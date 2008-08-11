@@ -16,14 +16,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>OUTPUT_DIR</name>
-			<type>2</type>
-			<locationURI>OUTPUT_DIR/scrum</locationURI>
-		</link>
-		<link>
 			<name>GWT</name>
 			<type>2</type>
 			<locationURI>GWT</locationURI>
+		</link>
+		<link>
+			<name>OUTPUT_DIR</name>
+			<type>2</type>
+			<locationURI>OUTPUT_DIR/scrum</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
