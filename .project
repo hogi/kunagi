@@ -23,7 +23,7 @@
 		<link>
 			<name>OUTPUT_DIR</name>
 			<type>2</type>
-			<locationURI>OUTPUT_DIR/scrum</locationURI>
+			<locationURI>OUTPUT_DIR</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

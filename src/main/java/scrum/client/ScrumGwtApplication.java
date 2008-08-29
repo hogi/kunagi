@@ -1,62 +1,23 @@
 package scrum.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.TabPanel;
 
-/**
- * Entry point classes define <code>onModuleLoad()</code>.
- */
 public class ScrumGwtApplication implements EntryPoint {
 
 	/**
-	 * This is the entry point method.
+	 * Application entry point.
 	 */
 	public void onModuleLoad() {
-		Image img = new Image("http://code.google.com/webtoolkit/logo-185x175.png");
-		Button button = new Button("Start the Ham & Eggs Scrum tool");
 
-		VerticalPanel vPanel = new VerticalPanel();
-		// We can add style names.
-		vPanel.addStyleName("widePanel");
-		vPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
-		vPanel.add(img);
-		vPanel.add(button);
+		TabPanel tabPanel = new TabPanel();
+		tabPanel.setWidth("100%");
+		tabPanel.add(new ProjectSummaryWidget(), "Project Summary");
+		tabPanel.add(new ProductBacklogWidget(), "Product Backlog");
+		tabPanel.selectTab(0);
 
-		// Add image and button to the RootPanel
-		RootPanel.get().add(vPanel);
-
-		// Create the dialog box
-		final DialogBox dialogBox = new DialogBox();
-		dialogBox.setText("You got so far. Probably you're pig!");
-		dialogBox.setAnimationEnabled(true);
-		Button closeButton = new Button("close");
-		VerticalPanel dialogVPanel = new VerticalPanel();
-		dialogVPanel.setWidth("100%");
-		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
-		dialogVPanel.add(closeButton);
-
-		closeButton.addClickListener(new ClickListener() {
-
-			public void onClick(Widget sender) {
-				dialogBox.hide();
-			}
-		});
-
-		// Set the contents of the Widget
-		dialogBox.setWidget(dialogVPanel);
-
-		button.addClickListener(new ClickListener() {
-
-			public void onClick(Widget sender) {
-				dialogBox.center();
-				dialogBox.show();
-			}
-		});
+		RootPanel.get().add(tabPanel);
 	}
+
 }
