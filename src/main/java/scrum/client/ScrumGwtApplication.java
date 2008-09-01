@@ -10,6 +10,15 @@ public class ScrumGwtApplication implements EntryPoint {
 	 * Application entry point.
 	 */
 	public void onModuleLoad() {
+		// load initially required data
+		Client.requestUpdateUsers();
+		Client.requestUpdateProjects();
+
+		// simulate login
+		Client.user = Client.getUser("1");
+
+		// simulate project selection
+		Client.project = Client.projects.get(0);
 
 		TabPanel tabPanel = new TabPanel();
 		tabPanel.setWidth("100%");
