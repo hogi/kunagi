@@ -31,3 +31,20 @@ button {
 img {
   margin-top: 20px;
 }
+
+.selected {
+  background: #FFAAAA;
+}
+
+.fieldLabel {
+  color: gray;
+}
+
+.editableViewer {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.editableEditor {
+  
+}

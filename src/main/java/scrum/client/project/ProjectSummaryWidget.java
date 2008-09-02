@@ -1,4 +1,6 @@
-package scrum.client;
+package scrum.client.project;
+
+import scrum.client.Client;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
