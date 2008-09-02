@@ -1,50 +1,42 @@
-/** Add css rules here for your application. */
-body {
-  font-family:arial,sans-serif
-}
-
-div,td {
-  color:#000000
-}
-
-a:link {
-  color:#0000cc
-}
-     
-a:visited {
-  color:#551a8b
-}
-
-a:active {
-  color:#ff0000
-}
-
 button {
-  display: block;
-  font-size: 16pt
+	display: block;
 }
 
 .widePanel {
-  width: 100%
+	width: 100%
 }
 
-img {
-  margin-top: 20px;
+.gwt-TabPanel {
+	width: 100%;
+	height: 100%;
 }
 
-.selected {
-  background: #FFAAAA;
+.gwt-TabPanelBottom {
+	height: 96%;
+}
+
+.AItemTableWidget-table-cell {
+	cursor: pointer;
+}
+
+.AItemTableWidget-table-cell-selected {
+	background: #FFAAAA;
 }
 
 .fieldLabel {
-  color: gray;
+	color: gray;
 }
 
 .editableViewer {
-  font-weight: bold;
-  cursor: pointer;
+	font-weight: bold;
+	cursor: pointer;
 }
 
 .editableEditor {
-  
+	
+}
+
+.AItemTableWidget {
+	width: 100%;
+	height: 100%;
 }

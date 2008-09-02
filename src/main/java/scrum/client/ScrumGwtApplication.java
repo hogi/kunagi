@@ -36,16 +36,13 @@ public class ScrumGwtApplication implements EntryPoint {
 		backlog = new ProductBacklogWidget();
 
 		TabPanel tabPanel = new TabPanel();
-		tabPanel.setWidth("100%");
-		tabPanel.setHeight("300px");
 		tabPanel.add(summary, "Project Summary");
 		tabPanel.add(backlog, "Product Backlog");
 		tabPanel.add(impediments, "Impediments");
 		tabPanel.add(new TestWidget(), "Test");
 		tabPanel.selectTab(2);
 
-		RootPanel root = RootPanel.get();
-		root.setHeight("100%");
+		RootPanel root = RootPanel.get("content");
 		root.add(tabPanel);
 	}
 }

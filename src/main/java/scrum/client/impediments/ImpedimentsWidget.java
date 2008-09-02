@@ -2,14 +2,18 @@ package scrum.client.impediments;
 
 import scrum.client.Client;
 
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public class ImpedimentsWidget extends Composite {
 
-	private HorizontalSplitPanel split;
-	public ImpedimentFieldsWidget details;
-	public ImpedimentsTable table;
+	ImpedimentsTable table;
+	ImpedimentFieldsWidget details;
 
 	public ImpedimentsWidget() {
 		table = new ImpedimentsTable();
@@ -17,12 +21,34 @@ public class ImpedimentsWidget extends Composite {
 
 		details = new ImpedimentFieldsWidget();
 
-		split = new HorizontalSplitPanel();
+		HorizontalSplitPanel split = new HorizontalSplitPanel();
 		split.setLeftWidget(table);
 		split.setRightWidget(details);
+		split.setSplitPosition("300px");
 
-		initWidget(split);
-		split.setSplitPosition("50%");
+		Button createButton = new Button("New Impediment");
+		createButton.addClickListener(new CreateClickListener());
+
+		VerticalPanel toolbar = new VerticalPanel();
+		toolbar.add(createButton);
+
+		DockPanel dock = new DockPanel();
+		dock.add(toolbar, DockPanel.NORTH);
+		dock.setCellHeight(toolbar, "1%");
+		dock.add(split, DockPanel.CENTER);
+		dock.setCellHeight(split, "99%");
+
+		initWidget(dock);
+	}
+
+	class CreateClickListener implements ClickListener {
+
+		public void onClick(Widget sender) {
+			Impediment impediment = Client.createImpediment();
+			table.setItems(Client.impediments);
+			table.selectItem(impediment);
+		}
+
 	}
 
 }

@@ -1,20 +1,15 @@
 package scrum.client.test;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HorizontalSplitPanel;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class TestWidget extends Composite {
 
 	public TestWidget() {
-		Label left = new Label("left");
-		Label right = new Label("right");
-
-		HorizontalSplitPanel split = new HorizontalSplitPanel();
-		split.setLeftWidget(left);
-		split.setRightWidget(right);
-		split.setSplitPosition("50px");
-
-		initWidget(split);
+		VerticalPanel panel = new VerticalPanel();
+		panel.setStyleName("TestWidget");
+		panel.add(new Button("test"));
+		initWidget(panel);
 	}
 }
