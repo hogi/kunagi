@@ -33,7 +33,7 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 			String text = getText();
 
 			editor = new TextArea();
-			editor.setWidth("200px");
+			editor.setWidth("96%");
 			editor.setHeight("100px");
 			editor.setText(text);
 			editor.addKeyboardListener(new EditorKeyboardListener());
@@ -50,6 +50,8 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 			toolbar.add(cancelButton);
 
 			editorPanel = new VerticalPanel();
+			editorPanel.setStyleName("AEditableTextareaWidget-editorPanel");
+			editorPanel.setWidth("100%");
 			editorPanel.add(editor);
 			editorPanel.add(toolbar);
 		}

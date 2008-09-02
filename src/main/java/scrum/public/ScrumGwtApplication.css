@@ -40,3 +40,13 @@ button {
 	width: 100%;
 	height: 100%;
 }
+
+.AItemFieldsWidget-table td {
+	vertical-align: top;
+}
+
+.AEditableTextareaWidget-editorPanel {
+}
+
+
+

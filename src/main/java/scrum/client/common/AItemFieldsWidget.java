@@ -10,12 +10,13 @@ public abstract class AItemFieldsWidget<I> extends Composite {
 
 	public I item;
 
-	private DockPanel dock = new DockPanel();
-	private FlexTable fieldTable;
+	private DockPanel dock;
+	private FlexTable table;
 
 	protected abstract void build();
 
 	public AItemFieldsWidget() {
+		dock = new DockPanel();
 		initWidget(dock);
 		setWidth("100%");
 		rebuild();
@@ -28,17 +29,19 @@ public abstract class AItemFieldsWidget<I> extends Composite {
 
 	public void rebuild() {
 		dock.clear();
-		fieldTable = null;
+		table = null;
 		if (item == null) {
 			dock.add(getNothing(), DockPanel.CENTER);
 			return;
 		}
 
-		fieldTable = new FlexTable();
+		table = new FlexTable();
+		table.setStyleName("AItemFieldsWidget-table");
+		table.setWidth("100%");
 
 		build();
 
-		dock.add(fieldTable, DockPanel.CENTER);
+		dock.add(table, DockPanel.CENTER);
 	}
 
 	protected void addField(String label, Widget value) {
@@ -48,9 +51,9 @@ public abstract class AItemFieldsWidget<I> extends Composite {
 
 		value.addStyleName("fieldValue");
 
-		int row = fieldTable.getRowCount();
-		fieldTable.setWidget(row, 0, l);
-		fieldTable.setWidget(row, 1, value);
+		int row = table.getRowCount();
+		table.setWidget(row, 0, l);
+		table.setWidget(row, 1, value);
 	}
 
 	protected Widget getNothing() {
