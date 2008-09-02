@@ -73,6 +73,11 @@ public class Client {
 		return impediment;
 	}
 
+	public static void deleteImpediment(Impediment impediment) {
+		project.impedimentsIds.remove(impediment.id);
+		impediments.remove(impediment);
+	}
+
 	public static Impediment getImpediment(String id) {
 		for (Impediment impediment : impediments) {
 			if (id.equals(impediment.id)) return impediment;

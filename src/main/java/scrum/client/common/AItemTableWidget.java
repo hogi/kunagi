@@ -66,6 +66,15 @@ public abstract class AItemTableWidget<I> extends Composite {
 		selectRow(row);
 	}
 
+	public int getSelectedRow() {
+		return selectedRow;
+	}
+
+	public I getSelectedItem() {
+		if (selectedRow < 0 || selectedRow >= items.size()) return null;
+		return items.get(selectedRow);
+	}
+
 	class Listener implements TableListener {
 
 		public void onCellClicked(SourcesTableEvents sender, int row, int cell) {
