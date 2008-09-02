@@ -6,6 +6,9 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * Widget, which displays fields of an item. A field is a pair of a label and a value.
+ */
 public abstract class AItemFieldsWidget<I> extends Composite {
 
 	public I item;

@@ -10,6 +10,9 @@ import com.google.gwt.user.client.ui.SourcesTableEvents;
 import com.google.gwt.user.client.ui.TableListener;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * Table designed for presenting a specific item per row.
+ */
 public abstract class AItemTableWidget<I> extends Composite {
 
 	private List<I> items = new ArrayList<I>();
