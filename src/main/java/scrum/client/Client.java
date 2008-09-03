@@ -25,13 +25,13 @@ public class Client {
 		// dummy objects. TODO call server
 
 		Project p1 = createProject(users.get(1));
-		p1.name = "nuke the moon";
+		p1.label = "nuke the moon";
 		p1.ownerId = users.get(0).id;
 		p1.participantsIds.add(users.get(0).id);
 		p1.participantsIds.add(users.get(1).id);
 
 		Project p2 = createProject(users.get(0));
-		p2.name = "ultimate internet virus";
+		p2.label = "ultimate internet virus";
 		p2.ownerId = users.get(1).id;
 		p2.participantsIds.add(users.get(0).id);
 		p2.participantsIds.add(users.get(1).id);
@@ -41,7 +41,7 @@ public class Client {
 	public static Project createProject(User master) {
 		Project project = new Project();
 		project.id = generateEntityId();
-		project.name = "New Project";
+		project.label = "New Project";
 		project.masterId = master.id;
 		projects.add(project);
 		return project;

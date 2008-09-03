@@ -25,6 +25,7 @@ public class ImpedimentsWidget extends Composite {
 		createButton.addClickListener(new CreateClickListener());
 		deleteButton = new Button("Delete Impediment");
 		deleteButton.addClickListener(new DeleteClickListener());
+		deleteButton.setEnabled(false);
 
 		HorizontalPanel toolbar = new HorizontalPanel();
 		toolbar.add(createButton);
@@ -57,7 +58,7 @@ public class ImpedimentsWidget extends Composite {
 		}
 
 		@Override
-		protected Widget getCell(Impediment item, int column, boolean selected) {
+		protected Widget getCell(Impediment item, int column) {
 			switch (column) {
 				case 0:
 					return new Label(item.label);
@@ -66,11 +67,7 @@ public class ImpedimentsWidget extends Composite {
 		}
 
 		@Override
-		protected void onItemSelected(Impediment item) {}
-
-		@Override
-		public void rebuild() {
-			super.rebuild();
+		protected void onItemSelected(Impediment item) {
 			Impediment impediment = getSelectedItem();
 			deleteButton.setEnabled(impediment != null);
 			details.setItem(impediment);
@@ -82,7 +79,7 @@ public class ImpedimentsWidget extends Composite {
 
 		public void onClick(Widget sender) {
 			Impediment impediment = Client.createImpediment();
-			table.setItems(Client.impediments);
+			table.addItem(impediment);
 			table.selectItem(impediment);
 		}
 
@@ -94,7 +91,7 @@ public class ImpedimentsWidget extends Composite {
 			Impediment impediment = table.getSelectedItem();
 			if (impediment == null) return;
 			Client.deleteImpediment(impediment);
-			table.setItems(Client.impediments);
+			table.removeItem(impediment);
 		}
 
 	}

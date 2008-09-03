@@ -15,6 +15,8 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public abstract class AItemTableWidget<I> extends Composite {
 
+	private static final String STYLE_CELL_SELECTED = "AItemTableWidget-table-cell-selected";
+
 	private List<I> items = new ArrayList<I>();
 	private int selectedRow = -1;
 
@@ -22,7 +24,7 @@ public abstract class AItemTableWidget<I> extends Composite {
 
 	protected abstract int getColumnCount();
 
-	protected abstract Widget getCell(I item, int column, boolean selected);
+	protected abstract Widget getCell(I item, int column);
 
 	protected abstract void onItemSelected(I item);
 
@@ -39,29 +41,71 @@ public abstract class AItemTableWidget<I> extends Composite {
 		rebuild();
 	}
 
-	public void rebuild() {
+	public void addItem(I item) {
+		items.add(item);
+		updateRow(items.size() - 1);
+	}
+
+	public void removeItem(I item) {
+		int row = items.indexOf(item);
+		if (row < 0) return;
+		unselect();
+		items.remove(row);
+		table.removeRow(row);
+	}
+
+	private void rebuild() {
+		unselect();
 		table.clear();
-		int columnCount = getColumnCount();
-		int row = 0;
-		for (I item : items) {
-			boolean selected = row == selectedRow;
-			for (int column = 0; column < columnCount; column++) {
-				Widget cell = getCell(item, column, selected);
-				cell.setStyleName("AItemTableWidget-table-cell");
-				if (selected) {
-					cell.addStyleName("AItemTableWidget-table-cell-selected");
-				}
-				table.setWidget(row, column, cell);
-			}
-			row++;
+		int rowCount = items.size();
+		for (int row = 0; row < rowCount; row++) {
+			updateRow(row);
 		}
 	}
 
-	public void selectRow(int row) {
+	public void updateRow(int row) {
+		I item = items.get(row);
+		int columnCount = getColumnCount();
+		for (int column = 0; column < columnCount; column++) {
+			Widget cell = getCell(item, column);
+			cell.addStyleName("AItemTableWidget-table-cell");
+			if (row == selectedRow) {
+				cell.addStyleName(STYLE_CELL_SELECTED);
+			}
+			table.setWidget(row, column, cell);
+		}
+	}
+
+	public void updateSelectedRow() {
+		int row = getSelectedRow();
+		if (row < 0 || row > items.size()) return;
+		updateRow(row);
+	}
+
+	public void unselect() {
+		if (selectedRow < 0) return;
+
+		int columnCount = getColumnCount();
+		for (int column = 0; column < columnCount; column++) {
+			Widget cell = table.getWidget(selectedRow, column);
+			cell.removeStyleName(STYLE_CELL_SELECTED);
+		}
+
+		selectedRow = -1;
+		onItemSelected(null);
+	}
+
+	private void selectRow(int row) {
+		unselect();
 		this.selectedRow = row;
-		rebuild();
-		I item = row < items.size() ? items.get(row) : null;
-		onItemSelected(item);
+
+		int columnCount = getColumnCount();
+		for (int column = 0; column < columnCount; column++) {
+			Widget cell = table.getWidget(selectedRow, column);
+			cell.addStyleName(STYLE_CELL_SELECTED);
+		}
+
+		onItemSelected(getSelectedItem());
 	}
 
 	public void selectItem(I item) {

@@ -1,9 +1,9 @@
 package scrum.client.impediments;
 
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AItemFieldsWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
+import scrum.client.workspace.WorkspaceWidget;
 
 public class ImpedimentFieldsWidget extends AItemFieldsWidget<Impediment> {
 
@@ -23,7 +23,7 @@ public class ImpedimentFieldsWidget extends AItemFieldsWidget<Impediment> {
 		@Override
 		protected void setText(String text) {
 			item.label = text;
-			ScrumGwtApplication.impediments.table.rebuild();
+			WorkspaceWidget.impediments.table.updateSelectedRow();
 		}
 
 	}
@@ -37,6 +37,7 @@ public class ImpedimentFieldsWidget extends AItemFieldsWidget<Impediment> {
 
 		@Override
 		protected void setText(String text) {
+			if (text == null || text.length() == 0) text = "-";
 			item.description = text;
 		}
 

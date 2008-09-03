@@ -11,7 +11,7 @@ import scrum.client.impediments.Impediment;
 
 public class Project extends AEntity {
 
-	public String name;
+	public String label;
 	public String masterId; // scrum master
 	public String ownerId; // product owner
 	public Set<String> participantsIds = new HashSet<String>(); // team
