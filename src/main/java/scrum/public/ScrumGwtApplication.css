@@ -30,6 +30,8 @@ button {
 .editableViewer {
 	font-weight: bold;
 	cursor: pointer;
+	background: #EEEEFF;
+	width: 100%;
 }
 
 .editableEditor {

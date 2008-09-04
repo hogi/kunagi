@@ -11,6 +11,7 @@ public class ImpedimentFieldsWidget extends AItemFieldsWidget<Impediment> {
 	protected void build() {
 		addField("Label", new LabelWidget());
 		addField("Description", new DescriptionWidget());
+		addField("Solution", new SolutionWidget());
 	}
 
 	class LabelWidget extends AEditableTextWidget {
@@ -22,6 +23,7 @@ public class ImpedimentFieldsWidget extends AItemFieldsWidget<Impediment> {
 
 		@Override
 		protected void setText(String text) {
+			if (text == null || text.length() == 0) text = "unlabeled";
 			item.label = text;
 			WorkspaceWidget.impediments.table.updateSelectedRow();
 		}
@@ -37,8 +39,21 @@ public class ImpedimentFieldsWidget extends AItemFieldsWidget<Impediment> {
 
 		@Override
 		protected void setText(String text) {
-			if (text == null || text.length() == 0) text = "-";
 			item.description = text;
+		}
+
+	}
+
+	class SolutionWidget extends AEditableTextareaWidget {
+
+		@Override
+		protected String getText() {
+			return item.solution;
+		}
+
+		@Override
+		protected void setText(String text) {
+			item.solution = text;
 		}
 
 	}
