@@ -1,6 +1,7 @@
 package scrum.client.workspace;
 
 import scrum.client.Client;
+import scrum.client.impediments.Impediments2Widget;
 import scrum.client.impediments.ImpedimentsWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.ProjectSummaryWidget;
@@ -64,8 +65,9 @@ public class WorkspaceWidget extends Composite {
 		tabPanel.add(summary, "Project Summary");
 		tabPanel.add(backlog, "Product Backlog");
 		tabPanel.add(impediments, "Impediments");
+		tabPanel.add(new Impediments2Widget(), "Impediments 2");
 		tabPanel.add(new TestWidget(), "Test");
-		tabPanel.selectTab(2);
+		tabPanel.selectTab(3);
 
 		return tabPanel;
 	}

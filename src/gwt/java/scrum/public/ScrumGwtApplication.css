@@ -64,3 +64,22 @@ button {
 	margin: 5px;
 }
 
+.BlockListWidget {
+	background: #CCDDFF;
+}
+
+.BlockWidget {
+	border: 1px solid black;
+	background: white;
+	padding: 5px;
+}
+
+.BlockWidget-selected {
+	border: 3px solid #CC4444;
+	padding: 3px;
+}
+
+.ImpedimentWidget-label {
+	font-size: 14px;
+	font-weight: bold;
+}
