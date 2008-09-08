@@ -4,6 +4,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * Base class for a editable widget.
+ * 
+ * A editable widget is by default in view mode. It displays a value using the viewer. By clicking on the
+ * viewer it is set to <code>editMode</code>. In edit mode the value can be edited in the editor.
+ */
 public abstract class AEditableWidget extends Composite {
 
 	private static AEditableWidget currentEditable;
@@ -11,8 +17,14 @@ public abstract class AEditableWidget extends Composite {
 	private HorizontalPanel panel;
 	private boolean editMode;
 
+	/**
+	 * Provides the viewer for view mode.
+	 */
 	protected abstract Widget getViewer();
 
+	/**
+	 * Provides the editor for edit mode.
+	 */
 	protected abstract Widget getEditor();
 
 	public AEditableWidget() {
@@ -21,7 +33,17 @@ public abstract class AEditableWidget extends Composite {
 		initWidget(panel);
 	}
 
-	public void rebuild() {
+	/**
+	 * Override this method to update the viewer after it is displayed.
+	 */
+	protected void updateViewer() {}
+
+	/**
+	 * Override this method to update the editor after it is displayed.
+	 */
+	protected void updateEditor() {}
+
+	void rebuild() {
 		panel.clear();
 		Widget widget;
 		if (editMode) {
@@ -39,7 +61,7 @@ public abstract class AEditableWidget extends Composite {
 		}
 	}
 
-	public void setEditMode(boolean editMode) {
+	void setEditMode(boolean editMode) {
 		if (editMode && currentEditable != null) {
 			currentEditable.setEditMode(false);
 		}
@@ -50,14 +72,6 @@ public abstract class AEditableWidget extends Composite {
 			currentEditable = null;
 		}
 		rebuild();
-	}
-
-	protected void updateEditor() {
-
-	}
-
-	protected void updateViewer() {
-
 	}
 
 }

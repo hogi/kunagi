@@ -61,6 +61,10 @@ public class Client {
 		Impediment apocalypse = createImpediment();
 		apocalypse.label = "Apocalypse";
 		apocalypse.description = "When end of days comes, will our software survive?";
+
+		Impediment lawsuit = createImpediment();
+		lawsuit.label = "Software Patent Lawsuit";
+		lawsuit.description = "What to do when we get sued for using someones intellectual property?";
 	}
 
 	public static Impediment createImpediment() {

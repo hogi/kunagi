@@ -5,14 +5,18 @@ import java.util.List;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SourcesTableEvents;
 import com.google.gwt.user.client.ui.TableListener;
 
+/**
+ * Scrollable List of <code>BlockWidget</code>s.
+ */
 public class BlockListWidget extends Composite {
 
 	private FlexTable table;
-	private List<BlockWidget> blocks = new ArrayList<BlockWidget>();
+	private ScrollPanel scroller;
+	private List<ABlockWidget> blocks = new ArrayList<ABlockWidget>();
 	private int selectedRow = -1;
 
 	public BlockListWidget() {
@@ -20,20 +24,23 @@ public class BlockListWidget extends Composite {
 		table.setWidth("100%");
 		table.addTableListener(new Listener());
 
-		SimplePanel panel = new SimplePanel();
-		panel.setStyleName("BlockListWidget");
-		panel.add(table);
+		scroller = new ScrollPanel();
+		scroller.setWidth("100%");
+		scroller.setHeight("100%");
+		scroller.setStyleName("BlockListWidget");
+		scroller.add(table);
 
-		initWidget(panel);
+		initWidget(scroller);
 	}
 
-	public void addBlock(BlockWidget block) {
+	public void addBlock(ABlockWidget block) {
 		block.rebuild();
 		blocks.add(block);
 		table.setWidget(table.getRowCount(), 0, block);
+		scroller.scrollToBottom();
 	}
 
-	public BlockWidget getSelectedBlock() {
+	public ABlockWidget getSelectedBlock() {
 		if (selectedRow < 0) return null;
 		return blocks.get(selectedRow);
 	}
@@ -41,20 +48,39 @@ public class BlockListWidget extends Composite {
 	public void selectRow(int row) {
 		if (row == selectedRow) return;
 		deselect();
-		BlockWidget block = blocks.get(row);
+		ABlockWidget block = blocks.get(row);
 		block.addStyleName("BlockWidget-selected");
 		block.setExtended(true);
 		selectedRow = row;
 	}
 
+	public void removeSelectedRow() {
+		removeRow(selectedRow);
+	}
+
+	public void removeRow(int row) {
+		if (row < 0 || row >= blocks.size()) return;
+		blocks.remove(row);
+		table.removeRow(row);
+		if (selectedRow == row) {
+			selectedRow = -1;
+		} else if (selectedRow > row) {
+			selectedRow--;
+		}
+	}
+
+	public void selectBlock(ABlockWidget block) {
+		selectRow(blocks.indexOf(block));
+	}
+
 	public void deselect() {
-		BlockWidget block = getSelectedBlock();
+		ABlockWidget block = getSelectedBlock();
 		if (block == null) return;
 		block.removeStyleName("BlockWidget-selected");
 		block.setExtended(false);
 	}
 
-	class Listener implements TableListener {
+	private class Listener implements TableListener {
 
 		public void onCellClicked(SourcesTableEvents sender, int row, int cell) {
 			selectRow(row);

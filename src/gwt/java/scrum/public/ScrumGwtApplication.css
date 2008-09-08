@@ -1,3 +1,7 @@
+td {
+	vertical-align: top;
+}
+
 button {
 	display: block;
 }
@@ -43,10 +47,6 @@ button {
 	height: 100%;
 }
 
-.AItemFieldsWidget-table td {
-	vertical-align: top;
-}
-
 .AEditableTextareaWidget-editorPanel {
 }
 
@@ -82,4 +82,10 @@ button {
 .ImpedimentWidget-label {
 	font-size: 14px;
 	font-weight: bold;
+}
+
+.Toolbar {
+	background: #CCDDFF;
+	padding: 3px;
+	border: 1px solid #CCDDFF; 
 }

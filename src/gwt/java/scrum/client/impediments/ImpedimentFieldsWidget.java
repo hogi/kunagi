@@ -3,9 +3,12 @@ package scrum.client.impediments;
 import scrum.client.common.AItemFieldsWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
-import scrum.client.workspace.WorkspaceWidget;
 
 public class ImpedimentFieldsWidget extends AItemFieldsWidget<Impediment> {
+
+	public ImpedimentFieldsWidget(Impediment item) {
+		super(item);
+	}
 
 	@Override
 	protected void build() {
@@ -25,7 +28,6 @@ public class ImpedimentFieldsWidget extends AItemFieldsWidget<Impediment> {
 		protected void setText(String text) {
 			if (text == null || text.length() == 0) text = "unlabeled";
 			item.label = text;
-			WorkspaceWidget.impediments.table.updateSelectedRow();
 		}
 
 	}

@@ -10,6 +10,12 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * Base class for a editable long text widget.
+ * 
+ * In view mode this widget displays a label for the value. In edit mode a <code>TextArea</code> is used as
+ * editor to allow editing the value.
+ */
 public abstract class AEditableTextareaWidget extends AEditableWidget {
 
 	private Label viewer;
@@ -17,8 +23,14 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 	private VerticalPanel editorPanel;
 	private TextArea editor;
 
+	/**
+	 * Provide the value for view mode and edit mode.
+	 */
 	protected abstract String getText();
 
+	/**
+	 * Set the value inputed by the user.
+	 */
 	protected abstract void setText(String text);
 
 	public AEditableTextareaWidget() {
@@ -64,7 +76,7 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 		return viewer;
 	}
 
-	class ViewerClickListener implements ClickListener {
+	private class ViewerClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
 			setEditMode(true);
@@ -72,7 +84,7 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 
 	}
 
-	class ApplyListener implements ClickListener {
+	private class ApplyListener implements ClickListener {
 
 		public void onClick(Widget sender) {
 			setText(editor.getText());
@@ -81,14 +93,14 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 		}
 	}
 
-	class CancelListener implements ClickListener {
+	private class CancelListener implements ClickListener {
 
 		public void onClick(Widget sender) {
 			setEditMode(false);
 		}
 	}
 
-	class EditorKeyboardListener extends KeyboardListenerAdapter {
+	private class EditorKeyboardListener extends KeyboardListenerAdapter {
 
 		@Override
 		public void onKeyPress(Widget sender, char keyCode, int modifiers) {

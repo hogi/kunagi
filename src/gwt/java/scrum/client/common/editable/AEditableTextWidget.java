@@ -7,13 +7,25 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * Base class for a editable text widget.
+ * 
+ * In view mode this widget displays a label for the value. In edit mode a <code>TextBox</code> is used as
+ * editor to allow editing the value.
+ */
 public abstract class AEditableTextWidget extends AEditableWidget {
 
 	private Label viewer;
 	private TextBox editor;
 
+	/**
+	 * Provide the value for view mode and edit mode.
+	 */
 	protected abstract String getText();
 
+	/**
+	 * Set the value inputed by the user.
+	 */
 	protected abstract void setText(String text);
 
 	public AEditableTextWidget() {
@@ -44,7 +56,7 @@ public abstract class AEditableTextWidget extends AEditableWidget {
 		return viewer;
 	}
 
-	class ViewerClickListener implements ClickListener {
+	private class ViewerClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
 			setEditMode(true);
@@ -52,7 +64,7 @@ public abstract class AEditableTextWidget extends AEditableWidget {
 
 	}
 
-	class EditorKeyboardListener extends KeyboardListenerAdapter {
+	private class EditorKeyboardListener extends KeyboardListenerAdapter {
 
 		@Override
 		public void onKeyPress(Widget sender, char keyCode, int modifiers) {
