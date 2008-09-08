@@ -72,6 +72,7 @@ button {
 	border: 1px solid black;
 	background: white;
 	padding: 5px;
+	cursor: pointer;
 }
 
 .BlockWidget-selected {
