@@ -1,5 +1,7 @@
 <module>
 
+      <inherits name='com.allen_sauer.gwt.dnd.gwt-dnd'/>
+
       <!-- Inherit the core Web Toolkit stuff.                        -->
       <inherits name='com.google.gwt.user.User'/>
 	

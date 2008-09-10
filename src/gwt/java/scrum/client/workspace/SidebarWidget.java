@@ -29,6 +29,10 @@ public class SidebarWidget extends Composite {
 		impedimentsButton.addClickListener(new ImpedimentsClickListener());
 		sidebar.add(impedimentsButton);
 
+		Button testButton = new Button("Test");
+		testButton.addClickListener(new TestClickListener());
+		sidebar.add(testButton);
+
 		initWidget(sidebar);
 	}
 
@@ -50,6 +54,13 @@ public class SidebarWidget extends Composite {
 
 		public void onClick(Widget sender) {
 			WorkspaceWidget.showBacklog();
+		}
+	}
+
+	private class TestClickListener implements ClickListener {
+
+		public void onClick(Widget sender) {
+			WorkspaceWidget.showTest();
 		}
 	}
 }

@@ -71,6 +71,10 @@ public class WorkspaceWidget extends Composite {
 		setWorkarea(summary);
 	}
 
+	public static void showTest() {
+		setWorkarea(new TestWidget());
+	}
+
 	public static void setWorkarea(Widget widget) {
 		workareaPanel.setWidget(widget);
 	}
