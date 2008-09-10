@@ -12,19 +12,10 @@ button {
 
 .gwt-TabPanel {
 	width: 100%;
-	height: 100%;
 }
 
 .gwt-TabPanelBottom {
 	height: 96%;
-}
-
-.AItemTableWidget-table-cell {
-	cursor: pointer;
-}
-
-.AItemTableWidget-table-cell-selected {
-	background: #FFAAAA;
 }
 
 .fieldLabel {
@@ -40,28 +31,6 @@ button {
 
 .editableEditor {
 	
-}
-
-.AItemTableWidget {
-	width: 100%;
-	height: 100%;
-}
-
-.AEditableTextareaWidget-editorPanel {
-}
-
-.WorkspaceWidget-header-appLabel {
-	font-size: 20px;
-	font-weight: bold;
-	margin: 5px;
-	color: #CCCCCC;
-	font-family: monospace;
-}
-
-.WorkspaceWidget-header-projectLabel {
-	font-size: 20px;
-	font-weight: bold;
-	margin: 5px;
 }
 
 .BlockListWidget {
@@ -89,4 +58,41 @@ button {
 	background: #CCDDFF;
 	padding: 3px;
 	border: 1px solid #CCDDFF; 
+}
+
+
+.WorkspaceWidget {
+}
+
+.WorkspaceWidget-workarea {
+	padding: 5px;
+}
+
+.HeaderWidget {
+	border-bottom: 1px solid #555555;
+	background: white;
+	position: fixed;
+	z-index: 10;
+}
+
+.HeaderWidget-appLabel {
+	font-size: 20px;
+	font-weight: bold;
+	margin: 5px;
+	color: #CCCCCC;
+	font-family: monospace;
+}
+
+.HeaderWidget-projectLabel {
+	font-size: 20px;
+	font-weight: bold;
+	margin: 5px;
+}
+
+.SidebarWidget {
+	background: #555555;
+	color: white;
+	padding: 5px;
+	position: fixed;
+	z-index: 10;
 }

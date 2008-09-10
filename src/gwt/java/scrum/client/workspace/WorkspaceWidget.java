@@ -10,7 +10,9 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TabPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class WorkspaceWidget extends Composite {
@@ -19,45 +21,92 @@ public class WorkspaceWidget extends Composite {
 	public static ProductBacklogWidget backlog;
 	public static ImpedimentsWidget impediments;
 
-	private Label projectLabel;
+	private static SimplePanel workareaPanel;
+	private static Label projectLabel;
 
 	public WorkspaceWidget() {
-
-		DockPanel dock = new DockPanel();
-		dock.addStyleName("WorkspaceWidget");
-		dock.setWidth("100%");
-		dock.setHeight("100%");
-
-		dock.add(createHeaderWidget(), DockPanel.NORTH);
-
-		Widget projectWidget = createProjectWidget();
-		dock.add(projectWidget, DockPanel.CENTER);
-		dock.setCellHeight(projectWidget, "99%");
-
-		initWidget(dock);
-	}
-
-	private Widget createHeaderWidget() {
-		Label appLabel = new Label("scrum");
-		appLabel.addStyleName("WorkspaceWidget-header-appLabel");
-
-		projectLabel = new Label();
-		projectLabel.addStyleName("WorkspaceWidget-header-projectLabel");
-		updateTitle();
-
-		HorizontalPanel panel = new HorizontalPanel();
-		panel.addStyleName("WorkspaceWidget-header");
-		panel.add(appLabel);
-		panel.add(projectLabel);
-
-		return panel;
-	}
-
-	private Widget createProjectWidget() {
 		// initialize widgets
 		summary = new ProjectSummaryWidget();
 		impediments = new ImpedimentsWidget();
 		backlog = new ProductBacklogWidget();
+
+		// create workspace
+		DockPanel workspacePanel = new DockPanel();
+		workspacePanel.setStyleName("WorkspaceWidget-workspace");
+		workspacePanel.setWidth("100%");
+
+		// header
+		Widget header = createHeaderWidget();
+		workspacePanel.add(header, DockPanel.NORTH);
+		workspacePanel.setCellHeight(header, "35px");
+		workspacePanel.setCellWidth(header, "100%");
+
+		// sidebar
+		Widget sidebar = createSidebar();
+		workspacePanel.add(sidebar, DockPanel.WEST);
+		workspacePanel.setCellWidth(sidebar, "200px");
+		workspacePanel.setCellHeight(sidebar, "100%");
+
+		// workarea
+		workareaPanel = new SimplePanel();
+		workareaPanel.setStyleName("WorkspaceWidget-workarea");
+		workspacePanel.add(workareaPanel, DockPanel.CENTER);
+		workspacePanel.setStyleName("WorkspaceWidget");
+		workspacePanel.setCellWidth(workareaPanel, "99%");
+
+		initWidget(workspacePanel);
+
+		showImpediments();
+	}
+
+	public static void showImpediments() {
+		setWorkarea(impediments);
+	}
+
+	public static void showBacklog() {
+		setWorkarea(backlog);
+	}
+
+	public static void showSummary() {
+		setWorkarea(summary);
+	}
+
+	public static void setWorkarea(Widget widget) {
+		workareaPanel.setWidget(widget);
+	}
+
+	private Widget createHeaderWidget() {
+		Label appLabel = new Label("scrum");
+		appLabel.addStyleName("HeaderWidget-appLabel");
+
+		projectLabel = new Label();
+		projectLabel.addStyleName("HeaderWidget-projectLabel");
+		updateTitle();
+
+		HorizontalPanel header = new HorizontalPanel();
+		header.addStyleName("HeaderWidget");
+		header.setWidth("100%");
+		header.add(appLabel);
+		header.setCellWidth(appLabel, "1%");
+		header.add(projectLabel);
+
+		SimplePanel panel = new SimplePanel();
+		panel.setWidth("100%");
+		panel.setStyleName("WorkspaceWidget-header");
+		panel.setWidget(header);
+		return panel;
+	}
+
+	private Widget createSidebar() {
+		VerticalPanel sidebar = new VerticalPanel();
+		sidebar.setStyleName("WorkspaceWidget-sidebar");
+		sidebar.setWidth("150px");
+		sidebar.setHeight("100%");
+		sidebar.add(new SidebarWidget());
+		return sidebar;
+	}
+
+	private Widget createProjectWidget() {
 
 		// build TabPanel for widgets
 		TabPanel tabPanel = new TabPanel();

@@ -29,6 +29,7 @@ public class ImpedimentsWidget extends Composite {
 		}
 
 		DockPanel dock = new DockPanel();
+		dock.setWidth("100%");
 		dock.add(toolbar, DockPanel.NORTH);
 		dock.setCellHeight(toolbar, "1%");
 		dock.add(list, DockPanel.CENTER);
