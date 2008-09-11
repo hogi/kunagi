@@ -54,6 +54,6 @@ public class Impediment extends AEntity {
 
 	public String getSummary() {
 		if (solved) return "Solved.";
-		return solution == null ? "Unsolved, without solution proposals." : "Unsolved, with solution proposal.";
+		return (solution == null || "".equals(solution)) ? "Unsolved." : "Unsolved, with solution proposal.";
 	}
 }

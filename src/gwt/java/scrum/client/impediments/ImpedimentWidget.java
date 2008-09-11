@@ -57,10 +57,11 @@ public class ImpedimentWidget extends ABlockWidget {
 			@Override
 			protected void setText(String text) {
 				impediment.setLabel(text);
+				rebuild();
 			}
 
 		});
-		fieldsWidget.addField("Description", new AEditableTextWidget() {
+		fieldsWidget.addField("Description", new AEditableTextareaWidget() {
 
 			@Override
 			protected String getText() {
@@ -119,6 +120,17 @@ public class ImpedimentWidget extends ABlockWidget {
 				}
 			});
 			toolbar.add(solveButton);
+		} else {
+			// impediment not solved -> add [Unsolve] button
+			Button unsolveButton = new Button("Unsolve");
+			unsolveButton.addClickListener(new ClickListener() {
+
+				public void onClick(Widget sender) {
+					impediment.setSolved(false);
+					rebuild();
+				}
+			});
+			toolbar.add(unsolveButton);
 		}
 
 		return toolbar;
