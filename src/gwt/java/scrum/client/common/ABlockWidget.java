@@ -1,7 +1,11 @@
 package scrum.client.common;
 
+import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -17,7 +21,13 @@ public abstract class ABlockWidget extends Composite {
 	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a
 	 * different implementation can be provided.
 	 */
-	protected abstract Widget build();
+	protected abstract Widget buildContent();
+
+	protected abstract Widget buildToolbar();
+
+	protected abstract String getBlockTitle();
+
+	protected abstract AbstractImagePrototype getIcon();
 
 	public ABlockWidget() {
 		panel = new SimplePanel();
@@ -33,10 +43,8 @@ public abstract class ABlockWidget extends Composite {
 		return extended;
 	}
 
-	void rebuild() {
-		Widget widget = build();
-		panel.clear();
-		panel.add(widget);
+	protected void rebuild() {
+		panel.setWidget(build());
 	}
 
 	void setExtended(boolean extended) {
@@ -45,4 +53,30 @@ public abstract class ABlockWidget extends Composite {
 		rebuild();
 	}
 
+	protected Widget build() {
+		Label title = new Label(getBlockTitle());
+		title.setStyleName("Block-title");
+
+		VerticalPanel center = new VerticalPanel();
+		center.setWidth("100%");
+		center.add(title);
+		center.add(buildContent());
+
+		HorizontalPanel block = new HorizontalPanel();
+		block.setStyleName("Block-block");
+		block.setWidth("100%");
+
+		AbstractImagePrototype icon = getIcon();
+		if (icon != null) block.add(icon.createImage());
+
+		block.add(center);
+		block.setCellWidth(center, "99%");
+
+		Widget toolbar = buildToolbar();
+		if (toolbar != null) {
+			block.add(toolbar);
+		}
+
+		return block;
+	}
 }

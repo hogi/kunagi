@@ -1,9 +1,9 @@
 package scrum.client.workspace;
 
-import scrum.client.Client;
 import scrum.client.impediments.ImpedimentsWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.ProjectSummaryWidget;
+import scrum.client.service.Service;
 import scrum.client.test.TestWidget;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -124,6 +124,6 @@ public class WorkspaceWidget extends Composite {
 	}
 
 	public void updateTitle() {
-		projectLabel.setText(Client.project.label);
+		projectLabel.setText(Service.getProject().getLabel());
 	}
 }

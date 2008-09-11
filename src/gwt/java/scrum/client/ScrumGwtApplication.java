@@ -1,5 +1,6 @@
 package scrum.client;
 
+import scrum.client.service.Service;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -11,16 +12,11 @@ public class ScrumGwtApplication implements EntryPoint {
 	 * Application entry point.
 	 */
 	public void onModuleLoad() {
-		// load initially required data
-		Client.requestUpdateUsers();
-		Client.requestUpdateProjects();
-		Client.requestUpdateImpediments();
-
 		// simulate login
-		Client.user = Client.getUser("1");
+		Service.login("duke", "geheim");
 
 		// simulate project selection
-		Client.project = Client.projects.get(0);
+		Service.selectProject("???");
 
 		RootPanel.get("workspace").add(new WorkspaceWidget());
 	}

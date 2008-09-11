@@ -49,9 +49,17 @@ button {
 	padding: 3px;
 }
 
-.ImpedimentWidget-label {
+.Block-title {
 	font-size: 14px;
 	font-weight: bold;
+}
+
+.Block-text {
+	color: #AAAAAA;
+}
+
+.Block-block {
+	padding: 3px;
 }
 
 .Toolbar {

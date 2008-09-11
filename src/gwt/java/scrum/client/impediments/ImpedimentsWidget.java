@@ -1,7 +1,7 @@
 package scrum.client.impediments;
 
-import scrum.client.Client;
 import scrum.client.common.BlockListWidget;
+import scrum.client.service.Service;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -24,7 +24,7 @@ public class ImpedimentsWidget extends Composite {
 		toolbar.add(createButton);
 
 		list = new BlockListWidget();
-		for (Impediment impediment : Client.impediments) {
+		for (Impediment impediment : Service.getProject().getImpediments()) {
 			list.addBlock(new ImpedimentWidget(impediment));
 		}
 
@@ -41,7 +41,7 @@ public class ImpedimentsWidget extends Composite {
 	class CreateClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			Impediment impediment = Client.createImpediment();
+			Impediment impediment = Service.getProject().createNewImpediment();
 			ImpedimentWidget block = new ImpedimentWidget(impediment);
 			list.addBlock(block);
 			list.selectBlock(block);
