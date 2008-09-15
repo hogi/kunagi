@@ -5,12 +5,15 @@ import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.img.Img;
 import scrum.client.project.BacklogItem;
-import scrum.client.workspace.WorkspaceWidget;
+import scrum.client.service.Service;
 
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -56,7 +59,8 @@ public class SprintWidget extends ABlockWidget {
 			label.addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					// TODO
+					// TODO Auto-generated method stub
+					
 				}
 				
 			});
@@ -78,13 +82,15 @@ public class SprintWidget extends ABlockWidget {
 		toolbar.setStyleName("Toolbar");
 		
 		Button addSprintButton = new Button("Assign Backlogitem");
-		addSprintButton.addClickListener(new ClickListener() {
-
-			public void onClick(Widget sender) {
-				// TODO show backlogitem selection
-				WorkspaceWidget.showBacklog();
-			}
-		});
+		addSprintButton.addClickListener(new AssignClickListener());
+		// addSprintButton.addClickListener(new ClickListener() {
+		//
+		// public void onClick(Widget sender) {
+		// // TODO show backlogitem selection
+		// // WorkspaceWidget.showBacklog();
+		//				
+		// }
+		// });
 		toolbar.add(addSprintButton);
 		
 		return toolbar;
@@ -99,6 +105,39 @@ public class SprintWidget extends ABlockWidget {
 	protected AbstractImagePrototype getIcon() {
 		//if (impediment.isSolved()) return Img.bundle.impedimentSolvedIcon32();
 		return Img.bundle.impedimentIcon32();
+	}
+	
+	private class AssignClickListener implements ClickListener {
+
+		DialogBox box = new DialogBox();
+		SuggestBox sg;
+		
+		public AssignClickListener() {
+			box.setPopupPosition(SprintWidget.this.getAbsoluteLeft(), SprintWidget.this.getAbsoluteTop());
+			
+			VerticalPanel mainpanel = new VerticalPanel();
+			MultiWordSuggestOracle ora = new MultiWordSuggestOracle();
+			for (BacklogItem backlogItem : Service.getProject().getBacklogItems()) {
+				ora.add(backlogItem.getLabel());
+			}
+			sg = new SuggestBox(ora);
+			mainpanel.add(sg);
+			Button b = new Button("Add");
+			b.addClickListener(new ClickListener() {
+				
+				public void onClick(Widget sender) {
+					box.hide();
+				}
+				
+			});
+			mainpanel.add(b);
+			box.add(mainpanel);
+		}
+		
+		public void onClick(Widget sender) {
+			box.show();
+		}
+
 	}
 	
 }
