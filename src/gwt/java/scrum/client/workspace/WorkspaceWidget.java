@@ -4,6 +4,7 @@ import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.BacklogItemListWidget;
 import scrum.client.project.ProjectSummaryWidget;
 import scrum.client.service.Service;
+import scrum.client.sprint.SprintListWidget;
 import scrum.client.test.TestWidget;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -20,6 +21,7 @@ public class WorkspaceWidget extends Composite {
 	public static ProjectSummaryWidget summary;
 	public static BacklogItemListWidget backlog;
 	public static ImpedimentListWidget impediments;
+	public static SprintListWidget sprints;
 
 	private static SimplePanel workareaPanel;
 	private static Label projectLabel;
@@ -29,6 +31,7 @@ public class WorkspaceWidget extends Composite {
 		summary = new ProjectSummaryWidget();
 		impediments = new ImpedimentListWidget();
 		backlog = new BacklogItemListWidget();
+		sprints = new SprintListWidget();
 
 		// create workspace
 		DockPanel workspacePanel = new DockPanel();
@@ -60,6 +63,10 @@ public class WorkspaceWidget extends Composite {
 		showBacklog();
 	}
 
+	public static void showSprints() {
+		setWorkarea(sprints);
+	}
+	
 	public static void showImpediments() {
 		setWorkarea(impediments);
 	}
@@ -118,6 +125,7 @@ public class WorkspaceWidget extends Composite {
 		tabPanel.add(summary, "Project Summary");
 		tabPanel.add(backlog, "Product Backlog");
 		tabPanel.add(impediments, "Impediments");
+		tabPanel.add(sprints, "Sprints");
 		tabPanel.add(new TestWidget(), "Test");
 		tabPanel.selectTab(2);
 

@@ -9,6 +9,7 @@ import scrum.client.admin.User;
 import scrum.client.common.AEntity;
 import scrum.client.impediments.Impediment;
 import scrum.client.service.EntityIdGenerator;
+import scrum.client.sprint.Sprint;
 
 public class Project extends AEntity {
 
@@ -18,7 +19,8 @@ public class Project extends AEntity {
 	private Set<User> participants; // team
 	private List<Impediment> impediments = new ArrayList<Impediment>();
 	private List<BacklogItem> backlogItems = new ArrayList<BacklogItem>();
-
+	private List<Sprint> sprints = new ArrayList<Sprint>();
+	
 	public Project(String id, String label, User master, User owner, Set<User> participants) {
 		super(id);
 		this.label = label;
@@ -76,4 +78,16 @@ public class Project extends AEntity {
 	public List<BacklogItem> getBacklogItems() {
 		return backlogItems;
 	}
+	
+	public Sprint createNewSprint(String label) {
+		Sprint sprint = new Sprint(EntityIdGenerator.generateId(), label);
+		sprints.add(sprint);
+		// TODO message to server
+		return sprint;
+	}
+
+	public List<Sprint> getSprints() {
+		return sprints;
+	}
+	
 }

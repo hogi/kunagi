@@ -27,6 +27,10 @@ public class SidebarWidget extends Composite {
 		backlogButton.addClickListener(new BacklogClickListener());
 		sidebar.add(backlogButton);
 
+		Button sprintsButton = new Button("Manage Sprints");
+		sprintsButton.addClickListener(new SprintsClickListener());
+		sidebar.add(sprintsButton);
+		
 		Button impedimentsButton = new Button("Impediments");
 		impedimentsButton.addClickListener(new ImpedimentsClickListener());
 		sidebar.add(impedimentsButton);
@@ -40,6 +44,13 @@ public class SidebarWidget extends Composite {
 		initWidget(sidebar);
 	}
 
+	private class SprintsClickListener implements ClickListener {
+
+		public void onClick(Widget sender) {
+			WorkspaceWidget.showSprints();
+		}
+	}
+	
 	private class ImpedimentsClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
