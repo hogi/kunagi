@@ -1,15 +1,14 @@
 package scrum.client.common;
 
 import com.google.gwt.user.client.ui.CellPanel;
-import com.google.gwt.user.client.ui.Label;
 
 public class Gwt {
 
 	public static void addFiller(CellPanel panel) {
-		Label filler = new Label("");
-		panel.add(filler);
-		panel.setCellWidth(filler, "99%");
-		panel.setCellHeight(filler, "99%");
+	// Label filler = new Label("");
+	// panel.add(filler);
+	// panel.setCellWidth(filler, "99%");
+	// panel.setCellHeight(filler, "99%");
 	}
 
 }
