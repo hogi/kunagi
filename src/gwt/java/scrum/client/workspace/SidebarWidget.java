@@ -1,5 +1,7 @@
 package scrum.client.workspace;
 
+import scrum.client.common.Gwt;
+
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
@@ -32,6 +34,8 @@ public class SidebarWidget extends Composite {
 		Button testButton = new Button("Test");
 		testButton.addClickListener(new TestClickListener());
 		sidebar.add(testButton);
+
+		Gwt.addFiller(sidebar);
 
 		initWidget(sidebar);
 	}

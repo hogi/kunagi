@@ -69,6 +69,10 @@ public class Project extends AEntity {
 		return item;
 	}
 
+	public void deleteBacklogItem(BacklogItem item) {
+		backlogItems.remove(item);
+	}
+
 	public List<BacklogItem> getBacklogItems() {
 		return backlogItems;
 	}

@@ -7,6 +7,7 @@ public class BacklogItem extends AEntity {
 	private String label;
 	private String description;
 	private String testDescription;
+	private boolean done;
 
 	public BacklogItem(String id, String label) {
 		super(id);
@@ -38,5 +39,13 @@ public class BacklogItem extends AEntity {
 	public BacklogItem setTestDescription(String test) {
 		this.testDescription = test;
 		return this;
+	}
+
+	public boolean isDone() {
+		return done;
+	}
+
+	public void setDone(boolean done) {
+		this.done = done;
 	}
 }

@@ -1,7 +1,7 @@
 package scrum.client.workspace;
 
-import scrum.client.impediments.ImpedimentsWidget;
-import scrum.client.project.ProductBacklogWidget;
+import scrum.client.impediments.ImpedimentListWidget;
+import scrum.client.project.BacklogItemListWidget;
 import scrum.client.project.ProjectSummaryWidget;
 import scrum.client.service.Service;
 import scrum.client.test.TestWidget;
@@ -18,8 +18,8 @@ import com.google.gwt.user.client.ui.Widget;
 public class WorkspaceWidget extends Composite {
 
 	public static ProjectSummaryWidget summary;
-	public static ProductBacklogWidget backlog;
-	public static ImpedimentsWidget impediments;
+	public static BacklogItemListWidget backlog;
+	public static ImpedimentListWidget impediments;
 
 	private static SimplePanel workareaPanel;
 	private static Label projectLabel;
@@ -27,8 +27,8 @@ public class WorkspaceWidget extends Composite {
 	public WorkspaceWidget() {
 		// initialize widgets
 		summary = new ProjectSummaryWidget();
-		impediments = new ImpedimentsWidget();
-		backlog = new ProductBacklogWidget();
+		impediments = new ImpedimentListWidget();
+		backlog = new BacklogItemListWidget();
 
 		// create workspace
 		DockPanel workspacePanel = new DockPanel();
@@ -56,7 +56,8 @@ public class WorkspaceWidget extends Composite {
 
 		initWidget(workspacePanel);
 
-		showImpediments();
+		// boost development, remove in production
+		showBacklog();
 	}
 
 	public static void showImpediments() {
