@@ -20,13 +20,22 @@ public class Project extends AEntity {
 	private List<Impediment> impediments = new ArrayList<Impediment>();
 	private List<BacklogItem> backlogItems = new ArrayList<BacklogItem>();
 	private List<Sprint> sprints = new ArrayList<Sprint>();
-	
+	private String effortUnit = "StoryPoints";
+
 	public Project(String id, String label, User master, User owner, Set<User> participants) {
 		super(id);
 		this.label = label;
 		this.master = master;
 		this.owner = owner;
 		this.participants = participants;
+	}
+
+	public void setEffortUnit(String effortUnit) {
+		this.effortUnit = effortUnit;
+	}
+
+	public String getEffortUnit() {
+		return effortUnit;
 	}
 
 	public String getLabel() {
@@ -78,7 +87,7 @@ public class Project extends AEntity {
 	public List<BacklogItem> getBacklogItems() {
 		return backlogItems;
 	}
-	
+
 	public Sprint createNewSprint(String label) {
 		Sprint sprint = new Sprint(EntityIdGenerator.generateId(), label);
 		sprints.add(sprint);
@@ -89,5 +98,5 @@ public class Project extends AEntity {
 	public List<Sprint> getSprints() {
 		return sprints;
 	}
-	
+
 }

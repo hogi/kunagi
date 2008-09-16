@@ -1,17 +1,33 @@
 package scrum.client.project;
 
 import scrum.client.common.AEntity;
+import scrum.client.service.Service;
 
 public class BacklogItem extends AEntity {
 
 	private String label;
 	private String description;
 	private String testDescription;
+	private Integer effort;
 	private boolean done;
 
 	public BacklogItem(String id, String label) {
 		super(id);
 		this.label = label;
+	}
+
+	public Integer getEffort() {
+		return effort;
+	}
+
+	public BacklogItem setEffort(Integer effort) {
+		this.effort = effort;
+		return this;
+	}
+
+	public String getEffortString() {
+		if (effort == null) return null;
+		return effort + " " + Service.getProject().getEffortUnit();
 	}
 
 	public String getLabel() {
@@ -45,7 +61,14 @@ public class BacklogItem extends AEntity {
 		return done;
 	}
 
-	public void setDone(boolean done) {
+	public BacklogItem setDone(boolean done) {
 		this.done = done;
+		return this;
+	}
+
+	public String getSummary() {
+		if (done) return "Done.";
+		if (effort == null) return "No effort estimated.";
+		return getEffortString() + " to do.";
 	}
 }

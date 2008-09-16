@@ -6,18 +6,11 @@ td {
 button {
 	display: block;
 	width: 100%;
+	min-width: 100px;
 }
 
 .widePanel {
 	width: 100%
-}
-
-.gwt-TabPanel {
-	width: 100%;
-}
-
-.gwt-TabPanelBottom {
-	height: 96%;
 }
 
 .fieldLabel {

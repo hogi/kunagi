@@ -2,6 +2,7 @@ package scrum.client.project;
 
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
+import scrum.client.common.editable.AEditableIntegerWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.img.Img;
@@ -25,7 +26,7 @@ public class BacklogItemWidget extends ABlockWidget {
 
 	@Override
 	protected Widget buildContent() {
-		if (!isExtended()) { return new Label(item.getLabel()); }
+		if (!isExtended()) { return new Label(item.getSummary()); }
 
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
 		fieldsWidget.addField("Label", new AEditableTextWidget() {
@@ -66,6 +67,20 @@ public class BacklogItemWidget extends ABlockWidget {
 			@Override
 			protected void setText(String text) {
 				item.setTestDescription(text);
+				rebuild();
+			}
+
+		});
+		fieldsWidget.addField("Effort", new AEditableIntegerWidget() {
+
+			@Override
+			protected Integer getValue() {
+				return item.getEffort();
+			}
+
+			@Override
+			protected void setValue(Integer value) {
+				item.setEffort(value);
 				rebuild();
 			}
 

@@ -17,11 +17,10 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-
 public class SprintWidget extends ABlockWidget {
 
 	private final Sprint sprint;
-	
+
 	public SprintWidget(Sprint sprint) {
 		this.sprint = sprint;
 	}
@@ -47,11 +46,11 @@ public class SprintWidget extends ABlockWidget {
 				sprint.setLabel(text);
 				rebuild();
 			}
-			
+
 		});
-		
+
 		fieldsWidget.addField("State", new Label(sprint.getStateLabel()));
-		
+
 		VerticalPanel backlogpanel = new VerticalPanel();
 		fieldsWidget.addField("Backlogitems", backlogpanel);
 		for (BacklogItem backlogItem : sprint.getBacklogItems()) {
@@ -59,14 +58,14 @@ public class SprintWidget extends ABlockWidget {
 			label.addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					// TODO Auto-generated method stub
-					
+				// TODO Auto-generated method stub
+
 				}
-				
+
 			});
 			backlogpanel.add(label);
 		}
-		
+
 		return fieldsWidget;
 	}
 
@@ -76,11 +75,11 @@ public class SprintWidget extends ABlockWidget {
 			// block is not extended -> no toolbar
 			return null;
 		}
-		
+
 		// block is extended -> create toolbar with buttons
 		VerticalPanel toolbar = new VerticalPanel();
 		toolbar.setStyleName("Toolbar");
-		
+
 		Button addSprintButton = new Button("Assign Backlogitem");
 		addSprintButton.addClickListener(new AssignClickListener());
 		// addSprintButton.addClickListener(new ClickListener() {
@@ -92,7 +91,7 @@ public class SprintWidget extends ABlockWidget {
 		// }
 		// });
 		toolbar.add(addSprintButton);
-		
+
 		return toolbar;
 	}
 
@@ -103,18 +102,17 @@ public class SprintWidget extends ABlockWidget {
 
 	@Override
 	protected AbstractImagePrototype getIcon() {
-		//if (impediment.isSolved()) return Img.bundle.impedimentSolvedIcon32();
-		return Img.bundle.impedimentIcon32();
+		return Img.bundle.sprintIcon32();
 	}
-	
+
 	private class AssignClickListener implements ClickListener {
 
 		DialogBox box = new DialogBox();
 		SuggestBox sg;
-		
+
 		public AssignClickListener() {
 			box.setPopupPosition(SprintWidget.this.getAbsoluteLeft(), SprintWidget.this.getAbsoluteTop());
-			
+
 			VerticalPanel mainpanel = new VerticalPanel();
 			MultiWordSuggestOracle ora = new MultiWordSuggestOracle();
 			for (BacklogItem backlogItem : Service.getProject().getBacklogItems()) {
@@ -124,20 +122,20 @@ public class SprintWidget extends ABlockWidget {
 			mainpanel.add(sg);
 			Button b = new Button("Add");
 			b.addClickListener(new ClickListener() {
-				
+
 				public void onClick(Widget sender) {
 					box.hide();
 				}
-				
+
 			});
 			mainpanel.add(b);
 			box.add(mainpanel);
 		}
-		
+
 		public void onClick(Widget sender) {
 			box.show();
 		}
 
 	}
-	
+
 }

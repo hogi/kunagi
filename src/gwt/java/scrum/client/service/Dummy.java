@@ -35,25 +35,14 @@ public class Dummy {
 				.setSolution("Force satan to speak with Cartman").setSolved(true);
 		moon.createNewImpediment().setLabel("Out of stereoids").setDescription(
 			"In two weeks Duke runs out of stereoids.").setSolution("Buy more stereoids.").setSolved(true);
-		
-		BacklogItem b1 = moon.createNewBacklogItem();
-		b1.setLabel("Reproduce");
 
-		BacklogItem b2 = moon.createNewBacklogItem();
-		b2.setLabel("Destroy operating system");
+		BacklogItem b1 = moon.createNewBacklogItem().setLabel("Reproduce").setEffort(12).setDone(true);
+		BacklogItem b2 = moon.createNewBacklogItem().setLabel("Destroy operating system").setEffort(6);
+		BacklogItem b3 = moon.createNewBacklogItem().setLabel("Destroy Hardware").setEffort(8);
+		BacklogItem b4 = moon.createNewBacklogItem().setLabel("Destroy connected Hardware (USB)").setEffort(8);
+		BacklogItem b5 = moon.createNewBacklogItem().setLabel("Destroy wireless Hardware (WLAN, Bluetooth)");
+		BacklogItem b6 = moon.createNewBacklogItem().setLabel("Destroy user");
 
-		BacklogItem b3 = moon.createNewBacklogItem();
-		b3.setLabel("Destroy Hardware");
-
-		BacklogItem b4 = moon.createNewBacklogItem();
-		b4.setLabel("Destroy connected Hardware (USB)");
-
-		BacklogItem b5 = moon.createNewBacklogItem();
-		b5.setLabel("Destroy wireless Hardware (WLAN, Bluetooth)");
-
-		BacklogItem b6 = moon.createNewBacklogItem();
-		b6.setLabel("Destroy user");
-		
 		Sprint s1 = moon.createNewSprint("Hardware Destroy Sprint");
 		s1.setState(Sprint.State.Development);
 		s1.getBacklogItems().add(b3);
