@@ -2,18 +2,22 @@ package scrum.client.impediments;
 
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.Gwt;
+import scrum.client.dnd.MyFuckingAwesomeDragController;
 import scrum.client.service.Service;
 
+import com.allen_sauer.gwt.dnd.client.DragController;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ImpedimentListWidget extends Composite {
 
 	public BlockListWidget list;
+	private DragController dragController = new MyFuckingAwesomeDragController(RootPanel.get(), false);
 
 	public ImpedimentListWidget() {
 		Button createButton = new Button("Create new Impediment");
@@ -27,7 +31,9 @@ public class ImpedimentListWidget extends Composite {
 
 		list = new BlockListWidget();
 		for (Impediment impediment : Service.getProject().getImpediments()) {
-			list.addBlock(new ImpedimentWidget(impediment));
+			ImpedimentWidget widget = new ImpedimentWidget(impediment);
+			dragController.makeDraggable(widget);
+			list.addBlock(widget);
 		}
 
 		DockPanel dock = new DockPanel();
@@ -49,5 +55,4 @@ public class ImpedimentListWidget extends Composite {
 			list.selectBlock(block);
 		}
 	}
-
 }

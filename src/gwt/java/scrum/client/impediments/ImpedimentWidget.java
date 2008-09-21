@@ -8,14 +8,19 @@ import scrum.client.img.Img;
 import scrum.client.service.Service;
 import scrum.client.workspace.WorkspaceWidget;
 
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MouseListener;
+import com.google.gwt.user.client.ui.MouseListenerCollection;
+import com.google.gwt.user.client.ui.SourcesMouseEvents;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ImpedimentWidget extends ABlockWidget {
+public class ImpedimentWidget extends ABlockWidget implements SourcesMouseEvents {
 
 	/**
 	 * The impediment, this widget is managing.
@@ -40,10 +45,8 @@ public class ImpedimentWidget extends ABlockWidget {
 
 	@Override
 	protected Widget buildContent() {
-		if (!isExtended()) {
-			// block is not extended -> return only a label with the summary
+		if (!isExtended()) // block is not extended -> return only a label with the summary
 			return new Label(impediment.getSummary());
-		}
 
 		// block is extended -> create an ItemFieldsWidget
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
@@ -90,10 +93,8 @@ public class ImpedimentWidget extends ABlockWidget {
 
 	@Override
 	protected Widget buildToolbar() {
-		if (!isExtended()) {
-			// block is not extended -> no toolbar
+		if (!isExtended()) // block is not extended -> no toolbar
 			return null;
-		}
 
 		// block is extended -> create toolbar with buttons
 		VerticalPanel toolbar = new VerticalPanel();
@@ -136,4 +137,33 @@ public class ImpedimentWidget extends ABlockWidget {
 		return toolbar;
 	}
 
+	// --- dnd-related ---
+	MouseListenerCollection mouseListeners;
+
+	public void addMouseListener(MouseListener listener) {
+		if (mouseListeners == null) {
+			mouseListeners = new MouseListenerCollection();
+			sinkEvents(Event.MOUSEEVENTS);
+		}
+		mouseListeners.add(listener);
+	}
+
+	public void removeMouseListener(MouseListener listener) {
+		if (mouseListeners != null) {
+			mouseListeners.remove(listener);
+		}
+	}
+
+	@Override
+	public void onBrowserEvent(Event event) {
+		switch (DOM.eventGetType(event)) {
+			case Event.ONMOUSEDOWN:
+			case Event.ONMOUSEUP:
+			case Event.ONMOUSEMOVE:
+			case Event.ONMOUSEOVER:
+			case Event.ONMOUSEOUT:
+				mouseListeners.fireMouseEvent(this, event);
+				break;
+		}
+	}
 }
