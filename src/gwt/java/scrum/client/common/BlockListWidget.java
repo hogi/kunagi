@@ -18,6 +18,7 @@ public class BlockListWidget extends Composite {
 	private ScrollPanel scroller;
 	private List<ABlockWidget> blocks = new ArrayList<ABlockWidget>();
 	private int selectedRow = -1;
+	private boolean extensible = true;
 
 	public BlockListWidget() {
 		table = new FlexTable();
@@ -31,6 +32,10 @@ public class BlockListWidget extends Composite {
 		scroller.add(table);
 
 		initWidget(scroller);
+	}
+
+	public void setExtensible(boolean extensible) {
+		this.extensible = extensible;
 	}
 
 	public void addBlock(ABlockWidget block) {
@@ -50,7 +55,9 @@ public class BlockListWidget extends Composite {
 		deselect();
 		ABlockWidget block = blocks.get(row);
 		block.addStyleName("BlockWidget-selected");
-		block.setExtended(true);
+		if (extensible) {
+			block.setExtended(true);
+		}
 		selectedRow = row;
 	}
 

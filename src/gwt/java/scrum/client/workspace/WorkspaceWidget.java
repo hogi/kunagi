@@ -66,7 +66,7 @@ public class WorkspaceWidget extends Composite {
 	public static void showSprints() {
 		setWorkarea(sprints);
 	}
-	
+
 	public static void showImpediments() {
 		setWorkarea(impediments);
 	}
@@ -112,7 +112,7 @@ public class WorkspaceWidget extends Composite {
 	private Widget createSidebar() {
 		VerticalPanel sidebar = new VerticalPanel();
 		sidebar.setStyleName("WorkspaceWidget-sidebar");
-		sidebar.setWidth("150px");
+		sidebar.setWidth("200px");
 		sidebar.setHeight("100%");
 		sidebar.add(new SidebarWidget());
 		return sidebar;

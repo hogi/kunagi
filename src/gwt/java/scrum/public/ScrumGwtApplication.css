@@ -37,6 +37,7 @@ button {
 	background: white;
 	padding: 5px;
 	cursor: pointer;
+	color: black;
 }
 
 .BlockWidget-selected {
@@ -99,3 +100,17 @@ button {
 	position: fixed;
 	z-index: 10;
 }
+
+.DropWidget {
+}
+
+.DropWidget-trash {
+	background: white;
+	border: 1px solid black;
+	color: black;
+}
+
+.DropWidget-space {
+	background: grey;
+}
+

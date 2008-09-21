@@ -20,4 +20,7 @@ public interface ScrumImageBundle extends ImageBundle {
 	@Resource(value = "sprint32.png")
 	public AbstractImagePrototype sprintIcon32();
 
+	@Resource(value = "trash32.png")
+	public AbstractImagePrototype trash32();
+
 }
