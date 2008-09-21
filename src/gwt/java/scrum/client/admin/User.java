@@ -14,4 +14,10 @@ public class User extends AEntity {
 	public String getName() {
 		return name;
 	}
+
+	public boolean equals(User user) {
+		if (user == null) return false;
+		return getId().equals(user.getId());
+	}
+
 }
