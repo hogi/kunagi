@@ -104,6 +104,10 @@ button {
 .DropWidget {
 }
 
+.DropWidget-items {
+	min-height: 100px;
+}
+
 .DropWidget-trash {
 	background: white;
 	border: 1px solid black;
