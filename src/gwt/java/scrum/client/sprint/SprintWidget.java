@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
@@ -34,6 +35,7 @@ public class SprintWidget extends ABlockWidget {
 
 		// block is extended -> create an ItemFieldsWidget
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
+		fieldsWidget.setWidth("100%");
 		fieldsWidget.addField("Label", new AEditableTextWidget() {
 
 			@Override
@@ -51,20 +53,31 @@ public class SprintWidget extends ABlockWidget {
 
 		fieldsWidget.addField("State", new Label(sprint.getStateLabel()));
 
-		VerticalPanel backlogpanel = new VerticalPanel();
-		fieldsWidget.addField("Backlogitems", backlogpanel);
+		// VerticalPanel backlogpanel = new VerticalPanel();
+		// fieldsWidget.addField("Backlogitems", backlogpanel);
+		// for (BacklogItem backlogItem : sprint.getBacklogItems()) {
+		// Label label = new Label(backlogItem.getLabel());
+		// label.addClickListener(new ClickListener() {
+		// public void onClick(Widget sender) {
+		//
+		// }
+		// });
+		// backlogpanel.add(label);
+		// }
+
+		FlexTable ft = new FlexTable();
+
+		int row = 0;
 		for (BacklogItem backlogItem : sprint.getBacklogItems()) {
 			Label label = new Label(backlogItem.getLabel());
-			label.addClickListener(new ClickListener() {
+			ft.setWidget(row, 0, label);
+			Button remove = new Button("Remove");
+			remove.setSize("50", "26");
+			ft.setWidget(row, 1, remove);
 
-				public void onClick(Widget sender) {
-				// TODO Auto-generated method stub
-
-				}
-
-			});
-			backlogpanel.add(label);
+			row++;
 		}
+		fieldsWidget.addField("Backlogitems", ft);
 
 		return fieldsWidget;
 	}
@@ -81,16 +94,17 @@ public class SprintWidget extends ABlockWidget {
 		toolbar.setStyleName("Toolbar");
 
 		Button addSprintButton = new Button("Assign Backlogitem");
-		addSprintButton.addClickListener(new AssignClickListener());
-		// addSprintButton.addClickListener(new ClickListener() {
-		//
-		// public void onClick(Widget sender) {
-		// // TODO show backlogitem selection
-		// // WorkspaceWidget.showBacklog();
-		//				
-		// }
-		// });
+		// addSprintButton.addClickListener(new AssignClickListener());
+		final SuggestBox suggest = new SuggestBox(getOracle());
+		toolbar.add(suggest);
+		addSprintButton.addClickListener(new ClickListener() {
+
+			public void onClick(Widget sender) {
+				assignBacklogItem(suggest.getText());
+			}
+		});
 		toolbar.add(addSprintButton);
+		
 
 		return toolbar;
 	}
@@ -104,31 +118,59 @@ public class SprintWidget extends ABlockWidget {
 	protected AbstractImagePrototype getIcon() {
 		return Img.bundle.sprintIcon32();
 	}
+	
+	// TODO wird nicht funktionieren (bugfrei :-)) da das label kein indiz für equals ist.
+	private MultiWordSuggestOracle getOracle() {
+		MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
+		
+		project: for (BacklogItem projectBacklogItem : Service.getProject().getBacklogItems()) {
+			for (BacklogItem sprintBacklogItem : sprint.getBacklogItems()) {
+				if (projectBacklogItem.getLabel().equals(sprintBacklogItem.getLabel())) {
+					continue project;
+				}
+			}
+			oracle.add(projectBacklogItem.getLabel());
+		}
+		
+		return oracle;
+	}
 
+	private void assignBacklogItem(String label) {
+		if ("".equals(label)) return;
+		
+		for (BacklogItem backlogItem : Service.getProject().getBacklogItems()) {
+			if (backlogItem.getLabel().equals(label) == false) continue;
+
+			sprint.getBacklogItems().add(backlogItem);
+			rebuild();
+			break;
+		}
+	}
+
+	// --- TASTING - TASTING - TASTING --- STILL IN DEV ---------//
+	
 	private class AssignClickListener implements ClickListener {
 
 		DialogBox box = new DialogBox();
-		SuggestBox sg;
+		SuggestBox suggest;
 
 		public AssignClickListener() {
-			box.setPopupPosition(SprintWidget.this.getAbsoluteLeft(), SprintWidget.this.getAbsoluteTop());
-
+			box.setPopupPosition(SprintWidget.this.getAbsoluteLeft() + 10, SprintWidget.this.getAbsoluteTop() + 10);
+			box.setAnimationEnabled(true);
+			// box.setSize("300", "200");
 			VerticalPanel mainpanel = new VerticalPanel();
-			MultiWordSuggestOracle ora = new MultiWordSuggestOracle();
-			for (BacklogItem backlogItem : Service.getProject().getBacklogItems()) {
-				ora.add(backlogItem.getLabel());
-			}
-			sg = new SuggestBox(ora);
-			mainpanel.add(sg);
-			Button b = new Button("Add");
-			b.addClickListener(new ClickListener() {
+			suggest = new SuggestBox(getOracle());
+			mainpanel.add(suggest);
+			
+			Button addButton = new Button("Add");
+			addButton.addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					box.hide();
 				}
 
 			});
-			mainpanel.add(b);
+			mainpanel.add(addButton);
 			box.add(mainpanel);
 		}
 
@@ -136,6 +178,13 @@ public class SprintWidget extends ABlockWidget {
 			box.show();
 		}
 
+		private MultiWordSuggestOracle getOracle() {
+			MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
+			for (BacklogItem backlogItem : Service.getProject().getBacklogItems()) {
+				oracle.add(backlogItem.getLabel());
+			}
+			return oracle;
+		}
 	}
 
 }

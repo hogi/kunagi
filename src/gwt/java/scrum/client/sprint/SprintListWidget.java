@@ -42,7 +42,7 @@ public class SprintListWidget extends Composite implements ClickListener {
 	}
 
 	public void onClick(Widget sender) {
-		
+		list.addBlock(new SprintWidget(Service.getProject().createNewSprint("<enter sprintname>")));
 	}
 	
 }
