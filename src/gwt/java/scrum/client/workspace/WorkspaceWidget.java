@@ -6,6 +6,7 @@ import scrum.client.project.ProjectSummaryWidget;
 import scrum.client.service.Service;
 import scrum.client.sprint.SprintListWidget;
 import scrum.client.test.TestWidget;
+import scrum.client.view.PortalView;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
@@ -22,6 +23,7 @@ public class WorkspaceWidget extends Composite {
 	public static BacklogItemListWidget backlog;
 	public static ImpedimentListWidget impediments;
 	public static SprintListWidget sprints;
+	public static PortalView portal;
 
 	private static SimplePanel workareaPanel;
 	private static Label projectLabel;
@@ -81,6 +83,10 @@ public class WorkspaceWidget extends Composite {
 
 	public static void showTest() {
 		setWorkarea(new TestWidget());
+	}
+
+	public static void showPortal() {
+		setWorkarea(new PortalView());
 	}
 
 	public static void setWorkarea(Widget widget) {

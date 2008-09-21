@@ -8,6 +8,7 @@ import java.util.Set;
 import scrum.client.admin.User;
 import scrum.client.common.AEntity;
 import scrum.client.impediments.Impediment;
+import scrum.client.project.task.Task;
 import scrum.client.service.EntityIdGenerator;
 import scrum.client.sprint.Sprint;
 
@@ -20,6 +21,7 @@ public class Project extends AEntity {
 	private List<Impediment> impediments = new ArrayList<Impediment>();
 	private List<BacklogItem> backlogItems = new ArrayList<BacklogItem>();
 	private List<Sprint> sprints = new ArrayList<Sprint>();
+
 	private String effortUnit = "StoryPoints";
 
 	public Project(String id, String label, User master, User owner, Set<User> participants) {
@@ -97,6 +99,22 @@ public class Project extends AEntity {
 
 	public List<Sprint> getSprints() {
 		return sprints;
+	}
+
+	public Sprint getCurrentSprint() {
+		for (Sprint sprint : sprints) {
+			if (sprint.getState().equals(Sprint.State.Development)) return sprint;
+		}
+		return null;
+	}
+
+	// TODO permission? s
+	public boolean deleteTask(Task task) {
+		for (BacklogItem backlogItem : backlogItems) {
+			boolean b = backlogItem.getTaskList().remove(task);
+			if (b) return true;
+		}
+		return false;
 	}
 
 }

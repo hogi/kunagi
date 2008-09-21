@@ -19,6 +19,10 @@ public class SidebarWidget extends Composite {
 
 		sidebar.add(new HTML("<h3>sidebar</h3>"));
 
+		Button portalButton = new Button("Start");
+		portalButton.addClickListener(new PortalClickListener());
+		sidebar.add(portalButton);
+
 		Button summaryButton = new Button("Project Summary");
 		summaryButton.addClickListener(new SummaryClickListener());
 		sidebar.add(summaryButton);
@@ -43,6 +47,13 @@ public class SidebarWidget extends Composite {
 		sidebar.add(dropArea);
 
 		initWidget(sidebar);
+	}
+
+	private class PortalClickListener implements ClickListener {
+
+		public void onClick(Widget sender) {
+			WorkspaceWidget.showPortal();
+		}
 	}
 
 	private class SprintsClickListener implements ClickListener {
@@ -79,4 +90,5 @@ public class SidebarWidget extends Composite {
 			WorkspaceWidget.showTest();
 		}
 	}
+
 }

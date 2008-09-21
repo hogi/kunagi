@@ -11,11 +11,10 @@ import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-
 public class SprintListWidget extends Composite implements ClickListener {
 
-	public BlockListWidget list;
-	
+	private BlockListWidget list = new BlockListWidget();
+
 	public SprintListWidget() {
 		Button createButton = new Button("Create new Sprint");
 		createButton.addClickListener(this);
@@ -25,12 +24,11 @@ public class SprintListWidget extends Composite implements ClickListener {
 		toolbar.setStyleName("Toolbar");
 		toolbar.add(createButton);
 		Gwt.addFiller(toolbar);
-		
-		list = new BlockListWidget();
+
 		for (Sprint sprint : Service.getProject().getSprints()) {
 			list.addBlock(new SprintWidget(sprint));
 		}
-		
+
 		DockPanel dock = new DockPanel();
 		dock.setWidth("100%");
 		dock.add(toolbar, DockPanel.NORTH);
@@ -44,5 +42,5 @@ public class SprintListWidget extends Composite implements ClickListener {
 	public void onClick(Widget sender) {
 		list.addBlock(new SprintWidget(Service.getProject().createNewSprint("<enter sprintname>")));
 	}
-	
+
 }
