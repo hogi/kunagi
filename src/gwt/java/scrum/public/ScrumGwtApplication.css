@@ -118,3 +118,18 @@ button {
 	background: grey;
 }
 
+.Trash-onEnter {
+	border: 2px solid purple;	
+}
+
+.deleted {
+	background: grey;	
+}
+
+#dnd {
+	left: 0;
+	top: 0;
+	background: red;
+	overflow: hidden;
+	z-index:-1000;
+	}
