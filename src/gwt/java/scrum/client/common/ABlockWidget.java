@@ -16,10 +16,11 @@ public abstract class ABlockWidget extends Composite {
 
 	private SimplePanel panel;
 	private boolean extended;
+	private boolean inClipboard;
 
 	/**
-	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a
-	 * different implementation can be provided.
+	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a different
+	 * implementation can be provided.
 	 */
 	protected abstract Widget buildContent();
 
@@ -43,6 +44,14 @@ public abstract class ABlockWidget extends Composite {
 		return extended;
 	}
 
+	public boolean isInClipboard() {
+		return inClipboard;
+	}
+
+	void setInClipboard(boolean inClipboard) {
+		this.inClipboard = inClipboard;
+	}
+
 	protected void rebuild() {
 		panel.setWidget(build());
 	}
@@ -60,7 +69,9 @@ public abstract class ABlockWidget extends Composite {
 		VerticalPanel center = new VerticalPanel();
 		center.setWidth("100%");
 		center.add(title);
-		center.add(buildContent());
+		if (!inClipboard) {
+			center.add(buildContent());
+		}
 
 		HorizontalPanel block = new HorizontalPanel();
 		block.setStyleName("Block-block");

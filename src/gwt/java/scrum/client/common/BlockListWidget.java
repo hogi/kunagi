@@ -18,12 +18,20 @@ public class BlockListWidget extends Composite {
 	private ScrollPanel scroller;
 	private List<ABlockWidget> blocks = new ArrayList<ABlockWidget>();
 	private int selectedRow = -1;
-	private boolean extensible = true;
+	private boolean sidebarMode;
 
 	public BlockListWidget() {
+		this(false);
+	}
+
+	public BlockListWidget(boolean sidebarMode) {
+		this.sidebarMode = sidebarMode;
+
 		table = new FlexTable();
 		table.setWidth("100%");
-		table.addTableListener(new Listener());
+		if (!sidebarMode) {
+			table.addTableListener(new Listener());
+		}
 
 		scroller = new ScrollPanel();
 		scroller.setWidth("100%");
@@ -34,11 +42,8 @@ public class BlockListWidget extends Composite {
 		initWidget(scroller);
 	}
 
-	public void setExtensible(boolean extensible) {
-		this.extensible = extensible;
-	}
-
 	public void addBlock(ABlockWidget block) {
+		if (sidebarMode) block.setInClipboard(true);
 		block.rebuild();
 		blocks.add(block);
 		table.setWidget(table.getRowCount(), 0, block);
@@ -55,7 +60,7 @@ public class BlockListWidget extends Composite {
 		deselect();
 		ABlockWidget block = blocks.get(row);
 		block.addStyleName("BlockWidget-selected");
-		if (extensible) {
+		if (!sidebarMode) {
 			block.setExtended(true);
 		}
 		selectedRow = row;

@@ -19,9 +19,8 @@ public class DropWidget extends Composite {
 	private HorizontalPanel trash;
 
 	public DropWidget() {
-		items = new BlockListWidget();
+		items = new BlockListWidget(true);
 		items.addStyleName("DropWidget-items");
-		items.setExtensible(false);
 
 		space = new SimplePanel();
 		space.setStyleName("DropWidget-space");
