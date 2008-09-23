@@ -52,7 +52,6 @@ public class DropWidget extends Composite {
 	};
 
 	public DropWidget() {
-		System.out.println("dropWidget");
 		ScrumGwtApplication.getDragController().registerDropController(trashDropController);
 
 		items = new BlockListWidget(true);

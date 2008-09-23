@@ -1,10 +1,15 @@
 package scrum.client.common;
 
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MouseListener;
+import com.google.gwt.user.client.ui.MouseListenerCollection;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.SourcesMouseEvents;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -12,15 +17,15 @@ import com.google.gwt.user.client.ui.Widget;
  * Base class for a block widget, which can be added to a <code>BlockWidgetList</code>.
  * 
  */
-public abstract class ABlockWidget extends Composite {
+public abstract class ABlockWidget extends Composite implements SourcesMouseEvents {
 
 	private SimplePanel panel;
 	private boolean extended;
 	private boolean inClipboard;
 
 	/**
-	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a different
-	 * implementation can be provided.
+	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a
+	 * different implementation can be provided.
 	 */
 	protected abstract Widget buildContent();
 
@@ -89,5 +94,35 @@ public abstract class ABlockWidget extends Composite {
 		}
 
 		return block;
+	}
+
+	// --- dnd-related ---
+	MouseListenerCollection mouseListeners;
+
+	public void addMouseListener(MouseListener listener) {
+		if (mouseListeners == null) {
+			mouseListeners = new MouseListenerCollection();
+			sinkEvents(Event.MOUSEEVENTS);
+		}
+		mouseListeners.add(listener);
+	}
+
+	public void removeMouseListener(MouseListener listener) {
+		if (mouseListeners != null) {
+			mouseListeners.remove(listener);
+		}
+	}
+
+	@Override
+	public void onBrowserEvent(Event event) {
+		switch (DOM.eventGetType(event)) {
+			case Event.ONMOUSEDOWN:
+			case Event.ONMOUSEUP:
+			case Event.ONMOUSEMOVE:
+			case Event.ONMOUSEOVER:
+			case Event.ONMOUSEOUT:
+				mouseListeners.fireMouseEvent(this, event);
+				break;
+		}
 	}
 }
