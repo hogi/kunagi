@@ -7,8 +7,10 @@ import scrum.client.service.Service;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ImpedimentListWidget extends Composite {
@@ -31,14 +33,16 @@ public class ImpedimentListWidget extends Composite {
 			list.addBlock(widget);
 		}
 
-		DockPanel dock = new DockPanel();
-		dock.setWidth("100%");
-		dock.add(toolbar, DockPanel.NORTH);
-		dock.setCellHeight(toolbar, "1%");
-		dock.add(list, DockPanel.CENTER);
-		dock.setCellHeight(list, "99%");
-
-		initWidget(dock);
+		FlowPanel panel = new FlowPanel();
+		panel
+				.add(new Label(
+						"Anything that prevents a team member from performing work as efficiently as possible is an impediment. Each team member has an opportunity to announce impediments during the daily Scrum meeting. The ScrumMaster is charged with ensuring impediments get resolved. ScrumMasters often arrange sidebar meetings when impediments cannot be resolved on the spot in the daily Scrum meeting."));
+		panel.add(new HTML("<br>"));
+		panel.setWidth("100%");
+		panel.add(toolbar);
+		panel.add(new HTML("<br>"));
+		panel.add(list);
+		initWidget(panel);
 	}
 
 	class CreateClickListener implements ClickListener {

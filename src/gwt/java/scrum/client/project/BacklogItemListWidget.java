@@ -7,8 +7,10 @@ import scrum.client.service.Service;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class BacklogItemListWidget extends Composite {
@@ -30,14 +32,16 @@ public class BacklogItemListWidget extends Composite {
 			list.addBlock(new BacklogItemWidget(item));
 		}
 
-		DockPanel dock = new DockPanel();
-		dock.setWidth("100%");
-		dock.add(toolbar, DockPanel.NORTH);
-		dock.setCellHeight(toolbar, "1%");
-		dock.add(list, DockPanel.CENTER);
-		dock.setCellHeight(list, "99%");
-
-		initWidget(dock);
+		FlowPanel panel = new FlowPanel();
+		panel
+				.add(new Label(
+						"The product backlog (or \"backlog\") is the requirements for a system, expressed as a prioritized list of product backlog Items. These included both functional and non-functional customer requirements, as well as technical team-generated requirements. While there are multiple inputs to the product backlog, it is the sole responsibility of the product owner to prioritize the product backlog."));
+		panel.add(new HTML("<br>"));
+		panel.setWidth("100%");
+		panel.add(toolbar);
+		panel.add(new HTML("<br>"));
+		panel.add(list);
+		initWidget(panel);
 	}
 
 	class CreateClickListener implements ClickListener {
