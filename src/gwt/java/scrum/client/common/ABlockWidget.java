@@ -1,5 +1,7 @@
 package scrum.client.common;
 
+import scrum.client.service.StyleSheet;
+
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -24,8 +26,8 @@ public abstract class ABlockWidget extends Composite implements SourcesMouseEven
 	private boolean inClipboard;
 
 	/**
-	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a
-	 * different implementation can be provided.
+	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a different
+	 * implementation can be provided.
 	 */
 	protected abstract Widget buildContent();
 
@@ -37,7 +39,7 @@ public abstract class ABlockWidget extends Composite implements SourcesMouseEven
 
 	public ABlockWidget() {
 		panel = new SimplePanel();
-		panel.setStyleName("BlockWidget");
+		panel.setStyleName(StyleSheet.BLOCK_WIDGET);
 		initWidget(panel);
 	}
 
