@@ -66,7 +66,7 @@ public class DropWidget extends Composite {
 		trash = new HorizontalPanel();
 		trash.setStyleName("DropWidget-trash");
 		trash.setWidth("100%");
-		trash.add(Img.icons().trash32().createImage());
+		trash.add(Img.icons().trashIcon32().createImage());
 		trash.add(new Label("Trash"));
 
 		DockPanel dock = new DockPanel();

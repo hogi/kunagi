@@ -1,5 +1,8 @@
 package scrum.client.common;
 
+import scrum.client.ScrumGwtApplication;
+import scrum.client.img.Img;
+
 import scrum.client.service.StyleSheet;
 
 import com.google.gwt.user.client.DOM;
@@ -7,11 +10,9 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.MouseListener;
-import com.google.gwt.user.client.ui.MouseListenerCollection;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.SourcesMouseEvents;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -19,11 +20,12 @@ import com.google.gwt.user.client.ui.Widget;
  * Base class for a block widget, which can be added to a <code>BlockWidgetList</code>.
  * 
  */
-public abstract class ABlockWidget extends Composite implements SourcesMouseEvents {
+public abstract class ABlockWidget extends Composite {
 
 	private SimplePanel panel;
 	private boolean extended;
 	private boolean inClipboard;
+	private Image dragHandle;
 
 	/**
 	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a different
@@ -84,6 +86,8 @@ public abstract class ABlockWidget extends Composite implements SourcesMouseEven
 		block.setStyleName("Block-block");
 		block.setWidth("100%");
 
+		if (dragHandle != null) block.add(dragHandle);
+
 		AbstractImagePrototype icon = getIcon();
 		if (icon != null) block.add(icon.createImage());
 
@@ -98,33 +102,15 @@ public abstract class ABlockWidget extends Composite implements SourcesMouseEven
 		return block;
 	}
 
-	// --- dnd-related ---
-	MouseListenerCollection mouseListeners;
-
-	public void addMouseListener(MouseListener listener) {
-		if (mouseListeners == null) {
-			mouseListeners = new MouseListenerCollection();
-			sinkEvents(Event.MOUSEEVENTS);
+	public void makeDraggable() {
+		if (dragHandle == null) {
+			dragHandle = Img.icons().dragHandleIcon32().createImage();
+			dragHandle.setStyleName("DragHandle");
 		}
-		mouseListeners.add(listener);
+		ScrumGwtApplication.getDragController().makeDraggable(dragHandle);
 	}
 
-	public void removeMouseListener(MouseListener listener) {
-		if (mouseListeners != null) {
-			mouseListeners.remove(listener);
-		}
-	}
-
-	@Override
-	public void onBrowserEvent(Event event) {
-		switch (DOM.eventGetType(event)) {
-			case Event.ONMOUSEDOWN:
-			case Event.ONMOUSEUP:
-			case Event.ONMOUSEMOVE:
-			case Event.ONMOUSEOVER:
-			case Event.ONMOUSEOUT:
-				mouseListeners.fireMouseEvent(this, event);
-				break;
-		}
+	public Image getDragHandle() {
+		return dragHandle;
 	}
 }

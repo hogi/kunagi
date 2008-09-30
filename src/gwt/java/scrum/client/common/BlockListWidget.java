@@ -3,8 +3,6 @@ package scrum.client.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import scrum.client.ScrumGwtApplication;
-
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -46,8 +44,8 @@ public class BlockListWidget extends Composite {
 
 	public void addBlock(ABlockWidget block) {
 		if (sidebarMode) block.setInClipboard(true);
+		block.makeDraggable();
 		block.rebuild();
-		ScrumGwtApplication.getDragController().makeDraggable(block);
 		blocks.add(block);
 		table.setWidget(table.getRowCount(), 0, block);
 		scroller.scrollToBottom();
