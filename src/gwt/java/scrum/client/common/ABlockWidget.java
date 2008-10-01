@@ -2,11 +2,8 @@ package scrum.client.common;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.img.Img;
-
 import scrum.client.service.StyleSheet;
 
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -28,8 +25,8 @@ public abstract class ABlockWidget extends Composite {
 	private Image dragHandle;
 
 	/**
-	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a different
-	 * implementation can be provided.
+	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a
+	 * different implementation can be provided.
 	 */
 	protected abstract Widget buildContent();
 
@@ -107,7 +104,7 @@ public abstract class ABlockWidget extends Composite {
 			dragHandle = Img.icons().dragHandleIcon32().createImage();
 			dragHandle.setStyleName("DragHandle");
 		}
-		ScrumGwtApplication.getDragController().makeDraggable(dragHandle);
+		ScrumGwtApplication.getDragController().makeDraggable(this, dragHandle);
 	}
 
 	public Image getDragHandle() {
