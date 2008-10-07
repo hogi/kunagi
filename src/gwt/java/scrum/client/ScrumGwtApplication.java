@@ -17,12 +17,6 @@ public class ScrumGwtApplication implements EntryPoint {
 	 * Application entry point.
 	 */
 	public void onModuleLoad() {
-		// simulate login
-		Service.login("duke", "geheim");
-
-		// simulate project selection
-		Service.selectProject("???");
-
 		// RootPanel.get("workspace").add(new WorkspaceWidget());
 
 		// dnd
@@ -32,6 +26,12 @@ public class ScrumGwtApplication implements EntryPoint {
 		dndPanel.add(new WorkspaceWidget());
 
 		RootPanel.get("workspace").add(dndPanel);
+
+		// simulate login
+		Service.login("duke", "geheim");
+
+		// simulate project selection
+		Service.selectProject("???");
 	}
 
 	public static MyFuckingAwesomeDragController getDragController() {

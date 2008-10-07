@@ -5,7 +5,6 @@ import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.img.Img;
 import scrum.client.service.Service;
-import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Button;
@@ -86,7 +85,7 @@ public class TaskWidget extends ABlockWidget {
 			public void onClick(Widget sender) {
 				task.setOwner(Service.getUser());
 				// TODO aahhh....!!! -> rebuild or something
-				WorkspaceWidget.showPortal();
+				// WorkspaceWidget.showPortal();
 			}
 
 		});

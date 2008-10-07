@@ -21,4 +21,6 @@
       <!-- Specify the application specific style sheet.              -->
       <stylesheet src='ScrumGwtApplication.css' />
 	
+      <servlet path='/scrum' class='scrum.server.ScrumServiceImpl'/>
+	
 </module>

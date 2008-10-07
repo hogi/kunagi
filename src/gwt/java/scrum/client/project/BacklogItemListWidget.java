@@ -28,9 +28,6 @@ public class BacklogItemListWidget extends Composite {
 		Gwt.addFiller(toolbar);
 
 		list = new BlockListWidget();
-		for (BacklogItem item : Service.getProject().getBacklogItems()) {
-			list.addBlock(new BacklogItemWidget(item));
-		}
 
 		FlowPanel panel = new FlowPanel();
 		panel
@@ -42,6 +39,12 @@ public class BacklogItemListWidget extends Composite {
 		panel.add(new HTML("<br>"));
 		panel.add(list);
 		initWidget(panel);
+	}
+
+	public void update() {
+		for (BacklogItem item : Service.getProject().getBacklogItems()) {
+			list.addBlock(new BacklogItemWidget(item));
+		}
 	}
 
 	class CreateClickListener implements ClickListener {

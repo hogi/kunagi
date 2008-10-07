@@ -2,6 +2,11 @@ package scrum.client.service;
 
 import scrum.client.admin.User;
 import scrum.client.project.Project;
+import scrum.client.workspace.WorkspaceWidget;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 public class Service {
 
@@ -17,6 +22,8 @@ public class Service {
 	 */
 	private static Project project;
 
+	private static ScrumServiceAsync scrumService;
+
 	public static void login(String name, String password) {
 		// dummy. TODO call server
 		for (User u : Dummy.users) {
@@ -31,11 +38,34 @@ public class Service {
 	}
 
 	public static void selectProject(String id) {
-		project = Dummy.moon;
+		WorkspaceWidget.lock("Loading project " + id + "...");
+		getScrumService().getProject(id, new AsyncCallback<ProjectData>() {
+
+			public void onSuccess(ProjectData result) {
+				project = Dummy.moon;
+				WorkspaceWidget.updateTitle();
+				WorkspaceWidget.showBacklog();
+				WorkspaceWidget.unlock();
+			}
+
+			public void onFailure(Throwable ex) {
+				ex.printStackTrace();
+				WorkspaceWidget.lock("Error: " + ex.getMessage());
+			}
+		});
 	}
 
 	public static Project getProject() {
 		return project;
+	}
+
+	public static ScrumServiceAsync getScrumService() {
+		if (scrumService == null) {
+			scrumService = GWT.create(ScrumService.class);
+			ServiceDefTarget target = (ServiceDefTarget) scrumService;
+			target.setServiceEntryPoint(GWT.getModuleBaseURL() + "scrum");
+		}
+		return scrumService;
 	}
 
 }

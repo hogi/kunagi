@@ -28,10 +28,6 @@ public class ImpedimentListWidget extends Composite {
 		Gwt.addFiller(toolbar);
 
 		list = new BlockListWidget();
-		for (Impediment impediment : Service.getProject().getImpediments()) {
-			ImpedimentWidget widget = new ImpedimentWidget(impediment);
-			list.addBlock(widget);
-		}
 
 		FlowPanel panel = new FlowPanel();
 		panel
@@ -43,6 +39,13 @@ public class ImpedimentListWidget extends Composite {
 		panel.add(new HTML("<br>"));
 		panel.add(list);
 		initWidget(panel);
+	}
+
+	public void update() {
+		for (Impediment impediment : Service.getProject().getImpediments()) {
+			ImpedimentWidget widget = new ImpedimentWidget(impediment);
+			list.addBlock(widget);
+		}
 	}
 
 	class CreateClickListener implements ClickListener {

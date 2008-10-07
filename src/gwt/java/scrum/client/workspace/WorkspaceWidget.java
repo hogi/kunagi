@@ -2,9 +2,8 @@ package scrum.client.workspace;
 
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.BacklogItemListWidget;
-import scrum.client.project.ProjectSummaryWidget;
+import scrum.client.project.Project;
 import scrum.client.service.Service;
-import scrum.client.sprint.SprintListWidget;
 import scrum.client.test.TestWidget;
 import scrum.client.view.PortalView;
 
@@ -13,30 +12,29 @@ import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class WorkspaceWidget extends Composite {
 
-	public static ProjectSummaryWidget summary;
 	public static BacklogItemListWidget backlog;
 	public static ImpedimentListWidget impediments;
-	public static SprintListWidget sprints;
+	// public static SprintListWidget sprints;
 	public static PortalView portal;
 
+	private static SimplePanel rootPanel;
+	private static DockPanel workspacePanel;
 	private static SimplePanel workareaPanel;
 	private static Label projectLabel;
 
 	public WorkspaceWidget() {
 		// initialize widgets
-		summary = new ProjectSummaryWidget();
 		impediments = new ImpedimentListWidget();
 		backlog = new BacklogItemListWidget();
-		sprints = new SprintListWidget();
+		// sprints = new SprintListWidget();
 
 		// create workspace
-		DockPanel workspacePanel = new DockPanel();
+		workspacePanel = new DockPanel();
 		workspacePanel.setStyleName("WorkspaceWidget-workspace");
 		workspacePanel.setWidth("100%");
 
@@ -59,34 +57,37 @@ public class WorkspaceWidget extends Composite {
 		workspacePanel.setStyleName("WorkspaceWidget");
 		workspacePanel.setCellWidth(workareaPanel, "99%");
 
-		initWidget(workspacePanel);
+		// root panel
+		rootPanel = new SimplePanel();
+		rootPanel.setWidget(workspacePanel);
 
-		// boost development, remove in production
-		showBacklog();
+		initWidget(rootPanel);
 	}
 
-	public static void showSprints() {
-		setWorkarea(sprints);
+	public static void lock(String message) {
+		rootPanel.setWidget(new Label(message));
 	}
+
+	public static void unlock() {
+		rootPanel.setWidget(workspacePanel);
+	}
+
+	// public static void showSprints() {
+	// setWorkarea(sprints);
+	// }
 
 	public static void showImpediments() {
+		impediments.update();
 		setWorkarea(impediments);
 	}
 
 	public static void showBacklog() {
+		backlog.update();
 		setWorkarea(backlog);
-	}
-
-	public static void showSummary() {
-		setWorkarea(summary);
 	}
 
 	public static void showTest() {
 		setWorkarea(new TestWidget());
-	}
-
-	public static void showPortal() {
-		setWorkarea(new PortalView());
 	}
 
 	public static void setWorkarea(Widget widget) {
@@ -124,21 +125,8 @@ public class WorkspaceWidget extends Composite {
 		return sidebar;
 	}
 
-	private Widget createProjectWidget() {
-
-		// build TabPanel for widgets
-		TabPanel tabPanel = new TabPanel();
-		tabPanel.add(summary, "Project Summary");
-		tabPanel.add(backlog, "Product Backlog");
-		tabPanel.add(impediments, "Impediments");
-		tabPanel.add(sprints, "Sprints");
-		tabPanel.add(new TestWidget(), "Test");
-		tabPanel.selectTab(2);
-
-		return tabPanel;
-	}
-
-	public void updateTitle() {
-		projectLabel.setText(Service.getProject().getLabel());
+	public static void updateTitle() {
+		Project project = Service.getProject();
+		projectLabel.setText(project == null ? "Select Project" : project.getLabel());
 	}
 }

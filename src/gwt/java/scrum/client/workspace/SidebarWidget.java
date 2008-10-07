@@ -19,21 +19,9 @@ public class SidebarWidget extends Composite {
 
 		sidebar.add(new HTML("<h3>sidebar</h3>"));
 
-		Button portalButton = new Button("Start");
-		portalButton.addClickListener(new PortalClickListener());
-		sidebar.add(portalButton);
-
-		Button summaryButton = new Button("Project Summary");
-		summaryButton.addClickListener(new SummaryClickListener());
-		sidebar.add(summaryButton);
-
 		Button backlogButton = new Button("Product Backlog");
 		backlogButton.addClickListener(new BacklogClickListener());
 		sidebar.add(backlogButton);
-
-		Button sprintsButton = new Button("Manage Sprints");
-		sprintsButton.addClickListener(new SprintsClickListener());
-		sidebar.add(sprintsButton);
 
 		Button impedimentsButton = new Button("Impediments");
 		impedimentsButton.addClickListener(new ImpedimentsClickListener());
@@ -49,31 +37,10 @@ public class SidebarWidget extends Composite {
 		initWidget(sidebar);
 	}
 
-	private class PortalClickListener implements ClickListener {
-
-		public void onClick(Widget sender) {
-			WorkspaceWidget.showPortal();
-		}
-	}
-
-	private class SprintsClickListener implements ClickListener {
-
-		public void onClick(Widget sender) {
-			WorkspaceWidget.showSprints();
-		}
-	}
-
 	private class ImpedimentsClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
 			WorkspaceWidget.showImpediments();
-		}
-	}
-
-	private class SummaryClickListener implements ClickListener {
-
-		public void onClick(Widget sender) {
-			WorkspaceWidget.showSummary();
 		}
 	}
 
