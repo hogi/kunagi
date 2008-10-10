@@ -2,6 +2,7 @@ package scrum.client.project;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,21 +16,27 @@ import scrum.client.sprint.Sprint;
 public class Project extends AEntity {
 
 	private String label;
-	private User master; // scrum master
-	private User owner; // product owner
-	private Set<User> participants; // team
+	private String effortUnit = "StoryPoints";
+
+	private Set<User> participants;
+	private User master;
+	private User owner;
+	private Set<User> team;
 	private List<Impediment> impediments = new ArrayList<Impediment>();
 	private List<BacklogItem> backlogItems = new ArrayList<BacklogItem>();
 	private List<Sprint> sprints = new ArrayList<Sprint>();
 
-	private String effortUnit = "StoryPoints";
-
-	public Project(String id, String label, User master, User owner, Set<User> participants) {
+	public Project(String id, String label, User master, User owner, Set<User> team) {
 		super(id);
 		this.label = label;
 		this.master = master;
 		this.owner = owner;
-		this.participants = participants;
+		this.team = team;
+
+		this.participants = new HashSet<User>();
+		this.participants.addAll(team);
+		this.participants.add(owner);
+		this.participants.add(master);
 	}
 
 	public void setEffortUnit(String effortUnit) {
@@ -58,6 +65,10 @@ public class Project extends AEntity {
 
 	public Collection<User> getParticipants() {
 		return participants;
+	}
+
+	public Set<User> getTeam() {
+		return team;
 	}
 
 	public Impediment createNewImpediment() {

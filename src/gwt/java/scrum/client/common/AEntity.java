@@ -1,5 +1,6 @@
 package scrum.client.common;
 
+
 /**
  * Base class for entities.
  */

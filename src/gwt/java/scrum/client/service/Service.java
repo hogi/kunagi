@@ -39,9 +39,9 @@ public class Service {
 
 	public static void selectProject(String id) {
 		WorkspaceWidget.lock("Loading project " + id + "...");
-		getScrumService().getProject(id, new AsyncCallback<ProjectData>() {
+		getScrumService().getProject(id, new AsyncCallback<ProjectDto>() {
 
-			public void onSuccess(ProjectData result) {
+			public void onSuccess(ProjectDto result) {
 				project = Dummy.moon;
 				WorkspaceWidget.updateTitle();
 				WorkspaceWidget.showBacklog();
