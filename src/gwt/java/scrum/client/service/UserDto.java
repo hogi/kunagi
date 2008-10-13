@@ -1,6 +1,8 @@
 package scrum.client.service;
 
-public class UserDto {
+import java.io.Serializable;
+
+public class UserDto implements Serializable {
 
 	public String id;
 	public String name;
