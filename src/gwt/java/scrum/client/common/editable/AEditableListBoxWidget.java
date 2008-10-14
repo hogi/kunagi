@@ -21,6 +21,8 @@ public abstract class AEditableListBoxWidget extends AEditableWidget {
 	 */
 	protected abstract void setText(String text);
 
+	protected abstract String[] getItems();
+
 	public AEditableListBoxWidget() {
 		viewer = new Label();
 		viewer.addClickListener(new ViewerClickListener());
@@ -31,13 +33,9 @@ public abstract class AEditableListBoxWidget extends AEditableWidget {
 	protected Widget getEditor() {
 		if (editor == null) {
 			editor = new ListBox();
-			editor.addItem("1");
-			editor.addItem("2");
-			editor.addItem("3");
-			editor.addItem("5");
-			editor.addItem("8");
-			editor.addItem("13");
-			editor.addItem("21");
+			for (String item : getItems()) {
+				editor.addItem(item);
+			}
 			editor.addChangeListener(new EditorChangeListener());
 
 			String text = getText();
