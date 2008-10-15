@@ -2,14 +2,11 @@ package scrum.client.workspace;
 
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.BacklogItemListWidget;
-import scrum.client.project.Project;
-import scrum.client.service.Service;
 import scrum.client.test.TestWidget;
 import scrum.client.view.PortalView;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -25,7 +22,6 @@ public class WorkspaceWidget extends Composite {
 	private static SimplePanel rootPanel;
 	private static DockPanel workspacePanel;
 	private static SimplePanel workareaPanel;
-	private static Label projectLabel;
 
 	public WorkspaceWidget() {
 		// initialize widgets
@@ -37,12 +33,6 @@ public class WorkspaceWidget extends Composite {
 		workspacePanel = new DockPanel();
 		workspacePanel.setStyleName("WorkspaceWidget-workspace");
 		workspacePanel.setWidth("100%");
-
-		// header
-		Widget header = createHeaderWidget();
-		workspacePanel.add(header, DockPanel.NORTH);
-		workspacePanel.setCellHeight(header, "35px");
-		workspacePanel.setCellWidth(header, "100%");
 
 		// sidebar
 		Widget sidebar = createSidebar();
@@ -94,28 +84,6 @@ public class WorkspaceWidget extends Composite {
 		workareaPanel.setWidget(widget);
 	}
 
-	private Widget createHeaderWidget() {
-		Label appLabel = new Label("scrum");
-		appLabel.addStyleName("HeaderWidget-appLabel");
-
-		projectLabel = new Label();
-		projectLabel.addStyleName("HeaderWidget-projectLabel");
-		updateTitle();
-
-		HorizontalPanel header = new HorizontalPanel();
-		header.addStyleName("HeaderWidget");
-		header.setWidth("100%");
-		header.add(appLabel);
-		header.setCellWidth(appLabel, "1%");
-		header.add(projectLabel);
-
-		SimplePanel panel = new SimplePanel();
-		panel.setWidth("100%");
-		panel.setStyleName("WorkspaceWidget-header");
-		panel.setWidget(header);
-		return panel;
-	}
-
 	private Widget createSidebar() {
 		VerticalPanel sidebar = new VerticalPanel();
 		sidebar.setStyleName("WorkspaceWidget-sidebar");
@@ -125,8 +93,4 @@ public class WorkspaceWidget extends Composite {
 		return sidebar;
 	}
 
-	public static void updateTitle() {
-		Project project = Service.getProject();
-		projectLabel.setText(project == null ? "Select Project" : project.getLabel());
-	}
 }

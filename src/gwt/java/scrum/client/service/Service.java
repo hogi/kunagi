@@ -43,7 +43,6 @@ public class Service {
 
 			public void onSuccess(ProjectDto result) {
 				project = Dummy.moon;
-				WorkspaceWidget.updateTitle();
 				WorkspaceWidget.showBacklog();
 				WorkspaceWidget.unlock();
 			}

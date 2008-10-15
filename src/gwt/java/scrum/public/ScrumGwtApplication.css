@@ -72,27 +72,6 @@ button {
 	padding: 5px;
 }
 
-.HeaderWidget {
-	border-bottom: 1px solid #555555;
-	background: white;
-	position: fixed;
-	z-index: 10;
-}
-
-.HeaderWidget-appLabel {
-	font-size: 20px;
-	font-weight: bold;
-	margin: 5px;
-	color: #CCCCCC;
-	font-family: monospace;
-}
-
-.HeaderWidget-projectLabel {
-	font-size: 20px;
-	font-weight: bold;
-	margin: 5px;
-}
-
 .SidebarWidget {
 	background: #555555;
 	color: white;
