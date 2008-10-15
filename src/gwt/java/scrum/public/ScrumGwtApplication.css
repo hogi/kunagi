@@ -9,6 +9,11 @@ button {
 	min-width: 100px;
 }
 
+body {
+	background: #555555;
+	padding: 5px;
+}
+
 .widePanel {
 	width: 100%
 }
@@ -38,6 +43,7 @@ button {
 	padding: 5px;
 	cursor: pointer;
 	color: black;
+	-moz-border-radius: 10px;
 }
 
 .BlockWidget-selected {
@@ -65,7 +71,8 @@ button {
 }
 
 
-.WorkspaceWidget {
+.WorkspaceWidget-workspace {
+	border: 2px solid red;
 }
 
 .WorkspaceWidget-workarea {
@@ -73,11 +80,12 @@ button {
 }
 
 .SidebarWidget {
-	background: #555555;
+	background: #777777;
 	color: white;
-	padding: 5px;
+	padding: 5px 5px 20px 5px;
 	position: fixed;
 	z-index: 10;
+	-moz-border-radius: 10px;
 }
 
 .DropWidget {
