@@ -17,41 +17,13 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class DropWidget extends Composite {
+public class ClipboardWidget extends Composite {
 
 	private BlockListWidget items;
 	private SimplePanel space;
 	private HorizontalPanel trash;
 
-	private DropController trashDropController = new DropController() {
-
-		public Widget getDropTarget() {
-			return trash;
-		}
-
-		public void onDrop(DragContext context) {
-			Widget widget = context.draggable;
-			widget.addStyleName("deleted");
-		}
-
-		public void onEnter(DragContext context) {
-			trash.addStyleName("Trash-onEnter");
-		}
-
-		public void onLeave(DragContext context) {
-			trash.removeStyleName("Trash-onEnter");
-		}
-
-		public void onMove(DragContext context) {}
-
-		public void onPreviewDrop(DragContext context) throws VetoDragException {
-		// TODO: check if item can be removed
-		// TODO: ask if item should be removed
-		}
-
-	};
-
-	public DropWidget() {
+	public ClipboardWidget() {
 		ScrumGwtApplication.getDragController().registerDropController(trashDropController);
 
 		items = new BlockListWidget(true);
@@ -59,7 +31,7 @@ public class DropWidget extends Composite {
 
 		space = new SimplePanel();
 		space.setStyleName("DropWidget-space");
-		space.setHeight("50px");
+		// space.setHeight("50px");
 		space.setWidth("100%");
 		space.setWidget(new Label("drop here"));
 
@@ -92,5 +64,33 @@ public class DropWidget extends Composite {
 	public void addItem(ABlockWidget item) {
 		items.addBlock(item);
 	}
+
+	private DropController trashDropController = new DropController() {
+
+		public Widget getDropTarget() {
+			return trash;
+		}
+
+		public void onDrop(DragContext context) {
+			Widget widget = context.draggable;
+			widget.addStyleName("deleted");
+		}
+
+		public void onEnter(DragContext context) {
+			trash.addStyleName("Trash-onEnter");
+		}
+
+		public void onLeave(DragContext context) {
+			trash.removeStyleName("Trash-onEnter");
+		}
+
+		public void onMove(DragContext context) {}
+
+		public void onPreviewDrop(DragContext context) throws VetoDragException {
+		// TODO: check if item can be removed
+		// TODO: ask if item should be removed
+		}
+
+	};
 
 }

@@ -62,10 +62,6 @@ public class WorkspaceWidget extends Composite {
 		rootPanel.setWidget(workspacePanel);
 	}
 
-	// public static void showSprints() {
-	// setWorkarea(sprints);
-	// }
-
 	public static void showImpediments() {
 		impediments.update();
 		setWorkarea(impediments);

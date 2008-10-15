@@ -9,13 +9,12 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SidebarWidget extends Composite {
 
-	private DropWidget dropArea;
+	private ClipboardWidget clipboard;
 
 	public SidebarWidget() {
 		VerticalPanel sidebar = new VerticalPanel();
 		sidebar.setStyleName("SidebarWidget");
 		sidebar.setWidth("200px");
-		sidebar.setHeight("600px");
 
 		sidebar.add(new HTML("<h3>sidebar</h3>"));
 
@@ -31,8 +30,8 @@ public class SidebarWidget extends Composite {
 		testButton.addClickListener(new TestClickListener());
 		sidebar.add(testButton);
 
-		dropArea = new DropWidget();
-		sidebar.add(dropArea);
+		clipboard = new ClipboardWidget();
+		sidebar.add(clipboard);
 
 		initWidget(sidebar);
 	}
