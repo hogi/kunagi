@@ -14,7 +14,7 @@ public class SidebarWidget extends Composite {
 	public SidebarWidget() {
 		VerticalPanel sidebar = new VerticalPanel();
 		sidebar.setStyleName("SidebarWidget");
-		sidebar.setWidth("200px");
+		sidebar.setWidth("300px");
 
 		sidebar.add(new HTML("<h3>sidebar</h3>"));
 

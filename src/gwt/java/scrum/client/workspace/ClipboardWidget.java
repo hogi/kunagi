@@ -31,7 +31,7 @@ public class ClipboardWidget extends Composite {
 
 		space = new SimplePanel();
 		space.setStyleName("DropWidget-space");
-		// space.setHeight("50px");
+		space.setHeight("200px");
 		space.setWidth("100%");
 		space.setWidget(new Label("drop here"));
 
@@ -43,7 +43,6 @@ public class ClipboardWidget extends Composite {
 
 		DockPanel dock = new DockPanel();
 		dock.setWidth("100%");
-		dock.setHeight("300px");
 		dock.setStyleName("DropWidget");
 
 		dock.add(items, DockPanel.NORTH);

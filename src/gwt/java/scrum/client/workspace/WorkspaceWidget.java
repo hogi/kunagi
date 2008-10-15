@@ -37,7 +37,6 @@ public class WorkspaceWidget extends Composite {
 		// sidebar
 		Widget sidebar = createSidebar();
 		workspacePanel.add(sidebar, DockPanel.WEST);
-		workspacePanel.setCellWidth(sidebar, "200px");
 		workspacePanel.setCellHeight(sidebar, "100%");
 
 		// workarea
@@ -83,7 +82,7 @@ public class WorkspaceWidget extends Composite {
 	private Widget createSidebar() {
 		VerticalPanel sidebar = new VerticalPanel();
 		sidebar.setStyleName("WorkspaceWidget-sidebar");
-		sidebar.setWidth("200px");
+		sidebar.setWidth("300px");
 		sidebar.setHeight("100%");
 		sidebar.add(new SidebarWidget());
 		return sidebar;
