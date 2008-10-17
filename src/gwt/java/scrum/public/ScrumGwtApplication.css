@@ -10,7 +10,6 @@ button {
 }
 
 body {
-	background: #555555;
 	padding: 5px;
 }
 
@@ -43,7 +42,6 @@ body {
 	padding: 5px;
 	cursor: pointer;
 	color: black;
-	-moz-border-radius: 10px;
 }
 
 .BlockWidget-selected {
@@ -80,12 +78,9 @@ body {
 }
 
 .SidebarWidget {
-	background: #777777;
-	color: white;
 	padding: 5px 5px 20px 5px;
 	position: fixed;
 	z-index: 10;
-	-moz-border-radius: 10px;
 }
 
 .DropWidget {
@@ -111,6 +106,21 @@ body {
 
 .deleted {
 	background: grey;	
+}
+
+.PanelWidget {
+	border: 2px solid darkblue;
+	-moz-border-radius: 10px;
+}
+
+.PanelWidget-title {
+	background: darkblue;
+	color: white;
+	padding: 5px;
+}
+
+.PanelWidget-content {
+	padding: 5px;
 }
 
 #dnd {

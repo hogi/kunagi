@@ -1,5 +1,7 @@
 package scrum.client.workspace;
 
+import scrum.client.common.PanelWidget;
+
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
@@ -9,29 +11,29 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SidebarWidget extends Composite {
 
-	private ClipboardWidget clipboard;
-
 	public SidebarWidget() {
 		VerticalPanel sidebar = new VerticalPanel();
 		sidebar.setStyleName("SidebarWidget");
 		sidebar.setWidth("300px");
 
-		sidebar.add(new HTML("<h3>sidebar</h3>"));
+		VerticalPanel buttonsPanel = new VerticalPanel();
+		buttonsPanel.setWidth("100%");
 
 		Button backlogButton = new Button("Product Backlog");
 		backlogButton.addClickListener(new BacklogClickListener());
-		sidebar.add(backlogButton);
+		buttonsPanel.add(backlogButton);
 
 		Button impedimentsButton = new Button("Impediments");
 		impedimentsButton.addClickListener(new ImpedimentsClickListener());
-		sidebar.add(impedimentsButton);
+		buttonsPanel.add(impedimentsButton);
 
 		Button testButton = new Button("Test");
 		testButton.addClickListener(new TestClickListener());
-		sidebar.add(testButton);
+		buttonsPanel.add(testButton);
 
-		clipboard = new ClipboardWidget();
-		sidebar.add(clipboard);
+		sidebar.add(new PanelWidget("Navigation", buttonsPanel));
+		sidebar.add(new HTML("&nbsp;"));
+		sidebar.add(new PanelWidget("Clipboard", new ClipboardWidget()));
 
 		initWidget(sidebar);
 	}
@@ -56,5 +58,4 @@ public class SidebarWidget extends Composite {
 			WorkspaceWidget.showTest();
 		}
 	}
-
 }
