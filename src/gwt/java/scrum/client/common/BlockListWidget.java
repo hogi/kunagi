@@ -150,8 +150,7 @@ public class BlockListWidget extends Composite {
 				WidgetArea area = new WidgetArea(block, null);
 				CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
 
-				ScrumGwtApplication.getDragController().unregisterDropController(this);
-				// removeRow(indexOf((ABlockWidget) context.draggable));
+				removeRow(indexOf((ABlockWidget) context.draggable));
 				if (isHigher(area, location)) {
 					addBlockAt(blocks.indexOf(block), (ABlockWidget) context.draggable);
 				} else {
