@@ -4,6 +4,7 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.img.Img;
 import scrum.client.service.StyleSheet;
 
+import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -23,6 +24,7 @@ public abstract class ABlockWidget extends Composite {
 	private boolean extended;
 	private boolean inClipboard;
 	private Image dragHandle;
+	private DropController dropController;
 
 	/**
 	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a
