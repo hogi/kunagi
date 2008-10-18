@@ -24,7 +24,7 @@ public abstract class ABlockWidget extends Composite {
 	private boolean extended;
 	private boolean inClipboard;
 	private Image dragHandle;
-	private DropController dropController;
+	private DropController dropController = getDropController();
 
 	/**
 	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a
@@ -112,4 +112,18 @@ public abstract class ABlockWidget extends Composite {
 	public Image getDragHandle() {
 		return dragHandle;
 	}
+
+	@Override
+	protected void onAttach() {
+		super.onAttach();
+		ScrumGwtApplication.getDragController().registerDropController(dropController);
+	}
+
+	@Override
+	protected void onDetach() {
+		ScrumGwtApplication.getDragController().unregisterDropController(dropController);
+		super.onDetach();
+	}
+
+	protected abstract DropController getDropController();
 }

@@ -6,6 +6,7 @@ import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.img.Img;
 import scrum.client.service.Service;
 
+import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -126,4 +127,10 @@ public class TaskWidget extends ABlockWidget {
 
 	}
 
+	@Override
+	protected DropController getDropController() {
+		throw new RuntimeException("Not implemented.");
+		// TODO: reference task list
+		// return new BlockListDropController(this, null);
+	}
 }

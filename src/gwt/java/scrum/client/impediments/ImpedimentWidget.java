@@ -4,10 +4,12 @@ import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
+import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
 import scrum.client.service.Service;
 import scrum.client.workspace.WorkspaceWidget;
 
+import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -130,5 +132,10 @@ public class ImpedimentWidget extends ABlockWidget {
 		}
 
 		return toolbar;
+	}
+
+	@Override
+	protected DropController getDropController() {
+		return new BlockListDropController(this, WorkspaceWidget.impediments.list);
 	}
 }

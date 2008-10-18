@@ -7,6 +7,7 @@ import scrum.client.img.Img;
 import scrum.client.project.BacklogItem;
 import scrum.client.service.Service;
 
+import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -104,7 +105,6 @@ public class SprintWidget extends ABlockWidget {
 			}
 		});
 		toolbar.add(addSprintButton);
-		
 
 		return toolbar;
 	}
@@ -118,11 +118,11 @@ public class SprintWidget extends ABlockWidget {
 	protected AbstractImagePrototype getIcon() {
 		return Img.bundle.sprintIcon32();
 	}
-	
+
 	// TODO wird nicht funktionieren (bugfrei :-)) da das label kein indiz für equals ist.
 	private MultiWordSuggestOracle getOracle() {
 		MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-		
+
 		project: for (BacklogItem projectBacklogItem : Service.getProject().getBacklogItems()) {
 			for (BacklogItem sprintBacklogItem : sprint.getBacklogItems()) {
 				if (projectBacklogItem.getLabel().equals(sprintBacklogItem.getLabel())) {
@@ -131,13 +131,13 @@ public class SprintWidget extends ABlockWidget {
 			}
 			oracle.add(projectBacklogItem.getLabel());
 		}
-		
+
 		return oracle;
 	}
 
 	private void assignBacklogItem(String label) {
 		if ("".equals(label)) return;
-		
+
 		for (BacklogItem backlogItem : Service.getProject().getBacklogItems()) {
 			if (backlogItem.getLabel().equals(label) == false) continue;
 
@@ -148,7 +148,7 @@ public class SprintWidget extends ABlockWidget {
 	}
 
 	// --- TASTING - TASTING - TASTING --- STILL IN DEV ---------//
-	
+
 	private class AssignClickListener implements ClickListener {
 
 		DialogBox box = new DialogBox();
@@ -161,7 +161,7 @@ public class SprintWidget extends ABlockWidget {
 			VerticalPanel mainpanel = new VerticalPanel();
 			suggest = new SuggestBox(getOracle());
 			mainpanel.add(suggest);
-			
+
 			Button addButton = new Button("Add");
 			addButton.addClickListener(new ClickListener() {
 
@@ -187,4 +187,10 @@ public class SprintWidget extends ABlockWidget {
 		}
 	}
 
+	@Override
+	protected DropController getDropController() {
+		throw new RuntimeException("Not implemented.");
+		// TODO: reference sprint list
+		// return new BlockListDropController(this, null);
+	}
 }
