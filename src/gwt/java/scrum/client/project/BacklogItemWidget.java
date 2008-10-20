@@ -162,6 +162,7 @@ public class BacklogItemWidget extends ABlockWidget {
 		return Img.bundle.backlogItemIcon32();
 	}
 
+	@Override
 	public void delete() {
 		Service.getProject().deleteBacklogItem(item);
 		WorkspaceWidget.backlog.list.remove(this);

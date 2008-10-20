@@ -133,4 +133,10 @@ public class TaskWidget extends ABlockWidget {
 		// TODO: reference task list
 		// return new BlockListDropController(this, null);
 	}
+
+	@Override
+	public void delete() {
+		throw new RuntimeException("Not implemented.");
+		// TODO: delete item and remove block from gui
+	}
 }

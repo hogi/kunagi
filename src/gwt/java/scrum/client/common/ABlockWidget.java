@@ -38,6 +38,10 @@ public abstract class ABlockWidget extends Composite {
 
 	protected abstract AbstractImagePrototype getIcon();
 
+	protected abstract DropController getDropController();
+
+	public abstract void delete();
+
 	public ABlockWidget() {
 		panel = new SimplePanel();
 		panel.setStyleName(StyleSheet.BLOCK_WIDGET);
@@ -124,6 +128,4 @@ public abstract class ABlockWidget extends Composite {
 		ScrumGwtApplication.getDragController().unregisterDropController(dropController);
 		super.onDetach();
 	}
-
-	protected abstract DropController getDropController();
 }

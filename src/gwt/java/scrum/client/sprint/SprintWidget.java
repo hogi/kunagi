@@ -193,4 +193,10 @@ public class SprintWidget extends ABlockWidget {
 		// TODO: reference sprint list
 		// return new BlockListDropController(this, null);
 	}
+
+	@Override
+	public void delete() {
+		throw new RuntimeException("Not implemented.");
+		// TODO: delete item and remove block from gui
+	}
 }

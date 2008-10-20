@@ -138,4 +138,10 @@ public class ImpedimentWidget extends ABlockWidget {
 	protected DropController getDropController() {
 		return new BlockListDropController(this, WorkspaceWidget.impediments.list);
 	}
+
+	@Override
+	public void delete() {
+		Service.getProject().deleteImpediment(impediment);
+		WorkspaceWidget.impediments.list.remove(this);
+	}
 }

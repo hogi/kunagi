@@ -5,7 +5,6 @@ import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.img.Img;
 import scrum.client.impediments.ImpedimentWidget;
-import scrum.client.project.BacklogItemWidget;
 import scrum.client.service.Dummy;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
@@ -73,9 +72,8 @@ public class ClipboardWidget extends Composite {
 
 		public void onDrop(DragContext context) {
 			Widget widget = context.draggable;
-			widget.addStyleName("deleted");
-			if (widget instanceof BacklogItemWidget) {
-				((BacklogItemWidget) widget).delete();
+			if (widget instanceof ABlockWidget) {
+				((ABlockWidget) widget).delete();
 			}
 		}
 
