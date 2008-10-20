@@ -141,7 +141,7 @@ public class ImpedimentWidget extends ABlockWidget {
 
 	@Override
 	public void delete() {
-		Service.getProject().deleteImpediment(impediment);
+		ScrumClient.getProject().deleteImpediment(impediment);
 		WorkspaceWidget.impediments.list.remove(this);
 	}
 }
