@@ -1,7 +1,5 @@
 package scrum.client.common;
 
-import ilarkesto.base.Str;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +30,9 @@ public class AEntity {
 	}
 
 	protected final boolean getPropertyAsBool(String name) {
-		return Str.isTrue(getProperty(name));
+		String s = getProperty(name);
+		if (s == null) return false;
+		return s.equals("true");
 	}
 
 	protected final void setProperty(String name, String value) {
