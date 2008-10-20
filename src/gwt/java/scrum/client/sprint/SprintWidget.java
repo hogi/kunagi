@@ -5,7 +5,7 @@ import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.img.Img;
 import scrum.client.project.BacklogItem;
-import scrum.client.service.Service;
+import scrum.client.service.ScrumClient;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -123,7 +123,7 @@ public class SprintWidget extends ABlockWidget {
 	private MultiWordSuggestOracle getOracle() {
 		MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
 
-		project: for (BacklogItem projectBacklogItem : Service.getProject().getBacklogItems()) {
+		project: for (BacklogItem projectBacklogItem : ScrumClient.getProject().getBacklogItems()) {
 			for (BacklogItem sprintBacklogItem : sprint.getBacklogItems()) {
 				if (projectBacklogItem.getLabel().equals(sprintBacklogItem.getLabel())) {
 					continue project;
@@ -138,7 +138,7 @@ public class SprintWidget extends ABlockWidget {
 	private void assignBacklogItem(String label) {
 		if ("".equals(label)) return;
 
-		for (BacklogItem backlogItem : Service.getProject().getBacklogItems()) {
+		for (BacklogItem backlogItem : ScrumClient.getProject().getBacklogItems()) {
 			if (backlogItem.getLabel().equals(label) == false) continue;
 
 			sprint.getBacklogItems().add(backlogItem);
@@ -180,7 +180,7 @@ public class SprintWidget extends ABlockWidget {
 
 		private MultiWordSuggestOracle getOracle() {
 			MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-			for (BacklogItem backlogItem : Service.getProject().getBacklogItems()) {
+			for (BacklogItem backlogItem : ScrumClient.getProject().getBacklogItems()) {
 				oracle.add(backlogItem.getLabel());
 			}
 			return oracle;

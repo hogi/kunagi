@@ -2,7 +2,7 @@ package scrum.client.project;
 
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.Gwt;
-import scrum.client.service.Service;
+import scrum.client.service.ScrumClient;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -42,7 +42,7 @@ public class BacklogItemListWidget extends Composite {
 	}
 
 	public void update() {
-		for (BacklogItem item : Service.getProject().getBacklogItems()) {
+		for (BacklogItem item : ScrumClient.getProject().getBacklogItems()) {
 			list.addBlock(new BacklogItemWidget(item));
 		}
 	}
@@ -50,7 +50,7 @@ public class BacklogItemListWidget extends Composite {
 	class CreateClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			BacklogItem item = Service.getProject().createNewBacklogItem();
+			BacklogItem item = ScrumClient.getProject().createNewBacklogItem();
 			BacklogItemWidget block = new BacklogItemWidget(item);
 			list.addBlock(block);
 			list.selectBlock(block);

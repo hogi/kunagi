@@ -4,56 +4,57 @@ import scrum.client.common.AEntity;
 
 public class Impediment extends AEntity {
 
-	private String label;
-	private String description;
-	private String solution;
-	private boolean solved;
+	public static final String LABEL = "label";
+	public static final String DESCRIPTION = "description";
+	public static final String SOLUTION = "solution";
+	public static final String SOLVED = "solved";
 
 	public Impediment(String id, String label, String description) {
 		super(id);
-		this.label = label;
-		this.description = description;
+		setProperty(LABEL, label);
+		setProperty(DESCRIPTION, description);
 	}
 
 	public String getLabel() {
-		return label;
+		return getProperty(LABEL);
 	}
 
 	public Impediment setLabel(String label) {
 		if (label == null || label.length() == 0) label = "unlabeled";
-		this.label = label;
+		setProperty(LABEL, label);
 		return this;
 	}
 
 	public String getDescription() {
-		return description;
+		return getProperty(DESCRIPTION);
 	}
 
 	public Impediment setDescription(String description) {
-		this.description = description;
+		setProperty(DESCRIPTION, description);
 		return this;
 	}
 
 	public String getSolution() {
-		return solution;
+		return getProperty(SOLUTION);
 	}
 
 	public Impediment setSolution(String solution) {
-		this.solution = solution;
+		setProperty(SOLUTION, solution);
 		return this;
 	}
 
 	public boolean isSolved() {
-		return solved;
+		return getPropertyAsBool(SOLVED);
 	}
 
 	public Impediment setSolved(boolean solved) {
-		this.solved = solved;
+		setProperty(SOLVED, solved);
 		return this;
 	}
 
 	public String getSummary() {
-		if (solved) return "Solved.";
+		if (isSolved()) return "Solved.";
+		String solution = getSolution();
 		return (solution == null || "".equals(solution)) ? "Unsolved." : "Unsolved, with solution proposal.";
 	}
 }

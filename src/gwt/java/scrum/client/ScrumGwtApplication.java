@@ -1,7 +1,7 @@
 package scrum.client;
 
 import scrum.client.dnd.MyFuckingAwesomeDragController;
-import scrum.client.service.Service;
+import scrum.client.service.ScrumClient;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -28,10 +28,10 @@ public class ScrumGwtApplication implements EntryPoint {
 		RootPanel.get("workspace").add(dndPanel);
 
 		// simulate login
-		Service.login("duke", "geheim");
+		ScrumClient.login("duke", "geheim");
 
 		// simulate project selection
-		Service.selectProject("???");
+		ScrumClient.selectProject("???");
 	}
 
 	public static MyFuckingAwesomeDragController getDragController() {

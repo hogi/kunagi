@@ -8,7 +8,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
-public class Service {
+public class ScrumClient {
 
 	/**
 	 * Current, logged in user.
@@ -39,19 +39,31 @@ public class Service {
 
 	public static void selectProject(String id) {
 		WorkspaceWidget.lock("Loading project " + id + "...");
-		getScrumService().getProject(id, new AsyncCallback<ProjectDto>() {
+		getScrumService().getProject(id, new AsyncCallback<ServerData>() {
 
-			public void onSuccess(ProjectDto result) {
-				project = Dummy.moon;
+			public void onSuccess(ServerData data) {
+				processMaster(data);
 				WorkspaceWidget.showBacklog();
 				WorkspaceWidget.unlock();
 			}
 
 			public void onFailure(Throwable ex) {
-				ex.printStackTrace();
-				WorkspaceWidget.lock("Error: " + ex.getMessage());
+				processError(ex);
 			}
 		});
+	}
+
+	private static void processMaster(ServerData data) {
+		if (data.project != null) {
+			System.out.println("project received");
+			project = Dummy.moon; // TODO new Project();
+			project.update(data);
+		}
+	}
+
+	private static void processError(Throwable ex) {
+		ex.printStackTrace();
+		WorkspaceWidget.lock("Error: " + ex.getMessage());
 	}
 
 	public static Project getProject() {

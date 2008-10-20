@@ -6,7 +6,7 @@ import java.util.List;
 import scrum.client.common.AEntity;
 import scrum.client.project.task.Task;
 import scrum.client.service.EntityIdGenerator;
-import scrum.client.service.Service;
+import scrum.client.service.ScrumClient;
 
 public class BacklogItem extends AEntity {
 
@@ -33,7 +33,7 @@ public class BacklogItem extends AEntity {
 
 	public String getEffortString() {
 		if (effort == null) return null;
-		return effort + " " + Service.getProject().getEffortUnit();
+		return effort + " " + ScrumClient.getProject().getEffortUnit();
 	}
 
 	public String getLabel() {

@@ -4,7 +4,7 @@ import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.img.Img;
-import scrum.client.service.Service;
+import scrum.client.service.ScrumClient;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -84,7 +84,7 @@ public class TaskWidget extends ABlockWidget {
 		ownButton.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				task.setOwner(Service.getUser());
+				task.setOwner(ScrumClient.getUser());
 				// TODO aahhh....!!! -> rebuild or something
 				// WorkspaceWidget.showPortal();
 			}
@@ -96,7 +96,7 @@ public class TaskWidget extends ABlockWidget {
 		deleteButton.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				Service.getProject().deleteTask(task);
+				ScrumClient.getProject().deleteTask(task);
 				// TODO ???
 				// WorkspaceWidget.tasks.list.removeSelectedRow();
 			}

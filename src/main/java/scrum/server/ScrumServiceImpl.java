@@ -1,7 +1,7 @@
 package scrum.server;
 
 import ilarkesto.logging.Logger;
-import scrum.client.service.ProjectDto;
+import scrum.client.service.ServerData;
 import scrum.client.service.ScrumService;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -11,10 +11,12 @@ public class ScrumServiceImpl extends RemoteServiceServlet implements ScrumServi
 	private static final Logger LOG = Logger.get(ScrumServiceImpl.class);
 	private static final String SESSION_DATA_KEY = SessionData.class.getSimpleName();
 
-	private DataStore dataStore = DataStore.get();
+	private static ScrumServer scrumServer = ScrumServer.get();
 
-	public ProjectDto getProject(String projectId) {
-		return dataStore.getProject(projectId);
+	public ServerData getProject(String projectId) {
+		SessionData session = getSessionData();
+		scrumServer.onProjectRequested(session, projectId);
+		return session.popNextData();
 	}
 
 	private SessionData getSessionData() {

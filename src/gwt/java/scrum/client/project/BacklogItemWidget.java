@@ -7,7 +7,7 @@ import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
-import scrum.client.service.Service;
+import scrum.client.service.ScrumClient;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
@@ -120,7 +120,7 @@ public class BacklogItemWidget extends ABlockWidget {
 		deleteButton.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				Service.getProject().deleteBacklogItem(item);
+				ScrumClient.getProject().deleteBacklogItem(item);
 				WorkspaceWidget.backlog.list.removeSelectedRow();
 			}
 		});
@@ -164,7 +164,7 @@ public class BacklogItemWidget extends ABlockWidget {
 
 	@Override
 	public void delete() {
-		Service.getProject().deleteBacklogItem(item);
+		ScrumClient.getProject().deleteBacklogItem(item);
 		WorkspaceWidget.backlog.list.remove(this);
 	}
 

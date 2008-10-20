@@ -4,6 +4,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface ScrumServiceAsync {
 
-	void getProject(String projectId, AsyncCallback<ProjectDto> callback);
+	void getProject(String projectId, AsyncCallback<ServerData> callback);
 
 }

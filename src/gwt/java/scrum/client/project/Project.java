@@ -11,11 +11,13 @@ import scrum.client.common.AEntity;
 import scrum.client.impediments.Impediment;
 import scrum.client.project.task.Task;
 import scrum.client.service.EntityIdGenerator;
+import scrum.client.service.ServerData;
 import scrum.client.sprint.Sprint;
 
 public class Project extends AEntity {
 
-	private String label;
+	public static final String LABEL = "label";
+
 	private String effortUnit = "StoryPoints";
 
 	private Set<User> participants;
@@ -28,7 +30,7 @@ public class Project extends AEntity {
 
 	public Project(String id, String label, User master, User owner, Set<User> team) {
 		super(id);
-		this.label = label;
+		setProperty(LABEL, label);
 		this.master = master;
 		this.owner = owner;
 		this.team = team;
@@ -48,11 +50,11 @@ public class Project extends AEntity {
 	}
 
 	public String getLabel() {
-		return label;
+		return getProperty(LABEL);
 	}
 
 	public void setLabel(String label) {
-		this.label = label;
+		setProperty(LABEL, label);
 	}
 
 	public User getMaster() {
@@ -126,6 +128,10 @@ public class Project extends AEntity {
 			if (b) return true;
 		}
 		return false;
+	}
+
+	public void update(ServerData data) {
+		setProperties(data.project);
 	}
 
 }

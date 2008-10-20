@@ -4,6 +4,6 @@ import com.google.gwt.user.client.rpc.RemoteService;
 
 public interface ScrumService extends RemoteService {
 
-	ProjectDto getProject(String projectId);
+	ServerData getProject(String projectId);
 
 }
