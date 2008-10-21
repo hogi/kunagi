@@ -1,6 +1,8 @@
 package scrum.server;
 
+import ilarkesto.base.Url;
 import ilarkesto.base.Utl;
+import ilarkesto.concurrent.TaskManager;
 import ilarkesto.logging.Logger;
 
 import java.util.HashSet;
@@ -10,10 +12,9 @@ import java.util.Set;
 import scrum.client.project.Project;
 import scrum.client.service.ServerData;
 
-public class ScrumServer {
+public class ScrumWebApplication extends GScrumWebApplication {
 
-	private static final Logger LOG = Logger.get(ScrumServer.class);
-	private static final ScrumServer INSTANCE = new ScrumServer();
+	private static final Logger LOG = Logger.get(ScrumWebApplication.class);
 
 	private Set<SessionData> sessions = new HashSet<SessionData>();
 	private DataStore dataStore = new DataStore();
@@ -36,8 +37,18 @@ public class ScrumServer {
 		sessions.add(session);
 	}
 
-	public static ScrumServer get() {
-		return INSTANCE;
+	@Override
+	protected void onStartWebApplication() {}
+
+	@Override
+	protected void scheduleTasks(TaskManager tm) {}
+
+	@Override
+	protected void onShutdownWebApplication() {}
+
+	@Override
+	public Url getHomeUrl() {
+		return new Url("index.html");
 	}
 
 }

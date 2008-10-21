@@ -41,6 +41,10 @@ public class Project extends AEntity {
 		this.participants.add(master);
 	}
 
+	public Project(ServerData data) {
+		update(data);
+	}
+
 	public void setEffortUnit(String effortUnit) {
 		this.effortUnit = effortUnit;
 	}

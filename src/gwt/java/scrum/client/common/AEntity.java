@@ -16,6 +16,10 @@ public class AEntity {
 		setProperty(ID, id);
 	}
 
+	public AEntity() {
+
+	}
+
 	public String getId() {
 		return getProperty(ID);
 	}

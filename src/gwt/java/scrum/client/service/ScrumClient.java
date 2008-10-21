@@ -56,8 +56,7 @@ public class ScrumClient {
 	private static void processMaster(ServerData data) {
 		if (data.project != null) {
 			System.out.println("project received");
-			project = Dummy.moon; // TODO new Project();
-			project.update(data);
+			project = new Project(data);
 		}
 	}
 
