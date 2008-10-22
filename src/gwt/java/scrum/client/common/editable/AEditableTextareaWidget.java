@@ -36,6 +36,7 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 	public AEditableTextareaWidget() {
 		viewer = new Label();
 		viewer.addClickListener(new ViewerClickListener());
+		viewer.setSize("100%", "20px");
 		rebuild();
 	}
 
