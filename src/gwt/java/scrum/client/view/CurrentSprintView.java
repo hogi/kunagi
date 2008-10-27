@@ -59,7 +59,13 @@ public class CurrentSprintView extends Composite {
 			}
 
 		});
-		fieldsWidget.addField("Effort overall", new Label("<1000>"));
+
+		int effortOverall = 0;
+		for (BacklogItem backlogItem : sprint.getBacklogItems()) {
+			if (backlogItem.getEffort() == null) continue;
+			effortOverall += backlogItem.getEffort().intValue();
+		}
+		fieldsWidget.addField("Effort overall", new Label(String.valueOf(effortOverall)));
 
 		view.add(fieldsWidget);
 
