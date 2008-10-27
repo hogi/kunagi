@@ -2,6 +2,7 @@ package scrum.client.project;
 
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.Gwt;
+import scrum.client.common.ListProvider;
 import scrum.client.service.ScrumClient;
 
 import com.google.gwt.user.client.ui.Button;
@@ -17,7 +18,11 @@ public class BacklogItemListWidget extends Composite {
 
 	public BlockListWidget list;
 
-	public BacklogItemListWidget() {
+	private ListProvider provider;
+
+	public BacklogItemListWidget(ListProvider provider) {
+		this.provider = provider;
+
 		Button createButton = new Button("Create new Backlog-Item");
 		createButton.addClickListener(new CreateClickListener());
 
@@ -42,7 +47,7 @@ public class BacklogItemListWidget extends Composite {
 	}
 
 	public void update() {
-		for (BacklogItem item : ScrumClient.getProject().getBacklogItems()) {
+		for (BacklogItem item : provider.getList()) {
 			list.addBlock(new BacklogItemWidget(item));
 		}
 	}

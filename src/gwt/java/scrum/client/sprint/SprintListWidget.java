@@ -7,8 +7,10 @@ import scrum.client.service.ScrumClient;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SprintListWidget extends Composite implements ClickListener {
@@ -29,14 +31,15 @@ public class SprintListWidget extends Composite implements ClickListener {
 			list.addBlock(new SprintWidget(sprint));
 		}
 
-		DockPanel dock = new DockPanel();
-		dock.setWidth("100%");
-		dock.add(toolbar, DockPanel.NORTH);
-		dock.setCellHeight(toolbar, "1%");
-		dock.add(list, DockPanel.CENTER);
-		dock.setCellHeight(list, "99%");
+		FlowPanel panel = new FlowPanel();
+		panel.add(new Label("All sprints!"));
+		panel.add(new HTML("<br>"));
+		panel.setWidth("100%");
+		panel.add(toolbar);
+		panel.add(new HTML("<br>"));
+		panel.add(list);
 
-		initWidget(dock);
+		initWidget(panel);
 	}
 
 	public void onClick(Widget sender) {

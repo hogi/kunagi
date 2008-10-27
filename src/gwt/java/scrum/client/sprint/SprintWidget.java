@@ -189,7 +189,9 @@ public class SprintWidget extends ABlockWidget {
 
 	@Override
 	protected DropController getDropController() {
-		throw new RuntimeException("Not implemented.");
+		return null;
+		// throw new RuntimeException("Not implemented.");
+
 		// TODO: reference sprint list
 		// return new BlockListDropController(this, null);
 	}

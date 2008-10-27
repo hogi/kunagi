@@ -13,7 +13,7 @@ public class BacklogItem extends AEntity {
 	private String label;
 	private String description;
 	private String testDescription;
-	private Integer effort;
+	private Integer effort = new Integer(1);
 	private boolean done;
 	private List<Task> taskList = new ArrayList<Task>();
 
