@@ -1,6 +1,7 @@
 package scrum.client.workspace;
 
 import scrum.client.common.PanelWidget;
+import scrum.client.service.StyleSheet;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -13,7 +14,7 @@ public class SidebarWidget extends Composite {
 
 	public SidebarWidget() {
 		VerticalPanel sidebar = new VerticalPanel();
-		sidebar.setStyleName("SidebarWidget");
+		sidebar.setStyleName(StyleSheet.SIDEBAR_WIDGET);
 		sidebar.setWidth("300px");
 
 		VerticalPanel buttonsPanel = new VerticalPanel();

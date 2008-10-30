@@ -3,6 +3,8 @@ package scrum.client.common;
 import java.util.LinkedList;
 import java.util.List;
 
+import scrum.client.service.StyleSheet;
+
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -36,7 +38,7 @@ public class BlockListWidget extends Composite {
 		scroller = new ScrollPanel();
 		scroller.setWidth("100%");
 		scroller.setHeight("100%");
-		scroller.setStyleName("BlockListWidget");
+		scroller.setStyleName(StyleSheet.BLOCK_LIST_WIDGET);
 		scroller.add(table);
 
 		initWidget(scroller);
@@ -87,7 +89,7 @@ public class BlockListWidget extends Composite {
 		if (row == selectedRow) return;
 		deselect();
 		ABlockWidget block = blocks.get(row);
-		block.addStyleName("BlockWidget-selected");
+		block.addStyleName(StyleSheet.BLOCK_WIDGET_SELECTED);
 		if (!sidebarMode) {
 			block.setExtended(true);
 		}
@@ -120,7 +122,7 @@ public class BlockListWidget extends Composite {
 	public void deselect() {
 		ABlockWidget block = getSelectedBlock();
 		if (block == null) return;
-		block.removeStyleName("BlockWidget-selected");
+		block.removeStyleName(StyleSheet.BLOCK_WIDGET_SELECTED);
 		block.setExtended(false);
 	}
 

@@ -6,6 +6,7 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.img.Img;
 import scrum.client.impediments.ImpedimentWidget;
 import scrum.client.service.Dummy;
+import scrum.client.service.StyleSheet;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.VetoDragException;
@@ -27,23 +28,23 @@ public class ClipboardWidget extends Composite {
 		ScrumGwtApplication.getDragController().registerDropController(trashDropController);
 
 		items = new BlockListWidget(true);
-		items.addStyleName("DropWidget-items");
+		items.addStyleName(StyleSheet.DROP_WIDGET_ITEMS);
 
 		space = new SimplePanel();
-		space.setStyleName("DropWidget-space");
+		space.setStyleName(StyleSheet.DROP_WIDGET_SPACE);
 		space.setHeight("200px");
 		space.setWidth("100%");
 		space.setWidget(new Label("drop here"));
 
 		trash = new HorizontalPanel();
-		trash.setStyleName("DropWidget-trash");
+		trash.setStyleName(StyleSheet.DROP_WIDGET_TRASH);
 		trash.setWidth("100%");
 		trash.add(Img.icons().trashIcon32().createImage());
 		trash.add(new Label("Trash"));
 
 		DockPanel dock = new DockPanel();
 		dock.setWidth("100%");
-		dock.setStyleName("DropWidget");
+		dock.setStyleName(StyleSheet.DROP_WIDGET);
 
 		dock.add(items, DockPanel.NORTH);
 		dock.setCellHeight(items, "1%");
@@ -78,11 +79,11 @@ public class ClipboardWidget extends Composite {
 		}
 
 		public void onEnter(DragContext context) {
-			trash.addStyleName("Trash-onEnter");
+			trash.addStyleName(StyleSheet.TRASH_ON_ENTER);
 		}
 
 		public void onLeave(DragContext context) {
-			trash.removeStyleName("Trash-onEnter");
+			trash.removeStyleName(StyleSheet.TRASH_ON_ENTER);
 		}
 
 		public void onMove(DragContext context) {}

@@ -4,6 +4,7 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.common.Gwt;
 import scrum.client.common.ListProvider;
 import scrum.client.service.ScrumClient;
+import scrum.client.service.StyleSheet;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -28,7 +29,7 @@ public class BacklogItemListWidget extends Composite {
 
 		HorizontalPanel toolbar = new HorizontalPanel();
 		toolbar.setWidth("100%");
-		toolbar.setStyleName("Toolbar");
+		toolbar.setStyleName(StyleSheet.TOOLBAR);
 		toolbar.add(createButton);
 		Gwt.addFiller(toolbar);
 

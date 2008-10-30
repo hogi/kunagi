@@ -1,5 +1,7 @@
 package scrum.client.common;
 
+import scrum.client.service.StyleSheet;
+
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -19,7 +21,7 @@ public class ItemFieldsWidget extends Composite {
 
 		grid = null;
 		grid = new Grid(0, 2);
-		grid.setStyleName("AItemFieldsWidget-grid");
+		grid.setStyleName(StyleSheet.A_ITEM_FIELDS_WIDGET_GRID);
 		grid.setWidth("100%");
 
 		initWidget(grid);
@@ -32,8 +34,8 @@ public class ItemFieldsWidget extends Composite {
 	public void addField(String label, Widget value) {
 
 		Label l = new Label(label);
-		l.setStyleName("fieldLabel");
-		value.addStyleName("fieldValue");
+		l.setStyleName(StyleSheet.FIELD_LABEL);
+		value.addStyleName(StyleSheet.FIELD_VALUE);
 		l.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
 		int row = grid.getRowCount();

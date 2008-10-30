@@ -1,5 +1,7 @@
 package scrum.client.common;
 
+import scrum.client.service.StyleSheet;
+
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
@@ -33,7 +35,7 @@ public abstract class AItemFieldsWidget<I> extends Composite {
 		grid = null;
 
 		grid = new Grid(0, 2);
-		grid.setStyleName("AItemFieldsWidget-grid");
+		grid.setStyleName(StyleSheet.A_ITEM_FIELDS_WIDGET_GRID);
 		grid.setWidth("100%");
 
 		build();
@@ -50,9 +52,9 @@ public abstract class AItemFieldsWidget<I> extends Composite {
 	protected void addField(String label, Widget value) {
 
 		Label l = new Label(label);
-		l.setStyleName("fieldLabel");
+		l.setStyleName(StyleSheet.FIELD_LABEL);
 
-		value.addStyleName("fieldValue");
+		value.addStyleName(StyleSheet.FIELD_VALUE);
 
 		int row = grid.getRowCount();
 		grid.resizeRows(row + 1);

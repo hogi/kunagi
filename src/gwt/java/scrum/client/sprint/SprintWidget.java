@@ -6,6 +6,7 @@ import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.img.Img;
 import scrum.client.project.BacklogItem;
 import scrum.client.service.ScrumClient;
+import scrum.client.service.StyleSheet;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -92,7 +93,7 @@ public class SprintWidget extends ABlockWidget {
 
 		// block is extended -> create toolbar with buttons
 		VerticalPanel toolbar = new VerticalPanel();
-		toolbar.setStyleName("Toolbar");
+		toolbar.setStyleName(StyleSheet.TOOLBAR);
 
 		Button addSprintButton = new Button("Assign Backlogitem");
 		// addSprintButton.addClickListener(new AssignClickListener());
