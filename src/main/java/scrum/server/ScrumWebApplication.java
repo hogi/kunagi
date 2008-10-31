@@ -1,35 +1,32 @@
 package scrum.server;
 
 import ilarkesto.base.Url;
-import ilarkesto.base.Utl;
 import ilarkesto.concurrent.TaskManager;
 import ilarkesto.logging.Logger;
 
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
-import scrum.client.project.Project;
 import scrum.client.service.ServerData;
+import scrum.server.admin.UserDao;
+import scrum.server.project.Project;
 
 public class ScrumWebApplication extends GScrumWebApplication {
 
 	private static final Logger LOG = Logger.get(ScrumWebApplication.class);
 
 	private Set<SessionData> sessions = new HashSet<SessionData>();
-	private DataStore dataStore = new DataStore();
 
 	public void onProjectRequested(SessionData session, String id) {
 		LOG.info("Project", id, "requested");
 		ServerData data = session.getNextData();
 
-		Map<String, ?> project = dataStore.getProject(id);
-		if (project == null) {
-			data.errors.add("Project does not exist: " + id);
-			return;
-		}
+		Project project = (Project) getProjectDao().getEntities().toArray()[0];
 
-		data.project = Utl.subMap((Map<String, String>) project, Project.ID, Project.LABEL);
+		data.project = new HashMap<String, String>();
+		data.project.put("id", project.getId());
+		data.project.put("label", project.getLabel());
 	}
 
 	public void onSessionCreated(SessionData session) {
@@ -38,7 +35,20 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	@Override
-	protected void onStartWebApplication() {}
+	protected void onStartWebApplication() {
+		if (getUserDao().getEntities().isEmpty()) {
+			LOG.warn("No users. Creating initial user: admin:geheim");
+			getUserDao().postUser("admin", "geheim");
+		}
+
+		// test data
+		if (getProjectDao().getEntities().isEmpty()) {
+			LOG.warn("Creating test project");
+			getProjectDao().postProject("test project", getUserDao().getUserByName("admin"));
+		}
+
+		getTransactionService().commit();
+	}
 
 	@Override
 	protected void scheduleTasks(TaskManager tm) {}
@@ -49,6 +59,16 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	@Override
 	public Url getHomeUrl() {
 		return new Url("index.html");
+	}
+
+	private UserDao userDao;
+
+	public UserDao getUserDao() {
+		if (userDao == null) {
+			userDao = new UserDao();
+			autowire(userDao);
+		}
+		return userDao;
 	}
 
 }
