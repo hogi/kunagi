@@ -7,6 +7,7 @@ import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
 import scrum.client.service.ScrumClient;
+import scrum.client.service.StyleSheet;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
@@ -95,7 +96,7 @@ public class ImpedimentWidget extends ABlockWidget {
 
 		// block is extended -> create toolbar with buttons
 		VerticalPanel toolbar = new VerticalPanel();
-		toolbar.setStyleName("Toolbar");
+		toolbar.setStyleName(StyleSheet.TOOLBAR);
 
 		Button deleteButton = new Button("Delete");
 		deleteButton.addClickListener(new ClickListener() {

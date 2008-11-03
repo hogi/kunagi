@@ -1,5 +1,7 @@
 package scrum.client.common.editable;
 
+import scrum.client.service.StyleSheet;
+
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -48,10 +50,10 @@ public abstract class AEditableWidget extends Composite {
 		Widget widget;
 		if (editMode) {
 			widget = getEditor();
-			widget.addStyleName("editableEditor");
+			widget.addStyleName(StyleSheet.EDITABLE_EDITOR);
 		} else {
 			widget = getViewer();
-			widget.addStyleName("editableViewer");
+			widget.addStyleName(StyleSheet.EDITABLE_VIEWER);
 		}
 		panel.add(widget);
 		if (editMode) {

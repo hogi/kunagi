@@ -1,5 +1,7 @@
 package scrum.client.common.editable;
 
+import scrum.client.service.StyleSheet;
+
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -63,7 +65,7 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 			toolbar.add(cancelButton);
 
 			editorPanel = new VerticalPanel();
-			editorPanel.setStyleName("AEditableTextareaWidget-editorPanel");
+			editorPanel.setStyleName(StyleSheet.A_EDITABLE_TEXTAREA_WIDGET_EDITOR_PANEL);
 			editorPanel.setWidth("100%");
 			editorPanel.add(editor);
 			editorPanel.add(toolbar);

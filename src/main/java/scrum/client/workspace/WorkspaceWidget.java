@@ -7,6 +7,7 @@ import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.BacklogItem;
 import scrum.client.project.BacklogItemListWidget;
 import scrum.client.service.ScrumClient;
+import scrum.client.service.StyleSheet;
 import scrum.client.test.CurrentSprintView;
 import scrum.client.test.TestWidget;
 
@@ -41,7 +42,7 @@ public class WorkspaceWidget extends Composite {
 
 		// create workspace
 		workspacePanel = new DockPanel();
-		workspacePanel.setStyleName("WorkspaceWidget-workspace");
+		workspacePanel.setStyleName(StyleSheet.WORKSPACE_WIDGET_WORKSPACE);
 		workspacePanel.setWidth("100%");
 
 		// sidebar
@@ -51,9 +52,9 @@ public class WorkspaceWidget extends Composite {
 
 		// workarea
 		workareaPanel = new SimplePanel();
-		workareaPanel.setStyleName("WorkspaceWidget-workarea");
+		workareaPanel.setStyleName(StyleSheet.WORKSPACE_WIDGET_WORKAREA);
 		workspacePanel.add(workareaPanel, DockPanel.CENTER);
-		workspacePanel.setStyleName("WorkspaceWidget");
+		workspacePanel.setStyleName(StyleSheet.WORKSPACE_WIDGET);
 		workspacePanel.setCellWidth(workareaPanel, "99%");
 
 		// root panel
@@ -96,7 +97,7 @@ public class WorkspaceWidget extends Composite {
 
 	private Widget createSidebar() {
 		VerticalPanel sidebar = new VerticalPanel();
-		sidebar.setStyleName("WorkspaceWidget-sidebar");
+		sidebar.setStyleName(StyleSheet.WORKSPACE_WIDGET_SIDEBAR);
 		sidebar.setWidth("300px");
 		sidebar.setHeight("100%");
 		sidebar.add(new SidebarWidget());

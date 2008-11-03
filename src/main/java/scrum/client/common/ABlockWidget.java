@@ -27,8 +27,8 @@ public abstract class ABlockWidget extends Composite {
 	private DropController dropController = getDropController();
 
 	/**
-	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a
-	 * different implementation can be provided.
+	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a different
+	 * implementation can be provided.
 	 */
 	protected abstract Widget buildContent();
 
@@ -76,7 +76,7 @@ public abstract class ABlockWidget extends Composite {
 
 	protected Widget build() {
 		Label title = new Label(getBlockTitle());
-		title.setStyleName("Block-title");
+		title.setStyleName(StyleSheet.BLOCK_TITLE);
 
 		VerticalPanel center = new VerticalPanel();
 		center.setWidth("100%");
@@ -86,7 +86,7 @@ public abstract class ABlockWidget extends Composite {
 		}
 
 		HorizontalPanel block = new HorizontalPanel();
-		block.setStyleName("Block-block");
+		block.setStyleName(StyleSheet.BLOCK_BLOCK);
 		block.setWidth("100%");
 
 		if (dragHandle != null) block.add(dragHandle);
@@ -108,7 +108,7 @@ public abstract class ABlockWidget extends Composite {
 	public void makeDraggable() {
 		if (dragHandle == null) {
 			dragHandle = Img.icons().dragHandleIcon32().createImage();
-			dragHandle.setStyleName("DragHandle");
+			dragHandle.setStyleName(StyleSheet.DRAG_HANDLE);
 		}
 		ScrumGwtApplication.getDragController().makeDraggable(this, dragHandle);
 	}
