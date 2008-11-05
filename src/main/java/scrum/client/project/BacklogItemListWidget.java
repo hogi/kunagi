@@ -1,10 +1,10 @@
 package scrum.client.project;
 
+import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.Gwt;
+import scrum.client.common.ScrumUtil;
 import scrum.client.common.ListProvider;
-import scrum.client.service.ScrumClient;
-import scrum.client.service.StyleSheet;
+import scrum.client.common.StyleSheet;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -31,7 +31,7 @@ public class BacklogItemListWidget extends Composite {
 		toolbar.setWidth("100%");
 		toolbar.setStyleName(StyleSheet.TOOLBAR);
 		toolbar.add(createButton);
-		Gwt.addFiller(toolbar);
+		ScrumUtil.addFiller(toolbar);
 
 		list = new BlockListWidget();
 
@@ -56,7 +56,7 @@ public class BacklogItemListWidget extends Composite {
 	class CreateClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			BacklogItem item = ScrumClient.getProject().createNewBacklogItem();
+			BacklogItem item = ScrumGwtApplication.getProject().createNewBacklogItem();
 			BacklogItemWidget block = new BacklogItemWidget(item);
 			list.addBlock(block);
 			list.selectBlock(block);

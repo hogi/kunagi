@@ -1,11 +1,18 @@
 package scrum.client.impediments;
 
+import java.util.Map;
+
 public class Impediment extends GImpediment {
 
-	public Impediment(String id, String label, String description) {
+	public static final String INIT_LABEL = "New Impediment";
+
+	public Impediment(String id) {
 		setId(id);
-		setLabel(label);
-		setDescription(description);
+		setLabel(INIT_LABEL);
+	}
+
+	public Impediment(Map data) {
+		super(data);
 	}
 
 	public String getSummary() {

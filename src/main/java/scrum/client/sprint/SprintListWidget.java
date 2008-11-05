@@ -1,8 +1,8 @@
 package scrum.client.sprint;
 
+import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.Gwt;
-import scrum.client.service.ScrumClient;
+import scrum.client.common.ScrumUtil;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -25,9 +25,9 @@ public class SprintListWidget extends Composite implements ClickListener {
 		toolbar.setWidth("100%");
 		toolbar.setStyleName("Toolbar");
 		toolbar.add(createButton);
-		Gwt.addFiller(toolbar);
+		ScrumUtil.addFiller(toolbar);
 
-		for (Sprint sprint : ScrumClient.getProject().getSprints()) {
+		for (Sprint sprint : ScrumGwtApplication.getProject().getSprints()) {
 			list.addBlock(new SprintWidget(sprint));
 		}
 
@@ -43,7 +43,7 @@ public class SprintListWidget extends Composite implements ClickListener {
 	}
 
 	public void onClick(Widget sender) {
-		list.addBlock(new SprintWidget(ScrumClient.getProject().createNewSprint("<enter sprintname>")));
+		list.addBlock(new SprintWidget(ScrumGwtApplication.getProject().createNewSprint("<enter sprintname>")));
 	}
 
 }

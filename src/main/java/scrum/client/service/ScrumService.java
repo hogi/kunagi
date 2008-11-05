@@ -6,4 +6,8 @@ public interface ScrumService extends RemoteService {
 
 	ServerData getProject(String projectId);
 
+	ServerData getImpediments();
+
+	ServerData getBacklogItems();
+
 }

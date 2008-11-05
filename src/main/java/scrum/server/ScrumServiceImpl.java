@@ -20,7 +20,19 @@ public class ScrumServiceImpl extends RemoteServiceServlet implements ScrumServi
 
 	public ServerData getProject(String projectId) {
 		SessionData session = getSessionData();
-		app.onProjectRequested(session, projectId);
+		app.onSelectProject(session, projectId);
+		return session.popNextData();
+	}
+
+	public ServerData getImpediments() {
+		SessionData session = getSessionData();
+		app.onGetImpediments(session);
+		return session.popNextData();
+	}
+
+	public ServerData getBacklogItems() {
+		SessionData session = getSessionData();
+		app.onGetBacklogItems(session);
 		return session.popNextData();
 	}
 

@@ -1,8 +1,9 @@
 package scrum.server.impediments;
 
-import scrum.server.project.GImpediment;
 
 public class Impediment extends GImpediment {
+
+	// --- dependencies ---
 
 	public Impediment(Impediment template) {
 		super(template);
@@ -12,4 +13,10 @@ public class Impediment extends GImpediment {
 		super(null);
 	}
 
+	// --- ---
+
+	@Override
+	public String toString() {
+		return getLabel();
+	}
 }

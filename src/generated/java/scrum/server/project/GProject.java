@@ -43,6 +43,11 @@ public abstract class GProject
     protected void repairDeadValueObject(AValueObject valueObject) {
     }
 
+    public void storeProperties(Map properties) {
+        super.storeProperties(properties);
+        properties.put("label", this.label);
+    }
+
     private static final Logger LOG = Logger.get(GProject.class);
 
     public static final String TYPE = "project";

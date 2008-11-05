@@ -28,6 +28,12 @@ import java.util.*;
 public abstract class GTask
             extends scrum.client.common.AEntity {
 
+    public GTask() {}
+
+    public GTask(Map data) {
+        super(data);
+    }
+
     // --- label ---
 
     private java.lang.String label ;
@@ -52,6 +58,13 @@ public abstract class GTask
     public final Task setEffort(java.lang.Integer effort) {
         this.effort = effort ;
         return (Task)this;
+    }
+
+    // --- update properties by map ---
+
+    public void updateProperties(Map props) {
+        label  = (java.lang.String) props.get("label");
+        effort  = (java.lang.Integer) props.get("effort");
     }
 
 }

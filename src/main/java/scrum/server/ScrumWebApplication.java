@@ -3,13 +3,14 @@ package scrum.server;
 import ilarkesto.base.Url;
 import ilarkesto.concurrent.TaskManager;
 import ilarkesto.logging.Logger;
+import ilarkesto.persistence.EntityUtils;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import scrum.client.service.ServerData;
 import scrum.server.admin.UserDao;
+import scrum.server.impediments.Impediment;
+import scrum.server.project.BacklogItem;
 import scrum.server.project.Project;
 
 public class ScrumWebApplication extends GScrumWebApplication {
@@ -18,15 +19,34 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	private Set<SessionData> sessions = new HashSet<SessionData>();
 
-	public void onProjectRequested(SessionData session, String id) {
+	public void onSelectProject(SessionData session, String id) {
 		LOG.info("Project", id, "requested");
-		ServerData data = session.getNextData();
 
 		Project project = (Project) getProjectDao().getEntities().toArray()[0];
+		session.setProject(project);
 
-		data.project = new HashMap<String, String>();
-		data.project.put("id", project.getId());
-		data.project.put("label", project.getLabel());
+		// prepare data for client
+		session.getNextData().project = project.createPropertiesMap();
+	}
+
+	public void onGetImpediments(SessionData session) {
+		LOG.info("Impediments requested");
+
+		Project project = session.getProject();
+		Set<Impediment> impediments = getImpedimentDao().getImpedimentsByProject(project);
+
+		// prepare data for client
+		session.getNextData().impediments = EntityUtils.createPropertiesMaps(impediments);
+	}
+
+	public void onGetBacklogItems(SessionData session) {
+		LOG.info("BacklogItems requested");
+
+		Project project = session.getProject();
+		Set<BacklogItem> backlogItems = getBacklogItemDao().getBacklogItemsByProject(project);
+
+		// prepare data for client
+		session.getNextData().backlogItems = EntityUtils.createPropertiesMaps(backlogItems);
 	}
 
 	public void onSessionCreated(SessionData session) {
@@ -44,7 +64,23 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		// test data
 		if (getProjectDao().getEntities().isEmpty()) {
 			LOG.warn("Creating test project");
-			getProjectDao().postProject("test project", getUserDao().getUserByName("admin"));
+			Project project = getProjectDao().postProject("test project", getUserDao().getUserByName("admin"));
+
+			Impediment impediment1 = getImpedimentDao().postImpediment(project);
+			impediment1.setLabel("Test Impediment 1");
+
+			Impediment impediment2 = getImpedimentDao().postImpediment(project);
+			impediment2.setLabel("Test Impediment 2");
+
+			BacklogItem backlogItem1 = getBacklogItemDao().postBacklogItem(project);
+			backlogItem1.setLabel("Test Backlog Item 1");
+
+			BacklogItem backlogItem2 = getBacklogItemDao().postBacklogItem(project);
+			backlogItem2.setLabel("Test Backlog Item 2");
+
+			BacklogItem backlogItem3 = getBacklogItemDao().postBacklogItem(project);
+			backlogItem3.setLabel("Test Backlog Item 3");
+
 		}
 
 		getTransactionService().commit();

@@ -1,4 +1,4 @@
-package scrum.client.service;
+package scrum.client.common;
 
 public class StyleSheet {
 

@@ -28,6 +28,12 @@ import java.util.*;
 public abstract class GImpediment
             extends scrum.client.common.AEntity {
 
+    public GImpediment() {}
+
+    public GImpediment(Map data) {
+        super(data);
+    }
+
     // --- solution ---
 
     private java.lang.String solution ;
@@ -41,16 +47,20 @@ public abstract class GImpediment
         return (Impediment)this;
     }
 
-    // --- solved ---
+    // --- project ---
 
-    private boolean solved ;
+    private String projectId;
 
-    public final boolean isSolved() {
-        return this.solved ;
+    // --- description ---
+
+    private java.lang.String description ;
+
+    public final java.lang.String getDescription() {
+        return this.description ;
     }
 
-    public final Impediment setSolved(boolean solved) {
-        this.solved = solved ;
+    public final Impediment setDescription(java.lang.String description) {
+        this.description = description ;
         return (Impediment)this;
     }
 
@@ -67,17 +77,27 @@ public abstract class GImpediment
         return (Impediment)this;
     }
 
-    // --- description ---
+    // --- solved ---
 
-    private java.lang.String description ;
+    private boolean solved ;
 
-    public final java.lang.String getDescription() {
-        return this.description ;
+    public final boolean isSolved() {
+        return this.solved ;
     }
 
-    public final Impediment setDescription(java.lang.String description) {
-        this.description = description ;
+    public final Impediment setSolved(boolean solved) {
+        this.solved = solved ;
         return (Impediment)this;
+    }
+
+    // --- update properties by map ---
+
+    public void updateProperties(Map props) {
+        solution  = (java.lang.String) props.get("solution");
+        projectId = (String) props.get("id");
+        description  = (java.lang.String) props.get("description");
+        label  = (java.lang.String) props.get("label");
+        solved  = (Boolean) props.get("solved");
     }
 
 }

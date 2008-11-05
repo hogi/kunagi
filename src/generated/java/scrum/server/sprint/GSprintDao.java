@@ -43,6 +43,8 @@ public abstract class GSprintDao
 
     // --- clear caches ---
     public void clearCaches() {
+        sprintsByProjectCache.clear();
+        projectsCache = null;
         sprintsByLabelCache.clear();
         labelsCache = null;
     }
@@ -61,6 +63,46 @@ public abstract class GSprintDao
         if (event.getEntity() instanceof Sprint) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - project
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.project.Project,Set<Sprint>> sprintsByProjectCache = new Cache<scrum.server.project.Project,Set<Sprint>>(
+            new Cache.Factory<scrum.server.project.Project,Set<Sprint>>() {
+                public Set<Sprint> create(scrum.server.project.Project project) {
+                    return getEntities(new IsProject(project));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByProject(scrum.server.project.Project project) {
+        return sprintsByProjectCache.get(project);
+    }
+    private Set<scrum.server.project.Project> projectsCache;
+
+    public final Set<scrum.server.project.Project> getProjects() {
+        if (projectsCache == null) {
+            projectsCache = new HashSet<scrum.server.project.Project>();
+            for (Sprint e : getEntities()) {
+                if (e.isProjectSet()) projectsCache.add(e.getProject());
+            }
+        }
+        return projectsCache;
+    }
+
+    private static class IsProject implements Predicate<Sprint> {
+
+        private scrum.server.project.Project value;
+
+        public IsProject(scrum.server.project.Project value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.isProject(value);
+        }
+
     }
 
     // -----------------------------------------------------------
@@ -117,5 +159,11 @@ public abstract class GSprintDao
     }
 
     // --- dependencies ---
+
+    protected scrum.server.project.ProjectDao projectDao;
+
+    public void setProjectDao(scrum.server.project.ProjectDao projectDao) {
+        this.projectDao = projectDao;
+    }
 
 }

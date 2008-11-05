@@ -2,12 +2,12 @@ package scrum.client.test;
 
 import java.util.List;
 
+import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.ListProvider;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.project.BacklogItem;
 import scrum.client.project.BacklogItemListWidget;
-import scrum.client.service.ScrumClient;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Sprint.State;
 
@@ -32,7 +32,7 @@ public class CurrentSprintView extends Composite {
 	}
 
 	public void update() {
-		sprint = ScrumClient.getProject().getCurrentSprint();
+		sprint = ScrumGwtApplication.getProject().getCurrentSprint();
 
 		if (sprint == null) {
 			Button assignSprintButton = new Button("Select current sprint (tmp: create new)");
@@ -81,7 +81,7 @@ public class CurrentSprintView extends Composite {
 	class AssignSprintListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			sprint = ScrumClient.getProject().createNewSprint("New Sprint");
+			sprint = ScrumGwtApplication.getProject().createNewSprint("New Sprint");
 			sprint.setState(State.Development);
 
 			update();

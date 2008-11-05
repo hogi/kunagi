@@ -1,13 +1,13 @@
 package scrum.client.impediments;
 
+import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
+import scrum.client.common.StyleSheet;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
-import scrum.client.service.ScrumClient;
-import scrum.client.service.StyleSheet;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
@@ -102,7 +102,7 @@ public class ImpedimentWidget extends ABlockWidget {
 		deleteButton.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				ScrumClient.getProject().deleteImpediment(impediment);
+				ScrumGwtApplication.getProject().deleteImpediment(impediment);
 				WorkspaceWidget.impediments.list.removeSelectedRow();
 			}
 		});
@@ -142,7 +142,7 @@ public class ImpedimentWidget extends ABlockWidget {
 
 	@Override
 	public void delete() {
-		ScrumClient.getProject().deleteImpediment(impediment);
+		ScrumGwtApplication.getProject().deleteImpediment(impediment);
 		WorkspaceWidget.impediments.list.remove(this);
 	}
 }

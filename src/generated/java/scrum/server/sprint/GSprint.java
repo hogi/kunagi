@@ -42,6 +42,12 @@ public abstract class GSprint
     protected void repairDeadValueObject(AValueObject valueObject) {
     }
 
+    public void storeProperties(Map properties) {
+        super.storeProperties(properties);
+        properties.put("project", this.projectId);
+        properties.put("label", this.label);
+    }
+
     private static final Logger LOG = Logger.get(GSprint.class);
 
     public static final String TYPE = "sprint";
@@ -51,7 +57,45 @@ public abstract class GSprint
         super(template);
         if (template==null) return;
 
+        setProject(template.getProject());
         setLabel(template.getLabel());
+    }
+
+    // -----------------------------------------------------------
+    // - project
+    // -----------------------------------------------------------
+
+    private String projectId;
+
+    public final scrum.server.project.Project getProject() {
+        if (this.projectId == null) return null;
+        return (scrum.server.project.Project)projectDao.getById(this.projectId);
+    }
+
+    public final void setProject(scrum.server.project.Project project) {
+        project = prepareProject(project);
+        if (isProject(project)) return;
+        this.projectId = project == null ? null : project.getId();
+        entityModified();
+    }
+
+    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
+        return project;
+    }
+
+    protected void repairDeadProjectReference(String entityId) {
+        if (entityId.equals(this.projectId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isProjectSet() {
+        return this.projectId != null;
+    }
+
+    public final boolean isProject(scrum.server.project.Project project) {
+        if (this.projectId == null && project == null) return true;
+        return project != null && project.getId().equals(this.projectId);
     }
 
     // -----------------------------------------------------------
@@ -87,12 +131,23 @@ public abstract class GSprint
 
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
+        repairDeadProjectReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
+        if (!isProjectSet()) {
+            repairMissingMaster();
+            return;
+        }
+        try {
+            getProject();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead project reference");
+            repairDeadProjectReference(this.projectId);
+        }
     }
 
 
@@ -101,6 +156,12 @@ public abstract class GSprint
     // -----------------------------------------------------------
 
     // --- dependencies ---
+
+    protected static scrum.server.project.ProjectDao projectDao;
+
+    public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
+        GSprint.projectDao = projectDao;
+    }
 
     protected static SprintDao sprintDao;
 

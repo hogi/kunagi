@@ -1,6 +1,6 @@
 package scrum.client.common.editable;
 
-import scrum.client.service.StyleSheet;
+import scrum.client.common.StyleSheet;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;

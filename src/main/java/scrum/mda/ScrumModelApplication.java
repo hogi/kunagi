@@ -30,6 +30,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (backlogItemModel == null) {
 			backlogItemModel = createEntityModel("BacklogItem", "project");
 			autowire(backlogItemModel);
+			backlogItemModel.addReference("project", getProjectModel()).setMaster(true);
 			backlogItemModel.addProperty("label", String.class);
 			backlogItemModel.addProperty("description", String.class);
 			backlogItemModel.addProperty("testDescription", String.class);
@@ -45,6 +46,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (sprintModel == null) {
 			sprintModel = createEntityModel("Sprint", "sprint");
 			autowire(sprintModel);
+			sprintModel.addReference("project", getProjectModel()).setMaster(true);
 			sprintModel.addProperty("label", String.class);
 		}
 		return sprintModel;
@@ -68,6 +70,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (impedimentModel == null) {
 			impedimentModel = createEntityModel("Impediment", "impediments");
 			autowire(impedimentModel);
+			impedimentModel.addReference("project", getProjectModel()).setMaster(true);
 			impedimentModel.addProperty("label", String.class);
 			impedimentModel.addProperty("description", String.class);
 			impedimentModel.addProperty("solution", String.class);

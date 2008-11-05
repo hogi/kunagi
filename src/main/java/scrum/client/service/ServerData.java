@@ -10,8 +10,9 @@ import java.util.Map;
  */
 public class ServerData implements Serializable {
 
-	public Map<String, String> project;
-	public List<Map<String, String>> impediments;
+	public Map project;
+	public List<Map> impediments;
+	public List<Map> backlogItems;
 	public List<String> errors = new ArrayList<String>();
 
 }

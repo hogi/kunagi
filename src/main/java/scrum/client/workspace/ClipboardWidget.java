@@ -3,10 +3,8 @@ package scrum.client.workspace;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockListWidget;
+import scrum.client.common.StyleSheet;
 import scrum.client.img.Img;
-import scrum.client.impediments.ImpedimentWidget;
-import scrum.client.service.Dummy;
-import scrum.client.service.StyleSheet;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.VetoDragException;
@@ -57,8 +55,8 @@ public class ClipboardWidget extends Composite {
 		initWidget(dock);
 
 		// test dummy
-		addItem(new ImpedimentWidget(Dummy.moon.getImpediments().get(0)));
-		addItem(new ImpedimentWidget(Dummy.moon.getImpediments().get(1)));
+		// addItem(new ImpedimentWidget(Dummy.moon.getImpediments().get(0)));
+		// addItem(new ImpedimentWidget(Dummy.moon.getImpediments().get(1)));
 	}
 
 	public void addItem(ABlockWidget item) {

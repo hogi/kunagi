@@ -45,11 +45,13 @@ public abstract class GImpedimentDao
     public void clearCaches() {
         impedimentsBySolutionCache.clear();
         solutionsCache = null;
-        impedimentsBySolvedCache.clear();
-        impedimentsByLabelCache.clear();
-        labelsCache = null;
+        impedimentsByProjectCache.clear();
+        projectsCache = null;
         impedimentsByDescriptionCache.clear();
         descriptionsCache = null;
+        impedimentsByLabelCache.clear();
+        labelsCache = null;
+        impedimentsBySolvedCache.clear();
     }
 
     @Override
@@ -109,30 +111,81 @@ public abstract class GImpedimentDao
     }
 
     // -----------------------------------------------------------
-    // - solved
+    // - project
     // -----------------------------------------------------------
 
-    private final Cache<Boolean,Set<Impediment>> impedimentsBySolvedCache = new Cache<Boolean,Set<Impediment>>(
-            new Cache.Factory<Boolean,Set<Impediment>>() {
-                public Set<Impediment> create(Boolean solved) {
-                    return getEntities(new IsSolved(solved));
+    private final Cache<scrum.server.project.Project,Set<Impediment>> impedimentsByProjectCache = new Cache<scrum.server.project.Project,Set<Impediment>>(
+            new Cache.Factory<scrum.server.project.Project,Set<Impediment>>() {
+                public Set<Impediment> create(scrum.server.project.Project project) {
+                    return getEntities(new IsProject(project));
                 }
             });
 
-    public final Set<Impediment> getImpedimentsBySolved(boolean solved) {
-        return impedimentsBySolvedCache.get(solved);
+    public final Set<Impediment> getImpedimentsByProject(scrum.server.project.Project project) {
+        return impedimentsByProjectCache.get(project);
+    }
+    private Set<scrum.server.project.Project> projectsCache;
+
+    public final Set<scrum.server.project.Project> getProjects() {
+        if (projectsCache == null) {
+            projectsCache = new HashSet<scrum.server.project.Project>();
+            for (Impediment e : getEntities()) {
+                if (e.isProjectSet()) projectsCache.add(e.getProject());
+            }
+        }
+        return projectsCache;
     }
 
-    private static class IsSolved implements Predicate<Impediment> {
+    private static class IsProject implements Predicate<Impediment> {
 
-        private boolean value;
+        private scrum.server.project.Project value;
 
-        public IsSolved(boolean value) {
+        public IsProject(scrum.server.project.Project value) {
             this.value = value;
         }
 
         public boolean test(Impediment e) {
-            return value == e.isSolved();
+            return e.isProject(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Impediment>> impedimentsByDescriptionCache = new Cache<java.lang.String,Set<Impediment>>(
+            new Cache.Factory<java.lang.String,Set<Impediment>>() {
+                public Set<Impediment> create(java.lang.String description) {
+                    return getEntities(new IsDescription(description));
+                }
+            });
+
+    public final Set<Impediment> getImpedimentsByDescription(java.lang.String description) {
+        return impedimentsByDescriptionCache.get(description);
+    }
+    private Set<java.lang.String> descriptionsCache;
+
+    public final Set<java.lang.String> getDescriptions() {
+        if (descriptionsCache == null) {
+            descriptionsCache = new HashSet<java.lang.String>();
+            for (Impediment e : getEntities()) {
+                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
+            }
+        }
+        return descriptionsCache;
+    }
+
+    private static class IsDescription implements Predicate<Impediment> {
+
+        private java.lang.String value;
+
+        public IsDescription(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Impediment e) {
+            return e.isDescription(value);
         }
 
     }
@@ -178,41 +231,30 @@ public abstract class GImpedimentDao
     }
 
     // -----------------------------------------------------------
-    // - description
+    // - solved
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Impediment>> impedimentsByDescriptionCache = new Cache<java.lang.String,Set<Impediment>>(
-            new Cache.Factory<java.lang.String,Set<Impediment>>() {
-                public Set<Impediment> create(java.lang.String description) {
-                    return getEntities(new IsDescription(description));
+    private final Cache<Boolean,Set<Impediment>> impedimentsBySolvedCache = new Cache<Boolean,Set<Impediment>>(
+            new Cache.Factory<Boolean,Set<Impediment>>() {
+                public Set<Impediment> create(Boolean solved) {
+                    return getEntities(new IsSolved(solved));
                 }
             });
 
-    public final Set<Impediment> getImpedimentsByDescription(java.lang.String description) {
-        return impedimentsByDescriptionCache.get(description);
-    }
-    private Set<java.lang.String> descriptionsCache;
-
-    public final Set<java.lang.String> getDescriptions() {
-        if (descriptionsCache == null) {
-            descriptionsCache = new HashSet<java.lang.String>();
-            for (Impediment e : getEntities()) {
-                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
-            }
-        }
-        return descriptionsCache;
+    public final Set<Impediment> getImpedimentsBySolved(boolean solved) {
+        return impedimentsBySolvedCache.get(solved);
     }
 
-    private static class IsDescription implements Predicate<Impediment> {
+    private static class IsSolved implements Predicate<Impediment> {
 
-        private java.lang.String value;
+        private boolean value;
 
-        public IsDescription(java.lang.String value) {
+        public IsSolved(boolean value) {
             this.value = value;
         }
 
         public boolean test(Impediment e) {
-            return e.isDescription(value);
+            return value == e.isSolved();
         }
 
     }
@@ -231,5 +273,11 @@ public abstract class GImpedimentDao
     }
 
     // --- dependencies ---
+
+    protected scrum.server.project.ProjectDao projectDao;
+
+    public void setProjectDao(scrum.server.project.ProjectDao projectDao) {
+        this.projectDao = projectDao;
+    }
 
 }

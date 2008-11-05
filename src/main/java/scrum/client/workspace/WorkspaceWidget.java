@@ -2,12 +2,12 @@ package scrum.client.workspace;
 
 import java.util.List;
 
+import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ListProvider;
+import scrum.client.common.StyleSheet;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.BacklogItem;
 import scrum.client.project.BacklogItemListWidget;
-import scrum.client.service.ScrumClient;
-import scrum.client.service.StyleSheet;
 import scrum.client.test.CurrentSprintView;
 import scrum.client.test.TestWidget;
 
@@ -34,7 +34,7 @@ public class WorkspaceWidget extends Composite {
 		backlog = new BacklogItemListWidget(new ListProvider() {
 
 			public List<BacklogItem> getList() {
-				return ScrumClient.getProject().getBacklogItems();
+				return ScrumGwtApplication.getProject().getBacklogItems();
 			}
 
 		});
@@ -92,6 +92,7 @@ public class WorkspaceWidget extends Composite {
 	}
 
 	public static void setWorkarea(Widget widget) {
+		unlock();
 		workareaPanel.setWidget(widget);
 	}
 

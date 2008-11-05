@@ -3,8 +3,8 @@ package scrum.client.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import scrum.client.ScrumGwtApplication;
 import scrum.client.project.BacklogItem;
-import scrum.client.service.ScrumClient;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
 import scrum.client.sprint.TaskListWidget;
@@ -19,7 +19,7 @@ public class PortalView extends Composite {
 		VerticalPanel vpanel = new VerticalPanel();
 		vpanel.setWidth("100%");
 
-		Sprint sprint = ScrumClient.getProject().getCurrentSprint();
+		Sprint sprint = ScrumGwtApplication.getProject().getCurrentSprint();
 		String sprintname = "<no sprint available>";
 		if (sprint != null) sprintname = sprint.getLabel();
 		vpanel.add(new Label(sprintname));
@@ -27,9 +27,9 @@ public class PortalView extends Composite {
 		vpanel.add(new Label("My tasks"));
 
 		List<Task> mytaskList = new ArrayList<Task>();
-		for (BacklogItem backlogItem : ScrumClient.getProject().getBacklogItems()) {
+		for (BacklogItem backlogItem : ScrumGwtApplication.getProject().getBacklogItems()) {
 			for (Task task : backlogItem.getTasks()) {
-				if (ScrumClient.getUser().equals(task.getOwner())) mytaskList.add(task);
+				if (ScrumGwtApplication.getUser().equals(task.getOwner())) mytaskList.add(task);
 			}
 		}
 		if (mytaskList.size() < 1) {
@@ -43,7 +43,7 @@ public class PortalView extends Composite {
 		vpanel.add(new Label("All current sprint tasks"));
 
 		List<Task> allTaskList = new ArrayList<Task>();
-		for (BacklogItem backlogItem : ScrumClient.getProject().getBacklogItems()) {
+		for (BacklogItem backlogItem : ScrumGwtApplication.getProject().getBacklogItems()) {
 			for (Task task : backlogItem.getTasks()) {
 				if (task.getOwner() == null) allTaskList.add(task);
 			}

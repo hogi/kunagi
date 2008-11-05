@@ -42,6 +42,12 @@ public abstract class GTask
     protected void repairDeadValueObject(AValueObject valueObject) {
     }
 
+    public void storeProperties(Map properties) {
+        super.storeProperties(properties);
+        properties.put("label", this.label);
+        properties.put("effort", this.effort);
+    }
+
     private static final Logger LOG = Logger.get(GTask.class);
 
     public static final String TYPE = "task";

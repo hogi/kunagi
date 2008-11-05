@@ -1,7 +1,8 @@
 package scrum.client.workspace;
 
+import scrum.client.ScrumGwtApplication;
 import scrum.client.common.PanelWidget;
-import scrum.client.service.StyleSheet;
+import scrum.client.common.StyleSheet;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -46,7 +47,13 @@ public class SidebarWidget extends Composite {
 	private class ImpedimentsClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			WorkspaceWidget.showImpediments();
+			WorkspaceWidget.lock("Loading impediments...");
+			ScrumGwtApplication.requestImpediments(new Runnable() {
+
+				public void run() {
+					WorkspaceWidget.showImpediments();
+				}
+			});
 		}
 	}
 
@@ -61,7 +68,13 @@ public class SidebarWidget extends Composite {
 	private class BacklogClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			WorkspaceWidget.showBacklog();
+			WorkspaceWidget.lock("Loading Backlog Items...");
+			ScrumGwtApplication.requestBacklogItems(new Runnable() {
+
+				public void run() {
+					WorkspaceWidget.showBacklog();
+				}
+			});
 		}
 	}
 

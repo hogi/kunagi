@@ -42,6 +42,10 @@ public abstract class GUser
     protected void repairDeadValueObject(AValueObject valueObject) {
     }
 
+    public void storeProperties(Map properties) {
+        super.storeProperties(properties);
+    }
+
     private static final Logger LOG = Logger.get(GUser.class);
 
     public static final String TYPE = "user";

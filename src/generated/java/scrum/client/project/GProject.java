@@ -28,6 +28,12 @@ import java.util.*;
 public abstract class GProject
             extends scrum.client.common.AEntity {
 
+    public GProject() {}
+
+    public GProject(Map data) {
+        super(data);
+    }
+
     // --- label ---
 
     private java.lang.String label ;
@@ -39,6 +45,12 @@ public abstract class GProject
     public final Project setLabel(java.lang.String label) {
         this.label = label ;
         return (Project)this;
+    }
+
+    // --- update properties by map ---
+
+    public void updateProperties(Map props) {
+        label  = (java.lang.String) props.get("label");
     }
 
 }

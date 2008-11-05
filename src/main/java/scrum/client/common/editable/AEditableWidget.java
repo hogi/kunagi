@@ -1,6 +1,6 @@
 package scrum.client.common.editable;
 
-import scrum.client.service.StyleSheet;
+import scrum.client.common.StyleSheet;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;

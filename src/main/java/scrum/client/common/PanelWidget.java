@@ -1,6 +1,5 @@
 package scrum.client.common;
 
-import scrum.client.service.StyleSheet;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;

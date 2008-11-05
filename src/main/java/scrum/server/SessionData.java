@@ -1,6 +1,7 @@
 package scrum.server;
 
 import scrum.client.service.ServerData;
+import scrum.server.project.Project;
 
 /**
  * This class represents the users HTTP session on the server.
@@ -8,6 +9,8 @@ import scrum.client.service.ServerData;
  * For each HTTP session there is one instance of this class.
  */
 public class SessionData {
+
+	private Project project;
 
 	/**
 	 * Data that will be transferred to the client at the next request.
@@ -24,6 +27,14 @@ public class SessionData {
 
 	ServerData getNextData() {
 		return nextData;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 }

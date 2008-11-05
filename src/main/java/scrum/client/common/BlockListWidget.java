@@ -3,8 +3,6 @@ package scrum.client.common;
 import java.util.LinkedList;
 import java.util.List;
 
-import scrum.client.service.StyleSheet;
-
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -42,6 +40,13 @@ public class BlockListWidget extends Composite {
 		scroller.add(table);
 
 		initWidget(scroller);
+	}
+
+	public void clear() {
+		int count = blocks.size();
+		for (int i = 0; i < count; i++) {
+			removeRow(0);
+		}
 	}
 
 	public void addBlock(ABlockWidget block) {

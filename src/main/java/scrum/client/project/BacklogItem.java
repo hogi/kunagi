@@ -2,23 +2,30 @@ package scrum.client.project;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import scrum.client.service.EntityIdGenerator;
-import scrum.client.service.ScrumClient;
+import scrum.client.ScrumGwtApplication;
+import scrum.client.common.EntityIdGenerator;
 import scrum.client.sprint.Task;
 
 public class BacklogItem extends GBacklogItem {
 
+	public static final String INIT_LABEL = "New Backlog Item";
+
 	private List<Task> tasks = new ArrayList<Task>();
 
-	public BacklogItem(String id, String label) {
+	public BacklogItem(String id) {
 		setId(id);
-		setLabel(label);
+		setLabel(INIT_LABEL);
+	}
+
+	public BacklogItem(Map data) {
+		super(data);
 	}
 
 	public String getEffortString() {
 		if (getEffort() == null) return null;
-		return getEffort() + " " + ScrumClient.getProject().getEffortUnit();
+		return getEffort() + " " + ScrumGwtApplication.getProject().getEffortUnit();
 	}
 
 	public String getSummary() {

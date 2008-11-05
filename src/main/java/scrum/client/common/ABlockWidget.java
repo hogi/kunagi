@@ -2,7 +2,6 @@ package scrum.client.common;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.img.Img;
-import scrum.client.service.StyleSheet;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;

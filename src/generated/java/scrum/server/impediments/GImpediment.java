@@ -42,6 +42,15 @@ public abstract class GImpediment
     protected void repairDeadValueObject(AValueObject valueObject) {
     }
 
+    public void storeProperties(Map properties) {
+        super.storeProperties(properties);
+        properties.put("solution", this.solution);
+        properties.put("project", this.projectId);
+        properties.put("description", this.description);
+        properties.put("label", this.label);
+        properties.put("solved", this.solved);
+    }
+
     private static final Logger LOG = Logger.get(GImpediment.class);
 
     public static final String TYPE = "impediment";
@@ -52,9 +61,10 @@ public abstract class GImpediment
         if (template==null) return;
 
         setSolution(template.getSolution());
-        setSolved(template.isSolved());
-        setLabel(template.getLabel());
+        setProject(template.getProject());
         setDescription(template.getDescription());
+        setLabel(template.getLabel());
+        setSolved(template.isSolved());
     }
 
     // -----------------------------------------------------------
@@ -89,28 +99,71 @@ public abstract class GImpediment
     }
 
     // -----------------------------------------------------------
-    // - solved
+    // - project
     // -----------------------------------------------------------
 
-    private boolean solved;
+    private String projectId;
 
-    public final boolean isSolved() {
-        return solved;
+    public final scrum.server.project.Project getProject() {
+        if (this.projectId == null) return null;
+        return (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
-    public final void setSolved(boolean solved) {
-        solved = prepareSolved(solved);
-        if (isSolved(solved)) return;
-        this.solved = solved;
+    public final void setProject(scrum.server.project.Project project) {
+        project = prepareProject(project);
+        if (isProject(project)) return;
+        this.projectId = project == null ? null : project.getId();
         entityModified();
     }
 
-    protected boolean prepareSolved(boolean solved) {
-        return solved;
+    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
+        return project;
     }
 
-    public final boolean isSolved(boolean solved) {
-        return this.solved == solved;
+    protected void repairDeadProjectReference(String entityId) {
+        if (entityId.equals(this.projectId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isProjectSet() {
+        return this.projectId != null;
+    }
+
+    public final boolean isProject(scrum.server.project.Project project) {
+        if (this.projectId == null && project == null) return true;
+        return project != null && project.getId().equals(this.projectId);
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private java.lang.String description;
+
+    public final java.lang.String getDescription() {
+        return description;
+    }
+
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+        entityModified();
+    }
+
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
+    }
+
+    public final boolean isDescriptionSet() {
+        return this.description != null;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
     }
 
     // -----------------------------------------------------------
@@ -145,44 +198,49 @@ public abstract class GImpediment
     }
 
     // -----------------------------------------------------------
-    // - description
+    // - solved
     // -----------------------------------------------------------
 
-    private java.lang.String description;
+    private boolean solved;
 
-    public final java.lang.String getDescription() {
-        return description;
+    public final boolean isSolved() {
+        return solved;
     }
 
-    public final void setDescription(java.lang.String description) {
-        description = prepareDescription(description);
-        if (isDescription(description)) return;
-        this.description = description;
+    public final void setSolved(boolean solved) {
+        solved = prepareSolved(solved);
+        if (isSolved(solved)) return;
+        this.solved = solved;
         entityModified();
     }
 
-    protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
-        return description;
+    protected boolean prepareSolved(boolean solved) {
+        return solved;
     }
 
-    public final boolean isDescriptionSet() {
-        return this.description != null;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        if (this.description == null && description == null) return true;
-        return this.description != null && this.description.equals(description);
+    public final boolean isSolved(boolean solved) {
+        return this.solved == solved;
     }
 
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
+        repairDeadProjectReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
+        if (!isProjectSet()) {
+            repairMissingMaster();
+            return;
+        }
+        try {
+            getProject();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead project reference");
+            repairDeadProjectReference(this.projectId);
+        }
     }
 
 
@@ -191,6 +249,12 @@ public abstract class GImpediment
     // -----------------------------------------------------------
 
     // --- dependencies ---
+
+    protected static scrum.server.project.ProjectDao projectDao;
+
+    public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
+        GImpediment.projectDao = projectDao;
+    }
 
     protected static ImpedimentDao impedimentDao;
 

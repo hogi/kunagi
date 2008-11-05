@@ -3,7 +3,7 @@ package scrum.client.common;
 import com.google.gwt.user.client.ui.CellPanel;
 import com.google.gwt.user.client.ui.Label;
 
-public class Gwt {
+public class ScrumUtil {
 
 	public static void addFiller(CellPanel panel) {
 		Label filler = new Label("");
