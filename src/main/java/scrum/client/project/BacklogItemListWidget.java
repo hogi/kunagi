@@ -2,8 +2,8 @@ package scrum.client.project;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.ScrumUtil;
 import scrum.client.common.ListProvider;
+import scrum.client.common.ScrumUtil;
 import scrum.client.common.StyleSheet;
 
 import com.google.gwt.user.client.ui.Button;
@@ -48,6 +48,7 @@ public class BacklogItemListWidget extends Composite {
 	}
 
 	public void update() {
+		list.clear();
 		for (BacklogItem item : provider.getList()) {
 			list.addBlock(new BacklogItemWidget(item));
 		}
