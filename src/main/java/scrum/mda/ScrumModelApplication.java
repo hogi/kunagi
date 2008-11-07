@@ -58,6 +58,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (taskModel == null) {
 			taskModel = createEntityModel("Task", "sprint");
 			autowire(taskModel);
+			taskModel.addReference("backlogItem", getBacklogItemModel()).setMaster(true);
 			taskModel.addProperty("label", String.class);
 			taskModel.addProperty("effort", Integer.class);
 		}

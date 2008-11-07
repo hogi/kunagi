@@ -32,35 +32,20 @@ public abstract class GImpediment
 
     public GImpediment(Map data) {
         super(data);
+        updateProperties(data);
     }
 
-    // --- solution ---
+    // --- solved ---
 
-    private java.lang.String solution ;
+    private boolean solved ;
 
-    public final java.lang.String getSolution() {
-        return this.solution ;
+    public final boolean isSolved() {
+        return this.solved ;
     }
 
-    public final Impediment setSolution(java.lang.String solution) {
-        this.solution = solution ;
-        return (Impediment)this;
-    }
-
-    // --- project ---
-
-    private String projectId;
-
-    // --- description ---
-
-    private java.lang.String description ;
-
-    public final java.lang.String getDescription() {
-        return this.description ;
-    }
-
-    public final Impediment setDescription(java.lang.String description) {
-        this.description = description ;
+    public final Impediment setSolved(boolean solved) {
+        this.solved = solved ;
+        propertyChanged("solved", toString(solved));
         return (Impediment)this;
     }
 
@@ -74,30 +59,50 @@ public abstract class GImpediment
 
     public final Impediment setLabel(java.lang.String label) {
         this.label = label ;
+        propertyChanged("label", label);
         return (Impediment)this;
     }
 
-    // --- solved ---
+    // --- project ---
 
-    private boolean solved ;
+    private String projectId;
 
-    public final boolean isSolved() {
-        return this.solved ;
+    // --- solution ---
+
+    private java.lang.String solution ;
+
+    public final java.lang.String getSolution() {
+        return this.solution ;
     }
 
-    public final Impediment setSolved(boolean solved) {
-        this.solved = solved ;
+    public final Impediment setSolution(java.lang.String solution) {
+        this.solution = solution ;
+        propertyChanged("solution", solution);
+        return (Impediment)this;
+    }
+
+    // --- description ---
+
+    private java.lang.String description ;
+
+    public final java.lang.String getDescription() {
+        return this.description ;
+    }
+
+    public final Impediment setDescription(java.lang.String description) {
+        this.description = description ;
+        propertyChanged("description", description);
         return (Impediment)this;
     }
 
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        solution  = (java.lang.String) props.get("solution");
-        projectId = (String) props.get("id");
-        description  = (java.lang.String) props.get("description");
-        label  = (java.lang.String) props.get("label");
         solved  = (Boolean) props.get("solved");
+        label  = (java.lang.String) props.get("label");
+        projectId = (String) props.get("id");
+        solution  = (java.lang.String) props.get("solution");
+        description  = (java.lang.String) props.get("description");
     }
 
 }

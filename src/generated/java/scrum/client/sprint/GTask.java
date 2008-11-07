@@ -32,6 +32,7 @@ public abstract class GTask
 
     public GTask(Map data) {
         super(data);
+        updateProperties(data);
     }
 
     // --- label ---
@@ -44,8 +45,13 @@ public abstract class GTask
 
     public final Task setLabel(java.lang.String label) {
         this.label = label ;
+        propertyChanged("label", label);
         return (Task)this;
     }
+
+    // --- backlogItem ---
+
+    private String backlogItemId;
 
     // --- effort ---
 
@@ -57,6 +63,7 @@ public abstract class GTask
 
     public final Task setEffort(java.lang.Integer effort) {
         this.effort = effort ;
+        propertyChanged("effort", toString(effort));
         return (Task)this;
     }
 
@@ -64,6 +71,7 @@ public abstract class GTask
 
     public void updateProperties(Map props) {
         label  = (java.lang.String) props.get("label");
+        backlogItemId = (String) props.get("id");
         effort  = (java.lang.Integer) props.get("effort");
     }
 

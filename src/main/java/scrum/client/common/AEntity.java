@@ -2,6 +2,8 @@ package scrum.client.common;
 
 import java.util.Map;
 
+import scrum.client.ScrumGwtApplication;
+
 /**
  * Base class for entities.
  */
@@ -23,6 +25,10 @@ public class AEntity {
 		this.id = id;
 	}
 
+	protected final void propertyChanged(String property, String value) {
+		ScrumGwtApplication.changeProperty(getId(), property, value);
+	}
+
 	@Override
 	public final boolean equals(Object obj) {
 		return id.equals(((AEntity) obj).id);
@@ -31,6 +37,16 @@ public class AEntity {
 	@Override
 	public String toString() {
 		return getId();
+	}
+
+	// --- helper ---
+
+	protected String toString(Integer value) {
+		return value == null ? null : value.toString();
+	}
+
+	protected String toString(Boolean value) {
+		return value == null ? null : value.toString();
 	}
 
 }

@@ -32,18 +32,34 @@ public abstract class GBacklogItem
 
     public GBacklogItem(Map data) {
         super(data);
+        updateProperties(data);
     }
 
-    // --- done ---
+    // --- label ---
 
-    private boolean done ;
+    private java.lang.String label ;
 
-    public final boolean isDone() {
-        return this.done ;
+    public final java.lang.String getLabel() {
+        return this.label ;
     }
 
-    public final BacklogItem setDone(boolean done) {
-        this.done = done ;
+    public final BacklogItem setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", label);
+        return (BacklogItem)this;
+    }
+
+    // --- effort ---
+
+    private java.lang.Integer effort ;
+
+    public final java.lang.Integer getEffort() {
+        return this.effort ;
+    }
+
+    public final BacklogItem setEffort(java.lang.Integer effort) {
+        this.effort = effort ;
+        propertyChanged("effort", toString(effort));
         return (BacklogItem)this;
     }
 
@@ -57,19 +73,7 @@ public abstract class GBacklogItem
 
     public final BacklogItem setDescription(java.lang.String description) {
         this.description = description ;
-        return (BacklogItem)this;
-    }
-
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final BacklogItem setLabel(java.lang.String label) {
-        this.label = label ;
+        propertyChanged("description", description);
         return (BacklogItem)this;
     }
 
@@ -77,16 +81,17 @@ public abstract class GBacklogItem
 
     private String projectId;
 
-    // --- effort ---
+    // --- done ---
 
-    private java.lang.Integer effort ;
+    private boolean done ;
 
-    public final java.lang.Integer getEffort() {
-        return this.effort ;
+    public final boolean isDone() {
+        return this.done ;
     }
 
-    public final BacklogItem setEffort(java.lang.Integer effort) {
-        this.effort = effort ;
+    public final BacklogItem setDone(boolean done) {
+        this.done = done ;
+        propertyChanged("done", toString(done));
         return (BacklogItem)this;
     }
 
@@ -100,17 +105,18 @@ public abstract class GBacklogItem
 
     public final BacklogItem setTestDescription(java.lang.String testDescription) {
         this.testDescription = testDescription ;
+        propertyChanged("testDescription", testDescription);
         return (BacklogItem)this;
     }
 
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        done  = (Boolean) props.get("done");
-        description  = (java.lang.String) props.get("description");
         label  = (java.lang.String) props.get("label");
-        projectId = (String) props.get("id");
         effort  = (java.lang.Integer) props.get("effort");
+        description  = (java.lang.String) props.get("description");
+        projectId = (String) props.get("id");
+        done  = (Boolean) props.get("done");
         testDescription  = (java.lang.String) props.get("testDescription");
     }
 

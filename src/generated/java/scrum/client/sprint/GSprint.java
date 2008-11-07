@@ -32,6 +32,7 @@ public abstract class GSprint
 
     public GSprint(Map data) {
         super(data);
+        updateProperties(data);
     }
 
     // --- project ---
@@ -48,6 +49,7 @@ public abstract class GSprint
 
     public final Sprint setLabel(java.lang.String label) {
         this.label = label ;
+        propertyChanged("label", label);
         return (Sprint)this;
     }
 

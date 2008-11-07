@@ -45,6 +45,8 @@ public abstract class GTaskDao
     public void clearCaches() {
         tasksByLabelCache.clear();
         labelsCache = null;
+        tasksByBacklogItemCache.clear();
+        backlogItemsCache = null;
         tasksByEffortCache.clear();
         effortsCache = null;
     }
@@ -106,6 +108,46 @@ public abstract class GTaskDao
     }
 
     // -----------------------------------------------------------
+    // - backlogItem
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.project.BacklogItem,Set<Task>> tasksByBacklogItemCache = new Cache<scrum.server.project.BacklogItem,Set<Task>>(
+            new Cache.Factory<scrum.server.project.BacklogItem,Set<Task>>() {
+                public Set<Task> create(scrum.server.project.BacklogItem backlogItem) {
+                    return getEntities(new IsBacklogItem(backlogItem));
+                }
+            });
+
+    public final Set<Task> getTasksByBacklogItem(scrum.server.project.BacklogItem backlogItem) {
+        return tasksByBacklogItemCache.get(backlogItem);
+    }
+    private Set<scrum.server.project.BacklogItem> backlogItemsCache;
+
+    public final Set<scrum.server.project.BacklogItem> getBacklogItems() {
+        if (backlogItemsCache == null) {
+            backlogItemsCache = new HashSet<scrum.server.project.BacklogItem>();
+            for (Task e : getEntities()) {
+                if (e.isBacklogItemSet()) backlogItemsCache.add(e.getBacklogItem());
+            }
+        }
+        return backlogItemsCache;
+    }
+
+    private static class IsBacklogItem implements Predicate<Task> {
+
+        private scrum.server.project.BacklogItem value;
+
+        public IsBacklogItem(scrum.server.project.BacklogItem value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isBacklogItem(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - effort
     // -----------------------------------------------------------
 
@@ -159,5 +201,11 @@ public abstract class GTaskDao
     }
 
     // --- dependencies ---
+
+    protected scrum.server.project.BacklogItemDao backlogItemDao;
+
+    public void setBacklogItemDao(scrum.server.project.BacklogItemDao backlogItemDao) {
+        this.backlogItemDao = backlogItemDao;
+    }
 
 }

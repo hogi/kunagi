@@ -32,6 +32,7 @@ public abstract class GUser
 
     public GUser(Map data) {
         super(data);
+        updateProperties(data);
     }
 
     // --- update properties by map ---

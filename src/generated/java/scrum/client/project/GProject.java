@@ -32,6 +32,7 @@ public abstract class GProject
 
     public GProject(Map data) {
         super(data);
+        updateProperties(data);
     }
 
     // --- label ---
@@ -44,6 +45,7 @@ public abstract class GProject
 
     public final Project setLabel(java.lang.String label) {
         this.label = label ;
+        propertyChanged("label", label);
         return (Project)this;
     }
 

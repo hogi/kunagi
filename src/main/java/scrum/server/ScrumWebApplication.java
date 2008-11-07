@@ -19,8 +19,12 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	private Set<SessionData> sessions = new HashSet<SessionData>();
 
+	public void onChangeProperty(SessionData session, String entityId, String property, String value) {
+		LOG.info("changeProperty:", entityId, property, value);
+	}
+
 	public void onSelectProject(SessionData session, String id) {
-		LOG.info("Project", id, "requested");
+		LOG.info("selectProject:", id);
 
 		Project project = (Project) getProjectDao().getEntities().toArray()[0];
 		session.setProject(project);
@@ -30,7 +34,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public void onGetImpediments(SessionData session) {
-		LOG.info("Impediments requested");
+		LOG.info("getImpediments");
 
 		Project project = session.getProject();
 		Set<Impediment> impediments = getImpedimentDao().getImpedimentsByProject(project);
@@ -40,7 +44,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public void onGetBacklogItems(SessionData session) {
-		LOG.info("BacklogItems requested");
+		LOG.info("getBacklogItems");
 
 		Project project = session.getProject();
 		Set<BacklogItem> backlogItems = getBacklogItemDao().getBacklogItemsByProject(project);

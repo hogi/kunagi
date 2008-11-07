@@ -44,11 +44,11 @@ public abstract class GBacklogItem
 
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("done", this.done);
-        properties.put("description", this.description);
         properties.put("label", this.label);
-        properties.put("project", this.projectId);
         properties.put("effort", this.effort);
+        properties.put("description", this.description);
+        properties.put("project", this.projectId);
+        properties.put("done", this.done);
         properties.put("testDescription", this.testDescription);
     }
 
@@ -61,68 +61,12 @@ public abstract class GBacklogItem
         super(template);
         if (template==null) return;
 
-        setDone(template.isDone());
-        setDescription(template.getDescription());
         setLabel(template.getLabel());
-        setProject(template.getProject());
         setEffort(template.getEffort());
+        setDescription(template.getDescription());
+        setProject(template.getProject());
+        setDone(template.isDone());
         setTestDescription(template.getTestDescription());
-    }
-
-    // -----------------------------------------------------------
-    // - done
-    // -----------------------------------------------------------
-
-    private boolean done;
-
-    public final boolean isDone() {
-        return done;
-    }
-
-    public final void setDone(boolean done) {
-        done = prepareDone(done);
-        if (isDone(done)) return;
-        this.done = done;
-        entityModified();
-    }
-
-    protected boolean prepareDone(boolean done) {
-        return done;
-    }
-
-    public final boolean isDone(boolean done) {
-        return this.done == done;
-    }
-
-    // -----------------------------------------------------------
-    // - description
-    // -----------------------------------------------------------
-
-    private java.lang.String description;
-
-    public final java.lang.String getDescription() {
-        return description;
-    }
-
-    public final void setDescription(java.lang.String description) {
-        description = prepareDescription(description);
-        if (isDescription(description)) return;
-        this.description = description;
-        entityModified();
-    }
-
-    protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
-        return description;
-    }
-
-    public final boolean isDescriptionSet() {
-        return this.description != null;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        if (this.description == null && description == null) return true;
-        return this.description != null && this.description.equals(description);
     }
 
     // -----------------------------------------------------------
@@ -154,6 +98,67 @@ public abstract class GBacklogItem
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - effort
+    // -----------------------------------------------------------
+
+    private java.lang.Integer effort;
+
+    public final java.lang.Integer getEffort() {
+        return effort;
+    }
+
+    public final void setEffort(java.lang.Integer effort) {
+        effort = prepareEffort(effort);
+        if (isEffort(effort)) return;
+        this.effort = effort;
+        entityModified();
+    }
+
+    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
+        return effort;
+    }
+
+    public final boolean isEffortSet() {
+        return this.effort != null;
+    }
+
+    public final boolean isEffort(java.lang.Integer effort) {
+        if (this.effort == null && effort == null) return true;
+        return this.effort != null && this.effort.equals(effort);
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private java.lang.String description;
+
+    public final java.lang.String getDescription() {
+        return description;
+    }
+
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+        entityModified();
+    }
+
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
+    }
+
+    public final boolean isDescriptionSet() {
+        return this.description != null;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
     }
 
     // -----------------------------------------------------------
@@ -194,33 +199,28 @@ public abstract class GBacklogItem
     }
 
     // -----------------------------------------------------------
-    // - effort
+    // - done
     // -----------------------------------------------------------
 
-    private java.lang.Integer effort;
+    private boolean done;
 
-    public final java.lang.Integer getEffort() {
-        return effort;
+    public final boolean isDone() {
+        return done;
     }
 
-    public final void setEffort(java.lang.Integer effort) {
-        effort = prepareEffort(effort);
-        if (isEffort(effort)) return;
-        this.effort = effort;
+    public final void setDone(boolean done) {
+        done = prepareDone(done);
+        if (isDone(done)) return;
+        this.done = done;
         entityModified();
     }
 
-    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
-        return effort;
+    protected boolean prepareDone(boolean done) {
+        return done;
     }
 
-    public final boolean isEffortSet() {
-        return this.effort != null;
-    }
-
-    public final boolean isEffort(java.lang.Integer effort) {
-        if (this.effort == null && effort == null) return true;
-        return this.effort != null && this.effort.equals(effort);
+    public final boolean isDone(boolean done) {
+        return this.done == done;
     }
 
     // -----------------------------------------------------------

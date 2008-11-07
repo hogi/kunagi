@@ -10,4 +10,8 @@ public interface ScrumService extends RemoteService {
 
 	ServerData getBacklogItems();
 
+	ServerData changeProperty(String entityId, String property, String value);
+
+	ServerData sleep(long millis);
+
 }

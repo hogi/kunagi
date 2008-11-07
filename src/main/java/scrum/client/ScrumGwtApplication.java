@@ -37,8 +37,6 @@ public class ScrumGwtApplication implements EntryPoint {
 
 	private static ScrumServiceAsync scrumService;
 
-	private static DefaultCallback defaultCallback = new DefaultCallback();
-
 	private static AbsolutePanel dndPanel;
 	private static MyFuckingAwesomeDragController dragController;
 
@@ -57,16 +55,29 @@ public class ScrumGwtApplication implements EntryPoint {
 		RootPanel.get("workspace").add(dndPanel);
 
 		// simulate login
-		ScrumGwtApplication.login("duke", "geheim");
+		login("duke", "geheim");
 
 		// simulate project selection
 		WorkspaceWidget.lock("Loading project...");
-		ScrumGwtApplication.selectProject("???", new Runnable() {
+		selectProject("???", new Runnable() {
 
 			public void run() {
 				WorkspaceWidget.showTest();
 			}
 		});
+
+		getScrumService().sleep(5000, new DefaultCallback(new Runnable() {
+
+			public void run() {
+				System.out.println("back from 5000");
+			}
+		}));
+		getScrumService().sleep(1000, new DefaultCallback(new Runnable() {
+
+			public void run() {
+				System.out.println("back from 1000");
+			}
+		}));
 	}
 
 	public static void login(String name, String password) {
@@ -76,6 +87,10 @@ public class ScrumGwtApplication implements EntryPoint {
 
 	public static User getUser() {
 		return user;
+	}
+
+	public static void changeProperty(String entityId, String property, String value) {
+		getScrumService().changeProperty(entityId, property, value, new DefaultCallback());
 	}
 
 	public static void selectProject(String id, Runnable successAction) {

@@ -6,13 +6,22 @@
 
 	<display-name>scrum</display-name>
 
-	<!-- servlets -->
-
-
-	<!-- mappings -->
-
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
+
+	<!-- servlets -->
+
+	<servlet>
+		<servlet-name>scrum</servlet-name>
+		<servlet-class>scrum.server.ScrumServiceImpl</servlet-class>
+	</servlet>	
+
+	<!-- mappings -->
+
+	<servlet-mapping>
+		<servlet-name>scrum</servlet-name>
+		<url-pattern>/scrum</url-pattern>
+	</servlet-mapping>
 
 </web-app>

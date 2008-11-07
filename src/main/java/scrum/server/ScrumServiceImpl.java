@@ -1,55 +1,44 @@
 package scrum.server;
 
-import ilarkesto.di.app.WebApplicationStarter;
+import ilarkesto.base.Utl;
 import ilarkesto.logging.Logger;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-
 import scrum.client.service.ScrumService;
 import scrum.client.service.ServerData;
+import scrum.server.common.AServiceImpl;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
-public class ScrumServiceImpl extends RemoteServiceServlet implements ScrumService {
+public class ScrumServiceImpl extends AServiceImpl implements ScrumService {
 
 	private static final Logger LOG = Logger.get(ScrumServiceImpl.class);
-	private static final String SESSION_DATA_KEY = SessionData.class.getSimpleName();
-
-	private ScrumWebApplication app;
 
 	public ServerData getProject(String projectId) {
 		SessionData session = getSessionData();
-		app.onSelectProject(session, projectId);
+		getApp().onSelectProject(session, projectId);
 		return session.popNextData();
 	}
 
 	public ServerData getImpediments() {
 		SessionData session = getSessionData();
-		app.onGetImpediments(session);
+		getApp().onGetImpediments(session);
 		return session.popNextData();
 	}
 
 	public ServerData getBacklogItems() {
 		SessionData session = getSessionData();
-		app.onGetBacklogItems(session);
+		getApp().onGetBacklogItems(session);
 		return session.popNextData();
 	}
 
-	private SessionData getSessionData() {
-		SessionData data = (SessionData) getThreadLocalRequest().getSession().getAttribute(SESSION_DATA_KEY);
-		if (data == null) {
-			data = new SessionData();
-			getThreadLocalRequest().getSession().setAttribute(SESSION_DATA_KEY, data);
-		}
-		return data;
+	public ServerData changeProperty(String entityId, String property, String value) {
+		SessionData session = getSessionData();
+		getApp().onChangeProperty(session, entityId, property, value);
+		return session.popNextData();
 	}
 
-	@Override
-	public void init(ServletConfig servletConfig) throws ServletException {
-		super.init(servletConfig);
-		app = (ScrumWebApplication) WebApplicationStarter
-				.startWebApplication(ScrumWebApplication.class.getName(), null);
+	public ServerData sleep(long millis) {
+		SessionData session = getSessionData();
+		LOG.debug("sleep", millis);
+		Utl.sleep(millis);
+		return session.popNextData();
 	}
 
 }

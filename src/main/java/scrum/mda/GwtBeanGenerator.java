@@ -69,6 +69,9 @@ public class GwtBeanGenerator extends ABeanModelClassGenerator<BeanModel> {
 				ln("");
 				ln("    public final", bean.getName(), "set" + nameUpper + "(" + p.getType(), p.getName() + ") {");
 				ln("        this." + p.getName(), "=", p.getName(), ";");
+				String toStringExpr = p.getType().equals(String.class.getName()) ? p.getName() : "toString("
+						+ p.getName() + ")";
+				ln("        propertyChanged(\"" + p.getName() + "\", " + toStringExpr + ");");
 				ln("        return (" + bean.getName() + ")this;");
 				ln("    }");
 			}

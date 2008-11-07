@@ -10,4 +10,8 @@ public interface ScrumServiceAsync {
 
 	void getBacklogItems(AsyncCallback<ServerData> callback);
 
+	void changeProperty(String entityId, String property, String value, AsyncCallback<ServerData> callback);
+
+	void sleep(long millis, AsyncCallback<ServerData> callback);
+
 }
