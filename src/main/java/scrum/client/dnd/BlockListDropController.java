@@ -27,12 +27,14 @@ public class BlockListDropController implements DropController {
 	public void onDrop(DragContext context) {
 		WidgetArea area = new WidgetArea(dropTarget, null);
 		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
+		ABlockWidget block = (ABlockWidget) context.draggable;
 
-		list.remove((ABlockWidget) context.draggable);
+		list.remove(block);
+		int dropTargetId = list.indexOf(dropTarget);
 		if (isHigher(area, location)) {
-			list.addBlockAt(list.indexOf(dropTarget), (ABlockWidget) context.draggable);
+			list.addBlockAt(dropTargetId, block);
 		} else {
-			list.addBlockAt(list.indexOf(dropTarget) + 1, (ABlockWidget) context.draggable);
+			list.addBlockAt(++dropTargetId, block);
 		}
 	}
 

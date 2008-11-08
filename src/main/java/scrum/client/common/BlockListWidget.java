@@ -71,6 +71,11 @@ public class BlockListWidget extends Composite {
 		blocks.add(index, block);
 		table.insertRow(index);
 		table.setWidget(index, 0, block);
+
+		selectedRow = (selectedRow >= index) ? selectedRow + 1 : selectedRow;
+		if (block.isExtended()) {
+			selectBlock(block);
+		}
 	}
 
 	public ABlockWidget getBlock(int index) {
@@ -88,6 +93,10 @@ public class BlockListWidget extends Composite {
 	public ABlockWidget getSelectedBlock() {
 		if (selectedRow < 0) return null;
 		return blocks.get(selectedRow);
+	}
+
+	public int getSelectedBlockId() {
+		return selectedRow;
 	}
 
 	public void selectRow(int row) {
@@ -128,6 +137,7 @@ public class BlockListWidget extends Composite {
 		ABlockWidget block = getSelectedBlock();
 		if (block == null) return;
 		block.removeStyleName(StyleSheet.BLOCK_WIDGET_SELECTED);
+		selectedRow = -1;
 		block.setExtended(false);
 	}
 
