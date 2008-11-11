@@ -10,7 +10,7 @@
 
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
-// generator: scrum.mda.GwtBeanGenerator
+// generator: scrum.mda.framework.GwtBeanGenerator
 
 
 
@@ -35,20 +35,6 @@ public abstract class GTask
         updateProperties(data);
     }
 
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final Task setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", label);
-        return (Task)this;
-    }
-
     // --- backlogItem ---
 
     private String backlogItemId;
@@ -67,12 +53,26 @@ public abstract class GTask
         return (Task)this;
     }
 
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final Task setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", label);
+        return (Task)this;
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        label  = (java.lang.String) props.get("label");
         backlogItemId = (String) props.get("id");
         effort  = (java.lang.Integer) props.get("effort");
+        label  = (java.lang.String) props.get("label");
     }
 
 }

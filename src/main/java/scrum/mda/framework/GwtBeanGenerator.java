@@ -1,4 +1,4 @@
-package scrum.mda;
+package scrum.mda.framework;
 
 import ilarkesto.base.Str;
 import ilarkesto.mda.gen.ABeanModelClassGenerator;

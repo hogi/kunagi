@@ -1,4 +1,4 @@
-package scrum.client.service;
+package scrum.client;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * This class is for transporting data from the scrum server to the GWT client.
  */
-public class ServerData implements Serializable {
+public class DataTransferObject implements Serializable {
 
 	public Map project;
 	public List<Map> impediments;

@@ -44,9 +44,9 @@ public abstract class GTask
 
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("label", this.label);
         properties.put("backlogItem", this.backlogItemId);
         properties.put("effort", this.effort);
+        properties.put("label", this.label);
     }
 
     private static final Logger LOG = Logger.get(GTask.class);
@@ -58,40 +58,9 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
-        setLabel(template.getLabel());
         setBacklogItem(template.getBacklogItem());
         setEffort(template.getEffort());
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        entityModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
+        setLabel(template.getLabel());
     }
 
     // -----------------------------------------------------------
@@ -159,6 +128,37 @@ public abstract class GTask
     public final boolean isEffort(java.lang.Integer effort) {
         if (this.effort == null && effort == null) return true;
         return this.effort != null && this.effort.equals(effort);
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
     }
 
     protected void repairDeadReferences(String entityId) {

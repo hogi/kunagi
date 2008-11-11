@@ -9,9 +9,6 @@ import scrum.client.dnd.MyFuckingAwesomeDragController;
 import scrum.client.impediments.Impediment;
 import scrum.client.project.BacklogItem;
 import scrum.client.project.Project;
-import scrum.client.service.ScrumService;
-import scrum.client.service.ScrumServiceAsync;
-import scrum.client.service.ServerData;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -105,7 +102,7 @@ public class ScrumGwtApplication implements EntryPoint {
 		getScrumService().getBacklogItems(new DefaultCallback(successAction));
 	}
 
-	private static void processMaster(ServerData data) {
+	private static void processMaster(DataTransferObject data) {
 		if (data.project != null) {
 			System.out.println("project received");
 			project = new Project(data.project);
@@ -148,7 +145,7 @@ public class ScrumGwtApplication implements EntryPoint {
 		return scrumService;
 	}
 
-	static class DefaultCallback implements AsyncCallback<ServerData> {
+	static class DefaultCallback implements AsyncCallback<DataTransferObject> {
 
 		private Runnable successAction;
 
@@ -158,7 +155,7 @@ public class ScrumGwtApplication implements EntryPoint {
 			this.successAction = successAction;
 		}
 
-		public void onSuccess(ServerData data) {
+		public void onSuccess(DataTransferObject data) {
 			processMaster(data);
 			if (successAction != null) successAction.run();
 		}

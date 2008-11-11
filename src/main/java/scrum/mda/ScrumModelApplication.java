@@ -6,6 +6,10 @@ import ilarkesto.mda.model.ApplicationModel;
 import ilarkesto.mda.model.BeanModel;
 import ilarkesto.mda.model.EntityModel;
 import ilarkesto.mda.model.PackageModel;
+import scrum.mda.framework.GwtBeanGenerator;
+import scrum.mda.framework.GwtServiceAsyncInterfaceGenerator;
+import scrum.mda.framework.GwtServiceInterfaceGenerator;
+import scrum.mda.framework.GwtServiceModel;
 
 public class ScrumModelApplication extends AGeneratorApplication {
 
@@ -92,6 +96,26 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return userModel;
 	}
 
+	// ---------------
+	// --- service ---
+	// ---------------
+
+	private GwtServiceModel serviceModel;
+
+	public GwtServiceModel getServiceModel() {
+		if (serviceModel == null) {
+			serviceModel = createGwtServiceModel("scrum");
+			autowire(serviceModel);
+			serviceModel.addMethod("getProject").addParameter("projectId", String.class);
+			serviceModel.addMethod("getImpediments");
+			serviceModel.addMethod("getBacklogItems");
+			serviceModel.addMethod("changeProperty").addParameter("entityId", String.class).addParameter("property",
+				String.class).addParameter("value", String.class);
+			serviceModel.addMethod("sleep").addParameter("millis", long.class);
+		}
+		return serviceModel;
+	}
+
 	// -------------------
 	// --- application ---
 	// -------------------
@@ -123,6 +147,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return basePackageModel;
 	}
 
+	private GwtServiceModel createGwtServiceModel(String name) {
+		return new GwtServiceModel(name, getBasePackageModel());
+	}
+
 	public static void main(String[] args) throws InterruptedException {
 		ApplicationStarter.startApplication(ScrumModelApplication.class).generateClasses();
 		Thread.sleep(1000);
@@ -137,4 +165,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		}
 	}
 
+	@Override
+	public void generateClasses() {
+		super.generateClasses();
+		autowire(new GwtServiceInterfaceGenerator()).generate(getServiceModel());
+		autowire(new GwtServiceAsyncInterfaceGenerator()).generate(getServiceModel());
+	}
 }

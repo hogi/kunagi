@@ -2,39 +2,39 @@ package scrum.server;
 
 import ilarkesto.base.Utl;
 import ilarkesto.logging.Logger;
-import scrum.client.service.ScrumService;
-import scrum.client.service.ServerData;
+import scrum.client.DataTransferObject;
+import scrum.client.ScrumService;
 import scrum.server.common.AServiceImpl;
 
 public class ScrumServiceImpl extends AServiceImpl implements ScrumService {
 
 	private static final Logger LOG = Logger.get(ScrumServiceImpl.class);
 
-	public ServerData getProject(String projectId) {
+	public DataTransferObject getProject(String projectId) {
 		SessionData session = getSessionData();
 		getApp().onSelectProject(session, projectId);
 		return session.popNextData();
 	}
 
-	public ServerData getImpediments() {
+	public DataTransferObject getImpediments() {
 		SessionData session = getSessionData();
 		getApp().onGetImpediments(session);
 		return session.popNextData();
 	}
 
-	public ServerData getBacklogItems() {
+	public DataTransferObject getBacklogItems() {
 		SessionData session = getSessionData();
 		getApp().onGetBacklogItems(session);
 		return session.popNextData();
 	}
 
-	public ServerData changeProperty(String entityId, String property, String value) {
+	public DataTransferObject changeProperty(String entityId, String property, String value) {
 		SessionData session = getSessionData();
 		getApp().onChangeProperty(session, entityId, property, value);
 		return session.popNextData();
 	}
 
-	public ServerData sleep(long millis) {
+	public DataTransferObject sleep(long millis) {
 		SessionData session = getSessionData();
 		LOG.debug("sleep", millis);
 		Utl.sleep(millis);

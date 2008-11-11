@@ -10,7 +10,7 @@
 
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
-// generator: scrum.mda.GwtBeanGenerator
+// generator: scrum.mda.framework.GwtBeanGenerator
 
 
 
@@ -49,24 +49,6 @@ public abstract class GImpediment
         return (Impediment)this;
     }
 
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final Impediment setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", label);
-        return (Impediment)this;
-    }
-
-    // --- project ---
-
-    private String projectId;
-
     // --- solution ---
 
     private java.lang.String solution ;
@@ -80,6 +62,10 @@ public abstract class GImpediment
         propertyChanged("solution", solution);
         return (Impediment)this;
     }
+
+    // --- project ---
+
+    private String projectId;
 
     // --- description ---
 
@@ -95,14 +81,28 @@ public abstract class GImpediment
         return (Impediment)this;
     }
 
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final Impediment setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", label);
+        return (Impediment)this;
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         solved  = (Boolean) props.get("solved");
-        label  = (java.lang.String) props.get("label");
-        projectId = (String) props.get("id");
         solution  = (java.lang.String) props.get("solution");
+        projectId = (String) props.get("id");
         description  = (java.lang.String) props.get("description");
+        label  = (java.lang.String) props.get("label");
     }
 
 }

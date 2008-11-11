@@ -10,7 +10,7 @@
 
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
-// generator: scrum.mda.GwtBeanGenerator
+// generator: scrum.mda.framework.GwtBeanGenerator
 
 
 
@@ -35,6 +35,24 @@ public abstract class GBacklogItem
         updateProperties(data);
     }
 
+    // --- project ---
+
+    private String projectId;
+
+    // --- testDescription ---
+
+    private java.lang.String testDescription ;
+
+    public final java.lang.String getTestDescription() {
+        return this.testDescription ;
+    }
+
+    public final BacklogItem setTestDescription(java.lang.String testDescription) {
+        this.testDescription = testDescription ;
+        propertyChanged("testDescription", testDescription);
+        return (BacklogItem)this;
+    }
+
     // --- label ---
 
     private java.lang.String label ;
@@ -46,6 +64,20 @@ public abstract class GBacklogItem
     public final BacklogItem setLabel(java.lang.String label) {
         this.label = label ;
         propertyChanged("label", label);
+        return (BacklogItem)this;
+    }
+
+    // --- done ---
+
+    private boolean done ;
+
+    public final boolean isDone() {
+        return this.done ;
+    }
+
+    public final BacklogItem setDone(boolean done) {
+        this.done = done ;
+        propertyChanged("done", toString(done));
         return (BacklogItem)this;
     }
 
@@ -77,47 +109,15 @@ public abstract class GBacklogItem
         return (BacklogItem)this;
     }
 
-    // --- project ---
-
-    private String projectId;
-
-    // --- done ---
-
-    private boolean done ;
-
-    public final boolean isDone() {
-        return this.done ;
-    }
-
-    public final BacklogItem setDone(boolean done) {
-        this.done = done ;
-        propertyChanged("done", toString(done));
-        return (BacklogItem)this;
-    }
-
-    // --- testDescription ---
-
-    private java.lang.String testDescription ;
-
-    public final java.lang.String getTestDescription() {
-        return this.testDescription ;
-    }
-
-    public final BacklogItem setTestDescription(java.lang.String testDescription) {
-        this.testDescription = testDescription ;
-        propertyChanged("testDescription", testDescription);
-        return (BacklogItem)this;
-    }
-
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
+        projectId = (String) props.get("id");
+        testDescription  = (java.lang.String) props.get("testDescription");
         label  = (java.lang.String) props.get("label");
+        done  = (Boolean) props.get("done");
         effort  = (java.lang.Integer) props.get("effort");
         description  = (java.lang.String) props.get("description");
-        projectId = (String) props.get("id");
-        done  = (Boolean) props.get("done");
-        testDescription  = (java.lang.String) props.get("testDescription");
     }
 
 }

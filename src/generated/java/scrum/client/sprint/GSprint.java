@@ -10,7 +10,7 @@
 
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
-// generator: scrum.mda.GwtBeanGenerator
+// generator: scrum.mda.framework.GwtBeanGenerator
 
 
 
@@ -35,10 +35,6 @@ public abstract class GSprint
         updateProperties(data);
     }
 
-    // --- project ---
-
-    private String projectId;
-
     // --- label ---
 
     private java.lang.String label ;
@@ -53,11 +49,15 @@ public abstract class GSprint
         return (Sprint)this;
     }
 
+    // --- project ---
+
+    private String projectId;
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        projectId = (String) props.get("id");
         label  = (java.lang.String) props.get("label");
+        projectId = (String) props.get("id");
     }
 
 }

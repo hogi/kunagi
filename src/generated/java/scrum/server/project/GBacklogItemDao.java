@@ -43,17 +43,17 @@ public abstract class GBacklogItemDao
 
     // --- clear caches ---
     public void clearCaches() {
+        backlogItemsByProjectCache.clear();
+        projectsCache = null;
+        backlogItemsByTestDescriptionCache.clear();
+        testDescriptionsCache = null;
         backlogItemsByLabelCache.clear();
         labelsCache = null;
+        backlogItemsByDoneCache.clear();
         backlogItemsByEffortCache.clear();
         effortsCache = null;
         backlogItemsByDescriptionCache.clear();
         descriptionsCache = null;
-        backlogItemsByProjectCache.clear();
-        projectsCache = null;
-        backlogItemsByDoneCache.clear();
-        backlogItemsByTestDescriptionCache.clear();
-        testDescriptionsCache = null;
     }
 
     @Override
@@ -70,6 +70,86 @@ public abstract class GBacklogItemDao
         if (event.getEntity() instanceof BacklogItem) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - project
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.project.Project,Set<BacklogItem>> backlogItemsByProjectCache = new Cache<scrum.server.project.Project,Set<BacklogItem>>(
+            new Cache.Factory<scrum.server.project.Project,Set<BacklogItem>>() {
+                public Set<BacklogItem> create(scrum.server.project.Project project) {
+                    return getEntities(new IsProject(project));
+                }
+            });
+
+    public final Set<BacklogItem> getBacklogItemsByProject(scrum.server.project.Project project) {
+        return backlogItemsByProjectCache.get(project);
+    }
+    private Set<scrum.server.project.Project> projectsCache;
+
+    public final Set<scrum.server.project.Project> getProjects() {
+        if (projectsCache == null) {
+            projectsCache = new HashSet<scrum.server.project.Project>();
+            for (BacklogItem e : getEntities()) {
+                if (e.isProjectSet()) projectsCache.add(e.getProject());
+            }
+        }
+        return projectsCache;
+    }
+
+    private static class IsProject implements Predicate<BacklogItem> {
+
+        private scrum.server.project.Project value;
+
+        public IsProject(scrum.server.project.Project value) {
+            this.value = value;
+        }
+
+        public boolean test(BacklogItem e) {
+            return e.isProject(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - testDescription
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<BacklogItem>> backlogItemsByTestDescriptionCache = new Cache<java.lang.String,Set<BacklogItem>>(
+            new Cache.Factory<java.lang.String,Set<BacklogItem>>() {
+                public Set<BacklogItem> create(java.lang.String testDescription) {
+                    return getEntities(new IsTestDescription(testDescription));
+                }
+            });
+
+    public final Set<BacklogItem> getBacklogItemsByTestDescription(java.lang.String testDescription) {
+        return backlogItemsByTestDescriptionCache.get(testDescription);
+    }
+    private Set<java.lang.String> testDescriptionsCache;
+
+    public final Set<java.lang.String> getTestDescriptions() {
+        if (testDescriptionsCache == null) {
+            testDescriptionsCache = new HashSet<java.lang.String>();
+            for (BacklogItem e : getEntities()) {
+                if (e.isTestDescriptionSet()) testDescriptionsCache.add(e.getTestDescription());
+            }
+        }
+        return testDescriptionsCache;
+    }
+
+    private static class IsTestDescription implements Predicate<BacklogItem> {
+
+        private java.lang.String value;
+
+        public IsTestDescription(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(BacklogItem e) {
+            return e.isTestDescription(value);
+        }
+
     }
 
     // -----------------------------------------------------------
@@ -108,6 +188,35 @@ public abstract class GBacklogItemDao
 
         public boolean test(BacklogItem e) {
             return e.isLabel(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - done
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<BacklogItem>> backlogItemsByDoneCache = new Cache<Boolean,Set<BacklogItem>>(
+            new Cache.Factory<Boolean,Set<BacklogItem>>() {
+                public Set<BacklogItem> create(Boolean done) {
+                    return getEntities(new IsDone(done));
+                }
+            });
+
+    public final Set<BacklogItem> getBacklogItemsByDone(boolean done) {
+        return backlogItemsByDoneCache.get(done);
+    }
+
+    private static class IsDone implements Predicate<BacklogItem> {
+
+        private boolean value;
+
+        public IsDone(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(BacklogItem e) {
+            return value == e.isDone();
         }
 
     }
@@ -188,115 +297,6 @@ public abstract class GBacklogItemDao
 
         public boolean test(BacklogItem e) {
             return e.isDescription(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - project
-    // -----------------------------------------------------------
-
-    private final Cache<scrum.server.project.Project,Set<BacklogItem>> backlogItemsByProjectCache = new Cache<scrum.server.project.Project,Set<BacklogItem>>(
-            new Cache.Factory<scrum.server.project.Project,Set<BacklogItem>>() {
-                public Set<BacklogItem> create(scrum.server.project.Project project) {
-                    return getEntities(new IsProject(project));
-                }
-            });
-
-    public final Set<BacklogItem> getBacklogItemsByProject(scrum.server.project.Project project) {
-        return backlogItemsByProjectCache.get(project);
-    }
-    private Set<scrum.server.project.Project> projectsCache;
-
-    public final Set<scrum.server.project.Project> getProjects() {
-        if (projectsCache == null) {
-            projectsCache = new HashSet<scrum.server.project.Project>();
-            for (BacklogItem e : getEntities()) {
-                if (e.isProjectSet()) projectsCache.add(e.getProject());
-            }
-        }
-        return projectsCache;
-    }
-
-    private static class IsProject implements Predicate<BacklogItem> {
-
-        private scrum.server.project.Project value;
-
-        public IsProject(scrum.server.project.Project value) {
-            this.value = value;
-        }
-
-        public boolean test(BacklogItem e) {
-            return e.isProject(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - done
-    // -----------------------------------------------------------
-
-    private final Cache<Boolean,Set<BacklogItem>> backlogItemsByDoneCache = new Cache<Boolean,Set<BacklogItem>>(
-            new Cache.Factory<Boolean,Set<BacklogItem>>() {
-                public Set<BacklogItem> create(Boolean done) {
-                    return getEntities(new IsDone(done));
-                }
-            });
-
-    public final Set<BacklogItem> getBacklogItemsByDone(boolean done) {
-        return backlogItemsByDoneCache.get(done);
-    }
-
-    private static class IsDone implements Predicate<BacklogItem> {
-
-        private boolean value;
-
-        public IsDone(boolean value) {
-            this.value = value;
-        }
-
-        public boolean test(BacklogItem e) {
-            return value == e.isDone();
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - testDescription
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<BacklogItem>> backlogItemsByTestDescriptionCache = new Cache<java.lang.String,Set<BacklogItem>>(
-            new Cache.Factory<java.lang.String,Set<BacklogItem>>() {
-                public Set<BacklogItem> create(java.lang.String testDescription) {
-                    return getEntities(new IsTestDescription(testDescription));
-                }
-            });
-
-    public final Set<BacklogItem> getBacklogItemsByTestDescription(java.lang.String testDescription) {
-        return backlogItemsByTestDescriptionCache.get(testDescription);
-    }
-    private Set<java.lang.String> testDescriptionsCache;
-
-    public final Set<java.lang.String> getTestDescriptions() {
-        if (testDescriptionsCache == null) {
-            testDescriptionsCache = new HashSet<java.lang.String>();
-            for (BacklogItem e : getEntities()) {
-                if (e.isTestDescriptionSet()) testDescriptionsCache.add(e.getTestDescription());
-            }
-        }
-        return testDescriptionsCache;
-    }
-
-    private static class IsTestDescription implements Predicate<BacklogItem> {
-
-        private java.lang.String value;
-
-        public IsTestDescription(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(BacklogItem e) {
-            return e.isTestDescription(value);
         }
 
     }

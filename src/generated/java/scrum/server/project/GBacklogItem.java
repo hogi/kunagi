@@ -44,12 +44,12 @@ public abstract class GBacklogItem
 
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("project", this.projectId);
+        properties.put("testDescription", this.testDescription);
         properties.put("label", this.label);
+        properties.put("done", this.done);
         properties.put("effort", this.effort);
         properties.put("description", this.description);
-        properties.put("project", this.projectId);
-        properties.put("done", this.done);
-        properties.put("testDescription", this.testDescription);
     }
 
     private static final Logger LOG = Logger.get(GBacklogItem.class);
@@ -61,12 +61,80 @@ public abstract class GBacklogItem
         super(template);
         if (template==null) return;
 
+        setProject(template.getProject());
+        setTestDescription(template.getTestDescription());
         setLabel(template.getLabel());
+        setDone(template.isDone());
         setEffort(template.getEffort());
         setDescription(template.getDescription());
-        setProject(template.getProject());
-        setDone(template.isDone());
-        setTestDescription(template.getTestDescription());
+    }
+
+    // -----------------------------------------------------------
+    // - project
+    // -----------------------------------------------------------
+
+    private String projectId;
+
+    public final scrum.server.project.Project getProject() {
+        if (this.projectId == null) return null;
+        return (scrum.server.project.Project)projectDao.getById(this.projectId);
+    }
+
+    public final void setProject(scrum.server.project.Project project) {
+        project = prepareProject(project);
+        if (isProject(project)) return;
+        this.projectId = project == null ? null : project.getId();
+        entityModified();
+    }
+
+    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
+        return project;
+    }
+
+    protected void repairDeadProjectReference(String entityId) {
+        if (entityId.equals(this.projectId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isProjectSet() {
+        return this.projectId != null;
+    }
+
+    public final boolean isProject(scrum.server.project.Project project) {
+        if (this.projectId == null && project == null) return true;
+        return project != null && project.getId().equals(this.projectId);
+    }
+
+    // -----------------------------------------------------------
+    // - testDescription
+    // -----------------------------------------------------------
+
+    private java.lang.String testDescription;
+
+    public final java.lang.String getTestDescription() {
+        return testDescription;
+    }
+
+    public final void setTestDescription(java.lang.String testDescription) {
+        testDescription = prepareTestDescription(testDescription);
+        if (isTestDescription(testDescription)) return;
+        this.testDescription = testDescription;
+        entityModified();
+    }
+
+    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
+        testDescription = Str.removeUnreadableChars(testDescription);
+        return testDescription;
+    }
+
+    public final boolean isTestDescriptionSet() {
+        return this.testDescription != null;
+    }
+
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        if (this.testDescription == null && testDescription == null) return true;
+        return this.testDescription != null && this.testDescription.equals(testDescription);
     }
 
     // -----------------------------------------------------------
@@ -98,6 +166,31 @@ public abstract class GBacklogItem
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - done
+    // -----------------------------------------------------------
+
+    private boolean done;
+
+    public final boolean isDone() {
+        return done;
+    }
+
+    public final void setDone(boolean done) {
+        done = prepareDone(done);
+        if (isDone(done)) return;
+        this.done = done;
+        entityModified();
+    }
+
+    protected boolean prepareDone(boolean done) {
+        return done;
+    }
+
+    public final boolean isDone(boolean done) {
+        return this.done == done;
     }
 
     // -----------------------------------------------------------
@@ -159,99 +252,6 @@ public abstract class GBacklogItem
     public final boolean isDescription(java.lang.String description) {
         if (this.description == null && description == null) return true;
         return this.description != null && this.description.equals(description);
-    }
-
-    // -----------------------------------------------------------
-    // - project
-    // -----------------------------------------------------------
-
-    private String projectId;
-
-    public final scrum.server.project.Project getProject() {
-        if (this.projectId == null) return null;
-        return (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
-
-    public final void setProject(scrum.server.project.Project project) {
-        project = prepareProject(project);
-        if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
-        entityModified();
-    }
-
-    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
-        return project;
-    }
-
-    protected void repairDeadProjectReference(String entityId) {
-        if (entityId.equals(this.projectId)) {
-            repairMissingMaster();
-        }
-    }
-
-    public final boolean isProjectSet() {
-        return this.projectId != null;
-    }
-
-    public final boolean isProject(scrum.server.project.Project project) {
-        if (this.projectId == null && project == null) return true;
-        return project != null && project.getId().equals(this.projectId);
-    }
-
-    // -----------------------------------------------------------
-    // - done
-    // -----------------------------------------------------------
-
-    private boolean done;
-
-    public final boolean isDone() {
-        return done;
-    }
-
-    public final void setDone(boolean done) {
-        done = prepareDone(done);
-        if (isDone(done)) return;
-        this.done = done;
-        entityModified();
-    }
-
-    protected boolean prepareDone(boolean done) {
-        return done;
-    }
-
-    public final boolean isDone(boolean done) {
-        return this.done == done;
-    }
-
-    // -----------------------------------------------------------
-    // - testDescription
-    // -----------------------------------------------------------
-
-    private java.lang.String testDescription;
-
-    public final java.lang.String getTestDescription() {
-        return testDescription;
-    }
-
-    public final void setTestDescription(java.lang.String testDescription) {
-        testDescription = prepareTestDescription(testDescription);
-        if (isTestDescription(testDescription)) return;
-        this.testDescription = testDescription;
-        entityModified();
-    }
-
-    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
-        testDescription = Str.removeUnreadableChars(testDescription);
-        return testDescription;
-    }
-
-    public final boolean isTestDescriptionSet() {
-        return this.testDescription != null;
-    }
-
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        if (this.testDescription == null && testDescription == null) return true;
-        return this.testDescription != null && this.testDescription.equals(testDescription);
     }
 
     protected void repairDeadReferences(String entityId) {

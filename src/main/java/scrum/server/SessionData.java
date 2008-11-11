@@ -1,6 +1,6 @@
 package scrum.server;
 
-import scrum.client.service.ServerData;
+import scrum.client.DataTransferObject;
 import scrum.server.project.Project;
 
 /**
@@ -15,17 +15,17 @@ public class SessionData {
 	/**
 	 * Data that will be transferred to the client at the next request.
 	 */
-	private ServerData nextData = new ServerData();
+	private DataTransferObject nextData = new DataTransferObject();
 
-	ServerData popNextData() {
+	DataTransferObject popNextData() {
 		synchronized (nextData) {
-			ServerData ret = nextData;
-			nextData = new ServerData();
+			DataTransferObject ret = nextData;
+			nextData = new DataTransferObject();
 			return ret;
 		}
 	}
 
-	ServerData getNextData() {
+	DataTransferObject getNextData() {
 		return nextData;
 	}
 

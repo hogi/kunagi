@@ -10,7 +10,7 @@
 
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
-// generator: scrum.mda.GwtBeanGenerator
+// generator: scrum.mda.framework.GwtBeanGenerator
 
 
 
