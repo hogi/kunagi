@@ -2,14 +2,15 @@ package scrum.mda;
 
 import ilarkesto.di.app.ApplicationStarter;
 import ilarkesto.mda.gen.AGeneratorApplication;
+import ilarkesto.mda.gen.GwtBeanGenerator;
+import ilarkesto.mda.gen.GwtServiceAsyncInterfaceGenerator;
+import ilarkesto.mda.gen.GwtServiceImplementationGenerator;
+import ilarkesto.mda.gen.GwtServiceInterfaceGenerator;
 import ilarkesto.mda.model.ApplicationModel;
 import ilarkesto.mda.model.BeanModel;
 import ilarkesto.mda.model.EntityModel;
+import ilarkesto.mda.model.GwtServiceModel;
 import ilarkesto.mda.model.PackageModel;
-import scrum.mda.framework.GwtBeanGenerator;
-import scrum.mda.framework.GwtServiceAsyncInterfaceGenerator;
-import scrum.mda.framework.GwtServiceInterfaceGenerator;
-import scrum.mda.framework.GwtServiceModel;
 
 public class ScrumModelApplication extends AGeneratorApplication {
 
@@ -127,6 +128,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			applicationModel = createWebApplicationModel("Scrum");
 			autowire(applicationModel);
 			applicationModel.addDaosAsComposites(getFinalEntityModels());
+			applicationModel.addService(getServiceModel());
 		}
 		return applicationModel;
 	}
@@ -170,5 +172,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		super.generateClasses();
 		autowire(new GwtServiceInterfaceGenerator()).generate(getServiceModel());
 		autowire(new GwtServiceAsyncInterfaceGenerator()).generate(getServiceModel());
+		autowire(new GwtServiceImplementationGenerator()).generate(getServiceModel());
 	}
 }

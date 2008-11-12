@@ -63,18 +63,6 @@ public class ScrumGwtApplication implements EntryPoint {
 			}
 		});
 
-		getScrumService().sleep(5000, new DefaultCallback(new Runnable() {
-
-			public void run() {
-				System.out.println("back from 5000");
-			}
-		}));
-		getScrumService().sleep(1000, new DefaultCallback(new Runnable() {
-
-			public void run() {
-				System.out.println("back from 1000");
-			}
-		}));
 	}
 
 	public static void login(String name, String password) {

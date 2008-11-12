@@ -1,6 +1,7 @@
 package scrum.server;
 
 import ilarkesto.base.Url;
+import ilarkesto.base.Utl;
 import ilarkesto.concurrent.TaskManager;
 import ilarkesto.logging.Logger;
 import ilarkesto.persistence.EntityUtils;
@@ -19,13 +20,13 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	private Set<SessionData> sessions = new HashSet<SessionData>();
 
+	@Override
 	public void onChangeProperty(SessionData session, String entityId, String property, String value) {
 		LOG.info("changeProperty:", entityId, property, value);
 	}
 
-	public void onSelectProject(SessionData session, String id) {
-		LOG.info("selectProject:", id);
-
+	@Override
+	public void onGetProject(SessionData session, String projectId) {
 		Project project = (Project) getProjectDao().getEntities().toArray()[0];
 		session.setProject(project);
 
@@ -33,24 +34,33 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		session.getNextData().project = project.createPropertiesMap();
 	}
 
+	@Override
 	public void onGetImpediments(SessionData session) {
 		LOG.info("getImpediments");
 
 		Project project = session.getProject();
+		if (project == null) throw new RuntimeException("No project selected.");
 		Set<Impediment> impediments = getImpedimentDao().getImpedimentsByProject(project);
 
 		// prepare data for client
 		session.getNextData().impediments = EntityUtils.createPropertiesMaps(impediments);
 	}
 
+	@Override
 	public void onGetBacklogItems(SessionData session) {
 		LOG.info("getBacklogItems");
 
 		Project project = session.getProject();
+		if (project == null) throw new RuntimeException("No project selected.");
 		Set<BacklogItem> backlogItems = getBacklogItemDao().getBacklogItemsByProject(project);
 
 		// prepare data for client
 		session.getNextData().backlogItems = EntityUtils.createPropertiesMaps(backlogItems);
+	}
+
+	@Override
+	public void onSleep(SessionData session, long millis) {
+		Utl.sleep(millis);
 	}
 
 	public void onSessionCreated(SessionData session) {

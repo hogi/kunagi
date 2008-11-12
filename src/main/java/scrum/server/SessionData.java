@@ -1,5 +1,7 @@
 package scrum.server;
 
+import ilarkesto.di.Context;
+import ilarkesto.logging.Logger;
 import scrum.client.DataTransferObject;
 import scrum.server.project.Project;
 
@@ -10,7 +12,14 @@ import scrum.server.project.Project;
  */
 public class SessionData {
 
+	private static final Logger LOG = Logger.get(SessionData.class);
+
+	private Context context;
 	private Project project;
+
+	public SessionData() {
+		context = Context.get().createSubContext("session");
+	}
 
 	/**
 	 * Data that will be transferred to the client at the next request.
@@ -34,7 +43,12 @@ public class SessionData {
 	}
 
 	public void setProject(Project project) {
+		LOG.info("project selected:", project);
 		this.project = project;
+	}
+
+	public Context getContext() {
+		return context;
 	}
 
 }

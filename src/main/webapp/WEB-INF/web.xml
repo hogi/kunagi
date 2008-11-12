@@ -15,13 +15,14 @@
 	<servlet>
 		<servlet-name>scrum</servlet-name>
 		<servlet-class>scrum.server.ScrumServiceImpl</servlet-class>
+		<load-on-startup>1</load-on-startup>
 	</servlet>	
 
 	<!-- mappings -->
 
 	<servlet-mapping>
 		<servlet-name>scrum</servlet-name>
-		<url-pattern>/scrum</url-pattern>
+		<url-pattern>/scrum.ScrumGwtApplication/scrum</url-pattern>
 	</servlet-mapping>
 
 </web-app>

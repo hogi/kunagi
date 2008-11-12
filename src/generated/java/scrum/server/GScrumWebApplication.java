@@ -175,4 +175,11 @@ public abstract class GScrumWebApplication
 
     // --- dependencies ---
 
+    // --- scrum ---
+public abstract void onGetProject(SessionData session, java.lang.String projectId);
+public abstract void onGetImpediments(SessionData session);
+public abstract void onGetBacklogItems(SessionData session);
+public abstract void onChangeProperty(SessionData session, java.lang.String entityId, java.lang.String property, java.lang.String value);
+public abstract void onSleep(SessionData session, long millis);
+
 }
