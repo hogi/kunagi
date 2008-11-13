@@ -34,7 +34,7 @@ public class WorkspaceWidget extends Composite {
 		backlog = new BacklogItemListWidget(new ListProvider() {
 
 			public List<BacklogItem> getList() {
-				return ScrumGwtApplication.getProject().getBacklogItems();
+				return ScrumGwtApplication.get().getProject().getBacklogItems();
 			}
 
 		});

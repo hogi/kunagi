@@ -1,5 +1,7 @@
 package scrum.client.sprint;
 
+import java.util.Map;
+
 import scrum.client.admin.User;
 
 public class Task extends GTask {
@@ -11,9 +13,13 @@ public class Task extends GTask {
 	private User owner;
 	private State state;
 
-	public Task(String id) {
-		setId(id);
+	public Task() {
 		state = State.Open;
+		createOnServer();
+	}
+
+	public Task(Map data) {
+		super(data);
 	}
 
 	public State getState() {

@@ -1,8 +1,11 @@
 package scrum.mda;
 
 import ilarkesto.di.app.ApplicationStarter;
-import ilarkesto.mda.gen.AGeneratorApplication;
-import ilarkesto.mda.gen.GwtBeanGenerator;
+import ilarkesto.mda.AGeneratorApplication;
+import ilarkesto.mda.gen.GwtApplicationGenerator;
+import ilarkesto.mda.gen.GwtDaoGenerator;
+import ilarkesto.mda.gen.GwtDataTransferObjectGenerator;
+import ilarkesto.mda.gen.GwtEntityGenerator;
 import ilarkesto.mda.gen.GwtServiceAsyncInterfaceGenerator;
 import ilarkesto.mda.gen.GwtServiceImplementationGenerator;
 import ilarkesto.mda.gen.GwtServiceInterfaceGenerator;
@@ -11,6 +14,8 @@ import ilarkesto.mda.model.BeanModel;
 import ilarkesto.mda.model.EntityModel;
 import ilarkesto.mda.model.GwtServiceModel;
 import ilarkesto.mda.model.PackageModel;
+
+import java.util.Map;
 
 public class ScrumModelApplication extends AGeneratorApplication {
 
@@ -93,6 +98,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel = createEntityModel("User", "admin");
 			autowire(userModel);
 			userModel.setSuperbean(super.getUserModel());
+			userModel.addProperty("name", String.class);
 		}
 		return userModel;
 	}
@@ -110,8 +116,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			serviceModel.addMethod("getProject").addParameter("projectId", String.class);
 			serviceModel.addMethod("getImpediments");
 			serviceModel.addMethod("getBacklogItems");
-			serviceModel.addMethod("changeProperty").addParameter("entityId", String.class).addParameter("property",
-				String.class).addParameter("value", String.class);
+			serviceModel.addMethod("changeProperties").addParameter("entityId", String.class).addParameter(
+				"properties", Map.class);
+			serviceModel.addMethod("createEntity").addParameter("type", String.class).addParameter("properties",
+				Map.class);
 			serviceModel.addMethod("sleep").addParameter("millis", long.class);
 		}
 		return serviceModel;
@@ -163,7 +171,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	protected void generate(BeanModel beanModel) {
 		super.generate(beanModel);
 		if (beanModel instanceof EntityModel) {
-			autowire(new GwtBeanGenerator()).generate(beanModel);
+			autowire(new GwtEntityGenerator()).generate(beanModel);
 		}
 	}
 
@@ -173,5 +181,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		autowire(new GwtServiceInterfaceGenerator()).generate(getServiceModel());
 		autowire(new GwtServiceAsyncInterfaceGenerator()).generate(getServiceModel());
 		autowire(new GwtServiceImplementationGenerator()).generate(getServiceModel());
+		autowire(new GwtApplicationGenerator()).generate(getApplicationModel());
+		autowire(new GwtDaoGenerator()).generate(getApplicationModel(), getEntityModels());
+		autowire(new GwtDataTransferObjectGenerator()).generate(getApplicationModel(), getEntityModels());
 	}
 }

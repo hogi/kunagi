@@ -84,7 +84,7 @@ public class TaskWidget extends ABlockWidget {
 		ownButton.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				task.setOwner(ScrumGwtApplication.getUser());
+				task.setOwner(ScrumGwtApplication.get().getUser());
 				// TODO aahhh....!!! -> rebuild or something
 				// WorkspaceWidget.showPortal();
 			}
@@ -96,7 +96,7 @@ public class TaskWidget extends ABlockWidget {
 		deleteButton.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				ScrumGwtApplication.getProject().deleteTask(task);
+				ScrumGwtApplication.get().getProject().deleteTask(task);
 				// TODO ???
 				// WorkspaceWidget.tasks.list.removeSelectedRow();
 			}

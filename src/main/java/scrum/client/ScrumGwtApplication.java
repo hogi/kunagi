@@ -11,31 +11,27 @@ import scrum.client.project.BacklogItem;
 import scrum.client.project.Project;
 import scrum.client.workspace.WorkspaceWidget;
 
-import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class ScrumGwtApplication implements EntryPoint {
+public class ScrumGwtApplication extends GScrumGwtApplication {
+
+	private Dao dao = new Dao();
 
 	/**
 	 * Current, logged in user.
 	 * 
 	 * TODO potential security problem. User could change this variable.
 	 */
-	private static User user;
+	private User user;
 
 	/**
 	 * Currently selected project.
 	 */
-	private static Project project;
+	private Project project;
 
-	private static ScrumServiceAsync scrumService;
-
-	private static AbsolutePanel dndPanel;
-	private static MyFuckingAwesomeDragController dragController;
+	private AbsolutePanel dndPanel;
+	private MyFuckingAwesomeDragController dragController;
 
 	/**
 	 * Application entry point.
@@ -56,7 +52,7 @@ public class ScrumGwtApplication implements EntryPoint {
 
 		// simulate project selection
 		WorkspaceWidget.lock("Loading project...");
-		selectProject("???", new Runnable() {
+		callGetProject("???", new Runnable() {
 
 			public void run() {
 				WorkspaceWidget.showTest();
@@ -65,32 +61,17 @@ public class ScrumGwtApplication implements EntryPoint {
 
 	}
 
-	public static void login(String name, String password) {
-		// dummy. TODO call server
-		user = new User(name, name);
+	public void login(String name, String password) {
+	// dummy. TODO call server
 	}
 
-	public static User getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public static void changeProperty(String entityId, String property, String value) {
-		getScrumService().changeProperty(entityId, property, value, new DefaultCallback());
-	}
-
-	public static void selectProject(String id, Runnable successAction) {
-		getScrumService().getProject(id, new DefaultCallback(successAction));
-	}
-
-	public static void requestImpediments(Runnable successAction) {
-		getScrumService().getImpediments(new DefaultCallback(successAction));
-	}
-
-	public static void requestBacklogItems(Runnable successAction) {
-		getScrumService().getBacklogItems(new DefaultCallback(successAction));
-	}
-
-	private static void processMaster(DataTransferObject data) {
+	@Override
+	protected void handleDataFromServer(DataTransferObject data) {
+		super.handleDataFromServer(data);
 		if (data.project != null) {
 			System.out.println("project received");
 			project = new Project(data.project);
@@ -113,48 +94,32 @@ public class ScrumGwtApplication implements EntryPoint {
 			}
 			project.setBacklogItems(backlogItems);
 		}
+		if (data.entityIdBase != null) {
+			entityIdBase = data.entityIdBase;
+			System.out.println("entityIdBase: " + entityIdBase);
+		}
 	}
 
-	private static void processError(Throwable ex) {
+	@Override
+	protected void handleCommunicationError(Throwable ex) {
 		ex.printStackTrace();
 		WorkspaceWidget.lock("Error: " + ex.getMessage());
 	}
 
-	public static Project getProject() {
+	public Project getProject() {
 		return project;
 	}
 
-	public static ScrumServiceAsync getScrumService() {
-		if (scrumService == null) {
-			scrumService = GWT.create(ScrumService.class);
-			ServiceDefTarget target = (ServiceDefTarget) scrumService;
-			target.setServiceEntryPoint(GWT.getModuleBaseURL() + "scrum");
-		}
-		return scrumService;
+	@Override
+	public Dao getDao() {
+		return dao;
 	}
 
-	static class DefaultCallback implements AsyncCallback<DataTransferObject> {
-
-		private Runnable successAction;
-
-		public DefaultCallback() {}
-
-		public DefaultCallback(Runnable successAction) {
-			this.successAction = successAction;
-		}
-
-		public void onSuccess(DataTransferObject data) {
-			processMaster(data);
-			if (successAction != null) successAction.run();
-		}
-
-		public void onFailure(Throwable ex) {
-			processError(ex);
-		}
-
+	public static ScrumGwtApplication get() {
+		return (ScrumGwtApplication) singleton;
 	}
 
-	public static MyFuckingAwesomeDragController getDragController() {
+	public MyFuckingAwesomeDragController getDragController() {
 		if (dragController == null) {
 			if (dndPanel == null) { throw new RuntimeException("dndPanel is null"); }
 			dragController = new MyFuckingAwesomeDragController(dndPanel, false);

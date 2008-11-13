@@ -25,6 +25,10 @@ public abstract class AServiceImpl extends RemoteServiceServlet {
 		getSessionData().getNextData().errors.add("Server error:" + Str.getRootCauseMessage(t));
 	}
 
+	protected final void onServiceMethodExecuted() {
+		getApp().getTransactionService().commit();
+	}
+
 	protected SessionData getSessionData() {
 		SessionData data = (SessionData) getThreadLocalRequest().getSession().getAttribute(SESSION_DATA_KEY);
 		if (data == null) {

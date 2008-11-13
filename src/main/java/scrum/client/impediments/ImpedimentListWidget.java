@@ -44,7 +44,7 @@ public class ImpedimentListWidget extends Composite {
 
 	public void update() {
 		list.clear();
-		for (Impediment impediment : ScrumGwtApplication.getProject().getImpediments()) {
+		for (Impediment impediment : ScrumGwtApplication.get().getProject().getImpediments()) {
 			ImpedimentWidget widget = new ImpedimentWidget(impediment);
 			list.addBlock(widget);
 		}
@@ -53,7 +53,7 @@ public class ImpedimentListWidget extends Composite {
 	class CreateClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			Impediment impediment = ScrumGwtApplication.getProject().createNewImpediment();
+			Impediment impediment = ScrumGwtApplication.get().getProject().createNewImpediment();
 			ImpedimentWidget block = new ImpedimentWidget(impediment);
 			list.addBlock(block);
 			list.selectBlock(block);

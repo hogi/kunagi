@@ -2,13 +2,16 @@ package scrum.client.impediments;
 
 import java.util.Map;
 
+import scrum.client.project.Project;
+
 public class Impediment extends GImpediment {
 
 	public static final String INIT_LABEL = "New Impediment";
 
-	public Impediment(String id) {
-		setId(id);
+	public Impediment(Project project) {
 		setLabel(INIT_LABEL);
+		setProject(project);
+		createOnServer();
 	}
 
 	public Impediment(Map data) {
@@ -19,5 +22,10 @@ public class Impediment extends GImpediment {
 		if (isSolved()) return "Solved.";
 		String solution = getSolution();
 		return (solution == null || "".equals(solution)) ? "Unsolved." : "Unsolved, with solution proposal.";
+	}
+
+	@Override
+	public String toString() {
+		return getLabel();
 	}
 }

@@ -32,7 +32,7 @@ public class CurrentSprintView extends Composite {
 	}
 
 	public void update() {
-		sprint = ScrumGwtApplication.getProject().getCurrentSprint();
+		sprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
 
 		if (sprint == null) {
 			Button assignSprintButton = new Button("Select current sprint (tmp: create new)");
@@ -81,7 +81,7 @@ public class CurrentSprintView extends Composite {
 	class AssignSprintListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			sprint = ScrumGwtApplication.getProject().createNewSprint("New Sprint");
+			sprint = ScrumGwtApplication.get().getProject().createNewSprint("New Sprint");
 			sprint.setState(State.Development);
 
 			update();

@@ -2,13 +2,11 @@ package scrum.client.project;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import scrum.client.admin.User;
-import scrum.client.common.EntityIdGenerator;
 import scrum.client.impediments.Impediment;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
@@ -25,17 +23,8 @@ public class Project extends GProject {
 	private List<BacklogItem> backlogItems = new ArrayList<BacklogItem>();
 	private List<Sprint> sprints = new ArrayList<Sprint>();
 
-	public Project(String id, String label, User master, User owner, Set<User> team) {
-		setId(id);
-		setLabel(label);
-		this.master = master;
-		this.owner = owner;
-		this.team = team;
-
-		this.participants = new HashSet<User>();
-		this.participants.addAll(team);
-		this.participants.add(owner);
-		this.participants.add(master);
+	public Project() {
+		createOnServer();
 	}
 
 	public Project(Map data) {
@@ -63,7 +52,7 @@ public class Project extends GProject {
 	}
 
 	public Impediment createNewImpediment() {
-		Impediment impediment = new Impediment(EntityIdGenerator.generateId());
+		Impediment impediment = new Impediment(this);
 		impediments.add(impediment);
 		// TODO message to server
 		return impediment;
@@ -83,7 +72,7 @@ public class Project extends GProject {
 	}
 
 	public BacklogItem createNewBacklogItem() {
-		BacklogItem item = new BacklogItem(EntityIdGenerator.generateId());
+		BacklogItem item = new BacklogItem();
 		backlogItems.add(item);
 		return item;
 	}
@@ -101,7 +90,7 @@ public class Project extends GProject {
 	}
 
 	public Sprint createNewSprint(String label) {
-		Sprint sprint = new Sprint(EntityIdGenerator.generateId(), label);
+		Sprint sprint = new Sprint(label);
 		sprints.add(sprint);
 		// TODO message to server
 		return sprint;

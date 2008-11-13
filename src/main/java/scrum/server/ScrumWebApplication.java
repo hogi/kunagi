@@ -4,10 +4,14 @@ import ilarkesto.base.Url;
 import ilarkesto.base.Utl;
 import ilarkesto.concurrent.TaskManager;
 import ilarkesto.logging.Logger;
+import ilarkesto.persistence.ADao;
+import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.EntityUtils;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import scrum.server.admin.UserDao;
 import scrum.server.impediments.Impediment;
@@ -20,9 +24,22 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	private Set<SessionData> sessions = new HashSet<SessionData>();
 
+	// --- client call handlers ---
+
 	@Override
-	public void onChangeProperty(SessionData session, String entityId, String property, String value) {
-		LOG.info("changeProperty:", entityId, property, value);
+	public void onCreateEntity(SessionData session, String type, Map properties) {
+		String id = (String) properties.get("id");
+		ADao dao = getDaoService().getDaoByName(type);
+		AEntity entity = dao.newEntityInstance(id);
+		entity.updateProperties(properties);
+		dao.saveEntity(entity);
+	}
+
+	@Override
+	public void onChangeProperties(SessionData session, String entityId, Map properties) {
+		AEntity entity = getDaoService().getEntityById(entityId);
+		entity.updateProperties(properties);
+		// TODO promote change to all sessions
 	}
 
 	@Override
@@ -44,6 +61,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 		// prepare data for client
 		session.getNextData().impediments = EntityUtils.createPropertiesMaps(impediments);
+		session.getNextData().addImpediments(EntityUtils.createPropertiesMaps(impediments));
 	}
 
 	@Override
@@ -63,9 +81,13 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		Utl.sleep(millis);
 	}
 
+	// --- ---
+
 	public void onSessionCreated(SessionData session) {
 		LOG.info("Session created");
 		sessions.add(session);
+
+		session.getNextData().entityIdBase = UUID.randomUUID().toString();
 	}
 
 	@Override

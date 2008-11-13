@@ -43,6 +43,7 @@ public abstract class GProject
     protected void repairDeadValueObject(AValueObject valueObject) {
     }
 
+    @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("label", this.label);

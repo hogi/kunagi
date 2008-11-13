@@ -121,7 +121,7 @@ public class BacklogItemWidget extends ABlockWidget {
 		deleteButton.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				ScrumGwtApplication.getProject().deleteBacklogItem(item);
+				ScrumGwtApplication.get().getProject().deleteBacklogItem(item);
 				WorkspaceWidget.backlog.list.removeSelectedRow();
 			}
 		});
@@ -165,7 +165,7 @@ public class BacklogItemWidget extends ABlockWidget {
 
 	@Override
 	public void delete() {
-		ScrumGwtApplication.getProject().deleteBacklogItem(item);
+		ScrumGwtApplication.get().getProject().deleteBacklogItem(item);
 		WorkspaceWidget.backlog.list.remove(this);
 	}
 

@@ -109,7 +109,7 @@ public abstract class ABlockWidget extends Composite {
 			dragHandle = Img.icons().dragHandleIcon32().createImage();
 			dragHandle.setStyleName(StyleSheet.DRAG_HANDLE);
 		}
-		ScrumGwtApplication.getDragController().makeDraggable(this, dragHandle);
+		ScrumGwtApplication.get().getDragController().makeDraggable(this, dragHandle);
 	}
 
 	public Image getDragHandle() {
@@ -119,12 +119,12 @@ public abstract class ABlockWidget extends Composite {
 	@Override
 	protected void onAttach() {
 		super.onAttach();
-		ScrumGwtApplication.getDragController().registerDropController(dropController);
+		ScrumGwtApplication.get().getDragController().registerDropController(dropController);
 	}
 
 	@Override
 	protected void onDetach() {
-		ScrumGwtApplication.getDragController().unregisterDropController(dropController);
+		ScrumGwtApplication.get().getDragController().unregisterDropController(dropController);
 		super.onDetach();
 	}
 }

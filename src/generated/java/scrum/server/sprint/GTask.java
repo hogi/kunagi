@@ -42,11 +42,12 @@ public abstract class GTask
     protected void repairDeadValueObject(AValueObject valueObject) {
     }
 
+    @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("backlogItem", this.backlogItemId);
         properties.put("effort", this.effort);
         properties.put("label", this.label);
+        properties.put("backlogItem", this.backlogItemId);
     }
 
     private static final Logger LOG = Logger.get(GTask.class);
@@ -58,46 +59,9 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
-        setBacklogItem(template.getBacklogItem());
         setEffort(template.getEffort());
         setLabel(template.getLabel());
-    }
-
-    // -----------------------------------------------------------
-    // - backlogItem
-    // -----------------------------------------------------------
-
-    private String backlogItemId;
-
-    public final scrum.server.project.BacklogItem getBacklogItem() {
-        if (this.backlogItemId == null) return null;
-        return (scrum.server.project.BacklogItem)backlogItemDao.getById(this.backlogItemId);
-    }
-
-    public final void setBacklogItem(scrum.server.project.BacklogItem backlogItem) {
-        backlogItem = prepareBacklogItem(backlogItem);
-        if (isBacklogItem(backlogItem)) return;
-        this.backlogItemId = backlogItem == null ? null : backlogItem.getId();
-        entityModified();
-    }
-
-    protected scrum.server.project.BacklogItem prepareBacklogItem(scrum.server.project.BacklogItem backlogItem) {
-        return backlogItem;
-    }
-
-    protected void repairDeadBacklogItemReference(String entityId) {
-        if (entityId.equals(this.backlogItemId)) {
-            repairMissingMaster();
-        }
-    }
-
-    public final boolean isBacklogItemSet() {
-        return this.backlogItemId != null;
-    }
-
-    public final boolean isBacklogItem(scrum.server.project.BacklogItem backlogItem) {
-        if (this.backlogItemId == null && backlogItem == null) return true;
-        return backlogItem != null && backlogItem.getId().equals(this.backlogItemId);
+        setBacklogItem(template.getBacklogItem());
     }
 
     // -----------------------------------------------------------
@@ -159,6 +123,43 @@ public abstract class GTask
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - backlogItem
+    // -----------------------------------------------------------
+
+    private String backlogItemId;
+
+    public final scrum.server.project.BacklogItem getBacklogItem() {
+        if (this.backlogItemId == null) return null;
+        return (scrum.server.project.BacklogItem)backlogItemDao.getById(this.backlogItemId);
+    }
+
+    public final void setBacklogItem(scrum.server.project.BacklogItem backlogItem) {
+        backlogItem = prepareBacklogItem(backlogItem);
+        if (isBacklogItem(backlogItem)) return;
+        this.backlogItemId = backlogItem == null ? null : backlogItem.getId();
+        entityModified();
+    }
+
+    protected scrum.server.project.BacklogItem prepareBacklogItem(scrum.server.project.BacklogItem backlogItem) {
+        return backlogItem;
+    }
+
+    protected void repairDeadBacklogItemReference(String entityId) {
+        if (entityId.equals(this.backlogItemId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isBacklogItemSet() {
+        return this.backlogItemId != null;
+    }
+
+    public final boolean isBacklogItem(scrum.server.project.BacklogItem backlogItem) {
+        if (this.backlogItemId == null && backlogItem == null) return true;
+        return backlogItem != null && backlogItem.getId().equals(this.backlogItemId);
     }
 
     protected void repairDeadReferences(String entityId) {

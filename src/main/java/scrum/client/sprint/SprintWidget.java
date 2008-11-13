@@ -123,7 +123,7 @@ public class SprintWidget extends ABlockWidget {
 	private MultiWordSuggestOracle getOracle() {
 		MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
 
-		project: for (BacklogItem projectBacklogItem : ScrumGwtApplication.getProject().getBacklogItems()) {
+		project: for (BacklogItem projectBacklogItem : ScrumGwtApplication.get().getProject().getBacklogItems()) {
 			for (BacklogItem sprintBacklogItem : sprint.getBacklogItems()) {
 				if (projectBacklogItem.getLabel().equals(sprintBacklogItem.getLabel())) {
 					continue project;
@@ -138,7 +138,7 @@ public class SprintWidget extends ABlockWidget {
 	private void assignBacklogItem(String label) {
 		if ("".equals(label)) return;
 
-		for (BacklogItem backlogItem : ScrumGwtApplication.getProject().getBacklogItems()) {
+		for (BacklogItem backlogItem : ScrumGwtApplication.get().getProject().getBacklogItems()) {
 			if (backlogItem.getLabel().equals(label) == false) continue;
 
 			sprint.getBacklogItems().add(backlogItem);
@@ -180,7 +180,7 @@ public class SprintWidget extends ABlockWidget {
 
 		private MultiWordSuggestOracle getOracle() {
 			MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-			for (BacklogItem backlogItem : ScrumGwtApplication.getProject().getBacklogItems()) {
+			for (BacklogItem backlogItem : ScrumGwtApplication.get().getProject().getBacklogItems()) {
 				oracle.add(backlogItem.getLabel());
 			}
 			return oracle;

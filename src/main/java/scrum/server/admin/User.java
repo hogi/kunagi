@@ -4,18 +4,8 @@ import ilarkesto.base.Crypt;
 
 public class User extends GUser {
 
-	private String name;
 	private String realName;
 	private String password;
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	@Override
 	public String getRealName() {

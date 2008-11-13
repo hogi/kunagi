@@ -2,6 +2,7 @@ package scrum.client.sprint;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import scrum.client.project.BacklogItem;
 
@@ -15,10 +16,14 @@ public class Sprint extends GSprint {
 
 	private List<BacklogItem> backlogItems = new ArrayList<BacklogItem>();
 
-	public Sprint(String id, String label) {
-		setId(id);
+	public Sprint(String label) {
 		setLabel(label);
 		state = State.Pending;
+		createOnServer();
+	}
+
+	public Sprint(Map data) {
+		super(data);
 	}
 
 	public List<BacklogItem> getBacklogItems() {

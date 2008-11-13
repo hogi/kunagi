@@ -48,31 +48,6 @@ public abstract class GScrumWebApplication
     // - composites
     // -----------------------------------------------------------
 
-    // --- projectDao ---
-
-    private scrum.server.project.ProjectDao projectDao;
-
-    public final scrum.server.project.ProjectDao getProjectDao() {
-        if (projectDao == null) {
-            projectDao = createProjectDao();
-            initializeProjectDao(projectDao);
-        }
-        return projectDao;
-    }
-
-    protected scrum.server.project.ProjectDao createProjectDao() {
-        return projectDao = new scrum.server.project.ProjectDao();
-    }
-
-    protected void initializeProjectDao(scrum.server.project.ProjectDao bean) {
-        autowire(bean);
-        Reflect.invokeInitializeIfThere(bean);
-    }
-
-    public final void resetProjectDao() {
-        projectDao = null;
-    }
-
     // --- taskDao ---
 
     private scrum.server.sprint.TaskDao taskDao;
@@ -96,31 +71,6 @@ public abstract class GScrumWebApplication
 
     public final void resetTaskDao() {
         taskDao = null;
-    }
-
-    // --- backlogItemDao ---
-
-    private scrum.server.project.BacklogItemDao backlogItemDao;
-
-    public final scrum.server.project.BacklogItemDao getBacklogItemDao() {
-        if (backlogItemDao == null) {
-            backlogItemDao = createBacklogItemDao();
-            initializeBacklogItemDao(backlogItemDao);
-        }
-        return backlogItemDao;
-    }
-
-    protected scrum.server.project.BacklogItemDao createBacklogItemDao() {
-        return backlogItemDao = new scrum.server.project.BacklogItemDao();
-    }
-
-    protected void initializeBacklogItemDao(scrum.server.project.BacklogItemDao bean) {
-        autowire(bean);
-        Reflect.invokeInitializeIfThere(bean);
-    }
-
-    public final void resetBacklogItemDao() {
-        backlogItemDao = null;
     }
 
     // --- impedimentDao ---
@@ -173,13 +123,64 @@ public abstract class GScrumWebApplication
         sprintDao = null;
     }
 
+    // --- backlogItemDao ---
+
+    private scrum.server.project.BacklogItemDao backlogItemDao;
+
+    public final scrum.server.project.BacklogItemDao getBacklogItemDao() {
+        if (backlogItemDao == null) {
+            backlogItemDao = createBacklogItemDao();
+            initializeBacklogItemDao(backlogItemDao);
+        }
+        return backlogItemDao;
+    }
+
+    protected scrum.server.project.BacklogItemDao createBacklogItemDao() {
+        return backlogItemDao = new scrum.server.project.BacklogItemDao();
+    }
+
+    protected void initializeBacklogItemDao(scrum.server.project.BacklogItemDao bean) {
+        autowire(bean);
+        Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetBacklogItemDao() {
+        backlogItemDao = null;
+    }
+
+    // --- projectDao ---
+
+    private scrum.server.project.ProjectDao projectDao;
+
+    public final scrum.server.project.ProjectDao getProjectDao() {
+        if (projectDao == null) {
+            projectDao = createProjectDao();
+            initializeProjectDao(projectDao);
+        }
+        return projectDao;
+    }
+
+    protected scrum.server.project.ProjectDao createProjectDao() {
+        return projectDao = new scrum.server.project.ProjectDao();
+    }
+
+    protected void initializeProjectDao(scrum.server.project.ProjectDao bean) {
+        autowire(bean);
+        Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetProjectDao() {
+        projectDao = null;
+    }
+
     // --- dependencies ---
 
     // --- scrum ---
-public abstract void onGetProject(SessionData session, java.lang.String projectId);
-public abstract void onGetImpediments(SessionData session);
-public abstract void onGetBacklogItems(SessionData session);
-public abstract void onChangeProperty(SessionData session, java.lang.String entityId, java.lang.String property, java.lang.String value);
-public abstract void onSleep(SessionData session, long millis);
+    public abstract void onGetProject(SessionData session, java.lang.String projectId);
+    public abstract void onGetImpediments(SessionData session);
+    public abstract void onGetBacklogItems(SessionData session);
+    public abstract void onChangeProperties(SessionData session, java.lang.String entityId, java.util.Map properties);
+    public abstract void onCreateEntity(SessionData session, java.lang.String type, java.util.Map properties);
+    public abstract void onSleep(SessionData session, long millis);
 
 }

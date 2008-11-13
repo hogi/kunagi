@@ -23,7 +23,7 @@ public class ClipboardWidget extends Composite {
 	private HorizontalPanel trash;
 
 	public ClipboardWidget() {
-		ScrumGwtApplication.getDragController().registerDropController(trashDropController);
+		ScrumGwtApplication.get().getDragController().registerDropController(trashDropController);
 
 		items = new BlockListWidget(true);
 		items.addStyleName(StyleSheet.DROP_WIDGET_ITEMS);

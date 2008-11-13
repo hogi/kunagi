@@ -34,7 +34,9 @@ public interface GScrumService
 
     DataTransferObject getBacklogItems();
 
-    DataTransferObject changeProperty(java.lang.String entityId, java.lang.String property, java.lang.String value);
+    DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties);
+
+    DataTransferObject createEntity(java.lang.String type, java.util.Map properties);
 
     DataTransferObject sleep(long millis);
 

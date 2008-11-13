@@ -27,7 +27,7 @@ public class SprintListWidget extends Composite implements ClickListener {
 		toolbar.add(createButton);
 		ScrumUtil.addFiller(toolbar);
 
-		for (Sprint sprint : ScrumGwtApplication.getProject().getSprints()) {
+		for (Sprint sprint : ScrumGwtApplication.get().getProject().getSprints()) {
 			list.addBlock(new SprintWidget(sprint));
 		}
 
@@ -43,7 +43,7 @@ public class SprintListWidget extends Composite implements ClickListener {
 	}
 
 	public void onClick(Widget sender) {
-		list.addBlock(new SprintWidget(ScrumGwtApplication.getProject().createNewSprint("<enter sprintname>")));
+		list.addBlock(new SprintWidget(ScrumGwtApplication.get().getProject().createNewSprint("<enter sprintname>")));
 	}
 
 }

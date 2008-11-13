@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.EntityIdGenerator;
 import scrum.client.sprint.Task;
 
 public class BacklogItem extends GBacklogItem {
@@ -14,9 +13,9 @@ public class BacklogItem extends GBacklogItem {
 
 	private List<Task> tasks = new ArrayList<Task>();
 
-	public BacklogItem(String id) {
-		setId(id);
+	public BacklogItem() {
 		setLabel(INIT_LABEL);
+		createOnServer();
 	}
 
 	public BacklogItem(Map data) {
@@ -25,7 +24,7 @@ public class BacklogItem extends GBacklogItem {
 
 	public String getEffortString() {
 		if (getEffort() == null) return null;
-		return getEffort() + " " + ScrumGwtApplication.getProject().getEffortUnit();
+		return getEffort() + " " + ScrumGwtApplication.get().getProject().getEffortUnit();
 	}
 
 	public String getSummary() {
@@ -43,7 +42,7 @@ public class BacklogItem extends GBacklogItem {
 	}
 
 	public Task createNewTask() {
-		Task task = new Task(EntityIdGenerator.generateId());
+		Task task = new Task();
 		tasks.add(task);
 		return task;
 	}

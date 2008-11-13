@@ -43,6 +43,8 @@ public abstract class GUserDao
 
     // --- clear caches ---
     public void clearCaches() {
+        usersByNameCache.clear();
+        namesCache = null;
     }
 
     @Override
@@ -59,6 +61,46 @@ public abstract class GUserDao
         if (event.getEntity() instanceof User) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - name
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<User>> usersByNameCache = new Cache<java.lang.String,Set<User>>(
+            new Cache.Factory<java.lang.String,Set<User>>() {
+                public Set<User> create(java.lang.String name) {
+                    return getEntities(new IsName(name));
+                }
+            });
+
+    public final Set<User> getUsersByName(java.lang.String name) {
+        return usersByNameCache.get(name);
+    }
+    private Set<java.lang.String> namesCache;
+
+    public final Set<java.lang.String> getNames() {
+        if (namesCache == null) {
+            namesCache = new HashSet<java.lang.String>();
+            for (User e : getEntities()) {
+                if (e.isNameSet()) namesCache.add(e.getName());
+            }
+        }
+        return namesCache;
+    }
+
+    private static class IsName implements Predicate<User> {
+
+        private java.lang.String value;
+
+        public IsName(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return e.isName(value);
+        }
+
     }
 
     // --- valueObject classes ---

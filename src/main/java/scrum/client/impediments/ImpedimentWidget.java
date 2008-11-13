@@ -102,7 +102,7 @@ public class ImpedimentWidget extends ABlockWidget {
 		deleteButton.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				ScrumGwtApplication.getProject().deleteImpediment(impediment);
+				ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
 				WorkspaceWidget.impediments.list.removeSelectedRow();
 			}
 		});
@@ -142,7 +142,7 @@ public class ImpedimentWidget extends ABlockWidget {
 
 	@Override
 	public void delete() {
-		ScrumGwtApplication.getProject().deleteImpediment(impediment);
+		ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
 		WorkspaceWidget.impediments.list.remove(this);
 	}
 }

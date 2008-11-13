@@ -57,7 +57,7 @@ public class BacklogItemListWidget extends Composite {
 	class CreateClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			BacklogItem item = ScrumGwtApplication.getProject().createNewBacklogItem();
+			BacklogItem item = ScrumGwtApplication.get().getProject().createNewBacklogItem();
 			BacklogItemWidget block = new BacklogItemWidget(item);
 			list.addBlock(block);
 			list.selectBlock(block);

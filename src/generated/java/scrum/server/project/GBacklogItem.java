@@ -42,14 +42,15 @@ public abstract class GBacklogItem
     protected void repairDeadValueObject(AValueObject valueObject) {
     }
 
+    @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("project", this.projectId);
-        properties.put("testDescription", this.testDescription);
-        properties.put("label", this.label);
-        properties.put("done", this.done);
-        properties.put("effort", this.effort);
         properties.put("description", this.description);
+        properties.put("done", this.done);
+        properties.put("testDescription", this.testDescription);
+        properties.put("project", this.projectId);
+        properties.put("label", this.label);
+        properties.put("effort", this.effort);
     }
 
     private static final Logger LOG = Logger.get(GBacklogItem.class);
@@ -61,12 +62,99 @@ public abstract class GBacklogItem
         super(template);
         if (template==null) return;
 
-        setProject(template.getProject());
-        setTestDescription(template.getTestDescription());
-        setLabel(template.getLabel());
-        setDone(template.isDone());
-        setEffort(template.getEffort());
         setDescription(template.getDescription());
+        setDone(template.isDone());
+        setTestDescription(template.getTestDescription());
+        setProject(template.getProject());
+        setLabel(template.getLabel());
+        setEffort(template.getEffort());
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private java.lang.String description;
+
+    public final java.lang.String getDescription() {
+        return description;
+    }
+
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+        entityModified();
+    }
+
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
+    }
+
+    public final boolean isDescriptionSet() {
+        return this.description != null;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
+    }
+
+    // -----------------------------------------------------------
+    // - done
+    // -----------------------------------------------------------
+
+    private boolean done;
+
+    public final boolean isDone() {
+        return done;
+    }
+
+    public final void setDone(boolean done) {
+        done = prepareDone(done);
+        if (isDone(done)) return;
+        this.done = done;
+        entityModified();
+    }
+
+    protected boolean prepareDone(boolean done) {
+        return done;
+    }
+
+    public final boolean isDone(boolean done) {
+        return this.done == done;
+    }
+
+    // -----------------------------------------------------------
+    // - testDescription
+    // -----------------------------------------------------------
+
+    private java.lang.String testDescription;
+
+    public final java.lang.String getTestDescription() {
+        return testDescription;
+    }
+
+    public final void setTestDescription(java.lang.String testDescription) {
+        testDescription = prepareTestDescription(testDescription);
+        if (isTestDescription(testDescription)) return;
+        this.testDescription = testDescription;
+        entityModified();
+    }
+
+    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
+        testDescription = Str.removeUnreadableChars(testDescription);
+        return testDescription;
+    }
+
+    public final boolean isTestDescriptionSet() {
+        return this.testDescription != null;
+    }
+
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        if (this.testDescription == null && testDescription == null) return true;
+        return this.testDescription != null && this.testDescription.equals(testDescription);
     }
 
     // -----------------------------------------------------------
@@ -107,37 +195,6 @@ public abstract class GBacklogItem
     }
 
     // -----------------------------------------------------------
-    // - testDescription
-    // -----------------------------------------------------------
-
-    private java.lang.String testDescription;
-
-    public final java.lang.String getTestDescription() {
-        return testDescription;
-    }
-
-    public final void setTestDescription(java.lang.String testDescription) {
-        testDescription = prepareTestDescription(testDescription);
-        if (isTestDescription(testDescription)) return;
-        this.testDescription = testDescription;
-        entityModified();
-    }
-
-    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
-        testDescription = Str.removeUnreadableChars(testDescription);
-        return testDescription;
-    }
-
-    public final boolean isTestDescriptionSet() {
-        return this.testDescription != null;
-    }
-
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        if (this.testDescription == null && testDescription == null) return true;
-        return this.testDescription != null && this.testDescription.equals(testDescription);
-    }
-
-    // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
 
@@ -169,31 +226,6 @@ public abstract class GBacklogItem
     }
 
     // -----------------------------------------------------------
-    // - done
-    // -----------------------------------------------------------
-
-    private boolean done;
-
-    public final boolean isDone() {
-        return done;
-    }
-
-    public final void setDone(boolean done) {
-        done = prepareDone(done);
-        if (isDone(done)) return;
-        this.done = done;
-        entityModified();
-    }
-
-    protected boolean prepareDone(boolean done) {
-        return done;
-    }
-
-    public final boolean isDone(boolean done) {
-        return this.done == done;
-    }
-
-    // -----------------------------------------------------------
     // - effort
     // -----------------------------------------------------------
 
@@ -221,37 +253,6 @@ public abstract class GBacklogItem
     public final boolean isEffort(java.lang.Integer effort) {
         if (this.effort == null && effort == null) return true;
         return this.effort != null && this.effort.equals(effort);
-    }
-
-    // -----------------------------------------------------------
-    // - description
-    // -----------------------------------------------------------
-
-    private java.lang.String description;
-
-    public final java.lang.String getDescription() {
-        return description;
-    }
-
-    public final void setDescription(java.lang.String description) {
-        description = prepareDescription(description);
-        if (isDescription(description)) return;
-        this.description = description;
-        entityModified();
-    }
-
-    protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
-        return description;
-    }
-
-    public final boolean isDescriptionSet() {
-        return this.description != null;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        if (this.description == null && description == null) return true;
-        return this.description != null && this.description.equals(description);
     }
 
     protected void repairDeadReferences(String entityId) {

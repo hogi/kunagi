@@ -41,7 +41,9 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("getProject",t);
         }
-        return session.popNextData();
+        scrum.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted();
+        return ret;
     }
 
     public scrum.client.DataTransferObject getImpediments() {
@@ -53,7 +55,9 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("getImpediments",t);
         }
-        return session.popNextData();
+        scrum.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted();
+        return ret;
     }
 
     public scrum.client.DataTransferObject getBacklogItems() {
@@ -65,19 +69,37 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("getBacklogItems",t);
         }
-        return session.popNextData();
+        scrum.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted();
+        return ret;
     }
 
-    public scrum.client.DataTransferObject changeProperty(java.lang.String entityId, java.lang.String property, java.lang.String value) {
+    public scrum.client.DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties) {
         SessionData session = getSessionData();
-        session.getContext().createSubContext("service:changeProperty");
-        LOG.debug("changeProperty");
+        session.getContext().createSubContext("service:changeProperties");
+        LOG.debug("changeProperties");
         try {
-            getApp().onChangeProperty(session, entityId, property, value);
+            getApp().onChangeProperties(session, entityId, properties);
         } catch (Throwable t) {
-            handleServiceMethodException("changeProperty",t);
+            handleServiceMethodException("changeProperties",t);
         }
-        return session.popNextData();
+        scrum.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted();
+        return ret;
+    }
+
+    public scrum.client.DataTransferObject createEntity(java.lang.String type, java.util.Map properties) {
+        SessionData session = getSessionData();
+        session.getContext().createSubContext("service:createEntity");
+        LOG.debug("createEntity");
+        try {
+            getApp().onCreateEntity(session, type, properties);
+        } catch (Throwable t) {
+            handleServiceMethodException("createEntity",t);
+        }
+        scrum.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted();
+        return ret;
     }
 
     public scrum.client.DataTransferObject sleep(long millis) {
@@ -89,7 +111,9 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("sleep",t);
         }
-        return session.popNextData();
+        scrum.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted();
+        return ret;
     }
 
 }
