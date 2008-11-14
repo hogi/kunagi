@@ -13,6 +13,7 @@ import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -33,8 +34,12 @@ public class SprintBacklogItemWidget extends ABlockWidget {
 		fieldsWidget.addField("Description", new Label(item.getDescription()));
 		fieldsWidget.addField("Test", new Label(item.getTestDescription()));
 		fieldsWidget.addField("Effort", new Label(item.getEffortString()));
-		fieldsWidget.addField("", new Label(item.getTasks().size() + " Todos"));
-		return fieldsWidget;
+
+		FlowPanel panel = new FlowPanel();
+		panel.add(fieldsWidget);
+		panel.add(new TaskListWidget(item));
+
+		return panel;
 	}
 
 	@Override

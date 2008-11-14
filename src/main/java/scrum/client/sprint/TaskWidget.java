@@ -129,7 +129,7 @@ public class TaskWidget extends ABlockWidget {
 
 	@Override
 	protected DropController getDropController() {
-		throw new RuntimeException("Not implemented.");
+		return null;
 		// TODO: reference task list
 		// return new BlockListDropController(this, null);
 	}

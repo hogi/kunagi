@@ -1,24 +1,27 @@
 package scrum.client.sprint;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import scrum.client.common.BlockListWidget;
+import scrum.client.project.BacklogItem;
 
 import com.google.gwt.user.client.ui.Composite;
 
 public class TaskListWidget extends Composite {
 
-	public List<Task> taskList = new ArrayList<Task>();
+	private BlockListWidget list = new BlockListWidget();
+	private BacklogItem backlogItem;
 
-	public BlockListWidget list = new BlockListWidget();
-
-	public TaskListWidget(List<Task> taskList) {
-		for (Task task : taskList) {
-			list.addBlock(new TaskWidget(task));
-		}
+	public TaskListWidget(BacklogItem backlogItem) {
+		this.backlogItem = backlogItem;
 
 		initWidget(list);
+		update();
+	}
+
+	public void update() {
+		list.clear();
+		for (Task task : backlogItem.getTasks()) {
+			list.addBlock(new TaskWidget(task));
+		}
 	}
 
 }

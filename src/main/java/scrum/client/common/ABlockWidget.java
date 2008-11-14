@@ -119,12 +119,14 @@ public abstract class ABlockWidget extends Composite {
 	@Override
 	protected void onAttach() {
 		super.onAttach();
-		ScrumGwtApplication.get().getDragController().registerDropController(dropController);
+		if (dropController != null)
+			ScrumGwtApplication.get().getDragController().registerDropController(dropController);
 	}
 
 	@Override
 	protected void onDetach() {
-		ScrumGwtApplication.get().getDragController().unregisterDropController(dropController);
+		if (dropController != null)
+			ScrumGwtApplication.get().getDragController().unregisterDropController(dropController);
 		super.onDetach();
 	}
 }
