@@ -1,7 +1,7 @@
 package scrum.client;
 
 import scrum.client.admin.User;
-import scrum.client.dnd.MyFuckingAwesomeDragController;
+import scrum.client.dnd.ScrumDragController;
 import scrum.client.project.Project;
 import scrum.client.workspace.WorkspaceWidget;
 
@@ -23,7 +23,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	 */
 	private Project project;
 
-	private MyFuckingAwesomeDragController dragController;
+	private ScrumDragController dragController;
 
 	/**
 	 * Application entry point.
@@ -87,9 +87,9 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		return (ScrumGwtApplication) singleton;
 	}
 
-	public MyFuckingAwesomeDragController getDragController() {
+	public ScrumDragController getDragController() {
 		if (dragController == null) {
-			dragController = new MyFuckingAwesomeDragController(RootPanel.get("dnd"), false);
+			dragController = new ScrumDragController(RootPanel.get("dnd"), false);
 		}
 		return dragController;
 	}

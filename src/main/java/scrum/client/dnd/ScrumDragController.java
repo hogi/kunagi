@@ -3,9 +3,9 @@ package scrum.client.dnd;
 import com.allen_sauer.gwt.dnd.client.PickupDragController;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
-public class MyFuckingAwesomeDragController extends PickupDragController {
+public class ScrumDragController extends PickupDragController {
 
-	public MyFuckingAwesomeDragController(AbsolutePanel boundaryPanel, boolean allowDroppingOnBoundaryPanel) {
+	public ScrumDragController(AbsolutePanel boundaryPanel, boolean allowDroppingOnBoundaryPanel) {
 		super(boundaryPanel, allowDroppingOnBoundaryPanel);
 		setBehaviorDragProxy(true);
 	}
