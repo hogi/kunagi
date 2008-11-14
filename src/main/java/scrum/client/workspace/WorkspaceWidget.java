@@ -1,5 +1,6 @@
 package scrum.client.workspace;
 
+import scrum.client.common.PanelWidget;
 import scrum.client.common.StyleSheet;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.BacklogItemListWidget;
@@ -63,26 +64,27 @@ public class WorkspaceWidget extends Composite {
 
 	public static void showImpediments() {
 		impediments.update();
-		setWorkarea(impediments);
+		setWorkarea(impediments, "Impediments");
 	}
 
 	public static void showSprint() {
 		sprint.update();
-		setWorkarea(sprint);
+		setWorkarea(sprint, "Current Sprint");
 	}
 
 	public static void showBacklog() {
 		backlog.update();
-		setWorkarea(backlog);
+		setWorkarea(backlog, "Product Backlog");
 	}
 
 	public static void showTest() {
-		setWorkarea(new TestWidget());
+		setWorkarea(new TestWidget(), "Test");
 	}
 
-	public static void setWorkarea(Widget widget) {
+	public static void setWorkarea(Widget widget, String title) {
 		unlock();
-		workareaPanel.setWidget(widget);
+		// workareaPanel.setWidget(widget);
+		workareaPanel.setWidget(new PanelWidget(title, widget));
 	}
 
 	private Widget createSidebar() {

@@ -24,6 +24,7 @@ public class StyleSheet {
 
 	public static final String TOOLBAR = "Toolbar";
 
+	public static final String DND_WIDGET = "DndWidget";
 	public static final String DROP_WIDGET = "DropWidget";
 	public static final String DROP_WIDGET_SPACE = "DropWidget-space";
 	public static final String DROP_WIDGET_TRASH = "DropWidget-trash";

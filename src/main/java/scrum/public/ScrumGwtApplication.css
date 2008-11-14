@@ -68,6 +68,8 @@ body {
 	border: 1px solid #CCDDFF; 
 }
 
+.WorkspaceWidget {
+}
 
 .WorkspaceWidget-workspace {
 	border: 2px solid red;
@@ -80,7 +82,6 @@ body {
 .SidebarWidget {
 	padding: 5px 5px 20px 5px;
 	position: fixed;
-	z-index: 10;
 }
 
 .DropWidget {
@@ -123,10 +124,3 @@ body {
 	padding: 5px;
 }
 
-#dnd {
-	left: 0;
-	top: 0;
-	background: red;
-	overflow: hidden;
-	z-index:-1000;
-	}

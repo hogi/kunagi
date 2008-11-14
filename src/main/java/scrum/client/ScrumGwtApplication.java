@@ -5,7 +5,6 @@ import scrum.client.dnd.MyFuckingAwesomeDragController;
 import scrum.client.project.Project;
 import scrum.client.workspace.WorkspaceWidget;
 
-import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class ScrumGwtApplication extends GScrumGwtApplication {
@@ -24,7 +23,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	 */
 	private Project project;
 
-	private AbsolutePanel dndPanel;
 	private MyFuckingAwesomeDragController dragController;
 
 	/**
@@ -33,13 +31,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	public void onModuleLoad() {
 		// RootPanel.get("workspace").add(new WorkspaceWidget());
 
-		// dnd
-		dndPanel = new AbsolutePanel();
-		dndPanel.setHeight("2000px");
-		dndPanel.setWidth("100%");
-		dndPanel.add(new WorkspaceWidget());
-
-		RootPanel.get("workspace").add(dndPanel);
+		RootPanel.get("workspace").add(new WorkspaceWidget());
 
 		// simulate login
 		login("duke", "geheim");
@@ -97,8 +89,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	public MyFuckingAwesomeDragController getDragController() {
 		if (dragController == null) {
-			if (dndPanel == null) { throw new RuntimeException("dndPanel is null"); }
-			dragController = new MyFuckingAwesomeDragController(dndPanel, false);
+			dragController = new MyFuckingAwesomeDragController(RootPanel.get("dnd"), false);
 		}
 		return dragController;
 	}
