@@ -3,6 +3,7 @@ package scrum.client.sprint;
 import java.util.Map;
 
 import scrum.client.admin.User;
+import scrum.client.project.BacklogItem;
 
 public class Task extends GTask {
 
@@ -13,7 +14,9 @@ public class Task extends GTask {
 	private User owner;
 	private State state;
 
-	public Task() {
+	public Task(BacklogItem backlogItem) {
+		setBacklogItem(backlogItem);
+		setLabel("New Task");
 		state = State.Open;
 	}
 
@@ -52,6 +55,11 @@ public class Task extends GTask {
 
 	public void setOwner(User owner) {
 		this.owner = owner;
+	}
+
+	@Override
+	public String toString() {
+		return getLabel();
 	}
 
 }

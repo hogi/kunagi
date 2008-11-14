@@ -33,7 +33,7 @@ public class SprintBacklogItemWidget extends ABlockWidget {
 		fieldsWidget.addField("Description", new Label(item.getDescription()));
 		fieldsWidget.addField("Test", new Label(item.getTestDescription()));
 		fieldsWidget.addField("Effort", new Label(item.getEffortString()));
-		fieldsWidget.addField("", new Label("hier kommen todos..."));
+		fieldsWidget.addField("", new Label(item.getTasks().size() + " Todos"));
 		return fieldsWidget;
 	}
 

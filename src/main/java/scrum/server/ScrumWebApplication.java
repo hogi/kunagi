@@ -22,6 +22,7 @@ import scrum.server.impediments.Impediment;
 import scrum.server.project.BacklogItem;
 import scrum.server.project.Project;
 import scrum.server.sprint.Sprint;
+import scrum.server.sprint.Task;
 
 public class ScrumWebApplication extends GScrumWebApplication {
 
@@ -76,6 +77,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if (sprint == null) return;
 		session.getNextData().addEntity(toPropertyMap(sprint));
 		session.getNextData().addEntities(toPropertyMap(project.getBacklogItems()));
+		session.getNextData().addEntities(toPropertyMap(sprint.getTasks()));
 	}
 
 	@Override
@@ -144,6 +146,16 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			backlogItem2.setProject(project);
 			backlogItem2.setLabel("Test Backlog Item 2");
 			getBacklogItemDao().saveEntity(backlogItem2);
+
+			Task task1 = getTaskDao().newEntityInstance();
+			task1.setBacklogItem(backlogItem2);
+			task1.setLabel("Task 1");
+			getTaskDao().saveEntity(task1);
+
+			Task task2 = getTaskDao().newEntityInstance();
+			task2.setBacklogItem(backlogItem2);
+			task2.setLabel("Task 2");
+			getTaskDao().saveEntity(task2);
 
 			BacklogItem backlogItem3 = getBacklogItemDao().newEntityInstance();
 			backlogItem3.setProject(project);

@@ -21,4 +21,9 @@ public class Sprint extends GSprint {
 		return getDao().getBacklogItemsBySprint(this);
 	}
 
+	@Override
+	public String toString() {
+		return getLabel();
+	}
+
 }

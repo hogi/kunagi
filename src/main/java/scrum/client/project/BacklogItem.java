@@ -1,6 +1,5 @@
 package scrum.client.project;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,8 +9,6 @@ import scrum.client.sprint.Task;
 public class BacklogItem extends GBacklogItem {
 
 	public static final String INIT_LABEL = "New Backlog Item";
-
-	private List<Task> tasks = new ArrayList<Task>();
 
 	public BacklogItem(Project project) {
 		setProject(project);
@@ -34,17 +31,18 @@ public class BacklogItem extends GBacklogItem {
 	}
 
 	public List<Task> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(List<Task> taskList) {
-		this.tasks = taskList;
+		return getDao().getTasksByBacklogItem(this);
 	}
 
 	public Task createNewTask() {
-		Task task = new Task();
-		tasks.add(task);
+		Task task = new Task(this);
+		getDao().createTask(task);
 		return task;
+	}
+
+	@Override
+	public String toString() {
+		return getLabel();
 	}
 
 }

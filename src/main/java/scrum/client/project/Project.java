@@ -91,4 +91,9 @@ public class Project extends GProject {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return getLabel();
+	}
+
 }
