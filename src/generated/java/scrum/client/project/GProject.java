@@ -39,7 +39,7 @@ public abstract class GProject
     public static final String ENTITY_TYPE = "project";
 
     @Override
-    protected final String getEntityType() {
+    public final String getEntityType() {
         return ENTITY_TYPE;
     }
 
@@ -61,16 +61,36 @@ public abstract class GProject
         return equals(this.label, label);
     }
 
+    // --- currentSprint ---
+
+    private String currentSprintId;
+
+    public final scrum.client.sprint.Sprint getCurrentSprint() {
+        return getDao().getSprint(this.currentSprintId);
+    }
+
+    public final Project setCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
+        this.currentSprintId = currentSprint.getId();
+        propertyChanged("currentSprint", this.currentSprintId);
+        return (Project)this;
+    }
+
+    public final boolean isCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
+        return equals(this.currentSprintId, currentSprint);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         label  = (java.lang.String) props.get("label");
+        currentSprintId = (String) props.get("currentSprintId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("label", this.label);
+        properties.put("currentSprint", this.currentSprintId);
     }
 
 }

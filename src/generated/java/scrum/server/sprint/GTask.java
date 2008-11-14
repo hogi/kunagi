@@ -47,7 +47,7 @@ public abstract class GTask
         super.storeProperties(properties);
         properties.put("effort", this.effort);
         properties.put("label", this.label);
-        properties.put("backlogItem", this.backlogItemId);
+        properties.put("backlogItemId", this.backlogItemId);
     }
 
     private static final Logger LOG = Logger.get(GTask.class);

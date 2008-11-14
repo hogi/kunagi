@@ -1,13 +1,7 @@
 package scrum.client;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import scrum.client.admin.User;
 import scrum.client.dnd.MyFuckingAwesomeDragController;
-import scrum.client.impediments.Impediment;
-import scrum.client.project.BacklogItem;
 import scrum.client.project.Project;
 import scrum.client.workspace.WorkspaceWidget;
 
@@ -72,28 +66,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	@Override
 	protected void handleDataFromServer(DataTransferObject data) {
 		super.handleDataFromServer(data);
-		if (data.project != null) {
-			System.out.println("project received");
-			project = new Project(data.project);
-		}
-		if (data.impediments != null) {
-			System.out.println(data.impediments.size() + " impediments received");
-			List<Impediment> impediments = new ArrayList<Impediment>();
-			for (Map impedimentData : data.impediments) {
-				Impediment impediment = new Impediment(impedimentData);
-				impediments.add(impediment);
-			}
-			project.setImpediments(impediments);
-		}
-		if (data.backlogItems != null) {
-			System.out.println(data.backlogItems.size() + " backlog items received");
-			List<BacklogItem> backlogItems = new ArrayList<BacklogItem>();
-			for (Map backlogItemData : data.backlogItems) {
-				BacklogItem backlogItem = new BacklogItem(backlogItemData);
-				backlogItems.add(backlogItem);
-			}
-			project.setBacklogItems(backlogItems);
-		}
+
 		if (data.entityIdBase != null) {
 			entityIdBase = data.entityIdBase;
 			System.out.println("entityIdBase: " + entityIdBase);
@@ -107,6 +80,9 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	}
 
 	public Project getProject() {
+		if (project == null) {
+			project = getDao().getProjects().get(0); // TODO will fail, on project change
+		}
 		return project;
 	}
 

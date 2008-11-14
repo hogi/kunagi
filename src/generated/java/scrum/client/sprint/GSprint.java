@@ -39,26 +39,8 @@ public abstract class GSprint
     public static final String ENTITY_TYPE = "sprint";
 
     @Override
-    protected final String getEntityType() {
+    public final String getEntityType() {
         return ENTITY_TYPE;
-    }
-
-    // --- project ---
-
-    private String projectId;
-
-    public final scrum.client.project.Project getProject() {
-        return getDao().getProject(this.projectId);
-    }
-
-    public final Sprint setProject(scrum.client.project.Project project) {
-        this.projectId = project.getId();
-        propertyChanged("project", this.projectId);
-        return (Sprint)this;
-    }
-
-    public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
     }
 
     // --- label ---
@@ -79,18 +61,36 @@ public abstract class GSprint
         return equals(this.label, label);
     }
 
+    // --- project ---
+
+    private String projectId;
+
+    public final scrum.client.project.Project getProject() {
+        return getDao().getProject(this.projectId);
+    }
+
+    public final Sprint setProject(scrum.client.project.Project project) {
+        this.projectId = project.getId();
+        propertyChanged("project", this.projectId);
+        return (Sprint)this;
+    }
+
+    public final boolean isProject(scrum.client.project.Project project) {
+        return equals(this.projectId, project);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        projectId = (String) props.get("id");
         label  = (java.lang.String) props.get("label");
+        projectId = (String) props.get("projectId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("project", this.projectId);
         properties.put("label", this.label);
+        properties.put("project", this.projectId);
     }
 
 }

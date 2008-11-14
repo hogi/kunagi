@@ -15,7 +15,6 @@ public class Task extends GTask {
 
 	public Task() {
 		state = State.Open;
-		createOnServer();
 	}
 
 	public Task(Map data) {

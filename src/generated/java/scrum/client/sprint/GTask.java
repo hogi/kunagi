@@ -39,7 +39,7 @@ public abstract class GTask
     public static final String ENTITY_TYPE = "task";
 
     @Override
-    protected final String getEntityType() {
+    public final String getEntityType() {
         return ENTITY_TYPE;
     }
 
@@ -102,7 +102,7 @@ public abstract class GTask
     public void updateProperties(Map props) {
         effort  = (java.lang.Integer) props.get("effort");
         label  = (java.lang.String) props.get("label");
-        backlogItemId = (String) props.get("id");
+        backlogItemId = (String) props.get("backlogItemId");
     }
 
     @Override

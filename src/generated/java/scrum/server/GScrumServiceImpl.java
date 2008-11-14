@@ -74,6 +74,20 @@ public abstract class GScrumServiceImpl
         return ret;
     }
 
+    public scrum.client.DataTransferObject getCurrentSprint() {
+        SessionData session = getSessionData();
+        session.getContext().createSubContext("service:getCurrentSprint");
+        LOG.debug("getCurrentSprint");
+        try {
+            getApp().onGetCurrentSprint(session);
+        } catch (Throwable t) {
+            handleServiceMethodException("getCurrentSprint",t);
+        }
+        scrum.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted();
+        return ret;
+    }
+
     public scrum.client.DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties) {
         SessionData session = getSessionData();
         session.getContext().createSubContext("service:changeProperties");
@@ -96,6 +110,20 @@ public abstract class GScrumServiceImpl
             getApp().onCreateEntity(session, type, properties);
         } catch (Throwable t) {
             handleServiceMethodException("createEntity",t);
+        }
+        scrum.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted();
+        return ret;
+    }
+
+    public scrum.client.DataTransferObject deleteEntity(java.lang.String entityId) {
+        SessionData session = getSessionData();
+        session.getContext().createSubContext("service:deleteEntity");
+        LOG.debug("deleteEntity");
+        try {
+            getApp().onDeleteEntity(session, entityId);
+        } catch (Throwable t) {
+            handleServiceMethodException("deleteEntity",t);
         }
         scrum.client.DataTransferObject ret = session.popNextData();
         onServiceMethodExecuted();

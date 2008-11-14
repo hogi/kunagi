@@ -39,7 +39,7 @@ public abstract class GUser
     public static final String ENTITY_TYPE = "user";
 
     @Override
-    protected final String getEntityType() {
+    public final String getEntityType() {
         return ENTITY_TYPE;
     }
 

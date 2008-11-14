@@ -60,7 +60,13 @@ public class SidebarWidget extends Composite {
 	private class SprintClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			WorkspaceWidget.showSprint();
+			WorkspaceWidget.lock("Loading Sprint...");
+			ScrumGwtApplication.get().callGetCurrentSprint(new Runnable() {
+
+				public void run() {
+					WorkspaceWidget.showSprint();
+				}
+			});
 		}
 
 	}

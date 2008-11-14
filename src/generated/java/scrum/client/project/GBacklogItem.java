@@ -39,26 +39,26 @@ public abstract class GBacklogItem
     public static final String ENTITY_TYPE = "backlogItem";
 
     @Override
-    protected final String getEntityType() {
+    public final String getEntityType() {
         return ENTITY_TYPE;
     }
 
-    // --- description ---
+    // --- sprint ---
 
-    private java.lang.String description ;
+    private String sprintId;
 
-    public final java.lang.String getDescription() {
-        return this.description ;
+    public final scrum.client.sprint.Sprint getSprint() {
+        return getDao().getSprint(this.sprintId);
     }
 
-    public final BacklogItem setDescription(java.lang.String description) {
-        this.description = description ;
-        propertyChanged("description", this.description);
+    public final BacklogItem setSprint(scrum.client.sprint.Sprint sprint) {
+        this.sprintId = sprint.getId();
+        propertyChanged("sprint", this.sprintId);
         return (BacklogItem)this;
     }
 
-    public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
+    public final boolean isSprint(scrum.client.sprint.Sprint sprint) {
+        return equals(this.sprintId, sprint);
     }
 
     // --- done ---
@@ -79,58 +79,22 @@ public abstract class GBacklogItem
         return equals(this.done, done);
     }
 
-    // --- testDescription ---
+    // --- description ---
 
-    private java.lang.String testDescription ;
+    private java.lang.String description ;
 
-    public final java.lang.String getTestDescription() {
-        return this.testDescription ;
+    public final java.lang.String getDescription() {
+        return this.description ;
     }
 
-    public final BacklogItem setTestDescription(java.lang.String testDescription) {
-        this.testDescription = testDescription ;
-        propertyChanged("testDescription", this.testDescription);
+    public final BacklogItem setDescription(java.lang.String description) {
+        this.description = description ;
+        propertyChanged("description", this.description);
         return (BacklogItem)this;
     }
 
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        return equals(this.testDescription, testDescription);
-    }
-
-    // --- project ---
-
-    private String projectId;
-
-    public final scrum.client.project.Project getProject() {
-        return getDao().getProject(this.projectId);
-    }
-
-    public final BacklogItem setProject(scrum.client.project.Project project) {
-        this.projectId = project.getId();
-        propertyChanged("project", this.projectId);
-        return (BacklogItem)this;
-    }
-
-    public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
-    }
-
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final BacklogItem setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
-        return (BacklogItem)this;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+    public final boolean isDescription(java.lang.String description) {
+        return equals(this.description, description);
     }
 
     // --- effort ---
@@ -151,26 +115,82 @@ public abstract class GBacklogItem
         return equals(this.effort, effort);
     }
 
+    // --- project ---
+
+    private String projectId;
+
+    public final scrum.client.project.Project getProject() {
+        return getDao().getProject(this.projectId);
+    }
+
+    public final BacklogItem setProject(scrum.client.project.Project project) {
+        this.projectId = project.getId();
+        propertyChanged("project", this.projectId);
+        return (BacklogItem)this;
+    }
+
+    public final boolean isProject(scrum.client.project.Project project) {
+        return equals(this.projectId, project);
+    }
+
+    // --- testDescription ---
+
+    private java.lang.String testDescription ;
+
+    public final java.lang.String getTestDescription() {
+        return this.testDescription ;
+    }
+
+    public final BacklogItem setTestDescription(java.lang.String testDescription) {
+        this.testDescription = testDescription ;
+        propertyChanged("testDescription", this.testDescription);
+        return (BacklogItem)this;
+    }
+
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        return equals(this.testDescription, testDescription);
+    }
+
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final BacklogItem setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
+        return (BacklogItem)this;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        description  = (java.lang.String) props.get("description");
+        sprintId = (String) props.get("sprintId");
         done  = (Boolean) props.get("done");
-        testDescription  = (java.lang.String) props.get("testDescription");
-        projectId = (String) props.get("id");
-        label  = (java.lang.String) props.get("label");
+        description  = (java.lang.String) props.get("description");
         effort  = (java.lang.Integer) props.get("effort");
+        projectId = (String) props.get("projectId");
+        testDescription  = (java.lang.String) props.get("testDescription");
+        label  = (java.lang.String) props.get("label");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("description", this.description);
+        properties.put("sprint", this.sprintId);
         properties.put("done", this.done);
-        properties.put("testDescription", this.testDescription);
-        properties.put("project", this.projectId);
-        properties.put("label", this.label);
+        properties.put("description", this.description);
         properties.put("effort", this.effort);
+        properties.put("project", this.projectId);
+        properties.put("testDescription", this.testDescription);
+        properties.put("label", this.label);
     }
 
 }

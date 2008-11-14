@@ -13,9 +13,9 @@ public class BacklogItem extends GBacklogItem {
 
 	private List<Task> tasks = new ArrayList<Task>();
 
-	public BacklogItem() {
+	public BacklogItem(Project project) {
+		setProject(project);
 		setLabel(INIT_LABEL);
-		createOnServer();
 	}
 
 	public BacklogItem(Map data) {

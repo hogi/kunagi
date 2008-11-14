@@ -4,7 +4,6 @@ import ilarkesto.di.app.ApplicationStarter;
 import ilarkesto.mda.AGeneratorApplication;
 import ilarkesto.mda.gen.GwtApplicationGenerator;
 import ilarkesto.mda.gen.GwtDaoGenerator;
-import ilarkesto.mda.gen.GwtDataTransferObjectGenerator;
 import ilarkesto.mda.gen.GwtEntityGenerator;
 import ilarkesto.mda.gen.GwtServiceAsyncInterfaceGenerator;
 import ilarkesto.mda.gen.GwtServiceImplementationGenerator;
@@ -30,6 +29,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel = createEntityModel("Project", "project");
 			autowire(projectModel);
 			projectModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);
+			projectModel.addReference("currentSprint", getSprintModel());
 		}
 		return projectModel;
 	}
@@ -41,6 +41,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			backlogItemModel = createEntityModel("BacklogItem", "project");
 			autowire(backlogItemModel);
 			backlogItemModel.addReference("project", getProjectModel()).setMaster(true);
+			backlogItemModel.addReference("sprint", getSprintModel());
 			backlogItemModel.addProperty("label", String.class);
 			backlogItemModel.addProperty("description", String.class);
 			backlogItemModel.addProperty("testDescription", String.class);
@@ -116,10 +117,12 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			serviceModel.addMethod("getProject").addParameter("projectId", String.class);
 			serviceModel.addMethod("getImpediments");
 			serviceModel.addMethod("getBacklogItems");
+			serviceModel.addMethod("getCurrentSprint");
 			serviceModel.addMethod("changeProperties").addParameter("entityId", String.class).addParameter(
 				"properties", Map.class);
 			serviceModel.addMethod("createEntity").addParameter("type", String.class).addParameter("properties",
 				Map.class);
+			serviceModel.addMethod("deleteEntity").addParameter("entityId", String.class);
 			serviceModel.addMethod("sleep").addParameter("millis", long.class);
 		}
 		return serviceModel;
@@ -183,6 +186,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		autowire(new GwtServiceImplementationGenerator()).generate(getServiceModel());
 		autowire(new GwtApplicationGenerator()).generate(getApplicationModel());
 		autowire(new GwtDaoGenerator()).generate(getApplicationModel(), getEntityModels());
-		autowire(new GwtDataTransferObjectGenerator()).generate(getApplicationModel(), getEntityModels());
+		// autowire(new GwtDataTransferObjectGenerator()).generate(getApplicationModel(), getEntityModels());
 	}
 }

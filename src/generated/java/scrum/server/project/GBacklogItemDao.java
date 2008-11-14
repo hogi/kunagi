@@ -43,17 +43,19 @@ public abstract class GBacklogItemDao
 
     // --- clear caches ---
     public void clearCaches() {
+        backlogItemsBySprintCache.clear();
+        sprintsCache = null;
+        backlogItemsByDoneCache.clear();
         backlogItemsByDescriptionCache.clear();
         descriptionsCache = null;
-        backlogItemsByDoneCache.clear();
-        backlogItemsByTestDescriptionCache.clear();
-        testDescriptionsCache = null;
-        backlogItemsByProjectCache.clear();
-        projectsCache = null;
-        backlogItemsByLabelCache.clear();
-        labelsCache = null;
         backlogItemsByEffortCache.clear();
         effortsCache = null;
+        backlogItemsByProjectCache.clear();
+        projectsCache = null;
+        backlogItemsByTestDescriptionCache.clear();
+        testDescriptionsCache = null;
+        backlogItemsByLabelCache.clear();
+        labelsCache = null;
     }
 
     @Override
@@ -70,6 +72,75 @@ public abstract class GBacklogItemDao
         if (event.getEntity() instanceof BacklogItem) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - sprint
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.sprint.Sprint,Set<BacklogItem>> backlogItemsBySprintCache = new Cache<scrum.server.sprint.Sprint,Set<BacklogItem>>(
+            new Cache.Factory<scrum.server.sprint.Sprint,Set<BacklogItem>>() {
+                public Set<BacklogItem> create(scrum.server.sprint.Sprint sprint) {
+                    return getEntities(new IsSprint(sprint));
+                }
+            });
+
+    public final Set<BacklogItem> getBacklogItemsBySprint(scrum.server.sprint.Sprint sprint) {
+        return backlogItemsBySprintCache.get(sprint);
+    }
+    private Set<scrum.server.sprint.Sprint> sprintsCache;
+
+    public final Set<scrum.server.sprint.Sprint> getSprints() {
+        if (sprintsCache == null) {
+            sprintsCache = new HashSet<scrum.server.sprint.Sprint>();
+            for (BacklogItem e : getEntities()) {
+                if (e.isSprintSet()) sprintsCache.add(e.getSprint());
+            }
+        }
+        return sprintsCache;
+    }
+
+    private static class IsSprint implements Predicate<BacklogItem> {
+
+        private scrum.server.sprint.Sprint value;
+
+        public IsSprint(scrum.server.sprint.Sprint value) {
+            this.value = value;
+        }
+
+        public boolean test(BacklogItem e) {
+            return e.isSprint(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - done
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<BacklogItem>> backlogItemsByDoneCache = new Cache<Boolean,Set<BacklogItem>>(
+            new Cache.Factory<Boolean,Set<BacklogItem>>() {
+                public Set<BacklogItem> create(Boolean done) {
+                    return getEntities(new IsDone(done));
+                }
+            });
+
+    public final Set<BacklogItem> getBacklogItemsByDone(boolean done) {
+        return backlogItemsByDoneCache.get(done);
+    }
+
+    private static class IsDone implements Predicate<BacklogItem> {
+
+        private boolean value;
+
+        public IsDone(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(BacklogItem e) {
+            return value == e.isDone();
+        }
+
     }
 
     // -----------------------------------------------------------
@@ -113,70 +184,41 @@ public abstract class GBacklogItemDao
     }
 
     // -----------------------------------------------------------
-    // - done
+    // - effort
     // -----------------------------------------------------------
 
-    private final Cache<Boolean,Set<BacklogItem>> backlogItemsByDoneCache = new Cache<Boolean,Set<BacklogItem>>(
-            new Cache.Factory<Boolean,Set<BacklogItem>>() {
-                public Set<BacklogItem> create(Boolean done) {
-                    return getEntities(new IsDone(done));
+    private final Cache<java.lang.Integer,Set<BacklogItem>> backlogItemsByEffortCache = new Cache<java.lang.Integer,Set<BacklogItem>>(
+            new Cache.Factory<java.lang.Integer,Set<BacklogItem>>() {
+                public Set<BacklogItem> create(java.lang.Integer effort) {
+                    return getEntities(new IsEffort(effort));
                 }
             });
 
-    public final Set<BacklogItem> getBacklogItemsByDone(boolean done) {
-        return backlogItemsByDoneCache.get(done);
+    public final Set<BacklogItem> getBacklogItemsByEffort(java.lang.Integer effort) {
+        return backlogItemsByEffortCache.get(effort);
     }
+    private Set<java.lang.Integer> effortsCache;
 
-    private static class IsDone implements Predicate<BacklogItem> {
-
-        private boolean value;
-
-        public IsDone(boolean value) {
-            this.value = value;
-        }
-
-        public boolean test(BacklogItem e) {
-            return value == e.isDone();
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - testDescription
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<BacklogItem>> backlogItemsByTestDescriptionCache = new Cache<java.lang.String,Set<BacklogItem>>(
-            new Cache.Factory<java.lang.String,Set<BacklogItem>>() {
-                public Set<BacklogItem> create(java.lang.String testDescription) {
-                    return getEntities(new IsTestDescription(testDescription));
-                }
-            });
-
-    public final Set<BacklogItem> getBacklogItemsByTestDescription(java.lang.String testDescription) {
-        return backlogItemsByTestDescriptionCache.get(testDescription);
-    }
-    private Set<java.lang.String> testDescriptionsCache;
-
-    public final Set<java.lang.String> getTestDescriptions() {
-        if (testDescriptionsCache == null) {
-            testDescriptionsCache = new HashSet<java.lang.String>();
+    public final Set<java.lang.Integer> getEfforts() {
+        if (effortsCache == null) {
+            effortsCache = new HashSet<java.lang.Integer>();
             for (BacklogItem e : getEntities()) {
-                if (e.isTestDescriptionSet()) testDescriptionsCache.add(e.getTestDescription());
+                if (e.isEffortSet()) effortsCache.add(e.getEffort());
             }
         }
-        return testDescriptionsCache;
+        return effortsCache;
     }
 
-    private static class IsTestDescription implements Predicate<BacklogItem> {
+    private static class IsEffort implements Predicate<BacklogItem> {
 
-        private java.lang.String value;
+        private java.lang.Integer value;
 
-        public IsTestDescription(java.lang.String value) {
+        public IsEffort(java.lang.Integer value) {
             this.value = value;
         }
 
         public boolean test(BacklogItem e) {
-            return e.isTestDescription(value);
+            return e.isEffort(value);
         }
 
     }
@@ -222,6 +264,46 @@ public abstract class GBacklogItemDao
     }
 
     // -----------------------------------------------------------
+    // - testDescription
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<BacklogItem>> backlogItemsByTestDescriptionCache = new Cache<java.lang.String,Set<BacklogItem>>(
+            new Cache.Factory<java.lang.String,Set<BacklogItem>>() {
+                public Set<BacklogItem> create(java.lang.String testDescription) {
+                    return getEntities(new IsTestDescription(testDescription));
+                }
+            });
+
+    public final Set<BacklogItem> getBacklogItemsByTestDescription(java.lang.String testDescription) {
+        return backlogItemsByTestDescriptionCache.get(testDescription);
+    }
+    private Set<java.lang.String> testDescriptionsCache;
+
+    public final Set<java.lang.String> getTestDescriptions() {
+        if (testDescriptionsCache == null) {
+            testDescriptionsCache = new HashSet<java.lang.String>();
+            for (BacklogItem e : getEntities()) {
+                if (e.isTestDescriptionSet()) testDescriptionsCache.add(e.getTestDescription());
+            }
+        }
+        return testDescriptionsCache;
+    }
+
+    private static class IsTestDescription implements Predicate<BacklogItem> {
+
+        private java.lang.String value;
+
+        public IsTestDescription(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(BacklogItem e) {
+            return e.isTestDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
 
@@ -261,46 +343,6 @@ public abstract class GBacklogItemDao
 
     }
 
-    // -----------------------------------------------------------
-    // - effort
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.Integer,Set<BacklogItem>> backlogItemsByEffortCache = new Cache<java.lang.Integer,Set<BacklogItem>>(
-            new Cache.Factory<java.lang.Integer,Set<BacklogItem>>() {
-                public Set<BacklogItem> create(java.lang.Integer effort) {
-                    return getEntities(new IsEffort(effort));
-                }
-            });
-
-    public final Set<BacklogItem> getBacklogItemsByEffort(java.lang.Integer effort) {
-        return backlogItemsByEffortCache.get(effort);
-    }
-    private Set<java.lang.Integer> effortsCache;
-
-    public final Set<java.lang.Integer> getEfforts() {
-        if (effortsCache == null) {
-            effortsCache = new HashSet<java.lang.Integer>();
-            for (BacklogItem e : getEntities()) {
-                if (e.isEffortSet()) effortsCache.add(e.getEffort());
-            }
-        }
-        return effortsCache;
-    }
-
-    private static class IsEffort implements Predicate<BacklogItem> {
-
-        private java.lang.Integer value;
-
-        public IsEffort(java.lang.Integer value) {
-            this.value = value;
-        }
-
-        public boolean test(BacklogItem e) {
-            return e.isEffort(value);
-        }
-
-    }
-
     // --- valueObject classes ---
     @Override
     protected Set<Class> getValueObjectClasses() {
@@ -315,6 +357,12 @@ public abstract class GBacklogItemDao
     }
 
     // --- dependencies ---
+
+    protected scrum.server.sprint.SprintDao sprintDao;
+
+    public void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
+        this.sprintDao = sprintDao;
+    }
 
     protected scrum.server.project.ProjectDao projectDao;
 

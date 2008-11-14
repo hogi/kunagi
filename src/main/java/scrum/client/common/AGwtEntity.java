@@ -12,34 +12,30 @@ import scrum.client.ScrumGwtApplication;
 public abstract class AGwtEntity {
 
 	private String id;
-	private transient boolean clientOnly;
+	private boolean inCreation;
 
-	protected abstract String getEntityType();
+	public abstract String getEntityType();
 
 	public AGwtEntity() {
-		this.clientOnly = true;
 		this.id = ScrumGwtApplication.get().getNewEntityId();
+		inCreation = true;
 	}
 
 	public AGwtEntity(Map data) {
 		this.id = (String) data.get("id");
 	}
 
-	protected final void createOnServer() {
-		if (!clientOnly) throw new RuntimeException("Entity already created on server.");
-		ScrumGwtApplication.get().callCreateEntity(getEntityType(), createPropertiesMap());
-		clientOnly = false;
-	}
-
 	public final String getId() {
 		return id;
 	}
 
+	void setCreated() {
+		this.inCreation = false;
+	}
+
 	protected final void propertyChanged(String property, Object value) {
-		if (clientOnly) return;
-		Map properties = new HashMap();
-		properties.put(property, value);
-		ScrumGwtApplication.get().callChangeProperties(getId(), properties);
+		if (inCreation) return;
+		getDao().entityPropertyChanged(this, property, value);
 	}
 
 	public void storeProperties(Map properties) {

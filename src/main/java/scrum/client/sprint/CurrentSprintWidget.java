@@ -1,30 +1,24 @@
-package scrum.client.test;
-
-import java.util.List;
+package scrum.client.sprint;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ItemFieldsWidget;
-import scrum.client.common.ListProvider;
 import scrum.client.common.editable.AEditableTextWidget;
-import scrum.client.project.BacklogItem;
-import scrum.client.project.BacklogItemListWidget;
-import scrum.client.sprint.Sprint;
-import scrum.client.sprint.Sprint.State;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CurrentSprintView extends Composite {
+public class CurrentSprintWidget extends Composite {
 
 	private VerticalPanel view;
 
 	private Sprint sprint;
 
-	public CurrentSprintView() {
+	public CurrentSprintWidget() {
 		view = new VerticalPanel();
 		view.setWidth("100%");
 
@@ -32,6 +26,15 @@ public class CurrentSprintView extends Composite {
 	}
 
 	public void update() {
+		view.clear();
+		view
+				.add(new Label(
+						"A sprint is an iteration of work during which an increment of product functionality is implemented. By the book, an iteration lasts 30 days. This is longer than in other agile methods to take into account the fact that a functional increment of product must be produced each sprint.\n"
+								+ "\n"
+								+ "The sprint starts with a one-day sprint planning meeting. Many daily Scrum meetings occur during the sprint (one per day). At the end of the sprint we have a sprint review meeting, followed by a sprint retrospective meeting.\n"
+								+ "\n"
+								+ "During the sprint, the team must not be interrupted with additional requests. Guaranteeing the team won't be interrupted allows it to make real commitments it can be expected to keep."));
+		view.add(new HTML("<br>"));
 		sprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
 
 		if (sprint == null) {
@@ -59,31 +62,15 @@ public class CurrentSprintView extends Composite {
 			}
 
 		});
-
-		int effortOverall = 0;
-		for (BacklogItem backlogItem : sprint.getBacklogItems()) {
-			if (backlogItem.getEffort() == null) continue;
-			effortOverall += backlogItem.getEffort().intValue();
-		}
-		fieldsWidget.addField("Effort overall", new Label(String.valueOf(effortOverall)));
-
 		view.add(fieldsWidget);
 
-		view.add(new BacklogItemListWidget(new ListProvider() {
-
-			public List<BacklogItem> getList() {
-				return sprint.getBacklogItems();
-			}
-
-		}));
+		view.add(new SprintBacklogItemListWidget(sprint));
 	}
 
 	class AssignSprintListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			sprint = ScrumGwtApplication.get().getProject().createNewSprint("New Sprint");
-			sprint.setState(State.Development);
-
+			sprint = ScrumGwtApplication.get().getProject().createNewSprint();
 			update();
 		}
 	}

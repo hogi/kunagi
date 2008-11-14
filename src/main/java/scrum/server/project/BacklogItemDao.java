@@ -9,11 +9,4 @@ public class BacklogItemDao extends GBacklogItemDao {
 		return backlogItem;
 	}
 
-	public BacklogItem postBacklogItem(Project project) {
-		BacklogItem backlogItem = newEntityInstance();
-		backlogItem.setProject(project);
-		saveEntity(backlogItem);
-		return backlogItem;
-	}
-
 }

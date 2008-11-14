@@ -1,6 +1,5 @@
 package scrum.client.project;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -19,13 +18,8 @@ public class Project extends GProject {
 	private User master;
 	private User owner;
 	private Set<User> team;
-	private List<Impediment> impediments = new ArrayList<Impediment>();
-	private List<BacklogItem> backlogItems = new ArrayList<BacklogItem>();
-	private List<Sprint> sprints = new ArrayList<Sprint>();
 
-	public Project() {
-		createOnServer();
-	}
+	public Project() {}
 
 	public Project(Map data) {
 		super(data);
@@ -53,63 +47,44 @@ public class Project extends GProject {
 
 	public Impediment createNewImpediment() {
 		Impediment impediment = new Impediment(this);
-		impediments.add(impediment);
-		// TODO message to server
+		getDao().createImpediment(impediment);
 		return impediment;
 	}
 
 	public void deleteImpediment(Impediment impediment) {
-		impediments.remove(impediment);
-		// TODO message to server
+		getDao().deleteImpediment(impediment);
 	}
 
 	public List<Impediment> getImpediments() {
-		return impediments;
-	}
-
-	public void setImpediments(List<Impediment> impediments) {
-		this.impediments = impediments;
+		return getDao().getImpedimentsByProject(this);
 	}
 
 	public BacklogItem createNewBacklogItem() {
-		BacklogItem item = new BacklogItem();
-		backlogItems.add(item);
+		BacklogItem item = new BacklogItem(this);
+		getDao().createBacklogItem(item);
 		return item;
 	}
 
 	public void deleteBacklogItem(BacklogItem item) {
-		backlogItems.remove(item);
+		getDao().deleteBacklogItem(item);
 	}
 
 	public List<BacklogItem> getBacklogItems() {
-		return backlogItems;
+		return getDao().getBacklogItemsByProject(this);
 	}
 
-	public void setBacklogItems(List<BacklogItem> backlogItems) {
-		this.backlogItems = backlogItems;
-	}
-
-	public Sprint createNewSprint(String label) {
-		Sprint sprint = new Sprint(label);
-		sprints.add(sprint);
-		// TODO message to server
+	public Sprint createNewSprint() {
+		Sprint sprint = new Sprint(this, "New Sprint");
+		getDao().createSprint(sprint);
 		return sprint;
 	}
 
 	public List<Sprint> getSprints() {
-		return sprints;
+		return getDao().getSprintsByProject(this);
 	}
 
-	public Sprint getCurrentSprint() {
-		for (Sprint sprint : sprints) {
-			if (sprint.getState().equals(Sprint.State.Development)) return sprint;
-		}
-		return null;
-	}
-
-	// TODO permission? s
 	public boolean deleteTask(Task task) {
-		for (BacklogItem backlogItem : backlogItems) {
+		for (BacklogItem backlogItem : getBacklogItems()) {
 			boolean b = backlogItem.getTasks().remove(task);
 			if (b) return true;
 		}

@@ -1,14 +1,9 @@
 package scrum.client.workspace;
 
-import java.util.List;
-
-import scrum.client.ScrumGwtApplication;
-import scrum.client.common.ListProvider;
 import scrum.client.common.StyleSheet;
 import scrum.client.impediments.ImpedimentListWidget;
-import scrum.client.project.BacklogItem;
 import scrum.client.project.BacklogItemListWidget;
-import scrum.client.test.CurrentSprintView;
+import scrum.client.sprint.CurrentSprintWidget;
 import scrum.client.test.TestWidget;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -21,7 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class WorkspaceWidget extends Composite {
 
 	public static BacklogItemListWidget backlog;
-	public static CurrentSprintView sprint;
+	public static CurrentSprintWidget sprint;
 	public static ImpedimentListWidget impediments;
 
 	private static SimplePanel rootPanel;
@@ -31,14 +26,8 @@ public class WorkspaceWidget extends Composite {
 	public WorkspaceWidget() {
 		// initialize widgets
 		impediments = new ImpedimentListWidget();
-		backlog = new BacklogItemListWidget(new ListProvider() {
-
-			public List<BacklogItem> getList() {
-				return ScrumGwtApplication.get().getProject().getBacklogItems();
-			}
-
-		});
-		sprint = new CurrentSprintView();
+		backlog = new BacklogItemListWidget();
+		sprint = new CurrentSprintWidget();
 
 		// create workspace
 		workspacePanel = new DockPanel();

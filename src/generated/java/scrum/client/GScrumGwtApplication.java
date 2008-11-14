@@ -64,6 +64,14 @@ public abstract class GScrumGwtApplication
         callGetBacklogItems( null);
     }
 
+    public final void callGetCurrentSprint( Runnable callback) {
+        getScrumService().getCurrentSprint( new DefaultCallback(callback));
+    }
+
+    public final void callGetCurrentSprint() {
+        callGetCurrentSprint( null);
+    }
+
     public final void callChangeProperties(java.lang.String entityId, java.util.Map properties,  Runnable callback) {
         getScrumService().changeProperties(entityId, properties,  new DefaultCallback(callback));
     }
@@ -78,6 +86,14 @@ public abstract class GScrumGwtApplication
 
     public final void callCreateEntity(java.lang.String type, java.util.Map properties) {
         callCreateEntity(type, properties,  null);
+    }
+
+    public final void callDeleteEntity(java.lang.String entityId,  Runnable callback) {
+        getScrumService().deleteEntity(entityId,  new DefaultCallback(callback));
+    }
+
+    public final void callDeleteEntity(java.lang.String entityId) {
+        callDeleteEntity(entityId,  null);
     }
 
     public final void callSleep(long millis,  Runnable callback) {

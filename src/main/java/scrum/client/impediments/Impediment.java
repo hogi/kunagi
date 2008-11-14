@@ -11,7 +11,6 @@ public class Impediment extends GImpediment {
 	public Impediment(Project project) {
 		setLabel(INIT_LABEL);
 		setProject(project);
-		createOnServer();
 	}
 
 	public Impediment(Map data) {

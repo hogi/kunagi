@@ -3,12 +3,16 @@ package scrum.server;
 import ilarkesto.base.Url;
 import ilarkesto.base.Utl;
 import ilarkesto.concurrent.TaskManager;
+import ilarkesto.io.IO;
 import ilarkesto.logging.Logger;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.EntityUtils;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -17,6 +21,7 @@ import scrum.server.admin.UserDao;
 import scrum.server.impediments.Impediment;
 import scrum.server.project.BacklogItem;
 import scrum.server.project.Project;
+import scrum.server.sprint.Sprint;
 
 public class ScrumWebApplication extends GScrumWebApplication {
 
@@ -29,6 +34,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	@Override
 	public void onCreateEntity(SessionData session, String type, Map properties) {
 		String id = (String) properties.get("id");
+		if (id == null) throw new NullPointerException("id == null");
 		ADao dao = getDaoService().getDaoByName(type);
 		AEntity entity = dao.newEntityInstance(id);
 		entity.updateProperties(properties);
@@ -36,10 +42,22 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	@Override
+	public void onDeleteEntity(SessionData session, String entityId) {
+		AEntity entity = getDaoService().getEntityById(entityId);
+		ADao dao = getDaoService().getDao(entity);
+		dao.deleteEntity(entity);
+		for (SessionData s : getOtherSessions(session)) {
+			s.getNextData().addDeletedEntity(entityId);
+		}
+	}
+
+	@Override
 	public void onChangeProperties(SessionData session, String entityId, Map properties) {
 		AEntity entity = getDaoService().getEntityById(entityId);
 		entity.updateProperties(properties);
-		// TODO promote change to all sessions
+		for (SessionData s : getOtherSessions(session)) {
+			s.getNextData().addEntity(toPropertyMap(entity));
+		}
 	}
 
 	@Override
@@ -48,32 +66,30 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		session.setProject(project);
 
 		// prepare data for client
-		session.getNextData().project = project.createPropertiesMap();
+		session.getNextData().addEntity(toPropertyMap(project));
+	}
+
+	@Override
+	public void onGetCurrentSprint(SessionData session) {
+		Project project = session.getProject();
+		Sprint sprint = project.getCurrentSprint();
+		if (sprint == null) return;
+		session.getNextData().addEntity(toPropertyMap(sprint));
+		session.getNextData().addEntities(toPropertyMap(project.getBacklogItems()));
 	}
 
 	@Override
 	public void onGetImpediments(SessionData session) {
-		LOG.info("getImpediments");
-
 		Project project = session.getProject();
 		if (project == null) throw new RuntimeException("No project selected.");
-		Set<Impediment> impediments = getImpedimentDao().getImpedimentsByProject(project);
-
-		// prepare data for client
-		session.getNextData().impediments = EntityUtils.createPropertiesMaps(impediments);
-		session.getNextData().addImpediments(EntityUtils.createPropertiesMaps(impediments));
+		session.getNextData().addEntities(toPropertyMap(project.getImpediments()));
 	}
 
 	@Override
 	public void onGetBacklogItems(SessionData session) {
-		LOG.info("getBacklogItems");
-
 		Project project = session.getProject();
 		if (project == null) throw new RuntimeException("No project selected.");
-		Set<BacklogItem> backlogItems = getBacklogItemDao().getBacklogItemsByProject(project);
-
-		// prepare data for client
-		session.getNextData().backlogItems = EntityUtils.createPropertiesMaps(backlogItems);
+		session.getNextData().addEntities(toPropertyMap(project.getBacklogItems()));
 	}
 
 	@Override
@@ -86,8 +102,15 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public void onSessionCreated(SessionData session) {
 		LOG.info("Session created");
 		sessions.add(session);
-
 		session.getNextData().entityIdBase = UUID.randomUUID().toString();
+	}
+
+	@Override
+	public void ensureIntegrity() {
+		// delete everything
+		IO.delete(getApplicationDataDir());
+
+		super.ensureIntegrity();
 	}
 
 	@Override
@@ -102,21 +125,38 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			LOG.warn("Creating test project");
 			Project project = getProjectDao().postProject("test project", getUserDao().getUserByName("admin"));
 
-			Impediment impediment1 = getImpedimentDao().postImpediment(project);
+			Impediment impediment1 = getImpedimentDao().newEntityInstance();
+			impediment1.setProject(project);
 			impediment1.setLabel("Test Impediment 1");
+			getImpedimentDao().saveEntity(impediment1);
 
-			Impediment impediment2 = getImpedimentDao().postImpediment(project);
+			Impediment impediment2 = getImpedimentDao().newEntityInstance();
+			impediment2.setProject(project);
 			impediment2.setLabel("Test Impediment 2");
+			getImpedimentDao().saveEntity(impediment2);
 
-			BacklogItem backlogItem1 = getBacklogItemDao().postBacklogItem(project);
+			BacklogItem backlogItem1 = getBacklogItemDao().newEntityInstance();
+			backlogItem1.setProject(project);
 			backlogItem1.setLabel("Test Backlog Item 1");
+			getBacklogItemDao().saveEntity(backlogItem1);
 
-			BacklogItem backlogItem2 = getBacklogItemDao().postBacklogItem(project);
+			BacklogItem backlogItem2 = getBacklogItemDao().newEntityInstance();
+			backlogItem2.setProject(project);
 			backlogItem2.setLabel("Test Backlog Item 2");
+			getBacklogItemDao().saveEntity(backlogItem2);
 
-			BacklogItem backlogItem3 = getBacklogItemDao().postBacklogItem(project);
+			BacklogItem backlogItem3 = getBacklogItemDao().newEntityInstance();
+			backlogItem3.setProject(project);
 			backlogItem3.setLabel("Test Backlog Item 3");
+			getBacklogItemDao().saveEntity(backlogItem3);
 
+			Sprint sprint1 = getSprintDao().newEntityInstance();
+			sprint1.setProject(project);
+			sprint1.setLabel("Sprint 1");
+			getSprintDao().saveEntity(sprint1);
+			backlogItem2.setSprint(sprint1);
+
+			project.setCurrentSprint(sprint1);
 		}
 
 		getTransactionService().commit();
@@ -141,6 +181,20 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			autowire(userDao);
 		}
 		return userDao;
+	}
+
+	private List<SessionData> getOtherSessions(SessionData session) {
+		List<SessionData> ret = new ArrayList<SessionData>(sessions);
+		ret.remove(session);
+		return ret;
+	}
+
+	private final Map toPropertyMap(AEntity entity) {
+		return entity.createPropertiesMap();
+	}
+
+	private final List<Map> toPropertyMap(Collection<? extends AEntity> entities) {
+		return EntityUtils.createPropertiesMaps(entities);
 	}
 
 }

@@ -45,6 +45,8 @@ public abstract class GProjectDao
     public void clearCaches() {
         projectsByLabelCache.clear();
         labelsCache = null;
+        projectsByCurrentSprintCache.clear();
+        currentSprintsCache = null;
     }
 
     @Override
@@ -103,6 +105,46 @@ public abstract class GProjectDao
 
     }
 
+    // -----------------------------------------------------------
+    // - currentSprint
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.sprint.Sprint,Set<Project>> projectsByCurrentSprintCache = new Cache<scrum.server.sprint.Sprint,Set<Project>>(
+            new Cache.Factory<scrum.server.sprint.Sprint,Set<Project>>() {
+                public Set<Project> create(scrum.server.sprint.Sprint currentSprint) {
+                    return getEntities(new IsCurrentSprint(currentSprint));
+                }
+            });
+
+    public final Set<Project> getProjectsByCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
+        return projectsByCurrentSprintCache.get(currentSprint);
+    }
+    private Set<scrum.server.sprint.Sprint> currentSprintsCache;
+
+    public final Set<scrum.server.sprint.Sprint> getCurrentSprints() {
+        if (currentSprintsCache == null) {
+            currentSprintsCache = new HashSet<scrum.server.sprint.Sprint>();
+            for (Project e : getEntities()) {
+                if (e.isCurrentSprintSet()) currentSprintsCache.add(e.getCurrentSprint());
+            }
+        }
+        return currentSprintsCache;
+    }
+
+    private static class IsCurrentSprint implements Predicate<Project> {
+
+        private scrum.server.sprint.Sprint value;
+
+        public IsCurrentSprint(scrum.server.sprint.Sprint value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isCurrentSprint(value);
+        }
+
+    }
+
     // --- valueObject classes ---
     @Override
     protected Set<Class> getValueObjectClasses() {
@@ -117,5 +159,11 @@ public abstract class GProjectDao
     }
 
     // --- dependencies ---
+
+    protected scrum.server.sprint.SprintDao sprintDao;
+
+    public void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
+        this.sprintDao = sprintDao;
+    }
 
 }

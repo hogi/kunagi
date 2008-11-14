@@ -34,9 +34,13 @@ public interface GScrumServiceAsync {
 
     void getBacklogItems(AsyncCallback<DataTransferObject> callback);
 
+    void getCurrentSprint(AsyncCallback<DataTransferObject> callback);
+
     void changeProperties(java.lang.String entityId, java.util.Map properties, AsyncCallback<DataTransferObject> callback);
 
     void createEntity(java.lang.String type, java.util.Map properties, AsyncCallback<DataTransferObject> callback);
+
+    void deleteEntity(java.lang.String entityId, AsyncCallback<DataTransferObject> callback);
 
     void sleep(long millis, AsyncCallback<DataTransferObject> callback);
 

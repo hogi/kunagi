@@ -47,6 +47,7 @@ public abstract class GProject
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("label", this.label);
+        properties.put("currentSprintId", this.currentSprintId);
     }
 
     private static final Logger LOG = Logger.get(GProject.class);
@@ -59,6 +60,7 @@ public abstract class GProject
         if (template==null) return;
 
         setLabel(template.getLabel());
+        setCurrentSprint(template.getCurrentSprint());
     }
 
 
@@ -103,14 +105,59 @@ public abstract class GProject
         return this.label != null && this.label.equals(label);
     }
 
+    // -----------------------------------------------------------
+    // - currentSprint
+    // -----------------------------------------------------------
+
+    private String currentSprintId;
+
+    public final scrum.server.sprint.Sprint getCurrentSprint() {
+        if (this.currentSprintId == null) return null;
+        return (scrum.server.sprint.Sprint)sprintDao.getById(this.currentSprintId);
+    }
+
+    public final void setCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
+        currentSprint = prepareCurrentSprint(currentSprint);
+        if (isCurrentSprint(currentSprint)) return;
+        this.currentSprintId = currentSprint == null ? null : currentSprint.getId();
+        entityModified();
+    }
+
+    protected scrum.server.sprint.Sprint prepareCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
+        return currentSprint;
+    }
+
+    protected void repairDeadCurrentSprintReference(String entityId) {
+        if (entityId.equals(this.currentSprintId)) {
+            this.currentSprintId = null;
+            entityModified();
+        }
+    }
+
+    public final boolean isCurrentSprintSet() {
+        return this.currentSprintId != null;
+    }
+
+    public final boolean isCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
+        if (this.currentSprintId == null && currentSprint == null) return true;
+        return currentSprint != null && currentSprint.getId().equals(this.currentSprintId);
+    }
+
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
+        repairDeadCurrentSprintReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
+        try {
+            getCurrentSprint();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead currentSprint reference");
+            repairDeadCurrentSprintReference(this.currentSprintId);
+        }
     }
 
 
@@ -119,6 +166,12 @@ public abstract class GProject
     // -----------------------------------------------------------
 
     // --- dependencies ---
+
+    protected static scrum.server.sprint.SprintDao sprintDao;
+
+    public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
+        GProject.sprintDao = sprintDao;
+    }
 
     protected static ProjectDao projectDao;
 
