@@ -37,6 +37,7 @@ public class SprintBacklogItemWidget extends ABlockWidget {
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(fieldsWidget);
+
 		panel.add(new TaskListWidget(item));
 
 		return panel;
@@ -79,6 +80,17 @@ public class SprintBacklogItemWidget extends ABlockWidget {
 			});
 			toolbar.add(unsolveButton);
 		}
+
+		Button newTaskButton = new Button("New Task");
+		newTaskButton.addClickListener(new ClickListener() {
+
+			public void onClick(Widget sender) {
+				item.createNewTask();
+				rebuild();
+
+			}
+		});
+		toolbar.add(newTaskButton);
 
 		return toolbar;
 	}
