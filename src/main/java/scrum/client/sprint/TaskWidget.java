@@ -96,9 +96,8 @@ public class TaskWidget extends ABlockWidget {
 		deleteButton.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				ScrumGwtApplication.get().getProject().deleteTask(task);
-				// TODO ???
-				// WorkspaceWidget.tasks.list.removeSelectedRow();
+				// ScrumGwtApplication.get().getProject().deleteTask(task);
+				delete();
 			}
 
 		});
@@ -136,7 +135,13 @@ public class TaskWidget extends ABlockWidget {
 
 	@Override
 	public void delete() {
-		throw new RuntimeException("Not implemented.");
+		task.getBacklogItem().deleteTask(task);
 		// TODO: delete item and remove block from gui
+		// Eigentlich nur TaskListWidget update();
+		// aber durch die Architektur nicht so einfach
+		// Beispiel bei sprint:
+		// WorkspaceWidget.sprint.list.removeSelectedRow();
+		// WorkspaceWidget.sprint.update();
+
 	}
 }

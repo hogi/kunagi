@@ -40,6 +40,10 @@ public class BacklogItem extends GBacklogItem {
 		return task;
 	}
 
+	public void deleteTask(Task task) {
+		getDao().deleteTask(task);
+	}
+
 	@Override
 	public String toString() {
 		return getLabel();

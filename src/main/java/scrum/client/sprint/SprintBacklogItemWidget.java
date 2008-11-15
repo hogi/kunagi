@@ -116,4 +116,5 @@ public class SprintBacklogItemWidget extends ABlockWidget {
 	protected DropController getDropController() {
 		return new BlockListDropController(this, WorkspaceWidget.backlog.list);
 	}
+
 }
