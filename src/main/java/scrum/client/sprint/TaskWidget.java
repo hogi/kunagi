@@ -3,6 +3,7 @@ package scrum.client.sprint;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
+import scrum.client.common.editable.AEditableListBoxWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.img.Img;
 
@@ -32,7 +33,30 @@ public class TaskWidget extends ABlockWidget {
 		// block is extended -> create an ItemFieldsWidget
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
 
-		fieldsWidget.addField("State", new Label(task.getStateLabel()));
+		// fieldsWidget.addField("State", new Label(task.getStateLabel()));
+
+		fieldsWidget.addField("State", new AEditableListBoxWidget() {
+
+			@Override
+			protected String getText() {
+				return String.valueOf(task.getStateLabel());
+			}
+
+			@Override
+			protected void setText(String state) {
+				task.setState(state);
+				// item.setEffort(Integer.parseInt(value));
+				rebuild();
+			}
+
+			@Override
+			protected String[] getItems() {
+				return new String[] { Task.STATE_OPEN, Task.STATE_OWNED, Task.STATE_TEST, Task.STATE_FINISHED,
+						Task.STATE_CLOSED };
+
+			}
+
+		});
 
 		fieldsWidget.addField("Description", new AEditableTextWidget() {
 

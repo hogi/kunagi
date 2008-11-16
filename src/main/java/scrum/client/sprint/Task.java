@@ -7,48 +7,37 @@ import scrum.client.project.BacklogItem;
 
 public class Task extends GTask {
 
-	public enum State {
-		Open, Pwnd, Finished, Test, Closed
-	}
+	public static final String STATE_OPEN = "Open";
+	public static final String STATE_OWNED = "Owned";
+	public static final String STATE_FINISHED = "Finished";
+	public static final String STATE_TEST = "Test";
+	public static final String STATE_CLOSED = "Closed";
 
 	private User owner;
-	private State state;
+	private String state;
 
-	// workaround
+	// Das TaskListWidget, in dem der Task liegt
 	private TaskListWidget taskListWidget = null;
 
 	public Task(BacklogItem backlogItem) {
 		setBacklogItem(backlogItem);
 		setLabel("New Task");
-		state = State.Open;
+		state = STATE_OPEN;
 	}
 
 	public Task(Map data) {
 		super(data);
 	}
 
-	public State getState() {
+	public String getState() {
 		return state;
 	}
 
 	public String getStateLabel() {
-		// TODO i18n
-		if (state == null) return "<null>";
-		switch (state) {
-			case Pwnd:
-				return "Owned";
-			case Finished:
-				return "Finished";
-			case Test:
-				return "Test";
-			case Closed:
-				return "Closed";
-			default:
-				return "Open";
-		}
+		return state;
 	}
 
-	public void setState(State state) {
+	public void setState(String state) {
 		this.state = state;
 	}
 
@@ -70,7 +59,6 @@ public class Task extends GTask {
 		return taskListWidget;
 	}
 
-	// kleiner Workaround, um an das TaskListWidget zu kommen
 	public void setTaskListWidget(TaskListWidget taskListWidget) {
 		this.taskListWidget = taskListWidget;
 	}
