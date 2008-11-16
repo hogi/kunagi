@@ -34,8 +34,6 @@ public class TaskWidget extends ABlockWidget {
 		// block is extended -> create an ItemFieldsWidget
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
 
-		// fieldsWidget.addField("State", new Label(task.getStateLabel()));
-
 		fieldsWidget.addField("State", new AEditableListBoxWidget() {
 
 			@Override
@@ -68,6 +66,7 @@ public class TaskWidget extends ABlockWidget {
 			@Override
 			protected void setText(String text) {
 				task.setLabel(text);
+				rebuild();
 			}
 
 		});

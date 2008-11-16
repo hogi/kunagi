@@ -42,7 +42,7 @@ public abstract class AEditableIntegerWidget extends AEditableWidget {
 			String text = value == null ? null : getValue().toString();
 			editor = new TextBox();
 			editor.setMaxLength(3);
-			editor.setWidth("6%");
+			editor.setWidth("10%");
 			editor.setText(text);
 			editor.addKeyboardListener(new EditorKeyboardListener());
 		}
@@ -76,7 +76,9 @@ public abstract class AEditableIntegerWidget extends AEditableWidget {
 
 			if (!Character.isDigit(keyCode) && (keyCode != (char) KEY_ENTER) && (keyCode != (char) KEY_TAB)
 					&& (keyCode != (char) KEY_BACKSPACE) && (keyCode != (char) KEY_DELETE)
-					&& (keyCode != (char) KEY_ESCAPE)) {
+					&& (keyCode != (char) KEY_ESCAPE) || (Character.valueOf(keyCode) == 46)) {
+				// 46 = "."
+
 				((TextBox) sender).cancelKey();
 			}
 
