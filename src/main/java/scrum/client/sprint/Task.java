@@ -33,10 +33,6 @@ public class Task extends GTask {
 		return state;
 	}
 
-	public String getStateLabel() {
-		return state;
-	}
-
 	public void setState(String state) {
 		this.state = state;
 	}

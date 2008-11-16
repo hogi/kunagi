@@ -40,13 +40,12 @@ public class TaskWidget extends ABlockWidget {
 
 			@Override
 			protected String getText() {
-				return String.valueOf(task.getStateLabel());
+				return String.valueOf(task.getState());
 			}
 
 			@Override
 			protected void setText(String state) {
 				task.setState(state);
-				// item.setEffort(Integer.parseInt(value));
 				rebuild();
 			}
 
@@ -72,22 +71,6 @@ public class TaskWidget extends ABlockWidget {
 			}
 
 		});
-
-		// fieldsWidget.addField("Effort", new AEditableTextWidget() {
-		//
-		// @Override
-		// protected String getText() {
-		// return String.valueOf(task.getEffort());
-		// }
-		//
-		// @Override
-		// protected void setText(String text) {
-		// // TODO errorhandling - aka only int-field
-		// int effort = Integer.parseInt(text);
-		// task.setEffort(effort);
-		// }
-		//
-		// });
 
 		fieldsWidget.addField("Effort", new AEditableIntegerWidget() {
 
@@ -146,7 +129,7 @@ public class TaskWidget extends ABlockWidget {
 
 	@Override
 	protected String getBlockTitle() {
-		return task.getLabel() + " (" + task.getStateLabel() + ")";
+		return task.getLabel() + " (" + task.getState() + ")";
 	}
 
 	@Override
