@@ -14,6 +14,9 @@ public class Task extends GTask {
 	private User owner;
 	private State state;
 
+	// workaround
+	private TaskListWidget taskListWidget = null;
+
 	public Task(BacklogItem backlogItem) {
 		setBacklogItem(backlogItem);
 		setLabel("New Task");
@@ -60,6 +63,16 @@ public class Task extends GTask {
 	@Override
 	public String toString() {
 		return getLabel();
+	}
+
+	// kleiner Workaround, um an das TaskListWidget zu kommen
+	public TaskListWidget getTaskListWidget() {
+		return taskListWidget;
+	}
+
+	// kleiner Workaround, um an das TaskListWidget zu kommen
+	public void setTaskListWidget(TaskListWidget taskListWidget) {
+		this.taskListWidget = taskListWidget;
 	}
 
 }

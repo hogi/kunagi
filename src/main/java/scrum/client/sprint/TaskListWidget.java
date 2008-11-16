@@ -20,6 +20,10 @@ public class TaskListWidget extends Composite {
 	public void update() {
 		list.clear();
 		for (Task task : backlogItem.getTasks()) {
+
+			// taskListWidget setzen, um es spaeter wieder ansprechen zu koennen
+			task.setTaskListWidget(this);
+
 			list.addBlock(new TaskWidget(task));
 		}
 	}

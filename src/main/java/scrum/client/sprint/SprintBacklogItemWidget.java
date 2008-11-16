@@ -21,6 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class SprintBacklogItemWidget extends ABlockWidget {
 
 	private BacklogItem item;
+	private TaskListWidget taskListWidget;
 
 	public SprintBacklogItemWidget(BacklogItem item) {
 		this.item = item;
@@ -38,7 +39,10 @@ public class SprintBacklogItemWidget extends ABlockWidget {
 		FlowPanel panel = new FlowPanel();
 		panel.add(fieldsWidget);
 
-		panel.add(new TaskListWidget(item));
+		taskListWidget = new TaskListWidget(item);
+		panel.add(taskListWidget);
+
+		// panel.add(new TaskListWidget(item));
 
 		return panel;
 	}
