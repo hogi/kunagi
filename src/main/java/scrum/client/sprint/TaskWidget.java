@@ -3,6 +3,7 @@ package scrum.client.sprint;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
+import scrum.client.common.editable.AEditableIntegerWidget;
 import scrum.client.common.editable.AEditableListBoxWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.img.Img;
@@ -72,18 +73,32 @@ public class TaskWidget extends ABlockWidget {
 
 		});
 
-		fieldsWidget.addField("Effort", new AEditableTextWidget() {
+		// fieldsWidget.addField("Effort", new AEditableTextWidget() {
+		//
+		// @Override
+		// protected String getText() {
+		// return String.valueOf(task.getEffort());
+		// }
+		//
+		// @Override
+		// protected void setText(String text) {
+		// // TODO errorhandling - aka only int-field
+		// int effort = Integer.parseInt(text);
+		// task.setEffort(effort);
+		// }
+		//
+		// });
+
+		fieldsWidget.addField("Effort", new AEditableIntegerWidget() {
 
 			@Override
-			protected String getText() {
-				return String.valueOf(task.getEffort());
+			protected Integer getValue() {
+				return task.getEffort();
 			}
 
 			@Override
-			protected void setText(String text) {
-				// TODO errorhandling - aka only int-field
-				int effort = Integer.parseInt(text);
-				task.setEffort(effort);
+			protected void setValue(Integer value) {
+				task.setEffort(value);
 			}
 
 		});

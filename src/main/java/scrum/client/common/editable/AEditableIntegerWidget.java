@@ -31,6 +31,7 @@ public abstract class AEditableIntegerWidget extends AEditableWidget {
 	public AEditableIntegerWidget() {
 		viewer = new Label();
 		viewer.addClickListener(new ViewerClickListener());
+		viewer.setSize("100%", "20px");
 		rebuild();
 	}
 
@@ -41,6 +42,7 @@ public abstract class AEditableIntegerWidget extends AEditableWidget {
 			String text = value == null ? null : getValue().toString();
 			editor = new TextBox();
 			editor.setMaxLength(3);
+			editor.setWidth("6%");
 			editor.setText(text);
 			editor.addKeyboardListener(new EditorKeyboardListener());
 		}
@@ -71,6 +73,13 @@ public abstract class AEditableIntegerWidget extends AEditableWidget {
 
 		@Override
 		public void onKeyPress(Widget sender, char keyCode, int modifiers) {
+
+			if (!Character.isDigit(keyCode) && (keyCode != (char) KEY_ENTER) && (keyCode != (char) KEY_TAB)
+					&& (keyCode != (char) KEY_BACKSPACE) && (keyCode != (char) KEY_DELETE)
+					&& (keyCode != (char) KEY_ESCAPE)) {
+				((TextBox) sender).cancelKey();
+			}
+
 			if (keyCode == KeyboardListener.KEY_ENTER) {
 				String text = editor.getText();
 				if (text == null) {
@@ -80,12 +89,7 @@ public abstract class AEditableIntegerWidget extends AEditableWidget {
 					if (text.length() == 0) {
 						setValue(null);
 					} else {
-						try {
-							setValue(Integer.parseInt(text));
-						} catch (NumberFormatException ex) {
-							System.err.println("not an integer: " + text);
-							setValue(null);
-						}
+						setValue(Integer.parseInt(text));
 					}
 				}
 				setEditMode(false);
@@ -94,6 +98,5 @@ public abstract class AEditableIntegerWidget extends AEditableWidget {
 				setEditMode(false);
 			}
 		}
-
 	}
 }
