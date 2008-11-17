@@ -27,7 +27,7 @@ public class TaskWidget extends ABlockWidget {
 	protected Widget buildContent() {
 		if (!isExtended()) {
 			// block is not extended -> return only a label with the summary
-			return new Label(task.getLabel());
+			return new Label(task.getSummary());
 		}
 
 		// block is extended -> create an ItemFieldsWidget

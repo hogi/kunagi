@@ -40,6 +40,11 @@ public class Task extends GTask {
 		this.owner = owner;
 	}
 
+	public String getSummary() {
+		if (isDone()) return "Done.";
+		return getEffort() + " hours to do.";
+	}
+
 	@Override
 	public String toString() {
 		return getLabel();
