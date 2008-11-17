@@ -46,7 +46,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			backlogItemModel.addProperty("description", String.class);
 			backlogItemModel.addProperty("testDescription", String.class);
 			backlogItemModel.addProperty("effort", Integer.class);
-			backlogItemModel.addProperty("done", boolean.class);
+			backlogItemModel.addProperty("closed", boolean.class);
 		}
 		return backlogItemModel;
 	}

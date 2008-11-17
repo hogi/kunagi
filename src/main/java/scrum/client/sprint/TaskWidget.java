@@ -4,7 +4,6 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.editable.AEditableIntegerWidget;
-import scrum.client.common.editable.AEditableListBoxWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.img.Img;
 
@@ -33,28 +32,6 @@ public class TaskWidget extends ABlockWidget {
 
 		// block is extended -> create an ItemFieldsWidget
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
-
-		fieldsWidget.addField("State", new AEditableListBoxWidget() {
-
-			@Override
-			protected String getText() {
-				return String.valueOf(task.getState());
-			}
-
-			@Override
-			protected void setText(String state) {
-				task.setState(state);
-				rebuild();
-			}
-
-			@Override
-			protected String[] getItems() {
-				return new String[] { Task.STATE_OPEN, Task.STATE_OWNED, Task.STATE_TEST, Task.STATE_FINISHED,
-						Task.STATE_CLOSED };
-
-			}
-
-		});
 
 		fieldsWidget.addField("Description", new AEditableTextWidget() {
 
@@ -101,17 +78,19 @@ public class TaskWidget extends ABlockWidget {
 		VerticalPanel toolbar = new VerticalPanel();
 		toolbar.setStyleName("Toolbar");
 
-		Button ownButton = new Button("Own");
-		ownButton.addClickListener(new ClickListener() {
+		if (!task.isDone()) {
+			Button ownButton = new Button("Own");
+			ownButton.addClickListener(new ClickListener() {
 
-			public void onClick(Widget sender) {
-				task.setOwner(ScrumGwtApplication.get().getUser());
-				// TODO aahhh....!!! -> rebuild or something
-				// WorkspaceWidget.showPortal();
-			}
+				public void onClick(Widget sender) {
+					task.setOwner(ScrumGwtApplication.get().getUser());
+					// TODO aahhh....!!! -> rebuild or something
+					// WorkspaceWidget.showPortal();
+				}
 
-		});
-		toolbar.add(ownButton);
+			});
+			toolbar.add(ownButton);
+		}
 
 		Button deleteButton = new Button("Delete");
 		deleteButton.addClickListener(new ClickListener() {
@@ -123,28 +102,34 @@ public class TaskWidget extends ABlockWidget {
 		});
 		toolbar.add(deleteButton);
 
+		if (!task.isDone()) {
+			Button doneButton = new Button("Done");
+			doneButton.addClickListener(new ClickListener() {
+
+				public void onClick(Widget sender) {
+					task.setDone();
+					rebuild();
+				}
+
+			});
+			toolbar.add(doneButton);
+		}
+
 		return toolbar;
 	}
 
 	@Override
 	protected String getBlockTitle() {
-		return task.getLabel() + " (" + task.getState() + ")";
+		return task.getLabel();
 	}
 
 	@Override
 	protected AbstractImagePrototype getIcon() {
+		if (task.isDone()) return Img.bundle.taskDoneIcon32();
 		return Img.bundle.taskIcon32();
 	}
 
 	// --- actions
-
-	private void assign() {
-
-	}
-
-	private void solve() {
-
-	}
 
 	@Override
 	protected DropController getDropController() {

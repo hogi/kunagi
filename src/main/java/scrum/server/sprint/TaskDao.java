@@ -6,6 +6,13 @@ import java.util.Set;
 
 public class TaskDao extends GTaskDao {
 
+	@Override
+	public Task newEntityInstance() {
+		Task task = super.newEntityInstance();
+		task.setEffort(scrum.client.sprint.Task.INIT_EFFORT);
+		return task;
+	}
+
 	public Set<Task> getTasksBySprint(final Sprint sprint) {
 		return getEntities(new Predicate<Task>() {
 

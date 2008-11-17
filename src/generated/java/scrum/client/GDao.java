@@ -70,6 +70,14 @@ public abstract class GDao
         return new ArrayList<scrum.client.sprint.Task>(tasks.values());
     }
 
+    public final List<scrum.client.sprint.Task> getTasksByBacklogItem(scrum.client.project.BacklogItem backlogItem) {
+        List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
+        for (scrum.client.sprint.Task entity : tasks.values()) {
+            if (entity.isBacklogItem(backlogItem)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.sprint.Task> getTasksByEffort(java.lang.Integer effort) {
         List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
         for (scrum.client.sprint.Task entity : tasks.values()) {
@@ -82,152 +90,6 @@ public abstract class GDao
         List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
         for (scrum.client.sprint.Task entity : tasks.values()) {
             if (entity.isLabel(label)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.sprint.Task> getTasksByBacklogItem(scrum.client.project.BacklogItem backlogItem) {
-        List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
-        for (scrum.client.sprint.Task entity : tasks.values()) {
-            if (entity.isBacklogItem(backlogItem)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    // --- Sprint ---
-
-    private Map<String, scrum.client.sprint.Sprint> sprints = new HashMap<String, scrum.client.sprint.Sprint>();
-
-    public final boolean containsSprint(scrum.client.sprint.Sprint sprint) {
-        return sprints.containsKey(sprint.getId());
-    }
-
-    public final void deleteSprint(scrum.client.sprint.Sprint sprint) {
-        sprints.remove(sprint.getId());
-        entityDeleted(sprint);
-    }
-
-    public final void createSprint(scrum.client.sprint.Sprint sprint) {
-        sprints.put(sprint.getId(), sprint);
-        entityCreated(sprint);
-    }
-
-    private final void updateSprint(Map data) {
-        String id = (String) data.get("id");
-        scrum.client.sprint.Sprint entity = sprints.get(id);
-        if (entity == null) {
-            entity = new scrum.client.sprint.Sprint(data);
-            sprints.put(id, entity);
-            scrum.client.common.Logger.DEBUG("Sprint received: " + entity);
-        } else {
-            entity.updateProperties(data);
-            scrum.client.common.Logger.DEBUG("Sprint updated: " + entity);
-        }
-    }
-
-    public final scrum.client.sprint.Sprint getSprint(String id) {
-        scrum.client.sprint.Sprint ret = sprints.get(id);
-        if (ret == null) throw new RuntimeException("Sprint does not exist: " + id);
-        return ret;
-    }
-
-    public final List<scrum.client.sprint.Sprint> getSprints() {
-        return new ArrayList<scrum.client.sprint.Sprint>(sprints.values());
-    }
-
-    public final List<scrum.client.sprint.Sprint> getSprintsByLabel(java.lang.String label) {
-        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
-        for (scrum.client.sprint.Sprint entity : sprints.values()) {
-            if (entity.isLabel(label)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.sprint.Sprint> getSprintsByProject(scrum.client.project.Project project) {
-        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
-        for (scrum.client.sprint.Sprint entity : sprints.values()) {
-            if (entity.isProject(project)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    // --- Impediment ---
-
-    private Map<String, scrum.client.impediments.Impediment> impediments = new HashMap<String, scrum.client.impediments.Impediment>();
-
-    public final boolean containsImpediment(scrum.client.impediments.Impediment impediment) {
-        return impediments.containsKey(impediment.getId());
-    }
-
-    public final void deleteImpediment(scrum.client.impediments.Impediment impediment) {
-        impediments.remove(impediment.getId());
-        entityDeleted(impediment);
-    }
-
-    public final void createImpediment(scrum.client.impediments.Impediment impediment) {
-        impediments.put(impediment.getId(), impediment);
-        entityCreated(impediment);
-    }
-
-    private final void updateImpediment(Map data) {
-        String id = (String) data.get("id");
-        scrum.client.impediments.Impediment entity = impediments.get(id);
-        if (entity == null) {
-            entity = new scrum.client.impediments.Impediment(data);
-            impediments.put(id, entity);
-            scrum.client.common.Logger.DEBUG("Impediment received: " + entity);
-        } else {
-            entity.updateProperties(data);
-            scrum.client.common.Logger.DEBUG("Impediment updated: " + entity);
-        }
-    }
-
-    public final scrum.client.impediments.Impediment getImpediment(String id) {
-        scrum.client.impediments.Impediment ret = impediments.get(id);
-        if (ret == null) throw new RuntimeException("Impediment does not exist: " + id);
-        return ret;
-    }
-
-    public final List<scrum.client.impediments.Impediment> getImpediments() {
-        return new ArrayList<scrum.client.impediments.Impediment>(impediments.values());
-    }
-
-    public final List<scrum.client.impediments.Impediment> getImpedimentsByProject(scrum.client.project.Project project) {
-        List<scrum.client.impediments.Impediment> ret = new ArrayList<scrum.client.impediments.Impediment>();
-        for (scrum.client.impediments.Impediment entity : impediments.values()) {
-            if (entity.isProject(project)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.impediments.Impediment> getImpedimentsBySolution(java.lang.String solution) {
-        List<scrum.client.impediments.Impediment> ret = new ArrayList<scrum.client.impediments.Impediment>();
-        for (scrum.client.impediments.Impediment entity : impediments.values()) {
-            if (entity.isSolution(solution)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.impediments.Impediment> getImpedimentsBySolved(boolean solved) {
-        List<scrum.client.impediments.Impediment> ret = new ArrayList<scrum.client.impediments.Impediment>();
-        for (scrum.client.impediments.Impediment entity : impediments.values()) {
-            if (entity.isSolved(solved)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.impediments.Impediment> getImpedimentsByLabel(java.lang.String label) {
-        List<scrum.client.impediments.Impediment> ret = new ArrayList<scrum.client.impediments.Impediment>();
-        for (scrum.client.impediments.Impediment entity : impediments.values()) {
-            if (entity.isLabel(label)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.impediments.Impediment> getImpedimentsByDescription(java.lang.String description) {
-        List<scrum.client.impediments.Impediment> ret = new ArrayList<scrum.client.impediments.Impediment>();
-        for (scrum.client.impediments.Impediment entity : impediments.values()) {
-            if (entity.isDescription(description)) ret.add(entity);
         }
         return ret;
     }
@@ -273,6 +135,14 @@ public abstract class GDao
         return new ArrayList<scrum.client.project.Project>(projects.values());
     }
 
+    public final List<scrum.client.project.Project> getProjectsByCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isCurrentSprint(currentSprint)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.project.Project> getProjectsByLabel(java.lang.String label) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
@@ -281,10 +151,140 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.project.Project> getProjectsByCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
-        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
-        for (scrum.client.project.Project entity : projects.values()) {
-            if (entity.isCurrentSprint(currentSprint)) ret.add(entity);
+    // --- Impediment ---
+
+    private Map<String, scrum.client.impediments.Impediment> impediments = new HashMap<String, scrum.client.impediments.Impediment>();
+
+    public final boolean containsImpediment(scrum.client.impediments.Impediment impediment) {
+        return impediments.containsKey(impediment.getId());
+    }
+
+    public final void deleteImpediment(scrum.client.impediments.Impediment impediment) {
+        impediments.remove(impediment.getId());
+        entityDeleted(impediment);
+    }
+
+    public final void createImpediment(scrum.client.impediments.Impediment impediment) {
+        impediments.put(impediment.getId(), impediment);
+        entityCreated(impediment);
+    }
+
+    private final void updateImpediment(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.impediments.Impediment entity = impediments.get(id);
+        if (entity == null) {
+            entity = new scrum.client.impediments.Impediment(data);
+            impediments.put(id, entity);
+            scrum.client.common.Logger.DEBUG("Impediment received: " + entity);
+        } else {
+            entity.updateProperties(data);
+            scrum.client.common.Logger.DEBUG("Impediment updated: " + entity);
+        }
+    }
+
+    public final scrum.client.impediments.Impediment getImpediment(String id) {
+        scrum.client.impediments.Impediment ret = impediments.get(id);
+        if (ret == null) throw new RuntimeException("Impediment does not exist: " + id);
+        return ret;
+    }
+
+    public final List<scrum.client.impediments.Impediment> getImpediments() {
+        return new ArrayList<scrum.client.impediments.Impediment>(impediments.values());
+    }
+
+    public final List<scrum.client.impediments.Impediment> getImpedimentsBySolution(java.lang.String solution) {
+        List<scrum.client.impediments.Impediment> ret = new ArrayList<scrum.client.impediments.Impediment>();
+        for (scrum.client.impediments.Impediment entity : impediments.values()) {
+            if (entity.isSolution(solution)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.impediments.Impediment> getImpedimentsByDescription(java.lang.String description) {
+        List<scrum.client.impediments.Impediment> ret = new ArrayList<scrum.client.impediments.Impediment>();
+        for (scrum.client.impediments.Impediment entity : impediments.values()) {
+            if (entity.isDescription(description)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.impediments.Impediment> getImpedimentsBySolved(boolean solved) {
+        List<scrum.client.impediments.Impediment> ret = new ArrayList<scrum.client.impediments.Impediment>();
+        for (scrum.client.impediments.Impediment entity : impediments.values()) {
+            if (entity.isSolved(solved)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.impediments.Impediment> getImpedimentsByLabel(java.lang.String label) {
+        List<scrum.client.impediments.Impediment> ret = new ArrayList<scrum.client.impediments.Impediment>();
+        for (scrum.client.impediments.Impediment entity : impediments.values()) {
+            if (entity.isLabel(label)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.impediments.Impediment> getImpedimentsByProject(scrum.client.project.Project project) {
+        List<scrum.client.impediments.Impediment> ret = new ArrayList<scrum.client.impediments.Impediment>();
+        for (scrum.client.impediments.Impediment entity : impediments.values()) {
+            if (entity.isProject(project)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    // --- Sprint ---
+
+    private Map<String, scrum.client.sprint.Sprint> sprints = new HashMap<String, scrum.client.sprint.Sprint>();
+
+    public final boolean containsSprint(scrum.client.sprint.Sprint sprint) {
+        return sprints.containsKey(sprint.getId());
+    }
+
+    public final void deleteSprint(scrum.client.sprint.Sprint sprint) {
+        sprints.remove(sprint.getId());
+        entityDeleted(sprint);
+    }
+
+    public final void createSprint(scrum.client.sprint.Sprint sprint) {
+        sprints.put(sprint.getId(), sprint);
+        entityCreated(sprint);
+    }
+
+    private final void updateSprint(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.sprint.Sprint entity = sprints.get(id);
+        if (entity == null) {
+            entity = new scrum.client.sprint.Sprint(data);
+            sprints.put(id, entity);
+            scrum.client.common.Logger.DEBUG("Sprint received: " + entity);
+        } else {
+            entity.updateProperties(data);
+            scrum.client.common.Logger.DEBUG("Sprint updated: " + entity);
+        }
+    }
+
+    public final scrum.client.sprint.Sprint getSprint(String id) {
+        scrum.client.sprint.Sprint ret = sprints.get(id);
+        if (ret == null) throw new RuntimeException("Sprint does not exist: " + id);
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.Sprint> getSprints() {
+        return new ArrayList<scrum.client.sprint.Sprint>(sprints.values());
+    }
+
+    public final List<scrum.client.sprint.Sprint> getSprintsByProject(scrum.client.project.Project project) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.isProject(project)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.Sprint> getSprintsByLabel(java.lang.String label) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.isLabel(label)) ret.add(entity);
         }
         return ret;
     }
@@ -330,34 +330,18 @@ public abstract class GDao
         return new ArrayList<scrum.client.project.BacklogItem>(backlogItems.values());
     }
 
-    public final List<scrum.client.project.BacklogItem> getBacklogItemsBySprint(scrum.client.sprint.Sprint sprint) {
-        List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
-        for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
-            if (entity.isSprint(sprint)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.project.BacklogItem> getBacklogItemsByDone(boolean done) {
-        List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
-        for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
-            if (entity.isDone(done)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.project.BacklogItem> getBacklogItemsByDescription(java.lang.String description) {
-        List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
-        for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
-            if (entity.isDescription(description)) ret.add(entity);
-        }
-        return ret;
-    }
-
     public final List<scrum.client.project.BacklogItem> getBacklogItemsByEffort(java.lang.Integer effort) {
         List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
         for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
             if (entity.isEffort(effort)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.BacklogItem> getBacklogItemsByLabel(java.lang.String label) {
+        List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
+        for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
+            if (entity.isLabel(label)) ret.add(entity);
         }
         return ret;
     }
@@ -378,10 +362,26 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.project.BacklogItem> getBacklogItemsByLabel(java.lang.String label) {
+    public final List<scrum.client.project.BacklogItem> getBacklogItemsByDescription(java.lang.String description) {
         List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
         for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
-            if (entity.isLabel(label)) ret.add(entity);
+            if (entity.isDescription(description)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.BacklogItem> getBacklogItemsByClosed(boolean closed) {
+        List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
+        for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
+            if (entity.isClosed(closed)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.BacklogItem> getBacklogItemsBySprint(scrum.client.sprint.Sprint sprint) {
+        List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
+        for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
+            if (entity.isSprint(sprint)) ret.add(entity);
         }
         return ret;
     }
@@ -393,9 +393,9 @@ public abstract class GDao
         if (entityMaps == null) {
             entityMaps = new ArrayList<Map<String, ? extends AGwtEntity>>();
             entityMaps.add(tasks);
-            entityMaps.add(sprints);
-            entityMaps.add(impediments);
             entityMaps.add(projects);
+            entityMaps.add(impediments);
+            entityMaps.add(sprints);
             entityMaps.add(backlogItems);
         }
         return entityMaps;
@@ -407,16 +407,16 @@ public abstract class GDao
             updateTask(data);
             return;
         }
-        if (type.equals(scrum.client.sprint.Sprint.ENTITY_TYPE)) {
-            updateSprint(data);
+        if (type.equals(scrum.client.project.Project.ENTITY_TYPE)) {
+            updateProject(data);
             return;
         }
         if (type.equals(scrum.client.impediments.Impediment.ENTITY_TYPE)) {
             updateImpediment(data);
             return;
         }
-        if (type.equals(scrum.client.project.Project.ENTITY_TYPE)) {
-            updateProject(data);
+        if (type.equals(scrum.client.sprint.Sprint.ENTITY_TYPE)) {
+            updateSprint(data);
             return;
         }
         if (type.equals(scrum.client.project.BacklogItem.ENTITY_TYPE)) {

@@ -29,12 +29,11 @@ public class SprintBacklogItemWidget extends ABlockWidget {
 
 	@Override
 	protected Widget buildContent() {
-		if (!isExtended()) { return new Label(item.getSummary()); }
+		if (!isExtended()) { return new Label(item.getSprintBacklogSummary()); }
 
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
 		fieldsWidget.addField("Description", new Label(item.getDescription()));
 		fieldsWidget.addField("Test", new Label(item.getTestDescription()));
-		fieldsWidget.addField("Effort", new Label(item.getEffortString()));
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(fieldsWidget);
@@ -64,37 +63,16 @@ public class SprintBacklogItemWidget extends ABlockWidget {
 		toolbar.add(removeButton);
 
 		if (!item.isDone()) {
-			Button solveButton = new Button("Done");
-			solveButton.addClickListener(new ClickListener() {
+			Button newTaskButton = new Button("Create Task");
+			newTaskButton.addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					item.setDone(true);
+					item.createNewTask();
 					rebuild();
 				}
 			});
-			toolbar.add(solveButton);
-		} else {
-			Button unsolveButton = new Button("Undone");
-			unsolveButton.addClickListener(new ClickListener() {
-
-				public void onClick(Widget sender) {
-					item.setDone(false);
-					rebuild();
-				}
-			});
-			toolbar.add(unsolveButton);
+			toolbar.add(newTaskButton);
 		}
-
-		Button newTaskButton = new Button("New Task");
-		newTaskButton.addClickListener(new ClickListener() {
-
-			public void onClick(Widget sender) {
-				item.createNewTask();
-				rebuild();
-
-			}
-		});
-		toolbar.add(newTaskButton);
 
 		return toolbar;
 	}

@@ -7,14 +7,9 @@ import scrum.client.project.BacklogItem;
 
 public class Task extends GTask {
 
-	public static final String STATE_OPEN = "Open";
-	public static final String STATE_OWNED = "Owned";
-	public static final String STATE_FINISHED = "Finished";
-	public static final String STATE_TEST = "Test";
-	public static final String STATE_CLOSED = "Closed";
+	public static final int INIT_EFFORT = 1;
 
 	private User owner;
-	private String state;
 
 	// Das TaskListWidget, in dem der Task liegt
 	private TaskListWidget taskListWidget = null;
@@ -22,19 +17,19 @@ public class Task extends GTask {
 	public Task(BacklogItem backlogItem) {
 		setBacklogItem(backlogItem);
 		setLabel("New Task");
-		state = STATE_OPEN;
+		setEffort(INIT_EFFORT);
 	}
 
 	public Task(Map data) {
 		super(data);
 	}
 
-	public String getState() {
-		return state;
+	public void setDone() {
+		setEffort(0);
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public boolean isDone() {
+		return getEffort() == null || getEffort() == 0;
 	}
 
 	public User getOwner() {

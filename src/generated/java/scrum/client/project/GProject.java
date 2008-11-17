@@ -43,24 +43,6 @@ public abstract class GProject
         return ENTITY_TYPE;
     }
 
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final Project setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
-        return (Project)this;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
-    }
-
     // --- currentSprint ---
 
     private String currentSprintId;
@@ -79,18 +61,36 @@ public abstract class GProject
         return equals(this.currentSprintId, currentSprint);
     }
 
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final Project setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
+        return (Project)this;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        label  = (java.lang.String) props.get("label");
         currentSprintId = (String) props.get("currentSprintId");
+        label  = (java.lang.String) props.get("label");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("label", this.label);
         properties.put("currentSprint", this.currentSprintId);
+        properties.put("label", this.label);
     }
 
 }

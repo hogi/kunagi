@@ -145,16 +145,19 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			BacklogItem backlogItem2 = getBacklogItemDao().newEntityInstance();
 			backlogItem2.setProject(project);
 			backlogItem2.setLabel("Test Backlog Item 2");
+			backlogItem2.setEffort(5);
 			getBacklogItemDao().saveEntity(backlogItem2);
 
 			Task task1 = getTaskDao().newEntityInstance();
 			task1.setBacklogItem(backlogItem2);
 			task1.setLabel("Task 1");
+			task1.setEffort(3);
 			getTaskDao().saveEntity(task1);
 
 			Task task2 = getTaskDao().newEntityInstance();
 			task2.setBacklogItem(backlogItem2);
 			task2.setLabel("Task 2");
+			task2.setEffort(1);
 			getTaskDao().saveEntity(task2);
 
 			BacklogItem backlogItem3 = getBacklogItemDao().newEntityInstance();

@@ -48,29 +48,29 @@ public abstract class GScrumWebApplication
     // - composites
     // -----------------------------------------------------------
 
-    // --- sprintDao ---
+    // --- impedimentDao ---
 
-    private scrum.server.sprint.SprintDao sprintDao;
+    private scrum.server.impediments.ImpedimentDao impedimentDao;
 
-    public final scrum.server.sprint.SprintDao getSprintDao() {
-        if (sprintDao == null) {
-            sprintDao = createSprintDao();
-            initializeSprintDao(sprintDao);
+    public final scrum.server.impediments.ImpedimentDao getImpedimentDao() {
+        if (impedimentDao == null) {
+            impedimentDao = createImpedimentDao();
+            initializeImpedimentDao(impedimentDao);
         }
-        return sprintDao;
+        return impedimentDao;
     }
 
-    protected scrum.server.sprint.SprintDao createSprintDao() {
-        return sprintDao = new scrum.server.sprint.SprintDao();
+    protected scrum.server.impediments.ImpedimentDao createImpedimentDao() {
+        return impedimentDao = new scrum.server.impediments.ImpedimentDao();
     }
 
-    protected void initializeSprintDao(scrum.server.sprint.SprintDao bean) {
+    protected void initializeImpedimentDao(scrum.server.impediments.ImpedimentDao bean) {
         autowire(bean);
         Reflect.invokeInitializeIfThere(bean);
     }
 
-    public final void resetSprintDao() {
-        sprintDao = null;
+    public final void resetImpedimentDao() {
+        impedimentDao = null;
     }
 
     // --- backlogItemDao ---
@@ -98,6 +98,31 @@ public abstract class GScrumWebApplication
         backlogItemDao = null;
     }
 
+    // --- projectDao ---
+
+    private scrum.server.project.ProjectDao projectDao;
+
+    public final scrum.server.project.ProjectDao getProjectDao() {
+        if (projectDao == null) {
+            projectDao = createProjectDao();
+            initializeProjectDao(projectDao);
+        }
+        return projectDao;
+    }
+
+    protected scrum.server.project.ProjectDao createProjectDao() {
+        return projectDao = new scrum.server.project.ProjectDao();
+    }
+
+    protected void initializeProjectDao(scrum.server.project.ProjectDao bean) {
+        autowire(bean);
+        Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetProjectDao() {
+        projectDao = null;
+    }
+
     // --- taskDao ---
 
     private scrum.server.sprint.TaskDao taskDao;
@@ -123,54 +148,29 @@ public abstract class GScrumWebApplication
         taskDao = null;
     }
 
-    // --- impedimentDao ---
+    // --- sprintDao ---
 
-    private scrum.server.impediments.ImpedimentDao impedimentDao;
+    private scrum.server.sprint.SprintDao sprintDao;
 
-    public final scrum.server.impediments.ImpedimentDao getImpedimentDao() {
-        if (impedimentDao == null) {
-            impedimentDao = createImpedimentDao();
-            initializeImpedimentDao(impedimentDao);
+    public final scrum.server.sprint.SprintDao getSprintDao() {
+        if (sprintDao == null) {
+            sprintDao = createSprintDao();
+            initializeSprintDao(sprintDao);
         }
-        return impedimentDao;
+        return sprintDao;
     }
 
-    protected scrum.server.impediments.ImpedimentDao createImpedimentDao() {
-        return impedimentDao = new scrum.server.impediments.ImpedimentDao();
+    protected scrum.server.sprint.SprintDao createSprintDao() {
+        return sprintDao = new scrum.server.sprint.SprintDao();
     }
 
-    protected void initializeImpedimentDao(scrum.server.impediments.ImpedimentDao bean) {
+    protected void initializeSprintDao(scrum.server.sprint.SprintDao bean) {
         autowire(bean);
         Reflect.invokeInitializeIfThere(bean);
     }
 
-    public final void resetImpedimentDao() {
-        impedimentDao = null;
-    }
-
-    // --- projectDao ---
-
-    private scrum.server.project.ProjectDao projectDao;
-
-    public final scrum.server.project.ProjectDao getProjectDao() {
-        if (projectDao == null) {
-            projectDao = createProjectDao();
-            initializeProjectDao(projectDao);
-        }
-        return projectDao;
-    }
-
-    protected scrum.server.project.ProjectDao createProjectDao() {
-        return projectDao = new scrum.server.project.ProjectDao();
-    }
-
-    protected void initializeProjectDao(scrum.server.project.ProjectDao bean) {
-        autowire(bean);
-        Reflect.invokeInitializeIfThere(bean);
-    }
-
-    public final void resetProjectDao() {
-        projectDao = null;
+    public final void resetSprintDao() {
+        sprintDao = null;
     }
 
     // --- dependencies ---

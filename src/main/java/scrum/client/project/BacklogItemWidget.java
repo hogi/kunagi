@@ -29,7 +29,7 @@ public class BacklogItemWidget extends ABlockWidget {
 
 	@Override
 	protected Widget buildContent() {
-		if (!isExtended()) { return new Label(item.getSummary()); }
+		if (!isExtended()) { return new Label(item.getProductBacklogSummary()); }
 
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
 		fieldsWidget.addField("Label", new AEditableTextWidget() {
@@ -127,22 +127,12 @@ public class BacklogItemWidget extends ABlockWidget {
 		});
 		toolbar.add(deleteButton);
 
-		if (!item.isDone()) {
-			Button solveButton = new Button("Done");
-			solveButton.addClickListener(new ClickListener() {
-
-				public void onClick(Widget sender) {
-					item.setDone(true);
-					rebuild();
-				}
-			});
-			toolbar.add(solveButton);
-		} else {
-			Button unsolveButton = new Button("Undone");
+		if (!item.isClosed() && item.isDone()) {
+			Button unsolveButton = new Button("Close");
 			unsolveButton.addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					item.setDone(false);
+					// item.setDone(false);
 					rebuild();
 				}
 			});
@@ -159,7 +149,7 @@ public class BacklogItemWidget extends ABlockWidget {
 
 	@Override
 	protected AbstractImagePrototype getIcon() {
-		if (item.isDone()) return Img.bundle.backlogItemDoneIcon32();
+		if (item.isClosed()) return Img.bundle.backlogItemDoneIcon32();
 		return Img.bundle.backlogItemIcon32();
 	}
 

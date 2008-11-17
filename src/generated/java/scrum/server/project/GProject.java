@@ -46,8 +46,8 @@ public abstract class GProject
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("label", this.label);
         properties.put("currentSprintId", this.currentSprintId);
+        properties.put("label", this.label);
     }
 
     private static final Logger LOG = Logger.get(GProject.class);
@@ -59,8 +59,8 @@ public abstract class GProject
         super(template);
         if (template==null) return;
 
-        setLabel(template.getLabel());
         setCurrentSprint(template.getCurrentSprint());
+        setLabel(template.getLabel());
     }
 
 
@@ -72,37 +72,6 @@ public abstract class GProject
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
         return false;
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        entityModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
     }
 
     // -----------------------------------------------------------
@@ -141,6 +110,37 @@ public abstract class GProject
     public final boolean isCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
         if (this.currentSprintId == null && currentSprint == null) return true;
         return currentSprint != null && currentSprint.getId().equals(this.currentSprintId);
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
     }
 
     protected void repairDeadReferences(String entityId) {

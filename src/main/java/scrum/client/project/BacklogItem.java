@@ -1,9 +1,11 @@
 package scrum.client.project;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumGwtApplication;
+import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
 
 public class BacklogItem extends GBacklogItem {
@@ -19,15 +21,60 @@ public class BacklogItem extends GBacklogItem {
 		super(data);
 	}
 
+	/**
+	 * No tasks created yet.
+	 */
+	public boolean isPlanned() {
+		return !getTasks().isEmpty();
+	}
+
+	/**
+	 * All tasks are done. Not closed yet.
+	 */
+	public boolean isDone() {
+		Collection<Task> tasks = getTasks();
+		if (tasks.isEmpty()) return false;
+		for (Task task : tasks) {
+			if (!task.isDone()) return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Summary to show in the product backlog.
+	 */
+	public String getProductBacklogSummary() {
+		if (isClosed()) return "Closed.";
+		if (isDone()) return "Done. Test required.";
+		if (getEffort() == null) return "No effort estimated.";
+		Sprint sprint = getSprint();
+		if (sprint == null) return getEffortString() + " to do. No sprint assigned.";
+		return getEffortString() + " to do in sprint " + sprint.getLabel() + ".";
+	}
+
+	/**
+	 * Summary to show in the sprint backlog.
+	 */
+	public String getSprintBacklogSummary() {
+		if (isClosed()) return "Closed.";
+		if (!isPlanned()) return "Not planned yet.";
+		if (isDone()) return "Done. Test required.";
+		int taskCount = 0;
+		int openTaskCount = 0;
+		int effort = 0;
+		for (Task task : getTasks()) {
+			taskCount++;
+			if (!task.isDone()) {
+				openTaskCount++;
+				effort += task.getEffort();
+			}
+		}
+		return openTaskCount + " of " + taskCount + " Tasks open. About " + effort + " hours to do.";
+	}
+
 	public String getEffortString() {
 		if (getEffort() == null) return null;
 		return getEffort() + " " + ScrumGwtApplication.get().getProject().getEffortUnit();
-	}
-
-	public String getSummary() {
-		if (isDone()) return "Done.";
-		if (getEffort() == null) return "No effort estimated.";
-		return getEffortString() + " to do.";
 	}
 
 	public List<Task> getTasks() {

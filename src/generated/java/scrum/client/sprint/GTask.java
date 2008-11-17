@@ -43,6 +43,24 @@ public abstract class GTask
         return ENTITY_TYPE;
     }
 
+    // --- backlogItem ---
+
+    private String backlogItemId;
+
+    public final scrum.client.project.BacklogItem getBacklogItem() {
+        return getDao().getBacklogItem(this.backlogItemId);
+    }
+
+    public final Task setBacklogItem(scrum.client.project.BacklogItem backlogItem) {
+        this.backlogItemId = backlogItem.getId();
+        propertyChanged("backlogItem", this.backlogItemId);
+        return (Task)this;
+    }
+
+    public final boolean isBacklogItem(scrum.client.project.BacklogItem backlogItem) {
+        return equals(this.backlogItemId, backlogItem);
+    }
+
     // --- effort ---
 
     private java.lang.Integer effort ;
@@ -79,38 +97,20 @@ public abstract class GTask
         return equals(this.label, label);
     }
 
-    // --- backlogItem ---
-
-    private String backlogItemId;
-
-    public final scrum.client.project.BacklogItem getBacklogItem() {
-        return getDao().getBacklogItem(this.backlogItemId);
-    }
-
-    public final Task setBacklogItem(scrum.client.project.BacklogItem backlogItem) {
-        this.backlogItemId = backlogItem.getId();
-        propertyChanged("backlogItem", this.backlogItemId);
-        return (Task)this;
-    }
-
-    public final boolean isBacklogItem(scrum.client.project.BacklogItem backlogItem) {
-        return equals(this.backlogItemId, backlogItem);
-    }
-
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
+        backlogItemId = (String) props.get("backlogItemId");
         effort  = (java.lang.Integer) props.get("effort");
         label  = (java.lang.String) props.get("label");
-        backlogItemId = (String) props.get("backlogItemId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("backlogItem", this.backlogItemId);
         properties.put("effort", this.effort);
         properties.put("label", this.label);
-        properties.put("backlogItem", this.backlogItemId);
     }
 
 }

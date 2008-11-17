@@ -14,6 +14,11 @@ public class Task extends GTask {
 
 	// --- ---
 
+	public boolean isDone() {
+		if (!isEffortSet()) return true;
+		return getEffort() == 0;
+	}
+
 	public boolean isSprint(Sprint sprint) {
 		return getBacklogItem().isSprint(sprint);
 	}
