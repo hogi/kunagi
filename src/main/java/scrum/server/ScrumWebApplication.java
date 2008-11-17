@@ -91,7 +91,12 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public void onGetBacklogItems(SessionData session) {
 		Project project = session.getProject();
 		if (project == null) throw new RuntimeException("No project selected.");
-		session.getNextData().addEntities(toPropertyMap(project.getBacklogItems()));
+		Collection<BacklogItem> backlogItems = project.getBacklogItems();
+		for (BacklogItem item : backlogItems) {
+			Sprint sprint = item.getSprint();
+			if (sprint != null) session.getNextData().addEntity(toPropertyMap(sprint));
+		}
+		session.getNextData().addEntities(toPropertyMap(backlogItems));
 	}
 
 	@Override
