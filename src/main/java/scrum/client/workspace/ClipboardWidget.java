@@ -23,6 +23,7 @@ public class ClipboardWidget extends Composite {
 	private HorizontalPanel trash;
 
 	public ClipboardWidget() {
+		ScrumGwtApplication.get().getDragController().registerDropController(itemDropController);
 		ScrumGwtApplication.get().getDragController().registerDropController(trashDropController);
 
 		items = new BlockListWidget(true);
@@ -62,6 +63,33 @@ public class ClipboardWidget extends Composite {
 	public void addItem(ABlockWidget item) {
 		items.addBlock(item);
 	}
+
+	private DropController itemDropController = new DropController() {
+
+		public Widget getDropTarget() {
+			return items;
+		}
+
+		public void onDrop(DragContext context) {
+			Widget widget = context.draggable;
+			if (widget instanceof ABlockWidget) {
+				items.addBlock(((ABlockWidget) widget));
+			}
+		}
+
+		public void onEnter(DragContext context) {
+			items.addStyleName(StyleSheet.TRASH_ON_ENTER); // TODO
+		}
+
+		public void onLeave(DragContext context) {
+			items.removeStyleName(StyleSheet.TRASH_ON_ENTER); // TODO
+		}
+
+		public void onMove(DragContext context) {}
+
+		public void onPreviewDrop(DragContext context) throws VetoDragException {}
+
+	};
 
 	private DropController trashDropController = new DropController() {
 
