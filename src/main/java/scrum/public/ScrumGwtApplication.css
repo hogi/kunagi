@@ -1,126 +1,43 @@
-td {
-	vertical-align: top;
-	padding: 1px 2px;
-}
+td {vertical-align: top; padding: 1px 2px;}
+button {display: block;	width: 100%; min-width: 100px;}
+body {padding: 5px;}
 
-button {
-	display: block;
-	width: 100%;
-	min-width: 100px;
-}
 
-body {
-	padding: 5px;
-}
 
-.widePanel {
-	width: 100%
-}
+.element-BlockWidget {border: 1px solid black; background: white; padding: 5px; cursor: pointer; color: black;}
+.element-BlockWidget-title {font-size: 14px; font-weight: bold;}
+.element-BlockWidget-block {padding: 3px;}
+.state-BlockWidget-selected {border: 3px solid #CC4444; padding: 3px;}
 
-.fieldLabel {
-	color: gray;
-}
+.element-WorkspaceWidget {}
+.element-WorkspaceWidget-sidebar {}
+.element-WorkspaceWidget-workspace {border: 2px solid red;}
+.element-WorkspaceWidget-workarea {padding: 5px;}
 
-.editableViewer {
-	font-weight: bold;
-	cursor: pointer;
-	background: #EEEEFF;
-	width: 100%;
-}
+.element-SidebarWidget {padding: 5px 5px 20px 5px; position: fixed;}
 
-.editableEditor {
-	
-}
+.element-BlockListWidget {background: #CCDDFF;}
 
-.BlockListWidget {
-	background: #CCDDFF;
-}
+.element-PanelWidget {border: 2px solid darkblue; -moz-border-radius: 10px;}
+.element-PanelWidget-title {background: darkblue; color: white; padding: 5px;}
+.element-PanelWidget-content {padding: 5px;}
 
-.BlockWidget {
-	border: 1px solid black;
-	background: white;
-	padding: 5px;
-	cursor: pointer;
-	color: black;
-}
+.element-DropWidget {}
+.element-DropWidget-items {min-height: 100px;}
+.element-DropWidget-trash {background: white; border: 1px solid black; color: black;}
+.element-DropWidget-space {background: grey;}
 
-.BlockWidget-selected {
-	border: 3px solid #CC4444;
-	padding: 3px;
-}
 
-.Block-title {
-	font-size: 14px;
-	font-weight: bold;
-}
 
-.Block-text {
-	color: #AAAAAA;
-}
 
-.Block-block {
-	padding: 3px;
-}
 
-.Toolbar {
-	background: #CCDDFF;
-	padding: 3px;
-	border: 1px solid #CCDDFF; 
-}
+.widePanel {width: 100%}
+.fieldLabel {color: gray;}
+.editableViewer {font-weight: bold;	cursor: pointer; background: #EEEEFF; width: 100%;}
+.editableEditor {}
+.Toolbar {background: #CCDDFF; padding: 3px; border: 1px solid #CCDDFF;}
+.Trash-onEnter {border: 2px solid purple;}
+.deleted {background: grey;}
 
-.WorkspaceWidget {
-}
 
-.WorkspaceWidget-workspace {
-	border: 2px solid red;
-}
-
-.WorkspaceWidget-workarea {
-	padding: 5px;
-}
-
-.SidebarWidget {
-	padding: 5px 5px 20px 5px;
-	position: fixed;
-}
-
-.DropWidget {
-}
-
-.DropWidget-items {
-	min-height: 100px;
-}
-
-.DropWidget-trash {
-	background: white;
-	border: 1px solid black;
-	color: black;
-}
-
-.DropWidget-space {
-	background: grey;
-}
-
-.Trash-onEnter {
-	border: 2px solid purple;	
-}
-
-.deleted {
-	background: grey;	
-}
-
-.PanelWidget {
-	border: 2px solid darkblue;
-	-moz-border-radius: 10px;
-}
-
-.PanelWidget-title {
-	background: darkblue;
-	color: white;
-	padding: 5px;
-}
-
-.PanelWidget-content {
-	padding: 5px;
-}
 
