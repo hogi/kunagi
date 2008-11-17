@@ -27,23 +27,23 @@ public class ClipboardWidget extends Composite {
 		ScrumGwtApplication.get().getDragController().registerDropController(trashDropController);
 
 		items = new BlockListWidget(true);
-		items.addStyleName(StyleSheet.DROP_WIDGET_ITEMS);
+		items.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_ITEMS);
 
 		space = new SimplePanel();
-		space.setStyleName(StyleSheet.DROP_WIDGET_SPACE);
+		space.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_SPACE);
 		space.setHeight("200px");
 		space.setWidth("100%");
 		space.setWidget(new Label("drop here"));
 
 		trash = new HorizontalPanel();
-		trash.setStyleName(StyleSheet.DROP_WIDGET_TRASH);
+		trash.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_TRASH);
 		trash.setWidth("100%");
 		trash.add(Img.icons().trashIcon32().createImage());
 		trash.add(new Label("Trash"));
 
 		DockPanel dock = new DockPanel();
 		dock.setWidth("100%");
-		dock.setStyleName(StyleSheet.DROP_WIDGET);
+		dock.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET);
 
 		dock.add(items, DockPanel.NORTH);
 		dock.setCellHeight(items, "1%");
