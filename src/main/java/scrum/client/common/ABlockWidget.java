@@ -43,7 +43,7 @@ public abstract class ABlockWidget extends Composite {
 
 	public ABlockWidget() {
 		panel = new SimplePanel();
-		panel.setStyleName(StyleSheet.BLOCK_WIDGET);
+		panel.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET);
 		initWidget(panel);
 	}
 
@@ -75,7 +75,7 @@ public abstract class ABlockWidget extends Composite {
 
 	protected Widget build() {
 		Label title = new Label(getBlockTitle());
-		title.setStyleName(StyleSheet.BLOCK_TITLE);
+		title.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_TITLE);
 
 		VerticalPanel center = new VerticalPanel();
 		center.setWidth("100%");
@@ -85,7 +85,7 @@ public abstract class ABlockWidget extends Composite {
 		}
 
 		HorizontalPanel block = new HorizontalPanel();
-		block.setStyleName(StyleSheet.BLOCK_BLOCK);
+		block.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_BLOCK);
 		block.setWidth("100%");
 
 		if (dragHandle != null) block.add(dragHandle);

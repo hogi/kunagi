@@ -36,7 +36,7 @@ public class BlockListWidget extends Composite {
 		scroller = new ScrollPanel();
 		scroller.setWidth("100%");
 		scroller.setHeight("100%");
-		scroller.setStyleName(StyleSheet.BLOCK_LIST_WIDGET);
+		scroller.setStyleName(StyleSheet.ELEMENT_BLOCK_LIST_WIDGET);
 		scroller.add(table);
 
 		initWidget(scroller);
@@ -103,7 +103,7 @@ public class BlockListWidget extends Composite {
 		if (row == selectedRow) return;
 		deselect();
 		ABlockWidget block = blocks.get(row);
-		block.addStyleName(StyleSheet.BLOCK_WIDGET_SELECTED);
+		block.addStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
 		if (!sidebarMode) {
 			block.setExtended(true);
 		}
@@ -136,7 +136,7 @@ public class BlockListWidget extends Composite {
 	public void deselect() {
 		ABlockWidget block = getSelectedBlock();
 		if (block == null) return;
-		block.removeStyleName(StyleSheet.BLOCK_WIDGET_SELECTED);
+		block.removeStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
 		selectedRow = -1;
 		block.setExtended(false);
 	}

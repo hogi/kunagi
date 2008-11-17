@@ -32,7 +32,7 @@ public class WorkspaceWidget extends Composite {
 
 		// create workspace
 		workspacePanel = new DockPanel();
-		workspacePanel.setStyleName(StyleSheet.WORKSPACE_WIDGET_WORKSPACE);
+		workspacePanel.setStyleName(StyleSheet.ELEMENT_WORKSPACE_WIDGET_WORKSPACE);
 		workspacePanel.setWidth("100%");
 
 		// sidebar
@@ -42,9 +42,9 @@ public class WorkspaceWidget extends Composite {
 
 		// workarea
 		workareaPanel = new SimplePanel();
-		workareaPanel.setStyleName(StyleSheet.WORKSPACE_WIDGET_WORKAREA);
+		workareaPanel.setStyleName(StyleSheet.ELEMENT_WORKSPACE_WIDGET_WORKAREA);
 		workspacePanel.add(workareaPanel, DockPanel.CENTER);
-		workspacePanel.setStyleName(StyleSheet.WORKSPACE_WIDGET);
+		workspacePanel.setStyleName(StyleSheet.ELEMENT_WORKSPACE_WIDGET);
 		workspacePanel.setCellWidth(workareaPanel, "99%");
 
 		// root panel
@@ -89,7 +89,7 @@ public class WorkspaceWidget extends Composite {
 
 	private Widget createSidebar() {
 		VerticalPanel sidebar = new VerticalPanel();
-		sidebar.setStyleName(StyleSheet.WORKSPACE_WIDGET_SIDEBAR);
+		sidebar.setStyleName(StyleSheet.ELEMENT_WORKSPACE_WIDGET_SIDEBAR);
 		sidebar.setWidth("300px");
 		sidebar.setHeight("100%");
 		sidebar.add(new SidebarWidget());
