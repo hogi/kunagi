@@ -1,6 +1,7 @@
 package scrum.client.common.editable;
 
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.KeyboardListenerAdapter;
 import com.google.gwt.user.client.ui.Label;
@@ -41,6 +42,7 @@ public abstract class AEditableIntegerWidget extends AEditableWidget {
 			Integer value = getValue();
 			String text = value == null ? null : getValue().toString();
 			editor = new TextBox();
+			editor.addFocusListener(new EditorFocusListener());
 			editor.setMaxLength(3);
 			editor.setWidth("10%");
 			editor.setText(text);
@@ -51,7 +53,9 @@ public abstract class AEditableIntegerWidget extends AEditableWidget {
 
 	@Override
 	protected void updateEditor() {
+		editor.setText(viewer.getText());
 		editor.setSelectionRange(0, editor.getText().length());
+		editor.setFocus(true);
 	}
 
 	@Override
@@ -91,14 +95,43 @@ public abstract class AEditableIntegerWidget extends AEditableWidget {
 					if (text.length() == 0) {
 						setValue(null);
 					} else {
-						setValue(Integer.parseInt(text));
+
+						try {
+							setValue(Integer.parseInt(text));
+						} catch (NumberFormatException e) {
+							editor.setText(viewer.getText());
+						}
+
 					}
 				}
 				setEditMode(false);
 			}
 			if (keyCode == KeyboardListener.KEY_ESCAPE) {
 				setEditMode(false);
+				editor.setText(viewer.getText());
 			}
 		}
+	}
+
+	private class EditorFocusListener implements FocusListener {
+
+		public void onFocus(Widget sender) {
+			if (getEditMode() != true) {
+				setEditMode(true);
+			}
+		}
+
+		public void onLostFocus(Widget sender) {
+
+			String text = editor.getText();
+			try {
+				int value = Integer.parseInt(text);
+				setValue(value);
+			} catch (NumberFormatException e) {
+				editor.setText(viewer.getText());
+			}
+			setEditMode(false);
+		}
+
 	}
 }

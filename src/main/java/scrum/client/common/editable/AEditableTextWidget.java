@@ -1,6 +1,7 @@
 package scrum.client.common.editable;
 
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.KeyboardListenerAdapter;
 import com.google.gwt.user.client.ui.Label;
@@ -40,6 +41,7 @@ public abstract class AEditableTextWidget extends AEditableWidget {
 		if (editor == null) {
 			String text = getText();
 			editor = new TextBox();
+			editor.addFocusListener(new EditorFocusListener());
 			editor.setText(text);
 			editor.addKeyboardListener(new EditorKeyboardListener());
 		}
@@ -48,7 +50,9 @@ public abstract class AEditableTextWidget extends AEditableWidget {
 
 	@Override
 	protected void updateEditor() {
+		editor.setText(viewer.getText());
 		editor.setSelectionRange(0, editor.getText().length());
+		editor.setFocus(true);
 	}
 
 	@Override
@@ -60,7 +64,9 @@ public abstract class AEditableTextWidget extends AEditableWidget {
 	private class ViewerClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			setEditMode(true);
+			if (getEditMode() != true) {
+				setEditMode(true);
+			}
 		}
 
 	}
@@ -74,9 +80,26 @@ public abstract class AEditableTextWidget extends AEditableWidget {
 				setEditMode(false);
 			}
 			if (keyCode == KeyboardListener.KEY_ESCAPE) {
+				editor.setText(viewer.getText());
 				setEditMode(false);
 			}
 		}
 
 	}
+
+	private class EditorFocusListener implements FocusListener {
+
+		public void onFocus(Widget sender) {
+			if (getEditMode() != true) {
+				setEditMode(true);
+			}
+		}
+
+		public void onLostFocus(Widget sender) {
+			setText(editor.getText());
+			setEditMode(false);
+		}
+
+	}
+
 }

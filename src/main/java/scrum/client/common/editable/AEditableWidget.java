@@ -76,4 +76,8 @@ public abstract class AEditableWidget extends Composite {
 		rebuild();
 	}
 
+	boolean getEditMode() {
+		return editMode;
+	}
+
 }
