@@ -2,6 +2,7 @@ package scrum.client.admin;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
+import scrum.client.common.PanelWidget;
 import scrum.client.project.Project;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -11,8 +12,7 @@ public class ProjectSelectionWidget extends Composite {
 	private BlockListWidget list = new BlockListWidget();
 
 	public ProjectSelectionWidget() {
-		list.setHeight("400px");
-		initWidget(list);
+		initWidget(new PanelWidget("Select Project", list));
 		update();
 	}
 

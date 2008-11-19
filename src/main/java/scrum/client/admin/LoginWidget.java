@@ -2,6 +2,7 @@ package scrum.client.admin;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ItemFieldsWidget;
+import scrum.client.common.PanelWidget;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.user.client.ui.Button;
@@ -39,7 +40,7 @@ public class LoginWidget extends Composite {
 		panel.add(fieldsWidget);
 		panel.add(loginButton);
 
-		initWidget(panel);
+		initWidget(new PanelWidget("Login", panel));
 	}
 
 	private void login() {

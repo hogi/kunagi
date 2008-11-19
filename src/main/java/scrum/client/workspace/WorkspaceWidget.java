@@ -61,7 +61,7 @@ public class WorkspaceWidget extends Composite {
 	}
 
 	public static void lock(String message) {
-		rootPanel.setWidget(new Label(message));
+		rootPanel.setWidget(new PanelWidget("Please Wait", new Label(message)));
 	}
 
 	public static void unlock() {
