@@ -1,5 +1,7 @@
 package scrum.client.workspace;
 
+import scrum.client.admin.LoginWidget;
+import scrum.client.admin.ProjectSelectionWidget;
 import scrum.client.common.PanelWidget;
 import scrum.client.common.StyleSheet;
 import scrum.client.impediments.ImpedimentListWidget;
@@ -16,6 +18,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class WorkspaceWidget extends Composite {
 
+	private static LoginWidget login;
+	public static ProjectSelectionWidget projectSelection;
 	public static BacklogItemListWidget backlog;
 	public static CurrentSprintWidget sprint;
 	public static ImpedimentListWidget impediments;
@@ -26,6 +30,8 @@ public class WorkspaceWidget extends Composite {
 
 	public WorkspaceWidget() {
 		// initialize widgets
+		login = new LoginWidget();
+		projectSelection = new ProjectSelectionWidget();
 		impediments = new ImpedimentListWidget();
 		backlog = new BacklogItemListWidget();
 		sprint = new CurrentSprintWidget();
@@ -49,7 +55,7 @@ public class WorkspaceWidget extends Composite {
 
 		// root panel
 		rootPanel = new SimplePanel();
-		rootPanel.setWidget(workspacePanel);
+		rootPanel.setWidget(login);
 
 		initWidget(rootPanel);
 	}
@@ -60,6 +66,10 @@ public class WorkspaceWidget extends Composite {
 
 	public static void unlock() {
 		rootPanel.setWidget(workspacePanel);
+	}
+
+	public static void activateProjectSelection() {
+		rootPanel.setWidget(projectSelection);
 	}
 
 	public static void showImpediments() {

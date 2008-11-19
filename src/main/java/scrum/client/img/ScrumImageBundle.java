@@ -32,4 +32,7 @@ public interface ScrumImageBundle extends ImageBundle {
 	@Resource(value = "drag32.png")
 	public AbstractImagePrototype dragHandleIcon32();
 
+	@Resource(value = "project32.png")
+	public AbstractImagePrototype projectIcon32();
+
 }

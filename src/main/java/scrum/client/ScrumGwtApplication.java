@@ -29,26 +29,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	 * Application entry point.
 	 */
 	public void onModuleLoad() {
-		// RootPanel.get("workspace").add(new WorkspaceWidget());
-
 		RootPanel.get("workspace").add(new WorkspaceWidget());
-
-		// simulate login
-		login("duke", "geheim");
-
-		// simulate project selection
-		WorkspaceWidget.lock("Loading project...");
-		callSelectProject("???", new Runnable() {
-
-			public void run() {
-				WorkspaceWidget.showTest();
-			}
-		});
-
-	}
-
-	public void login(String name, String password) {
-	// dummy. TODO call server
 	}
 
 	public User getUser() {
