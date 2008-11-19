@@ -45,8 +45,8 @@ public abstract class GSprint
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
         properties.put("label", this.label);
+        properties.put("projectId", this.projectId);
     }
 
     private static final Logger LOG = Logger.get(GSprint.class);
@@ -58,8 +58,39 @@ public abstract class GSprint
         super(template);
         if (template==null) return;
 
-        setProject(template.getProject());
         setLabel(template.getLabel());
+        setProject(template.getProject());
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
     }
 
     // -----------------------------------------------------------
@@ -97,37 +128,6 @@ public abstract class GSprint
     public final boolean isProject(scrum.server.project.Project project) {
         if (this.projectId == null && project == null) return true;
         return project != null && project.getId().equals(this.projectId);
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        entityModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
     }
 
     protected void repairDeadReferences(String entityId) {

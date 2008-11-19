@@ -48,7 +48,7 @@ public class SidebarWidget extends Composite {
 
 		public void onClick(Widget sender) {
 			WorkspaceWidget.lock("Loading impediments...");
-			ScrumGwtApplication.get().callGetImpediments(new Runnable() {
+			ScrumGwtApplication.get().callRequestImpediments(new Runnable() {
 
 				public void run() {
 					WorkspaceWidget.showImpediments();
@@ -61,7 +61,7 @@ public class SidebarWidget extends Composite {
 
 		public void onClick(Widget sender) {
 			WorkspaceWidget.lock("Loading Sprint...");
-			ScrumGwtApplication.get().callGetCurrentSprint(new Runnable() {
+			ScrumGwtApplication.get().callRequestCurrentSprint(new Runnable() {
 
 				public void run() {
 					WorkspaceWidget.showSprint();
@@ -75,7 +75,7 @@ public class SidebarWidget extends Composite {
 
 		public void onClick(Widget sender) {
 			WorkspaceWidget.lock("Loading Backlog Items...");
-			ScrumGwtApplication.get().callGetBacklogItems(new Runnable() {
+			ScrumGwtApplication.get().callRequestBacklogItems(new Runnable() {
 
 				public void run() {
 					WorkspaceWidget.showBacklog();

@@ -45,11 +45,11 @@ public abstract class GImpediment
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("solution", this.solution);
         properties.put("description", this.description);
-        properties.put("solved", this.solved);
         properties.put("label", this.label);
+        properties.put("solution", this.solution);
         properties.put("projectId", this.projectId);
+        properties.put("solved", this.solved);
     }
 
     private static final Logger LOG = Logger.get(GImpediment.class);
@@ -61,42 +61,11 @@ public abstract class GImpediment
         super(template);
         if (template==null) return;
 
-        setSolution(template.getSolution());
         setDescription(template.getDescription());
-        setSolved(template.isSolved());
         setLabel(template.getLabel());
+        setSolution(template.getSolution());
         setProject(template.getProject());
-    }
-
-    // -----------------------------------------------------------
-    // - solution
-    // -----------------------------------------------------------
-
-    private java.lang.String solution;
-
-    public final java.lang.String getSolution() {
-        return solution;
-    }
-
-    public final void setSolution(java.lang.String solution) {
-        solution = prepareSolution(solution);
-        if (isSolution(solution)) return;
-        this.solution = solution;
-        entityModified();
-    }
-
-    protected java.lang.String prepareSolution(java.lang.String solution) {
-        solution = Str.removeUnreadableChars(solution);
-        return solution;
-    }
-
-    public final boolean isSolutionSet() {
-        return this.solution != null;
-    }
-
-    public final boolean isSolution(java.lang.String solution) {
-        if (this.solution == null && solution == null) return true;
-        return this.solution != null && this.solution.equals(solution);
+        setSolved(template.isSolved());
     }
 
     // -----------------------------------------------------------
@@ -131,31 +100,6 @@ public abstract class GImpediment
     }
 
     // -----------------------------------------------------------
-    // - solved
-    // -----------------------------------------------------------
-
-    private boolean solved;
-
-    public final boolean isSolved() {
-        return solved;
-    }
-
-    public final void setSolved(boolean solved) {
-        solved = prepareSolved(solved);
-        if (isSolved(solved)) return;
-        this.solved = solved;
-        entityModified();
-    }
-
-    protected boolean prepareSolved(boolean solved) {
-        return solved;
-    }
-
-    public final boolean isSolved(boolean solved) {
-        return this.solved == solved;
-    }
-
-    // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
 
@@ -184,6 +128,37 @@ public abstract class GImpediment
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - solution
+    // -----------------------------------------------------------
+
+    private java.lang.String solution;
+
+    public final java.lang.String getSolution() {
+        return solution;
+    }
+
+    public final void setSolution(java.lang.String solution) {
+        solution = prepareSolution(solution);
+        if (isSolution(solution)) return;
+        this.solution = solution;
+        entityModified();
+    }
+
+    protected java.lang.String prepareSolution(java.lang.String solution) {
+        solution = Str.removeUnreadableChars(solution);
+        return solution;
+    }
+
+    public final boolean isSolutionSet() {
+        return this.solution != null;
+    }
+
+    public final boolean isSolution(java.lang.String solution) {
+        if (this.solution == null && solution == null) return true;
+        return this.solution != null && this.solution.equals(solution);
     }
 
     // -----------------------------------------------------------
@@ -221,6 +196,31 @@ public abstract class GImpediment
     public final boolean isProject(scrum.server.project.Project project) {
         if (this.projectId == null && project == null) return true;
         return project != null && project.getId().equals(this.projectId);
+    }
+
+    // -----------------------------------------------------------
+    // - solved
+    // -----------------------------------------------------------
+
+    private boolean solved;
+
+    public final boolean isSolved() {
+        return solved;
+    }
+
+    public final void setSolved(boolean solved) {
+        solved = prepareSolved(solved);
+        if (isSolved(solved)) return;
+        this.solved = solved;
+        entityModified();
+    }
+
+    protected boolean prepareSolved(boolean solved) {
+        return solved;
+    }
+
+    public final boolean isSolved(boolean solved) {
+        return this.solved == solved;
     }
 
     protected void repairDeadReferences(String entityId) {

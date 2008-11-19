@@ -38,7 +38,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 		// simulate project selection
 		WorkspaceWidget.lock("Loading project...");
-		callGetProject("???", new Runnable() {
+		callSelectProject("???", new Runnable() {
 
 			public void run() {
 				WorkspaceWidget.showTest();

@@ -43,10 +43,12 @@ public abstract class GProjectDao
 
     // --- clear caches ---
     public void clearCaches() {
-        projectsByCurrentSprintCache.clear();
-        currentSprintsCache = null;
         projectsByLabelCache.clear();
         labelsCache = null;
+        projectsByCurrentSprintCache.clear();
+        currentSprintsCache = null;
+        projectsByAdminCache.clear();
+        adminsCache = null;
     }
 
     @Override
@@ -63,6 +65,46 @@ public abstract class GProjectDao
         if (event.getEntity() instanceof Project) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByLabelCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String label) {
+                    return getEntities(new IsLabel(label));
+                }
+            });
+
+    public final Set<Project> getProjectsByLabel(java.lang.String label) {
+        return projectsByLabelCache.get(label);
+    }
+    private Set<java.lang.String> labelsCache;
+
+    public final Set<java.lang.String> getLabels() {
+        if (labelsCache == null) {
+            labelsCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isLabelSet()) labelsCache.add(e.getLabel());
+            }
+        }
+        return labelsCache;
+    }
+
+    private static class IsLabel implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsLabel(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isLabel(value);
+        }
+
     }
 
     // -----------------------------------------------------------
@@ -106,41 +148,41 @@ public abstract class GProjectDao
     }
 
     // -----------------------------------------------------------
-    // - label
+    // - admins
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Project>> projectsByLabelCache = new Cache<java.lang.String,Set<Project>>(
-            new Cache.Factory<java.lang.String,Set<Project>>() {
-                public Set<Project> create(java.lang.String label) {
-                    return getEntities(new IsLabel(label));
+    private final Cache<scrum.server.admin.User,Set<Project>> projectsByAdminCache = new Cache<scrum.server.admin.User,Set<Project>>(
+            new Cache.Factory<scrum.server.admin.User,Set<Project>>() {
+                public Set<Project> create(scrum.server.admin.User admin) {
+                    return getEntities(new ContainsAdmin(admin));
                 }
             });
 
-    public final Set<Project> getProjectsByLabel(java.lang.String label) {
-        return projectsByLabelCache.get(label);
+    public final Set<Project> getProjectsByAdmin(scrum.server.admin.User admin) {
+        return projectsByAdminCache.get(admin);
     }
-    private Set<java.lang.String> labelsCache;
+    private Set<scrum.server.admin.User> adminsCache;
 
-    public final Set<java.lang.String> getLabels() {
-        if (labelsCache == null) {
-            labelsCache = new HashSet<java.lang.String>();
+    public final Set<scrum.server.admin.User> getAdmins() {
+        if (adminsCache == null) {
+            adminsCache = new HashSet<scrum.server.admin.User>();
             for (Project e : getEntities()) {
-                if (e.isLabelSet()) labelsCache.add(e.getLabel());
+                adminsCache.addAll(e.getAdmins());
             }
         }
-        return labelsCache;
+        return adminsCache;
     }
 
-    private static class IsLabel implements Predicate<Project> {
+    private static class ContainsAdmin implements Predicate<Project> {
 
-        private java.lang.String value;
+        private scrum.server.admin.User value;
 
-        public IsLabel(java.lang.String value) {
+        public ContainsAdmin(scrum.server.admin.User value) {
             this.value = value;
         }
 
         public boolean test(Project e) {
-            return e.isLabel(value);
+            return e.containsAdmin(value);
         }
 
     }

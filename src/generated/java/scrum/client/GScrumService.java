@@ -28,13 +28,15 @@ import java.util.*;
 public interface GScrumService
             extends com.google.gwt.user.client.rpc.RemoteService {
 
-    DataTransferObject getProject(java.lang.String projectId);
+    DataTransferObject login(java.lang.String username, java.lang.String password);
 
-    DataTransferObject getImpediments();
+    DataTransferObject selectProject(java.lang.String projectId);
 
-    DataTransferObject getBacklogItems();
+    DataTransferObject requestImpediments();
 
-    DataTransferObject getCurrentSprint();
+    DataTransferObject requestBacklogItems();
+
+    DataTransferObject requestCurrentSprint();
 
     DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties);
 

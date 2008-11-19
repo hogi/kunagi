@@ -46,8 +46,9 @@ public abstract class GProject
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("currentSprintId", this.currentSprintId);
         properties.put("label", this.label);
+        properties.put("currentSprintId", this.currentSprintId);
+        properties.put("adminsIds", this.adminsIds);
     }
 
     private static final Logger LOG = Logger.get(GProject.class);
@@ -59,8 +60,9 @@ public abstract class GProject
         super(template);
         if (template==null) return;
 
-        setCurrentSprint(template.getCurrentSprint());
         setLabel(template.getLabel());
+        setCurrentSprint(template.getCurrentSprint());
+        setAdmins(template.getAdmins());
     }
 
 
@@ -72,6 +74,37 @@ public abstract class GProject
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
         return false;
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
     }
 
     // -----------------------------------------------------------
@@ -113,39 +146,92 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
-    // - label
+    // - admins
     // -----------------------------------------------------------
 
-    private java.lang.String label;
+    private java.util.Set<String> adminsIds = new java.util.HashSet<String>();
 
-    public final java.lang.String getLabel() {
-        return label;
+    public final java.util.Set<scrum.server.admin.User> getAdmins() {
+        return (Set)userDao.getByIds(this.adminsIds);
     }
 
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
+    public final void setAdmins(java.util.Set<scrum.server.admin.User> admins) {
+        admins = prepareAdmins(admins);
+        if (admins == null) throw new IllegalArgumentException("null is not allowed");
+        java.util.Set<String> ids = getIds(admins);
+        if (this.adminsIds.equals(ids)) return;
+        this.adminsIds = ids;
         entityModified();
     }
 
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
+    protected java.util.Set<scrum.server.admin.User> prepareAdmins(java.util.Set<scrum.server.admin.User> admins) {
+        return admins;
     }
 
-    public final boolean isLabelSet() {
-        return this.label != null;
+    protected void repairDeadAdminReference(String entityId) {
+        if (this.adminsIds.remove(entityId)) entityModified();
     }
 
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
+    public final boolean containsAdmin(scrum.server.admin.User admin) {
+        if (admin == null) return false;
+        return this.adminsIds.contains(admin.getId());
+    }
+
+    public final int getAdminsCount() {
+        return this.adminsIds.size();
+    }
+
+    public final boolean isAdminsEmpty() {
+        return this.adminsIds.isEmpty();
+    }
+
+    public final boolean addAdmin(scrum.server.admin.User admin) {
+        if (admin == null) throw new IllegalArgumentException("admin == null");
+        boolean added = this.adminsIds.add(admin.getId());
+        if (added) entityModified();
+        return added;
+    }
+
+    public final boolean addAdmins(Collection<scrum.server.admin.User> admins) {
+        if (admins == null) throw new IllegalArgumentException("admins == null");
+        boolean added = false;
+        for (scrum.server.admin.User admin : admins) {
+            added = added | this.adminsIds.add(admin.getId());
+        }
+        if (added) entityModified();
+        return added;
+    }
+
+    public final boolean removeAdmin(scrum.server.admin.User admin) {
+        if (admin == null) throw new IllegalArgumentException("admin == null");
+        if (this.adminsIds == null) return false;
+        boolean removed = this.adminsIds.remove(admin.getId());
+        if (removed) entityModified();
+        return removed;
+    }
+
+    public final boolean removeAdmins(Collection<scrum.server.admin.User> admins) {
+        if (admins == null) return false;
+        if (admins.isEmpty()) return false;
+        boolean removed = false;
+        for (scrum.server.admin.User _element: admins) {
+            removed = removed | removeAdmin(_element);
+        }
+        return removed;
+    }
+
+    public final boolean clearAdmins() {
+        if (this.adminsIds.isEmpty()) return false;
+        this.adminsIds.clear();
+        entityModified();
+        return true;
     }
 
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
         repairDeadCurrentSprintReference(entityId);
+        if (this.adminsIds == null) this.adminsIds = new java.util.HashSet<String>();
+        repairDeadAdminReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -157,6 +243,16 @@ public abstract class GProject
         } catch (EntityDoesNotExistException ex) {
             LOG.info("Repairing dead currentSprint reference");
             repairDeadCurrentSprintReference(this.currentSprintId);
+        }
+        if (this.adminsIds == null) this.adminsIds = new java.util.HashSet<String>();
+        Set<String> admins = new HashSet<String>(this.adminsIds);
+        for (String entityId : admins) {
+            try {
+                userDao.getById(entityId);
+            } catch (EntityDoesNotExistException ex) {
+                LOG.info("Repairing dead admin reference");
+                repairDeadAdminReference(entityId);
+            }
         }
     }
 

@@ -40,36 +40,44 @@ public abstract class GScrumGwtApplication
         return scrumService;
     }
 
-    public final void callGetProject(java.lang.String projectId,  Runnable callback) {
-        getScrumService().getProject(projectId,  new DefaultCallback(callback));
+    public final void callLogin(java.lang.String username, java.lang.String password,  Runnable callback) {
+        getScrumService().login(username, password,  new DefaultCallback(callback));
     }
 
-    public final void callGetProject(java.lang.String projectId) {
-        callGetProject(projectId,  null);
+    public final void callLogin(java.lang.String username, java.lang.String password) {
+        callLogin(username, password,  null);
     }
 
-    public final void callGetImpediments( Runnable callback) {
-        getScrumService().getImpediments( new DefaultCallback(callback));
+    public final void callSelectProject(java.lang.String projectId,  Runnable callback) {
+        getScrumService().selectProject(projectId,  new DefaultCallback(callback));
     }
 
-    public final void callGetImpediments() {
-        callGetImpediments( null);
+    public final void callSelectProject(java.lang.String projectId) {
+        callSelectProject(projectId,  null);
     }
 
-    public final void callGetBacklogItems( Runnable callback) {
-        getScrumService().getBacklogItems( new DefaultCallback(callback));
+    public final void callRequestImpediments( Runnable callback) {
+        getScrumService().requestImpediments( new DefaultCallback(callback));
     }
 
-    public final void callGetBacklogItems() {
-        callGetBacklogItems( null);
+    public final void callRequestImpediments() {
+        callRequestImpediments( null);
     }
 
-    public final void callGetCurrentSprint( Runnable callback) {
-        getScrumService().getCurrentSprint( new DefaultCallback(callback));
+    public final void callRequestBacklogItems( Runnable callback) {
+        getScrumService().requestBacklogItems( new DefaultCallback(callback));
     }
 
-    public final void callGetCurrentSprint() {
-        callGetCurrentSprint( null);
+    public final void callRequestBacklogItems() {
+        callRequestBacklogItems( null);
+    }
+
+    public final void callRequestCurrentSprint( Runnable callback) {
+        getScrumService().requestCurrentSprint( new DefaultCallback(callback));
+    }
+
+    public final void callRequestCurrentSprint() {
+        callRequestCurrentSprint( null);
     }
 
     public final void callChangeProperties(java.lang.String entityId, java.util.Map properties,  Runnable callback) {

@@ -43,24 +43,6 @@ public abstract class GProject
         return ENTITY_TYPE;
     }
 
-    // --- currentSprint ---
-
-    private String currentSprintId;
-
-    public final scrum.client.sprint.Sprint getCurrentSprint() {
-        return getDao().getSprint(this.currentSprintId);
-    }
-
-    public final Project setCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
-        this.currentSprintId = currentSprint.getId();
-        propertyChanged("currentSprint", this.currentSprintId);
-        return (Project)this;
-    }
-
-    public final boolean isCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
-        return equals(this.currentSprintId, currentSprint);
-    }
-
     // --- label ---
 
     private java.lang.String label ;
@@ -79,18 +61,47 @@ public abstract class GProject
         return equals(this.label, label);
     }
 
+    // --- currentSprint ---
+
+    private String currentSprintId;
+
+    public final scrum.client.sprint.Sprint getCurrentSprint() {
+        return getDao().getSprint(this.currentSprintId);
+    }
+
+    public final Project setCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
+        this.currentSprintId = currentSprint.getId();
+        propertyChanged("currentSprint", this.currentSprintId);
+        return (Project)this;
+    }
+
+    public final boolean isCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
+        return equals(this.currentSprintId, currentSprint);
+    }
+
+    // --- admins ---
+
+    private Set<String> adminsIds = new HashSet<String>();
+
+    public final java.util.Set<scrum.client.admin.User> getAdmins() {
+        if ( adminsIds.isEmpty()) return Collections.emptySet();
+        return getDao().getUsers(this.adminsIds);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        currentSprintId = (String) props.get("currentSprintId");
         label  = (java.lang.String) props.get("label");
+        currentSprintId = (String) props.get("currentSprintId");
+        adminsIds = (Set<String>) props.get("adminsIds");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("currentSprint", this.currentSprintId);
         properties.put("label", this.label);
+        properties.put("currentSprintId", this.currentSprintId);
+        properties.put("admins", this.adminsIds);
     }
 
 }

@@ -32,56 +32,70 @@ public abstract class GScrumServiceImpl
 
     private static final Logger LOG = Logger.get(GScrumServiceImpl.class);
 
-    public scrum.client.DataTransferObject getProject(java.lang.String projectId) {
+    public scrum.client.DataTransferObject login(java.lang.String username, java.lang.String password) {
         SessionData session = getSessionData();
-        session.getContext().createSubContext("service:getProject");
-        LOG.debug("getProject");
+        session.getContext().createSubContext("service:login");
+        LOG.debug("login");
         try {
-            getApp().onGetProject(session, projectId);
+            getApp().onLogin(session, username, password);
         } catch (Throwable t) {
-            handleServiceMethodException("getProject",t);
+            handleServiceMethodException("login",t);
         }
         scrum.client.DataTransferObject ret = session.popNextData();
         onServiceMethodExecuted();
         return ret;
     }
 
-    public scrum.client.DataTransferObject getImpediments() {
+    public scrum.client.DataTransferObject selectProject(java.lang.String projectId) {
         SessionData session = getSessionData();
-        session.getContext().createSubContext("service:getImpediments");
-        LOG.debug("getImpediments");
+        session.getContext().createSubContext("service:selectProject");
+        LOG.debug("selectProject");
         try {
-            getApp().onGetImpediments(session);
+            getApp().onSelectProject(session, projectId);
         } catch (Throwable t) {
-            handleServiceMethodException("getImpediments",t);
+            handleServiceMethodException("selectProject",t);
         }
         scrum.client.DataTransferObject ret = session.popNextData();
         onServiceMethodExecuted();
         return ret;
     }
 
-    public scrum.client.DataTransferObject getBacklogItems() {
+    public scrum.client.DataTransferObject requestImpediments() {
         SessionData session = getSessionData();
-        session.getContext().createSubContext("service:getBacklogItems");
-        LOG.debug("getBacklogItems");
+        session.getContext().createSubContext("service:requestImpediments");
+        LOG.debug("requestImpediments");
         try {
-            getApp().onGetBacklogItems(session);
+            getApp().onRequestImpediments(session);
         } catch (Throwable t) {
-            handleServiceMethodException("getBacklogItems",t);
+            handleServiceMethodException("requestImpediments",t);
         }
         scrum.client.DataTransferObject ret = session.popNextData();
         onServiceMethodExecuted();
         return ret;
     }
 
-    public scrum.client.DataTransferObject getCurrentSprint() {
+    public scrum.client.DataTransferObject requestBacklogItems() {
         SessionData session = getSessionData();
-        session.getContext().createSubContext("service:getCurrentSprint");
-        LOG.debug("getCurrentSprint");
+        session.getContext().createSubContext("service:requestBacklogItems");
+        LOG.debug("requestBacklogItems");
         try {
-            getApp().onGetCurrentSprint(session);
+            getApp().onRequestBacklogItems(session);
         } catch (Throwable t) {
-            handleServiceMethodException("getCurrentSprint",t);
+            handleServiceMethodException("requestBacklogItems",t);
+        }
+        scrum.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted();
+        return ret;
+    }
+
+    public scrum.client.DataTransferObject requestCurrentSprint() {
+        SessionData session = getSessionData();
+        session.getContext().createSubContext("service:requestCurrentSprint");
+        LOG.debug("requestCurrentSprint");
+        try {
+            getApp().onRequestCurrentSprint(session);
+        } catch (Throwable t) {
+            handleServiceMethodException("requestCurrentSprint",t);
         }
         scrum.client.DataTransferObject ret = session.popNextData();
         onServiceMethodExecuted();

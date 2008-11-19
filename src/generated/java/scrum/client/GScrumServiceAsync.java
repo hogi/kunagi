@@ -28,13 +28,15 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface GScrumServiceAsync {
 
-    void getProject(java.lang.String projectId, AsyncCallback<DataTransferObject> callback);
+    void login(java.lang.String username, java.lang.String password, AsyncCallback<DataTransferObject> callback);
 
-    void getImpediments(AsyncCallback<DataTransferObject> callback);
+    void selectProject(java.lang.String projectId, AsyncCallback<DataTransferObject> callback);
 
-    void getBacklogItems(AsyncCallback<DataTransferObject> callback);
+    void requestImpediments(AsyncCallback<DataTransferObject> callback);
 
-    void getCurrentSprint(AsyncCallback<DataTransferObject> callback);
+    void requestBacklogItems(AsyncCallback<DataTransferObject> callback);
+
+    void requestCurrentSprint(AsyncCallback<DataTransferObject> callback);
 
     void changeProperties(java.lang.String entityId, java.util.Map properties, AsyncCallback<DataTransferObject> callback);
 

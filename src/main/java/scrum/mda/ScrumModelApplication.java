@@ -29,6 +29,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel = createEntityModel("Project", "project");
 			autowire(projectModel);
 			projectModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);
+			projectModel.addSetReference("admins", getUserModel());
 			projectModel.addReference("currentSprint", getSprintModel());
 		}
 		return projectModel;
@@ -114,10 +115,12 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (serviceModel == null) {
 			serviceModel = createGwtServiceModel("scrum");
 			autowire(serviceModel);
-			serviceModel.addMethod("getProject").addParameter("projectId", String.class);
-			serviceModel.addMethod("getImpediments");
-			serviceModel.addMethod("getBacklogItems");
-			serviceModel.addMethod("getCurrentSprint");
+			serviceModel.addMethod("login").addParameter("username", String.class).addParameter("password",
+				String.class);
+			serviceModel.addMethod("selectProject").addParameter("projectId", String.class);
+			serviceModel.addMethod("requestImpediments");
+			serviceModel.addMethod("requestBacklogItems");
+			serviceModel.addMethod("requestCurrentSprint");
 			serviceModel.addMethod("changeProperties").addParameter("entityId", String.class).addParameter(
 				"properties", Map.class);
 			serviceModel.addMethod("createEntity").addParameter("type", String.class).addParameter("properties",
@@ -138,7 +141,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (applicationModel == null) {
 			applicationModel = createWebApplicationModel("Scrum");
 			autowire(applicationModel);
-			applicationModel.addDaosAsComposites(getFinalEntityModels());
+			applicationModel.addDaosAsComposites(getFinalEntityModels(true));
 			applicationModel.addService(getServiceModel());
 		}
 		return applicationModel;
@@ -185,7 +188,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		autowire(new GwtServiceAsyncInterfaceGenerator()).generate(getServiceModel());
 		autowire(new GwtServiceImplementationGenerator()).generate(getServiceModel());
 		autowire(new GwtApplicationGenerator()).generate(getApplicationModel());
-		autowire(new GwtDaoGenerator()).generate(getApplicationModel(), getEntityModels());
+		autowire(new GwtDaoGenerator()).generate(getApplicationModel(), getFinalEntityModels(false));
 		// autowire(new GwtDataTransferObjectGenerator()).generate(getApplicationModel(), getEntityModels());
 	}
 }

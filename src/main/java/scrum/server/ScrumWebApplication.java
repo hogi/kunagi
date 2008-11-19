@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.impediments.Impediment;
 import scrum.server.project.BacklogItem;
@@ -62,7 +63,16 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	@Override
-	public void onGetProject(SessionData session, String projectId) {
+	public void onLogin(SessionData session, String username, String password) {
+		User user = getUserDao().getUserByName(username);
+		if (user == null) throw new RuntimeException("Login failed.");
+
+		// TODO limit to users projects
+		session.getNextData().addEntities(toPropertyMap(getProjectDao().getEntities()));
+	}
+
+	@Override
+	public void onSelectProject(SessionData session, String projectId) {
 		Project project = (Project) getProjectDao().getEntities().toArray()[0];
 		session.setProject(project);
 
@@ -71,7 +81,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	@Override
-	public void onGetCurrentSprint(SessionData session) {
+	public void onRequestCurrentSprint(SessionData session) {
 		Project project = session.getProject();
 		Sprint sprint = project.getCurrentSprint();
 		if (sprint == null) return;
@@ -81,14 +91,14 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	@Override
-	public void onGetImpediments(SessionData session) {
+	public void onRequestImpediments(SessionData session) {
 		Project project = session.getProject();
 		if (project == null) throw new RuntimeException("No project selected.");
 		session.getNextData().addEntities(toPropertyMap(project.getImpediments()));
 	}
 
 	@Override
-	public void onGetBacklogItems(SessionData session) {
+	public void onRequestBacklogItems(SessionData session) {
 		Project project = session.getProject();
 		if (project == null) throw new RuntimeException("No project selected.");
 		Collection<BacklogItem> backlogItems = project.getBacklogItems();
@@ -128,56 +138,58 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		}
 
 		// test data
-		if (getProjectDao().getEntities().isEmpty()) {
-			LOG.warn("Creating test project");
-			Project project = getProjectDao().postProject("test project", getUserDao().getUserByName("admin"));
+		if (getProjectDao().getEntities().isEmpty()) createTestData();
+	}
 
-			Impediment impediment1 = getImpedimentDao().newEntityInstance();
-			impediment1.setProject(project);
-			impediment1.setLabel("Test Impediment 1");
-			getImpedimentDao().saveEntity(impediment1);
+	private void createTestData() {
+		LOG.warn("Creating test project");
+		Project project = getProjectDao().postProject("test project", getUserDao().getUserByName("admin"));
 
-			Impediment impediment2 = getImpedimentDao().newEntityInstance();
-			impediment2.setProject(project);
-			impediment2.setLabel("Test Impediment 2");
-			getImpedimentDao().saveEntity(impediment2);
+		Impediment impediment1 = getImpedimentDao().newEntityInstance();
+		impediment1.setProject(project);
+		impediment1.setLabel("Test Impediment 1");
+		getImpedimentDao().saveEntity(impediment1);
 
-			BacklogItem backlogItem1 = getBacklogItemDao().newEntityInstance();
-			backlogItem1.setProject(project);
-			backlogItem1.setLabel("Test Backlog Item 1");
-			getBacklogItemDao().saveEntity(backlogItem1);
+		Impediment impediment2 = getImpedimentDao().newEntityInstance();
+		impediment2.setProject(project);
+		impediment2.setLabel("Test Impediment 2");
+		getImpedimentDao().saveEntity(impediment2);
 
-			BacklogItem backlogItem2 = getBacklogItemDao().newEntityInstance();
-			backlogItem2.setProject(project);
-			backlogItem2.setLabel("Test Backlog Item 2");
-			backlogItem2.setEffort(5);
-			getBacklogItemDao().saveEntity(backlogItem2);
+		BacklogItem backlogItem1 = getBacklogItemDao().newEntityInstance();
+		backlogItem1.setProject(project);
+		backlogItem1.setLabel("Test Backlog Item 1");
+		getBacklogItemDao().saveEntity(backlogItem1);
 
-			Task task1 = getTaskDao().newEntityInstance();
-			task1.setBacklogItem(backlogItem2);
-			task1.setLabel("Task 1");
-			task1.setEffort(3);
-			getTaskDao().saveEntity(task1);
+		BacklogItem backlogItem2 = getBacklogItemDao().newEntityInstance();
+		backlogItem2.setProject(project);
+		backlogItem2.setLabel("Test Backlog Item 2");
+		backlogItem2.setEffort(5);
+		getBacklogItemDao().saveEntity(backlogItem2);
 
-			Task task2 = getTaskDao().newEntityInstance();
-			task2.setBacklogItem(backlogItem2);
-			task2.setLabel("Task 2");
-			task2.setEffort(1);
-			getTaskDao().saveEntity(task2);
+		Task task1 = getTaskDao().newEntityInstance();
+		task1.setBacklogItem(backlogItem2);
+		task1.setLabel("Task 1");
+		task1.setEffort(3);
+		getTaskDao().saveEntity(task1);
 
-			BacklogItem backlogItem3 = getBacklogItemDao().newEntityInstance();
-			backlogItem3.setProject(project);
-			backlogItem3.setLabel("Test Backlog Item 3");
-			getBacklogItemDao().saveEntity(backlogItem3);
+		Task task2 = getTaskDao().newEntityInstance();
+		task2.setBacklogItem(backlogItem2);
+		task2.setLabel("Task 2");
+		task2.setEffort(1);
+		getTaskDao().saveEntity(task2);
 
-			Sprint sprint1 = getSprintDao().newEntityInstance();
-			sprint1.setProject(project);
-			sprint1.setLabel("Sprint 1");
-			getSprintDao().saveEntity(sprint1);
-			backlogItem2.setSprint(sprint1);
+		BacklogItem backlogItem3 = getBacklogItemDao().newEntityInstance();
+		backlogItem3.setProject(project);
+		backlogItem3.setLabel("Test Backlog Item 3");
+		getBacklogItemDao().saveEntity(backlogItem3);
 
-			project.setCurrentSprint(sprint1);
-		}
+		Sprint sprint1 = getSprintDao().newEntityInstance();
+		sprint1.setProject(project);
+		sprint1.setLabel("Sprint 1");
+		getSprintDao().saveEntity(sprint1);
+		backlogItem2.setSprint(sprint1);
+
+		project.setCurrentSprint(sprint1);
 
 		getTransactionService().commit();
 	}
