@@ -100,14 +100,17 @@ public class BlockListWidget extends Composite {
 	}
 
 	public void selectRow(int row) {
-		if (row == selectedRow) return;
-		deselect();
-		ABlockWidget block = blocks.get(row);
-		block.addStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
-		if (!sidebarMode) {
-			block.setExtended(true);
+		if (row == selectedRow) {
+			deselect();
+		} else {
+			deselect();
+			ABlockWidget block = blocks.get(row);
+			block.addStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
+			if (!sidebarMode) {
+				block.setExtended(true);
+			}
+			selectedRow = row;
 		}
-		selectedRow = row;
 	}
 
 	public void remove(ABlockWidget widget) {
