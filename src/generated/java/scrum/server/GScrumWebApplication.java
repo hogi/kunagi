@@ -73,29 +73,29 @@ public abstract class GScrumWebApplication
         taskDao = null;
     }
 
-    // --- projectDao ---
+    // --- backlogItemDao ---
 
-    private scrum.server.project.ProjectDao projectDao;
+    private scrum.server.project.BacklogItemDao backlogItemDao;
 
-    public final scrum.server.project.ProjectDao getProjectDao() {
-        if (projectDao == null) {
-            projectDao = createProjectDao();
-            initializeProjectDao(projectDao);
+    public final scrum.server.project.BacklogItemDao getBacklogItemDao() {
+        if (backlogItemDao == null) {
+            backlogItemDao = createBacklogItemDao();
+            initializeBacklogItemDao(backlogItemDao);
         }
-        return projectDao;
+        return backlogItemDao;
     }
 
-    protected scrum.server.project.ProjectDao createProjectDao() {
-        return projectDao = new scrum.server.project.ProjectDao();
+    protected scrum.server.project.BacklogItemDao createBacklogItemDao() {
+        return backlogItemDao = new scrum.server.project.BacklogItemDao();
     }
 
-    protected void initializeProjectDao(scrum.server.project.ProjectDao bean) {
+    protected void initializeBacklogItemDao(scrum.server.project.BacklogItemDao bean) {
         autowire(bean);
         Reflect.invokeInitializeIfThere(bean);
     }
 
-    public final void resetProjectDao() {
-        projectDao = null;
+    public final void resetBacklogItemDao() {
+        backlogItemDao = null;
     }
 
     // --- impedimentDao ---
@@ -148,29 +148,29 @@ public abstract class GScrumWebApplication
         sprintDao = null;
     }
 
-    // --- backlogItemDao ---
+    // --- projectDao ---
 
-    private scrum.server.project.BacklogItemDao backlogItemDao;
+    private scrum.server.project.ProjectDao projectDao;
 
-    public final scrum.server.project.BacklogItemDao getBacklogItemDao() {
-        if (backlogItemDao == null) {
-            backlogItemDao = createBacklogItemDao();
-            initializeBacklogItemDao(backlogItemDao);
+    public final scrum.server.project.ProjectDao getProjectDao() {
+        if (projectDao == null) {
+            projectDao = createProjectDao();
+            initializeProjectDao(projectDao);
         }
-        return backlogItemDao;
+        return projectDao;
     }
 
-    protected scrum.server.project.BacklogItemDao createBacklogItemDao() {
-        return backlogItemDao = new scrum.server.project.BacklogItemDao();
+    protected scrum.server.project.ProjectDao createProjectDao() {
+        return projectDao = new scrum.server.project.ProjectDao();
     }
 
-    protected void initializeBacklogItemDao(scrum.server.project.BacklogItemDao bean) {
+    protected void initializeProjectDao(scrum.server.project.ProjectDao bean) {
         autowire(bean);
         Reflect.invokeInitializeIfThere(bean);
     }
 
-    public final void resetBacklogItemDao() {
-        backlogItemDao = null;
+    public final void resetProjectDao() {
+        projectDao = null;
     }
 
     // --- dependencies ---

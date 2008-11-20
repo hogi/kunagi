@@ -88,7 +88,9 @@ public abstract class GTask
     }
 
     public final Task setBacklogItem(scrum.client.project.BacklogItem backlogItem) {
-        this.backlogItemId = backlogItem.getId();
+        String id = backlogItem == null ? null : backlogItem.getId();
+        if (equals(this.backlogItemId, id)) return (Task) this;
+        this.backlogItemId = id;
         propertyChanged("backlogItem", this.backlogItemId);
         return (Task)this;
     }

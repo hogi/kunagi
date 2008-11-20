@@ -45,11 +45,11 @@ public abstract class GImpediment
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("solved", this.solved);
         properties.put("description", this.description);
-        properties.put("label", this.label);
         properties.put("solution", this.solution);
         properties.put("projectId", this.projectId);
-        properties.put("solved", this.solved);
+        properties.put("label", this.label);
     }
 
     private static final Logger LOG = Logger.get(GImpediment.class);
@@ -61,11 +61,36 @@ public abstract class GImpediment
         super(template);
         if (template==null) return;
 
+        setSolved(template.isSolved());
         setDescription(template.getDescription());
-        setLabel(template.getLabel());
         setSolution(template.getSolution());
         setProject(template.getProject());
-        setSolved(template.isSolved());
+        setLabel(template.getLabel());
+    }
+
+    // -----------------------------------------------------------
+    // - solved
+    // -----------------------------------------------------------
+
+    private boolean solved;
+
+    public final boolean isSolved() {
+        return solved;
+    }
+
+    public final void setSolved(boolean solved) {
+        solved = prepareSolved(solved);
+        if (isSolved(solved)) return;
+        this.solved = solved;
+        entityModified();
+    }
+
+    protected boolean prepareSolved(boolean solved) {
+        return solved;
+    }
+
+    public final boolean isSolved(boolean solved) {
+        return this.solved == solved;
     }
 
     // -----------------------------------------------------------
@@ -97,37 +122,6 @@ public abstract class GImpediment
     public final boolean isDescription(java.lang.String description) {
         if (this.description == null && description == null) return true;
         return this.description != null && this.description.equals(description);
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        entityModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
     }
 
     // -----------------------------------------------------------
@@ -199,28 +193,34 @@ public abstract class GImpediment
     }
 
     // -----------------------------------------------------------
-    // - solved
+    // - label
     // -----------------------------------------------------------
 
-    private boolean solved;
+    private java.lang.String label;
 
-    public final boolean isSolved() {
-        return solved;
+    public final java.lang.String getLabel() {
+        return label;
     }
 
-    public final void setSolved(boolean solved) {
-        solved = prepareSolved(solved);
-        if (isSolved(solved)) return;
-        this.solved = solved;
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
         entityModified();
     }
 
-    protected boolean prepareSolved(boolean solved) {
-        return solved;
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
     }
 
-    public final boolean isSolved(boolean solved) {
-        return this.solved == solved;
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
     }
 
     protected void repairDeadReferences(String entityId) {

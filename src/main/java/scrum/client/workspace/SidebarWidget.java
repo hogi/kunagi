@@ -21,6 +21,10 @@ public class SidebarWidget extends Composite {
 		VerticalPanel buttonsPanel = new VerticalPanel();
 		buttonsPanel.setWidth("100%");
 
+		Button projectOverviewButton = new Button("Product Overview");
+		projectOverviewButton.addClickListener(new ProjectOverviewClickListener());
+		buttonsPanel.add(projectOverviewButton);
+
 		Button backlogButton = new Button("Product Backlog");
 		backlogButton.addClickListener(new BacklogClickListener());
 		buttonsPanel.add(backlogButton);
@@ -42,6 +46,14 @@ public class SidebarWidget extends Composite {
 		sidebar.add(new PanelWidget("Clipboard", new ClipboardWidget()));
 
 		initWidget(sidebar);
+	}
+
+	private class ProjectOverviewClickListener implements ClickListener {
+
+		public void onClick(Widget sender) {
+			WorkspaceWidget.showProjectOverview();
+		}
+
 	}
 
 	private class ImpedimentsClickListener implements ClickListener {

@@ -29,7 +29,11 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel = createEntityModel("Project", "project");
 			autowire(projectModel);
 			projectModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);
+			projectModel.addProperty("description", String.class);
 			projectModel.addSetReference("admins", getUserModel());
+			projectModel.addReference("productOwner", getUserModel());
+			projectModel.addReference("scrumMaster", getUserModel());
+			projectModel.addSetReference("teamMembers", getUserModel());
 			projectModel.addReference("currentSprint", getSprintModel());
 		}
 		return projectModel;

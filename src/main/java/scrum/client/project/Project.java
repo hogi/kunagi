@@ -1,11 +1,8 @@
 package scrum.client.project;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import scrum.client.admin.User;
 import scrum.client.impediments.Impediment;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
@@ -13,11 +10,6 @@ import scrum.client.sprint.Task;
 public class Project extends GProject {
 
 	private static final String effortUnit = "StoryPoints";
-
-	private Set<User> participants;
-	private User master;
-	private User owner;
-	private Set<User> team;
 
 	public Project() {}
 
@@ -27,22 +19,6 @@ public class Project extends GProject {
 
 	public String getEffortUnit() {
 		return effortUnit;
-	}
-
-	public User getMaster() {
-		return master;
-	}
-
-	public User getOwner() {
-		return owner;
-	}
-
-	public Collection<User> getParticipants() {
-		return participants;
-	}
-
-	public Set<User> getTeam() {
-		return team;
 	}
 
 	public Impediment createNewImpediment() {

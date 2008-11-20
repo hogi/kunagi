@@ -79,6 +79,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 		// prepare data for client
 		session.getNextData().addEntity(toPropertyMap(project));
+		session.getNextData().addEntities(toPropertyMap(project.getMembers()));
 	}
 
 	@Override
@@ -143,26 +144,35 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	private void createTestData() {
-		LOG.warn("Creating test project");
-		Project project = getProjectDao().postProject("test project", getUserDao().getUserByName("admin"));
+		LOG.warn("Creating test data");
+
+		User user1 = getUserDao().postUser("homer", "geheim");
+		User user2 = getUserDao().postUser("cartman", "geheim");
+		User user3 = getUserDao().postUser("duke", "geheim");
+
+		Project project1 = getProjectDao().postProject("test project", getUserDao().getUserByName("admin"));
+		project1.addAdmins(getUserDao().getEntities());
+		project1.addTeamMembers(getUserDao().getEntities());
+		project1.setProductOwner(user1);
+		project1.setScrumMaster(user2);
 
 		Impediment impediment1 = getImpedimentDao().newEntityInstance();
-		impediment1.setProject(project);
+		impediment1.setProject(project1);
 		impediment1.setLabel("Test Impediment 1");
 		getImpedimentDao().saveEntity(impediment1);
 
 		Impediment impediment2 = getImpedimentDao().newEntityInstance();
-		impediment2.setProject(project);
+		impediment2.setProject(project1);
 		impediment2.setLabel("Test Impediment 2");
 		getImpedimentDao().saveEntity(impediment2);
 
 		BacklogItem backlogItem1 = getBacklogItemDao().newEntityInstance();
-		backlogItem1.setProject(project);
+		backlogItem1.setProject(project1);
 		backlogItem1.setLabel("Test Backlog Item 1");
 		getBacklogItemDao().saveEntity(backlogItem1);
 
 		BacklogItem backlogItem2 = getBacklogItemDao().newEntityInstance();
-		backlogItem2.setProject(project);
+		backlogItem2.setProject(project1);
 		backlogItem2.setLabel("Test Backlog Item 2");
 		backlogItem2.setEffort(5);
 		getBacklogItemDao().saveEntity(backlogItem2);
@@ -180,17 +190,17 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		getTaskDao().saveEntity(task2);
 
 		BacklogItem backlogItem3 = getBacklogItemDao().newEntityInstance();
-		backlogItem3.setProject(project);
+		backlogItem3.setProject(project1);
 		backlogItem3.setLabel("Test Backlog Item 3");
 		getBacklogItemDao().saveEntity(backlogItem3);
 
 		Sprint sprint1 = getSprintDao().newEntityInstance();
-		sprint1.setProject(project);
+		sprint1.setProject(project1);
 		sprint1.setLabel("Sprint 1");
 		getSprintDao().saveEntity(sprint1);
 		backlogItem2.setSprint(sprint1);
 
-		project.setCurrentSprint(sprint1);
+		project1.setCurrentSprint(sprint1);
 
 		getTransactionService().commit();
 	}

@@ -30,7 +30,14 @@ public class ProjectWidget extends ABlockWidget {
 
 	@Override
 	protected Widget buildContent() {
-		return new Label("Crazy project");
+		String description = project.getDescription();
+		if (description == null) description = "No description.";
+		if (!isExtended()) {
+			if (description.length() > 150) {
+				description = description.substring(0, 149) + "...";
+			}
+		}
+		return new Label(description);
 	}
 
 	@Override
@@ -60,7 +67,7 @@ public class ProjectWidget extends ABlockWidget {
 
 			public void run() {
 				WorkspaceWidget.unlock();
-				WorkspaceWidget.showTest();
+				WorkspaceWidget.showProjectOverview();
 			}
 		});
 	}

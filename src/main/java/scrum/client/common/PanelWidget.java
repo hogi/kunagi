@@ -8,14 +8,15 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class PanelWidget extends Composite {
 
-	public PanelWidget(String title, Widget content) {
+	private FlowPanel contentPanel;
+
+	public PanelWidget(String title) {
 		SimplePanel titlePanel = new SimplePanel();
 		titlePanel.setStyleName(StyleSheet.ELEMENT_PANEL_WIDGET_TITLE);
 		titlePanel.add(new Label(title));
 
-		FlowPanel contentPanel = new FlowPanel();
+		contentPanel = new FlowPanel();
 		contentPanel.setStyleName(StyleSheet.ELEMENT_PANEL_WIDGET_CONTENT);
-		contentPanel.add(content);
 
 		FlowPanel panel = new FlowPanel();
 		panel.setStyleName(StyleSheet.ELEMENT_PANEL_WIDGET);
@@ -23,6 +24,17 @@ public class PanelWidget extends Composite {
 		panel.add(contentPanel);
 
 		initWidget(panel);
+	}
+
+	public PanelWidget(String title, Widget content) {
+		this(title);
+		setContent(content);
+	}
+
+	public PanelWidget setContent(Widget content) {
+		contentPanel.clear();
+		contentPanel.add(content);
+		return this;
 	}
 
 }

@@ -1,11 +1,13 @@
 package scrum.client.workspace;
 
+import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.LoginWidget;
 import scrum.client.admin.ProjectSelectionWidget;
 import scrum.client.common.PanelWidget;
 import scrum.client.common.StyleSheet;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.BacklogItemListWidget;
+import scrum.client.project.ProjectOverviewWidget;
 import scrum.client.sprint.CurrentSprintWidget;
 import scrum.client.test.TestWidget;
 
@@ -70,6 +72,10 @@ public class WorkspaceWidget extends Composite {
 
 	public static void activateProjectSelection() {
 		rootPanel.setWidget(projectSelection);
+	}
+
+	public static void showProjectOverview() {
+		setWorkarea(new ProjectOverviewWidget(ScrumGwtApplication.get().getProject()), "Project Overview");
 	}
 
 	public static void showImpediments() {

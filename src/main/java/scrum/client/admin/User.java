@@ -10,4 +10,9 @@ public class User extends GUser {
 		super(data);
 	}
 
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 }
