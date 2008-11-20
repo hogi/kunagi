@@ -1,6 +1,5 @@
 package scrum.client.common;
 
-
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -40,8 +39,8 @@ public class ItemFieldsWidget extends Composite {
 		int row = grid.getRowCount();
 		grid.resizeRows(row + 1);
 		if (row == 0) {
-			grid.getCellFormatter().setWidth(row, 0, "1%");
-			grid.getCellFormatter().setWidth(row, 1, "99%");
+			grid.getCellFormatter().setWidth(row, 0, "25%");
+			grid.getCellFormatter().setWidth(row, 1, "75%");
 		}
 		grid.setWidget(row, 0, l);
 		grid.setWidget(row, 1, value);

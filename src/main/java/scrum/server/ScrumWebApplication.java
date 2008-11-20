@@ -155,6 +155,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		project1.addTeamMembers(getUserDao().getEntities());
 		project1.setProductOwner(user1);
 		project1.setScrumMaster(user2);
+		project1
+				.setDescription("Test project with homer, cartman, duke and admin. Some impediments, some backlog items. Also a current sprint.");
 
 		Impediment impediment1 = getImpedimentDao().newEntityInstance();
 		impediment1.setProject(project1);

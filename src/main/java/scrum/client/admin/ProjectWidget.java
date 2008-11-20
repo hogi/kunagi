@@ -33,6 +33,10 @@ public class ProjectWidget extends ABlockWidget {
 		String description = project.getDescription();
 		if (description == null) description = "No description.";
 		if (!isExtended()) {
+			int idx = description.indexOf('.');
+			if (idx > 0) {
+				description = description.substring(0, idx + 1);
+			}
 			if (description.length() > 150) {
 				description = description.substring(0, 149) + "...";
 			}
