@@ -40,6 +40,14 @@ public abstract class GScrumGwtApplication
         return scrumService;
     }
 
+    public final void callPing( Runnable callback) {
+        getScrumService().ping( new DefaultCallback(callback));
+    }
+
+    public final void callPing() {
+        callPing( null);
+    }
+
     public final void callLogin(java.lang.String username, java.lang.String password,  Runnable callback) {
         getScrumService().login(username, password,  new DefaultCallback(callback));
     }

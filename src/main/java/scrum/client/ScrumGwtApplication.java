@@ -29,6 +29,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	 * Application entry point.
 	 */
 	public void onModuleLoad() {
+		callPing();
 		RootPanel.get("workspace").add(new WorkspaceWidget());
 	}
 
@@ -43,6 +44,10 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		if (data.entityIdBase != null) {
 			entityIdBase = data.entityIdBase;
 			System.out.println("entityIdBase: " + entityIdBase);
+		}
+
+		if (data.isUserSet()) {
+			user = getDao().getUser(data.getUserId());
 		}
 	}
 

@@ -17,8 +17,21 @@ public class DataTransferObject implements Serializable {
 	public String entityIdBase;
 	public List<String> errors = new ArrayList<String>();
 
+	private String userId;
 	private Set<String> deletedEntities;
 	private Map<String, Map> entities;
+
+	public void setUserId(String user) {
+		this.userId = user;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public boolean isUserSet() {
+		return userId != null;
+	}
 
 	public final boolean containsEntities() {
 		return entities != null && !entities.isEmpty();

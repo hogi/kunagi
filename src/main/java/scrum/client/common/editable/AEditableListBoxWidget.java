@@ -9,19 +9,21 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class AEditableListBoxWidget extends AEditableWidget {
 
 	private Label viewer;
-	private ListBox editor;
+	private ListBox listBox;
 
 	/**
-	 * Provide the value for view mode and edit mode.
+	 * Provide the value for view mode.
 	 */
 	protected abstract String getText();
+
+	protected abstract String getSelectedValue();
 
 	/**
 	 * Set the value inputed by the user.
 	 */
-	protected abstract void setText(String text);
+	protected abstract void setValue(String value);
 
-	protected abstract String[] getItems();
+	protected abstract String[] getSelectableValues();
 
 	public AEditableListBoxWidget() {
 		viewer = new Label();
@@ -31,20 +33,22 @@ public abstract class AEditableListBoxWidget extends AEditableWidget {
 
 	@Override
 	protected Widget getEditor() {
-		if (editor == null) {
-			editor = new ListBox();
-			for (String item : getItems()) {
-				editor.addItem(item);
+		if (listBox == null) {
+			listBox = new ListBox();
+			for (String item : getSelectableValues()) {
+				listBox.addItem(item);
 			}
-			editor.addChangeListener(new EditorChangeListener());
+			listBox.addChangeListener(new EditorChangeListener());
 
-			String text = getText();
-			for (int i = 0; i < editor.getItemCount(); i++) {
-				if (editor.getItemText(i).equals(text) == false) continue;
-				editor.setItemSelected(i, true);
+			String selectedValue = getSelectedValue();
+			for (int i = 0; i < listBox.getItemCount(); i++) {
+				if (listBox.getItemText(i).equals(selectedValue)) {
+					listBox.setItemSelected(i, true);
+					break;
+				}
 			}
 		}
-		return editor;
+		return listBox;
 	}
 
 	@Override
@@ -64,7 +68,7 @@ public abstract class AEditableListBoxWidget extends AEditableWidget {
 	private class EditorChangeListener implements ChangeListener {
 
 		public void onChange(Widget sender) {
-			setText(editor.getItemText(editor.getSelectedIndex()));
+			setValue(listBox.getItemText(listBox.getSelectedIndex()));
 		}
 
 	}

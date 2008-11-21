@@ -80,7 +80,7 @@ public class ProjectWidget extends ABlockWidget {
 	public void delete() {}
 
 	@Override
-	protected DropController getDropController() {
+	protected DropController createDropController() {
 		return null;
 	}
 

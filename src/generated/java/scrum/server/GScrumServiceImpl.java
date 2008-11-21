@@ -32,6 +32,20 @@ public abstract class GScrumServiceImpl
 
     private static final Logger LOG = Logger.get(GScrumServiceImpl.class);
 
+    public scrum.client.DataTransferObject ping() {
+        SessionData session = getSessionData();
+        session.getContext().createSubContext("service:ping");
+        LOG.debug("ping");
+        try {
+            getApp().onPing(session);
+        } catch (Throwable t) {
+            handleServiceMethodException("ping",t);
+        }
+        scrum.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted();
+        return ret;
+    }
+
     public scrum.client.DataTransferObject login(java.lang.String username, java.lang.String password) {
         SessionData session = getSessionData();
         session.getContext().createSubContext("service:login");

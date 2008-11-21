@@ -12,20 +12,15 @@ import com.google.gwt.user.client.ui.TableListener;
 /**
  * Scrollable List of <code>BlockWidget</code>s.
  */
-public class BlockListWidget extends Composite {
+public final class BlockListWidget<B extends ABlockWidget> extends Composite {
 
 	private FlexTable table;
 	private ScrollPanel scroller;
-	private List<ABlockWidget> blocks = new LinkedList<ABlockWidget>();
+	private List<B> blocks = new LinkedList<B>();
 	private int selectedRow = -1;
 	private boolean sidebarMode;
 
 	public BlockListWidget() {
-		this(false);
-	}
-
-	public BlockListWidget(boolean sidebarMode) {
-		this.sidebarMode = sidebarMode;
 
 		table = new FlexTable();
 		table.setWidth("100%");
@@ -42,16 +37,22 @@ public class BlockListWidget extends Composite {
 		initWidget(scroller);
 	}
 
-	public void clear() {
+	void onBlockRebuilt(B block) {}
+
+	public final void setSidebarMode(boolean sidebarMode) {
+		this.sidebarMode = sidebarMode;
+	}
+
+	public final void clear() {
 		int count = blocks.size();
 		for (int i = 0; i < count; i++) {
 			removeRow(0);
 		}
 	}
 
-	public void addBlock(ABlockWidget block) {
+	public final void addBlock(B block) {
 		if (sidebarMode) block.setInClipboard(true);
-
+		block.setList(this);
 		block.makeDraggable();
 		// createDropControllerFor(block);
 
@@ -61,9 +62,9 @@ public class BlockListWidget extends Composite {
 		scroller.scrollToBottom();
 	}
 
-	public void addBlockAt(int index, ABlockWidget block) {
+	public final void addBlockAt(int index, B block) {
 		if (sidebarMode) block.setInClipboard(true);
-
+		block.setList(this);
 		block.makeDraggable();
 		// createDropControllerFor(block);
 
@@ -78,30 +79,30 @@ public class BlockListWidget extends Composite {
 		}
 	}
 
-	public ABlockWidget getBlock(int index) {
+	public final B getBlock(int index) {
 		return blocks.get(index);
 	}
 
-	public int size() {
+	public final int size() {
 		return blocks.size();
 	}
 
-	public int indexOf(ABlockWidget block) {
+	public final int indexOf(B block) {
 		return blocks.indexOf(block);
 	}
 
-	public ABlockWidget getSelectedBlock() {
+	public final B getSelectedBlock() {
 		if (selectedRow < 0) return null;
 		return blocks.get(selectedRow);
 	}
 
-	public int getSelectedBlockId() {
+	public final int getSelectedBlockId() {
 		return selectedRow;
 	}
 
-	public void selectRow(int row) {
+	public final void selectRow(int row) {
 		if (row == selectedRow) {
-			deselect();
+			// deselect();
 		} else {
 			deselect();
 			ABlockWidget block = blocks.get(row);
@@ -113,15 +114,15 @@ public class BlockListWidget extends Composite {
 		}
 	}
 
-	public void remove(ABlockWidget widget) {
+	public final void remove(B widget) {
 		removeRow(indexOf(widget));
 	}
 
-	public void removeSelectedRow() {
+	public final void removeSelectedRow() {
 		removeRow(selectedRow);
 	}
 
-	public void removeRow(int row) {
+	public final void removeRow(int row) {
 		if (row < 0 || row >= blocks.size()) return;
 		blocks.remove(row);
 		table.removeRow(row);
@@ -132,19 +133,19 @@ public class BlockListWidget extends Composite {
 		}
 	}
 
-	public void selectBlock(ABlockWidget block) {
+	public final void selectBlock(B block) {
 		selectRow(blocks.indexOf(block));
 	}
 
-	public void deselect() {
-		ABlockWidget block = getSelectedBlock();
+	public final void deselect() {
+		B block = getSelectedBlock();
 		if (block == null) return;
 		block.removeStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
 		selectedRow = -1;
 		block.setExtended(false);
 	}
 
-	private class Listener implements TableListener {
+	private final class Listener implements TableListener {
 
 		public void onCellClicked(SourcesTableEvents sender, int row, int cell) {
 			selectRow(row);

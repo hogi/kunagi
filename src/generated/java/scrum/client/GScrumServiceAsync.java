@@ -28,6 +28,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface GScrumServiceAsync {
 
+    void ping(AsyncCallback<DataTransferObject> callback);
+
     void login(java.lang.String username, java.lang.String password, AsyncCallback<DataTransferObject> callback);
 
     void selectProject(java.lang.String projectId, AsyncCallback<DataTransferObject> callback);

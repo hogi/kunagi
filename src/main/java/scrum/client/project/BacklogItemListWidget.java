@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class BacklogItemListWidget extends Composite {
 
-	public BlockListWidget list;
+	public BlockListWidget list = new BlockListWidget();
 
 	public BacklogItemListWidget() {
 		Button createButton = new Button("Create new Backlog-Item");
@@ -27,8 +27,6 @@ public class BacklogItemListWidget extends Composite {
 		toolbar.setStyleName(StyleSheet.TOOLBAR);
 		toolbar.add(createButton);
 		ScrumUtil.addFiller(toolbar);
-
-		list = new BlockListWidget();
 
 		FlowPanel panel = new FlowPanel();
 		panel

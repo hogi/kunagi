@@ -28,6 +28,8 @@ import java.util.*;
 public interface GScrumService
             extends com.google.gwt.user.client.rpc.RemoteService {
 
+    DataTransferObject ping();
+
     DataTransferObject login(java.lang.String username, java.lang.String password);
 
     DataTransferObject selectProject(java.lang.String projectId);

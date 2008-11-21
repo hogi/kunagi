@@ -67,6 +67,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		User user = getUserDao().getUserByName(username);
 		if (user == null) throw new RuntimeException("Login failed.");
 
+		session.getNextData().setUserId(user.getId());
 		session.getNextData().addEntity(toPropertyMap(user));
 		// TODO limit to users projects
 		session.getNextData().addEntities(toPropertyMap(getProjectDao().getEntities()));
@@ -110,6 +111,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		}
 		session.getNextData().addEntities(toPropertyMap(backlogItems));
 	}
+
+	@Override
+	public void onPing(SessionData session) {}
 
 	@Override
 	public void onSleep(SessionData session, long millis) {

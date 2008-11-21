@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ClipboardWidget extends Composite {
 
-	private BlockListWidget items;
+	private BlockListWidget list = new BlockListWidget();
 	private SimplePanel space;
 	private HorizontalPanel trash;
 
@@ -26,8 +26,8 @@ public class ClipboardWidget extends Composite {
 		ScrumGwtApplication.get().getDragController().registerDropController(itemDropController);
 		ScrumGwtApplication.get().getDragController().registerDropController(trashDropController);
 
-		items = new BlockListWidget(true);
-		items.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_ITEMS);
+		list.setSidebarMode(true);
+		list.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_ITEMS);
 
 		space = new SimplePanel();
 		space.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_SPACE);
@@ -45,8 +45,8 @@ public class ClipboardWidget extends Composite {
 		dock.setWidth("100%");
 		dock.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET);
 
-		dock.add(items, DockPanel.NORTH);
-		dock.setCellHeight(items, "1%");
+		dock.add(list, DockPanel.NORTH);
+		dock.setCellHeight(list, "1%");
 
 		dock.add(space, DockPanel.CENTER);
 
@@ -61,28 +61,28 @@ public class ClipboardWidget extends Composite {
 	}
 
 	public void addItem(ABlockWidget item) {
-		items.addBlock(item);
+		list.addBlock(item);
 	}
 
 	private DropController itemDropController = new DropController() {
 
 		public Widget getDropTarget() {
-			return items;
+			return list;
 		}
 
 		public void onDrop(DragContext context) {
 			Widget widget = context.draggable;
 			if (widget instanceof ABlockWidget) {
-				items.addBlock(((ABlockWidget) widget));
+				list.addBlock(((ABlockWidget) widget));
 			}
 		}
 
 		public void onEnter(DragContext context) {
-			items.addStyleName(StyleSheet.TRASH_ON_ENTER); // TODO
+			list.addStyleName(StyleSheet.TRASH_ON_ENTER); // TODO
 		}
 
 		public void onLeave(DragContext context) {
-			items.removeStyleName(StyleSheet.TRASH_ON_ENTER); // TODO
+			list.removeStyleName(StyleSheet.TRASH_ON_ENTER); // TODO
 		}
 
 		public void onMove(DragContext context) {}

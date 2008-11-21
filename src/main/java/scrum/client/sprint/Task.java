@@ -12,6 +12,7 @@ public class Task extends GTask {
 	private User owner;
 
 	// Das TaskListWidget, in dem der Task liegt
+	@Deprecated
 	private TaskListWidget taskListWidget = null;
 
 	public Task(BacklogItem backlogItem) {
@@ -51,10 +52,12 @@ public class Task extends GTask {
 	}
 
 	// kleiner Workaround, um an das TaskListWidget zu kommen
+	@Deprecated
 	public TaskListWidget getTaskListWidget() {
 		return taskListWidget;
 	}
 
+	@Deprecated
 	public void setTaskListWidget(TaskListWidget taskListWidget) {
 		this.taskListWidget = taskListWidget;
 	}

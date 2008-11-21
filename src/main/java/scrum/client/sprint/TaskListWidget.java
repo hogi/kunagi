@@ -14,18 +14,22 @@ public class TaskListWidget extends Composite {
 		this.backlogItem = backlogItem;
 
 		initWidget(list);
-		update();
+		update(null);
 	}
 
-	public void update() {
+	public void update(Task selectedTask) {
 		list.clear();
+		TaskWidget select = null;
 		for (Task task : backlogItem.getTasks()) {
 
 			// taskListWidget setzen, um es spaeter wieder ansprechen zu koennen
 			task.setTaskListWidget(this);
 
-			list.addBlock(new TaskWidget(task));
+			TaskWidget block = new TaskWidget(task);
+			if (task == selectedTask) select = block;
+			list.addBlock(block);
 		}
+		if (select != null) list.selectBlock(select);
 	}
 
 }

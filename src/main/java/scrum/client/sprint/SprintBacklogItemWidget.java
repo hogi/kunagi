@@ -67,8 +67,8 @@ public class SprintBacklogItemWidget extends ABlockWidget {
 			newTaskButton.addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					item.createNewTask();
-					rebuild();
+					Task task = item.createNewTask();
+					taskListWidget.update(task);
 				}
 			});
 			toolbar.add(newTaskButton);
@@ -95,7 +95,7 @@ public class SprintBacklogItemWidget extends ABlockWidget {
 	}
 
 	@Override
-	protected DropController getDropController() {
+	protected DropController createDropController() {
 		return new BlockListDropController(this, WorkspaceWidget.backlog.list);
 	}
 

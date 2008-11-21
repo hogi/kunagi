@@ -7,7 +7,6 @@ import scrum.client.common.editable.AEditableIntegerWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.img.Img;
 
-import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -62,7 +61,8 @@ public class TaskWidget extends ABlockWidget {
 
 		});
 
-		fieldsWidget.addField("Owner", new Label(task.getOwner() == null ? "<empty>" : task.getOwner().getName()));
+		fieldsWidget.addField("Owner", new Label(task.getOwner() == null ? "No owner specified." : task.getOwner()
+				.getName()));
 
 		return fieldsWidget;
 	}
@@ -84,8 +84,7 @@ public class TaskWidget extends ABlockWidget {
 
 				public void onClick(Widget sender) {
 					task.setOwner(ScrumGwtApplication.get().getUser());
-					// TODO aahhh....!!! -> rebuild or something
-					// WorkspaceWidget.showPortal();
+					rebuild();
 				}
 
 			});
@@ -129,20 +128,11 @@ public class TaskWidget extends ABlockWidget {
 		return Img.bundle.taskIcon32();
 	}
 
-	// --- actions
-
-	@Override
-	protected DropController getDropController() {
-		return null;
-		// TODO: reference task list
-		// return new BlockListDropController(this, null);
-	}
-
 	@Override
 	public void delete() {
 
 		task.getBacklogItem().deleteTask(task);
-		task.getTaskListWidget().update();
+		task.getTaskListWidget().update(null);
 
 	}
 }

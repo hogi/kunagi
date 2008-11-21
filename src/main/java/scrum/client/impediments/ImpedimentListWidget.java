@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ImpedimentListWidget extends Composite {
 
-	public BlockListWidget list;
+	public BlockListWidget list = new BlockListWidget();
 
 	public ImpedimentListWidget() {
 		Button createButton = new Button("Create new Impediment");
@@ -27,8 +27,6 @@ public class ImpedimentListWidget extends Composite {
 		toolbar.setStyleName(StyleSheet.TOOLBAR);
 		toolbar.add(createButton);
 		ScrumUtil.addFiller(toolbar);
-
-		list = new BlockListWidget();
 
 		FlowPanel panel = new FlowPanel();
 		panel

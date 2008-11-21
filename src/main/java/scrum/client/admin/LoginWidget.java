@@ -44,13 +44,18 @@ public class LoginWidget extends Composite {
 	}
 
 	private void login() {
-		// simulate project selection
-		WorkspaceWidget.lock("Loading projects...");
+		WorkspaceWidget.lock("Checking login data...");
 		ScrumGwtApplication.get().callLogin(username.getText(), password.getText(), new Runnable() {
 
 			public void run() {
-				WorkspaceWidget.projectSelection.update();
-				WorkspaceWidget.activateProjectSelection();
+				if (ScrumGwtApplication.get().getUser() == null) {
+					// login failed
+					WorkspaceWidget.activateLogin();
+				} else {
+					// login succeeded
+					WorkspaceWidget.projectSelection.update();
+					WorkspaceWidget.activateProjectSelection();
+				}
 			}
 		});
 	}

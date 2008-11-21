@@ -57,9 +57,9 @@ public class WorkspaceWidget extends Composite {
 
 		// root panel
 		rootPanel = new SimplePanel();
-		rootPanel.setWidget(login);
-
 		initWidget(rootPanel);
+
+		activateLogin();
 	}
 
 	public static void lock(String message) {
@@ -68,6 +68,10 @@ public class WorkspaceWidget extends Composite {
 
 	public static void unlock() {
 		rootPanel.setWidget(workspacePanel);
+	}
+
+	public static void activateLogin() {
+		rootPanel.setWidget(login);
 	}
 
 	public static void activateProjectSelection() {

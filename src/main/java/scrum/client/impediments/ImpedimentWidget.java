@@ -136,7 +136,7 @@ public class ImpedimentWidget extends ABlockWidget {
 	}
 
 	@Override
-	protected DropController getDropController() {
+	protected DropController createDropController() {
 		return new BlockListDropController(this, WorkspaceWidget.impediments.list);
 	}
 

@@ -119,6 +119,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (serviceModel == null) {
 			serviceModel = createGwtServiceModel("scrum");
 			autowire(serviceModel);
+			serviceModel.addMethod("ping");
 			serviceModel.addMethod("login").addParameter("username", String.class).addParameter("password",
 				String.class);
 			serviceModel.addMethod("selectProject").addParameter("projectId", String.class);

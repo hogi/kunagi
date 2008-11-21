@@ -176,6 +176,7 @@ public abstract class GScrumWebApplication
     // --- dependencies ---
 
     // --- scrum ---
+    public abstract void onPing(SessionData session);
     public abstract void onLogin(SessionData session, java.lang.String username, java.lang.String password);
     public abstract void onSelectProject(SessionData session, java.lang.String projectId);
     public abstract void onRequestImpediments(SessionData session);

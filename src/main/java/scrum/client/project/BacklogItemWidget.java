@@ -46,6 +46,7 @@ public class BacklogItemWidget extends ABlockWidget {
 			}
 
 		});
+
 		fieldsWidget.addField("Description", new AEditableTextareaWidget() {
 
 			@Override
@@ -60,6 +61,7 @@ public class BacklogItemWidget extends ABlockWidget {
 			}
 
 		});
+
 		fieldsWidget.addField("Test", new AEditableTextareaWidget() {
 
 			@Override
@@ -74,40 +76,35 @@ public class BacklogItemWidget extends ABlockWidget {
 			}
 
 		});
-		// fieldsWidget.addField("Effort", new AEditableIntegerWidget() {
-		//
-		// @Override
-		// protected Integer getValue() {
-		// return item.getEffort();
-		// }
-		//
-		// @Override
-		// protected void setValue(Integer value) {
-		// item.setEffort(value);
-		// rebuild();
-		// }
-		//
-		// });
+
 		fieldsWidget.addField("Effort", new AEditableListBoxWidget() {
 
 			@Override
 			protected String getText() {
-				return String.valueOf(item.getEffort());
+				Integer effort = item.getEffort();
+				return effort == null ? "No effort estimated." : effort.toString() + " "
+						+ item.getProject().getEffortUnit();
 			}
 
 			@Override
-			protected void setText(String value) {
-				item.setEffort(Integer.parseInt(value));
+			protected String[] getSelectableValues() {
+				return new String[] { "", "1", "2", "3", "5", "8", "13", "21" };
+			}
+
+			@Override
+			protected String getSelectedValue() {
+				Integer effort = item.getEffort();
+				return effort == null ? "" : effort.toString();
+			}
+
+			@Override
+			protected void setValue(String value) {
+				item.setEffort(value.length() == 0 ? null : Integer.parseInt(value));
 				rebuild();
 			}
 
-			@Override
-			protected String[] getItems() {
-				return new String[] { "1", "2", "3", "5", "8", "13", "21" };
-
-			}
-
 		});
+
 		return fieldsWidget;
 	}
 
@@ -160,7 +157,7 @@ public class BacklogItemWidget extends ABlockWidget {
 	}
 
 	@Override
-	protected DropController getDropController() {
+	protected DropController createDropController() {
 		return new BlockListDropController(this, WorkspaceWidget.backlog.list);
 	}
 }

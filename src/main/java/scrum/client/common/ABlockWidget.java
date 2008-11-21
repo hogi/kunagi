@@ -19,11 +19,12 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public abstract class ABlockWidget extends Composite {
 
+	private BlockListWidget list;
 	private SimplePanel panel;
 	private boolean extended;
 	private boolean inClipboard;
 	private Image dragHandle;
-	private DropController dropController = getDropController();
+	private DropController dropController;
 
 	/**
 	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a different
@@ -37,43 +38,59 @@ public abstract class ABlockWidget extends Composite {
 
 	protected abstract AbstractImagePrototype getIcon();
 
-	protected abstract DropController getDropController();
-
 	public abstract void delete();
 
 	public ABlockWidget() {
 		panel = new SimplePanel();
 		panel.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET);
+		dropController = createDropController();
 		initWidget(panel);
+	}
+
+	protected DropController createDropController() {
+		return null;
+	}
+
+	public final BlockListWidget getList() {
+		return list;
+	}
+
+	final void setList(BlockListWidget list) {
+		this.list = list;
+	}
+
+	public final boolean isDropSupported() {
+		return dropController != null;
 	}
 
 	/**
 	 * Indicates if the bock is in extended-mode. This method should by called whithin the
 	 * <code>build()</code>-method.
 	 */
-	public boolean isExtended() {
+	public final boolean isExtended() {
 		return extended;
 	}
 
-	public boolean isInClipboard() {
+	public final boolean isInClipboard() {
 		return inClipboard;
 	}
 
-	void setInClipboard(boolean inClipboard) {
+	final void setInClipboard(boolean inClipboard) {
 		this.inClipboard = inClipboard;
 	}
 
-	protected void rebuild() {
+	protected final void rebuild() {
 		panel.setWidget(build());
+		list.onBlockRebuilt(this);
 	}
 
-	void setExtended(boolean extended) {
+	final void setExtended(boolean extended) {
 		if (this.extended == extended) return;
 		this.extended = extended;
 		rebuild();
 	}
 
-	protected Widget build() {
+	protected final Widget build() {
 		Label title = new Label(getBlockTitle());
 		title.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_TITLE);
 
@@ -104,7 +121,7 @@ public abstract class ABlockWidget extends Composite {
 		return block;
 	}
 
-	public void makeDraggable() {
+	public final void makeDraggable() {
 		if (dragHandle == null) {
 			dragHandle = Img.icons().dragHandleIcon32().createImage();
 			dragHandle.setStyleName(StyleSheet.DRAG_HANDLE);
