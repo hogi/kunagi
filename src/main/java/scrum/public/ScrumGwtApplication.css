@@ -6,26 +6,26 @@ body {padding: 5px;}
 
 .element-BlockWidget {border: 1px solid black; background: white; padding: 5px; cursor: pointer; color: black;}
 .element-BlockWidget-title {font-size: 14px; font-weight: bold;}
-.element-BlockWidget-block {padding: 3px;}
+.element-BlockWidget-block {padding: 3px; width: 100%;}
 .state-BlockWidget-selected {border: 3px solid #CC4444; padding: 3px;}
 
 .element-WorkspaceWidget {}
-.element-WorkspaceWidget-sidebar {}
-.element-WorkspaceWidget-workspace {border: 2px solid red;}
+.element-WorkspaceWidget-sidebar {width: 300px; height: 100%;}
+.element-WorkspaceWidget-workspace {border: 2px solid red; width: 100%;}
 .element-WorkspaceWidget-workarea {padding: 5px;}
 
-.element-SidebarWidget {padding: 5px 5px 20px 5px; position: fixed;}
+.element-SidebarWidget {padding: 5px 5px 20px 5px; position: fixed; width: 300px;}
 
-.element-BlockListWidget {background: #CCDDFF;}
+.element-BlockListWidget {background: #CCDDFF; width: 100%; height: 100%;}
 
 .element-PanelWidget {border: 2px solid darkblue; -moz-border-radius: 10px;}
 .element-PanelWidget-title {background: darkblue; color: white; padding: 5px;}
 .element-PanelWidget-content {padding: 5px;}
 
-.element-DropWidget {}
+.element-DropWidget {width: 100%;}
 .element-DropWidget-items {min-height: 100px;}
-.element-DropWidget-trash {background: white; border: 1px solid black; color: black;}
-.element-DropWidget-space {background: grey;}
+.element-DropWidget-trash {background: white; border: 1px solid black; color: black; width: 100%;}
+.element-DropWidget-space {background: grey; width: 100%; height: 200px;}
 
 
 
@@ -35,9 +35,11 @@ body {padding: 5px;}
 .fieldLabel {color: gray;}
 .editableViewer {font-weight: bold;	cursor: pointer; background: #EEEEFF; width: 100%;}
 .editableEditor {}
-.Toolbar {background: #CCDDFF; padding: 3px; border: 1px solid #CCDDFF;}
+.Toolbar {background: #CCDDFF; padding: 3px; border: 1px solid #CCDDFF; width: 100%;}
 .Trash-onEnter {border: 2px solid purple;}
 .deleted {background: grey;}
+.AEditableTextareaWidget-editorPanel {width: 100%;}
+.AItemFieldsWidget-grid {width: 100%;}
 
 
 

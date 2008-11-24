@@ -31,18 +31,14 @@ public class ClipboardWidget extends Composite {
 
 		space = new SimplePanel();
 		space.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_SPACE);
-		space.setHeight("200px");
-		space.setWidth("100%");
 		space.setWidget(new Label("drop here"));
 
 		trash = new HorizontalPanel();
 		trash.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_TRASH);
-		trash.setWidth("100%");
 		trash.add(Img.icons().trashIcon32().createImage());
 		trash.add(new Label("Trash"));
 
 		DockPanel dock = new DockPanel();
-		dock.setWidth("100%");
 		dock.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET);
 
 		dock.add(list, DockPanel.NORTH);

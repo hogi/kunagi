@@ -41,7 +41,6 @@ public class WorkspaceWidget extends Composite {
 		// create workspace
 		workspacePanel = new DockPanel();
 		workspacePanel.setStyleName(StyleSheet.ELEMENT_WORKSPACE_WIDGET_WORKSPACE);
-		workspacePanel.setWidth("100%");
 
 		// sidebar
 		Widget sidebar = createSidebar();
@@ -110,8 +109,6 @@ public class WorkspaceWidget extends Composite {
 	private Widget createSidebar() {
 		VerticalPanel sidebar = new VerticalPanel();
 		sidebar.setStyleName(StyleSheet.ELEMENT_WORKSPACE_WIDGET_SIDEBAR);
-		sidebar.setWidth("300px");
-		sidebar.setHeight("100%");
 		sidebar.add(new SidebarWidget());
 		return sidebar;
 	}

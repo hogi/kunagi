@@ -25,7 +25,6 @@ public class SprintBacklogItemListWidget extends Composite {
 		createButton.addClickListener(new CreateClickListener());
 
 		HorizontalPanel toolbar = new HorizontalPanel();
-		toolbar.setWidth("100%");
 		toolbar.setStyleName(StyleSheet.TOOLBAR);
 		toolbar.add(createButton);
 		ScrumUtil.addFiller(toolbar);

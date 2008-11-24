@@ -66,7 +66,6 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 
 			editorPanel = new VerticalPanel();
 			editorPanel.setStyleName(StyleSheet.A_EDITABLE_TEXTAREA_WIDGET_EDITOR_PANEL);
-			editorPanel.setWidth("100%");
 			editorPanel.add(editor);
 			editorPanel.add(toolbar);
 		}
