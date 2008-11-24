@@ -20,7 +20,6 @@ public class ItemFieldsWidget extends Composite {
 		grid = null;
 		grid = new Grid(0, 2);
 		grid.setStyleName(StyleSheet.A_ITEM_FIELDS_WIDGET_GRID);
-		grid.setWidth("100%");
 
 		initWidget(grid);
 	}

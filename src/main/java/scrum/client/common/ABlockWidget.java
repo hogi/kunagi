@@ -103,7 +103,6 @@ public abstract class ABlockWidget extends Composite {
 
 		HorizontalPanel block = new HorizontalPanel();
 		block.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_BLOCK);
-		block.setWidth("100%");
 
 		if (dragHandle != null) block.add(dragHandle);
 

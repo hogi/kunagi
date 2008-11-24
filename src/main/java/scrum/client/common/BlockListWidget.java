@@ -29,8 +29,6 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite {
 		}
 
 		scroller = new ScrollPanel();
-		scroller.setWidth("100%");
-		scroller.setHeight("100%");
 		scroller.setStyleName(StyleSheet.ELEMENT_BLOCK_LIST_WIDGET);
 		scroller.add(table);
 
