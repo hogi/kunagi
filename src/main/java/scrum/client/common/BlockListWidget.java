@@ -58,6 +58,7 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 		// createDropControllerFor(block);
 
 		block.rebuild();
+		block.setListController(controller);
 		blocks.add(block);
 		table.setWidget(table.getRowCount(), 0, block);
 		scroller.scrollToBottom();
@@ -150,6 +151,7 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	public void setController(BlockListController<B> controller) {
 		this.controller = controller;
 		for (ABlockWidget block : blocks) {
+			System.out.println(block + ": " + controller.getClass());
 			block.setListController(controller);
 		}
 	}

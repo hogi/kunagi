@@ -16,7 +16,7 @@ public class TaskListWidget extends Composite {
 
 			@Override
 			public void dataChanged(TaskWidget block) {
-				throw new RuntimeException("Not implemented.");
+				sprintStoryWidget.taskDataChanged();
 			}
 		});
 

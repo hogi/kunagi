@@ -25,7 +25,7 @@ public abstract class ABlockWidget extends Composite {
 	private boolean inClipboard;
 	private Image dragHandle;
 	private DropController dropController;
-	protected BlockListController listController;
+	protected BlockListController listController = new BlockListController<ABlockWidget>();
 
 	/**
 	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a

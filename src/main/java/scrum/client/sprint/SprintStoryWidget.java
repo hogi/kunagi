@@ -20,20 +20,21 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SprintStoryWidget extends ABlockWidget {
 
-	private Story item;
+	private Story story;
 	private TaskListWidget taskListWidget;
 
-	public SprintStoryWidget(Story item) {
-		this.item = item;
+	public SprintStoryWidget(Story story) {
+		this.story = story;
 	}
 
 	@Override
 	protected Widget buildContent() {
-		if (!isExtended()) { return new Label(item.getSprintBacklogSummary()); }
+		if (!isExtended()) { return new Label(story.getSprintBacklogSummary()); }
 
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
-		fieldsWidget.addField("Description", new Label(item.getDescription()));
-		fieldsWidget.addField("Test", new Label(item.getTestDescription()));
+		fieldsWidget.addField("Description", new Label(story.getDescription()));
+		fieldsWidget.addField("Test", new Label(story.getTestDescription()));
+		fieldsWidget.addField("Task effort sum", new Label(story.getTaskEffortSumString()));
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(fieldsWidget);
@@ -62,12 +63,12 @@ public class SprintStoryWidget extends ABlockWidget {
 		});
 		toolbar.add(removeButton);
 
-		if (!item.isDone()) {
+		if (!story.isDone()) {
 			Button newTaskButton = new Button("Create Task");
 			newTaskButton.addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					Task task = item.createNewTask();
+					Task task = story.createNewTask();
 					taskListWidget.update(task);
 				}
 			});
@@ -79,18 +80,18 @@ public class SprintStoryWidget extends ABlockWidget {
 
 	@Override
 	protected String getBlockTitle() {
-		return item.getLabel();
+		return story.getLabel();
 	}
 
 	@Override
 	protected AbstractImagePrototype getIcon() {
-		if (item.isDone()) return Img.bundle.storyDoneIcon32();
+		if (story.isDone()) return Img.bundle.storyDoneIcon32();
 		return Img.bundle.storyIcon32();
 	}
 
 	@Override
 	public void delete() {
-		ScrumGwtApplication.get().getProject().deleteStory(item);
+		ScrumGwtApplication.get().getProject().deleteStory(story);
 		WorkspaceWidget.backlog.list.remove(this);
 	}
 
@@ -100,6 +101,10 @@ public class SprintStoryWidget extends ABlockWidget {
 	}
 
 	public Story getItem() {
-		return item;
+		return story;
+	}
+
+	public void taskDataChanged() {
+		rebuild();
 	}
 }

@@ -77,6 +77,27 @@ public class Story extends GStory {
 		return getEffort() + " " + ScrumGwtApplication.get().getProject().getEffortUnit();
 	}
 
+	public Integer getTaskEffortSum() {
+		Integer sum = null;
+		for (Task t : getTasks()) {
+			Integer effort = t.getEffort();
+			if (effort != null) {
+				if (sum == null) {
+					sum = effort;
+				} else {
+					sum += effort;
+				}
+			}
+		}
+		return sum;
+	}
+
+	public String getTaskEffortSumString() {
+		Integer sum = getTaskEffortSum();
+		if (sum != null) return sum + " hours";
+		return "unknown";
+	}
+
 	public List<Task> getTasks() {
 		return getDao().getTasksByStory(this);
 	}
