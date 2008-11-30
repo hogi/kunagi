@@ -13,7 +13,7 @@ public class Project extends GProject {
 	// --- dependencies ---
 
 	private static ImpedimentDao impedimentDao;
-	private static BacklogItemDao backlogItemDao;
+	private static StoryDao storyDao;
 
 	public Project(GProject template) {
 		super(template);
@@ -27,8 +27,8 @@ public class Project extends GProject {
 		Project.impedimentDao = impedimentDao;
 	}
 
-	public static void setBacklogItemDao(BacklogItemDao backlogItemDao) {
-		Project.backlogItemDao = backlogItemDao;
+	public static void setStoryDao(StoryDao storyDao) {
+		Project.storyDao = storyDao;
 	}
 
 	// --- ---
@@ -54,8 +54,8 @@ public class Project extends GProject {
 		return impedimentDao.getImpedimentsByProject(this);
 	}
 
-	public Set<BacklogItem> getBacklogItems() {
-		return backlogItemDao.getBacklogItemsByProject(this);
+	public Set<Story> getBacklogItems() {
+		return storyDao.getStorysByProject(this);
 	}
 
 	@Override

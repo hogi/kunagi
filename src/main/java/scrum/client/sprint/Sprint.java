@@ -3,8 +3,8 @@ package scrum.client.sprint;
 import java.util.List;
 import java.util.Map;
 
-import scrum.client.project.BacklogItem;
 import scrum.client.project.Project;
+import scrum.client.project.Story;
 
 public class Sprint extends GSprint {
 
@@ -17,8 +17,8 @@ public class Sprint extends GSprint {
 		super(data);
 	}
 
-	public List<BacklogItem> getBacklogItems() {
-		return getDao().getBacklogItemsBySprint(this);
+	public List<Story> getBacklogItems() {
+		return getDao().getStorysBySprint(this);
 	}
 
 	@Override

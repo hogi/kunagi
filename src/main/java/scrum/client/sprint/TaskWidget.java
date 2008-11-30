@@ -148,7 +148,7 @@ public class TaskWidget extends ABlockWidget {
 	@Override
 	public void delete() {
 
-		task.getBacklogItem().deleteTask(task);
+		task.getStory().deleteTask(task);
 		task.getTaskListWidget().update(null);
 
 	}

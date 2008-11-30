@@ -20,7 +20,7 @@ public class Task extends GTask {
 	}
 
 	public boolean isSprint(Sprint sprint) {
-		return getBacklogItem().isSprint(sprint);
+		return getStory().isSprint(sprint);
 	}
 
 	@Override

@@ -47,12 +47,12 @@ public abstract class GProject
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("label", this.label);
-        properties.put("adminsIds", this.adminsIds);
-        properties.put("productOwnerId", this.productOwnerId);
-        properties.put("teamMembersIds", this.teamMembersIds);
-        properties.put("description", this.description);
-        properties.put("scrumMasterId", this.scrumMasterId);
         properties.put("currentSprintId", this.currentSprintId);
+        properties.put("teamMembersIds", this.teamMembersIds);
+        properties.put("adminsIds", this.adminsIds);
+        properties.put("scrumMasterId", this.scrumMasterId);
+        properties.put("productOwnerId", this.productOwnerId);
+        properties.put("description", this.description);
     }
 
     public int compareTo(Project other) {
@@ -69,12 +69,12 @@ public abstract class GProject
         if (template==null) return;
 
         setLabel(template.getLabel());
-        setAdmins(template.getAdmins());
-        setProductOwner(template.getProductOwner());
-        setTeamMembers(template.getTeamMembers());
-        setDescription(template.getDescription());
-        setScrumMaster(template.getScrumMaster());
         setCurrentSprint(template.getCurrentSprint());
+        setTeamMembers(template.getTeamMembers());
+        setAdmins(template.getAdmins());
+        setScrumMaster(template.getScrumMaster());
+        setProductOwner(template.getProductOwner());
+        setDescription(template.getDescription());
     }
 
 
@@ -120,123 +120,41 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
-    // - admins
+    // - currentSprint
     // -----------------------------------------------------------
 
-    private java.util.Set<String> adminsIds = new java.util.HashSet<String>();
+    private String currentSprintId;
 
-    public final java.util.Set<scrum.server.admin.User> getAdmins() {
-        return (Set)userDao.getByIds(this.adminsIds);
+    public final scrum.server.sprint.Sprint getCurrentSprint() {
+        if (this.currentSprintId == null) return null;
+        return (scrum.server.sprint.Sprint)sprintDao.getById(this.currentSprintId);
     }
 
-    public final void setAdmins(java.util.Set<scrum.server.admin.User> admins) {
-        admins = prepareAdmins(admins);
-        if (admins == null) throw new IllegalArgumentException("null is not allowed");
-        java.util.Set<String> ids = getIds(admins);
-        if (this.adminsIds.equals(ids)) return;
-        this.adminsIds = ids;
+    public final void setCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
+        currentSprint = prepareCurrentSprint(currentSprint);
+        if (isCurrentSprint(currentSprint)) return;
+        this.currentSprintId = currentSprint == null ? null : currentSprint.getId();
         entityModified();
     }
 
-    protected java.util.Set<scrum.server.admin.User> prepareAdmins(java.util.Set<scrum.server.admin.User> admins) {
-        return admins;
+    protected scrum.server.sprint.Sprint prepareCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
+        return currentSprint;
     }
 
-    protected void repairDeadAdminReference(String entityId) {
-        if (this.adminsIds.remove(entityId)) entityModified();
-    }
-
-    public final boolean containsAdmin(scrum.server.admin.User admin) {
-        if (admin == null) return false;
-        return this.adminsIds.contains(admin.getId());
-    }
-
-    public final int getAdminsCount() {
-        return this.adminsIds.size();
-    }
-
-    public final boolean isAdminsEmpty() {
-        return this.adminsIds.isEmpty();
-    }
-
-    public final boolean addAdmin(scrum.server.admin.User admin) {
-        if (admin == null) throw new IllegalArgumentException("admin == null");
-        boolean added = this.adminsIds.add(admin.getId());
-        if (added) entityModified();
-        return added;
-    }
-
-    public final boolean addAdmins(Collection<scrum.server.admin.User> admins) {
-        if (admins == null) throw new IllegalArgumentException("admins == null");
-        boolean added = false;
-        for (scrum.server.admin.User admin : admins) {
-            added = added | this.adminsIds.add(admin.getId());
-        }
-        if (added) entityModified();
-        return added;
-    }
-
-    public final boolean removeAdmin(scrum.server.admin.User admin) {
-        if (admin == null) throw new IllegalArgumentException("admin == null");
-        if (this.adminsIds == null) return false;
-        boolean removed = this.adminsIds.remove(admin.getId());
-        if (removed) entityModified();
-        return removed;
-    }
-
-    public final boolean removeAdmins(Collection<scrum.server.admin.User> admins) {
-        if (admins == null) return false;
-        if (admins.isEmpty()) return false;
-        boolean removed = false;
-        for (scrum.server.admin.User _element: admins) {
-            removed = removed | removeAdmin(_element);
-        }
-        return removed;
-    }
-
-    public final boolean clearAdmins() {
-        if (this.adminsIds.isEmpty()) return false;
-        this.adminsIds.clear();
-        entityModified();
-        return true;
-    }
-
-    // -----------------------------------------------------------
-    // - productOwner
-    // -----------------------------------------------------------
-
-    private String productOwnerId;
-
-    public final scrum.server.admin.User getProductOwner() {
-        if (this.productOwnerId == null) return null;
-        return (scrum.server.admin.User)userDao.getById(this.productOwnerId);
-    }
-
-    public final void setProductOwner(scrum.server.admin.User productOwner) {
-        productOwner = prepareProductOwner(productOwner);
-        if (isProductOwner(productOwner)) return;
-        this.productOwnerId = productOwner == null ? null : productOwner.getId();
-        entityModified();
-    }
-
-    protected scrum.server.admin.User prepareProductOwner(scrum.server.admin.User productOwner) {
-        return productOwner;
-    }
-
-    protected void repairDeadProductOwnerReference(String entityId) {
-        if (entityId.equals(this.productOwnerId)) {
-            this.productOwnerId = null;
+    protected void repairDeadCurrentSprintReference(String entityId) {
+        if (entityId.equals(this.currentSprintId)) {
+            this.currentSprintId = null;
             entityModified();
         }
     }
 
-    public final boolean isProductOwnerSet() {
-        return this.productOwnerId != null;
+    public final boolean isCurrentSprintSet() {
+        return this.currentSprintId != null;
     }
 
-    public final boolean isProductOwner(scrum.server.admin.User productOwner) {
-        if (this.productOwnerId == null && productOwner == null) return true;
-        return productOwner != null && productOwner.getId().equals(this.productOwnerId);
+    public final boolean isCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
+        if (this.currentSprintId == null && currentSprint == null) return true;
+        return currentSprint != null && currentSprint.getId().equals(this.currentSprintId);
     }
 
     // -----------------------------------------------------------
@@ -322,34 +240,85 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
-    // - description
+    // - admins
     // -----------------------------------------------------------
 
-    private java.lang.String description;
+    private java.util.Set<String> adminsIds = new java.util.HashSet<String>();
 
-    public final java.lang.String getDescription() {
-        return description;
+    public final java.util.Set<scrum.server.admin.User> getAdmins() {
+        return (Set)userDao.getByIds(this.adminsIds);
     }
 
-    public final void setDescription(java.lang.String description) {
-        description = prepareDescription(description);
-        if (isDescription(description)) return;
-        this.description = description;
+    public final void setAdmins(java.util.Set<scrum.server.admin.User> admins) {
+        admins = prepareAdmins(admins);
+        if (admins == null) throw new IllegalArgumentException("null is not allowed");
+        java.util.Set<String> ids = getIds(admins);
+        if (this.adminsIds.equals(ids)) return;
+        this.adminsIds = ids;
         entityModified();
     }
 
-    protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
-        return description;
+    protected java.util.Set<scrum.server.admin.User> prepareAdmins(java.util.Set<scrum.server.admin.User> admins) {
+        return admins;
     }
 
-    public final boolean isDescriptionSet() {
-        return this.description != null;
+    protected void repairDeadAdminReference(String entityId) {
+        if (this.adminsIds.remove(entityId)) entityModified();
     }
 
-    public final boolean isDescription(java.lang.String description) {
-        if (this.description == null && description == null) return true;
-        return this.description != null && this.description.equals(description);
+    public final boolean containsAdmin(scrum.server.admin.User admin) {
+        if (admin == null) return false;
+        return this.adminsIds.contains(admin.getId());
+    }
+
+    public final int getAdminsCount() {
+        return this.adminsIds.size();
+    }
+
+    public final boolean isAdminsEmpty() {
+        return this.adminsIds.isEmpty();
+    }
+
+    public final boolean addAdmin(scrum.server.admin.User admin) {
+        if (admin == null) throw new IllegalArgumentException("admin == null");
+        boolean added = this.adminsIds.add(admin.getId());
+        if (added) entityModified();
+        return added;
+    }
+
+    public final boolean addAdmins(Collection<scrum.server.admin.User> admins) {
+        if (admins == null) throw new IllegalArgumentException("admins == null");
+        boolean added = false;
+        for (scrum.server.admin.User admin : admins) {
+            added = added | this.adminsIds.add(admin.getId());
+        }
+        if (added) entityModified();
+        return added;
+    }
+
+    public final boolean removeAdmin(scrum.server.admin.User admin) {
+        if (admin == null) throw new IllegalArgumentException("admin == null");
+        if (this.adminsIds == null) return false;
+        boolean removed = this.adminsIds.remove(admin.getId());
+        if (removed) entityModified();
+        return removed;
+    }
+
+    public final boolean removeAdmins(Collection<scrum.server.admin.User> admins) {
+        if (admins == null) return false;
+        if (admins.isEmpty()) return false;
+        boolean removed = false;
+        for (scrum.server.admin.User _element: admins) {
+            removed = removed | removeAdmin(_element);
+        }
+        return removed;
+    }
+
+    public final boolean clearAdmins() {
+        if (this.adminsIds.isEmpty()) return false;
+        this.adminsIds.clear();
+        entityModified();
+        return true;
     }
 
     // -----------------------------------------------------------
@@ -391,73 +360,94 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
-    // - currentSprint
+    // - productOwner
     // -----------------------------------------------------------
 
-    private String currentSprintId;
+    private String productOwnerId;
 
-    public final scrum.server.sprint.Sprint getCurrentSprint() {
-        if (this.currentSprintId == null) return null;
-        return (scrum.server.sprint.Sprint)sprintDao.getById(this.currentSprintId);
+    public final scrum.server.admin.User getProductOwner() {
+        if (this.productOwnerId == null) return null;
+        return (scrum.server.admin.User)userDao.getById(this.productOwnerId);
     }
 
-    public final void setCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
-        currentSprint = prepareCurrentSprint(currentSprint);
-        if (isCurrentSprint(currentSprint)) return;
-        this.currentSprintId = currentSprint == null ? null : currentSprint.getId();
+    public final void setProductOwner(scrum.server.admin.User productOwner) {
+        productOwner = prepareProductOwner(productOwner);
+        if (isProductOwner(productOwner)) return;
+        this.productOwnerId = productOwner == null ? null : productOwner.getId();
         entityModified();
     }
 
-    protected scrum.server.sprint.Sprint prepareCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
-        return currentSprint;
+    protected scrum.server.admin.User prepareProductOwner(scrum.server.admin.User productOwner) {
+        return productOwner;
     }
 
-    protected void repairDeadCurrentSprintReference(String entityId) {
-        if (entityId.equals(this.currentSprintId)) {
-            this.currentSprintId = null;
+    protected void repairDeadProductOwnerReference(String entityId) {
+        if (entityId.equals(this.productOwnerId)) {
+            this.productOwnerId = null;
             entityModified();
         }
     }
 
-    public final boolean isCurrentSprintSet() {
-        return this.currentSprintId != null;
+    public final boolean isProductOwnerSet() {
+        return this.productOwnerId != null;
     }
 
-    public final boolean isCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
-        if (this.currentSprintId == null && currentSprint == null) return true;
-        return currentSprint != null && currentSprint.getId().equals(this.currentSprintId);
+    public final boolean isProductOwner(scrum.server.admin.User productOwner) {
+        if (this.productOwnerId == null && productOwner == null) return true;
+        return productOwner != null && productOwner.getId().equals(this.productOwnerId);
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private java.lang.String description;
+
+    public final java.lang.String getDescription() {
+        return description;
+    }
+
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+        entityModified();
+    }
+
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
+    }
+
+    public final boolean isDescriptionSet() {
+        return this.description != null;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
     }
 
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
-        if (this.adminsIds == null) this.adminsIds = new java.util.HashSet<String>();
-        repairDeadAdminReference(entityId);
-        repairDeadProductOwnerReference(entityId);
+        repairDeadCurrentSprintReference(entityId);
         if (this.teamMembersIds == null) this.teamMembersIds = new java.util.HashSet<String>();
         repairDeadTeamMemberReference(entityId);
+        if (this.adminsIds == null) this.adminsIds = new java.util.HashSet<String>();
+        repairDeadAdminReference(entityId);
         repairDeadScrumMasterReference(entityId);
-        repairDeadCurrentSprintReference(entityId);
+        repairDeadProductOwnerReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
-        if (this.adminsIds == null) this.adminsIds = new java.util.HashSet<String>();
-        Set<String> admins = new HashSet<String>(this.adminsIds);
-        for (String entityId : admins) {
-            try {
-                userDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
-                LOG.info("Repairing dead admin reference");
-                repairDeadAdminReference(entityId);
-            }
-        }
         try {
-            getProductOwner();
+            getCurrentSprint();
         } catch (EntityDoesNotExistException ex) {
-            LOG.info("Repairing dead productOwner reference");
-            repairDeadProductOwnerReference(this.productOwnerId);
+            LOG.info("Repairing dead currentSprint reference");
+            repairDeadCurrentSprintReference(this.currentSprintId);
         }
         if (this.teamMembersIds == null) this.teamMembersIds = new java.util.HashSet<String>();
         Set<String> teamMembers = new HashSet<String>(this.teamMembersIds);
@@ -469,6 +459,16 @@ public abstract class GProject
                 repairDeadTeamMemberReference(entityId);
             }
         }
+        if (this.adminsIds == null) this.adminsIds = new java.util.HashSet<String>();
+        Set<String> admins = new HashSet<String>(this.adminsIds);
+        for (String entityId : admins) {
+            try {
+                userDao.getById(entityId);
+            } catch (EntityDoesNotExistException ex) {
+                LOG.info("Repairing dead admin reference");
+                repairDeadAdminReference(entityId);
+            }
+        }
         try {
             getScrumMaster();
         } catch (EntityDoesNotExistException ex) {
@@ -476,10 +476,10 @@ public abstract class GProject
             repairDeadScrumMasterReference(this.scrumMasterId);
         }
         try {
-            getCurrentSprint();
+            getProductOwner();
         } catch (EntityDoesNotExistException ex) {
-            LOG.info("Repairing dead currentSprint reference");
-            repairDeadCurrentSprintReference(this.currentSprintId);
+            LOG.info("Repairing dead productOwner reference");
+            repairDeadProductOwnerReference(this.productOwnerId);
         }
     }
 

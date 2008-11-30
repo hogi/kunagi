@@ -8,16 +8,16 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
 
-public class BacklogItem extends GBacklogItem {
+public class Story extends GStory {
 
 	public static final String INIT_LABEL = "New Backlog Item";
 
-	public BacklogItem(Project project) {
+	public Story(Project project) {
 		setProject(project);
 		setLabel(INIT_LABEL);
 	}
 
-	public BacklogItem(Map data) {
+	public Story(Map data) {
 		super(data);
 	}
 
@@ -78,7 +78,7 @@ public class BacklogItem extends GBacklogItem {
 	}
 
 	public List<Task> getTasks() {
-		return getDao().getTasksByBacklogItem(this);
+		return getDao().getTasksByStory(this);
 	}
 
 	public Task createNewTask() {

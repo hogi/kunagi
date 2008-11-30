@@ -43,42 +43,22 @@ public abstract class GImpediment
         return ENTITY_TYPE;
     }
 
-    // --- project ---
+    // --- solution ---
 
-    private String projectId;
+    private java.lang.String solution ;
 
-    public final scrum.client.project.Project getProject() {
-        return getDao().getProject(this.projectId);
+    public final java.lang.String getSolution() {
+        return this.solution ;
     }
 
-    public final Impediment setProject(scrum.client.project.Project project) {
-        String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Impediment) this;
-        this.projectId = id;
-        propertyChanged("project", this.projectId);
+    public final Impediment setSolution(java.lang.String solution) {
+        this.solution = solution ;
+        propertyChanged("solution", this.solution);
         return (Impediment)this;
     }
 
-    public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
-    }
-
-    // --- solved ---
-
-    private boolean solved ;
-
-    public final boolean isSolved() {
-        return this.solved ;
-    }
-
-    public final Impediment setSolved(boolean solved) {
-        this.solved = solved ;
-        propertyChanged("solved", this.solved);
-        return (Impediment)this;
-    }
-
-    public final boolean isSolved(boolean solved) {
-        return equals(this.solved, solved);
+    public final boolean isSolution(java.lang.String solution) {
+        return equals(this.solution, solution);
     }
 
     // --- label ---
@@ -99,22 +79,42 @@ public abstract class GImpediment
         return equals(this.label, label);
     }
 
-    // --- solution ---
+    // --- solved ---
 
-    private java.lang.String solution ;
+    private boolean solved ;
 
-    public final java.lang.String getSolution() {
-        return this.solution ;
+    public final boolean isSolved() {
+        return this.solved ;
     }
 
-    public final Impediment setSolution(java.lang.String solution) {
-        this.solution = solution ;
-        propertyChanged("solution", this.solution);
+    public final Impediment setSolved(boolean solved) {
+        this.solved = solved ;
+        propertyChanged("solved", this.solved);
         return (Impediment)this;
     }
 
-    public final boolean isSolution(java.lang.String solution) {
-        return equals(this.solution, solution);
+    public final boolean isSolved(boolean solved) {
+        return equals(this.solved, solved);
+    }
+
+    // --- project ---
+
+    private String projectId;
+
+    public final scrum.client.project.Project getProject() {
+        return getDao().getProject(this.projectId);
+    }
+
+    public final Impediment setProject(scrum.client.project.Project project) {
+        String id = project == null ? null : project.getId();
+        if (equals(this.projectId, id)) return (Impediment) this;
+        this.projectId = id;
+        propertyChanged("project", this.projectId);
+        return (Impediment)this;
+    }
+
+    public final boolean isProject(scrum.client.project.Project project) {
+        return equals(this.projectId, project);
     }
 
     // --- description ---
@@ -138,20 +138,20 @@ public abstract class GImpediment
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        projectId = (String) props.get("projectId");
-        solved  = (Boolean) props.get("solved");
-        label  = (java.lang.String) props.get("label");
         solution  = (java.lang.String) props.get("solution");
+        label  = (java.lang.String) props.get("label");
+        solved  = (Boolean) props.get("solved");
+        projectId = (String) props.get("projectId");
         description  = (java.lang.String) props.get("description");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("solved", this.solved);
-        properties.put("label", this.label);
         properties.put("solution", this.solution);
+        properties.put("label", this.label);
+        properties.put("solved", this.solved);
+        properties.put("projectId", this.projectId);
         properties.put("description", this.description);
     }
 

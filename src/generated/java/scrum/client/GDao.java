@@ -80,18 +80,10 @@ public abstract class GDao
         return new ArrayList<scrum.client.impediments.Impediment>(impediments.values());
     }
 
-    public final List<scrum.client.impediments.Impediment> getImpedimentsByProject(scrum.client.project.Project project) {
+    public final List<scrum.client.impediments.Impediment> getImpedimentsBySolution(java.lang.String solution) {
         List<scrum.client.impediments.Impediment> ret = new ArrayList<scrum.client.impediments.Impediment>();
         for (scrum.client.impediments.Impediment entity : impediments.values()) {
-            if (entity.isProject(project)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.impediments.Impediment> getImpedimentsBySolved(boolean solved) {
-        List<scrum.client.impediments.Impediment> ret = new ArrayList<scrum.client.impediments.Impediment>();
-        for (scrum.client.impediments.Impediment entity : impediments.values()) {
-            if (entity.isSolved(solved)) ret.add(entity);
+            if (entity.isSolution(solution)) ret.add(entity);
         }
         return ret;
     }
@@ -104,10 +96,18 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.impediments.Impediment> getImpedimentsBySolution(java.lang.String solution) {
+    public final List<scrum.client.impediments.Impediment> getImpedimentsBySolved(boolean solved) {
         List<scrum.client.impediments.Impediment> ret = new ArrayList<scrum.client.impediments.Impediment>();
         for (scrum.client.impediments.Impediment entity : impediments.values()) {
-            if (entity.isSolution(solution)) ret.add(entity);
+            if (entity.isSolved(solved)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.impediments.Impediment> getImpedimentsByProject(scrum.client.project.Project project) {
+        List<scrum.client.impediments.Impediment> ret = new ArrayList<scrum.client.impediments.Impediment>();
+        for (scrum.client.impediments.Impediment entity : impediments.values()) {
+            if (entity.isProject(project)) ret.add(entity);
         }
         return ret;
     }
@@ -179,196 +179,6 @@ public abstract class GDao
         return ret;
     }
 
-    // --- BacklogItem ---
-
-    private Map<String, scrum.client.project.BacklogItem> backlogItems = new HashMap<String, scrum.client.project.BacklogItem>();
-
-    public final boolean containsBacklogItem(scrum.client.project.BacklogItem backlogItem) {
-        return backlogItems.containsKey(backlogItem.getId());
-    }
-
-    public final void deleteBacklogItem(scrum.client.project.BacklogItem backlogItem) {
-        backlogItems.remove(backlogItem.getId());
-        entityDeleted(backlogItem);
-    }
-
-    public final void createBacklogItem(scrum.client.project.BacklogItem backlogItem) {
-        backlogItems.put(backlogItem.getId(), backlogItem);
-        entityCreated(backlogItem);
-    }
-
-    private final void updateBacklogItem(Map data) {
-        String id = (String) data.get("id");
-        scrum.client.project.BacklogItem entity = backlogItems.get(id);
-        if (entity == null) {
-            entity = new scrum.client.project.BacklogItem(data);
-            backlogItems.put(id, entity);
-            scrum.client.common.Logger.DEBUG("BacklogItem received: " + entity);
-        } else {
-            entity.updateProperties(data);
-            scrum.client.common.Logger.DEBUG("BacklogItem updated: " + entity);
-        }
-    }
-
-    public final scrum.client.project.BacklogItem getBacklogItem(String id) {
-        scrum.client.project.BacklogItem ret = backlogItems.get(id);
-        if (ret == null) throw new RuntimeException("BacklogItem does not exist: " + id);
-        return ret;
-    }
-
-    public final Set<scrum.client.project.BacklogItem> getBacklogItems(Collection<String> ids) {
-        Set<scrum.client.project.BacklogItem> ret = new HashSet<scrum.client.project.BacklogItem>();
-        for (String id : ids) {
-            scrum.client.project.BacklogItem entity = backlogItems.get(id);
-            if (entity == null) throw new RuntimeException("BacklogItem does not exist: " + id);
-            ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.project.BacklogItem> getBacklogItems() {
-        return new ArrayList<scrum.client.project.BacklogItem>(backlogItems.values());
-    }
-
-    public final List<scrum.client.project.BacklogItem> getBacklogItemsBySprint(scrum.client.sprint.Sprint sprint) {
-        List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
-        for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
-            if (entity.isSprint(sprint)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.project.BacklogItem> getBacklogItemsByClosed(boolean closed) {
-        List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
-        for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
-            if (entity.isClosed(closed)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.project.BacklogItem> getBacklogItemsByTestDescription(java.lang.String testDescription) {
-        List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
-        for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
-            if (entity.isTestDescription(testDescription)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.project.BacklogItem> getBacklogItemsByDescription(java.lang.String description) {
-        List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
-        for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
-            if (entity.isDescription(description)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.project.BacklogItem> getBacklogItemsByProject(scrum.client.project.Project project) {
-        List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
-        for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
-            if (entity.isProject(project)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.project.BacklogItem> getBacklogItemsByLabel(java.lang.String label) {
-        List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
-        for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
-            if (entity.isLabel(label)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.project.BacklogItem> getBacklogItemsByEffort(java.lang.Integer effort) {
-        List<scrum.client.project.BacklogItem> ret = new ArrayList<scrum.client.project.BacklogItem>();
-        for (scrum.client.project.BacklogItem entity : backlogItems.values()) {
-            if (entity.isEffort(effort)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    // --- Task ---
-
-    private Map<String, scrum.client.sprint.Task> tasks = new HashMap<String, scrum.client.sprint.Task>();
-
-    public final boolean containsTask(scrum.client.sprint.Task task) {
-        return tasks.containsKey(task.getId());
-    }
-
-    public final void deleteTask(scrum.client.sprint.Task task) {
-        tasks.remove(task.getId());
-        entityDeleted(task);
-    }
-
-    public final void createTask(scrum.client.sprint.Task task) {
-        tasks.put(task.getId(), task);
-        entityCreated(task);
-    }
-
-    private final void updateTask(Map data) {
-        String id = (String) data.get("id");
-        scrum.client.sprint.Task entity = tasks.get(id);
-        if (entity == null) {
-            entity = new scrum.client.sprint.Task(data);
-            tasks.put(id, entity);
-            scrum.client.common.Logger.DEBUG("Task received: " + entity);
-        } else {
-            entity.updateProperties(data);
-            scrum.client.common.Logger.DEBUG("Task updated: " + entity);
-        }
-    }
-
-    public final scrum.client.sprint.Task getTask(String id) {
-        scrum.client.sprint.Task ret = tasks.get(id);
-        if (ret == null) throw new RuntimeException("Task does not exist: " + id);
-        return ret;
-    }
-
-    public final Set<scrum.client.sprint.Task> getTasks(Collection<String> ids) {
-        Set<scrum.client.sprint.Task> ret = new HashSet<scrum.client.sprint.Task>();
-        for (String id : ids) {
-            scrum.client.sprint.Task entity = tasks.get(id);
-            if (entity == null) throw new RuntimeException("Task does not exist: " + id);
-            ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.sprint.Task> getTasks() {
-        return new ArrayList<scrum.client.sprint.Task>(tasks.values());
-    }
-
-    public final List<scrum.client.sprint.Task> getTasksByLabel(java.lang.String label) {
-        List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
-        for (scrum.client.sprint.Task entity : tasks.values()) {
-            if (entity.isLabel(label)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.sprint.Task> getTasksByBacklogItem(scrum.client.project.BacklogItem backlogItem) {
-        List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
-        for (scrum.client.sprint.Task entity : tasks.values()) {
-            if (entity.isBacklogItem(backlogItem)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.sprint.Task> getTasksByEffort(java.lang.Integer effort) {
-        List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
-        for (scrum.client.sprint.Task entity : tasks.values()) {
-            if (entity.isEffort(effort)) ret.add(entity);
-        }
-        return ret;
-    }
-
-    public final List<scrum.client.sprint.Task> getTasksByNotice(java.lang.String notice) {
-        List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
-        for (scrum.client.sprint.Task entity : tasks.values()) {
-            if (entity.isNotice(notice)) ret.add(entity);
-        }
-        return ret;
-    }
-
     // --- Project ---
 
     private Map<String, scrum.client.project.Project> projects = new HashMap<String, scrum.client.project.Project>();
@@ -428,23 +238,15 @@ public abstract class GDao
         return ret;
     }
 
-
-    public final List<scrum.client.project.Project> getProjectsByProductOwner(scrum.client.admin.User productOwner) {
+    public final List<scrum.client.project.Project> getProjectsByCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
-            if (entity.isProductOwner(productOwner)) ret.add(entity);
+            if (entity.isCurrentSprint(currentSprint)) ret.add(entity);
         }
         return ret;
     }
 
 
-    public final List<scrum.client.project.Project> getProjectsByDescription(java.lang.String description) {
-        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
-        for (scrum.client.project.Project entity : projects.values()) {
-            if (entity.isDescription(description)) ret.add(entity);
-        }
-        return ret;
-    }
 
     public final List<scrum.client.project.Project> getProjectsByScrumMaster(scrum.client.admin.User scrumMaster) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
@@ -454,10 +256,101 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.project.Project> getProjectsByCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
+    public final List<scrum.client.project.Project> getProjectsByProductOwner(scrum.client.admin.User productOwner) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
-            if (entity.isCurrentSprint(currentSprint)) ret.add(entity);
+            if (entity.isProductOwner(productOwner)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Project> getProjectsByDescription(java.lang.String description) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isDescription(description)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    // --- Task ---
+
+    private Map<String, scrum.client.sprint.Task> tasks = new HashMap<String, scrum.client.sprint.Task>();
+
+    public final boolean containsTask(scrum.client.sprint.Task task) {
+        return tasks.containsKey(task.getId());
+    }
+
+    public final void deleteTask(scrum.client.sprint.Task task) {
+        tasks.remove(task.getId());
+        entityDeleted(task);
+    }
+
+    public final void createTask(scrum.client.sprint.Task task) {
+        tasks.put(task.getId(), task);
+        entityCreated(task);
+    }
+
+    private final void updateTask(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.sprint.Task entity = tasks.get(id);
+        if (entity == null) {
+            entity = new scrum.client.sprint.Task(data);
+            tasks.put(id, entity);
+            scrum.client.common.Logger.DEBUG("Task received: " + entity);
+        } else {
+            entity.updateProperties(data);
+            scrum.client.common.Logger.DEBUG("Task updated: " + entity);
+        }
+    }
+
+    public final scrum.client.sprint.Task getTask(String id) {
+        scrum.client.sprint.Task ret = tasks.get(id);
+        if (ret == null) throw new RuntimeException("Task does not exist: " + id);
+        return ret;
+    }
+
+    public final Set<scrum.client.sprint.Task> getTasks(Collection<String> ids) {
+        Set<scrum.client.sprint.Task> ret = new HashSet<scrum.client.sprint.Task>();
+        for (String id : ids) {
+            scrum.client.sprint.Task entity = tasks.get(id);
+            if (entity == null) throw new RuntimeException("Task does not exist: " + id);
+            ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.Task> getTasks() {
+        return new ArrayList<scrum.client.sprint.Task>(tasks.values());
+    }
+
+    public final List<scrum.client.sprint.Task> getTasksByEffort(java.lang.Integer effort) {
+        List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
+        for (scrum.client.sprint.Task entity : tasks.values()) {
+            if (entity.isEffort(effort)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.Task> getTasksByStory(scrum.client.project.Story story) {
+        List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
+        for (scrum.client.sprint.Task entity : tasks.values()) {
+            if (entity.isStory(story)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.Task> getTasksByNotice(java.lang.String notice) {
+        List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
+        for (scrum.client.sprint.Task entity : tasks.values()) {
+            if (entity.isNotice(notice)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.Task> getTasksByLabel(java.lang.String label) {
+        List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
+        for (scrum.client.sprint.Task entity : tasks.values()) {
+            if (entity.isLabel(label)) ret.add(entity);
         }
         return ret;
     }
@@ -529,6 +422,113 @@ public abstract class GDao
         return ret;
     }
 
+    // --- Story ---
+
+    private Map<String, scrum.client.project.Story> storys = new HashMap<String, scrum.client.project.Story>();
+
+    public final boolean containsStory(scrum.client.project.Story story) {
+        return storys.containsKey(story.getId());
+    }
+
+    public final void deleteStory(scrum.client.project.Story story) {
+        storys.remove(story.getId());
+        entityDeleted(story);
+    }
+
+    public final void createStory(scrum.client.project.Story story) {
+        storys.put(story.getId(), story);
+        entityCreated(story);
+    }
+
+    private final void updateStory(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.project.Story entity = storys.get(id);
+        if (entity == null) {
+            entity = new scrum.client.project.Story(data);
+            storys.put(id, entity);
+            scrum.client.common.Logger.DEBUG("Story received: " + entity);
+        } else {
+            entity.updateProperties(data);
+            scrum.client.common.Logger.DEBUG("Story updated: " + entity);
+        }
+    }
+
+    public final scrum.client.project.Story getStory(String id) {
+        scrum.client.project.Story ret = storys.get(id);
+        if (ret == null) throw new RuntimeException("Story does not exist: " + id);
+        return ret;
+    }
+
+    public final Set<scrum.client.project.Story> getStorys(Collection<String> ids) {
+        Set<scrum.client.project.Story> ret = new HashSet<scrum.client.project.Story>();
+        for (String id : ids) {
+            scrum.client.project.Story entity = storys.get(id);
+            if (entity == null) throw new RuntimeException("Story does not exist: " + id);
+            ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Story> getStorys() {
+        return new ArrayList<scrum.client.project.Story>(storys.values());
+    }
+
+    public final List<scrum.client.project.Story> getStorysByDescription(java.lang.String description) {
+        List<scrum.client.project.Story> ret = new ArrayList<scrum.client.project.Story>();
+        for (scrum.client.project.Story entity : storys.values()) {
+            if (entity.isDescription(description)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Story> getStorysByEffort(java.lang.Integer effort) {
+        List<scrum.client.project.Story> ret = new ArrayList<scrum.client.project.Story>();
+        for (scrum.client.project.Story entity : storys.values()) {
+            if (entity.isEffort(effort)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Story> getStorysByTestDescription(java.lang.String testDescription) {
+        List<scrum.client.project.Story> ret = new ArrayList<scrum.client.project.Story>();
+        for (scrum.client.project.Story entity : storys.values()) {
+            if (entity.isTestDescription(testDescription)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Story> getStorysByProject(scrum.client.project.Project project) {
+        List<scrum.client.project.Story> ret = new ArrayList<scrum.client.project.Story>();
+        for (scrum.client.project.Story entity : storys.values()) {
+            if (entity.isProject(project)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Story> getStorysByClosed(boolean closed) {
+        List<scrum.client.project.Story> ret = new ArrayList<scrum.client.project.Story>();
+        for (scrum.client.project.Story entity : storys.values()) {
+            if (entity.isClosed(closed)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Story> getStorysByLabel(java.lang.String label) {
+        List<scrum.client.project.Story> ret = new ArrayList<scrum.client.project.Story>();
+        for (scrum.client.project.Story entity : storys.values()) {
+            if (entity.isLabel(label)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Story> getStorysBySprint(scrum.client.sprint.Sprint sprint) {
+        List<scrum.client.project.Story> ret = new ArrayList<scrum.client.project.Story>();
+        for (scrum.client.project.Story entity : storys.values()) {
+            if (entity.isSprint(sprint)) ret.add(entity);
+        }
+        return ret;
+    }
+
     private Collection<Map<String, ? extends AGwtEntity>> entityMaps;
 
     @Override
@@ -537,10 +537,10 @@ public abstract class GDao
             entityMaps = new ArrayList<Map<String, ? extends AGwtEntity>>();
             entityMaps.add(impediments);
             entityMaps.add(users);
-            entityMaps.add(backlogItems);
-            entityMaps.add(tasks);
             entityMaps.add(projects);
+            entityMaps.add(tasks);
             entityMaps.add(sprints);
+            entityMaps.add(storys);
         }
         return entityMaps;
     }
@@ -555,20 +555,20 @@ public abstract class GDao
             updateUser(data);
             return;
         }
-        if (type.equals(scrum.client.project.BacklogItem.ENTITY_TYPE)) {
-            updateBacklogItem(data);
+        if (type.equals(scrum.client.project.Project.ENTITY_TYPE)) {
+            updateProject(data);
             return;
         }
         if (type.equals(scrum.client.sprint.Task.ENTITY_TYPE)) {
             updateTask(data);
             return;
         }
-        if (type.equals(scrum.client.project.Project.ENTITY_TYPE)) {
-            updateProject(data);
-            return;
-        }
         if (type.equals(scrum.client.sprint.Sprint.ENTITY_TYPE)) {
             updateSprint(data);
+            return;
+        }
+        if (type.equals(scrum.client.project.Story.ENTITY_TYPE)) {
+            updateStory(data);
             return;
         }
        throw new RuntimeException("Unsupported type: " + type);

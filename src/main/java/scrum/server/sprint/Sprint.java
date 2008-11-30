@@ -2,14 +2,14 @@ package scrum.server.sprint;
 
 import java.util.Set;
 
-import scrum.server.project.BacklogItem;
-import scrum.server.project.BacklogItemDao;
+import scrum.server.project.Story;
+import scrum.server.project.StoryDao;
 
 public class Sprint extends GSprint {
 
 	// --- dependencies ---
 
-	private static BacklogItemDao backlogItemDao;
+	private static StoryDao storyDao;
 	private static TaskDao taskDao;
 
 	public Sprint(Sprint template) {
@@ -20,8 +20,8 @@ public class Sprint extends GSprint {
 		super(null);
 	}
 
-	public static void setBacklogItemDao(BacklogItemDao backlogItemDao) {
-		Sprint.backlogItemDao = backlogItemDao;
+	public static void setBacklogItemDao(StoryDao storyDao) {
+		Sprint.storyDao = storyDao;
 	}
 
 	public static void setTaskDao(TaskDao taskDao) {
@@ -30,8 +30,8 @@ public class Sprint extends GSprint {
 
 	// --- ---
 
-	public Set<BacklogItem> getBacklogItems() {
-		return backlogItemDao.getBacklogItemsBySprint(this);
+	public Set<Story> getBacklogItems() {
+		return storyDao.getStorysBySprint(this);
 	}
 
 	public Set<Task> getTasks() {

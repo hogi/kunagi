@@ -3,7 +3,7 @@ package scrum.client.sprint;
 import java.util.Map;
 
 import scrum.client.admin.User;
-import scrum.client.project.BacklogItem;
+import scrum.client.project.Story;
 
 public class Task extends GTask {
 
@@ -15,8 +15,8 @@ public class Task extends GTask {
 	@Deprecated
 	private TaskListWidget taskListWidget = null;
 
-	public Task(BacklogItem backlogItem) {
-		setBacklogItem(backlogItem);
+	public Task(Story story) {
+		setStory(story);
 		setLabel("New Task");
 		setEffort(INIT_EFFORT);
 	}

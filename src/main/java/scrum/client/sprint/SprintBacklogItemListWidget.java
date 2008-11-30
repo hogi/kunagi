@@ -3,7 +3,7 @@ package scrum.client.sprint;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.ScrumUtil;
 import scrum.client.common.StyleSheet;
-import scrum.client.project.BacklogItem;
+import scrum.client.project.Story;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -41,7 +41,7 @@ public class SprintBacklogItemListWidget extends Composite {
 
 	public void update() {
 		list.clear();
-		for (BacklogItem item : sprint.getBacklogItems()) {
+		for (Story item : sprint.getBacklogItems()) {
 			list.addBlock(new SprintBacklogItemWidget(item));
 		}
 	}

@@ -86,7 +86,7 @@ public class SidebarWidget extends Composite {
 
 		public void onClick(Widget sender) {
 			WorkspaceWidget.lock("Loading Backlog Items...");
-			ScrumGwtApplication.get().callRequestBacklogItems(new Runnable() {
+			ScrumGwtApplication.get().callRequestStorys(new Runnable() {
 
 				public void run() {
 					WorkspaceWidget.showBacklog();

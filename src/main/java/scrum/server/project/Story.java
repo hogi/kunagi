@@ -5,28 +5,28 @@ import java.util.Set;
 import scrum.server.sprint.Task;
 import scrum.server.sprint.TaskDao;
 
-public class BacklogItem extends GBacklogItem {
+public class Story extends GStory {
 
 	// --- dependencies ---
 
 	private static TaskDao taskDao;
 
-	public BacklogItem(BacklogItem template) {
+	public Story(Story template) {
 		super(template);
 	}
 
-	public BacklogItem() {
+	public Story() {
 		super(null);
 	}
 
 	public static void setTaskDao(TaskDao taskDao) {
-		BacklogItem.taskDao = taskDao;
+		Story.taskDao = taskDao;
 	}
 
 	// --- ---
 
 	public Set<Task> getTasks() {
-		return taskDao.getTasksByBacklogItem(this);
+		return taskDao.getTasksByStory(this);
 	}
 
 	@Override

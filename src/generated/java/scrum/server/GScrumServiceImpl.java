@@ -88,14 +88,14 @@ public abstract class GScrumServiceImpl
         return ret;
     }
 
-    public scrum.client.DataTransferObject requestBacklogItems() {
+    public scrum.client.DataTransferObject requestStorys() {
         SessionData session = getSessionData();
-        session.getContext().createSubContext("service:requestBacklogItems");
-        LOG.debug("requestBacklogItems");
+        session.getContext().createSubContext("service:requestStorys");
+        LOG.debug("requestStorys");
         try {
-            getApp().onRequestBacklogItems(session);
+            getApp().onRequestStorys(session);
         } catch (Throwable t) {
-            handleServiceMethodException("requestBacklogItems",t);
+            handleServiceMethodException("requestStorys",t);
         }
         scrum.client.DataTransferObject ret = session.popNextData();
         onServiceMethodExecuted();

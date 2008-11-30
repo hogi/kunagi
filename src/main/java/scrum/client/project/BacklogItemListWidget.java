@@ -41,7 +41,7 @@ public class BacklogItemListWidget extends Composite {
 
 	public void update() {
 		list.clear();
-		for (BacklogItem item : ScrumGwtApplication.get().getProject().getBacklogItems()) {
+		for (Story item : ScrumGwtApplication.get().getProject().getBacklogItems()) {
 			list.addBlock(new BacklogItemWidget(item));
 		}
 	}
@@ -49,7 +49,7 @@ public class BacklogItemListWidget extends Composite {
 	class CreateClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			BacklogItem item = ScrumGwtApplication.get().getProject().createNewBacklogItem();
+			Story item = ScrumGwtApplication.get().getProject().createNewBacklogItem();
 			BacklogItemWidget block = new BacklogItemWidget(item);
 			list.addBlock(block);
 			list.selectBlock(block);

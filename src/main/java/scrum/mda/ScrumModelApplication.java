@@ -39,21 +39,21 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return projectModel;
 	}
 
-	private EntityModel backlogItemModel;
+	private EntityModel storyModel;
 
-	public EntityModel getBacklogItemModel() {
-		if (backlogItemModel == null) {
-			backlogItemModel = createEntityModel("BacklogItem", "project");
-			autowire(backlogItemModel);
-			backlogItemModel.addReference("project", getProjectModel()).setMaster(true);
-			backlogItemModel.addReference("sprint", getSprintModel());
-			backlogItemModel.addProperty("label", String.class);
-			backlogItemModel.addProperty("description", String.class);
-			backlogItemModel.addProperty("testDescription", String.class);
-			backlogItemModel.addProperty("effort", Integer.class);
-			backlogItemModel.addProperty("closed", boolean.class);
+	public EntityModel getStoryModel() {
+		if (storyModel == null) {
+			storyModel = createEntityModel("Story", "project");
+			autowire(storyModel);
+			storyModel.addReference("project", getProjectModel()).setMaster(true);
+			storyModel.addReference("sprint", getSprintModel());
+			storyModel.addProperty("label", String.class);
+			storyModel.addProperty("description", String.class);
+			storyModel.addProperty("testDescription", String.class);
+			storyModel.addProperty("effort", Integer.class);
+			storyModel.addProperty("closed", boolean.class);
 		}
-		return backlogItemModel;
+		return storyModel;
 	}
 
 	private EntityModel sprintModel;
@@ -74,7 +74,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (taskModel == null) {
 			taskModel = createEntityModel("Task", "sprint");
 			autowire(taskModel);
-			taskModel.addReference("backlogItem", getBacklogItemModel()).setMaster(true);
+			taskModel.addReference("story", getStoryModel()).setMaster(true);
 			taskModel.addProperty("label", String.class);
 			taskModel.addProperty("effort", Integer.class);
 			taskModel.addProperty("notice", String.class);
@@ -125,7 +125,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				String.class);
 			serviceModel.addMethod("selectProject").addParameter("projectId", String.class);
 			serviceModel.addMethod("requestImpediments");
-			serviceModel.addMethod("requestBacklogItems");
+			serviceModel.addMethod("requestStorys");
 			serviceModel.addMethod("requestCurrentSprint");
 			serviceModel.addMethod("changeProperties").addParameter("entityId", String.class).addParameter(
 				"properties", Map.class);

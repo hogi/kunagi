@@ -21,9 +21,9 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class BacklogItemWidget extends ABlockWidget {
 
-	private BacklogItem item;
+	private Story item;
 
-	public BacklogItemWidget(BacklogItem item) {
+	public BacklogItemWidget(Story item) {
 		this.item = item;
 	}
 
@@ -161,7 +161,7 @@ public class BacklogItemWidget extends ABlockWidget {
 		return new BlockListDropController(this, WorkspaceWidget.backlog.list);
 	}
 
-	public BacklogItem getItem() {
+	public Story getItem() {
 		return item;
 	}
 }

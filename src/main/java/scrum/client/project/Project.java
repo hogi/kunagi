@@ -35,18 +35,18 @@ public class Project extends GProject {
 		return getDao().getImpedimentsByProject(this);
 	}
 
-	public BacklogItem createNewBacklogItem() {
-		BacklogItem item = new BacklogItem(this);
-		getDao().createBacklogItem(item);
+	public Story createNewBacklogItem() {
+		Story item = new Story(this);
+		getDao().createStory(item);
 		return item;
 	}
 
-	public void deleteBacklogItem(BacklogItem item) {
-		getDao().deleteBacklogItem(item);
+	public void deleteBacklogItem(Story item) {
+		getDao().deleteStory(item);
 	}
 
-	public List<BacklogItem> getBacklogItems() {
-		return getDao().getBacklogItemsByProject(this);
+	public List<Story> getBacklogItems() {
+		return getDao().getStorysByProject(this);
 	}
 
 	public Sprint createNewSprint() {
@@ -60,8 +60,8 @@ public class Project extends GProject {
 	}
 
 	public boolean deleteTask(Task task) {
-		for (BacklogItem backlogItem : getBacklogItems()) {
-			boolean b = backlogItem.getTasks().remove(task);
+		for (Story story : getBacklogItems()) {
+			boolean b = story.getTasks().remove(task);
 			if (b) return true;
 		}
 		return false;

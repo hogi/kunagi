@@ -46,10 +46,10 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("label", this.label);
-        properties.put("backlogItemId", this.backlogItemId);
         properties.put("effort", this.effort);
+        properties.put("storyId", this.storyId);
         properties.put("notice", this.notice);
+        properties.put("label", this.label);
     }
 
     public int compareTo(Task other) {
@@ -65,78 +65,10 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
-        setLabel(template.getLabel());
-        setBacklogItem(template.getBacklogItem());
         setEffort(template.getEffort());
+        setStory(template.getStory());
         setNotice(template.getNotice());
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        entityModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
-    }
-
-    // -----------------------------------------------------------
-    // - backlogItem
-    // -----------------------------------------------------------
-
-    private String backlogItemId;
-
-    public final scrum.server.project.BacklogItem getBacklogItem() {
-        if (this.backlogItemId == null) return null;
-        return (scrum.server.project.BacklogItem)backlogItemDao.getById(this.backlogItemId);
-    }
-
-    public final void setBacklogItem(scrum.server.project.BacklogItem backlogItem) {
-        backlogItem = prepareBacklogItem(backlogItem);
-        if (isBacklogItem(backlogItem)) return;
-        this.backlogItemId = backlogItem == null ? null : backlogItem.getId();
-        entityModified();
-    }
-
-    protected scrum.server.project.BacklogItem prepareBacklogItem(scrum.server.project.BacklogItem backlogItem) {
-        return backlogItem;
-    }
-
-    protected void repairDeadBacklogItemReference(String entityId) {
-        if (entityId.equals(this.backlogItemId)) {
-            repairMissingMaster();
-        }
-    }
-
-    public final boolean isBacklogItemSet() {
-        return this.backlogItemId != null;
-    }
-
-    public final boolean isBacklogItem(scrum.server.project.BacklogItem backlogItem) {
-        if (this.backlogItemId == null && backlogItem == null) return true;
-        return backlogItem != null && backlogItem.getId().equals(this.backlogItemId);
+        setLabel(template.getLabel());
     }
 
     // -----------------------------------------------------------
@@ -170,6 +102,43 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
+    // - story
+    // -----------------------------------------------------------
+
+    private String storyId;
+
+    public final scrum.server.project.Story getStory() {
+        if (this.storyId == null) return null;
+        return (scrum.server.project.Story)storyDao.getById(this.storyId);
+    }
+
+    public final void setStory(scrum.server.project.Story story) {
+        story = prepareStory(story);
+        if (isStory(story)) return;
+        this.storyId = story == null ? null : story.getId();
+        entityModified();
+    }
+
+    protected scrum.server.project.Story prepareStory(scrum.server.project.Story story) {
+        return story;
+    }
+
+    protected void repairDeadStoryReference(String entityId) {
+        if (entityId.equals(this.storyId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isStorySet() {
+        return this.storyId != null;
+    }
+
+    public final boolean isStory(scrum.server.project.Story story) {
+        if (this.storyId == null && story == null) return true;
+        return story != null && story.getId().equals(this.storyId);
+    }
+
+    // -----------------------------------------------------------
     // - notice
     // -----------------------------------------------------------
 
@@ -200,24 +169,55 @@ public abstract class GTask
         return this.notice != null && this.notice.equals(notice);
     }
 
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
+    }
+
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
-        repairDeadBacklogItemReference(entityId);
+        repairDeadStoryReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
-        if (!isBacklogItemSet()) {
+        if (!isStorySet()) {
             repairMissingMaster();
             return;
         }
         try {
-            getBacklogItem();
+            getStory();
         } catch (EntityDoesNotExistException ex) {
-            LOG.info("Repairing dead backlogItem reference");
-            repairDeadBacklogItemReference(this.backlogItemId);
+            LOG.info("Repairing dead story reference");
+            repairDeadStoryReference(this.storyId);
         }
     }
 
@@ -228,10 +228,10 @@ public abstract class GTask
 
     // --- dependencies ---
 
-    protected static scrum.server.project.BacklogItemDao backlogItemDao;
+    protected static scrum.server.project.StoryDao storyDao;
 
-    public static final void setBacklogItemDao(scrum.server.project.BacklogItemDao backlogItemDao) {
-        GTask.backlogItemDao = backlogItemDao;
+    public static final void setStoryDao(scrum.server.project.StoryDao storyDao) {
+        GTask.storyDao = storyDao;
     }
 
     protected static TaskDao taskDao;

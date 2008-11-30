@@ -6,7 +6,7 @@ import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.StyleSheet;
 import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
-import scrum.client.project.BacklogItem;
+import scrum.client.project.Story;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
@@ -20,10 +20,10 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SprintBacklogItemWidget extends ABlockWidget {
 
-	private BacklogItem item;
+	private Story item;
 	private TaskListWidget taskListWidget;
 
-	public SprintBacklogItemWidget(BacklogItem item) {
+	public SprintBacklogItemWidget(Story item) {
 		this.item = item;
 	}
 
@@ -99,7 +99,7 @@ public class SprintBacklogItemWidget extends ABlockWidget {
 		return new BlockListDropController(this, WorkspaceWidget.backlog.list);
 	}
 
-	public BacklogItem getItem() {
+	public Story getItem() {
 		return item;
 	}
 }

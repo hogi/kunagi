@@ -43,14 +43,14 @@ public abstract class GTaskDao
 
     // --- clear caches ---
     public void clearCaches() {
-        tasksByLabelCache.clear();
-        labelsCache = null;
-        tasksByBacklogItemCache.clear();
-        backlogItemsCache = null;
         tasksByEffortCache.clear();
         effortsCache = null;
+        tasksByStoryCache.clear();
+        storysCache = null;
         tasksByNoticeCache.clear();
         noticesCache = null;
+        tasksByLabelCache.clear();
+        labelsCache = null;
     }
 
     @Override
@@ -67,86 +67,6 @@ public abstract class GTaskDao
         if (event.getEntity() instanceof Task) {
             clearCaches();
         }
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Task>> tasksByLabelCache = new Cache<java.lang.String,Set<Task>>(
-            new Cache.Factory<java.lang.String,Set<Task>>() {
-                public Set<Task> create(java.lang.String label) {
-                    return getEntities(new IsLabel(label));
-                }
-            });
-
-    public final Set<Task> getTasksByLabel(java.lang.String label) {
-        return tasksByLabelCache.get(label);
-    }
-    private Set<java.lang.String> labelsCache;
-
-    public final Set<java.lang.String> getLabels() {
-        if (labelsCache == null) {
-            labelsCache = new HashSet<java.lang.String>();
-            for (Task e : getEntities()) {
-                if (e.isLabelSet()) labelsCache.add(e.getLabel());
-            }
-        }
-        return labelsCache;
-    }
-
-    private static class IsLabel implements Predicate<Task> {
-
-        private java.lang.String value;
-
-        public IsLabel(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Task e) {
-            return e.isLabel(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - backlogItem
-    // -----------------------------------------------------------
-
-    private final Cache<scrum.server.project.BacklogItem,Set<Task>> tasksByBacklogItemCache = new Cache<scrum.server.project.BacklogItem,Set<Task>>(
-            new Cache.Factory<scrum.server.project.BacklogItem,Set<Task>>() {
-                public Set<Task> create(scrum.server.project.BacklogItem backlogItem) {
-                    return getEntities(new IsBacklogItem(backlogItem));
-                }
-            });
-
-    public final Set<Task> getTasksByBacklogItem(scrum.server.project.BacklogItem backlogItem) {
-        return tasksByBacklogItemCache.get(backlogItem);
-    }
-    private Set<scrum.server.project.BacklogItem> backlogItemsCache;
-
-    public final Set<scrum.server.project.BacklogItem> getBacklogItems() {
-        if (backlogItemsCache == null) {
-            backlogItemsCache = new HashSet<scrum.server.project.BacklogItem>();
-            for (Task e : getEntities()) {
-                if (e.isBacklogItemSet()) backlogItemsCache.add(e.getBacklogItem());
-            }
-        }
-        return backlogItemsCache;
-    }
-
-    private static class IsBacklogItem implements Predicate<Task> {
-
-        private scrum.server.project.BacklogItem value;
-
-        public IsBacklogItem(scrum.server.project.BacklogItem value) {
-            this.value = value;
-        }
-
-        public boolean test(Task e) {
-            return e.isBacklogItem(value);
-        }
-
     }
 
     // -----------------------------------------------------------
@@ -185,6 +105,46 @@ public abstract class GTaskDao
 
         public boolean test(Task e) {
             return e.isEffort(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - story
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.project.Story,Set<Task>> tasksByStoryCache = new Cache<scrum.server.project.Story,Set<Task>>(
+            new Cache.Factory<scrum.server.project.Story,Set<Task>>() {
+                public Set<Task> create(scrum.server.project.Story story) {
+                    return getEntities(new IsStory(story));
+                }
+            });
+
+    public final Set<Task> getTasksByStory(scrum.server.project.Story story) {
+        return tasksByStoryCache.get(story);
+    }
+    private Set<scrum.server.project.Story> storysCache;
+
+    public final Set<scrum.server.project.Story> getStorys() {
+        if (storysCache == null) {
+            storysCache = new HashSet<scrum.server.project.Story>();
+            for (Task e : getEntities()) {
+                if (e.isStorySet()) storysCache.add(e.getStory());
+            }
+        }
+        return storysCache;
+    }
+
+    private static class IsStory implements Predicate<Task> {
+
+        private scrum.server.project.Story value;
+
+        public IsStory(scrum.server.project.Story value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isStory(value);
         }
 
     }
@@ -229,6 +189,46 @@ public abstract class GTaskDao
 
     }
 
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Task>> tasksByLabelCache = new Cache<java.lang.String,Set<Task>>(
+            new Cache.Factory<java.lang.String,Set<Task>>() {
+                public Set<Task> create(java.lang.String label) {
+                    return getEntities(new IsLabel(label));
+                }
+            });
+
+    public final Set<Task> getTasksByLabel(java.lang.String label) {
+        return tasksByLabelCache.get(label);
+    }
+    private Set<java.lang.String> labelsCache;
+
+    public final Set<java.lang.String> getLabels() {
+        if (labelsCache == null) {
+            labelsCache = new HashSet<java.lang.String>();
+            for (Task e : getEntities()) {
+                if (e.isLabelSet()) labelsCache.add(e.getLabel());
+            }
+        }
+        return labelsCache;
+    }
+
+    private static class IsLabel implements Predicate<Task> {
+
+        private java.lang.String value;
+
+        public IsLabel(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isLabel(value);
+        }
+
+    }
+
     // --- valueObject classes ---
     @Override
     protected Set<Class> getValueObjectClasses() {
@@ -244,10 +244,10 @@ public abstract class GTaskDao
 
     // --- dependencies ---
 
-    protected scrum.server.project.BacklogItemDao backlogItemDao;
+    protected scrum.server.project.StoryDao storyDao;
 
-    public void setBacklogItemDao(scrum.server.project.BacklogItemDao backlogItemDao) {
-        this.backlogItemDao = backlogItemDao;
+    public void setStoryDao(scrum.server.project.StoryDao storyDao) {
+        this.storyDao = storyDao;
     }
 
 }

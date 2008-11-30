@@ -30,14 +30,14 @@ import ilarkesto.base.time.*;
 import ilarkesto.base.*;
 import ilarkesto.persistence.*;
 
-public abstract class GBacklogItem
+public abstract class GStory
             extends AEntity
-            implements java.lang.Comparable<BacklogItem> {
+            implements java.lang.Comparable<Story> {
 
     // --- AEntity ---
 
-    public final BacklogItemDao getDao() {
-        return backlogItemDao;
+    public final StoryDao getDao() {
+        return storyDao;
     }
 
     protected void repairDeadValueObject(AValueObject valueObject) {
@@ -46,129 +46,35 @@ public abstract class GBacklogItem
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("sprintId", this.sprintId);
-        properties.put("closed", this.closed);
-        properties.put("testDescription", this.testDescription);
         properties.put("description", this.description);
-        properties.put("projectId", this.projectId);
-        properties.put("label", this.label);
         properties.put("effort", this.effort);
+        properties.put("testDescription", this.testDescription);
+        properties.put("projectId", this.projectId);
+        properties.put("closed", this.closed);
+        properties.put("label", this.label);
+        properties.put("sprintId", this.sprintId);
     }
 
-    public int compareTo(BacklogItem other) {
+    public int compareTo(Story other) {
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
-    private static final Logger LOG = Logger.get(GBacklogItem.class);
+    private static final Logger LOG = Logger.get(GStory.class);
 
-    public static final String TYPE = "backlogItem";
+    public static final String TYPE = "story";
 
     // --- copy constructor ---
-    public GBacklogItem(GBacklogItem template) {
+    public GStory(GStory template) {
         super(template);
         if (template==null) return;
 
-        setSprint(template.getSprint());
-        setClosed(template.isClosed());
-        setTestDescription(template.getTestDescription());
         setDescription(template.getDescription());
-        setProject(template.getProject());
-        setLabel(template.getLabel());
         setEffort(template.getEffort());
-    }
-
-    // -----------------------------------------------------------
-    // - sprint
-    // -----------------------------------------------------------
-
-    private String sprintId;
-
-    public final scrum.server.sprint.Sprint getSprint() {
-        if (this.sprintId == null) return null;
-        return (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
-    }
-
-    public final void setSprint(scrum.server.sprint.Sprint sprint) {
-        sprint = prepareSprint(sprint);
-        if (isSprint(sprint)) return;
-        this.sprintId = sprint == null ? null : sprint.getId();
-        entityModified();
-    }
-
-    protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
-        return sprint;
-    }
-
-    protected void repairDeadSprintReference(String entityId) {
-        if (entityId.equals(this.sprintId)) {
-            this.sprintId = null;
-            entityModified();
-        }
-    }
-
-    public final boolean isSprintSet() {
-        return this.sprintId != null;
-    }
-
-    public final boolean isSprint(scrum.server.sprint.Sprint sprint) {
-        if (this.sprintId == null && sprint == null) return true;
-        return sprint != null && sprint.getId().equals(this.sprintId);
-    }
-
-    // -----------------------------------------------------------
-    // - closed
-    // -----------------------------------------------------------
-
-    private boolean closed;
-
-    public final boolean isClosed() {
-        return closed;
-    }
-
-    public final void setClosed(boolean closed) {
-        closed = prepareClosed(closed);
-        if (isClosed(closed)) return;
-        this.closed = closed;
-        entityModified();
-    }
-
-    protected boolean prepareClosed(boolean closed) {
-        return closed;
-    }
-
-    public final boolean isClosed(boolean closed) {
-        return this.closed == closed;
-    }
-
-    // -----------------------------------------------------------
-    // - testDescription
-    // -----------------------------------------------------------
-
-    private java.lang.String testDescription;
-
-    public final java.lang.String getTestDescription() {
-        return testDescription;
-    }
-
-    public final void setTestDescription(java.lang.String testDescription) {
-        testDescription = prepareTestDescription(testDescription);
-        if (isTestDescription(testDescription)) return;
-        this.testDescription = testDescription;
-        entityModified();
-    }
-
-    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
-        testDescription = Str.removeUnreadableChars(testDescription);
-        return testDescription;
-    }
-
-    public final boolean isTestDescriptionSet() {
-        return this.testDescription != null;
-    }
-
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        if (this.testDescription == null && testDescription == null) return true;
-        return this.testDescription != null && this.testDescription.equals(testDescription);
+        setTestDescription(template.getTestDescription());
+        setProject(template.getProject());
+        setClosed(template.isClosed());
+        setLabel(template.getLabel());
+        setSprint(template.getSprint());
     }
 
     // -----------------------------------------------------------
@@ -200,6 +106,67 @@ public abstract class GBacklogItem
     public final boolean isDescription(java.lang.String description) {
         if (this.description == null && description == null) return true;
         return this.description != null && this.description.equals(description);
+    }
+
+    // -----------------------------------------------------------
+    // - effort
+    // -----------------------------------------------------------
+
+    private java.lang.Integer effort;
+
+    public final java.lang.Integer getEffort() {
+        return effort;
+    }
+
+    public final void setEffort(java.lang.Integer effort) {
+        effort = prepareEffort(effort);
+        if (isEffort(effort)) return;
+        this.effort = effort;
+        entityModified();
+    }
+
+    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
+        return effort;
+    }
+
+    public final boolean isEffortSet() {
+        return this.effort != null;
+    }
+
+    public final boolean isEffort(java.lang.Integer effort) {
+        if (this.effort == null && effort == null) return true;
+        return this.effort != null && this.effort.equals(effort);
+    }
+
+    // -----------------------------------------------------------
+    // - testDescription
+    // -----------------------------------------------------------
+
+    private java.lang.String testDescription;
+
+    public final java.lang.String getTestDescription() {
+        return testDescription;
+    }
+
+    public final void setTestDescription(java.lang.String testDescription) {
+        testDescription = prepareTestDescription(testDescription);
+        if (isTestDescription(testDescription)) return;
+        this.testDescription = testDescription;
+        entityModified();
+    }
+
+    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
+        testDescription = Str.removeUnreadableChars(testDescription);
+        return testDescription;
+    }
+
+    public final boolean isTestDescriptionSet() {
+        return this.testDescription != null;
+    }
+
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        if (this.testDescription == null && testDescription == null) return true;
+        return this.testDescription != null && this.testDescription.equals(testDescription);
     }
 
     // -----------------------------------------------------------
@@ -240,6 +207,31 @@ public abstract class GBacklogItem
     }
 
     // -----------------------------------------------------------
+    // - closed
+    // -----------------------------------------------------------
+
+    private boolean closed;
+
+    public final boolean isClosed() {
+        return closed;
+    }
+
+    public final void setClosed(boolean closed) {
+        closed = prepareClosed(closed);
+        if (isClosed(closed)) return;
+        this.closed = closed;
+        entityModified();
+    }
+
+    protected boolean prepareClosed(boolean closed) {
+        return closed;
+    }
+
+    public final boolean isClosed(boolean closed) {
+        return this.closed == closed;
+    }
+
+    // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
 
@@ -271,51 +263,53 @@ public abstract class GBacklogItem
     }
 
     // -----------------------------------------------------------
-    // - effort
+    // - sprint
     // -----------------------------------------------------------
 
-    private java.lang.Integer effort;
+    private String sprintId;
 
-    public final java.lang.Integer getEffort() {
-        return effort;
+    public final scrum.server.sprint.Sprint getSprint() {
+        if (this.sprintId == null) return null;
+        return (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
     }
 
-    public final void setEffort(java.lang.Integer effort) {
-        effort = prepareEffort(effort);
-        if (isEffort(effort)) return;
-        this.effort = effort;
+    public final void setSprint(scrum.server.sprint.Sprint sprint) {
+        sprint = prepareSprint(sprint);
+        if (isSprint(sprint)) return;
+        this.sprintId = sprint == null ? null : sprint.getId();
         entityModified();
     }
 
-    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
-        return effort;
+    protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
+        return sprint;
     }
 
-    public final boolean isEffortSet() {
-        return this.effort != null;
+    protected void repairDeadSprintReference(String entityId) {
+        if (entityId.equals(this.sprintId)) {
+            this.sprintId = null;
+            entityModified();
+        }
     }
 
-    public final boolean isEffort(java.lang.Integer effort) {
-        if (this.effort == null && effort == null) return true;
-        return this.effort != null && this.effort.equals(effort);
+    public final boolean isSprintSet() {
+        return this.sprintId != null;
+    }
+
+    public final boolean isSprint(scrum.server.sprint.Sprint sprint) {
+        if (this.sprintId == null && sprint == null) return true;
+        return sprint != null && sprint.getId().equals(this.sprintId);
     }
 
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
-        repairDeadSprintReference(entityId);
         repairDeadProjectReference(entityId);
+        repairDeadSprintReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
-        try {
-            getSprint();
-        } catch (EntityDoesNotExistException ex) {
-            LOG.info("Repairing dead sprint reference");
-            repairDeadSprintReference(this.sprintId);
-        }
         if (!isProjectSet()) {
             repairMissingMaster();
             return;
@@ -325,6 +319,12 @@ public abstract class GBacklogItem
         } catch (EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
+        }
+        try {
+            getSprint();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead sprint reference");
+            repairDeadSprintReference(this.sprintId);
         }
     }
 
@@ -338,19 +338,19 @@ public abstract class GBacklogItem
     protected static scrum.server.sprint.SprintDao sprintDao;
 
     public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
-        GBacklogItem.sprintDao = sprintDao;
+        GStory.sprintDao = sprintDao;
     }
 
     protected static scrum.server.project.ProjectDao projectDao;
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
-        GBacklogItem.projectDao = projectDao;
+        GStory.projectDao = projectDao;
     }
 
-    protected static BacklogItemDao backlogItemDao;
+    protected static StoryDao storyDao;
 
-    public static final void setBacklogItemDao(BacklogItemDao backlogItemDao) {
-        GBacklogItem.backlogItemDao = backlogItemDao;
+    public static final void setStoryDao(StoryDao storyDao) {
+        GStory.storyDao = storyDao;
     }
 
 }
