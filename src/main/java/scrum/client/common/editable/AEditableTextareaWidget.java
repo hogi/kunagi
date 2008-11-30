@@ -74,7 +74,14 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 
 	@Override
 	protected Widget getViewer() {
-		viewer.setText(getText());
+
+		String text = getText();
+
+		if (text != null && text.length() > 45) {
+			text = text.substring(0, 45);
+			text += "...";
+		}
+		viewer.setText(text);
 		return viewer;
 	}
 
