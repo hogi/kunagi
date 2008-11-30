@@ -34,7 +34,7 @@ public class CurrentSprintWidget extends Composite {
 								+ "The sprint starts with a one-day sprint planning meeting. Many daily Scrum meetings occur during the sprint (one per day). At the end of the sprint we have a sprint review meeting, followed by a sprint retrospective meeting.\n"
 								+ "\n"
 								+ "During the sprint, the team must not be interrupted with additional requests. Guaranteeing the team won't be interrupted allows it to make real commitments it can be expected to keep."));
-		view.add(new HTML("<br>"));
+		view.add(new HTML("<br />"));
 		sprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
 
 		if (sprint == null) {
@@ -62,9 +62,14 @@ public class CurrentSprintWidget extends Composite {
 			}
 
 		});
+		fieldsWidget.addField("Effort sum", new Label(sprint.getTaskEffortSumString()));
 		view.add(fieldsWidget);
 
-		view.add(new SprintStoryListWidget(sprint));
+		view.add(new SprintStoryListWidget(this));
+	}
+
+	public Sprint getSprint() {
+		return sprint;
 	}
 
 	class AssignSprintListener implements ClickListener {

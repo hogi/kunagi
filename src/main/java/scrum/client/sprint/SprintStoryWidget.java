@@ -105,6 +105,6 @@ public class SprintStoryWidget extends ABlockWidget {
 	}
 
 	public void taskDataChanged() {
-		rebuild();
+		controller.dataChanged(this);
 	}
 }

@@ -21,6 +21,27 @@ public class Sprint extends GSprint {
 		return getDao().getStorysBySprint(this);
 	}
 
+	public Integer getTaskEffortSum() {
+		Integer sum = null;
+		for (Story s : getStorys()) {
+			Integer effort = s.getTaskEffortSum();
+			if (effort != null) {
+				if (sum == null) {
+					sum = effort;
+				} else {
+					sum += effort;
+				}
+			}
+		}
+		return sum;
+	}
+
+	public String getTaskEffortSumString() {
+		Integer sum = getTaskEffortSum();
+		if (sum != null) return sum + " hours";
+		return "unknown";
+	}
+
 	@Override
 	public String toString() {
 		return getLabel();

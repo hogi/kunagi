@@ -58,7 +58,7 @@ public class TaskWidget extends ABlockWidget {
 			@Override
 			protected void setValue(Integer value) {
 				task.setEffort(value);
-				listController.dataChanged(TaskWidget.this);
+				controller.dataChanged(TaskWidget.this);
 			}
 
 		});

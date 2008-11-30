@@ -1,5 +1,6 @@
 package scrum.client.sprint;
 
+import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.ScrumUtil;
 import scrum.client.common.StyleSheet;
@@ -15,12 +16,19 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SprintStoryListWidget extends Composite {
 
-	private Sprint sprint;
+	private CurrentSprintWidget sprintWidget;
 	public BlockListWidget<SprintStoryWidget> list = new BlockListWidget<SprintStoryWidget>();
 
-	public SprintStoryListWidget(Sprint sprint) {
-		this.sprint = sprint;
+	public SprintStoryListWidget(CurrentSprintWidget sprintWidget) {
+		this.sprintWidget = sprintWidget;
 
+		list.setController(new BlockListController<SprintStoryWidget>() {
+
+			@Override
+			public void dataChanged(SprintStoryWidget block) {
+				SprintStoryListWidget.this.sprintWidget.update();
+			}
+		});
 		Button createButton = new Button("Add Backlog-Item");
 		createButton.addClickListener(new CreateClickListener());
 
@@ -41,7 +49,7 @@ public class SprintStoryListWidget extends Composite {
 
 	public void update() {
 		list.clear();
-		for (Story item : sprint.getStorys()) {
+		for (Story item : sprintWidget.getSprint().getStorys()) {
 			list.addBlock(new SprintStoryWidget(item));
 		}
 	}
