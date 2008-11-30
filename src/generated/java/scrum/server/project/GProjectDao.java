@@ -43,20 +43,20 @@ public abstract class GProjectDao
 
     // --- clear caches ---
     public void clearCaches() {
-        projectsByProductOwnerCache.clear();
-        productOwnersCache = null;
         projectsByLabelCache.clear();
         labelsCache = null;
-        projectsByScrumMasterCache.clear();
-        scrumMastersCache = null;
-        projectsByDescriptionCache.clear();
-        descriptionsCache = null;
         projectsByAdminCache.clear();
         adminsCache = null;
-        projectsByCurrentSprintCache.clear();
-        currentSprintsCache = null;
+        projectsByProductOwnerCache.clear();
+        productOwnersCache = null;
         projectsByTeamMemberCache.clear();
         teamMembersCache = null;
+        projectsByDescriptionCache.clear();
+        descriptionsCache = null;
+        projectsByScrumMasterCache.clear();
+        scrumMastersCache = null;
+        projectsByCurrentSprintCache.clear();
+        currentSprintsCache = null;
     }
 
     @Override
@@ -73,46 +73,6 @@ public abstract class GProjectDao
         if (event.getEntity() instanceof Project) {
             clearCaches();
         }
-    }
-
-    // -----------------------------------------------------------
-    // - productOwner
-    // -----------------------------------------------------------
-
-    private final Cache<scrum.server.admin.User,Set<Project>> projectsByProductOwnerCache = new Cache<scrum.server.admin.User,Set<Project>>(
-            new Cache.Factory<scrum.server.admin.User,Set<Project>>() {
-                public Set<Project> create(scrum.server.admin.User productOwner) {
-                    return getEntities(new IsProductOwner(productOwner));
-                }
-            });
-
-    public final Set<Project> getProjectsByProductOwner(scrum.server.admin.User productOwner) {
-        return projectsByProductOwnerCache.get(productOwner);
-    }
-    private Set<scrum.server.admin.User> productOwnersCache;
-
-    public final Set<scrum.server.admin.User> getProductOwners() {
-        if (productOwnersCache == null) {
-            productOwnersCache = new HashSet<scrum.server.admin.User>();
-            for (Project e : getEntities()) {
-                if (e.isProductOwnerSet()) productOwnersCache.add(e.getProductOwner());
-            }
-        }
-        return productOwnersCache;
-    }
-
-    private static class IsProductOwner implements Predicate<Project> {
-
-        private scrum.server.admin.User value;
-
-        public IsProductOwner(scrum.server.admin.User value) {
-            this.value = value;
-        }
-
-        public boolean test(Project e) {
-            return e.isProductOwner(value);
-        }
-
     }
 
     // -----------------------------------------------------------
@@ -151,86 +111,6 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isLabel(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - scrumMaster
-    // -----------------------------------------------------------
-
-    private final Cache<scrum.server.admin.User,Set<Project>> projectsByScrumMasterCache = new Cache<scrum.server.admin.User,Set<Project>>(
-            new Cache.Factory<scrum.server.admin.User,Set<Project>>() {
-                public Set<Project> create(scrum.server.admin.User scrumMaster) {
-                    return getEntities(new IsScrumMaster(scrumMaster));
-                }
-            });
-
-    public final Set<Project> getProjectsByScrumMaster(scrum.server.admin.User scrumMaster) {
-        return projectsByScrumMasterCache.get(scrumMaster);
-    }
-    private Set<scrum.server.admin.User> scrumMastersCache;
-
-    public final Set<scrum.server.admin.User> getScrumMasters() {
-        if (scrumMastersCache == null) {
-            scrumMastersCache = new HashSet<scrum.server.admin.User>();
-            for (Project e : getEntities()) {
-                if (e.isScrumMasterSet()) scrumMastersCache.add(e.getScrumMaster());
-            }
-        }
-        return scrumMastersCache;
-    }
-
-    private static class IsScrumMaster implements Predicate<Project> {
-
-        private scrum.server.admin.User value;
-
-        public IsScrumMaster(scrum.server.admin.User value) {
-            this.value = value;
-        }
-
-        public boolean test(Project e) {
-            return e.isScrumMaster(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - description
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Project>> projectsByDescriptionCache = new Cache<java.lang.String,Set<Project>>(
-            new Cache.Factory<java.lang.String,Set<Project>>() {
-                public Set<Project> create(java.lang.String description) {
-                    return getEntities(new IsDescription(description));
-                }
-            });
-
-    public final Set<Project> getProjectsByDescription(java.lang.String description) {
-        return projectsByDescriptionCache.get(description);
-    }
-    private Set<java.lang.String> descriptionsCache;
-
-    public final Set<java.lang.String> getDescriptions() {
-        if (descriptionsCache == null) {
-            descriptionsCache = new HashSet<java.lang.String>();
-            for (Project e : getEntities()) {
-                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
-            }
-        }
-        return descriptionsCache;
-    }
-
-    private static class IsDescription implements Predicate<Project> {
-
-        private java.lang.String value;
-
-        public IsDescription(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Project e) {
-            return e.isDescription(value);
         }
 
     }
@@ -276,41 +156,41 @@ public abstract class GProjectDao
     }
 
     // -----------------------------------------------------------
-    // - currentSprint
+    // - productOwner
     // -----------------------------------------------------------
 
-    private final Cache<scrum.server.sprint.Sprint,Set<Project>> projectsByCurrentSprintCache = new Cache<scrum.server.sprint.Sprint,Set<Project>>(
-            new Cache.Factory<scrum.server.sprint.Sprint,Set<Project>>() {
-                public Set<Project> create(scrum.server.sprint.Sprint currentSprint) {
-                    return getEntities(new IsCurrentSprint(currentSprint));
+    private final Cache<scrum.server.admin.User,Set<Project>> projectsByProductOwnerCache = new Cache<scrum.server.admin.User,Set<Project>>(
+            new Cache.Factory<scrum.server.admin.User,Set<Project>>() {
+                public Set<Project> create(scrum.server.admin.User productOwner) {
+                    return getEntities(new IsProductOwner(productOwner));
                 }
             });
 
-    public final Set<Project> getProjectsByCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
-        return projectsByCurrentSprintCache.get(currentSprint);
+    public final Set<Project> getProjectsByProductOwner(scrum.server.admin.User productOwner) {
+        return projectsByProductOwnerCache.get(productOwner);
     }
-    private Set<scrum.server.sprint.Sprint> currentSprintsCache;
+    private Set<scrum.server.admin.User> productOwnersCache;
 
-    public final Set<scrum.server.sprint.Sprint> getCurrentSprints() {
-        if (currentSprintsCache == null) {
-            currentSprintsCache = new HashSet<scrum.server.sprint.Sprint>();
+    public final Set<scrum.server.admin.User> getProductOwners() {
+        if (productOwnersCache == null) {
+            productOwnersCache = new HashSet<scrum.server.admin.User>();
             for (Project e : getEntities()) {
-                if (e.isCurrentSprintSet()) currentSprintsCache.add(e.getCurrentSprint());
+                if (e.isProductOwnerSet()) productOwnersCache.add(e.getProductOwner());
             }
         }
-        return currentSprintsCache;
+        return productOwnersCache;
     }
 
-    private static class IsCurrentSprint implements Predicate<Project> {
+    private static class IsProductOwner implements Predicate<Project> {
 
-        private scrum.server.sprint.Sprint value;
+        private scrum.server.admin.User value;
 
-        public IsCurrentSprint(scrum.server.sprint.Sprint value) {
+        public IsProductOwner(scrum.server.admin.User value) {
             this.value = value;
         }
 
         public boolean test(Project e) {
-            return e.isCurrentSprint(value);
+            return e.isProductOwner(value);
         }
 
     }
@@ -351,6 +231,126 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.containsTeamMember(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByDescriptionCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String description) {
+                    return getEntities(new IsDescription(description));
+                }
+            });
+
+    public final Set<Project> getProjectsByDescription(java.lang.String description) {
+        return projectsByDescriptionCache.get(description);
+    }
+    private Set<java.lang.String> descriptionsCache;
+
+    public final Set<java.lang.String> getDescriptions() {
+        if (descriptionsCache == null) {
+            descriptionsCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
+            }
+        }
+        return descriptionsCache;
+    }
+
+    private static class IsDescription implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsDescription(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - scrumMaster
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.admin.User,Set<Project>> projectsByScrumMasterCache = new Cache<scrum.server.admin.User,Set<Project>>(
+            new Cache.Factory<scrum.server.admin.User,Set<Project>>() {
+                public Set<Project> create(scrum.server.admin.User scrumMaster) {
+                    return getEntities(new IsScrumMaster(scrumMaster));
+                }
+            });
+
+    public final Set<Project> getProjectsByScrumMaster(scrum.server.admin.User scrumMaster) {
+        return projectsByScrumMasterCache.get(scrumMaster);
+    }
+    private Set<scrum.server.admin.User> scrumMastersCache;
+
+    public final Set<scrum.server.admin.User> getScrumMasters() {
+        if (scrumMastersCache == null) {
+            scrumMastersCache = new HashSet<scrum.server.admin.User>();
+            for (Project e : getEntities()) {
+                if (e.isScrumMasterSet()) scrumMastersCache.add(e.getScrumMaster());
+            }
+        }
+        return scrumMastersCache;
+    }
+
+    private static class IsScrumMaster implements Predicate<Project> {
+
+        private scrum.server.admin.User value;
+
+        public IsScrumMaster(scrum.server.admin.User value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isScrumMaster(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - currentSprint
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.sprint.Sprint,Set<Project>> projectsByCurrentSprintCache = new Cache<scrum.server.sprint.Sprint,Set<Project>>(
+            new Cache.Factory<scrum.server.sprint.Sprint,Set<Project>>() {
+                public Set<Project> create(scrum.server.sprint.Sprint currentSprint) {
+                    return getEntities(new IsCurrentSprint(currentSprint));
+                }
+            });
+
+    public final Set<Project> getProjectsByCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
+        return projectsByCurrentSprintCache.get(currentSprint);
+    }
+    private Set<scrum.server.sprint.Sprint> currentSprintsCache;
+
+    public final Set<scrum.server.sprint.Sprint> getCurrentSprints() {
+        if (currentSprintsCache == null) {
+            currentSprintsCache = new HashSet<scrum.server.sprint.Sprint>();
+            for (Project e : getEntities()) {
+                if (e.isCurrentSprintSet()) currentSprintsCache.add(e.getCurrentSprint());
+            }
+        }
+        return currentSprintsCache;
+    }
+
+    private static class IsCurrentSprint implements Predicate<Project> {
+
+        private scrum.server.sprint.Sprint value;
+
+        public IsCurrentSprint(scrum.server.sprint.Sprint value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isCurrentSprint(value);
         }
 
     }

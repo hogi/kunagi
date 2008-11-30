@@ -73,56 +73,6 @@ public abstract class GScrumWebApplication
         taskDao = null;
     }
 
-    // --- backlogItemDao ---
-
-    private scrum.server.project.BacklogItemDao backlogItemDao;
-
-    public final scrum.server.project.BacklogItemDao getBacklogItemDao() {
-        if (backlogItemDao == null) {
-            backlogItemDao = createBacklogItemDao();
-            initializeBacklogItemDao(backlogItemDao);
-        }
-        return backlogItemDao;
-    }
-
-    protected scrum.server.project.BacklogItemDao createBacklogItemDao() {
-        return backlogItemDao = new scrum.server.project.BacklogItemDao();
-    }
-
-    protected void initializeBacklogItemDao(scrum.server.project.BacklogItemDao bean) {
-        autowire(bean);
-        Reflect.invokeInitializeIfThere(bean);
-    }
-
-    public final void resetBacklogItemDao() {
-        backlogItemDao = null;
-    }
-
-    // --- impedimentDao ---
-
-    private scrum.server.impediments.ImpedimentDao impedimentDao;
-
-    public final scrum.server.impediments.ImpedimentDao getImpedimentDao() {
-        if (impedimentDao == null) {
-            impedimentDao = createImpedimentDao();
-            initializeImpedimentDao(impedimentDao);
-        }
-        return impedimentDao;
-    }
-
-    protected scrum.server.impediments.ImpedimentDao createImpedimentDao() {
-        return impedimentDao = new scrum.server.impediments.ImpedimentDao();
-    }
-
-    protected void initializeImpedimentDao(scrum.server.impediments.ImpedimentDao bean) {
-        autowire(bean);
-        Reflect.invokeInitializeIfThere(bean);
-    }
-
-    public final void resetImpedimentDao() {
-        impedimentDao = null;
-    }
-
     // --- sprintDao ---
 
     private scrum.server.sprint.SprintDao sprintDao;
@@ -171,6 +121,56 @@ public abstract class GScrumWebApplication
 
     public final void resetProjectDao() {
         projectDao = null;
+    }
+
+    // --- backlogItemDao ---
+
+    private scrum.server.project.BacklogItemDao backlogItemDao;
+
+    public final scrum.server.project.BacklogItemDao getBacklogItemDao() {
+        if (backlogItemDao == null) {
+            backlogItemDao = createBacklogItemDao();
+            initializeBacklogItemDao(backlogItemDao);
+        }
+        return backlogItemDao;
+    }
+
+    protected scrum.server.project.BacklogItemDao createBacklogItemDao() {
+        return backlogItemDao = new scrum.server.project.BacklogItemDao();
+    }
+
+    protected void initializeBacklogItemDao(scrum.server.project.BacklogItemDao bean) {
+        autowire(bean);
+        Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetBacklogItemDao() {
+        backlogItemDao = null;
+    }
+
+    // --- impedimentDao ---
+
+    private scrum.server.impediments.ImpedimentDao impedimentDao;
+
+    public final scrum.server.impediments.ImpedimentDao getImpedimentDao() {
+        if (impedimentDao == null) {
+            impedimentDao = createImpedimentDao();
+            initializeImpedimentDao(impedimentDao);
+        }
+        return impedimentDao;
+    }
+
+    protected scrum.server.impediments.ImpedimentDao createImpedimentDao() {
+        return impedimentDao = new scrum.server.impediments.ImpedimentDao();
+    }
+
+    protected void initializeImpedimentDao(scrum.server.impediments.ImpedimentDao bean) {
+        autowire(bean);
+        Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetImpedimentDao() {
+        impedimentDao = null;
     }
 
     // --- dependencies ---

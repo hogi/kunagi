@@ -31,7 +31,8 @@ import ilarkesto.base.*;
 import ilarkesto.persistence.*;
 
 public abstract class GImpediment
-            extends AEntity {
+            extends AEntity
+            implements java.lang.Comparable<Impediment> {
 
     // --- AEntity ---
 
@@ -45,11 +46,15 @@ public abstract class GImpediment
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("solved", this.solved);
-        properties.put("description", this.description);
-        properties.put("solution", this.solution);
         properties.put("projectId", this.projectId);
+        properties.put("solved", this.solved);
         properties.put("label", this.label);
+        properties.put("solution", this.solution);
+        properties.put("description", this.description);
+    }
+
+    public int compareTo(Impediment other) {
+        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
     private static final Logger LOG = Logger.get(GImpediment.class);
@@ -61,98 +66,11 @@ public abstract class GImpediment
         super(template);
         if (template==null) return;
 
-        setSolved(template.isSolved());
-        setDescription(template.getDescription());
-        setSolution(template.getSolution());
         setProject(template.getProject());
+        setSolved(template.isSolved());
         setLabel(template.getLabel());
-    }
-
-    // -----------------------------------------------------------
-    // - solved
-    // -----------------------------------------------------------
-
-    private boolean solved;
-
-    public final boolean isSolved() {
-        return solved;
-    }
-
-    public final void setSolved(boolean solved) {
-        solved = prepareSolved(solved);
-        if (isSolved(solved)) return;
-        this.solved = solved;
-        entityModified();
-    }
-
-    protected boolean prepareSolved(boolean solved) {
-        return solved;
-    }
-
-    public final boolean isSolved(boolean solved) {
-        return this.solved == solved;
-    }
-
-    // -----------------------------------------------------------
-    // - description
-    // -----------------------------------------------------------
-
-    private java.lang.String description;
-
-    public final java.lang.String getDescription() {
-        return description;
-    }
-
-    public final void setDescription(java.lang.String description) {
-        description = prepareDescription(description);
-        if (isDescription(description)) return;
-        this.description = description;
-        entityModified();
-    }
-
-    protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
-        return description;
-    }
-
-    public final boolean isDescriptionSet() {
-        return this.description != null;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        if (this.description == null && description == null) return true;
-        return this.description != null && this.description.equals(description);
-    }
-
-    // -----------------------------------------------------------
-    // - solution
-    // -----------------------------------------------------------
-
-    private java.lang.String solution;
-
-    public final java.lang.String getSolution() {
-        return solution;
-    }
-
-    public final void setSolution(java.lang.String solution) {
-        solution = prepareSolution(solution);
-        if (isSolution(solution)) return;
-        this.solution = solution;
-        entityModified();
-    }
-
-    protected java.lang.String prepareSolution(java.lang.String solution) {
-        solution = Str.removeUnreadableChars(solution);
-        return solution;
-    }
-
-    public final boolean isSolutionSet() {
-        return this.solution != null;
-    }
-
-    public final boolean isSolution(java.lang.String solution) {
-        if (this.solution == null && solution == null) return true;
-        return this.solution != null && this.solution.equals(solution);
+        setSolution(template.getSolution());
+        setDescription(template.getDescription());
     }
 
     // -----------------------------------------------------------
@@ -193,6 +111,31 @@ public abstract class GImpediment
     }
 
     // -----------------------------------------------------------
+    // - solved
+    // -----------------------------------------------------------
+
+    private boolean solved;
+
+    public final boolean isSolved() {
+        return solved;
+    }
+
+    public final void setSolved(boolean solved) {
+        solved = prepareSolved(solved);
+        if (isSolved(solved)) return;
+        this.solved = solved;
+        entityModified();
+    }
+
+    protected boolean prepareSolved(boolean solved) {
+        return solved;
+    }
+
+    public final boolean isSolved(boolean solved) {
+        return this.solved == solved;
+    }
+
+    // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
 
@@ -221,6 +164,68 @@ public abstract class GImpediment
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - solution
+    // -----------------------------------------------------------
+
+    private java.lang.String solution;
+
+    public final java.lang.String getSolution() {
+        return solution;
+    }
+
+    public final void setSolution(java.lang.String solution) {
+        solution = prepareSolution(solution);
+        if (isSolution(solution)) return;
+        this.solution = solution;
+        entityModified();
+    }
+
+    protected java.lang.String prepareSolution(java.lang.String solution) {
+        solution = Str.removeUnreadableChars(solution);
+        return solution;
+    }
+
+    public final boolean isSolutionSet() {
+        return this.solution != null;
+    }
+
+    public final boolean isSolution(java.lang.String solution) {
+        if (this.solution == null && solution == null) return true;
+        return this.solution != null && this.solution.equals(solution);
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private java.lang.String description;
+
+    public final java.lang.String getDescription() {
+        return description;
+    }
+
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+        entityModified();
+    }
+
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
+    }
+
+    public final boolean isDescriptionSet() {
+        return this.description != null;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
     }
 
     protected void repairDeadReferences(String entityId) {

@@ -43,24 +43,6 @@ public abstract class GTask
         return ENTITY_TYPE;
     }
 
-    // --- effort ---
-
-    private java.lang.Integer effort ;
-
-    public final java.lang.Integer getEffort() {
-        return this.effort ;
-    }
-
-    public final Task setEffort(java.lang.Integer effort) {
-        this.effort = effort ;
-        propertyChanged("effort", this.effort);
-        return (Task)this;
-    }
-
-    public final boolean isEffort(java.lang.Integer effort) {
-        return equals(this.effort, effort);
-    }
-
     // --- label ---
 
     private java.lang.String label ;
@@ -99,20 +81,58 @@ public abstract class GTask
         return equals(this.backlogItemId, backlogItem);
     }
 
+    // --- effort ---
+
+    private java.lang.Integer effort ;
+
+    public final java.lang.Integer getEffort() {
+        return this.effort ;
+    }
+
+    public final Task setEffort(java.lang.Integer effort) {
+        this.effort = effort ;
+        propertyChanged("effort", this.effort);
+        return (Task)this;
+    }
+
+    public final boolean isEffort(java.lang.Integer effort) {
+        return equals(this.effort, effort);
+    }
+
+    // --- notice ---
+
+    private java.lang.String notice ;
+
+    public final java.lang.String getNotice() {
+        return this.notice ;
+    }
+
+    public final Task setNotice(java.lang.String notice) {
+        this.notice = notice ;
+        propertyChanged("notice", this.notice);
+        return (Task)this;
+    }
+
+    public final boolean isNotice(java.lang.String notice) {
+        return equals(this.notice, notice);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        effort  = (java.lang.Integer) props.get("effort");
         label  = (java.lang.String) props.get("label");
         backlogItemId = (String) props.get("backlogItemId");
+        effort  = (java.lang.Integer) props.get("effort");
+        notice  = (java.lang.String) props.get("notice");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("effort", this.effort);
         properties.put("label", this.label);
         properties.put("backlogItemId", this.backlogItemId);
+        properties.put("effort", this.effort);
+        properties.put("notice", this.notice);
     }
 
 }

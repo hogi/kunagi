@@ -31,7 +31,8 @@ import ilarkesto.base.*;
 import ilarkesto.persistence.*;
 
 public abstract class GSprint
-            extends AEntity {
+            extends AEntity
+            implements java.lang.Comparable<Sprint> {
 
     // --- AEntity ---
 
@@ -47,6 +48,10 @@ public abstract class GSprint
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("label", this.label);
+    }
+
+    public int compareTo(Sprint other) {
+        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
     private static final Logger LOG = Logger.get(GSprint.class);

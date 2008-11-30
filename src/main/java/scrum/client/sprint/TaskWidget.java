@@ -5,6 +5,7 @@ import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.editable.AEditableIntegerWidget;
 import scrum.client.common.editable.AEditableTextWidget;
+import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -57,6 +58,21 @@ public class TaskWidget extends ABlockWidget {
 			@Override
 			protected void setValue(Integer value) {
 				task.setEffort(value);
+			}
+
+		});
+
+		fieldsWidget.addField("Notice", new AEditableTextareaWidget() {
+
+			@Override
+			protected String getText() {
+				return task.getNotice();
+			}
+
+			@Override
+			protected void setText(String text) {
+				task.setNotice(text);
+				rebuild();
 			}
 
 		});

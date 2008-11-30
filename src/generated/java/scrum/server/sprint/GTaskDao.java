@@ -43,12 +43,14 @@ public abstract class GTaskDao
 
     // --- clear caches ---
     public void clearCaches() {
-        tasksByEffortCache.clear();
-        effortsCache = null;
         tasksByLabelCache.clear();
         labelsCache = null;
         tasksByBacklogItemCache.clear();
         backlogItemsCache = null;
+        tasksByEffortCache.clear();
+        effortsCache = null;
+        tasksByNoticeCache.clear();
+        noticesCache = null;
     }
 
     @Override
@@ -65,46 +67,6 @@ public abstract class GTaskDao
         if (event.getEntity() instanceof Task) {
             clearCaches();
         }
-    }
-
-    // -----------------------------------------------------------
-    // - effort
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.Integer,Set<Task>> tasksByEffortCache = new Cache<java.lang.Integer,Set<Task>>(
-            new Cache.Factory<java.lang.Integer,Set<Task>>() {
-                public Set<Task> create(java.lang.Integer effort) {
-                    return getEntities(new IsEffort(effort));
-                }
-            });
-
-    public final Set<Task> getTasksByEffort(java.lang.Integer effort) {
-        return tasksByEffortCache.get(effort);
-    }
-    private Set<java.lang.Integer> effortsCache;
-
-    public final Set<java.lang.Integer> getEfforts() {
-        if (effortsCache == null) {
-            effortsCache = new HashSet<java.lang.Integer>();
-            for (Task e : getEntities()) {
-                if (e.isEffortSet()) effortsCache.add(e.getEffort());
-            }
-        }
-        return effortsCache;
-    }
-
-    private static class IsEffort implements Predicate<Task> {
-
-        private java.lang.Integer value;
-
-        public IsEffort(java.lang.Integer value) {
-            this.value = value;
-        }
-
-        public boolean test(Task e) {
-            return e.isEffort(value);
-        }
-
     }
 
     // -----------------------------------------------------------
@@ -183,6 +145,86 @@ public abstract class GTaskDao
 
         public boolean test(Task e) {
             return e.isBacklogItem(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - effort
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.Integer,Set<Task>> tasksByEffortCache = new Cache<java.lang.Integer,Set<Task>>(
+            new Cache.Factory<java.lang.Integer,Set<Task>>() {
+                public Set<Task> create(java.lang.Integer effort) {
+                    return getEntities(new IsEffort(effort));
+                }
+            });
+
+    public final Set<Task> getTasksByEffort(java.lang.Integer effort) {
+        return tasksByEffortCache.get(effort);
+    }
+    private Set<java.lang.Integer> effortsCache;
+
+    public final Set<java.lang.Integer> getEfforts() {
+        if (effortsCache == null) {
+            effortsCache = new HashSet<java.lang.Integer>();
+            for (Task e : getEntities()) {
+                if (e.isEffortSet()) effortsCache.add(e.getEffort());
+            }
+        }
+        return effortsCache;
+    }
+
+    private static class IsEffort implements Predicate<Task> {
+
+        private java.lang.Integer value;
+
+        public IsEffort(java.lang.Integer value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isEffort(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - notice
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Task>> tasksByNoticeCache = new Cache<java.lang.String,Set<Task>>(
+            new Cache.Factory<java.lang.String,Set<Task>>() {
+                public Set<Task> create(java.lang.String notice) {
+                    return getEntities(new IsNotice(notice));
+                }
+            });
+
+    public final Set<Task> getTasksByNotice(java.lang.String notice) {
+        return tasksByNoticeCache.get(notice);
+    }
+    private Set<java.lang.String> noticesCache;
+
+    public final Set<java.lang.String> getNotices() {
+        if (noticesCache == null) {
+            noticesCache = new HashSet<java.lang.String>();
+            for (Task e : getEntities()) {
+                if (e.isNoticeSet()) noticesCache.add(e.getNotice());
+            }
+        }
+        return noticesCache;
+    }
+
+    private static class IsNotice implements Predicate<Task> {
+
+        private java.lang.String value;
+
+        public IsNotice(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isNotice(value);
         }
 
     }

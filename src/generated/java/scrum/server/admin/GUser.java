@@ -31,7 +31,8 @@ import ilarkesto.base.*;
 import ilarkesto.persistence.*;
 
 public abstract class GUser
-            extends AUser {
+            extends AUser
+            implements java.lang.Comparable<User> {
 
     // --- AEntity ---
 
@@ -46,6 +47,10 @@ public abstract class GUser
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("name", this.name);
+    }
+
+    public int compareTo(User other) {
+        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
     private static final Logger LOG = Logger.get(GUser.class);

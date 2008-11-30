@@ -31,7 +31,8 @@ import ilarkesto.base.*;
 import ilarkesto.persistence.*;
 
 public abstract class GBacklogItem
-            extends AEntity {
+            extends AEntity
+            implements java.lang.Comparable<BacklogItem> {
 
     // --- AEntity ---
 
@@ -45,13 +46,17 @@ public abstract class GBacklogItem
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("effort", this.effort);
-        properties.put("label", this.label);
-        properties.put("testDescription", this.testDescription);
-        properties.put("description", this.description);
         properties.put("sprintId", this.sprintId);
         properties.put("closed", this.closed);
+        properties.put("testDescription", this.testDescription);
+        properties.put("description", this.description);
+        properties.put("projectId", this.projectId);
+        properties.put("label", this.label);
+        properties.put("effort", this.effort);
+    }
+
+    public int compareTo(BacklogItem other) {
+        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
     private static final Logger LOG = Logger.get(GBacklogItem.class);
@@ -63,173 +68,13 @@ public abstract class GBacklogItem
         super(template);
         if (template==null) return;
 
-        setProject(template.getProject());
-        setEffort(template.getEffort());
-        setLabel(template.getLabel());
-        setTestDescription(template.getTestDescription());
-        setDescription(template.getDescription());
         setSprint(template.getSprint());
         setClosed(template.isClosed());
-    }
-
-    // -----------------------------------------------------------
-    // - project
-    // -----------------------------------------------------------
-
-    private String projectId;
-
-    public final scrum.server.project.Project getProject() {
-        if (this.projectId == null) return null;
-        return (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
-
-    public final void setProject(scrum.server.project.Project project) {
-        project = prepareProject(project);
-        if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
-        entityModified();
-    }
-
-    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
-        return project;
-    }
-
-    protected void repairDeadProjectReference(String entityId) {
-        if (entityId.equals(this.projectId)) {
-            repairMissingMaster();
-        }
-    }
-
-    public final boolean isProjectSet() {
-        return this.projectId != null;
-    }
-
-    public final boolean isProject(scrum.server.project.Project project) {
-        if (this.projectId == null && project == null) return true;
-        return project != null && project.getId().equals(this.projectId);
-    }
-
-    // -----------------------------------------------------------
-    // - effort
-    // -----------------------------------------------------------
-
-    private java.lang.Integer effort;
-
-    public final java.lang.Integer getEffort() {
-        return effort;
-    }
-
-    public final void setEffort(java.lang.Integer effort) {
-        effort = prepareEffort(effort);
-        if (isEffort(effort)) return;
-        this.effort = effort;
-        entityModified();
-    }
-
-    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
-        return effort;
-    }
-
-    public final boolean isEffortSet() {
-        return this.effort != null;
-    }
-
-    public final boolean isEffort(java.lang.Integer effort) {
-        if (this.effort == null && effort == null) return true;
-        return this.effort != null && this.effort.equals(effort);
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        entityModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
-    }
-
-    // -----------------------------------------------------------
-    // - testDescription
-    // -----------------------------------------------------------
-
-    private java.lang.String testDescription;
-
-    public final java.lang.String getTestDescription() {
-        return testDescription;
-    }
-
-    public final void setTestDescription(java.lang.String testDescription) {
-        testDescription = prepareTestDescription(testDescription);
-        if (isTestDescription(testDescription)) return;
-        this.testDescription = testDescription;
-        entityModified();
-    }
-
-    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
-        testDescription = Str.removeUnreadableChars(testDescription);
-        return testDescription;
-    }
-
-    public final boolean isTestDescriptionSet() {
-        return this.testDescription != null;
-    }
-
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        if (this.testDescription == null && testDescription == null) return true;
-        return this.testDescription != null && this.testDescription.equals(testDescription);
-    }
-
-    // -----------------------------------------------------------
-    // - description
-    // -----------------------------------------------------------
-
-    private java.lang.String description;
-
-    public final java.lang.String getDescription() {
-        return description;
-    }
-
-    public final void setDescription(java.lang.String description) {
-        description = prepareDescription(description);
-        if (isDescription(description)) return;
-        this.description = description;
-        entityModified();
-    }
-
-    protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
-        return description;
-    }
-
-    public final boolean isDescriptionSet() {
-        return this.description != null;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        if (this.description == null && description == null) return true;
-        return this.description != null && this.description.equals(description);
+        setTestDescription(template.getTestDescription());
+        setDescription(template.getDescription());
+        setProject(template.getProject());
+        setLabel(template.getLabel());
+        setEffort(template.getEffort());
     }
 
     // -----------------------------------------------------------
@@ -295,16 +140,182 @@ public abstract class GBacklogItem
         return this.closed == closed;
     }
 
+    // -----------------------------------------------------------
+    // - testDescription
+    // -----------------------------------------------------------
+
+    private java.lang.String testDescription;
+
+    public final java.lang.String getTestDescription() {
+        return testDescription;
+    }
+
+    public final void setTestDescription(java.lang.String testDescription) {
+        testDescription = prepareTestDescription(testDescription);
+        if (isTestDescription(testDescription)) return;
+        this.testDescription = testDescription;
+        entityModified();
+    }
+
+    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
+        testDescription = Str.removeUnreadableChars(testDescription);
+        return testDescription;
+    }
+
+    public final boolean isTestDescriptionSet() {
+        return this.testDescription != null;
+    }
+
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        if (this.testDescription == null && testDescription == null) return true;
+        return this.testDescription != null && this.testDescription.equals(testDescription);
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private java.lang.String description;
+
+    public final java.lang.String getDescription() {
+        return description;
+    }
+
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+        entityModified();
+    }
+
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
+    }
+
+    public final boolean isDescriptionSet() {
+        return this.description != null;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
+    }
+
+    // -----------------------------------------------------------
+    // - project
+    // -----------------------------------------------------------
+
+    private String projectId;
+
+    public final scrum.server.project.Project getProject() {
+        if (this.projectId == null) return null;
+        return (scrum.server.project.Project)projectDao.getById(this.projectId);
+    }
+
+    public final void setProject(scrum.server.project.Project project) {
+        project = prepareProject(project);
+        if (isProject(project)) return;
+        this.projectId = project == null ? null : project.getId();
+        entityModified();
+    }
+
+    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
+        return project;
+    }
+
+    protected void repairDeadProjectReference(String entityId) {
+        if (entityId.equals(this.projectId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isProjectSet() {
+        return this.projectId != null;
+    }
+
+    public final boolean isProject(scrum.server.project.Project project) {
+        if (this.projectId == null && project == null) return true;
+        return project != null && project.getId().equals(this.projectId);
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - effort
+    // -----------------------------------------------------------
+
+    private java.lang.Integer effort;
+
+    public final java.lang.Integer getEffort() {
+        return effort;
+    }
+
+    public final void setEffort(java.lang.Integer effort) {
+        effort = prepareEffort(effort);
+        if (isEffort(effort)) return;
+        this.effort = effort;
+        entityModified();
+    }
+
+    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
+        return effort;
+    }
+
+    public final boolean isEffortSet() {
+        return this.effort != null;
+    }
+
+    public final boolean isEffort(java.lang.Integer effort) {
+        if (this.effort == null && effort == null) return true;
+        return this.effort != null && this.effort.equals(effort);
+    }
+
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
-        repairDeadProjectReference(entityId);
         repairDeadSprintReference(entityId);
+        repairDeadProjectReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
+        try {
+            getSprint();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead sprint reference");
+            repairDeadSprintReference(this.sprintId);
+        }
         if (!isProjectSet()) {
             repairMissingMaster();
             return;
@@ -314,12 +325,6 @@ public abstract class GBacklogItem
         } catch (EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
-        }
-        try {
-            getSprint();
-        } catch (EntityDoesNotExistException ex) {
-            LOG.info("Repairing dead sprint reference");
-            repairDeadSprintReference(this.sprintId);
         }
     }
 

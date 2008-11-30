@@ -31,7 +31,8 @@ import ilarkesto.base.*;
 import ilarkesto.persistence.*;
 
 public abstract class GTask
-            extends AEntity {
+            extends AEntity
+            implements java.lang.Comparable<Task> {
 
     // --- AEntity ---
 
@@ -45,9 +46,14 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("effort", this.effort);
         properties.put("label", this.label);
         properties.put("backlogItemId", this.backlogItemId);
+        properties.put("effort", this.effort);
+        properties.put("notice", this.notice);
+    }
+
+    public int compareTo(Task other) {
+        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
     private static final Logger LOG = Logger.get(GTask.class);
@@ -59,39 +65,10 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
-        setEffort(template.getEffort());
         setLabel(template.getLabel());
         setBacklogItem(template.getBacklogItem());
-    }
-
-    // -----------------------------------------------------------
-    // - effort
-    // -----------------------------------------------------------
-
-    private java.lang.Integer effort;
-
-    public final java.lang.Integer getEffort() {
-        return effort;
-    }
-
-    public final void setEffort(java.lang.Integer effort) {
-        effort = prepareEffort(effort);
-        if (isEffort(effort)) return;
-        this.effort = effort;
-        entityModified();
-    }
-
-    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
-        return effort;
-    }
-
-    public final boolean isEffortSet() {
-        return this.effort != null;
-    }
-
-    public final boolean isEffort(java.lang.Integer effort) {
-        if (this.effort == null && effort == null) return true;
-        return this.effort != null && this.effort.equals(effort);
+        setEffort(template.getEffort());
+        setNotice(template.getNotice());
     }
 
     // -----------------------------------------------------------
@@ -160,6 +137,67 @@ public abstract class GTask
     public final boolean isBacklogItem(scrum.server.project.BacklogItem backlogItem) {
         if (this.backlogItemId == null && backlogItem == null) return true;
         return backlogItem != null && backlogItem.getId().equals(this.backlogItemId);
+    }
+
+    // -----------------------------------------------------------
+    // - effort
+    // -----------------------------------------------------------
+
+    private java.lang.Integer effort;
+
+    public final java.lang.Integer getEffort() {
+        return effort;
+    }
+
+    public final void setEffort(java.lang.Integer effort) {
+        effort = prepareEffort(effort);
+        if (isEffort(effort)) return;
+        this.effort = effort;
+        entityModified();
+    }
+
+    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
+        return effort;
+    }
+
+    public final boolean isEffortSet() {
+        return this.effort != null;
+    }
+
+    public final boolean isEffort(java.lang.Integer effort) {
+        if (this.effort == null && effort == null) return true;
+        return this.effort != null && this.effort.equals(effort);
+    }
+
+    // -----------------------------------------------------------
+    // - notice
+    // -----------------------------------------------------------
+
+    private java.lang.String notice;
+
+    public final java.lang.String getNotice() {
+        return notice;
+    }
+
+    public final void setNotice(java.lang.String notice) {
+        notice = prepareNotice(notice);
+        if (isNotice(notice)) return;
+        this.notice = notice;
+        entityModified();
+    }
+
+    protected java.lang.String prepareNotice(java.lang.String notice) {
+        notice = Str.removeUnreadableChars(notice);
+        return notice;
+    }
+
+    public final boolean isNoticeSet() {
+        return this.notice != null;
+    }
+
+    public final boolean isNotice(java.lang.String notice) {
+        if (this.notice == null && notice == null) return true;
+        return this.notice != null && this.notice.equals(notice);
     }
 
     protected void repairDeadReferences(String entityId) {

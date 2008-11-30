@@ -77,6 +77,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			taskModel.addReference("backlogItem", getBacklogItemModel()).setMaster(true);
 			taskModel.addProperty("label", String.class);
 			taskModel.addProperty("effort", Integer.class);
+			taskModel.addProperty("notice", String.class);
 		}
 		return taskModel;
 	}
