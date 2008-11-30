@@ -28,8 +28,8 @@ public abstract class ABlockWidget extends Composite {
 	protected BlockListController controller = new BlockListController<ABlockWidget>();
 
 	/**
-	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a
-	 * different implementation can be provided.
+	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a different
+	 * implementation can be provided.
 	 */
 	protected abstract Widget buildContent();
 
@@ -100,7 +100,7 @@ public abstract class ABlockWidget extends Composite {
 		title.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_TITLE);
 
 		VerticalPanel center = new VerticalPanel();
-		center.setWidth("100%");
+		center.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_CENTER);
 		center.add(title);
 		if (!inClipboard) {
 			center.add(buildContent());
@@ -115,6 +115,8 @@ public abstract class ABlockWidget extends Composite {
 		if (icon != null) block.add(icon.createImage());
 
 		block.add(center);
+
+		// TODO (fha, 30.11.2008): geht das nicht auch im css?
 		block.setCellWidth(center, "99%");
 
 		Widget toolbar = buildToolbar();

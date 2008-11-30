@@ -38,7 +38,7 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 	public AEditableTextareaWidget() {
 		viewer = new Label();
 		viewer.addClickListener(new ViewerClickListener());
-		viewer.setSize("100%", "20px");
+		viewer.setStyleName(StyleSheet.VIEWER);
 		rebuild();
 	}
 
@@ -49,8 +49,7 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 			editor = new RichTextArea();
 			editor.ensureDebugId("richtext-id");
 
-			editor.setWidth("96%");
-			editor.setHeight("100px");
+			editor.setStyleName(StyleSheet.TEXTAREA_EDITOR);
 			editor.setText(text);
 			editor.addKeyboardListener(new EditorKeyboardListener());
 

@@ -1,5 +1,7 @@
 package scrum.client.common.editable;
 
+import scrum.client.common.StyleSheet;
+
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.KeyboardListener;
@@ -32,7 +34,7 @@ public abstract class AEditableTextWidget extends AEditableWidget {
 	public AEditableTextWidget() {
 		viewer = new Label();
 		viewer.addClickListener(new ViewerClickListener());
-		viewer.setSize("100%", "20px");
+		viewer.setStyleName(StyleSheet.VIEWER);
 		rebuild();
 	}
 

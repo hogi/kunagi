@@ -38,7 +38,7 @@ public class SprintStoryListWidget extends Composite {
 		ScrumUtil.addFiller(toolbar);
 
 		FlowPanel panel = new FlowPanel();
-		panel.setWidth("100%");
+		panel.setStyleName(StyleSheet.ELEMENT_SPRINT_STORY_LIST_WIDGET);
 		panel.add(toolbar);
 		panel.add(new HTML("<br />"));
 		panel.add(list);

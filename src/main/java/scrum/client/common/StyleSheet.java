@@ -7,6 +7,7 @@ public class StyleSheet {
 	public static final String ELEMENT_BLOCK_WIDGET = "element-BlockWidget";
 	public static final String ELEMENT_BLOCK_WIDGET_TITLE = "element-BlockWidget-title";
 	public static final String ELEMENT_BLOCK_WIDGET_BLOCK = "element-BlockWidget-block";
+	public static final String ELEMENT_BLOCK_WIDGET_CENTER = "element-BlockWidget-center";
 	public static final String STATE_BLOCK_WIDGET_SELECTED = "state-BlockWidget-selected";
 
 	// WorkspaceWidget
@@ -24,6 +25,7 @@ public class StyleSheet {
 	// BlockListWidget
 
 	public static final String ELEMENT_BLOCK_LIST_WIDGET = "element-BlockListWidget";
+	public static final String ELEMENT_BLOCK_LIST_WIDGET_TABLE = "element-BlockListWidget-table";
 
 	// PanelWidget
 
@@ -38,8 +40,29 @@ public class StyleSheet {
 	public static final String ELEMENT_DROP_WIDGET_SPACE = "element-DropWidget-space";
 	public static final String ELEMENT_DROP_WIDGET_TRASH = "element-DropWidget-trash";
 
+	// SprintStoryListWidget
+
+	public static final String ELEMENT_SPRINT_STORY_LIST_WIDGET = "element-SprintStoryListWidget";
+
+	// CurrentSprintWidget
+
+	public static final String ELEMENT_CURRENT_SPRINT_WIDGET = "element-CurrentSprintWidget";
+	public static final String ELEMENT_CURRENT_SPRINT_WIDGET_FIELDS_WIDGET = "element-CurrentSprintWidget-fieldsWidget";
+
+	// StoryListWidget
+
+	public static final String ELEMENT_STORY_LIST_WIDGET = "element-StoryListWidget";
+
+	// ImpedimentListWidget
+
+	public static final String ELEMENT_IMPEDIMENT_LIST_WIDGET = "element-ImpedimentListWidget";
+
 	// others
 
+	public static final String VIEWER = "Viewer";
+	public static final String TEXTAREA_EDITOR = "Textarea-editor";
+	public static final String INTEGER_EDITOR = "Integer-editor";
+	public static final String A_EDITABLE_WIDGET = "AEditableWidget";
 	public static final String DRAG_HANDLE = "DragHandle";
 	public static final String A_ITEM_FIELDS_WIDGET_GRID = "AItemFieldsWidget-grid";
 	public static final String FIELD_LABEL = "fieldLabel";

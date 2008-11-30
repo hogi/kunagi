@@ -31,7 +31,7 @@ public abstract class AEditableWidget extends Composite {
 
 	public AEditableWidget() {
 		panel = new HorizontalPanel();
-		panel.setWidth("100%");
+		panel.setStyleName(StyleSheet.A_EDITABLE_WIDGET);
 		initWidget(panel);
 	}
 

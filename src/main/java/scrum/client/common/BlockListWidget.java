@@ -26,7 +26,7 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	public BlockListWidget() {
 
 		table = new FlexTable();
-		table.setWidth("100%");
+		table.setStyleName(StyleSheet.ELEMENT_BLOCK_LIST_WIDGET_TABLE);
 		if (!sidebarMode) {
 			table.addTableListener(new Listener());
 		}

@@ -2,6 +2,7 @@ package scrum.client.sprint;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ItemFieldsWidget;
+import scrum.client.common.StyleSheet;
 import scrum.client.common.editable.AEditableTextWidget;
 
 import com.google.gwt.user.client.ui.Button;
@@ -20,7 +21,7 @@ public class CurrentSprintWidget extends Composite {
 
 	public CurrentSprintWidget() {
 		view = new VerticalPanel();
-		view.setWidth("100%");
+		view.setStyleName(StyleSheet.ELEMENT_CURRENT_SPRINT_WIDGET);
 
 		initWidget(view);
 	}
@@ -47,7 +48,7 @@ public class CurrentSprintWidget extends Composite {
 		}
 
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
-		fieldsWidget.setWidth("100%");
+		fieldsWidget.setStyleName(StyleSheet.ELEMENT_CURRENT_SPRINT_WIDGET_FIELDS_WIDGET);
 		fieldsWidget.addField("Label", new AEditableTextWidget() {
 
 			@Override
