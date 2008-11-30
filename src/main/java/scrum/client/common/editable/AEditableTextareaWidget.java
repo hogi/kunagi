@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.KeyboardListenerAdapter;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -23,7 +23,7 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 	private Label viewer;
 
 	private VerticalPanel editorPanel;
-	private TextArea editor;
+	private RichTextArea editor;
 
 	/**
 	 * Provide the value for view mode and edit mode.
@@ -46,8 +46,9 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 	protected Widget getEditor() {
 		if (editorPanel == null) {
 			String text = getText();
+			editor = new RichTextArea();
+			editor.ensureDebugId("richtext-id");
 
-			editor = new TextArea();
 			editor.setWidth("96%");
 			editor.setHeight("100px");
 			editor.setText(text);
