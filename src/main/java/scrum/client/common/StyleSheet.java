@@ -19,6 +19,7 @@ public class StyleSheet {
 	// SidebarWidget
 
 	public static final String ELEMENT_SIDEBAR_WIDGET = "element-SidebarWidget";
+	public static final String ELEMENT_SIDEBAR_WIDGET_BUTTONS = "element-SidebarWidget-buttons";
 
 	// BlockListWidget
 

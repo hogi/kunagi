@@ -18,7 +18,7 @@ public class SidebarWidget extends Composite {
 		sidebar.setStyleName(StyleSheet.ELEMENT_SIDEBAR_WIDGET);
 
 		VerticalPanel buttonsPanel = new VerticalPanel();
-		buttonsPanel.setWidth("100%");
+		buttonsPanel.setStyleName(StyleSheet.ELEMENT_SIDEBAR_WIDGET_BUTTONS);
 
 		Button projectOverviewButton = new Button("Project Overview");
 		projectOverviewButton.addClickListener(new ProjectOverviewClickListener());

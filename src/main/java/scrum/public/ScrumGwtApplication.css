@@ -15,6 +15,7 @@ body {padding: 5px;}
 .element-WorkspaceWidget-workarea {padding: 5px;}
 
 .element-SidebarWidget {padding: 5px 5px 20px 5px; position: fixed; width: 300px;}
+.element-SidebarWidget-buttons {width: 100%;}
 
 .element-BlockListWidget {background: #CCDDFF; width: 100%; height: 100%;}
 
