@@ -1,17 +1,24 @@
 package scrum.client.sprint;
 
+import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
-import scrum.client.project.BacklogItem;
 
 import com.google.gwt.user.client.ui.Composite;
 
 public class TaskListWidget extends Composite {
 
-	private BlockListWidget list = new BlockListWidget();
-	private BacklogItem backlogItem;
+	private BlockListWidget<TaskWidget> list = new BlockListWidget<TaskWidget>();
+	private SprintBacklogItemWidget backlogItemWidget;
 
-	public TaskListWidget(BacklogItem backlogItem) {
-		this.backlogItem = backlogItem;
+	public TaskListWidget(SprintBacklogItemWidget backlogItemWidget) {
+		this.backlogItemWidget = backlogItemWidget;
+		list.setController(new BlockListController<TaskWidget>() {
+
+			@Override
+			public void dataChanged(TaskWidget block) {
+				throw new RuntimeException("Not implemented.");
+			}
+		});
 
 		initWidget(list);
 		update(null);
@@ -20,7 +27,7 @@ public class TaskListWidget extends Composite {
 	public void update(Task selectedTask) {
 		list.clear();
 		TaskWidget select = null;
-		for (Task task : backlogItem.getTasks()) {
+		for (Task task : backlogItemWidget.getItem().getTasks()) {
 
 			// taskListWidget setzen, um es spaeter wieder ansprechen zu koennen
 			task.setTaskListWidget(this);

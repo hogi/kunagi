@@ -25,10 +25,11 @@ public abstract class ABlockWidget extends Composite {
 	private boolean inClipboard;
 	private Image dragHandle;
 	private DropController dropController;
+	protected BlockListController listController;
 
 	/**
-	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a different
-	 * implementation can be provided.
+	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a
+	 * different implementation can be provided.
 	 */
 	protected abstract Widget buildContent();
 
@@ -61,6 +62,10 @@ public abstract class ABlockWidget extends Composite {
 
 	public final boolean isDropSupported() {
 		return dropController != null;
+	}
+
+	public void setListController(BlockListController listController) {
+		this.listController = listController;
 	}
 
 	/**

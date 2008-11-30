@@ -38,7 +38,7 @@ public class SprintBacklogItemWidget extends ABlockWidget {
 		FlowPanel panel = new FlowPanel();
 		panel.add(fieldsWidget);
 
-		taskListWidget = new TaskListWidget(item);
+		taskListWidget = new TaskListWidget(this);
 		panel.add(taskListWidget);
 
 		// panel.add(new TaskListWidget(item));
@@ -99,4 +99,7 @@ public class SprintBacklogItemWidget extends ABlockWidget {
 		return new BlockListDropController(this, WorkspaceWidget.backlog.list);
 	}
 
+	public BacklogItem getItem() {
+		return item;
+	}
 }

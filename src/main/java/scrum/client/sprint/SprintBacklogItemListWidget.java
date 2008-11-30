@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class SprintBacklogItemListWidget extends Composite {
 
 	private Sprint sprint;
-	public BlockListWidget list = new BlockListWidget();
+	public BlockListWidget<SprintBacklogItemWidget> list = new BlockListWidget<SprintBacklogItemWidget>();
 
 	public SprintBacklogItemListWidget(Sprint sprint) {
 		this.sprint = sprint;
@@ -32,7 +32,7 @@ public class SprintBacklogItemListWidget extends Composite {
 		FlowPanel panel = new FlowPanel();
 		panel.setWidth("100%");
 		panel.add(toolbar);
-		panel.add(new HTML("<br>"));
+		panel.add(new HTML("<br />"));
 		panel.add(list);
 		initWidget(panel);
 

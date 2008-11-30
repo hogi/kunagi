@@ -160,4 +160,8 @@ public class BacklogItemWidget extends ABlockWidget {
 	protected DropController createDropController() {
 		return new BlockListDropController(this, WorkspaceWidget.backlog.list);
 	}
+
+	public BacklogItem getItem() {
+		return item;
+	}
 }
