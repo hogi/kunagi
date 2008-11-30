@@ -18,12 +18,12 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SprintBacklogItemWidget extends ABlockWidget {
+public class SprintStoryWidget extends ABlockWidget {
 
 	private Story item;
 	private TaskListWidget taskListWidget;
 
-	public SprintBacklogItemWidget(Story item) {
+	public SprintStoryWidget(Story item) {
 		this.item = item;
 	}
 
@@ -84,13 +84,13 @@ public class SprintBacklogItemWidget extends ABlockWidget {
 
 	@Override
 	protected AbstractImagePrototype getIcon() {
-		if (item.isDone()) return Img.bundle.backlogItemDoneIcon32();
-		return Img.bundle.backlogItemIcon32();
+		if (item.isDone()) return Img.bundle.storyDoneIcon32();
+		return Img.bundle.storyIcon32();
 	}
 
 	@Override
 	public void delete() {
-		ScrumGwtApplication.get().getProject().deleteBacklogItem(item);
+		ScrumGwtApplication.get().getProject().deleteStory(item);
 		WorkspaceWidget.backlog.list.remove(this);
 	}
 

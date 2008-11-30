@@ -8,10 +8,10 @@ import com.google.gwt.user.client.ui.Composite;
 public class TaskListWidget extends Composite {
 
 	private BlockListWidget<TaskWidget> list = new BlockListWidget<TaskWidget>();
-	private SprintBacklogItemWidget backlogItemWidget;
+	private SprintStoryWidget sprintStoryWidget;
 
-	public TaskListWidget(SprintBacklogItemWidget backlogItemWidget) {
-		this.backlogItemWidget = backlogItemWidget;
+	public TaskListWidget(SprintStoryWidget storyWidget) {
+		this.sprintStoryWidget = storyWidget;
 		list.setController(new BlockListController<TaskWidget>() {
 
 			@Override
@@ -27,7 +27,7 @@ public class TaskListWidget extends Composite {
 	public void update(Task selectedTask) {
 		list.clear();
 		TaskWidget select = null;
-		for (Task task : backlogItemWidget.getItem().getTasks()) {
+		for (Task task : sprintStoryWidget.getItem().getTasks()) {
 
 			// taskListWidget setzen, um es spaeter wieder ansprechen zu koennen
 			task.setTaskListWidget(this);

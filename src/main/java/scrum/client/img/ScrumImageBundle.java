@@ -5,11 +5,11 @@ import com.google.gwt.user.client.ui.ImageBundle;
 
 public interface ScrumImageBundle extends ImageBundle {
 
-	@Resource(value = "backlogItem32.png")
-	public AbstractImagePrototype backlogItemIcon32();
+	@Resource(value = "story32.png")
+	public AbstractImagePrototype storyIcon32();
 
-	@Resource(value = "backlogItemDone32.png")
-	public AbstractImagePrototype backlogItemDoneIcon32();
+	@Resource(value = "storyDone32.png")
+	public AbstractImagePrototype storyDoneIcon32();
 
 	@Resource(value = "impediment32.png")
 	public AbstractImagePrototype impedimentIcon32();

@@ -20,7 +20,7 @@ public class Sprint extends GSprint {
 		super(null);
 	}
 
-	public static void setBacklogItemDao(StoryDao storyDao) {
+	public static void setStoryDao(StoryDao storyDao) {
 		Sprint.storyDao = storyDao;
 	}
 
@@ -30,7 +30,7 @@ public class Sprint extends GSprint {
 
 	// --- ---
 
-	public Set<Story> getBacklogItems() {
+	public Set<Story> getStorys() {
 		return storyDao.getStorysBySprint(this);
 	}
 

@@ -89,7 +89,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		Sprint sprint = project.getCurrentSprint();
 		if (sprint == null) return;
 		session.getNextData().addEntity(toPropertyMap(sprint));
-		session.getNextData().addEntities(toPropertyMap(project.getBacklogItems()));
+		session.getNextData().addEntities(toPropertyMap(project.getStorys()));
 		session.getNextData().addEntities(toPropertyMap(sprint.getTasks()));
 	}
 
@@ -104,7 +104,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public void onRequestStorys(SessionData session) {
 		Project project = session.getProject();
 		if (project == null) throw new RuntimeException("No project selected.");
-		Collection<Story> stories = project.getBacklogItems();
+		Collection<Story> stories = project.getStorys();
 		for (Story item : stories) {
 			Sprint sprint = item.getSprint();
 			if (sprint != null) session.getNextData().addEntity(toPropertyMap(sprint));
@@ -172,39 +172,39 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		impediment2.setLabel("Test Impediment 2");
 		getImpedimentDao().saveEntity(impediment2);
 
-		Story backlogItem1 = getStoryDao().newEntityInstance();
-		backlogItem1.setProject(project1);
-		backlogItem1.setLabel("Test Backlog Item 1");
-		getStoryDao().saveEntity(backlogItem1);
+		Story story1 = getStoryDao().newEntityInstance();
+		story1.setProject(project1);
+		story1.setLabel("Test Backlog Item 1");
+		getStoryDao().saveEntity(story1);
 
-		Story backlogItem2 = getStoryDao().newEntityInstance();
-		backlogItem2.setProject(project1);
-		backlogItem2.setLabel("Test Backlog Item 2");
-		backlogItem2.setEffort(5);
-		getStoryDao().saveEntity(backlogItem2);
+		Story story2 = getStoryDao().newEntityInstance();
+		story2.setProject(project1);
+		story2.setLabel("Test Backlog Item 2");
+		story2.setEffort(5);
+		getStoryDao().saveEntity(story2);
 
 		Task task1 = getTaskDao().newEntityInstance();
-		task1.setStory(backlogItem2);
+		task1.setStory(story2);
 		task1.setLabel("Task 1");
 		task1.setEffort(3);
 		getTaskDao().saveEntity(task1);
 
 		Task task2 = getTaskDao().newEntityInstance();
-		task2.setStory(backlogItem2);
+		task2.setStory(story2);
 		task2.setLabel("Task 2");
 		task2.setEffort(1);
 		getTaskDao().saveEntity(task2);
 
-		Story backlogItem3 = getStoryDao().newEntityInstance();
-		backlogItem3.setProject(project1);
-		backlogItem3.setLabel("Test Backlog Item 3");
-		getStoryDao().saveEntity(backlogItem3);
+		Story story3 = getStoryDao().newEntityInstance();
+		story3.setProject(project1);
+		story3.setLabel("Test Backlog Item 3");
+		getStoryDao().saveEntity(story3);
 
 		Sprint sprint1 = getSprintDao().newEntityInstance();
 		sprint1.setProject(project1);
 		sprint1.setLabel("Sprint 1");
 		getSprintDao().saveEntity(sprint1);
-		backlogItem2.setSprint(sprint1);
+		story2.setSprint(sprint1);
 
 		project1.setCurrentSprint(sprint1);
 

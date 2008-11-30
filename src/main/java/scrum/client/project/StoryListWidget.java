@@ -14,11 +14,11 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class BacklogItemListWidget extends Composite {
+public class StoryListWidget extends Composite {
 
 	public BlockListWidget list = new BlockListWidget();
 
-	public BacklogItemListWidget() {
+	public StoryListWidget() {
 		Button createButton = new Button("Create new Backlog-Item");
 		createButton.addClickListener(new CreateClickListener());
 
@@ -41,16 +41,16 @@ public class BacklogItemListWidget extends Composite {
 
 	public void update() {
 		list.clear();
-		for (Story item : ScrumGwtApplication.get().getProject().getBacklogItems()) {
-			list.addBlock(new BacklogItemWidget(item));
+		for (Story item : ScrumGwtApplication.get().getProject().getStorys()) {
+			list.addBlock(new StoryWidget(item));
 		}
 	}
 
 	class CreateClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			Story item = ScrumGwtApplication.get().getProject().createNewBacklogItem();
-			BacklogItemWidget block = new BacklogItemWidget(item);
+			Story item = ScrumGwtApplication.get().getProject().createNewStory();
+			StoryWidget block = new StoryWidget(item);
 			list.addBlock(block);
 			list.selectBlock(block);
 		}

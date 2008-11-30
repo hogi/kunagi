@@ -64,7 +64,7 @@ public class CurrentSprintWidget extends Composite {
 		});
 		view.add(fieldsWidget);
 
-		view.add(new SprintBacklogItemListWidget(sprint));
+		view.add(new SprintStoryListWidget(sprint));
 	}
 
 	class AssignSprintListener implements ClickListener {

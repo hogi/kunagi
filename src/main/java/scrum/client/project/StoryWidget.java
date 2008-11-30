@@ -19,11 +19,11 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class BacklogItemWidget extends ABlockWidget {
+public class StoryWidget extends ABlockWidget {
 
 	private Story item;
 
-	public BacklogItemWidget(Story item) {
+	public StoryWidget(Story item) {
 		this.item = item;
 	}
 
@@ -118,7 +118,7 @@ public class BacklogItemWidget extends ABlockWidget {
 		deleteButton.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				ScrumGwtApplication.get().getProject().deleteBacklogItem(item);
+				ScrumGwtApplication.get().getProject().deleteStory(item);
 				WorkspaceWidget.backlog.list.removeSelectedRow();
 			}
 		});
@@ -146,13 +146,13 @@ public class BacklogItemWidget extends ABlockWidget {
 
 	@Override
 	protected AbstractImagePrototype getIcon() {
-		if (item.isClosed()) return Img.bundle.backlogItemDoneIcon32();
-		return Img.bundle.backlogItemIcon32();
+		if (item.isClosed()) return Img.bundle.storyDoneIcon32();
+		return Img.bundle.storyIcon32();
 	}
 
 	@Override
 	public void delete() {
-		ScrumGwtApplication.get().getProject().deleteBacklogItem(item);
+		ScrumGwtApplication.get().getProject().deleteStory(item);
 		WorkspaceWidget.backlog.list.remove(this);
 	}
 

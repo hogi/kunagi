@@ -17,7 +17,7 @@ public class Sprint extends GSprint {
 		super(data);
 	}
 
-	public List<Story> getBacklogItems() {
+	public List<Story> getStorys() {
 		return getDao().getStorysBySprint(this);
 	}
 

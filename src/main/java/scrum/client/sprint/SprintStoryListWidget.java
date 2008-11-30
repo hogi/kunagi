@@ -13,12 +13,12 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SprintBacklogItemListWidget extends Composite {
+public class SprintStoryListWidget extends Composite {
 
 	private Sprint sprint;
-	public BlockListWidget<SprintBacklogItemWidget> list = new BlockListWidget<SprintBacklogItemWidget>();
+	public BlockListWidget<SprintStoryWidget> list = new BlockListWidget<SprintStoryWidget>();
 
-	public SprintBacklogItemListWidget(Sprint sprint) {
+	public SprintStoryListWidget(Sprint sprint) {
 		this.sprint = sprint;
 
 		Button createButton = new Button("Add Backlog-Item");
@@ -41,8 +41,8 @@ public class SprintBacklogItemListWidget extends Composite {
 
 	public void update() {
 		list.clear();
-		for (Story item : sprint.getBacklogItems()) {
-			list.addBlock(new SprintBacklogItemWidget(item));
+		for (Story item : sprint.getStorys()) {
+			list.addBlock(new SprintStoryWidget(item));
 		}
 	}
 

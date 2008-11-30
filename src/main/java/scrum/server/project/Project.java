@@ -54,7 +54,7 @@ public class Project extends GProject {
 		return impedimentDao.getImpedimentsByProject(this);
 	}
 
-	public Set<Story> getBacklogItems() {
+	public Set<Story> getStorys() {
 		return storyDao.getStorysByProject(this);
 	}
 

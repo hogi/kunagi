@@ -6,7 +6,7 @@ import scrum.client.admin.ProjectSelectionWidget;
 import scrum.client.common.PanelWidget;
 import scrum.client.common.StyleSheet;
 import scrum.client.impediments.ImpedimentListWidget;
-import scrum.client.project.BacklogItemListWidget;
+import scrum.client.project.StoryListWidget;
 import scrum.client.project.ProjectOverviewWidget;
 import scrum.client.sprint.CurrentSprintWidget;
 import scrum.client.test.TestWidget;
@@ -22,7 +22,7 @@ public class WorkspaceWidget extends Composite {
 
 	private static LoginWidget login;
 	public static ProjectSelectionWidget projectSelection;
-	public static BacklogItemListWidget backlog;
+	public static StoryListWidget backlog;
 	public static CurrentSprintWidget sprint;
 	public static ImpedimentListWidget impediments;
 
@@ -35,7 +35,7 @@ public class WorkspaceWidget extends Composite {
 		login = new LoginWidget();
 		projectSelection = new ProjectSelectionWidget();
 		impediments = new ImpedimentListWidget();
-		backlog = new BacklogItemListWidget();
+		backlog = new StoryListWidget();
 		sprint = new CurrentSprintWidget();
 
 		// create workspace

@@ -35,17 +35,17 @@ public class Project extends GProject {
 		return getDao().getImpedimentsByProject(this);
 	}
 
-	public Story createNewBacklogItem() {
+	public Story createNewStory() {
 		Story item = new Story(this);
 		getDao().createStory(item);
 		return item;
 	}
 
-	public void deleteBacklogItem(Story item) {
+	public void deleteStory(Story item) {
 		getDao().deleteStory(item);
 	}
 
-	public List<Story> getBacklogItems() {
+	public List<Story> getStorys() {
 		return getDao().getStorysByProject(this);
 	}
 
@@ -60,7 +60,7 @@ public class Project extends GProject {
 	}
 
 	public boolean deleteTask(Task task) {
-		for (Story story : getBacklogItems()) {
+		for (Story story : getStorys()) {
 			boolean b = story.getTasks().remove(task);
 			if (b) return true;
 		}
