@@ -43,20 +43,20 @@ public abstract class GProjectDao
 
     // --- clear caches ---
     public void clearCaches() {
-        projectsByLabelCache.clear();
-        labelsCache = null;
-        projectsByCurrentSprintCache.clear();
-        currentSprintsCache = null;
+        projectsByDescriptionCache.clear();
+        descriptionsCache = null;
         projectsByTeamMemberCache.clear();
         teamMembersCache = null;
         projectsByAdminCache.clear();
         adminsCache = null;
+        projectsByCurrentSprintCache.clear();
+        currentSprintsCache = null;
         projectsByScrumMasterCache.clear();
         scrumMastersCache = null;
+        projectsByLabelCache.clear();
+        labelsCache = null;
         projectsByProductOwnerCache.clear();
         productOwnersCache = null;
-        projectsByDescriptionCache.clear();
-        descriptionsCache = null;
     }
 
     @Override
@@ -76,81 +76,41 @@ public abstract class GProjectDao
     }
 
     // -----------------------------------------------------------
-    // - label
+    // - description
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Project>> projectsByLabelCache = new Cache<java.lang.String,Set<Project>>(
+    private final Cache<java.lang.String,Set<Project>> projectsByDescriptionCache = new Cache<java.lang.String,Set<Project>>(
             new Cache.Factory<java.lang.String,Set<Project>>() {
-                public Set<Project> create(java.lang.String label) {
-                    return getEntities(new IsLabel(label));
+                public Set<Project> create(java.lang.String description) {
+                    return getEntities(new IsDescription(description));
                 }
             });
 
-    public final Set<Project> getProjectsByLabel(java.lang.String label) {
-        return projectsByLabelCache.get(label);
+    public final Set<Project> getProjectsByDescription(java.lang.String description) {
+        return projectsByDescriptionCache.get(description);
     }
-    private Set<java.lang.String> labelsCache;
+    private Set<java.lang.String> descriptionsCache;
 
-    public final Set<java.lang.String> getLabels() {
-        if (labelsCache == null) {
-            labelsCache = new HashSet<java.lang.String>();
+    public final Set<java.lang.String> getDescriptions() {
+        if (descriptionsCache == null) {
+            descriptionsCache = new HashSet<java.lang.String>();
             for (Project e : getEntities()) {
-                if (e.isLabelSet()) labelsCache.add(e.getLabel());
+                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
             }
         }
-        return labelsCache;
+        return descriptionsCache;
     }
 
-    private static class IsLabel implements Predicate<Project> {
+    private static class IsDescription implements Predicate<Project> {
 
         private java.lang.String value;
 
-        public IsLabel(java.lang.String value) {
+        public IsDescription(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(Project e) {
-            return e.isLabel(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - currentSprint
-    // -----------------------------------------------------------
-
-    private final Cache<scrum.server.sprint.Sprint,Set<Project>> projectsByCurrentSprintCache = new Cache<scrum.server.sprint.Sprint,Set<Project>>(
-            new Cache.Factory<scrum.server.sprint.Sprint,Set<Project>>() {
-                public Set<Project> create(scrum.server.sprint.Sprint currentSprint) {
-                    return getEntities(new IsCurrentSprint(currentSprint));
-                }
-            });
-
-    public final Set<Project> getProjectsByCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
-        return projectsByCurrentSprintCache.get(currentSprint);
-    }
-    private Set<scrum.server.sprint.Sprint> currentSprintsCache;
-
-    public final Set<scrum.server.sprint.Sprint> getCurrentSprints() {
-        if (currentSprintsCache == null) {
-            currentSprintsCache = new HashSet<scrum.server.sprint.Sprint>();
-            for (Project e : getEntities()) {
-                if (e.isCurrentSprintSet()) currentSprintsCache.add(e.getCurrentSprint());
-            }
-        }
-        return currentSprintsCache;
-    }
-
-    private static class IsCurrentSprint implements Predicate<Project> {
-
-        private scrum.server.sprint.Sprint value;
-
-        public IsCurrentSprint(scrum.server.sprint.Sprint value) {
-            this.value = value;
-        }
-
-        public boolean test(Project e) {
-            return e.isCurrentSprint(value);
+            return e.isDescription(value);
         }
 
     }
@@ -236,6 +196,46 @@ public abstract class GProjectDao
     }
 
     // -----------------------------------------------------------
+    // - currentSprint
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.sprint.Sprint,Set<Project>> projectsByCurrentSprintCache = new Cache<scrum.server.sprint.Sprint,Set<Project>>(
+            new Cache.Factory<scrum.server.sprint.Sprint,Set<Project>>() {
+                public Set<Project> create(scrum.server.sprint.Sprint currentSprint) {
+                    return getEntities(new IsCurrentSprint(currentSprint));
+                }
+            });
+
+    public final Set<Project> getProjectsByCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
+        return projectsByCurrentSprintCache.get(currentSprint);
+    }
+    private Set<scrum.server.sprint.Sprint> currentSprintsCache;
+
+    public final Set<scrum.server.sprint.Sprint> getCurrentSprints() {
+        if (currentSprintsCache == null) {
+            currentSprintsCache = new HashSet<scrum.server.sprint.Sprint>();
+            for (Project e : getEntities()) {
+                if (e.isCurrentSprintSet()) currentSprintsCache.add(e.getCurrentSprint());
+            }
+        }
+        return currentSprintsCache;
+    }
+
+    private static class IsCurrentSprint implements Predicate<Project> {
+
+        private scrum.server.sprint.Sprint value;
+
+        public IsCurrentSprint(scrum.server.sprint.Sprint value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isCurrentSprint(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - scrumMaster
     // -----------------------------------------------------------
 
@@ -276,6 +276,46 @@ public abstract class GProjectDao
     }
 
     // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByLabelCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String label) {
+                    return getEntities(new IsLabel(label));
+                }
+            });
+
+    public final Set<Project> getProjectsByLabel(java.lang.String label) {
+        return projectsByLabelCache.get(label);
+    }
+    private Set<java.lang.String> labelsCache;
+
+    public final Set<java.lang.String> getLabels() {
+        if (labelsCache == null) {
+            labelsCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isLabelSet()) labelsCache.add(e.getLabel());
+            }
+        }
+        return labelsCache;
+    }
+
+    private static class IsLabel implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsLabel(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isLabel(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - productOwner
     // -----------------------------------------------------------
 
@@ -311,46 +351,6 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isProductOwner(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - description
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Project>> projectsByDescriptionCache = new Cache<java.lang.String,Set<Project>>(
-            new Cache.Factory<java.lang.String,Set<Project>>() {
-                public Set<Project> create(java.lang.String description) {
-                    return getEntities(new IsDescription(description));
-                }
-            });
-
-    public final Set<Project> getProjectsByDescription(java.lang.String description) {
-        return projectsByDescriptionCache.get(description);
-    }
-    private Set<java.lang.String> descriptionsCache;
-
-    public final Set<java.lang.String> getDescriptions() {
-        if (descriptionsCache == null) {
-            descriptionsCache = new HashSet<java.lang.String>();
-            for (Project e : getEntities()) {
-                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
-            }
-        }
-        return descriptionsCache;
-    }
-
-    private static class IsDescription implements Predicate<Project> {
-
-        private java.lang.String value;
-
-        public IsDescription(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Project e) {
-            return e.isDescription(value);
         }
 
     }

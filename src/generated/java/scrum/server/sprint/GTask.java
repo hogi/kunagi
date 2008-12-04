@@ -46,10 +46,10 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("effort", this.effort);
         properties.put("storyId", this.storyId);
-        properties.put("notice", this.notice);
         properties.put("label", this.label);
+        properties.put("notice", this.notice);
+        properties.put("effort", this.effort);
     }
 
     public int compareTo(Task other) {
@@ -65,40 +65,10 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
-        setEffort(template.getEffort());
         setStory(template.getStory());
-        setNotice(template.getNotice());
         setLabel(template.getLabel());
-    }
-
-    // -----------------------------------------------------------
-    // - effort
-    // -----------------------------------------------------------
-
-    private java.lang.Integer effort;
-
-    public final java.lang.Integer getEffort() {
-        return effort;
-    }
-
-    public final void setEffort(java.lang.Integer effort) {
-        effort = prepareEffort(effort);
-        if (isEffort(effort)) return;
-        this.effort = effort;
-        entityModified();
-    }
-
-    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
-        return effort;
-    }
-
-    public final boolean isEffortSet() {
-        return this.effort != null;
-    }
-
-    public final boolean isEffort(java.lang.Integer effort) {
-        if (this.effort == null && effort == null) return true;
-        return this.effort != null && this.effort.equals(effort);
+        setNotice(template.getNotice());
+        setEffort(template.getEffort());
     }
 
     // -----------------------------------------------------------
@@ -139,6 +109,37 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
     // - notice
     // -----------------------------------------------------------
 
@@ -170,34 +171,33 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
-    // - label
+    // - effort
     // -----------------------------------------------------------
 
-    private java.lang.String label;
+    private java.lang.Integer effort;
 
-    public final java.lang.String getLabel() {
-        return label;
+    public final java.lang.Integer getEffort() {
+        return effort;
     }
 
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
+    public final void setEffort(java.lang.Integer effort) {
+        effort = prepareEffort(effort);
+        if (isEffort(effort)) return;
+        this.effort = effort;
         entityModified();
     }
 
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
+    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
+        return effort;
     }
 
-    public final boolean isLabelSet() {
-        return this.label != null;
+    public final boolean isEffortSet() {
+        return this.effort != null;
     }
 
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
+    public final boolean isEffort(java.lang.Integer effort) {
+        if (this.effort == null && effort == null) return true;
+        return this.effort != null && this.effort.equals(effort);
     }
 
     protected void repairDeadReferences(String entityId) {

@@ -61,24 +61,6 @@ public abstract class GImpediment
         return equals(this.solution, solution);
     }
 
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final Impediment setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
-        return (Impediment)this;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
-    }
-
     // --- solved ---
 
     private boolean solved ;
@@ -95,6 +77,42 @@ public abstract class GImpediment
 
     public final boolean isSolved(boolean solved) {
         return equals(this.solved, solved);
+    }
+
+    // --- description ---
+
+    private java.lang.String description ;
+
+    public final java.lang.String getDescription() {
+        return this.description ;
+    }
+
+    public final Impediment setDescription(java.lang.String description) {
+        this.description = description ;
+        propertyChanged("description", this.description);
+        return (Impediment)this;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        return equals(this.description, description);
+    }
+
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final Impediment setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
+        return (Impediment)this;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
     }
 
     // --- project ---
@@ -117,42 +135,24 @@ public abstract class GImpediment
         return equals(this.projectId, project);
     }
 
-    // --- description ---
-
-    private java.lang.String description ;
-
-    public final java.lang.String getDescription() {
-        return this.description ;
-    }
-
-    public final Impediment setDescription(java.lang.String description) {
-        this.description = description ;
-        propertyChanged("description", this.description);
-        return (Impediment)this;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
-    }
-
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         solution  = (java.lang.String) props.get("solution");
-        label  = (java.lang.String) props.get("label");
         solved  = (Boolean) props.get("solved");
-        projectId = (String) props.get("projectId");
         description  = (java.lang.String) props.get("description");
+        label  = (java.lang.String) props.get("label");
+        projectId = (String) props.get("projectId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("solution", this.solution);
-        properties.put("label", this.label);
         properties.put("solved", this.solved);
-        properties.put("projectId", this.projectId);
         properties.put("description", this.description);
+        properties.put("label", this.label);
+        properties.put("projectId", this.projectId);
     }
 
 }

@@ -47,10 +47,10 @@ public abstract class GImpediment
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("solution", this.solution);
-        properties.put("label", this.label);
         properties.put("solved", this.solved);
-        properties.put("projectId", this.projectId);
         properties.put("description", this.description);
+        properties.put("label", this.label);
+        properties.put("projectId", this.projectId);
     }
 
     public int compareTo(Impediment other) {
@@ -67,10 +67,10 @@ public abstract class GImpediment
         if (template==null) return;
 
         setSolution(template.getSolution());
-        setLabel(template.getLabel());
         setSolved(template.isSolved());
-        setProject(template.getProject());
         setDescription(template.getDescription());
+        setLabel(template.getLabel());
+        setProject(template.getProject());
     }
 
     // -----------------------------------------------------------
@@ -105,6 +105,62 @@ public abstract class GImpediment
     }
 
     // -----------------------------------------------------------
+    // - solved
+    // -----------------------------------------------------------
+
+    private boolean solved;
+
+    public final boolean isSolved() {
+        return solved;
+    }
+
+    public final void setSolved(boolean solved) {
+        solved = prepareSolved(solved);
+        if (isSolved(solved)) return;
+        this.solved = solved;
+        entityModified();
+    }
+
+    protected boolean prepareSolved(boolean solved) {
+        return solved;
+    }
+
+    public final boolean isSolved(boolean solved) {
+        return this.solved == solved;
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private java.lang.String description;
+
+    public final java.lang.String getDescription() {
+        return description;
+    }
+
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+        entityModified();
+    }
+
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
+    }
+
+    public final boolean isDescriptionSet() {
+        return this.description != null;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
+    }
+
+    // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
 
@@ -133,31 +189,6 @@ public abstract class GImpediment
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
-    }
-
-    // -----------------------------------------------------------
-    // - solved
-    // -----------------------------------------------------------
-
-    private boolean solved;
-
-    public final boolean isSolved() {
-        return solved;
-    }
-
-    public final void setSolved(boolean solved) {
-        solved = prepareSolved(solved);
-        if (isSolved(solved)) return;
-        this.solved = solved;
-        entityModified();
-    }
-
-    protected boolean prepareSolved(boolean solved) {
-        return solved;
-    }
-
-    public final boolean isSolved(boolean solved) {
-        return this.solved == solved;
     }
 
     // -----------------------------------------------------------
@@ -195,37 +226,6 @@ public abstract class GImpediment
     public final boolean isProject(scrum.server.project.Project project) {
         if (this.projectId == null && project == null) return true;
         return project != null && project.getId().equals(this.projectId);
-    }
-
-    // -----------------------------------------------------------
-    // - description
-    // -----------------------------------------------------------
-
-    private java.lang.String description;
-
-    public final java.lang.String getDescription() {
-        return description;
-    }
-
-    public final void setDescription(java.lang.String description) {
-        description = prepareDescription(description);
-        if (isDescription(description)) return;
-        this.description = description;
-        entityModified();
-    }
-
-    protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
-        return description;
-    }
-
-    public final boolean isDescriptionSet() {
-        return this.description != null;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        if (this.description == null && description == null) return true;
-        return this.description != null && this.description.equals(description);
     }
 
     protected void repairDeadReferences(String entityId) {

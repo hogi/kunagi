@@ -43,58 +43,22 @@ public abstract class GStory
         return ENTITY_TYPE;
     }
 
-    // --- description ---
+    // --- closed ---
 
-    private java.lang.String description ;
+    private boolean closed ;
 
-    public final java.lang.String getDescription() {
-        return this.description ;
+    public final boolean isClosed() {
+        return this.closed ;
     }
 
-    public final Story setDescription(java.lang.String description) {
-        this.description = description ;
-        propertyChanged("description", this.description);
+    public final Story setClosed(boolean closed) {
+        this.closed = closed ;
+        propertyChanged("closed", this.closed);
         return (Story)this;
     }
 
-    public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
-    }
-
-    // --- effort ---
-
-    private java.lang.Integer effort ;
-
-    public final java.lang.Integer getEffort() {
-        return this.effort ;
-    }
-
-    public final Story setEffort(java.lang.Integer effort) {
-        this.effort = effort ;
-        propertyChanged("effort", this.effort);
-        return (Story)this;
-    }
-
-    public final boolean isEffort(java.lang.Integer effort) {
-        return equals(this.effort, effort);
-    }
-
-    // --- testDescription ---
-
-    private java.lang.String testDescription ;
-
-    public final java.lang.String getTestDescription() {
-        return this.testDescription ;
-    }
-
-    public final Story setTestDescription(java.lang.String testDescription) {
-        this.testDescription = testDescription ;
-        propertyChanged("testDescription", this.testDescription);
-        return (Story)this;
-    }
-
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        return equals(this.testDescription, testDescription);
+    public final boolean isClosed(boolean closed) {
+        return equals(this.closed, closed);
     }
 
     // --- project ---
@@ -117,22 +81,40 @@ public abstract class GStory
         return equals(this.projectId, project);
     }
 
-    // --- closed ---
+    // --- effort ---
 
-    private boolean closed ;
+    private java.lang.Integer effort ;
 
-    public final boolean isClosed() {
-        return this.closed ;
+    public final java.lang.Integer getEffort() {
+        return this.effort ;
     }
 
-    public final Story setClosed(boolean closed) {
-        this.closed = closed ;
-        propertyChanged("closed", this.closed);
+    public final Story setEffort(java.lang.Integer effort) {
+        this.effort = effort ;
+        propertyChanged("effort", this.effort);
         return (Story)this;
     }
 
-    public final boolean isClosed(boolean closed) {
-        return equals(this.closed, closed);
+    public final boolean isEffort(java.lang.Integer effort) {
+        return equals(this.effort, effort);
+    }
+
+    // --- description ---
+
+    private java.lang.String description ;
+
+    public final java.lang.String getDescription() {
+        return this.description ;
+    }
+
+    public final Story setDescription(java.lang.String description) {
+        this.description = description ;
+        propertyChanged("description", this.description);
+        return (Story)this;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        return equals(this.description, description);
     }
 
     // --- label ---
@@ -173,28 +155,46 @@ public abstract class GStory
         return equals(this.sprintId, sprint);
     }
 
+    // --- testDescription ---
+
+    private java.lang.String testDescription ;
+
+    public final java.lang.String getTestDescription() {
+        return this.testDescription ;
+    }
+
+    public final Story setTestDescription(java.lang.String testDescription) {
+        this.testDescription = testDescription ;
+        propertyChanged("testDescription", this.testDescription);
+        return (Story)this;
+    }
+
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        return equals(this.testDescription, testDescription);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        description  = (java.lang.String) props.get("description");
-        effort  = (java.lang.Integer) props.get("effort");
-        testDescription  = (java.lang.String) props.get("testDescription");
-        projectId = (String) props.get("projectId");
         closed  = (Boolean) props.get("closed");
+        projectId = (String) props.get("projectId");
+        effort  = (java.lang.Integer) props.get("effort");
+        description  = (java.lang.String) props.get("description");
         label  = (java.lang.String) props.get("label");
         sprintId = (String) props.get("sprintId");
+        testDescription  = (java.lang.String) props.get("testDescription");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("description", this.description);
-        properties.put("effort", this.effort);
-        properties.put("testDescription", this.testDescription);
-        properties.put("projectId", this.projectId);
         properties.put("closed", this.closed);
+        properties.put("projectId", this.projectId);
+        properties.put("effort", this.effort);
+        properties.put("description", this.description);
         properties.put("label", this.label);
         properties.put("sprintId", this.sprintId);
+        properties.put("testDescription", this.testDescription);
     }
 
 }

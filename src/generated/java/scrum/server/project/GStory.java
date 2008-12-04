@@ -46,13 +46,13 @@ public abstract class GStory
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("description", this.description);
-        properties.put("effort", this.effort);
-        properties.put("testDescription", this.testDescription);
-        properties.put("projectId", this.projectId);
         properties.put("closed", this.closed);
+        properties.put("projectId", this.projectId);
+        properties.put("effort", this.effort);
+        properties.put("description", this.description);
         properties.put("label", this.label);
         properties.put("sprintId", this.sprintId);
+        properties.put("testDescription", this.testDescription);
     }
 
     public int compareTo(Story other) {
@@ -68,105 +68,38 @@ public abstract class GStory
         super(template);
         if (template==null) return;
 
-        setDescription(template.getDescription());
-        setEffort(template.getEffort());
-        setTestDescription(template.getTestDescription());
-        setProject(template.getProject());
         setClosed(template.isClosed());
+        setProject(template.getProject());
+        setEffort(template.getEffort());
+        setDescription(template.getDescription());
         setLabel(template.getLabel());
         setSprint(template.getSprint());
+        setTestDescription(template.getTestDescription());
     }
 
     // -----------------------------------------------------------
-    // - description
+    // - closed
     // -----------------------------------------------------------
 
-    private java.lang.String description;
+    private boolean closed;
 
-    public final java.lang.String getDescription() {
-        return description;
+    public final boolean isClosed() {
+        return closed;
     }
 
-    public final void setDescription(java.lang.String description) {
-        description = prepareDescription(description);
-        if (isDescription(description)) return;
-        this.description = description;
+    public final void setClosed(boolean closed) {
+        closed = prepareClosed(closed);
+        if (isClosed(closed)) return;
+        this.closed = closed;
         entityModified();
     }
 
-    protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
-        return description;
+    protected boolean prepareClosed(boolean closed) {
+        return closed;
     }
 
-    public final boolean isDescriptionSet() {
-        return this.description != null;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        if (this.description == null && description == null) return true;
-        return this.description != null && this.description.equals(description);
-    }
-
-    // -----------------------------------------------------------
-    // - effort
-    // -----------------------------------------------------------
-
-    private java.lang.Integer effort;
-
-    public final java.lang.Integer getEffort() {
-        return effort;
-    }
-
-    public final void setEffort(java.lang.Integer effort) {
-        effort = prepareEffort(effort);
-        if (isEffort(effort)) return;
-        this.effort = effort;
-        entityModified();
-    }
-
-    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
-        return effort;
-    }
-
-    public final boolean isEffortSet() {
-        return this.effort != null;
-    }
-
-    public final boolean isEffort(java.lang.Integer effort) {
-        if (this.effort == null && effort == null) return true;
-        return this.effort != null && this.effort.equals(effort);
-    }
-
-    // -----------------------------------------------------------
-    // - testDescription
-    // -----------------------------------------------------------
-
-    private java.lang.String testDescription;
-
-    public final java.lang.String getTestDescription() {
-        return testDescription;
-    }
-
-    public final void setTestDescription(java.lang.String testDescription) {
-        testDescription = prepareTestDescription(testDescription);
-        if (isTestDescription(testDescription)) return;
-        this.testDescription = testDescription;
-        entityModified();
-    }
-
-    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
-        testDescription = Str.removeUnreadableChars(testDescription);
-        return testDescription;
-    }
-
-    public final boolean isTestDescriptionSet() {
-        return this.testDescription != null;
-    }
-
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        if (this.testDescription == null && testDescription == null) return true;
-        return this.testDescription != null && this.testDescription.equals(testDescription);
+    public final boolean isClosed(boolean closed) {
+        return this.closed == closed;
     }
 
     // -----------------------------------------------------------
@@ -207,28 +140,64 @@ public abstract class GStory
     }
 
     // -----------------------------------------------------------
-    // - closed
+    // - effort
     // -----------------------------------------------------------
 
-    private boolean closed;
+    private java.lang.Integer effort;
 
-    public final boolean isClosed() {
-        return closed;
+    public final java.lang.Integer getEffort() {
+        return effort;
     }
 
-    public final void setClosed(boolean closed) {
-        closed = prepareClosed(closed);
-        if (isClosed(closed)) return;
-        this.closed = closed;
+    public final void setEffort(java.lang.Integer effort) {
+        effort = prepareEffort(effort);
+        if (isEffort(effort)) return;
+        this.effort = effort;
         entityModified();
     }
 
-    protected boolean prepareClosed(boolean closed) {
-        return closed;
+    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
+        return effort;
     }
 
-    public final boolean isClosed(boolean closed) {
-        return this.closed == closed;
+    public final boolean isEffortSet() {
+        return this.effort != null;
+    }
+
+    public final boolean isEffort(java.lang.Integer effort) {
+        if (this.effort == null && effort == null) return true;
+        return this.effort != null && this.effort.equals(effort);
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private java.lang.String description;
+
+    public final java.lang.String getDescription() {
+        return description;
+    }
+
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+        entityModified();
+    }
+
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
+    }
+
+    public final boolean isDescriptionSet() {
+        return this.description != null;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
     }
 
     // -----------------------------------------------------------
@@ -298,6 +267,37 @@ public abstract class GStory
     public final boolean isSprint(scrum.server.sprint.Sprint sprint) {
         if (this.sprintId == null && sprint == null) return true;
         return sprint != null && sprint.getId().equals(this.sprintId);
+    }
+
+    // -----------------------------------------------------------
+    // - testDescription
+    // -----------------------------------------------------------
+
+    private java.lang.String testDescription;
+
+    public final java.lang.String getTestDescription() {
+        return testDescription;
+    }
+
+    public final void setTestDescription(java.lang.String testDescription) {
+        testDescription = prepareTestDescription(testDescription);
+        if (isTestDescription(testDescription)) return;
+        this.testDescription = testDescription;
+        entityModified();
+    }
+
+    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
+        testDescription = Str.removeUnreadableChars(testDescription);
+        return testDescription;
+    }
+
+    public final boolean isTestDescriptionSet() {
+        return this.testDescription != null;
+    }
+
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        if (this.testDescription == null && testDescription == null) return true;
+        return this.testDescription != null && this.testDescription.equals(testDescription);
     }
 
     protected void repairDeadReferences(String entityId) {

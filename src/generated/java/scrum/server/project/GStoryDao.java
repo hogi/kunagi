@@ -43,19 +43,19 @@ public abstract class GStoryDao
 
     // --- clear caches ---
     public void clearCaches() {
-        storysByDescriptionCache.clear();
-        descriptionsCache = null;
-        storysByEffortCache.clear();
-        effortsCache = null;
-        storysByTestDescriptionCache.clear();
-        testDescriptionsCache = null;
+        storysByClosedCache.clear();
         storysByProjectCache.clear();
         projectsCache = null;
-        storysByClosedCache.clear();
+        storysByEffortCache.clear();
+        effortsCache = null;
+        storysByDescriptionCache.clear();
+        descriptionsCache = null;
         storysByLabelCache.clear();
         labelsCache = null;
         storysBySprintCache.clear();
         sprintsCache = null;
+        storysByTestDescriptionCache.clear();
+        testDescriptionsCache = null;
     }
 
     @Override
@@ -75,121 +75,30 @@ public abstract class GStoryDao
     }
 
     // -----------------------------------------------------------
-    // - description
+    // - closed
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Story>> storysByDescriptionCache = new Cache<java.lang.String,Set<Story>>(
-            new Cache.Factory<java.lang.String,Set<Story>>() {
-                public Set<Story> create(java.lang.String description) {
-                    return getEntities(new IsDescription(description));
+    private final Cache<Boolean,Set<Story>> storysByClosedCache = new Cache<Boolean,Set<Story>>(
+            new Cache.Factory<Boolean,Set<Story>>() {
+                public Set<Story> create(Boolean closed) {
+                    return getEntities(new IsClosed(closed));
                 }
             });
 
-    public final Set<Story> getStorysByDescription(java.lang.String description) {
-        return storysByDescriptionCache.get(description);
-    }
-    private Set<java.lang.String> descriptionsCache;
-
-    public final Set<java.lang.String> getDescriptions() {
-        if (descriptionsCache == null) {
-            descriptionsCache = new HashSet<java.lang.String>();
-            for (Story e : getEntities()) {
-                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
-            }
-        }
-        return descriptionsCache;
+    public final Set<Story> getStorysByClosed(boolean closed) {
+        return storysByClosedCache.get(closed);
     }
 
-    private static class IsDescription implements Predicate<Story> {
+    private static class IsClosed implements Predicate<Story> {
 
-        private java.lang.String value;
+        private boolean value;
 
-        public IsDescription(java.lang.String value) {
+        public IsClosed(boolean value) {
             this.value = value;
         }
 
         public boolean test(Story e) {
-            return e.isDescription(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - effort
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.Integer,Set<Story>> storysByEffortCache = new Cache<java.lang.Integer,Set<Story>>(
-            new Cache.Factory<java.lang.Integer,Set<Story>>() {
-                public Set<Story> create(java.lang.Integer effort) {
-                    return getEntities(new IsEffort(effort));
-                }
-            });
-
-    public final Set<Story> getStorysByEffort(java.lang.Integer effort) {
-        return storysByEffortCache.get(effort);
-    }
-    private Set<java.lang.Integer> effortsCache;
-
-    public final Set<java.lang.Integer> getEfforts() {
-        if (effortsCache == null) {
-            effortsCache = new HashSet<java.lang.Integer>();
-            for (Story e : getEntities()) {
-                if (e.isEffortSet()) effortsCache.add(e.getEffort());
-            }
-        }
-        return effortsCache;
-    }
-
-    private static class IsEffort implements Predicate<Story> {
-
-        private java.lang.Integer value;
-
-        public IsEffort(java.lang.Integer value) {
-            this.value = value;
-        }
-
-        public boolean test(Story e) {
-            return e.isEffort(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - testDescription
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Story>> storysByTestDescriptionCache = new Cache<java.lang.String,Set<Story>>(
-            new Cache.Factory<java.lang.String,Set<Story>>() {
-                public Set<Story> create(java.lang.String testDescription) {
-                    return getEntities(new IsTestDescription(testDescription));
-                }
-            });
-
-    public final Set<Story> getStorysByTestDescription(java.lang.String testDescription) {
-        return storysByTestDescriptionCache.get(testDescription);
-    }
-    private Set<java.lang.String> testDescriptionsCache;
-
-    public final Set<java.lang.String> getTestDescriptions() {
-        if (testDescriptionsCache == null) {
-            testDescriptionsCache = new HashSet<java.lang.String>();
-            for (Story e : getEntities()) {
-                if (e.isTestDescriptionSet()) testDescriptionsCache.add(e.getTestDescription());
-            }
-        }
-        return testDescriptionsCache;
-    }
-
-    private static class IsTestDescription implements Predicate<Story> {
-
-        private java.lang.String value;
-
-        public IsTestDescription(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Story e) {
-            return e.isTestDescription(value);
+            return value == e.isClosed();
         }
 
     }
@@ -235,30 +144,81 @@ public abstract class GStoryDao
     }
 
     // -----------------------------------------------------------
-    // - closed
+    // - effort
     // -----------------------------------------------------------
 
-    private final Cache<Boolean,Set<Story>> storysByClosedCache = new Cache<Boolean,Set<Story>>(
-            new Cache.Factory<Boolean,Set<Story>>() {
-                public Set<Story> create(Boolean closed) {
-                    return getEntities(new IsClosed(closed));
+    private final Cache<java.lang.Integer,Set<Story>> storysByEffortCache = new Cache<java.lang.Integer,Set<Story>>(
+            new Cache.Factory<java.lang.Integer,Set<Story>>() {
+                public Set<Story> create(java.lang.Integer effort) {
+                    return getEntities(new IsEffort(effort));
                 }
             });
 
-    public final Set<Story> getStorysByClosed(boolean closed) {
-        return storysByClosedCache.get(closed);
+    public final Set<Story> getStorysByEffort(java.lang.Integer effort) {
+        return storysByEffortCache.get(effort);
+    }
+    private Set<java.lang.Integer> effortsCache;
+
+    public final Set<java.lang.Integer> getEfforts() {
+        if (effortsCache == null) {
+            effortsCache = new HashSet<java.lang.Integer>();
+            for (Story e : getEntities()) {
+                if (e.isEffortSet()) effortsCache.add(e.getEffort());
+            }
+        }
+        return effortsCache;
     }
 
-    private static class IsClosed implements Predicate<Story> {
+    private static class IsEffort implements Predicate<Story> {
 
-        private boolean value;
+        private java.lang.Integer value;
 
-        public IsClosed(boolean value) {
+        public IsEffort(java.lang.Integer value) {
             this.value = value;
         }
 
         public boolean test(Story e) {
-            return value == e.isClosed();
+            return e.isEffort(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Story>> storysByDescriptionCache = new Cache<java.lang.String,Set<Story>>(
+            new Cache.Factory<java.lang.String,Set<Story>>() {
+                public Set<Story> create(java.lang.String description) {
+                    return getEntities(new IsDescription(description));
+                }
+            });
+
+    public final Set<Story> getStorysByDescription(java.lang.String description) {
+        return storysByDescriptionCache.get(description);
+    }
+    private Set<java.lang.String> descriptionsCache;
+
+    public final Set<java.lang.String> getDescriptions() {
+        if (descriptionsCache == null) {
+            descriptionsCache = new HashSet<java.lang.String>();
+            for (Story e : getEntities()) {
+                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
+            }
+        }
+        return descriptionsCache;
+    }
+
+    private static class IsDescription implements Predicate<Story> {
+
+        private java.lang.String value;
+
+        public IsDescription(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Story e) {
+            return e.isDescription(value);
         }
 
     }
@@ -339,6 +299,46 @@ public abstract class GStoryDao
 
         public boolean test(Story e) {
             return e.isSprint(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - testDescription
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Story>> storysByTestDescriptionCache = new Cache<java.lang.String,Set<Story>>(
+            new Cache.Factory<java.lang.String,Set<Story>>() {
+                public Set<Story> create(java.lang.String testDescription) {
+                    return getEntities(new IsTestDescription(testDescription));
+                }
+            });
+
+    public final Set<Story> getStorysByTestDescription(java.lang.String testDescription) {
+        return storysByTestDescriptionCache.get(testDescription);
+    }
+    private Set<java.lang.String> testDescriptionsCache;
+
+    public final Set<java.lang.String> getTestDescriptions() {
+        if (testDescriptionsCache == null) {
+            testDescriptionsCache = new HashSet<java.lang.String>();
+            for (Story e : getEntities()) {
+                if (e.isTestDescriptionSet()) testDescriptionsCache.add(e.getTestDescription());
+            }
+        }
+        return testDescriptionsCache;
+    }
+
+    private static class IsTestDescription implements Predicate<Story> {
+
+        private java.lang.String value;
+
+        public IsTestDescription(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Story e) {
+            return e.isTestDescription(value);
         }
 
     }

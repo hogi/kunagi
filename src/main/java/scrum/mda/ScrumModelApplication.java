@@ -12,7 +12,6 @@ import ilarkesto.mda.model.ApplicationModel;
 import ilarkesto.mda.model.BeanModel;
 import ilarkesto.mda.model.EntityModel;
 import ilarkesto.mda.model.GwtServiceModel;
-import ilarkesto.mda.model.PackageModel;
 
 import java.util.Map;
 
@@ -155,28 +154,15 @@ public class ScrumModelApplication extends AGeneratorApplication {
 
 	@Override
 	protected String getBasePackageName() {
-		return "scrum";
-	}
-
-	private PackageModel basePackageModel;
-
-	@Override
-	public PackageModel getBasePackageModel() {
-		if (basePackageModel == null) {
-			basePackageModel = new PackageModel(getBasePackageName()).getSubPackageModel("server");
-			autowire(basePackageModel);
-		}
-		return basePackageModel;
+		return "scrum.server";
 	}
 
 	private GwtServiceModel createGwtServiceModel(String name) {
-		return new GwtServiceModel(name, getBasePackageModel());
+		return new GwtServiceModel(name, getBasePackageName());
 	}
 
 	public static void main(String[] args) throws InterruptedException {
-		ApplicationStarter.startApplication(ScrumModelApplication.class).generateClasses();
-		Thread.sleep(1000);
-		System.exit(0);
+		ApplicationStarter.startApplication(ScrumModelApplication.class).generateClasses().shutdown();
 	}
 
 	@Override
@@ -188,8 +174,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	}
 
 	@Override
-	public void generateClasses() {
-		super.generateClasses();
+	protected void onGeneration() {
+		super.onGeneration();
 		autowire(new GwtServiceInterfaceGenerator()).generate(getServiceModel());
 		autowire(new GwtServiceAsyncInterfaceGenerator()).generate(getServiceModel());
 		autowire(new GwtServiceImplementationGenerator()).generate(getServiceModel());
