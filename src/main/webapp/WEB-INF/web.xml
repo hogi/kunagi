@@ -18,7 +18,17 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>	
 
+	<servlet>
+		<servlet-name>sprintBurndownChart</servlet-name>
+		<servlet-class>scrum.server.sprint.SprintBurndownChartServlet</servlet-class>
+	</servlet>	
+	
 	<!-- mappings -->
+	
+	<servlet-mapping>
+		<servlet-name>sprintBurndownChart</servlet-name>
+		<url-pattern>/sprintBurndownChart.png</url-pattern>
+	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>scrum</servlet-name>

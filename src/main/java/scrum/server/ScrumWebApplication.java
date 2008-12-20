@@ -8,6 +8,7 @@ import ilarkesto.logging.Logger;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.EntityUtils;
+import ilarkesto.ui.web.AWebApplication;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +24,7 @@ import scrum.server.impediments.Impediment;
 import scrum.server.project.Project;
 import scrum.server.project.Story;
 import scrum.server.sprint.Sprint;
+import scrum.server.sprint.SprintBurndownChart;
 import scrum.server.sprint.Task;
 
 public class ScrumWebApplication extends GScrumWebApplication {
@@ -30,6 +32,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	private static final Logger LOG = Logger.get(ScrumWebApplication.class);
 
 	private Set<SessionData> sessions = new HashSet<SessionData>();
+	private SprintBurndownChart sprintBurndownChart;
 
 	// --- client call handlers ---
 
@@ -88,6 +91,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		// prepare data for client
 		session.getNextData().addEntity(toPropertyMap(project));
 		session.getNextData().addEntities(toPropertyMap(project.getMembers()));
+		if (project.isCurrentSprintSet()) session.getNextData().addEntity(toPropertyMap(project.getCurrentSprint()));
 	}
 
 	@Override
@@ -125,6 +129,16 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	@Override
 	public void onSleep(SessionData session, long millis) {
 		Utl.sleep(millis);
+	}
+
+	// --- components ---
+
+	public SprintBurndownChart getSprintBurndownChart() {
+		if (sprintBurndownChart == null) {
+			sprintBurndownChart = new SprintBurndownChart();
+			autowire(sprintBurndownChart);
+		}
+		return sprintBurndownChart;
 	}
 
 	// --- ---
@@ -251,6 +265,10 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	private final List<Map> toPropertyMap(Collection<? extends AEntity> entities) {
 		return EntityUtils.createPropertiesMaps(entities);
+	}
+
+	public static ScrumWebApplication get() {
+		return (ScrumWebApplication) AWebApplication.get();
 	}
 
 }

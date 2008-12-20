@@ -2,12 +2,17 @@ package scrum.client.project;
 
 import scrum.client.admin.User;
 import scrum.client.common.ItemFieldsWidget;
+import scrum.client.common.PanelWidget;
 import scrum.client.common.ScrumUtil;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
+import scrum.client.sprint.Sprint;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectOverviewWidget extends Composite {
 
@@ -60,7 +65,20 @@ public class ProjectOverviewWidget extends Composite {
 			fields.addField("Project Admins", new Label(admins));
 		}
 
-		initWidget(fields);
+		FlowPanel panel = new FlowPanel();
+		panel.add(fields);
+		Sprint sprint = project.getCurrentSprint();
+		if (sprint != null) {
+			panel.add(createCurrentSprintOverview(sprint));
+		}
+
+		initWidget(panel);
 	}
 
+	private Widget createCurrentSprintOverview(Sprint sprint) {
+		int width = 500;
+		int height = 200;
+		String url = "../sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width=" + width + "&height=" + height;
+		return new PanelWidget("Current Sprint", new Image(url, 0, 0, width, height));
+	}
 }
