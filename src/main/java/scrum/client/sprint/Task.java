@@ -62,4 +62,25 @@ public class Task extends GTask {
 		this.taskListWidget = taskListWidget;
 	}
 
+	public void incrementBurnedWork() {
+		setBurnedWork(getBurnedWork() + 1);
+	}
+
+	public void decrementBurnedWork() {
+		if (getBurnedWork() == 0) return;
+		setBurnedWork(getBurnedWork() - 1);
+	}
+
+	public void incrementRemainingWork() {
+		Integer work = getRemainingWork();
+		if (work == null) work = 0;
+		setRemainingWork(work + 1);
+	}
+
+	public void decrementRemainingWork() {
+		Integer work = getRemainingWork();
+		if (work == null || work == 1) return;
+		setRemainingWork(work - 1);
+	}
+
 }

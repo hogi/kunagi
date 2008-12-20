@@ -3,7 +3,7 @@ package scrum.client.sprint;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
-import scrum.client.common.editable.AEditableIntegerWidget;
+import scrum.client.common.editable.AEditableIntegerShiftWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.img.Img;
@@ -55,7 +55,7 @@ public class TaskWidget extends ABlockWidget {
 
 		});
 
-		fieldsWidget.addField("Burned Work", new AEditableIntegerWidget() {
+		fieldsWidget.addField("Burned Work", new AEditableIntegerShiftWidget() {
 
 			@Override
 			protected Integer getValue() {
@@ -67,9 +67,19 @@ public class TaskWidget extends ABlockWidget {
 				task.setBurnedWork(value == null ? 0 : value);
 				controller.dataChanged(TaskWidget.this);
 			}
+
+			@Override
+			protected void onMinusClicked() {
+				task.decrementBurnedWork();
+			}
+
+			@Override
+			protected void onPlusClicked() {
+				task.incrementBurnedWork();
+			}
 		});
 
-		fieldsWidget.addField("Remaining Work", new AEditableIntegerWidget() {
+		fieldsWidget.addField("Remaining Work", new AEditableIntegerShiftWidget() {
 
 			@Override
 			protected Integer getValue() {
@@ -80,6 +90,16 @@ public class TaskWidget extends ABlockWidget {
 			protected void setValue(Integer value) {
 				task.setRemainingWork(value);
 				controller.dataChanged(TaskWidget.this);
+			}
+
+			@Override
+			protected void onMinusClicked() {
+				task.decrementRemainingWork();
+			}
+
+			@Override
+			protected void onPlusClicked() {
+				task.incrementRemainingWork();
 			}
 
 		});
