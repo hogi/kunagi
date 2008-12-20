@@ -2,6 +2,7 @@ package scrum.server;
 
 import ilarkesto.base.Url;
 import ilarkesto.base.Utl;
+import ilarkesto.base.time.Date;
 import ilarkesto.concurrent.TaskManager;
 import ilarkesto.io.IO;
 import ilarkesto.logging.Logger;
@@ -25,6 +26,7 @@ import scrum.server.project.Project;
 import scrum.server.project.Story;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintBurndownChart;
+import scrum.server.sprint.SprintDaySnapshot;
 import scrum.server.sprint.Task;
 
 public class ScrumWebApplication extends GScrumWebApplication {
@@ -64,7 +66,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		// probably dirty hacked stuff x-ing
 		if (entity instanceof Task) {
 			Task task = (Task) entity;
-			task.getStory().getSprint().getDaySnapshotForToday().update();
+			task.getStory().getSprint().getDaySnapshot(Date.today()).update();
 		}
 
 		for (SessionData s : getOtherSessions(session)) {
@@ -208,6 +210,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		task1.setStory(story2);
 		task1.setLabel("Task 1");
 		task1.setEffort(3);
+		task1.setBurndown(5);
 		getTaskDao().saveEntity(task1);
 
 		Task task2 = getTaskDao().newEntityInstance();
@@ -226,6 +229,11 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		sprint1.setLabel("Sprint 1");
 		getSprintDao().saveEntity(sprint1);
 		story2.setSprint(sprint1);
+		for (int i = 1; i <= 5; i++) {
+			SprintDaySnapshot snapshot = sprint1.getDaySnapshot(Date.today().addDays(-i));
+			snapshot.setBurndown(i % 2);
+			snapshot.setEffort(50 - i);
+		}
 
 		project1.setCurrentSprint(sprint1);
 

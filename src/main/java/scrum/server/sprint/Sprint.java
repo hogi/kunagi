@@ -38,19 +38,15 @@ public class Sprint extends GSprint {
 	// --- ---
 
 	public Date getBegin() {
-		return Date.today().getFirstDateOfMonth();
+		return Date.today().addDays(-15);
 	}
 
 	public Date getEnd() {
-		return Date.today().getLastDateOfMonth();
+		return Date.today().addDays(5);
 	}
 
 	public SprintDaySnapshot getDaySnapshot(Date date) {
 		return sprintDaySnapshotDao.getSprintDaySnapshot(this, date, true);
-	}
-
-	public SprintDaySnapshot getDaySnapshotForToday() {
-		return getDaySnapshot(Date.today());
 	}
 
 	public int getTaskEffortSum() {
