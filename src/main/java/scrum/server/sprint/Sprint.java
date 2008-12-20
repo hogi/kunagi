@@ -38,11 +38,17 @@ public class Sprint extends GSprint {
 	// --- ---
 
 	public Date getBegin() {
+		// TODO dummy here
 		return Date.today().addDays(-15);
 	}
 
 	public Date getEnd() {
+		// TODO dummy here
 		return Date.today().addDays(5);
+	}
+
+	public int getLenghtInDays() {
+		return getBegin().getPeriodTo(getEnd()).toDays();
 	}
 
 	public SprintDaySnapshot getDaySnapshot(Date date) {
