@@ -77,13 +77,12 @@ public class StoryWidget extends ABlockWidget {
 
 		});
 
-		fieldsWidget.addField("Effort", new AEditableListBoxWidget() {
+		fieldsWidget.addField("Estimated Work", new AEditableListBoxWidget() {
 
 			@Override
 			protected String getText() {
 				Integer effort = item.getEffort();
-				return effort == null ? "No effort estimated." : effort.toString() + " "
-						+ item.getProject().getEffortUnit();
+				return effort == null ? "No estimation." : effort.toString() + " " + item.getProject().getEffortUnit();
 			}
 
 			@Override

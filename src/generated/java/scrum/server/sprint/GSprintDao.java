@@ -47,10 +47,6 @@ public abstract class GSprintDao
         labelsCache = null;
         sprintsByProjectCache.clear();
         projectsCache = null;
-        sprintsByEndCrapCache.clear();
-        endCrapsCache = null;
-        sprintsByBeginCrapCache.clear();
-        beginCrapsCache = null;
     }
 
     @Override
@@ -145,86 +141,6 @@ public abstract class GSprintDao
 
         public boolean test(Sprint e) {
             return e.isProject(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - endCrap
-    // -----------------------------------------------------------
-
-    private final Cache<java.util.Date,Set<Sprint>> sprintsByEndCrapCache = new Cache<java.util.Date,Set<Sprint>>(
-            new Cache.Factory<java.util.Date,Set<Sprint>>() {
-                public Set<Sprint> create(java.util.Date endCrap) {
-                    return getEntities(new IsEndCrap(endCrap));
-                }
-            });
-
-    public final Set<Sprint> getSprintsByEndCrap(java.util.Date endCrap) {
-        return sprintsByEndCrapCache.get(endCrap);
-    }
-    private Set<java.util.Date> endCrapsCache;
-
-    public final Set<java.util.Date> getEndCraps() {
-        if (endCrapsCache == null) {
-            endCrapsCache = new HashSet<java.util.Date>();
-            for (Sprint e : getEntities()) {
-                if (e.isEndCrapSet()) endCrapsCache.add(e.getEndCrap());
-            }
-        }
-        return endCrapsCache;
-    }
-
-    private static class IsEndCrap implements Predicate<Sprint> {
-
-        private java.util.Date value;
-
-        public IsEndCrap(java.util.Date value) {
-            this.value = value;
-        }
-
-        public boolean test(Sprint e) {
-            return e.isEndCrap(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - beginCrap
-    // -----------------------------------------------------------
-
-    private final Cache<java.util.Date,Set<Sprint>> sprintsByBeginCrapCache = new Cache<java.util.Date,Set<Sprint>>(
-            new Cache.Factory<java.util.Date,Set<Sprint>>() {
-                public Set<Sprint> create(java.util.Date beginCrap) {
-                    return getEntities(new IsBeginCrap(beginCrap));
-                }
-            });
-
-    public final Set<Sprint> getSprintsByBeginCrap(java.util.Date beginCrap) {
-        return sprintsByBeginCrapCache.get(beginCrap);
-    }
-    private Set<java.util.Date> beginCrapsCache;
-
-    public final Set<java.util.Date> getBeginCraps() {
-        if (beginCrapsCache == null) {
-            beginCrapsCache = new HashSet<java.util.Date>();
-            for (Sprint e : getEntities()) {
-                if (e.isBeginCrapSet()) beginCrapsCache.add(e.getBeginCrap());
-            }
-        }
-        return beginCrapsCache;
-    }
-
-    private static class IsBeginCrap implements Predicate<Sprint> {
-
-        private java.util.Date value;
-
-        public IsBeginCrap(java.util.Date value) {
-            this.value = value;
-        }
-
-        public boolean test(Sprint e) {
-            return e.isBeginCrap(value);
         }
 
     }

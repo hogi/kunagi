@@ -48,8 +48,6 @@ public abstract class GSprint
         super.storeProperties(properties);
         properties.put("label", this.label);
         properties.put("projectId", this.projectId);
-        properties.put("endCrap", this.endCrap);
-        properties.put("beginCrap", this.beginCrap);
     }
 
     public int compareTo(Sprint other) {
@@ -67,8 +65,6 @@ public abstract class GSprint
 
         setLabel(template.getLabel());
         setProject(template.getProject());
-        setEndCrap(template.getEndCrap());
-        setBeginCrap(template.getBeginCrap());
     }
 
     // -----------------------------------------------------------
@@ -137,66 +133,6 @@ public abstract class GSprint
     public final boolean isProject(scrum.server.project.Project project) {
         if (this.projectId == null && project == null) return true;
         return project != null && project.getId().equals(this.projectId);
-    }
-
-    // -----------------------------------------------------------
-    // - endCrap
-    // -----------------------------------------------------------
-
-    private java.util.Date endCrap;
-
-    public final java.util.Date getEndCrap() {
-        return endCrap;
-    }
-
-    public final void setEndCrap(java.util.Date endCrap) {
-        endCrap = prepareEndCrap(endCrap);
-        if (isEndCrap(endCrap)) return;
-        this.endCrap = endCrap;
-        entityModified();
-    }
-
-    protected java.util.Date prepareEndCrap(java.util.Date endCrap) {
-        return endCrap;
-    }
-
-    public final boolean isEndCrapSet() {
-        return this.endCrap != null;
-    }
-
-    public final boolean isEndCrap(java.util.Date endCrap) {
-        if (this.endCrap == null && endCrap == null) return true;
-        return this.endCrap != null && this.endCrap.equals(endCrap);
-    }
-
-    // -----------------------------------------------------------
-    // - beginCrap
-    // -----------------------------------------------------------
-
-    private java.util.Date beginCrap;
-
-    public final java.util.Date getBeginCrap() {
-        return beginCrap;
-    }
-
-    public final void setBeginCrap(java.util.Date beginCrap) {
-        beginCrap = prepareBeginCrap(beginCrap);
-        if (isBeginCrap(beginCrap)) return;
-        this.beginCrap = beginCrap;
-        entityModified();
-    }
-
-    protected java.util.Date prepareBeginCrap(java.util.Date beginCrap) {
-        return beginCrap;
-    }
-
-    public final boolean isBeginCrapSet() {
-        return this.beginCrap != null;
-    }
-
-    public final boolean isBeginCrap(java.util.Date beginCrap) {
-        if (this.beginCrap == null && beginCrap == null) return true;
-        return this.beginCrap != null && this.beginCrap.equals(beginCrap);
     }
 
     protected void repairDeadReferences(String entityId) {

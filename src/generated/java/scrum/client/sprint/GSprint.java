@@ -81,49 +81,11 @@ public abstract class GSprint
         return equals(this.projectId, project);
     }
 
-    // --- endCrap ---
-
-    private java.util.Date endCrap ;
-
-    public final java.util.Date getEndCrap() {
-        return this.endCrap ;
-    }
-
-    public final Sprint setEndCrap(java.util.Date endCrap) {
-        this.endCrap = endCrap ;
-        propertyChanged("endCrap", this.endCrap);
-        return (Sprint)this;
-    }
-
-    public final boolean isEndCrap(java.util.Date endCrap) {
-        return equals(this.endCrap, endCrap);
-    }
-
-    // --- beginCrap ---
-
-    private java.util.Date beginCrap ;
-
-    public final java.util.Date getBeginCrap() {
-        return this.beginCrap ;
-    }
-
-    public final Sprint setBeginCrap(java.util.Date beginCrap) {
-        this.beginCrap = beginCrap ;
-        propertyChanged("beginCrap", this.beginCrap);
-        return (Sprint)this;
-    }
-
-    public final boolean isBeginCrap(java.util.Date beginCrap) {
-        return equals(this.beginCrap, beginCrap);
-    }
-
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         label  = (java.lang.String) props.get("label");
         projectId = (String) props.get("projectId");
-        endCrap  = (java.util.Date) props.get("endCrap");
-        beginCrap  = (java.util.Date) props.get("beginCrap");
     }
 
     @Override
@@ -131,8 +93,6 @@ public abstract class GSprint
         super.storeProperties(properties);
         properties.put("label", this.label);
         properties.put("projectId", this.projectId);
-        properties.put("endCrap", this.endCrap);
-        properties.put("beginCrap", this.beginCrap);
     }
 
 }

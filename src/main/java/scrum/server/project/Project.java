@@ -1,5 +1,7 @@
 package scrum.server.project;
 
+import ilarkesto.base.time.Date;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +34,16 @@ public class Project extends GProject {
 	}
 
 	// --- ---
+
+	public Date getBegin() {
+		// TODO dummy here
+		return Date.today().addDays(-20);
+	}
+
+	public Date getEnd() {
+		// TODO dummy here
+		return Date.today().addMonths(7);
+	}
 
 	public Set<User> getMembers() {
 		Set<User> ret = new HashSet<User>();

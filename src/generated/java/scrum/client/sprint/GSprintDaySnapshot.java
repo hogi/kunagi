@@ -43,6 +43,24 @@ public abstract class GSprintDaySnapshot
         return ENTITY_TYPE;
     }
 
+    // --- dateCrap ---
+
+    private java.util.Date dateCrap ;
+
+    public final java.util.Date getDateCrap() {
+        return this.dateCrap ;
+    }
+
+    public final SprintDaySnapshot setDateCrap(java.util.Date dateCrap) {
+        this.dateCrap = dateCrap ;
+        propertyChanged("dateCrap", this.dateCrap);
+        return (SprintDaySnapshot)this;
+    }
+
+    public final boolean isDateCrap(java.util.Date dateCrap) {
+        return equals(this.dateCrap, dateCrap);
+    }
+
     // --- sprint ---
 
     private String sprintId;
@@ -81,24 +99,6 @@ public abstract class GSprintDaySnapshot
         return equals(this.burndown, burndown);
     }
 
-    // --- dateCrap ---
-
-    private java.util.Date dateCrap ;
-
-    public final java.util.Date getDateCrap() {
-        return this.dateCrap ;
-    }
-
-    public final SprintDaySnapshot setDateCrap(java.util.Date dateCrap) {
-        this.dateCrap = dateCrap ;
-        propertyChanged("dateCrap", this.dateCrap);
-        return (SprintDaySnapshot)this;
-    }
-
-    public final boolean isDateCrap(java.util.Date dateCrap) {
-        return equals(this.dateCrap, dateCrap);
-    }
-
     // --- effort ---
 
     private int effort ;
@@ -120,18 +120,18 @@ public abstract class GSprintDaySnapshot
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
+        dateCrap  = (java.util.Date) props.get("dateCrap");
         sprintId = (String) props.get("sprintId");
         burndown  = (Integer) props.get("burndown");
-        dateCrap  = (java.util.Date) props.get("dateCrap");
         effort  = (Integer) props.get("effort");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("dateCrap", this.dateCrap);
         properties.put("sprintId", this.sprintId);
         properties.put("burndown", this.burndown);
-        properties.put("dateCrap", this.dateCrap);
         properties.put("effort", this.effort);
     }
 

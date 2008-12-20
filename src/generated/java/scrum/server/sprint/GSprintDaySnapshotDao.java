@@ -43,12 +43,12 @@ public abstract class GSprintDaySnapshotDao
 
     // --- clear caches ---
     public void clearCaches() {
+        sprintDaySnapshotsByDateCrapCache.clear();
+        dateCrapsCache = null;
         sprintDaySnapshotsBySprintCache.clear();
         sprintsCache = null;
         sprintDaySnapshotsByBurndownCache.clear();
         burndownsCache = null;
-        sprintDaySnapshotsByDateCrapCache.clear();
-        dateCrapsCache = null;
         sprintDaySnapshotsByEffortCache.clear();
         effortsCache = null;
     }
@@ -67,6 +67,46 @@ public abstract class GSprintDaySnapshotDao
         if (event.getEntity() instanceof SprintDaySnapshot) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - dateCrap
+    // -----------------------------------------------------------
+
+    private final Cache<java.util.Date,Set<SprintDaySnapshot>> sprintDaySnapshotsByDateCrapCache = new Cache<java.util.Date,Set<SprintDaySnapshot>>(
+            new Cache.Factory<java.util.Date,Set<SprintDaySnapshot>>() {
+                public Set<SprintDaySnapshot> create(java.util.Date dateCrap) {
+                    return getEntities(new IsDateCrap(dateCrap));
+                }
+            });
+
+    public final Set<SprintDaySnapshot> getSprintDaySnapshotsByDateCrap(java.util.Date dateCrap) {
+        return sprintDaySnapshotsByDateCrapCache.get(dateCrap);
+    }
+    private Set<java.util.Date> dateCrapsCache;
+
+    public final Set<java.util.Date> getDateCraps() {
+        if (dateCrapsCache == null) {
+            dateCrapsCache = new HashSet<java.util.Date>();
+            for (SprintDaySnapshot e : getEntities()) {
+                if (e.isDateCrapSet()) dateCrapsCache.add(e.getDateCrap());
+            }
+        }
+        return dateCrapsCache;
+    }
+
+    private static class IsDateCrap implements Predicate<SprintDaySnapshot> {
+
+        private java.util.Date value;
+
+        public IsDateCrap(java.util.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(SprintDaySnapshot e) {
+            return e.isDateCrap(value);
+        }
+
     }
 
     // -----------------------------------------------------------
@@ -145,46 +185,6 @@ public abstract class GSprintDaySnapshotDao
 
         public boolean test(SprintDaySnapshot e) {
             return e.isBurndown(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - dateCrap
-    // -----------------------------------------------------------
-
-    private final Cache<java.util.Date,Set<SprintDaySnapshot>> sprintDaySnapshotsByDateCrapCache = new Cache<java.util.Date,Set<SprintDaySnapshot>>(
-            new Cache.Factory<java.util.Date,Set<SprintDaySnapshot>>() {
-                public Set<SprintDaySnapshot> create(java.util.Date dateCrap) {
-                    return getEntities(new IsDateCrap(dateCrap));
-                }
-            });
-
-    public final Set<SprintDaySnapshot> getSprintDaySnapshotsByDateCrap(java.util.Date dateCrap) {
-        return sprintDaySnapshotsByDateCrapCache.get(dateCrap);
-    }
-    private Set<java.util.Date> dateCrapsCache;
-
-    public final Set<java.util.Date> getDateCraps() {
-        if (dateCrapsCache == null) {
-            dateCrapsCache = new HashSet<java.util.Date>();
-            for (SprintDaySnapshot e : getEntities()) {
-                if (e.isDateCrapSet()) dateCrapsCache.add(e.getDateCrap());
-            }
-        }
-        return dateCrapsCache;
-    }
-
-    private static class IsDateCrap implements Predicate<SprintDaySnapshot> {
-
-        private java.util.Date value;
-
-        public IsDateCrap(java.util.Date value) {
-            this.value = value;
-        }
-
-        public boolean test(SprintDaySnapshot e) {
-            return e.isDateCrap(value);
         }
 
     }

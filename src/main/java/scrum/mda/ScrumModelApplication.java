@@ -39,6 +39,20 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return projectModel;
 	}
 
+	private EntityModel projectSprintSnapshotModel;
+
+	public EntityModel getProjectSprintSnapshotModel() {
+		if (projectSprintSnapshotModel == null) {
+			projectSprintSnapshotModel = createEntityModel("ProjectSprintSnapshot", "project");
+			autowire(projectSprintSnapshotModel);
+			projectSprintSnapshotModel.addReference("project", getProjectModel());
+			projectSprintSnapshotModel.addProperty("dateCrap", Date.class);
+			projectSprintSnapshotModel.addProperty("effort", int.class);
+			projectSprintSnapshotModel.addProperty("burndown", int.class);
+		}
+		return projectSprintSnapshotModel;
+	}
+
 	private EntityModel storyModel;
 
 	public EntityModel getStoryModel() {
@@ -64,8 +78,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(sprintModel);
 			sprintModel.addReference("project", getProjectModel()).setMaster(true);
 			sprintModel.addProperty("label", String.class);
-			sprintModel.addProperty("beginCrap", Date.class);
-			sprintModel.addProperty("endCrap", Date.class);
 		}
 		return sprintModel;
 	}

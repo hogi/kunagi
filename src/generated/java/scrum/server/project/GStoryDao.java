@@ -43,19 +43,19 @@ public abstract class GStoryDao
 
     // --- clear caches ---
     public void clearCaches() {
+        storysByClosedCache.clear();
         storysByEffortCache.clear();
         effortsCache = null;
-        storysByLabelCache.clear();
-        labelsCache = null;
-        storysByDescriptionCache.clear();
-        descriptionsCache = null;
-        storysBySprintCache.clear();
-        sprintsCache = null;
-        storysByClosedCache.clear();
         storysByTestDescriptionCache.clear();
         testDescriptionsCache = null;
+        storysByLabelCache.clear();
+        labelsCache = null;
+        storysBySprintCache.clear();
+        sprintsCache = null;
         storysByProjectCache.clear();
         projectsCache = null;
+        storysByDescriptionCache.clear();
+        descriptionsCache = null;
     }
 
     @Override
@@ -72,6 +72,35 @@ public abstract class GStoryDao
         if (event.getEntity() instanceof Story) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - closed
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<Story>> storysByClosedCache = new Cache<Boolean,Set<Story>>(
+            new Cache.Factory<Boolean,Set<Story>>() {
+                public Set<Story> create(Boolean closed) {
+                    return getEntities(new IsClosed(closed));
+                }
+            });
+
+    public final Set<Story> getStorysByClosed(boolean closed) {
+        return storysByClosedCache.get(closed);
+    }
+
+    private static class IsClosed implements Predicate<Story> {
+
+        private boolean value;
+
+        public IsClosed(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(Story e) {
+            return value == e.isClosed();
+        }
+
     }
 
     // -----------------------------------------------------------
@@ -110,155 +139,6 @@ public abstract class GStoryDao
 
         public boolean test(Story e) {
             return e.isEffort(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Story>> storysByLabelCache = new Cache<java.lang.String,Set<Story>>(
-            new Cache.Factory<java.lang.String,Set<Story>>() {
-                public Set<Story> create(java.lang.String label) {
-                    return getEntities(new IsLabel(label));
-                }
-            });
-
-    public final Set<Story> getStorysByLabel(java.lang.String label) {
-        return storysByLabelCache.get(label);
-    }
-    private Set<java.lang.String> labelsCache;
-
-    public final Set<java.lang.String> getLabels() {
-        if (labelsCache == null) {
-            labelsCache = new HashSet<java.lang.String>();
-            for (Story e : getEntities()) {
-                if (e.isLabelSet()) labelsCache.add(e.getLabel());
-            }
-        }
-        return labelsCache;
-    }
-
-    private static class IsLabel implements Predicate<Story> {
-
-        private java.lang.String value;
-
-        public IsLabel(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Story e) {
-            return e.isLabel(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - description
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Story>> storysByDescriptionCache = new Cache<java.lang.String,Set<Story>>(
-            new Cache.Factory<java.lang.String,Set<Story>>() {
-                public Set<Story> create(java.lang.String description) {
-                    return getEntities(new IsDescription(description));
-                }
-            });
-
-    public final Set<Story> getStorysByDescription(java.lang.String description) {
-        return storysByDescriptionCache.get(description);
-    }
-    private Set<java.lang.String> descriptionsCache;
-
-    public final Set<java.lang.String> getDescriptions() {
-        if (descriptionsCache == null) {
-            descriptionsCache = new HashSet<java.lang.String>();
-            for (Story e : getEntities()) {
-                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
-            }
-        }
-        return descriptionsCache;
-    }
-
-    private static class IsDescription implements Predicate<Story> {
-
-        private java.lang.String value;
-
-        public IsDescription(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Story e) {
-            return e.isDescription(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - sprint
-    // -----------------------------------------------------------
-
-    private final Cache<scrum.server.sprint.Sprint,Set<Story>> storysBySprintCache = new Cache<scrum.server.sprint.Sprint,Set<Story>>(
-            new Cache.Factory<scrum.server.sprint.Sprint,Set<Story>>() {
-                public Set<Story> create(scrum.server.sprint.Sprint sprint) {
-                    return getEntities(new IsSprint(sprint));
-                }
-            });
-
-    public final Set<Story> getStorysBySprint(scrum.server.sprint.Sprint sprint) {
-        return storysBySprintCache.get(sprint);
-    }
-    private Set<scrum.server.sprint.Sprint> sprintsCache;
-
-    public final Set<scrum.server.sprint.Sprint> getSprints() {
-        if (sprintsCache == null) {
-            sprintsCache = new HashSet<scrum.server.sprint.Sprint>();
-            for (Story e : getEntities()) {
-                if (e.isSprintSet()) sprintsCache.add(e.getSprint());
-            }
-        }
-        return sprintsCache;
-    }
-
-    private static class IsSprint implements Predicate<Story> {
-
-        private scrum.server.sprint.Sprint value;
-
-        public IsSprint(scrum.server.sprint.Sprint value) {
-            this.value = value;
-        }
-
-        public boolean test(Story e) {
-            return e.isSprint(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - closed
-    // -----------------------------------------------------------
-
-    private final Cache<Boolean,Set<Story>> storysByClosedCache = new Cache<Boolean,Set<Story>>(
-            new Cache.Factory<Boolean,Set<Story>>() {
-                public Set<Story> create(Boolean closed) {
-                    return getEntities(new IsClosed(closed));
-                }
-            });
-
-    public final Set<Story> getStorysByClosed(boolean closed) {
-        return storysByClosedCache.get(closed);
-    }
-
-    private static class IsClosed implements Predicate<Story> {
-
-        private boolean value;
-
-        public IsClosed(boolean value) {
-            this.value = value;
-        }
-
-        public boolean test(Story e) {
-            return value == e.isClosed();
         }
 
     }
@@ -304,6 +184,86 @@ public abstract class GStoryDao
     }
 
     // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Story>> storysByLabelCache = new Cache<java.lang.String,Set<Story>>(
+            new Cache.Factory<java.lang.String,Set<Story>>() {
+                public Set<Story> create(java.lang.String label) {
+                    return getEntities(new IsLabel(label));
+                }
+            });
+
+    public final Set<Story> getStorysByLabel(java.lang.String label) {
+        return storysByLabelCache.get(label);
+    }
+    private Set<java.lang.String> labelsCache;
+
+    public final Set<java.lang.String> getLabels() {
+        if (labelsCache == null) {
+            labelsCache = new HashSet<java.lang.String>();
+            for (Story e : getEntities()) {
+                if (e.isLabelSet()) labelsCache.add(e.getLabel());
+            }
+        }
+        return labelsCache;
+    }
+
+    private static class IsLabel implements Predicate<Story> {
+
+        private java.lang.String value;
+
+        public IsLabel(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Story e) {
+            return e.isLabel(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - sprint
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.sprint.Sprint,Set<Story>> storysBySprintCache = new Cache<scrum.server.sprint.Sprint,Set<Story>>(
+            new Cache.Factory<scrum.server.sprint.Sprint,Set<Story>>() {
+                public Set<Story> create(scrum.server.sprint.Sprint sprint) {
+                    return getEntities(new IsSprint(sprint));
+                }
+            });
+
+    public final Set<Story> getStorysBySprint(scrum.server.sprint.Sprint sprint) {
+        return storysBySprintCache.get(sprint);
+    }
+    private Set<scrum.server.sprint.Sprint> sprintsCache;
+
+    public final Set<scrum.server.sprint.Sprint> getSprints() {
+        if (sprintsCache == null) {
+            sprintsCache = new HashSet<scrum.server.sprint.Sprint>();
+            for (Story e : getEntities()) {
+                if (e.isSprintSet()) sprintsCache.add(e.getSprint());
+            }
+        }
+        return sprintsCache;
+    }
+
+    private static class IsSprint implements Predicate<Story> {
+
+        private scrum.server.sprint.Sprint value;
+
+        public IsSprint(scrum.server.sprint.Sprint value) {
+            this.value = value;
+        }
+
+        public boolean test(Story e) {
+            return e.isSprint(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - project
     // -----------------------------------------------------------
 
@@ -339,6 +299,46 @@ public abstract class GStoryDao
 
         public boolean test(Story e) {
             return e.isProject(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Story>> storysByDescriptionCache = new Cache<java.lang.String,Set<Story>>(
+            new Cache.Factory<java.lang.String,Set<Story>>() {
+                public Set<Story> create(java.lang.String description) {
+                    return getEntities(new IsDescription(description));
+                }
+            });
+
+    public final Set<Story> getStorysByDescription(java.lang.String description) {
+        return storysByDescriptionCache.get(description);
+    }
+    private Set<java.lang.String> descriptionsCache;
+
+    public final Set<java.lang.String> getDescriptions() {
+        if (descriptionsCache == null) {
+            descriptionsCache = new HashSet<java.lang.String>();
+            for (Story e : getEntities()) {
+                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
+            }
+        }
+        return descriptionsCache;
+    }
+
+    private static class IsDescription implements Predicate<Story> {
+
+        private java.lang.String value;
+
+        public IsDescription(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Story e) {
+            return e.isDescription(value);
         }
 
     }

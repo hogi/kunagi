@@ -43,22 +43,22 @@ public abstract class GTask
         return ENTITY_TYPE;
     }
 
-    // --- effort ---
+    // --- burndown ---
 
-    private java.lang.Integer effort ;
+    private int burndown ;
 
-    public final java.lang.Integer getEffort() {
-        return this.effort ;
+    public final int getBurndown() {
+        return this.burndown ;
     }
 
-    public final Task setEffort(java.lang.Integer effort) {
-        this.effort = effort ;
-        propertyChanged("effort", this.effort);
+    public final Task setBurndown(int burndown) {
+        this.burndown = burndown ;
+        propertyChanged("burndown", this.burndown);
         return (Task)this;
     }
 
-    public final boolean isEffort(java.lang.Integer effort) {
-        return equals(this.effort, effort);
+    public final boolean isBurndown(int burndown) {
+        return equals(this.burndown, burndown);
     }
 
     // --- story ---
@@ -81,22 +81,40 @@ public abstract class GTask
         return equals(this.storyId, story);
     }
 
-    // --- burndown ---
+    // --- notice ---
 
-    private int burndown ;
+    private java.lang.String notice ;
 
-    public final int getBurndown() {
-        return this.burndown ;
+    public final java.lang.String getNotice() {
+        return this.notice ;
     }
 
-    public final Task setBurndown(int burndown) {
-        this.burndown = burndown ;
-        propertyChanged("burndown", this.burndown);
+    public final Task setNotice(java.lang.String notice) {
+        this.notice = notice ;
+        propertyChanged("notice", this.notice);
         return (Task)this;
     }
 
-    public final boolean isBurndown(int burndown) {
-        return equals(this.burndown, burndown);
+    public final boolean isNotice(java.lang.String notice) {
+        return equals(this.notice, notice);
+    }
+
+    // --- effort ---
+
+    private java.lang.Integer effort ;
+
+    public final java.lang.Integer getEffort() {
+        return this.effort ;
+    }
+
+    public final Task setEffort(java.lang.Integer effort) {
+        this.effort = effort ;
+        propertyChanged("effort", this.effort);
+        return (Task)this;
+    }
+
+    public final boolean isEffort(java.lang.Integer effort) {
+        return equals(this.effort, effort);
     }
 
     // --- label ---
@@ -117,42 +135,24 @@ public abstract class GTask
         return equals(this.label, label);
     }
 
-    // --- notice ---
-
-    private java.lang.String notice ;
-
-    public final java.lang.String getNotice() {
-        return this.notice ;
-    }
-
-    public final Task setNotice(java.lang.String notice) {
-        this.notice = notice ;
-        propertyChanged("notice", this.notice);
-        return (Task)this;
-    }
-
-    public final boolean isNotice(java.lang.String notice) {
-        return equals(this.notice, notice);
-    }
-
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        effort  = (java.lang.Integer) props.get("effort");
-        storyId = (String) props.get("storyId");
         burndown  = (Integer) props.get("burndown");
-        label  = (java.lang.String) props.get("label");
+        storyId = (String) props.get("storyId");
         notice  = (java.lang.String) props.get("notice");
+        effort  = (java.lang.Integer) props.get("effort");
+        label  = (java.lang.String) props.get("label");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("effort", this.effort);
-        properties.put("storyId", this.storyId);
         properties.put("burndown", this.burndown);
-        properties.put("label", this.label);
+        properties.put("storyId", this.storyId);
         properties.put("notice", this.notice);
+        properties.put("effort", this.effort);
+        properties.put("label", this.label);
     }
 
 }

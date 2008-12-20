@@ -46,11 +46,11 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("effort", this.effort);
-        properties.put("storyId", this.storyId);
         properties.put("burndown", this.burndown);
-        properties.put("label", this.label);
+        properties.put("storyId", this.storyId);
         properties.put("notice", this.notice);
+        properties.put("effort", this.effort);
+        properties.put("label", this.label);
     }
 
     public int compareTo(Task other) {
@@ -66,41 +66,36 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
-        setEffort(template.getEffort());
-        setStory(template.getStory());
         setBurndown(template.getBurndown());
-        setLabel(template.getLabel());
+        setStory(template.getStory());
         setNotice(template.getNotice());
+        setEffort(template.getEffort());
+        setLabel(template.getLabel());
     }
 
     // -----------------------------------------------------------
-    // - effort
+    // - burndown
     // -----------------------------------------------------------
 
-    private java.lang.Integer effort;
+    private int burndown;
 
-    public final java.lang.Integer getEffort() {
-        return effort;
+    public final int getBurndown() {
+        return burndown;
     }
 
-    public final void setEffort(java.lang.Integer effort) {
-        effort = prepareEffort(effort);
-        if (isEffort(effort)) return;
-        this.effort = effort;
+    public final void setBurndown(int burndown) {
+        burndown = prepareBurndown(burndown);
+        if (isBurndown(burndown)) return;
+        this.burndown = burndown;
         entityModified();
     }
 
-    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
-        return effort;
+    protected int prepareBurndown(int burndown) {
+        return burndown;
     }
 
-    public final boolean isEffortSet() {
-        return this.effort != null;
-    }
-
-    public final boolean isEffort(java.lang.Integer effort) {
-        if (this.effort == null && effort == null) return true;
-        return this.effort != null && this.effort.equals(effort);
+    public final boolean isBurndown(int burndown) {
+        return this.burndown == burndown;
     }
 
     // -----------------------------------------------------------
@@ -141,28 +136,64 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
-    // - burndown
+    // - notice
     // -----------------------------------------------------------
 
-    private int burndown;
+    private java.lang.String notice;
 
-    public final int getBurndown() {
-        return burndown;
+    public final java.lang.String getNotice() {
+        return notice;
     }
 
-    public final void setBurndown(int burndown) {
-        burndown = prepareBurndown(burndown);
-        if (isBurndown(burndown)) return;
-        this.burndown = burndown;
+    public final void setNotice(java.lang.String notice) {
+        notice = prepareNotice(notice);
+        if (isNotice(notice)) return;
+        this.notice = notice;
         entityModified();
     }
 
-    protected int prepareBurndown(int burndown) {
-        return burndown;
+    protected java.lang.String prepareNotice(java.lang.String notice) {
+        notice = Str.removeUnreadableChars(notice);
+        return notice;
     }
 
-    public final boolean isBurndown(int burndown) {
-        return this.burndown == burndown;
+    public final boolean isNoticeSet() {
+        return this.notice != null;
+    }
+
+    public final boolean isNotice(java.lang.String notice) {
+        if (this.notice == null && notice == null) return true;
+        return this.notice != null && this.notice.equals(notice);
+    }
+
+    // -----------------------------------------------------------
+    // - effort
+    // -----------------------------------------------------------
+
+    private java.lang.Integer effort;
+
+    public final java.lang.Integer getEffort() {
+        return effort;
+    }
+
+    public final void setEffort(java.lang.Integer effort) {
+        effort = prepareEffort(effort);
+        if (isEffort(effort)) return;
+        this.effort = effort;
+        entityModified();
+    }
+
+    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
+        return effort;
+    }
+
+    public final boolean isEffortSet() {
+        return this.effort != null;
+    }
+
+    public final boolean isEffort(java.lang.Integer effort) {
+        if (this.effort == null && effort == null) return true;
+        return this.effort != null && this.effort.equals(effort);
     }
 
     // -----------------------------------------------------------
@@ -194,37 +225,6 @@ public abstract class GTask
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
-    }
-
-    // -----------------------------------------------------------
-    // - notice
-    // -----------------------------------------------------------
-
-    private java.lang.String notice;
-
-    public final java.lang.String getNotice() {
-        return notice;
-    }
-
-    public final void setNotice(java.lang.String notice) {
-        notice = prepareNotice(notice);
-        if (isNotice(notice)) return;
-        this.notice = notice;
-        entityModified();
-    }
-
-    protected java.lang.String prepareNotice(java.lang.String notice) {
-        notice = Str.removeUnreadableChars(notice);
-        return notice;
-    }
-
-    public final boolean isNoticeSet() {
-        return this.notice != null;
-    }
-
-    public final boolean isNotice(java.lang.String notice) {
-        if (this.notice == null && notice == null) return true;
-        return this.notice != null && this.notice.equals(notice);
     }
 
     protected void repairDeadReferences(String entityId) {

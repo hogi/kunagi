@@ -46,9 +46,9 @@ public abstract class GSprintDaySnapshot
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("dateCrap", this.dateCrap);
         properties.put("sprintId", this.sprintId);
         properties.put("burndown", this.burndown);
-        properties.put("dateCrap", this.dateCrap);
         properties.put("effort", this.effort);
     }
 
@@ -65,10 +65,40 @@ public abstract class GSprintDaySnapshot
         super(template);
         if (template==null) return;
 
+        setDateCrap(template.getDateCrap());
         setSprint(template.getSprint());
         setBurndown(template.getBurndown());
-        setDateCrap(template.getDateCrap());
         setEffort(template.getEffort());
+    }
+
+    // -----------------------------------------------------------
+    // - dateCrap
+    // -----------------------------------------------------------
+
+    private java.util.Date dateCrap;
+
+    public final java.util.Date getDateCrap() {
+        return dateCrap;
+    }
+
+    public final void setDateCrap(java.util.Date dateCrap) {
+        dateCrap = prepareDateCrap(dateCrap);
+        if (isDateCrap(dateCrap)) return;
+        this.dateCrap = dateCrap;
+        entityModified();
+    }
+
+    protected java.util.Date prepareDateCrap(java.util.Date dateCrap) {
+        return dateCrap;
+    }
+
+    public final boolean isDateCrapSet() {
+        return this.dateCrap != null;
+    }
+
+    public final boolean isDateCrap(java.util.Date dateCrap) {
+        if (this.dateCrap == null && dateCrap == null) return true;
+        return this.dateCrap != null && this.dateCrap.equals(dateCrap);
     }
 
     // -----------------------------------------------------------
@@ -132,36 +162,6 @@ public abstract class GSprintDaySnapshot
 
     public final boolean isBurndown(int burndown) {
         return this.burndown == burndown;
-    }
-
-    // -----------------------------------------------------------
-    // - dateCrap
-    // -----------------------------------------------------------
-
-    private java.util.Date dateCrap;
-
-    public final java.util.Date getDateCrap() {
-        return dateCrap;
-    }
-
-    public final void setDateCrap(java.util.Date dateCrap) {
-        dateCrap = prepareDateCrap(dateCrap);
-        if (isDateCrap(dateCrap)) return;
-        this.dateCrap = dateCrap;
-        entityModified();
-    }
-
-    protected java.util.Date prepareDateCrap(java.util.Date dateCrap) {
-        return dateCrap;
-    }
-
-    public final boolean isDateCrapSet() {
-        return this.dateCrap != null;
-    }
-
-    public final boolean isDateCrap(java.util.Date dateCrap) {
-        if (this.dateCrap == null && dateCrap == null) return true;
-        return this.dateCrap != null && this.dateCrap.equals(dateCrap);
     }
 
     // -----------------------------------------------------------
