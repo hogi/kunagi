@@ -195,6 +195,11 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		impediment2.setLabel("Test Impediment 2");
 		getImpedimentDao().saveEntity(impediment2);
 
+		Impediment impediment3 = getImpedimentDao().newEntityInstance();
+		impediment3.setProject(project1);
+		impediment3.setLabel("Test Impediment 3");
+		getImpedimentDao().saveEntity(impediment3);
+
 		Story story1 = getStoryDao().newEntityInstance();
 		story1.setProject(project1);
 		story1.setLabel("Test Backlog Item 1");
