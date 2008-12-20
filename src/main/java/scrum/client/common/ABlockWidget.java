@@ -1,7 +1,9 @@
 package scrum.client.common;
 
 import scrum.client.ScrumGwtApplication;
+import scrum.client.dnd.DummyDropWidget;
 import scrum.client.img.Img;
+import scrum.client.workspace.AClipboardItemWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -20,12 +22,15 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class ABlockWidget extends Composite {
 
 	private BlockListWidget list;
+	private VerticalPanel mainpanel;
 	private SimplePanel panel;
 	private boolean extended;
 	private boolean inClipboard;
 	private Image dragHandle;
 	private DropController dropController;
 	protected BlockListController controller = new BlockListController<ABlockWidget>();
+	private DummyDropWidget dummyTop = new DummyDropWidget();
+	private DummyDropWidget dummyBottom = new DummyDropWidget();
 
 	/**
 	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a different
@@ -42,14 +47,33 @@ public abstract class ABlockWidget extends Composite {
 	public abstract void delete();
 
 	public ABlockWidget() {
+		mainpanel = new VerticalPanel();
+
 		panel = new SimplePanel();
 		panel.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET);
 		dropController = createDropController();
-		initWidget(panel);
+
+		mainpanel.add(dummyTop);
+		mainpanel.add(panel);
+		mainpanel.add(dummyBottom);
+
+		dummyTop.setVisible(false);
+		dummyBottom.setVisible(false);
+		initWidget(mainpanel);
 	}
 
-	protected DropController createDropController() {
+	public AClipboardItemWidget getClipboardItemWidget() {
 		return null;
+	}
+
+	protected abstract DropController createDropController();
+
+	public DummyDropWidget getDummyTop() {
+		return dummyTop;
+	}
+
+	public DummyDropWidget getDummyBottom() {
+		return dummyBottom;
 	}
 
 	public final BlockListWidget getList() {
@@ -96,20 +120,34 @@ public abstract class ABlockWidget extends Composite {
 	}
 
 	protected final Widget build() {
+		if (inClipboard) {
+			return buildClipboardItemWidget();
+		} else {
+			return buildBlockItemWidget();
+		}
+	}
+
+	protected final Widget buildClipboardItemWidget() {
+		if (getClipboardItemWidget() == null) {
+			return buildBlockItemWidget();
+		} else {
+			return getClipboardItemWidget();
+		}
+	}
+
+	protected final Widget buildBlockItemWidget() {
 		Label title = new Label(getBlockTitle());
 		title.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_TITLE);
 
 		VerticalPanel center = new VerticalPanel();
 		center.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_CENTER);
 		center.add(title);
-		if (!inClipboard) {
-			center.add(buildContent());
-		}
+		center.add(buildContent());
 
 		HorizontalPanel block = new HorizontalPanel();
 		block.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_BLOCK);
 
-		if (dragHandle != null) block.add(dragHandle);
+		block.add(dragHandle);
 
 		AbstractImagePrototype icon = getIcon();
 		if (icon != null) block.add(icon.createImage());
@@ -128,14 +166,23 @@ public abstract class ABlockWidget extends Composite {
 	}
 
 	public final void makeDraggable() {
-		if (dragHandle == null) {
-			dragHandle = Img.icons().dragHandleIcon32().createImage();
-			dragHandle.setStyleName(StyleSheet.DRAG_HANDLE);
+		createDragHandle();
+		if (inClipboard) {
+			ScrumGwtApplication.get().getDragController().makeDraggable(getClipboardItemWidget(), dragHandle);
+		} else {
+			ScrumGwtApplication.get().getDragController().makeDraggable(this, dragHandle);
 		}
-		ScrumGwtApplication.get().getDragController().makeDraggable(this, dragHandle);
 	}
 
-	public Image getDragHandle() {
+	public Image createDragHandle() {
+		if (inClipboard) {
+			dragHandle = getClipboardItemWidget().getDragHandle();
+		} else {
+			dragHandle = Img.icons().dragHandleIcon32().createImage();
+		}
+
+		dragHandle.setStyleName(StyleSheet.DRAG_HANDLE);
+
 		return dragHandle;
 	}
 

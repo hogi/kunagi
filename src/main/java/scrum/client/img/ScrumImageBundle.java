@@ -14,6 +14,9 @@ public interface ScrumImageBundle extends ImageBundle {
 	@Resource(value = "impediment32.png")
 	public AbstractImagePrototype impedimentIcon32();
 
+	@Resource(value = "impediment16.png")
+	public AbstractImagePrototype impedimentIcon16();
+
 	@Resource(value = "impedimentSolved32.png")
 	public AbstractImagePrototype impedimentSolvedIcon32();
 

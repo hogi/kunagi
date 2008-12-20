@@ -2,6 +2,9 @@ package scrum.client.common;
 
 public class StyleSheet {
 
+	// DummyDropWidget
+	public static final String ELEMENT_DUMMY_DROP_WIDGET = "element-DummyDropWidget";
+
 	// BlockWidget
 
 	public static final String ELEMENT_BLOCK_WIDGET = "element-BlockWidget";

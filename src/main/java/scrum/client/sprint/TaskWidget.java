@@ -8,6 +8,7 @@ import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.img.Img;
 
+import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -21,6 +22,12 @@ public class TaskWidget extends ABlockWidget {
 
 	public TaskWidget(Task task) {
 		this.task = task;
+	}
+
+	@Override
+	protected DropController createDropController() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

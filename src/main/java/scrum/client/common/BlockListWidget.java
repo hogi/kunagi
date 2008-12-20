@@ -61,6 +61,7 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 		block.setListController(controller);
 		blocks.add(block);
 		table.setWidget(table.getRowCount(), 0, block);
+
 		scroller.scrollToBottom();
 	}
 
@@ -104,6 +105,8 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	}
 
 	public final void selectRow(int row) {
+		if (sidebarMode) return;
+
 		if (row == selectedRow) {
 			// deselect();
 		} else {

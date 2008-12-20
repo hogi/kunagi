@@ -40,13 +40,31 @@ public class BlockListDropController implements DropController {
 
 	public void onEnter(DragContext context) {}
 
-	public void onLeave(DragContext context) {}
+	public void onLeave(DragContext context) {
+		WidgetArea area = new WidgetArea(dropTarget, null);
+		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
+
+		boolean isHigher = isHigher(area, location);
+		if (isHigher) {
+			dropTarget.getDummyTop().setVisible(false);
+		} else {
+			dropTarget.getDummyBottom().setVisible(false);
+		}
+	}
 
 	public void onMove(DragContext context) {
 		WidgetArea area = new WidgetArea(dropTarget, null);
 		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
+
 		boolean isHigher = isHigher(area, location);
-		// TODO: highlight drop area
+		if (isHigher) {
+			dropTarget.getDummyTop().setVisible(true);
+			dropTarget.getDummyBottom().setVisible(false);
+		} else {
+			dropTarget.getDummyTop().setVisible(false);
+			dropTarget.getDummyBottom().setVisible(true);
+		}
+
 	}
 
 	public void onPreviewDrop(DragContext context) throws VetoDragException {

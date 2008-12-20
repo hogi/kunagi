@@ -69,7 +69,8 @@ public class ClipboardWidget extends Composite {
 		public void onDrop(DragContext context) {
 			Widget widget = context.draggable;
 			if (widget instanceof ABlockWidget) {
-				list.addBlock(((ABlockWidget) widget));
+				ABlockWidget ablockwidget = (ABlockWidget) widget;
+				if (ablockwidget.isInClipboard() == false) list.addBlock(((ABlockWidget) widget));
 			}
 		}
 

@@ -8,6 +8,7 @@ import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
+import scrum.client.workspace.AClipboardItemWidget;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
@@ -27,6 +28,23 @@ public class ImpedimentWidget extends ABlockWidget {
 
 	public ImpedimentWidget(Impediment impediment) {
 		this.impediment = impediment;
+	}
+
+	@Override
+	public AClipboardItemWidget getClipboardItemWidget() {
+		return new AClipboardItemWidget() {
+
+			@Override
+			public AbstractImagePrototype getIcon() {
+				return Img.bundle.impedimentIcon16();
+			}
+
+			@Override
+			protected String getLabel() {
+				return impediment.getLabel();
+			}
+
+		};
 	}
 
 	@Override
