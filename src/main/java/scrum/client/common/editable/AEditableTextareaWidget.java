@@ -1,6 +1,7 @@
 package scrum.client.common.editable;
 
 import scrum.client.common.StyleSheet;
+import scrum.client.gwtsamples.content.text.RichTextToolbar;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -24,6 +25,8 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 
 	private VerticalPanel editorPanel;
 	private RichTextArea editor;
+	private RichTextToolbar editorToolbar;
+	private boolean showToolbar;
 
 	/**
 	 * Provide the value for view mode and edit mode.
@@ -36,6 +39,12 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 	protected abstract void setText(String text);
 
 	public AEditableTextareaWidget() {
+		this(false);
+	}
+
+	public AEditableTextareaWidget(boolean showToolbar) {
+		this.showToolbar = showToolbar;
+
 		viewer = new Label();
 		viewer.addClickListener(new ViewerClickListener());
 		viewer.setStyleName(StyleSheet.VIEWER);
@@ -50,8 +59,9 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 			editor.ensureDebugId("richtext-id");
 
 			editor.setStyleName(StyleSheet.TEXTAREA_EDITOR);
-			editor.setText(text);
+			editor.setHTML(text);
 			editor.addKeyboardListener(new EditorKeyboardListener());
+			editorToolbar = new RichTextToolbar(editor);
 
 			Button applyButton = new Button("Apply");
 			applyButton.addClickListener(new ApplyListener());
@@ -66,7 +76,12 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 
 			editorPanel = new VerticalPanel();
 			editorPanel.setStyleName(StyleSheet.A_EDITABLE_TEXTAREA_WIDGET_EDITOR_PANEL);
-			editorPanel.add(editor);
+			VerticalPanel vpanel = new VerticalPanel();
+			if (showToolbar) {
+				vpanel.add(editorToolbar);
+			}
+			vpanel.add(editor);
+			editorPanel.add(vpanel);
 			editorPanel.add(toolbar);
 		}
 		return editorPanel;

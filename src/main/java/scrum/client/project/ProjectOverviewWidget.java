@@ -27,7 +27,7 @@ public class ProjectOverviewWidget extends Composite {
 			}
 		});
 
-		fields.addField("Description", new AEditableTextareaWidget() {
+		fields.addField("Description", new AEditableTextareaWidget(true) {
 
 			@Override
 			protected void setText(String text) {
