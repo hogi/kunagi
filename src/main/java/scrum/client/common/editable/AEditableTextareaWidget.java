@@ -1,7 +1,7 @@
 package scrum.client.common.editable;
 
 import scrum.client.common.StyleSheet;
-import scrum.client.gwtsamples.content.text.RichTextToolbar;
+import scrum.client.common.gwtsamples.content.text.RichTextToolbar;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
