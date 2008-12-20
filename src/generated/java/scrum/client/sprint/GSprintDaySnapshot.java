@@ -81,40 +81,40 @@ public abstract class GSprintDaySnapshot
         return equals(this.sprintId, sprint);
     }
 
-    // --- burndown ---
+    // --- burnedWork ---
 
-    private int burndown ;
+    private int burnedWork ;
 
-    public final int getBurndown() {
-        return this.burndown ;
+    public final int getBurnedWork() {
+        return this.burnedWork ;
     }
 
-    public final SprintDaySnapshot setBurndown(int burndown) {
-        this.burndown = burndown ;
-        propertyChanged("burndown", this.burndown);
+    public final SprintDaySnapshot setBurnedWork(int burnedWork) {
+        this.burnedWork = burnedWork ;
+        propertyChanged("burnedWork", this.burnedWork);
         return (SprintDaySnapshot)this;
     }
 
-    public final boolean isBurndown(int burndown) {
-        return equals(this.burndown, burndown);
+    public final boolean isBurnedWork(int burnedWork) {
+        return equals(this.burnedWork, burnedWork);
     }
 
-    // --- effort ---
+    // --- remainingWork ---
 
-    private int effort ;
+    private int remainingWork ;
 
-    public final int getEffort() {
-        return this.effort ;
+    public final int getRemainingWork() {
+        return this.remainingWork ;
     }
 
-    public final SprintDaySnapshot setEffort(int effort) {
-        this.effort = effort ;
-        propertyChanged("effort", this.effort);
+    public final SprintDaySnapshot setRemainingWork(int remainingWork) {
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
         return (SprintDaySnapshot)this;
     }
 
-    public final boolean isEffort(int effort) {
-        return equals(this.effort, effort);
+    public final boolean isRemainingWork(int remainingWork) {
+        return equals(this.remainingWork, remainingWork);
     }
 
     // --- update properties by map ---
@@ -122,8 +122,8 @@ public abstract class GSprintDaySnapshot
     public void updateProperties(Map props) {
         dateCrap  = (java.util.Date) props.get("dateCrap");
         sprintId = (String) props.get("sprintId");
-        burndown  = (Integer) props.get("burndown");
-        effort  = (Integer) props.get("effort");
+        burnedWork  = (Integer) props.get("burnedWork");
+        remainingWork  = (Integer) props.get("remainingWork");
     }
 
     @Override
@@ -131,8 +131,8 @@ public abstract class GSprintDaySnapshot
         super.storeProperties(properties);
         properties.put("dateCrap", this.dateCrap);
         properties.put("sprintId", this.sprintId);
-        properties.put("burndown", this.burndown);
-        properties.put("effort", this.effort);
+        properties.put("burnedWork", this.burnedWork);
+        properties.put("remainingWork", this.remainingWork);
     }
 
 }

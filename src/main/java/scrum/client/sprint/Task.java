@@ -18,7 +18,7 @@ public class Task extends GTask {
 	public Task(Story story) {
 		setStory(story);
 		setLabel("New Task");
-		setEffort(INIT_EFFORT);
+		setRemainingWork(INIT_EFFORT);
 	}
 
 	public Task(Map data) {
@@ -26,11 +26,11 @@ public class Task extends GTask {
 	}
 
 	public void setDone() {
-		setEffort(0);
+		setRemainingWork(0);
 	}
 
 	public boolean isDone() {
-		return getEffort() == null || getEffort() == 0;
+		return getRemainingWork() == null || getRemainingWork() == 0;
 	}
 
 	public User getOwner() {
@@ -43,7 +43,7 @@ public class Task extends GTask {
 
 	public String getSummary() {
 		if (isDone()) return "Done.";
-		return getEffort() + " hours to do.";
+		return getRemainingWork() + " hours to do.";
 	}
 
 	@Override

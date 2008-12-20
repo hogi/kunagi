@@ -44,8 +44,8 @@ public abstract class GStoryDao
     // --- clear caches ---
     public void clearCaches() {
         storysByClosedCache.clear();
-        storysByEffortCache.clear();
-        effortsCache = null;
+        storysByEstimatedWorkCache.clear();
+        estimatedWorksCache = null;
         storysByTestDescriptionCache.clear();
         testDescriptionsCache = null;
         storysByLabelCache.clear();
@@ -104,41 +104,41 @@ public abstract class GStoryDao
     }
 
     // -----------------------------------------------------------
-    // - effort
+    // - estimatedWork
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.Integer,Set<Story>> storysByEffortCache = new Cache<java.lang.Integer,Set<Story>>(
+    private final Cache<java.lang.Integer,Set<Story>> storysByEstimatedWorkCache = new Cache<java.lang.Integer,Set<Story>>(
             new Cache.Factory<java.lang.Integer,Set<Story>>() {
-                public Set<Story> create(java.lang.Integer effort) {
-                    return getEntities(new IsEffort(effort));
+                public Set<Story> create(java.lang.Integer estimatedWork) {
+                    return getEntities(new IsEstimatedWork(estimatedWork));
                 }
             });
 
-    public final Set<Story> getStorysByEffort(java.lang.Integer effort) {
-        return storysByEffortCache.get(effort);
+    public final Set<Story> getStorysByEstimatedWork(java.lang.Integer estimatedWork) {
+        return storysByEstimatedWorkCache.get(estimatedWork);
     }
-    private Set<java.lang.Integer> effortsCache;
+    private Set<java.lang.Integer> estimatedWorksCache;
 
-    public final Set<java.lang.Integer> getEfforts() {
-        if (effortsCache == null) {
-            effortsCache = new HashSet<java.lang.Integer>();
+    public final Set<java.lang.Integer> getEstimatedWorks() {
+        if (estimatedWorksCache == null) {
+            estimatedWorksCache = new HashSet<java.lang.Integer>();
             for (Story e : getEntities()) {
-                if (e.isEffortSet()) effortsCache.add(e.getEffort());
+                if (e.isEstimatedWorkSet()) estimatedWorksCache.add(e.getEstimatedWork());
             }
         }
-        return effortsCache;
+        return estimatedWorksCache;
     }
 
-    private static class IsEffort implements Predicate<Story> {
+    private static class IsEstimatedWork implements Predicate<Story> {
 
         private java.lang.Integer value;
 
-        public IsEffort(java.lang.Integer value) {
+        public IsEstimatedWork(java.lang.Integer value) {
             this.value = value;
         }
 
         public boolean test(Story e) {
-            return e.isEffort(value);
+            return e.isEstimatedWork(value);
         }
 
     }

@@ -5,8 +5,8 @@ import ilarkesto.base.time.Date;
 public class SprintDaySnapshot extends GSprintDaySnapshot {
 
 	public void update() {
-		setEffort(getSprint().getTaskEffortSum());
-		setBurndown(getSprint().getTaskBurndownSum());
+		setRemainingWork(getSprint().getRemainingWork());
+		setBurnedWork(getSprint().getBurnedWork());
 	}
 
 	public Date getDate() {

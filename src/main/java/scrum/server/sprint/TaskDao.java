@@ -9,7 +9,7 @@ public class TaskDao extends GTaskDao {
 	@Override
 	public Task newEntityInstance() {
 		Task task = super.newEntityInstance();
-		task.setEffort(scrum.client.sprint.Task.INIT_EFFORT);
+		task.setRemainingWork(scrum.client.sprint.Task.INIT_EFFORT);
 		return task;
 	}
 

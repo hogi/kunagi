@@ -61,22 +61,22 @@ public abstract class GStory
         return equals(this.closed, closed);
     }
 
-    // --- effort ---
+    // --- estimatedWork ---
 
-    private java.lang.Integer effort ;
+    private java.lang.Integer estimatedWork ;
 
-    public final java.lang.Integer getEffort() {
-        return this.effort ;
+    public final java.lang.Integer getEstimatedWork() {
+        return this.estimatedWork ;
     }
 
-    public final Story setEffort(java.lang.Integer effort) {
-        this.effort = effort ;
-        propertyChanged("effort", this.effort);
+    public final Story setEstimatedWork(java.lang.Integer estimatedWork) {
+        this.estimatedWork = estimatedWork ;
+        propertyChanged("estimatedWork", this.estimatedWork);
         return (Story)this;
     }
 
-    public final boolean isEffort(java.lang.Integer effort) {
-        return equals(this.effort, effort);
+    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
+        return equals(this.estimatedWork, estimatedWork);
     }
 
     // --- testDescription ---
@@ -177,7 +177,7 @@ public abstract class GStory
 
     public void updateProperties(Map props) {
         closed  = (Boolean) props.get("closed");
-        effort  = (java.lang.Integer) props.get("effort");
+        estimatedWork  = (java.lang.Integer) props.get("estimatedWork");
         testDescription  = (java.lang.String) props.get("testDescription");
         label  = (java.lang.String) props.get("label");
         sprintId = (String) props.get("sprintId");
@@ -189,7 +189,7 @@ public abstract class GStory
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("closed", this.closed);
-        properties.put("effort", this.effort);
+        properties.put("estimatedWork", this.estimatedWork);
         properties.put("testDescription", this.testDescription);
         properties.put("label", this.label);
         properties.put("sprintId", this.sprintId);

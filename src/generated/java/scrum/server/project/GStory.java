@@ -47,7 +47,7 @@ public abstract class GStory
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("closed", this.closed);
-        properties.put("effort", this.effort);
+        properties.put("estimatedWork", this.estimatedWork);
         properties.put("testDescription", this.testDescription);
         properties.put("label", this.label);
         properties.put("sprintId", this.sprintId);
@@ -69,7 +69,7 @@ public abstract class GStory
         if (template==null) return;
 
         setClosed(template.isClosed());
-        setEffort(template.getEffort());
+        setEstimatedWork(template.getEstimatedWork());
         setTestDescription(template.getTestDescription());
         setLabel(template.getLabel());
         setSprint(template.getSprint());
@@ -103,33 +103,33 @@ public abstract class GStory
     }
 
     // -----------------------------------------------------------
-    // - effort
+    // - estimatedWork
     // -----------------------------------------------------------
 
-    private java.lang.Integer effort;
+    private java.lang.Integer estimatedWork;
 
-    public final java.lang.Integer getEffort() {
-        return effort;
+    public final java.lang.Integer getEstimatedWork() {
+        return estimatedWork;
     }
 
-    public final void setEffort(java.lang.Integer effort) {
-        effort = prepareEffort(effort);
-        if (isEffort(effort)) return;
-        this.effort = effort;
+    public final void setEstimatedWork(java.lang.Integer estimatedWork) {
+        estimatedWork = prepareEstimatedWork(estimatedWork);
+        if (isEstimatedWork(estimatedWork)) return;
+        this.estimatedWork = estimatedWork;
         entityModified();
     }
 
-    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
-        return effort;
+    protected java.lang.Integer prepareEstimatedWork(java.lang.Integer estimatedWork) {
+        return estimatedWork;
     }
 
-    public final boolean isEffortSet() {
-        return this.effort != null;
+    public final boolean isEstimatedWorkSet() {
+        return this.estimatedWork != null;
     }
 
-    public final boolean isEffort(java.lang.Integer effort) {
-        if (this.effort == null && effort == null) return true;
-        return this.effort != null && this.effort.equals(effort);
+    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
+        if (this.estimatedWork == null && estimatedWork == null) return true;
+        return this.estimatedWork != null && this.estimatedWork.equals(estimatedWork);
     }
 
     // -----------------------------------------------------------

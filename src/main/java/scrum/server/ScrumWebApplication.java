@@ -208,20 +208,20 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		Story story2 = getStoryDao().newEntityInstance();
 		story2.setProject(project1);
 		story2.setLabel("Test Backlog Item 2");
-		story2.setEffort(5);
+		story2.setEstimatedWork(5);
 		getStoryDao().saveEntity(story2);
 
 		Task task1 = getTaskDao().newEntityInstance();
 		task1.setStory(story2);
 		task1.setLabel("Task 1");
-		task1.setEffort(3);
-		task1.setBurndown(5);
+		task1.setRemainingWork(3);
+		task1.setBurnedWork(5);
 		getTaskDao().saveEntity(task1);
 
 		Task task2 = getTaskDao().newEntityInstance();
 		task2.setStory(story2);
 		task2.setLabel("Task 2");
-		task2.setEffort(1);
+		task2.setRemainingWork(1);
 		getTaskDao().saveEntity(task2);
 
 		Story story3 = getStoryDao().newEntityInstance();
@@ -236,8 +236,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		story2.setSprint(sprint1);
 		for (int i = 1; i <= 5; i++) {
 			SprintDaySnapshot snapshot = sprint1.getDaySnapshot(Date.today().addDays(-i));
-			snapshot.setBurndown(i % 2);
-			snapshot.setEffort(50 - i);
+			snapshot.setBurnedWork(i % 2);
+			snapshot.setRemainingWork(50 - i);
 		}
 
 		project1.setCurrentSprint(sprint1);

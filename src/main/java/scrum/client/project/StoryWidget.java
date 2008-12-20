@@ -81,7 +81,7 @@ public class StoryWidget extends ABlockWidget {
 
 			@Override
 			protected String getText() {
-				Integer effort = item.getEffort();
+				Integer effort = item.getEstimatedWork();
 				return effort == null ? "No estimation." : effort.toString() + " " + item.getProject().getEffortUnit();
 			}
 
@@ -92,13 +92,13 @@ public class StoryWidget extends ABlockWidget {
 
 			@Override
 			protected String getSelectedValue() {
-				Integer effort = item.getEffort();
+				Integer effort = item.getEstimatedWork();
 				return effort == null ? "" : effort.toString();
 			}
 
 			@Override
 			protected void setValue(String value) {
-				item.setEffort(value.length() == 0 ? null : Integer.parseInt(value));
+				item.setEstimatedWork(value.length() == 0 ? null : Integer.parseInt(value));
 				rebuild();
 			}
 

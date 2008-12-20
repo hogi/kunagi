@@ -46,8 +46,8 @@ public abstract class GProjectSprintSnapshot
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("burndown", this.burndown);
-        properties.put("effort", this.effort);
+        properties.put("burnedWork", this.burnedWork);
+        properties.put("remainingWork", this.remainingWork);
         properties.put("projectId", this.projectId);
         properties.put("dateCrap", this.dateCrap);
     }
@@ -65,60 +65,60 @@ public abstract class GProjectSprintSnapshot
         super(template);
         if (template==null) return;
 
-        setBurndown(template.getBurndown());
-        setEffort(template.getEffort());
+        setBurnedWork(template.getBurnedWork());
+        setRemainingWork(template.getRemainingWork());
         setProject(template.getProject());
         setDateCrap(template.getDateCrap());
     }
 
     // -----------------------------------------------------------
-    // - burndown
+    // - burnedWork
     // -----------------------------------------------------------
 
-    private int burndown;
+    private int burnedWork;
 
-    public final int getBurndown() {
-        return burndown;
+    public final int getBurnedWork() {
+        return burnedWork;
     }
 
-    public final void setBurndown(int burndown) {
-        burndown = prepareBurndown(burndown);
-        if (isBurndown(burndown)) return;
-        this.burndown = burndown;
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
         entityModified();
     }
 
-    protected int prepareBurndown(int burndown) {
-        return burndown;
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
     }
 
-    public final boolean isBurndown(int burndown) {
-        return this.burndown == burndown;
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
     }
 
     // -----------------------------------------------------------
-    // - effort
+    // - remainingWork
     // -----------------------------------------------------------
 
-    private int effort;
+    private int remainingWork;
 
-    public final int getEffort() {
-        return effort;
+    public final int getRemainingWork() {
+        return remainingWork;
     }
 
-    public final void setEffort(int effort) {
-        effort = prepareEffort(effort);
-        if (isEffort(effort)) return;
-        this.effort = effort;
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
         entityModified();
     }
 
-    protected int prepareEffort(int effort) {
-        return effort;
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
     }
 
-    public final boolean isEffort(int effort) {
-        return this.effort == effort;
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
     }
 
     // -----------------------------------------------------------

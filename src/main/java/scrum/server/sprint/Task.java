@@ -15,8 +15,8 @@ public class Task extends GTask {
 	// --- ---
 
 	public boolean isDone() {
-		if (!isEffortSet()) return true;
-		return getEffort() == 0;
+		if (!isRemainingWorkSet()) return true;
+		return getRemainingWork() == 0;
 	}
 
 	public boolean isSprint(Sprint sprint) {

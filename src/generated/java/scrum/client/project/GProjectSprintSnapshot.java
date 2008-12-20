@@ -43,40 +43,40 @@ public abstract class GProjectSprintSnapshot
         return ENTITY_TYPE;
     }
 
-    // --- burndown ---
+    // --- burnedWork ---
 
-    private int burndown ;
+    private int burnedWork ;
 
-    public final int getBurndown() {
-        return this.burndown ;
+    public final int getBurnedWork() {
+        return this.burnedWork ;
     }
 
-    public final ProjectSprintSnapshot setBurndown(int burndown) {
-        this.burndown = burndown ;
-        propertyChanged("burndown", this.burndown);
+    public final ProjectSprintSnapshot setBurnedWork(int burnedWork) {
+        this.burnedWork = burnedWork ;
+        propertyChanged("burnedWork", this.burnedWork);
         return (ProjectSprintSnapshot)this;
     }
 
-    public final boolean isBurndown(int burndown) {
-        return equals(this.burndown, burndown);
+    public final boolean isBurnedWork(int burnedWork) {
+        return equals(this.burnedWork, burnedWork);
     }
 
-    // --- effort ---
+    // --- remainingWork ---
 
-    private int effort ;
+    private int remainingWork ;
 
-    public final int getEffort() {
-        return this.effort ;
+    public final int getRemainingWork() {
+        return this.remainingWork ;
     }
 
-    public final ProjectSprintSnapshot setEffort(int effort) {
-        this.effort = effort ;
-        propertyChanged("effort", this.effort);
+    public final ProjectSprintSnapshot setRemainingWork(int remainingWork) {
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
         return (ProjectSprintSnapshot)this;
     }
 
-    public final boolean isEffort(int effort) {
-        return equals(this.effort, effort);
+    public final boolean isRemainingWork(int remainingWork) {
+        return equals(this.remainingWork, remainingWork);
     }
 
     // --- project ---
@@ -120,8 +120,8 @@ public abstract class GProjectSprintSnapshot
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        burndown  = (Integer) props.get("burndown");
-        effort  = (Integer) props.get("effort");
+        burnedWork  = (Integer) props.get("burnedWork");
+        remainingWork  = (Integer) props.get("remainingWork");
         projectId = (String) props.get("projectId");
         dateCrap  = (java.util.Date) props.get("dateCrap");
     }
@@ -129,8 +129,8 @@ public abstract class GProjectSprintSnapshot
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("burndown", this.burndown);
-        properties.put("effort", this.effort);
+        properties.put("burnedWork", this.burnedWork);
+        properties.put("remainingWork", this.remainingWork);
         properties.put("projectId", this.projectId);
         properties.put("dateCrap", this.dateCrap);
     }

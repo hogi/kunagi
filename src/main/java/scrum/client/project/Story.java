@@ -46,7 +46,7 @@ public class Story extends GStory {
 	public String getProductBacklogSummary() {
 		if (isClosed()) return "Closed.";
 		if (isDone()) return "Done. Test required.";
-		if (getEffort() == null) return "No effort estimated.";
+		if (getEstimatedWork() == null) return "No effort estimated.";
 		Sprint sprint = getSprint();
 		if (sprint == null) return getEffortString() + " to do. No sprint assigned.";
 		return getEffortString() + " to do in sprint " + sprint.getLabel() + ".";
@@ -66,21 +66,21 @@ public class Story extends GStory {
 			taskCount++;
 			if (!task.isDone()) {
 				openTaskCount++;
-				effort += task.getEffort();
+				effort += task.getRemainingWork();
 			}
 		}
 		return openTaskCount + " of " + taskCount + " Tasks open. About " + effort + " hours to do.";
 	}
 
 	public String getEffortString() {
-		if (getEffort() == null) return null;
-		return getEffort() + " " + ScrumGwtApplication.get().getProject().getEffortUnit();
+		if (getEstimatedWork() == null) return null;
+		return getEstimatedWork() + " " + ScrumGwtApplication.get().getProject().getEffortUnit();
 	}
 
 	public Integer getTaskEffortSum() {
 		Integer sum = null;
 		for (Task t : getTasks()) {
-			Integer effort = t.getEffort();
+			Integer effort = t.getRemainingWork();
 			if (effort != null) {
 				if (sum == null) {
 					sum = effort;

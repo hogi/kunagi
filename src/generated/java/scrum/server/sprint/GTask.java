@@ -46,10 +46,10 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("burndown", this.burndown);
+        properties.put("burnedWork", this.burnedWork);
         properties.put("storyId", this.storyId);
         properties.put("notice", this.notice);
-        properties.put("effort", this.effort);
+        properties.put("remainingWork", this.remainingWork);
         properties.put("label", this.label);
     }
 
@@ -66,36 +66,36 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
-        setBurndown(template.getBurndown());
+        setBurnedWork(template.getBurnedWork());
         setStory(template.getStory());
         setNotice(template.getNotice());
-        setEffort(template.getEffort());
+        setRemainingWork(template.getRemainingWork());
         setLabel(template.getLabel());
     }
 
     // -----------------------------------------------------------
-    // - burndown
+    // - burnedWork
     // -----------------------------------------------------------
 
-    private int burndown;
+    private int burnedWork;
 
-    public final int getBurndown() {
-        return burndown;
+    public final int getBurnedWork() {
+        return burnedWork;
     }
 
-    public final void setBurndown(int burndown) {
-        burndown = prepareBurndown(burndown);
-        if (isBurndown(burndown)) return;
-        this.burndown = burndown;
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
         entityModified();
     }
 
-    protected int prepareBurndown(int burndown) {
-        return burndown;
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
     }
 
-    public final boolean isBurndown(int burndown) {
-        return this.burndown == burndown;
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
     }
 
     // -----------------------------------------------------------
@@ -167,33 +167,33 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
-    // - effort
+    // - remainingWork
     // -----------------------------------------------------------
 
-    private java.lang.Integer effort;
+    private java.lang.Integer remainingWork;
 
-    public final java.lang.Integer getEffort() {
-        return effort;
+    public final java.lang.Integer getRemainingWork() {
+        return remainingWork;
     }
 
-    public final void setEffort(java.lang.Integer effort) {
-        effort = prepareEffort(effort);
-        if (isEffort(effort)) return;
-        this.effort = effort;
+    public final void setRemainingWork(java.lang.Integer remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
         entityModified();
     }
 
-    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
-        return effort;
+    protected java.lang.Integer prepareRemainingWork(java.lang.Integer remainingWork) {
+        return remainingWork;
     }
 
-    public final boolean isEffortSet() {
-        return this.effort != null;
+    public final boolean isRemainingWorkSet() {
+        return this.remainingWork != null;
     }
 
-    public final boolean isEffort(java.lang.Integer effort) {
-        if (this.effort == null && effort == null) return true;
-        return this.effort != null && this.effort.equals(effort);
+    public final boolean isRemainingWork(java.lang.Integer remainingWork) {
+        if (this.remainingWork == null && remainingWork == null) return true;
+        return this.remainingWork != null && this.remainingWork.equals(remainingWork);
     }
 
     // -----------------------------------------------------------

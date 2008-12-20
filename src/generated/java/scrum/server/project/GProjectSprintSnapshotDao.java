@@ -43,10 +43,10 @@ public abstract class GProjectSprintSnapshotDao
 
     // --- clear caches ---
     public void clearCaches() {
-        projectSprintSnapshotsByBurndownCache.clear();
-        burndownsCache = null;
-        projectSprintSnapshotsByEffortCache.clear();
-        effortsCache = null;
+        projectSprintSnapshotsByBurnedWorkCache.clear();
+        burnedWorksCache = null;
+        projectSprintSnapshotsByRemainingWorkCache.clear();
+        remainingWorksCache = null;
         projectSprintSnapshotsByProjectCache.clear();
         projectsCache = null;
         projectSprintSnapshotsByDateCrapCache.clear();
@@ -70,81 +70,81 @@ public abstract class GProjectSprintSnapshotDao
     }
 
     // -----------------------------------------------------------
-    // - burndown
+    // - burnedWork
     // -----------------------------------------------------------
 
-    private final Cache<Integer,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByBurndownCache = new Cache<Integer,Set<ProjectSprintSnapshot>>(
+    private final Cache<Integer,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByBurnedWorkCache = new Cache<Integer,Set<ProjectSprintSnapshot>>(
             new Cache.Factory<Integer,Set<ProjectSprintSnapshot>>() {
-                public Set<ProjectSprintSnapshot> create(Integer burndown) {
-                    return getEntities(new IsBurndown(burndown));
+                public Set<ProjectSprintSnapshot> create(Integer burnedWork) {
+                    return getEntities(new IsBurnedWork(burnedWork));
                 }
             });
 
-    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByBurndown(int burndown) {
-        return projectSprintSnapshotsByBurndownCache.get(burndown);
+    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByBurnedWork(int burnedWork) {
+        return projectSprintSnapshotsByBurnedWorkCache.get(burnedWork);
     }
-    private Set<Integer> burndownsCache;
+    private Set<Integer> burnedWorksCache;
 
-    public final Set<Integer> getBurndowns() {
-        if (burndownsCache == null) {
-            burndownsCache = new HashSet<Integer>();
+    public final Set<Integer> getBurnedWorks() {
+        if (burnedWorksCache == null) {
+            burnedWorksCache = new HashSet<Integer>();
             for (ProjectSprintSnapshot e : getEntities()) {
-                burndownsCache.add(e.getBurndown());
+                burnedWorksCache.add(e.getBurnedWork());
             }
         }
-        return burndownsCache;
+        return burnedWorksCache;
     }
 
-    private static class IsBurndown implements Predicate<ProjectSprintSnapshot> {
+    private static class IsBurnedWork implements Predicate<ProjectSprintSnapshot> {
 
         private int value;
 
-        public IsBurndown(int value) {
+        public IsBurnedWork(int value) {
             this.value = value;
         }
 
         public boolean test(ProjectSprintSnapshot e) {
-            return e.isBurndown(value);
+            return e.isBurnedWork(value);
         }
 
     }
 
     // -----------------------------------------------------------
-    // - effort
+    // - remainingWork
     // -----------------------------------------------------------
 
-    private final Cache<Integer,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByEffortCache = new Cache<Integer,Set<ProjectSprintSnapshot>>(
+    private final Cache<Integer,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByRemainingWorkCache = new Cache<Integer,Set<ProjectSprintSnapshot>>(
             new Cache.Factory<Integer,Set<ProjectSprintSnapshot>>() {
-                public Set<ProjectSprintSnapshot> create(Integer effort) {
-                    return getEntities(new IsEffort(effort));
+                public Set<ProjectSprintSnapshot> create(Integer remainingWork) {
+                    return getEntities(new IsRemainingWork(remainingWork));
                 }
             });
 
-    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByEffort(int effort) {
-        return projectSprintSnapshotsByEffortCache.get(effort);
+    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByRemainingWork(int remainingWork) {
+        return projectSprintSnapshotsByRemainingWorkCache.get(remainingWork);
     }
-    private Set<Integer> effortsCache;
+    private Set<Integer> remainingWorksCache;
 
-    public final Set<Integer> getEfforts() {
-        if (effortsCache == null) {
-            effortsCache = new HashSet<Integer>();
+    public final Set<Integer> getRemainingWorks() {
+        if (remainingWorksCache == null) {
+            remainingWorksCache = new HashSet<Integer>();
             for (ProjectSprintSnapshot e : getEntities()) {
-                effortsCache.add(e.getEffort());
+                remainingWorksCache.add(e.getRemainingWork());
             }
         }
-        return effortsCache;
+        return remainingWorksCache;
     }
 
-    private static class IsEffort implements Predicate<ProjectSprintSnapshot> {
+    private static class IsRemainingWork implements Predicate<ProjectSprintSnapshot> {
 
         private int value;
 
-        public IsEffort(int value) {
+        public IsRemainingWork(int value) {
             this.value = value;
         }
 
         public boolean test(ProjectSprintSnapshot e) {
-            return e.isEffort(value);
+            return e.isRemainingWork(value);
         }
 
     }

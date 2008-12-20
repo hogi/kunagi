@@ -96,18 +96,18 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.sprint.SprintDaySnapshot> getSprintDaySnapshotsByBurndown(int burndown) {
+    public final List<scrum.client.sprint.SprintDaySnapshot> getSprintDaySnapshotsByBurnedWork(int burnedWork) {
         List<scrum.client.sprint.SprintDaySnapshot> ret = new ArrayList<scrum.client.sprint.SprintDaySnapshot>();
         for (scrum.client.sprint.SprintDaySnapshot entity : sprintDaySnapshots.values()) {
-            if (entity.isBurndown(burndown)) ret.add(entity);
+            if (entity.isBurnedWork(burnedWork)) ret.add(entity);
         }
         return ret;
     }
 
-    public final List<scrum.client.sprint.SprintDaySnapshot> getSprintDaySnapshotsByEffort(int effort) {
+    public final List<scrum.client.sprint.SprintDaySnapshot> getSprintDaySnapshotsByRemainingWork(int remainingWork) {
         List<scrum.client.sprint.SprintDaySnapshot> ret = new ArrayList<scrum.client.sprint.SprintDaySnapshot>();
         for (scrum.client.sprint.SprintDaySnapshot entity : sprintDaySnapshots.values()) {
-            if (entity.isEffort(effort)) ret.add(entity);
+            if (entity.isRemainingWork(remainingWork)) ret.add(entity);
         }
         return ret;
     }
@@ -230,18 +230,18 @@ public abstract class GDao
         return new ArrayList<scrum.client.project.ProjectSprintSnapshot>(projectSprintSnapshots.values());
     }
 
-    public final List<scrum.client.project.ProjectSprintSnapshot> getProjectSprintSnapshotsByBurndown(int burndown) {
+    public final List<scrum.client.project.ProjectSprintSnapshot> getProjectSprintSnapshotsByBurnedWork(int burnedWork) {
         List<scrum.client.project.ProjectSprintSnapshot> ret = new ArrayList<scrum.client.project.ProjectSprintSnapshot>();
         for (scrum.client.project.ProjectSprintSnapshot entity : projectSprintSnapshots.values()) {
-            if (entity.isBurndown(burndown)) ret.add(entity);
+            if (entity.isBurnedWork(burnedWork)) ret.add(entity);
         }
         return ret;
     }
 
-    public final List<scrum.client.project.ProjectSprintSnapshot> getProjectSprintSnapshotsByEffort(int effort) {
+    public final List<scrum.client.project.ProjectSprintSnapshot> getProjectSprintSnapshotsByRemainingWork(int remainingWork) {
         List<scrum.client.project.ProjectSprintSnapshot> ret = new ArrayList<scrum.client.project.ProjectSprintSnapshot>();
         for (scrum.client.project.ProjectSprintSnapshot entity : projectSprintSnapshots.values()) {
-            if (entity.isEffort(effort)) ret.add(entity);
+            if (entity.isRemainingWork(remainingWork)) ret.add(entity);
         }
         return ret;
     }
@@ -406,10 +406,10 @@ public abstract class GDao
         return new ArrayList<scrum.client.sprint.Task>(tasks.values());
     }
 
-    public final List<scrum.client.sprint.Task> getTasksByBurndown(int burndown) {
+    public final List<scrum.client.sprint.Task> getTasksByBurnedWork(int burnedWork) {
         List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
         for (scrum.client.sprint.Task entity : tasks.values()) {
-            if (entity.isBurndown(burndown)) ret.add(entity);
+            if (entity.isBurnedWork(burnedWork)) ret.add(entity);
         }
         return ret;
     }
@@ -430,10 +430,10 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.sprint.Task> getTasksByEffort(java.lang.Integer effort) {
+    public final List<scrum.client.sprint.Task> getTasksByRemainingWork(java.lang.Integer remainingWork) {
         List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
         for (scrum.client.sprint.Task entity : tasks.values()) {
-            if (entity.isEffort(effort)) ret.add(entity);
+            if (entity.isRemainingWork(remainingWork)) ret.add(entity);
         }
         return ret;
     }
@@ -655,10 +655,10 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.project.Story> getStorysByEffort(java.lang.Integer effort) {
+    public final List<scrum.client.project.Story> getStorysByEstimatedWork(java.lang.Integer estimatedWork) {
         List<scrum.client.project.Story> ret = new ArrayList<scrum.client.project.Story>();
         for (scrum.client.project.Story entity : storys.values()) {
-            if (entity.isEffort(effort)) ret.add(entity);
+            if (entity.isEstimatedWork(estimatedWork)) ret.add(entity);
         }
         return ret;
     }

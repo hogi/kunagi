@@ -55,16 +55,30 @@ public class TaskWidget extends ABlockWidget {
 
 		});
 
-		fieldsWidget.addField("Effort", new AEditableIntegerWidget() {
+		fieldsWidget.addField("Burned Work", new AEditableIntegerWidget() {
 
 			@Override
 			protected Integer getValue() {
-				return task.getEffort();
+				return task.getBurnedWork();
 			}
 
 			@Override
 			protected void setValue(Integer value) {
-				task.setEffort(value);
+				task.setBurnedWork(value == null ? 0 : value);
+				controller.dataChanged(TaskWidget.this);
+			}
+		});
+
+		fieldsWidget.addField("Remaining Work", new AEditableIntegerWidget() {
+
+			@Override
+			protected Integer getValue() {
+				return task.getRemainingWork();
+			}
+
+			@Override
+			protected void setValue(Integer value) {
+				task.setRemainingWork(value);
 				controller.dataChanged(TaskWidget.this);
 			}
 

@@ -55,19 +55,19 @@ public class Sprint extends GSprint {
 		return sprintDaySnapshotDao.getSprintDaySnapshot(this, date, true);
 	}
 
-	public int getTaskEffortSum() {
+	public int getRemainingWork() {
 		int sum = 0;
 		for (Task task : getTasks()) {
-			Integer effort = task.getEffort();
+			Integer effort = task.getRemainingWork();
 			if (effort != null) sum += effort;
 		}
 		return sum;
 	}
 
-	public int getTaskBurndownSum() {
+	public int getBurnedWork() {
 		int sum = 0;
 		for (Task task : getTasks()) {
-			sum += task.getBurndown();
+			sum += task.getBurnedWork();
 		}
 		return sum;
 	}

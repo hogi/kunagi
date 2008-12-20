@@ -43,22 +43,22 @@ public abstract class GTask
         return ENTITY_TYPE;
     }
 
-    // --- burndown ---
+    // --- burnedWork ---
 
-    private int burndown ;
+    private int burnedWork ;
 
-    public final int getBurndown() {
-        return this.burndown ;
+    public final int getBurnedWork() {
+        return this.burnedWork ;
     }
 
-    public final Task setBurndown(int burndown) {
-        this.burndown = burndown ;
-        propertyChanged("burndown", this.burndown);
+    public final Task setBurnedWork(int burnedWork) {
+        this.burnedWork = burnedWork ;
+        propertyChanged("burnedWork", this.burnedWork);
         return (Task)this;
     }
 
-    public final boolean isBurndown(int burndown) {
-        return equals(this.burndown, burndown);
+    public final boolean isBurnedWork(int burnedWork) {
+        return equals(this.burnedWork, burnedWork);
     }
 
     // --- story ---
@@ -99,22 +99,22 @@ public abstract class GTask
         return equals(this.notice, notice);
     }
 
-    // --- effort ---
+    // --- remainingWork ---
 
-    private java.lang.Integer effort ;
+    private java.lang.Integer remainingWork ;
 
-    public final java.lang.Integer getEffort() {
-        return this.effort ;
+    public final java.lang.Integer getRemainingWork() {
+        return this.remainingWork ;
     }
 
-    public final Task setEffort(java.lang.Integer effort) {
-        this.effort = effort ;
-        propertyChanged("effort", this.effort);
+    public final Task setRemainingWork(java.lang.Integer remainingWork) {
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
         return (Task)this;
     }
 
-    public final boolean isEffort(java.lang.Integer effort) {
-        return equals(this.effort, effort);
+    public final boolean isRemainingWork(java.lang.Integer remainingWork) {
+        return equals(this.remainingWork, remainingWork);
     }
 
     // --- label ---
@@ -138,20 +138,20 @@ public abstract class GTask
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        burndown  = (Integer) props.get("burndown");
+        burnedWork  = (Integer) props.get("burnedWork");
         storyId = (String) props.get("storyId");
         notice  = (java.lang.String) props.get("notice");
-        effort  = (java.lang.Integer) props.get("effort");
+        remainingWork  = (java.lang.Integer) props.get("remainingWork");
         label  = (java.lang.String) props.get("label");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("burndown", this.burndown);
+        properties.put("burnedWork", this.burnedWork);
         properties.put("storyId", this.storyId);
         properties.put("notice", this.notice);
-        properties.put("effort", this.effort);
+        properties.put("remainingWork", this.remainingWork);
         properties.put("label", this.label);
     }
 

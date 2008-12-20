@@ -47,8 +47,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(projectSprintSnapshotModel);
 			projectSprintSnapshotModel.addReference("project", getProjectModel());
 			projectSprintSnapshotModel.addProperty("dateCrap", Date.class);
-			projectSprintSnapshotModel.addProperty("effort", int.class);
-			projectSprintSnapshotModel.addProperty("burndown", int.class);
+			projectSprintSnapshotModel.addProperty("remainingWork", int.class);
+			projectSprintSnapshotModel.addProperty("burnedWork", int.class);
 		}
 		return projectSprintSnapshotModel;
 	}
@@ -64,7 +64,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			storyModel.addProperty("label", String.class);
 			storyModel.addProperty("description", String.class);
 			storyModel.addProperty("testDescription", String.class);
-			storyModel.addProperty("effort", Integer.class);
+			storyModel.addProperty("estimatedWork", Integer.class);
 			storyModel.addProperty("closed", boolean.class);
 		}
 		return storyModel;
@@ -90,8 +90,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(sprintDaySnapshotModel);
 			sprintDaySnapshotModel.addReference("sprint", getSprintModel());
 			sprintDaySnapshotModel.addProperty("dateCrap", Date.class);
-			sprintDaySnapshotModel.addProperty("effort", int.class);
-			sprintDaySnapshotModel.addProperty("burndown", int.class);
+			sprintDaySnapshotModel.addProperty("remainingWork", int.class);
+			sprintDaySnapshotModel.addProperty("burnedWork", int.class);
 		}
 		return sprintDaySnapshotModel;
 	}
@@ -104,8 +104,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(taskModel);
 			taskModel.addReference("story", getStoryModel()).setMaster(true);
 			taskModel.addProperty("label", String.class);
-			taskModel.addProperty("effort", Integer.class);
-			taskModel.addProperty("burndown", int.class);
+			taskModel.addProperty("remainingWork", Integer.class);
+			taskModel.addProperty("burnedWork", int.class);
 			taskModel.addProperty("notice", String.class);
 		}
 		return taskModel;

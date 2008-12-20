@@ -37,8 +37,8 @@ public class SprintDaySnapshotDao extends GSprintDaySnapshotDao {
 				snapshot.setSprint(sprint);
 				snapshot.setDate(date);
 				if (previousSnapshot != null) {
-					snapshot.setEffort(previousSnapshot.getEffort());
-					snapshot.setBurndown(previousSnapshot.getBurndown());
+					snapshot.setRemainingWork(previousSnapshot.getRemainingWork());
+					snapshot.setBurnedWork(previousSnapshot.getBurnedWork());
 				}
 			}
 			ret.add(snapshot);
