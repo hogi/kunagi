@@ -43,6 +43,24 @@ public abstract class GTask
         return ENTITY_TYPE;
     }
 
+    // --- effort ---
+
+    private java.lang.Integer effort ;
+
+    public final java.lang.Integer getEffort() {
+        return this.effort ;
+    }
+
+    public final Task setEffort(java.lang.Integer effort) {
+        this.effort = effort ;
+        propertyChanged("effort", this.effort);
+        return (Task)this;
+    }
+
+    public final boolean isEffort(java.lang.Integer effort) {
+        return equals(this.effort, effort);
+    }
+
     // --- story ---
 
     private String storyId;
@@ -61,6 +79,24 @@ public abstract class GTask
 
     public final boolean isStory(scrum.client.project.Story story) {
         return equals(this.storyId, story);
+    }
+
+    // --- burndown ---
+
+    private int burndown ;
+
+    public final int getBurndown() {
+        return this.burndown ;
+    }
+
+    public final Task setBurndown(int burndown) {
+        this.burndown = burndown ;
+        propertyChanged("burndown", this.burndown);
+        return (Task)this;
+    }
+
+    public final boolean isBurndown(int burndown) {
+        return equals(this.burndown, burndown);
     }
 
     // --- label ---
@@ -99,40 +135,24 @@ public abstract class GTask
         return equals(this.notice, notice);
     }
 
-    // --- effort ---
-
-    private java.lang.Integer effort ;
-
-    public final java.lang.Integer getEffort() {
-        return this.effort ;
-    }
-
-    public final Task setEffort(java.lang.Integer effort) {
-        this.effort = effort ;
-        propertyChanged("effort", this.effort);
-        return (Task)this;
-    }
-
-    public final boolean isEffort(java.lang.Integer effort) {
-        return equals(this.effort, effort);
-    }
-
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
+        effort  = (java.lang.Integer) props.get("effort");
         storyId = (String) props.get("storyId");
+        burndown  = (Integer) props.get("burndown");
         label  = (java.lang.String) props.get("label");
         notice  = (java.lang.String) props.get("notice");
-        effort  = (java.lang.Integer) props.get("effort");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("effort", this.effort);
         properties.put("storyId", this.storyId);
+        properties.put("burndown", this.burndown);
         properties.put("label", this.label);
         properties.put("notice", this.notice);
-        properties.put("effort", this.effort);
     }
 
 }

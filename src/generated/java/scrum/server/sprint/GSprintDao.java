@@ -43,10 +43,14 @@ public abstract class GSprintDao
 
     // --- clear caches ---
     public void clearCaches() {
-        sprintsByProjectCache.clear();
-        projectsCache = null;
         sprintsByLabelCache.clear();
         labelsCache = null;
+        sprintsByProjectCache.clear();
+        projectsCache = null;
+        sprintsByEndCrapCache.clear();
+        endCrapsCache = null;
+        sprintsByBeginCrapCache.clear();
+        beginCrapsCache = null;
     }
 
     @Override
@@ -63,6 +67,46 @@ public abstract class GSprintDao
         if (event.getEntity() instanceof Sprint) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Sprint>> sprintsByLabelCache = new Cache<java.lang.String,Set<Sprint>>(
+            new Cache.Factory<java.lang.String,Set<Sprint>>() {
+                public Set<Sprint> create(java.lang.String label) {
+                    return getEntities(new IsLabel(label));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByLabel(java.lang.String label) {
+        return sprintsByLabelCache.get(label);
+    }
+    private Set<java.lang.String> labelsCache;
+
+    public final Set<java.lang.String> getLabels() {
+        if (labelsCache == null) {
+            labelsCache = new HashSet<java.lang.String>();
+            for (Sprint e : getEntities()) {
+                if (e.isLabelSet()) labelsCache.add(e.getLabel());
+            }
+        }
+        return labelsCache;
+    }
+
+    private static class IsLabel implements Predicate<Sprint> {
+
+        private java.lang.String value;
+
+        public IsLabel(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.isLabel(value);
+        }
+
     }
 
     // -----------------------------------------------------------
@@ -106,41 +150,81 @@ public abstract class GSprintDao
     }
 
     // -----------------------------------------------------------
-    // - label
+    // - endCrap
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Sprint>> sprintsByLabelCache = new Cache<java.lang.String,Set<Sprint>>(
-            new Cache.Factory<java.lang.String,Set<Sprint>>() {
-                public Set<Sprint> create(java.lang.String label) {
-                    return getEntities(new IsLabel(label));
+    private final Cache<java.util.Date,Set<Sprint>> sprintsByEndCrapCache = new Cache<java.util.Date,Set<Sprint>>(
+            new Cache.Factory<java.util.Date,Set<Sprint>>() {
+                public Set<Sprint> create(java.util.Date endCrap) {
+                    return getEntities(new IsEndCrap(endCrap));
                 }
             });
 
-    public final Set<Sprint> getSprintsByLabel(java.lang.String label) {
-        return sprintsByLabelCache.get(label);
+    public final Set<Sprint> getSprintsByEndCrap(java.util.Date endCrap) {
+        return sprintsByEndCrapCache.get(endCrap);
     }
-    private Set<java.lang.String> labelsCache;
+    private Set<java.util.Date> endCrapsCache;
 
-    public final Set<java.lang.String> getLabels() {
-        if (labelsCache == null) {
-            labelsCache = new HashSet<java.lang.String>();
+    public final Set<java.util.Date> getEndCraps() {
+        if (endCrapsCache == null) {
+            endCrapsCache = new HashSet<java.util.Date>();
             for (Sprint e : getEntities()) {
-                if (e.isLabelSet()) labelsCache.add(e.getLabel());
+                if (e.isEndCrapSet()) endCrapsCache.add(e.getEndCrap());
             }
         }
-        return labelsCache;
+        return endCrapsCache;
     }
 
-    private static class IsLabel implements Predicate<Sprint> {
+    private static class IsEndCrap implements Predicate<Sprint> {
 
-        private java.lang.String value;
+        private java.util.Date value;
 
-        public IsLabel(java.lang.String value) {
+        public IsEndCrap(java.util.Date value) {
             this.value = value;
         }
 
         public boolean test(Sprint e) {
-            return e.isLabel(value);
+            return e.isEndCrap(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - beginCrap
+    // -----------------------------------------------------------
+
+    private final Cache<java.util.Date,Set<Sprint>> sprintsByBeginCrapCache = new Cache<java.util.Date,Set<Sprint>>(
+            new Cache.Factory<java.util.Date,Set<Sprint>>() {
+                public Set<Sprint> create(java.util.Date beginCrap) {
+                    return getEntities(new IsBeginCrap(beginCrap));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByBeginCrap(java.util.Date beginCrap) {
+        return sprintsByBeginCrapCache.get(beginCrap);
+    }
+    private Set<java.util.Date> beginCrapsCache;
+
+    public final Set<java.util.Date> getBeginCraps() {
+        if (beginCrapsCache == null) {
+            beginCrapsCache = new HashSet<java.util.Date>();
+            for (Sprint e : getEntities()) {
+                if (e.isBeginCrapSet()) beginCrapsCache.add(e.getBeginCrap());
+            }
+        }
+        return beginCrapsCache;
+    }
+
+    private static class IsBeginCrap implements Predicate<Sprint> {
+
+        private java.util.Date value;
+
+        public IsBeginCrap(java.util.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.isBeginCrap(value);
         }
 
     }

@@ -46,8 +46,10 @@ public abstract class GSprint
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
         properties.put("label", this.label);
+        properties.put("projectId", this.projectId);
+        properties.put("endCrap", this.endCrap);
+        properties.put("beginCrap", this.beginCrap);
     }
 
     public int compareTo(Sprint other) {
@@ -63,8 +65,41 @@ public abstract class GSprint
         super(template);
         if (template==null) return;
 
-        setProject(template.getProject());
         setLabel(template.getLabel());
+        setProject(template.getProject());
+        setEndCrap(template.getEndCrap());
+        setBeginCrap(template.getBeginCrap());
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
     }
 
     // -----------------------------------------------------------
@@ -105,34 +140,63 @@ public abstract class GSprint
     }
 
     // -----------------------------------------------------------
-    // - label
+    // - endCrap
     // -----------------------------------------------------------
 
-    private java.lang.String label;
+    private java.util.Date endCrap;
 
-    public final java.lang.String getLabel() {
-        return label;
+    public final java.util.Date getEndCrap() {
+        return endCrap;
     }
 
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
+    public final void setEndCrap(java.util.Date endCrap) {
+        endCrap = prepareEndCrap(endCrap);
+        if (isEndCrap(endCrap)) return;
+        this.endCrap = endCrap;
         entityModified();
     }
 
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
+    protected java.util.Date prepareEndCrap(java.util.Date endCrap) {
+        return endCrap;
     }
 
-    public final boolean isLabelSet() {
-        return this.label != null;
+    public final boolean isEndCrapSet() {
+        return this.endCrap != null;
     }
 
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
+    public final boolean isEndCrap(java.util.Date endCrap) {
+        if (this.endCrap == null && endCrap == null) return true;
+        return this.endCrap != null && this.endCrap.equals(endCrap);
+    }
+
+    // -----------------------------------------------------------
+    // - beginCrap
+    // -----------------------------------------------------------
+
+    private java.util.Date beginCrap;
+
+    public final java.util.Date getBeginCrap() {
+        return beginCrap;
+    }
+
+    public final void setBeginCrap(java.util.Date beginCrap) {
+        beginCrap = prepareBeginCrap(beginCrap);
+        if (isBeginCrap(beginCrap)) return;
+        this.beginCrap = beginCrap;
+        entityModified();
+    }
+
+    protected java.util.Date prepareBeginCrap(java.util.Date beginCrap) {
+        return beginCrap;
+    }
+
+    public final boolean isBeginCrapSet() {
+        return this.beginCrap != null;
+    }
+
+    public final boolean isBeginCrap(java.util.Date beginCrap) {
+        if (this.beginCrap == null && beginCrap == null) return true;
+        return this.beginCrap != null && this.beginCrap.equals(beginCrap);
     }
 
     protected void repairDeadReferences(String entityId) {

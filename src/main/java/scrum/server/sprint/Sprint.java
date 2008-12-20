@@ -1,5 +1,7 @@
 package scrum.server.sprint;
 
+import ilarkesto.base.time.Date;
+
 import java.util.Set;
 
 import scrum.server.project.Story;
@@ -11,6 +13,7 @@ public class Sprint extends GSprint {
 
 	private static StoryDao storyDao;
 	private static TaskDao taskDao;
+	private static SprintDaySnapshotDao sprintDaySnapshotDao;
 
 	public Sprint(Sprint template) {
 		super(template);
@@ -28,7 +31,44 @@ public class Sprint extends GSprint {
 		Sprint.taskDao = taskDao;
 	}
 
+	public static void setSprintDaySnapshotDao(SprintDaySnapshotDao sprintDaySnapshotDao) {
+		Sprint.sprintDaySnapshotDao = sprintDaySnapshotDao;
+	}
+
 	// --- ---
+
+	public Date getBegin() {
+		return Date.today().getFirstDateOfMonth();
+	}
+
+	public Date getEnd() {
+		return Date.today().getLastDateOfMonth();
+	}
+
+	public SprintDaySnapshot getDaySnapshot(Date date) {
+		return sprintDaySnapshotDao.getSprintDaySnapshot(this, date, true);
+	}
+
+	public SprintDaySnapshot getDaySnapshotForToday() {
+		return getDaySnapshot(Date.today());
+	}
+
+	public int getTaskEffortSum() {
+		int sum = 0;
+		for (Task task : getTasks()) {
+			Integer effort = task.getEffort();
+			if (effort != null) sum += effort;
+		}
+		return sum;
+	}
+
+	public int getTaskBurndownSum() {
+		int sum = 0;
+		for (Task task : getTasks()) {
+			sum += task.getBurndown();
+		}
+		return sum;
+	}
 
 	public Set<Story> getStorys() {
 		return storyDao.getStorysBySprint(this);

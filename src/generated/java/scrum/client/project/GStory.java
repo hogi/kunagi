@@ -43,44 +43,6 @@ public abstract class GStory
         return ENTITY_TYPE;
     }
 
-    // --- closed ---
-
-    private boolean closed ;
-
-    public final boolean isClosed() {
-        return this.closed ;
-    }
-
-    public final Story setClosed(boolean closed) {
-        this.closed = closed ;
-        propertyChanged("closed", this.closed);
-        return (Story)this;
-    }
-
-    public final boolean isClosed(boolean closed) {
-        return equals(this.closed, closed);
-    }
-
-    // --- project ---
-
-    private String projectId;
-
-    public final scrum.client.project.Project getProject() {
-        return getDao().getProject(this.projectId);
-    }
-
-    public final Story setProject(scrum.client.project.Project project) {
-        String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Story) this;
-        this.projectId = id;
-        propertyChanged("project", this.projectId);
-        return (Story)this;
-    }
-
-    public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
-    }
-
     // --- effort ---
 
     private java.lang.Integer effort ;
@@ -99,24 +61,6 @@ public abstract class GStory
         return equals(this.effort, effort);
     }
 
-    // --- description ---
-
-    private java.lang.String description ;
-
-    public final java.lang.String getDescription() {
-        return this.description ;
-    }
-
-    public final Story setDescription(java.lang.String description) {
-        this.description = description ;
-        propertyChanged("description", this.description);
-        return (Story)this;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
-    }
-
     // --- label ---
 
     private java.lang.String label ;
@@ -133,6 +77,24 @@ public abstract class GStory
 
     public final boolean isLabel(java.lang.String label) {
         return equals(this.label, label);
+    }
+
+    // --- description ---
+
+    private java.lang.String description ;
+
+    public final java.lang.String getDescription() {
+        return this.description ;
+    }
+
+    public final Story setDescription(java.lang.String description) {
+        this.description = description ;
+        propertyChanged("description", this.description);
+        return (Story)this;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        return equals(this.description, description);
     }
 
     // --- sprint ---
@@ -155,6 +117,24 @@ public abstract class GStory
         return equals(this.sprintId, sprint);
     }
 
+    // --- closed ---
+
+    private boolean closed ;
+
+    public final boolean isClosed() {
+        return this.closed ;
+    }
+
+    public final Story setClosed(boolean closed) {
+        this.closed = closed ;
+        propertyChanged("closed", this.closed);
+        return (Story)this;
+    }
+
+    public final boolean isClosed(boolean closed) {
+        return equals(this.closed, closed);
+    }
+
     // --- testDescription ---
 
     private java.lang.String testDescription ;
@@ -173,28 +153,48 @@ public abstract class GStory
         return equals(this.testDescription, testDescription);
     }
 
+    // --- project ---
+
+    private String projectId;
+
+    public final scrum.client.project.Project getProject() {
+        return getDao().getProject(this.projectId);
+    }
+
+    public final Story setProject(scrum.client.project.Project project) {
+        String id = project == null ? null : project.getId();
+        if (equals(this.projectId, id)) return (Story) this;
+        this.projectId = id;
+        propertyChanged("project", this.projectId);
+        return (Story)this;
+    }
+
+    public final boolean isProject(scrum.client.project.Project project) {
+        return equals(this.projectId, project);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        closed  = (Boolean) props.get("closed");
-        projectId = (String) props.get("projectId");
         effort  = (java.lang.Integer) props.get("effort");
-        description  = (java.lang.String) props.get("description");
         label  = (java.lang.String) props.get("label");
+        description  = (java.lang.String) props.get("description");
         sprintId = (String) props.get("sprintId");
+        closed  = (Boolean) props.get("closed");
         testDescription  = (java.lang.String) props.get("testDescription");
+        projectId = (String) props.get("projectId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("closed", this.closed);
-        properties.put("projectId", this.projectId);
         properties.put("effort", this.effort);
-        properties.put("description", this.description);
         properties.put("label", this.label);
+        properties.put("description", this.description);
         properties.put("sprintId", this.sprintId);
+        properties.put("closed", this.closed);
         properties.put("testDescription", this.testDescription);
+        properties.put("projectId", this.projectId);
     }
 
 }

@@ -57,6 +57,13 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public void onChangeProperties(SessionData session, String entityId, Map properties) {
 		AEntity entity = getDaoService().getEntityById(entityId);
 		entity.updateProperties(properties);
+
+		// probably dirty hacked stuff x-ing
+		if (entity instanceof Task) {
+			Task task = (Task) entity;
+			task.getStory().getSprint().getDaySnapshotForToday().update();
+		}
+
 		for (SessionData s : getOtherSessions(session)) {
 			s.getNextData().addEntity(toPropertyMap(entity));
 		}

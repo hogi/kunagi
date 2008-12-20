@@ -43,11 +43,11 @@ public abstract class GImpedimentDao
 
     // --- clear caches ---
     public void clearCaches() {
-        impedimentsBySolutionCache.clear();
-        solutionsCache = null;
-        impedimentsBySolvedCache.clear();
         impedimentsByDescriptionCache.clear();
         descriptionsCache = null;
+        impedimentsBySolvedCache.clear();
+        impedimentsBySolutionCache.clear();
+        solutionsCache = null;
         impedimentsByLabelCache.clear();
         labelsCache = null;
         impedimentsByProjectCache.clear();
@@ -68,75 +68,6 @@ public abstract class GImpedimentDao
         if (event.getEntity() instanceof Impediment) {
             clearCaches();
         }
-    }
-
-    // -----------------------------------------------------------
-    // - solution
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Impediment>> impedimentsBySolutionCache = new Cache<java.lang.String,Set<Impediment>>(
-            new Cache.Factory<java.lang.String,Set<Impediment>>() {
-                public Set<Impediment> create(java.lang.String solution) {
-                    return getEntities(new IsSolution(solution));
-                }
-            });
-
-    public final Set<Impediment> getImpedimentsBySolution(java.lang.String solution) {
-        return impedimentsBySolutionCache.get(solution);
-    }
-    private Set<java.lang.String> solutionsCache;
-
-    public final Set<java.lang.String> getSolutions() {
-        if (solutionsCache == null) {
-            solutionsCache = new HashSet<java.lang.String>();
-            for (Impediment e : getEntities()) {
-                if (e.isSolutionSet()) solutionsCache.add(e.getSolution());
-            }
-        }
-        return solutionsCache;
-    }
-
-    private static class IsSolution implements Predicate<Impediment> {
-
-        private java.lang.String value;
-
-        public IsSolution(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Impediment e) {
-            return e.isSolution(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - solved
-    // -----------------------------------------------------------
-
-    private final Cache<Boolean,Set<Impediment>> impedimentsBySolvedCache = new Cache<Boolean,Set<Impediment>>(
-            new Cache.Factory<Boolean,Set<Impediment>>() {
-                public Set<Impediment> create(Boolean solved) {
-                    return getEntities(new IsSolved(solved));
-                }
-            });
-
-    public final Set<Impediment> getImpedimentsBySolved(boolean solved) {
-        return impedimentsBySolvedCache.get(solved);
-    }
-
-    private static class IsSolved implements Predicate<Impediment> {
-
-        private boolean value;
-
-        public IsSolved(boolean value) {
-            this.value = value;
-        }
-
-        public boolean test(Impediment e) {
-            return value == e.isSolved();
-        }
-
     }
 
     // -----------------------------------------------------------
@@ -175,6 +106,75 @@ public abstract class GImpedimentDao
 
         public boolean test(Impediment e) {
             return e.isDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - solved
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<Impediment>> impedimentsBySolvedCache = new Cache<Boolean,Set<Impediment>>(
+            new Cache.Factory<Boolean,Set<Impediment>>() {
+                public Set<Impediment> create(Boolean solved) {
+                    return getEntities(new IsSolved(solved));
+                }
+            });
+
+    public final Set<Impediment> getImpedimentsBySolved(boolean solved) {
+        return impedimentsBySolvedCache.get(solved);
+    }
+
+    private static class IsSolved implements Predicate<Impediment> {
+
+        private boolean value;
+
+        public IsSolved(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(Impediment e) {
+            return value == e.isSolved();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - solution
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Impediment>> impedimentsBySolutionCache = new Cache<java.lang.String,Set<Impediment>>(
+            new Cache.Factory<java.lang.String,Set<Impediment>>() {
+                public Set<Impediment> create(java.lang.String solution) {
+                    return getEntities(new IsSolution(solution));
+                }
+            });
+
+    public final Set<Impediment> getImpedimentsBySolution(java.lang.String solution) {
+        return impedimentsBySolutionCache.get(solution);
+    }
+    private Set<java.lang.String> solutionsCache;
+
+    public final Set<java.lang.String> getSolutions() {
+        if (solutionsCache == null) {
+            solutionsCache = new HashSet<java.lang.String>();
+            for (Impediment e : getEntities()) {
+                if (e.isSolutionSet()) solutionsCache.add(e.getSolution());
+            }
+        }
+        return solutionsCache;
+    }
+
+    private static class IsSolution implements Predicate<Impediment> {
+
+        private java.lang.String value;
+
+        public IsSolution(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Impediment e) {
+            return e.isSolution(value);
         }
 
     }

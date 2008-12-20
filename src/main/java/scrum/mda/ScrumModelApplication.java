@@ -13,6 +13,7 @@ import ilarkesto.mda.model.BeanModel;
 import ilarkesto.mda.model.EntityModel;
 import ilarkesto.mda.model.GwtServiceModel;
 
+import java.util.Date;
 import java.util.Map;
 
 public class ScrumModelApplication extends AGeneratorApplication {
@@ -63,8 +64,24 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(sprintModel);
 			sprintModel.addReference("project", getProjectModel()).setMaster(true);
 			sprintModel.addProperty("label", String.class);
+			sprintModel.addProperty("beginCrap", Date.class);
+			sprintModel.addProperty("endCrap", Date.class);
 		}
 		return sprintModel;
+	}
+
+	private EntityModel sprintDaySnapshotModel;
+
+	public EntityModel getSprintDaySnapshotModel() {
+		if (sprintDaySnapshotModel == null) {
+			sprintDaySnapshotModel = createEntityModel("SprintDaySnapshot", "sprint");
+			autowire(sprintDaySnapshotModel);
+			sprintDaySnapshotModel.addReference("sprint", getSprintModel());
+			sprintDaySnapshotModel.addProperty("dateCrap", Date.class);
+			sprintDaySnapshotModel.addProperty("effort", int.class);
+			sprintDaySnapshotModel.addProperty("burndown", int.class);
+		}
+		return sprintDaySnapshotModel;
 	}
 
 	private EntityModel taskModel;
@@ -76,6 +93,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			taskModel.addReference("story", getStoryModel()).setMaster(true);
 			taskModel.addProperty("label", String.class);
 			taskModel.addProperty("effort", Integer.class);
+			taskModel.addProperty("burndown", int.class);
 			taskModel.addProperty("notice", String.class);
 		}
 		return taskModel;

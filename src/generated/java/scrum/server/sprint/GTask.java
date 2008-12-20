@@ -46,10 +46,11 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("effort", this.effort);
         properties.put("storyId", this.storyId);
+        properties.put("burndown", this.burndown);
         properties.put("label", this.label);
         properties.put("notice", this.notice);
-        properties.put("effort", this.effort);
     }
 
     public int compareTo(Task other) {
@@ -65,10 +66,41 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
+        setEffort(template.getEffort());
         setStory(template.getStory());
+        setBurndown(template.getBurndown());
         setLabel(template.getLabel());
         setNotice(template.getNotice());
-        setEffort(template.getEffort());
+    }
+
+    // -----------------------------------------------------------
+    // - effort
+    // -----------------------------------------------------------
+
+    private java.lang.Integer effort;
+
+    public final java.lang.Integer getEffort() {
+        return effort;
+    }
+
+    public final void setEffort(java.lang.Integer effort) {
+        effort = prepareEffort(effort);
+        if (isEffort(effort)) return;
+        this.effort = effort;
+        entityModified();
+    }
+
+    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
+        return effort;
+    }
+
+    public final boolean isEffortSet() {
+        return this.effort != null;
+    }
+
+    public final boolean isEffort(java.lang.Integer effort) {
+        if (this.effort == null && effort == null) return true;
+        return this.effort != null && this.effort.equals(effort);
     }
 
     // -----------------------------------------------------------
@@ -106,6 +138,31 @@ public abstract class GTask
     public final boolean isStory(scrum.server.project.Story story) {
         if (this.storyId == null && story == null) return true;
         return story != null && story.getId().equals(this.storyId);
+    }
+
+    // -----------------------------------------------------------
+    // - burndown
+    // -----------------------------------------------------------
+
+    private int burndown;
+
+    public final int getBurndown() {
+        return burndown;
+    }
+
+    public final void setBurndown(int burndown) {
+        burndown = prepareBurndown(burndown);
+        if (isBurndown(burndown)) return;
+        this.burndown = burndown;
+        entityModified();
+    }
+
+    protected int prepareBurndown(int burndown) {
+        return burndown;
+    }
+
+    public final boolean isBurndown(int burndown) {
+        return this.burndown == burndown;
     }
 
     // -----------------------------------------------------------
@@ -168,36 +225,6 @@ public abstract class GTask
     public final boolean isNotice(java.lang.String notice) {
         if (this.notice == null && notice == null) return true;
         return this.notice != null && this.notice.equals(notice);
-    }
-
-    // -----------------------------------------------------------
-    // - effort
-    // -----------------------------------------------------------
-
-    private java.lang.Integer effort;
-
-    public final java.lang.Integer getEffort() {
-        return effort;
-    }
-
-    public final void setEffort(java.lang.Integer effort) {
-        effort = prepareEffort(effort);
-        if (isEffort(effort)) return;
-        this.effort = effort;
-        entityModified();
-    }
-
-    protected java.lang.Integer prepareEffort(java.lang.Integer effort) {
-        return effort;
-    }
-
-    public final boolean isEffortSet() {
-        return this.effort != null;
-    }
-
-    public final boolean isEffort(java.lang.Integer effort) {
-        if (this.effort == null && effort == null) return true;
-        return this.effort != null && this.effort.equals(effort);
     }
 
     protected void repairDeadReferences(String entityId) {
