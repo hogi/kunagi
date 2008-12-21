@@ -1,8 +1,8 @@
 package scrum.client.project;
 
 import scrum.client.admin.User;
+import scrum.client.common.GroupWidget;
 import scrum.client.common.ItemFieldsWidget;
-import scrum.client.common.PanelWidget;
 import scrum.client.common.ScrumUtil;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
@@ -66,7 +66,7 @@ public class ProjectOverviewWidget extends Composite {
 		}
 
 		FlowPanel panel = new FlowPanel();
-		panel.add(fields);
+		panel.add(new GroupWidget("Project Properties", fields));
 		Sprint sprint = project.getCurrentSprint();
 		if (sprint != null) {
 			panel.add(createCurrentSprintOverview(sprint));
@@ -79,6 +79,6 @@ public class ProjectOverviewWidget extends Composite {
 		int width = 500;
 		int height = 200;
 		String url = "../sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width=" + width + "&height=" + height;
-		return new PanelWidget("Current Sprint", new Image(url, 0, 0, width, height));
+		return new GroupWidget("Current Sprint", new Image(url, 0, 0, width, height));
 	}
 }

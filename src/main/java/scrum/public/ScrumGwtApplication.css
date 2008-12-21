@@ -24,6 +24,9 @@ body {padding: 5px;}
 .element-PanelWidget-title {background: darkblue; color: white; padding: 5px;}
 .element-PanelWidget-content {padding: 5px;}
 
+.element-GroupWidget-title {background: #DDDDDD; color: black; padding: 5px;}
+.element-GroupWidget-content {padding: 5px;}
+
 .element-DropWidget {width: 100%;}
 .element-DropWidget-items {min-height: 100px;}
 .element-DropWidget-trash {background: white; border: 1px solid black; color: black; width: 100%;}
