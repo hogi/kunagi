@@ -46,11 +46,11 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("burnedWork", this.burnedWork);
-        properties.put("storyId", this.storyId);
         properties.put("notice", this.notice);
+        properties.put("burnedWork", this.burnedWork);
         properties.put("remainingWork", this.remainingWork);
         properties.put("label", this.label);
+        properties.put("storyId", this.storyId);
     }
 
     public int compareTo(Task other) {
@@ -66,73 +66,11 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
-        setBurnedWork(template.getBurnedWork());
-        setStory(template.getStory());
         setNotice(template.getNotice());
+        setBurnedWork(template.getBurnedWork());
         setRemainingWork(template.getRemainingWork());
         setLabel(template.getLabel());
-    }
-
-    // -----------------------------------------------------------
-    // - burnedWork
-    // -----------------------------------------------------------
-
-    private int burnedWork;
-
-    public final int getBurnedWork() {
-        return burnedWork;
-    }
-
-    public final void setBurnedWork(int burnedWork) {
-        burnedWork = prepareBurnedWork(burnedWork);
-        if (isBurnedWork(burnedWork)) return;
-        this.burnedWork = burnedWork;
-        entityModified();
-    }
-
-    protected int prepareBurnedWork(int burnedWork) {
-        return burnedWork;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return this.burnedWork == burnedWork;
-    }
-
-    // -----------------------------------------------------------
-    // - story
-    // -----------------------------------------------------------
-
-    private String storyId;
-
-    public final scrum.server.project.Story getStory() {
-        if (this.storyId == null) return null;
-        return (scrum.server.project.Story)storyDao.getById(this.storyId);
-    }
-
-    public final void setStory(scrum.server.project.Story story) {
-        story = prepareStory(story);
-        if (isStory(story)) return;
-        this.storyId = story == null ? null : story.getId();
-        entityModified();
-    }
-
-    protected scrum.server.project.Story prepareStory(scrum.server.project.Story story) {
-        return story;
-    }
-
-    protected void repairDeadStoryReference(String entityId) {
-        if (entityId.equals(this.storyId)) {
-            repairMissingMaster();
-        }
-    }
-
-    public final boolean isStorySet() {
-        return this.storyId != null;
-    }
-
-    public final boolean isStory(scrum.server.project.Story story) {
-        if (this.storyId == null && story == null) return true;
-        return story != null && story.getId().equals(this.storyId);
+        setStory(template.getStory());
     }
 
     // -----------------------------------------------------------
@@ -164,6 +102,31 @@ public abstract class GTask
     public final boolean isNotice(java.lang.String notice) {
         if (this.notice == null && notice == null) return true;
         return this.notice != null && this.notice.equals(notice);
+    }
+
+    // -----------------------------------------------------------
+    // - burnedWork
+    // -----------------------------------------------------------
+
+    private int burnedWork;
+
+    public final int getBurnedWork() {
+        return burnedWork;
+    }
+
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
+        entityModified();
+    }
+
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
     }
 
     // -----------------------------------------------------------
@@ -225,6 +188,43 @@ public abstract class GTask
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - story
+    // -----------------------------------------------------------
+
+    private String storyId;
+
+    public final scrum.server.project.Story getStory() {
+        if (this.storyId == null) return null;
+        return (scrum.server.project.Story)storyDao.getById(this.storyId);
+    }
+
+    public final void setStory(scrum.server.project.Story story) {
+        story = prepareStory(story);
+        if (isStory(story)) return;
+        this.storyId = story == null ? null : story.getId();
+        entityModified();
+    }
+
+    protected scrum.server.project.Story prepareStory(scrum.server.project.Story story) {
+        return story;
+    }
+
+    protected void repairDeadStoryReference(String entityId) {
+        if (entityId.equals(this.storyId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isStorySet() {
+        return this.storyId != null;
+    }
+
+    public final boolean isStory(scrum.server.project.Story story) {
+        if (this.storyId == null && story == null) return true;
+        return story != null && story.getId().equals(this.storyId);
     }
 
     protected void repairDeadReferences(String entityId) {

@@ -43,22 +43,24 @@ public abstract class GProjectSprintSnapshot
         return ENTITY_TYPE;
     }
 
-    // --- burnedWork ---
+    // --- project ---
 
-    private int burnedWork ;
+    private String projectId;
 
-    public final int getBurnedWork() {
-        return this.burnedWork ;
+    public final scrum.client.project.Project getProject() {
+        return getDao().getProject(this.projectId);
     }
 
-    public final ProjectSprintSnapshot setBurnedWork(int burnedWork) {
-        this.burnedWork = burnedWork ;
-        propertyChanged("burnedWork", this.burnedWork);
+    public final ProjectSprintSnapshot setProject(scrum.client.project.Project project) {
+        String id = project == null ? null : project.getId();
+        if (equals(this.projectId, id)) return (ProjectSprintSnapshot) this;
+        this.projectId = id;
+        propertyChanged("project", this.projectId);
         return (ProjectSprintSnapshot)this;
     }
 
-    public final boolean isBurnedWork(int burnedWork) {
-        return equals(this.burnedWork, burnedWork);
+    public final boolean isProject(scrum.client.project.Project project) {
+        return equals(this.projectId, project);
     }
 
     // --- remainingWork ---
@@ -79,24 +81,22 @@ public abstract class GProjectSprintSnapshot
         return equals(this.remainingWork, remainingWork);
     }
 
-    // --- project ---
+    // --- burnedWork ---
 
-    private String projectId;
+    private int burnedWork ;
 
-    public final scrum.client.project.Project getProject() {
-        return getDao().getProject(this.projectId);
+    public final int getBurnedWork() {
+        return this.burnedWork ;
     }
 
-    public final ProjectSprintSnapshot setProject(scrum.client.project.Project project) {
-        String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (ProjectSprintSnapshot) this;
-        this.projectId = id;
-        propertyChanged("project", this.projectId);
+    public final ProjectSprintSnapshot setBurnedWork(int burnedWork) {
+        this.burnedWork = burnedWork ;
+        propertyChanged("burnedWork", this.burnedWork);
         return (ProjectSprintSnapshot)this;
     }
 
-    public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
+    public final boolean isBurnedWork(int burnedWork) {
+        return equals(this.burnedWork, burnedWork);
     }
 
     // --- dateCrap ---
@@ -120,18 +120,18 @@ public abstract class GProjectSprintSnapshot
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        burnedWork  = (Integer) props.get("burnedWork");
-        remainingWork  = (Integer) props.get("remainingWork");
         projectId = (String) props.get("projectId");
+        remainingWork  = (Integer) props.get("remainingWork");
+        burnedWork  = (Integer) props.get("burnedWork");
         dateCrap  = (java.util.Date) props.get("dateCrap");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("burnedWork", this.burnedWork);
-        properties.put("remainingWork", this.remainingWork);
         properties.put("projectId", this.projectId);
+        properties.put("remainingWork", this.remainingWork);
+        properties.put("burnedWork", this.burnedWork);
         properties.put("dateCrap", this.dateCrap);
     }
 

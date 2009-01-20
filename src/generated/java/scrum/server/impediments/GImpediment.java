@@ -46,11 +46,11 @@ public abstract class GImpediment
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("label", this.label);
         properties.put("description", this.description);
-        properties.put("solution", this.solution);
         properties.put("projectId", this.projectId);
+        properties.put("label", this.label);
         properties.put("solved", this.solved);
+        properties.put("solution", this.solution);
     }
 
     public int compareTo(Impediment other) {
@@ -66,42 +66,11 @@ public abstract class GImpediment
         super(template);
         if (template==null) return;
 
-        setLabel(template.getLabel());
         setDescription(template.getDescription());
-        setSolution(template.getSolution());
         setProject(template.getProject());
+        setLabel(template.getLabel());
         setSolved(template.isSolved());
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        entityModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
+        setSolution(template.getSolution());
     }
 
     // -----------------------------------------------------------
@@ -133,37 +102,6 @@ public abstract class GImpediment
     public final boolean isDescription(java.lang.String description) {
         if (this.description == null && description == null) return true;
         return this.description != null && this.description.equals(description);
-    }
-
-    // -----------------------------------------------------------
-    // - solution
-    // -----------------------------------------------------------
-
-    private java.lang.String solution;
-
-    public final java.lang.String getSolution() {
-        return solution;
-    }
-
-    public final void setSolution(java.lang.String solution) {
-        solution = prepareSolution(solution);
-        if (isSolution(solution)) return;
-        this.solution = solution;
-        entityModified();
-    }
-
-    protected java.lang.String prepareSolution(java.lang.String solution) {
-        solution = Str.removeUnreadableChars(solution);
-        return solution;
-    }
-
-    public final boolean isSolutionSet() {
-        return this.solution != null;
-    }
-
-    public final boolean isSolution(java.lang.String solution) {
-        if (this.solution == null && solution == null) return true;
-        return this.solution != null && this.solution.equals(solution);
     }
 
     // -----------------------------------------------------------
@@ -204,6 +142,37 @@ public abstract class GImpediment
     }
 
     // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
     // - solved
     // -----------------------------------------------------------
 
@@ -226,6 +195,37 @@ public abstract class GImpediment
 
     public final boolean isSolved(boolean solved) {
         return this.solved == solved;
+    }
+
+    // -----------------------------------------------------------
+    // - solution
+    // -----------------------------------------------------------
+
+    private java.lang.String solution;
+
+    public final java.lang.String getSolution() {
+        return solution;
+    }
+
+    public final void setSolution(java.lang.String solution) {
+        solution = prepareSolution(solution);
+        if (isSolution(solution)) return;
+        this.solution = solution;
+        entityModified();
+    }
+
+    protected java.lang.String prepareSolution(java.lang.String solution) {
+        solution = Str.removeUnreadableChars(solution);
+        return solution;
+    }
+
+    public final boolean isSolutionSet() {
+        return this.solution != null;
+    }
+
+    public final boolean isSolution(java.lang.String solution) {
+        if (this.solution == null && solution == null) return true;
+        return this.solution != null && this.solution.equals(solution);
     }
 
     protected void repairDeadReferences(String entityId) {

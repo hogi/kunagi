@@ -43,6 +43,26 @@ public abstract class GStory
         return ENTITY_TYPE;
     }
 
+    // --- sprint ---
+
+    private String sprintId;
+
+    public final scrum.client.sprint.Sprint getSprint() {
+        return getDao().getSprint(this.sprintId);
+    }
+
+    public final Story setSprint(scrum.client.sprint.Sprint sprint) {
+        String id = sprint == null ? null : sprint.getId();
+        if (equals(this.sprintId, id)) return (Story) this;
+        this.sprintId = id;
+        propertyChanged("sprint", this.sprintId);
+        return (Story)this;
+    }
+
+    public final boolean isSprint(scrum.client.sprint.Sprint sprint) {
+        return equals(this.sprintId, sprint);
+    }
+
     // --- closed ---
 
     private boolean closed ;
@@ -61,6 +81,24 @@ public abstract class GStory
         return equals(this.closed, closed);
     }
 
+    // --- description ---
+
+    private java.lang.String description ;
+
+    public final java.lang.String getDescription() {
+        return this.description ;
+    }
+
+    public final Story setDescription(java.lang.String description) {
+        this.description = description ;
+        propertyChanged("description", this.description);
+        return (Story)this;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        return equals(this.description, description);
+    }
+
     // --- estimatedWork ---
 
     private java.lang.Integer estimatedWork ;
@@ -77,6 +115,26 @@ public abstract class GStory
 
     public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
         return equals(this.estimatedWork, estimatedWork);
+    }
+
+    // --- project ---
+
+    private String projectId;
+
+    public final scrum.client.project.Project getProject() {
+        return getDao().getProject(this.projectId);
+    }
+
+    public final Story setProject(scrum.client.project.Project project) {
+        String id = project == null ? null : project.getId();
+        if (equals(this.projectId, id)) return (Story) this;
+        this.projectId = id;
+        propertyChanged("project", this.projectId);
+        return (Story)this;
+    }
+
+    public final boolean isProject(scrum.client.project.Project project) {
+        return equals(this.projectId, project);
     }
 
     // --- testDescription ---
@@ -115,86 +173,28 @@ public abstract class GStory
         return equals(this.label, label);
     }
 
-    // --- sprint ---
-
-    private String sprintId;
-
-    public final scrum.client.sprint.Sprint getSprint() {
-        return getDao().getSprint(this.sprintId);
-    }
-
-    public final Story setSprint(scrum.client.sprint.Sprint sprint) {
-        String id = sprint == null ? null : sprint.getId();
-        if (equals(this.sprintId, id)) return (Story) this;
-        this.sprintId = id;
-        propertyChanged("sprint", this.sprintId);
-        return (Story)this;
-    }
-
-    public final boolean isSprint(scrum.client.sprint.Sprint sprint) {
-        return equals(this.sprintId, sprint);
-    }
-
-    // --- project ---
-
-    private String projectId;
-
-    public final scrum.client.project.Project getProject() {
-        return getDao().getProject(this.projectId);
-    }
-
-    public final Story setProject(scrum.client.project.Project project) {
-        String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Story) this;
-        this.projectId = id;
-        propertyChanged("project", this.projectId);
-        return (Story)this;
-    }
-
-    public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
-    }
-
-    // --- description ---
-
-    private java.lang.String description ;
-
-    public final java.lang.String getDescription() {
-        return this.description ;
-    }
-
-    public final Story setDescription(java.lang.String description) {
-        this.description = description ;
-        propertyChanged("description", this.description);
-        return (Story)this;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
-    }
-
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
+        sprintId = (String) props.get("sprintId");
         closed  = (Boolean) props.get("closed");
+        description  = (java.lang.String) props.get("description");
         estimatedWork  = (java.lang.Integer) props.get("estimatedWork");
+        projectId = (String) props.get("projectId");
         testDescription  = (java.lang.String) props.get("testDescription");
         label  = (java.lang.String) props.get("label");
-        sprintId = (String) props.get("sprintId");
-        projectId = (String) props.get("projectId");
-        description  = (java.lang.String) props.get("description");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("sprintId", this.sprintId);
         properties.put("closed", this.closed);
+        properties.put("description", this.description);
         properties.put("estimatedWork", this.estimatedWork);
+        properties.put("projectId", this.projectId);
         properties.put("testDescription", this.testDescription);
         properties.put("label", this.label);
-        properties.put("sprintId", this.sprintId);
-        properties.put("projectId", this.projectId);
-        properties.put("description", this.description);
     }
 
 }

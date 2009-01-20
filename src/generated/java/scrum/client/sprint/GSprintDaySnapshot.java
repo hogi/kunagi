@@ -43,22 +43,40 @@ public abstract class GSprintDaySnapshot
         return ENTITY_TYPE;
     }
 
-    // --- dateCrap ---
+    // --- remainingWork ---
 
-    private java.util.Date dateCrap ;
+    private int remainingWork ;
 
-    public final java.util.Date getDateCrap() {
-        return this.dateCrap ;
+    public final int getRemainingWork() {
+        return this.remainingWork ;
     }
 
-    public final SprintDaySnapshot setDateCrap(java.util.Date dateCrap) {
-        this.dateCrap = dateCrap ;
-        propertyChanged("dateCrap", this.dateCrap);
+    public final SprintDaySnapshot setRemainingWork(int remainingWork) {
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
         return (SprintDaySnapshot)this;
     }
 
-    public final boolean isDateCrap(java.util.Date dateCrap) {
-        return equals(this.dateCrap, dateCrap);
+    public final boolean isRemainingWork(int remainingWork) {
+        return equals(this.remainingWork, remainingWork);
+    }
+
+    // --- burnedWork ---
+
+    private int burnedWork ;
+
+    public final int getBurnedWork() {
+        return this.burnedWork ;
+    }
+
+    public final SprintDaySnapshot setBurnedWork(int burnedWork) {
+        this.burnedWork = burnedWork ;
+        propertyChanged("burnedWork", this.burnedWork);
+        return (SprintDaySnapshot)this;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return equals(this.burnedWork, burnedWork);
     }
 
     // --- sprint ---
@@ -81,58 +99,40 @@ public abstract class GSprintDaySnapshot
         return equals(this.sprintId, sprint);
     }
 
-    // --- burnedWork ---
+    // --- dateCrap ---
 
-    private int burnedWork ;
+    private java.util.Date dateCrap ;
 
-    public final int getBurnedWork() {
-        return this.burnedWork ;
+    public final java.util.Date getDateCrap() {
+        return this.dateCrap ;
     }
 
-    public final SprintDaySnapshot setBurnedWork(int burnedWork) {
-        this.burnedWork = burnedWork ;
-        propertyChanged("burnedWork", this.burnedWork);
+    public final SprintDaySnapshot setDateCrap(java.util.Date dateCrap) {
+        this.dateCrap = dateCrap ;
+        propertyChanged("dateCrap", this.dateCrap);
         return (SprintDaySnapshot)this;
     }
 
-    public final boolean isBurnedWork(int burnedWork) {
-        return equals(this.burnedWork, burnedWork);
-    }
-
-    // --- remainingWork ---
-
-    private int remainingWork ;
-
-    public final int getRemainingWork() {
-        return this.remainingWork ;
-    }
-
-    public final SprintDaySnapshot setRemainingWork(int remainingWork) {
-        this.remainingWork = remainingWork ;
-        propertyChanged("remainingWork", this.remainingWork);
-        return (SprintDaySnapshot)this;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return equals(this.remainingWork, remainingWork);
+    public final boolean isDateCrap(java.util.Date dateCrap) {
+        return equals(this.dateCrap, dateCrap);
     }
 
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        dateCrap  = (java.util.Date) props.get("dateCrap");
-        sprintId = (String) props.get("sprintId");
-        burnedWork  = (Integer) props.get("burnedWork");
         remainingWork  = (Integer) props.get("remainingWork");
+        burnedWork  = (Integer) props.get("burnedWork");
+        sprintId = (String) props.get("sprintId");
+        dateCrap  = (java.util.Date) props.get("dateCrap");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("dateCrap", this.dateCrap);
-        properties.put("sprintId", this.sprintId);
-        properties.put("burnedWork", this.burnedWork);
         properties.put("remainingWork", this.remainingWork);
+        properties.put("burnedWork", this.burnedWork);
+        properties.put("sprintId", this.sprintId);
+        properties.put("dateCrap", this.dateCrap);
     }
 
 }

@@ -43,12 +43,12 @@ public abstract class GProjectSprintSnapshotDao
 
     // --- clear caches ---
     public void clearCaches() {
-        projectSprintSnapshotsByBurnedWorkCache.clear();
-        burnedWorksCache = null;
-        projectSprintSnapshotsByRemainingWorkCache.clear();
-        remainingWorksCache = null;
         projectSprintSnapshotsByProjectCache.clear();
         projectsCache = null;
+        projectSprintSnapshotsByRemainingWorkCache.clear();
+        remainingWorksCache = null;
+        projectSprintSnapshotsByBurnedWorkCache.clear();
+        burnedWorksCache = null;
         projectSprintSnapshotsByDateCrapCache.clear();
         dateCrapsCache = null;
     }
@@ -70,41 +70,41 @@ public abstract class GProjectSprintSnapshotDao
     }
 
     // -----------------------------------------------------------
-    // - burnedWork
+    // - project
     // -----------------------------------------------------------
 
-    private final Cache<Integer,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByBurnedWorkCache = new Cache<Integer,Set<ProjectSprintSnapshot>>(
-            new Cache.Factory<Integer,Set<ProjectSprintSnapshot>>() {
-                public Set<ProjectSprintSnapshot> create(Integer burnedWork) {
-                    return getEntities(new IsBurnedWork(burnedWork));
+    private final Cache<scrum.server.project.Project,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByProjectCache = new Cache<scrum.server.project.Project,Set<ProjectSprintSnapshot>>(
+            new Cache.Factory<scrum.server.project.Project,Set<ProjectSprintSnapshot>>() {
+                public Set<ProjectSprintSnapshot> create(scrum.server.project.Project project) {
+                    return getEntities(new IsProject(project));
                 }
             });
 
-    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByBurnedWork(int burnedWork) {
-        return projectSprintSnapshotsByBurnedWorkCache.get(burnedWork);
+    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByProject(scrum.server.project.Project project) {
+        return projectSprintSnapshotsByProjectCache.get(project);
     }
-    private Set<Integer> burnedWorksCache;
+    private Set<scrum.server.project.Project> projectsCache;
 
-    public final Set<Integer> getBurnedWorks() {
-        if (burnedWorksCache == null) {
-            burnedWorksCache = new HashSet<Integer>();
+    public final Set<scrum.server.project.Project> getProjects() {
+        if (projectsCache == null) {
+            projectsCache = new HashSet<scrum.server.project.Project>();
             for (ProjectSprintSnapshot e : getEntities()) {
-                burnedWorksCache.add(e.getBurnedWork());
+                if (e.isProjectSet()) projectsCache.add(e.getProject());
             }
         }
-        return burnedWorksCache;
+        return projectsCache;
     }
 
-    private static class IsBurnedWork implements Predicate<ProjectSprintSnapshot> {
+    private static class IsProject implements Predicate<ProjectSprintSnapshot> {
 
-        private int value;
+        private scrum.server.project.Project value;
 
-        public IsBurnedWork(int value) {
+        public IsProject(scrum.server.project.Project value) {
             this.value = value;
         }
 
         public boolean test(ProjectSprintSnapshot e) {
-            return e.isBurnedWork(value);
+            return e.isProject(value);
         }
 
     }
@@ -150,41 +150,41 @@ public abstract class GProjectSprintSnapshotDao
     }
 
     // -----------------------------------------------------------
-    // - project
+    // - burnedWork
     // -----------------------------------------------------------
 
-    private final Cache<scrum.server.project.Project,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByProjectCache = new Cache<scrum.server.project.Project,Set<ProjectSprintSnapshot>>(
-            new Cache.Factory<scrum.server.project.Project,Set<ProjectSprintSnapshot>>() {
-                public Set<ProjectSprintSnapshot> create(scrum.server.project.Project project) {
-                    return getEntities(new IsProject(project));
+    private final Cache<Integer,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByBurnedWorkCache = new Cache<Integer,Set<ProjectSprintSnapshot>>(
+            new Cache.Factory<Integer,Set<ProjectSprintSnapshot>>() {
+                public Set<ProjectSprintSnapshot> create(Integer burnedWork) {
+                    return getEntities(new IsBurnedWork(burnedWork));
                 }
             });
 
-    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByProject(scrum.server.project.Project project) {
-        return projectSprintSnapshotsByProjectCache.get(project);
+    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByBurnedWork(int burnedWork) {
+        return projectSprintSnapshotsByBurnedWorkCache.get(burnedWork);
     }
-    private Set<scrum.server.project.Project> projectsCache;
+    private Set<Integer> burnedWorksCache;
 
-    public final Set<scrum.server.project.Project> getProjects() {
-        if (projectsCache == null) {
-            projectsCache = new HashSet<scrum.server.project.Project>();
+    public final Set<Integer> getBurnedWorks() {
+        if (burnedWorksCache == null) {
+            burnedWorksCache = new HashSet<Integer>();
             for (ProjectSprintSnapshot e : getEntities()) {
-                if (e.isProjectSet()) projectsCache.add(e.getProject());
+                burnedWorksCache.add(e.getBurnedWork());
             }
         }
-        return projectsCache;
+        return burnedWorksCache;
     }
 
-    private static class IsProject implements Predicate<ProjectSprintSnapshot> {
+    private static class IsBurnedWork implements Predicate<ProjectSprintSnapshot> {
 
-        private scrum.server.project.Project value;
+        private int value;
 
-        public IsProject(scrum.server.project.Project value) {
+        public IsBurnedWork(int value) {
             this.value = value;
         }
 
         public boolean test(ProjectSprintSnapshot e) {
-            return e.isProject(value);
+            return e.isBurnedWork(value);
         }
 
     }

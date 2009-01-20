@@ -46,10 +46,10 @@ public abstract class GSprintDaySnapshot
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("dateCrap", this.dateCrap);
-        properties.put("sprintId", this.sprintId);
-        properties.put("burnedWork", this.burnedWork);
         properties.put("remainingWork", this.remainingWork);
+        properties.put("burnedWork", this.burnedWork);
+        properties.put("sprintId", this.sprintId);
+        properties.put("dateCrap", this.dateCrap);
     }
 
     public int compareTo(SprintDaySnapshot other) {
@@ -65,40 +65,60 @@ public abstract class GSprintDaySnapshot
         super(template);
         if (template==null) return;
 
-        setDateCrap(template.getDateCrap());
-        setSprint(template.getSprint());
-        setBurnedWork(template.getBurnedWork());
         setRemainingWork(template.getRemainingWork());
+        setBurnedWork(template.getBurnedWork());
+        setSprint(template.getSprint());
+        setDateCrap(template.getDateCrap());
     }
 
     // -----------------------------------------------------------
-    // - dateCrap
+    // - remainingWork
     // -----------------------------------------------------------
 
-    private java.util.Date dateCrap;
+    private int remainingWork;
 
-    public final java.util.Date getDateCrap() {
-        return dateCrap;
+    public final int getRemainingWork() {
+        return remainingWork;
     }
 
-    public final void setDateCrap(java.util.Date dateCrap) {
-        dateCrap = prepareDateCrap(dateCrap);
-        if (isDateCrap(dateCrap)) return;
-        this.dateCrap = dateCrap;
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
         entityModified();
     }
 
-    protected java.util.Date prepareDateCrap(java.util.Date dateCrap) {
-        return dateCrap;
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
     }
 
-    public final boolean isDateCrapSet() {
-        return this.dateCrap != null;
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
     }
 
-    public final boolean isDateCrap(java.util.Date dateCrap) {
-        if (this.dateCrap == null && dateCrap == null) return true;
-        return this.dateCrap != null && this.dateCrap.equals(dateCrap);
+    // -----------------------------------------------------------
+    // - burnedWork
+    // -----------------------------------------------------------
+
+    private int burnedWork;
+
+    public final int getBurnedWork() {
+        return burnedWork;
+    }
+
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
+        entityModified();
+    }
+
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
     }
 
     // -----------------------------------------------------------
@@ -140,53 +160,33 @@ public abstract class GSprintDaySnapshot
     }
 
     // -----------------------------------------------------------
-    // - burnedWork
+    // - dateCrap
     // -----------------------------------------------------------
 
-    private int burnedWork;
+    private java.util.Date dateCrap;
 
-    public final int getBurnedWork() {
-        return burnedWork;
+    public final java.util.Date getDateCrap() {
+        return dateCrap;
     }
 
-    public final void setBurnedWork(int burnedWork) {
-        burnedWork = prepareBurnedWork(burnedWork);
-        if (isBurnedWork(burnedWork)) return;
-        this.burnedWork = burnedWork;
+    public final void setDateCrap(java.util.Date dateCrap) {
+        dateCrap = prepareDateCrap(dateCrap);
+        if (isDateCrap(dateCrap)) return;
+        this.dateCrap = dateCrap;
         entityModified();
     }
 
-    protected int prepareBurnedWork(int burnedWork) {
-        return burnedWork;
+    protected java.util.Date prepareDateCrap(java.util.Date dateCrap) {
+        return dateCrap;
     }
 
-    public final boolean isBurnedWork(int burnedWork) {
-        return this.burnedWork == burnedWork;
+    public final boolean isDateCrapSet() {
+        return this.dateCrap != null;
     }
 
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private int remainingWork;
-
-    public final int getRemainingWork() {
-        return remainingWork;
-    }
-
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
-        entityModified();
-    }
-
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
+    public final boolean isDateCrap(java.util.Date dateCrap) {
+        if (this.dateCrap == null && dateCrap == null) return true;
+        return this.dateCrap != null && this.dateCrap.equals(dateCrap);
     }
 
     protected void repairDeadReferences(String entityId) {
