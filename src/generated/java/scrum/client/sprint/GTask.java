@@ -61,24 +61,6 @@ public abstract class GTask
         return equals(this.notice, notice);
     }
 
-    // --- burnedWork ---
-
-    private int burnedWork ;
-
-    public final int getBurnedWork() {
-        return this.burnedWork ;
-    }
-
-    public final Task setBurnedWork(int burnedWork) {
-        this.burnedWork = burnedWork ;
-        propertyChanged("burnedWork", this.burnedWork);
-        return (Task)this;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return equals(this.burnedWork, burnedWork);
-    }
-
     // --- remainingWork ---
 
     private java.lang.Integer remainingWork ;
@@ -95,24 +77,6 @@ public abstract class GTask
 
     public final boolean isRemainingWork(java.lang.Integer remainingWork) {
         return equals(this.remainingWork, remainingWork);
-    }
-
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final Task setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
-        return (Task)this;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
     }
 
     // --- story ---
@@ -135,24 +99,60 @@ public abstract class GTask
         return equals(this.storyId, story);
     }
 
+    // --- burnedWork ---
+
+    private int burnedWork ;
+
+    public final int getBurnedWork() {
+        return this.burnedWork ;
+    }
+
+    public final Task setBurnedWork(int burnedWork) {
+        this.burnedWork = burnedWork ;
+        propertyChanged("burnedWork", this.burnedWork);
+        return (Task)this;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return equals(this.burnedWork, burnedWork);
+    }
+
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final Task setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
+        return (Task)this;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         notice  = (java.lang.String) props.get("notice");
-        burnedWork  = (Integer) props.get("burnedWork");
         remainingWork  = (java.lang.Integer) props.get("remainingWork");
-        label  = (java.lang.String) props.get("label");
         storyId = (String) props.get("storyId");
+        burnedWork  = (Integer) props.get("burnedWork");
+        label  = (java.lang.String) props.get("label");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("notice", this.notice);
-        properties.put("burnedWork", this.burnedWork);
         properties.put("remainingWork", this.remainingWork);
-        properties.put("label", this.label);
         properties.put("storyId", this.storyId);
+        properties.put("burnedWork", this.burnedWork);
+        properties.put("label", this.label);
     }
 
 }

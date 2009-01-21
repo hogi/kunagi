@@ -43,44 +43,6 @@ public abstract class GProject
         return ENTITY_TYPE;
     }
 
-    // --- scrumMaster ---
-
-    private String scrumMasterId;
-
-    public final scrum.client.admin.User getScrumMaster() {
-        return getDao().getUser(this.scrumMasterId);
-    }
-
-    public final Project setScrumMaster(scrum.client.admin.User scrumMaster) {
-        String id = scrumMaster == null ? null : scrumMaster.getId();
-        if (equals(this.scrumMasterId, id)) return (Project) this;
-        this.scrumMasterId = id;
-        propertyChanged("scrumMaster", this.scrumMasterId);
-        return (Project)this;
-    }
-
-    public final boolean isScrumMaster(scrum.client.admin.User scrumMaster) {
-        return equals(this.scrumMasterId, scrumMaster);
-    }
-
-    // --- description ---
-
-    private java.lang.String description ;
-
-    public final java.lang.String getDescription() {
-        return this.description ;
-    }
-
-    public final Project setDescription(java.lang.String description) {
-        this.description = description ;
-        propertyChanged("description", this.description);
-        return (Project)this;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
-    }
-
     // --- teamMembers ---
 
     private Set<String> teamMembersIds = new HashSet<String>();
@@ -102,6 +64,26 @@ public abstract class GProject
         if (!teamMembersIds.contains(id)) return;
         teamMembersIds.remove(id);
         propertyChanged("teamMembers", this.teamMembersIds);
+    }
+
+    // --- productOwner ---
+
+    private String productOwnerId;
+
+    public final scrum.client.admin.User getProductOwner() {
+        return getDao().getUser(this.productOwnerId);
+    }
+
+    public final Project setProductOwner(scrum.client.admin.User productOwner) {
+        String id = productOwner == null ? null : productOwner.getId();
+        if (equals(this.productOwnerId, id)) return (Project) this;
+        this.productOwnerId = id;
+        propertyChanged("productOwner", this.productOwnerId);
+        return (Project)this;
+    }
+
+    public final boolean isProductOwner(scrum.client.admin.User productOwner) {
+        return equals(this.productOwnerId, productOwner);
     }
 
     // --- admins ---
@@ -127,24 +109,22 @@ public abstract class GProject
         propertyChanged("admins", this.adminsIds);
     }
 
-    // --- productOwner ---
+    // --- description ---
 
-    private String productOwnerId;
+    private java.lang.String description ;
 
-    public final scrum.client.admin.User getProductOwner() {
-        return getDao().getUser(this.productOwnerId);
+    public final java.lang.String getDescription() {
+        return this.description ;
     }
 
-    public final Project setProductOwner(scrum.client.admin.User productOwner) {
-        String id = productOwner == null ? null : productOwner.getId();
-        if (equals(this.productOwnerId, id)) return (Project) this;
-        this.productOwnerId = id;
-        propertyChanged("productOwner", this.productOwnerId);
+    public final Project setDescription(java.lang.String description) {
+        this.description = description ;
+        propertyChanged("description", this.description);
         return (Project)this;
     }
 
-    public final boolean isProductOwner(scrum.client.admin.User productOwner) {
-        return equals(this.productOwnerId, productOwner);
+    public final boolean isDescription(java.lang.String description) {
+        return equals(this.description, description);
     }
 
     // --- label ---
@@ -163,6 +143,26 @@ public abstract class GProject
 
     public final boolean isLabel(java.lang.String label) {
         return equals(this.label, label);
+    }
+
+    // --- scrumMaster ---
+
+    private String scrumMasterId;
+
+    public final scrum.client.admin.User getScrumMaster() {
+        return getDao().getUser(this.scrumMasterId);
+    }
+
+    public final Project setScrumMaster(scrum.client.admin.User scrumMaster) {
+        String id = scrumMaster == null ? null : scrumMaster.getId();
+        if (equals(this.scrumMasterId, id)) return (Project) this;
+        this.scrumMasterId = id;
+        propertyChanged("scrumMaster", this.scrumMasterId);
+        return (Project)this;
+    }
+
+    public final boolean isScrumMaster(scrum.client.admin.User scrumMaster) {
+        return equals(this.scrumMasterId, scrumMaster);
     }
 
     // --- currentSprint ---
@@ -188,24 +188,24 @@ public abstract class GProject
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        scrumMasterId = (String) props.get("scrumMasterId");
-        description  = (java.lang.String) props.get("description");
         teamMembersIds = (Set<String>) props.get("teamMembersIds");
-        adminsIds = (Set<String>) props.get("adminsIds");
         productOwnerId = (String) props.get("productOwnerId");
+        adminsIds = (Set<String>) props.get("adminsIds");
+        description  = (java.lang.String) props.get("description");
         label  = (java.lang.String) props.get("label");
+        scrumMasterId = (String) props.get("scrumMasterId");
         currentSprintId = (String) props.get("currentSprintId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("scrumMasterId", this.scrumMasterId);
-        properties.put("description", this.description);
         properties.put("teamMembers", this.teamMembersIds);
-        properties.put("admins", this.adminsIds);
         properties.put("productOwnerId", this.productOwnerId);
+        properties.put("admins", this.adminsIds);
+        properties.put("description", this.description);
         properties.put("label", this.label);
+        properties.put("scrumMasterId", this.scrumMasterId);
         properties.put("currentSprintId", this.currentSprintId);
     }
 

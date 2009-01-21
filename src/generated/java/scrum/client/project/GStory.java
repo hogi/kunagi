@@ -63,22 +63,40 @@ public abstract class GStory
         return equals(this.sprintId, sprint);
     }
 
-    // --- closed ---
+    // --- testDescription ---
 
-    private boolean closed ;
+    private java.lang.String testDescription ;
 
-    public final boolean isClosed() {
-        return this.closed ;
+    public final java.lang.String getTestDescription() {
+        return this.testDescription ;
     }
 
-    public final Story setClosed(boolean closed) {
-        this.closed = closed ;
-        propertyChanged("closed", this.closed);
+    public final Story setTestDescription(java.lang.String testDescription) {
+        this.testDescription = testDescription ;
+        propertyChanged("testDescription", this.testDescription);
         return (Story)this;
     }
 
-    public final boolean isClosed(boolean closed) {
-        return equals(this.closed, closed);
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        return equals(this.testDescription, testDescription);
+    }
+
+    // --- estimatedWork ---
+
+    private java.lang.Integer estimatedWork ;
+
+    public final java.lang.Integer getEstimatedWork() {
+        return this.estimatedWork ;
+    }
+
+    public final Story setEstimatedWork(java.lang.Integer estimatedWork) {
+        this.estimatedWork = estimatedWork ;
+        propertyChanged("estimatedWork", this.estimatedWork);
+        return (Story)this;
+    }
+
+    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
+        return equals(this.estimatedWork, estimatedWork);
     }
 
     // --- description ---
@@ -99,22 +117,40 @@ public abstract class GStory
         return equals(this.description, description);
     }
 
-    // --- estimatedWork ---
+    // --- closed ---
 
-    private java.lang.Integer estimatedWork ;
+    private boolean closed ;
 
-    public final java.lang.Integer getEstimatedWork() {
-        return this.estimatedWork ;
+    public final boolean isClosed() {
+        return this.closed ;
     }
 
-    public final Story setEstimatedWork(java.lang.Integer estimatedWork) {
-        this.estimatedWork = estimatedWork ;
-        propertyChanged("estimatedWork", this.estimatedWork);
+    public final Story setClosed(boolean closed) {
+        this.closed = closed ;
+        propertyChanged("closed", this.closed);
         return (Story)this;
     }
 
-    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
-        return equals(this.estimatedWork, estimatedWork);
+    public final boolean isClosed(boolean closed) {
+        return equals(this.closed, closed);
+    }
+
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final Story setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
+        return (Story)this;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
     }
 
     // --- project ---
@@ -137,64 +173,28 @@ public abstract class GStory
         return equals(this.projectId, project);
     }
 
-    // --- testDescription ---
-
-    private java.lang.String testDescription ;
-
-    public final java.lang.String getTestDescription() {
-        return this.testDescription ;
-    }
-
-    public final Story setTestDescription(java.lang.String testDescription) {
-        this.testDescription = testDescription ;
-        propertyChanged("testDescription", this.testDescription);
-        return (Story)this;
-    }
-
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        return equals(this.testDescription, testDescription);
-    }
-
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final Story setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
-        return (Story)this;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
-    }
-
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         sprintId = (String) props.get("sprintId");
-        closed  = (Boolean) props.get("closed");
-        description  = (java.lang.String) props.get("description");
-        estimatedWork  = (java.lang.Integer) props.get("estimatedWork");
-        projectId = (String) props.get("projectId");
         testDescription  = (java.lang.String) props.get("testDescription");
+        estimatedWork  = (java.lang.Integer) props.get("estimatedWork");
+        description  = (java.lang.String) props.get("description");
+        closed  = (Boolean) props.get("closed");
         label  = (java.lang.String) props.get("label");
+        projectId = (String) props.get("projectId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("sprintId", this.sprintId);
-        properties.put("closed", this.closed);
-        properties.put("description", this.description);
-        properties.put("estimatedWork", this.estimatedWork);
-        properties.put("projectId", this.projectId);
         properties.put("testDescription", this.testDescription);
+        properties.put("estimatedWork", this.estimatedWork);
+        properties.put("description", this.description);
+        properties.put("closed", this.closed);
         properties.put("label", this.label);
+        properties.put("projectId", this.projectId);
     }
 
 }

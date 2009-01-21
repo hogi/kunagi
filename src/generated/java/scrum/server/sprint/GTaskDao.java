@@ -45,14 +45,14 @@ public abstract class GTaskDao
     public void clearCaches() {
         tasksByNoticeCache.clear();
         noticesCache = null;
-        tasksByBurnedWorkCache.clear();
-        burnedWorksCache = null;
         tasksByRemainingWorkCache.clear();
         remainingWorksCache = null;
-        tasksByLabelCache.clear();
-        labelsCache = null;
         tasksByStoryCache.clear();
         storysCache = null;
+        tasksByBurnedWorkCache.clear();
+        burnedWorksCache = null;
+        tasksByLabelCache.clear();
+        labelsCache = null;
     }
 
     @Override
@@ -112,46 +112,6 @@ public abstract class GTaskDao
     }
 
     // -----------------------------------------------------------
-    // - burnedWork
-    // -----------------------------------------------------------
-
-    private final Cache<Integer,Set<Task>> tasksByBurnedWorkCache = new Cache<Integer,Set<Task>>(
-            new Cache.Factory<Integer,Set<Task>>() {
-                public Set<Task> create(Integer burnedWork) {
-                    return getEntities(new IsBurnedWork(burnedWork));
-                }
-            });
-
-    public final Set<Task> getTasksByBurnedWork(int burnedWork) {
-        return tasksByBurnedWorkCache.get(burnedWork);
-    }
-    private Set<Integer> burnedWorksCache;
-
-    public final Set<Integer> getBurnedWorks() {
-        if (burnedWorksCache == null) {
-            burnedWorksCache = new HashSet<Integer>();
-            for (Task e : getEntities()) {
-                burnedWorksCache.add(e.getBurnedWork());
-            }
-        }
-        return burnedWorksCache;
-    }
-
-    private static class IsBurnedWork implements Predicate<Task> {
-
-        private int value;
-
-        public IsBurnedWork(int value) {
-            this.value = value;
-        }
-
-        public boolean test(Task e) {
-            return e.isBurnedWork(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
     // - remainingWork
     // -----------------------------------------------------------
 
@@ -192,46 +152,6 @@ public abstract class GTaskDao
     }
 
     // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Task>> tasksByLabelCache = new Cache<java.lang.String,Set<Task>>(
-            new Cache.Factory<java.lang.String,Set<Task>>() {
-                public Set<Task> create(java.lang.String label) {
-                    return getEntities(new IsLabel(label));
-                }
-            });
-
-    public final Set<Task> getTasksByLabel(java.lang.String label) {
-        return tasksByLabelCache.get(label);
-    }
-    private Set<java.lang.String> labelsCache;
-
-    public final Set<java.lang.String> getLabels() {
-        if (labelsCache == null) {
-            labelsCache = new HashSet<java.lang.String>();
-            for (Task e : getEntities()) {
-                if (e.isLabelSet()) labelsCache.add(e.getLabel());
-            }
-        }
-        return labelsCache;
-    }
-
-    private static class IsLabel implements Predicate<Task> {
-
-        private java.lang.String value;
-
-        public IsLabel(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Task e) {
-            return e.isLabel(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
     // - story
     // -----------------------------------------------------------
 
@@ -267,6 +187,86 @@ public abstract class GTaskDao
 
         public boolean test(Task e) {
             return e.isStory(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - burnedWork
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Task>> tasksByBurnedWorkCache = new Cache<Integer,Set<Task>>(
+            new Cache.Factory<Integer,Set<Task>>() {
+                public Set<Task> create(Integer burnedWork) {
+                    return getEntities(new IsBurnedWork(burnedWork));
+                }
+            });
+
+    public final Set<Task> getTasksByBurnedWork(int burnedWork) {
+        return tasksByBurnedWorkCache.get(burnedWork);
+    }
+    private Set<Integer> burnedWorksCache;
+
+    public final Set<Integer> getBurnedWorks() {
+        if (burnedWorksCache == null) {
+            burnedWorksCache = new HashSet<Integer>();
+            for (Task e : getEntities()) {
+                burnedWorksCache.add(e.getBurnedWork());
+            }
+        }
+        return burnedWorksCache;
+    }
+
+    private static class IsBurnedWork implements Predicate<Task> {
+
+        private int value;
+
+        public IsBurnedWork(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isBurnedWork(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Task>> tasksByLabelCache = new Cache<java.lang.String,Set<Task>>(
+            new Cache.Factory<java.lang.String,Set<Task>>() {
+                public Set<Task> create(java.lang.String label) {
+                    return getEntities(new IsLabel(label));
+                }
+            });
+
+    public final Set<Task> getTasksByLabel(java.lang.String label) {
+        return tasksByLabelCache.get(label);
+    }
+    private Set<java.lang.String> labelsCache;
+
+    public final Set<java.lang.String> getLabels() {
+        if (labelsCache == null) {
+            labelsCache = new HashSet<java.lang.String>();
+            for (Task e : getEntities()) {
+                if (e.isLabelSet()) labelsCache.add(e.getLabel());
+            }
+        }
+        return labelsCache;
+    }
+
+    private static class IsLabel implements Predicate<Task> {
+
+        private java.lang.String value;
+
+        public IsLabel(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isLabel(value);
         }
 
     }

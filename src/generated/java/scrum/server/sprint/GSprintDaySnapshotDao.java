@@ -43,14 +43,14 @@ public abstract class GSprintDaySnapshotDao
 
     // --- clear caches ---
     public void clearCaches() {
+        sprintDaySnapshotsByDateCache.clear();
+        datesCache = null;
+        sprintDaySnapshotsBySprintCache.clear();
+        sprintsCache = null;
         sprintDaySnapshotsByRemainingWorkCache.clear();
         remainingWorksCache = null;
         sprintDaySnapshotsByBurnedWorkCache.clear();
         burnedWorksCache = null;
-        sprintDaySnapshotsBySprintCache.clear();
-        sprintsCache = null;
-        sprintDaySnapshotsByDateCrapCache.clear();
-        dateCrapsCache = null;
     }
 
     @Override
@@ -67,6 +67,86 @@ public abstract class GSprintDaySnapshotDao
         if (event.getEntity() instanceof SprintDaySnapshot) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - date
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.Date,Set<SprintDaySnapshot>> sprintDaySnapshotsByDateCache = new Cache<ilarkesto.base.time.Date,Set<SprintDaySnapshot>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<SprintDaySnapshot>>() {
+                public Set<SprintDaySnapshot> create(ilarkesto.base.time.Date date) {
+                    return getEntities(new IsDate(date));
+                }
+            });
+
+    public final Set<SprintDaySnapshot> getSprintDaySnapshotsByDate(ilarkesto.base.time.Date date) {
+        return sprintDaySnapshotsByDateCache.get(date);
+    }
+    private Set<ilarkesto.base.time.Date> datesCache;
+
+    public final Set<ilarkesto.base.time.Date> getDates() {
+        if (datesCache == null) {
+            datesCache = new HashSet<ilarkesto.base.time.Date>();
+            for (SprintDaySnapshot e : getEntities()) {
+                if (e.isDateSet()) datesCache.add(e.getDate());
+            }
+        }
+        return datesCache;
+    }
+
+    private static class IsDate implements Predicate<SprintDaySnapshot> {
+
+        private ilarkesto.base.time.Date value;
+
+        public IsDate(ilarkesto.base.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(SprintDaySnapshot e) {
+            return e.isDate(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - sprint
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.sprint.Sprint,Set<SprintDaySnapshot>> sprintDaySnapshotsBySprintCache = new Cache<scrum.server.sprint.Sprint,Set<SprintDaySnapshot>>(
+            new Cache.Factory<scrum.server.sprint.Sprint,Set<SprintDaySnapshot>>() {
+                public Set<SprintDaySnapshot> create(scrum.server.sprint.Sprint sprint) {
+                    return getEntities(new IsSprint(sprint));
+                }
+            });
+
+    public final Set<SprintDaySnapshot> getSprintDaySnapshotsBySprint(scrum.server.sprint.Sprint sprint) {
+        return sprintDaySnapshotsBySprintCache.get(sprint);
+    }
+    private Set<scrum.server.sprint.Sprint> sprintsCache;
+
+    public final Set<scrum.server.sprint.Sprint> getSprints() {
+        if (sprintsCache == null) {
+            sprintsCache = new HashSet<scrum.server.sprint.Sprint>();
+            for (SprintDaySnapshot e : getEntities()) {
+                if (e.isSprintSet()) sprintsCache.add(e.getSprint());
+            }
+        }
+        return sprintsCache;
+    }
+
+    private static class IsSprint implements Predicate<SprintDaySnapshot> {
+
+        private scrum.server.sprint.Sprint value;
+
+        public IsSprint(scrum.server.sprint.Sprint value) {
+            this.value = value;
+        }
+
+        public boolean test(SprintDaySnapshot e) {
+            return e.isSprint(value);
+        }
+
     }
 
     // -----------------------------------------------------------
@@ -145,86 +225,6 @@ public abstract class GSprintDaySnapshotDao
 
         public boolean test(SprintDaySnapshot e) {
             return e.isBurnedWork(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - sprint
-    // -----------------------------------------------------------
-
-    private final Cache<scrum.server.sprint.Sprint,Set<SprintDaySnapshot>> sprintDaySnapshotsBySprintCache = new Cache<scrum.server.sprint.Sprint,Set<SprintDaySnapshot>>(
-            new Cache.Factory<scrum.server.sprint.Sprint,Set<SprintDaySnapshot>>() {
-                public Set<SprintDaySnapshot> create(scrum.server.sprint.Sprint sprint) {
-                    return getEntities(new IsSprint(sprint));
-                }
-            });
-
-    public final Set<SprintDaySnapshot> getSprintDaySnapshotsBySprint(scrum.server.sprint.Sprint sprint) {
-        return sprintDaySnapshotsBySprintCache.get(sprint);
-    }
-    private Set<scrum.server.sprint.Sprint> sprintsCache;
-
-    public final Set<scrum.server.sprint.Sprint> getSprints() {
-        if (sprintsCache == null) {
-            sprintsCache = new HashSet<scrum.server.sprint.Sprint>();
-            for (SprintDaySnapshot e : getEntities()) {
-                if (e.isSprintSet()) sprintsCache.add(e.getSprint());
-            }
-        }
-        return sprintsCache;
-    }
-
-    private static class IsSprint implements Predicate<SprintDaySnapshot> {
-
-        private scrum.server.sprint.Sprint value;
-
-        public IsSprint(scrum.server.sprint.Sprint value) {
-            this.value = value;
-        }
-
-        public boolean test(SprintDaySnapshot e) {
-            return e.isSprint(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - dateCrap
-    // -----------------------------------------------------------
-
-    private final Cache<java.util.Date,Set<SprintDaySnapshot>> sprintDaySnapshotsByDateCrapCache = new Cache<java.util.Date,Set<SprintDaySnapshot>>(
-            new Cache.Factory<java.util.Date,Set<SprintDaySnapshot>>() {
-                public Set<SprintDaySnapshot> create(java.util.Date dateCrap) {
-                    return getEntities(new IsDateCrap(dateCrap));
-                }
-            });
-
-    public final Set<SprintDaySnapshot> getSprintDaySnapshotsByDateCrap(java.util.Date dateCrap) {
-        return sprintDaySnapshotsByDateCrapCache.get(dateCrap);
-    }
-    private Set<java.util.Date> dateCrapsCache;
-
-    public final Set<java.util.Date> getDateCraps() {
-        if (dateCrapsCache == null) {
-            dateCrapsCache = new HashSet<java.util.Date>();
-            for (SprintDaySnapshot e : getEntities()) {
-                if (e.isDateCrapSet()) dateCrapsCache.add(e.getDateCrap());
-            }
-        }
-        return dateCrapsCache;
-    }
-
-    private static class IsDateCrap implements Predicate<SprintDaySnapshot> {
-
-        private java.util.Date value;
-
-        public IsDateCrap(java.util.Date value) {
-            this.value = value;
-        }
-
-        public boolean test(SprintDaySnapshot e) {
-            return e.isDateCrap(value);
         }
 
     }

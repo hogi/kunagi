@@ -1,5 +1,6 @@
 package scrum.mda;
 
+import ilarkesto.base.time.Date;
 import ilarkesto.di.app.ApplicationStarter;
 import ilarkesto.mda.AGeneratorApplication;
 import ilarkesto.mda.gen.GwtApplicationGenerator;
@@ -13,7 +14,6 @@ import ilarkesto.mda.model.BeanModel;
 import ilarkesto.mda.model.EntityModel;
 import ilarkesto.mda.model.GwtServiceModel;
 
-import java.util.Date;
 import java.util.Map;
 
 public class ScrumModelApplication extends AGeneratorApplication {
@@ -46,7 +46,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectSprintSnapshotModel = createEntityModel("ProjectSprintSnapshot", "project");
 			autowire(projectSprintSnapshotModel);
 			projectSprintSnapshotModel.addReference("project", getProjectModel());
-			projectSprintSnapshotModel.addProperty("dateCrap", Date.class);
+			projectSprintSnapshotModel.addProperty("date", Date.class);
 			projectSprintSnapshotModel.addProperty("remainingWork", int.class);
 			projectSprintSnapshotModel.addProperty("burnedWork", int.class);
 		}
@@ -89,7 +89,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			sprintDaySnapshotModel = createEntityModel("SprintDaySnapshot", "sprint");
 			autowire(sprintDaySnapshotModel);
 			sprintDaySnapshotModel.addReference("sprint", getSprintModel());
-			sprintDaySnapshotModel.addProperty("dateCrap", Date.class);
+			sprintDaySnapshotModel.addProperty("date", Date.class);
 			sprintDaySnapshotModel.addProperty("remainingWork", int.class);
 			sprintDaySnapshotModel.addProperty("burnedWork", int.class);
 		}

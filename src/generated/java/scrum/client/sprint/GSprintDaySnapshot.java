@@ -43,6 +43,44 @@ public abstract class GSprintDaySnapshot
         return ENTITY_TYPE;
     }
 
+    // --- date ---
+
+    private scrum.client.common.Date date ;
+
+    public final scrum.client.common.Date getDate() {
+        return this.date ;
+    }
+
+    public final SprintDaySnapshot setDate(scrum.client.common.Date date) {
+        this.date = date ;
+        propertyChanged("date", this.date);
+        return (SprintDaySnapshot)this;
+    }
+
+    public final boolean isDate(scrum.client.common.Date date) {
+        return equals(this.date, date);
+    }
+
+    // --- sprint ---
+
+    private String sprintId;
+
+    public final scrum.client.sprint.Sprint getSprint() {
+        return getDao().getSprint(this.sprintId);
+    }
+
+    public final SprintDaySnapshot setSprint(scrum.client.sprint.Sprint sprint) {
+        String id = sprint == null ? null : sprint.getId();
+        if (equals(this.sprintId, id)) return (SprintDaySnapshot) this;
+        this.sprintId = id;
+        propertyChanged("sprint", this.sprintId);
+        return (SprintDaySnapshot)this;
+    }
+
+    public final boolean isSprint(scrum.client.sprint.Sprint sprint) {
+        return equals(this.sprintId, sprint);
+    }
+
     // --- remainingWork ---
 
     private int remainingWork ;
@@ -79,60 +117,23 @@ public abstract class GSprintDaySnapshot
         return equals(this.burnedWork, burnedWork);
     }
 
-    // --- sprint ---
-
-    private String sprintId;
-
-    public final scrum.client.sprint.Sprint getSprint() {
-        return getDao().getSprint(this.sprintId);
-    }
-
-    public final SprintDaySnapshot setSprint(scrum.client.sprint.Sprint sprint) {
-        String id = sprint == null ? null : sprint.getId();
-        if (equals(this.sprintId, id)) return (SprintDaySnapshot) this;
-        this.sprintId = id;
-        propertyChanged("sprint", this.sprintId);
-        return (SprintDaySnapshot)this;
-    }
-
-    public final boolean isSprint(scrum.client.sprint.Sprint sprint) {
-        return equals(this.sprintId, sprint);
-    }
-
-    // --- dateCrap ---
-
-    private java.util.Date dateCrap ;
-
-    public final java.util.Date getDateCrap() {
-        return this.dateCrap ;
-    }
-
-    public final SprintDaySnapshot setDateCrap(java.util.Date dateCrap) {
-        this.dateCrap = dateCrap ;
-        propertyChanged("dateCrap", this.dateCrap);
-        return (SprintDaySnapshot)this;
-    }
-
-    public final boolean isDateCrap(java.util.Date dateCrap) {
-        return equals(this.dateCrap, dateCrap);
-    }
-
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
+        String dateAsString = (String) props.get("date");
+        date  =  dateAsString == null ? null : new scrum.client.common.Date(dateAsString);
+        sprintId = (String) props.get("sprintId");
         remainingWork  = (Integer) props.get("remainingWork");
         burnedWork  = (Integer) props.get("burnedWork");
-        sprintId = (String) props.get("sprintId");
-        dateCrap  = (java.util.Date) props.get("dateCrap");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("sprintId", this.sprintId);
         properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);
-        properties.put("sprintId", this.sprintId);
-        properties.put("dateCrap", this.dateCrap);
     }
 
 }
