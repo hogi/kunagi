@@ -59,7 +59,29 @@ public class BurndownChart {
 
 	}
 
-	public static void writeSprintBurndownChart(OutputStream out, List<SprintDaySnapshot> snapshots, Date firstDay,
+	// --- dependencies ---
+
+	private SprintDaySnapshotDao sprintDaySnapshotDao;
+	private SprintDao sprintDao;
+
+	public void setSprintDaySnapshotDao(SprintDaySnapshotDao sprintDaySnapshotDao) {
+		this.sprintDaySnapshotDao = sprintDaySnapshotDao;
+	}
+
+	public void setSprintDao(SprintDao sprintDao) {
+		this.sprintDao = sprintDao;
+	}
+
+	// --- ---
+
+	public void wirteChart(OutputStream out, String sprintId, int width, int height) {
+		Sprint sprint = sprintDao.getById(sprintId);
+		List<SprintDaySnapshot> snapshots = sprintDaySnapshotDao.getSprintDaySnapshots(sprint);
+
+		writeSprintBurndownChart(out, snapshots, sprint.getBegin(), sprint.getEnd(), 500, width, height);
+	}
+
+	private void writeSprintBurndownChart(OutputStream out, List<SprintDaySnapshot> snapshots, Date firstDay,
 			Date lastDay, double initialWork, int width, int height) {
 		DefaultXYDataset data = createSprintBurndownChartDataset(snapshots, firstDay, lastDay, 50.0);
 		double tick = 1.0;

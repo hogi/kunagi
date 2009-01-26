@@ -24,8 +24,8 @@ import scrum.server.admin.UserDao;
 import scrum.server.impediments.Impediment;
 import scrum.server.project.Project;
 import scrum.server.project.Story;
+import scrum.server.sprint.BurndownChart;
 import scrum.server.sprint.Sprint;
-import scrum.server.sprint.SprintBurndownChart;
 import scrum.server.sprint.SprintDaySnapshot;
 import scrum.server.sprint.Task;
 
@@ -34,7 +34,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	private static final Logger LOG = Logger.get(ScrumWebApplication.class);
 
 	private Set<SessionData> sessions = new HashSet<SessionData>();
-	private SprintBurndownChart sprintBurndownChart;
+	private BurndownChart burndownChart;
 
 	// --- client call handlers ---
 
@@ -135,12 +135,12 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	// --- components ---
 
-	public SprintBurndownChart getSprintBurndownChart() {
-		if (sprintBurndownChart == null) {
-			sprintBurndownChart = new SprintBurndownChart();
-			autowire(sprintBurndownChart);
+	public BurndownChart getBurndownChart() {
+		if (burndownChart == null) {
+			burndownChart = new BurndownChart();
+			autowire(burndownChart);
 		}
-		return sprintBurndownChart;
+		return burndownChart;
 	}
 
 	// --- ---

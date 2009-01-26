@@ -21,7 +21,7 @@ public class SprintBurndownChartServlet extends HttpServlet {
 		if (height == null) height = "200";
 
 		resp.setContentType("image/png");
-		ScrumWebApplication.get().getSprintBurndownChart().wirteChart(resp.getOutputStream(), sprintId,
+		ScrumWebApplication.get().getBurndownChart().wirteChart(resp.getOutputStream(), sprintId,
 			Integer.parseInt(width), Integer.parseInt(height));
 	}
 
