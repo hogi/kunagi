@@ -4,6 +4,7 @@ body {padding: 5px;}
 
 .element-DummyDropWidget {border: 0px; background: black; width: 100%; height: 3px;}
 
+.element-BlockWidget-main {width: 100%;}
 .element-BlockWidget {border: 1px solid black; background: white; padding: 5px; cursor: pointer; color: black;}
 .element-BlockWidget-title {font-size: 14px; font-weight: bold;}
 .element-BlockWidget-block {padding: 3px; width: 100%;}
@@ -19,6 +20,7 @@ body {padding: 5px;}
 .element-SidebarWidget-buttons {width: 100%;}
 
 .element-BlockListWidget {background: #CCDDFF; width: 100%; height: 100%;}
+.element-BlockListWidget-table {width: 100%;}
 
 .element-PanelWidget {border: 2px solid darkblue; -moz-border-radius: 10px;}
 .element-PanelWidget-title {background: darkblue; color: white; padding: 5px;}

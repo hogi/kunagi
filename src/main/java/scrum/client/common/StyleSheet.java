@@ -7,6 +7,7 @@ public class StyleSheet {
 
 	// BlockWidget
 
+	public static final String ELEMENT_BLOCK_WIDGET_MAIN = "element-BlockWidget-main";
 	public static final String ELEMENT_BLOCK_WIDGET = "element-BlockWidget";
 	public static final String ELEMENT_BLOCK_WIDGET_TITLE = "element-BlockWidget-title";
 	public static final String ELEMENT_BLOCK_WIDGET_BLOCK = "element-BlockWidget-block";
