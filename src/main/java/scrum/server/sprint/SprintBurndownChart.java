@@ -33,7 +33,8 @@ public class SprintBurndownChart {
 		// writeDummyChart(out, snapshots, width, height);
 
 		// TODO real chart integration.
-		new BurndownChart().writeBurndownChart(out, snapshots, sprint.getBegin(), sprint.getEnd(), 500);
+		new BurndownChart().writeSprintBurndownChart(out, snapshots, sprint.getBegin(), sprint.getEnd(), 500, width,
+			height);
 	}
 
 	private void writeDummyChart(OutputStream out, List<SprintDaySnapshot> snapshots, int width, int height) {

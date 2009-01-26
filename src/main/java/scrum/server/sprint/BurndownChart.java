@@ -23,22 +23,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.Range;
 import org.jfree.data.xy.DefaultXYDataset;
 
-
 public class BurndownChart {
-
-	private static SprintDaySnapshot shot(Date d, int b, int r) {
-		SprintDaySnapshot s = new SprintDaySnapshot();
-		try {
-			s.setDate(d);
-		} catch (NullPointerException e) {}
-		try {
-			s.setBurnedWork(b);
-		} catch (NullPointerException e) {}
-		try {
-			s.setRemainingWork(r);
-		} catch (NullPointerException e) {}
-		return s;
-	}
 
 	public static void main(String[] args) {
 
@@ -74,8 +59,8 @@ public class BurndownChart {
 
 	}
 
-	public static void writeBurndownChart(OutputStream out, List<SprintDaySnapshot> snapshots, Date firstDay,
-			Date lastDay, double initialWork) {
+	public static void writeSprintBurndownChart(OutputStream out, List<SprintDaySnapshot> snapshots, Date firstDay,
+			Date lastDay, double initialWork, int width, int height) {
 		DefaultXYDataset data = createSprintBurndownChartDataset(snapshots, firstDay, lastDay, 50.0);
 		double tick = 1.0;
 		double max = getMaximum(data);
@@ -90,7 +75,7 @@ public class BurndownChart {
 
 		JFreeChart chart = createSprintBurndownChart(data, "Date", "Work", firstDay, lastDay, 1, 3, max * 1.1, tick);
 		try {
-			ChartUtilities.writeScaledChartAsPNG(out, chart, 500, 500, 1, 1);
+			ChartUtilities.writeScaledChartAsPNG(out, chart, width, height, 1, 1);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -256,6 +241,20 @@ public class BurndownChart {
 			array[1][i] = b.get(i);
 		}
 		return array;
+	}
+
+	private static SprintDaySnapshot shot(Date d, int b, int r) {
+		SprintDaySnapshot s = new SprintDaySnapshot();
+		try {
+			s.setDate(d);
+		} catch (NullPointerException e) {}
+		try {
+			s.setBurnedWork(b);
+		} catch (NullPointerException e) {}
+		try {
+			s.setRemainingWork(r);
+		} catch (NullPointerException e) {}
+		return s;
 	}
 
 }
