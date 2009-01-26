@@ -77,7 +77,7 @@ public class ProjectOverviewWidget extends Composite {
 
 	private Widget createCurrentSprintOverview(Sprint sprint) {
 		int width = 500;
-		int height = 200;
+		int height = 300;
 		String url = "../sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width=" + width + "&height=" + height;
 		return new GroupWidget("Current Sprint", new Image(url, 0, 0, width, height));
 	}
