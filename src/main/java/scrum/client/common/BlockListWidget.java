@@ -52,7 +52,8 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	}
 
 	public final void addBlock(B block) {
-		if (sidebarMode) block.setInClipboard(true);
+		// if (sidebarMode)
+		block.setInClipboard(sidebarMode);
 		block.setList(this);
 		block.makeDraggable();
 		// createDropControllerFor(block);
@@ -66,7 +67,8 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	}
 
 	public final void addBlockAt(int index, B block) {
-		if (sidebarMode) block.setInClipboard(true);
+		// if (sidebarMode)
+		block.setInClipboard(sidebarMode);
 		block.setList(this);
 		block.makeDraggable();
 		// createDropControllerFor(block);

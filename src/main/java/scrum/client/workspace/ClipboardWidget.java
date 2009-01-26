@@ -70,7 +70,8 @@ public class ClipboardWidget extends Composite {
 			Widget widget = context.draggable;
 			if (widget instanceof ABlockWidget) {
 				ABlockWidget ablockwidget = (ABlockWidget) widget;
-				if (ablockwidget.isInClipboard() == false) list.addBlock(((ABlockWidget) widget));
+				if (ablockwidget.isInClipboard() == false) list.addBlock(ablockwidget);
+				ablockwidget.rebuild();
 			}
 		}
 
@@ -79,7 +80,13 @@ public class ClipboardWidget extends Composite {
 		}
 
 		public void onLeave(DragContext context) {
+			System.out.println("leaving...");
 			list.removeStyleName(StyleSheet.TRASH_ON_ENTER); // TODO
+			Widget widget = context.draggable;
+			if (widget instanceof ABlockWidget) {
+				ABlockWidget ablockwidget = (ABlockWidget) widget;
+				ablockwidget.rebuild();
+			}
 		}
 
 		public void onMove(DragContext context) {}

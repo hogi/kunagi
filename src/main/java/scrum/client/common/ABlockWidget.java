@@ -3,7 +3,6 @@ package scrum.client.common;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.dnd.DummyDropWidget;
 import scrum.client.img.Img;
-import scrum.client.workspace.AClipboardItemWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -62,9 +61,9 @@ public abstract class ABlockWidget extends Composite {
 		initWidget(mainpanel);
 	}
 
-	public AClipboardItemWidget getClipboardItemWidget() {
-		return null;
-	}
+	// public AClipboardItemWidget getClipboardItemWidget() {
+	// return null;
+	// }
 
 	protected abstract DropController createDropController();
 
@@ -108,7 +107,7 @@ public abstract class ABlockWidget extends Composite {
 		this.inClipboard = inClipboard;
 	}
 
-	protected final void rebuild() {
+	public final void rebuild() {
 		panel.setWidget(build());
 		list.onBlockRebuilt(this);
 	}
@@ -128,11 +127,11 @@ public abstract class ABlockWidget extends Composite {
 	}
 
 	protected final Widget buildClipboardItemWidget() {
-		if (getClipboardItemWidget() == null) {
-			return buildBlockItemWidget();
-		} else {
-			return getClipboardItemWidget();
-		}
+		HorizontalPanel mainpanel = new HorizontalPanel();
+		mainpanel.add(dragHandle);
+		mainpanel.add(new Label(getBlockTitle()));
+
+		return mainpanel;
 	}
 
 	protected final Widget buildBlockItemWidget() {
@@ -167,22 +166,12 @@ public abstract class ABlockWidget extends Composite {
 
 	public final void makeDraggable() {
 		createDragHandle();
-		if (inClipboard) {
-			ScrumGwtApplication.get().getDragController().makeDraggable(getClipboardItemWidget(), dragHandle);
-		} else {
-			ScrumGwtApplication.get().getDragController().makeDraggable(this, dragHandle);
-		}
+		ScrumGwtApplication.get().getDragController().makeDraggable(this, dragHandle);
 	}
 
 	public Image createDragHandle() {
-		if (inClipboard) {
-			dragHandle = getClipboardItemWidget().getDragHandle();
-		} else {
-			dragHandle = Img.icons().dragHandleIcon32().createImage();
-		}
-
+		dragHandle = Img.icons().dragHandleIcon32().createImage();
 		dragHandle.setStyleName(StyleSheet.DRAG_HANDLE);
-
 		return dragHandle;
 	}
 
