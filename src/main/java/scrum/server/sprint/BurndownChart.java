@@ -78,7 +78,7 @@ public class BurndownChart {
 		Sprint sprint = sprintDao.getById(sprintId);
 		List<SprintDaySnapshot> snapshots = sprintDaySnapshotDao.getSprintDaySnapshots(sprint);
 
-		writeSprintBurndownChart(out, snapshots, sprint.getBegin(), sprint.getEnd(), 500, width, height);
+		writeSprintBurndownChart(out, snapshots, sprint.getBegin(), sprint.getEnd(), 0, width, height);
 	}
 
 	private void writeSprintBurndownChart(OutputStream out, List<SprintDaySnapshot> snapshots, Date firstDay,
