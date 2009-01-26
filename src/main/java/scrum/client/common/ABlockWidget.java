@@ -47,6 +47,7 @@ public abstract class ABlockWidget extends Composite {
 
 	public ABlockWidget() {
 		mainpanel = new VerticalPanel();
+		mainpanel.setWidth("100%");
 
 		panel = new SimplePanel();
 		panel.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET);
