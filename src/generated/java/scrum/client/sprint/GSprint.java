@@ -43,22 +43,40 @@ public abstract class GSprint
         return ENTITY_TYPE;
     }
 
-    // --- label ---
+    // --- end ---
 
-    private java.lang.String label ;
+    private scrum.client.common.Date end ;
 
-    public final java.lang.String getLabel() {
-        return this.label ;
+    public final scrum.client.common.Date getEnd() {
+        return this.end ;
     }
 
-    public final Sprint setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
+    public final Sprint setEnd(scrum.client.common.Date end) {
+        this.end = end ;
+        propertyChanged("end", this.end);
         return (Sprint)this;
     }
 
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+    public final boolean isEnd(scrum.client.common.Date end) {
+        return equals(this.end, end);
+    }
+
+    // --- begin ---
+
+    private scrum.client.common.Date begin ;
+
+    public final scrum.client.common.Date getBegin() {
+        return this.begin ;
+    }
+
+    public final Sprint setBegin(scrum.client.common.Date begin) {
+        this.begin = begin ;
+        propertyChanged("begin", this.begin);
+        return (Sprint)this;
+    }
+
+    public final boolean isBegin(scrum.client.common.Date begin) {
+        return equals(this.begin, begin);
     }
 
     // --- project ---
@@ -81,18 +99,42 @@ public abstract class GSprint
         return equals(this.projectId, project);
     }
 
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final Sprint setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
+        return (Sprint)this;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        label  = (java.lang.String) props.get("label");
+        String endAsString = (String) props.get("end");
+        end  =  endAsString == null ? null : new scrum.client.common.Date(endAsString);
+        String beginAsString = (String) props.get("begin");
+        begin  =  beginAsString == null ? null : new scrum.client.common.Date(beginAsString);
         projectId = (String) props.get("projectId");
+        label  = (java.lang.String) props.get("label");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("label", this.label);
+        properties.put("end", this.end == null ? null : this.end.toString());
+        properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("projectId", this.projectId);
+        properties.put("label", this.label);
     }
 
 }

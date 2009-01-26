@@ -47,10 +47,10 @@ public abstract class GProjectSprintSnapshotDao
         projectsCache = null;
         projectSprintSnapshotsByBurnedWorkCache.clear();
         burnedWorksCache = null;
-        projectSprintSnapshotsByDateCache.clear();
-        datesCache = null;
         projectSprintSnapshotsByRemainingWorkCache.clear();
         remainingWorksCache = null;
+        projectSprintSnapshotsByDateCache.clear();
+        datesCache = null;
     }
 
     @Override
@@ -150,46 +150,6 @@ public abstract class GProjectSprintSnapshotDao
     }
 
     // -----------------------------------------------------------
-    // - date
-    // -----------------------------------------------------------
-
-    private final Cache<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByDateCache = new Cache<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>>(
-            new Cache.Factory<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>>() {
-                public Set<ProjectSprintSnapshot> create(ilarkesto.base.time.Date date) {
-                    return getEntities(new IsDate(date));
-                }
-            });
-
-    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByDate(ilarkesto.base.time.Date date) {
-        return projectSprintSnapshotsByDateCache.get(date);
-    }
-    private Set<ilarkesto.base.time.Date> datesCache;
-
-    public final Set<ilarkesto.base.time.Date> getDates() {
-        if (datesCache == null) {
-            datesCache = new HashSet<ilarkesto.base.time.Date>();
-            for (ProjectSprintSnapshot e : getEntities()) {
-                if (e.isDateSet()) datesCache.add(e.getDate());
-            }
-        }
-        return datesCache;
-    }
-
-    private static class IsDate implements Predicate<ProjectSprintSnapshot> {
-
-        private ilarkesto.base.time.Date value;
-
-        public IsDate(ilarkesto.base.time.Date value) {
-            this.value = value;
-        }
-
-        public boolean test(ProjectSprintSnapshot e) {
-            return e.isDate(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
     // - remainingWork
     // -----------------------------------------------------------
 
@@ -225,6 +185,46 @@ public abstract class GProjectSprintSnapshotDao
 
         public boolean test(ProjectSprintSnapshot e) {
             return e.isRemainingWork(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - date
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByDateCache = new Cache<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>>() {
+                public Set<ProjectSprintSnapshot> create(ilarkesto.base.time.Date date) {
+                    return getEntities(new IsDate(date));
+                }
+            });
+
+    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByDate(ilarkesto.base.time.Date date) {
+        return projectSprintSnapshotsByDateCache.get(date);
+    }
+    private Set<ilarkesto.base.time.Date> datesCache;
+
+    public final Set<ilarkesto.base.time.Date> getDates() {
+        if (datesCache == null) {
+            datesCache = new HashSet<ilarkesto.base.time.Date>();
+            for (ProjectSprintSnapshot e : getEntities()) {
+                if (e.isDateSet()) datesCache.add(e.getDate());
+            }
+        }
+        return datesCache;
+    }
+
+    private static class IsDate implements Predicate<ProjectSprintSnapshot> {
+
+        private ilarkesto.base.time.Date value;
+
+        public IsDate(ilarkesto.base.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectSprintSnapshot e) {
+            return e.isDate(value);
         }
 
     }

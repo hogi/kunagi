@@ -78,6 +78,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(sprintModel);
 			sprintModel.addReference("project", getProjectModel()).setMaster(true);
 			sprintModel.addProperty("label", String.class);
+			sprintModel.addProperty("begin", Date.class);
+			sprintModel.addProperty("end", Date.class);
 		}
 		return sprintModel;
 	}

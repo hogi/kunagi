@@ -232,6 +232,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		Sprint sprint1 = getSprintDao().newEntityInstance();
 		sprint1.setProject(project1);
 		sprint1.setLabel("Sprint 1");
+		sprint1.setBegin(Date.today().addDays(-15));
+		sprint1.setEnd(Date.today().addDays(5));
 		getSprintDao().saveEntity(sprint1);
 		story2.setSprint(sprint1);
 		for (int i = 1; i <= 5; i++) {

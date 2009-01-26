@@ -43,44 +43,6 @@ public abstract class GImpediment
         return ENTITY_TYPE;
     }
 
-    // --- solved ---
-
-    private boolean solved ;
-
-    public final boolean isSolved() {
-        return this.solved ;
-    }
-
-    public final Impediment setSolved(boolean solved) {
-        this.solved = solved ;
-        propertyChanged("solved", this.solved);
-        return (Impediment)this;
-    }
-
-    public final boolean isSolved(boolean solved) {
-        return equals(this.solved, solved);
-    }
-
-    // --- project ---
-
-    private String projectId;
-
-    public final scrum.client.project.Project getProject() {
-        return getDao().getProject(this.projectId);
-    }
-
-    public final Impediment setProject(scrum.client.project.Project project) {
-        String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Impediment) this;
-        this.projectId = id;
-        propertyChanged("project", this.projectId);
-        return (Impediment)this;
-    }
-
-    public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
-    }
-
     // --- label ---
 
     private java.lang.String label ;
@@ -117,6 +79,26 @@ public abstract class GImpediment
         return equals(this.solution, solution);
     }
 
+    // --- project ---
+
+    private String projectId;
+
+    public final scrum.client.project.Project getProject() {
+        return getDao().getProject(this.projectId);
+    }
+
+    public final Impediment setProject(scrum.client.project.Project project) {
+        String id = project == null ? null : project.getId();
+        if (equals(this.projectId, id)) return (Impediment) this;
+        this.projectId = id;
+        propertyChanged("project", this.projectId);
+        return (Impediment)this;
+    }
+
+    public final boolean isProject(scrum.client.project.Project project) {
+        return equals(this.projectId, project);
+    }
+
     // --- description ---
 
     private java.lang.String description ;
@@ -135,24 +117,42 @@ public abstract class GImpediment
         return equals(this.description, description);
     }
 
+    // --- solved ---
+
+    private boolean solved ;
+
+    public final boolean isSolved() {
+        return this.solved ;
+    }
+
+    public final Impediment setSolved(boolean solved) {
+        this.solved = solved ;
+        propertyChanged("solved", this.solved);
+        return (Impediment)this;
+    }
+
+    public final boolean isSolved(boolean solved) {
+        return equals(this.solved, solved);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        solved  = (Boolean) props.get("solved");
-        projectId = (String) props.get("projectId");
         label  = (java.lang.String) props.get("label");
         solution  = (java.lang.String) props.get("solution");
+        projectId = (String) props.get("projectId");
         description  = (java.lang.String) props.get("description");
+        solved  = (Boolean) props.get("solved");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("solved", this.solved);
-        properties.put("projectId", this.projectId);
         properties.put("label", this.label);
         properties.put("solution", this.solution);
+        properties.put("projectId", this.projectId);
         properties.put("description", this.description);
+        properties.put("solved", this.solved);
     }
 
 }

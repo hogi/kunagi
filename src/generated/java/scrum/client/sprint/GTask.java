@@ -43,24 +43,6 @@ public abstract class GTask
         return ENTITY_TYPE;
     }
 
-    // --- notice ---
-
-    private java.lang.String notice ;
-
-    public final java.lang.String getNotice() {
-        return this.notice ;
-    }
-
-    public final Task setNotice(java.lang.String notice) {
-        this.notice = notice ;
-        propertyChanged("notice", this.notice);
-        return (Task)this;
-    }
-
-    public final boolean isNotice(java.lang.String notice) {
-        return equals(this.notice, notice);
-    }
-
     // --- remainingWork ---
 
     private java.lang.Integer remainingWork ;
@@ -79,24 +61,22 @@ public abstract class GTask
         return equals(this.remainingWork, remainingWork);
     }
 
-    // --- story ---
+    // --- notice ---
 
-    private String storyId;
+    private java.lang.String notice ;
 
-    public final scrum.client.project.Story getStory() {
-        return getDao().getStory(this.storyId);
+    public final java.lang.String getNotice() {
+        return this.notice ;
     }
 
-    public final Task setStory(scrum.client.project.Story story) {
-        String id = story == null ? null : story.getId();
-        if (equals(this.storyId, id)) return (Task) this;
-        this.storyId = id;
-        propertyChanged("story", this.storyId);
+    public final Task setNotice(java.lang.String notice) {
+        this.notice = notice ;
+        propertyChanged("notice", this.notice);
         return (Task)this;
     }
 
-    public final boolean isStory(scrum.client.project.Story story) {
-        return equals(this.storyId, story);
+    public final boolean isNotice(java.lang.String notice) {
+        return equals(this.notice, notice);
     }
 
     // --- burnedWork ---
@@ -135,24 +115,44 @@ public abstract class GTask
         return equals(this.label, label);
     }
 
+    // --- story ---
+
+    private String storyId;
+
+    public final scrum.client.project.Story getStory() {
+        return getDao().getStory(this.storyId);
+    }
+
+    public final Task setStory(scrum.client.project.Story story) {
+        String id = story == null ? null : story.getId();
+        if (equals(this.storyId, id)) return (Task) this;
+        this.storyId = id;
+        propertyChanged("story", this.storyId);
+        return (Task)this;
+    }
+
+    public final boolean isStory(scrum.client.project.Story story) {
+        return equals(this.storyId, story);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        notice  = (java.lang.String) props.get("notice");
         remainingWork  = (java.lang.Integer) props.get("remainingWork");
-        storyId = (String) props.get("storyId");
+        notice  = (java.lang.String) props.get("notice");
         burnedWork  = (Integer) props.get("burnedWork");
         label  = (java.lang.String) props.get("label");
+        storyId = (String) props.get("storyId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("notice", this.notice);
         properties.put("remainingWork", this.remainingWork);
-        properties.put("storyId", this.storyId);
+        properties.put("notice", this.notice);
         properties.put("burnedWork", this.burnedWork);
         properties.put("label", this.label);
+        properties.put("storyId", this.storyId);
     }
 
 }

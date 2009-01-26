@@ -46,11 +46,11 @@ public abstract class GImpediment
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("solved", this.solved);
-        properties.put("projectId", this.projectId);
         properties.put("label", this.label);
         properties.put("solution", this.solution);
+        properties.put("projectId", this.projectId);
         properties.put("description", this.description);
+        properties.put("solved", this.solved);
     }
 
     public int compareTo(Impediment other) {
@@ -66,73 +66,11 @@ public abstract class GImpediment
         super(template);
         if (template==null) return;
 
-        setSolved(template.isSolved());
-        setProject(template.getProject());
         setLabel(template.getLabel());
         setSolution(template.getSolution());
+        setProject(template.getProject());
         setDescription(template.getDescription());
-    }
-
-    // -----------------------------------------------------------
-    // - solved
-    // -----------------------------------------------------------
-
-    private boolean solved;
-
-    public final boolean isSolved() {
-        return solved;
-    }
-
-    public final void setSolved(boolean solved) {
-        solved = prepareSolved(solved);
-        if (isSolved(solved)) return;
-        this.solved = solved;
-        entityModified();
-    }
-
-    protected boolean prepareSolved(boolean solved) {
-        return solved;
-    }
-
-    public final boolean isSolved(boolean solved) {
-        return this.solved == solved;
-    }
-
-    // -----------------------------------------------------------
-    // - project
-    // -----------------------------------------------------------
-
-    private String projectId;
-
-    public final scrum.server.project.Project getProject() {
-        if (this.projectId == null) return null;
-        return (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
-
-    public final void setProject(scrum.server.project.Project project) {
-        project = prepareProject(project);
-        if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
-        entityModified();
-    }
-
-    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
-        return project;
-    }
-
-    protected void repairDeadProjectReference(String entityId) {
-        if (entityId.equals(this.projectId)) {
-            repairMissingMaster();
-        }
-    }
-
-    public final boolean isProjectSet() {
-        return this.projectId != null;
-    }
-
-    public final boolean isProject(scrum.server.project.Project project) {
-        if (this.projectId == null && project == null) return true;
-        return project != null && project.getId().equals(this.projectId);
+        setSolved(template.isSolved());
     }
 
     // -----------------------------------------------------------
@@ -198,6 +136,43 @@ public abstract class GImpediment
     }
 
     // -----------------------------------------------------------
+    // - project
+    // -----------------------------------------------------------
+
+    private String projectId;
+
+    public final scrum.server.project.Project getProject() {
+        if (this.projectId == null) return null;
+        return (scrum.server.project.Project)projectDao.getById(this.projectId);
+    }
+
+    public final void setProject(scrum.server.project.Project project) {
+        project = prepareProject(project);
+        if (isProject(project)) return;
+        this.projectId = project == null ? null : project.getId();
+        entityModified();
+    }
+
+    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
+        return project;
+    }
+
+    protected void repairDeadProjectReference(String entityId) {
+        if (entityId.equals(this.projectId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isProjectSet() {
+        return this.projectId != null;
+    }
+
+    public final boolean isProject(scrum.server.project.Project project) {
+        if (this.projectId == null && project == null) return true;
+        return project != null && project.getId().equals(this.projectId);
+    }
+
+    // -----------------------------------------------------------
     // - description
     // -----------------------------------------------------------
 
@@ -226,6 +201,31 @@ public abstract class GImpediment
     public final boolean isDescription(java.lang.String description) {
         if (this.description == null && description == null) return true;
         return this.description != null && this.description.equals(description);
+    }
+
+    // -----------------------------------------------------------
+    // - solved
+    // -----------------------------------------------------------
+
+    private boolean solved;
+
+    public final boolean isSolved() {
+        return solved;
+    }
+
+    public final void setSolved(boolean solved) {
+        solved = prepareSolved(solved);
+        if (isSolved(solved)) return;
+        this.solved = solved;
+        entityModified();
+    }
+
+    protected boolean prepareSolved(boolean solved) {
+        return solved;
+    }
+
+    public final boolean isSolved(boolean solved) {
+        return this.solved == solved;
     }
 
     protected void repairDeadReferences(String entityId) {

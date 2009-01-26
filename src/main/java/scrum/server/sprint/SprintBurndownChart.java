@@ -28,13 +28,18 @@ public class SprintBurndownChart {
 
 	public void wirteChart(OutputStream out, String sprintId, int width, int height) {
 		Sprint sprint = sprintDao.getById(sprintId);
-		writeChart(out, sprintDaySnapshotDao.getSprintDaySnapshots(sprint), width, height);
+		List<SprintDaySnapshot> snapshots = sprintDaySnapshotDao.getSprintDaySnapshots(sprint);
+
+		// writeDummyChart(out, snapshots, width, height);
+
+		// TODO real chart integration.
+		new BurndownChart().writeBurndownChart(out, snapshots, sprint.getBegin(), sprint.getEnd(), 500);
 	}
 
-	private void writeChart(OutputStream out, List<SprintDaySnapshot> snapshots, int width, int height) {
+	private void writeDummyChart(OutputStream out, List<SprintDaySnapshot> snapshots, int width, int height) {
 		DefaultPieDataset data = new DefaultPieDataset();
-		data.setValue("Hogi", 1);
-		data.setValue("Witek", 99);
+		data.setValue("Hogi", 10);
+		data.setValue("Witek", 90);
 		JFreeChart chart = ChartFactory.createPieChart3D("Witek vs Hogi", data, true, true, true);
 		try {
 			ChartUtilities.writeChartAsPNG(out, chart, width, height);

@@ -46,11 +46,11 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("notice", this.notice);
         properties.put("remainingWork", this.remainingWork);
-        properties.put("storyId", this.storyId);
+        properties.put("notice", this.notice);
         properties.put("burnedWork", this.burnedWork);
         properties.put("label", this.label);
+        properties.put("storyId", this.storyId);
     }
 
     public int compareTo(Task other) {
@@ -66,42 +66,11 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
-        setNotice(template.getNotice());
         setRemainingWork(template.getRemainingWork());
-        setStory(template.getStory());
+        setNotice(template.getNotice());
         setBurnedWork(template.getBurnedWork());
         setLabel(template.getLabel());
-    }
-
-    // -----------------------------------------------------------
-    // - notice
-    // -----------------------------------------------------------
-
-    private java.lang.String notice;
-
-    public final java.lang.String getNotice() {
-        return notice;
-    }
-
-    public final void setNotice(java.lang.String notice) {
-        notice = prepareNotice(notice);
-        if (isNotice(notice)) return;
-        this.notice = notice;
-        entityModified();
-    }
-
-    protected java.lang.String prepareNotice(java.lang.String notice) {
-        notice = Str.removeUnreadableChars(notice);
-        return notice;
-    }
-
-    public final boolean isNoticeSet() {
-        return this.notice != null;
-    }
-
-    public final boolean isNotice(java.lang.String notice) {
-        if (this.notice == null && notice == null) return true;
-        return this.notice != null && this.notice.equals(notice);
+        setStory(template.getStory());
     }
 
     // -----------------------------------------------------------
@@ -135,40 +104,34 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
-    // - story
+    // - notice
     // -----------------------------------------------------------
 
-    private String storyId;
+    private java.lang.String notice;
 
-    public final scrum.server.project.Story getStory() {
-        if (this.storyId == null) return null;
-        return (scrum.server.project.Story)storyDao.getById(this.storyId);
+    public final java.lang.String getNotice() {
+        return notice;
     }
 
-    public final void setStory(scrum.server.project.Story story) {
-        story = prepareStory(story);
-        if (isStory(story)) return;
-        this.storyId = story == null ? null : story.getId();
+    public final void setNotice(java.lang.String notice) {
+        notice = prepareNotice(notice);
+        if (isNotice(notice)) return;
+        this.notice = notice;
         entityModified();
     }
 
-    protected scrum.server.project.Story prepareStory(scrum.server.project.Story story) {
-        return story;
+    protected java.lang.String prepareNotice(java.lang.String notice) {
+        notice = Str.removeUnreadableChars(notice);
+        return notice;
     }
 
-    protected void repairDeadStoryReference(String entityId) {
-        if (entityId.equals(this.storyId)) {
-            repairMissingMaster();
-        }
+    public final boolean isNoticeSet() {
+        return this.notice != null;
     }
 
-    public final boolean isStorySet() {
-        return this.storyId != null;
-    }
-
-    public final boolean isStory(scrum.server.project.Story story) {
-        if (this.storyId == null && story == null) return true;
-        return story != null && story.getId().equals(this.storyId);
+    public final boolean isNotice(java.lang.String notice) {
+        if (this.notice == null && notice == null) return true;
+        return this.notice != null && this.notice.equals(notice);
     }
 
     // -----------------------------------------------------------
@@ -225,6 +188,43 @@ public abstract class GTask
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - story
+    // -----------------------------------------------------------
+
+    private String storyId;
+
+    public final scrum.server.project.Story getStory() {
+        if (this.storyId == null) return null;
+        return (scrum.server.project.Story)storyDao.getById(this.storyId);
+    }
+
+    public final void setStory(scrum.server.project.Story story) {
+        story = prepareStory(story);
+        if (isStory(story)) return;
+        this.storyId = story == null ? null : story.getId();
+        entityModified();
+    }
+
+    protected scrum.server.project.Story prepareStory(scrum.server.project.Story story) {
+        return story;
+    }
+
+    protected void repairDeadStoryReference(String entityId) {
+        if (entityId.equals(this.storyId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isStorySet() {
+        return this.storyId != null;
+    }
+
+    public final boolean isStory(scrum.server.project.Story story) {
+        if (this.storyId == null && story == null) return true;
+        return story != null && story.getId().equals(this.storyId);
     }
 
     protected void repairDeadReferences(String entityId) {

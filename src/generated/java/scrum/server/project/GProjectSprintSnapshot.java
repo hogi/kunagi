@@ -48,8 +48,8 @@ public abstract class GProjectSprintSnapshot
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("burnedWork", this.burnedWork);
-        properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("remainingWork", this.remainingWork);
+        properties.put("date", this.date == null ? null : this.date.toString());
     }
 
     public int compareTo(ProjectSprintSnapshot other) {
@@ -67,8 +67,8 @@ public abstract class GProjectSprintSnapshot
 
         setProject(template.getProject());
         setBurnedWork(template.getBurnedWork());
-        setDate(template.getDate());
         setRemainingWork(template.getRemainingWork());
+        setDate(template.getDate());
     }
 
     // -----------------------------------------------------------
@@ -135,6 +135,31 @@ public abstract class GProjectSprintSnapshot
     }
 
     // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private int remainingWork;
+
+    public final int getRemainingWork() {
+        return remainingWork;
+    }
+
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+        entityModified();
+    }
+
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
+    }
+
+    // -----------------------------------------------------------
     // - date
     // -----------------------------------------------------------
 
@@ -162,31 +187,6 @@ public abstract class GProjectSprintSnapshot
     public final boolean isDate(ilarkesto.base.time.Date date) {
         if (this.date == null && date == null) return true;
         return this.date != null && this.date.equals(date);
-    }
-
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private int remainingWork;
-
-    public final int getRemainingWork() {
-        return remainingWork;
-    }
-
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
-        entityModified();
-    }
-
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
     }
 
     protected void repairDeadReferences(String entityId) {

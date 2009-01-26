@@ -104,7 +104,7 @@ public class TaskWidget extends ABlockWidget {
 
 		});
 
-		fieldsWidget.addField("Notice", new AEditableTextareaWidget() {
+		fieldsWidget.addField("Note", new AEditableTextareaWidget() {
 
 			@Override
 			protected String getText() {

@@ -73,6 +73,31 @@ public abstract class GScrumWebApplication
         sprintDaySnapshotDao = null;
     }
 
+    // --- storyDao ---
+
+    private scrum.server.project.StoryDao storyDao;
+
+    public final scrum.server.project.StoryDao getStoryDao() {
+        if (storyDao == null) {
+            storyDao = createStoryDao();
+            initializeStoryDao(storyDao);
+        }
+        return storyDao;
+    }
+
+    protected scrum.server.project.StoryDao createStoryDao() {
+        return storyDao = new scrum.server.project.StoryDao();
+    }
+
+    protected void initializeStoryDao(scrum.server.project.StoryDao bean) {
+        autowire(bean);
+        Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetStoryDao() {
+        storyDao = null;
+    }
+
     // --- projectSprintSnapshotDao ---
 
     private scrum.server.project.ProjectSprintSnapshotDao projectSprintSnapshotDao;
@@ -96,6 +121,31 @@ public abstract class GScrumWebApplication
 
     public final void resetProjectSprintSnapshotDao() {
         projectSprintSnapshotDao = null;
+    }
+
+    // --- sprintDao ---
+
+    private scrum.server.sprint.SprintDao sprintDao;
+
+    public final scrum.server.sprint.SprintDao getSprintDao() {
+        if (sprintDao == null) {
+            sprintDao = createSprintDao();
+            initializeSprintDao(sprintDao);
+        }
+        return sprintDao;
+    }
+
+    protected scrum.server.sprint.SprintDao createSprintDao() {
+        return sprintDao = new scrum.server.sprint.SprintDao();
+    }
+
+    protected void initializeSprintDao(scrum.server.sprint.SprintDao bean) {
+        autowire(bean);
+        Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetSprintDao() {
+        sprintDao = null;
     }
 
     // --- projectDao ---
@@ -148,31 +198,6 @@ public abstract class GScrumWebApplication
         impedimentDao = null;
     }
 
-    // --- sprintDao ---
-
-    private scrum.server.sprint.SprintDao sprintDao;
-
-    public final scrum.server.sprint.SprintDao getSprintDao() {
-        if (sprintDao == null) {
-            sprintDao = createSprintDao();
-            initializeSprintDao(sprintDao);
-        }
-        return sprintDao;
-    }
-
-    protected scrum.server.sprint.SprintDao createSprintDao() {
-        return sprintDao = new scrum.server.sprint.SprintDao();
-    }
-
-    protected void initializeSprintDao(scrum.server.sprint.SprintDao bean) {
-        autowire(bean);
-        Reflect.invokeInitializeIfThere(bean);
-    }
-
-    public final void resetSprintDao() {
-        sprintDao = null;
-    }
-
     // --- taskDao ---
 
     private scrum.server.sprint.TaskDao taskDao;
@@ -196,31 +221,6 @@ public abstract class GScrumWebApplication
 
     public final void resetTaskDao() {
         taskDao = null;
-    }
-
-    // --- storyDao ---
-
-    private scrum.server.project.StoryDao storyDao;
-
-    public final scrum.server.project.StoryDao getStoryDao() {
-        if (storyDao == null) {
-            storyDao = createStoryDao();
-            initializeStoryDao(storyDao);
-        }
-        return storyDao;
-    }
-
-    protected scrum.server.project.StoryDao createStoryDao() {
-        return storyDao = new scrum.server.project.StoryDao();
-    }
-
-    protected void initializeStoryDao(scrum.server.project.StoryDao bean) {
-        autowire(bean);
-        Reflect.invokeInitializeIfThere(bean);
-    }
-
-    public final void resetStoryDao() {
-        storyDao = null;
     }
 
     // --- dependencies ---

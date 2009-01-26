@@ -43,16 +43,16 @@ public abstract class GTaskDao
 
     // --- clear caches ---
     public void clearCaches() {
-        tasksByNoticeCache.clear();
-        noticesCache = null;
         tasksByRemainingWorkCache.clear();
         remainingWorksCache = null;
-        tasksByStoryCache.clear();
-        storysCache = null;
+        tasksByNoticeCache.clear();
+        noticesCache = null;
         tasksByBurnedWorkCache.clear();
         burnedWorksCache = null;
         tasksByLabelCache.clear();
         labelsCache = null;
+        tasksByStoryCache.clear();
+        storysCache = null;
     }
 
     @Override
@@ -69,46 +69,6 @@ public abstract class GTaskDao
         if (event.getEntity() instanceof Task) {
             clearCaches();
         }
-    }
-
-    // -----------------------------------------------------------
-    // - notice
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Task>> tasksByNoticeCache = new Cache<java.lang.String,Set<Task>>(
-            new Cache.Factory<java.lang.String,Set<Task>>() {
-                public Set<Task> create(java.lang.String notice) {
-                    return getEntities(new IsNotice(notice));
-                }
-            });
-
-    public final Set<Task> getTasksByNotice(java.lang.String notice) {
-        return tasksByNoticeCache.get(notice);
-    }
-    private Set<java.lang.String> noticesCache;
-
-    public final Set<java.lang.String> getNotices() {
-        if (noticesCache == null) {
-            noticesCache = new HashSet<java.lang.String>();
-            for (Task e : getEntities()) {
-                if (e.isNoticeSet()) noticesCache.add(e.getNotice());
-            }
-        }
-        return noticesCache;
-    }
-
-    private static class IsNotice implements Predicate<Task> {
-
-        private java.lang.String value;
-
-        public IsNotice(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Task e) {
-            return e.isNotice(value);
-        }
-
     }
 
     // -----------------------------------------------------------
@@ -152,41 +112,41 @@ public abstract class GTaskDao
     }
 
     // -----------------------------------------------------------
-    // - story
+    // - notice
     // -----------------------------------------------------------
 
-    private final Cache<scrum.server.project.Story,Set<Task>> tasksByStoryCache = new Cache<scrum.server.project.Story,Set<Task>>(
-            new Cache.Factory<scrum.server.project.Story,Set<Task>>() {
-                public Set<Task> create(scrum.server.project.Story story) {
-                    return getEntities(new IsStory(story));
+    private final Cache<java.lang.String,Set<Task>> tasksByNoticeCache = new Cache<java.lang.String,Set<Task>>(
+            new Cache.Factory<java.lang.String,Set<Task>>() {
+                public Set<Task> create(java.lang.String notice) {
+                    return getEntities(new IsNotice(notice));
                 }
             });
 
-    public final Set<Task> getTasksByStory(scrum.server.project.Story story) {
-        return tasksByStoryCache.get(story);
+    public final Set<Task> getTasksByNotice(java.lang.String notice) {
+        return tasksByNoticeCache.get(notice);
     }
-    private Set<scrum.server.project.Story> storysCache;
+    private Set<java.lang.String> noticesCache;
 
-    public final Set<scrum.server.project.Story> getStorys() {
-        if (storysCache == null) {
-            storysCache = new HashSet<scrum.server.project.Story>();
+    public final Set<java.lang.String> getNotices() {
+        if (noticesCache == null) {
+            noticesCache = new HashSet<java.lang.String>();
             for (Task e : getEntities()) {
-                if (e.isStorySet()) storysCache.add(e.getStory());
+                if (e.isNoticeSet()) noticesCache.add(e.getNotice());
             }
         }
-        return storysCache;
+        return noticesCache;
     }
 
-    private static class IsStory implements Predicate<Task> {
+    private static class IsNotice implements Predicate<Task> {
 
-        private scrum.server.project.Story value;
+        private java.lang.String value;
 
-        public IsStory(scrum.server.project.Story value) {
+        public IsNotice(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(Task e) {
-            return e.isStory(value);
+            return e.isNotice(value);
         }
 
     }
@@ -267,6 +227,46 @@ public abstract class GTaskDao
 
         public boolean test(Task e) {
             return e.isLabel(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - story
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.project.Story,Set<Task>> tasksByStoryCache = new Cache<scrum.server.project.Story,Set<Task>>(
+            new Cache.Factory<scrum.server.project.Story,Set<Task>>() {
+                public Set<Task> create(scrum.server.project.Story story) {
+                    return getEntities(new IsStory(story));
+                }
+            });
+
+    public final Set<Task> getTasksByStory(scrum.server.project.Story story) {
+        return tasksByStoryCache.get(story);
+    }
+    private Set<scrum.server.project.Story> storysCache;
+
+    public final Set<scrum.server.project.Story> getStorys() {
+        if (storysCache == null) {
+            storysCache = new HashSet<scrum.server.project.Story>();
+            for (Task e : getEntities()) {
+                if (e.isStorySet()) storysCache.add(e.getStory());
+            }
+        }
+        return storysCache;
+    }
+
+    private static class IsStory implements Predicate<Task> {
+
+        private scrum.server.project.Story value;
+
+        public IsStory(scrum.server.project.Story value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isStory(value);
         }
 
     }

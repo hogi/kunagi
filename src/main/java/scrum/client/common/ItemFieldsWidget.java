@@ -28,7 +28,7 @@ public class ItemFieldsWidget extends Composite {
 	 * @param label Label of the field (left).
 	 * @param value Value widget of the field (right).
 	 */
-	public void addField(String label, Widget value) {
+	public <W extends Widget> W addField(String label, W value) {
 
 		Label l = new Label(label);
 		l.setStyleName(StyleSheet.FIELD_LABEL);
@@ -43,6 +43,8 @@ public class ItemFieldsWidget extends Composite {
 		}
 		grid.setWidget(row, 0, l);
 		grid.setWidget(row, 1, value);
+
+		return value;
 	}
 
 }

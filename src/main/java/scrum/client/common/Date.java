@@ -16,8 +16,8 @@ public class Date {
 		if (date.length() != 10) throw new RuntimeException("Illegal date format: " + date);
 
 		int y = Integer.parseInt(date.substring(0, 4));
-		int m = Integer.parseInt(date.substring(5, 6));
-		int d = Integer.parseInt(date.substring(8, 9));
+		int m = Integer.parseInt(date.substring(5, 7));
+		int d = Integer.parseInt(date.substring(8, 10));
 
 		this.year = y;
 		this.month = m;
