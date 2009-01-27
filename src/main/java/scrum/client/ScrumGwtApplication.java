@@ -75,7 +75,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	public ScrumDragController getDragController() {
 		if (dragController == null) {
-			dragController = new ScrumDragController(RootPanel.get("dnd"), false);
+			dragController = new ScrumDragController(RootPanel.get(), false);
 		}
 		return dragController;
 	}
