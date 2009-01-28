@@ -2,26 +2,24 @@ package scrum.client.sprint;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ItemFieldsWidget;
-import scrum.client.common.StyleSheet;
 import scrum.client.common.editable.AEditableTextWidget;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class CurrentSprintWidget extends Composite {
 
-	private VerticalPanel view;
+	private FlowPanel view;
 
 	private Sprint sprint;
 
 	public CurrentSprintWidget() {
-		view = new VerticalPanel();
-		view.setStyleName(StyleSheet.ELEMENT_CURRENT_SPRINT_WIDGET);
+		view = new FlowPanel();
 
 		initWidget(view);
 	}
@@ -48,7 +46,6 @@ public class CurrentSprintWidget extends Composite {
 		}
 
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
-		fieldsWidget.setStyleName(StyleSheet.ELEMENT_CURRENT_SPRINT_WIDGET_FIELDS_WIDGET);
 		fieldsWidget.addField("Label", new AEditableTextWidget() {
 
 			@Override

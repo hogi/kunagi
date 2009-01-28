@@ -32,7 +32,6 @@ public class ImpedimentListWidget extends Composite {
 				.add(new Label(
 						"Anything that prevents a team member from performing work as efficiently as possible is an impediment. Each team member has an opportunity to announce impediments during the daily Scrum meeting. The ScrumMaster is charged with ensuring impediments get resolved. ScrumMasters often arrange sidebar meetings when impediments cannot be resolved on the spot in the daily Scrum meeting."));
 		panel.add(new HTML("<br>"));
-		panel.setStyleName(StyleSheet.ELEMENT_IMPEDIMENT_LIST_WIDGET);
 		panel.add(toolbar);
 		panel.add(new HTML("<br>"));
 		panel.add(list);

@@ -27,6 +27,8 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 
 	public BlockListWidget() {
 		table = new FlexTable();
+		table.setCellPadding(0);
+		table.setCellSpacing(0);
 		table.setStyleName(StyleSheet.ELEMENT_BLOCK_LIST_WIDGET_TABLE);
 		if (!sidebarMode) {
 			table.addTableListener(new Listener());
@@ -115,7 +117,7 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 		} else {
 			deselect();
 			ABlockWidget block = blocks.get(row);
-			block.addStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
+			block.getBorderPanel().addStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
 			if (!sidebarMode) {
 				block.setExtended(true);
 			}
@@ -149,7 +151,7 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	public final void deselect() {
 		B block = getSelectedBlock();
 		if (block == null) return;
-		block.removeStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
+		block.getBorderPanel().removeStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
 		selectedRow = -1;
 		block.setExtended(false);
 	}

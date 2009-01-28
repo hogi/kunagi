@@ -32,7 +32,6 @@ public class StoryListWidget extends Composite {
 				.add(new Label(
 						"The product backlog (or \"backlog\") is the requirements for a system, expressed as a prioritized list of product backlog Items. These included both functional and non-functional customer requirements, as well as technical team-generated requirements. While there are multiple inputs to the product backlog, it is the sole responsibility of the product owner to prioritize the product backlog."));
 		panel.add(new HTML("<br>"));
-		panel.setStyleName(StyleSheet.ELEMENT_STORY_LIST_WIDGET);
 		panel.add(toolbar);
 		panel.add(new HTML("<br>"));
 		panel.add(list);

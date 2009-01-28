@@ -4,6 +4,7 @@ public class StyleSheet {
 
 	// DummyDropWidget
 	public static final String ELEMENT_DUMMY_DROP_WIDGET = "element-DummyDropWidget";
+	public static final String ELEMENT_DUMMY_DROP_WIDGET_ACTIVE = "element-DummyDropWidget-active";
 
 	// BlockWidget
 
@@ -49,23 +50,6 @@ public class StyleSheet {
 	public static final String ELEMENT_DROP_WIDGET_ITEMS = "element-DropWidget-items";
 	public static final String ELEMENT_DROP_WIDGET_SPACE = "element-DropWidget-space";
 	public static final String ELEMENT_DROP_WIDGET_TRASH = "element-DropWidget-trash";
-
-	// SprintStoryListWidget
-
-	public static final String ELEMENT_SPRINT_STORY_LIST_WIDGET = "element-SprintStoryListWidget";
-
-	// CurrentSprintWidget
-
-	public static final String ELEMENT_CURRENT_SPRINT_WIDGET = "element-CurrentSprintWidget";
-	public static final String ELEMENT_CURRENT_SPRINT_WIDGET_FIELDS_WIDGET = "element-CurrentSprintWidget-fieldsWidget";
-
-	// StoryListWidget
-
-	public static final String ELEMENT_STORY_LIST_WIDGET = "element-StoryListWidget";
-
-	// ImpedimentListWidget
-
-	public static final String ELEMENT_IMPEDIMENT_LIST_WIDGET = "element-ImpedimentListWidget";
 
 	// others
 

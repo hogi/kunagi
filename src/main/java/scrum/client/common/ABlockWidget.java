@@ -6,11 +6,11 @@ import scrum.client.dnd.DummyDropWidget;
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class ABlockWidget extends Composite {
 
 	private BlockListWidget list;
-	private VerticalPanel mainpanel;
+	private FlowPanel mainPanel;
 	private SimplePanel panel;
 	private boolean extended;
 	private boolean inClipboard;
@@ -47,20 +47,24 @@ public abstract class ABlockWidget extends Composite {
 	public abstract void delete();
 
 	public ABlockWidget() {
-		mainpanel = new VerticalPanel();
-		mainpanel.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_MAIN);
+		mainPanel = new FlowPanel();
+		mainPanel.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_MAIN);
 
 		panel = new SimplePanel();
 		panel.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET);
 		dropController = createDropController();
 
-		mainpanel.add(dummyTop);
-		mainpanel.add(panel);
-		mainpanel.add(dummyBottom);
+		mainPanel.add(dummyTop);
+		mainPanel.add(panel);
+		mainPanel.add(dummyBottom);
 
-		dummyTop.setVisible(false);
-		dummyBottom.setVisible(false);
-		initWidget(mainpanel);
+		dummyTop.setActive(false);
+		dummyBottom.setActive(false);
+		initWidget(mainPanel);
+	}
+
+	public Widget getBorderPanel() {
+		return panel;
 	}
 
 	protected abstract DropController createDropController();
@@ -104,7 +108,7 @@ public abstract class ABlockWidget extends Composite {
 	final void setInClipboard(boolean inClipboard) {
 		this.inClipboard = inClipboard;
 		if (inClipboard) {
-			removeStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
+			getBorderPanel().removeStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
 			extended = false;
 		}
 	}
@@ -136,7 +140,7 @@ public abstract class ABlockWidget extends Composite {
 		Label title = new Label(getBlockTitle());
 		title.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_TITLE);
 
-		VerticalPanel center = new VerticalPanel();
+		FlowPanel center = new FlowPanel();
 		center.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_CENTER);
 		center.add(title);
 		center.add(buildContent());

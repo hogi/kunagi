@@ -1,15 +1,19 @@
-td {vertical-align: top; padding: 1px 2px;}
-button {display: block;	width: 100%; min-width: 100px;}
+td {vertical-align: top;}
+button {white-space: nowrap;}
 body {padding: 5px;}
 
-.element-DummyDropWidget {border: 0px; background: black; width: 100%; height: 3px;}
+.element-DummyDropWidget {background: #CCDDFF; height: 2px;}
+.element-DummyDropWidget-active {background: black; height: 5px; margin: 5px;}
 
-.element-BlockWidget-main {width: 100%;}
+.element-BlockListWidget {background: #CCDDFF; padding: 3px;}
+.element-BlockListWidget-table {width: 100%;}
+
+.element-BlockWidget-main {}
 .element-BlockWidget {border: 1px solid black; background: white; padding: 5px; cursor: pointer; color: black;}
 .element-BlockWidget-title {font-size: 14px; font-weight: bold;}
 .element-BlockWidget-block {padding: 3px; width: 100%;}
-.element-BlockWidget-center {width: 100%;}
-.state-BlockWidget-selected {border: 3px solid #CC4444; padding: 3px;}
+.element-BlockWidget-center {}
+.state-BlockWidget-selected {border: 3px solid #CC4444;}
 
 .element-WorkspaceWidget {}
 .element-WorkspaceWidget-sidebar {width: 300px; height: 100%;}
@@ -17,10 +21,7 @@ body {padding: 5px;}
 .element-WorkspaceWidget-workarea {padding: 5px;}
 
 .element-SidebarWidget {padding: 5px 5px 20px 5px; position: fixed; width: 300px;}
-.element-SidebarWidget-buttons {width: 100%;}
-
-.element-BlockListWidget {background: #CCDDFF; width: 100%; height: 100%;}
-.element-BlockListWidget-table {width: 100%;}
+.element-SidebarWidget-buttons {}
 
 .element-PanelWidget {border: 2px solid darkblue; -moz-border-radius: 10px;}
 .element-PanelWidget-title {background: darkblue; color: white; padding: 5px;}
@@ -34,15 +35,6 @@ body {padding: 5px;}
 .element-DropWidget-trash {background: white; border: 1px solid black; color: black; width: 100%;}
 .element-DropWidget-space {background: grey; width: 100%; height: 200px;}
 
-.element-SprintStoryListWidget {width: 100%;}
-
-.element-CurrentSprintWidget {width:100%;}
-.element-CurrentSprintWidget-fieldsWidget {width: 100%;}
-
-.element-StoryListWidget {width:100%;}
-
-.element-ImpedimentListWidget {width:100%;}
-
 .Viewer {height: 20px; width: 100%;}
 .Textarea-editor {height: 100px; width: 96%;}
 .Integer-editor {width: 10%;}
@@ -51,7 +43,7 @@ body {padding: 5px;}
 .fieldLabel {color: gray;}
 .editableViewer {font-weight: bold;	cursor: pointer; background: #EEEEFF; width: 100%;}
 .editableEditor {}
-.Toolbar {background: #CCDDFF; padding: 3px; border: 1px solid #CCDDFF; width: 100%;}
+.Toolbar {background: #CCDDFF; padding: 3px; border: 1px solid #CCDDFF;}
 .Trash-onEnter {border: 2px solid purple;}
 .deleted {background: grey;}
 .AEditableTextareaWidget-editorPanel {width: 100%;}

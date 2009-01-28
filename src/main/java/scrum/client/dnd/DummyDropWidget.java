@@ -20,6 +20,10 @@ public class DummyDropWidget extends Composite {
 		initWidget(panel);
 	}
 
+	public void setActive(boolean active) {
+		panel.setStyleName(active ? StyleSheet.ELEMENT_DUMMY_DROP_WIDGET_ACTIVE : StyleSheet.ELEMENT_DUMMY_DROP_WIDGET);
+	}
+
 	@Override
 	protected void onAttach() {
 		super.onAttach();

@@ -47,9 +47,9 @@ public class BlockListDropController implements DropController {
 		if (dropTarget.isInClipboard() == false) {
 			boolean isHigher = isHigher(area, location);
 			if (isHigher) {
-				dropTarget.getDummyTop().setVisible(false);
+				dropTarget.getDummyTop().setActive(false);
 			} else {
-				dropTarget.getDummyBottom().setVisible(false);
+				dropTarget.getDummyBottom().setActive(false);
 			}
 		}
 	}
@@ -61,11 +61,11 @@ public class BlockListDropController implements DropController {
 		if (dropTarget.isInClipboard() == false) {
 			boolean isHigher = isHigher(area, location);
 			if (isHigher) {
-				dropTarget.getDummyTop().setVisible(true);
-				dropTarget.getDummyBottom().setVisible(false);
+				dropTarget.getDummyTop().setActive(true);
+				dropTarget.getDummyBottom().setActive(false);
 			} else {
-				dropTarget.getDummyTop().setVisible(false);
-				dropTarget.getDummyBottom().setVisible(true);
+				dropTarget.getDummyTop().setActive(false);
+				dropTarget.getDummyBottom().setActive(true);
 			}
 		}
 

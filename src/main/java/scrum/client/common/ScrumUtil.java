@@ -10,8 +10,8 @@ public class ScrumUtil {
 	public static void addFiller(CellPanel panel) {
 		Label filler = new Label("");
 		panel.add(filler);
-		panel.setCellWidth(filler, "99%");
-		panel.setCellHeight(filler, "99%");
+		// panel.setCellWidth(filler, "99%");
+		// panel.setCellHeight(filler, "99%");
 	}
 
 	public static String toCommataSeperatedString(Collection c) {
