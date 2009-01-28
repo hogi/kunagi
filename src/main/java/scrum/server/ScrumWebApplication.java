@@ -84,6 +84,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		session.getNextData().addEntity(toPropertyMap(user));
 		// TODO limit to users projects
 		session.getNextData().addEntities(toPropertyMap(getProjectDao().getEntities()));
+		session.getNextData().entityIdBase = UUID.randomUUID().toString();
 	}
 
 	@Override
