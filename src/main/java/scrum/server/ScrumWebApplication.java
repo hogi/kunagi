@@ -89,7 +89,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	@Override
 	public void onSelectProject(SessionData session, String projectId) {
-		Project project = (Project) getProjectDao().getEntities().toArray()[0];
+		Project project = getProjectDao().getById(projectId);
 		session.setProject(project);
 
 		// prepare data for client
@@ -179,7 +179,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		User user2 = getUserDao().postUser("cartman", "geheim");
 		User user3 = getUserDao().postUser("duke", "geheim");
 
-		Project project1 = getProjectDao().postProject("test project", getUserDao().getUserByName("admin"));
+		Project project1 = getProjectDao().postProject("Prepared Project", getUserDao().getUserByName("admin"));
 		project1.addAdmins(getUserDao().getEntities());
 		project1.addTeamMembers(getUserDao().getEntities());
 		project1.setProductOwner(user1);
@@ -189,27 +189,27 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 		Impediment impediment1 = getImpedimentDao().newEntityInstance();
 		impediment1.setProject(project1);
-		impediment1.setLabel("Test Impediment 1");
+		impediment1.setLabel("Impediment 1");
 		getImpedimentDao().saveEntity(impediment1);
 
 		Impediment impediment2 = getImpedimentDao().newEntityInstance();
 		impediment2.setProject(project1);
-		impediment2.setLabel("Test Impediment 2");
+		impediment2.setLabel("Impediment 2");
 		getImpedimentDao().saveEntity(impediment2);
 
 		Impediment impediment3 = getImpedimentDao().newEntityInstance();
 		impediment3.setProject(project1);
-		impediment3.setLabel("Test Impediment 3");
+		impediment3.setLabel("Impediment 3");
 		getImpedimentDao().saveEntity(impediment3);
 
 		Story story1 = getStoryDao().newEntityInstance();
 		story1.setProject(project1);
-		story1.setLabel("Test Backlog Item 1");
+		story1.setLabel("Story 1");
 		getStoryDao().saveEntity(story1);
 
 		Story story2 = getStoryDao().newEntityInstance();
 		story2.setProject(project1);
-		story2.setLabel("Test Backlog Item 2");
+		story2.setLabel("Story 2");
 		story2.setEstimatedWork(5);
 		getStoryDao().saveEntity(story2);
 
@@ -228,7 +228,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 		Story story3 = getStoryDao().newEntityInstance();
 		story3.setProject(project1);
-		story3.setLabel("Test Backlog Item 3");
+		story3.setLabel("Story 3");
 		getStoryDao().saveEntity(story3);
 
 		Sprint sprint1 = getSprintDao().newEntityInstance();
@@ -245,6 +245,22 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		}
 
 		project1.setCurrentSprint(sprint1);
+
+		// ---
+
+		Project project2 = getProjectDao().postProject("Empty Project", getUserDao().getUserByName("admin"));
+		project2.addAdmins(getUserDao().getEntities());
+		project2.addTeamMembers(getUserDao().getEntities());
+		project2.setProductOwner(user2);
+		project2.setScrumMaster(user3);
+		project2.setDescription("Minimal test project.");
+
+		Sprint sprint2 = getSprintDao().newEntityInstance();
+		sprint2.setProject(project1);
+		sprint2.setLabel("Sprint 1");
+		sprint2.setBegin(Date.today().addDays(-1));
+		sprint2.setEnd(Date.today().addDays(30));
+		getSprintDao().saveEntity(sprint1);
 
 		getTransactionService().commit();
 	}
