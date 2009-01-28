@@ -53,6 +53,17 @@ public class SprintStoryWidget extends ABlockWidget {
 		VerticalPanel toolbar = new VerticalPanel();
 		toolbar.setStyleName(StyleSheet.TOOLBAR);
 
+		if (story.isDone() && !story.isClosed()) {
+			Button closeButton = new Button("Close");
+			closeButton.addClickListener(new ClickListener() {
+
+				public void onClick(Widget sender) {
+					story.setClosed(true);
+					rebuild();
+				}
+			});
+		}
+
 		Button removeButton = new Button("Remove");
 		removeButton.addClickListener(new ClickListener() {
 
@@ -63,7 +74,7 @@ public class SprintStoryWidget extends ABlockWidget {
 		});
 		toolbar.add(removeButton);
 
-		if (!story.isDone()) {
+		if (!story.isClosed()) {
 			Button newTaskButton = new Button("Create Task");
 			newTaskButton.addClickListener(new ClickListener() {
 
