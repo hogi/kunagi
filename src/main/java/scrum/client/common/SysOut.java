@@ -1,6 +1,6 @@
 package scrum.client.common;
 
-public class Logger {
+public class SysOut {
 
 	public static void DEBUG(Object... strings) {
 		StringBuilder sb = new StringBuilder();

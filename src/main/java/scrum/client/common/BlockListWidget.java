@@ -15,6 +15,8 @@ import com.google.gwt.user.client.ui.TableListener;
  */
 public final class BlockListWidget<B extends ABlockWidget> extends Composite implements Iterable<B> {
 
+	// private static final Logger LOG = Logger.get(BlockListWidget.class);
+
 	private FlexTable table;
 	private ScrollPanel scroller;
 	private List<B> blocks = new LinkedList<B>();
@@ -24,7 +26,6 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	private BlockListController<B> controller = new BlockListController<B>();
 
 	public BlockListWidget() {
-
 		table = new FlexTable();
 		table.setStyleName(StyleSheet.ELEMENT_BLOCK_LIST_WIDGET_TABLE);
 		if (!sidebarMode) {
@@ -52,11 +53,8 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	}
 
 	public final void addBlock(B block) {
-		// if (sidebarMode)
 		block.setInClipboard(sidebarMode);
 		block.setList(this);
-		block.makeDraggable();
-		// createDropControllerFor(block);
 
 		block.rebuild();
 		block.setListController(controller);
@@ -67,11 +65,8 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	}
 
 	public final void addBlockAt(int index, B block) {
-		// if (sidebarMode)
 		block.setInClipboard(sidebarMode);
 		block.setList(this);
-		block.makeDraggable();
-		// createDropControllerFor(block);
 
 		block.rebuild();
 		block.setListController(controller);
@@ -132,13 +127,16 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 
 	public final void removeRow(int row) {
 		if (row < 0 || row >= blocks.size()) return;
-		blocks.remove(row);
-		table.removeRow(row);
+		// TODO why does deselect does not work? even this debug is not printed in non-gwt-browser.
+		SysOut.DEBUG("remove row:", row);
+
 		if (selectedRow == row) {
-			selectedRow = -1;
+			deselect();
 		} else if (selectedRow > row) {
 			selectedRow--;
 		}
+		blocks.remove(row);
+		table.removeRow(row);
 	}
 
 	public final void selectBlock(B block) {
@@ -147,6 +145,10 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 
 	public final void deselect() {
 		B block = getSelectedBlock();
+
+		// TODO why does deselect does not work? even this debug is not printed in non-gwt-browser.
+		SysOut.DEBUG("DESELECT!!!!!!!!!!!!!!!!!!!!!!!");
+
 		if (block == null) return;
 		block.removeStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
 		selectedRow = -1;
@@ -156,7 +158,7 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	public void setController(BlockListController<B> controller) {
 		this.controller = controller;
 		for (ABlockWidget block : blocks) {
-			System.out.println(block + ": " + controller.getClass());
+			// LOG.debug(block + ": " + controller.getClass());
 			block.setListController(controller);
 		}
 	}

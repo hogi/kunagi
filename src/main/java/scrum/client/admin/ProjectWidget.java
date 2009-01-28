@@ -85,7 +85,12 @@ public class ProjectWidget extends ABlockWidget {
 	}
 
 	@Override
-	protected AbstractImagePrototype getIcon() {
+	protected AbstractImagePrototype getIcon16() {
+		return Img.icons().projectIcon32();
+	}
+
+	@Override
+	protected AbstractImagePrototype getIcon32() {
 		return Img.icons().projectIcon32();
 	}
 

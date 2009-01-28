@@ -41,13 +41,14 @@ public class ClipboardWidget extends Composite {
 		DockPanel dock = new DockPanel();
 		dock.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET);
 
-		dock.add(list, DockPanel.NORTH);
-		dock.setCellHeight(list, "1%");
+		// dock.add(list, DockPanel.NORTH);
+		// dock.setCellHeight(list, "1%");
+		dock.add(list, DockPanel.CENTER);
 
-		dock.add(space, DockPanel.CENTER);
+		// dock.add(space, DockPanel.CENTER);
 
 		dock.add(trash, DockPanel.SOUTH);
-		dock.setCellHeight(trash, "1%");
+		// dock.setCellHeight(trash, "1%");
 
 		initWidget(dock);
 
@@ -71,7 +72,7 @@ public class ClipboardWidget extends Composite {
 			if (widget instanceof ABlockWidget) {
 				ABlockWidget ablockwidget = (ABlockWidget) widget;
 				if (ablockwidget.isInClipboard() == false) list.addBlock(ablockwidget);
-				ablockwidget.rebuild();
+				// ablockwidget.rebuild();
 			}
 		}
 
@@ -82,11 +83,11 @@ public class ClipboardWidget extends Composite {
 		public void onLeave(DragContext context) {
 			System.out.println("leaving...");
 			list.removeStyleName(StyleSheet.TRASH_ON_ENTER); // TODO
-			Widget widget = context.draggable;
-			if (widget instanceof ABlockWidget) {
-				ABlockWidget ablockwidget = (ABlockWidget) widget;
-				ablockwidget.rebuild();
-			}
+			// Widget widget = context.draggable;
+			// if (widget instanceof ABlockWidget) {
+			// ABlockWidget ablockwidget = (ABlockWidget) widget;
+			// ablockwidget.rebuild();
+			// }
 		}
 
 		public void onMove(DragContext context) {}

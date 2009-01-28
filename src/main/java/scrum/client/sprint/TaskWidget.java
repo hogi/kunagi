@@ -181,7 +181,13 @@ public class TaskWidget extends ABlockWidget {
 	}
 
 	@Override
-	protected AbstractImagePrototype getIcon() {
+	protected AbstractImagePrototype getIcon16() {
+		if (task.isDone()) return Img.bundle.taskDoneIcon16();
+		return Img.bundle.taskIcon16();
+	}
+
+	@Override
+	protected AbstractImagePrototype getIcon32() {
 		if (task.isDone()) return Img.bundle.taskDoneIcon32();
 		return Img.bundle.taskIcon32();
 	}

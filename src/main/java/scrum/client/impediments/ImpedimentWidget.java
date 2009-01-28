@@ -29,34 +29,20 @@ public class ImpedimentWidget extends ABlockWidget {
 		this.impediment = impediment;
 	}
 
-	// @Override
-	// public AClipboardItemWidget getClipboardItemWidget() {
-	// AClipboardItemWidget wi = new AClipboardItemWidget() {
-	//
-	// @Override
-	// public AbstractImagePrototype getIcon() {
-	// return Img.bundle.impedimentIcon16();
-	// }
-	//
-	// @Override
-	// protected String getLabel() {
-	// return impediment.getLabel();
-	// }
-	//
-	// };
-	//
-	// ScrumGwtApplication.get().getDragController().makeDraggable(wi, wi.getDragHandle());
-	//
-	// return wi;
-	// }
-
 	@Override
 	protected String getBlockTitle() {
 		return impediment.getLabel();
 	}
 
 	@Override
-	protected AbstractImagePrototype getIcon() {
+	protected AbstractImagePrototype getIcon16() {
+		// return different icon depending on solved-status
+		if (impediment.isSolved()) return Img.bundle.impedimentSolvedIcon16();
+		return Img.bundle.impedimentIcon16();
+	}
+
+	@Override
+	protected AbstractImagePrototype getIcon32() {
 		// return different icon depending on solved-status
 		if (impediment.isSolved()) return Img.bundle.impedimentSolvedIcon32();
 		return Img.bundle.impedimentIcon32();

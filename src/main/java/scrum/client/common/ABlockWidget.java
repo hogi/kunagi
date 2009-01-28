@@ -2,7 +2,6 @@ package scrum.client.common;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.dnd.DummyDropWidget;
-import scrum.client.img.Img;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -18,6 +17,7 @@ import com.google.gwt.user.client.ui.Widget;
  * Base class for a block widget, which can be added to a <code>BlockWidgetList</code>.
  * 
  */
+@SuppressWarnings("unchecked")
 public abstract class ABlockWidget extends Composite {
 
 	private BlockListWidget list;
@@ -25,9 +25,8 @@ public abstract class ABlockWidget extends Composite {
 	private SimplePanel panel;
 	private boolean extended;
 	private boolean inClipboard;
-	private Image dragHandle;
 	private DropController dropController;
-	protected BlockListController controller = new BlockListController<ABlockWidget>();
+	protected BlockListController controller = new BlockListController();
 	private DummyDropWidget dummyTop = new DummyDropWidget();
 	private DummyDropWidget dummyBottom = new DummyDropWidget();
 
@@ -41,7 +40,9 @@ public abstract class ABlockWidget extends Composite {
 
 	protected abstract String getBlockTitle();
 
-	protected abstract AbstractImagePrototype getIcon();
+	protected abstract AbstractImagePrototype getIcon16();
+
+	protected abstract AbstractImagePrototype getIcon32();
 
 	public abstract void delete();
 
@@ -61,10 +62,6 @@ public abstract class ABlockWidget extends Composite {
 		dummyBottom.setVisible(false);
 		initWidget(mainpanel);
 	}
-
-	// public AClipboardItemWidget getClipboardItemWidget() {
-	// return null;
-	// }
 
 	protected abstract DropController createDropController();
 
@@ -93,7 +90,7 @@ public abstract class ABlockWidget extends Composite {
 	}
 
 	/**
-	 * Indicates if the bock is in extended-mode. This method should by called whithin the
+	 * Indicates if the block is in extended-mode. This method should by called within the
 	 * <code>build()</code>-method.
 	 */
 	public final boolean isExtended() {
@@ -106,6 +103,7 @@ public abstract class ABlockWidget extends Composite {
 
 	final void setInClipboard(boolean inClipboard) {
 		this.inClipboard = inClipboard;
+		if (this.inClipboard != inClipboard) rebuild();
 	}
 
 	public final void rebuild() {
@@ -120,16 +118,12 @@ public abstract class ABlockWidget extends Composite {
 	}
 
 	protected final Widget build() {
-		if (inClipboard) {
-			return buildClipboardItemWidget();
-		} else {
-			return buildBlockItemWidget();
-		}
+		return inClipboard ? buildClipboardItemWidget() : buildBlockItemWidget();
 	}
 
 	protected final Widget buildClipboardItemWidget() {
 		HorizontalPanel mainpanel = new HorizontalPanel();
-		mainpanel.add(dragHandle);
+		mainpanel.add(makeDraggable());
 		mainpanel.add(new Label(getBlockTitle()));
 
 		return mainpanel;
@@ -147,10 +141,7 @@ public abstract class ABlockWidget extends Composite {
 		HorizontalPanel block = new HorizontalPanel();
 		block.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_BLOCK);
 
-		block.add(dragHandle);
-
-		AbstractImagePrototype icon = getIcon();
-		if (icon != null) block.add(icon.createImage());
+		block.add(makeDraggable());
 
 		block.add(center);
 
@@ -165,13 +156,19 @@ public abstract class ABlockWidget extends Composite {
 		return block;
 	}
 
-	public final void makeDraggable() {
-		createDragHandle();
+	public final Image makeDraggable() {
+		Image dragHandle = createDragHandle();
 		ScrumGwtApplication.get().getDragController().makeDraggable(this, dragHandle);
+		return dragHandle;
 	}
 
 	public Image createDragHandle() {
-		dragHandle = Img.icons().dragHandleIcon32().createImage();
+		Image dragHandle = null;
+		if (isInClipboard()) {
+			dragHandle = getIcon16().createImage();
+		} else {
+			dragHandle = getIcon32().createImage();
+		}
 		dragHandle.setStyleName(StyleSheet.DRAG_HANDLE);
 		return dragHandle;
 	}

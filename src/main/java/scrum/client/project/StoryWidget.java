@@ -144,7 +144,13 @@ public class StoryWidget extends ABlockWidget {
 	}
 
 	@Override
-	protected AbstractImagePrototype getIcon() {
+	protected AbstractImagePrototype getIcon16() {
+		if (item.isClosed()) return Img.bundle.storyDoneIcon16();
+		return Img.bundle.storyIcon16();
+	}
+
+	@Override
+	protected AbstractImagePrototype getIcon32() {
 		if (item.isClosed()) return Img.bundle.storyDoneIcon32();
 		return Img.bundle.storyIcon32();
 	}
