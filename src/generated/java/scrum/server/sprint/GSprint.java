@@ -46,9 +46,9 @@ public abstract class GSprint
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("projectId", this.projectId);
         properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("begin", this.begin == null ? null : this.begin.toString());
-        properties.put("projectId", this.projectId);
         properties.put("label", this.label);
     }
 
@@ -65,10 +65,47 @@ public abstract class GSprint
         super(template);
         if (template==null) return;
 
+        setProject(template.getProject());
         setEnd(template.getEnd());
         setBegin(template.getBegin());
-        setProject(template.getProject());
         setLabel(template.getLabel());
+    }
+
+    // -----------------------------------------------------------
+    // - project
+    // -----------------------------------------------------------
+
+    private String projectId;
+
+    public final scrum.server.project.Project getProject() {
+        if (this.projectId == null) return null;
+        return (scrum.server.project.Project)projectDao.getById(this.projectId);
+    }
+
+    public final void setProject(scrum.server.project.Project project) {
+        project = prepareProject(project);
+        if (isProject(project)) return;
+        this.projectId = project == null ? null : project.getId();
+        entityModified();
+    }
+
+    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
+        return project;
+    }
+
+    protected void repairDeadProjectReference(String entityId) {
+        if (entityId.equals(this.projectId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isProjectSet() {
+        return this.projectId != null;
+    }
+
+    public final boolean isProject(scrum.server.project.Project project) {
+        if (this.projectId == null && project == null) return true;
+        return project != null && project.getId().equals(this.projectId);
     }
 
     // -----------------------------------------------------------
@@ -129,43 +166,6 @@ public abstract class GSprint
     public final boolean isBegin(ilarkesto.base.time.Date begin) {
         if (this.begin == null && begin == null) return true;
         return this.begin != null && this.begin.equals(begin);
-    }
-
-    // -----------------------------------------------------------
-    // - project
-    // -----------------------------------------------------------
-
-    private String projectId;
-
-    public final scrum.server.project.Project getProject() {
-        if (this.projectId == null) return null;
-        return (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
-
-    public final void setProject(scrum.server.project.Project project) {
-        project = prepareProject(project);
-        if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
-        entityModified();
-    }
-
-    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
-        return project;
-    }
-
-    protected void repairDeadProjectReference(String entityId) {
-        if (entityId.equals(this.projectId)) {
-            repairMissingMaster();
-        }
-    }
-
-    public final boolean isProjectSet() {
-        return this.projectId != null;
-    }
-
-    public final boolean isProject(scrum.server.project.Project project) {
-        if (this.projectId == null && project == null) return true;
-        return project != null && project.getId().equals(this.projectId);
     }
 
     // -----------------------------------------------------------

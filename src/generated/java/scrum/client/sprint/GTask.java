@@ -43,22 +43,24 @@ public abstract class GTask
         return ENTITY_TYPE;
     }
 
-    // --- remainingWork ---
+    // --- story ---
 
-    private java.lang.Integer remainingWork ;
+    private String storyId;
 
-    public final java.lang.Integer getRemainingWork() {
-        return this.remainingWork ;
+    public final scrum.client.project.Story getStory() {
+        return getDao().getStory(this.storyId);
     }
 
-    public final Task setRemainingWork(java.lang.Integer remainingWork) {
-        this.remainingWork = remainingWork ;
-        propertyChanged("remainingWork", this.remainingWork);
+    public final Task setStory(scrum.client.project.Story story) {
+        String id = story == null ? null : story.getId();
+        if (equals(this.storyId, id)) return (Task) this;
+        this.storyId = id;
+        propertyChanged("storyId", this.storyId);
         return (Task)this;
     }
 
-    public final boolean isRemainingWork(java.lang.Integer remainingWork) {
-        return equals(this.remainingWork, remainingWork);
+    public final boolean isStory(scrum.client.project.Story story) {
+        return equals(this.storyId, story);
     }
 
     // --- notice ---
@@ -79,24 +81,6 @@ public abstract class GTask
         return equals(this.notice, notice);
     }
 
-    // --- burnedWork ---
-
-    private int burnedWork ;
-
-    public final int getBurnedWork() {
-        return this.burnedWork ;
-    }
-
-    public final Task setBurnedWork(int burnedWork) {
-        this.burnedWork = burnedWork ;
-        propertyChanged("burnedWork", this.burnedWork);
-        return (Task)this;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return equals(this.burnedWork, burnedWork);
-    }
-
     // --- label ---
 
     private java.lang.String label ;
@@ -115,44 +99,60 @@ public abstract class GTask
         return equals(this.label, label);
     }
 
-    // --- story ---
+    // --- burnedWork ---
 
-    private String storyId;
+    private int burnedWork ;
 
-    public final scrum.client.project.Story getStory() {
-        return getDao().getStory(this.storyId);
+    public final int getBurnedWork() {
+        return this.burnedWork ;
     }
 
-    public final Task setStory(scrum.client.project.Story story) {
-        String id = story == null ? null : story.getId();
-        if (equals(this.storyId, id)) return (Task) this;
-        this.storyId = id;
-        propertyChanged("story", this.storyId);
+    public final Task setBurnedWork(int burnedWork) {
+        this.burnedWork = burnedWork ;
+        propertyChanged("burnedWork", this.burnedWork);
         return (Task)this;
     }
 
-    public final boolean isStory(scrum.client.project.Story story) {
-        return equals(this.storyId, story);
+    public final boolean isBurnedWork(int burnedWork) {
+        return equals(this.burnedWork, burnedWork);
+    }
+
+    // --- remainingWork ---
+
+    private java.lang.Integer remainingWork ;
+
+    public final java.lang.Integer getRemainingWork() {
+        return this.remainingWork ;
+    }
+
+    public final Task setRemainingWork(java.lang.Integer remainingWork) {
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
+        return (Task)this;
+    }
+
+    public final boolean isRemainingWork(java.lang.Integer remainingWork) {
+        return equals(this.remainingWork, remainingWork);
     }
 
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        remainingWork  = (java.lang.Integer) props.get("remainingWork");
-        notice  = (java.lang.String) props.get("notice");
-        burnedWork  = (Integer) props.get("burnedWork");
-        label  = (java.lang.String) props.get("label");
         storyId = (String) props.get("storyId");
+        notice  = (java.lang.String) props.get("notice");
+        label  = (java.lang.String) props.get("label");
+        burnedWork  = (Integer) props.get("burnedWork");
+        remainingWork  = (java.lang.Integer) props.get("remainingWork");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("remainingWork", this.remainingWork);
-        properties.put("notice", this.notice);
-        properties.put("burnedWork", this.burnedWork);
-        properties.put("label", this.label);
         properties.put("storyId", this.storyId);
+        properties.put("notice", this.notice);
+        properties.put("label", this.label);
+        properties.put("burnedWork", this.burnedWork);
+        properties.put("remainingWork", this.remainingWork);
     }
 
 }

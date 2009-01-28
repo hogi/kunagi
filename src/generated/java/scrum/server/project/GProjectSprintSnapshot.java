@@ -46,10 +46,10 @@ public abstract class GProjectSprintSnapshot
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("projectId", this.projectId);
         properties.put("burnedWork", this.burnedWork);
         properties.put("remainingWork", this.remainingWork);
-        properties.put("date", this.date == null ? null : this.date.toString());
     }
 
     public int compareTo(ProjectSprintSnapshot other) {
@@ -65,10 +65,40 @@ public abstract class GProjectSprintSnapshot
         super(template);
         if (template==null) return;
 
+        setDate(template.getDate());
         setProject(template.getProject());
         setBurnedWork(template.getBurnedWork());
         setRemainingWork(template.getRemainingWork());
-        setDate(template.getDate());
+    }
+
+    // -----------------------------------------------------------
+    // - date
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date date;
+
+    public final ilarkesto.base.time.Date getDate() {
+        return date;
+    }
+
+    public final void setDate(ilarkesto.base.time.Date date) {
+        date = prepareDate(date);
+        if (isDate(date)) return;
+        this.date = date;
+        entityModified();
+    }
+
+    protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
+        return date;
+    }
+
+    public final boolean isDateSet() {
+        return this.date != null;
+    }
+
+    public final boolean isDate(ilarkesto.base.time.Date date) {
+        if (this.date == null && date == null) return true;
+        return this.date != null && this.date.equals(date);
     }
 
     // -----------------------------------------------------------
@@ -157,36 +187,6 @@ public abstract class GProjectSprintSnapshot
 
     public final boolean isRemainingWork(int remainingWork) {
         return this.remainingWork == remainingWork;
-    }
-
-    // -----------------------------------------------------------
-    // - date
-    // -----------------------------------------------------------
-
-    private ilarkesto.base.time.Date date;
-
-    public final ilarkesto.base.time.Date getDate() {
-        return date;
-    }
-
-    public final void setDate(ilarkesto.base.time.Date date) {
-        date = prepareDate(date);
-        if (isDate(date)) return;
-        this.date = date;
-        entityModified();
-    }
-
-    protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
-        return date;
-    }
-
-    public final boolean isDateSet() {
-        return this.date != null;
-    }
-
-    public final boolean isDate(ilarkesto.base.time.Date date) {
-        if (this.date == null && date == null) return true;
-        return this.date != null && this.date.equals(date);
     }
 
     protected void repairDeadReferences(String entityId) {

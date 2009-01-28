@@ -43,24 +43,6 @@ public abstract class GImpediment
         return ENTITY_TYPE;
     }
 
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final Impediment setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
-        return (Impediment)this;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
-    }
-
     // --- solution ---
 
     private java.lang.String solution ;
@@ -77,26 +59,6 @@ public abstract class GImpediment
 
     public final boolean isSolution(java.lang.String solution) {
         return equals(this.solution, solution);
-    }
-
-    // --- project ---
-
-    private String projectId;
-
-    public final scrum.client.project.Project getProject() {
-        return getDao().getProject(this.projectId);
-    }
-
-    public final Impediment setProject(scrum.client.project.Project project) {
-        String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Impediment) this;
-        this.projectId = id;
-        propertyChanged("project", this.projectId);
-        return (Impediment)this;
-    }
-
-    public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
     }
 
     // --- description ---
@@ -135,24 +97,62 @@ public abstract class GImpediment
         return equals(this.solved, solved);
     }
 
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final Impediment setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
+        return (Impediment)this;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
+    }
+
+    // --- project ---
+
+    private String projectId;
+
+    public final scrum.client.project.Project getProject() {
+        return getDao().getProject(this.projectId);
+    }
+
+    public final Impediment setProject(scrum.client.project.Project project) {
+        String id = project == null ? null : project.getId();
+        if (equals(this.projectId, id)) return (Impediment) this;
+        this.projectId = id;
+        propertyChanged("projectId", this.projectId);
+        return (Impediment)this;
+    }
+
+    public final boolean isProject(scrum.client.project.Project project) {
+        return equals(this.projectId, project);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        label  = (java.lang.String) props.get("label");
         solution  = (java.lang.String) props.get("solution");
-        projectId = (String) props.get("projectId");
         description  = (java.lang.String) props.get("description");
         solved  = (Boolean) props.get("solved");
+        label  = (java.lang.String) props.get("label");
+        projectId = (String) props.get("projectId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("label", this.label);
         properties.put("solution", this.solution);
-        properties.put("projectId", this.projectId);
         properties.put("description", this.description);
         properties.put("solved", this.solved);
+        properties.put("label", this.label);
+        properties.put("projectId", this.projectId);
     }
 
 }

@@ -43,16 +43,16 @@ public abstract class GTaskDao
 
     // --- clear caches ---
     public void clearCaches() {
-        tasksByRemainingWorkCache.clear();
-        remainingWorksCache = null;
-        tasksByNoticeCache.clear();
-        noticesCache = null;
-        tasksByBurnedWorkCache.clear();
-        burnedWorksCache = null;
-        tasksByLabelCache.clear();
-        labelsCache = null;
         tasksByStoryCache.clear();
         storysCache = null;
+        tasksByNoticeCache.clear();
+        noticesCache = null;
+        tasksByLabelCache.clear();
+        labelsCache = null;
+        tasksByBurnedWorkCache.clear();
+        burnedWorksCache = null;
+        tasksByRemainingWorkCache.clear();
+        remainingWorksCache = null;
     }
 
     @Override
@@ -72,41 +72,41 @@ public abstract class GTaskDao
     }
 
     // -----------------------------------------------------------
-    // - remainingWork
+    // - story
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.Integer,Set<Task>> tasksByRemainingWorkCache = new Cache<java.lang.Integer,Set<Task>>(
-            new Cache.Factory<java.lang.Integer,Set<Task>>() {
-                public Set<Task> create(java.lang.Integer remainingWork) {
-                    return getEntities(new IsRemainingWork(remainingWork));
+    private final Cache<scrum.server.project.Story,Set<Task>> tasksByStoryCache = new Cache<scrum.server.project.Story,Set<Task>>(
+            new Cache.Factory<scrum.server.project.Story,Set<Task>>() {
+                public Set<Task> create(scrum.server.project.Story story) {
+                    return getEntities(new IsStory(story));
                 }
             });
 
-    public final Set<Task> getTasksByRemainingWork(java.lang.Integer remainingWork) {
-        return tasksByRemainingWorkCache.get(remainingWork);
+    public final Set<Task> getTasksByStory(scrum.server.project.Story story) {
+        return tasksByStoryCache.get(story);
     }
-    private Set<java.lang.Integer> remainingWorksCache;
+    private Set<scrum.server.project.Story> storysCache;
 
-    public final Set<java.lang.Integer> getRemainingWorks() {
-        if (remainingWorksCache == null) {
-            remainingWorksCache = new HashSet<java.lang.Integer>();
+    public final Set<scrum.server.project.Story> getStorys() {
+        if (storysCache == null) {
+            storysCache = new HashSet<scrum.server.project.Story>();
             for (Task e : getEntities()) {
-                if (e.isRemainingWorkSet()) remainingWorksCache.add(e.getRemainingWork());
+                if (e.isStorySet()) storysCache.add(e.getStory());
             }
         }
-        return remainingWorksCache;
+        return storysCache;
     }
 
-    private static class IsRemainingWork implements Predicate<Task> {
+    private static class IsStory implements Predicate<Task> {
 
-        private java.lang.Integer value;
+        private scrum.server.project.Story value;
 
-        public IsRemainingWork(java.lang.Integer value) {
+        public IsStory(scrum.server.project.Story value) {
             this.value = value;
         }
 
         public boolean test(Task e) {
-            return e.isRemainingWork(value);
+            return e.isStory(value);
         }
 
     }
@@ -152,46 +152,6 @@ public abstract class GTaskDao
     }
 
     // -----------------------------------------------------------
-    // - burnedWork
-    // -----------------------------------------------------------
-
-    private final Cache<Integer,Set<Task>> tasksByBurnedWorkCache = new Cache<Integer,Set<Task>>(
-            new Cache.Factory<Integer,Set<Task>>() {
-                public Set<Task> create(Integer burnedWork) {
-                    return getEntities(new IsBurnedWork(burnedWork));
-                }
-            });
-
-    public final Set<Task> getTasksByBurnedWork(int burnedWork) {
-        return tasksByBurnedWorkCache.get(burnedWork);
-    }
-    private Set<Integer> burnedWorksCache;
-
-    public final Set<Integer> getBurnedWorks() {
-        if (burnedWorksCache == null) {
-            burnedWorksCache = new HashSet<Integer>();
-            for (Task e : getEntities()) {
-                burnedWorksCache.add(e.getBurnedWork());
-            }
-        }
-        return burnedWorksCache;
-    }
-
-    private static class IsBurnedWork implements Predicate<Task> {
-
-        private int value;
-
-        public IsBurnedWork(int value) {
-            this.value = value;
-        }
-
-        public boolean test(Task e) {
-            return e.isBurnedWork(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
 
@@ -232,41 +192,81 @@ public abstract class GTaskDao
     }
 
     // -----------------------------------------------------------
-    // - story
+    // - burnedWork
     // -----------------------------------------------------------
 
-    private final Cache<scrum.server.project.Story,Set<Task>> tasksByStoryCache = new Cache<scrum.server.project.Story,Set<Task>>(
-            new Cache.Factory<scrum.server.project.Story,Set<Task>>() {
-                public Set<Task> create(scrum.server.project.Story story) {
-                    return getEntities(new IsStory(story));
+    private final Cache<Integer,Set<Task>> tasksByBurnedWorkCache = new Cache<Integer,Set<Task>>(
+            new Cache.Factory<Integer,Set<Task>>() {
+                public Set<Task> create(Integer burnedWork) {
+                    return getEntities(new IsBurnedWork(burnedWork));
                 }
             });
 
-    public final Set<Task> getTasksByStory(scrum.server.project.Story story) {
-        return tasksByStoryCache.get(story);
+    public final Set<Task> getTasksByBurnedWork(int burnedWork) {
+        return tasksByBurnedWorkCache.get(burnedWork);
     }
-    private Set<scrum.server.project.Story> storysCache;
+    private Set<Integer> burnedWorksCache;
 
-    public final Set<scrum.server.project.Story> getStorys() {
-        if (storysCache == null) {
-            storysCache = new HashSet<scrum.server.project.Story>();
+    public final Set<Integer> getBurnedWorks() {
+        if (burnedWorksCache == null) {
+            burnedWorksCache = new HashSet<Integer>();
             for (Task e : getEntities()) {
-                if (e.isStorySet()) storysCache.add(e.getStory());
+                burnedWorksCache.add(e.getBurnedWork());
             }
         }
-        return storysCache;
+        return burnedWorksCache;
     }
 
-    private static class IsStory implements Predicate<Task> {
+    private static class IsBurnedWork implements Predicate<Task> {
 
-        private scrum.server.project.Story value;
+        private int value;
 
-        public IsStory(scrum.server.project.Story value) {
+        public IsBurnedWork(int value) {
             this.value = value;
         }
 
         public boolean test(Task e) {
-            return e.isStory(value);
+            return e.isBurnedWork(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.Integer,Set<Task>> tasksByRemainingWorkCache = new Cache<java.lang.Integer,Set<Task>>(
+            new Cache.Factory<java.lang.Integer,Set<Task>>() {
+                public Set<Task> create(java.lang.Integer remainingWork) {
+                    return getEntities(new IsRemainingWork(remainingWork));
+                }
+            });
+
+    public final Set<Task> getTasksByRemainingWork(java.lang.Integer remainingWork) {
+        return tasksByRemainingWorkCache.get(remainingWork);
+    }
+    private Set<java.lang.Integer> remainingWorksCache;
+
+    public final Set<java.lang.Integer> getRemainingWorks() {
+        if (remainingWorksCache == null) {
+            remainingWorksCache = new HashSet<java.lang.Integer>();
+            for (Task e : getEntities()) {
+                if (e.isRemainingWorkSet()) remainingWorksCache.add(e.getRemainingWork());
+            }
+        }
+        return remainingWorksCache;
+    }
+
+    private static class IsRemainingWork implements Predicate<Task> {
+
+        private java.lang.Integer value;
+
+        public IsRemainingWork(java.lang.Integer value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isRemainingWork(value);
         }
 
     }

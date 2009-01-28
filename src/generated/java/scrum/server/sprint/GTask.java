@@ -46,11 +46,11 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("remainingWork", this.remainingWork);
-        properties.put("notice", this.notice);
-        properties.put("burnedWork", this.burnedWork);
-        properties.put("label", this.label);
         properties.put("storyId", this.storyId);
+        properties.put("notice", this.notice);
+        properties.put("label", this.label);
+        properties.put("burnedWork", this.burnedWork);
+        properties.put("remainingWork", this.remainingWork);
     }
 
     public int compareTo(Task other) {
@@ -66,128 +66,11 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
-        setRemainingWork(template.getRemainingWork());
-        setNotice(template.getNotice());
-        setBurnedWork(template.getBurnedWork());
-        setLabel(template.getLabel());
         setStory(template.getStory());
-    }
-
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private java.lang.Integer remainingWork;
-
-    public final java.lang.Integer getRemainingWork() {
-        return remainingWork;
-    }
-
-    public final void setRemainingWork(java.lang.Integer remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
-        entityModified();
-    }
-
-    protected java.lang.Integer prepareRemainingWork(java.lang.Integer remainingWork) {
-        return remainingWork;
-    }
-
-    public final boolean isRemainingWorkSet() {
-        return this.remainingWork != null;
-    }
-
-    public final boolean isRemainingWork(java.lang.Integer remainingWork) {
-        if (this.remainingWork == null && remainingWork == null) return true;
-        return this.remainingWork != null && this.remainingWork.equals(remainingWork);
-    }
-
-    // -----------------------------------------------------------
-    // - notice
-    // -----------------------------------------------------------
-
-    private java.lang.String notice;
-
-    public final java.lang.String getNotice() {
-        return notice;
-    }
-
-    public final void setNotice(java.lang.String notice) {
-        notice = prepareNotice(notice);
-        if (isNotice(notice)) return;
-        this.notice = notice;
-        entityModified();
-    }
-
-    protected java.lang.String prepareNotice(java.lang.String notice) {
-        notice = Str.removeUnreadableChars(notice);
-        return notice;
-    }
-
-    public final boolean isNoticeSet() {
-        return this.notice != null;
-    }
-
-    public final boolean isNotice(java.lang.String notice) {
-        if (this.notice == null && notice == null) return true;
-        return this.notice != null && this.notice.equals(notice);
-    }
-
-    // -----------------------------------------------------------
-    // - burnedWork
-    // -----------------------------------------------------------
-
-    private int burnedWork;
-
-    public final int getBurnedWork() {
-        return burnedWork;
-    }
-
-    public final void setBurnedWork(int burnedWork) {
-        burnedWork = prepareBurnedWork(burnedWork);
-        if (isBurnedWork(burnedWork)) return;
-        this.burnedWork = burnedWork;
-        entityModified();
-    }
-
-    protected int prepareBurnedWork(int burnedWork) {
-        return burnedWork;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return this.burnedWork == burnedWork;
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        entityModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
+        setNotice(template.getNotice());
+        setLabel(template.getLabel());
+        setBurnedWork(template.getBurnedWork());
+        setRemainingWork(template.getRemainingWork());
     }
 
     // -----------------------------------------------------------
@@ -225,6 +108,123 @@ public abstract class GTask
     public final boolean isStory(scrum.server.project.Story story) {
         if (this.storyId == null && story == null) return true;
         return story != null && story.getId().equals(this.storyId);
+    }
+
+    // -----------------------------------------------------------
+    // - notice
+    // -----------------------------------------------------------
+
+    private java.lang.String notice;
+
+    public final java.lang.String getNotice() {
+        return notice;
+    }
+
+    public final void setNotice(java.lang.String notice) {
+        notice = prepareNotice(notice);
+        if (isNotice(notice)) return;
+        this.notice = notice;
+        entityModified();
+    }
+
+    protected java.lang.String prepareNotice(java.lang.String notice) {
+        notice = Str.removeUnreadableChars(notice);
+        return notice;
+    }
+
+    public final boolean isNoticeSet() {
+        return this.notice != null;
+    }
+
+    public final boolean isNotice(java.lang.String notice) {
+        if (this.notice == null && notice == null) return true;
+        return this.notice != null && this.notice.equals(notice);
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - burnedWork
+    // -----------------------------------------------------------
+
+    private int burnedWork;
+
+    public final int getBurnedWork() {
+        return burnedWork;
+    }
+
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
+        entityModified();
+    }
+
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
+    }
+
+    // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private java.lang.Integer remainingWork;
+
+    public final java.lang.Integer getRemainingWork() {
+        return remainingWork;
+    }
+
+    public final void setRemainingWork(java.lang.Integer remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+        entityModified();
+    }
+
+    protected java.lang.Integer prepareRemainingWork(java.lang.Integer remainingWork) {
+        return remainingWork;
+    }
+
+    public final boolean isRemainingWorkSet() {
+        return this.remainingWork != null;
+    }
+
+    public final boolean isRemainingWork(java.lang.Integer remainingWork) {
+        if (this.remainingWork == null && remainingWork == null) return true;
+        return this.remainingWork != null && this.remainingWork.equals(remainingWork);
     }
 
     protected void repairDeadReferences(String entityId) {

@@ -60,6 +60,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	@Override
 	public void onChangeProperties(SessionData session, String entityId, Map properties) {
+		LOG.debug("-------------->", properties);
 		AEntity entity = getDaoService().getEntityById(entityId);
 		entity.updateProperties(properties);
 

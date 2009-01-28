@@ -43,17 +43,17 @@ public abstract class GStoryDao
 
     // --- clear caches ---
     public void clearCaches() {
-        storysByClosedCache.clear();
+        storysByLabelCache.clear();
+        labelsCache = null;
         storysBySprintCache.clear();
         sprintsCache = null;
         storysByProjectCache.clear();
         projectsCache = null;
-        storysByEstimatedWorkCache.clear();
-        estimatedWorksCache = null;
-        storysByLabelCache.clear();
-        labelsCache = null;
+        storysByClosedCache.clear();
         storysByDescriptionCache.clear();
         descriptionsCache = null;
+        storysByEstimatedWorkCache.clear();
+        estimatedWorksCache = null;
         storysByTestDescriptionCache.clear();
         testDescriptionsCache = null;
     }
@@ -75,30 +75,41 @@ public abstract class GStoryDao
     }
 
     // -----------------------------------------------------------
-    // - closed
+    // - label
     // -----------------------------------------------------------
 
-    private final Cache<Boolean,Set<Story>> storysByClosedCache = new Cache<Boolean,Set<Story>>(
-            new Cache.Factory<Boolean,Set<Story>>() {
-                public Set<Story> create(Boolean closed) {
-                    return getEntities(new IsClosed(closed));
+    private final Cache<java.lang.String,Set<Story>> storysByLabelCache = new Cache<java.lang.String,Set<Story>>(
+            new Cache.Factory<java.lang.String,Set<Story>>() {
+                public Set<Story> create(java.lang.String label) {
+                    return getEntities(new IsLabel(label));
                 }
             });
 
-    public final Set<Story> getStorysByClosed(boolean closed) {
-        return storysByClosedCache.get(closed);
+    public final Set<Story> getStorysByLabel(java.lang.String label) {
+        return storysByLabelCache.get(label);
+    }
+    private Set<java.lang.String> labelsCache;
+
+    public final Set<java.lang.String> getLabels() {
+        if (labelsCache == null) {
+            labelsCache = new HashSet<java.lang.String>();
+            for (Story e : getEntities()) {
+                if (e.isLabelSet()) labelsCache.add(e.getLabel());
+            }
+        }
+        return labelsCache;
     }
 
-    private static class IsClosed implements Predicate<Story> {
+    private static class IsLabel implements Predicate<Story> {
 
-        private boolean value;
+        private java.lang.String value;
 
-        public IsClosed(boolean value) {
+        public IsLabel(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(Story e) {
-            return value == e.isClosed();
+            return e.isLabel(value);
         }
 
     }
@@ -184,81 +195,30 @@ public abstract class GStoryDao
     }
 
     // -----------------------------------------------------------
-    // - estimatedWork
+    // - closed
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.Integer,Set<Story>> storysByEstimatedWorkCache = new Cache<java.lang.Integer,Set<Story>>(
-            new Cache.Factory<java.lang.Integer,Set<Story>>() {
-                public Set<Story> create(java.lang.Integer estimatedWork) {
-                    return getEntities(new IsEstimatedWork(estimatedWork));
+    private final Cache<Boolean,Set<Story>> storysByClosedCache = new Cache<Boolean,Set<Story>>(
+            new Cache.Factory<Boolean,Set<Story>>() {
+                public Set<Story> create(Boolean closed) {
+                    return getEntities(new IsClosed(closed));
                 }
             });
 
-    public final Set<Story> getStorysByEstimatedWork(java.lang.Integer estimatedWork) {
-        return storysByEstimatedWorkCache.get(estimatedWork);
-    }
-    private Set<java.lang.Integer> estimatedWorksCache;
-
-    public final Set<java.lang.Integer> getEstimatedWorks() {
-        if (estimatedWorksCache == null) {
-            estimatedWorksCache = new HashSet<java.lang.Integer>();
-            for (Story e : getEntities()) {
-                if (e.isEstimatedWorkSet()) estimatedWorksCache.add(e.getEstimatedWork());
-            }
-        }
-        return estimatedWorksCache;
+    public final Set<Story> getStorysByClosed(boolean closed) {
+        return storysByClosedCache.get(closed);
     }
 
-    private static class IsEstimatedWork implements Predicate<Story> {
+    private static class IsClosed implements Predicate<Story> {
 
-        private java.lang.Integer value;
+        private boolean value;
 
-        public IsEstimatedWork(java.lang.Integer value) {
+        public IsClosed(boolean value) {
             this.value = value;
         }
 
         public boolean test(Story e) {
-            return e.isEstimatedWork(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Story>> storysByLabelCache = new Cache<java.lang.String,Set<Story>>(
-            new Cache.Factory<java.lang.String,Set<Story>>() {
-                public Set<Story> create(java.lang.String label) {
-                    return getEntities(new IsLabel(label));
-                }
-            });
-
-    public final Set<Story> getStorysByLabel(java.lang.String label) {
-        return storysByLabelCache.get(label);
-    }
-    private Set<java.lang.String> labelsCache;
-
-    public final Set<java.lang.String> getLabels() {
-        if (labelsCache == null) {
-            labelsCache = new HashSet<java.lang.String>();
-            for (Story e : getEntities()) {
-                if (e.isLabelSet()) labelsCache.add(e.getLabel());
-            }
-        }
-        return labelsCache;
-    }
-
-    private static class IsLabel implements Predicate<Story> {
-
-        private java.lang.String value;
-
-        public IsLabel(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Story e) {
-            return e.isLabel(value);
+            return value == e.isClosed();
         }
 
     }
@@ -299,6 +259,46 @@ public abstract class GStoryDao
 
         public boolean test(Story e) {
             return e.isDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - estimatedWork
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.Integer,Set<Story>> storysByEstimatedWorkCache = new Cache<java.lang.Integer,Set<Story>>(
+            new Cache.Factory<java.lang.Integer,Set<Story>>() {
+                public Set<Story> create(java.lang.Integer estimatedWork) {
+                    return getEntities(new IsEstimatedWork(estimatedWork));
+                }
+            });
+
+    public final Set<Story> getStorysByEstimatedWork(java.lang.Integer estimatedWork) {
+        return storysByEstimatedWorkCache.get(estimatedWork);
+    }
+    private Set<java.lang.Integer> estimatedWorksCache;
+
+    public final Set<java.lang.Integer> getEstimatedWorks() {
+        if (estimatedWorksCache == null) {
+            estimatedWorksCache = new HashSet<java.lang.Integer>();
+            for (Story e : getEntities()) {
+                if (e.isEstimatedWorkSet()) estimatedWorksCache.add(e.getEstimatedWork());
+            }
+        }
+        return estimatedWorksCache;
+    }
+
+    private static class IsEstimatedWork implements Predicate<Story> {
+
+        private java.lang.Integer value;
+
+        public IsEstimatedWork(java.lang.Integer value) {
+            this.value = value;
+        }
+
+        public boolean test(Story e) {
+            return e.isEstimatedWork(value);
         }
 
     }

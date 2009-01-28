@@ -9,6 +9,7 @@ import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
+import scrum.client.sprint.Sprint;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
@@ -21,27 +22,27 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class StoryWidget extends ABlockWidget {
 
-	private Story item;
+	private Story story;
 
 	public StoryWidget(Story item) {
-		this.item = item;
+		this.story = item;
 	}
 
 	@Override
 	protected Widget buildContent() {
-		if (!isExtended()) { return new Label(item.getProductBacklogSummary()); }
+		if (!isExtended()) { return new Label(story.getProductBacklogSummary()); }
 
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
 		fieldsWidget.addField("Label", new AEditableTextWidget() {
 
 			@Override
 			protected String getText() {
-				return item.getLabel();
+				return story.getLabel();
 			}
 
 			@Override
 			protected void setText(String text) {
-				item.setLabel(text);
+				story.setLabel(text);
 				rebuild();
 			}
 
@@ -51,12 +52,12 @@ public class StoryWidget extends ABlockWidget {
 
 			@Override
 			protected String getText() {
-				return item.getDescription();
+				return story.getDescription();
 			}
 
 			@Override
 			protected void setText(String text) {
-				item.setDescription(text);
+				story.setDescription(text);
 				rebuild();
 			}
 
@@ -66,12 +67,12 @@ public class StoryWidget extends ABlockWidget {
 
 			@Override
 			protected String getText() {
-				return item.getTestDescription();
+				return story.getTestDescription();
 			}
 
 			@Override
 			protected void setText(String text) {
-				item.setTestDescription(text);
+				story.setTestDescription(text);
 				rebuild();
 			}
 
@@ -81,8 +82,8 @@ public class StoryWidget extends ABlockWidget {
 
 			@Override
 			protected String getText() {
-				Integer effort = item.getEstimatedWork();
-				return effort == null ? "No estimation." : effort.toString() + " " + item.getProject().getEffortUnit();
+				Integer effort = story.getEstimatedWork();
+				return effort == null ? "No estimation." : effort.toString() + " " + story.getProject().getEffortUnit();
 			}
 
 			@Override
@@ -92,13 +93,13 @@ public class StoryWidget extends ABlockWidget {
 
 			@Override
 			protected String getSelectedValue() {
-				Integer effort = item.getEstimatedWork();
+				Integer effort = story.getEstimatedWork();
 				return effort == null ? "" : effort.toString();
 			}
 
 			@Override
 			protected void setValue(String value) {
-				item.setEstimatedWork(value.length() == 0 ? null : Integer.parseInt(value));
+				story.setEstimatedWork(value.length() == 0 ? null : Integer.parseInt(value));
 				rebuild();
 			}
 
@@ -117,13 +118,26 @@ public class StoryWidget extends ABlockWidget {
 		deleteButton.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				ScrumGwtApplication.get().getProject().deleteStory(item);
+				ScrumGwtApplication.get().getProject().deleteStory(story);
 				WorkspaceWidget.backlog.list.removeSelectedRow();
 			}
 		});
 		toolbar.add(deleteButton);
 
-		if (!item.isClosed() && item.isDone()) {
+		final Sprint currentSprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
+		if (currentSprint != null && !story.isSprint(currentSprint)) {
+			Button addToSprintButton = new Button("Add to current Sprint");
+			addToSprintButton.addClickListener(new ClickListener() {
+
+				public void onClick(Widget sender) {
+					story.setSprint(currentSprint);
+					rebuild();
+				}
+			});
+			toolbar.add(addToSprintButton);
+		}
+
+		if (!story.isClosed() && story.isDone()) {
 			Button unsolveButton = new Button("Close");
 			unsolveButton.addClickListener(new ClickListener() {
 
@@ -140,24 +154,24 @@ public class StoryWidget extends ABlockWidget {
 
 	@Override
 	protected String getBlockTitle() {
-		return item.getLabel();
+		return story.getLabel();
 	}
 
 	@Override
 	protected AbstractImagePrototype getIcon16() {
-		if (item.isClosed()) return Img.bundle.storyDoneIcon16();
+		if (story.isClosed()) return Img.bundle.storyDoneIcon16();
 		return Img.bundle.storyIcon16();
 	}
 
 	@Override
 	protected AbstractImagePrototype getIcon32() {
-		if (item.isClosed()) return Img.bundle.storyDoneIcon32();
+		if (story.isClosed()) return Img.bundle.storyDoneIcon32();
 		return Img.bundle.storyIcon32();
 	}
 
 	@Override
 	public void delete() {
-		ScrumGwtApplication.get().getProject().deleteStory(item);
+		ScrumGwtApplication.get().getProject().deleteStory(story);
 		WorkspaceWidget.backlog.list.remove(this);
 	}
 
@@ -166,7 +180,7 @@ public class StoryWidget extends ABlockWidget {
 		return new BlockListDropController(this, WorkspaceWidget.backlog.list);
 	}
 
-	public Story getItem() {
-		return item;
+	public Story getStory() {
+		return story;
 	}
 }
