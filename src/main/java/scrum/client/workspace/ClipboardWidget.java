@@ -23,8 +23,6 @@ public class ClipboardWidget extends Composite {
 	private HorizontalPanel trash;
 
 	public ClipboardWidget() {
-		ScrumGwtApplication.get().getDragController().registerDropController(itemDropController);
-		ScrumGwtApplication.get().getDragController().registerDropController(trashDropController);
 
 		list.setSidebarMode(true);
 		list.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_ITEMS);
@@ -49,6 +47,9 @@ public class ClipboardWidget extends Composite {
 
 		dock.add(trash, DockPanel.SOUTH);
 		// dock.setCellHeight(trash, "1%");
+
+		ScrumGwtApplication.get().getDragController().registerDropController(itemDropController);
+		ScrumGwtApplication.get().getDragController().registerDropController(trashDropController);
 
 		initWidget(dock);
 

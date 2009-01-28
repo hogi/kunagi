@@ -44,11 +44,13 @@ public class BlockListDropController implements DropController {
 		WidgetArea area = new WidgetArea(dropTarget, null);
 		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
 
-		boolean isHigher = isHigher(area, location);
-		if (isHigher) {
-			dropTarget.getDummyTop().setVisible(false);
-		} else {
-			dropTarget.getDummyBottom().setVisible(false);
+		if (dropTarget.isInClipboard() == false) {
+			boolean isHigher = isHigher(area, location);
+			if (isHigher) {
+				dropTarget.getDummyTop().setVisible(false);
+			} else {
+				dropTarget.getDummyBottom().setVisible(false);
+			}
 		}
 	}
 
@@ -56,13 +58,15 @@ public class BlockListDropController implements DropController {
 		WidgetArea area = new WidgetArea(dropTarget, null);
 		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
 
-		boolean isHigher = isHigher(area, location);
-		if (isHigher) {
-			dropTarget.getDummyTop().setVisible(true);
-			dropTarget.getDummyBottom().setVisible(false);
-		} else {
-			dropTarget.getDummyTop().setVisible(false);
-			dropTarget.getDummyBottom().setVisible(true);
+		if (dropTarget.isInClipboard() == false) {
+			boolean isHigher = isHigher(area, location);
+			if (isHigher) {
+				dropTarget.getDummyTop().setVisible(true);
+				dropTarget.getDummyBottom().setVisible(false);
+			} else {
+				dropTarget.getDummyTop().setVisible(false);
+				dropTarget.getDummyBottom().setVisible(true);
+			}
 		}
 
 	}

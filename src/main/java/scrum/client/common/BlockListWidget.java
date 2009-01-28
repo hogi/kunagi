@@ -45,6 +45,10 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 		this.sidebarMode = sidebarMode;
 	}
 
+	public final boolean isSidebarMode() {
+		return sidebarMode;
+	}
+
 	public final void clear() {
 		int count = blocks.size();
 		for (int i = 0; i < count; i++) {
@@ -53,11 +57,12 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	}
 
 	public final void addBlock(B block) {
-		block.setInClipboard(sidebarMode);
+		block.setListController(controller);
 		block.setList(this);
 
+		block.setInClipboard(sidebarMode);
 		block.rebuild();
-		block.setListController(controller);
+
 		blocks.add(block);
 		table.setWidget(table.getRowCount(), 0, block);
 
@@ -65,11 +70,12 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	}
 
 	public final void addBlockAt(int index, B block) {
-		block.setInClipboard(sidebarMode);
+		block.setListController(controller);
 		block.setList(this);
 
+		block.setInClipboard(sidebarMode);
 		block.rebuild();
-		block.setListController(controller);
+
 		blocks.add(index, block);
 		table.insertRow(index);
 		table.setWidget(index, 0, block);
@@ -127,16 +133,13 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 
 	public final void removeRow(int row) {
 		if (row < 0 || row >= blocks.size()) return;
-		// TODO why does deselect does not work? even this debug is not printed in non-gwt-browser.
-		SysOut.DEBUG("remove row:", row);
-
+		blocks.remove(row);
+		table.removeRow(row);
 		if (selectedRow == row) {
-			deselect();
+			selectedRow = -1;
 		} else if (selectedRow > row) {
 			selectedRow--;
 		}
-		blocks.remove(row);
-		table.removeRow(row);
 	}
 
 	public final void selectBlock(B block) {
@@ -145,10 +148,6 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 
 	public final void deselect() {
 		B block = getSelectedBlock();
-
-		// TODO why does deselect does not work? even this debug is not printed in non-gwt-browser.
-		SysOut.DEBUG("DESELECT!!!!!!!!!!!!!!!!!!!!!!!");
-
 		if (block == null) return;
 		block.removeStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
 		selectedRow = -1;

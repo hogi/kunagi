@@ -28,7 +28,7 @@ public abstract class AGwtDao {
 					AGwtEntity entity = map.remove(entityId);
 					if (entity != null) {
 						deletedEntities.remove(entityId);
-						SysOut.DEBUG("deleted:", entity.getEntityType() + ":", entity);
+						Logger.DEBUG("deleted:", entity.getEntityType() + ":", entity);
 					}
 				}
 			}

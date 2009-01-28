@@ -103,7 +103,10 @@ public abstract class ABlockWidget extends Composite {
 
 	final void setInClipboard(boolean inClipboard) {
 		this.inClipboard = inClipboard;
-		if (this.inClipboard != inClipboard) rebuild();
+		if (inClipboard) {
+			removeStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
+			extended = false;
+		}
 	}
 
 	public final void rebuild() {
