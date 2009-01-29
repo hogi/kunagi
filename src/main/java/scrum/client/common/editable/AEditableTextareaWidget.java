@@ -6,9 +6,9 @@ import scrum.client.common.gwtsamples.content.text.RichTextToolbar;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.KeyboardListenerAdapter;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public abstract class AEditableTextareaWidget extends AEditableWidget {
 
-	private Label viewer;
+	private InlineHTML viewer;
 
 	private VerticalPanel editorPanel;
 	private RichTextArea editor;
@@ -45,7 +45,7 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 	public AEditableTextareaWidget(boolean showToolbar) {
 		this.showToolbar = showToolbar;
 
-		viewer = new Label();
+		viewer = new InlineHTML();
 		viewer.addClickListener(new ViewerClickListener());
 		viewer.setStyleName(StyleSheet.VIEWER);
 		rebuild();
@@ -92,11 +92,7 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 
 		String text = getText();
 
-		if (text != null && text.length() > 45) {
-			text = text.substring(0, 45);
-			text += "...";
-		}
-		viewer.setText(text);
+		viewer.setHTML(text);
 		return viewer;
 	}
 
@@ -111,7 +107,7 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 	private class ApplyListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			setText(editor.getText());
+			setText(editor.getHTML());
 			setEditMode(false);
 
 		}

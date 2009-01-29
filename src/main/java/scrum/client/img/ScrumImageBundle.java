@@ -32,6 +32,9 @@ public interface ScrumImageBundle extends ImageBundle {
 	@Resource(value = "sprint32.png")
 	public AbstractImagePrototype sprintIcon32();
 
+	@Resource(value = "sprint16.png")
+	public AbstractImagePrototype sprintIcon16();
+
 	@Resource(value = "task32.png")
 	public AbstractImagePrototype taskIcon16(); // TODO find corresponding icon with size 16
 
@@ -58,5 +61,14 @@ public interface ScrumImageBundle extends ImageBundle {
 
 	@Resource(value = "minus16.png")
 	public AbstractImagePrototype minusIcon16();
+
+	@Resource(value = "action16.png")
+	public AbstractImagePrototype action16();
+
+	@Resource(value = "delete16.png")
+	public AbstractImagePrototype delete16();
+
+	@Resource(value = "done16.png")
+	public AbstractImagePrototype done16();
 
 }

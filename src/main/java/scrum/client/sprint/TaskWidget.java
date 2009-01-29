@@ -3,6 +3,7 @@ package scrum.client.sprint;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
+import scrum.client.common.ToolbarWidget;
 import scrum.client.common.editable.AEditableIntegerShiftWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
@@ -10,10 +11,8 @@ import scrum.client.img.Img;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class TaskWidget extends ABlockWidget {
@@ -133,12 +132,9 @@ public class TaskWidget extends ABlockWidget {
 		}
 
 		// block is extended -> create toolbar with buttons
-		VerticalPanel toolbar = new VerticalPanel();
-		toolbar.setStyleName("Toolbar");
-
+		ToolbarWidget toolbar = new ToolbarWidget();
 		if (!task.isDone()) {
-			Button ownButton = new Button("Own");
-			ownButton.addClickListener(new ClickListener() {
+			toolbar.addButton("Own").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					task.setOwner(ScrumGwtApplication.get().getUser());
@@ -146,22 +142,18 @@ public class TaskWidget extends ABlockWidget {
 				}
 
 			});
-			toolbar.add(ownButton);
 		}
 
-		Button deleteButton = new Button("Delete");
-		deleteButton.addClickListener(new ClickListener() {
+		toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
 				delete();
 			}
 
 		});
-		toolbar.add(deleteButton);
 
 		if (!task.isDone()) {
-			Button doneButton = new Button("Done");
-			doneButton.addClickListener(new ClickListener() {
+			toolbar.addButton(Img.bundle.done16().createImage(), "Done").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					task.setDone();
@@ -169,7 +161,6 @@ public class TaskWidget extends ABlockWidget {
 				}
 
 			});
-			toolbar.add(doneButton);
 		}
 
 		return toolbar;

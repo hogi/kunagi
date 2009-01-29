@@ -3,7 +3,7 @@ package scrum.client.project;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
-import scrum.client.common.StyleSheet;
+import scrum.client.common.ToolbarWidget;
 import scrum.client.common.editable.AEditableListBoxWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
@@ -14,10 +14,8 @@ import scrum.client.workspace.WorkspaceWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class StoryWidget extends ABlockWidget {
@@ -111,42 +109,36 @@ public class StoryWidget extends ABlockWidget {
 	@Override
 	protected Widget buildToolbar() {
 		if (!isExtended()) return null;
-		VerticalPanel toolbar = new VerticalPanel();
-		toolbar.setStyleName(StyleSheet.TOOLBAR);
+		ToolbarWidget toolbar = new ToolbarWidget();
 
-		Button deleteButton = new Button("Delete");
-		deleteButton.addClickListener(new ClickListener() {
+		toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
 				ScrumGwtApplication.get().getProject().deleteStory(story);
 				WorkspaceWidget.backlog.list.removeSelectedRow();
 			}
 		});
-		toolbar.add(deleteButton);
 
 		final Sprint currentSprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
 		if (currentSprint != null && !story.isSprint(currentSprint)) {
-			Button addToSprintButton = new Button("Add to current Sprint");
-			addToSprintButton.addClickListener(new ClickListener() {
+			toolbar.addButton(Img.bundle.sprintIcon16().createImage(), "Add to current Sprint").addClickListener(
+				new ClickListener() {
 
-				public void onClick(Widget sender) {
-					story.setSprint(currentSprint);
-					rebuild();
-				}
-			});
-			toolbar.add(addToSprintButton);
+					public void onClick(Widget sender) {
+						story.setSprint(currentSprint);
+						rebuild();
+					}
+				});
 		}
 
 		if (!story.isClosed() && story.isDone()) {
-			Button unsolveButton = new Button("Close");
-			unsolveButton.addClickListener(new ClickListener() {
+			toolbar.addButton(Img.bundle.done16().createImage(), "Close").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					// item.setDone(false);
 					rebuild();
 				}
 			});
-			toolbar.add(unsolveButton);
 		}
 
 		return toolbar;

@@ -2,17 +2,15 @@ package scrum.client.admin;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
-import scrum.client.common.StyleSheet;
+import scrum.client.common.ToolbarWidget;
 import scrum.client.img.Img;
 import scrum.client.project.Project;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectWidget extends ABlockWidget {
@@ -41,7 +39,7 @@ public class ProjectWidget extends ABlockWidget {
 				description = description.substring(0, 149) + "...";
 			}
 		}
-		return new Label(description);
+		return new HTML(description);
 	}
 
 	@Override
@@ -50,17 +48,14 @@ public class ProjectWidget extends ABlockWidget {
 			return null;
 
 		// block is extended -> create toolbar with buttons
-		VerticalPanel toolbar = new VerticalPanel();
-		toolbar.setStyleName(StyleSheet.TOOLBAR);
+		ToolbarWidget toolbar = new ToolbarWidget();
 
-		Button selectButton = new Button("Select");
-		selectButton.addClickListener(new ClickListener() {
+		toolbar.addButton("Select").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
 				select();
 			}
 		});
-		toolbar.add(selectButton);
 
 		return toolbar;
 	}

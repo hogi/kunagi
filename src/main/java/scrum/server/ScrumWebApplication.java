@@ -95,7 +95,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		// prepare data for client
 		session.getNextData().addEntity(toPropertyMap(project));
 		session.getNextData().addEntities(toPropertyMap(project.getMembers()));
-		if (project.isCurrentSprintSet()) session.getNextData().addEntity(toPropertyMap(project.getCurrentSprint()));
+		if (project.isCurrentSprintSet()) {
+			session.getNextData().addEntity(toPropertyMap(project.getCurrentSprint()));
+		}
 	}
 
 	@Override
@@ -155,8 +157,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	@Override
 	public void ensureIntegrity() {
-		// delete everything
-		IO.delete(getApplicationDataDir());
+		// delete entities
+		IO.delete(getApplicationDataDir() + "/entities");
 
 		super.ensureIntegrity();
 	}
@@ -256,11 +258,13 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		project2.setDescription("Minimal test project.");
 
 		Sprint sprint2 = getSprintDao().newEntityInstance();
-		sprint2.setProject(project1);
+		sprint2.setProject(project2);
 		sprint2.setLabel("Sprint 1");
 		sprint2.setBegin(Date.today().addDays(-1));
 		sprint2.setEnd(Date.today().addDays(30));
-		getSprintDao().saveEntity(sprint1);
+		getSprintDao().saveEntity(sprint2);
+
+		project2.setCurrentSprint(sprint2);
 
 		getTransactionService().commit();
 	}

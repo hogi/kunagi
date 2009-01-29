@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SourcesTableEvents;
 import com.google.gwt.user.client.ui.TableListener;
 
@@ -18,7 +17,6 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	// private static final Logger LOG = Logger.get(BlockListWidget.class);
 
 	private FlexTable table;
-	private ScrollPanel scroller;
 	private List<B> blocks = new LinkedList<B>();
 	private int selectedRow = -1;
 	private boolean sidebarMode;
@@ -27,18 +25,12 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 
 	public BlockListWidget() {
 		table = new FlexTable();
-		table.setCellPadding(0);
-		table.setCellSpacing(0);
 		table.setStyleName(StyleSheet.ELEMENT_BLOCK_LIST_WIDGET_TABLE);
 		if (!sidebarMode) {
 			table.addTableListener(new Listener());
 		}
 
-		scroller = new ScrollPanel();
-		scroller.setStyleName(StyleSheet.ELEMENT_BLOCK_LIST_WIDGET);
-		scroller.add(table);
-
-		initWidget(scroller);
+		initWidget(table);
 	}
 
 	void onBlockRebuilt(B block) {}
@@ -67,8 +59,6 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 
 		blocks.add(block);
 		table.setWidget(table.getRowCount(), 0, block);
-
-		scroller.scrollToBottom();
 	}
 
 	public final void addBlockAt(int index, B block) {

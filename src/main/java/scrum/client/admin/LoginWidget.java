@@ -1,11 +1,11 @@
 package scrum.client.admin;
 
 import scrum.client.ScrumGwtApplication;
+import scrum.client.common.ButtonWidget;
 import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.PanelWidget;
 import scrum.client.workspace.WorkspaceWidget;
 
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -17,14 +17,14 @@ public class LoginWidget extends Composite {
 
 	private TextBox username;
 	private PasswordTextBox password;
-	private Button loginButton;
+	private ButtonWidget loginButton;
 
 	public LoginWidget() {
 		username = new TextBox();
 		username.setText("admin");
 		password = new PasswordTextBox();
 		password.setText("geheim");
-		loginButton = new Button("Login");
+		loginButton = new ButtonWidget(null, "Login");
 		loginButton.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {

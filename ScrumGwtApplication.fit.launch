@@ -11,7 +11,7 @@
 
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value=" -Xmx256M"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-out www scrum.ScrumGwtApplication/ScrumGwtApplication.html"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-out runtimedata scrum.ScrumGwtApplication/ScrumGwtApplication.html"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="scrum"/>
 <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
 </launchConfiguration>

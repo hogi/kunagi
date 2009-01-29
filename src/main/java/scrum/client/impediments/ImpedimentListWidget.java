@@ -2,30 +2,23 @@ package scrum.client.impediments;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.ScrumUtil;
-import scrum.client.common.StyleSheet;
+import scrum.client.common.ToolbarWidget;
 
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ImpedimentListWidget extends Composite {
 
-	public BlockListWidget list = new BlockListWidget();
+	public BlockListWidget<ImpedimentWidget> list = new BlockListWidget<ImpedimentWidget>();
 
 	public ImpedimentListWidget() {
-		Button createButton = new Button("Create new Impediment");
-		createButton.addClickListener(new CreateClickListener());
+		ToolbarWidget toolbar = new ToolbarWidget();
 
-		HorizontalPanel toolbar = new HorizontalPanel();
-		toolbar.setStyleName(StyleSheet.TOOLBAR);
-		toolbar.add(createButton);
-		ScrumUtil.addFiller(toolbar);
+		toolbar.addButton("Create new Impediment").addClickListener(new CreateClickListener());
 
 		FlowPanel panel = new FlowPanel();
 		panel

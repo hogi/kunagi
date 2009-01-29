@@ -3,8 +3,9 @@ package scrum.client.workspace;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.PanelWidget;
 import scrum.client.common.StyleSheet;
+import scrum.client.common.ToolbarWidget;
+import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -17,88 +18,69 @@ public class SidebarWidget extends Composite {
 		VerticalPanel sidebar = new VerticalPanel();
 		sidebar.setStyleName(StyleSheet.ELEMENT_SIDEBAR_WIDGET);
 
-		VerticalPanel buttonsPanel = new VerticalPanel();
-		buttonsPanel.setStyleName(StyleSheet.ELEMENT_SIDEBAR_WIDGET_BUTTONS);
+		ToolbarWidget toolbar = new ToolbarWidget();
 
-		Button projectOverviewButton = new Button("Project Overview");
-		projectOverviewButton.addClickListener(new ProjectOverviewClickListener());
-		buttonsPanel.add(projectOverviewButton);
+		toolbar.addButton("Project Overview").addClickListener(new ClickListener() {
 
-		Button backlogButton = new Button("Product Backlog");
-		backlogButton.addClickListener(new BacklogClickListener());
-		buttonsPanel.add(backlogButton);
+			public void onClick(Widget sender) {
+				WorkspaceWidget.showProjectOverview();
+			}
 
-		Button sprintButton = new Button("Current Sprint");
-		sprintButton.addClickListener(new SprintClickListener());
-		buttonsPanel.add(sprintButton);
+		});
 
-		Button impedimentsButton = new Button("Impediments");
-		impedimentsButton.addClickListener(new ImpedimentsClickListener());
-		buttonsPanel.add(impedimentsButton);
+		toolbar.addButton("Product Backlog").addClickListener(new ClickListener() {
 
-		Button testButton = new Button("Test");
-		testButton.addClickListener(new TestClickListener());
-		buttonsPanel.add(testButton);
+			public void onClick(Widget sender) {
+				WorkspaceWidget.lock("Loading Backlog Items...");
+				ScrumGwtApplication.get().callRequestStorys(new Runnable() {
 
-		sidebar.add(new PanelWidget("Navigation", buttonsPanel));
+					public void run() {
+						WorkspaceWidget.showBacklog();
+					}
+				});
+			}
+		});
+
+		toolbar.addButton(Img.bundle.sprintIcon16().createImage(), "Current Sprint").addClickListener(
+			new ClickListener() {
+
+				public void onClick(Widget sender) {
+					WorkspaceWidget.lock("Loading Sprint...");
+					ScrumGwtApplication.get().callRequestCurrentSprint(new Runnable() {
+
+						public void run() {
+							WorkspaceWidget.showSprint();
+						}
+					});
+				}
+
+			});
+
+		toolbar.addButton(Img.bundle.impedimentIcon16().createImage(), "Impediments").addClickListener(
+			new ClickListener() {
+
+				public void onClick(Widget sender) {
+					WorkspaceWidget.lock("Loading impediments...");
+					ScrumGwtApplication.get().callRequestImpediments(new Runnable() {
+
+						public void run() {
+							WorkspaceWidget.showImpediments();
+						}
+					});
+				}
+			});
+
+		toolbar.addButton("Test").addClickListener(new ClickListener() {
+
+			public void onClick(Widget sender) {
+				WorkspaceWidget.showTest();
+			}
+		});
+
+		sidebar.add(new PanelWidget("Navigation", toolbar));
 		sidebar.add(new HTML("&nbsp;"));
 		sidebar.add(new PanelWidget("Clipboard", new ClipboardWidget()));
 
 		initWidget(sidebar);
-	}
-
-	private class ProjectOverviewClickListener implements ClickListener {
-
-		public void onClick(Widget sender) {
-			WorkspaceWidget.showProjectOverview();
-		}
-
-	}
-
-	private class ImpedimentsClickListener implements ClickListener {
-
-		public void onClick(Widget sender) {
-			WorkspaceWidget.lock("Loading impediments...");
-			ScrumGwtApplication.get().callRequestImpediments(new Runnable() {
-
-				public void run() {
-					WorkspaceWidget.showImpediments();
-				}
-			});
-		}
-	}
-
-	private class SprintClickListener implements ClickListener {
-
-		public void onClick(Widget sender) {
-			WorkspaceWidget.lock("Loading Sprint...");
-			ScrumGwtApplication.get().callRequestCurrentSprint(new Runnable() {
-
-				public void run() {
-					WorkspaceWidget.showSprint();
-				}
-			});
-		}
-
-	}
-
-	private class BacklogClickListener implements ClickListener {
-
-		public void onClick(Widget sender) {
-			WorkspaceWidget.lock("Loading Backlog Items...");
-			ScrumGwtApplication.get().callRequestStorys(new Runnable() {
-
-				public void run() {
-					WorkspaceWidget.showBacklog();
-				}
-			});
-		}
-	}
-
-	private class TestClickListener implements ClickListener {
-
-		public void onClick(Widget sender) {
-			WorkspaceWidget.showTest();
-		}
 	}
 }

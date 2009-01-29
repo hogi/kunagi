@@ -2,6 +2,8 @@ package scrum.client.common;
 
 public class StyleSheet {
 
+	public static final String ELEMENT_BUTTON_WIDGET = "element-ButtonWidget";
+
 	// DummyDropWidget
 	public static final String ELEMENT_DUMMY_DROP_WIDGET = "element-DummyDropWidget";
 	public static final String ELEMENT_DUMMY_DROP_WIDGET_ACTIVE = "element-DummyDropWidget-active";
@@ -29,7 +31,6 @@ public class StyleSheet {
 
 	// BlockListWidget
 
-	public static final String ELEMENT_BLOCK_LIST_WIDGET = "element-BlockListWidget";
 	public static final String ELEMENT_BLOCK_LIST_WIDGET_TABLE = "element-BlockListWidget-table";
 
 	// PanelWidget
@@ -61,7 +62,7 @@ public class StyleSheet {
 	public static final String A_ITEM_FIELDS_WIDGET_GRID = "AItemFieldsWidget-grid";
 	public static final String FIELD_LABEL = "fieldLabel";
 	public static final String A_EDITABLE_TEXTAREA_WIDGET_EDITOR_PANEL = "AEditableTextareaWidget-editorPanel";
-	public static final String TOOLBAR = "Toolbar";
+	public static final String ELEMENT_TOOLBAR_WIDGET = "element-ToolbarWidget";
 	public static final String TRASH_ON_ENTER = "Trash-onEnter";
 	public static final String FIELD_VALUE = "fieldValue";
 	public static final String EDITABLE_EDITOR = "editableEditor";

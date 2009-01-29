@@ -3,7 +3,7 @@ package scrum.client.impediments;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
-import scrum.client.common.StyleSheet;
+import scrum.client.common.ToolbarWidget;
 import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.dnd.BlockListDropController;
@@ -12,10 +12,8 @@ import scrum.client.workspace.WorkspaceWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ImpedimentWidget extends ABlockWidget {
@@ -102,41 +100,34 @@ public class ImpedimentWidget extends ABlockWidget {
 			return null;
 
 		// block is extended -> create toolbar with buttons
-		VerticalPanel toolbar = new VerticalPanel();
-		toolbar.setStyleName(StyleSheet.TOOLBAR);
+		ToolbarWidget toolbar = new ToolbarWidget();
 
-		Button deleteButton = new Button("Delete");
-		deleteButton.addClickListener(new ClickListener() {
+		toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
 				ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
 				WorkspaceWidget.impediments.list.removeSelectedRow();
 			}
 		});
-		toolbar.add(deleteButton);
 
 		if (!impediment.isSolved()) {
 			// impediment not solved -> add [Solve] button
-			Button solveButton = new Button("Solve");
-			solveButton.addClickListener(new ClickListener() {
+			toolbar.addButton(Img.bundle.done16().createImage(), "Solve").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					impediment.setSolved(true);
 					rebuild();
 				}
 			});
-			toolbar.add(solveButton);
 		} else {
 			// impediment not solved -> add [Unsolve] button
-			Button unsolveButton = new Button("Unsolve");
-			unsolveButton.addClickListener(new ClickListener() {
+			toolbar.addButton("Unsolve").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					impediment.setSolved(false);
 					rebuild();
 				}
 			});
-			toolbar.add(unsolveButton);
 		}
 
 		return toolbar;

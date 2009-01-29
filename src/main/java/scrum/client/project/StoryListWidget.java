@@ -2,30 +2,22 @@ package scrum.client.project;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.ScrumUtil;
-import scrum.client.common.StyleSheet;
+import scrum.client.common.ToolbarWidget;
 
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class StoryListWidget extends Composite {
 
-	public BlockListWidget list = new BlockListWidget();
+	public BlockListWidget<StoryWidget> list = new BlockListWidget<StoryWidget>();
 
 	public StoryListWidget() {
-		Button createButton = new Button("Create new Backlog-Item");
-		createButton.addClickListener(new CreateClickListener());
-
-		HorizontalPanel toolbar = new HorizontalPanel();
-		toolbar.setStyleName(StyleSheet.TOOLBAR);
-		toolbar.add(createButton);
-		ScrumUtil.addFiller(toolbar);
+		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar.addButton("Create new Backlog-Item").addClickListener(new CreateClickListener());
 
 		FlowPanel panel = new FlowPanel();
 		panel

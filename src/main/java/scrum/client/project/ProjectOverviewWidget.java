@@ -79,6 +79,7 @@ public class ProjectOverviewWidget extends Composite {
 		int width = 500;
 		int height = 300;
 		String url = "../sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width=" + width + "&height=" + height;
+		// String url = "http://www.google.de/intl/de_de/images/logo.gif";
 		return new GroupWidget("Current Sprint", new Image(url, 0, 0, width, height));
 	}
 }

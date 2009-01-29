@@ -3,7 +3,7 @@ package scrum.client.sprint;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
-import scrum.client.common.StyleSheet;
+import scrum.client.common.ToolbarWidget;
 import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
 import scrum.client.project.Story;
@@ -11,11 +11,9 @@ import scrum.client.workspace.WorkspaceWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SprintStoryWidget extends ABlockWidget {
@@ -50,12 +48,10 @@ public class SprintStoryWidget extends ABlockWidget {
 	@Override
 	protected Widget buildToolbar() {
 		if (!isExtended()) return null;
-		VerticalPanel toolbar = new VerticalPanel();
-		toolbar.setStyleName(StyleSheet.TOOLBAR);
+		ToolbarWidget toolbar = new ToolbarWidget();
 
 		if (story.isDone() && !story.isClosed()) {
-			Button closeButton = new Button("Close");
-			closeButton.addClickListener(new ClickListener() {
+			toolbar.addButton("Close").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					story.setClosed(true);
@@ -64,26 +60,22 @@ public class SprintStoryWidget extends ABlockWidget {
 			});
 		}
 
-		Button removeButton = new Button("Remove");
-		removeButton.addClickListener(new ClickListener() {
+		toolbar.addButton("Remove").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
 			// ScrumGwtApplication.get().getProject().deleteBacklogItem(item);
 			// WorkspaceWidget.backlog.list.removeSelectedRow();
 			}
 		});
-		toolbar.add(removeButton);
 
 		if (!story.isClosed()) {
-			Button newTaskButton = new Button("Create Task");
-			newTaskButton.addClickListener(new ClickListener() {
+			toolbar.addButton("Create new Task").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					Task task = story.createNewTask();
 					taskListWidget.update(task);
 				}
 			});
-			toolbar.add(newTaskButton);
 		}
 
 		return toolbar;
@@ -109,7 +101,6 @@ public class SprintStoryWidget extends ABlockWidget {
 	@Override
 	public void delete() {
 		ScrumGwtApplication.get().getProject().deleteStory(story);
-		WorkspaceWidget.backlog.list.remove(this);
 	}
 
 	@Override
