@@ -21,8 +21,13 @@ public class SprintRequirementWidget extends ABlockWidget {
 	private Requirement story;
 	private TaskListWidget taskListWidget;
 
+	private Label taskEffortSum;
+
 	public SprintRequirementWidget(Requirement story) {
 		this.story = story;
+
+		taskEffortSum = new Label();
+		update();
 	}
 
 	@Override
@@ -32,7 +37,7 @@ public class SprintRequirementWidget extends ABlockWidget {
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
 		fieldsWidget.addField("Description", new Label(story.getDescription()));
 		fieldsWidget.addField("Test", new Label(story.getTestDescription()));
-		fieldsWidget.addField("Task effort sum", new Label(story.getTaskEffortSumString()));
+		fieldsWidget.addField("Task effort sum", taskEffortSum);
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(fieldsWidget);
@@ -43,6 +48,10 @@ public class SprintRequirementWidget extends ABlockWidget {
 		// panel.add(new TaskListWidget(item));
 
 		return panel;
+	}
+
+	public void update() {
+		taskEffortSum.setText(story.getTaskEffortSumString());
 	}
 
 	@Override
@@ -113,6 +122,7 @@ public class SprintRequirementWidget extends ABlockWidget {
 	}
 
 	public void taskDataChanged() {
+		update();
 		controller.dataChanged(this);
 	}
 }

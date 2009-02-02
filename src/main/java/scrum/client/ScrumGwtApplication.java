@@ -57,10 +57,11 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		WorkspaceWidget.lock("Error: " + ex.getMessage());
 	}
 
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
 	public Project getProject() {
-		if (project == null) {
-			project = getDao().getProjects().get(0); // TODO will fail, on project change
-		}
 		return project;
 	}
 

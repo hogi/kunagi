@@ -1,5 +1,6 @@
 package scrum.client.project;
 
+import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.common.GroupWidget;
 import scrum.client.common.ItemFieldsWidget;
@@ -16,19 +17,19 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectOverviewWidget extends Composite {
 
-	public ProjectOverviewWidget(final Project project) {
+	public ProjectOverviewWidget() {
 		ItemFieldsWidget fields = new ItemFieldsWidget();
 
 		fields.addField("Label", new AEditableTextWidget() {
 
 			@Override
 			protected void setText(String text) {
-				project.setLabel(text);
+				ScrumGwtApplication.get().getProject().setLabel(text);
 			}
 
 			@Override
 			protected String getText() {
-				return project.getLabel();
+				return ScrumGwtApplication.get().getProject().getLabel();
 			}
 		});
 
@@ -36,38 +37,38 @@ public class ProjectOverviewWidget extends Composite {
 
 			@Override
 			protected void setText(String text) {
-				project.setDescription(text);
+				ScrumGwtApplication.get().getProject().setDescription(text);
 			}
 
 			@Override
 			protected String getText() {
-				return project.getDescription();
+				return ScrumGwtApplication.get().getProject().getDescription();
 			}
 		});
 
-		User productOwner = project.getProductOwner();
+		User productOwner = ScrumGwtApplication.get().getProject().getProductOwner();
 		if (productOwner != null) {
 			fields.addField("Product Owner", new Label(productOwner.getName()));
 		}
 
-		User scrumMaster = project.getScrumMaster();
+		User scrumMaster = ScrumGwtApplication.get().getProject().getScrumMaster();
 		if (scrumMaster != null) {
 			fields.addField("Scrum Master", new Label(scrumMaster.getName()));
 		}
 
-		String team = ScrumUtil.toCommataSeperatedString(project.getTeamMembers());
+		String team = ScrumUtil.toCommataSeperatedString(ScrumGwtApplication.get().getProject().getTeamMembers());
 		if (team.length() > 0) {
 			fields.addField("Team", new Label(team));
 		}
 
-		String admins = ScrumUtil.toCommataSeperatedString(project.getAdmins());
+		String admins = ScrumUtil.toCommataSeperatedString(ScrumGwtApplication.get().getProject().getAdmins());
 		if (admins.length() > 0) {
 			fields.addField("Project Admins", new Label(admins));
 		}
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(new GroupWidget("Project Properties", fields));
-		Sprint sprint = project.getCurrentSprint();
+		Sprint sprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
 		if (sprint != null) {
 			panel.add(createCurrentSprintOverview(sprint));
 		}

@@ -62,6 +62,7 @@ public class ProjectWidget extends ABlockWidget {
 
 	private void select() {
 		WorkspaceWidget.lock("Loading project...");
+		ScrumGwtApplication.get().setProject(project);
 		ScrumGwtApplication.get().callSelectProject(project.getId(), new Runnable() {
 
 			public void run() {

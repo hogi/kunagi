@@ -1,81 +1,83 @@
 package scrum.client.sprint;
 
 import scrum.client.ScrumGwtApplication;
+import scrum.client.common.BlockListController;
+import scrum.client.common.BlockListWidget;
 import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.editable.AEditableTextWidget;
+import scrum.client.project.Project;
+import scrum.client.project.Requirement;
 
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class CurrentSprintWidget extends Composite {
 
+	private BlockListWidget<SprintRequirementWidget> requirementList = new BlockListWidget<SprintRequirementWidget>();
 	private FlowPanel view;
-
-	private Sprint sprint;
+	private Label totalEffort;
+	private Label begin;
+	private Label end;
 
 	public CurrentSprintWidget() {
+		totalEffort = new Label();
+		begin = new Label();
+		end = new Label();
+		requirementList.setController(new BlockListController<SprintRequirementWidget>() {
+
+			@Override
+			public void dataChanged(SprintRequirementWidget block) {
+				update();
+			}
+		});
+
 		view = new FlowPanel();
-
-		initWidget(view);
-	}
-
-	public void update() {
-		view.clear();
-		view
-				.add(new Label(
-						"A sprint is an iteration of work during which an increment of product functionality is implemented. By the book, an iteration lasts 30 days. This is longer than in other agile methods to take into account the fact that a functional increment of product must be produced each sprint.\n"
-								+ "\n"
-								+ "The sprint starts with a one-day sprint planning meeting. Many daily Scrum meetings occur during the sprint (one per day). At the end of the sprint we have a sprint review meeting, followed by a sprint retrospective meeting.\n"
-								+ "\n"
-								+ "During the sprint, the team must not be interrupted with additional requests. Guaranteeing the team won't be interrupted allows it to make real commitments it can be expected to keep."));
-		view.add(new HTML("<br />"));
-		sprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
-
-		if (sprint == null) {
-			Button assignSprintButton = new Button("Select current sprint (tmp: create new)");
-			assignSprintButton.addClickListener(new AssignSprintListener());
-
-			view.add(assignSprintButton);
-
-			return;
-		}
-
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
 		fieldsWidget.addField("Label", new AEditableTextWidget() {
 
 			@Override
 			protected String getText() {
-				return sprint.getLabel();
+				return getSprint() == null ? null : getSprint().getLabel();
 			}
 
 			@Override
 			protected void setText(String text) {
-				sprint.setLabel(text);
-				// rebuild();
+				getSprint().setLabel(text);
 			}
 
 		});
-		fieldsWidget.addField("Begin", new Label(sprint.getBegin().toString()));
-		fieldsWidget.addField("End", new Label(sprint.getEnd().toString()));
-		fieldsWidget.addField("Total Effort", new Label(sprint.getTaskEffortSumString()));
+		fieldsWidget.addField("Begin", begin);
+		fieldsWidget.addField("End", end);
+		fieldsWidget.addField("Total Effort", totalEffort);
 		view.add(fieldsWidget);
-
-		view.add(new SprintRequirementListWidget(this));
+		view.add(requirementList);
+		initWidget(view);
 	}
 
-	public Sprint getSprint() {
-		return sprint;
+	public void update() {
+
+		totalEffort.setText(getSprint().getTaskEffortSumString());
+		begin.setText(getSprint().getBegin().toString());
+		end.setText(getSprint().getEnd().toString());
+
+		requirementList.clear();
+		for (Requirement item : getSprint().getRequirements()) {
+			requirementList.addBlock(new SprintRequirementWidget(item));
+		}
+	}
+
+	private Sprint getSprint() {
+		Project project = ScrumGwtApplication.get().getProject();
+		if (project == null) return null;
+		return project.getCurrentSprint();
 	}
 
 	class AssignSprintListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			sprint = ScrumGwtApplication.get().getProject().createNewSprint();
 			update();
 		}
 	}

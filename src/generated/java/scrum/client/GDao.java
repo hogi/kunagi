@@ -53,7 +53,7 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.admin.User(data);
             users.put(id, entity);
-            scrum.client.common.Logger.DEBUG("User received: " + entity);
+            scrum.client.common.Logger.DEBUG("User received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
             scrum.client.common.Logger.DEBUG("User updated: " + entity);
@@ -112,7 +112,7 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.sprint.SprintDaySnapshot(data);
             sprintDaySnapshots.put(id, entity);
-            scrum.client.common.Logger.DEBUG("SprintDaySnapshot received: " + entity);
+            scrum.client.common.Logger.DEBUG("SprintDaySnapshot received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
             scrum.client.common.Logger.DEBUG("SprintDaySnapshot updated: " + entity);
@@ -195,7 +195,7 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.impediments.Impediment(data);
             impediments.put(id, entity);
-            scrum.client.common.Logger.DEBUG("Impediment received: " + entity);
+            scrum.client.common.Logger.DEBUG("Impediment received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
             scrum.client.common.Logger.DEBUG("Impediment updated: " + entity);
@@ -286,7 +286,7 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.project.ProjectSprintSnapshot(data);
             projectSprintSnapshots.put(id, entity);
-            scrum.client.common.Logger.DEBUG("ProjectSprintSnapshot received: " + entity);
+            scrum.client.common.Logger.DEBUG("ProjectSprintSnapshot received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
             scrum.client.common.Logger.DEBUG("ProjectSprintSnapshot updated: " + entity);
@@ -369,7 +369,7 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.sprint.Task(data);
             tasks.put(id, entity);
-            scrum.client.common.Logger.DEBUG("Task received: " + entity);
+            scrum.client.common.Logger.DEBUG("Task received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
             scrum.client.common.Logger.DEBUG("Task updated: " + entity);
@@ -460,7 +460,7 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.project.Requirement(data);
             requirements.put(id, entity);
-            scrum.client.common.Logger.DEBUG("Requirement received: " + entity);
+            scrum.client.common.Logger.DEBUG("Requirement received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
             scrum.client.common.Logger.DEBUG("Requirement updated: " + entity);
@@ -567,7 +567,7 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.project.Project(data);
             projects.put(id, entity);
-            scrum.client.common.Logger.DEBUG("Project received: " + entity);
+            scrum.client.common.Logger.DEBUG("Project received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
             scrum.client.common.Logger.DEBUG("Project updated: " + entity);
@@ -660,7 +660,7 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.sprint.Sprint(data);
             sprints.put(id, entity);
-            scrum.client.common.Logger.DEBUG("Sprint received: " + entity);
+            scrum.client.common.Logger.DEBUG("Sprint received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
             scrum.client.common.Logger.DEBUG("Sprint updated: " + entity);
