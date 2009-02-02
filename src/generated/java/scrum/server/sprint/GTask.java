@@ -46,11 +46,11 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("storyId", this.storyId);
-        properties.put("notice", this.notice);
+        properties.put("requirementId", this.requirementId);
         properties.put("label", this.label);
-        properties.put("burnedWork", this.burnedWork);
         properties.put("remainingWork", this.remainingWork);
+        properties.put("notice", this.notice);
+        properties.put("burnedWork", this.burnedWork);
     }
 
     public int compareTo(Task other) {
@@ -66,79 +66,48 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
-        setStory(template.getStory());
-        setNotice(template.getNotice());
+        setRequirement(template.getRequirement());
         setLabel(template.getLabel());
-        setBurnedWork(template.getBurnedWork());
         setRemainingWork(template.getRemainingWork());
+        setNotice(template.getNotice());
+        setBurnedWork(template.getBurnedWork());
     }
 
     // -----------------------------------------------------------
-    // - story
+    // - requirement
     // -----------------------------------------------------------
 
-    private String storyId;
+    private String requirementId;
 
-    public final scrum.server.project.Story getStory() {
-        if (this.storyId == null) return null;
-        return (scrum.server.project.Story)storyDao.getById(this.storyId);
+    public final scrum.server.project.Requirement getRequirement() {
+        if (this.requirementId == null) return null;
+        return (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
     }
 
-    public final void setStory(scrum.server.project.Story story) {
-        story = prepareStory(story);
-        if (isStory(story)) return;
-        this.storyId = story == null ? null : story.getId();
+    public final void setRequirement(scrum.server.project.Requirement requirement) {
+        requirement = prepareRequirement(requirement);
+        if (isRequirement(requirement)) return;
+        this.requirementId = requirement == null ? null : requirement.getId();
         entityModified();
     }
 
-    protected scrum.server.project.Story prepareStory(scrum.server.project.Story story) {
-        return story;
+    protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
+        return requirement;
     }
 
-    protected void repairDeadStoryReference(String entityId) {
-        if (entityId.equals(this.storyId)) {
+    protected void repairDeadRequirementReference(String entityId) {
+        if (entityId.equals(this.requirementId)) {
             repairMissingMaster();
         }
     }
 
-    public final boolean isStorySet() {
-        return this.storyId != null;
+    public final boolean isRequirementSet() {
+        return this.requirementId != null;
     }
 
-    public final boolean isStory(scrum.server.project.Story story) {
-        if (this.storyId == null && story == null) return true;
-        return story != null && story.getId().equals(this.storyId);
-    }
-
-    // -----------------------------------------------------------
-    // - notice
-    // -----------------------------------------------------------
-
-    private java.lang.String notice;
-
-    public final java.lang.String getNotice() {
-        return notice;
-    }
-
-    public final void setNotice(java.lang.String notice) {
-        notice = prepareNotice(notice);
-        if (isNotice(notice)) return;
-        this.notice = notice;
-        entityModified();
-    }
-
-    protected java.lang.String prepareNotice(java.lang.String notice) {
-        notice = Str.removeUnreadableChars(notice);
-        return notice;
-    }
-
-    public final boolean isNoticeSet() {
-        return this.notice != null;
-    }
-
-    public final boolean isNotice(java.lang.String notice) {
-        if (this.notice == null && notice == null) return true;
-        return this.notice != null && this.notice.equals(notice);
+    public final boolean isRequirement(scrum.server.project.Requirement requirement) {
+        if (this.requirementId == null && requirement == null) return true;
+        return requirement != null && requirement.getId().equals(this.requirementId);
     }
 
     // -----------------------------------------------------------
@@ -173,31 +142,6 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
-    // - burnedWork
-    // -----------------------------------------------------------
-
-    private int burnedWork;
-
-    public final int getBurnedWork() {
-        return burnedWork;
-    }
-
-    public final void setBurnedWork(int burnedWork) {
-        burnedWork = prepareBurnedWork(burnedWork);
-        if (isBurnedWork(burnedWork)) return;
-        this.burnedWork = burnedWork;
-        entityModified();
-    }
-
-    protected int prepareBurnedWork(int burnedWork) {
-        return burnedWork;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return this.burnedWork == burnedWork;
-    }
-
-    // -----------------------------------------------------------
     // - remainingWork
     // -----------------------------------------------------------
 
@@ -227,24 +171,80 @@ public abstract class GTask
         return this.remainingWork != null && this.remainingWork.equals(remainingWork);
     }
 
+    // -----------------------------------------------------------
+    // - notice
+    // -----------------------------------------------------------
+
+    private java.lang.String notice;
+
+    public final java.lang.String getNotice() {
+        return notice;
+    }
+
+    public final void setNotice(java.lang.String notice) {
+        notice = prepareNotice(notice);
+        if (isNotice(notice)) return;
+        this.notice = notice;
+        entityModified();
+    }
+
+    protected java.lang.String prepareNotice(java.lang.String notice) {
+        notice = Str.removeUnreadableChars(notice);
+        return notice;
+    }
+
+    public final boolean isNoticeSet() {
+        return this.notice != null;
+    }
+
+    public final boolean isNotice(java.lang.String notice) {
+        if (this.notice == null && notice == null) return true;
+        return this.notice != null && this.notice.equals(notice);
+    }
+
+    // -----------------------------------------------------------
+    // - burnedWork
+    // -----------------------------------------------------------
+
+    private int burnedWork;
+
+    public final int getBurnedWork() {
+        return burnedWork;
+    }
+
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
+        entityModified();
+    }
+
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
+    }
+
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
-        repairDeadStoryReference(entityId);
+        repairDeadRequirementReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
-        if (!isStorySet()) {
+        if (!isRequirementSet()) {
             repairMissingMaster();
             return;
         }
         try {
-            getStory();
+            getRequirement();
         } catch (EntityDoesNotExistException ex) {
-            LOG.info("Repairing dead story reference");
-            repairDeadStoryReference(this.storyId);
+            LOG.info("Repairing dead requirement reference");
+            repairDeadRequirementReference(this.requirementId);
         }
     }
 
@@ -255,10 +255,10 @@ public abstract class GTask
 
     // --- dependencies ---
 
-    protected static scrum.server.project.StoryDao storyDao;
+    protected static scrum.server.project.RequirementDao requirementDao;
 
-    public static final void setStoryDao(scrum.server.project.StoryDao storyDao) {
-        GTask.storyDao = storyDao;
+    public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
+        GTask.requirementDao = requirementDao;
     }
 
     protected static TaskDao taskDao;

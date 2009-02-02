@@ -35,18 +35,18 @@ public class Project extends GProject {
 		return getDao().getImpedimentsByProject(this);
 	}
 
-	public Story createNewStory() {
-		Story item = new Story(this);
-		getDao().createStory(item);
+	public Requirement createNewRequirement() {
+		Requirement item = new Requirement(this);
+		getDao().createRequirement(item);
 		return item;
 	}
 
-	public void deleteStory(Story item) {
-		getDao().deleteStory(item);
+	public void deleteRequirement(Requirement item) {
+		getDao().deleteRequirement(item);
 	}
 
-	public List<Story> getStorys() {
-		return getDao().getStorysByProject(this);
+	public List<Requirement> getRequirements() {
+		return getDao().getRequirementsByProject(this);
 	}
 
 	public Sprint createNewSprint() {
@@ -60,8 +60,8 @@ public class Project extends GProject {
 	}
 
 	public boolean deleteTask(Task task) {
-		for (Story story : getStorys()) {
-			boolean b = story.getTasks().remove(task);
+		for (Requirement requirement : getRequirements()) {
+			boolean b = requirement.getTasks().remove(task);
 			if (b) return true;
 		}
 		return false;

@@ -47,9 +47,9 @@ public abstract class GSprintDaySnapshot
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("sprintId", this.sprintId);
-        properties.put("remainingWork", this.remainingWork);
         properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("burnedWork", this.burnedWork);
+        properties.put("remainingWork", this.remainingWork);
     }
 
     public int compareTo(SprintDaySnapshot other) {
@@ -66,9 +66,9 @@ public abstract class GSprintDaySnapshot
         if (template==null) return;
 
         setSprint(template.getSprint());
-        setRemainingWork(template.getRemainingWork());
         setDate(template.getDate());
         setBurnedWork(template.getBurnedWork());
+        setRemainingWork(template.getRemainingWork());
     }
 
     // -----------------------------------------------------------
@@ -107,31 +107,6 @@ public abstract class GSprintDaySnapshot
     public final boolean isSprint(scrum.server.sprint.Sprint sprint) {
         if (this.sprintId == null && sprint == null) return true;
         return sprint != null && sprint.getId().equals(this.sprintId);
-    }
-
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private int remainingWork;
-
-    public final int getRemainingWork() {
-        return remainingWork;
-    }
-
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
-        entityModified();
-    }
-
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
     }
 
     // -----------------------------------------------------------
@@ -187,6 +162,31 @@ public abstract class GSprintDaySnapshot
 
     public final boolean isBurnedWork(int burnedWork) {
         return this.burnedWork == burnedWork;
+    }
+
+    // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private int remainingWork;
+
+    public final int getRemainingWork() {
+        return remainingWork;
+    }
+
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+        entityModified();
+    }
+
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
     }
 
     protected void repairDeadReferences(String entityId) {

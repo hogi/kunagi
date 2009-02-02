@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.project.Project;
-import scrum.client.project.Story;
+import scrum.client.project.Requirement;
 
 public class Sprint extends GSprint {
 
@@ -17,13 +17,13 @@ public class Sprint extends GSprint {
 		super(data);
 	}
 
-	public List<Story> getStorys() {
-		return getDao().getStorysBySprint(this);
+	public List<Requirement> getRequirements() {
+		return getDao().getRequirementsBySprint(this);
 	}
 
 	public Integer getTaskEffortSum() {
 		Integer sum = null;
-		for (Story s : getStorys()) {
+		for (Requirement s : getRequirements()) {
 			Integer effort = s.getTaskEffortSum();
 			if (effort != null) {
 				if (sum == null) {

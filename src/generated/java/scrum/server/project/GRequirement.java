@@ -30,14 +30,14 @@ import ilarkesto.base.time.*;
 import ilarkesto.base.*;
 import ilarkesto.persistence.*;
 
-public abstract class GStory
+public abstract class GRequirement
             extends AEntity
-            implements java.lang.Comparable<Story> {
+            implements java.lang.Comparable<Requirement> {
 
     // --- AEntity ---
 
-    public final StoryDao getDao() {
-        return storyDao;
+    public final RequirementDao getDao() {
+        return requirementDao;
     }
 
     protected void repairDeadValueObject(AValueObject valueObject) {
@@ -46,35 +46,66 @@ public abstract class GStory
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("description", this.description);
         properties.put("label", this.label);
         properties.put("sprintId", this.sprintId);
-        properties.put("projectId", this.projectId);
-        properties.put("closed", this.closed);
-        properties.put("description", this.description);
-        properties.put("estimatedWork", this.estimatedWork);
         properties.put("testDescription", this.testDescription);
+        properties.put("closed", this.closed);
+        properties.put("estimatedWork", this.estimatedWork);
+        properties.put("projectId", this.projectId);
     }
 
-    public int compareTo(Story other) {
+    public int compareTo(Requirement other) {
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
-    private static final Logger LOG = Logger.get(GStory.class);
+    private static final Logger LOG = Logger.get(GRequirement.class);
 
-    public static final String TYPE = "story";
+    public static final String TYPE = "requirement";
 
     // --- copy constructor ---
-    public GStory(GStory template) {
+    public GRequirement(GRequirement template) {
         super(template);
         if (template==null) return;
 
+        setDescription(template.getDescription());
         setLabel(template.getLabel());
         setSprint(template.getSprint());
-        setProject(template.getProject());
-        setClosed(template.isClosed());
-        setDescription(template.getDescription());
-        setEstimatedWork(template.getEstimatedWork());
         setTestDescription(template.getTestDescription());
+        setClosed(template.isClosed());
+        setEstimatedWork(template.getEstimatedWork());
+        setProject(template.getProject());
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private java.lang.String description;
+
+    public final java.lang.String getDescription() {
+        return description;
+    }
+
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+        entityModified();
+    }
+
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
+    }
+
+    public final boolean isDescriptionSet() {
+        return this.description != null;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
     }
 
     // -----------------------------------------------------------
@@ -147,6 +178,92 @@ public abstract class GStory
     }
 
     // -----------------------------------------------------------
+    // - testDescription
+    // -----------------------------------------------------------
+
+    private java.lang.String testDescription;
+
+    public final java.lang.String getTestDescription() {
+        return testDescription;
+    }
+
+    public final void setTestDescription(java.lang.String testDescription) {
+        testDescription = prepareTestDescription(testDescription);
+        if (isTestDescription(testDescription)) return;
+        this.testDescription = testDescription;
+        entityModified();
+    }
+
+    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
+        testDescription = Str.removeUnreadableChars(testDescription);
+        return testDescription;
+    }
+
+    public final boolean isTestDescriptionSet() {
+        return this.testDescription != null;
+    }
+
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        if (this.testDescription == null && testDescription == null) return true;
+        return this.testDescription != null && this.testDescription.equals(testDescription);
+    }
+
+    // -----------------------------------------------------------
+    // - closed
+    // -----------------------------------------------------------
+
+    private boolean closed;
+
+    public final boolean isClosed() {
+        return closed;
+    }
+
+    public final void setClosed(boolean closed) {
+        closed = prepareClosed(closed);
+        if (isClosed(closed)) return;
+        this.closed = closed;
+        entityModified();
+    }
+
+    protected boolean prepareClosed(boolean closed) {
+        return closed;
+    }
+
+    public final boolean isClosed(boolean closed) {
+        return this.closed == closed;
+    }
+
+    // -----------------------------------------------------------
+    // - estimatedWork
+    // -----------------------------------------------------------
+
+    private java.lang.Integer estimatedWork;
+
+    public final java.lang.Integer getEstimatedWork() {
+        return estimatedWork;
+    }
+
+    public final void setEstimatedWork(java.lang.Integer estimatedWork) {
+        estimatedWork = prepareEstimatedWork(estimatedWork);
+        if (isEstimatedWork(estimatedWork)) return;
+        this.estimatedWork = estimatedWork;
+        entityModified();
+    }
+
+    protected java.lang.Integer prepareEstimatedWork(java.lang.Integer estimatedWork) {
+        return estimatedWork;
+    }
+
+    public final boolean isEstimatedWorkSet() {
+        return this.estimatedWork != null;
+    }
+
+    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
+        if (this.estimatedWork == null && estimatedWork == null) return true;
+        return this.estimatedWork != null && this.estimatedWork.equals(estimatedWork);
+    }
+
+    // -----------------------------------------------------------
     // - project
     // -----------------------------------------------------------
 
@@ -181,123 +298,6 @@ public abstract class GStory
     public final boolean isProject(scrum.server.project.Project project) {
         if (this.projectId == null && project == null) return true;
         return project != null && project.getId().equals(this.projectId);
-    }
-
-    // -----------------------------------------------------------
-    // - closed
-    // -----------------------------------------------------------
-
-    private boolean closed;
-
-    public final boolean isClosed() {
-        return closed;
-    }
-
-    public final void setClosed(boolean closed) {
-        closed = prepareClosed(closed);
-        if (isClosed(closed)) return;
-        this.closed = closed;
-        entityModified();
-    }
-
-    protected boolean prepareClosed(boolean closed) {
-        return closed;
-    }
-
-    public final boolean isClosed(boolean closed) {
-        return this.closed == closed;
-    }
-
-    // -----------------------------------------------------------
-    // - description
-    // -----------------------------------------------------------
-
-    private java.lang.String description;
-
-    public final java.lang.String getDescription() {
-        return description;
-    }
-
-    public final void setDescription(java.lang.String description) {
-        description = prepareDescription(description);
-        if (isDescription(description)) return;
-        this.description = description;
-        entityModified();
-    }
-
-    protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
-        return description;
-    }
-
-    public final boolean isDescriptionSet() {
-        return this.description != null;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        if (this.description == null && description == null) return true;
-        return this.description != null && this.description.equals(description);
-    }
-
-    // -----------------------------------------------------------
-    // - estimatedWork
-    // -----------------------------------------------------------
-
-    private java.lang.Integer estimatedWork;
-
-    public final java.lang.Integer getEstimatedWork() {
-        return estimatedWork;
-    }
-
-    public final void setEstimatedWork(java.lang.Integer estimatedWork) {
-        estimatedWork = prepareEstimatedWork(estimatedWork);
-        if (isEstimatedWork(estimatedWork)) return;
-        this.estimatedWork = estimatedWork;
-        entityModified();
-    }
-
-    protected java.lang.Integer prepareEstimatedWork(java.lang.Integer estimatedWork) {
-        return estimatedWork;
-    }
-
-    public final boolean isEstimatedWorkSet() {
-        return this.estimatedWork != null;
-    }
-
-    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
-        if (this.estimatedWork == null && estimatedWork == null) return true;
-        return this.estimatedWork != null && this.estimatedWork.equals(estimatedWork);
-    }
-
-    // -----------------------------------------------------------
-    // - testDescription
-    // -----------------------------------------------------------
-
-    private java.lang.String testDescription;
-
-    public final java.lang.String getTestDescription() {
-        return testDescription;
-    }
-
-    public final void setTestDescription(java.lang.String testDescription) {
-        testDescription = prepareTestDescription(testDescription);
-        if (isTestDescription(testDescription)) return;
-        this.testDescription = testDescription;
-        entityModified();
-    }
-
-    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
-        testDescription = Str.removeUnreadableChars(testDescription);
-        return testDescription;
-    }
-
-    public final boolean isTestDescriptionSet() {
-        return this.testDescription != null;
-    }
-
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        if (this.testDescription == null && testDescription == null) return true;
-        return this.testDescription != null && this.testDescription.equals(testDescription);
     }
 
     protected void repairDeadReferences(String entityId) {
@@ -338,19 +338,19 @@ public abstract class GStory
     protected static scrum.server.sprint.SprintDao sprintDao;
 
     public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
-        GStory.sprintDao = sprintDao;
+        GRequirement.sprintDao = sprintDao;
     }
 
     protected static scrum.server.project.ProjectDao projectDao;
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
-        GStory.projectDao = projectDao;
+        GRequirement.projectDao = projectDao;
     }
 
-    protected static StoryDao storyDao;
+    protected static RequirementDao requirementDao;
 
-    public static final void setStoryDao(StoryDao storyDao) {
-        GStory.storyDao = storyDao;
+    public static final void setRequirementDao(RequirementDao requirementDao) {
+        GRequirement.requirementDao = requirementDao;
     }
 
 }

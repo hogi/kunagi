@@ -5,28 +5,28 @@ import java.util.Set;
 import scrum.server.sprint.Task;
 import scrum.server.sprint.TaskDao;
 
-public class Story extends GStory {
+public class Requirement extends GRequirement {
 
 	// --- dependencies ---
 
 	private static TaskDao taskDao;
 
-	public Story(Story template) {
+	public Requirement(Requirement template) {
 		super(template);
 	}
 
-	public Story() {
+	public Requirement() {
 		super(null);
 	}
 
 	public static void setTaskDao(TaskDao taskDao) {
-		Story.taskDao = taskDao;
+		Requirement.taskDao = taskDao;
 	}
 
 	// --- ---
 
 	public Set<Task> getTasks() {
-		return taskDao.getTasksByStory(this);
+		return taskDao.getTasksByRequirement(this);
 	}
 
 	@Override

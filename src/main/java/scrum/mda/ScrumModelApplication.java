@@ -53,21 +53,21 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return projectSprintSnapshotModel;
 	}
 
-	private EntityModel storyModel;
+	private EntityModel requirementModel;
 
-	public EntityModel getStoryModel() {
-		if (storyModel == null) {
-			storyModel = createEntityModel("Story", "project");
-			autowire(storyModel);
-			storyModel.addReference("project", getProjectModel()).setMaster(true);
-			storyModel.addReference("sprint", getSprintModel());
-			storyModel.addProperty("label", String.class);
-			storyModel.addProperty("description", String.class);
-			storyModel.addProperty("testDescription", String.class);
-			storyModel.addProperty("estimatedWork", Integer.class);
-			storyModel.addProperty("closed", boolean.class);
+	public EntityModel getRequirementModel() {
+		if (requirementModel == null) {
+			requirementModel = createEntityModel("Requirement", "project");
+			autowire(requirementModel);
+			requirementModel.addReference("project", getProjectModel()).setMaster(true);
+			requirementModel.addReference("sprint", getSprintModel());
+			requirementModel.addProperty("label", String.class);
+			requirementModel.addProperty("description", String.class);
+			requirementModel.addProperty("testDescription", String.class);
+			requirementModel.addProperty("estimatedWork", Integer.class);
+			requirementModel.addProperty("closed", boolean.class);
 		}
-		return storyModel;
+		return requirementModel;
 	}
 
 	private EntityModel sprintModel;
@@ -104,7 +104,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (taskModel == null) {
 			taskModel = createEntityModel("Task", "sprint");
 			autowire(taskModel);
-			taskModel.addReference("story", getStoryModel()).setMaster(true);
+			taskModel.addReference("requirement", getRequirementModel()).setMaster(true);
 			taskModel.addProperty("label", String.class);
 			taskModel.addProperty("remainingWork", Integer.class);
 			taskModel.addProperty("burnedWork", int.class);
@@ -156,7 +156,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				String.class);
 			serviceModel.addMethod("selectProject").addParameter("projectId", String.class);
 			serviceModel.addMethod("requestImpediments");
-			serviceModel.addMethod("requestStorys");
+			serviceModel.addMethod("requestRequirements");
 			serviceModel.addMethod("requestCurrentSprint");
 			serviceModel.addMethod("changeProperties").addParameter("entityId", String.class).addParameter(
 				"properties", Map.class);

@@ -2,10 +2,10 @@ package scrum.client.common;
 
 import java.util.List;
 
-import scrum.client.project.Story;
+import scrum.client.project.Requirement;
 
 public interface ListProvider {
 
-	public List<Story> getList();
+	public List<Requirement> getList();
 
 }

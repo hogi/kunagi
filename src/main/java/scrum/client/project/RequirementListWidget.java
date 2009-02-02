@@ -11,13 +11,13 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class StoryListWidget extends Composite {
+public class RequirementListWidget extends Composite {
 
-	public BlockListWidget<StoryWidget> list = new BlockListWidget<StoryWidget>();
+	public BlockListWidget<RequirementWidget> list = new BlockListWidget<RequirementWidget>();
 
-	public StoryListWidget() {
+	public RequirementListWidget() {
 		ToolbarWidget toolbar = new ToolbarWidget();
-		toolbar.addButton("Create new Backlog-Item").addClickListener(new CreateClickListener());
+		toolbar.addButton("Create new Requirement").addClickListener(new CreateClickListener());
 
 		FlowPanel panel = new FlowPanel();
 		panel
@@ -32,16 +32,16 @@ public class StoryListWidget extends Composite {
 
 	public void update() {
 		list.clear();
-		for (Story item : ScrumGwtApplication.get().getProject().getStorys()) {
-			list.addBlock(new StoryWidget(item));
+		for (Requirement item : ScrumGwtApplication.get().getProject().getRequirements()) {
+			list.addBlock(new RequirementWidget(item));
 		}
 	}
 
 	class CreateClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			Story item = ScrumGwtApplication.get().getProject().createNewStory();
-			StoryWidget block = new StoryWidget(item);
+			Requirement requirement = ScrumGwtApplication.get().getProject().createNewRequirement();
+			RequirementWidget block = new RequirementWidget(requirement);
 			list.addBlock(block);
 			list.selectBlock(block);
 		}

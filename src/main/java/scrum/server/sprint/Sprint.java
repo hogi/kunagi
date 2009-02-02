@@ -4,14 +4,14 @@ import ilarkesto.base.time.Date;
 
 import java.util.Set;
 
-import scrum.server.project.Story;
-import scrum.server.project.StoryDao;
+import scrum.server.project.Requirement;
+import scrum.server.project.RequirementDao;
 
 public class Sprint extends GSprint {
 
 	// --- dependencies ---
 
-	private static StoryDao storyDao;
+	private static RequirementDao requirementDao;
 	private static TaskDao taskDao;
 	private static SprintDaySnapshotDao sprintDaySnapshotDao;
 
@@ -23,8 +23,8 @@ public class Sprint extends GSprint {
 		super(null);
 	}
 
-	public static void setStoryDao(StoryDao storyDao) {
-		Sprint.storyDao = storyDao;
+	public static void setRequirementDao(RequirementDao storyDao) {
+		Sprint.requirementDao = storyDao;
 	}
 
 	public static void setTaskDao(TaskDao taskDao) {
@@ -62,8 +62,8 @@ public class Sprint extends GSprint {
 		return sum;
 	}
 
-	public Set<Story> getStorys() {
-		return storyDao.getStorysBySprint(this);
+	public Set<Requirement> getRequirements() {
+		return requirementDao.getRequirementsBySprint(this);
 	}
 
 	public Set<Task> getTasks() {

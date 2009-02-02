@@ -6,7 +6,7 @@ import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.ToolbarWidget;
 import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
-import scrum.client.project.Story;
+import scrum.client.project.Requirement;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
@@ -16,12 +16,12 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SprintStoryWidget extends ABlockWidget {
+public class SprintRequirementWidget extends ABlockWidget {
 
-	private Story story;
+	private Requirement story;
 	private TaskListWidget taskListWidget;
 
-	public SprintStoryWidget(Story story) {
+	public SprintRequirementWidget(Requirement story) {
 		this.story = story;
 	}
 
@@ -100,7 +100,7 @@ public class SprintStoryWidget extends ABlockWidget {
 
 	@Override
 	public void delete() {
-		ScrumGwtApplication.get().getProject().deleteStory(story);
+		ScrumGwtApplication.get().getProject().deleteRequirement(story);
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class SprintStoryWidget extends ABlockWidget {
 		return new BlockListDropController(this, WorkspaceWidget.backlog.list);
 	}
 
-	public Story getItem() {
+	public Requirement getItem() {
 		return story;
 	}
 

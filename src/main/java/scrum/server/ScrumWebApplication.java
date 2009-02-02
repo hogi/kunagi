@@ -23,7 +23,7 @@ import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.impediments.Impediment;
 import scrum.server.project.Project;
-import scrum.server.project.Story;
+import scrum.server.project.Requirement;
 import scrum.server.sprint.BurndownChart;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintDaySnapshot;
@@ -67,7 +67,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		// probably dirty hacked stuff x-ing
 		if (entity instanceof Task) {
 			Task task = (Task) entity;
-			task.getStory().getSprint().getDaySnapshot(Date.today()).update();
+			task.getRequirement().getSprint().getDaySnapshot(Date.today()).update();
 		}
 
 		for (SessionData s : getOtherSessions(session)) {
@@ -106,7 +106,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		Sprint sprint = project.getCurrentSprint();
 		if (sprint == null) return;
 		session.getNextData().addEntity(toPropertyMap(sprint));
-		session.getNextData().addEntities(toPropertyMap(project.getStorys()));
+		session.getNextData().addEntities(toPropertyMap(project.getRequirements()));
 		session.getNextData().addEntities(toPropertyMap(sprint.getTasks()));
 	}
 
@@ -118,11 +118,11 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	@Override
-	public void onRequestStorys(SessionData session) {
+	public void onRequestRequirements(SessionData session) {
 		Project project = session.getProject();
 		if (project == null) throw new RuntimeException("No project selected.");
-		Collection<Story> stories = project.getStorys();
-		for (Story item : stories) {
+		Collection<Requirement> stories = project.getRequirements();
+		for (Requirement item : stories) {
 			Sprint sprint = item.getSprint();
 			if (sprint != null) session.getNextData().addEntity(toPropertyMap(sprint));
 		}
@@ -130,7 +130,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	@Override
-	public void onPing(SessionData session) {}
+	public void onPing(SessionData session) {
+		LOG.debug("ping");
+	}
 
 	@Override
 	public void onSleep(SessionData session, long millis) {
@@ -204,34 +206,34 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		impediment3.setLabel("Impediment 3");
 		getImpedimentDao().saveEntity(impediment3);
 
-		Story story1 = getStoryDao().newEntityInstance();
-		story1.setProject(project1);
-		story1.setLabel("Story 1");
-		getStoryDao().saveEntity(story1);
+		Requirement requirement1 = getRequirementDao().newEntityInstance();
+		requirement1.setProject(project1);
+		requirement1.setLabel("Requirement 1");
+		getRequirementDao().saveEntity(requirement1);
 
-		Story story2 = getStoryDao().newEntityInstance();
-		story2.setProject(project1);
-		story2.setLabel("Story 2");
-		story2.setEstimatedWork(5);
-		getStoryDao().saveEntity(story2);
+		Requirement requirement2 = getRequirementDao().newEntityInstance();
+		requirement2.setProject(project1);
+		requirement2.setLabel("Requirement 2");
+		requirement2.setEstimatedWork(5);
+		getRequirementDao().saveEntity(requirement2);
 
 		Task task1 = getTaskDao().newEntityInstance();
-		task1.setStory(story2);
+		task1.setRequirement(requirement2);
 		task1.setLabel("Task 1");
 		task1.setRemainingWork(3);
 		task1.setBurnedWork(5);
 		getTaskDao().saveEntity(task1);
 
 		Task task2 = getTaskDao().newEntityInstance();
-		task2.setStory(story2);
+		task2.setRequirement(requirement2);
 		task2.setLabel("Task 2");
 		task2.setRemainingWork(1);
 		getTaskDao().saveEntity(task2);
 
-		Story story3 = getStoryDao().newEntityInstance();
-		story3.setProject(project1);
-		story3.setLabel("Story 3");
-		getStoryDao().saveEntity(story3);
+		Requirement requirement3 = getRequirementDao().newEntityInstance();
+		requirement3.setProject(project1);
+		requirement3.setLabel("Requirement 3");
+		getRequirementDao().saveEntity(requirement3);
 
 		Sprint sprint1 = getSprintDao().newEntityInstance();
 		sprint1.setProject(project1);
@@ -239,7 +241,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		sprint1.setBegin(Date.today().addDays(-15));
 		sprint1.setEnd(Date.today().addDays(5));
 		getSprintDao().saveEntity(sprint1);
-		story2.setSprint(sprint1);
+		requirement2.setSprint(sprint1);
 		for (int i = 1; i <= 5; i++) {
 			SprintDaySnapshot snapshot = sprint1.getDaySnapshot(Date.today().addDays(-i));
 			snapshot.setBurnedWork(i % 2);

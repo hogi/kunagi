@@ -15,7 +15,7 @@ public class Project extends GProject {
 	// --- dependencies ---
 
 	private static ImpedimentDao impedimentDao;
-	private static StoryDao storyDao;
+	private static RequirementDao requirementDao;
 
 	public Project(GProject template) {
 		super(template);
@@ -29,8 +29,8 @@ public class Project extends GProject {
 		Project.impedimentDao = impedimentDao;
 	}
 
-	public static void setStoryDao(StoryDao storyDao) {
-		Project.storyDao = storyDao;
+	public static void setRequirementDao(RequirementDao storyDao) {
+		Project.requirementDao = storyDao;
 	}
 
 	// --- ---
@@ -66,8 +66,8 @@ public class Project extends GProject {
 		return impedimentDao.getImpedimentsByProject(this);
 	}
 
-	public Set<Story> getStorys() {
-		return storyDao.getStorysByProject(this);
+	public Set<Requirement> getRequirements() {
+		return requirementDao.getRequirementsByProject(this);
 	}
 
 	@Override

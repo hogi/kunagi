@@ -43,14 +43,14 @@ public abstract class GProjectSprintSnapshotDao
 
     // --- clear caches ---
     public void clearCaches() {
-        projectSprintSnapshotsByDateCache.clear();
-        datesCache = null;
-        projectSprintSnapshotsByProjectCache.clear();
-        projectsCache = null;
-        projectSprintSnapshotsByBurnedWorkCache.clear();
-        burnedWorksCache = null;
         projectSprintSnapshotsByRemainingWorkCache.clear();
         remainingWorksCache = null;
+        projectSprintSnapshotsByProjectCache.clear();
+        projectsCache = null;
+        projectSprintSnapshotsByDateCache.clear();
+        datesCache = null;
+        projectSprintSnapshotsByBurnedWorkCache.clear();
+        burnedWorksCache = null;
     }
 
     @Override
@@ -70,41 +70,41 @@ public abstract class GProjectSprintSnapshotDao
     }
 
     // -----------------------------------------------------------
-    // - date
+    // - remainingWork
     // -----------------------------------------------------------
 
-    private final Cache<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByDateCache = new Cache<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>>(
-            new Cache.Factory<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>>() {
-                public Set<ProjectSprintSnapshot> create(ilarkesto.base.time.Date date) {
-                    return getEntities(new IsDate(date));
+    private final Cache<Integer,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByRemainingWorkCache = new Cache<Integer,Set<ProjectSprintSnapshot>>(
+            new Cache.Factory<Integer,Set<ProjectSprintSnapshot>>() {
+                public Set<ProjectSprintSnapshot> create(Integer remainingWork) {
+                    return getEntities(new IsRemainingWork(remainingWork));
                 }
             });
 
-    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByDate(ilarkesto.base.time.Date date) {
-        return projectSprintSnapshotsByDateCache.get(date);
+    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByRemainingWork(int remainingWork) {
+        return projectSprintSnapshotsByRemainingWorkCache.get(remainingWork);
     }
-    private Set<ilarkesto.base.time.Date> datesCache;
+    private Set<Integer> remainingWorksCache;
 
-    public final Set<ilarkesto.base.time.Date> getDates() {
-        if (datesCache == null) {
-            datesCache = new HashSet<ilarkesto.base.time.Date>();
+    public final Set<Integer> getRemainingWorks() {
+        if (remainingWorksCache == null) {
+            remainingWorksCache = new HashSet<Integer>();
             for (ProjectSprintSnapshot e : getEntities()) {
-                if (e.isDateSet()) datesCache.add(e.getDate());
+                remainingWorksCache.add(e.getRemainingWork());
             }
         }
-        return datesCache;
+        return remainingWorksCache;
     }
 
-    private static class IsDate implements Predicate<ProjectSprintSnapshot> {
+    private static class IsRemainingWork implements Predicate<ProjectSprintSnapshot> {
 
-        private ilarkesto.base.time.Date value;
+        private int value;
 
-        public IsDate(ilarkesto.base.time.Date value) {
+        public IsRemainingWork(int value) {
             this.value = value;
         }
 
         public boolean test(ProjectSprintSnapshot e) {
-            return e.isDate(value);
+            return e.isRemainingWork(value);
         }
 
     }
@@ -150,6 +150,46 @@ public abstract class GProjectSprintSnapshotDao
     }
 
     // -----------------------------------------------------------
+    // - date
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByDateCache = new Cache<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>>() {
+                public Set<ProjectSprintSnapshot> create(ilarkesto.base.time.Date date) {
+                    return getEntities(new IsDate(date));
+                }
+            });
+
+    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByDate(ilarkesto.base.time.Date date) {
+        return projectSprintSnapshotsByDateCache.get(date);
+    }
+    private Set<ilarkesto.base.time.Date> datesCache;
+
+    public final Set<ilarkesto.base.time.Date> getDates() {
+        if (datesCache == null) {
+            datesCache = new HashSet<ilarkesto.base.time.Date>();
+            for (ProjectSprintSnapshot e : getEntities()) {
+                if (e.isDateSet()) datesCache.add(e.getDate());
+            }
+        }
+        return datesCache;
+    }
+
+    private static class IsDate implements Predicate<ProjectSprintSnapshot> {
+
+        private ilarkesto.base.time.Date value;
+
+        public IsDate(ilarkesto.base.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectSprintSnapshot e) {
+            return e.isDate(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - burnedWork
     // -----------------------------------------------------------
 
@@ -185,46 +225,6 @@ public abstract class GProjectSprintSnapshotDao
 
         public boolean test(ProjectSprintSnapshot e) {
             return e.isBurnedWork(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private final Cache<Integer,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByRemainingWorkCache = new Cache<Integer,Set<ProjectSprintSnapshot>>(
-            new Cache.Factory<Integer,Set<ProjectSprintSnapshot>>() {
-                public Set<ProjectSprintSnapshot> create(Integer remainingWork) {
-                    return getEntities(new IsRemainingWork(remainingWork));
-                }
-            });
-
-    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByRemainingWork(int remainingWork) {
-        return projectSprintSnapshotsByRemainingWorkCache.get(remainingWork);
-    }
-    private Set<Integer> remainingWorksCache;
-
-    public final Set<Integer> getRemainingWorks() {
-        if (remainingWorksCache == null) {
-            remainingWorksCache = new HashSet<Integer>();
-            for (ProjectSprintSnapshot e : getEntities()) {
-                remainingWorksCache.add(e.getRemainingWork());
-            }
-        }
-        return remainingWorksCache;
-    }
-
-    private static class IsRemainingWork implements Predicate<ProjectSprintSnapshot> {
-
-        private int value;
-
-        public IsRemainingWork(int value) {
-            this.value = value;
-        }
-
-        public boolean test(ProjectSprintSnapshot e) {
-            return e.isRemainingWork(value);
         }
 
     }

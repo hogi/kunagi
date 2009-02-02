@@ -36,7 +36,7 @@ public interface GScrumService
 
     DataTransferObject requestImpediments();
 
-    DataTransferObject requestStorys();
+    DataTransferObject requestRequirements();
 
     DataTransferObject requestCurrentSprint();
 

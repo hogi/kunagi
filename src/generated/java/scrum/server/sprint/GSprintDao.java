@@ -43,14 +43,14 @@ public abstract class GSprintDao
 
     // --- clear caches ---
     public void clearCaches() {
-        sprintsByProjectCache.clear();
-        projectsCache = null;
-        sprintsByEndCache.clear();
-        endsCache = null;
-        sprintsByBeginCache.clear();
-        beginsCache = null;
         sprintsByLabelCache.clear();
         labelsCache = null;
+        sprintsByEndCache.clear();
+        endsCache = null;
+        sprintsByProjectCache.clear();
+        projectsCache = null;
+        sprintsByBeginCache.clear();
+        beginsCache = null;
     }
 
     @Override
@@ -70,41 +70,41 @@ public abstract class GSprintDao
     }
 
     // -----------------------------------------------------------
-    // - project
+    // - label
     // -----------------------------------------------------------
 
-    private final Cache<scrum.server.project.Project,Set<Sprint>> sprintsByProjectCache = new Cache<scrum.server.project.Project,Set<Sprint>>(
-            new Cache.Factory<scrum.server.project.Project,Set<Sprint>>() {
-                public Set<Sprint> create(scrum.server.project.Project project) {
-                    return getEntities(new IsProject(project));
+    private final Cache<java.lang.String,Set<Sprint>> sprintsByLabelCache = new Cache<java.lang.String,Set<Sprint>>(
+            new Cache.Factory<java.lang.String,Set<Sprint>>() {
+                public Set<Sprint> create(java.lang.String label) {
+                    return getEntities(new IsLabel(label));
                 }
             });
 
-    public final Set<Sprint> getSprintsByProject(scrum.server.project.Project project) {
-        return sprintsByProjectCache.get(project);
+    public final Set<Sprint> getSprintsByLabel(java.lang.String label) {
+        return sprintsByLabelCache.get(label);
     }
-    private Set<scrum.server.project.Project> projectsCache;
+    private Set<java.lang.String> labelsCache;
 
-    public final Set<scrum.server.project.Project> getProjects() {
-        if (projectsCache == null) {
-            projectsCache = new HashSet<scrum.server.project.Project>();
+    public final Set<java.lang.String> getLabels() {
+        if (labelsCache == null) {
+            labelsCache = new HashSet<java.lang.String>();
             for (Sprint e : getEntities()) {
-                if (e.isProjectSet()) projectsCache.add(e.getProject());
+                if (e.isLabelSet()) labelsCache.add(e.getLabel());
             }
         }
-        return projectsCache;
+        return labelsCache;
     }
 
-    private static class IsProject implements Predicate<Sprint> {
+    private static class IsLabel implements Predicate<Sprint> {
 
-        private scrum.server.project.Project value;
+        private java.lang.String value;
 
-        public IsProject(scrum.server.project.Project value) {
+        public IsLabel(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(Sprint e) {
-            return e.isProject(value);
+            return e.isLabel(value);
         }
 
     }
@@ -150,6 +150,46 @@ public abstract class GSprintDao
     }
 
     // -----------------------------------------------------------
+    // - project
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.project.Project,Set<Sprint>> sprintsByProjectCache = new Cache<scrum.server.project.Project,Set<Sprint>>(
+            new Cache.Factory<scrum.server.project.Project,Set<Sprint>>() {
+                public Set<Sprint> create(scrum.server.project.Project project) {
+                    return getEntities(new IsProject(project));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByProject(scrum.server.project.Project project) {
+        return sprintsByProjectCache.get(project);
+    }
+    private Set<scrum.server.project.Project> projectsCache;
+
+    public final Set<scrum.server.project.Project> getProjects() {
+        if (projectsCache == null) {
+            projectsCache = new HashSet<scrum.server.project.Project>();
+            for (Sprint e : getEntities()) {
+                if (e.isProjectSet()) projectsCache.add(e.getProject());
+            }
+        }
+        return projectsCache;
+    }
+
+    private static class IsProject implements Predicate<Sprint> {
+
+        private scrum.server.project.Project value;
+
+        public IsProject(scrum.server.project.Project value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.isProject(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - begin
     // -----------------------------------------------------------
 
@@ -185,46 +225,6 @@ public abstract class GSprintDao
 
         public boolean test(Sprint e) {
             return e.isBegin(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Sprint>> sprintsByLabelCache = new Cache<java.lang.String,Set<Sprint>>(
-            new Cache.Factory<java.lang.String,Set<Sprint>>() {
-                public Set<Sprint> create(java.lang.String label) {
-                    return getEntities(new IsLabel(label));
-                }
-            });
-
-    public final Set<Sprint> getSprintsByLabel(java.lang.String label) {
-        return sprintsByLabelCache.get(label);
-    }
-    private Set<java.lang.String> labelsCache;
-
-    public final Set<java.lang.String> getLabels() {
-        if (labelsCache == null) {
-            labelsCache = new HashSet<java.lang.String>();
-            for (Sprint e : getEntities()) {
-                if (e.isLabelSet()) labelsCache.add(e.getLabel());
-            }
-        }
-        return labelsCache;
-    }
-
-    private static class IsLabel implements Predicate<Sprint> {
-
-        private java.lang.String value;
-
-        public IsLabel(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Sprint e) {
-            return e.isLabel(value);
         }
 
     }

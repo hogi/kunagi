@@ -72,12 +72,12 @@ public abstract class GScrumGwtApplication
         callRequestImpediments( null);
     }
 
-    public final void callRequestStorys( Runnable callback) {
-        getScrumService().requestStorys( new DefaultCallback(callback));
+    public final void callRequestRequirements( Runnable callback) {
+        getScrumService().requestRequirements( new DefaultCallback(callback));
     }
 
-    public final void callRequestStorys() {
-        callRequestStorys( null);
+    public final void callRequestRequirements() {
+        callRequestRequirements( null);
     }
 
     public final void callRequestCurrentSprint( Runnable callback) {

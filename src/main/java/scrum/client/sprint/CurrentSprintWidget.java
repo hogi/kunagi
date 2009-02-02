@@ -65,7 +65,7 @@ public class CurrentSprintWidget extends Composite {
 		fieldsWidget.addField("Total Effort", new Label(sprint.getTaskEffortSumString()));
 		view.add(fieldsWidget);
 
-		view.add(new SprintStoryListWidget(this));
+		view.add(new SprintRequirementListWidget(this));
 	}
 
 	public Sprint getSprint() {

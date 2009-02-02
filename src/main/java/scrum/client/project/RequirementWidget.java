@@ -18,29 +18,29 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class StoryWidget extends ABlockWidget {
+public class RequirementWidget extends ABlockWidget {
 
-	private Story story;
+	private Requirement requirement;
 
-	public StoryWidget(Story item) {
-		this.story = item;
+	public RequirementWidget(Requirement item) {
+		this.requirement = item;
 	}
 
 	@Override
 	protected Widget buildContent() {
-		if (!isExtended()) { return new Label(story.getProductBacklogSummary()); }
+		if (!isExtended()) { return new Label(requirement.getProductBacklogSummary()); }
 
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
 		fieldsWidget.addField("Label", new AEditableTextWidget() {
 
 			@Override
 			protected String getText() {
-				return story.getLabel();
+				return requirement.getLabel();
 			}
 
 			@Override
 			protected void setText(String text) {
-				story.setLabel(text);
+				requirement.setLabel(text);
 				rebuild();
 			}
 
@@ -50,12 +50,12 @@ public class StoryWidget extends ABlockWidget {
 
 			@Override
 			protected String getText() {
-				return story.getDescription();
+				return requirement.getDescription();
 			}
 
 			@Override
 			protected void setText(String text) {
-				story.setDescription(text);
+				requirement.setDescription(text);
 				rebuild();
 			}
 
@@ -65,12 +65,12 @@ public class StoryWidget extends ABlockWidget {
 
 			@Override
 			protected String getText() {
-				return story.getTestDescription();
+				return requirement.getTestDescription();
 			}
 
 			@Override
 			protected void setText(String text) {
-				story.setTestDescription(text);
+				requirement.setTestDescription(text);
 				rebuild();
 			}
 
@@ -80,8 +80,8 @@ public class StoryWidget extends ABlockWidget {
 
 			@Override
 			protected String getText() {
-				Integer effort = story.getEstimatedWork();
-				return effort == null ? "No estimation." : effort.toString() + " " + story.getProject().getEffortUnit();
+				Integer effort = requirement.getEstimatedWork();
+				return effort == null ? "No estimation." : effort.toString() + " " + requirement.getProject().getEffortUnit();
 			}
 
 			@Override
@@ -91,13 +91,13 @@ public class StoryWidget extends ABlockWidget {
 
 			@Override
 			protected String getSelectedValue() {
-				Integer effort = story.getEstimatedWork();
+				Integer effort = requirement.getEstimatedWork();
 				return effort == null ? "" : effort.toString();
 			}
 
 			@Override
 			protected void setValue(String value) {
-				story.setEstimatedWork(value.length() == 0 ? null : Integer.parseInt(value));
+				requirement.setEstimatedWork(value.length() == 0 ? null : Integer.parseInt(value));
 				rebuild();
 			}
 
@@ -114,24 +114,24 @@ public class StoryWidget extends ABlockWidget {
 		toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				ScrumGwtApplication.get().getProject().deleteStory(story);
+				ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
 				WorkspaceWidget.backlog.list.removeSelectedRow();
 			}
 		});
 
 		final Sprint currentSprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
-		if (currentSprint != null && !story.isSprint(currentSprint)) {
+		if (currentSprint != null && !requirement.isSprint(currentSprint)) {
 			toolbar.addButton(Img.bundle.sprintIcon16().createImage(), "Add to current Sprint").addClickListener(
 				new ClickListener() {
 
 					public void onClick(Widget sender) {
-						story.setSprint(currentSprint);
+						requirement.setSprint(currentSprint);
 						rebuild();
 					}
 				});
 		}
 
-		if (!story.isClosed() && story.isDone()) {
+		if (!requirement.isClosed() && requirement.isDone()) {
 			toolbar.addButton(Img.bundle.done16().createImage(), "Close").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
@@ -146,24 +146,24 @@ public class StoryWidget extends ABlockWidget {
 
 	@Override
 	protected String getBlockTitle() {
-		return story.getLabel();
+		return requirement.getLabel();
 	}
 
 	@Override
 	protected AbstractImagePrototype getIcon16() {
-		if (story.isClosed()) return Img.bundle.storyDoneIcon16();
+		if (requirement.isClosed()) return Img.bundle.storyDoneIcon16();
 		return Img.bundle.storyIcon16();
 	}
 
 	@Override
 	protected AbstractImagePrototype getIcon32() {
-		if (story.isClosed()) return Img.bundle.storyDoneIcon32();
+		if (requirement.isClosed()) return Img.bundle.storyDoneIcon32();
 		return Img.bundle.storyIcon32();
 	}
 
 	@Override
 	public void delete() {
-		ScrumGwtApplication.get().getProject().deleteStory(story);
+		ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
 		WorkspaceWidget.backlog.list.remove(this);
 	}
 
@@ -172,7 +172,7 @@ public class StoryWidget extends ABlockWidget {
 		return new BlockListDropController(this, WorkspaceWidget.backlog.list);
 	}
 
-	public Story getStory() {
-		return story;
+	public Requirement getRequirement() {
+		return requirement;
 	}
 }

@@ -43,78 +43,6 @@ public abstract class GImpediment
         return ENTITY_TYPE;
     }
 
-    // --- solution ---
-
-    private java.lang.String solution ;
-
-    public final java.lang.String getSolution() {
-        return this.solution ;
-    }
-
-    public final Impediment setSolution(java.lang.String solution) {
-        this.solution = solution ;
-        propertyChanged("solution", this.solution);
-        return (Impediment)this;
-    }
-
-    public final boolean isSolution(java.lang.String solution) {
-        return equals(this.solution, solution);
-    }
-
-    // --- description ---
-
-    private java.lang.String description ;
-
-    public final java.lang.String getDescription() {
-        return this.description ;
-    }
-
-    public final Impediment setDescription(java.lang.String description) {
-        this.description = description ;
-        propertyChanged("description", this.description);
-        return (Impediment)this;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
-    }
-
-    // --- solved ---
-
-    private boolean solved ;
-
-    public final boolean isSolved() {
-        return this.solved ;
-    }
-
-    public final Impediment setSolved(boolean solved) {
-        this.solved = solved ;
-        propertyChanged("solved", this.solved);
-        return (Impediment)this;
-    }
-
-    public final boolean isSolved(boolean solved) {
-        return equals(this.solved, solved);
-    }
-
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final Impediment setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
-        return (Impediment)this;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
-    }
-
     // --- project ---
 
     private String projectId;
@@ -135,24 +63,96 @@ public abstract class GImpediment
         return equals(this.projectId, project);
     }
 
+    // --- solution ---
+
+    private java.lang.String solution ;
+
+    public final java.lang.String getSolution() {
+        return this.solution ;
+    }
+
+    public final Impediment setSolution(java.lang.String solution) {
+        this.solution = solution ;
+        propertyChanged("solution", this.solution);
+        return (Impediment)this;
+    }
+
+    public final boolean isSolution(java.lang.String solution) {
+        return equals(this.solution, solution);
+    }
+
+    // --- solved ---
+
+    private boolean solved ;
+
+    public final boolean isSolved() {
+        return this.solved ;
+    }
+
+    public final Impediment setSolved(boolean solved) {
+        this.solved = solved ;
+        propertyChanged("solved", this.solved);
+        return (Impediment)this;
+    }
+
+    public final boolean isSolved(boolean solved) {
+        return equals(this.solved, solved);
+    }
+
+    // --- description ---
+
+    private java.lang.String description ;
+
+    public final java.lang.String getDescription() {
+        return this.description ;
+    }
+
+    public final Impediment setDescription(java.lang.String description) {
+        this.description = description ;
+        propertyChanged("description", this.description);
+        return (Impediment)this;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        return equals(this.description, description);
+    }
+
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final Impediment setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
+        return (Impediment)this;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        solution  = (java.lang.String) props.get("solution");
-        description  = (java.lang.String) props.get("description");
-        solved  = (Boolean) props.get("solved");
-        label  = (java.lang.String) props.get("label");
         projectId = (String) props.get("projectId");
+        solution  = (java.lang.String) props.get("solution");
+        solved  = (Boolean) props.get("solved");
+        description  = (java.lang.String) props.get("description");
+        label  = (java.lang.String) props.get("label");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("solution", this.solution);
-        properties.put("description", this.description);
-        properties.put("solved", this.solved);
-        properties.put("label", this.label);
         properties.put("projectId", this.projectId);
+        properties.put("solution", this.solution);
+        properties.put("solved", this.solved);
+        properties.put("description", this.description);
+        properties.put("label", this.label);
     }
 
 }

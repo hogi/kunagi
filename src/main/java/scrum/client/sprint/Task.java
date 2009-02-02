@@ -3,7 +3,7 @@ package scrum.client.sprint;
 import java.util.Map;
 
 import scrum.client.admin.User;
-import scrum.client.project.Story;
+import scrum.client.project.Requirement;
 
 public class Task extends GTask {
 
@@ -15,8 +15,8 @@ public class Task extends GTask {
 	@Deprecated
 	private TaskListWidget taskListWidget = null;
 
-	public Task(Story story) {
-		setStory(story);
+	public Task(Requirement requirement) {
+		setRequirement(requirement);
 		setLabel("New Task");
 		setRemainingWork(INIT_EFFORT);
 	}
