@@ -9,8 +9,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException {
-		Logger.setDebugEnabled(true);
 		super.init(servletConfig);
+		Logger.setDebugEnabled(true);
 	}
 
 	@Override
