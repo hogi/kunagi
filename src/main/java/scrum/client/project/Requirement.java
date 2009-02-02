@@ -10,7 +10,7 @@ import scrum.client.sprint.Task;
 
 public class Requirement extends GRequirement {
 
-	public static final String INIT_LABEL = "New Backlog Item";
+	public static final String INIT_LABEL = "New Requirement";
 
 	public Requirement(Project project) {
 		setProject(project);

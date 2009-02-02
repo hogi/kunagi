@@ -63,18 +63,29 @@ public class TaskWidget extends ABlockWidget {
 
 			@Override
 			protected void setValue(Integer value) {
-				task.setBurnedWork(value == null ? 0 : value);
+				if (value == 0) value = 0;
+				int previous = task.getBurnedWork();
+				int diff = previous - value;
+				task.setBurnedWork(value);
+				Integer remaining = task.getRemainingWork();
+				if (remaining == null) remaining = 0;
+				remaining -= diff;
+				if (remaining < 0) remaining = 0;
 				controller.dataChanged(TaskWidget.this);
 			}
 
 			@Override
 			protected void onMinusClicked() {
 				task.decrementBurnedWork();
+				task.incrementRemainingWork();
+				controller.dataChanged(TaskWidget.this);
 			}
 
 			@Override
 			protected void onPlusClicked() {
 				task.incrementBurnedWork();
+				task.decrementRemainingWork();
+				controller.dataChanged(TaskWidget.this);
 			}
 		});
 
@@ -94,11 +105,13 @@ public class TaskWidget extends ABlockWidget {
 			@Override
 			protected void onMinusClicked() {
 				task.decrementRemainingWork();
+				controller.dataChanged(TaskWidget.this);
 			}
 
 			@Override
 			protected void onPlusClicked() {
 				task.incrementRemainingWork();
+				controller.dataChanged(TaskWidget.this);
 			}
 
 		});
