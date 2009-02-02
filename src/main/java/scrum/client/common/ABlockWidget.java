@@ -146,6 +146,7 @@ public abstract class ABlockWidget extends Composite {
 		center.add(buildContent());
 
 		HorizontalPanel block = new HorizontalPanel();
+		block.setSpacing(5);
 		block.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_BLOCK);
 
 		block.add(makeDraggable());
