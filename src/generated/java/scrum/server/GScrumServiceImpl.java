@@ -33,9 +33,9 @@ public abstract class GScrumServiceImpl
     private static final Logger LOG = Logger.get(GScrumServiceImpl.class);
 
     public scrum.client.DataTransferObject ping() {
+        LOG.debug("ping");
         SessionData session = getSessionData();
         session.getContext().createSubContext("service:ping");
-        LOG.debug("ping");
         try {
             getApp().onPing(session);
         } catch (Throwable t) {
@@ -47,9 +47,9 @@ public abstract class GScrumServiceImpl
     }
 
     public scrum.client.DataTransferObject login(java.lang.String username, java.lang.String password) {
+        LOG.debug("login");
         SessionData session = getSessionData();
         session.getContext().createSubContext("service:login");
-        LOG.debug("login");
         try {
             getApp().onLogin(session, username, password);
         } catch (Throwable t) {
@@ -61,9 +61,9 @@ public abstract class GScrumServiceImpl
     }
 
     public scrum.client.DataTransferObject selectProject(java.lang.String projectId) {
+        LOG.debug("selectProject");
         SessionData session = getSessionData();
         session.getContext().createSubContext("service:selectProject");
-        LOG.debug("selectProject");
         try {
             getApp().onSelectProject(session, projectId);
         } catch (Throwable t) {
@@ -75,9 +75,9 @@ public abstract class GScrumServiceImpl
     }
 
     public scrum.client.DataTransferObject requestImpediments() {
+        LOG.debug("requestImpediments");
         SessionData session = getSessionData();
         session.getContext().createSubContext("service:requestImpediments");
-        LOG.debug("requestImpediments");
         try {
             getApp().onRequestImpediments(session);
         } catch (Throwable t) {
@@ -89,9 +89,9 @@ public abstract class GScrumServiceImpl
     }
 
     public scrum.client.DataTransferObject requestRequirements() {
+        LOG.debug("requestRequirements");
         SessionData session = getSessionData();
         session.getContext().createSubContext("service:requestRequirements");
-        LOG.debug("requestRequirements");
         try {
             getApp().onRequestRequirements(session);
         } catch (Throwable t) {
@@ -103,9 +103,9 @@ public abstract class GScrumServiceImpl
     }
 
     public scrum.client.DataTransferObject requestCurrentSprint() {
+        LOG.debug("requestCurrentSprint");
         SessionData session = getSessionData();
         session.getContext().createSubContext("service:requestCurrentSprint");
-        LOG.debug("requestCurrentSprint");
         try {
             getApp().onRequestCurrentSprint(session);
         } catch (Throwable t) {
@@ -117,9 +117,9 @@ public abstract class GScrumServiceImpl
     }
 
     public scrum.client.DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties) {
+        LOG.debug("changeProperties");
         SessionData session = getSessionData();
         session.getContext().createSubContext("service:changeProperties");
-        LOG.debug("changeProperties");
         try {
             getApp().onChangeProperties(session, entityId, properties);
         } catch (Throwable t) {
@@ -131,9 +131,9 @@ public abstract class GScrumServiceImpl
     }
 
     public scrum.client.DataTransferObject createEntity(java.lang.String type, java.util.Map properties) {
+        LOG.debug("createEntity");
         SessionData session = getSessionData();
         session.getContext().createSubContext("service:createEntity");
-        LOG.debug("createEntity");
         try {
             getApp().onCreateEntity(session, type, properties);
         } catch (Throwable t) {
@@ -145,9 +145,9 @@ public abstract class GScrumServiceImpl
     }
 
     public scrum.client.DataTransferObject deleteEntity(java.lang.String entityId) {
+        LOG.debug("deleteEntity");
         SessionData session = getSessionData();
         session.getContext().createSubContext("service:deleteEntity");
-        LOG.debug("deleteEntity");
         try {
             getApp().onDeleteEntity(session, entityId);
         } catch (Throwable t) {
@@ -159,9 +159,9 @@ public abstract class GScrumServiceImpl
     }
 
     public scrum.client.DataTransferObject sleep(long millis) {
+        LOG.debug("sleep");
         SessionData session = getSessionData();
         session.getContext().createSubContext("service:sleep");
-        LOG.debug("sleep");
         try {
             getApp().onSleep(session, millis);
         } catch (Throwable t) {

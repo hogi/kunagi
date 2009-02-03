@@ -50,4 +50,10 @@ public abstract class AServiceImpl extends RemoteServiceServlet {
 				.startWebApplication(ScrumWebApplication.class.getName(), null);
 	}
 
+	@Override
+	protected void doUnexpectedFailure(Throwable e) {
+		LOG.error("Service execution failed:", e);
+		super.doUnexpectedFailure(e);
+	}
+
 }
