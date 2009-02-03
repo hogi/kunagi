@@ -2,6 +2,8 @@ package scrum.client.sprint;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
+import scrum.client.common.BlockListController;
+import scrum.client.common.BlockListWidget;
 import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.ToolbarWidget;
 import scrum.client.dnd.BlockListDropController;
@@ -18,40 +20,51 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SprintRequirementWidget extends ABlockWidget {
 
-	private Requirement story;
-	private TaskListWidget taskListWidget;
+	private Requirement requirement;
+	private BlockListWidget<TaskWidget> taskList;
 
 	private Label taskEffortSum;
 
 	public SprintRequirementWidget(Requirement story) {
-		this.story = story;
-
+		this.requirement = story;
 		taskEffortSum = new Label();
-		update();
 	}
 
 	@Override
 	protected Widget buildContent() {
-		if (!isExtended()) { return new Label(story.getSprintBacklogSummary()); }
+		if (!isExtended()) { return new Label(requirement.getSprintBacklogSummary()); }
 
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
-		fieldsWidget.addField("Description", new Label(story.getDescription()));
-		fieldsWidget.addField("Test", new Label(story.getTestDescription()));
+		fieldsWidget.addField("Description", new Label(requirement.getDescription()));
+		fieldsWidget.addField("Test", new Label(requirement.getTestDescription()));
 		fieldsWidget.addField("Task effort sum", taskEffortSum);
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(fieldsWidget);
 
-		taskListWidget = new TaskListWidget(this);
-		panel.add(taskListWidget);
+		taskList = new BlockListWidget<TaskWidget>(new BlockListController<TaskWidget>() {
 
-		// panel.add(new TaskListWidget(item));
+			@Override
+			public void dataChanged(TaskWidget block) {
+				update();
+				controller.dataChanged(SprintRequirementWidget.this);
+			}
+		});
+		panel.add(taskList);
+
+		update();
 
 		return panel;
 	}
 
 	public void update() {
-		taskEffortSum.setText(story.getTaskEffortSumString());
+		taskEffortSum.setText(requirement.getTaskEffortSumString());
+
+		taskList.clear();
+		for (Task task : requirement.getTasks()) {
+			TaskWidget block = new TaskWidget(task);
+			taskList.addBlock(block);
+		}
 	}
 
 	@Override
@@ -59,11 +72,11 @@ public class SprintRequirementWidget extends ABlockWidget {
 		if (!isExtended()) return null;
 		ToolbarWidget toolbar = new ToolbarWidget();
 
-		if (story.isDone() && !story.isClosed()) {
+		if (requirement.isDone() && !requirement.isClosed()) {
 			toolbar.addButton("Close").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					story.setClosed(true);
+					requirement.setClosed(true);
 					rebuild();
 				}
 			});
@@ -77,12 +90,12 @@ public class SprintRequirementWidget extends ABlockWidget {
 			}
 		});
 
-		if (!story.isClosed()) {
+		if (!requirement.isClosed()) {
 			toolbar.addButton("Create new Task").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					Task task = story.createNewTask();
-					taskListWidget.update(task);
+					Task task = requirement.createNewTask();
+					update();
 				}
 			});
 		}
@@ -92,24 +105,24 @@ public class SprintRequirementWidget extends ABlockWidget {
 
 	@Override
 	protected String getBlockTitle() {
-		return story.getLabel();
+		return requirement.getLabel();
 	}
 
 	@Override
 	protected AbstractImagePrototype getIcon16() {
-		if (story.isDone()) return Img.bundle.storyDoneIcon16();
+		if (requirement.isDone()) return Img.bundle.storyDoneIcon16();
 		return Img.bundle.storyIcon16();
 	}
 
 	@Override
 	protected AbstractImagePrototype getIcon32() {
-		if (story.isDone()) return Img.bundle.storyDoneIcon32();
+		if (requirement.isDone()) return Img.bundle.storyDoneIcon32();
 		return Img.bundle.storyIcon32();
 	}
 
 	@Override
 	public void delete() {
-		ScrumGwtApplication.get().getProject().deleteRequirement(story);
+		ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
 	}
 
 	@Override
@@ -118,11 +131,7 @@ public class SprintRequirementWidget extends ABlockWidget {
 	}
 
 	public Requirement getItem() {
-		return story;
+		return requirement;
 	}
 
-	public void taskDataChanged() {
-		update();
-		controller.dataChanged(this);
-	}
 }

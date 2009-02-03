@@ -11,10 +11,6 @@ public class Task extends GTask {
 
 	private User owner;
 
-	// Das TaskListWidget, in dem der Task liegt
-	@Deprecated
-	private TaskListWidget taskListWidget = null;
-
 	public Task(Requirement requirement) {
 		setRequirement(requirement);
 		setLabel("New Task");
@@ -49,17 +45,6 @@ public class Task extends GTask {
 	@Override
 	public String toString() {
 		return getLabel();
-	}
-
-	// kleiner Workaround, um an das TaskListWidget zu kommen
-	@Deprecated
-	public TaskListWidget getTaskListWidget() {
-		return taskListWidget;
-	}
-
-	@Deprecated
-	public void setTaskListWidget(TaskListWidget taskListWidget) {
-		this.taskListWidget = taskListWidget;
 	}
 
 	public void incrementBurnedWork() {

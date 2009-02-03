@@ -198,9 +198,7 @@ public class TaskWidget extends ABlockWidget {
 
 	@Override
 	public void delete() {
-
 		task.getRequirement().deleteTask(task);
-		task.getTaskListWidget().update(null);
-
+		controller.dataChanged(this);
 	}
 }
