@@ -412,7 +412,7 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.sprint.Task> getTasksByRemainingWork(java.lang.Integer remainingWork) {
+    public final List<scrum.client.sprint.Task> getTasksByRemainingWork(int remainingWork) {
         List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
         for (scrum.client.sprint.Task entity : tasks.values()) {
             if (entity.isRemainingWork(remainingWork)) ret.add(entity);

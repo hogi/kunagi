@@ -69,27 +69,27 @@ public class TaskWidget extends ABlockWidget {
 			protected void setValue(Integer value) {
 				if (value == 0) value = 0;
 				int previous = task.getBurnedWork();
-				int diff = previous - value;
+				int diff = value - previous;
 				task.setBurnedWork(value);
-				Integer remaining = task.getRemainingWork();
-				if (remaining == null) remaining = 0;
-				remaining -= diff;
-				if (remaining < 0) remaining = 0;
+				task.adjustRemainingWork(diff);
 				notifyListControllerDataChanged();
+				rebuild();
 			}
 
 			@Override
 			protected void onMinusClicked() {
 				task.decrementBurnedWork();
-				task.incrementRemainingWork();
+				task.adjustRemainingWork(-1);
 				notifyListControllerDataChanged();
+				rebuild();
 			}
 
 			@Override
 			protected void onPlusClicked() {
 				task.incrementBurnedWork();
-				task.decrementRemainingWork();
+				task.adjustRemainingWork(1);
 				notifyListControllerDataChanged();
+				rebuild();
 			}
 		});
 
@@ -104,18 +104,22 @@ public class TaskWidget extends ABlockWidget {
 			protected void setValue(Integer value) {
 				task.setRemainingWork(value);
 				notifyListControllerDataChanged();
+				rebuild();
 			}
 
 			@Override
 			protected void onMinusClicked() {
 				task.decrementRemainingWork();
 				notifyListControllerDataChanged();
+				rebuild();
 			}
 
 			@Override
 			protected void onPlusClicked() {
 				task.incrementRemainingWork();
 				notifyListControllerDataChanged();
+				rebuild();
+
 			}
 
 		});
@@ -174,8 +178,8 @@ public class TaskWidget extends ABlockWidget {
 
 				public void onClick(Widget sender) {
 					task.setDone();
-					rebuild();
 					notifyListControllerDataChanged();
+					rebuild();
 				}
 
 			});

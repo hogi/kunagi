@@ -106,7 +106,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(taskModel);
 			taskModel.addReference("requirement", getRequirementModel()).setMaster(true);
 			taskModel.addProperty("label", String.class);
-			taskModel.addProperty("remainingWork", Integer.class);
+			taskModel.addProperty("remainingWork", int.class);
 			taskModel.addProperty("burnedWork", int.class);
 			taskModel.addProperty("notice", String.class);
 		}

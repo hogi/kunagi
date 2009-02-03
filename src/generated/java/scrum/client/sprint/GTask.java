@@ -84,19 +84,19 @@ public abstract class GTask
 
     // --- remainingWork ---
 
-    private java.lang.Integer remainingWork ;
+    private int remainingWork ;
 
-    public final java.lang.Integer getRemainingWork() {
+    public final int getRemainingWork() {
         return this.remainingWork ;
     }
 
-    public final Task setRemainingWork(java.lang.Integer remainingWork) {
+    public final Task setRemainingWork(int remainingWork) {
         this.remainingWork = remainingWork ;
         propertyChanged("remainingWork", this.remainingWork);
         return (Task)this;
     }
 
-    public final boolean isRemainingWork(java.lang.Integer remainingWork) {
+    public final boolean isRemainingWork(int remainingWork) {
         return equals(this.remainingWork, remainingWork);
     }
 
@@ -141,7 +141,7 @@ public abstract class GTask
     public void updateProperties(Map props) {
         requirementId = (String) props.get("requirementId");
         label  = (java.lang.String) props.get("label");
-        remainingWork  = (java.lang.Integer) props.get("remainingWork");
+        remainingWork  = (Integer) props.get("remainingWork");
         notice  = (java.lang.String) props.get("notice");
         burnedWork  = (Integer) props.get("burnedWork");
     }

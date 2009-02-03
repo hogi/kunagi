@@ -10,12 +10,12 @@ public class Task extends GTask {
 
 	public Task() {
 		super(null);
+		setRemainingWork(1);
 	}
 
 	// --- ---
 
 	public boolean isDone() {
-		if (!isRemainingWorkSet()) return true;
 		return getRemainingWork() == 0;
 	}
 

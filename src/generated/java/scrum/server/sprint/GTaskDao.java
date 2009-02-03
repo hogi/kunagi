@@ -155,23 +155,23 @@ public abstract class GTaskDao
     // - remainingWork
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.Integer,Set<Task>> tasksByRemainingWorkCache = new Cache<java.lang.Integer,Set<Task>>(
-            new Cache.Factory<java.lang.Integer,Set<Task>>() {
-                public Set<Task> create(java.lang.Integer remainingWork) {
+    private final Cache<Integer,Set<Task>> tasksByRemainingWorkCache = new Cache<Integer,Set<Task>>(
+            new Cache.Factory<Integer,Set<Task>>() {
+                public Set<Task> create(Integer remainingWork) {
                     return getEntities(new IsRemainingWork(remainingWork));
                 }
             });
 
-    public final Set<Task> getTasksByRemainingWork(java.lang.Integer remainingWork) {
+    public final Set<Task> getTasksByRemainingWork(int remainingWork) {
         return tasksByRemainingWorkCache.get(remainingWork);
     }
-    private Set<java.lang.Integer> remainingWorksCache;
+    private Set<Integer> remainingWorksCache;
 
-    public final Set<java.lang.Integer> getRemainingWorks() {
+    public final Set<Integer> getRemainingWorks() {
         if (remainingWorksCache == null) {
-            remainingWorksCache = new HashSet<java.lang.Integer>();
+            remainingWorksCache = new HashSet<Integer>();
             for (Task e : getEntities()) {
-                if (e.isRemainingWorkSet()) remainingWorksCache.add(e.getRemainingWork());
+                remainingWorksCache.add(e.getRemainingWork());
             }
         }
         return remainingWorksCache;
@@ -179,9 +179,9 @@ public abstract class GTaskDao
 
     private static class IsRemainingWork implements Predicate<Task> {
 
-        private java.lang.Integer value;
+        private int value;
 
-        public IsRemainingWork(java.lang.Integer value) {
+        public IsRemainingWork(int value) {
             this.value = value;
         }
 

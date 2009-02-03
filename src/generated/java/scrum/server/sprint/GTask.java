@@ -145,30 +145,25 @@ public abstract class GTask
     // - remainingWork
     // -----------------------------------------------------------
 
-    private java.lang.Integer remainingWork;
+    private int remainingWork;
 
-    public final java.lang.Integer getRemainingWork() {
+    public final int getRemainingWork() {
         return remainingWork;
     }
 
-    public final void setRemainingWork(java.lang.Integer remainingWork) {
+    public final void setRemainingWork(int remainingWork) {
         remainingWork = prepareRemainingWork(remainingWork);
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
         entityModified();
     }
 
-    protected java.lang.Integer prepareRemainingWork(java.lang.Integer remainingWork) {
+    protected int prepareRemainingWork(int remainingWork) {
         return remainingWork;
     }
 
-    public final boolean isRemainingWorkSet() {
-        return this.remainingWork != null;
-    }
-
-    public final boolean isRemainingWork(java.lang.Integer remainingWork) {
-        if (this.remainingWork == null && remainingWork == null) return true;
-        return this.remainingWork != null && this.remainingWork.equals(remainingWork);
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
     }
 
     // -----------------------------------------------------------

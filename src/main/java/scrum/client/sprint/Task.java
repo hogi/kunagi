@@ -26,7 +26,7 @@ public class Task extends GTask {
 	}
 
 	public boolean isDone() {
-		return getRemainingWork() == null || getRemainingWork() == 0;
+		return getRemainingWork() == 0;
 	}
 
 	public User getOwner() {
@@ -56,15 +56,20 @@ public class Task extends GTask {
 		setBurnedWork(getBurnedWork() - 1);
 	}
 
+	public void adjustRemainingWork(int burned) {
+		int remaining = getRemainingWork();
+		remaining -= burned;
+		if (remaining < 1) remaining = 1;
+		setRemainingWork(remaining);
+	}
+
 	public void incrementRemainingWork() {
-		Integer work = getRemainingWork();
-		if (work == null) work = 0;
-		setRemainingWork(work + 1);
+		setRemainingWork(getRemainingWork() + 1);
 	}
 
 	public void decrementRemainingWork() {
-		Integer work = getRemainingWork();
-		if (work == null || work == 0) return;
+		int work = getRemainingWork();
+		if (work <= 1) return;
 		setRemainingWork(work - 1);
 	}
 
