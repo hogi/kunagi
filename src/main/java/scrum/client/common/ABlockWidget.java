@@ -121,6 +121,11 @@ public abstract class ABlockWidget extends Composite {
 	final void setExtended(boolean extended) {
 		if (this.extended == extended) return;
 		this.extended = extended;
+		if (extended) {
+			getBorderPanel().addStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
+		} else {
+			getBorderPanel().removeStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
+		}
 		rebuild();
 	}
 

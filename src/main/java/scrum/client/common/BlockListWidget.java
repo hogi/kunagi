@@ -102,17 +102,15 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	public final void selectRow(int row) {
 		if (sidebarMode) return;
 
-		if (row == selectedRow) {
-			// deselect();
-		} else {
-			deselect();
-			ABlockWidget block = blocks.get(row);
-			block.getBorderPanel().addStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
-			if (!sidebarMode) {
-				block.setExtended(true);
-			}
-			selectedRow = row;
+		if (row == selectedRow) return;
+
+		deselect();
+		ABlockWidget block = blocks.get(row);
+
+		if (!sidebarMode) {
+			block.setExtended(true);
 		}
+		selectedRow = row;
 	}
 
 	public final void remove(B widget) {
@@ -139,11 +137,10 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	}
 
 	public final void deselect() {
-		B block = getSelectedBlock();
-		if (block == null) return;
-		block.getBorderPanel().removeStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
+		for (B block : blocks) {
+			block.setExtended(false);
+		}
 		selectedRow = -1;
-		block.setExtended(false);
 	}
 
 	public void setController(BlockListController<B> controller) {
