@@ -81,7 +81,8 @@ public class RequirementWidget extends ABlockWidget {
 			@Override
 			protected String getText() {
 				Integer effort = requirement.getEstimatedWork();
-				return effort == null ? "No estimation." : effort.toString() + " " + requirement.getProject().getEffortUnit();
+				return effort == null ? "No estimation." : effort.toString() + " "
+						+ requirement.getProject().getEffortUnit();
 			}
 
 			@Override
@@ -120,15 +121,25 @@ public class RequirementWidget extends ABlockWidget {
 		});
 
 		final Sprint currentSprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
-		if (currentSprint != null && !requirement.isSprint(currentSprint)) {
-			toolbar.addButton(Img.bundle.sprintIcon16().createImage(), "Add to current Sprint").addClickListener(
-				new ClickListener() {
+		if (currentSprint != null) {
+			if (requirement.isSprint(currentSprint)) {
+				toolbar.addButton("Remove from current Sprint").addClickListener(new ClickListener() {
 
 					public void onClick(Widget sender) {
-						requirement.setSprint(currentSprint);
+						requirement.setSprint(null);
 						rebuild();
 					}
 				});
+			} else {
+				toolbar.addButton(Img.bundle.sprintIcon16().createImage(), "Add to current Sprint").addClickListener(
+					new ClickListener() {
+
+						public void onClick(Widget sender) {
+							requirement.setSprint(currentSprint);
+							rebuild();
+						}
+					});
+			}
 		}
 
 		if (!requirement.isClosed() && requirement.isDone()) {
