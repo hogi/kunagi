@@ -48,6 +48,7 @@ public abstract class GProject
     private String currentSprintId;
 
     public final scrum.client.sprint.Sprint getCurrentSprint() {
+        if (currentSprintId == null) return null;
         return getDao().getSprint(this.currentSprintId);
     }
 
@@ -68,6 +69,7 @@ public abstract class GProject
     private String productOwnerId;
 
     public final scrum.client.admin.User getProductOwner() {
+        if (productOwnerId == null) return null;
         return getDao().getUser(this.productOwnerId);
     }
 
@@ -129,6 +131,7 @@ public abstract class GProject
     private String scrumMasterId;
 
     public final scrum.client.admin.User getScrumMaster() {
+        if (scrumMasterId == null) return null;
         return getDao().getUser(this.scrumMasterId);
     }
 

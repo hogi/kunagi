@@ -48,6 +48,7 @@ public abstract class GTask
     private String requirementId;
 
     public final scrum.client.project.Requirement getRequirement() {
+        if (requirementId == null) return null;
         return getDao().getRequirement(this.requirementId);
     }
 

@@ -84,6 +84,7 @@ public abstract class GSprint
     private String projectId;
 
     public final scrum.client.project.Project getProject() {
+        if (projectId == null) return null;
         return getDao().getProject(this.projectId);
     }
 

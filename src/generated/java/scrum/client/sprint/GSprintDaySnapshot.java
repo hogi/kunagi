@@ -48,6 +48,7 @@ public abstract class GSprintDaySnapshot
     private String sprintId;
 
     public final scrum.client.sprint.Sprint getSprint() {
+        if (sprintId == null) return null;
         return getDao().getSprint(this.sprintId);
     }
 

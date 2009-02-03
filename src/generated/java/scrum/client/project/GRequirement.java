@@ -84,6 +84,7 @@ public abstract class GRequirement
     private String sprintId;
 
     public final scrum.client.sprint.Sprint getSprint() {
+        if (sprintId == null) return null;
         return getDao().getSprint(this.sprintId);
     }
 
@@ -158,6 +159,7 @@ public abstract class GRequirement
     private String projectId;
 
     public final scrum.client.project.Project getProject() {
+        if (projectId == null) return null;
         return getDao().getProject(this.projectId);
     }
 
