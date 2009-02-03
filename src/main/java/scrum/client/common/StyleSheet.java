@@ -5,8 +5,8 @@ public class StyleSheet {
 	public static final String ELEMENT_BUTTON_WIDGET = "element-ButtonWidget";
 
 	// DummyDropWidget
-	public static final String ELEMENT_DUMMY_DROP_WIDGET = "element-DummyDropWidget";
-	public static final String ELEMENT_DUMMY_DROP_WIDGET_ACTIVE = "element-DummyDropWidget-active";
+	public static final String ELEMENT_DND_MARKER_WIDGET = "element-DndMarkerWidget";
+	public static final String ELEMENT_DND_MARKER_WIDGET_ACTIVE = "element-DndMarkerWidget-active";
 
 	// BlockWidget
 

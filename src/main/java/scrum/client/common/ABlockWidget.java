@@ -1,7 +1,7 @@
 package scrum.client.common;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.dnd.DummyDropWidget;
+import scrum.client.dnd.DndMarkerWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -26,9 +26,9 @@ public abstract class ABlockWidget extends Composite {
 	private boolean extended;
 	private boolean inClipboard;
 	private DropController dropController;
-	protected BlockListController controller = new BlockListController();
-	private DummyDropWidget dummyTop = new DummyDropWidget();
-	private DummyDropWidget dummyBottom = new DummyDropWidget();
+	protected BlockListController controller;
+	private DndMarkerWidget dndMarkerTop = new DndMarkerWidget();
+	private DndMarkerWidget dndMarkerBottom = new DndMarkerWidget();
 
 	/**
 	 * Provide the content of the block. Depending on properties (ie. <code>isExtended()</code>) a different
@@ -54,12 +54,12 @@ public abstract class ABlockWidget extends Composite {
 		panel.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET);
 		dropController = createDropController();
 
-		mainPanel.add(dummyTop);
+		mainPanel.add(dndMarkerTop);
 		mainPanel.add(panel);
-		mainPanel.add(dummyBottom);
+		mainPanel.add(dndMarkerBottom);
 
-		dummyTop.setActive(false);
-		dummyBottom.setActive(false);
+		dndMarkerTop.setActive(false);
+		dndMarkerBottom.setActive(false);
 		initWidget(mainPanel);
 	}
 
@@ -69,12 +69,19 @@ public abstract class ABlockWidget extends Composite {
 
 	protected abstract DropController createDropController();
 
-	public DummyDropWidget getDummyTop() {
-		return dummyTop;
+	public void deactivateDndMarkers() {
+		dndMarkerTop.setActive(false);
+		dndMarkerBottom.setActive(false);
 	}
 
-	public DummyDropWidget getDummyBottom() {
-		return dummyBottom;
+	public void activateDndMarkerTop() {
+		dndMarkerTop.setActive(true);
+		dndMarkerBottom.setActive(false);
+	}
+
+	public void activateDndMarkerBottom() {
+		dndMarkerBottom.setActive(true);
+		dndMarkerTop.setActive(false);
 	}
 
 	public final BlockListWidget getList() {
@@ -89,7 +96,7 @@ public abstract class ABlockWidget extends Composite {
 		return dropController != null;
 	}
 
-	public void setListController(BlockListController listController) {
+	void setListController(BlockListController listController) {
 		this.controller = listController;
 	}
 

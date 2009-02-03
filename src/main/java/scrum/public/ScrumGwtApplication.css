@@ -15,8 +15,8 @@ body {padding: 5px;}
 .element-BlockWidget-center {}
 .state-BlockWidget-selected {border: 3px solid #84C979; cursor: default;}
 
-.element-DummyDropWidget {background: #EEF3F9; height: 2px;}
-.element-DummyDropWidget-active {background: black; height: 5px; margin: 5px;}
+.element-DndMarkerWidget {background: #EEF3F9; height: 3px;}
+.element-DndMarkerWidget-active {background: black; height: 3px;}
 
 
 .element-WorkspaceWidget {}

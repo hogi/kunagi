@@ -62,9 +62,14 @@ public class SprintRequirementWidget extends ABlockWidget {
 
 		taskList.clear();
 		for (Task task : requirement.getTasks()) {
-			TaskWidget block = new TaskWidget(task);
-			taskList.addBlock(block);
+			addBlock(task);
 		}
+	}
+
+	private TaskWidget addBlock(Task task) {
+		TaskWidget block = new TaskWidget(task);
+		taskList.addBlock(block);
+		return block;
 	}
 
 	@Override
@@ -82,20 +87,14 @@ public class SprintRequirementWidget extends ABlockWidget {
 			});
 		}
 
-		toolbar.addButton("Remove").addClickListener(new ClickListener() {
-
-			public void onClick(Widget sender) {
-			// ScrumGwtApplication.get().getProject().deleteBacklogItem(item);
-			// WorkspaceWidget.backlog.list.removeSelectedRow();
-			}
-		});
-
 		if (!requirement.isClosed()) {
 			toolbar.addButton("Create new Task").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					Task task = requirement.createNewTask();
+					TaskWidget block = addBlock(task);
 					update();
+					taskList.selectBlock(block);
 				}
 			});
 		}

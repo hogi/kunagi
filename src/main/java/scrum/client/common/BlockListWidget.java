@@ -26,6 +26,8 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	public BlockListWidget(BlockListController<B> controller) {
 		this.controller = controller;
 		table = new FlexTable();
+		table.setCellPadding(0);
+		table.setCellSpacing(0);
 		table.setStyleName(StyleSheet.ELEMENT_BLOCK_LIST_WIDGET_TABLE);
 		if (!sidebarMode) {
 			table.addTableListener(new Listener());
@@ -62,21 +64,16 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 		table.setWidget(table.getRowCount(), 0, block);
 	}
 
-	public final void addBlockAt(int index, B block) {
-		block.setListController(controller);
-		block.setList(this);
+	public final void moveBlock(B block, int toIndex) {
+		int fromIndex = indexOf(block);
+		Logger.DEBUG("moving block from", fromIndex, "to", toIndex);
 
-		block.setInClipboard(sidebarMode);
-		block.rebuild();
+		blocks.remove(fromIndex);
+		blocks.add(toIndex, block);
 
-		blocks.add(index, block);
-		table.insertRow(index);
-		table.setWidget(index, 0, block);
-
-		selectedRow = (selectedRow >= index) ? selectedRow + 1 : selectedRow;
-		if (block.isExtended()) {
-			selectBlock(block);
-		}
+		table.removeRow(fromIndex);
+		table.insertRow(toIndex);
+		table.setWidget(toIndex, 0, block);
 	}
 
 	public final B getBlock(int index) {

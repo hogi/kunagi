@@ -7,21 +7,21 @@ import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.SimplePanel;
 
-public class DummyDropWidget extends Composite {
+public class DndMarkerWidget extends Composite {
 
 	private SimplePanel panel;
 
 	private DropController dropController;
 
-	public DummyDropWidget() {
+	public DndMarkerWidget() {
 		panel = new SimplePanel();
-		panel.setStyleName(StyleSheet.ELEMENT_DUMMY_DROP_WIDGET);
+		panel.setStyleName(StyleSheet.ELEMENT_DND_MARKER_WIDGET);
 
 		initWidget(panel);
 	}
 
 	public void setActive(boolean active) {
-		panel.setStyleName(active ? StyleSheet.ELEMENT_DUMMY_DROP_WIDGET_ACTIVE : StyleSheet.ELEMENT_DUMMY_DROP_WIDGET);
+		panel.setStyleName(active ? StyleSheet.ELEMENT_DND_MARKER_WIDGET_ACTIVE : StyleSheet.ELEMENT_DND_MARKER_WIDGET);
 	}
 
 	@Override

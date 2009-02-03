@@ -29,13 +29,11 @@ public class BlockListDropController implements DropController {
 		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
 		ABlockWidget block = (ABlockWidget) context.draggable;
 
-		list.remove(block);
-		int dropTargetId = list.indexOf(dropTarget);
-		if (isHigher(area, location)) {
-			list.addBlockAt(dropTargetId, block);
-		} else {
-			list.addBlockAt(++dropTargetId, block);
-		}
+		int fromIndex = list.indexOf(block);
+		int toIndex = list.indexOf(dropTarget);
+		if (fromIndex > toIndex) toIndex++;
+		if (isHigher(area, location)) toIndex--;
+		list.moveBlock(block, toIndex);
 	}
 
 	public void onEnter(DragContext context) {}
@@ -44,13 +42,9 @@ public class BlockListDropController implements DropController {
 		WidgetArea area = new WidgetArea(dropTarget, null);
 		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
 
-		if (dropTarget.isInClipboard() == false) {
+		if (!dropTarget.isInClipboard()) {
 			boolean isHigher = isHigher(area, location);
-			if (isHigher) {
-				dropTarget.getDummyTop().setActive(false);
-			} else {
-				dropTarget.getDummyBottom().setActive(false);
-			}
+			dropTarget.deactivateDndMarkers();
 		}
 	}
 
@@ -58,14 +52,12 @@ public class BlockListDropController implements DropController {
 		WidgetArea area = new WidgetArea(dropTarget, null);
 		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
 
-		if (dropTarget.isInClipboard() == false) {
+		if (!dropTarget.isInClipboard()) {
 			boolean isHigher = isHigher(area, location);
 			if (isHigher) {
-				dropTarget.getDummyTop().setActive(true);
-				dropTarget.getDummyBottom().setActive(false);
+				dropTarget.activateDndMarkerTop();
 			} else {
-				dropTarget.getDummyTop().setActive(false);
-				dropTarget.getDummyBottom().setActive(true);
+				dropTarget.activateDndMarkerBottom();
 			}
 		}
 
