@@ -1,6 +1,7 @@
 package scrum.client.project;
 
 import scrum.client.ScrumGwtApplication;
+import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.ToolbarWidget;
 
@@ -13,9 +14,10 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class RequirementListWidget extends Composite {
 
-	public BlockListWidget<RequirementWidget> list = new BlockListWidget<RequirementWidget>();
+	public BlockListWidget<RequirementWidget> list;
 
 	public RequirementListWidget() {
+		list = new BlockListWidget<RequirementWidget>(new BlockListController<RequirementWidget>());
 		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton("Create new Requirement").addClickListener(new CreateClickListener());
 

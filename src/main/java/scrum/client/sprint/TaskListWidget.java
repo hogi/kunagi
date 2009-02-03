@@ -7,12 +7,12 @@ import com.google.gwt.user.client.ui.Composite;
 
 public class TaskListWidget extends Composite {
 
-	private BlockListWidget<TaskWidget> list = new BlockListWidget<TaskWidget>();
+	private BlockListWidget<TaskWidget> list;
 	private SprintRequirementWidget sprintRequirementWidget;
 
 	public TaskListWidget(SprintRequirementWidget requirementWidget) {
 		this.sprintRequirementWidget = requirementWidget;
-		list.setController(new BlockListController<TaskWidget>() {
+		list = new BlockListWidget<TaskWidget>(new BlockListController<TaskWidget>() {
 
 			@Override
 			public void dataChanged(TaskWidget block) {

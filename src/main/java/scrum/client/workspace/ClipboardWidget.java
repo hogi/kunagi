@@ -2,6 +2,7 @@ package scrum.client.workspace;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
+import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.StyleSheet;
 import scrum.client.img.Img;
@@ -18,11 +19,12 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ClipboardWidget extends Composite {
 
-	private BlockListWidget list = new BlockListWidget();
+	private BlockListWidget list;
 	private SimplePanel space;
 	private HorizontalPanel trash;
 
 	public ClipboardWidget() {
+		list = new BlockListWidget(new BlockListController());
 
 		list.setSidebarMode(true);
 		list.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_ITEMS);

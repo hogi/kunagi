@@ -23,7 +23,8 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 
 	private BlockListController<B> controller = new BlockListController<B>();
 
-	public BlockListWidget() {
+	public BlockListWidget(BlockListController<B> controller) {
+		this.controller = controller;
 		table = new FlexTable();
 		table.setStyleName(StyleSheet.ELEMENT_BLOCK_LIST_WIDGET_TABLE);
 		if (!sidebarMode) {
@@ -141,14 +142,6 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 			block.setExtended(false);
 		}
 		selectedRow = -1;
-	}
-
-	public void setController(BlockListController<B> controller) {
-		this.controller = controller;
-		for (ABlockWidget block : blocks) {
-			// LOG.debug(block + ": " + controller.getClass());
-			block.setListController(controller);
-		}
 	}
 
 	private final class Listener implements TableListener {

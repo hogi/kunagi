@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CurrentSprintWidget extends Composite {
 
-	private BlockListWidget<SprintRequirementWidget> requirementList = new BlockListWidget<SprintRequirementWidget>();
+	private BlockListWidget<SprintRequirementWidget> requirementList;
 	private FlowPanel view;
 	private Label totalEffort;
 	private Label begin;
@@ -26,13 +26,14 @@ public class CurrentSprintWidget extends Composite {
 		totalEffort = new Label();
 		begin = new Label();
 		end = new Label();
-		requirementList.setController(new BlockListController<SprintRequirementWidget>() {
+		requirementList = new BlockListWidget<SprintRequirementWidget>(
+				new BlockListController<SprintRequirementWidget>() {
 
-			@Override
-			public void dataChanged(SprintRequirementWidget block) {
-				update();
-			}
-		});
+					@Override
+					public void dataChanged(SprintRequirementWidget block) {
+						update();
+					}
+				});
 
 		view = new FlowPanel();
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();

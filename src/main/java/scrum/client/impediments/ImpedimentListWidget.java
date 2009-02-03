@@ -1,6 +1,7 @@
 package scrum.client.impediments;
 
 import scrum.client.ScrumGwtApplication;
+import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.ToolbarWidget;
 
@@ -13,9 +14,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ImpedimentListWidget extends Composite {
 
-	public BlockListWidget<ImpedimentWidget> list = new BlockListWidget<ImpedimentWidget>();
+	public BlockListWidget<ImpedimentWidget> list;
 
 	public ImpedimentListWidget() {
+		list = new BlockListWidget<ImpedimentWidget>(new BlockListController<ImpedimentWidget>());
+
 		ToolbarWidget toolbar = new ToolbarWidget();
 
 		toolbar.addButton("Create new Impediment").addClickListener(new CreateClickListener());
