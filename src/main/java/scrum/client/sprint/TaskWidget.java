@@ -23,6 +23,10 @@ public class TaskWidget extends ABlockWidget {
 		this.task = task;
 	}
 
+	public Task getTask() {
+		return task;
+	}
+
 	@Override
 	protected DropController createDropController() {
 		// TODO Auto-generated method stub
@@ -71,21 +75,21 @@ public class TaskWidget extends ABlockWidget {
 				if (remaining == null) remaining = 0;
 				remaining -= diff;
 				if (remaining < 0) remaining = 0;
-				controller.dataChanged(TaskWidget.this);
+				notifyListControllerDataChanged();
 			}
 
 			@Override
 			protected void onMinusClicked() {
 				task.decrementBurnedWork();
 				task.incrementRemainingWork();
-				controller.dataChanged(TaskWidget.this);
+				notifyListControllerDataChanged();
 			}
 
 			@Override
 			protected void onPlusClicked() {
 				task.incrementBurnedWork();
 				task.decrementRemainingWork();
-				controller.dataChanged(TaskWidget.this);
+				notifyListControllerDataChanged();
 			}
 		});
 
@@ -99,19 +103,19 @@ public class TaskWidget extends ABlockWidget {
 			@Override
 			protected void setValue(Integer value) {
 				task.setRemainingWork(value);
-				controller.dataChanged(TaskWidget.this);
+				notifyListControllerDataChanged();
 			}
 
 			@Override
 			protected void onMinusClicked() {
 				task.decrementRemainingWork();
-				controller.dataChanged(TaskWidget.this);
+				notifyListControllerDataChanged();
 			}
 
 			@Override
 			protected void onPlusClicked() {
 				task.incrementRemainingWork();
-				controller.dataChanged(TaskWidget.this);
+				notifyListControllerDataChanged();
 			}
 
 		});
@@ -171,6 +175,7 @@ public class TaskWidget extends ABlockWidget {
 				public void onClick(Widget sender) {
 					task.setDone();
 					rebuild();
+					notifyListControllerDataChanged();
 				}
 
 			});
@@ -199,6 +204,6 @@ public class TaskWidget extends ABlockWidget {
 	@Override
 	public void delete() {
 		task.getRequirement().deleteTask(task);
-		controller.dataChanged(this);
+		notifyListControllerDataChanged();
 	}
 }

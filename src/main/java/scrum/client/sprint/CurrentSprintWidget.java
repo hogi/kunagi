@@ -1,5 +1,8 @@
 package scrum.client.sprint;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
@@ -21,6 +24,8 @@ public class CurrentSprintWidget extends Composite {
 	private Label totalEffort;
 	private Label begin;
 	private Label end;
+
+	private List<Requirement> previousRequirements = new ArrayList<Requirement>(0);
 
 	public CurrentSprintWidget() {
 		totalEffort = new Label();
@@ -59,15 +64,19 @@ public class CurrentSprintWidget extends Composite {
 	}
 
 	public void update() {
-
 		totalEffort.setText(getSprint().getTaskEffortSumString());
 		begin.setText(getSprint().getBegin().toString());
 		end.setText(getSprint().getEnd().toString());
 
-		requirementList.clear();
-		for (Requirement item : getSprint().getRequirements()) {
-			requirementList.addBlock(new SprintRequirementWidget(item));
+		List<Requirement> requirements = getSprint().getRequirements();
+		if (!requirements.equals(previousRequirements)) {
+			requirementList.clear();
+			for (Requirement requirement : requirements) {
+				requirementList.addBlock(new SprintRequirementWidget(requirement));
+			}
+			previousRequirements = requirements;
 		}
+
 	}
 
 	private Sprint getSprint() {

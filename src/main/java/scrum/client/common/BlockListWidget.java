@@ -53,7 +53,7 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 		}
 	}
 
-	public final void addBlock(B block) {
+	public final B addBlock(B block) {
 		block.setListController(controller);
 		block.setList(this);
 
@@ -62,6 +62,8 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 
 		blocks.add(block);
 		table.setWidget(table.getRowCount(), 0, block);
+
+		return block;
 	}
 
 	public final void moveBlock(B block, int toIndex) {

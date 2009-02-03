@@ -64,7 +64,7 @@ public class Task extends GTask {
 
 	public void decrementRemainingWork() {
 		Integer work = getRemainingWork();
-		if (work == null || work == 1) return;
+		if (work == null || work == 0) return;
 		setRemainingWork(work - 1);
 	}
 

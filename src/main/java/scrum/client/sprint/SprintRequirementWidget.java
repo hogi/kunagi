@@ -1,5 +1,8 @@
 package scrum.client.sprint;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockListController;
@@ -25,9 +28,15 @@ public class SprintRequirementWidget extends ABlockWidget {
 
 	private Label taskEffortSum;
 
-	public SprintRequirementWidget(Requirement story) {
-		this.requirement = story;
+	private List<Task> previousTasks = new ArrayList<Task>(0);
+
+	public SprintRequirementWidget(Requirement requirement) {
+		this.requirement = requirement;
 		taskEffortSum = new Label();
+	}
+
+	public Requirement getRequirement() {
+		return requirement;
 	}
 
 	@Override
@@ -47,7 +56,7 @@ public class SprintRequirementWidget extends ABlockWidget {
 			@Override
 			public void dataChanged(TaskWidget block) {
 				update();
-				controller.dataChanged(SprintRequirementWidget.this);
+				notifyListControllerDataChanged();
 			}
 		});
 		panel.add(taskList);
@@ -60,9 +69,19 @@ public class SprintRequirementWidget extends ABlockWidget {
 	public void update() {
 		taskEffortSum.setText(requirement.getTaskEffortSumString());
 
-		taskList.clear();
-		for (Task task : requirement.getTasks()) {
-			addBlock(task);
+		TaskWidget selectedBlock = taskList.getSelectedBlock();
+		Task selectedTask = selectedBlock == null ? null : selectedBlock.getTask();
+
+		List<Task> tasks = requirement.getTasks();
+		if (!tasks.equals(previousTasks)) {
+			taskList.clear();
+			for (Task task : tasks) {
+				TaskWidget block = addBlock(task);
+				if (selectedTask == task) {
+					taskList.selectBlock(block);
+				}
+			}
+			previousTasks = tasks;
 		}
 	}
 
@@ -93,8 +112,8 @@ public class SprintRequirementWidget extends ABlockWidget {
 				public void onClick(Widget sender) {
 					Task task = requirement.createNewTask();
 					TaskWidget block = addBlock(task);
-					update();
 					taskList.selectBlock(block);
+					update();
 				}
 			});
 		}
