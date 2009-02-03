@@ -13,7 +13,7 @@ body {padding: 5px;}
 .element-BlockWidget-title {font-size: 14px; font-weight: bold;}
 .element-BlockWidget-block {padding: 3px; width: 100%;}
 .element-BlockWidget-center {}
-.state-BlockWidget-selected {border: 3px solid #84C979;}
+.state-BlockWidget-selected {border: 3px solid #84C979; cursor: default;}
 
 .element-DummyDropWidget {background: #EEF3F9; height: 2px;}
 .element-DummyDropWidget-active {background: black; height: 5px; margin: 5px;}

@@ -39,7 +39,7 @@ public abstract class AEditableTextareaWidget extends AEditableWidget {
 	protected abstract void setText(String text);
 
 	public AEditableTextareaWidget() {
-		this(false);
+		this(true);
 	}
 
 	public AEditableTextareaWidget(boolean showToolbar) {

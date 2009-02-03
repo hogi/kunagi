@@ -50,7 +50,7 @@ public class ProjectWidget extends ABlockWidget {
 		// block is extended -> create toolbar with buttons
 		ToolbarWidget toolbar = new ToolbarWidget();
 
-		toolbar.addButton("Select").addClickListener(new ClickListener() {
+		toolbar.addButton("Open Project").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
 				select();

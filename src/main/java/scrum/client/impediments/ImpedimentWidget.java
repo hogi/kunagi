@@ -112,7 +112,7 @@ public class ImpedimentWidget extends ABlockWidget {
 
 		if (!impediment.isSolved()) {
 			// impediment not solved -> add [Solve] button
-			toolbar.addButton(Img.bundle.done16().createImage(), "Solve").addClickListener(new ClickListener() {
+			toolbar.addButton(Img.bundle.done16().createImage(), "Mark Solved").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					impediment.setSolved(true);
@@ -121,7 +121,7 @@ public class ImpedimentWidget extends ABlockWidget {
 			});
 		} else {
 			// impediment not solved -> add [Unsolve] button
-			toolbar.addButton("Unsolve").addClickListener(new ClickListener() {
+			toolbar.addButton("Mark Unsolved").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					impediment.setSolved(false);
