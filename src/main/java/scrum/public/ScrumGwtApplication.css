@@ -39,7 +39,7 @@ body {padding: 5px;}
 .element-DropWidget-trash {background: white; border: 1px solid black; color: black; width: 100%;}
 .element-DropWidget-space {background: grey; width: 100%; height: 200px;}
 
-.Viewer {height: 20px; width: 100%;}
+.Viewer {min-height: 16px; width: 100%;}
 .Textarea-editor {height: 100px; width: 96%;}
 .Integer-editor {width: 10%;}
 .AEditableWidget {width: 100%}
