@@ -79,12 +79,14 @@ public class BurndownChart {
 		Sprint sprint = sprintDao.getById(sprintId);
 		List<SprintDaySnapshot> snapshots = sprintDaySnapshotDao.getSprintDaySnapshots(sprint);
 
-		writeSprintBurndownChart(out, snapshots, sprint.getBegin(), sprint.getEnd(), 0, width, height);
+		writeSprintBurndownChart(out, snapshots, sprint.getBegin().addDays(-1), sprint.getEnd(), snapshots.get(0)
+				.getBurnedWork()
+				+ snapshots.get(1).getRemainingWork(), width, height);
 	}
 
 	private void writeSprintBurndownChart(OutputStream out, List<SprintDaySnapshot> snapshots, Date firstDay,
 			Date lastDay, double initialWork, int width, int height) {
-		DefaultXYDataset data = createSprintBurndownChartDataset(snapshots, firstDay, lastDay, 50.0);
+		DefaultXYDataset data = createSprintBurndownChartDataset(snapshots, firstDay, lastDay, initialWork);
 		double tick = 1.0;
 		double max = getMaximum(data);
 
