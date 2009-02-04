@@ -35,6 +35,7 @@ public abstract class AGwtEntity {
 
 	protected final void propertyChanged(String property, Object value) {
 		if (inCreation) return;
+		if (value instanceof Date) value = value.toString();
 		getDao().entityPropertyChanged(this, property, value);
 	}
 
