@@ -46,11 +46,11 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("requirementId", this.requirementId);
-        properties.put("label", this.label);
-        properties.put("remainingWork", this.remainingWork);
         properties.put("notice", this.notice);
         properties.put("burnedWork", this.burnedWork);
+        properties.put("requirementId", this.requirementId);
+        properties.put("remainingWork", this.remainingWork);
+        properties.put("label", this.label);
     }
 
     public int compareTo(Task other) {
@@ -66,104 +66,11 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
-        setRequirement(template.getRequirement());
-        setLabel(template.getLabel());
-        setRemainingWork(template.getRemainingWork());
         setNotice(template.getNotice());
         setBurnedWork(template.getBurnedWork());
-    }
-
-    // -----------------------------------------------------------
-    // - requirement
-    // -----------------------------------------------------------
-
-    private String requirementId;
-
-    public final scrum.server.project.Requirement getRequirement() {
-        if (this.requirementId == null) return null;
-        return (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
-    }
-
-    public final void setRequirement(scrum.server.project.Requirement requirement) {
-        requirement = prepareRequirement(requirement);
-        if (isRequirement(requirement)) return;
-        this.requirementId = requirement == null ? null : requirement.getId();
-        entityModified();
-    }
-
-    protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
-        return requirement;
-    }
-
-    protected void repairDeadRequirementReference(String entityId) {
-        if (entityId.equals(this.requirementId)) {
-            repairMissingMaster();
-        }
-    }
-
-    public final boolean isRequirementSet() {
-        return this.requirementId != null;
-    }
-
-    public final boolean isRequirement(scrum.server.project.Requirement requirement) {
-        if (this.requirementId == null && requirement == null) return true;
-        return requirement != null && requirement.getId().equals(this.requirementId);
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        entityModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
-    }
-
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private int remainingWork;
-
-    public final int getRemainingWork() {
-        return remainingWork;
-    }
-
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
-        entityModified();
-    }
-
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
+        setRequirement(template.getRequirement());
+        setRemainingWork(template.getRemainingWork());
+        setLabel(template.getLabel());
     }
 
     // -----------------------------------------------------------
@@ -220,6 +127,99 @@ public abstract class GTask
 
     public final boolean isBurnedWork(int burnedWork) {
         return this.burnedWork == burnedWork;
+    }
+
+    // -----------------------------------------------------------
+    // - requirement
+    // -----------------------------------------------------------
+
+    private String requirementId;
+
+    public final scrum.server.project.Requirement getRequirement() {
+        if (this.requirementId == null) return null;
+        return (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
+    }
+
+    public final void setRequirement(scrum.server.project.Requirement requirement) {
+        requirement = prepareRequirement(requirement);
+        if (isRequirement(requirement)) return;
+        this.requirementId = requirement == null ? null : requirement.getId();
+        entityModified();
+    }
+
+    protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
+        return requirement;
+    }
+
+    protected void repairDeadRequirementReference(String entityId) {
+        if (entityId.equals(this.requirementId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isRequirementSet() {
+        return this.requirementId != null;
+    }
+
+    public final boolean isRequirement(scrum.server.project.Requirement requirement) {
+        if (this.requirementId == null && requirement == null) return true;
+        return requirement != null && requirement.getId().equals(this.requirementId);
+    }
+
+    // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private int remainingWork;
+
+    public final int getRemainingWork() {
+        return remainingWork;
+    }
+
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+        entityModified();
+    }
+
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
     }
 
     protected void repairDeadReferences(String entityId) {

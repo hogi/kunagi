@@ -46,10 +46,10 @@ public abstract class GProjectSprintSnapshot
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("remainingWork", this.remainingWork);
-        properties.put("projectId", this.projectId);
-        properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("burnedWork", this.burnedWork);
+        properties.put("projectId", this.projectId);
+        properties.put("remainingWork", this.remainingWork);
+        properties.put("date", this.date == null ? null : this.date.toString());
     }
 
     public int compareTo(ProjectSprintSnapshot other) {
@@ -65,35 +65,35 @@ public abstract class GProjectSprintSnapshot
         super(template);
         if (template==null) return;
 
-        setRemainingWork(template.getRemainingWork());
-        setProject(template.getProject());
-        setDate(template.getDate());
         setBurnedWork(template.getBurnedWork());
+        setProject(template.getProject());
+        setRemainingWork(template.getRemainingWork());
+        setDate(template.getDate());
     }
 
     // -----------------------------------------------------------
-    // - remainingWork
+    // - burnedWork
     // -----------------------------------------------------------
 
-    private int remainingWork;
+    private int burnedWork;
 
-    public final int getRemainingWork() {
-        return remainingWork;
+    public final int getBurnedWork() {
+        return burnedWork;
     }
 
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
         entityModified();
     }
 
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
     }
 
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
     }
 
     // -----------------------------------------------------------
@@ -135,6 +135,31 @@ public abstract class GProjectSprintSnapshot
     }
 
     // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private int remainingWork;
+
+    public final int getRemainingWork() {
+        return remainingWork;
+    }
+
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+        entityModified();
+    }
+
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
+    }
+
+    // -----------------------------------------------------------
     // - date
     // -----------------------------------------------------------
 
@@ -162,31 +187,6 @@ public abstract class GProjectSprintSnapshot
     public final boolean isDate(ilarkesto.base.time.Date date) {
         if (this.date == null && date == null) return true;
         return this.date != null && this.date.equals(date);
-    }
-
-    // -----------------------------------------------------------
-    // - burnedWork
-    // -----------------------------------------------------------
-
-    private int burnedWork;
-
-    public final int getBurnedWork() {
-        return burnedWork;
-    }
-
-    public final void setBurnedWork(int burnedWork) {
-        burnedWork = prepareBurnedWork(burnedWork);
-        if (isBurnedWork(burnedWork)) return;
-        this.burnedWork = burnedWork;
-        entityModified();
-    }
-
-    protected int prepareBurnedWork(int burnedWork) {
-        return burnedWork;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return this.burnedWork == burnedWork;
     }
 
     protected void repairDeadReferences(String entityId) {

@@ -43,19 +43,19 @@ public abstract class GRequirementDao
 
     // --- clear caches ---
     public void clearCaches() {
-        requirementsByDescriptionCache.clear();
-        descriptionsCache = null;
-        requirementsByLabelCache.clear();
-        labelsCache = null;
         requirementsBySprintCache.clear();
         sprintsCache = null;
-        requirementsByTestDescriptionCache.clear();
-        testDescriptionsCache = null;
-        requirementsByClosedCache.clear();
-        requirementsByEstimatedWorkCache.clear();
-        estimatedWorksCache = null;
         requirementsByProjectCache.clear();
         projectsCache = null;
+        requirementsByEstimatedWorkCache.clear();
+        estimatedWorksCache = null;
+        requirementsByLabelCache.clear();
+        labelsCache = null;
+        requirementsByClosedCache.clear();
+        requirementsByTestDescriptionCache.clear();
+        testDescriptionsCache = null;
+        requirementsByDescriptionCache.clear();
+        descriptionsCache = null;
     }
 
     @Override
@@ -72,86 +72,6 @@ public abstract class GRequirementDao
         if (event.getEntity() instanceof Requirement) {
             clearCaches();
         }
-    }
-
-    // -----------------------------------------------------------
-    // - description
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Requirement>> requirementsByDescriptionCache = new Cache<java.lang.String,Set<Requirement>>(
-            new Cache.Factory<java.lang.String,Set<Requirement>>() {
-                public Set<Requirement> create(java.lang.String description) {
-                    return getEntities(new IsDescription(description));
-                }
-            });
-
-    public final Set<Requirement> getRequirementsByDescription(java.lang.String description) {
-        return requirementsByDescriptionCache.get(description);
-    }
-    private Set<java.lang.String> descriptionsCache;
-
-    public final Set<java.lang.String> getDescriptions() {
-        if (descriptionsCache == null) {
-            descriptionsCache = new HashSet<java.lang.String>();
-            for (Requirement e : getEntities()) {
-                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
-            }
-        }
-        return descriptionsCache;
-    }
-
-    private static class IsDescription implements Predicate<Requirement> {
-
-        private java.lang.String value;
-
-        public IsDescription(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Requirement e) {
-            return e.isDescription(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Requirement>> requirementsByLabelCache = new Cache<java.lang.String,Set<Requirement>>(
-            new Cache.Factory<java.lang.String,Set<Requirement>>() {
-                public Set<Requirement> create(java.lang.String label) {
-                    return getEntities(new IsLabel(label));
-                }
-            });
-
-    public final Set<Requirement> getRequirementsByLabel(java.lang.String label) {
-        return requirementsByLabelCache.get(label);
-    }
-    private Set<java.lang.String> labelsCache;
-
-    public final Set<java.lang.String> getLabels() {
-        if (labelsCache == null) {
-            labelsCache = new HashSet<java.lang.String>();
-            for (Requirement e : getEntities()) {
-                if (e.isLabelSet()) labelsCache.add(e.getLabel());
-            }
-        }
-        return labelsCache;
-    }
-
-    private static class IsLabel implements Predicate<Requirement> {
-
-        private java.lang.String value;
-
-        public IsLabel(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Requirement e) {
-            return e.isLabel(value);
-        }
-
     }
 
     // -----------------------------------------------------------
@@ -195,70 +115,41 @@ public abstract class GRequirementDao
     }
 
     // -----------------------------------------------------------
-    // - testDescription
+    // - project
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Requirement>> requirementsByTestDescriptionCache = new Cache<java.lang.String,Set<Requirement>>(
-            new Cache.Factory<java.lang.String,Set<Requirement>>() {
-                public Set<Requirement> create(java.lang.String testDescription) {
-                    return getEntities(new IsTestDescription(testDescription));
+    private final Cache<scrum.server.project.Project,Set<Requirement>> requirementsByProjectCache = new Cache<scrum.server.project.Project,Set<Requirement>>(
+            new Cache.Factory<scrum.server.project.Project,Set<Requirement>>() {
+                public Set<Requirement> create(scrum.server.project.Project project) {
+                    return getEntities(new IsProject(project));
                 }
             });
 
-    public final Set<Requirement> getRequirementsByTestDescription(java.lang.String testDescription) {
-        return requirementsByTestDescriptionCache.get(testDescription);
+    public final Set<Requirement> getRequirementsByProject(scrum.server.project.Project project) {
+        return requirementsByProjectCache.get(project);
     }
-    private Set<java.lang.String> testDescriptionsCache;
+    private Set<scrum.server.project.Project> projectsCache;
 
-    public final Set<java.lang.String> getTestDescriptions() {
-        if (testDescriptionsCache == null) {
-            testDescriptionsCache = new HashSet<java.lang.String>();
+    public final Set<scrum.server.project.Project> getProjects() {
+        if (projectsCache == null) {
+            projectsCache = new HashSet<scrum.server.project.Project>();
             for (Requirement e : getEntities()) {
-                if (e.isTestDescriptionSet()) testDescriptionsCache.add(e.getTestDescription());
+                if (e.isProjectSet()) projectsCache.add(e.getProject());
             }
         }
-        return testDescriptionsCache;
+        return projectsCache;
     }
 
-    private static class IsTestDescription implements Predicate<Requirement> {
+    private static class IsProject implements Predicate<Requirement> {
 
-        private java.lang.String value;
+        private scrum.server.project.Project value;
 
-        public IsTestDescription(java.lang.String value) {
+        public IsProject(scrum.server.project.Project value) {
             this.value = value;
         }
 
         public boolean test(Requirement e) {
-            return e.isTestDescription(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - closed
-    // -----------------------------------------------------------
-
-    private final Cache<Boolean,Set<Requirement>> requirementsByClosedCache = new Cache<Boolean,Set<Requirement>>(
-            new Cache.Factory<Boolean,Set<Requirement>>() {
-                public Set<Requirement> create(Boolean closed) {
-                    return getEntities(new IsClosed(closed));
-                }
-            });
-
-    public final Set<Requirement> getRequirementsByClosed(boolean closed) {
-        return requirementsByClosedCache.get(closed);
-    }
-
-    private static class IsClosed implements Predicate<Requirement> {
-
-        private boolean value;
-
-        public IsClosed(boolean value) {
-            this.value = value;
-        }
-
-        public boolean test(Requirement e) {
-            return value == e.isClosed();
+            return e.isProject(value);
         }
 
     }
@@ -304,41 +195,150 @@ public abstract class GRequirementDao
     }
 
     // -----------------------------------------------------------
-    // - project
+    // - label
     // -----------------------------------------------------------
 
-    private final Cache<scrum.server.project.Project,Set<Requirement>> requirementsByProjectCache = new Cache<scrum.server.project.Project,Set<Requirement>>(
-            new Cache.Factory<scrum.server.project.Project,Set<Requirement>>() {
-                public Set<Requirement> create(scrum.server.project.Project project) {
-                    return getEntities(new IsProject(project));
+    private final Cache<java.lang.String,Set<Requirement>> requirementsByLabelCache = new Cache<java.lang.String,Set<Requirement>>(
+            new Cache.Factory<java.lang.String,Set<Requirement>>() {
+                public Set<Requirement> create(java.lang.String label) {
+                    return getEntities(new IsLabel(label));
                 }
             });
 
-    public final Set<Requirement> getRequirementsByProject(scrum.server.project.Project project) {
-        return requirementsByProjectCache.get(project);
+    public final Set<Requirement> getRequirementsByLabel(java.lang.String label) {
+        return requirementsByLabelCache.get(label);
     }
-    private Set<scrum.server.project.Project> projectsCache;
+    private Set<java.lang.String> labelsCache;
 
-    public final Set<scrum.server.project.Project> getProjects() {
-        if (projectsCache == null) {
-            projectsCache = new HashSet<scrum.server.project.Project>();
+    public final Set<java.lang.String> getLabels() {
+        if (labelsCache == null) {
+            labelsCache = new HashSet<java.lang.String>();
             for (Requirement e : getEntities()) {
-                if (e.isProjectSet()) projectsCache.add(e.getProject());
+                if (e.isLabelSet()) labelsCache.add(e.getLabel());
             }
         }
-        return projectsCache;
+        return labelsCache;
     }
 
-    private static class IsProject implements Predicate<Requirement> {
+    private static class IsLabel implements Predicate<Requirement> {
 
-        private scrum.server.project.Project value;
+        private java.lang.String value;
 
-        public IsProject(scrum.server.project.Project value) {
+        public IsLabel(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(Requirement e) {
-            return e.isProject(value);
+            return e.isLabel(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - closed
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<Requirement>> requirementsByClosedCache = new Cache<Boolean,Set<Requirement>>(
+            new Cache.Factory<Boolean,Set<Requirement>>() {
+                public Set<Requirement> create(Boolean closed) {
+                    return getEntities(new IsClosed(closed));
+                }
+            });
+
+    public final Set<Requirement> getRequirementsByClosed(boolean closed) {
+        return requirementsByClosedCache.get(closed);
+    }
+
+    private static class IsClosed implements Predicate<Requirement> {
+
+        private boolean value;
+
+        public IsClosed(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(Requirement e) {
+            return value == e.isClosed();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - testDescription
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Requirement>> requirementsByTestDescriptionCache = new Cache<java.lang.String,Set<Requirement>>(
+            new Cache.Factory<java.lang.String,Set<Requirement>>() {
+                public Set<Requirement> create(java.lang.String testDescription) {
+                    return getEntities(new IsTestDescription(testDescription));
+                }
+            });
+
+    public final Set<Requirement> getRequirementsByTestDescription(java.lang.String testDescription) {
+        return requirementsByTestDescriptionCache.get(testDescription);
+    }
+    private Set<java.lang.String> testDescriptionsCache;
+
+    public final Set<java.lang.String> getTestDescriptions() {
+        if (testDescriptionsCache == null) {
+            testDescriptionsCache = new HashSet<java.lang.String>();
+            for (Requirement e : getEntities()) {
+                if (e.isTestDescriptionSet()) testDescriptionsCache.add(e.getTestDescription());
+            }
+        }
+        return testDescriptionsCache;
+    }
+
+    private static class IsTestDescription implements Predicate<Requirement> {
+
+        private java.lang.String value;
+
+        public IsTestDescription(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Requirement e) {
+            return e.isTestDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Requirement>> requirementsByDescriptionCache = new Cache<java.lang.String,Set<Requirement>>(
+            new Cache.Factory<java.lang.String,Set<Requirement>>() {
+                public Set<Requirement> create(java.lang.String description) {
+                    return getEntities(new IsDescription(description));
+                }
+            });
+
+    public final Set<Requirement> getRequirementsByDescription(java.lang.String description) {
+        return requirementsByDescriptionCache.get(description);
+    }
+    private Set<java.lang.String> descriptionsCache;
+
+    public final Set<java.lang.String> getDescriptions() {
+        if (descriptionsCache == null) {
+            descriptionsCache = new HashSet<java.lang.String>();
+            for (Requirement e : getEntities()) {
+                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
+            }
+        }
+        return descriptionsCache;
+    }
+
+    private static class IsDescription implements Predicate<Requirement> {
+
+        private java.lang.String value;
+
+        public IsDescription(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Requirement e) {
+            return e.isDescription(value);
         }
 
     }

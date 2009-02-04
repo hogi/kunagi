@@ -46,10 +46,10 @@ public abstract class GSprintDaySnapshot
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("sprintId", this.sprintId);
-        properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("burnedWork", this.burnedWork);
         properties.put("remainingWork", this.remainingWork);
+        properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("sprintId", this.sprintId);
     }
 
     public int compareTo(SprintDaySnapshot other) {
@@ -65,78 +65,10 @@ public abstract class GSprintDaySnapshot
         super(template);
         if (template==null) return;
 
-        setSprint(template.getSprint());
-        setDate(template.getDate());
         setBurnedWork(template.getBurnedWork());
         setRemainingWork(template.getRemainingWork());
-    }
-
-    // -----------------------------------------------------------
-    // - sprint
-    // -----------------------------------------------------------
-
-    private String sprintId;
-
-    public final scrum.server.sprint.Sprint getSprint() {
-        if (this.sprintId == null) return null;
-        return (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
-    }
-
-    public final void setSprint(scrum.server.sprint.Sprint sprint) {
-        sprint = prepareSprint(sprint);
-        if (isSprint(sprint)) return;
-        this.sprintId = sprint == null ? null : sprint.getId();
-        entityModified();
-    }
-
-    protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
-        return sprint;
-    }
-
-    protected void repairDeadSprintReference(String entityId) {
-        if (entityId.equals(this.sprintId)) {
-            this.sprintId = null;
-            entityModified();
-        }
-    }
-
-    public final boolean isSprintSet() {
-        return this.sprintId != null;
-    }
-
-    public final boolean isSprint(scrum.server.sprint.Sprint sprint) {
-        if (this.sprintId == null && sprint == null) return true;
-        return sprint != null && sprint.getId().equals(this.sprintId);
-    }
-
-    // -----------------------------------------------------------
-    // - date
-    // -----------------------------------------------------------
-
-    private ilarkesto.base.time.Date date;
-
-    public final ilarkesto.base.time.Date getDate() {
-        return date;
-    }
-
-    public final void setDate(ilarkesto.base.time.Date date) {
-        date = prepareDate(date);
-        if (isDate(date)) return;
-        this.date = date;
-        entityModified();
-    }
-
-    protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
-        return date;
-    }
-
-    public final boolean isDateSet() {
-        return this.date != null;
-    }
-
-    public final boolean isDate(ilarkesto.base.time.Date date) {
-        if (this.date == null && date == null) return true;
-        return this.date != null && this.date.equals(date);
+        setDate(template.getDate());
+        setSprint(template.getSprint());
     }
 
     // -----------------------------------------------------------
@@ -187,6 +119,74 @@ public abstract class GSprintDaySnapshot
 
     public final boolean isRemainingWork(int remainingWork) {
         return this.remainingWork == remainingWork;
+    }
+
+    // -----------------------------------------------------------
+    // - date
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date date;
+
+    public final ilarkesto.base.time.Date getDate() {
+        return date;
+    }
+
+    public final void setDate(ilarkesto.base.time.Date date) {
+        date = prepareDate(date);
+        if (isDate(date)) return;
+        this.date = date;
+        entityModified();
+    }
+
+    protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
+        return date;
+    }
+
+    public final boolean isDateSet() {
+        return this.date != null;
+    }
+
+    public final boolean isDate(ilarkesto.base.time.Date date) {
+        if (this.date == null && date == null) return true;
+        return this.date != null && this.date.equals(date);
+    }
+
+    // -----------------------------------------------------------
+    // - sprint
+    // -----------------------------------------------------------
+
+    private String sprintId;
+
+    public final scrum.server.sprint.Sprint getSprint() {
+        if (this.sprintId == null) return null;
+        return (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
+    }
+
+    public final void setSprint(scrum.server.sprint.Sprint sprint) {
+        sprint = prepareSprint(sprint);
+        if (isSprint(sprint)) return;
+        this.sprintId = sprint == null ? null : sprint.getId();
+        entityModified();
+    }
+
+    protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
+        return sprint;
+    }
+
+    protected void repairDeadSprintReference(String entityId) {
+        if (entityId.equals(this.sprintId)) {
+            this.sprintId = null;
+            entityModified();
+        }
+    }
+
+    public final boolean isSprintSet() {
+        return this.sprintId != null;
+    }
+
+    public final boolean isSprint(scrum.server.sprint.Sprint sprint) {
+        if (this.sprintId == null && sprint == null) return true;
+        return sprint != null && sprint.getId().equals(this.sprintId);
     }
 
     protected void repairDeadReferences(String entityId) {

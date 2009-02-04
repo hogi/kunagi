@@ -8,6 +8,7 @@ import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.editable.AEditableTextWidget;
+import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 
@@ -54,6 +55,18 @@ public class CurrentSprintWidget extends Composite {
 				getSprint().setLabel(text);
 			}
 
+		});
+		fieldsWidget.addField("Goal", new AEditableTextareaWidget() {
+
+			@Override
+			protected void setText(String text) {
+				getSprint().setGoal(text);
+			}
+
+			@Override
+			protected String getText() {
+				return getSprint() == null ? null : getSprint().getGoal();
+			}
 		});
 		fieldsWidget.addField("Begin", begin);
 		fieldsWidget.addField("End", end);

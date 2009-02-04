@@ -46,10 +46,11 @@ public abstract class GSprint
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("label", this.label);
-        properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("projectId", this.projectId);
         properties.put("begin", this.begin == null ? null : this.begin.toString());
+        properties.put("goal", this.goal);
+        properties.put("label", this.label);
+        properties.put("end", this.end == null ? null : this.end.toString());
     }
 
     public int compareTo(Sprint other) {
@@ -65,71 +66,11 @@ public abstract class GSprint
         super(template);
         if (template==null) return;
 
-        setLabel(template.getLabel());
-        setEnd(template.getEnd());
         setProject(template.getProject());
         setBegin(template.getBegin());
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        entityModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
-    }
-
-    // -----------------------------------------------------------
-    // - end
-    // -----------------------------------------------------------
-
-    private ilarkesto.base.time.Date end;
-
-    public final ilarkesto.base.time.Date getEnd() {
-        return end;
-    }
-
-    public final void setEnd(ilarkesto.base.time.Date end) {
-        end = prepareEnd(end);
-        if (isEnd(end)) return;
-        this.end = end;
-        entityModified();
-    }
-
-    protected ilarkesto.base.time.Date prepareEnd(ilarkesto.base.time.Date end) {
-        return end;
-    }
-
-    public final boolean isEndSet() {
-        return this.end != null;
-    }
-
-    public final boolean isEnd(ilarkesto.base.time.Date end) {
-        if (this.end == null && end == null) return true;
-        return this.end != null && this.end.equals(end);
+        setGoal(template.getGoal());
+        setLabel(template.getLabel());
+        setEnd(template.getEnd());
     }
 
     // -----------------------------------------------------------
@@ -197,6 +138,98 @@ public abstract class GSprint
     public final boolean isBegin(ilarkesto.base.time.Date begin) {
         if (this.begin == null && begin == null) return true;
         return this.begin != null && this.begin.equals(begin);
+    }
+
+    // -----------------------------------------------------------
+    // - goal
+    // -----------------------------------------------------------
+
+    private java.lang.String goal;
+
+    public final java.lang.String getGoal() {
+        return goal;
+    }
+
+    public final void setGoal(java.lang.String goal) {
+        goal = prepareGoal(goal);
+        if (isGoal(goal)) return;
+        this.goal = goal;
+        entityModified();
+    }
+
+    protected java.lang.String prepareGoal(java.lang.String goal) {
+        goal = Str.removeUnreadableChars(goal);
+        return goal;
+    }
+
+    public final boolean isGoalSet() {
+        return this.goal != null;
+    }
+
+    public final boolean isGoal(java.lang.String goal) {
+        if (this.goal == null && goal == null) return true;
+        return this.goal != null && this.goal.equals(goal);
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - end
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date end;
+
+    public final ilarkesto.base.time.Date getEnd() {
+        return end;
+    }
+
+    public final void setEnd(ilarkesto.base.time.Date end) {
+        end = prepareEnd(end);
+        if (isEnd(end)) return;
+        this.end = end;
+        entityModified();
+    }
+
+    protected ilarkesto.base.time.Date prepareEnd(ilarkesto.base.time.Date end) {
+        return end;
+    }
+
+    public final boolean isEndSet() {
+        return this.end != null;
+    }
+
+    public final boolean isEnd(ilarkesto.base.time.Date end) {
+        if (this.end == null && end == null) return true;
+        return this.end != null && this.end.equals(end);
     }
 
     protected void repairDeadReferences(String entityId) {

@@ -43,42 +43,6 @@ public abstract class GSprint
         return ENTITY_TYPE;
     }
 
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final Sprint setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
-        return (Sprint)this;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
-    }
-
-    // --- end ---
-
-    private scrum.client.common.Date end ;
-
-    public final scrum.client.common.Date getEnd() {
-        return this.end ;
-    }
-
-    public final Sprint setEnd(scrum.client.common.Date end) {
-        this.end = end ;
-        propertyChanged("end", this.end);
-        return (Sprint)this;
-    }
-
-    public final boolean isEnd(scrum.client.common.Date end) {
-        return equals(this.end, end);
-    }
-
     // --- project ---
 
     private String projectId;
@@ -118,24 +82,80 @@ public abstract class GSprint
         return equals(this.begin, begin);
     }
 
+    // --- goal ---
+
+    private java.lang.String goal ;
+
+    public final java.lang.String getGoal() {
+        return this.goal ;
+    }
+
+    public final Sprint setGoal(java.lang.String goal) {
+        this.goal = goal ;
+        propertyChanged("goal", this.goal);
+        return (Sprint)this;
+    }
+
+    public final boolean isGoal(java.lang.String goal) {
+        return equals(this.goal, goal);
+    }
+
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final Sprint setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
+        return (Sprint)this;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
+    }
+
+    // --- end ---
+
+    private scrum.client.common.Date end ;
+
+    public final scrum.client.common.Date getEnd() {
+        return this.end ;
+    }
+
+    public final Sprint setEnd(scrum.client.common.Date end) {
+        this.end = end ;
+        propertyChanged("end", this.end);
+        return (Sprint)this;
+    }
+
+    public final boolean isEnd(scrum.client.common.Date end) {
+        return equals(this.end, end);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        label  = (java.lang.String) props.get("label");
-        String endAsString = (String) props.get("end");
-        end  =  endAsString == null ? null : new scrum.client.common.Date(endAsString);
         projectId = (String) props.get("projectId");
         String beginAsString = (String) props.get("begin");
         begin  =  beginAsString == null ? null : new scrum.client.common.Date(beginAsString);
+        goal  = (java.lang.String) props.get("goal");
+        label  = (java.lang.String) props.get("label");
+        String endAsString = (String) props.get("end");
+        end  =  endAsString == null ? null : new scrum.client.common.Date(endAsString);
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("label", this.label);
-        properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("projectId", this.projectId);
         properties.put("begin", this.begin == null ? null : this.begin.toString());
+        properties.put("goal", this.goal);
+        properties.put("label", this.label);
+        properties.put("end", this.end == null ? null : this.end.toString());
     }
 
 }
