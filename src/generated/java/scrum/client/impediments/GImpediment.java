@@ -43,40 +43,22 @@ public abstract class GImpediment
         return ENTITY_TYPE;
     }
 
-    // --- date ---
+    // --- label ---
 
-    private scrum.client.common.Date date ;
+    private java.lang.String label ;
 
-    public final scrum.client.common.Date getDate() {
-        return this.date ;
+    public final java.lang.String getLabel() {
+        return this.label ;
     }
 
-    public final Impediment setDate(scrum.client.common.Date date) {
-        this.date = date ;
-        propertyChanged("date", this.date);
+    public final Impediment setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
         return (Impediment)this;
     }
 
-    public final boolean isDate(scrum.client.common.Date date) {
-        return equals(this.date, date);
-    }
-
-    // --- solution ---
-
-    private java.lang.String solution ;
-
-    public final java.lang.String getSolution() {
-        return this.solution ;
-    }
-
-    public final Impediment setSolution(java.lang.String solution) {
-        this.solution = solution ;
-        propertyChanged("solution", this.solution);
-        return (Impediment)this;
-    }
-
-    public final boolean isSolution(java.lang.String solution) {
-        return equals(this.solution, solution);
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
     }
 
     // --- description ---
@@ -97,22 +79,22 @@ public abstract class GImpediment
         return equals(this.description, description);
     }
 
-    // --- label ---
+    // --- date ---
 
-    private java.lang.String label ;
+    private scrum.client.common.Date date ;
 
-    public final java.lang.String getLabel() {
-        return this.label ;
+    public final scrum.client.common.Date getDate() {
+        return this.date ;
     }
 
-    public final Impediment setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
+    public final Impediment setDate(scrum.client.common.Date date) {
+        this.date = date ;
+        propertyChanged("date", this.date);
         return (Impediment)this;
     }
 
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+    public final boolean isDate(scrum.client.common.Date date) {
+        return equals(this.date, date);
     }
 
     // --- project ---
@@ -136,6 +118,24 @@ public abstract class GImpediment
         return equals(this.projectId, project);
     }
 
+    // --- solution ---
+
+    private java.lang.String solution ;
+
+    public final java.lang.String getSolution() {
+        return this.solution ;
+    }
+
+    public final Impediment setSolution(java.lang.String solution) {
+        this.solution = solution ;
+        propertyChanged("solution", this.solution);
+        return (Impediment)this;
+    }
+
+    public final boolean isSolution(java.lang.String solution) {
+        return equals(this.solution, solution);
+    }
+
     // --- solveDate ---
 
     private scrum.client.common.Date solveDate ;
@@ -157,12 +157,12 @@ public abstract class GImpediment
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
+        label  = (java.lang.String) props.get("label");
+        description  = (java.lang.String) props.get("description");
         String dateAsString = (String) props.get("date");
         date  =  dateAsString == null ? null : new scrum.client.common.Date(dateAsString);
-        solution  = (java.lang.String) props.get("solution");
-        description  = (java.lang.String) props.get("description");
-        label  = (java.lang.String) props.get("label");
         projectId = (String) props.get("projectId");
+        solution  = (java.lang.String) props.get("solution");
         String solveDateAsString = (String) props.get("solveDate");
         solveDate  =  solveDateAsString == null ? null : new scrum.client.common.Date(solveDateAsString);
     }
@@ -170,11 +170,11 @@ public abstract class GImpediment
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("date", this.date == null ? null : this.date.toString());
-        properties.put("solution", this.solution);
-        properties.put("description", this.description);
         properties.put("label", this.label);
+        properties.put("description", this.description);
+        properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("projectId", this.projectId);
+        properties.put("solution", this.solution);
         properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
     }
 

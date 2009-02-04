@@ -61,27 +61,6 @@ public abstract class GSprintDaySnapshot
         return equals(this.burnedWork, burnedWork);
     }
 
-    // --- sprint ---
-
-    private String sprintId;
-
-    public final scrum.client.sprint.Sprint getSprint() {
-        if (sprintId == null) return null;
-        return getDao().getSprint(this.sprintId);
-    }
-
-    public final SprintDaySnapshot setSprint(scrum.client.sprint.Sprint sprint) {
-        String id = sprint == null ? null : sprint.getId();
-        if (equals(this.sprintId, id)) return (SprintDaySnapshot) this;
-        this.sprintId = id;
-        propertyChanged("sprintId", this.sprintId);
-        return (SprintDaySnapshot)this;
-    }
-
-    public final boolean isSprint(scrum.client.sprint.Sprint sprint) {
-        return equals(this.sprintId, sprint);
-    }
-
     // --- remainingWork ---
 
     private int remainingWork ;
@@ -118,23 +97,44 @@ public abstract class GSprintDaySnapshot
         return equals(this.date, date);
     }
 
+    // --- sprint ---
+
+    private String sprintId;
+
+    public final scrum.client.sprint.Sprint getSprint() {
+        if (sprintId == null) return null;
+        return getDao().getSprint(this.sprintId);
+    }
+
+    public final SprintDaySnapshot setSprint(scrum.client.sprint.Sprint sprint) {
+        String id = sprint == null ? null : sprint.getId();
+        if (equals(this.sprintId, id)) return (SprintDaySnapshot) this;
+        this.sprintId = id;
+        propertyChanged("sprintId", this.sprintId);
+        return (SprintDaySnapshot)this;
+    }
+
+    public final boolean isSprint(scrum.client.sprint.Sprint sprint) {
+        return equals(this.sprintId, sprint);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         burnedWork  = (Integer) props.get("burnedWork");
-        sprintId = (String) props.get("sprintId");
         remainingWork  = (Integer) props.get("remainingWork");
         String dateAsString = (String) props.get("date");
         date  =  dateAsString == null ? null : new scrum.client.common.Date(dateAsString);
+        sprintId = (String) props.get("sprintId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("burnedWork", this.burnedWork);
-        properties.put("sprintId", this.sprintId);
         properties.put("remainingWork", this.remainingWork);
         properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("sprintId", this.sprintId);
     }
 
 }

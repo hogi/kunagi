@@ -43,6 +43,27 @@ public abstract class GTask
         return ENTITY_TYPE;
     }
 
+    // --- owner ---
+
+    private String ownerId;
+
+    public final scrum.client.admin.User getOwner() {
+        if (ownerId == null) return null;
+        return getDao().getUser(this.ownerId);
+    }
+
+    public final Task setOwner(scrum.client.admin.User owner) {
+        String id = owner == null ? null : owner.getId();
+        if (equals(this.ownerId, id)) return (Task) this;
+        this.ownerId = id;
+        propertyChanged("ownerId", this.ownerId);
+        return (Task)this;
+    }
+
+    public final boolean isOwner(scrum.client.admin.User owner) {
+        return equals(this.ownerId, owner);
+    }
+
     // --- requirement ---
 
     private String requirementId;
@@ -139,6 +160,7 @@ public abstract class GTask
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
+        ownerId = (String) props.get("ownerId");
         requirementId = (String) props.get("requirementId");
         notice  = (java.lang.String) props.get("notice");
         label  = (java.lang.String) props.get("label");
@@ -149,6 +171,7 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("ownerId", this.ownerId);
         properties.put("requirementId", this.requirementId);
         properties.put("notice", this.notice);
         properties.put("label", this.label);

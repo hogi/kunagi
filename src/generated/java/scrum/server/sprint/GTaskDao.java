@@ -43,6 +43,8 @@ public abstract class GTaskDao
 
     // --- clear caches ---
     public void clearCaches() {
+        tasksByOwnerCache.clear();
+        ownersCache = null;
         tasksByRequirementCache.clear();
         requirementsCache = null;
         tasksByNoticeCache.clear();
@@ -69,6 +71,46 @@ public abstract class GTaskDao
         if (event.getEntity() instanceof Task) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - owner
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.admin.User,Set<Task>> tasksByOwnerCache = new Cache<scrum.server.admin.User,Set<Task>>(
+            new Cache.Factory<scrum.server.admin.User,Set<Task>>() {
+                public Set<Task> create(scrum.server.admin.User owner) {
+                    return getEntities(new IsOwner(owner));
+                }
+            });
+
+    public final Set<Task> getTasksByOwner(scrum.server.admin.User owner) {
+        return tasksByOwnerCache.get(owner);
+    }
+    private Set<scrum.server.admin.User> ownersCache;
+
+    public final Set<scrum.server.admin.User> getOwners() {
+        if (ownersCache == null) {
+            ownersCache = new HashSet<scrum.server.admin.User>();
+            for (Task e : getEntities()) {
+                if (e.isOwnerSet()) ownersCache.add(e.getOwner());
+            }
+        }
+        return ownersCache;
+    }
+
+    private static class IsOwner implements Predicate<Task> {
+
+        private scrum.server.admin.User value;
+
+        public IsOwner(scrum.server.admin.User value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isOwner(value);
+        }
+
     }
 
     // -----------------------------------------------------------

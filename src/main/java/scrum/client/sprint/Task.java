@@ -9,8 +9,6 @@ public class Task extends GTask {
 
 	public static final int INIT_EFFORT = 1;
 
-	private User owner;
-
 	public Task(Requirement requirement) {
 		setRequirement(requirement);
 		setLabel("New Task");
@@ -29,17 +27,16 @@ public class Task extends GTask {
 		return getRemainingWork() == 0;
 	}
 
-	public User getOwner() {
-		return owner;
-	}
-
-	public void setOwner(User owner) {
-		this.owner = owner;
-	}
-
 	public String getSummary() {
 		if (isDone()) return "Done.";
-		return getRemainingWork() + " hours to do.";
+		String s = getRemainingWork() + " hours to do.";
+		User owner = getOwner();
+		if (owner != null) {
+			s += " Owed by " + owner + ".";
+		} else {
+			s += " No owner.";
+		}
+		return s;
 	}
 
 	@Override

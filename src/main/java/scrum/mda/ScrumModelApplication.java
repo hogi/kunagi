@@ -110,6 +110,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			taskModel.addProperty("remainingWork", int.class);
 			taskModel.addProperty("burnedWork", int.class);
 			taskModel.addProperty("notice", String.class);
+			taskModel.addReference("owner", getUserModel());
 		}
 		return taskModel;
 	}

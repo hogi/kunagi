@@ -46,6 +46,7 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("ownerId", this.ownerId);
         properties.put("requirementId", this.requirementId);
         properties.put("notice", this.notice);
         properties.put("label", this.label);
@@ -66,11 +67,50 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
+        setOwner(template.getOwner());
         setRequirement(template.getRequirement());
         setNotice(template.getNotice());
         setLabel(template.getLabel());
         setBurnedWork(template.getBurnedWork());
         setRemainingWork(template.getRemainingWork());
+    }
+
+    // -----------------------------------------------------------
+    // - owner
+    // -----------------------------------------------------------
+
+    private String ownerId;
+
+    public final scrum.server.admin.User getOwner() {
+        if (this.ownerId == null) return null;
+        return (scrum.server.admin.User)userDao.getById(this.ownerId);
+    }
+
+    public final void setOwner(scrum.server.admin.User owner) {
+        owner = prepareOwner(owner);
+        if (isOwner(owner)) return;
+        this.ownerId = owner == null ? null : owner.getId();
+        entityModified();
+    }
+
+    protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
+        return owner;
+    }
+
+    protected void repairDeadOwnerReference(String entityId) {
+        if (entityId.equals(this.ownerId)) {
+            this.ownerId = null;
+            entityModified();
+        }
+    }
+
+    public final boolean isOwnerSet() {
+        return this.ownerId != null;
+    }
+
+    public final boolean isOwner(scrum.server.admin.User owner) {
+        if (this.ownerId == null && owner == null) return true;
+        return owner != null && owner.getId().equals(this.ownerId);
     }
 
     // -----------------------------------------------------------
@@ -224,6 +264,7 @@ public abstract class GTask
 
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
+        repairDeadOwnerReference(entityId);
         repairDeadRequirementReference(entityId);
     }
 
@@ -231,6 +272,12 @@ public abstract class GTask
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
+        try {
+            getOwner();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead owner reference");
+            repairDeadOwnerReference(this.ownerId);
+        }
         if (!isRequirementSet()) {
             repairMissingMaster();
             return;
