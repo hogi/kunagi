@@ -81,7 +81,7 @@ public class BurndownChart {
 
 		writeSprintBurndownChart(out, snapshots, sprint.getBegin().addDays(-1), sprint.getEnd(), snapshots.get(0)
 				.getBurnedWork()
-				+ snapshots.get(1).getRemainingWork(), width, height);
+				+ snapshots.get(0).getRemainingWork(), width, height);
 	}
 
 	private void writeSprintBurndownChart(OutputStream out, List<SprintDaySnapshot> snapshots, Date firstDay,
