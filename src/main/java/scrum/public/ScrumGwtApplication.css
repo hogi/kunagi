@@ -35,7 +35,7 @@ body {padding: 5px;}
 .element-GroupWidget-content {padding: 5px;}
 
 .element-DropWidget {width: 100%;}
-.element-DropWidget-items {min-height: 100px;}
+.element-DropWidget-items {height: 100px; width: 100%;}
 .element-DropWidget-trash {background: white; border: 1px solid black; color: black; width: 100%;}
 .element-DropWidget-space {background: grey; width: 100%; height: 200px;}
 
