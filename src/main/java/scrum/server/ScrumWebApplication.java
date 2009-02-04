@@ -209,6 +209,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		Requirement requirement1 = getRequirementDao().newEntityInstance();
 		requirement1.setProject(project1);
 		requirement1.setLabel("Requirement 1");
+		requirement1.setEstimatedWork(10);
 		getRequirementDao().saveEntity(requirement1);
 
 		Requirement requirement2 = getRequirementDao().newEntityInstance();
@@ -242,10 +243,16 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		sprint1.setEnd(Date.today().addDays(5));
 		getSprintDao().saveEntity(sprint1);
 		requirement2.setSprint(sprint1);
-		for (int i = 1; i <= 5; i++) {
+		int remainingWork = 150;
+		int burnedWork = 0;
+		for (int i = 15; i > 0; i--) {
 			SprintDaySnapshot snapshot = sprint1.getDaySnapshot(Date.today().addDays(-i));
-			snapshot.setBurnedWork(i % 2);
-			snapshot.setRemainingWork(50 - i);
+			int burned = Utl.randomInt(1, 3) * 5;
+			burnedWork += burned;
+			remainingWork -= burned;
+			if (Utl.randomInt(1, 5) == 1) remainingWork += burned + 5;
+			snapshot.setBurnedWork(burnedWork);
+			snapshot.setRemainingWork(remainingWork);
 		}
 
 		project1.setCurrentSprint(sprint1);

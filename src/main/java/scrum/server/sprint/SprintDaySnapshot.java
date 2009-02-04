@@ -1,6 +1,5 @@
 package scrum.server.sprint;
 
-
 public class SprintDaySnapshot extends GSprintDaySnapshot {
 
 	public void update() {
@@ -14,6 +13,11 @@ public class SprintDaySnapshot extends GSprintDaySnapshot {
 
 	public SprintDaySnapshot(SprintDaySnapshot template) {
 		super(template);
+	}
+
+	@Override
+	public String toString() {
+		return getDate() + ": " + getBurnedWork() + ", " + getRemainingWork();
 	}
 
 }
