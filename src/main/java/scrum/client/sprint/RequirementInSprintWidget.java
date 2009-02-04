@@ -55,7 +55,7 @@ public class RequirementInSprintWidget extends ABlockWidget {
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
 		fieldsWidget.addField("Description", new Label(requirement.getDescription()));
 		fieldsWidget.addField("Test", new Label(requirement.getTestDescription()));
-		fieldsWidget.addField("Task effort sum", taskEffortSum);
+		fieldsWidget.addField("Remainig Work", taskEffortSum);
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(fieldsWidget);
@@ -68,7 +68,7 @@ public class RequirementInSprintWidget extends ABlockWidget {
 	}
 
 	public void update() {
-		taskEffortSum.setText(requirement.getTaskEffortSumString());
+		taskEffortSum.setText(requirement.getRemainingWork());
 
 		TaskWidget selectedBlock = taskList.getSelectedBlock();
 		Task selectedTask = selectedBlock == null ? null : selectedBlock.getTask();

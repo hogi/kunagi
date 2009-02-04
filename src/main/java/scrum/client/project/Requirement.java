@@ -92,7 +92,7 @@ public class Requirement extends GRequirement {
 		return sum;
 	}
 
-	public String getTaskEffortSumString() {
+	public String getRemainingWork() {
 		Integer sum = getTaskEffortSum();
 		if (sum != null) return sum + " hours";
 		return "unknown";

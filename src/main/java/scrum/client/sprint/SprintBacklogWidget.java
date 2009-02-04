@@ -22,14 +22,14 @@ public class SprintBacklogWidget extends Composite {
 
 	private BlockListWidget<RequirementInSprintWidget> requirementList;
 	private FlowPanel view;
-	private Label totalEffort;
+	private Label remainingWork;
 	private Label begin;
 	private Label end;
 
 	private List<Requirement> previousRequirements = new ArrayList<Requirement>(0);
 
 	public SprintBacklogWidget() {
-		totalEffort = new Label();
+		remainingWork = new Label();
 		begin = new Label();
 		end = new Label();
 		requirementList = new BlockListWidget<RequirementInSprintWidget>(
@@ -70,14 +70,14 @@ public class SprintBacklogWidget extends Composite {
 		});
 		fieldsWidget.addField("Begin", begin);
 		fieldsWidget.addField("End", end);
-		fieldsWidget.addField("Total Effort", totalEffort);
+		fieldsWidget.addField("Remaining Work", remainingWork);
 		view.add(fieldsWidget);
 		view.add(requirementList);
 		initWidget(view);
 	}
 
 	public void update() {
-		totalEffort.setText(getSprint().getTaskEffortSumString());
+		remainingWork.setText(getSprint().getTaskEffortSumString());
 		begin.setText(getSprint().getBegin().toString());
 		end.setText(getSprint().getEnd().toString());
 
