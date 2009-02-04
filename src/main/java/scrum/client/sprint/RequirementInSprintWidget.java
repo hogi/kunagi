@@ -33,6 +33,15 @@ public class RequirementInSprintWidget extends ABlockWidget {
 	public RequirementInSprintWidget(Requirement requirement) {
 		this.requirement = requirement;
 		taskEffortSum = new Label();
+
+		taskList = new BlockListWidget<TaskWidget>(new BlockListController<TaskWidget>() {
+
+			@Override
+			public void dataChanged(TaskWidget block) {
+				update();
+				notifyListControllerDataChanged();
+			}
+		});
 	}
 
 	public Requirement getRequirement() {
@@ -51,14 +60,6 @@ public class RequirementInSprintWidget extends ABlockWidget {
 		FlowPanel panel = new FlowPanel();
 		panel.add(fieldsWidget);
 
-		taskList = new BlockListWidget<TaskWidget>(new BlockListController<TaskWidget>() {
-
-			@Override
-			public void dataChanged(TaskWidget block) {
-				update();
-				notifyListControllerDataChanged();
-			}
-		});
 		panel.add(taskList);
 
 		update();
