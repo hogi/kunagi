@@ -41,7 +41,7 @@ public class SidebarWidget extends Composite {
 			}
 		});
 
-		toolbar.addButton(Img.bundle.sprintIcon16().createImage(), "Current Sprint").addClickListener(
+		toolbar.addButton(Img.bundle.sprintIcon16().createImage(), "Sprint Backlog").addClickListener(
 			new ClickListener() {
 
 				public void onClick(Widget sender) {
