@@ -20,6 +20,7 @@ import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.xy.DefaultXYDataset;
 
@@ -108,6 +109,16 @@ public class BurndownChart {
 			double upperBoundary, double valueLabelTickUnit) {
 		JFreeChart chart = ChartFactory.createXYLineChart("", "", "", data, PlotOrientation.VERTICAL, false, true,
 			false);
+
+		XYItemRenderer renderer = chart.getXYPlot().getRenderer();
+
+		renderer.setSeriesPaint(0, new Color(0.1f, 0.9f, 0f));
+		renderer.setSeriesStroke(0, new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
+		renderer.setSeriesPaint(1, new Color(0.1f, 0.9f, 0f));
+		renderer.setSeriesStroke(1, new BasicStroke(1.5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL, 1.0f,
+				new float[] { 4, 8 }, 4));
+		renderer.setSeriesPaint(2, new Color(1.0f, 0.85f, 0.85f));
+		renderer.setSeriesStroke(2, new BasicStroke(5.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
 
 		DateAxis axis = new DateAxis(dateAxisLabel);
 		axis.setDateFormatOverride(Date.FORMAT_DAY_MONTH);
