@@ -123,7 +123,7 @@ public class RequirementWidget extends ABlockWidget {
 		final Sprint currentSprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
 		if (currentSprint != null) {
 			if (requirement.isSprint(currentSprint)) {
-				toolbar.addButton("Remove from current Sprint").addClickListener(new ClickListener() {
+				toolbar.addButton("Remove from Sprint").addClickListener(new ClickListener() {
 
 					public void onClick(Widget sender) {
 						requirement.setSprint(null);
@@ -131,7 +131,7 @@ public class RequirementWidget extends ABlockWidget {
 					}
 				});
 			} else {
-				toolbar.addButton(Img.bundle.sprintIcon16().createImage(), "Add to current Sprint").addClickListener(
+				toolbar.addButton(Img.bundle.sprintIcon16().createImage(), "Add to Sprint").addClickListener(
 					new ClickListener() {
 
 						public void onClick(Widget sender) {
