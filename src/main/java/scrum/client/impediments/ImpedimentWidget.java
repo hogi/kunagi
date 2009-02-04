@@ -115,7 +115,7 @@ public class ImpedimentWidget extends ABlockWidget {
 			toolbar.addButton(Img.bundle.done16().createImage(), "Mark Solved").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					impediment.setSolved(true);
+					impediment.setSolved();
 					rebuild();
 				}
 			});
@@ -124,7 +124,7 @@ public class ImpedimentWidget extends ABlockWidget {
 			toolbar.addButton("Mark Unsolved").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					impediment.setSolved(false);
+					impediment.setSolveDate(null);
 					rebuild();
 				}
 			});

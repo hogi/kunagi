@@ -2,6 +2,7 @@ package scrum.client.impediments;
 
 import java.util.Map;
 
+import scrum.client.common.Date;
 import scrum.client.project.Project;
 
 public class Impediment extends GImpediment {
@@ -21,6 +22,14 @@ public class Impediment extends GImpediment {
 		if (isSolved()) return "Solved.";
 		String solution = getSolution();
 		return (solution == null || "".equals(solution)) ? "Unsolved." : "Unsolved, with solution proposal.";
+	}
+
+	public boolean isSolved() {
+		return getSolveDate() != null;
+	}
+
+	public void setSolved() {
+		setSolveDate(Date.today());
 	}
 
 	@Override

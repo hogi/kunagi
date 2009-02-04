@@ -122,9 +122,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(impedimentModel);
 			impedimentModel.addReference("project", getProjectModel()).setMaster(true);
 			impedimentModel.addProperty("label", String.class);
+			impedimentModel.addProperty("date", Date.class);
 			impedimentModel.addProperty("description", String.class);
 			impedimentModel.addProperty("solution", String.class);
-			impedimentModel.addProperty("solved", boolean.class);
+			impedimentModel.addProperty("solveDate", Date.class);
 		}
 		return impedimentModel;
 	}

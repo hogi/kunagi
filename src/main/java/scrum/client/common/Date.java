@@ -24,6 +24,11 @@ public class Date {
 		this.day = d;
 	}
 
+	public static Date today() {
+		// TODO set dodays date here
+		return new Date(2012, 12, 12);
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
