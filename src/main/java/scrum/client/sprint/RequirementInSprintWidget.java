@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SprintRequirementWidget extends ABlockWidget {
+public class RequirementInSprintWidget extends ABlockWidget {
 
 	private Requirement requirement;
 	private BlockListWidget<TaskWidget> taskList;
@@ -30,7 +30,7 @@ public class SprintRequirementWidget extends ABlockWidget {
 
 	private List<Task> previousTasks = new ArrayList<Task>(0);
 
-	public SprintRequirementWidget(Requirement requirement) {
+	public RequirementInSprintWidget(Requirement requirement) {
 		this.requirement = requirement;
 		taskEffortSum = new Label();
 	}

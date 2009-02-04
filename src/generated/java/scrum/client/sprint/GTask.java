@@ -43,42 +43,6 @@ public abstract class GTask
         return ENTITY_TYPE;
     }
 
-    // --- notice ---
-
-    private java.lang.String notice ;
-
-    public final java.lang.String getNotice() {
-        return this.notice ;
-    }
-
-    public final Task setNotice(java.lang.String notice) {
-        this.notice = notice ;
-        propertyChanged("notice", this.notice);
-        return (Task)this;
-    }
-
-    public final boolean isNotice(java.lang.String notice) {
-        return equals(this.notice, notice);
-    }
-
-    // --- burnedWork ---
-
-    private int burnedWork ;
-
-    public final int getBurnedWork() {
-        return this.burnedWork ;
-    }
-
-    public final Task setBurnedWork(int burnedWork) {
-        this.burnedWork = burnedWork ;
-        propertyChanged("burnedWork", this.burnedWork);
-        return (Task)this;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return equals(this.burnedWork, burnedWork);
-    }
-
     // --- requirement ---
 
     private String requirementId;
@@ -100,22 +64,22 @@ public abstract class GTask
         return equals(this.requirementId, requirement);
     }
 
-    // --- remainingWork ---
+    // --- notice ---
 
-    private int remainingWork ;
+    private java.lang.String notice ;
 
-    public final int getRemainingWork() {
-        return this.remainingWork ;
+    public final java.lang.String getNotice() {
+        return this.notice ;
     }
 
-    public final Task setRemainingWork(int remainingWork) {
-        this.remainingWork = remainingWork ;
-        propertyChanged("remainingWork", this.remainingWork);
+    public final Task setNotice(java.lang.String notice) {
+        this.notice = notice ;
+        propertyChanged("notice", this.notice);
         return (Task)this;
     }
 
-    public final boolean isRemainingWork(int remainingWork) {
-        return equals(this.remainingWork, remainingWork);
+    public final boolean isNotice(java.lang.String notice) {
+        return equals(this.notice, notice);
     }
 
     // --- label ---
@@ -136,24 +100,60 @@ public abstract class GTask
         return equals(this.label, label);
     }
 
+    // --- burnedWork ---
+
+    private int burnedWork ;
+
+    public final int getBurnedWork() {
+        return this.burnedWork ;
+    }
+
+    public final Task setBurnedWork(int burnedWork) {
+        this.burnedWork = burnedWork ;
+        propertyChanged("burnedWork", this.burnedWork);
+        return (Task)this;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return equals(this.burnedWork, burnedWork);
+    }
+
+    // --- remainingWork ---
+
+    private int remainingWork ;
+
+    public final int getRemainingWork() {
+        return this.remainingWork ;
+    }
+
+    public final Task setRemainingWork(int remainingWork) {
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
+        return (Task)this;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return equals(this.remainingWork, remainingWork);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        notice  = (java.lang.String) props.get("notice");
-        burnedWork  = (Integer) props.get("burnedWork");
         requirementId = (String) props.get("requirementId");
-        remainingWork  = (Integer) props.get("remainingWork");
+        notice  = (java.lang.String) props.get("notice");
         label  = (java.lang.String) props.get("label");
+        burnedWork  = (Integer) props.get("burnedWork");
+        remainingWork  = (Integer) props.get("remainingWork");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("notice", this.notice);
-        properties.put("burnedWork", this.burnedWork);
         properties.put("requirementId", this.requirementId);
-        properties.put("remainingWork", this.remainingWork);
+        properties.put("notice", this.notice);
         properties.put("label", this.label);
+        properties.put("burnedWork", this.burnedWork);
+        properties.put("remainingWork", this.remainingWork);
     }
 
 }

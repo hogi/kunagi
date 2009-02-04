@@ -5,9 +5,9 @@ import scrum.client.admin.ProjectSelectionWidget;
 import scrum.client.common.PanelWidget;
 import scrum.client.common.StyleSheet;
 import scrum.client.impediments.ImpedimentListWidget;
+import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.ProjectOverviewWidget;
-import scrum.client.project.RequirementListWidget;
-import scrum.client.sprint.CurrentSprintWidget;
+import scrum.client.sprint.SprintBacklogWidget;
 import scrum.client.test.TestWidget;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -21,8 +21,8 @@ public class WorkspaceWidget extends Composite {
 
 	private static LoginWidget login;
 	public static ProjectSelectionWidget projectSelection;
-	public static RequirementListWidget backlog;
-	public static CurrentSprintWidget sprint;
+	public static ProductBacklogWidget backlog;
+	public static SprintBacklogWidget sprint;
 	public static ImpedimentListWidget impediments;
 
 	private static SimplePanel rootPanel;
@@ -34,8 +34,8 @@ public class WorkspaceWidget extends Composite {
 		login = new LoginWidget();
 		projectSelection = new ProjectSelectionWidget();
 		impediments = new ImpedimentListWidget();
-		backlog = new RequirementListWidget();
-		sprint = new CurrentSprintWidget();
+		backlog = new ProductBacklogWidget();
+		sprint = new SprintBacklogWidget();
 
 		// create workspace
 		workspacePanel = new DockPanel();
@@ -87,7 +87,7 @@ public class WorkspaceWidget extends Composite {
 
 	public static void showSprint() {
 		sprint.update();
-		setWorkarea(sprint, "Current Sprint");
+		setWorkarea(sprint, "Sprint Backlog");
 	}
 
 	public static void showBacklog() {

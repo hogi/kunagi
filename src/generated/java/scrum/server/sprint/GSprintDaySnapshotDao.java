@@ -45,12 +45,12 @@ public abstract class GSprintDaySnapshotDao
     public void clearCaches() {
         sprintDaySnapshotsByBurnedWorkCache.clear();
         burnedWorksCache = null;
+        sprintDaySnapshotsBySprintCache.clear();
+        sprintsCache = null;
         sprintDaySnapshotsByRemainingWorkCache.clear();
         remainingWorksCache = null;
         sprintDaySnapshotsByDateCache.clear();
         datesCache = null;
-        sprintDaySnapshotsBySprintCache.clear();
-        sprintsCache = null;
     }
 
     @Override
@@ -105,6 +105,46 @@ public abstract class GSprintDaySnapshotDao
 
         public boolean test(SprintDaySnapshot e) {
             return e.isBurnedWork(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - sprint
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.sprint.Sprint,Set<SprintDaySnapshot>> sprintDaySnapshotsBySprintCache = new Cache<scrum.server.sprint.Sprint,Set<SprintDaySnapshot>>(
+            new Cache.Factory<scrum.server.sprint.Sprint,Set<SprintDaySnapshot>>() {
+                public Set<SprintDaySnapshot> create(scrum.server.sprint.Sprint sprint) {
+                    return getEntities(new IsSprint(sprint));
+                }
+            });
+
+    public final Set<SprintDaySnapshot> getSprintDaySnapshotsBySprint(scrum.server.sprint.Sprint sprint) {
+        return sprintDaySnapshotsBySprintCache.get(sprint);
+    }
+    private Set<scrum.server.sprint.Sprint> sprintsCache;
+
+    public final Set<scrum.server.sprint.Sprint> getSprints() {
+        if (sprintsCache == null) {
+            sprintsCache = new HashSet<scrum.server.sprint.Sprint>();
+            for (SprintDaySnapshot e : getEntities()) {
+                if (e.isSprintSet()) sprintsCache.add(e.getSprint());
+            }
+        }
+        return sprintsCache;
+    }
+
+    private static class IsSprint implements Predicate<SprintDaySnapshot> {
+
+        private scrum.server.sprint.Sprint value;
+
+        public IsSprint(scrum.server.sprint.Sprint value) {
+            this.value = value;
+        }
+
+        public boolean test(SprintDaySnapshot e) {
+            return e.isSprint(value);
         }
 
     }
@@ -185,46 +225,6 @@ public abstract class GSprintDaySnapshotDao
 
         public boolean test(SprintDaySnapshot e) {
             return e.isDate(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - sprint
-    // -----------------------------------------------------------
-
-    private final Cache<scrum.server.sprint.Sprint,Set<SprintDaySnapshot>> sprintDaySnapshotsBySprintCache = new Cache<scrum.server.sprint.Sprint,Set<SprintDaySnapshot>>(
-            new Cache.Factory<scrum.server.sprint.Sprint,Set<SprintDaySnapshot>>() {
-                public Set<SprintDaySnapshot> create(scrum.server.sprint.Sprint sprint) {
-                    return getEntities(new IsSprint(sprint));
-                }
-            });
-
-    public final Set<SprintDaySnapshot> getSprintDaySnapshotsBySprint(scrum.server.sprint.Sprint sprint) {
-        return sprintDaySnapshotsBySprintCache.get(sprint);
-    }
-    private Set<scrum.server.sprint.Sprint> sprintsCache;
-
-    public final Set<scrum.server.sprint.Sprint> getSprints() {
-        if (sprintsCache == null) {
-            sprintsCache = new HashSet<scrum.server.sprint.Sprint>();
-            for (SprintDaySnapshot e : getEntities()) {
-                if (e.isSprintSet()) sprintsCache.add(e.getSprint());
-            }
-        }
-        return sprintsCache;
-    }
-
-    private static class IsSprint implements Predicate<SprintDaySnapshot> {
-
-        private scrum.server.sprint.Sprint value;
-
-        public IsSprint(scrum.server.sprint.Sprint value) {
-            this.value = value;
-        }
-
-        public boolean test(SprintDaySnapshot e) {
-            return e.isSprint(value);
         }
 
     }

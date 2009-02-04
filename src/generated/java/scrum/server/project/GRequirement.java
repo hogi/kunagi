@@ -46,13 +46,13 @@ public abstract class GRequirement
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("label", this.label);
         properties.put("sprintId", this.sprintId);
         properties.put("projectId", this.projectId);
-        properties.put("estimatedWork", this.estimatedWork);
-        properties.put("label", this.label);
         properties.put("closed", this.closed);
-        properties.put("testDescription", this.testDescription);
         properties.put("description", this.description);
+        properties.put("estimatedWork", this.estimatedWork);
+        properties.put("testDescription", this.testDescription);
     }
 
     public int compareTo(Requirement other) {
@@ -68,13 +68,44 @@ public abstract class GRequirement
         super(template);
         if (template==null) return;
 
+        setLabel(template.getLabel());
         setSprint(template.getSprint());
         setProject(template.getProject());
-        setEstimatedWork(template.getEstimatedWork());
-        setLabel(template.getLabel());
         setClosed(template.isClosed());
-        setTestDescription(template.getTestDescription());
         setDescription(template.getDescription());
+        setEstimatedWork(template.getEstimatedWork());
+        setTestDescription(template.getTestDescription());
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
     }
 
     // -----------------------------------------------------------
@@ -153,67 +184,6 @@ public abstract class GRequirement
     }
 
     // -----------------------------------------------------------
-    // - estimatedWork
-    // -----------------------------------------------------------
-
-    private java.lang.Integer estimatedWork;
-
-    public final java.lang.Integer getEstimatedWork() {
-        return estimatedWork;
-    }
-
-    public final void setEstimatedWork(java.lang.Integer estimatedWork) {
-        estimatedWork = prepareEstimatedWork(estimatedWork);
-        if (isEstimatedWork(estimatedWork)) return;
-        this.estimatedWork = estimatedWork;
-        entityModified();
-    }
-
-    protected java.lang.Integer prepareEstimatedWork(java.lang.Integer estimatedWork) {
-        return estimatedWork;
-    }
-
-    public final boolean isEstimatedWorkSet() {
-        return this.estimatedWork != null;
-    }
-
-    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
-        if (this.estimatedWork == null && estimatedWork == null) return true;
-        return this.estimatedWork != null && this.estimatedWork.equals(estimatedWork);
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        entityModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
-    }
-
-    // -----------------------------------------------------------
     // - closed
     // -----------------------------------------------------------
 
@@ -236,37 +206,6 @@ public abstract class GRequirement
 
     public final boolean isClosed(boolean closed) {
         return this.closed == closed;
-    }
-
-    // -----------------------------------------------------------
-    // - testDescription
-    // -----------------------------------------------------------
-
-    private java.lang.String testDescription;
-
-    public final java.lang.String getTestDescription() {
-        return testDescription;
-    }
-
-    public final void setTestDescription(java.lang.String testDescription) {
-        testDescription = prepareTestDescription(testDescription);
-        if (isTestDescription(testDescription)) return;
-        this.testDescription = testDescription;
-        entityModified();
-    }
-
-    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
-        testDescription = Str.removeUnreadableChars(testDescription);
-        return testDescription;
-    }
-
-    public final boolean isTestDescriptionSet() {
-        return this.testDescription != null;
-    }
-
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        if (this.testDescription == null && testDescription == null) return true;
-        return this.testDescription != null && this.testDescription.equals(testDescription);
     }
 
     // -----------------------------------------------------------
@@ -298,6 +237,67 @@ public abstract class GRequirement
     public final boolean isDescription(java.lang.String description) {
         if (this.description == null && description == null) return true;
         return this.description != null && this.description.equals(description);
+    }
+
+    // -----------------------------------------------------------
+    // - estimatedWork
+    // -----------------------------------------------------------
+
+    private java.lang.Integer estimatedWork;
+
+    public final java.lang.Integer getEstimatedWork() {
+        return estimatedWork;
+    }
+
+    public final void setEstimatedWork(java.lang.Integer estimatedWork) {
+        estimatedWork = prepareEstimatedWork(estimatedWork);
+        if (isEstimatedWork(estimatedWork)) return;
+        this.estimatedWork = estimatedWork;
+        entityModified();
+    }
+
+    protected java.lang.Integer prepareEstimatedWork(java.lang.Integer estimatedWork) {
+        return estimatedWork;
+    }
+
+    public final boolean isEstimatedWorkSet() {
+        return this.estimatedWork != null;
+    }
+
+    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
+        if (this.estimatedWork == null && estimatedWork == null) return true;
+        return this.estimatedWork != null && this.estimatedWork.equals(estimatedWork);
+    }
+
+    // -----------------------------------------------------------
+    // - testDescription
+    // -----------------------------------------------------------
+
+    private java.lang.String testDescription;
+
+    public final java.lang.String getTestDescription() {
+        return testDescription;
+    }
+
+    public final void setTestDescription(java.lang.String testDescription) {
+        testDescription = prepareTestDescription(testDescription);
+        if (isTestDescription(testDescription)) return;
+        this.testDescription = testDescription;
+        entityModified();
+    }
+
+    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
+        testDescription = Str.removeUnreadableChars(testDescription);
+        return testDescription;
+    }
+
+    public final boolean isTestDescriptionSet() {
+        return this.testDescription != null;
+    }
+
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        if (this.testDescription == null && testDescription == null) return true;
+        return this.testDescription != null && this.testDescription.equals(testDescription);
     }
 
     protected void repairDeadReferences(String entityId) {

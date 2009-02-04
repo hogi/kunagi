@@ -12,11 +12,11 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RequirementListWidget extends Composite {
+public class ProductBacklogWidget extends Composite {
 
 	public BlockListWidget<RequirementWidget> list;
 
-	public RequirementListWidget() {
+	public ProductBacklogWidget() {
 		list = new BlockListWidget<RequirementWidget>(new BlockListController<RequirementWidget>());
 		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton("Create new Requirement").addClickListener(new CreateClickListener());

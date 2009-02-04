@@ -18,9 +18,9 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CurrentSprintWidget extends Composite {
+public class SprintBacklogWidget extends Composite {
 
-	private BlockListWidget<SprintRequirementWidget> requirementList;
+	private BlockListWidget<RequirementInSprintWidget> requirementList;
 	private FlowPanel view;
 	private Label totalEffort;
 	private Label begin;
@@ -28,15 +28,15 @@ public class CurrentSprintWidget extends Composite {
 
 	private List<Requirement> previousRequirements = new ArrayList<Requirement>(0);
 
-	public CurrentSprintWidget() {
+	public SprintBacklogWidget() {
 		totalEffort = new Label();
 		begin = new Label();
 		end = new Label();
-		requirementList = new BlockListWidget<SprintRequirementWidget>(
-				new BlockListController<SprintRequirementWidget>() {
+		requirementList = new BlockListWidget<RequirementInSprintWidget>(
+				new BlockListController<RequirementInSprintWidget>() {
 
 					@Override
-					public void dataChanged(SprintRequirementWidget block) {
+					public void dataChanged(RequirementInSprintWidget block) {
 						update();
 					}
 				});
@@ -85,7 +85,7 @@ public class CurrentSprintWidget extends Composite {
 		if (!requirements.equals(previousRequirements)) {
 			requirementList.clear();
 			for (Requirement requirement : requirements) {
-				requirementList.addBlock(new SprintRequirementWidget(requirement));
+				requirementList.addBlock(new RequirementInSprintWidget(requirement));
 			}
 			previousRequirements = requirements;
 		}
