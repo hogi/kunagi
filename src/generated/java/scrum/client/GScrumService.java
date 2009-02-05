@@ -28,24 +28,24 @@ import java.util.*;
 public interface GScrumService
             extends com.google.gwt.user.client.rpc.RemoteService {
 
-    DataTransferObject ping();
+    ilarkesto.gwt.client.DataTransferObject ping();
 
-    DataTransferObject login(java.lang.String username, java.lang.String password);
+    ilarkesto.gwt.client.DataTransferObject login(java.lang.String username, java.lang.String password);
 
-    DataTransferObject selectProject(java.lang.String projectId);
+    ilarkesto.gwt.client.DataTransferObject selectProject(java.lang.String projectId);
 
-    DataTransferObject requestImpediments();
+    ilarkesto.gwt.client.DataTransferObject requestImpediments();
 
-    DataTransferObject requestRequirements();
+    ilarkesto.gwt.client.DataTransferObject requestRequirements();
 
-    DataTransferObject requestCurrentSprint();
+    ilarkesto.gwt.client.DataTransferObject requestCurrentSprint();
 
-    DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties);
+    ilarkesto.gwt.client.DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties);
 
-    DataTransferObject createEntity(java.lang.String type, java.util.Map properties);
+    ilarkesto.gwt.client.DataTransferObject createEntity(java.lang.String type, java.util.Map properties);
 
-    DataTransferObject deleteEntity(java.lang.String entityId);
+    ilarkesto.gwt.client.DataTransferObject deleteEntity(java.lang.String entityId);
 
-    DataTransferObject sleep(long millis);
+    ilarkesto.gwt.client.DataTransferObject sleep(long millis);
 
 }

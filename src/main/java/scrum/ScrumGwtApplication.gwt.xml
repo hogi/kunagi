@@ -2,6 +2,7 @@
 
 	<!-- libraries -->
 	<inherits name="com.google.gwt.user.User" />
+	<inherits name="ilarkesto.gwt.ilarkesto" />
 	<inherits name="com.allen_sauer.gwt.dnd.gwt-dnd" />
 
 	<!-- style/theme -->

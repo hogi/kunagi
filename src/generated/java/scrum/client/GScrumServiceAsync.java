@@ -28,24 +28,24 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface GScrumServiceAsync {
 
-    void ping(AsyncCallback<DataTransferObject> callback);
+    void ping(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
-    void login(java.lang.String username, java.lang.String password, AsyncCallback<DataTransferObject> callback);
+    void login(java.lang.String username, java.lang.String password, AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
-    void selectProject(java.lang.String projectId, AsyncCallback<DataTransferObject> callback);
+    void selectProject(java.lang.String projectId, AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
-    void requestImpediments(AsyncCallback<DataTransferObject> callback);
+    void requestImpediments(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
-    void requestRequirements(AsyncCallback<DataTransferObject> callback);
+    void requestRequirements(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
-    void requestCurrentSprint(AsyncCallback<DataTransferObject> callback);
+    void requestCurrentSprint(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
-    void changeProperties(java.lang.String entityId, java.util.Map properties, AsyncCallback<DataTransferObject> callback);
+    void changeProperties(java.lang.String entityId, java.util.Map properties, AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
-    void createEntity(java.lang.String type, java.util.Map properties, AsyncCallback<DataTransferObject> callback);
+    void createEntity(java.lang.String type, java.util.Map properties, AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
-    void deleteEntity(java.lang.String entityId, AsyncCallback<DataTransferObject> callback);
+    void deleteEntity(java.lang.String entityId, AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
-    void sleep(long millis, AsyncCallback<DataTransferObject> callback);
+    void sleep(long millis, AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
 }

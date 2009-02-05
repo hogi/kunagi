@@ -6,6 +6,9 @@
 		<exec executable="svn">
 			<arg value="update" />
 		</exec>
+		<exec executable="svn" dir="../ilarkesto">
+			<arg value="update" />
+		</exec>
 	</target>
 
 	<target name="clean">

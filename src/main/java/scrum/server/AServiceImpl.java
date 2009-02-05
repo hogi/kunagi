@@ -3,6 +3,18 @@ package scrum.server;
 import ilarkesto.base.Str;
 import ilarkesto.di.app.WebApplicationStarter;
 import ilarkesto.logging.Logger;
+import ilarkesto.persistence.AEntity;
+import ilarkesto.persistence.DaoService;
+import ilarkesto.persistence.EntityUtils;
+import ilarkesto.webapp.AWebApplication;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -19,6 +31,7 @@ public abstract class AServiceImpl extends RemoteServiceServlet {
 	private static final String SESSION_DATA_KEY = SessionData.class.getSimpleName();
 
 	private ScrumWebApplication app;
+	private Set<SessionData> sessions = new HashSet<SessionData>();
 
 	protected final void handleServiceMethodException(String method, Throwable t) {
 		LOG.error("Service method failed:", method, "->", t);
@@ -29,17 +42,19 @@ public abstract class AServiceImpl extends RemoteServiceServlet {
 		getApp().getTransactionService().commit();
 	}
 
-	protected SessionData getSessionData() {
+	protected final SessionData getSessionData() {
 		SessionData data = (SessionData) getThreadLocalRequest().getSession().getAttribute(SESSION_DATA_KEY);
 		if (data == null) {
+			LOG.info("Session created");
 			data = new SessionData();
 			getThreadLocalRequest().getSession().setAttribute(SESSION_DATA_KEY, data);
-			getApp().onSessionCreated(data);
+			sessions.add(data);
+			data.getNextData().entityIdBase = UUID.randomUUID().toString();
 		}
 		return data;
 	}
 
-	protected ScrumWebApplication getApp() {
+	protected final ScrumWebApplication getApp() {
 		return app;
 	}
 
@@ -48,12 +63,37 @@ public abstract class AServiceImpl extends RemoteServiceServlet {
 		super.init(servletConfig);
 		app = (ScrumWebApplication) WebApplicationStarter
 				.startWebApplication(ScrumWebApplication.class.getName(), null);
+		app.autowire(this);
 	}
 
 	@Override
 	protected void doUnexpectedFailure(Throwable e) {
 		LOG.error("Service execution failed:", e);
 		super.doUnexpectedFailure(e);
+	}
+
+	@Override
+	public void destroy() {
+		AWebApplication.get().shutdown();
+		super.destroy();
+	}
+
+	protected DaoService getDaoService() {
+		return app.getDaoService();
+	}
+
+	protected final List<SessionData> getOtherSessions(SessionData session) {
+		List<SessionData> ret = new ArrayList<SessionData>(sessions);
+		ret.remove(session);
+		return ret;
+	}
+
+	protected final Map toPropertyMap(AEntity entity) {
+		return entity.createPropertiesMap();
+	}
+
+	protected final List<Map> toPropertyMap(Collection<? extends AEntity> entities) {
+		return EntityUtils.createPropertiesMaps(entities);
 	}
 
 }

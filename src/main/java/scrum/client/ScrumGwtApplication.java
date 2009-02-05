@@ -1,5 +1,6 @@
 package scrum.client;
 
+import ilarkesto.gwt.client.DataTransferObject;
 import scrum.client.admin.User;
 import scrum.client.dnd.ScrumDragController;
 import scrum.client.project.Project;

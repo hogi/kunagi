@@ -1,10 +1,14 @@
 package scrum.client;
 
+
+import ilarkesto.gwt.client.DataTransferObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import scrum.client.common.AGwtDao;
 import scrum.client.common.AGwtEntity;
+
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.rpc.AsyncCallback;

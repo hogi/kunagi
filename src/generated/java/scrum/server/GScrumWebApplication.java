@@ -31,7 +31,7 @@ import ilarkesto.base.*;
 import ilarkesto.persistence.*;
 
 public abstract class GScrumWebApplication
-            extends ilarkesto.ui.web.AWebApplication {
+            extends ilarkesto.webapp.AWebApplication {
 
     private static final Logger LOG = Logger.get(GScrumWebApplication.class);
 
@@ -224,17 +224,5 @@ public abstract class GScrumWebApplication
     }
 
     // --- dependencies ---
-
-    // --- scrum ---
-    public abstract void onPing(SessionData session);
-    public abstract void onLogin(SessionData session, java.lang.String username, java.lang.String password);
-    public abstract void onSelectProject(SessionData session, java.lang.String projectId);
-    public abstract void onRequestImpediments(SessionData session);
-    public abstract void onRequestRequirements(SessionData session);
-    public abstract void onRequestCurrentSprint(SessionData session);
-    public abstract void onChangeProperties(SessionData session, java.lang.String entityId, java.util.Map properties);
-    public abstract void onCreateEntity(SessionData session, java.lang.String type, java.util.Map properties);
-    public abstract void onDeleteEntity(SessionData session, java.lang.String entityId);
-    public abstract void onSleep(SessionData session, long millis);
 
 }

@@ -1,8 +1,8 @@
 package scrum.server;
 
 import ilarkesto.di.Context;
+import ilarkesto.gwt.client.DataTransferObject;
 import ilarkesto.logging.Logger;
-import scrum.client.DataTransferObject;
 import scrum.server.project.Project;
 
 /**

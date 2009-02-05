@@ -1,12 +1,15 @@
 package scrum.client.common;
 
+
+import ilarkesto.gwt.client.DataTransferObject;
+import ilarkesto.gwt.client.GwtLogger;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import scrum.client.DataTransferObject;
 import scrum.client.ScrumGwtApplication;
 
 public abstract class AGwtDao {
@@ -28,7 +31,7 @@ public abstract class AGwtDao {
 					AGwtEntity entity = map.remove(entityId);
 					if (entity != null) {
 						deletedEntities.remove(entityId);
-						Logger.DEBUG("deleted:", entity.getEntityType() + ":", entity);
+						GwtLogger.DEBUG("deleted:", entity.getEntityType() + ":", entity);
 					}
 				}
 			}

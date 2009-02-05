@@ -196,10 +196,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return "scrum.server";
 	}
 
-	private GwtServiceModel createGwtServiceModel(String name) {
-		return new GwtServiceModel(name, getBasePackageName());
-	}
-
 	@Override
 	protected void generate(BeanModel beanModel) {
 		super.generate(beanModel);

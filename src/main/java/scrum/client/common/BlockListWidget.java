@@ -1,5 +1,7 @@
 package scrum.client.common;
 
+import ilarkesto.gwt.client.GwtLogger;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -68,7 +70,7 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 
 	public final void moveBlock(B block, int toIndex) {
 		int fromIndex = indexOf(block);
-		Logger.DEBUG("moving block from", fromIndex, "to", toIndex);
+		GwtLogger.DEBUG("moving block from", fromIndex, "to", toIndex);
 
 		blocks.remove(fromIndex);
 		blocks.add(toIndex, block);

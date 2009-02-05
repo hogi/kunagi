@@ -6,19 +6,8 @@ import ilarkesto.base.time.Date;
 import ilarkesto.concurrent.TaskManager;
 import ilarkesto.io.IO;
 import ilarkesto.logging.Logger;
-import ilarkesto.persistence.ADao;
-import ilarkesto.persistence.AEntity;
-import ilarkesto.persistence.EntityUtils;
-import ilarkesto.ui.web.AWebApplication;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
+import ilarkesto.webapp.AWebApplication;
+import ilarkesto.webapp.AWebSession;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.impediments.Impediment;
@@ -33,111 +22,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	private static final Logger LOG = Logger.get(ScrumWebApplication.class);
 
-	private Set<SessionData> sessions = new HashSet<SessionData>();
 	private BurndownChart burndownChart;
-
-	// --- client call handlers ---
-
-	@Override
-	public void onCreateEntity(SessionData session, String type, Map properties) {
-		String id = (String) properties.get("id");
-		if (id == null) throw new NullPointerException("id == null");
-		ADao dao = getDaoService().getDaoByName(type);
-		AEntity entity = dao.newEntityInstance(id);
-		entity.updateProperties(properties);
-		dao.saveEntity(entity);
-	}
-
-	@Override
-	public void onDeleteEntity(SessionData session, String entityId) {
-		AEntity entity = getDaoService().getEntityById(entityId);
-		ADao dao = getDaoService().getDao(entity);
-		dao.deleteEntity(entity);
-		for (SessionData s : getOtherSessions(session)) {
-			s.getNextData().addDeletedEntity(entityId);
-		}
-	}
-
-	@Override
-	public void onChangeProperties(SessionData session, String entityId, Map properties) {
-		LOG.debug("-------------->", properties);
-		AEntity entity = getDaoService().getEntityById(entityId);
-		entity.updateProperties(properties);
-
-		// probably dirty hacked stuff x-ing
-		if (entity instanceof Task) {
-			Task task = (Task) entity;
-			task.getRequirement().getSprint().getDaySnapshot(Date.today()).update();
-		}
-
-		for (SessionData s : getOtherSessions(session)) {
-			s.getNextData().addEntity(toPropertyMap(entity));
-		}
-	}
-
-	@Override
-	public void onLogin(SessionData session, String username, String password) {
-		User user = getUserDao().getUserByName(username);
-		if (user == null) throw new RuntimeException("Login failed.");
-
-		session.getNextData().setUserId(user.getId());
-		session.getNextData().addEntity(toPropertyMap(user));
-		// TODO limit to users projects
-		session.getNextData().addEntities(toPropertyMap(getProjectDao().getEntities()));
-		session.getNextData().entityIdBase = UUID.randomUUID().toString();
-	}
-
-	@Override
-	public void onSelectProject(SessionData session, String projectId) {
-		Project project = getProjectDao().getById(projectId);
-		session.setProject(project);
-
-		// prepare data for client
-		session.getNextData().addEntity(toPropertyMap(project));
-		session.getNextData().addEntities(toPropertyMap(project.getMembers()));
-		if (project.isCurrentSprintSet()) {
-			session.getNextData().addEntity(toPropertyMap(project.getCurrentSprint()));
-		}
-	}
-
-	@Override
-	public void onRequestCurrentSprint(SessionData session) {
-		Project project = session.getProject();
-		Sprint sprint = project.getCurrentSprint();
-		if (sprint == null) return;
-		session.getNextData().addEntity(toPropertyMap(sprint));
-		session.getNextData().addEntities(toPropertyMap(project.getRequirements()));
-		session.getNextData().addEntities(toPropertyMap(sprint.getTasks()));
-	}
-
-	@Override
-	public void onRequestImpediments(SessionData session) {
-		Project project = session.getProject();
-		if (project == null) throw new RuntimeException("No project selected.");
-		session.getNextData().addEntities(toPropertyMap(project.getImpediments()));
-	}
-
-	@Override
-	public void onRequestRequirements(SessionData session) {
-		Project project = session.getProject();
-		if (project == null) throw new RuntimeException("No project selected.");
-		Collection<Requirement> stories = project.getRequirements();
-		for (Requirement item : stories) {
-			Sprint sprint = item.getSprint();
-			if (sprint != null) session.getNextData().addEntity(toPropertyMap(sprint));
-		}
-		session.getNextData().addEntities(toPropertyMap(stories));
-	}
-
-	@Override
-	public void onPing(SessionData session) {
-		LOG.debug("ping");
-	}
-
-	@Override
-	public void onSleep(SessionData session, long millis) {
-		Utl.sleep(millis);
-	}
 
 	// --- components ---
 
@@ -150,12 +35,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	// --- ---
-
-	public void onSessionCreated(SessionData session) {
-		LOG.info("Session created");
-		sessions.add(session);
-		session.getNextData().entityIdBase = UUID.randomUUID().toString();
-	}
 
 	@Override
 	public void ensureIntegrity() {
@@ -299,18 +178,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return userDao;
 	}
 
-	private List<SessionData> getOtherSessions(SessionData session) {
-		List<SessionData> ret = new ArrayList<SessionData>(sessions);
-		ret.remove(session);
-		return ret;
-	}
-
-	private final Map toPropertyMap(AEntity entity) {
-		return entity.createPropertiesMap();
-	}
-
-	private final List<Map> toPropertyMap(Collection<? extends AEntity> entities) {
-		return EntityUtils.createPropertiesMaps(entities);
+	@Override
+	protected AWebSession createWebSession() {
+		return autowire(new WebSession(context));
 	}
 
 	public static ScrumWebApplication get() {
