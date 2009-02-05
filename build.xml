@@ -2,6 +2,12 @@
 
 <project name="scrum" default="war" basedir=".">
 
+	<target name="update">
+		<exec executable="svn">
+			<arg value="update" />
+		</exec>
+	</target>
+
 	<target name="clean">
 		<delete dir="build" />
 	</target>
@@ -44,5 +50,10 @@
 	<target name="war" depends="webapp">
 		<war destfile="build/scrum.war" basedir="build/webapp" />
 	</target>
+	
+	<target name="deploy" depends="war">
+		<copy tofile="/var/webapps/scrum.war" file="build/scrum.war" />
+	</target>
 
+	<target name="update-and-deploy" depends="update,deploy" />
 </project>
