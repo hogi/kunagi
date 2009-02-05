@@ -18,6 +18,10 @@ import java.util.Map;
 
 public class ScrumModelApplication extends AGeneratorApplication {
 
+	public static void main(String[] args) throws InterruptedException {
+		ApplicationStarter.startApplication(ScrumModelApplication.class).generateClasses().shutdown();
+	}
+
 	// ----------------
 	// --- entities ---
 	// ----------------
@@ -196,10 +200,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return new GwtServiceModel(name, getBasePackageName());
 	}
 
-	public static void main(String[] args) throws InterruptedException {
-		ApplicationStarter.startApplication(ScrumModelApplication.class).generateClasses().shutdown();
-	}
-
 	@Override
 	protected void generate(BeanModel beanModel) {
 		super.generate(beanModel);
@@ -216,6 +216,5 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		autowire(new GwtServiceImplementationGenerator()).generate(getServiceModel());
 		autowire(new GwtApplicationGenerator()).generate(getApplicationModel());
 		autowire(new GwtDaoGenerator()).generate(getApplicationModel(), getFinalEntityModels(false));
-		// autowire(new GwtDataTransferObjectGenerator()).generate(getApplicationModel(), getEntityModels());
 	}
 }
