@@ -15,7 +15,7 @@
 		<delete dir="build" />
 	</target>
 
-	<target name="compile" depends="clean">
+	<target name="compile">
 		<java classname="com.google.gwt.dev.GWTCompiler" failonerror="true" fork="true">
 			<arg value="-out" />
 			<arg value="build/webapp" />
@@ -25,6 +25,7 @@
 			<classpath location="src/main/java" />
 			<classpath location="src/generated/java" />
 			<classpath location="lib/gwt-dnd-2.5.6.jar" />
+			<classpath location="../ilarkesto/src/main/java" />
 		</java>
 		<mkdir dir="build/webapp/WEB-INF/classes" />
 		<copy todir="build/webapp/WEB-INF/classes">
@@ -58,5 +59,5 @@
 		<copy tofile="/var/webapps/scrum.war" file="build/scrum.war" />
 	</target>
 
-	<target name="update-and-deploy" depends="update,deploy" />
+	<target name="update-deploy-clean" depends="update,deploy,clean" />
 </project>
