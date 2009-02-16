@@ -2,6 +2,7 @@ package scrum.server.sprint;
 
 import ilarkesto.base.time.Date;
 
+import java.util.List;
 import java.util.Set;
 
 import scrum.server.project.Requirement;
@@ -36,6 +37,10 @@ public class Sprint extends GSprint {
 	}
 
 	// --- ---
+
+	public List<SprintDaySnapshot> getSnapshots() {
+		return sprintDaySnapshotDao.getSprintDaySnapshots(this);
+	}
 
 	public int getLenghtInDays() {
 		return getBegin().getPeriodTo(getEnd()).toDays();

@@ -15,5 +15,6 @@
 	<!-- servlets -->
 	<servlet path="/scrum" class="scrum.server.ScrumServiceImpl" />
 	<servlet path="/sprintBurndownChart.png" class="scrum.server.sprint.SprintBurndownChartServlet" />
+	<servlet path="/projectBurndownChart.png" class="scrum.server.project.ProjectBurndownChartServlet" />
 
 </module>

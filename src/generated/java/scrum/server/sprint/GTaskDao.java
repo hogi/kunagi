@@ -43,18 +43,18 @@ public abstract class GTaskDao
 
     // --- clear caches ---
     public void clearCaches() {
-        tasksByOwnerCache.clear();
-        ownersCache = null;
-        tasksByRequirementCache.clear();
-        requirementsCache = null;
-        tasksByNoticeCache.clear();
-        noticesCache = null;
         tasksByLabelCache.clear();
         labelsCache = null;
-        tasksByBurnedWorkCache.clear();
-        burnedWorksCache = null;
+        tasksByRequirementCache.clear();
+        requirementsCache = null;
         tasksByRemainingWorkCache.clear();
         remainingWorksCache = null;
+        tasksByOwnerCache.clear();
+        ownersCache = null;
+        tasksByBurnedWorkCache.clear();
+        burnedWorksCache = null;
+        tasksByNoticeCache.clear();
+        noticesCache = null;
     }
 
     @Override
@@ -74,41 +74,41 @@ public abstract class GTaskDao
     }
 
     // -----------------------------------------------------------
-    // - owner
+    // - label
     // -----------------------------------------------------------
 
-    private final Cache<scrum.server.admin.User,Set<Task>> tasksByOwnerCache = new Cache<scrum.server.admin.User,Set<Task>>(
-            new Cache.Factory<scrum.server.admin.User,Set<Task>>() {
-                public Set<Task> create(scrum.server.admin.User owner) {
-                    return getEntities(new IsOwner(owner));
+    private final Cache<java.lang.String,Set<Task>> tasksByLabelCache = new Cache<java.lang.String,Set<Task>>(
+            new Cache.Factory<java.lang.String,Set<Task>>() {
+                public Set<Task> create(java.lang.String label) {
+                    return getEntities(new IsLabel(label));
                 }
             });
 
-    public final Set<Task> getTasksByOwner(scrum.server.admin.User owner) {
-        return tasksByOwnerCache.get(owner);
+    public final Set<Task> getTasksByLabel(java.lang.String label) {
+        return tasksByLabelCache.get(label);
     }
-    private Set<scrum.server.admin.User> ownersCache;
+    private Set<java.lang.String> labelsCache;
 
-    public final Set<scrum.server.admin.User> getOwners() {
-        if (ownersCache == null) {
-            ownersCache = new HashSet<scrum.server.admin.User>();
+    public final Set<java.lang.String> getLabels() {
+        if (labelsCache == null) {
+            labelsCache = new HashSet<java.lang.String>();
             for (Task e : getEntities()) {
-                if (e.isOwnerSet()) ownersCache.add(e.getOwner());
+                if (e.isLabelSet()) labelsCache.add(e.getLabel());
             }
         }
-        return ownersCache;
+        return labelsCache;
     }
 
-    private static class IsOwner implements Predicate<Task> {
+    private static class IsLabel implements Predicate<Task> {
 
-        private scrum.server.admin.User value;
+        private java.lang.String value;
 
-        public IsOwner(scrum.server.admin.User value) {
+        public IsLabel(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(Task e) {
-            return e.isOwner(value);
+            return e.isLabel(value);
         }
 
     }
@@ -154,81 +154,81 @@ public abstract class GTaskDao
     }
 
     // -----------------------------------------------------------
-    // - notice
+    // - remainingWork
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Task>> tasksByNoticeCache = new Cache<java.lang.String,Set<Task>>(
-            new Cache.Factory<java.lang.String,Set<Task>>() {
-                public Set<Task> create(java.lang.String notice) {
-                    return getEntities(new IsNotice(notice));
+    private final Cache<Integer,Set<Task>> tasksByRemainingWorkCache = new Cache<Integer,Set<Task>>(
+            new Cache.Factory<Integer,Set<Task>>() {
+                public Set<Task> create(Integer remainingWork) {
+                    return getEntities(new IsRemainingWork(remainingWork));
                 }
             });
 
-    public final Set<Task> getTasksByNotice(java.lang.String notice) {
-        return tasksByNoticeCache.get(notice);
+    public final Set<Task> getTasksByRemainingWork(int remainingWork) {
+        return tasksByRemainingWorkCache.get(remainingWork);
     }
-    private Set<java.lang.String> noticesCache;
+    private Set<Integer> remainingWorksCache;
 
-    public final Set<java.lang.String> getNotices() {
-        if (noticesCache == null) {
-            noticesCache = new HashSet<java.lang.String>();
+    public final Set<Integer> getRemainingWorks() {
+        if (remainingWorksCache == null) {
+            remainingWorksCache = new HashSet<Integer>();
             for (Task e : getEntities()) {
-                if (e.isNoticeSet()) noticesCache.add(e.getNotice());
+                remainingWorksCache.add(e.getRemainingWork());
             }
         }
-        return noticesCache;
+        return remainingWorksCache;
     }
 
-    private static class IsNotice implements Predicate<Task> {
+    private static class IsRemainingWork implements Predicate<Task> {
 
-        private java.lang.String value;
+        private int value;
 
-        public IsNotice(java.lang.String value) {
+        public IsRemainingWork(int value) {
             this.value = value;
         }
 
         public boolean test(Task e) {
-            return e.isNotice(value);
+            return e.isRemainingWork(value);
         }
 
     }
 
     // -----------------------------------------------------------
-    // - label
+    // - owner
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Task>> tasksByLabelCache = new Cache<java.lang.String,Set<Task>>(
-            new Cache.Factory<java.lang.String,Set<Task>>() {
-                public Set<Task> create(java.lang.String label) {
-                    return getEntities(new IsLabel(label));
+    private final Cache<scrum.server.admin.User,Set<Task>> tasksByOwnerCache = new Cache<scrum.server.admin.User,Set<Task>>(
+            new Cache.Factory<scrum.server.admin.User,Set<Task>>() {
+                public Set<Task> create(scrum.server.admin.User owner) {
+                    return getEntities(new IsOwner(owner));
                 }
             });
 
-    public final Set<Task> getTasksByLabel(java.lang.String label) {
-        return tasksByLabelCache.get(label);
+    public final Set<Task> getTasksByOwner(scrum.server.admin.User owner) {
+        return tasksByOwnerCache.get(owner);
     }
-    private Set<java.lang.String> labelsCache;
+    private Set<scrum.server.admin.User> ownersCache;
 
-    public final Set<java.lang.String> getLabels() {
-        if (labelsCache == null) {
-            labelsCache = new HashSet<java.lang.String>();
+    public final Set<scrum.server.admin.User> getOwners() {
+        if (ownersCache == null) {
+            ownersCache = new HashSet<scrum.server.admin.User>();
             for (Task e : getEntities()) {
-                if (e.isLabelSet()) labelsCache.add(e.getLabel());
+                if (e.isOwnerSet()) ownersCache.add(e.getOwner());
             }
         }
-        return labelsCache;
+        return ownersCache;
     }
 
-    private static class IsLabel implements Predicate<Task> {
+    private static class IsOwner implements Predicate<Task> {
 
-        private java.lang.String value;
+        private scrum.server.admin.User value;
 
-        public IsLabel(java.lang.String value) {
+        public IsOwner(scrum.server.admin.User value) {
             this.value = value;
         }
 
         public boolean test(Task e) {
-            return e.isLabel(value);
+            return e.isOwner(value);
         }
 
     }
@@ -274,41 +274,41 @@ public abstract class GTaskDao
     }
 
     // -----------------------------------------------------------
-    // - remainingWork
+    // - notice
     // -----------------------------------------------------------
 
-    private final Cache<Integer,Set<Task>> tasksByRemainingWorkCache = new Cache<Integer,Set<Task>>(
-            new Cache.Factory<Integer,Set<Task>>() {
-                public Set<Task> create(Integer remainingWork) {
-                    return getEntities(new IsRemainingWork(remainingWork));
+    private final Cache<java.lang.String,Set<Task>> tasksByNoticeCache = new Cache<java.lang.String,Set<Task>>(
+            new Cache.Factory<java.lang.String,Set<Task>>() {
+                public Set<Task> create(java.lang.String notice) {
+                    return getEntities(new IsNotice(notice));
                 }
             });
 
-    public final Set<Task> getTasksByRemainingWork(int remainingWork) {
-        return tasksByRemainingWorkCache.get(remainingWork);
+    public final Set<Task> getTasksByNotice(java.lang.String notice) {
+        return tasksByNoticeCache.get(notice);
     }
-    private Set<Integer> remainingWorksCache;
+    private Set<java.lang.String> noticesCache;
 
-    public final Set<Integer> getRemainingWorks() {
-        if (remainingWorksCache == null) {
-            remainingWorksCache = new HashSet<Integer>();
+    public final Set<java.lang.String> getNotices() {
+        if (noticesCache == null) {
+            noticesCache = new HashSet<java.lang.String>();
             for (Task e : getEntities()) {
-                remainingWorksCache.add(e.getRemainingWork());
+                if (e.isNoticeSet()) noticesCache.add(e.getNotice());
             }
         }
-        return remainingWorksCache;
+        return noticesCache;
     }
 
-    private static class IsRemainingWork implements Predicate<Task> {
+    private static class IsNotice implements Predicate<Task> {
 
-        private int value;
+        private java.lang.String value;
 
-        public IsRemainingWork(int value) {
+        public IsNotice(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(Task e) {
-            return e.isRemainingWork(value);
+            return e.isNotice(value);
         }
 
     }

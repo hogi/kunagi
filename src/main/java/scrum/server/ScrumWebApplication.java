@@ -63,6 +63,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		User user3 = getUserDao().postUser("duke", "geheim");
 
 		Project project1 = getProjectDao().postProject("Prepared Project", getUserDao().getUserByName("admin"));
+		project1.setBegin(Date.today().addMonths(-2));
+		project1.setEnd(Date.today().addMonths(5));
 		project1.addAdmins(getUserDao().getEntities());
 		project1.addTeamMembers(getUserDao().getEntities());
 		project1.setProductOwner(user1);
@@ -135,10 +137,13 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		}
 
 		project1.setCurrentSprint(sprint1);
+		project1.createNextSprint();
 
 		// ---
 
 		Project project2 = getProjectDao().postProject("Empty Project", getUserDao().getUserByName("admin"));
+		project2.setBegin(Date.today().addDays(-5));
+		project2.setEnd(Date.today().addMonths(2));
 		project2.addAdmins(getUserDao().getEntities());
 		project2.addTeamMembers(getUserDao().getEntities());
 		project2.setProductOwner(user2);
@@ -153,6 +158,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		getSprintDao().saveEntity(sprint2);
 
 		project2.setCurrentSprint(sprint2);
+		project2.createNextSprint();
 
 		getTransactionService().commit();
 	}

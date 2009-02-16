@@ -43,18 +43,18 @@ public abstract class GImpedimentDao
 
     // --- clear caches ---
     public void clearCaches() {
+        impedimentsByDateCache.clear();
+        datesCache = null;
+        impedimentsBySolveDateCache.clear();
+        solveDatesCache = null;
+        impedimentsByProjectCache.clear();
+        projectsCache = null;
         impedimentsByLabelCache.clear();
         labelsCache = null;
         impedimentsByDescriptionCache.clear();
         descriptionsCache = null;
-        impedimentsByDateCache.clear();
-        datesCache = null;
-        impedimentsByProjectCache.clear();
-        projectsCache = null;
         impedimentsBySolutionCache.clear();
         solutionsCache = null;
-        impedimentsBySolveDateCache.clear();
-        solveDatesCache = null;
     }
 
     @Override
@@ -71,6 +71,126 @@ public abstract class GImpedimentDao
         if (event.getEntity() instanceof Impediment) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - date
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.Date,Set<Impediment>> impedimentsByDateCache = new Cache<ilarkesto.base.time.Date,Set<Impediment>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<Impediment>>() {
+                public Set<Impediment> create(ilarkesto.base.time.Date date) {
+                    return getEntities(new IsDate(date));
+                }
+            });
+
+    public final Set<Impediment> getImpedimentsByDate(ilarkesto.base.time.Date date) {
+        return impedimentsByDateCache.get(date);
+    }
+    private Set<ilarkesto.base.time.Date> datesCache;
+
+    public final Set<ilarkesto.base.time.Date> getDates() {
+        if (datesCache == null) {
+            datesCache = new HashSet<ilarkesto.base.time.Date>();
+            for (Impediment e : getEntities()) {
+                if (e.isDateSet()) datesCache.add(e.getDate());
+            }
+        }
+        return datesCache;
+    }
+
+    private static class IsDate implements Predicate<Impediment> {
+
+        private ilarkesto.base.time.Date value;
+
+        public IsDate(ilarkesto.base.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(Impediment e) {
+            return e.isDate(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - solveDate
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.Date,Set<Impediment>> impedimentsBySolveDateCache = new Cache<ilarkesto.base.time.Date,Set<Impediment>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<Impediment>>() {
+                public Set<Impediment> create(ilarkesto.base.time.Date solveDate) {
+                    return getEntities(new IsSolveDate(solveDate));
+                }
+            });
+
+    public final Set<Impediment> getImpedimentsBySolveDate(ilarkesto.base.time.Date solveDate) {
+        return impedimentsBySolveDateCache.get(solveDate);
+    }
+    private Set<ilarkesto.base.time.Date> solveDatesCache;
+
+    public final Set<ilarkesto.base.time.Date> getSolveDates() {
+        if (solveDatesCache == null) {
+            solveDatesCache = new HashSet<ilarkesto.base.time.Date>();
+            for (Impediment e : getEntities()) {
+                if (e.isSolveDateSet()) solveDatesCache.add(e.getSolveDate());
+            }
+        }
+        return solveDatesCache;
+    }
+
+    private static class IsSolveDate implements Predicate<Impediment> {
+
+        private ilarkesto.base.time.Date value;
+
+        public IsSolveDate(ilarkesto.base.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(Impediment e) {
+            return e.isSolveDate(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - project
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.project.Project,Set<Impediment>> impedimentsByProjectCache = new Cache<scrum.server.project.Project,Set<Impediment>>(
+            new Cache.Factory<scrum.server.project.Project,Set<Impediment>>() {
+                public Set<Impediment> create(scrum.server.project.Project project) {
+                    return getEntities(new IsProject(project));
+                }
+            });
+
+    public final Set<Impediment> getImpedimentsByProject(scrum.server.project.Project project) {
+        return impedimentsByProjectCache.get(project);
+    }
+    private Set<scrum.server.project.Project> projectsCache;
+
+    public final Set<scrum.server.project.Project> getProjects() {
+        if (projectsCache == null) {
+            projectsCache = new HashSet<scrum.server.project.Project>();
+            for (Impediment e : getEntities()) {
+                if (e.isProjectSet()) projectsCache.add(e.getProject());
+            }
+        }
+        return projectsCache;
+    }
+
+    private static class IsProject implements Predicate<Impediment> {
+
+        private scrum.server.project.Project value;
+
+        public IsProject(scrum.server.project.Project value) {
+            this.value = value;
+        }
+
+        public boolean test(Impediment e) {
+            return e.isProject(value);
+        }
+
     }
 
     // -----------------------------------------------------------
@@ -154,86 +274,6 @@ public abstract class GImpedimentDao
     }
 
     // -----------------------------------------------------------
-    // - date
-    // -----------------------------------------------------------
-
-    private final Cache<ilarkesto.base.time.Date,Set<Impediment>> impedimentsByDateCache = new Cache<ilarkesto.base.time.Date,Set<Impediment>>(
-            new Cache.Factory<ilarkesto.base.time.Date,Set<Impediment>>() {
-                public Set<Impediment> create(ilarkesto.base.time.Date date) {
-                    return getEntities(new IsDate(date));
-                }
-            });
-
-    public final Set<Impediment> getImpedimentsByDate(ilarkesto.base.time.Date date) {
-        return impedimentsByDateCache.get(date);
-    }
-    private Set<ilarkesto.base.time.Date> datesCache;
-
-    public final Set<ilarkesto.base.time.Date> getDates() {
-        if (datesCache == null) {
-            datesCache = new HashSet<ilarkesto.base.time.Date>();
-            for (Impediment e : getEntities()) {
-                if (e.isDateSet()) datesCache.add(e.getDate());
-            }
-        }
-        return datesCache;
-    }
-
-    private static class IsDate implements Predicate<Impediment> {
-
-        private ilarkesto.base.time.Date value;
-
-        public IsDate(ilarkesto.base.time.Date value) {
-            this.value = value;
-        }
-
-        public boolean test(Impediment e) {
-            return e.isDate(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - project
-    // -----------------------------------------------------------
-
-    private final Cache<scrum.server.project.Project,Set<Impediment>> impedimentsByProjectCache = new Cache<scrum.server.project.Project,Set<Impediment>>(
-            new Cache.Factory<scrum.server.project.Project,Set<Impediment>>() {
-                public Set<Impediment> create(scrum.server.project.Project project) {
-                    return getEntities(new IsProject(project));
-                }
-            });
-
-    public final Set<Impediment> getImpedimentsByProject(scrum.server.project.Project project) {
-        return impedimentsByProjectCache.get(project);
-    }
-    private Set<scrum.server.project.Project> projectsCache;
-
-    public final Set<scrum.server.project.Project> getProjects() {
-        if (projectsCache == null) {
-            projectsCache = new HashSet<scrum.server.project.Project>();
-            for (Impediment e : getEntities()) {
-                if (e.isProjectSet()) projectsCache.add(e.getProject());
-            }
-        }
-        return projectsCache;
-    }
-
-    private static class IsProject implements Predicate<Impediment> {
-
-        private scrum.server.project.Project value;
-
-        public IsProject(scrum.server.project.Project value) {
-            this.value = value;
-        }
-
-        public boolean test(Impediment e) {
-            return e.isProject(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
     // - solution
     // -----------------------------------------------------------
 
@@ -269,46 +309,6 @@ public abstract class GImpedimentDao
 
         public boolean test(Impediment e) {
             return e.isSolution(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - solveDate
-    // -----------------------------------------------------------
-
-    private final Cache<ilarkesto.base.time.Date,Set<Impediment>> impedimentsBySolveDateCache = new Cache<ilarkesto.base.time.Date,Set<Impediment>>(
-            new Cache.Factory<ilarkesto.base.time.Date,Set<Impediment>>() {
-                public Set<Impediment> create(ilarkesto.base.time.Date solveDate) {
-                    return getEntities(new IsSolveDate(solveDate));
-                }
-            });
-
-    public final Set<Impediment> getImpedimentsBySolveDate(ilarkesto.base.time.Date solveDate) {
-        return impedimentsBySolveDateCache.get(solveDate);
-    }
-    private Set<ilarkesto.base.time.Date> solveDatesCache;
-
-    public final Set<ilarkesto.base.time.Date> getSolveDates() {
-        if (solveDatesCache == null) {
-            solveDatesCache = new HashSet<ilarkesto.base.time.Date>();
-            for (Impediment e : getEntities()) {
-                if (e.isSolveDateSet()) solveDatesCache.add(e.getSolveDate());
-            }
-        }
-        return solveDatesCache;
-    }
-
-    private static class IsSolveDate implements Predicate<Impediment> {
-
-        private ilarkesto.base.time.Date value;
-
-        public IsSolveDate(ilarkesto.base.time.Date value) {
-            this.value = value;
-        }
-
-        public boolean test(Impediment e) {
-            return e.isSolveDate(value);
         }
 
     }

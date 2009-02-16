@@ -24,6 +24,10 @@ import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.xy.DefaultXYDataset;
 
+import scrum.server.project.Project;
+import scrum.server.project.ProjectDao;
+import scrum.server.project.ProjectSprintSnapshot;
+
 public class BurndownChart {
 
 	public static void main(String[] args) {
@@ -62,11 +66,11 @@ public class BurndownChart {
 
 	// --- dependencies ---
 
-	private SprintDaySnapshotDao sprintDaySnapshotDao;
+	private ProjectDao projectDao;
 	private SprintDao sprintDao;
 
-	public void setSprintDaySnapshotDao(SprintDaySnapshotDao sprintDaySnapshotDao) {
-		this.sprintDaySnapshotDao = sprintDaySnapshotDao;
+	public void setProjectDao(ProjectDao projectDao) {
+		this.projectDao = projectDao;
 	}
 
 	public void setSprintDao(SprintDao sprintDao) {
@@ -75,13 +79,27 @@ public class BurndownChart {
 
 	// --- ---
 
-	public void wirteChart(OutputStream out, String sprintId, int width, int height) {
+	public void wirteProjectBurndownChart(OutputStream out, String projectId, int width, int height) {
+		Project project = projectDao.getById(projectId);
+		List<ProjectSprintSnapshot> snapshots = project.getSnapshots();
+
+		writeProjectBurndownChart(out, snapshots, project.getBegin().addDays(-1), project.getEnd(), snapshots.get(0)
+				.getBurnedWork()
+				+ snapshots.get(0).getRemainingWork(), width, height);
+	}
+
+	public void wirteSprintBurndownChart(OutputStream out, String sprintId, int width, int height) {
 		Sprint sprint = sprintDao.getById(sprintId);
-		List<SprintDaySnapshot> snapshots = sprintDaySnapshotDao.getSprintDaySnapshots(sprint);
+		List<SprintDaySnapshot> snapshots = sprint.getSnapshots();
 
 		writeSprintBurndownChart(out, snapshots, sprint.getBegin().addDays(-1), sprint.getEnd(), snapshots.get(0)
 				.getBurnedWork()
 				+ snapshots.get(0).getRemainingWork(), width, height);
+	}
+
+	private void writeProjectBurndownChart(OutputStream out, List<ProjectSprintSnapshot> snapshots, Date firstDay,
+			Date lastDay, double initialWork, int width, int height) {
+	// TODO
 	}
 
 	private void writeSprintBurndownChart(OutputStream out, List<SprintDaySnapshot> snapshots, Date firstDay,
