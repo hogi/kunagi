@@ -1,9 +1,10 @@
 package scrum.client.workspace;
 
+import java.util.ArrayList;
+
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
-import scrum.client.common.BlockListController;
-import scrum.client.common.BlockListWidget;
+import scrum.client.common.ClipboardItemWidget;
 import scrum.client.common.StyleSheet;
 import scrum.client.img.Img;
 
@@ -15,20 +16,17 @@ import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ClipboardWidget extends Composite {
 
-	private BlockListWidget list;
+	private VerticalPanel clipboardPanel;
 	private SimplePanel space;
 	private HorizontalPanel trash;
+	private ArrayList<ClipboardItemWidget> clipboardItems = new ArrayList<ClipboardItemWidget>();
 
 	public ClipboardWidget() {
-		list = new BlockListWidget(new BlockListController());
-
-		list.setSidebarMode(true);
-		list.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_ITEMS);
-
 		space = new SimplePanel();
 		space.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_SPACE);
 		space.setWidget(new Label("drop here"));
@@ -41,14 +39,11 @@ public class ClipboardWidget extends Composite {
 		DockPanel dock = new DockPanel();
 		dock.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET);
 
-		// dock.add(list, DockPanel.NORTH);
-		// dock.setCellHeight(list, "1%");
-		dock.add(list, DockPanel.CENTER);
-
-		// dock.add(space, DockPanel.CENTER);
+		clipboardPanel = new VerticalPanel();
+		clipboardPanel.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_ITEMS);
+		dock.add(clipboardPanel, DockPanel.CENTER);
 
 		dock.add(trash, DockPanel.SOUTH);
-		// dock.setCellHeight(trash, "1%");
 
 		ScrumGwtApplication.get().getDragController().registerDropController(itemDropController);
 		ScrumGwtApplication.get().getDragController().registerDropController(trashDropController);
@@ -60,32 +55,47 @@ public class ClipboardWidget extends Composite {
 		// addItem(new ImpedimentWidget(Dummy.moon.getImpediments().get(1)));
 	}
 
-	public void addItem(ABlockWidget item) {
-		list.addBlock(item);
+	public void addItem(ClipboardItemWidget item) {
+		if (item.getSource().isInClipboard()) { return; }
+		item.getSource().setInClipboard(true);
+		item.setClipboard(this);
+		clipboardItems.add(item);
+		rebuild();
+	}
+
+	public void removeItem(ClipboardItemWidget item) {
+		clipboardItems.remove(item);
+		rebuild();
+	}
+
+	private void rebuild() {
+		clipboardPanel.clear();
+		for (ClipboardItemWidget item : clipboardItems) {
+			clipboardPanel.add(item);
+		}
 	}
 
 	private DropController itemDropController = new DropController() {
 
 		public Widget getDropTarget() {
-			return list;
+			return clipboardPanel;
 		}
 
 		public void onDrop(DragContext context) {
 			Widget widget = context.draggable;
 			if (widget instanceof ABlockWidget) {
 				ABlockWidget ablockwidget = (ABlockWidget) widget;
-				if (ablockwidget.isInClipboard() == false) list.addBlock(ablockwidget);
-				// ablockwidget.rebuild();
+				addItem(ablockwidget.createClipboardItem());
 			}
 		}
 
 		public void onEnter(DragContext context) {
-			list.addStyleName(StyleSheet.TRASH_ON_ENTER); // TODO
+			clipboardPanel.addStyleName(StyleSheet.TRASH_ON_ENTER); // TODO
 		}
 
 		public void onLeave(DragContext context) {
 			System.out.println("leaving...");
-			list.removeStyleName(StyleSheet.TRASH_ON_ENTER); // TODO
+			clipboardPanel.removeStyleName(StyleSheet.TRASH_ON_ENTER); // TODO
 			// Widget widget = context.draggable;
 			// if (widget instanceof ABlockWidget) {
 			// ABlockWidget ablockwidget = (ABlockWidget) widget;

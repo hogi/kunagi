@@ -116,12 +116,12 @@ public abstract class ABlockWidget extends Composite {
 		return inClipboard;
 	}
 
-	final void setInClipboard(boolean inClipboard) {
+	public final void setInClipboard(boolean inClipboard) {
 		this.inClipboard = inClipboard;
-		if (inClipboard) {
-			getBorderPanel().removeStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
-			extended = false;
-		}
+		// if (inClipboard) {
+		// getBorderPanel().removeStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
+		// extended = false;
+		// }
 	}
 
 	public final void rebuild() {
@@ -141,15 +141,7 @@ public abstract class ABlockWidget extends Composite {
 	}
 
 	protected final Widget build() {
-		return inClipboard ? buildClipboardItemWidget() : buildBlockItemWidget();
-	}
-
-	protected final Widget buildClipboardItemWidget() {
-		HorizontalPanel mainpanel = new HorizontalPanel();
-		mainpanel.add(makeDraggable());
-		mainpanel.add(new Label(getBlockTitle()));
-
-		return mainpanel;
+		return buildBlockItemWidget();
 	}
 
 	protected final Widget buildBlockItemWidget() {
@@ -187,14 +179,15 @@ public abstract class ABlockWidget extends Composite {
 	}
 
 	public Image createDragHandle() {
-		Image dragHandle = null;
-		if (isInClipboard()) {
-			dragHandle = getIcon16().createImage();
-		} else {
-			dragHandle = getIcon32().createImage();
-		}
+		Image dragHandle = getIcon32().createImage();
 		dragHandle.setStyleName(StyleSheet.DRAG_HANDLE);
 		return dragHandle;
+	}
+
+	public ClipboardItemWidget createClipboardItem() {
+		ClipboardItemWidget item = new ClipboardItemWidget(this);
+
+		return item;
 	}
 
 	@Override

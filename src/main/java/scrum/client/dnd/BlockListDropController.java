@@ -2,6 +2,7 @@ package scrum.client.dnd;
 
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockListWidget;
+import scrum.client.common.ClipboardItemWidget;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.VetoDragException;
@@ -27,40 +28,50 @@ public class BlockListDropController implements DropController {
 	public void onDrop(DragContext context) {
 		WidgetArea area = new WidgetArea(dropTarget, null);
 		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
-		ABlockWidget block = (ABlockWidget) context.draggable;
 
-		int fromIndex = list.indexOf(block);
-		int toIndex = list.indexOf(dropTarget);
-		if (fromIndex > toIndex) toIndex++;
-		if (isHigher(area, location)) toIndex--;
-		list.moveBlock(block, toIndex);
+		if (context.draggable instanceof ClipboardItemWidget) {
+			// move from clipboard
+			ClipboardItemWidget item = (ClipboardItemWidget) context.draggable;
+
+			int fromIndex = list.indexOf(item.getSource());
+			if (fromIndex < 0) {
+				// TODO move data
+			}
+
+			int toIndex = list.indexOf(dropTarget);
+			if (fromIndex > toIndex) toIndex++;
+			if (isHigher(area, location)) toIndex--;
+			item.getSource().setInClipboard(false);
+			list.moveBlock(item.getSource(), toIndex);
+			item.removeFromClipboard();
+		} else {
+			// move in the list
+			ABlockWidget block = (ABlockWidget) context.draggable;
+
+			int fromIndex = list.indexOf(block);
+			int toIndex = list.indexOf(dropTarget);
+			if (fromIndex > toIndex) toIndex++;
+			if (isHigher(area, location)) toIndex--;
+			list.moveBlock(block, toIndex);
+		}
 	}
 
 	public void onEnter(DragContext context) {}
 
 	public void onLeave(DragContext context) {
-		WidgetArea area = new WidgetArea(dropTarget, null);
-		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
-
-		if (!dropTarget.isInClipboard()) {
-			boolean isHigher = isHigher(area, location);
-			dropTarget.deactivateDndMarkers();
-		}
+		dropTarget.deactivateDndMarkers();
 	}
 
 	public void onMove(DragContext context) {
 		WidgetArea area = new WidgetArea(dropTarget, null);
 		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
 
-		if (!dropTarget.isInClipboard()) {
-			boolean isHigher = isHigher(area, location);
-			if (isHigher) {
-				dropTarget.activateDndMarkerTop();
-			} else {
-				dropTarget.activateDndMarkerBottom();
-			}
+		boolean isHigher = isHigher(area, location);
+		if (isHigher) {
+			dropTarget.activateDndMarkerTop();
+		} else {
+			dropTarget.activateDndMarkerBottom();
 		}
-
 	}
 
 	public void onPreviewDrop(DragContext context) throws VetoDragException {
@@ -73,6 +84,10 @@ public class BlockListDropController implements DropController {
 	}
 
 	private boolean isDropAllowed(DragContext context) {
+		if (context.draggable instanceof ClipboardItemWidget) {
+			ClipboardItemWidget item = (ClipboardItemWidget) context.draggable;
+			return item.getSource().getClass().equals(dropTarget.getClass());
+		}
 		return context.draggable.getClass().equals(dropTarget.getClass());
 	}
 }
