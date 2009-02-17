@@ -1,4 +1,4 @@
-package scrum.server.sprint;
+package scrum.server.common;
 
 import ilarkesto.base.time.Date;
 
@@ -27,12 +27,15 @@ import org.jfree.data.xy.DefaultXYDataset;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.ProjectSprintSnapshot;
+import scrum.server.sprint.Sprint;
+import scrum.server.sprint.SprintDao;
+import scrum.server.sprint.SprintDaySnapshot;
 
 public class BurndownChart {
 
 	public static void main(String[] args) {
 
-		List<SprintDaySnapshot> shots = new ArrayList<SprintDaySnapshot>();
+		List<BurndownSnapshot> shots = new ArrayList<BurndownSnapshot>();
 
 		shots.add(shot(new Date(2008, 7, 1), 5, 45));
 		shots.add(shot(new Date(2008, 7, 2), 10, 40));
@@ -99,12 +102,31 @@ public class BurndownChart {
 
 	private void writeProjectBurndownChart(OutputStream out, List<ProjectSprintSnapshot> snapshots, Date firstDay,
 			Date lastDay, double initialWork, int width, int height) {
-	// TODO
+		List<BurndownSnapshot> burndownSnapshots = new ArrayList<BurndownSnapshot>(snapshots);
+		DefaultXYDataset data = createSprintBurndownChartDataset(burndownSnapshots, firstDay, lastDay, initialWork);
+		double tick = 1.0;
+		double max = getMaximum(data);
+
+		while (max / tick > 25) {
+			tick *= 2;
+			if (max / tick <= 25) break;
+			tick *= 2.5;
+			if (max / tick <= 25) break;
+			tick *= 2;
+		}
+
+		JFreeChart chart = createSprintBurndownChart(data, "Date", "Work", firstDay, lastDay, 10, 30, max * 1.1, tick);
+		try {
+			ChartUtilities.writeScaledChartAsPNG(out, chart, width, height, 1, 1);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void writeSprintBurndownChart(OutputStream out, List<SprintDaySnapshot> snapshots, Date firstDay,
 			Date lastDay, double initialWork, int width, int height) {
-		DefaultXYDataset data = createSprintBurndownChartDataset(snapshots, firstDay, lastDay, initialWork);
+		List<BurndownSnapshot> burndownSnapshots = new ArrayList<BurndownSnapshot>(snapshots);
+		DefaultXYDataset data = createSprintBurndownChartDataset(burndownSnapshots, firstDay, lastDay, initialWork);
 		double tick = 1.0;
 		double max = getMaximum(data);
 
@@ -186,7 +208,7 @@ public class BurndownChart {
 		return max;
 	}
 
-	private static DefaultXYDataset createSprintBurndownChartDataset(List<SprintDaySnapshot> snapshots, Date firstDay,
+	private static DefaultXYDataset createSprintBurndownChartDataset(List<BurndownSnapshot> snapshots, Date firstDay,
 			Date lastDay, double initialWork) {
 
 		List<Double> mainDates = new ArrayList<Double>();
@@ -224,7 +246,7 @@ public class BurndownChart {
 
 		for (int i = 0; i < snapshots.size(); i++) {
 
-			SprintDaySnapshot snapshot = snapshots.get(i);
+			BurndownSnapshot snapshot = snapshots.get(i);
 			Date snapshotDate = snapshot.getDate();
 			double snapshotDateMillis = snapshotDate.toMillis();
 			newBurnedWork = snapshot.getBurnedWork();

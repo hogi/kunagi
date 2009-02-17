@@ -1,6 +1,8 @@
 package scrum.server.sprint;
 
-public class SprintDaySnapshot extends GSprintDaySnapshot {
+import scrum.server.common.BurndownSnapshot;
+
+public class SprintDaySnapshot extends GSprintDaySnapshot implements BurndownSnapshot {
 
 	public void update() {
 		setRemainingWork(getSprint().getRemainingWork());

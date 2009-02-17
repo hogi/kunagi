@@ -1,6 +1,9 @@
 package scrum.server.project;
 
-public class ProjectSprintSnapshot extends GProjectSprintSnapshot implements Comparable<ProjectSprintSnapshot> {
+import scrum.server.common.BurndownSnapshot;
+
+public class ProjectSprintSnapshot extends GProjectSprintSnapshot implements Comparable<ProjectSprintSnapshot>,
+		BurndownSnapshot {
 
 	public ProjectSprintSnapshot(GProjectSprintSnapshot template) {
 		super(template);
