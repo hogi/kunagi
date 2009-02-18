@@ -69,8 +69,18 @@ public class ProjectOverviewWidget extends Composite {
 			fields.addField("Project Admins", new Label(admins));
 		}
 
+		int chartWidth = 500;
+		int chartHeight = 300;
+		String chartUrl = "../projectBurndownChart.png?projectId=" + ScrumGwtApplication.get().getProject().getId()
+				+ "&width=" + chartWidth + "&height=" + chartHeight;
+		Image chart = new Image(chartUrl, 0, 0, chartWidth, chartHeight);
+
+		FlowPanel projectPropertiesPanel = new FlowPanel();
+		projectPropertiesPanel.add(fields);
+		projectPropertiesPanel.add(chart);
+
 		FlowPanel panel = new FlowPanel();
-		panel.add(new GroupWidget("Project Properties", fields));
+		panel.add(new GroupWidget("Project Properties", projectPropertiesPanel));
 		Sprint sprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
 		if (sprint != null) {
 			panel.add(createCurrentSprintOverview(sprint));
@@ -85,10 +95,10 @@ public class ProjectOverviewWidget extends Composite {
 	}
 
 	private Widget createCurrentSprintOverview(Sprint sprint) {
-		int width = 500;
-		int height = 300;
-		String url = "../sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width=" + width + "&height=" + height;
-		// String url = "http://www.google.de/intl/de_de/images/logo.gif";
-		return new GroupWidget("Current Sprint", new Image(url, 0, 0, width, height));
+		int chartWidth = 500;
+		int chartHeight = 300;
+		String chartUrl = "../sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width=" + chartWidth + "&height="
+				+ chartHeight;
+		return new GroupWidget("Current Sprint", new Image(chartUrl, 0, 0, chartWidth, chartHeight));
 	}
 }

@@ -84,7 +84,7 @@ public class BurndownChart {
 
 	public void wirteProjectBurndownChart(OutputStream out, String projectId, int width, int height) {
 		Project project = projectDao.getById(projectId);
-		List<ProjectSprintSnapshot> snapshots = project.getSnapshots();
+		List<ProjectSprintSnapshot> snapshots = project.getSprintSnapshots();
 
 		writeProjectBurndownChart(out, snapshots, project.getBegin().addDays(-1), project.getEnd(), snapshots.get(0)
 				.getBurnedWork()
@@ -93,7 +93,7 @@ public class BurndownChart {
 
 	public void wirteSprintBurndownChart(OutputStream out, String sprintId, int width, int height) {
 		Sprint sprint = sprintDao.getById(sprintId);
-		List<SprintDaySnapshot> snapshots = sprint.getSnapshots();
+		List<SprintDaySnapshot> snapshots = sprint.getDaySnapshots();
 
 		writeSprintBurndownChart(out, snapshots, sprint.getBegin().addDays(-1), sprint.getEnd(), snapshots.get(0)
 				.getBurnedWork()

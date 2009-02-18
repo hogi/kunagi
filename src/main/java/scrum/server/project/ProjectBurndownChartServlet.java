@@ -1,5 +1,7 @@
 package scrum.server.project;
 
+import ilarkesto.logging.Logger;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -11,6 +13,8 @@ import scrum.server.ScrumWebApplication;
 
 public class ProjectBurndownChartServlet extends HttpServlet {
 
+	private static final Logger LOG = Logger.get(ProjectBurndownChartServlet.class);
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -19,6 +23,8 @@ public class ProjectBurndownChartServlet extends HttpServlet {
 		if (width == null) width = "400";
 		String height = req.getParameter("height");
 		if (height == null) height = "200";
+
+		LOG.debug("Generating project burndown chart:", width + "x" + height, projectId);
 
 		resp.setContentType("image/png");
 		ScrumWebApplication.get().getBurndownChart().wirteProjectBurndownChart(resp.getOutputStream(), projectId,

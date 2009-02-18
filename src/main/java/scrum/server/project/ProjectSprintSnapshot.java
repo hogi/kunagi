@@ -1,8 +1,7 @@
 package scrum.server.project;
 
 import ilarkesto.base.time.Date;
-
-public class ProjectSprintSnapshot extends GProjectSprintSnapshot implements Comparable<ProjectSprintSnapshot> {
+import scrum.server.common.BurndownSnapshot;
 
 public class ProjectSprintSnapshot extends GProjectSprintSnapshot implements Comparable<ProjectSprintSnapshot>,
 		BurndownSnapshot {

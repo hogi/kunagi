@@ -11,5 +11,3 @@ public interface BurndownSnapshot {
 	public int getRemainingWork();
 
 }
-
-// $Log:$
