@@ -46,12 +46,12 @@ public abstract class GImpediment
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
-        properties.put("projectId", this.projectId);
         properties.put("label", this.label);
         properties.put("description", this.description);
         properties.put("solution", this.solution);
+        properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("projectId", this.projectId);
     }
 
     public int compareTo(Impediment other) {
@@ -67,42 +67,12 @@ public abstract class GImpediment
         super(template);
         if (template==null) return;
 
-        setDate(template.getDate());
         setSolveDate(template.getSolveDate());
-        setProject(template.getProject());
         setLabel(template.getLabel());
         setDescription(template.getDescription());
         setSolution(template.getSolution());
-    }
-
-    // -----------------------------------------------------------
-    // - date
-    // -----------------------------------------------------------
-
-    private ilarkesto.base.time.Date date;
-
-    public final ilarkesto.base.time.Date getDate() {
-        return date;
-    }
-
-    public final void setDate(ilarkesto.base.time.Date date) {
-        date = prepareDate(date);
-        if (isDate(date)) return;
-        this.date = date;
-        entityModified();
-    }
-
-    protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
-        return date;
-    }
-
-    public final boolean isDateSet() {
-        return this.date != null;
-    }
-
-    public final boolean isDate(ilarkesto.base.time.Date date) {
-        if (this.date == null && date == null) return true;
-        return this.date != null && this.date.equals(date);
+        setDate(template.getDate());
+        setProject(template.getProject());
     }
 
     // -----------------------------------------------------------
@@ -133,43 +103,6 @@ public abstract class GImpediment
     public final boolean isSolveDate(ilarkesto.base.time.Date solveDate) {
         if (this.solveDate == null && solveDate == null) return true;
         return this.solveDate != null && this.solveDate.equals(solveDate);
-    }
-
-    // -----------------------------------------------------------
-    // - project
-    // -----------------------------------------------------------
-
-    private String projectId;
-
-    public final scrum.server.project.Project getProject() {
-        if (this.projectId == null) return null;
-        return (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
-
-    public final void setProject(scrum.server.project.Project project) {
-        project = prepareProject(project);
-        if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
-        entityModified();
-    }
-
-    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
-        return project;
-    }
-
-    protected void repairDeadProjectReference(String entityId) {
-        if (entityId.equals(this.projectId)) {
-            repairMissingMaster();
-        }
-    }
-
-    public final boolean isProjectSet() {
-        return this.projectId != null;
-    }
-
-    public final boolean isProject(scrum.server.project.Project project) {
-        if (this.projectId == null && project == null) return true;
-        return project != null && project.getId().equals(this.projectId);
     }
 
     // -----------------------------------------------------------
@@ -263,6 +196,73 @@ public abstract class GImpediment
     public final boolean isSolution(java.lang.String solution) {
         if (this.solution == null && solution == null) return true;
         return this.solution != null && this.solution.equals(solution);
+    }
+
+    // -----------------------------------------------------------
+    // - date
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date date;
+
+    public final ilarkesto.base.time.Date getDate() {
+        return date;
+    }
+
+    public final void setDate(ilarkesto.base.time.Date date) {
+        date = prepareDate(date);
+        if (isDate(date)) return;
+        this.date = date;
+        entityModified();
+    }
+
+    protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
+        return date;
+    }
+
+    public final boolean isDateSet() {
+        return this.date != null;
+    }
+
+    public final boolean isDate(ilarkesto.base.time.Date date) {
+        if (this.date == null && date == null) return true;
+        return this.date != null && this.date.equals(date);
+    }
+
+    // -----------------------------------------------------------
+    // - project
+    // -----------------------------------------------------------
+
+    private String projectId;
+
+    public final scrum.server.project.Project getProject() {
+        if (this.projectId == null) return null;
+        return (scrum.server.project.Project)projectDao.getById(this.projectId);
+    }
+
+    public final void setProject(scrum.server.project.Project project) {
+        project = prepareProject(project);
+        if (isProject(project)) return;
+        this.projectId = project == null ? null : project.getId();
+        entityModified();
+    }
+
+    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
+        return project;
+    }
+
+    protected void repairDeadProjectReference(String entityId) {
+        if (entityId.equals(this.projectId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isProjectSet() {
+        return this.projectId != null;
+    }
+
+    public final boolean isProject(scrum.server.project.Project project) {
+        if (this.projectId == null && project == null) return true;
+        return project != null && project.getId().equals(this.projectId);
     }
 
     protected void repairDeadReferences(String entityId) {

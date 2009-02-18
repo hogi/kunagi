@@ -1,6 +1,8 @@
 package scrum.server.project;
 
-import scrum.server.common.BurndownSnapshot;
+import ilarkesto.base.time.Date;
+
+public class ProjectSprintSnapshot extends GProjectSprintSnapshot implements Comparable<ProjectSprintSnapshot> {
 
 public class ProjectSprintSnapshot extends GProjectSprintSnapshot implements Comparable<ProjectSprintSnapshot>,
 		BurndownSnapshot {
@@ -11,6 +13,23 @@ public class ProjectSprintSnapshot extends GProjectSprintSnapshot implements Com
 
 	public ProjectSprintSnapshot() {
 		super(null);
+	}
+
+	public void update() {
+		setRemainingWork(getProject().getRemainingWork());
+		setBurnedWork(getProject().getBurnedWork());
+	}
+
+	public boolean isProject(Project project) {
+		return getSprint().isProject(project);
+	}
+
+	public Project getProject() {
+		return getSprint().getProject();
+	}
+
+	public Date getDate() {
+		return getSprint().getEnd();
 	}
 
 	@Override

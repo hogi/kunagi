@@ -116,7 +116,7 @@ public class RequirementWidget extends ABlockWidget {
 
 			public void onClick(Widget sender) {
 				ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
-				WorkspaceWidget.backlog.list.removeSelectedRow();
+				ScrumGwtApplication.get().getWorkspace().getBacklog().list.removeSelectedRow();
 			}
 		});
 
@@ -175,12 +175,12 @@ public class RequirementWidget extends ABlockWidget {
 	@Override
 	public void delete() {
 		ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
-		WorkspaceWidget.backlog.list.remove(this);
+		ScrumGwtApplication.get().getWorkspace().getBacklog().list.remove(this);
 	}
 
 	@Override
 	protected DropController createDropController() {
-		return new BlockListDropController(this, WorkspaceWidget.backlog.list);
+		return new BlockListDropController(this, ScrumGwtApplication.get().getWorkspace().getBacklog().list);
 	}
 
 	public Requirement getRequirement() {

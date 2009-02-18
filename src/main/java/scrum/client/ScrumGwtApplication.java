@@ -26,16 +26,29 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	private ScrumDragController dragController;
 
+	private WorkspaceWidget workspaceWidget;
+
 	/**
 	 * Application entry point.
 	 */
 	public void onModuleLoad() {
-		callPing();
-		RootPanel.get("workspace").add(new WorkspaceWidget());
+		workspaceWidget = new WorkspaceWidget();
+		RootPanel.get("workspace").add(workspaceWidget);
+		workspaceWidget.lock("Connecting to server...");
+		callPing(new Runnable() {
+
+			public void run() {
+				workspaceWidget.activateLogin();
+			}
+		});
 	}
 
 	public User getUser() {
 		return user;
+	}
+
+	public WorkspaceWidget getWorkspace() {
+		return workspaceWidget;
 	}
 
 	@Override
@@ -55,7 +68,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	@Override
 	protected void handleCommunicationError(Throwable ex) {
 		ex.printStackTrace();
-		WorkspaceWidget.lock("Error: " + ex.getMessage());
+		ScrumGwtApplication.get().getWorkspace().lock("Error: " + ex.getMessage());
 	}
 
 	public void setProject(Project project) {

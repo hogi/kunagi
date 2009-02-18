@@ -38,7 +38,7 @@ public class Sprint extends GSprint {
 
 	// --- ---
 
-	public List<SprintDaySnapshot> getSnapshots() {
+	public List<SprintDaySnapshot> getDaySnapshots() {
 		return sprintDaySnapshotDao.getSprintDaySnapshots(this);
 	}
 

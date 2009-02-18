@@ -12,7 +12,6 @@ import scrum.client.common.ToolbarWidget;
 import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
 import scrum.client.project.Requirement;
-import scrum.client.workspace.WorkspaceWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -146,7 +145,7 @@ public class RequirementInSprintWidget extends ABlockWidget {
 
 	@Override
 	protected DropController createDropController() {
-		return new BlockListDropController(this, WorkspaceWidget.backlog.list);
+		return new BlockListDropController(this, ScrumGwtApplication.get().getWorkspace().getBacklog().list);
 	}
 
 	public Requirement getItem() {

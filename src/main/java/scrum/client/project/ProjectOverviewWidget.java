@@ -17,10 +17,13 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectOverviewWidget extends Composite {
 
+	private AEditableTextWidget label;
+	private AEditableTextareaWidget description;
+
 	public ProjectOverviewWidget() {
 		ItemFieldsWidget fields = new ItemFieldsWidget();
 
-		fields.addField("Label", new AEditableTextWidget() {
+		label = fields.addField("Label", new AEditableTextWidget() {
 
 			@Override
 			protected void setText(String text) {
@@ -33,7 +36,7 @@ public class ProjectOverviewWidget extends Composite {
 			}
 		});
 
-		fields.addField("Description", new AEditableTextareaWidget(true) {
+		description = fields.addField("Description", new AEditableTextareaWidget(true) {
 
 			@Override
 			protected void setText(String text) {
@@ -74,6 +77,11 @@ public class ProjectOverviewWidget extends Composite {
 		}
 
 		initWidget(panel);
+	}
+
+	public void update() {
+		label.rebuild();
+		description.rebuild();
 	}
 
 	private Widget createCurrentSprintOverview(Sprint sprint) {

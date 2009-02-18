@@ -45,10 +45,10 @@ public abstract class GSprintDaySnapshotDao
     public void clearCaches() {
         sprintDaySnapshotsByBurnedWorkCache.clear();
         burnedWorksCache = null;
-        sprintDaySnapshotsByRemainingWorkCache.clear();
-        remainingWorksCache = null;
         sprintDaySnapshotsByDateCache.clear();
         datesCache = null;
+        sprintDaySnapshotsByRemainingWorkCache.clear();
+        remainingWorksCache = null;
         sprintDaySnapshotsBySprintCache.clear();
         sprintsCache = null;
     }
@@ -110,46 +110,6 @@ public abstract class GSprintDaySnapshotDao
     }
 
     // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private final Cache<Integer,Set<SprintDaySnapshot>> sprintDaySnapshotsByRemainingWorkCache = new Cache<Integer,Set<SprintDaySnapshot>>(
-            new Cache.Factory<Integer,Set<SprintDaySnapshot>>() {
-                public Set<SprintDaySnapshot> create(Integer remainingWork) {
-                    return getEntities(new IsRemainingWork(remainingWork));
-                }
-            });
-
-    public final Set<SprintDaySnapshot> getSprintDaySnapshotsByRemainingWork(int remainingWork) {
-        return sprintDaySnapshotsByRemainingWorkCache.get(remainingWork);
-    }
-    private Set<Integer> remainingWorksCache;
-
-    public final Set<Integer> getRemainingWorks() {
-        if (remainingWorksCache == null) {
-            remainingWorksCache = new HashSet<Integer>();
-            for (SprintDaySnapshot e : getEntities()) {
-                remainingWorksCache.add(e.getRemainingWork());
-            }
-        }
-        return remainingWorksCache;
-    }
-
-    private static class IsRemainingWork implements Predicate<SprintDaySnapshot> {
-
-        private int value;
-
-        public IsRemainingWork(int value) {
-            this.value = value;
-        }
-
-        public boolean test(SprintDaySnapshot e) {
-            return e.isRemainingWork(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
     // - date
     // -----------------------------------------------------------
 
@@ -185,6 +145,46 @@ public abstract class GSprintDaySnapshotDao
 
         public boolean test(SprintDaySnapshot e) {
             return e.isDate(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<SprintDaySnapshot>> sprintDaySnapshotsByRemainingWorkCache = new Cache<Integer,Set<SprintDaySnapshot>>(
+            new Cache.Factory<Integer,Set<SprintDaySnapshot>>() {
+                public Set<SprintDaySnapshot> create(Integer remainingWork) {
+                    return getEntities(new IsRemainingWork(remainingWork));
+                }
+            });
+
+    public final Set<SprintDaySnapshot> getSprintDaySnapshotsByRemainingWork(int remainingWork) {
+        return sprintDaySnapshotsByRemainingWorkCache.get(remainingWork);
+    }
+    private Set<Integer> remainingWorksCache;
+
+    public final Set<Integer> getRemainingWorks() {
+        if (remainingWorksCache == null) {
+            remainingWorksCache = new HashSet<Integer>();
+            for (SprintDaySnapshot e : getEntities()) {
+                remainingWorksCache.add(e.getRemainingWork());
+            }
+        }
+        return remainingWorksCache;
+    }
+
+    private static class IsRemainingWork implements Predicate<SprintDaySnapshot> {
+
+        private int value;
+
+        public IsRemainingWork(int value) {
+            this.value = value;
+        }
+
+        public boolean test(SprintDaySnapshot e) {
+            return e.isRemainingWork(value);
         }
 
     }

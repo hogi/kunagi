@@ -43,6 +43,24 @@ public abstract class GTask
         return ENTITY_TYPE;
     }
 
+    // --- burnedWork ---
+
+    private int burnedWork ;
+
+    public final int getBurnedWork() {
+        return this.burnedWork ;
+    }
+
+    public final Task setBurnedWork(int burnedWork) {
+        this.burnedWork = burnedWork ;
+        propertyChanged("burnedWork", this.burnedWork);
+        return (Task)this;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return equals(this.burnedWork, burnedWork);
+    }
+
     // --- label ---
 
     private java.lang.String label ;
@@ -59,27 +77,6 @@ public abstract class GTask
 
     public final boolean isLabel(java.lang.String label) {
         return equals(this.label, label);
-    }
-
-    // --- requirement ---
-
-    private String requirementId;
-
-    public final scrum.client.project.Requirement getRequirement() {
-        if (requirementId == null) return null;
-        return getDao().getRequirement(this.requirementId);
-    }
-
-    public final Task setRequirement(scrum.client.project.Requirement requirement) {
-        String id = requirement == null ? null : requirement.getId();
-        if (equals(this.requirementId, id)) return (Task) this;
-        this.requirementId = id;
-        propertyChanged("requirementId", this.requirementId);
-        return (Task)this;
-    }
-
-    public final boolean isRequirement(scrum.client.project.Requirement requirement) {
-        return equals(this.requirementId, requirement);
     }
 
     // --- remainingWork ---
@@ -121,24 +118,6 @@ public abstract class GTask
         return equals(this.ownerId, owner);
     }
 
-    // --- burnedWork ---
-
-    private int burnedWork ;
-
-    public final int getBurnedWork() {
-        return this.burnedWork ;
-    }
-
-    public final Task setBurnedWork(int burnedWork) {
-        this.burnedWork = burnedWork ;
-        propertyChanged("burnedWork", this.burnedWork);
-        return (Task)this;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return equals(this.burnedWork, burnedWork);
-    }
-
     // --- notice ---
 
     private java.lang.String notice ;
@@ -157,26 +136,47 @@ public abstract class GTask
         return equals(this.notice, notice);
     }
 
+    // --- requirement ---
+
+    private String requirementId;
+
+    public final scrum.client.project.Requirement getRequirement() {
+        if (requirementId == null) return null;
+        return getDao().getRequirement(this.requirementId);
+    }
+
+    public final Task setRequirement(scrum.client.project.Requirement requirement) {
+        String id = requirement == null ? null : requirement.getId();
+        if (equals(this.requirementId, id)) return (Task) this;
+        this.requirementId = id;
+        propertyChanged("requirementId", this.requirementId);
+        return (Task)this;
+    }
+
+    public final boolean isRequirement(scrum.client.project.Requirement requirement) {
+        return equals(this.requirementId, requirement);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
+        burnedWork  = (Integer) props.get("burnedWork");
         label  = (java.lang.String) props.get("label");
-        requirementId = (String) props.get("requirementId");
         remainingWork  = (Integer) props.get("remainingWork");
         ownerId = (String) props.get("ownerId");
-        burnedWork  = (Integer) props.get("burnedWork");
         notice  = (java.lang.String) props.get("notice");
+        requirementId = (String) props.get("requirementId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("burnedWork", this.burnedWork);
         properties.put("label", this.label);
-        properties.put("requirementId", this.requirementId);
         properties.put("remainingWork", this.remainingWork);
         properties.put("ownerId", this.ownerId);
-        properties.put("burnedWork", this.burnedWork);
         properties.put("notice", this.notice);
+        properties.put("requirementId", this.requirementId);
     }
 
 }

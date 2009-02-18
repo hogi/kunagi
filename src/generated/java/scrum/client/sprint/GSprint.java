@@ -43,22 +43,40 @@ public abstract class GSprint
         return ENTITY_TYPE;
     }
 
-    // --- goal ---
+    // --- label ---
 
-    private java.lang.String goal ;
+    private java.lang.String label ;
 
-    public final java.lang.String getGoal() {
-        return this.goal ;
+    public final java.lang.String getLabel() {
+        return this.label ;
     }
 
-    public final Sprint setGoal(java.lang.String goal) {
-        this.goal = goal ;
-        propertyChanged("goal", this.goal);
+    public final Sprint setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
         return (Sprint)this;
     }
 
-    public final boolean isGoal(java.lang.String goal) {
-        return equals(this.goal, goal);
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
+    }
+
+    // --- begin ---
+
+    private scrum.client.common.Date begin ;
+
+    public final scrum.client.common.Date getBegin() {
+        return this.begin ;
+    }
+
+    public final Sprint setBegin(scrum.client.common.Date begin) {
+        this.begin = begin ;
+        propertyChanged("begin", this.begin);
+        return (Sprint)this;
+    }
+
+    public final boolean isBegin(scrum.client.common.Date begin) {
+        return equals(this.begin, begin);
     }
 
     // --- project ---
@@ -100,62 +118,44 @@ public abstract class GSprint
         return equals(this.end, end);
     }
 
-    // --- begin ---
+    // --- goal ---
 
-    private scrum.client.common.Date begin ;
+    private java.lang.String goal ;
 
-    public final scrum.client.common.Date getBegin() {
-        return this.begin ;
+    public final java.lang.String getGoal() {
+        return this.goal ;
     }
 
-    public final Sprint setBegin(scrum.client.common.Date begin) {
-        this.begin = begin ;
-        propertyChanged("begin", this.begin);
+    public final Sprint setGoal(java.lang.String goal) {
+        this.goal = goal ;
+        propertyChanged("goal", this.goal);
         return (Sprint)this;
     }
 
-    public final boolean isBegin(scrum.client.common.Date begin) {
-        return equals(this.begin, begin);
-    }
-
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final Sprint setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
-        return (Sprint)this;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+    public final boolean isGoal(java.lang.String goal) {
+        return equals(this.goal, goal);
     }
 
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        goal  = (java.lang.String) props.get("goal");
+        label  = (java.lang.String) props.get("label");
+        String beginAsString = (String) props.get("begin");
+        begin  =  beginAsString == null ? null : new scrum.client.common.Date(beginAsString);
         projectId = (String) props.get("projectId");
         String endAsString = (String) props.get("end");
         end  =  endAsString == null ? null : new scrum.client.common.Date(endAsString);
-        String beginAsString = (String) props.get("begin");
-        begin  =  beginAsString == null ? null : new scrum.client.common.Date(beginAsString);
-        label  = (java.lang.String) props.get("label");
+        goal  = (java.lang.String) props.get("goal");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("goal", this.goal);
+        properties.put("label", this.label);
+        properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("projectId", this.projectId);
         properties.put("end", this.end == null ? null : this.end.toString());
-        properties.put("begin", this.begin == null ? null : this.begin.toString());
-        properties.put("label", this.label);
+        properties.put("goal", this.goal);
     }
 
 }

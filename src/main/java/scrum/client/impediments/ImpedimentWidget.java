@@ -8,7 +8,6 @@ import scrum.client.common.editable.AEditableTextWidget;
 import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
-import scrum.client.workspace.WorkspaceWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -106,7 +105,7 @@ public class ImpedimentWidget extends ABlockWidget {
 
 			public void onClick(Widget sender) {
 				ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
-				WorkspaceWidget.impediments.list.removeSelectedRow();
+				ScrumGwtApplication.get().getWorkspace().getImpediments().list.removeSelectedRow();
 			}
 		});
 
@@ -135,12 +134,12 @@ public class ImpedimentWidget extends ABlockWidget {
 
 	@Override
 	protected DropController createDropController() {
-		return new BlockListDropController(this, WorkspaceWidget.impediments.list);
+		return new BlockListDropController(this, ScrumGwtApplication.get().getWorkspace().getImpediments().list);
 	}
 
 	@Override
 	public void delete() {
 		ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
-		WorkspaceWidget.impediments.list.remove(this);
+		ScrumGwtApplication.get().getWorkspace().getImpediments().list.remove(this);
 	}
 }

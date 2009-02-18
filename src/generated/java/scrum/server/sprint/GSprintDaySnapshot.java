@@ -47,8 +47,8 @@ public abstract class GSprintDaySnapshot
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("burnedWork", this.burnedWork);
-        properties.put("remainingWork", this.remainingWork);
         properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("remainingWork", this.remainingWork);
         properties.put("sprintId", this.sprintId);
     }
 
@@ -66,8 +66,8 @@ public abstract class GSprintDaySnapshot
         if (template==null) return;
 
         setBurnedWork(template.getBurnedWork());
-        setRemainingWork(template.getRemainingWork());
         setDate(template.getDate());
+        setRemainingWork(template.getRemainingWork());
         setSprint(template.getSprint());
     }
 
@@ -94,31 +94,6 @@ public abstract class GSprintDaySnapshot
 
     public final boolean isBurnedWork(int burnedWork) {
         return this.burnedWork == burnedWork;
-    }
-
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private int remainingWork;
-
-    public final int getRemainingWork() {
-        return remainingWork;
-    }
-
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
-        entityModified();
-    }
-
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
     }
 
     // -----------------------------------------------------------
@@ -149,6 +124,31 @@ public abstract class GSprintDaySnapshot
     public final boolean isDate(ilarkesto.base.time.Date date) {
         if (this.date == null && date == null) return true;
         return this.date != null && this.date.equals(date);
+    }
+
+    // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private int remainingWork;
+
+    public final int getRemainingWork() {
+        return remainingWork;
+    }
+
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+        entityModified();
+    }
+
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
     }
 
     // -----------------------------------------------------------

@@ -1,5 +1,6 @@
 package scrum.client.workspace;
 
+import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.admin.LoginWidget;
 import scrum.client.admin.ProjectSelectionWidget;
 import scrum.client.common.PanelWidget;
@@ -19,23 +20,27 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class WorkspaceWidget extends Composite {
 
-	private static LoginWidget login;
-	public static ProjectSelectionWidget projectSelection;
-	public static ProductBacklogWidget backlog;
-	public static SprintBacklogWidget sprint;
-	public static ImpedimentListWidget impediments;
+	private Widget currentWorkareaWidget;
 
-	private static SimplePanel rootPanel;
-	private static DockPanel workspacePanel;
-	private static SimplePanel workareaPanel;
+	private LoginWidget login;
+	private ProjectSelectionWidget projectSelector;
+	private ProductBacklogWidget backlog;
+	private SprintBacklogWidget sprint;
+	private ImpedimentListWidget impediments;
+	private ProjectOverviewWidget projectOverview;
+
+	private SimplePanel rootPanel;
+	private DockPanel workspacePanel;
+	private SimplePanel workareaPanel;
 
 	public WorkspaceWidget() {
 		// initialize widgets
 		login = new LoginWidget();
-		projectSelection = new ProjectSelectionWidget();
+		projectSelector = new ProjectSelectionWidget();
 		impediments = new ImpedimentListWidget();
 		backlog = new ProductBacklogWidget();
 		sprint = new SprintBacklogWidget();
+		currentWorkareaWidget = new Label("Workarea");
 
 		// create workspace
 		workspacePanel = new DockPanel();
@@ -57,52 +62,77 @@ public class WorkspaceWidget extends Composite {
 		rootPanel = new SimplePanel();
 		initWidget(rootPanel);
 
-		activateLogin();
 	}
 
-	public static void lock(String message) {
+	public ProductBacklogWidget getBacklog() {
+		return backlog;
+	}
+
+	public ImpedimentListWidget getImpediments() {
+		return impediments;
+	}
+
+	public ProjectSelectionWidget getProjectSelector() {
+		return projectSelector;
+	}
+
+	public void lock(String message) {
+		GwtLogger.DEBUG("Locking workspace:", message);
 		rootPanel.setWidget(new PanelWidget("Please Wait", new Label(message)));
 	}
 
-	public static void unlock() {
+	public void unlock() {
+		GwtLogger.DEBUG("Unlocking workspace");
 		rootPanel.setWidget(workspacePanel);
 	}
 
-	public static void activateLogin() {
+	public void activateLogin() {
 		rootPanel.setWidget(login);
 	}
 
-	public static void activateProjectSelection() {
-		rootPanel.setWidget(projectSelection);
+	public void activateProjectSelection() {
+		GwtLogger.DEBUG("Activating project selector");
+		rootPanel.setWidget(projectSelector);
 	}
 
-	public static void showProjectOverview() {
-		setWorkarea(new ProjectOverviewWidget(), "Project Overview");
+	public void showProjectOverview() {
+		getProjectOverview().update();
+		showWidget(projectOverview, "Project Overview");
 	}
 
-	public static void showImpediments() {
+	public boolean isProjectOverview() {
+		return currentWorkareaWidget == projectOverview;
+	}
+
+	public ProjectOverviewWidget getProjectOverview() {
+		if (projectOverview == null) projectOverview = new ProjectOverviewWidget();
+		return projectOverview;
+	}
+
+	public void showImpediments() {
 		impediments.update();
-		setWorkarea(impediments, "Impediments");
+		showWidget(impediments, "Impediments");
 	}
 
-	public static void showSprint() {
+	public void showSprint() {
 		sprint.update();
-		setWorkarea(sprint, "Sprint Backlog");
+		showWidget(sprint, "Sprint Backlog");
 	}
 
-	public static void showBacklog() {
+	public void showBacklog() {
 		backlog.update();
-		setWorkarea(backlog, "Product Backlog");
+		showWidget(backlog, "Product Backlog");
 	}
 
-	public static void showTest() {
-		setWorkarea(new TestWidget(), "Test");
+	public void showTest() {
+		showWidget(new TestWidget(), "Test");
 	}
 
-	public static void setWorkarea(Widget widget, String title) {
+	private void showWidget(Widget widget, String title) {
+		GwtLogger.DEBUG("showWidget:", title);
 		unlock();
-		// workareaPanel.setWidget(widget);
 		workareaPanel.setWidget(new PanelWidget(title, widget));
+		currentWorkareaWidget = widget;
 	}
 
 	private Widget createSidebar() {

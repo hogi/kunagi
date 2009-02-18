@@ -24,4 +24,16 @@ public class UserDao extends GUserDao {
 		return user;
 	}
 
+	public User postUser(String name) {
+		return postUser(name, "geheim");
+	}
+
+	// --- test data ---
+
+	public User getTestUser(String name) {
+		User user = getUserByName(name);
+		if (user == null) user = postUser(name);
+		return user;
+	}
+
 }

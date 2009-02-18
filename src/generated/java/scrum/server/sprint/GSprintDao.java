@@ -43,16 +43,16 @@ public abstract class GSprintDao
 
     // --- clear caches ---
     public void clearCaches() {
-        sprintsByGoalCache.clear();
-        goalsCache = null;
+        sprintsByLabelCache.clear();
+        labelsCache = null;
+        sprintsByBeginCache.clear();
+        beginsCache = null;
         sprintsByProjectCache.clear();
         projectsCache = null;
         sprintsByEndCache.clear();
         endsCache = null;
-        sprintsByBeginCache.clear();
-        beginsCache = null;
-        sprintsByLabelCache.clear();
-        labelsCache = null;
+        sprintsByGoalCache.clear();
+        goalsCache = null;
     }
 
     @Override
@@ -72,41 +72,81 @@ public abstract class GSprintDao
     }
 
     // -----------------------------------------------------------
-    // - goal
+    // - label
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Sprint>> sprintsByGoalCache = new Cache<java.lang.String,Set<Sprint>>(
+    private final Cache<java.lang.String,Set<Sprint>> sprintsByLabelCache = new Cache<java.lang.String,Set<Sprint>>(
             new Cache.Factory<java.lang.String,Set<Sprint>>() {
-                public Set<Sprint> create(java.lang.String goal) {
-                    return getEntities(new IsGoal(goal));
+                public Set<Sprint> create(java.lang.String label) {
+                    return getEntities(new IsLabel(label));
                 }
             });
 
-    public final Set<Sprint> getSprintsByGoal(java.lang.String goal) {
-        return sprintsByGoalCache.get(goal);
+    public final Set<Sprint> getSprintsByLabel(java.lang.String label) {
+        return sprintsByLabelCache.get(label);
     }
-    private Set<java.lang.String> goalsCache;
+    private Set<java.lang.String> labelsCache;
 
-    public final Set<java.lang.String> getGoals() {
-        if (goalsCache == null) {
-            goalsCache = new HashSet<java.lang.String>();
+    public final Set<java.lang.String> getLabels() {
+        if (labelsCache == null) {
+            labelsCache = new HashSet<java.lang.String>();
             for (Sprint e : getEntities()) {
-                if (e.isGoalSet()) goalsCache.add(e.getGoal());
+                if (e.isLabelSet()) labelsCache.add(e.getLabel());
             }
         }
-        return goalsCache;
+        return labelsCache;
     }
 
-    private static class IsGoal implements Predicate<Sprint> {
+    private static class IsLabel implements Predicate<Sprint> {
 
         private java.lang.String value;
 
-        public IsGoal(java.lang.String value) {
+        public IsLabel(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(Sprint e) {
-            return e.isGoal(value);
+            return e.isLabel(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - begin
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.Date,Set<Sprint>> sprintsByBeginCache = new Cache<ilarkesto.base.time.Date,Set<Sprint>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<Sprint>>() {
+                public Set<Sprint> create(ilarkesto.base.time.Date begin) {
+                    return getEntities(new IsBegin(begin));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByBegin(ilarkesto.base.time.Date begin) {
+        return sprintsByBeginCache.get(begin);
+    }
+    private Set<ilarkesto.base.time.Date> beginsCache;
+
+    public final Set<ilarkesto.base.time.Date> getBegins() {
+        if (beginsCache == null) {
+            beginsCache = new HashSet<ilarkesto.base.time.Date>();
+            for (Sprint e : getEntities()) {
+                if (e.isBeginSet()) beginsCache.add(e.getBegin());
+            }
+        }
+        return beginsCache;
+    }
+
+    private static class IsBegin implements Predicate<Sprint> {
+
+        private ilarkesto.base.time.Date value;
+
+        public IsBegin(ilarkesto.base.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.isBegin(value);
         }
 
     }
@@ -192,81 +232,41 @@ public abstract class GSprintDao
     }
 
     // -----------------------------------------------------------
-    // - begin
+    // - goal
     // -----------------------------------------------------------
 
-    private final Cache<ilarkesto.base.time.Date,Set<Sprint>> sprintsByBeginCache = new Cache<ilarkesto.base.time.Date,Set<Sprint>>(
-            new Cache.Factory<ilarkesto.base.time.Date,Set<Sprint>>() {
-                public Set<Sprint> create(ilarkesto.base.time.Date begin) {
-                    return getEntities(new IsBegin(begin));
-                }
-            });
-
-    public final Set<Sprint> getSprintsByBegin(ilarkesto.base.time.Date begin) {
-        return sprintsByBeginCache.get(begin);
-    }
-    private Set<ilarkesto.base.time.Date> beginsCache;
-
-    public final Set<ilarkesto.base.time.Date> getBegins() {
-        if (beginsCache == null) {
-            beginsCache = new HashSet<ilarkesto.base.time.Date>();
-            for (Sprint e : getEntities()) {
-                if (e.isBeginSet()) beginsCache.add(e.getBegin());
-            }
-        }
-        return beginsCache;
-    }
-
-    private static class IsBegin implements Predicate<Sprint> {
-
-        private ilarkesto.base.time.Date value;
-
-        public IsBegin(ilarkesto.base.time.Date value) {
-            this.value = value;
-        }
-
-        public boolean test(Sprint e) {
-            return e.isBegin(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Sprint>> sprintsByLabelCache = new Cache<java.lang.String,Set<Sprint>>(
+    private final Cache<java.lang.String,Set<Sprint>> sprintsByGoalCache = new Cache<java.lang.String,Set<Sprint>>(
             new Cache.Factory<java.lang.String,Set<Sprint>>() {
-                public Set<Sprint> create(java.lang.String label) {
-                    return getEntities(new IsLabel(label));
+                public Set<Sprint> create(java.lang.String goal) {
+                    return getEntities(new IsGoal(goal));
                 }
             });
 
-    public final Set<Sprint> getSprintsByLabel(java.lang.String label) {
-        return sprintsByLabelCache.get(label);
+    public final Set<Sprint> getSprintsByGoal(java.lang.String goal) {
+        return sprintsByGoalCache.get(goal);
     }
-    private Set<java.lang.String> labelsCache;
+    private Set<java.lang.String> goalsCache;
 
-    public final Set<java.lang.String> getLabels() {
-        if (labelsCache == null) {
-            labelsCache = new HashSet<java.lang.String>();
+    public final Set<java.lang.String> getGoals() {
+        if (goalsCache == null) {
+            goalsCache = new HashSet<java.lang.String>();
             for (Sprint e : getEntities()) {
-                if (e.isLabelSet()) labelsCache.add(e.getLabel());
+                if (e.isGoalSet()) goalsCache.add(e.getGoal());
             }
         }
-        return labelsCache;
+        return goalsCache;
     }
 
-    private static class IsLabel implements Predicate<Sprint> {
+    private static class IsGoal implements Predicate<Sprint> {
 
         private java.lang.String value;
 
-        public IsLabel(java.lang.String value) {
+        public IsGoal(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(Sprint e) {
-            return e.isLabel(value);
+            return e.isGoal(value);
         }
 
     }

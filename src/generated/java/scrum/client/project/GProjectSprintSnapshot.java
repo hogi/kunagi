@@ -43,24 +43,6 @@ public abstract class GProjectSprintSnapshot
         return ENTITY_TYPE;
     }
 
-    // --- date ---
-
-    private scrum.client.common.Date date ;
-
-    public final scrum.client.common.Date getDate() {
-        return this.date ;
-    }
-
-    public final ProjectSprintSnapshot setDate(scrum.client.common.Date date) {
-        this.date = date ;
-        propertyChanged("date", this.date);
-        return (ProjectSprintSnapshot)this;
-    }
-
-    public final boolean isDate(scrum.client.common.Date date) {
-        return equals(this.date, date);
-    }
-
     // --- remainingWork ---
 
     private int remainingWork ;
@@ -79,25 +61,25 @@ public abstract class GProjectSprintSnapshot
         return equals(this.remainingWork, remainingWork);
     }
 
-    // --- project ---
+    // --- sprint ---
 
-    private String projectId;
+    private String sprintId;
 
-    public final scrum.client.project.Project getProject() {
-        if (projectId == null) return null;
-        return getDao().getProject(this.projectId);
+    public final scrum.client.sprint.Sprint getSprint() {
+        if (sprintId == null) return null;
+        return getDao().getSprint(this.sprintId);
     }
 
-    public final ProjectSprintSnapshot setProject(scrum.client.project.Project project) {
-        String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (ProjectSprintSnapshot) this;
-        this.projectId = id;
-        propertyChanged("projectId", this.projectId);
+    public final ProjectSprintSnapshot setSprint(scrum.client.sprint.Sprint sprint) {
+        String id = sprint == null ? null : sprint.getId();
+        if (equals(this.sprintId, id)) return (ProjectSprintSnapshot) this;
+        this.sprintId = id;
+        propertyChanged("sprintId", this.sprintId);
         return (ProjectSprintSnapshot)this;
     }
 
-    public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
+    public final boolean isSprint(scrum.client.sprint.Sprint sprint) {
+        return equals(this.sprintId, sprint);
     }
 
     // --- burnedWork ---
@@ -121,19 +103,16 @@ public abstract class GProjectSprintSnapshot
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        String dateAsString = (String) props.get("date");
-        date  =  dateAsString == null ? null : new scrum.client.common.Date(dateAsString);
         remainingWork  = (Integer) props.get("remainingWork");
-        projectId = (String) props.get("projectId");
+        sprintId = (String) props.get("sprintId");
         burnedWork  = (Integer) props.get("burnedWork");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("remainingWork", this.remainingWork);
-        properties.put("projectId", this.projectId);
+        properties.put("sprintId", this.sprintId);
         properties.put("burnedWork", this.burnedWork);
     }
 

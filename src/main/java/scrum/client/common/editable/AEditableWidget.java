@@ -38,14 +38,14 @@ public abstract class AEditableWidget extends Composite {
 	/**
 	 * Override this method to update the viewer after it is displayed.
 	 */
-	protected void updateViewer() {}
+	public void updateViewer() {}
 
 	/**
 	 * Override this method to update the editor after it is displayed.
 	 */
 	protected void updateEditor() {}
 
-	void rebuild() {
+	public void rebuild() {
 		panel.clear();
 		Widget widget;
 		if (editMode) {

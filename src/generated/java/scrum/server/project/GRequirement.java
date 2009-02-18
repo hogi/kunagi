@@ -46,13 +46,13 @@ public abstract class GRequirement
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("closed", this.closed);
-        properties.put("description", this.description);
-        properties.put("projectId", this.projectId);
-        properties.put("label", this.label);
-        properties.put("sprintId", this.sprintId);
-        properties.put("estimatedWork", this.estimatedWork);
         properties.put("testDescription", this.testDescription);
+        properties.put("description", this.description);
+        properties.put("estimatedWork", this.estimatedWork);
+        properties.put("label", this.label);
+        properties.put("closed", this.closed);
+        properties.put("sprintId", this.sprintId);
+        properties.put("projectId", this.projectId);
     }
 
     public int compareTo(Requirement other) {
@@ -68,38 +68,44 @@ public abstract class GRequirement
         super(template);
         if (template==null) return;
 
-        setClosed(template.isClosed());
-        setDescription(template.getDescription());
-        setProject(template.getProject());
-        setLabel(template.getLabel());
-        setSprint(template.getSprint());
-        setEstimatedWork(template.getEstimatedWork());
         setTestDescription(template.getTestDescription());
+        setDescription(template.getDescription());
+        setEstimatedWork(template.getEstimatedWork());
+        setLabel(template.getLabel());
+        setClosed(template.isClosed());
+        setSprint(template.getSprint());
+        setProject(template.getProject());
     }
 
     // -----------------------------------------------------------
-    // - closed
+    // - testDescription
     // -----------------------------------------------------------
 
-    private boolean closed;
+    private java.lang.String testDescription;
 
-    public final boolean isClosed() {
-        return closed;
+    public final java.lang.String getTestDescription() {
+        return testDescription;
     }
 
-    public final void setClosed(boolean closed) {
-        closed = prepareClosed(closed);
-        if (isClosed(closed)) return;
-        this.closed = closed;
+    public final void setTestDescription(java.lang.String testDescription) {
+        testDescription = prepareTestDescription(testDescription);
+        if (isTestDescription(testDescription)) return;
+        this.testDescription = testDescription;
         entityModified();
     }
 
-    protected boolean prepareClosed(boolean closed) {
-        return closed;
+    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
+        testDescription = Str.removeUnreadableChars(testDescription);
+        return testDescription;
     }
 
-    public final boolean isClosed(boolean closed) {
-        return this.closed == closed;
+    public final boolean isTestDescriptionSet() {
+        return this.testDescription != null;
+    }
+
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        if (this.testDescription == null && testDescription == null) return true;
+        return this.testDescription != null && this.testDescription.equals(testDescription);
     }
 
     // -----------------------------------------------------------
@@ -134,40 +140,33 @@ public abstract class GRequirement
     }
 
     // -----------------------------------------------------------
-    // - project
+    // - estimatedWork
     // -----------------------------------------------------------
 
-    private String projectId;
+    private java.lang.Integer estimatedWork;
 
-    public final scrum.server.project.Project getProject() {
-        if (this.projectId == null) return null;
-        return (scrum.server.project.Project)projectDao.getById(this.projectId);
+    public final java.lang.Integer getEstimatedWork() {
+        return estimatedWork;
     }
 
-    public final void setProject(scrum.server.project.Project project) {
-        project = prepareProject(project);
-        if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
+    public final void setEstimatedWork(java.lang.Integer estimatedWork) {
+        estimatedWork = prepareEstimatedWork(estimatedWork);
+        if (isEstimatedWork(estimatedWork)) return;
+        this.estimatedWork = estimatedWork;
         entityModified();
     }
 
-    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
-        return project;
+    protected java.lang.Integer prepareEstimatedWork(java.lang.Integer estimatedWork) {
+        return estimatedWork;
     }
 
-    protected void repairDeadProjectReference(String entityId) {
-        if (entityId.equals(this.projectId)) {
-            repairMissingMaster();
-        }
+    public final boolean isEstimatedWorkSet() {
+        return this.estimatedWork != null;
     }
 
-    public final boolean isProjectSet() {
-        return this.projectId != null;
-    }
-
-    public final boolean isProject(scrum.server.project.Project project) {
-        if (this.projectId == null && project == null) return true;
-        return project != null && project.getId().equals(this.projectId);
+    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
+        if (this.estimatedWork == null && estimatedWork == null) return true;
+        return this.estimatedWork != null && this.estimatedWork.equals(estimatedWork);
     }
 
     // -----------------------------------------------------------
@@ -199,6 +198,31 @@ public abstract class GRequirement
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - closed
+    // -----------------------------------------------------------
+
+    private boolean closed;
+
+    public final boolean isClosed() {
+        return closed;
+    }
+
+    public final void setClosed(boolean closed) {
+        closed = prepareClosed(closed);
+        if (isClosed(closed)) return;
+        this.closed = closed;
+        entityModified();
+    }
+
+    protected boolean prepareClosed(boolean closed) {
+        return closed;
+    }
+
+    public final boolean isClosed(boolean closed) {
+        return this.closed == closed;
     }
 
     // -----------------------------------------------------------
@@ -240,76 +264,58 @@ public abstract class GRequirement
     }
 
     // -----------------------------------------------------------
-    // - estimatedWork
+    // - project
     // -----------------------------------------------------------
 
-    private java.lang.Integer estimatedWork;
+    private String projectId;
 
-    public final java.lang.Integer getEstimatedWork() {
-        return estimatedWork;
+    public final scrum.server.project.Project getProject() {
+        if (this.projectId == null) return null;
+        return (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
-    public final void setEstimatedWork(java.lang.Integer estimatedWork) {
-        estimatedWork = prepareEstimatedWork(estimatedWork);
-        if (isEstimatedWork(estimatedWork)) return;
-        this.estimatedWork = estimatedWork;
+    public final void setProject(scrum.server.project.Project project) {
+        project = prepareProject(project);
+        if (isProject(project)) return;
+        this.projectId = project == null ? null : project.getId();
         entityModified();
     }
 
-    protected java.lang.Integer prepareEstimatedWork(java.lang.Integer estimatedWork) {
-        return estimatedWork;
+    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
+        return project;
     }
 
-    public final boolean isEstimatedWorkSet() {
-        return this.estimatedWork != null;
+    protected void repairDeadProjectReference(String entityId) {
+        if (entityId.equals(this.projectId)) {
+            repairMissingMaster();
+        }
     }
 
-    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
-        if (this.estimatedWork == null && estimatedWork == null) return true;
-        return this.estimatedWork != null && this.estimatedWork.equals(estimatedWork);
+    public final boolean isProjectSet() {
+        return this.projectId != null;
     }
 
-    // -----------------------------------------------------------
-    // - testDescription
-    // -----------------------------------------------------------
-
-    private java.lang.String testDescription;
-
-    public final java.lang.String getTestDescription() {
-        return testDescription;
-    }
-
-    public final void setTestDescription(java.lang.String testDescription) {
-        testDescription = prepareTestDescription(testDescription);
-        if (isTestDescription(testDescription)) return;
-        this.testDescription = testDescription;
-        entityModified();
-    }
-
-    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
-        testDescription = Str.removeUnreadableChars(testDescription);
-        return testDescription;
-    }
-
-    public final boolean isTestDescriptionSet() {
-        return this.testDescription != null;
-    }
-
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        if (this.testDescription == null && testDescription == null) return true;
-        return this.testDescription != null && this.testDescription.equals(testDescription);
+    public final boolean isProject(scrum.server.project.Project project) {
+        if (this.projectId == null && project == null) return true;
+        return project != null && project.getId().equals(this.projectId);
     }
 
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
-        repairDeadProjectReference(entityId);
         repairDeadSprintReference(entityId);
+        repairDeadProjectReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
+        try {
+            getSprint();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead sprint reference");
+            repairDeadSprintReference(this.sprintId);
+        }
         if (!isProjectSet()) {
             repairMissingMaster();
             return;
@@ -319,12 +325,6 @@ public abstract class GRequirement
         } catch (EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
-        }
-        try {
-            getSprint();
-        } catch (EntityDoesNotExistException ex) {
-            LOG.info("Repairing dead sprint reference");
-            repairDeadSprintReference(this.sprintId);
         }
     }
 

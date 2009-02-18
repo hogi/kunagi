@@ -1,6 +1,6 @@
 td {vertical-align: top;}
 .gwt-Button {white-space: nowrap;}
-body {padding: 5px;}
+body {padding: 5px; background: #555555 url(../bg.png);}
 
 .element-ToolbarWidget {padding: 3px;}
 .element-ButtonWidget {font-weight: bold; cursor: pointer; color: darkblue; white-space: nowrap;}
@@ -9,9 +9,9 @@ body {padding: 5px;}
 .element-BlockListWidget-table {width: 100%; background: #EEF3F9;}
 
 .element-BlockWidget-main {}
-.element-BlockWidget {border: 1px solid black; background: white; padding: 5px; cursor: pointer; color: black;}
+.element-BlockWidget {border: 1px solid black; background: white; cursor: pointer; color: black;}
 .element-BlockWidget-title {font-size: 14px; font-weight: bold;}
-.element-BlockWidget-block {padding: 3px; width: 100%;}
+.element-BlockWidget-block {padding: 1px; width: 100%;}
 .element-BlockWidget-center {}
 .state-BlockWidget-selected {border: 3px solid #84C979; cursor: default;}
 
@@ -27,7 +27,7 @@ body {padding: 5px;}
 .element-SidebarWidget {padding: 5px 5px 20px 5px; position: fixed; width: 300px;}
 .element-SidebarWidget-buttons {}
 
-.element-PanelWidget {border: 2px solid #EEEEEE; -moz-border-radius: 10px;}
+.element-PanelWidget {border: 2px solid #EEEEEE; background: white; -moz-border-radius: 10px;}
 .element-PanelWidget-title {background: #EEEEEE; color: #AAAAAA; font-weight: bold; padding: 5px;}
 .element-PanelWidget-content {padding: 5px;}
 

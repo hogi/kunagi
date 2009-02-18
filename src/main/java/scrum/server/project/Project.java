@@ -1,7 +1,5 @@
 package scrum.server.project;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,20 +39,55 @@ public class Project extends GProject {
 
 	// --- ---
 
-	public List<ProjectSprintSnapshot> getSnapshots() {
-		List<ProjectSprintSnapshot> ret = new ArrayList<ProjectSprintSnapshot>(projectSprintSnapshotDao
-				.getProjectSprintSnapshotsByProject(this));
-		Collections.sort(ret);
-		return ret;
+	public ProjectSprintSnapshot getCurrentSprintSnapshot() {
+		ProjectSprintSnapshot snapshot = projectSprintSnapshotDao.getProjectSprintSnapshotBySprint(getCurrentSprint());
+		if (snapshot == null) snapshot = createSprintSnapshot();
+		return snapshot;
+	}
+
+	public int getRemainingWork() {
+		int sum = 0;
+		for (Requirement requirement : getRequirements()) {
+			if (requirement.isClosed()) continue;
+			Integer work = requirement.getEstimatedWork();
+			if (work != null) sum += work;
+		}
+		return sum;
+	}
+
+	public int getBurnedWork() {
+		int sum = 0;
+		for (Requirement requirement : getRequirements()) {
+			if (!requirement.isClosed()) continue;
+			Integer work = requirement.getEstimatedWork();
+			if (work != null) sum += work;
+		}
+		return sum;
+	}
+
+	public List<ProjectSprintSnapshot> getSprintSnapshots() {
+		return projectSprintSnapshotDao.getProjectSprintSnapshotsByProject(this);
 	}
 
 	public void switchToNextSprint() {
 		Sprint oldSprint = getCurrentSprint();
 
+		getCurrentSprintSnapshot().update();
+
 		Sprint newSprint = getNextSprint();
 		if (newSprint == null) newSprint = createNextSprint();
 		setCurrentSprint(newSprint);
 		createNextSprint();
+
+		createSprintSnapshot();
+	}
+
+	private ProjectSprintSnapshot createSprintSnapshot() {
+		ProjectSprintSnapshot snapshot = projectSprintSnapshotDao.newEntityInstance();
+		snapshot.setSprint(getCurrentSprint());
+		snapshot.update();
+		projectSprintSnapshotDao.saveEntity(snapshot);
+		return snapshot;
 	}
 
 	public Sprint createNextSprint() {
@@ -96,4 +129,31 @@ public class Project extends GProject {
 		return getLabel();
 	}
 
+	// --- test data ---
+
+	public void addTestImpediments(int variant) {
+		if (variant == 0) return;
+
+		impedimentDao.createTestImpediment(this, 1);
+		impedimentDao.createTestImpediment(this, 2);
+		impedimentDao.createTestImpediment(this, 3);
+	}
+
+	public void addTestRequirements(int variant) {
+		if (variant == 0) return;
+
+		requirementDao.createTestRequirement(this, 1);
+		requirementDao.createTestRequirement(this, 2);
+		requirementDao.createTestRequirement(this, 3);
+		requirementDao.createTestRequirement(this, 4);
+		requirementDao.createTestRequirement(this, 5);
+	}
+
+	public void addTestSprints(int variant) {
+		sprintDao.createTestSprint(this, 0);
+		if (variant == 0) return;
+		sprintDao.createTestSprint(this, 1);
+		sprintDao.createTestSprint(this, 2);
+		sprintDao.createTestSprint(this, 3);
+	}
 }

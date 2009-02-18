@@ -61,24 +61,6 @@ public abstract class GSprintDaySnapshot
         return equals(this.burnedWork, burnedWork);
     }
 
-    // --- remainingWork ---
-
-    private int remainingWork ;
-
-    public final int getRemainingWork() {
-        return this.remainingWork ;
-    }
-
-    public final SprintDaySnapshot setRemainingWork(int remainingWork) {
-        this.remainingWork = remainingWork ;
-        propertyChanged("remainingWork", this.remainingWork);
-        return (SprintDaySnapshot)this;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return equals(this.remainingWork, remainingWork);
-    }
-
     // --- date ---
 
     private scrum.client.common.Date date ;
@@ -95,6 +77,24 @@ public abstract class GSprintDaySnapshot
 
     public final boolean isDate(scrum.client.common.Date date) {
         return equals(this.date, date);
+    }
+
+    // --- remainingWork ---
+
+    private int remainingWork ;
+
+    public final int getRemainingWork() {
+        return this.remainingWork ;
+    }
+
+    public final SprintDaySnapshot setRemainingWork(int remainingWork) {
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
+        return (SprintDaySnapshot)this;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return equals(this.remainingWork, remainingWork);
     }
 
     // --- sprint ---
@@ -122,9 +122,9 @@ public abstract class GSprintDaySnapshot
 
     public void updateProperties(Map props) {
         burnedWork  = (Integer) props.get("burnedWork");
-        remainingWork  = (Integer) props.get("remainingWork");
         String dateAsString = (String) props.get("date");
         date  =  dateAsString == null ? null : new scrum.client.common.Date(dateAsString);
+        remainingWork  = (Integer) props.get("remainingWork");
         sprintId = (String) props.get("sprintId");
     }
 
@@ -132,8 +132,8 @@ public abstract class GSprintDaySnapshot
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("burnedWork", this.burnedWork);
-        properties.put("remainingWork", this.remainingWork);
         properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("remainingWork", this.remainingWork);
         properties.put("sprintId", this.sprintId);
     }
 

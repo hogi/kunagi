@@ -43,12 +43,9 @@ public abstract class GProjectSprintSnapshotDao
 
     // --- clear caches ---
     public void clearCaches() {
-        projectSprintSnapshotsByDateCache.clear();
-        datesCache = null;
         projectSprintSnapshotsByRemainingWorkCache.clear();
         remainingWorksCache = null;
-        projectSprintSnapshotsByProjectCache.clear();
-        projectsCache = null;
+        sprintsCache = null;
         projectSprintSnapshotsByBurnedWorkCache.clear();
         burnedWorksCache = null;
     }
@@ -67,46 +64,6 @@ public abstract class GProjectSprintSnapshotDao
         if (event.getEntity() instanceof ProjectSprintSnapshot) {
             clearCaches();
         }
-    }
-
-    // -----------------------------------------------------------
-    // - date
-    // -----------------------------------------------------------
-
-    private final Cache<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByDateCache = new Cache<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>>(
-            new Cache.Factory<ilarkesto.base.time.Date,Set<ProjectSprintSnapshot>>() {
-                public Set<ProjectSprintSnapshot> create(ilarkesto.base.time.Date date) {
-                    return getEntities(new IsDate(date));
-                }
-            });
-
-    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByDate(ilarkesto.base.time.Date date) {
-        return projectSprintSnapshotsByDateCache.get(date);
-    }
-    private Set<ilarkesto.base.time.Date> datesCache;
-
-    public final Set<ilarkesto.base.time.Date> getDates() {
-        if (datesCache == null) {
-            datesCache = new HashSet<ilarkesto.base.time.Date>();
-            for (ProjectSprintSnapshot e : getEntities()) {
-                if (e.isDateSet()) datesCache.add(e.getDate());
-            }
-        }
-        return datesCache;
-    }
-
-    private static class IsDate implements Predicate<ProjectSprintSnapshot> {
-
-        private ilarkesto.base.time.Date value;
-
-        public IsDate(ilarkesto.base.time.Date value) {
-            this.value = value;
-        }
-
-        public boolean test(ProjectSprintSnapshot e) {
-            return e.isDate(value);
-        }
-
     }
 
     // -----------------------------------------------------------
@@ -150,41 +107,34 @@ public abstract class GProjectSprintSnapshotDao
     }
 
     // -----------------------------------------------------------
-    // - project
+    // - sprint
     // -----------------------------------------------------------
 
-    private final Cache<scrum.server.project.Project,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByProjectCache = new Cache<scrum.server.project.Project,Set<ProjectSprintSnapshot>>(
-            new Cache.Factory<scrum.server.project.Project,Set<ProjectSprintSnapshot>>() {
-                public Set<ProjectSprintSnapshot> create(scrum.server.project.Project project) {
-                    return getEntities(new IsProject(project));
-                }
-            });
-
-    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByProject(scrum.server.project.Project project) {
-        return projectSprintSnapshotsByProjectCache.get(project);
+    public final ProjectSprintSnapshot getProjectSprintSnapshotBySprint(scrum.server.sprint.Sprint sprint) {
+        return getEntity(new IsSprint(sprint));
     }
-    private Set<scrum.server.project.Project> projectsCache;
+    private Set<scrum.server.sprint.Sprint> sprintsCache;
 
-    public final Set<scrum.server.project.Project> getProjects() {
-        if (projectsCache == null) {
-            projectsCache = new HashSet<scrum.server.project.Project>();
+    public final Set<scrum.server.sprint.Sprint> getSprints() {
+        if (sprintsCache == null) {
+            sprintsCache = new HashSet<scrum.server.sprint.Sprint>();
             for (ProjectSprintSnapshot e : getEntities()) {
-                if (e.isProjectSet()) projectsCache.add(e.getProject());
+                if (e.isSprintSet()) sprintsCache.add(e.getSprint());
             }
         }
-        return projectsCache;
+        return sprintsCache;
     }
 
-    private static class IsProject implements Predicate<ProjectSprintSnapshot> {
+    private static class IsSprint implements Predicate<ProjectSprintSnapshot> {
 
-        private scrum.server.project.Project value;
+        private scrum.server.sprint.Sprint value;
 
-        public IsProject(scrum.server.project.Project value) {
+        public IsSprint(scrum.server.sprint.Sprint value) {
             this.value = value;
         }
 
         public boolean test(ProjectSprintSnapshot e) {
-            return e.isProject(value);
+            return e.isSprint(value);
         }
 
     }
@@ -244,10 +194,10 @@ public abstract class GProjectSprintSnapshotDao
 
     // --- dependencies ---
 
-    protected scrum.server.project.ProjectDao projectDao;
+    protected scrum.server.sprint.SprintDao sprintDao;
 
-    public void setProjectDao(scrum.server.project.ProjectDao projectDao) {
-        this.projectDao = projectDao;
+    public void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
+        this.sprintDao = sprintDao;
     }
 
 }

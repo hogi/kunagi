@@ -1,10 +1,10 @@
 package scrum.client.admin;
 
+import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ButtonWidget;
 import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.PanelWidget;
-import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
@@ -44,17 +44,18 @@ public class LoginWidget extends Composite {
 	}
 
 	private void login() {
-		WorkspaceWidget.lock("Checking login data...");
+		ScrumGwtApplication.get().getWorkspace().lock("Checking login data...");
 		ScrumGwtApplication.get().callLogin(username.getText(), password.getText(), new Runnable() {
 
 			public void run() {
+				GwtLogger.DEBUG("Login response received");
 				if (ScrumGwtApplication.get().getUser() == null) {
 					// login failed
-					WorkspaceWidget.activateLogin();
+					ScrumGwtApplication.get().getWorkspace().activateLogin();
 				} else {
 					// login succeeded
-					WorkspaceWidget.projectSelection.update();
-					WorkspaceWidget.activateProjectSelection();
+					ScrumGwtApplication.get().getWorkspace().getProjectSelector().update();
+					ScrumGwtApplication.get().getWorkspace().activateProjectSelection();
 				}
 			}
 		});

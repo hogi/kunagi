@@ -23,7 +23,7 @@ public class SidebarWidget extends Composite {
 		toolbar.addButton("Project Overview").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				WorkspaceWidget.showProjectOverview();
+				ScrumGwtApplication.get().getWorkspace().showProjectOverview();
 			}
 
 		});
@@ -31,11 +31,11 @@ public class SidebarWidget extends Composite {
 		toolbar.addButton("Product Backlog").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				WorkspaceWidget.lock("Loading Backlog Items...");
+				ScrumGwtApplication.get().getWorkspace().lock("Loading Backlog Items...");
 				ScrumGwtApplication.get().callRequestRequirements(new Runnable() {
 
 					public void run() {
-						WorkspaceWidget.showBacklog();
+						ScrumGwtApplication.get().getWorkspace().showBacklog();
 					}
 				});
 			}
@@ -45,11 +45,11 @@ public class SidebarWidget extends Composite {
 			new ClickListener() {
 
 				public void onClick(Widget sender) {
-					WorkspaceWidget.lock("Loading Sprint...");
+					ScrumGwtApplication.get().getWorkspace().lock("Loading Sprint...");
 					ScrumGwtApplication.get().callRequestCurrentSprint(new Runnable() {
 
 						public void run() {
-							WorkspaceWidget.showSprint();
+							ScrumGwtApplication.get().getWorkspace().showSprint();
 						}
 					});
 				}
@@ -60,11 +60,11 @@ public class SidebarWidget extends Composite {
 			new ClickListener() {
 
 				public void onClick(Widget sender) {
-					WorkspaceWidget.lock("Loading impediments...");
+					ScrumGwtApplication.get().getWorkspace().lock("Loading impediments...");
 					ScrumGwtApplication.get().callRequestImpediments(new Runnable() {
 
 						public void run() {
-							WorkspaceWidget.showImpediments();
+							ScrumGwtApplication.get().getWorkspace().showImpediments();
 						}
 					});
 				}
@@ -73,7 +73,7 @@ public class SidebarWidget extends Composite {
 		toolbar.addButton("Test").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				WorkspaceWidget.showTest();
+				ScrumGwtApplication.get().getWorkspace().showTest();
 			}
 		});
 

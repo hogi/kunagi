@@ -1,6 +1,5 @@
 package scrum.client.common;
 
-
 import ilarkesto.gwt.client.DataTransferObject;
 import ilarkesto.gwt.client.GwtLogger;
 
@@ -18,6 +17,10 @@ public abstract class AGwtDao {
 
 	protected abstract void updateEntity(String type, Map data);
 
+	protected abstract void onEntityUpdated(AGwtEntity entity);
+
+	protected abstract void onEntityDeleted(AGwtEntity entity);
+
 	public void handleDataFromServer(DataTransferObject data) {
 		if (data.containsEntities()) {
 			for (Map entityData : data.getEntities()) {
@@ -32,6 +35,7 @@ public abstract class AGwtDao {
 					if (entity != null) {
 						deletedEntities.remove(entityId);
 						GwtLogger.DEBUG("deleted:", entity.getEntityType() + ":", entity);
+						onEntityDeleted(entity);
 					}
 				}
 			}

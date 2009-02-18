@@ -43,24 +43,6 @@ public abstract class GImpediment
         return ENTITY_TYPE;
     }
 
-    // --- date ---
-
-    private scrum.client.common.Date date ;
-
-    public final scrum.client.common.Date getDate() {
-        return this.date ;
-    }
-
-    public final Impediment setDate(scrum.client.common.Date date) {
-        this.date = date ;
-        propertyChanged("date", this.date);
-        return (Impediment)this;
-    }
-
-    public final boolean isDate(scrum.client.common.Date date) {
-        return equals(this.date, date);
-    }
-
     // --- solveDate ---
 
     private scrum.client.common.Date solveDate ;
@@ -77,27 +59,6 @@ public abstract class GImpediment
 
     public final boolean isSolveDate(scrum.client.common.Date solveDate) {
         return equals(this.solveDate, solveDate);
-    }
-
-    // --- project ---
-
-    private String projectId;
-
-    public final scrum.client.project.Project getProject() {
-        if (projectId == null) return null;
-        return getDao().getProject(this.projectId);
-    }
-
-    public final Impediment setProject(scrum.client.project.Project project) {
-        String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Impediment) this;
-        this.projectId = id;
-        propertyChanged("projectId", this.projectId);
-        return (Impediment)this;
-    }
-
-    public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
     }
 
     // --- label ---
@@ -154,28 +115,67 @@ public abstract class GImpediment
         return equals(this.solution, solution);
     }
 
+    // --- date ---
+
+    private scrum.client.common.Date date ;
+
+    public final scrum.client.common.Date getDate() {
+        return this.date ;
+    }
+
+    public final Impediment setDate(scrum.client.common.Date date) {
+        this.date = date ;
+        propertyChanged("date", this.date);
+        return (Impediment)this;
+    }
+
+    public final boolean isDate(scrum.client.common.Date date) {
+        return equals(this.date, date);
+    }
+
+    // --- project ---
+
+    private String projectId;
+
+    public final scrum.client.project.Project getProject() {
+        if (projectId == null) return null;
+        return getDao().getProject(this.projectId);
+    }
+
+    public final Impediment setProject(scrum.client.project.Project project) {
+        String id = project == null ? null : project.getId();
+        if (equals(this.projectId, id)) return (Impediment) this;
+        this.projectId = id;
+        propertyChanged("projectId", this.projectId);
+        return (Impediment)this;
+    }
+
+    public final boolean isProject(scrum.client.project.Project project) {
+        return equals(this.projectId, project);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        String dateAsString = (String) props.get("date");
-        date  =  dateAsString == null ? null : new scrum.client.common.Date(dateAsString);
         String solveDateAsString = (String) props.get("solveDate");
         solveDate  =  solveDateAsString == null ? null : new scrum.client.common.Date(solveDateAsString);
-        projectId = (String) props.get("projectId");
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
         solution  = (java.lang.String) props.get("solution");
+        String dateAsString = (String) props.get("date");
+        date  =  dateAsString == null ? null : new scrum.client.common.Date(dateAsString);
+        projectId = (String) props.get("projectId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
-        properties.put("projectId", this.projectId);
         properties.put("label", this.label);
         properties.put("description", this.description);
         properties.put("solution", this.solution);
+        properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("projectId", this.projectId);
     }
 
 }

@@ -59,7 +59,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onChangeProperties(SessionData session, String entityId, Map properties) {
-		LOG.debug("-------------->", properties);
 		AEntity entity = getDaoService().getEntityById(entityId);
 		entity.updateProperties(properties);
 
@@ -67,6 +66,16 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Task) {
 			Task task = (Task) entity;
 			task.getRequirement().getSprint().getDaySnapshot(Date.today()).update();
+		}
+
+		if (entity instanceof Requirement) {
+			Requirement requirement = (Requirement) entity;
+			requirement.getProject().getCurrentSprintSnapshot().update();
+		}
+
+		if (entity instanceof Project) {
+			Project project = (Project) entity;
+
 		}
 
 		for (SessionData s : getOtherSessions(session)) {
