@@ -1,8 +1,8 @@
 package scrum.client.common;
 
-public class StyleSheet {
+import ilarkesto.gwt.client.BaseStyleSheet;
 
-	public static final String ELEMENT_BUTTON_WIDGET = "element-ButtonWidget";
+public class StyleSheet extends BaseStyleSheet {
 
 	// DummyDropWidget
 	public static final String ELEMENT_DND_MARKER_WIDGET = "element-DndMarkerWidget";
@@ -54,18 +54,11 @@ public class StyleSheet {
 
 	// others
 
-	public static final String VIEWER = "Viewer";
-	public static final String TEXTAREA_EDITOR = "Textarea-editor";
 	public static final String INTEGER_EDITOR = "Integer-editor";
-	public static final String A_EDITABLE_WIDGET = "AEditableWidget";
 	public static final String DRAG_HANDLE = "DragHandle";
 	public static final String A_ITEM_FIELDS_WIDGET_GRID = "AItemFieldsWidget-grid";
 	public static final String FIELD_LABEL = "fieldLabel";
-	public static final String A_EDITABLE_TEXTAREA_WIDGET_EDITOR_PANEL = "AEditableTextareaWidget-editorPanel";
-	public static final String ELEMENT_TOOLBAR_WIDGET = "element-ToolbarWidget";
 	public static final String TRASH_ON_ENTER = "Trash-onEnter";
 	public static final String FIELD_VALUE = "fieldValue";
-	public static final String EDITABLE_EDITOR = "editableEditor";
-	public static final String EDITABLE_VIEWER = "editableViewer";
 
 }

@@ -1,11 +1,11 @@
 package scrum.client.impediments;
 
+import ilarkesto.gwt.client.ARichtextViewEditWidget;
+import ilarkesto.gwt.client.ATextViewEditWidget;
+import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
-import scrum.client.common.ToolbarWidget;
-import scrum.client.common.editable.AEditableTextWidget;
-import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
 
@@ -52,42 +52,57 @@ public class ImpedimentWidget extends ABlockWidget {
 
 		// block is extended -> create an ItemFieldsWidget
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
-		fieldsWidget.addField("Label", new AEditableTextWidget() {
+		fieldsWidget.addField("Label", new ATextViewEditWidget() {
 
 			@Override
-			protected String getText() {
-				return impediment.getLabel();
+			protected void onViewerUpdate() {
+				setViewerText(impediment.getLabel());
 			}
 
 			@Override
-			protected void setText(String text) {
-				impediment.setLabel(text);
+			protected void onEditorUpdate() {
+				setEditorText(impediment.getLabel());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				impediment.setLabel(getEditorText());
 				rebuild();
 			}
 
 		});
-		fieldsWidget.addField("Description", new AEditableTextareaWidget() {
+		fieldsWidget.addField("Description", new ARichtextViewEditWidget() {
 
 			@Override
-			protected String getText() {
-				return impediment.getDescription();
+			protected void onViewerUpdate() {
+				setViewerText(impediment.getDescription());
 			}
 
 			@Override
-			protected void setText(String text) {
-				impediment.setDescription(text);
+			protected void onEditorUpdate() {
+				setEditorText(impediment.getDescription());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				impediment.setDescription(getEditorText());
 			}
 		});
-		fieldsWidget.addField("Solution", new AEditableTextareaWidget() {
+		fieldsWidget.addField("Solution", new ARichtextViewEditWidget() {
 
 			@Override
-			protected String getText() {
-				return impediment.getSolution();
+			protected void onViewerUpdate() {
+				setViewerText(impediment.getSolution());
 			}
 
 			@Override
-			protected void setText(String text) {
-				impediment.setSolution(text);
+			protected void onEditorUpdate() {
+				setEditorText(impediment.getSolution());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				impediment.setSolution(getEditorText());
 			}
 		});
 		return fieldsWidget;

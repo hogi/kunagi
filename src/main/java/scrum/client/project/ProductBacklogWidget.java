@@ -1,9 +1,9 @@
 package scrum.client.project;
 
+import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.ToolbarWidget;
 
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;

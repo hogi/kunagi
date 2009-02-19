@@ -15,6 +15,7 @@
  */
 package scrum.client.common.gwtsamples.content.text;
 
+import ilarkesto.gwt.client.richtexttoolbar.RichTextToolbar;
 import scrum.client.common.gwtsamples.ContentWidget;
 import scrum.client.common.gwtsamples.ShowcaseAnnotations.ShowcaseData;
 import scrum.client.common.gwtsamples.ShowcaseAnnotations.ShowcaseSource;

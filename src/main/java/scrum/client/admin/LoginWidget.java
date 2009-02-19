@@ -1,8 +1,8 @@
 package scrum.client.admin;
 
+import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.ButtonWidget;
 import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.PanelWidget;
 

@@ -1,5 +1,7 @@
 package scrum.client.sprint;
 
+import ilarkesto.gwt.client.ToolbarWidget;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,6 @@ import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.ItemFieldsWidget;
-import scrum.client.common.ToolbarWidget;
 import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
 import scrum.client.project.Requirement;

@@ -1,16 +1,15 @@
 package scrum.client.project;
 
+import ilarkesto.gwt.client.ARichtextViewEditWidget;
+import ilarkesto.gwt.client.ATextViewEditWidget;
+import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
-import scrum.client.common.ToolbarWidget;
 import scrum.client.common.editable.AEditableListBoxWidget;
-import scrum.client.common.editable.AEditableTextWidget;
-import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
 import scrum.client.sprint.Sprint;
-import scrum.client.workspace.WorkspaceWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -31,47 +30,60 @@ public class RequirementWidget extends ABlockWidget {
 		if (!isExtended()) { return new Label(requirement.getProductBacklogSummary()); }
 
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
-		fieldsWidget.addField("Label", new AEditableTextWidget() {
+		fieldsWidget.addField("Label", new ATextViewEditWidget() {
 
 			@Override
-			protected String getText() {
-				return requirement.getLabel();
+			protected void onViewerUpdate() {
+				setViewerText(requirement.getLabel());
 			}
 
 			@Override
-			protected void setText(String text) {
-				requirement.setLabel(text);
+			protected void onEditorUpdate() {
+				setEditorText(requirement.getLabel());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				requirement.setLabel(getEditorText());
 				rebuild();
 			}
 
 		});
 
-		fieldsWidget.addField("Description", new AEditableTextareaWidget() {
+		fieldsWidget.addField("Description", new ARichtextViewEditWidget() {
 
 			@Override
-			protected String getText() {
-				return requirement.getDescription();
+			protected void onViewerUpdate() {
+				setViewerText(requirement.getDescription());
 			}
 
 			@Override
-			protected void setText(String text) {
-				requirement.setDescription(text);
-				rebuild();
+			protected void onEditorUpdate() {
+				setEditorText(requirement.getDescription());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				requirement.setDescription(getEditorText());
 			}
 
 		});
 
-		fieldsWidget.addField("Test", new AEditableTextareaWidget() {
+		fieldsWidget.addField("Test", new ARichtextViewEditWidget() {
 
 			@Override
-			protected String getText() {
-				return requirement.getTestDescription();
+			protected void onViewerUpdate() {
+				setViewerText(requirement.getTestDescription());
 			}
 
 			@Override
-			protected void setText(String text) {
-				requirement.setTestDescription(text);
-				rebuild();
+			protected void onEditorUpdate() {
+				setEditorText(requirement.getTestDescription());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				requirement.setTestDescription(getEditorText());
 			}
 
 		});

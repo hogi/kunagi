@@ -1,8 +1,8 @@
 package scrum.client.admin;
 
+import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
-import scrum.client.common.ToolbarWidget;
 import scrum.client.img.Img;
 import scrum.client.project.Project;
 import scrum.client.workspace.WorkspaceWidget;

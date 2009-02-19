@@ -1,12 +1,12 @@
 package scrum.client.sprint;
 
+import ilarkesto.gwt.client.AIntegerViewEditWidget;
+import ilarkesto.gwt.client.ARichtextViewEditWidget;
+import ilarkesto.gwt.client.ATextViewEditWidget;
+import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.ItemFieldsWidget;
-import scrum.client.common.ToolbarWidget;
-import scrum.client.common.editable.AEditableIntegerShiftWidget;
-import scrum.client.common.editable.AEditableTextWidget;
-import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.img.Img;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
@@ -18,6 +18,11 @@ import com.google.gwt.user.client.ui.Widget;
 public class TaskWidget extends ABlockWidget {
 
 	private Task task;
+
+	private ATextViewEditWidget description;
+	private AIntegerViewEditWidget burnedWork;
+	private AIntegerViewEditWidget remainingWork;
+	private ARichtextViewEditWidget note;
 
 	public TaskWidget(Task task) {
 		this.task = task;
@@ -43,31 +48,41 @@ public class TaskWidget extends ABlockWidget {
 		// block is extended -> create an ItemFieldsWidget
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
 
-		fieldsWidget.addField("Description", new AEditableTextWidget() {
+		description = fieldsWidget.addField("Description", new ATextViewEditWidget() {
 
 			@Override
-			protected String getText() {
-				return task.getLabel();
+			protected void onViewerUpdate() {
+				setViewerText(task.getLabel());
 			}
 
 			@Override
-			protected void setText(String text) {
-				task.setLabel(text);
-				rebuild();
+			protected void onEditorUpdate() {
+				setViewerText(task.getLabel());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				task.setLabel(getEditorText());
 			}
 
 		});
 
-		fieldsWidget.addField("Burned Work", new AEditableIntegerShiftWidget() {
+		burnedWork = fieldsWidget.addField("Burned Work", new AIntegerViewEditWidget() {
 
 			@Override
-			protected Integer getValue() {
-				return task.getBurnedWork();
+			protected void onViewerUpdate() {
+				setViewerValue(task.getBurnedWork(), "hours");
 			}
 
 			@Override
-			protected void setValue(Integer value) {
-				if (value == 0) value = 0;
+			protected void onEditorUpdate() {
+				setEditorValue(task.getBurnedWork());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				Integer value = getEditorValue(0);
+				if (value == null) value = 0;
 				int previous = task.getBurnedWork();
 				int diff = value - previous;
 				task.setBurnedWork(value);
@@ -93,16 +108,21 @@ public class TaskWidget extends ABlockWidget {
 			}
 		});
 
-		fieldsWidget.addField("Remaining Work", new AEditableIntegerShiftWidget() {
+		remainingWork = fieldsWidget.addField("Remaining Work", new AIntegerViewEditWidget() {
 
 			@Override
-			protected Integer getValue() {
-				return task.getRemainingWork();
+			protected void onViewerUpdate() {
+				setViewerValue(task.getRemainingWork(), "hours");
 			}
 
 			@Override
-			protected void setValue(Integer value) {
-				task.setRemainingWork(value);
+			protected void onEditorUpdate() {
+				setEditorValue(task.getRemainingWork());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				task.setRemainingWork(getEditorValue(1));
 				notifyListControllerDataChanged();
 				rebuild();
 			}
@@ -119,28 +139,37 @@ public class TaskWidget extends ABlockWidget {
 				task.incrementRemainingWork();
 				notifyListControllerDataChanged();
 				rebuild();
-
 			}
 
 		});
 
-		fieldsWidget.addField("Note", new AEditableTextareaWidget() {
+		note = fieldsWidget.addField("Note", new ARichtextViewEditWidget() {
 
 			@Override
-			protected String getText() {
-				return task.getNotice();
+			protected void onViewerUpdate() {
+				setViewerText(task.getNotice());
 			}
 
 			@Override
-			protected void setText(String text) {
-				task.setNotice(text);
-				rebuild();
+			protected void onEditorUpdate() {
+				setEditorText(task.getNotice());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				task.setNotice(getEditorText());
 			}
 
 		});
 
 		fieldsWidget.addField("Owner", new Label(task.getOwner() == null ? "No owner specified." : task.getOwner()
 				.getName()));
+
+		// TODO move to update()
+		description.update();
+		burnedWork.update();
+		remainingWork.update();
+		note.update();
 
 		return fieldsWidget;
 	}

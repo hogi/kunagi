@@ -1,5 +1,9 @@
 package scrum.client.sprint;
 
+import ilarkesto.gwt.client.ARichtextViewEditWidget;
+import ilarkesto.gwt.client.ATextViewEditWidget;
+import ilarkesto.gwt.client.AWidget;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,18 +11,15 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.ItemFieldsWidget;
-import scrum.client.common.editable.AEditableTextWidget;
-import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SprintBacklogWidget extends Composite {
+public class SprintBacklogWidget extends AWidget {
 
 	private BlockListWidget<RequirementInSprintWidget> requirementList;
 	private FlowPanel view;
@@ -26,9 +27,14 @@ public class SprintBacklogWidget extends Composite {
 	private Label begin;
 	private Label end;
 
+	private ATextViewEditWidget label;
+	private ARichtextViewEditWidget goal;
+
 	private List<Requirement> previousRequirements = new ArrayList<Requirement>(0);
 
-	public SprintBacklogWidget() {
+	@Override
+	protected Widget onInitialization() {
+
 		remainingWork = new Label();
 		begin = new Label();
 		end = new Label();
@@ -43,29 +49,40 @@ public class SprintBacklogWidget extends Composite {
 
 		view = new FlowPanel();
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
-		fieldsWidget.addField("Label", new AEditableTextWidget() {
+
+		label = fieldsWidget.addField("Label", new ATextViewEditWidget() {
 
 			@Override
-			protected String getText() {
-				return getSprint() == null ? null : getSprint().getLabel();
+			protected void onViewerUpdate() {
+				if (getSprint() != null) setViewerText(getSprint().getLabel());
 			}
 
 			@Override
-			protected void setText(String text) {
-				getSprint().setLabel(text);
+			protected void onEditorUpdate() {
+				setEditorText(getSprint().getLabel());
 			}
 
+			@Override
+			protected void onEditorSubmit() {
+				getSprint().setLabel(getEditorText());
+			}
 		});
-		fieldsWidget.addField("Goal", new AEditableTextareaWidget() {
+
+		goal = fieldsWidget.addField("Goal", new ARichtextViewEditWidget() {
 
 			@Override
-			protected void setText(String text) {
-				getSprint().setGoal(text);
+			protected void onViewerUpdate() {
+				if (getSprint() != null) setViewerText(getSprint().getGoal());
 			}
 
 			@Override
-			protected String getText() {
-				return getSprint() == null ? null : getSprint().getGoal();
+			protected void onEditorUpdate() {
+				setEditorText(getSprint().getGoal());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				getSprint().setGoal(getEditorText());
 			}
 		});
 		fieldsWidget.addField("Begin", begin);
@@ -73,10 +90,14 @@ public class SprintBacklogWidget extends Composite {
 		fieldsWidget.addField("Remaining Work", remainingWork);
 		view.add(fieldsWidget);
 		view.add(requirementList);
-		initWidget(view);
+		return view;
 	}
 
-	public void update() {
+	@Override
+	protected void onUpdate() {
+		label.update();
+		goal.update();
+
 		remainingWork.setText(getSprint().getTaskEffortSumString());
 		begin.setText(getSprint().getBegin().toString());
 		end.setText(getSprint().getEnd().toString());

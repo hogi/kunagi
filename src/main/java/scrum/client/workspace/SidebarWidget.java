@@ -1,9 +1,9 @@
 package scrum.client.workspace;
 
+import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.PanelWidget;
 import scrum.client.common.StyleSheet;
-import scrum.client.common.ToolbarWidget;
 import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.ClickListener;

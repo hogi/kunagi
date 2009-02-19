@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.Widget;
  * A editable widget is by default in view mode. It displays a value using the viewer. By clicking on the
  * viewer it is set to <code>editMode</code>. In edit mode the value can be edited in the editor.
  */
+@Deprecated
 public abstract class AEditableWidget extends Composite {
 
 	private static AEditableWidget currentEditable;

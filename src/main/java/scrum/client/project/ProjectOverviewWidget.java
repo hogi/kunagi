@@ -1,12 +1,12 @@
 package scrum.client.project;
 
+import ilarkesto.gwt.client.ARichtextViewEditWidget;
+import ilarkesto.gwt.client.ATextViewEditWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.common.GroupWidget;
 import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.ScrumUtil;
-import scrum.client.common.editable.AEditableTextWidget;
-import scrum.client.common.editable.AEditableTextareaWidget;
 import scrum.client.sprint.Sprint;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -17,35 +17,45 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectOverviewWidget extends Composite {
 
-	private AEditableTextWidget label;
-	private AEditableTextareaWidget description;
+	private ATextViewEditWidget label;
+	private ARichtextViewEditWidget description;
 
 	public ProjectOverviewWidget() {
 		ItemFieldsWidget fields = new ItemFieldsWidget();
 
-		label = fields.addField("Label", new AEditableTextWidget() {
+		label = fields.addField("Label", new ATextViewEditWidget() {
 
 			@Override
-			protected void setText(String text) {
-				ScrumGwtApplication.get().getProject().setLabel(text);
+			protected void onViewerUpdate() {
+				setViewerText(ScrumGwtApplication.get().getProject().getLabel());
 			}
 
 			@Override
-			protected String getText() {
-				return ScrumGwtApplication.get().getProject().getLabel();
+			protected void onEditorUpdate() {
+				setEditorText(ScrumGwtApplication.get().getProject().getLabel());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				ScrumGwtApplication.get().getProject().setLabel(getEditorText());
 			}
 		});
 
-		description = fields.addField("Description", new AEditableTextareaWidget(true) {
+		description = fields.addField("Description", new ARichtextViewEditWidget() {
 
 			@Override
-			protected void setText(String text) {
-				ScrumGwtApplication.get().getProject().setDescription(text);
+			protected void onViewerUpdate() {
+				setViewerText(ScrumGwtApplication.get().getProject().getDescription());
 			}
 
 			@Override
-			protected String getText() {
-				return ScrumGwtApplication.get().getProject().getDescription();
+			protected void onEditorUpdate() {
+				setEditorText(ScrumGwtApplication.get().getProject().getDescription());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				ScrumGwtApplication.get().getProject().setDescription(getEditorText());
 			}
 		});
 
@@ -90,8 +100,8 @@ public class ProjectOverviewWidget extends Composite {
 	}
 
 	public void update() {
-		label.rebuild();
-		description.rebuild();
+		label.update();
+		description.update();
 	}
 
 	private Widget createCurrentSprintOverview(Sprint sprint) {
