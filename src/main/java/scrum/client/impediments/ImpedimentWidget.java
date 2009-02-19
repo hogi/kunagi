@@ -17,10 +17,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ImpedimentWidget extends ABlockWidget {
 
-	/**
-	 * The impediment, this widget is managing.
-	 */
 	private Impediment impediment;
+
+	private ATextViewEditWidget label;
+	private ARichtextViewEditWidget description;
+	private ARichtextViewEditWidget solution;
 
 	public ImpedimentWidget(Impediment impediment) {
 		this.impediment = impediment;
@@ -52,7 +53,7 @@ public class ImpedimentWidget extends ABlockWidget {
 
 		// block is extended -> create an ItemFieldsWidget
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
-		fieldsWidget.addField("Label", new ATextViewEditWidget() {
+		label = fieldsWidget.addField("Label", new ATextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -71,7 +72,7 @@ public class ImpedimentWidget extends ABlockWidget {
 			}
 
 		});
-		fieldsWidget.addField("Description", new ARichtextViewEditWidget() {
+		description = fieldsWidget.addField("Description", new ARichtextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -88,7 +89,7 @@ public class ImpedimentWidget extends ABlockWidget {
 				impediment.setDescription(getEditorText());
 			}
 		});
-		fieldsWidget.addField("Solution", new ARichtextViewEditWidget() {
+		solution = fieldsWidget.addField("Solution", new ARichtextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -105,6 +106,12 @@ public class ImpedimentWidget extends ABlockWidget {
 				impediment.setSolution(getEditorText());
 			}
 		});
+
+		// TODO move to update()
+		label.update();
+		description.update();
+		solution.update();
+
 		return fieldsWidget;
 	}
 

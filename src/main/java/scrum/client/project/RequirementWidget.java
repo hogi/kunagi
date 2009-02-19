@@ -21,6 +21,10 @@ public class RequirementWidget extends ABlockWidget {
 
 	private Requirement requirement;
 
+	private ATextViewEditWidget label;
+	private ARichtextViewEditWidget description;
+	private ARichtextViewEditWidget test;
+
 	public RequirementWidget(Requirement item) {
 		this.requirement = item;
 	}
@@ -30,7 +34,7 @@ public class RequirementWidget extends ABlockWidget {
 		if (!isExtended()) { return new Label(requirement.getProductBacklogSummary()); }
 
 		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
-		fieldsWidget.addField("Label", new ATextViewEditWidget() {
+		label = fieldsWidget.addField("Label", new ATextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -50,7 +54,7 @@ public class RequirementWidget extends ABlockWidget {
 
 		});
 
-		fieldsWidget.addField("Description", new ARichtextViewEditWidget() {
+		description = fieldsWidget.addField("Description", new ARichtextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -69,7 +73,7 @@ public class RequirementWidget extends ABlockWidget {
 
 		});
 
-		fieldsWidget.addField("Test", new ARichtextViewEditWidget() {
+		test = fieldsWidget.addField("Test", new ARichtextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -115,6 +119,11 @@ public class RequirementWidget extends ABlockWidget {
 			}
 
 		});
+
+		// TODO move to update()
+		label.update();
+		description.update();
+		test.update();
 
 		return fieldsWidget;
 	}
