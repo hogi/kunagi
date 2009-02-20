@@ -3,8 +3,8 @@ package scrum.client;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ClientLogger {
@@ -17,7 +17,7 @@ public class ClientLogger {
 		final DialogBox db = new DialogBox();
 		db.setSize("200", "150");
 
-		VerticalPanel panel = new VerticalPanel();
+		FlowPanel panel = new FlowPanel();
 		Label text = new Label(message);
 		panel.add(text);
 
