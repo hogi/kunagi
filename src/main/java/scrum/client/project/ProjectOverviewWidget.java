@@ -2,6 +2,7 @@ package scrum.client.project;
 
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
+import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.common.GroupWidget;
@@ -9,18 +10,18 @@ import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.ScrumUtil;
 import scrum.client.sprint.Sprint;
 
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectOverviewWidget extends Composite {
+public class ProjectOverviewWidget extends AWidget {
 
 	private ATextViewEditWidget label;
 	private ARichtextViewEditWidget description;
 
-	public ProjectOverviewWidget() {
+	@Override
+	protected Widget onInitialization() {
 		ItemFieldsWidget fields = new ItemFieldsWidget();
 
 		label = fields.addField("Label", new ATextViewEditWidget() {
@@ -96,10 +97,11 @@ public class ProjectOverviewWidget extends Composite {
 			panel.add(createCurrentSprintOverview(sprint));
 		}
 
-		initWidget(panel);
+		return panel;
 	}
 
-	public void update() {
+	@Override
+	protected void onUpdate() {
 		label.update();
 		description.update();
 	}

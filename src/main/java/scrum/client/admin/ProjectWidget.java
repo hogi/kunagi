@@ -5,7 +5,8 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.img.Img;
 import scrum.client.project.Project;
-import scrum.client.workspace.WorkspaceWidget;
+import scrum.client.workspace.Ui;
+import scrum.client.workspace.WorkareaWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -61,13 +62,14 @@ public class ProjectWidget extends ABlockWidget {
 	}
 
 	private void select() {
-		ScrumGwtApplication.get().getWorkspace().lock("Loading project...");
+		Ui.get().lock("Loading project...");
 		ScrumGwtApplication.get().setProject(project);
 		ScrumGwtApplication.get().callSelectProject(project.getId(), new Runnable() {
 
 			public void run() {
-				ScrumGwtApplication.get().getWorkspace().unlock();
-				ScrumGwtApplication.get().getWorkspace().showProjectOverview();
+				Ui.get().unlock();
+				Ui.get().showWorkspace();
+				WorkareaWidget.get().showProjectOverview();
 			}
 		});
 	}

@@ -1,22 +1,24 @@
 package scrum.client.impediments;
 
+import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
+import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ImpedimentListWidget extends Composite {
+public class ImpedimentListWidget extends AWidget {
 
 	public BlockListWidget<ImpedimentWidget> list;
 
-	public ImpedimentListWidget() {
+	@Override
+	protected Widget onInitialization() {
 		list = new BlockListWidget<ImpedimentWidget>(new BlockListController<ImpedimentWidget>());
 
 		ToolbarWidget toolbar = new ToolbarWidget();
@@ -31,10 +33,12 @@ public class ImpedimentListWidget extends Composite {
 		panel.add(toolbar);
 		panel.add(new HTML("<br>"));
 		panel.add(list);
-		initWidget(panel);
+
+		return panel;
 	}
 
-	public void update() {
+	@Override
+	protected void onUpdate() {
 		list.clear();
 		for (Impediment impediment : ScrumGwtApplication.get().getProject().getImpediments()) {
 			ImpedimentWidget widget = new ImpedimentWidget(impediment);
@@ -50,5 +54,9 @@ public class ImpedimentListWidget extends Composite {
 			list.addBlock(block);
 			list.selectBlock(block);
 		}
+	}
+
+	public static ImpedimentListWidget get() {
+		return WorkareaWidget.get().getImpedimentList();
 	}
 }

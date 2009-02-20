@@ -1,22 +1,24 @@
 package scrum.client.project;
 
+import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
+import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProductBacklogWidget extends Composite {
+public class ProductBacklogWidget extends AWidget {
 
 	public BlockListWidget<RequirementWidget> list;
 
-	public ProductBacklogWidget() {
+	@Override
+	protected Widget onInitialization() {
 		list = new BlockListWidget<RequirementWidget>(new BlockListController<RequirementWidget>());
 		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton("Create new Requirement").addClickListener(new CreateClickListener());
@@ -29,10 +31,12 @@ public class ProductBacklogWidget extends Composite {
 		panel.add(toolbar);
 		panel.add(new HTML("<br>"));
 		panel.add(list);
-		initWidget(panel);
+
+		return panel;
 	}
 
-	public void update() {
+	@Override
+	protected void onUpdate() {
 		list.clear();
 		for (Requirement item : ScrumGwtApplication.get().getProject().getRequirements()) {
 			list.addBlock(new RequirementWidget(item));
@@ -47,5 +51,9 @@ public class ProductBacklogWidget extends Composite {
 			list.addBlock(block);
 			list.selectBlock(block);
 		}
+	}
+
+	public static ProductBacklogWidget get() {
+		return WorkareaWidget.get().getProductBacklog();
 	}
 }

@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.DataTransferObject;
 import scrum.client.admin.User;
 import scrum.client.dnd.ScrumDragController;
 import scrum.client.project.Project;
+import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.user.client.ui.RootPanel;
@@ -26,19 +27,20 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	private ScrumDragController dragController;
 
-	private WorkspaceWidget workspaceWidget;
+	private Ui ui;
 
 	/**
 	 * Application entry point.
 	 */
 	public void onModuleLoad() {
-		workspaceWidget = new WorkspaceWidget();
-		RootPanel.get("workspace").add(workspaceWidget);
-		workspaceWidget.lock("Connecting to server...");
+		ui = Ui.get();
+		ui.update();
+		RootPanel.get("workspace").add(ui);
+		ui.lock("Connecting to server...");
 		callPing(new Runnable() {
 
 			public void run() {
-				workspaceWidget.activateLogin();
+				ui.unlock();
 			}
 		});
 	}
@@ -47,8 +49,8 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		return user;
 	}
 
-	public WorkspaceWidget getWorkspace() {
-		return workspaceWidget;
+	public Ui getUi() {
+		return ui;
 	}
 
 	@Override
@@ -68,7 +70,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	@Override
 	protected void handleCommunicationError(Throwable ex) {
 		ex.printStackTrace();
-		ScrumGwtApplication.get().getWorkspace().lock("Error: " + ex.getMessage());
+		ui.lock("Error: " + ex.getMessage());
 	}
 
 	public void setProject(Project project) {
@@ -94,4 +96,11 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		}
 		return dragController;
 	}
+
+	// --- helper ---
+
+	public WorkspaceWidget getWorkspaceWidget() {
+		return getUi().getWorkspace();
+	}
+
 }

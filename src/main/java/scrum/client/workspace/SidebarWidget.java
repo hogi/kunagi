@@ -23,7 +23,7 @@ public class SidebarWidget extends Composite {
 		toolbar.addButton("Project Overview").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				ScrumGwtApplication.get().getWorkspace().showProjectOverview();
+				WorkareaWidget.get().showProjectOverview();
 			}
 
 		});
@@ -31,11 +31,11 @@ public class SidebarWidget extends Composite {
 		toolbar.addButton("Product Backlog").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				ScrumGwtApplication.get().getWorkspace().lock("Loading Backlog Items...");
+				Ui.get().lock("Loading Backlog Items...");
 				ScrumGwtApplication.get().callRequestRequirements(new Runnable() {
 
 					public void run() {
-						ScrumGwtApplication.get().getWorkspace().showBacklog();
+						WorkareaWidget.get().showProductBacklog();
 					}
 				});
 			}
@@ -45,11 +45,11 @@ public class SidebarWidget extends Composite {
 			new ClickListener() {
 
 				public void onClick(Widget sender) {
-					ScrumGwtApplication.get().getWorkspace().lock("Loading Sprint...");
+					Ui.get().lock("Loading Sprint...");
 					ScrumGwtApplication.get().callRequestCurrentSprint(new Runnable() {
 
 						public void run() {
-							ScrumGwtApplication.get().getWorkspace().showSprint();
+							WorkareaWidget.get().showSprintBacklog();
 						}
 					});
 				}
@@ -60,11 +60,11 @@ public class SidebarWidget extends Composite {
 			new ClickListener() {
 
 				public void onClick(Widget sender) {
-					ScrumGwtApplication.get().getWorkspace().lock("Loading impediments...");
+					Ui.get().lock("Loading impediments...");
 					ScrumGwtApplication.get().callRequestImpediments(new Runnable() {
 
 						public void run() {
-							ScrumGwtApplication.get().getWorkspace().showImpediments();
+							WorkareaWidget.get().showImpedimentList();
 						}
 					});
 				}
@@ -73,7 +73,7 @@ public class SidebarWidget extends Composite {
 		toolbar.addButton("Test").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				ScrumGwtApplication.get().getWorkspace().showTest();
+			// ScrumGwtApplication.get().getWorkspaceWidget().showTest();
 			}
 		});
 

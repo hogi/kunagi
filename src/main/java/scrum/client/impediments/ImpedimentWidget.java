@@ -127,7 +127,7 @@ public class ImpedimentWidget extends ABlockWidget {
 
 			public void onClick(Widget sender) {
 				ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
-				ScrumGwtApplication.get().getWorkspace().getImpediments().list.removeSelectedRow();
+				ImpedimentListWidget.get().list.removeSelectedRow();
 			}
 		});
 
@@ -156,12 +156,12 @@ public class ImpedimentWidget extends ABlockWidget {
 
 	@Override
 	protected DropController createDropController() {
-		return new BlockListDropController(this, ScrumGwtApplication.get().getWorkspace().getImpediments().list);
+		return new BlockListDropController(this, ImpedimentListWidget.get().list);
 	}
 
 	@Override
 	public void delete() {
 		ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
-		ScrumGwtApplication.get().getWorkspace().getImpediments().list.remove(this);
+		ImpedimentListWidget.get().list.remove(this);
 	}
 }
