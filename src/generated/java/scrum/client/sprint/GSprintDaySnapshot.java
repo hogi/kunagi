@@ -24,6 +24,11 @@
 package scrum.client.sprint;
 
 import java.util.*;
+import ilarkesto.auth.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.time.*;
+import ilarkesto.base.*;
+import ilarkesto.persistence.*;
 
 public abstract class GSprintDaySnapshot
             extends scrum.client.common.AGwtEntity {
@@ -43,24 +48,6 @@ public abstract class GSprintDaySnapshot
         return ENTITY_TYPE;
     }
 
-    // --- burnedWork ---
-
-    private int burnedWork ;
-
-    public final int getBurnedWork() {
-        return this.burnedWork ;
-    }
-
-    public final SprintDaySnapshot setBurnedWork(int burnedWork) {
-        this.burnedWork = burnedWork ;
-        propertyChanged("burnedWork", this.burnedWork);
-        return (SprintDaySnapshot)this;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return equals(this.burnedWork, burnedWork);
-    }
-
     // --- date ---
 
     private scrum.client.common.Date date ;
@@ -77,6 +64,24 @@ public abstract class GSprintDaySnapshot
 
     public final boolean isDate(scrum.client.common.Date date) {
         return equals(this.date, date);
+    }
+
+    // --- burnedWork ---
+
+    private int burnedWork ;
+
+    public final int getBurnedWork() {
+        return this.burnedWork ;
+    }
+
+    public final SprintDaySnapshot setBurnedWork(int burnedWork) {
+        this.burnedWork = burnedWork ;
+        propertyChanged("burnedWork", this.burnedWork);
+        return (SprintDaySnapshot)this;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return equals(this.burnedWork, burnedWork);
     }
 
     // --- remainingWork ---
@@ -121,9 +126,9 @@ public abstract class GSprintDaySnapshot
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        burnedWork  = (Integer) props.get("burnedWork");
         String dateAsString = (String) props.get("date");
         date  =  dateAsString == null ? null : new scrum.client.common.Date(dateAsString);
+        burnedWork  = (Integer) props.get("burnedWork");
         remainingWork  = (Integer) props.get("remainingWork");
         sprintId = (String) props.get("sprintId");
     }
@@ -131,8 +136,8 @@ public abstract class GSprintDaySnapshot
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("burnedWork", this.burnedWork);
         properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("burnedWork", this.burnedWork);
         properties.put("remainingWork", this.remainingWork);
         properties.put("sprintId", this.sprintId);
     }

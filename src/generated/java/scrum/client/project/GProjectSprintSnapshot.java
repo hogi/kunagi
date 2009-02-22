@@ -24,6 +24,11 @@
 package scrum.client.project;
 
 import java.util.*;
+import ilarkesto.auth.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.time.*;
+import ilarkesto.base.*;
+import ilarkesto.persistence.*;
 
 public abstract class GProjectSprintSnapshot
             extends scrum.client.common.AGwtEntity {
@@ -61,6 +66,24 @@ public abstract class GProjectSprintSnapshot
         return equals(this.remainingWork, remainingWork);
     }
 
+    // --- burnedWork ---
+
+    private int burnedWork ;
+
+    public final int getBurnedWork() {
+        return this.burnedWork ;
+    }
+
+    public final ProjectSprintSnapshot setBurnedWork(int burnedWork) {
+        this.burnedWork = burnedWork ;
+        propertyChanged("burnedWork", this.burnedWork);
+        return (ProjectSprintSnapshot)this;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return equals(this.burnedWork, burnedWork);
+    }
+
     // --- sprint ---
 
     private String sprintId;
@@ -82,38 +105,20 @@ public abstract class GProjectSprintSnapshot
         return equals(this.sprintId, sprint);
     }
 
-    // --- burnedWork ---
-
-    private int burnedWork ;
-
-    public final int getBurnedWork() {
-        return this.burnedWork ;
-    }
-
-    public final ProjectSprintSnapshot setBurnedWork(int burnedWork) {
-        this.burnedWork = burnedWork ;
-        propertyChanged("burnedWork", this.burnedWork);
-        return (ProjectSprintSnapshot)this;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return equals(this.burnedWork, burnedWork);
-    }
-
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         remainingWork  = (Integer) props.get("remainingWork");
-        sprintId = (String) props.get("sprintId");
         burnedWork  = (Integer) props.get("burnedWork");
+        sprintId = (String) props.get("sprintId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("remainingWork", this.remainingWork);
-        properties.put("sprintId", this.sprintId);
         properties.put("burnedWork", this.burnedWork);
+        properties.put("sprintId", this.sprintId);
     }
 
 }

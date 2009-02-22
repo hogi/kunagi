@@ -46,12 +46,12 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("burnedWork", this.burnedWork);
-        properties.put("label", this.label);
-        properties.put("remainingWork", this.remainingWork);
-        properties.put("ownerId", this.ownerId);
-        properties.put("notice", this.notice);
         properties.put("requirementId", this.requirementId);
+        properties.put("label", this.label);
+        properties.put("ownerId", this.ownerId);
+        properties.put("remainingWork", this.remainingWork);
+        properties.put("notice", this.notice);
+        properties.put("burnedWork", this.burnedWork);
     }
 
     public int compareTo(Task other) {
@@ -67,37 +67,49 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
-        setBurnedWork(template.getBurnedWork());
-        setLabel(template.getLabel());
-        setRemainingWork(template.getRemainingWork());
-        setOwner(template.getOwner());
-        setNotice(template.getNotice());
         setRequirement(template.getRequirement());
+        setLabel(template.getLabel());
+        setOwner(template.getOwner());
+        setRemainingWork(template.getRemainingWork());
+        setNotice(template.getNotice());
+        setBurnedWork(template.getBurnedWork());
     }
 
     // -----------------------------------------------------------
-    // - burnedWork
+    // - requirement
     // -----------------------------------------------------------
 
-    private int burnedWork;
+    private String requirementId;
 
-    public final int getBurnedWork() {
-        return burnedWork;
+    public final scrum.server.project.Requirement getRequirement() {
+        if (this.requirementId == null) return null;
+        return (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
     }
 
-    public final void setBurnedWork(int burnedWork) {
-        burnedWork = prepareBurnedWork(burnedWork);
-        if (isBurnedWork(burnedWork)) return;
-        this.burnedWork = burnedWork;
+    public final void setRequirement(scrum.server.project.Requirement requirement) {
+        requirement = prepareRequirement(requirement);
+        if (isRequirement(requirement)) return;
+        this.requirementId = requirement == null ? null : requirement.getId();
         entityModified();
     }
 
-    protected int prepareBurnedWork(int burnedWork) {
-        return burnedWork;
+    protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
+        return requirement;
     }
 
-    public final boolean isBurnedWork(int burnedWork) {
-        return this.burnedWork == burnedWork;
+    protected void repairDeadRequirementReference(String entityId) {
+        if (entityId.equals(this.requirementId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isRequirementSet() {
+        return this.requirementId != null;
+    }
+
+    public final boolean isRequirement(scrum.server.project.Requirement requirement) {
+        if (this.requirementId == null && requirement == null) return true;
+        return requirement != null && requirement.getId().equals(this.requirementId);
     }
 
     // -----------------------------------------------------------
@@ -129,31 +141,6 @@ public abstract class GTask
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
-    }
-
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private int remainingWork;
-
-    public final int getRemainingWork() {
-        return remainingWork;
-    }
-
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
-        entityModified();
-    }
-
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
     }
 
     // -----------------------------------------------------------
@@ -195,6 +182,31 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private int remainingWork;
+
+    public final int getRemainingWork() {
+        return remainingWork;
+    }
+
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+        entityModified();
+    }
+
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
+    }
+
+    // -----------------------------------------------------------
     // - notice
     // -----------------------------------------------------------
 
@@ -226,58 +238,40 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
-    // - requirement
+    // - burnedWork
     // -----------------------------------------------------------
 
-    private String requirementId;
+    private int burnedWork;
 
-    public final scrum.server.project.Requirement getRequirement() {
-        if (this.requirementId == null) return null;
-        return (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
+    public final int getBurnedWork() {
+        return burnedWork;
     }
 
-    public final void setRequirement(scrum.server.project.Requirement requirement) {
-        requirement = prepareRequirement(requirement);
-        if (isRequirement(requirement)) return;
-        this.requirementId = requirement == null ? null : requirement.getId();
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
         entityModified();
     }
 
-    protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
-        return requirement;
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
     }
 
-    protected void repairDeadRequirementReference(String entityId) {
-        if (entityId.equals(this.requirementId)) {
-            repairMissingMaster();
-        }
-    }
-
-    public final boolean isRequirementSet() {
-        return this.requirementId != null;
-    }
-
-    public final boolean isRequirement(scrum.server.project.Requirement requirement) {
-        if (this.requirementId == null && requirement == null) return true;
-        return requirement != null && requirement.getId().equals(this.requirementId);
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
     }
 
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
-        repairDeadOwnerReference(entityId);
         repairDeadRequirementReference(entityId);
+        repairDeadOwnerReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
-        try {
-            getOwner();
-        } catch (EntityDoesNotExistException ex) {
-            LOG.info("Repairing dead owner reference");
-            repairDeadOwnerReference(this.ownerId);
-        }
         if (!isRequirementSet()) {
             repairMissingMaster();
             return;
@@ -288,12 +282,13 @@ public abstract class GTask
             LOG.info("Repairing dead requirement reference");
             repairDeadRequirementReference(this.requirementId);
         }
+        try {
+            getOwner();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead owner reference");
+            repairDeadOwnerReference(this.ownerId);
+        }
     }
-
-
-    // -----------------------------------------------------------
-    // - composites
-    // -----------------------------------------------------------
 
     // --- dependencies ---
 
@@ -308,5 +303,10 @@ public abstract class GTask
     public static final void setTaskDao(TaskDao taskDao) {
         GTask.taskDao = taskDao;
     }
+
+
+    // -----------------------------------------------------------
+    // - composites
+    // -----------------------------------------------------------
 
 }

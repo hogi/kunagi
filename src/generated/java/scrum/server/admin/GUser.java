@@ -106,11 +106,6 @@ public abstract class GUser
         super.ensureIntegrity();
     }
 
-
-    // -----------------------------------------------------------
-    // - composites
-    // -----------------------------------------------------------
-
     // --- dependencies ---
 
     protected static UserDao userDao;
@@ -118,5 +113,10 @@ public abstract class GUser
     public static final void setUserDao(UserDao userDao) {
         GUser.userDao = userDao;
     }
+
+
+    // -----------------------------------------------------------
+    // - composites
+    // -----------------------------------------------------------
 
 }

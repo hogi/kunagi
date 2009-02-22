@@ -46,11 +46,11 @@ public abstract class GImpediment
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
-        properties.put("label", this.label);
-        properties.put("description", this.description);
         properties.put("solution", this.solution);
         properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("description", this.description);
+        properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
+        properties.put("label", this.label);
         properties.put("projectId", this.projectId);
     }
 
@@ -67,104 +67,12 @@ public abstract class GImpediment
         super(template);
         if (template==null) return;
 
-        setSolveDate(template.getSolveDate());
-        setLabel(template.getLabel());
-        setDescription(template.getDescription());
         setSolution(template.getSolution());
         setDate(template.getDate());
+        setDescription(template.getDescription());
+        setSolveDate(template.getSolveDate());
+        setLabel(template.getLabel());
         setProject(template.getProject());
-    }
-
-    // -----------------------------------------------------------
-    // - solveDate
-    // -----------------------------------------------------------
-
-    private ilarkesto.base.time.Date solveDate;
-
-    public final ilarkesto.base.time.Date getSolveDate() {
-        return solveDate;
-    }
-
-    public final void setSolveDate(ilarkesto.base.time.Date solveDate) {
-        solveDate = prepareSolveDate(solveDate);
-        if (isSolveDate(solveDate)) return;
-        this.solveDate = solveDate;
-        entityModified();
-    }
-
-    protected ilarkesto.base.time.Date prepareSolveDate(ilarkesto.base.time.Date solveDate) {
-        return solveDate;
-    }
-
-    public final boolean isSolveDateSet() {
-        return this.solveDate != null;
-    }
-
-    public final boolean isSolveDate(ilarkesto.base.time.Date solveDate) {
-        if (this.solveDate == null && solveDate == null) return true;
-        return this.solveDate != null && this.solveDate.equals(solveDate);
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        entityModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
-    }
-
-    // -----------------------------------------------------------
-    // - description
-    // -----------------------------------------------------------
-
-    private java.lang.String description;
-
-    public final java.lang.String getDescription() {
-        return description;
-    }
-
-    public final void setDescription(java.lang.String description) {
-        description = prepareDescription(description);
-        if (isDescription(description)) return;
-        this.description = description;
-        entityModified();
-    }
-
-    protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
-        return description;
-    }
-
-    public final boolean isDescriptionSet() {
-        return this.description != null;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        if (this.description == null && description == null) return true;
-        return this.description != null && this.description.equals(description);
     }
 
     // -----------------------------------------------------------
@@ -229,6 +137,98 @@ public abstract class GImpediment
     }
 
     // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private java.lang.String description;
+
+    public final java.lang.String getDescription() {
+        return description;
+    }
+
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+        entityModified();
+    }
+
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
+    }
+
+    public final boolean isDescriptionSet() {
+        return this.description != null;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
+    }
+
+    // -----------------------------------------------------------
+    // - solveDate
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date solveDate;
+
+    public final ilarkesto.base.time.Date getSolveDate() {
+        return solveDate;
+    }
+
+    public final void setSolveDate(ilarkesto.base.time.Date solveDate) {
+        solveDate = prepareSolveDate(solveDate);
+        if (isSolveDate(solveDate)) return;
+        this.solveDate = solveDate;
+        entityModified();
+    }
+
+    protected ilarkesto.base.time.Date prepareSolveDate(ilarkesto.base.time.Date solveDate) {
+        return solveDate;
+    }
+
+    public final boolean isSolveDateSet() {
+        return this.solveDate != null;
+    }
+
+    public final boolean isSolveDate(ilarkesto.base.time.Date solveDate) {
+        if (this.solveDate == null && solveDate == null) return true;
+        return this.solveDate != null && this.solveDate.equals(solveDate);
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
     // - project
     // -----------------------------------------------------------
 
@@ -286,11 +286,6 @@ public abstract class GImpediment
         }
     }
 
-
-    // -----------------------------------------------------------
-    // - composites
-    // -----------------------------------------------------------
-
     // --- dependencies ---
 
     protected static scrum.server.project.ProjectDao projectDao;
@@ -304,5 +299,10 @@ public abstract class GImpediment
     public static final void setImpedimentDao(ImpedimentDao impedimentDao) {
         GImpediment.impedimentDao = impedimentDao;
     }
+
+
+    // -----------------------------------------------------------
+    // - composites
+    // -----------------------------------------------------------
 
 }

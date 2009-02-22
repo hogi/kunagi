@@ -24,6 +24,11 @@
 package scrum.client.admin;
 
 import java.util.*;
+import ilarkesto.auth.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.time.*;
+import ilarkesto.base.*;
+import ilarkesto.persistence.*;
 
 public abstract class GUser
             extends scrum.client.common.AGwtEntity {

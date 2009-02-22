@@ -47,8 +47,8 @@ public abstract class GProjectSprintSnapshot
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("remainingWork", this.remainingWork);
-        properties.put("sprintId", this.sprintId);
         properties.put("burnedWork", this.burnedWork);
+        properties.put("sprintId", this.sprintId);
     }
 
     public int compareTo(ProjectSprintSnapshot other) {
@@ -65,8 +65,8 @@ public abstract class GProjectSprintSnapshot
         if (template==null) return;
 
         setRemainingWork(template.getRemainingWork());
-        setSprint(template.getSprint());
         setBurnedWork(template.getBurnedWork());
+        setSprint(template.getSprint());
     }
 
     // -----------------------------------------------------------
@@ -92,6 +92,31 @@ public abstract class GProjectSprintSnapshot
 
     public final boolean isRemainingWork(int remainingWork) {
         return this.remainingWork == remainingWork;
+    }
+
+    // -----------------------------------------------------------
+    // - burnedWork
+    // -----------------------------------------------------------
+
+    private int burnedWork;
+
+    public final int getBurnedWork() {
+        return burnedWork;
+    }
+
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
+        entityModified();
+    }
+
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
     }
 
     // -----------------------------------------------------------
@@ -132,31 +157,6 @@ public abstract class GProjectSprintSnapshot
         return sprint != null && sprint.getId().equals(this.sprintId);
     }
 
-    // -----------------------------------------------------------
-    // - burnedWork
-    // -----------------------------------------------------------
-
-    private int burnedWork;
-
-    public final int getBurnedWork() {
-        return burnedWork;
-    }
-
-    public final void setBurnedWork(int burnedWork) {
-        burnedWork = prepareBurnedWork(burnedWork);
-        if (isBurnedWork(burnedWork)) return;
-        this.burnedWork = burnedWork;
-        entityModified();
-    }
-
-    protected int prepareBurnedWork(int burnedWork) {
-        return burnedWork;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return this.burnedWork == burnedWork;
-    }
-
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
         repairDeadSprintReference(entityId);
@@ -174,11 +174,6 @@ public abstract class GProjectSprintSnapshot
         }
     }
 
-
-    // -----------------------------------------------------------
-    // - composites
-    // -----------------------------------------------------------
-
     // --- dependencies ---
 
     protected static scrum.server.sprint.SprintDao sprintDao;
@@ -192,5 +187,10 @@ public abstract class GProjectSprintSnapshot
     public static final void setProjectSprintSnapshotDao(ProjectSprintSnapshotDao projectSprintSnapshotDao) {
         GProjectSprintSnapshot.projectSprintSnapshotDao = projectSprintSnapshotDao;
     }
+
+
+    // -----------------------------------------------------------
+    // - composites
+    // -----------------------------------------------------------
 
 }

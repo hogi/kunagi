@@ -46,13 +46,13 @@ public abstract class GRequirement
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("testDescription", this.testDescription);
+        properties.put("sprintId", this.sprintId);
+        properties.put("label", this.label);
+        properties.put("projectId", this.projectId);
+        properties.put("closed", this.closed);
         properties.put("description", this.description);
         properties.put("estimatedWork", this.estimatedWork);
-        properties.put("label", this.label);
-        properties.put("closed", this.closed);
-        properties.put("sprintId", this.sprintId);
-        properties.put("projectId", this.projectId);
+        properties.put("testDescription", this.testDescription);
     }
 
     public int compareTo(Requirement other) {
@@ -68,44 +68,144 @@ public abstract class GRequirement
         super(template);
         if (template==null) return;
 
-        setTestDescription(template.getTestDescription());
+        setSprint(template.getSprint());
+        setLabel(template.getLabel());
+        setProject(template.getProject());
+        setClosed(template.isClosed());
         setDescription(template.getDescription());
         setEstimatedWork(template.getEstimatedWork());
-        setLabel(template.getLabel());
-        setClosed(template.isClosed());
-        setSprint(template.getSprint());
-        setProject(template.getProject());
+        setTestDescription(template.getTestDescription());
     }
 
     // -----------------------------------------------------------
-    // - testDescription
+    // - sprint
     // -----------------------------------------------------------
 
-    private java.lang.String testDescription;
+    private String sprintId;
 
-    public final java.lang.String getTestDescription() {
-        return testDescription;
+    public final scrum.server.sprint.Sprint getSprint() {
+        if (this.sprintId == null) return null;
+        return (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
     }
 
-    public final void setTestDescription(java.lang.String testDescription) {
-        testDescription = prepareTestDescription(testDescription);
-        if (isTestDescription(testDescription)) return;
-        this.testDescription = testDescription;
+    public final void setSprint(scrum.server.sprint.Sprint sprint) {
+        sprint = prepareSprint(sprint);
+        if (isSprint(sprint)) return;
+        this.sprintId = sprint == null ? null : sprint.getId();
         entityModified();
     }
 
-    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
-        testDescription = Str.removeUnreadableChars(testDescription);
-        return testDescription;
+    protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
+        return sprint;
     }
 
-    public final boolean isTestDescriptionSet() {
-        return this.testDescription != null;
+    protected void repairDeadSprintReference(String entityId) {
+        if (entityId.equals(this.sprintId)) {
+            this.sprintId = null;
+            entityModified();
+        }
     }
 
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        if (this.testDescription == null && testDescription == null) return true;
-        return this.testDescription != null && this.testDescription.equals(testDescription);
+    public final boolean isSprintSet() {
+        return this.sprintId != null;
+    }
+
+    public final boolean isSprint(scrum.server.sprint.Sprint sprint) {
+        if (this.sprintId == null && sprint == null) return true;
+        return sprint != null && sprint.getId().equals(this.sprintId);
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        entityModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - project
+    // -----------------------------------------------------------
+
+    private String projectId;
+
+    public final scrum.server.project.Project getProject() {
+        if (this.projectId == null) return null;
+        return (scrum.server.project.Project)projectDao.getById(this.projectId);
+    }
+
+    public final void setProject(scrum.server.project.Project project) {
+        project = prepareProject(project);
+        if (isProject(project)) return;
+        this.projectId = project == null ? null : project.getId();
+        entityModified();
+    }
+
+    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
+        return project;
+    }
+
+    protected void repairDeadProjectReference(String entityId) {
+        if (entityId.equals(this.projectId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isProjectSet() {
+        return this.projectId != null;
+    }
+
+    public final boolean isProject(scrum.server.project.Project project) {
+        if (this.projectId == null && project == null) return true;
+        return project != null && project.getId().equals(this.projectId);
+    }
+
+    // -----------------------------------------------------------
+    // - closed
+    // -----------------------------------------------------------
+
+    private boolean closed;
+
+    public final boolean isClosed() {
+        return closed;
+    }
+
+    public final void setClosed(boolean closed) {
+        closed = prepareClosed(closed);
+        if (isClosed(closed)) return;
+        this.closed = closed;
+        entityModified();
+    }
+
+    protected boolean prepareClosed(boolean closed) {
+        return closed;
+    }
+
+    public final boolean isClosed(boolean closed) {
+        return this.closed == closed;
     }
 
     // -----------------------------------------------------------
@@ -170,134 +270,34 @@ public abstract class GRequirement
     }
 
     // -----------------------------------------------------------
-    // - label
+    // - testDescription
     // -----------------------------------------------------------
 
-    private java.lang.String label;
+    private java.lang.String testDescription;
 
-    public final java.lang.String getLabel() {
-        return label;
+    public final java.lang.String getTestDescription() {
+        return testDescription;
     }
 
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
+    public final void setTestDescription(java.lang.String testDescription) {
+        testDescription = prepareTestDescription(testDescription);
+        if (isTestDescription(testDescription)) return;
+        this.testDescription = testDescription;
         entityModified();
     }
 
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
+    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
+        testDescription = Str.removeUnreadableChars(testDescription);
+        return testDescription;
     }
 
-    public final boolean isLabelSet() {
-        return this.label != null;
+    public final boolean isTestDescriptionSet() {
+        return this.testDescription != null;
     }
 
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
-    }
-
-    // -----------------------------------------------------------
-    // - closed
-    // -----------------------------------------------------------
-
-    private boolean closed;
-
-    public final boolean isClosed() {
-        return closed;
-    }
-
-    public final void setClosed(boolean closed) {
-        closed = prepareClosed(closed);
-        if (isClosed(closed)) return;
-        this.closed = closed;
-        entityModified();
-    }
-
-    protected boolean prepareClosed(boolean closed) {
-        return closed;
-    }
-
-    public final boolean isClosed(boolean closed) {
-        return this.closed == closed;
-    }
-
-    // -----------------------------------------------------------
-    // - sprint
-    // -----------------------------------------------------------
-
-    private String sprintId;
-
-    public final scrum.server.sprint.Sprint getSprint() {
-        if (this.sprintId == null) return null;
-        return (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
-    }
-
-    public final void setSprint(scrum.server.sprint.Sprint sprint) {
-        sprint = prepareSprint(sprint);
-        if (isSprint(sprint)) return;
-        this.sprintId = sprint == null ? null : sprint.getId();
-        entityModified();
-    }
-
-    protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
-        return sprint;
-    }
-
-    protected void repairDeadSprintReference(String entityId) {
-        if (entityId.equals(this.sprintId)) {
-            this.sprintId = null;
-            entityModified();
-        }
-    }
-
-    public final boolean isSprintSet() {
-        return this.sprintId != null;
-    }
-
-    public final boolean isSprint(scrum.server.sprint.Sprint sprint) {
-        if (this.sprintId == null && sprint == null) return true;
-        return sprint != null && sprint.getId().equals(this.sprintId);
-    }
-
-    // -----------------------------------------------------------
-    // - project
-    // -----------------------------------------------------------
-
-    private String projectId;
-
-    public final scrum.server.project.Project getProject() {
-        if (this.projectId == null) return null;
-        return (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
-
-    public final void setProject(scrum.server.project.Project project) {
-        project = prepareProject(project);
-        if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
-        entityModified();
-    }
-
-    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
-        return project;
-    }
-
-    protected void repairDeadProjectReference(String entityId) {
-        if (entityId.equals(this.projectId)) {
-            repairMissingMaster();
-        }
-    }
-
-    public final boolean isProjectSet() {
-        return this.projectId != null;
-    }
-
-    public final boolean isProject(scrum.server.project.Project project) {
-        if (this.projectId == null && project == null) return true;
-        return project != null && project.getId().equals(this.projectId);
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        if (this.testDescription == null && testDescription == null) return true;
+        return this.testDescription != null && this.testDescription.equals(testDescription);
     }
 
     protected void repairDeadReferences(String entityId) {
@@ -328,11 +328,6 @@ public abstract class GRequirement
         }
     }
 
-
-    // -----------------------------------------------------------
-    // - composites
-    // -----------------------------------------------------------
-
     // --- dependencies ---
 
     protected static scrum.server.sprint.SprintDao sprintDao;
@@ -352,5 +347,10 @@ public abstract class GRequirement
     public static final void setRequirementDao(RequirementDao requirementDao) {
         GRequirement.requirementDao = requirementDao;
     }
+
+
+    // -----------------------------------------------------------
+    // - composites
+    // -----------------------------------------------------------
 
 }

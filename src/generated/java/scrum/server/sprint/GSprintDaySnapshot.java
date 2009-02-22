@@ -46,8 +46,8 @@ public abstract class GSprintDaySnapshot
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("burnedWork", this.burnedWork);
         properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("burnedWork", this.burnedWork);
         properties.put("remainingWork", this.remainingWork);
         properties.put("sprintId", this.sprintId);
     }
@@ -65,35 +65,10 @@ public abstract class GSprintDaySnapshot
         super(template);
         if (template==null) return;
 
-        setBurnedWork(template.getBurnedWork());
         setDate(template.getDate());
+        setBurnedWork(template.getBurnedWork());
         setRemainingWork(template.getRemainingWork());
         setSprint(template.getSprint());
-    }
-
-    // -----------------------------------------------------------
-    // - burnedWork
-    // -----------------------------------------------------------
-
-    private int burnedWork;
-
-    public final int getBurnedWork() {
-        return burnedWork;
-    }
-
-    public final void setBurnedWork(int burnedWork) {
-        burnedWork = prepareBurnedWork(burnedWork);
-        if (isBurnedWork(burnedWork)) return;
-        this.burnedWork = burnedWork;
-        entityModified();
-    }
-
-    protected int prepareBurnedWork(int burnedWork) {
-        return burnedWork;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return this.burnedWork == burnedWork;
     }
 
     // -----------------------------------------------------------
@@ -124,6 +99,31 @@ public abstract class GSprintDaySnapshot
     public final boolean isDate(ilarkesto.base.time.Date date) {
         if (this.date == null && date == null) return true;
         return this.date != null && this.date.equals(date);
+    }
+
+    // -----------------------------------------------------------
+    // - burnedWork
+    // -----------------------------------------------------------
+
+    private int burnedWork;
+
+    public final int getBurnedWork() {
+        return burnedWork;
+    }
+
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
+        entityModified();
+    }
+
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
     }
 
     // -----------------------------------------------------------
@@ -206,11 +206,6 @@ public abstract class GSprintDaySnapshot
         }
     }
 
-
-    // -----------------------------------------------------------
-    // - composites
-    // -----------------------------------------------------------
-
     // --- dependencies ---
 
     protected static scrum.server.sprint.SprintDao sprintDao;
@@ -224,5 +219,10 @@ public abstract class GSprintDaySnapshot
     public static final void setSprintDaySnapshotDao(SprintDaySnapshotDao sprintDaySnapshotDao) {
         GSprintDaySnapshot.sprintDaySnapshotDao = sprintDaySnapshotDao;
     }
+
+
+    // -----------------------------------------------------------
+    // - composites
+    // -----------------------------------------------------------
 
 }

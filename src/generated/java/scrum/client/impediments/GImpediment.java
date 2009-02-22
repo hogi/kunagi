@@ -24,6 +24,11 @@
 package scrum.client.impediments;
 
 import java.util.*;
+import ilarkesto.auth.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.time.*;
+import ilarkesto.base.*;
+import ilarkesto.persistence.*;
 
 public abstract class GImpediment
             extends scrum.client.common.AGwtEntity {
@@ -41,60 +46,6 @@ public abstract class GImpediment
     @Override
     public final String getEntityType() {
         return ENTITY_TYPE;
-    }
-
-    // --- solveDate ---
-
-    private scrum.client.common.Date solveDate ;
-
-    public final scrum.client.common.Date getSolveDate() {
-        return this.solveDate ;
-    }
-
-    public final Impediment setSolveDate(scrum.client.common.Date solveDate) {
-        this.solveDate = solveDate ;
-        propertyChanged("solveDate", this.solveDate);
-        return (Impediment)this;
-    }
-
-    public final boolean isSolveDate(scrum.client.common.Date solveDate) {
-        return equals(this.solveDate, solveDate);
-    }
-
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final Impediment setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
-        return (Impediment)this;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
-    }
-
-    // --- description ---
-
-    private java.lang.String description ;
-
-    public final java.lang.String getDescription() {
-        return this.description ;
-    }
-
-    public final Impediment setDescription(java.lang.String description) {
-        this.description = description ;
-        propertyChanged("description", this.description);
-        return (Impediment)this;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
     }
 
     // --- solution ---
@@ -133,6 +84,60 @@ public abstract class GImpediment
         return equals(this.date, date);
     }
 
+    // --- description ---
+
+    private java.lang.String description ;
+
+    public final java.lang.String getDescription() {
+        return this.description ;
+    }
+
+    public final Impediment setDescription(java.lang.String description) {
+        this.description = description ;
+        propertyChanged("description", this.description);
+        return (Impediment)this;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        return equals(this.description, description);
+    }
+
+    // --- solveDate ---
+
+    private scrum.client.common.Date solveDate ;
+
+    public final scrum.client.common.Date getSolveDate() {
+        return this.solveDate ;
+    }
+
+    public final Impediment setSolveDate(scrum.client.common.Date solveDate) {
+        this.solveDate = solveDate ;
+        propertyChanged("solveDate", this.solveDate);
+        return (Impediment)this;
+    }
+
+    public final boolean isSolveDate(scrum.client.common.Date solveDate) {
+        return equals(this.solveDate, solveDate);
+    }
+
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final Impediment setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
+        return (Impediment)this;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
+    }
+
     // --- project ---
 
     private String projectId;
@@ -157,24 +162,24 @@ public abstract class GImpediment
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        String solveDateAsString = (String) props.get("solveDate");
-        solveDate  =  solveDateAsString == null ? null : new scrum.client.common.Date(solveDateAsString);
-        label  = (java.lang.String) props.get("label");
-        description  = (java.lang.String) props.get("description");
         solution  = (java.lang.String) props.get("solution");
         String dateAsString = (String) props.get("date");
         date  =  dateAsString == null ? null : new scrum.client.common.Date(dateAsString);
+        description  = (java.lang.String) props.get("description");
+        String solveDateAsString = (String) props.get("solveDate");
+        solveDate  =  solveDateAsString == null ? null : new scrum.client.common.Date(solveDateAsString);
+        label  = (java.lang.String) props.get("label");
         projectId = (String) props.get("projectId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
-        properties.put("label", this.label);
-        properties.put("description", this.description);
         properties.put("solution", this.solution);
         properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("description", this.description);
+        properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
+        properties.put("label", this.label);
         properties.put("projectId", this.projectId);
     }
 

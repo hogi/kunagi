@@ -202,7 +202,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	protected void generate(BeanModel beanModel) {
 		super.generate(beanModel);
 		if (beanModel instanceof EntityModel) {
-			autowire(new GwtEntityGenerator()).generate(beanModel);
+			autowire(new GwtEntityGenerator()).generate((EntityModel) beanModel);
 		}
 	}
 

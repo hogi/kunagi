@@ -25,6 +25,7 @@ package scrum.server.project;
 
 import java.util.*;
 import ilarkesto.auth.*;
+import ilarkesto.logging.*;
 import ilarkesto.base.time.*;
 import ilarkesto.base.*;
 import ilarkesto.fp.*;
@@ -45,9 +46,9 @@ public abstract class GProjectSprintSnapshotDao
     public void clearCaches() {
         projectSprintSnapshotsByRemainingWorkCache.clear();
         remainingWorksCache = null;
-        sprintsCache = null;
         projectSprintSnapshotsByBurnedWorkCache.clear();
         burnedWorksCache = null;
+        sprintsCache = null;
     }
 
     @Override
@@ -107,39 +108,6 @@ public abstract class GProjectSprintSnapshotDao
     }
 
     // -----------------------------------------------------------
-    // - sprint
-    // -----------------------------------------------------------
-
-    public final ProjectSprintSnapshot getProjectSprintSnapshotBySprint(scrum.server.sprint.Sprint sprint) {
-        return getEntity(new IsSprint(sprint));
-    }
-    private Set<scrum.server.sprint.Sprint> sprintsCache;
-
-    public final Set<scrum.server.sprint.Sprint> getSprints() {
-        if (sprintsCache == null) {
-            sprintsCache = new HashSet<scrum.server.sprint.Sprint>();
-            for (ProjectSprintSnapshot e : getEntities()) {
-                if (e.isSprintSet()) sprintsCache.add(e.getSprint());
-            }
-        }
-        return sprintsCache;
-    }
-
-    private static class IsSprint implements Predicate<ProjectSprintSnapshot> {
-
-        private scrum.server.sprint.Sprint value;
-
-        public IsSprint(scrum.server.sprint.Sprint value) {
-            this.value = value;
-        }
-
-        public boolean test(ProjectSprintSnapshot e) {
-            return e.isSprint(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
     // - burnedWork
     // -----------------------------------------------------------
 
@@ -175,6 +143,39 @@ public abstract class GProjectSprintSnapshotDao
 
         public boolean test(ProjectSprintSnapshot e) {
             return e.isBurnedWork(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - sprint
+    // -----------------------------------------------------------
+
+    public final ProjectSprintSnapshot getProjectSprintSnapshotBySprint(scrum.server.sprint.Sprint sprint) {
+        return getEntity(new IsSprint(sprint));
+    }
+    private Set<scrum.server.sprint.Sprint> sprintsCache;
+
+    public final Set<scrum.server.sprint.Sprint> getSprints() {
+        if (sprintsCache == null) {
+            sprintsCache = new HashSet<scrum.server.sprint.Sprint>();
+            for (ProjectSprintSnapshot e : getEntities()) {
+                if (e.isSprintSet()) sprintsCache.add(e.getSprint());
+            }
+        }
+        return sprintsCache;
+    }
+
+    private static class IsSprint implements Predicate<ProjectSprintSnapshot> {
+
+        private scrum.server.sprint.Sprint value;
+
+        public IsSprint(scrum.server.sprint.Sprint value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectSprintSnapshot e) {
+            return e.isSprint(value);
         }
 
     }
