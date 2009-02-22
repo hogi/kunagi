@@ -5,7 +5,7 @@ import ilarkesto.di.app.WebApplicationStarter;
 import ilarkesto.logging.Logger;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.DaoService;
-import ilarkesto.persistence.EntityUtils;
+import ilarkesto.persistence.Persist;
 import ilarkesto.webapp.AWebApplication;
 
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public abstract class AServiceImpl extends RemoteServiceServlet {
 	}
 
 	protected final List<Map> toPropertyMap(Collection<? extends AEntity> entities) {
-		return EntityUtils.createPropertiesMaps(entities);
+		return Persist.createPropertiesMaps(entities);
 	}
 
 }

@@ -44,11 +44,11 @@ public abstract class GProjectSprintSnapshotDao
 
     // --- clear caches ---
     public void clearCaches() {
-        projectSprintSnapshotsByRemainingWorkCache.clear();
-        remainingWorksCache = null;
         projectSprintSnapshotsByBurnedWorkCache.clear();
         burnedWorksCache = null;
         sprintsCache = null;
+        projectSprintSnapshotsByRemainingWorkCache.clear();
+        remainingWorksCache = null;
     }
 
     @Override
@@ -65,46 +65,6 @@ public abstract class GProjectSprintSnapshotDao
         if (event.getEntity() instanceof ProjectSprintSnapshot) {
             clearCaches();
         }
-    }
-
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private final Cache<Integer,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByRemainingWorkCache = new Cache<Integer,Set<ProjectSprintSnapshot>>(
-            new Cache.Factory<Integer,Set<ProjectSprintSnapshot>>() {
-                public Set<ProjectSprintSnapshot> create(Integer remainingWork) {
-                    return getEntities(new IsRemainingWork(remainingWork));
-                }
-            });
-
-    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByRemainingWork(int remainingWork) {
-        return projectSprintSnapshotsByRemainingWorkCache.get(remainingWork);
-    }
-    private Set<Integer> remainingWorksCache;
-
-    public final Set<Integer> getRemainingWorks() {
-        if (remainingWorksCache == null) {
-            remainingWorksCache = new HashSet<Integer>();
-            for (ProjectSprintSnapshot e : getEntities()) {
-                remainingWorksCache.add(e.getRemainingWork());
-            }
-        }
-        return remainingWorksCache;
-    }
-
-    private static class IsRemainingWork implements Predicate<ProjectSprintSnapshot> {
-
-        private int value;
-
-        public IsRemainingWork(int value) {
-            this.value = value;
-        }
-
-        public boolean test(ProjectSprintSnapshot e) {
-            return e.isRemainingWork(value);
-        }
-
     }
 
     // -----------------------------------------------------------
@@ -176,6 +136,46 @@ public abstract class GProjectSprintSnapshotDao
 
         public boolean test(ProjectSprintSnapshot e) {
             return e.isSprint(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByRemainingWorkCache = new Cache<Integer,Set<ProjectSprintSnapshot>>(
+            new Cache.Factory<Integer,Set<ProjectSprintSnapshot>>() {
+                public Set<ProjectSprintSnapshot> create(Integer remainingWork) {
+                    return getEntities(new IsRemainingWork(remainingWork));
+                }
+            });
+
+    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByRemainingWork(int remainingWork) {
+        return projectSprintSnapshotsByRemainingWorkCache.get(remainingWork);
+    }
+    private Set<Integer> remainingWorksCache;
+
+    public final Set<Integer> getRemainingWorks() {
+        if (remainingWorksCache == null) {
+            remainingWorksCache = new HashSet<Integer>();
+            for (ProjectSprintSnapshot e : getEntities()) {
+                remainingWorksCache.add(e.getRemainingWork());
+            }
+        }
+        return remainingWorksCache;
+    }
+
+    private static class IsRemainingWork implements Predicate<ProjectSprintSnapshot> {
+
+        private int value;
+
+        public IsRemainingWork(int value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectSprintSnapshot e) {
+            return e.isRemainingWork(value);
         }
 
     }

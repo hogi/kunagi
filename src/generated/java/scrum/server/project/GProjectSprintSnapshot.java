@@ -40,15 +40,15 @@ public abstract class GProjectSprintSnapshot
         return projectSprintSnapshotDao;
     }
 
-    protected void repairDeadValueObject(AValueObject valueObject) {
+    protected void repairDeadValueObject(ADatob valueObject) {
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);
         properties.put("sprintId", this.sprintId);
+        properties.put("remainingWork", this.remainingWork);
     }
 
     public int compareTo(ProjectSprintSnapshot other) {
@@ -64,34 +64,9 @@ public abstract class GProjectSprintSnapshot
         super(template);
         if (template==null) return;
 
-        setRemainingWork(template.getRemainingWork());
         setBurnedWork(template.getBurnedWork());
         setSprint(template.getSprint());
-    }
-
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private int remainingWork;
-
-    public final int getRemainingWork() {
-        return remainingWork;
-    }
-
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
-        entityModified();
-    }
-
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
+        setRemainingWork(template.getRemainingWork());
     }
 
     // -----------------------------------------------------------
@@ -155,6 +130,31 @@ public abstract class GProjectSprintSnapshot
     public final boolean isSprint(scrum.server.sprint.Sprint sprint) {
         if (this.sprintId == null && sprint == null) return true;
         return sprint != null && sprint.getId().equals(this.sprintId);
+    }
+
+    // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private int remainingWork;
+
+    public final int getRemainingWork() {
+        return remainingWork;
+    }
+
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+        entityModified();
+    }
+
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
     }
 
     protected void repairDeadReferences(String entityId) {

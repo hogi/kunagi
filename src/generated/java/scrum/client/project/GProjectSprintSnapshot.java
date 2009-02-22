@@ -48,24 +48,6 @@ public abstract class GProjectSprintSnapshot
         return ENTITY_TYPE;
     }
 
-    // --- remainingWork ---
-
-    private int remainingWork ;
-
-    public final int getRemainingWork() {
-        return this.remainingWork ;
-    }
-
-    public final ProjectSprintSnapshot setRemainingWork(int remainingWork) {
-        this.remainingWork = remainingWork ;
-        propertyChanged("remainingWork", this.remainingWork);
-        return (ProjectSprintSnapshot)this;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return equals(this.remainingWork, remainingWork);
-    }
-
     // --- burnedWork ---
 
     private int burnedWork ;
@@ -105,20 +87,38 @@ public abstract class GProjectSprintSnapshot
         return equals(this.sprintId, sprint);
     }
 
+    // --- remainingWork ---
+
+    private int remainingWork ;
+
+    public final int getRemainingWork() {
+        return this.remainingWork ;
+    }
+
+    public final ProjectSprintSnapshot setRemainingWork(int remainingWork) {
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
+        return (ProjectSprintSnapshot)this;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return equals(this.remainingWork, remainingWork);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        remainingWork  = (Integer) props.get("remainingWork");
         burnedWork  = (Integer) props.get("burnedWork");
         sprintId = (String) props.get("sprintId");
+        remainingWork  = (Integer) props.get("remainingWork");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);
         properties.put("sprintId", this.sprintId);
+        properties.put("remainingWork", this.remainingWork);
     }
 
 }
