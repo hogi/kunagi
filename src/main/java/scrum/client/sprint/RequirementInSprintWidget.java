@@ -27,6 +27,9 @@ public class RequirementInSprintWidget extends ABlockWidget {
 	private Requirement requirement;
 	private BlockListWidget<TaskWidget> taskList;
 
+	private Label summary;
+	private Widget content;
+	private ToolbarWidget toolbar;
 	private Label taskEffortSum;
 
 	private List<Task> previousTasks = new ArrayList<Task>(0);
@@ -45,31 +48,25 @@ public class RequirementInSprintWidget extends ABlockWidget {
 		});
 	}
 
-	public Requirement getRequirement() {
-		return requirement;
+	@Override
+	protected void onBlockInitialization() {
+		summary = new Label();
+
 	}
 
 	@Override
-	protected Widget buildContent() {
-		if (!isExtended()) { return new Label(requirement.getSprintBacklogSummary()); }
+	protected void onBlockUpdate() {
+		setBlockTitle(requirement.getLabel());
+		setIcon(requirement.isDone() ? Img.bundle.storyDoneIcon32() : Img.bundle.storyIcon32());
+		if (!isSelected()) {
+			summary.setText(requirement.getSprintBacklogSummary());
+			setContent(summary);
+			setToolbar(null);
+			return;
+		}
 
-		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
-		fieldsWidget.addField("Description", new Label(requirement.getDescription()));
-		fieldsWidget.addField("Test", new Label(requirement.getTestDescription()));
-		fieldsWidget.addField("Remainig Work", taskEffortSum);
-
-		FlowPanel panel = new FlowPanel();
-		panel.add(fieldsWidget);
-
-		panel.add(taskList);
-
-		update();
-
-		return panel;
-	}
-
-	public void update() {
 		taskEffortSum.setText(requirement.getRemainingWork());
+		taskList.update();
 
 		TaskWidget selectedBlock = taskList.getSelectedBlock();
 		Task selectedTask = selectedBlock == null ? null : selectedBlock.getTask();
@@ -85,6 +82,22 @@ public class RequirementInSprintWidget extends ABlockWidget {
 			}
 			previousTasks = tasks;
 		}
+
+		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
+		fieldsWidget.addField("Description", new Label(requirement.getDescription()));
+		fieldsWidget.addField("Test", new Label(requirement.getTestDescription()));
+		fieldsWidget.addField("Remainig Work", taskEffortSum);
+
+		FlowPanel panel = new FlowPanel();
+		panel.add(fieldsWidget);
+		panel.add(taskList);
+
+		setContent(panel);
+		setToolbar(getToolbar());
+	}
+
+	public Requirement getRequirement() {
+		return requirement;
 	}
 
 	private TaskWidget addBlock(Task task) {
@@ -93,51 +106,39 @@ public class RequirementInSprintWidget extends ABlockWidget {
 		return block;
 	}
 
-	@Override
-	protected Widget buildToolbar() {
-		if (!isExtended()) return null;
-		ToolbarWidget toolbar = new ToolbarWidget();
+	protected Widget getToolbar() {
+		if (toolbar == null) {
+			toolbar = new ToolbarWidget();
 
-		if (requirement.isDone() && !requirement.isClosed()) {
-			toolbar.addButton("Close").addClickListener(new ClickListener() {
+			if (requirement.isDone() && !requirement.isClosed()) {
+				toolbar.addButton("Close").addClickListener(new ClickListener() {
 
-				public void onClick(Widget sender) {
-					requirement.setClosed(true);
-					rebuild();
-				}
-			});
+					public void onClick(Widget sender) {
+						requirement.setClosed(true);
+						update();
+					}
+				});
+			}
+
+			if (!requirement.isClosed()) {
+				toolbar.addButton("Create new Task").addClickListener(new ClickListener() {
+
+					public void onClick(Widget sender) {
+						Task task = requirement.createNewTask();
+						TaskWidget block = addBlock(task);
+						taskList.selectBlock(block);
+						update();
+					}
+				});
+			}
 		}
-
-		if (!requirement.isClosed()) {
-			toolbar.addButton("Create new Task").addClickListener(new ClickListener() {
-
-				public void onClick(Widget sender) {
-					Task task = requirement.createNewTask();
-					TaskWidget block = addBlock(task);
-					taskList.selectBlock(block);
-					update();
-				}
-			});
-		}
-
 		return toolbar;
-	}
-
-	@Override
-	protected String getBlockTitle() {
-		return requirement.getLabel();
 	}
 
 	@Override
 	protected AbstractImagePrototype getIcon16() {
 		if (requirement.isDone()) return Img.bundle.storyDoneIcon16();
 		return Img.bundle.storyIcon16();
-	}
-
-	@Override
-	protected AbstractImagePrototype getIcon32() {
-		if (requirement.isDone()) return Img.bundle.storyDoneIcon32();
-		return Img.bundle.storyIcon32();
 	}
 
 	@Override

@@ -41,7 +41,6 @@ public class BlockListDropController implements DropController {
 			int toIndex = list.indexOf(dropTarget);
 			if (fromIndex > toIndex) toIndex++;
 			if (isHigher(area, location)) toIndex--;
-			item.getSource().setInClipboard(false);
 			list.moveBlock(item.getSource(), toIndex);
 			item.removeFromClipboard();
 		} else {

@@ -37,6 +37,7 @@ public class ProductBacklogWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		list.update();
 		list.clear();
 		for (Requirement item : ScrumGwtApplication.get().getProject().getRequirements()) {
 			list.addBlock(new RequirementWidget(item));

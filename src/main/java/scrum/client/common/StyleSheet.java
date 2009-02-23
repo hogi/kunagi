@@ -55,7 +55,6 @@ public class StyleSheet extends BaseStyleSheet {
 	// others
 
 	public static final String INTEGER_EDITOR = "Integer-editor";
-	public static final String DRAG_HANDLE = "DragHandle";
 	public static final String A_ITEM_FIELDS_WIDGET_GRID = "AItemFieldsWidget-grid";
 	public static final String FIELD_LABEL = "fieldLabel";
 	public static final String TRASH_ON_ENTER = "Trash-onEnter";

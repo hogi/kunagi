@@ -24,16 +24,19 @@ public class RequirementWidget extends ABlockWidget {
 	private ATextViewEditWidget label;
 	private ARichtextViewEditWidget description;
 	private ARichtextViewEditWidget test;
+	private Label summary;
+	private ItemFieldsWidget fieldsWidget;
+	private ToolbarWidget toolbar;
 
 	public RequirementWidget(Requirement item) {
 		this.requirement = item;
 	}
 
 	@Override
-	protected Widget buildContent() {
-		if (!isExtended()) { return new Label(requirement.getProductBacklogSummary()); }
+	protected void onBlockInitialization() {
+		summary = new Label();
 
-		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
+		fieldsWidget = new ItemFieldsWidget();
 		label = fieldsWidget.addField("Label", new ATextViewEditWidget() {
 
 			@Override
@@ -49,7 +52,7 @@ public class RequirementWidget extends ABlockWidget {
 			@Override
 			protected void onEditorSubmit() {
 				requirement.setLabel(getEditorText());
-				rebuild();
+				update();
 			}
 
 		});
@@ -119,78 +122,78 @@ public class RequirementWidget extends ABlockWidget {
 			}
 
 		});
+	}
 
-		// TODO move to update()
+	@Override
+	protected void onBlockUpdate() {
+		setBlockTitle(requirement.getLabel());
+		setIcon(requirement.isClosed() ? Img.bundle.storyDoneIcon32() : Img.bundle.storyIcon32());
+		if (!isSelected()) {
+			summary.setText(requirement.getProductBacklogSummary());
+			setContent(summary);
+			setToolbar(null);
+			return;
+		}
+
 		label.update();
 		description.update();
 		test.update();
 
-		return fieldsWidget;
+		setContent(fieldsWidget);
+		setToolbar(getToolbar());
 	}
 
-	@Override
-	protected Widget buildToolbar() {
-		if (!isExtended()) return null;
-		ToolbarWidget toolbar = new ToolbarWidget();
+	protected Widget getToolbar() {
+		if (toolbar == null) {
+			toolbar = new ToolbarWidget();
 
-		toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
-
-			public void onClick(Widget sender) {
-				ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
-				ProductBacklogWidget.get().list.removeSelectedRow();
-			}
-		});
-
-		final Sprint currentSprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
-		if (currentSprint != null) {
-			if (requirement.isSprint(currentSprint)) {
-				toolbar.addButton("Remove from Sprint").addClickListener(new ClickListener() {
-
-					public void onClick(Widget sender) {
-						requirement.setSprint(null);
-						rebuild();
-					}
-				});
-			} else {
-				toolbar.addButton(Img.bundle.sprintIcon16().createImage(), "Add to Sprint").addClickListener(
-					new ClickListener() {
-
-						public void onClick(Widget sender) {
-							requirement.setSprint(currentSprint);
-							rebuild();
-						}
-					});
-			}
-		}
-
-		if (!requirement.isClosed() && requirement.isDone()) {
-			toolbar.addButton(Img.bundle.done16().createImage(), "Close").addClickListener(new ClickListener() {
+			toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					// item.setDone(false);
-					rebuild();
+					ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
+					ProductBacklogWidget.get().list.removeSelectedRow();
 				}
 			});
+
+			final Sprint currentSprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
+			if (currentSprint != null) {
+				if (requirement.isSprint(currentSprint)) {
+					toolbar.addButton("Remove from Sprint").addClickListener(new ClickListener() {
+
+						public void onClick(Widget sender) {
+							requirement.setSprint(null);
+							update();
+						}
+					});
+				} else {
+					toolbar.addButton(Img.bundle.sprintIcon16().createImage(), "Add to Sprint").addClickListener(
+						new ClickListener() {
+
+							public void onClick(Widget sender) {
+								requirement.setSprint(currentSprint);
+								update();
+							}
+						});
+				}
+			}
+
+			if (!requirement.isClosed() && requirement.isDone()) {
+				toolbar.addButton(Img.bundle.done16().createImage(), "Close").addClickListener(new ClickListener() {
+
+					public void onClick(Widget sender) {
+						// item.setDone(false);
+						update();
+					}
+				});
+			}
 		}
-
 		return toolbar;
-	}
-
-	@Override
-	protected String getBlockTitle() {
-		return requirement.getLabel();
 	}
 
 	@Override
 	protected AbstractImagePrototype getIcon16() {
 		if (requirement.isClosed()) return Img.bundle.storyDoneIcon16();
 		return Img.bundle.storyIcon16();
-	}
-
-	@Override
-	protected AbstractImagePrototype getIcon32() {
-		if (requirement.isClosed()) return Img.bundle.storyDoneIcon32();
-		return Img.bundle.storyIcon32();
 	}
 
 	@Override

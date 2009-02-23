@@ -56,8 +56,6 @@ public class ClipboardWidget extends Composite {
 	}
 
 	public void addItem(ClipboardItemWidget item) {
-		if (item.getSource().isInClipboard()) { return; }
-		item.getSource().setInClipboard(true);
 		item.setClipboard(this);
 		clipboardItems.add(item);
 		rebuild();

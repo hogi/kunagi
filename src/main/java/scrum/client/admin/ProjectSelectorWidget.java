@@ -21,6 +21,7 @@ public class ProjectSelectorWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		list.update();
 		list.clear();
 		for (Project project : ScrumGwtApplication.get().getDao().getProjects()) {
 			ProjectWidget block = new ProjectWidget(project);

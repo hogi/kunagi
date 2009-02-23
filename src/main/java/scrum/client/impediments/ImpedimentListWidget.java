@@ -39,6 +39,7 @@ public class ImpedimentListWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		list.update();
 		list.clear();
 		for (Impediment impediment : ScrumGwtApplication.get().getProject().getImpediments()) {
 			ImpedimentWidget widget = new ImpedimentWidget(impediment);

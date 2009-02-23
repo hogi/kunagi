@@ -97,6 +97,7 @@ public class SprintBacklogWidget extends AWidget {
 	protected void onUpdate() {
 		label.update();
 		goal.update();
+		requirementList.update();
 
 		remainingWork.setText(getSprint().getTaskEffortSumString());
 		begin.setText(getSprint().getBegin().toString());

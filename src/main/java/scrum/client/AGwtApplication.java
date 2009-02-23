@@ -1,16 +1,11 @@
 package scrum.client;
 
-
 import ilarkesto.gwt.client.DataTransferObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
+import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.common.AGwtDao;
-import scrum.client.common.AGwtEntity;
-
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public abstract class AGwtApplication implements EntryPoint {
@@ -19,7 +14,6 @@ public abstract class AGwtApplication implements EntryPoint {
 
 	protected String entityIdBase;
 	private int entityIdCounter;
-	private Map<String, ? extends AGwtEntity> entities = new HashMap<String, AGwtEntity>();
 
 	protected abstract void handleCommunicationError(Throwable ex);
 
@@ -28,6 +22,13 @@ public abstract class AGwtApplication implements EntryPoint {
 	public AGwtApplication() {
 		if (singleton != null) throw new RuntimeException("GWT application already instantiated: " + singleton);
 		singleton = this;
+		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
+
+			public void onUncaughtException(Throwable ex) {
+				ex.printStackTrace();
+				GwtLogger.DEBUG("ERROR", ex);
+			}
+		});
 	}
 
 	protected void handleDataFromServer(DataTransferObject data) {

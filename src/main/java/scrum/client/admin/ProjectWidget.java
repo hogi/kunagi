@@ -18,20 +18,27 @@ public class ProjectWidget extends ABlockWidget {
 
 	private Project project;
 
+	private HTML content;
+	private ToolbarWidget toolbar;
+
 	public ProjectWidget(Project project) {
 		this.project = project;
 	}
 
 	@Override
-	protected String getBlockTitle() {
-		return project.getLabel();
+	protected void onBlockInitialization() {
+		content = new HTML();
+
 	}
 
 	@Override
-	protected Widget buildContent() {
+	protected void onBlockUpdate() {
+		setBlockTitle(project.getLabel());
+		setIcon(Img.icons().projectIcon32());
+
 		String description = project.getDescription();
 		if (description == null) description = "No description.";
-		if (!isExtended()) {
+		if (!isSelected()) {
 			int idx = description.indexOf('.');
 			if (idx > 0) {
 				description = description.substring(0, idx + 1);
@@ -40,23 +47,22 @@ public class ProjectWidget extends ABlockWidget {
 				description = description.substring(0, 149) + "...";
 			}
 		}
-		return new HTML(description);
+		content.setHTML(description);
+
+		setContent(content);
+		setToolbar(isSelected() ? getToolbar() : null);
 	}
 
-	@Override
-	protected Widget buildToolbar() {
-		if (!isExtended()) // block is not extended -> no toolbar
-			return null;
+	protected Widget getToolbar() {
+		if (toolbar == null) {
+			toolbar = new ToolbarWidget();
+			toolbar.addButton("Open Project").addClickListener(new ClickListener() {
 
-		// block is extended -> create toolbar with buttons
-		ToolbarWidget toolbar = new ToolbarWidget();
-
-		toolbar.addButton("Open Project").addClickListener(new ClickListener() {
-
-			public void onClick(Widget sender) {
-				select();
-			}
-		});
+				public void onClick(Widget sender) {
+					select();
+				}
+			});
+		}
 
 		return toolbar;
 	}
@@ -84,11 +90,6 @@ public class ProjectWidget extends ABlockWidget {
 
 	@Override
 	protected AbstractImagePrototype getIcon16() {
-		return Img.icons().projectIcon32();
-	}
-
-	@Override
-	protected AbstractImagePrototype getIcon32() {
 		return Img.icons().projectIcon32();
 	}
 

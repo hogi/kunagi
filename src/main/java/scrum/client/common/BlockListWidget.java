@@ -1,51 +1,50 @@
 package scrum.client.common;
 
+import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.GwtLogger;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.SourcesTableEvents;
 import com.google.gwt.user.client.ui.TableListener;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Scrollable List of <code>BlockWidget</code>s.
  */
-public final class BlockListWidget<B extends ABlockWidget> extends Composite implements Iterable<B> {
+public final class BlockListWidget<B extends ABlockWidget> extends AWidget implements Iterable<B> {
 
 	// private static final Logger LOG = Logger.get(BlockListWidget.class);
 
 	private FlexTable table;
 	private List<B> blocks = new LinkedList<B>();
 	private int selectedRow = -1;
-	private boolean sidebarMode;
 
 	private BlockListController<B> controller = new BlockListController<B>();
 
 	public BlockListWidget(BlockListController<B> controller) {
 		this.controller = controller;
+	}
+
+	@Override
+	protected Widget onInitialization() {
 		table = new FlexTable();
 		table.setCellPadding(0);
 		table.setCellSpacing(0);
 		table.setStyleName(StyleSheet.ELEMENT_BLOCK_LIST_WIDGET_TABLE);
-		if (!sidebarMode) {
-			table.addTableListener(new Listener());
+		table.addTableListener(new Listener());
+
+		return table;
+	}
+
+	@Override
+	protected void onUpdate() {
+		for (B block : blocks) {
+			block.update();
 		}
-
-		initWidget(table);
-	}
-
-	void onBlockRebuilt(B block) {}
-
-	public final void setSidebarMode(boolean sidebarMode) {
-		this.sidebarMode = sidebarMode;
-	}
-
-	public final boolean isSidebarMode() {
-		return sidebarMode;
 	}
 
 	public final void clear() {
@@ -59,11 +58,9 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 		block.setListController(controller);
 		block.setList(this);
 
-		block.setInClipboard(sidebarMode);
-		block.rebuild();
-
 		blocks.add(block);
 		table.setWidget(table.getRowCount(), 0, block);
+		block.update();
 
 		return block;
 	}
@@ -102,16 +99,13 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 	}
 
 	public final void selectRow(int row) {
-		if (sidebarMode) return;
 
 		if (row == selectedRow) return;
 
 		deselect();
 		ABlockWidget block = blocks.get(row);
 
-		if (!sidebarMode) {
-			block.setExtended(true);
-		}
+		block.setSelected(true);
 		selectedRow = row;
 	}
 
@@ -140,7 +134,7 @@ public final class BlockListWidget<B extends ABlockWidget> extends Composite imp
 
 	public final void deselect() {
 		for (B block : blocks) {
-			block.setExtended(false);
+			block.setSelected(false);
 		}
 		selectedRow = -1;
 	}

@@ -19,6 +19,10 @@ public class ImpedimentWidget extends ABlockWidget {
 
 	private Impediment impediment;
 
+	private ItemFieldsWidget fieldsWidget;
+	private Label summary;
+	private ToolbarWidget toolbar;
+
 	private ATextViewEditWidget label;
 	private ARichtextViewEditWidget description;
 	private ARichtextViewEditWidget solution;
@@ -28,31 +32,11 @@ public class ImpedimentWidget extends ABlockWidget {
 	}
 
 	@Override
-	protected String getBlockTitle() {
-		return impediment.getLabel();
-	}
+	protected void onBlockInitialization() {
+		summary = new Label();
 
-	@Override
-	protected AbstractImagePrototype getIcon16() {
-		// return different icon depending on solved-status
-		if (impediment.isSolved()) return Img.bundle.impedimentSolvedIcon16();
-		return Img.bundle.impedimentIcon16();
-	}
+		fieldsWidget = new ItemFieldsWidget();
 
-	@Override
-	protected AbstractImagePrototype getIcon32() {
-		// return different icon depending on solved-status
-		if (impediment.isSolved()) return Img.bundle.impedimentSolvedIcon32();
-		return Img.bundle.impedimentIcon32();
-	}
-
-	@Override
-	protected Widget buildContent() {
-		if (!isExtended()) // block is not extended -> return only a label with the summary
-			return new Label(impediment.getSummary());
-
-		// block is extended -> create an ItemFieldsWidget
-		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
 		label = fieldsWidget.addField("Label", new ATextViewEditWidget() {
 
 			@Override
@@ -68,7 +52,7 @@ public class ImpedimentWidget extends ABlockWidget {
 			@Override
 			protected void onEditorSubmit() {
 				impediment.setLabel(getEditorText());
-				rebuild();
+				update();
 			}
 
 		});
@@ -107,48 +91,65 @@ public class ImpedimentWidget extends ABlockWidget {
 			}
 		});
 
-		// TODO move to update()
-		label.update();
-		description.update();
-		solution.update();
-
-		return fieldsWidget;
 	}
 
 	@Override
-	protected Widget buildToolbar() {
-		if (!isExtended()) // block is not extended -> no toolbar
-			return null;
+	protected void onBlockUpdate() {
+		setBlockTitle(impediment.getLabel());
+		setIcon(impediment.isSolved() ? Img.bundle.impedimentSolvedIcon32() : Img.bundle.impedimentIcon32());
+		if (!isSelected()) {
+			summary.setText(impediment.getSummary());
+			setContent(summary);
+			setToolbar(null);
+			return;
+		}
+		label.update();
+		description.update();
+		solution.update();
+		setContent(fieldsWidget);
+		setToolbar(getToolbar());
+	}
 
-		// block is extended -> create toolbar with buttons
-		ToolbarWidget toolbar = new ToolbarWidget();
+	@Override
+	protected AbstractImagePrototype getIcon16() {
+		// return different icon depending on solved-status
+		if (impediment.isSolved()) return Img.bundle.impedimentSolvedIcon16();
+		return Img.bundle.impedimentIcon16();
+	}
 
-		toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
+	protected Widget getToolbar() {
+		if (toolbar == null) {
 
-			public void onClick(Widget sender) {
-				ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
-				ImpedimentListWidget.get().list.removeSelectedRow();
+			toolbar = new ToolbarWidget();
+
+			toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
+
+				public void onClick(Widget sender) {
+					ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
+					ImpedimentListWidget.get().list.removeSelectedRow();
+				}
+			});
+
+			if (!impediment.isSolved()) {
+				// impediment not solved -> add [Solve] button
+				toolbar.addButton(Img.bundle.done16().createImage(), "Mark Solved").addClickListener(
+					new ClickListener() {
+
+						public void onClick(Widget sender) {
+							impediment.setSolved();
+							update();
+						}
+					});
+			} else {
+				// impediment not solved -> add [Unsolve] button
+				toolbar.addButton("Mark Unsolved").addClickListener(new ClickListener() {
+
+					public void onClick(Widget sender) {
+						impediment.setSolveDate(null);
+						update();
+					}
+				});
 			}
-		});
-
-		if (!impediment.isSolved()) {
-			// impediment not solved -> add [Solve] button
-			toolbar.addButton(Img.bundle.done16().createImage(), "Mark Solved").addClickListener(new ClickListener() {
-
-				public void onClick(Widget sender) {
-					impediment.setSolved();
-					rebuild();
-				}
-			});
-		} else {
-			// impediment not solved -> add [Unsolve] button
-			toolbar.addButton("Mark Unsolved").addClickListener(new ClickListener() {
-
-				public void onClick(Widget sender) {
-					impediment.setSolveDate(null);
-					rebuild();
-				}
-			});
 		}
 
 		return toolbar;

@@ -23,30 +23,19 @@ public class TaskWidget extends ABlockWidget {
 	private AIntegerViewEditWidget burnedWork;
 	private AIntegerViewEditWidget remainingWork;
 	private ARichtextViewEditWidget note;
+	private Label summary;
+	private ItemFieldsWidget fieldsWidget;
+	private ToolbarWidget toolbar;
 
 	public TaskWidget(Task task) {
 		this.task = task;
 	}
 
-	public Task getTask() {
-		return task;
-	}
-
 	@Override
-	protected DropController createDropController() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	protected void onBlockInitialization() {
+		summary = new Label();
 
-	@Override
-	protected Widget buildContent() {
-		if (!isExtended()) {
-			// block is not extended -> return only a label with the summary
-			return new Label(task.getSummary());
-		}
-
-		// block is extended -> create an ItemFieldsWidget
-		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
+		fieldsWidget = new ItemFieldsWidget();
 
 		description = fieldsWidget.addField("Description", new ATextViewEditWidget() {
 
@@ -88,7 +77,7 @@ public class TaskWidget extends ABlockWidget {
 				task.setBurnedWork(value);
 				task.adjustRemainingWork(diff);
 				notifyListControllerDataChanged();
-				rebuild();
+				update();
 			}
 
 			@Override
@@ -96,7 +85,7 @@ public class TaskWidget extends ABlockWidget {
 				task.decrementBurnedWork();
 				task.adjustRemainingWork(-1);
 				notifyListControllerDataChanged();
-				rebuild();
+				update();
 			}
 
 			@Override
@@ -104,7 +93,7 @@ public class TaskWidget extends ABlockWidget {
 				task.incrementBurnedWork();
 				task.adjustRemainingWork(1);
 				notifyListControllerDataChanged();
-				rebuild();
+				update();
 			}
 		});
 
@@ -124,21 +113,21 @@ public class TaskWidget extends ABlockWidget {
 			protected void onEditorSubmit() {
 				task.setRemainingWork(getEditorValue(1));
 				notifyListControllerDataChanged();
-				rebuild();
+				update();
 			}
 
 			@Override
 			protected void onMinusClicked() {
 				task.decrementRemainingWork();
 				notifyListControllerDataChanged();
-				rebuild();
+				update();
 			}
 
 			@Override
 			protected void onPlusClicked() {
 				task.incrementRemainingWork();
 				notifyListControllerDataChanged();
-				rebuild();
+				update();
 			}
 
 		});
@@ -165,73 +154,78 @@ public class TaskWidget extends ABlockWidget {
 		fieldsWidget.addField("Owner", new Label(task.getOwner() == null ? "No owner specified." : task.getOwner()
 				.getName()));
 
-		// TODO move to update()
+	}
+
+	@Override
+	protected void onBlockUpdate() {
+		setBlockTitle(task.getLabel());
+		setIcon(task.isDone() ? Img.bundle.taskDoneIcon32() : Img.bundle.taskIcon32());
+		if (!isSelected()) {
+			summary.setText(task.getSummary());
+			setContent(summary);
+			setToolbar(null);
+			return;
+		}
+
 		description.update();
 		burnedWork.update();
 		remainingWork.update();
 		note.update();
 
-		return fieldsWidget;
+		setContent(fieldsWidget);
+		setToolbar(getToolbar());
+	}
+
+	public Task getTask() {
+		return task;
 	}
 
 	@Override
-	protected Widget buildToolbar() {
-		if (!isExtended()) {
-			// block is not extended -> no toolbar
-			return null;
-		}
+	protected DropController createDropController() {
+		return null;
+	}
 
-		// block is extended -> create toolbar with buttons
-		ToolbarWidget toolbar = new ToolbarWidget();
-		if (!task.isDone()) {
-			toolbar.addButton("Own").addClickListener(new ClickListener() {
+	protected Widget getToolbar() {
+		if (toolbar == null) {
+			toolbar = new ToolbarWidget();
+			if (!task.isDone()) {
+				toolbar.addButton("Own").addClickListener(new ClickListener() {
 
-				public void onClick(Widget sender) {
-					task.setOwner(ScrumGwtApplication.get().getUser());
-					rebuild();
-				}
+					public void onClick(Widget sender) {
+						task.setOwner(ScrumGwtApplication.get().getUser());
+						update();
+					}
 
-			});
-		}
-
-		toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
-
-			public void onClick(Widget sender) {
-				delete();
+				});
 			}
 
-		});
-
-		if (!task.isDone()) {
-			toolbar.addButton(Img.bundle.done16().createImage(), "Done").addClickListener(new ClickListener() {
+			toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					task.setDone();
-					notifyListControllerDataChanged();
-					rebuild();
+					delete();
 				}
 
 			});
+
+			if (!task.isDone()) {
+				toolbar.addButton(Img.bundle.done16().createImage(), "Done").addClickListener(new ClickListener() {
+
+					public void onClick(Widget sender) {
+						task.setDone();
+						notifyListControllerDataChanged();
+						update();
+					}
+
+				});
+			}
 		}
-
 		return toolbar;
-	}
-
-	@Override
-	protected String getBlockTitle() {
-		return task.getLabel();
 	}
 
 	@Override
 	protected AbstractImagePrototype getIcon16() {
 		if (task.isDone()) return Img.bundle.taskDoneIcon16();
 		return Img.bundle.taskIcon16();
-	}
-
-	@Override
-	protected AbstractImagePrototype getIcon32() {
-		if (task.isDone()) return Img.bundle.taskDoneIcon32();
-		return Img.bundle.taskIcon32();
 	}
 
 	@Override
