@@ -49,7 +49,6 @@ public class StyleSheet extends BaseStyleSheet {
 
 	public static final String ELEMENT_DROP_WIDGET = "element-DropWidget";
 	public static final String ELEMENT_DROP_WIDGET_ITEMS = "element-DropWidget-items";
-	public static final String ELEMENT_DROP_WIDGET_SPACE = "element-DropWidget-space";
 	public static final String ELEMENT_DROP_WIDGET_TRASH = "element-DropWidget-trash";
 
 	// others

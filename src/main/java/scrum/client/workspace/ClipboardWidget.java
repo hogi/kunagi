@@ -14,39 +14,31 @@ import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ClipboardWidget extends Composite {
 
 	private VerticalPanel clipboardPanel;
-	private SimplePanel space;
 	private HorizontalPanel trash;
 	private ArrayList<ClipboardItemWidget> clipboardItems = new ArrayList<ClipboardItemWidget>();
 
 	public ClipboardWidget() {
-		space = new SimplePanel();
-		space.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_SPACE);
-		space.setWidget(new Label("drop here"));
-
 		trash = new HorizontalPanel();
 		trash.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_TRASH);
 		trash.add(Img.icons().trashIcon32().createImage());
-		trash.add(new Label("Trash"));
-
-		DockPanel dock = new DockPanel();
-		dock.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET);
+		// trash.add(new Label("Trash"));
 
 		clipboardPanel = new VerticalPanel();
 		clipboardPanel.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_ITEMS);
-		dock.add(clipboardPanel, DockPanel.CENTER);
-
-		dock.add(trash, DockPanel.SOUTH);
 
 		ScrumGwtApplication.get().getDragController().registerDropController(itemDropController);
 		ScrumGwtApplication.get().getDragController().registerDropController(trashDropController);
+
+		DockPanel dock = new DockPanel();
+		dock.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET);
+		dock.add(clipboardPanel, DockPanel.CENTER);
+		dock.add(trash, DockPanel.SOUTH);
 
 		initWidget(dock);
 

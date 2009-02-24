@@ -1,36 +1,39 @@
 package scrum.client.workspace;
 
-import ilarkesto.gwt.client.ToolbarWidget;
+import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.NavigatorWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.PanelWidget;
 import scrum.client.common.StyleSheet;
 import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SidebarWidget extends Composite {
+public class SidebarWidget extends AWidget {
 
-	public SidebarWidget() {
-		VerticalPanel sidebar = new VerticalPanel();
-		sidebar.setStyleName(StyleSheet.ELEMENT_SIDEBAR_WIDGET);
+	private NavigatorWidget navigator;
 
-		ToolbarWidget toolbar = new ToolbarWidget();
+	@Override
+	protected Widget onInitialization() {
+		SimplePanel title = new SimplePanel();
+		title.setStyleName("title");
+		title.setWidget(new Label("Scrum42"));
 
-		toolbar.addButton("Project Overview").addClickListener(new ClickListener() {
+		navigator = new NavigatorWidget();
 
-			public void onClick(Widget sender) {
+		navigator.addItem(null, "Project Overview", new Runnable() {
+
+			public void run() {
 				WorkareaWidget.get().showProjectOverview();
 			}
-
 		});
 
-		toolbar.addButton("Product Backlog").addClickListener(new ClickListener() {
+		navigator.addItem(null, "Product Backlog", new Runnable() {
 
-			public void onClick(Widget sender) {
+			public void run() {
 				Ui.get().lock("Loading Backlog Items...");
 				ScrumGwtApplication.get().callRequestRequirements(new Runnable() {
 
@@ -41,46 +44,57 @@ public class SidebarWidget extends Composite {
 			}
 		});
 
-		toolbar.addButton(Img.bundle.sprintIcon16().createImage(), "Sprint Backlog").addClickListener(
-			new ClickListener() {
+		navigator.addItem(Img.bundle.sprintIcon16().createImage(), "Sprint Backlog", new Runnable() {
 
-				public void onClick(Widget sender) {
-					Ui.get().lock("Loading Sprint...");
-					ScrumGwtApplication.get().callRequestCurrentSprint(new Runnable() {
+			public void run() {
+				Ui.get().lock("Loading Backlog Items...");
+				ScrumGwtApplication.get().callRequestRequirements(new Runnable() {
 
-						public void run() {
-							WorkareaWidget.get().showSprintBacklog();
-						}
-					});
-				}
+					public void run() {
+						Ui.get().lock("Loading Sprint...");
+						ScrumGwtApplication.get().callRequestCurrentSprint(new Runnable() {
 
-			});
-
-		toolbar.addButton(Img.bundle.impedimentIcon16().createImage(), "Impediments").addClickListener(
-			new ClickListener() {
-
-				public void onClick(Widget sender) {
-					Ui.get().lock("Loading impediments...");
-					ScrumGwtApplication.get().callRequestImpediments(new Runnable() {
-
-						public void run() {
-							WorkareaWidget.get().showImpedimentList();
-						}
-					});
-				}
-			});
-
-		toolbar.addButton("Test").addClickListener(new ClickListener() {
-
-			public void onClick(Widget sender) {
-			// ScrumGwtApplication.get().getWorkspaceWidget().showTest();
+							public void run() {
+								WorkareaWidget.get().showSprintBacklog();
+							}
+						});
+					}
+				});
 			}
 		});
 
-		sidebar.add(new PanelWidget("Navigation", toolbar));
-		sidebar.add(new HTML("&nbsp;"));
-		sidebar.add(new PanelWidget("Clipboard", new ClipboardWidget()));
+		navigator.addItem(Img.bundle.impedimentIcon16().createImage(), "Impediment List", new Runnable() {
 
-		initWidget(sidebar);
+			public void run() {
+				Ui.get().lock("Loading Backlog Items...");
+				ScrumGwtApplication.get().callRequestRequirements(new Runnable() {
+
+					public void run() {
+						Ui.get().lock("Loading impediments...");
+						ScrumGwtApplication.get().callRequestImpediments(new Runnable() {
+
+							public void run() {
+								WorkareaWidget.get().showImpedimentList();
+							}
+						});
+					}
+				});
+			}
+		});
+
+		VerticalPanel sidebar = new VerticalPanel();
+		sidebar.setStyleName(StyleSheet.ELEMENT_SIDEBAR_WIDGET);
+		sidebar.add(title);
+		sidebar.add(navigator);
+		sidebar.add(new HTML("&nbsp;"));
+		sidebar.add(new ClipboardWidget());
+
+		return sidebar;
 	}
+
+	@Override
+	protected void onUpdate() {
+		navigator.update();
+	}
+
 }

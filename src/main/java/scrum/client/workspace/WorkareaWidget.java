@@ -1,7 +1,6 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.PanelWidget;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.ProjectOverviewWidget;
@@ -25,13 +24,14 @@ public class WorkareaWidget extends AWidget {
 	protected Widget onInitialization() {
 		currentWidget = new Label("workarea");
 		wrapper = new SimplePanel();
+		wrapper.setStyleName("WorkareaWidget");
 		wrapper.add(currentWidget);
 		return wrapper;
 	}
 
 	@Override
 	protected void onUpdate() {
-		wrapper.setWidget(new PanelWidget("Content", currentWidget));
+		wrapper.setWidget(currentWidget);
 		if (currentWidget != null && currentWidget instanceof AWidget) {
 			((AWidget) currentWidget).update();
 		}
@@ -53,7 +53,7 @@ public class WorkareaWidget extends AWidget {
 		show(getImpedimentList());
 	}
 
-	private void show(Widget widget) {
+	private void show(AWidget widget) {
 		currentWidget = widget;
 		Ui.get().unlock();
 		update();

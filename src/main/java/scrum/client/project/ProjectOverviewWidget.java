@@ -5,10 +5,11 @@ import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
+import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
-import scrum.client.common.ItemFieldsWidget;
 import scrum.client.common.ScrumUtil;
 import scrum.client.sprint.Sprint;
+import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -17,14 +18,13 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectOverviewWidget extends AWidget {
 
-	private ATextViewEditWidget label;
-	private ARichtextViewEditWidget description;
+	private FieldsWidget fields;
 
 	@Override
 	protected Widget onInitialization() {
-		ItemFieldsWidget fields = new ItemFieldsWidget();
+		fields = new FieldsWidget();
 
-		label = fields.addField("Label", new ATextViewEditWidget() {
+		fields.add("Label", new ATextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -42,7 +42,7 @@ public class ProjectOverviewWidget extends AWidget {
 			}
 		});
 
-		description = fields.addField("Description", new ARichtextViewEditWidget() {
+		fields.add("Description", new ARichtextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -62,22 +62,22 @@ public class ProjectOverviewWidget extends AWidget {
 
 		User productOwner = ScrumGwtApplication.get().getProject().getProductOwner();
 		if (productOwner != null) {
-			fields.addField("Product Owner", new Label(productOwner.getName()));
+			fields.add("Product Owner", new Label(productOwner.getName()));
 		}
 
 		User scrumMaster = ScrumGwtApplication.get().getProject().getScrumMaster();
 		if (scrumMaster != null) {
-			fields.addField("Scrum Master", new Label(scrumMaster.getName()));
+			fields.add("Scrum Master", new Label(scrumMaster.getName()));
 		}
 
 		String team = ScrumUtil.toCommataSeperatedString(ScrumGwtApplication.get().getProject().getTeamMembers());
 		if (team.length() > 0) {
-			fields.addField("Team", new Label(team));
+			fields.add("Team", new Label(team));
 		}
 
 		String admins = ScrumUtil.toCommataSeperatedString(ScrumGwtApplication.get().getProject().getAdmins());
 		if (admins.length() > 0) {
-			fields.addField("Project Admins", new Label(admins));
+			fields.add("Project Admins", new Label(admins));
 		}
 
 		int chartWidth = 500;
@@ -102,8 +102,7 @@ public class ProjectOverviewWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		label.update();
-		description.update();
+		fields.update();
 	}
 
 	private Widget createCurrentSprintOverview(Sprint sprint) {
@@ -112,5 +111,9 @@ public class ProjectOverviewWidget extends AWidget {
 		String chartUrl = "../sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width=" + chartWidth + "&height="
 				+ chartHeight;
 		return new GroupWidget("Current Sprint", new Image(chartUrl, 0, 0, chartWidth, chartHeight));
+	}
+
+	public static ProjectOverviewWidget get() {
+		return WorkareaWidget.get().getProjectOverview();
 	}
 }

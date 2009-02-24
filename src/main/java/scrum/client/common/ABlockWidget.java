@@ -32,7 +32,6 @@ public abstract class ABlockWidget extends AWidget {
 	private SimplePanel panel;
 	private boolean selected;
 	private DropController dropController;
-	private BlockListController listController;
 	private DndMarkerWidget dndMarkerTop = new DndMarkerWidget();
 	private DndMarkerWidget dndMarkerBottom = new DndMarkerWidget();
 
@@ -118,10 +117,6 @@ public abstract class ABlockWidget extends AWidget {
 		return title.getText();
 	}
 
-	protected void notifyListControllerDataChanged() {
-		listController.dataChanged(this);
-	}
-
 	public Widget getBorderPanel() {
 		return panel;
 	}
@@ -153,10 +148,6 @@ public abstract class ABlockWidget extends AWidget {
 
 	public final boolean isDropSupported() {
 		return dropController != null;
-	}
-
-	void setListController(BlockListController listController) {
-		this.listController = listController;
 	}
 
 	/**

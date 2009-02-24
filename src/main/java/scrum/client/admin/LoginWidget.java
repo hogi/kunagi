@@ -4,7 +4,7 @@ import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.ItemFieldsWidget;
+import scrum.client.common.FieldsWidget;
 import scrum.client.common.PanelWidget;
 import scrum.client.workspace.Ui;
 
@@ -34,9 +34,9 @@ public class LoginWidget extends AWidget {
 			}
 		});
 
-		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
-		fieldsWidget.addField("Username", username);
-		fieldsWidget.addField("Password", password);
+		FieldsWidget fieldsWidget = new FieldsWidget();
+		fieldsWidget.addWidget("Username", username);
+		fieldsWidget.addWidget("Password", password);
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(fieldsWidget);

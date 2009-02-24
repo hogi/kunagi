@@ -4,8 +4,8 @@ import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.ABlockWidget;
-import scrum.client.common.ItemFieldsWidget;
+import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
 
@@ -15,29 +15,38 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ImpedimentWidget extends ABlockWidget {
+public class ImpedimentWidget extends AExtensibleBlockWidget {
 
 	private Impediment impediment;
 
-	private ItemFieldsWidget fieldsWidget;
+	private FieldsWidget fields;
 	private Label summary;
 	private ToolbarWidget toolbar;
-
-	private ATextViewEditWidget label;
-	private ARichtextViewEditWidget description;
-	private ARichtextViewEditWidget solution;
 
 	public ImpedimentWidget(Impediment impediment) {
 		this.impediment = impediment;
 	}
 
 	@Override
-	protected void onBlockInitialization() {
+	protected void onCollapsedInitialization() {
 		summary = new Label();
+	}
 
-		fieldsWidget = new ItemFieldsWidget();
+	@Override
+	protected void onCollapsedUpdate() {
+		setBlockTitle(impediment.getLabel());
+		setIcon(impediment.isSolved() ? Img.bundle.impedimentSolvedIcon32() : Img.bundle.impedimentIcon32());
+		summary.setText(impediment.getSummary());
+		setContent(summary);
+		setToolbar(null);
+	}
 
-		label = fieldsWidget.addField("Label", new ATextViewEditWidget() {
+	@Override
+	protected void onExtendedInitialization() {
+		fields = new FieldsWidget();
+		fields.setAutoUpdateWidget(this);
+
+		fields.add("Label", new ATextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -52,11 +61,10 @@ public class ImpedimentWidget extends ABlockWidget {
 			@Override
 			protected void onEditorSubmit() {
 				impediment.setLabel(getEditorText());
-				update();
 			}
 
 		});
-		description = fieldsWidget.addField("Description", new ARichtextViewEditWidget() {
+		fields.add("Description", new ARichtextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -73,7 +81,7 @@ public class ImpedimentWidget extends ABlockWidget {
 				impediment.setDescription(getEditorText());
 			}
 		});
-		solution = fieldsWidget.addField("Solution", new ARichtextViewEditWidget() {
+		fields.add("Solution", new ARichtextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -94,19 +102,11 @@ public class ImpedimentWidget extends ABlockWidget {
 	}
 
 	@Override
-	protected void onBlockUpdate() {
+	protected void onExtendedUpdate() {
 		setBlockTitle(impediment.getLabel());
 		setIcon(impediment.isSolved() ? Img.bundle.impedimentSolvedIcon32() : Img.bundle.impedimentIcon32());
-		if (!isSelected()) {
-			summary.setText(impediment.getSummary());
-			setContent(summary);
-			setToolbar(null);
-			return;
-		}
-		label.update();
-		description.update();
-		solution.update();
-		setContent(fieldsWidget);
+		fields.update();
+		setContent(fields);
 		setToolbar(getToolbar());
 	}
 

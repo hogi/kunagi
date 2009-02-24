@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.ItemFieldsWidget;
+import scrum.client.common.FieldsWidget;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 
@@ -27,8 +26,7 @@ public class SprintBacklogWidget extends AWidget {
 	private Label begin;
 	private Label end;
 
-	private ATextViewEditWidget label;
-	private ARichtextViewEditWidget goal;
+	private FieldsWidget fieldsWidget;
 
 	private List<Requirement> previousRequirements = new ArrayList<Requirement>(0);
 
@@ -38,19 +36,12 @@ public class SprintBacklogWidget extends AWidget {
 		remainingWork = new Label();
 		begin = new Label();
 		end = new Label();
-		requirementList = new BlockListWidget<RequirementInSprintWidget>(
-				new BlockListController<RequirementInSprintWidget>() {
-
-					@Override
-					public void dataChanged(RequirementInSprintWidget block) {
-						update();
-					}
-				});
+		requirementList = new BlockListWidget<RequirementInSprintWidget>();
 
 		view = new FlowPanel();
-		ItemFieldsWidget fieldsWidget = new ItemFieldsWidget();
+		fieldsWidget = new FieldsWidget();
 
-		label = fieldsWidget.addField("Label", new ATextViewEditWidget() {
+		fieldsWidget.add("Label", new ATextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -68,7 +59,7 @@ public class SprintBacklogWidget extends AWidget {
 			}
 		});
 
-		goal = fieldsWidget.addField("Goal", new ARichtextViewEditWidget() {
+		fieldsWidget.add("Goal", new ARichtextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -85,9 +76,9 @@ public class SprintBacklogWidget extends AWidget {
 				getSprint().setGoal(getEditorText());
 			}
 		});
-		fieldsWidget.addField("Begin", begin);
-		fieldsWidget.addField("End", end);
-		fieldsWidget.addField("Remaining Work", remainingWork);
+		fieldsWidget.add("Begin", begin);
+		fieldsWidget.add("End", end);
+		fieldsWidget.add("Remaining Work", remainingWork);
 		view.add(fieldsWidget);
 		view.add(requirementList);
 		return view;
@@ -95,8 +86,7 @@ public class SprintBacklogWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		label.update();
-		goal.update();
+		fieldsWidget.update();
 		requirementList.update();
 
 		remainingWork.setText(getSprint().getTaskEffortSumString());
@@ -107,7 +97,7 @@ public class SprintBacklogWidget extends AWidget {
 		if (!requirements.equals(previousRequirements)) {
 			requirementList.clear();
 			for (Requirement requirement : requirements) {
-				requirementList.addBlock(new RequirementInSprintWidget(requirement));
+				requirementList.addBlock(new RequirementInSprintWidget(requirement, this));
 			}
 			previousRequirements = requirements;
 		}

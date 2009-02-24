@@ -2,7 +2,6 @@ package scrum.client.admin;
 
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.PanelWidget;
 import scrum.client.project.Project;
@@ -15,7 +14,7 @@ public class ProjectSelectorWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<ProjectWidget>(new BlockListController<ProjectWidget>());
+		list = new BlockListWidget<ProjectWidget>();
 		return new PanelWidget("Select Project", list);
 	}
 

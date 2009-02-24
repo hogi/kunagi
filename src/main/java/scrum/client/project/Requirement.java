@@ -48,8 +48,8 @@ public class Requirement extends GRequirement {
 		if (isDone()) return "Done. Test required.";
 		if (getEstimatedWork() == null) return "No effort estimated.";
 		Sprint sprint = getSprint();
-		if (sprint == null) return getEffortString() + " to do. No sprint assigned.";
-		return getEffortString() + " to do in sprint " + sprint.getLabel() + ".";
+		if (sprint == null) return getEstimatedWorkAsString() + " to do. No sprint assigned.";
+		return getEstimatedWorkAsString() + " to do in sprint " + sprint.getLabel() + ".";
 	}
 
 	/**
@@ -72,12 +72,12 @@ public class Requirement extends GRequirement {
 		return openTaskCount + " of " + taskCount + " Tasks open. About " + effort + " hours to do.";
 	}
 
-	public String getEffortString() {
+	public String getEstimatedWorkAsString() {
 		if (getEstimatedWork() == null) return null;
 		return getEstimatedWork() + " " + ScrumGwtApplication.get().getProject().getEffortUnit();
 	}
 
-	public Integer getTaskEffortSum() {
+	public Integer getRemainingWork() {
 		Integer sum = null;
 		for (Task t : getTasks()) {
 			Integer effort = t.getRemainingWork();
@@ -92,8 +92,8 @@ public class Requirement extends GRequirement {
 		return sum;
 	}
 
-	public String getRemainingWork() {
-		Integer sum = getTaskEffortSum();
+	public String getRemainingWorkAsString() {
+		Integer sum = getRemainingWork();
 		if (sum != null) return sum + " hours";
 		return "unknown";
 	}

@@ -24,7 +24,7 @@ public class Sprint extends GSprint {
 	public Integer getTaskEffortSum() {
 		Integer sum = null;
 		for (Requirement s : getRequirements()) {
-			Integer effort = s.getTaskEffortSum();
+			Integer effort = s.getRemainingWork();
 			if (effort != null) {
 				if (sum == null) {
 					sum = effort;

@@ -3,7 +3,6 @@ package scrum.client.project;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.WorkareaWidget;
 
@@ -19,7 +18,7 @@ public class ProductBacklogWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<RequirementWidget>(new BlockListController<RequirementWidget>());
+		list = new BlockListWidget<RequirementWidget>();
 		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton("Create new Requirement").addClickListener(new CreateClickListener());
 

@@ -23,12 +23,6 @@ public final class BlockListWidget<B extends ABlockWidget> extends AWidget imple
 	private List<B> blocks = new LinkedList<B>();
 	private int selectedRow = -1;
 
-	private BlockListController<B> controller = new BlockListController<B>();
-
-	public BlockListWidget(BlockListController<B> controller) {
-		this.controller = controller;
-	}
-
 	@Override
 	protected Widget onInitialization() {
 		table = new FlexTable();
@@ -55,7 +49,6 @@ public final class BlockListWidget<B extends ABlockWidget> extends AWidget imple
 	}
 
 	public final B addBlock(B block) {
-		block.setListController(controller);
 		block.setList(this);
 
 		blocks.add(block);

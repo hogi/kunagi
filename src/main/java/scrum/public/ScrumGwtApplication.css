@@ -1,12 +1,12 @@
 td {vertical-align: top;}
 .gwt-Button {white-space: nowrap;}
-body {padding: 5px; background: #555555 url(../bg.png);}
+body {padding: 5px; background: #F2F5FE url("bg.gif") 0 0 repeat-x;}
 
 .element-ToolbarWidget {padding: 3px;}
 .element-ButtonWidget {font-weight: bold; cursor: pointer; color: darkblue; white-space: nowrap;}
 
 
-.element-BlockListWidget-table {width: 100%; background: #EEF3F9;}
+.element-BlockListWidget-table {width: 100%; background: #F2F5FE;}
 
 .element-BlockWidget-main {}
 .element-BlockWidget {border: 1px solid black; background: white; cursor: pointer; color: black;}
@@ -15,29 +15,35 @@ body {padding: 5px; background: #555555 url(../bg.png);}
 .element-BlockWidget-center {}
 .state-BlockWidget-selected {border: 3px solid #84C979; cursor: default;}
 
-.element-DndMarkerWidget {background: #EEF3F9; height: 3px;}
+.element-DndMarkerWidget {background: #F2F5FE; height: 3px;}
 .element-DndMarkerWidget-active {background: black; height: 3px;}
 
 
 .element-WorkspaceWidget {}
 .element-WorkspaceWidget-sidebar {width: 300px; height: 100%;}
-.element-WorkspaceWidget-workspace {border: 2px solid red; width: 100%;}
-.element-WorkspaceWidget-workarea {padding: 5px;}
+.element-WorkspaceWidget-workspace { width: 100%;}
+.element-WorkspaceWidget-workarea {padding: 5px;border: 2px solid red;}
 
-.element-SidebarWidget {padding: 5px 5px 20px 5px; position: fixed; width: 300px;}
-.element-SidebarWidget-buttons {}
+.element-SidebarWidget {position: fixed; width: 300px; background:#CEDBF9 url("sidebar_bg.gif") 0 0 repeat-y;}
+.element-SidebarWidget .title {padding: 5px 20px 5px 20px; background:#A0B9F3 url("sidebar_title_bg.gif") 0 0 repeat-y; color: white; font-size: 20px; font-weight: bold; text-align: center;}
 
-.element-PanelWidget {border: 2px solid #EEEEEE; background: white; -moz-border-radius: 10px;}
+.NavigatorWidget .item {padding: 0px 15px 0px 15px; font-size: 16px;}
+.NavigatorWidget .item a {display:block; padding: 5px 5px 5px 5px; text-decoration:none; border-bottom: 1px solid #E2EAFC;}
+.NavigatorWidget .item a:hover {background-color:#D3DFF8; color:#192666;}
+.NavigatorWidget .selected .item a {background-color: #D3DFF8;}
+
+.WorkareaWidget {background: white; padding: 5px;}
+
+.element-PanelWidget {border: 2px solid #EEEEEE; background: white; }
 .element-PanelWidget-title {background: #EEEEEE; color: #AAAAAA; font-weight: bold; padding: 5px;}
 .element-PanelWidget-content {padding: 5px;}
 
 .element-GroupWidget-title {background: #DDDDDD; color: black; padding: 5px;}
 .element-GroupWidget-content {padding: 5px;}
 
-.element-DropWidget {width: 100%;}
-.element-DropWidget-items {height: 100px; width: 100%;}
-.element-DropWidget-trash {background: white; border: 1px solid black; color: black; width: 100%;}
-.element-DropWidget-space {background: grey; width: 100%; height: 200px;}
+.element-DropWidget {margin: 10px; margin-right: 25px; width: 100%;}
+.element-DropWidget-items {height: 100px; width: 100%; border: 1px dotted #192666;}
+.element-DropWidget-trash {border: 1px dotted #192666;}
 
 .Viewer {min-height: 16px; width: 100%;}
 .Textarea-editor {height: 100px; width: 96%;}
@@ -45,7 +51,7 @@ body {padding: 5px; background: #555555 url(../bg.png);}
 .AEditableWidget {width: 100%}
 .widePanel {width: 100%}
 .fieldLabel {color: gray;}
-.editableViewer {cursor: pointer; background: #EEF3F9; width: 100%; border: 1px dotted #CCCCCC; display: block; padding: 3px;}
+.editableViewer {cursor: pointer; background: #F2F5FE; width: 100%; border: 1px dotted #CCCCCC; display: block; padding: 3px;}
 .editableEditor {}
 .Trash-onEnter {border: 2px solid purple;}
 .deleted {background: grey;}

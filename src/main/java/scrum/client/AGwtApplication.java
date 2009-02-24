@@ -27,6 +27,7 @@ public abstract class AGwtApplication implements EntryPoint {
 			public void onUncaughtException(Throwable ex) {
 				ex.printStackTrace();
 				GwtLogger.DEBUG("ERROR", ex);
+				throw new RuntimeException(ex);
 			}
 		});
 	}

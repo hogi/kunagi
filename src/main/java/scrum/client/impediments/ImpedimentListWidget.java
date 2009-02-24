@@ -3,7 +3,6 @@ package scrum.client.impediments;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.BlockListController;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.WorkareaWidget;
 
@@ -19,7 +18,7 @@ public class ImpedimentListWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<ImpedimentWidget>(new BlockListController<ImpedimentWidget>());
+		list = new BlockListWidget<ImpedimentWidget>();
 
 		ToolbarWidget toolbar = new ToolbarWidget();
 

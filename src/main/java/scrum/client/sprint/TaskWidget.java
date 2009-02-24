@@ -3,10 +3,11 @@ package scrum.client.sprint;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
+import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.ABlockWidget;
-import scrum.client.common.ItemFieldsWidget;
+import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
@@ -15,29 +16,39 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class TaskWidget extends ABlockWidget {
+public class TaskWidget extends AExtensibleBlockWidget {
 
 	private Task task;
+	private AWidget autoUpdateWidget; // widget to update, when fields edited
 
-	private ATextViewEditWidget description;
-	private AIntegerViewEditWidget burnedWork;
-	private AIntegerViewEditWidget remainingWork;
-	private ARichtextViewEditWidget note;
 	private Label summary;
-	private ItemFieldsWidget fieldsWidget;
-	private ToolbarWidget toolbar;
+	private FieldsWidget fields;
 
-	public TaskWidget(Task task) {
+	public TaskWidget(Task task, AWidget autoUpdateWidget) {
 		this.task = task;
+		this.autoUpdateWidget = autoUpdateWidget;
 	}
 
 	@Override
-	protected void onBlockInitialization() {
+	protected void onCollapsedInitialization() {
 		summary = new Label();
+	}
 
-		fieldsWidget = new ItemFieldsWidget();
+	@Override
+	protected void onCollapsedUpdate() {
+		setBlockTitle(task.getLabel());
+		setIcon(task.isDone() ? Img.bundle.taskDoneIcon32() : Img.bundle.taskIcon32());
+		summary.setText(task.getSummary());
+		setContent(summary);
+		setToolbar(null);
+	}
 
-		description = fieldsWidget.addField("Description", new ATextViewEditWidget() {
+	@Override
+	protected void onExtendedInitialization() {
+		fields = new FieldsWidget();
+		fields.setAutoUpdateWidget(autoUpdateWidget);
+
+		fields.add("Description", new ATextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -56,7 +67,7 @@ public class TaskWidget extends ABlockWidget {
 
 		});
 
-		burnedWork = fieldsWidget.addField("Burned Work", new AIntegerViewEditWidget() {
+		fields.add("Burned Work", new AIntegerViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -76,28 +87,22 @@ public class TaskWidget extends ABlockWidget {
 				int diff = value - previous;
 				task.setBurnedWork(value);
 				task.adjustRemainingWork(diff);
-				notifyListControllerDataChanged();
-				update();
 			}
 
 			@Override
 			protected void onMinusClicked() {
 				task.decrementBurnedWork();
 				task.adjustRemainingWork(-1);
-				notifyListControllerDataChanged();
-				update();
 			}
 
 			@Override
 			protected void onPlusClicked() {
 				task.incrementBurnedWork();
 				task.adjustRemainingWork(1);
-				notifyListControllerDataChanged();
-				update();
 			}
 		});
 
-		remainingWork = fieldsWidget.addField("Remaining Work", new AIntegerViewEditWidget() {
+		fields.add("Remaining Work", new AIntegerViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -112,27 +117,21 @@ public class TaskWidget extends ABlockWidget {
 			@Override
 			protected void onEditorSubmit() {
 				task.setRemainingWork(getEditorValue(1));
-				notifyListControllerDataChanged();
-				update();
 			}
 
 			@Override
 			protected void onMinusClicked() {
 				task.decrementRemainingWork();
-				notifyListControllerDataChanged();
-				update();
 			}
 
 			@Override
 			protected void onPlusClicked() {
 				task.incrementRemainingWork();
-				notifyListControllerDataChanged();
-				update();
 			}
 
 		});
 
-		note = fieldsWidget.addField("Note", new ARichtextViewEditWidget() {
+		fields.add("Note", new ARichtextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -151,29 +150,17 @@ public class TaskWidget extends ABlockWidget {
 
 		});
 
-		fieldsWidget.addField("Owner", new Label(task.getOwner() == null ? "No owner specified." : task.getOwner()
-				.getName()));
+		fields.add("Owner", new Label(task.getOwner() == null ? "No owner specified." : task.getOwner().getName()));
 
 	}
 
 	@Override
-	protected void onBlockUpdate() {
+	protected void onExtendedUpdate() {
 		setBlockTitle(task.getLabel());
 		setIcon(task.isDone() ? Img.bundle.taskDoneIcon32() : Img.bundle.taskIcon32());
-		if (!isSelected()) {
-			summary.setText(task.getSummary());
-			setContent(summary);
-			setToolbar(null);
-			return;
-		}
-
-		description.update();
-		burnedWork.update();
-		remainingWork.update();
-		note.update();
-
-		setContent(fieldsWidget);
-		setToolbar(getToolbar());
+		fields.update();
+		setContent(fields);
+		setToolbar(createToolbar());
 	}
 
 	public Task getTask() {
@@ -185,39 +172,38 @@ public class TaskWidget extends ABlockWidget {
 		return null;
 	}
 
-	protected Widget getToolbar() {
-		if (toolbar == null) {
-			toolbar = new ToolbarWidget();
-			if (!task.isDone()) {
-				toolbar.addButton("Own").addClickListener(new ClickListener() {
+	protected Widget createToolbar() {
 
-					public void onClick(Widget sender) {
-						task.setOwner(ScrumGwtApplication.get().getUser());
-						update();
-					}
-
-				});
-			}
-
-			toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
+		ToolbarWidget toolbar = new ToolbarWidget();
+		if (!task.isDone()) {
+			toolbar.addButton("Own").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					delete();
+					task.setOwner(ScrumGwtApplication.get().getUser());
+					autoUpdateWidget.update();
 				}
 
 			});
+		}
 
-			if (!task.isDone()) {
-				toolbar.addButton(Img.bundle.done16().createImage(), "Done").addClickListener(new ClickListener() {
+		toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
 
-					public void onClick(Widget sender) {
-						task.setDone();
-						notifyListControllerDataChanged();
-						update();
-					}
-
-				});
+			public void onClick(Widget sender) {
+				delete();
+				autoUpdateWidget.update();
 			}
+
+		});
+
+		if (!task.isDone()) {
+			toolbar.addButton(Img.bundle.done16().createImage(), "Done").addClickListener(new ClickListener() {
+
+				public void onClick(Widget sender) {
+					task.setDone();
+					autoUpdateWidget.update();
+				}
+
+			});
 		}
 		return toolbar;
 	}
@@ -231,6 +217,6 @@ public class TaskWidget extends ABlockWidget {
 	@Override
 	public void delete() {
 		task.getRequirement().deleteTask(task);
-		notifyListControllerDataChanged();
+		autoUpdateWidget.update();
 	}
 }

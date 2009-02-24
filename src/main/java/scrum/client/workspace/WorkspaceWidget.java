@@ -4,7 +4,6 @@ import ilarkesto.gwt.client.AWidget;
 import scrum.client.common.StyleSheet;
 
 import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -14,7 +13,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class WorkspaceWidget extends AWidget {
 
 	private DockPanel workspacePanel;
-	private SimplePanel workareaPanel;
 
 	private SidebarWidget sidebar;
 	private WorkareaWidget workarea;
@@ -28,10 +26,6 @@ public class WorkspaceWidget extends AWidget {
 		VerticalPanel sidebarPanel = new VerticalPanel();
 		sidebarPanel.setStyleName(StyleSheet.ELEMENT_WORKSPACE_WIDGET_SIDEBAR);
 		sidebarPanel.add(sidebar);
-
-		// workarea
-		workareaPanel = new SimplePanel();
-		workareaPanel.setStyleName(StyleSheet.ELEMENT_WORKSPACE_WIDGET_WORKAREA);
 
 		// workspace
 		workspacePanel = new DockPanel();
@@ -47,7 +41,7 @@ public class WorkspaceWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		// TODO sidebarWidget.update();
+		sidebar.update();
 		workarea.update();
 	}
 
