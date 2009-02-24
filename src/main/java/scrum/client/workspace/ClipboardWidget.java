@@ -2,10 +2,10 @@ package scrum.client.workspace;
 
 import java.util.ArrayList;
 
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.ClipboardItemWidget;
 import scrum.client.common.StyleSheet;
+import scrum.client.dnd.DndManager;
 import scrum.client.img.Img;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
@@ -32,8 +32,8 @@ public class ClipboardWidget extends Composite {
 		clipboardPanel = new VerticalPanel();
 		clipboardPanel.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_ITEMS);
 
-		ScrumGwtApplication.get().getDragController().registerDropController(itemDropController);
-		ScrumGwtApplication.get().getDragController().registerDropController(trashDropController);
+		DndManager.get().getDragController().registerDropController(itemDropController);
+		DndManager.get().getDragController().registerDropController(trashDropController);
 
 		DockPanel dock = new DockPanel();
 		dock.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET);

@@ -1,6 +1,6 @@
 package scrum.client.common;
 
-import scrum.client.ScrumGwtApplication;
+import scrum.client.dnd.DndManager;
 import scrum.client.workspace.ClipboardWidget;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -31,7 +31,7 @@ public class ClipboardItemWidget extends Composite {
 		rebuild();
 
 		initWidget(mainPanel);
-		ScrumGwtApplication.get().getDragController().makeDraggable(this, this.icon);
+		DndManager.get().getDragController().makeDraggable(this, this.icon);
 	}
 
 	protected void rebuild() {

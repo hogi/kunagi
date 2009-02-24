@@ -10,7 +10,6 @@ import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
 
-import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Label;
@@ -165,11 +164,6 @@ public class TaskWidget extends AExtensibleBlockWidget {
 
 	public Task getTask() {
 		return task;
-	}
-
-	@Override
-	protected DropController createDropController() {
-		return null;
 	}
 
 	protected Widget createToolbar() {

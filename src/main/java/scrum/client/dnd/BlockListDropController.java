@@ -13,63 +13,62 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class BlockListDropController implements DropController {
 
-	private ABlockWidget dropTarget;
-	private BlockListWidget list;
+	private ABlockWidget targetBlock;
 
-	public BlockListDropController(ABlockWidget dropTarget, BlockListWidget list) {
-		this.dropTarget = dropTarget;
-		this.list = list;
+	public BlockListDropController(ABlockWidget targetBlock) {
+		this.targetBlock = targetBlock;
 	}
 
 	public Widget getDropTarget() {
-		return dropTarget;
+		return targetBlock;
 	}
 
 	public void onDrop(DragContext context) {
-		WidgetArea area = new WidgetArea(dropTarget, null);
+		WidgetArea area = new WidgetArea(targetBlock, null);
 		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
+		BlockListWidget targetList = targetBlock.getList();
 
 		if (context.draggable instanceof ClipboardItemWidget) {
 			// move from clipboard
 			ClipboardItemWidget item = (ClipboardItemWidget) context.draggable;
 
-			int fromIndex = list.indexOf(item.getSource());
+			int fromIndex = targetList.indexOf(item.getSource());
 			if (fromIndex < 0) {
 				// TODO move data
 			}
 
-			int toIndex = list.indexOf(dropTarget);
+			int toIndex = targetList.indexOf(targetBlock);
 			if (fromIndex > toIndex) toIndex++;
 			if (isHigher(area, location)) toIndex--;
-			list.moveBlock(item.getSource(), toIndex);
+			targetList.moveBlock(item.getSource(), toIndex);
 			item.removeFromClipboard();
 		} else {
 			// move in the list
-			ABlockWidget block = (ABlockWidget) context.draggable;
+			ABlockWidget draggedBlock = (ABlockWidget) context.draggable;
 
-			int fromIndex = list.indexOf(block);
-			int toIndex = list.indexOf(dropTarget);
+			int fromIndex = targetList.indexOf(draggedBlock);
+			int toIndex = targetList.indexOf(targetBlock);
 			if (fromIndex > toIndex) toIndex++;
 			if (isHigher(area, location)) toIndex--;
-			list.moveBlock(block, toIndex);
+			targetList.moveBlock(draggedBlock, toIndex);
 		}
 	}
 
 	public void onEnter(DragContext context) {}
 
 	public void onLeave(DragContext context) {
-		dropTarget.deactivateDndMarkers();
+		targetBlock.deactivateDndMarkers();
 	}
 
 	public void onMove(DragContext context) {
-		WidgetArea area = new WidgetArea(dropTarget, null);
+		WidgetArea area = new WidgetArea(targetBlock, null);
 		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
 
 		boolean isHigher = isHigher(area, location);
 		if (isHigher) {
-			dropTarget.activateDndMarkerTop();
+			targetBlock.activateDndMarkerTop();
 		} else {
-			dropTarget.activateDndMarkerBottom();
+			targetBlock.activateDndMarkerBottom();
 		}
 	}
 
@@ -85,8 +84,8 @@ public class BlockListDropController implements DropController {
 	private boolean isDropAllowed(DragContext context) {
 		if (context.draggable instanceof ClipboardItemWidget) {
 			ClipboardItemWidget item = (ClipboardItemWidget) context.draggable;
-			return item.getSource().getClass().equals(dropTarget.getClass());
+			return item.getSource().getClass().equals(targetBlock.getClass());
 		}
-		return context.draggable.getClass().equals(dropTarget.getClass());
+		return context.draggable.getClass().equals(targetBlock.getClass());
 	}
 }

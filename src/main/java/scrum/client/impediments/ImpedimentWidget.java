@@ -6,10 +6,8 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.FieldsWidget;
-import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
 
-import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Label;
@@ -153,11 +151,6 @@ public class ImpedimentWidget extends AExtensibleBlockWidget {
 		}
 
 		return toolbar;
-	}
-
-	@Override
-	protected DropController createDropController() {
-		return new BlockListDropController(this, ImpedimentListWidget.get().list);
 	}
 
 	@Override

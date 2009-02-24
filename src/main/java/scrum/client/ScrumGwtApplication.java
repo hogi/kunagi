@@ -2,7 +2,7 @@ package scrum.client;
 
 import ilarkesto.gwt.client.DataTransferObject;
 import scrum.client.admin.User;
-import scrum.client.dnd.ScrumDragController;
+import scrum.client.dnd.DndManager;
 import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkspaceWidget;
@@ -25,7 +25,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	 */
 	private Project project;
 
-	private ScrumDragController dragController;
+	private DndManager dndManager;
 
 	private Ui ui;
 
@@ -90,11 +90,11 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		return (ScrumGwtApplication) singleton;
 	}
 
-	public ScrumDragController getDragController() {
-		if (dragController == null) {
-			dragController = new ScrumDragController(RootPanel.get(), false);
+	public DndManager getDndManager() {
+		if (dndManager == null) {
+			dndManager = new DndManager();
 		}
-		return dragController;
+		return dndManager;
 	}
 
 	// --- helper ---

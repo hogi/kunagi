@@ -8,7 +8,6 @@ import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkareaWidget;
 
-import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HTML;
@@ -82,11 +81,6 @@ public class ProjectWidget extends ABlockWidget {
 
 	@Override
 	public void delete() {}
-
-	@Override
-	protected DropController createDropController() {
-		return null;
-	}
 
 	@Override
 	protected AbstractImagePrototype getIcon16() {

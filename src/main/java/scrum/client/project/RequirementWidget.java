@@ -8,11 +8,9 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.FieldsWidget;
-import scrum.client.dnd.BlockListDropController;
 import scrum.client.img.Img;
 import scrum.client.sprint.Sprint;
 
-import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Label;
@@ -200,11 +198,6 @@ public class RequirementWidget extends AExtensibleBlockWidget {
 	public void delete() {
 		ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
 		ProductBacklogWidget.get().list.remove(this);
-	}
-
-	@Override
-	protected DropController createDropController() {
-		return new BlockListDropController(this, ProductBacklogWidget.get().list);
 	}
 
 	public Requirement getRequirement() {

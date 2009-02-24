@@ -1,10 +1,9 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.ScrumGwtApplication;
-import scrum.client.dnd.DndMarkerWidget;
+import scrum.client.dnd.BlockListDndMarkerWidget;
+import scrum.client.dnd.DndManager;
 
-import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -31,9 +30,8 @@ public abstract class ABlockWidget extends AWidget {
 	private FlowPanel mainPanel;
 	private SimplePanel panel;
 	private boolean selected;
-	private DropController dropController;
-	private DndMarkerWidget dndMarkerTop = new DndMarkerWidget();
-	private DndMarkerWidget dndMarkerBottom = new DndMarkerWidget();
+	private BlockListDndMarkerWidget dndMarkerTop = new BlockListDndMarkerWidget();
+	private BlockListDndMarkerWidget dndMarkerBottom = new BlockListDndMarkerWidget();
 
 	protected abstract AbstractImagePrototype getIcon16();
 
@@ -42,6 +40,8 @@ public abstract class ABlockWidget extends AWidget {
 	protected abstract void onBlockInitialization();
 
 	protected abstract void onBlockUpdate();
+
+	public ABlockWidget() {}
 
 	@Override
 	protected final Widget onInitialization() {
@@ -57,7 +57,7 @@ public abstract class ABlockWidget extends AWidget {
 		center.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_CENTER);
 		center.add(title);
 		center.add(contentWrapper);
-		ScrumGwtApplication.get().getDragController().makeDraggable(this, iconPanel);
+		DndManager.get().makeDraggable(this, iconPanel);
 
 		blockPanel = new HorizontalPanel();
 		blockPanel.setSpacing(5);
@@ -73,8 +73,6 @@ public abstract class ABlockWidget extends AWidget {
 		panel = new SimplePanel();
 		panel.setWidget(blockPanel);
 		panel.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET);
-
-		dropController = createDropController();
 
 		mainPanel.add(dndMarkerTop);
 		mainPanel.add(panel);
@@ -121,8 +119,6 @@ public abstract class ABlockWidget extends AWidget {
 		return panel;
 	}
 
-	protected abstract DropController createDropController();
-
 	public void deactivateDndMarkers() {
 		dndMarkerTop.setActive(false);
 		dndMarkerBottom.setActive(false);
@@ -146,8 +142,9 @@ public abstract class ABlockWidget extends AWidget {
 		this.list = list;
 	}
 
+	@Deprecated
 	public final boolean isDropSupported() {
-		return dropController != null;
+		return true;
 	}
 
 	/**
@@ -178,14 +175,12 @@ public abstract class ABlockWidget extends AWidget {
 	@Override
 	protected void onAttach() {
 		super.onAttach();
-		if (dropController != null)
-			ScrumGwtApplication.get().getDragController().registerDropController(dropController);
+		DndManager.get().registerDropTarget(this);
 	}
 
 	@Override
 	protected void onDetach() {
-		if (dropController != null)
-			ScrumGwtApplication.get().getDragController().unregisterDropController(dropController);
+		DndManager.get().unregisterDropTarget(this);
 		super.onDetach();
 	}
 }
