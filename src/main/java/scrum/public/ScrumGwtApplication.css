@@ -1,6 +1,6 @@
 td {vertical-align: top;}
 .gwt-Button {white-space: nowrap;}
-body {padding: 5px; background: #F2F5FE url("bg.gif") 0 0 repeat-x;}
+body {padding: 5px; background: white; backgroundX: #F2F5FE url("bg.gif") 0 0 repeat-x;}
 
 .element-ToolbarWidget {padding: 3px;}
 .element-ButtonWidget {font-weight: bold; cursor: pointer; color: darkblue; white-space: nowrap;}
