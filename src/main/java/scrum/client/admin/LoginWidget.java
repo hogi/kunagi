@@ -5,7 +5,7 @@ import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
-import scrum.client.common.PanelWidget;
+import scrum.client.common.GroupWidget;
 import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.ClickListener;
@@ -42,7 +42,7 @@ public class LoginWidget extends AWidget {
 		panel.add(fieldsWidget);
 		panel.add(loginButton);
 
-		return new PanelWidget("Login", panel);
+		return new GroupWidget("Login", panel);
 	}
 
 	@Override

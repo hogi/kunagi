@@ -189,7 +189,7 @@ public class RequirementWidget extends AExtensibleBlockWidget {
 	}
 
 	@Override
-	protected AbstractImagePrototype getIcon16() {
+	public AbstractImagePrototype getIcon16() {
 		if (requirement.isClosed()) return Img.bundle.storyDoneIcon16();
 		return Img.bundle.storyIcon16();
 	}

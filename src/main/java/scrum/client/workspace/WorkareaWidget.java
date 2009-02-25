@@ -1,6 +1,7 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
+import scrum.client.ScrumGwtApplication;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.ProjectOverviewWidget;
@@ -42,15 +43,33 @@ public class WorkareaWidget extends AWidget {
 	}
 
 	public void showSprintBacklog() {
-		show(getSprintBacklog());
+		Ui.get().lock("Loading Sprint...");
+		ScrumGwtApplication.get().callRequestCurrentSprint(new Runnable() {
+
+			public void run() {
+				show(getSprintBacklog());
+			}
+		});
 	}
 
 	public void showProductBacklog() {
-		show(getProductBacklog());
+		Ui.get().lock("Loading Product Backlog...");
+		ScrumGwtApplication.get().callRequestRequirements(new Runnable() {
+
+			public void run() {
+				show(getProductBacklog());
+			}
+		});
 	}
 
 	public void showImpedimentList() {
-		show(getImpedimentList());
+		Ui.get().lock("Loading Impediments...");
+		ScrumGwtApplication.get().callRequestImpediments(new Runnable() {
+
+			public void run() {
+				show(getImpedimentList());
+			}
+		});
 	}
 
 	private void show(AWidget widget) {

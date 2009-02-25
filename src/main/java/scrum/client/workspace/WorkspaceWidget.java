@@ -1,10 +1,9 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.StyleSheet;
 
 import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -22,20 +21,18 @@ public class WorkspaceWidget extends AWidget {
 		sidebar = new SidebarWidget();
 		workarea = new WorkareaWidget();
 
-		// sidebar
-		VerticalPanel sidebarPanel = new VerticalPanel();
-		sidebarPanel.setStyleName(StyleSheet.ELEMENT_WORKSPACE_WIDGET_SIDEBAR);
-		sidebarPanel.add(sidebar);
+		SimplePanel sidebarWrapper = new SimplePanel();
+		sidebarWrapper.setStyleName("sidebar");
+		sidebarWrapper.add(sidebar);
 
-		// workspace
 		workspacePanel = new DockPanel();
-		workspacePanel.setStyleName(StyleSheet.ELEMENT_WORKSPACE_WIDGET_WORKSPACE);
-		workspacePanel.add(sidebarPanel, DockPanel.WEST);
-		workspacePanel.setCellHeight(sidebarPanel, "100%");
+		workspacePanel.setStyleName("WorkspaceWidget");
+		workspacePanel.setWidth("100%");
+		workspacePanel.add(sidebarWrapper, DockPanel.WEST);
+		workspacePanel.setCellHeight(sidebarWrapper, "100%");
 		workspacePanel.add(workarea, DockPanel.CENTER);
 		workspacePanel.setCellWidth(workarea, "99%");
 
-		workspacePanel.setStyleName(StyleSheet.ELEMENT_WORKSPACE_WIDGET);
 		return workspacePanel;
 	}
 

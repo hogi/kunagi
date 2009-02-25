@@ -33,6 +33,11 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	 * Application entry point.
 	 */
 	public void onModuleLoad() {
+
+		// workaround for GWT issue 1813
+		// http://code.google.com/p/google-web-toolkit/issues/detail?id=1813
+		RootPanel.get().getElement().getStyle().setProperty("position", "relative");
+
 		ui = Ui.get();
 		ui.update();
 		RootPanel.get("workspace").add(ui);

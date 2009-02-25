@@ -3,6 +3,7 @@ package scrum.client.common;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.dnd.BlockListDndMarkerWidget;
 import scrum.client.dnd.DndManager;
+import scrum.client.workspace.ClipboardItemWidget;
 
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -33,7 +34,7 @@ public abstract class ABlockWidget extends AWidget {
 	private BlockListDndMarkerWidget dndMarkerTop = new BlockListDndMarkerWidget();
 	private BlockListDndMarkerWidget dndMarkerBottom = new BlockListDndMarkerWidget();
 
-	protected abstract AbstractImagePrototype getIcon16();
+	public abstract AbstractImagePrototype getIcon16();
 
 	public abstract void delete();
 

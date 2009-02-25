@@ -83,7 +83,7 @@ public class ProjectWidget extends ABlockWidget {
 	public void delete() {}
 
 	@Override
-	protected AbstractImagePrototype getIcon16() {
+	public AbstractImagePrototype getIcon16() {
 		return Img.icons().projectIcon32();
 	}
 

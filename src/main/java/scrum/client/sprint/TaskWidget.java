@@ -203,7 +203,7 @@ public class TaskWidget extends AExtensibleBlockWidget {
 	}
 
 	@Override
-	protected AbstractImagePrototype getIcon16() {
+	public AbstractImagePrototype getIcon16() {
 		if (task.isDone()) return Img.bundle.taskDoneIcon16();
 		return Img.bundle.taskIcon16();
 	}

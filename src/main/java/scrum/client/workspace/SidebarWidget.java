@@ -2,25 +2,20 @@ package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
-import scrum.client.ScrumGwtApplication;
-import scrum.client.common.StyleSheet;
+import scrum.client.common.ScrumUtil;
 import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SidebarWidget extends AWidget {
 
 	private NavigatorWidget navigator;
+	private ClipboardWidget clipboard;
+	private TrashWidget trash;
 
 	@Override
 	protected Widget onInitialization() {
-		SimplePanel title = new SimplePanel();
-		title.setStyleName("title");
-		title.setWidget(new Label("Scrum42"));
 
 		navigator = new NavigatorWidget();
 
@@ -34,60 +29,34 @@ public class SidebarWidget extends AWidget {
 		navigator.addItem(null, "Product Backlog", new Runnable() {
 
 			public void run() {
-				Ui.get().lock("Loading Backlog Items...");
-				ScrumGwtApplication.get().callRequestRequirements(new Runnable() {
-
-					public void run() {
-						WorkareaWidget.get().showProductBacklog();
-					}
-				});
+				WorkareaWidget.get().showProductBacklog();
 			}
 		});
 
 		navigator.addItem(Img.bundle.sprintIcon16().createImage(), "Sprint Backlog", new Runnable() {
 
 			public void run() {
-				Ui.get().lock("Loading Backlog Items...");
-				ScrumGwtApplication.get().callRequestRequirements(new Runnable() {
-
-					public void run() {
-						Ui.get().lock("Loading Sprint...");
-						ScrumGwtApplication.get().callRequestCurrentSprint(new Runnable() {
-
-							public void run() {
-								WorkareaWidget.get().showSprintBacklog();
-							}
-						});
-					}
-				});
+				WorkareaWidget.get().showSprintBacklog();
 			}
 		});
 
 		navigator.addItem(Img.bundle.impedimentIcon16().createImage(), "Impediment List", new Runnable() {
 
 			public void run() {
-				Ui.get().lock("Loading Backlog Items...");
-				ScrumGwtApplication.get().callRequestRequirements(new Runnable() {
-
-					public void run() {
-						Ui.get().lock("Loading impediments...");
-						ScrumGwtApplication.get().callRequestImpediments(new Runnable() {
-
-							public void run() {
-								WorkareaWidget.get().showImpedimentList();
-							}
-						});
-					}
-				});
+				WorkareaWidget.get().showImpedimentList();
 			}
 		});
 
-		VerticalPanel sidebar = new VerticalPanel();
-		sidebar.setStyleName(StyleSheet.ELEMENT_SIDEBAR_WIDGET);
-		sidebar.add(title);
+		trash = new TrashWidget();
+
+		clipboard = new ClipboardWidget();
+
+		FlowPanel sidebar = new FlowPanel();
+		sidebar.setStyleName("SidebarWidget");
+		sidebar.add(ScrumUtil.createEmptyDiv("beforeNavigatorSpacer"));
 		sidebar.add(navigator);
-		sidebar.add(new HTML("&nbsp;"));
-		sidebar.add(new ClipboardWidget());
+		sidebar.add(trash);
+		sidebar.add(clipboard);
 
 		return sidebar;
 	}
@@ -95,6 +64,8 @@ public class SidebarWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		navigator.update();
+		trash.update();
+		clipboard.update();
 	}
 
 }

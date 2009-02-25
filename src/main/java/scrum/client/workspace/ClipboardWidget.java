@@ -1,74 +1,58 @@
 package scrum.client.workspace;
 
+import ilarkesto.gwt.client.AWidget;
+
 import java.util.ArrayList;
 
 import scrum.client.common.ABlockWidget;
-import scrum.client.common.ClipboardItemWidget;
 import scrum.client.common.StyleSheet;
 import scrum.client.dnd.DndManager;
-import scrum.client.img.Img;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.VetoDragException;
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ClipboardWidget extends Composite {
+public class ClipboardWidget extends AWidget {
 
-	private VerticalPanel clipboardPanel;
-	private HorizontalPanel trash;
+	private FlowPanel panel;
 	private ArrayList<ClipboardItemWidget> clipboardItems = new ArrayList<ClipboardItemWidget>();
 
-	public ClipboardWidget() {
-		trash = new HorizontalPanel();
-		trash.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_TRASH);
-		trash.add(Img.icons().trashIcon32().createImage());
-		// trash.add(new Label("Trash"));
-
-		clipboardPanel = new VerticalPanel();
-		clipboardPanel.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET_ITEMS);
+	@Override
+	protected Widget onInitialization() {
+		panel = new FlowPanel();
+		panel.setStyleName("ClipboardWidget");
 
 		DndManager.get().getDragController().registerDropController(itemDropController);
-		DndManager.get().getDragController().registerDropController(trashDropController);
 
-		DockPanel dock = new DockPanel();
-		dock.setStyleName(StyleSheet.ELEMENT_DROP_WIDGET);
-		dock.add(clipboardPanel, DockPanel.CENTER);
-		dock.add(trash, DockPanel.SOUTH);
+		return panel;
+	}
 
-		initWidget(dock);
-
-		// test dummy
-		// addItem(new ImpedimentWidget(Dummy.moon.getImpediments().get(0)));
-		// addItem(new ImpedimentWidget(Dummy.moon.getImpediments().get(1)));
+	@Override
+	protected void onUpdate() {
+		panel.clear();
+		for (ClipboardItemWidget item : clipboardItems) {
+			panel.add(item);
+			item.update();
+		}
 	}
 
 	public void addItem(ClipboardItemWidget item) {
 		item.setClipboard(this);
 		clipboardItems.add(item);
-		rebuild();
+		update();
 	}
 
 	public void removeItem(ClipboardItemWidget item) {
 		clipboardItems.remove(item);
-		rebuild();
-	}
-
-	private void rebuild() {
-		clipboardPanel.clear();
-		for (ClipboardItemWidget item : clipboardItems) {
-			clipboardPanel.add(item);
-		}
+		update();
 	}
 
 	private DropController itemDropController = new DropController() {
 
 		public Widget getDropTarget() {
-			return clipboardPanel;
+			return panel;
 		}
 
 		public void onDrop(DragContext context) {
@@ -80,12 +64,12 @@ public class ClipboardWidget extends Composite {
 		}
 
 		public void onEnter(DragContext context) {
-			clipboardPanel.addStyleName(StyleSheet.TRASH_ON_ENTER); // TODO
+			panel.addStyleName(StyleSheet.DND_DROP_ALLOWED); // TODO
 		}
 
 		public void onLeave(DragContext context) {
 			System.out.println("leaving...");
-			clipboardPanel.removeStyleName(StyleSheet.TRASH_ON_ENTER); // TODO
+			panel.removeStyleName(StyleSheet.DND_DROP_ALLOWED); // TODO
 			// Widget widget = context.draggable;
 			// if (widget instanceof ABlockWidget) {
 			// ABlockWidget ablockwidget = (ABlockWidget) widget;
@@ -96,36 +80,6 @@ public class ClipboardWidget extends Composite {
 		public void onMove(DragContext context) {}
 
 		public void onPreviewDrop(DragContext context) throws VetoDragException {}
-
-	};
-
-	private DropController trashDropController = new DropController() {
-
-		public Widget getDropTarget() {
-			return trash;
-		}
-
-		public void onDrop(DragContext context) {
-			Widget widget = context.draggable;
-			if (widget instanceof ABlockWidget) {
-				((ABlockWidget) widget).delete();
-			}
-		}
-
-		public void onEnter(DragContext context) {
-			trash.addStyleName(StyleSheet.TRASH_ON_ENTER);
-		}
-
-		public void onLeave(DragContext context) {
-			trash.removeStyleName(StyleSheet.TRASH_ON_ENTER);
-		}
-
-		public void onMove(DragContext context) {}
-
-		public void onPreviewDrop(DragContext context) throws VetoDragException {
-		// TODO: check if item can be removed
-		// TODO: ask if item should be removed
-		}
 
 	};
 

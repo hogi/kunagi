@@ -4,12 +4,12 @@ import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
+import scrum.client.common.GroupWidget;
 import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProductBacklogWidget extends AWidget {
@@ -23,15 +23,11 @@ public class ProductBacklogWidget extends AWidget {
 		toolbar.addButton("Create new Requirement").addClickListener(new CreateClickListener());
 
 		FlowPanel panel = new FlowPanel();
-		panel
-				.add(new Label(
-						"The product backlog (or \"backlog\") is the requirements for a system, expressed as a prioritized list of product backlog Items. These included both functional and non-functional customer requirements, as well as technical team-generated requirements. While there are multiple inputs to the product backlog, it is the sole responsibility of the product owner to prioritize the product backlog."));
-		panel.add(new HTML("<br>"));
 		panel.add(toolbar);
 		panel.add(new HTML("<br>"));
 		panel.add(list);
 
-		return panel;
+		return new GroupWidget("Product Backlog", panel);
 	}
 
 	@Override

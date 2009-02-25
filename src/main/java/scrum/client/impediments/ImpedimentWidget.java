@@ -109,7 +109,7 @@ public class ImpedimentWidget extends AExtensibleBlockWidget {
 	}
 
 	@Override
-	protected AbstractImagePrototype getIcon16() {
+	public AbstractImagePrototype getIcon16() {
 		// return different icon depending on solved-status
 		if (impediment.isSolved()) return Img.bundle.impedimentSolvedIcon16();
 		return Img.bundle.impedimentIcon16();

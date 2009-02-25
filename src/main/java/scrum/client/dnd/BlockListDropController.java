@@ -2,7 +2,7 @@ package scrum.client.dnd;
 
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.ClipboardItemWidget;
+import scrum.client.workspace.ClipboardItemWidget;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.VetoDragException;

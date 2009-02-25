@@ -10,6 +10,7 @@ import java.util.List;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.FieldsWidget;
+import scrum.client.common.GroupWidget;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 
@@ -81,7 +82,8 @@ public class SprintBacklogWidget extends AWidget {
 		fieldsWidget.add("Remaining Work", remainingWork);
 		view.add(fieldsWidget);
 		view.add(requirementList);
-		return view;
+
+		return new GroupWidget("Sprint Backlog", view);
 	}
 
 	@Override

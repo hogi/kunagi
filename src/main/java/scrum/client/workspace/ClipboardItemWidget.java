@@ -1,17 +1,15 @@
-package scrum.client.common;
+package scrum.client.workspace;
 
+import ilarkesto.gwt.client.AWidget;
+import scrum.client.common.ABlockWidget;
 import scrum.client.dnd.DndManager;
-import scrum.client.workspace.ClipboardWidget;
 
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 
-public class ClipboardItemWidget extends Composite {
-
-	private FlowPanel mainPanel;
+public class ClipboardItemWidget extends AWidget {
 
 	private HorizontalPanel panel;
 
@@ -24,25 +22,25 @@ public class ClipboardItemWidget extends Composite {
 	public ClipboardItemWidget(ABlockWidget src) {
 		this.src = src;
 		this.icon = src.getIcon16().createImage();
-
-		mainPanel = new FlowPanel();
-		mainPanel.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_MAIN);
-
-		rebuild();
-
-		initWidget(mainPanel);
-		DndManager.get().getDragController().makeDraggable(this, this.icon);
 	}
 
-	protected void rebuild() {
-		// mainPanel.remove(panel);
+	@Override
+	protected Widget onInitialization() {
 
 		panel = new HorizontalPanel();
+		panel.setWidth("100%");
+		panel.setSpacing(5);
+		panel.setStyleName("ClipboardItemWidget");
 		panel.add(icon);
+		panel.setCellWidth(icon, "1%");
 		panel.add(new Label(src.getBlockTitle()));
 
-		mainPanel.add(panel);
+		DndManager.get().getDragController().makeDraggable(this, this.icon);
+		return panel;
 	}
+
+	@Override
+	protected void onUpdate() {}
 
 	public void removeFromClipboard() {
 		if (clipboard != null) clipboard.removeItem(this);

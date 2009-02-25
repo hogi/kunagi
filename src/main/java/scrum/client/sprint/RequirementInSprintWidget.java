@@ -151,7 +151,7 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget {
 	}
 
 	@Override
-	protected AbstractImagePrototype getIcon16() {
+	public AbstractImagePrototype getIcon16() {
 		if (requirement.isDone()) return Img.bundle.storyDoneIcon16();
 		return Img.bundle.storyIcon16();
 	}
