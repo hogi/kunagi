@@ -21,7 +21,7 @@ public class Ui extends AWidget {
 	private static final Ui SINGLETON = new Ui();
 
 	private LockWidget locker;
-	private SimplePanel wrapper;
+	private SimplePanel contentWrapper;
 	private AWidget currentWidget;
 
 	private HeaderWidget header;
@@ -36,14 +36,18 @@ public class Ui extends AWidget {
 		login = new LoginWidget();
 		currentWidget = login;
 
-		wrapper = new SimplePanel();
-		wrapper.setStyleName("content");
-		wrapper.setWidget(login);
+		contentWrapper = new SimplePanel();
+		contentWrapper.setStyleName("content");
+		contentWrapper.setWidget(login);
+
+		SimplePanel headerWrapper = new SimplePanel();
+		headerWrapper.setStyleName("header");
+		headerWrapper.setWidget(header);
 
 		FlowPanel pagePanel = new FlowPanel();
 		pagePanel.setStyleName("page");
-		pagePanel.add(header);
-		pagePanel.add(wrapper);
+		pagePanel.add(headerWrapper);
+		pagePanel.add(contentWrapper);
 
 		locker = new LockWidget(pagePanel);
 		return locker;
@@ -52,7 +56,7 @@ public class Ui extends AWidget {
 	@Override
 	protected void onUpdate() {
 		header.update();
-		wrapper.setWidget(currentWidget);
+		contentWrapper.setWidget(currentWidget);
 		currentWidget.update();
 		locker.update();
 	}

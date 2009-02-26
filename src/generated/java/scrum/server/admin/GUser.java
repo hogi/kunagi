@@ -40,7 +40,7 @@ public abstract class GUser
         return userDao;
     }
 
-    protected void repairDeadValueObject(ADatob valueObject) {
+    protected void repairDeadDatob(ADatob datob) {
     }
 
     @Override

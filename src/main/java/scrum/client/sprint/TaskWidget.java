@@ -36,7 +36,7 @@ public class TaskWidget extends AExtensibleBlockWidget {
 	@Override
 	protected void onCollapsedUpdate() {
 		setBlockTitle(task.getLabel());
-		setIcon(task.isDone() ? Img.bundle.taskDoneIcon32() : Img.bundle.taskIcon32());
+		setIcon(task.isDone() ? Img.bundle.done32() : Img.bundle.task32());
 		summary.setText(task.getSummary());
 		setContent(summary);
 		setToolbar(null);
@@ -156,7 +156,7 @@ public class TaskWidget extends AExtensibleBlockWidget {
 	@Override
 	protected void onExtendedUpdate() {
 		setBlockTitle(task.getLabel());
-		setIcon(task.isDone() ? Img.bundle.taskDoneIcon32() : Img.bundle.taskIcon32());
+		setIcon(task.isDone() ? Img.bundle.done32() : Img.bundle.task32());
 		fields.update();
 		setContent(fields);
 		setToolbar(createToolbar());
@@ -204,8 +204,8 @@ public class TaskWidget extends AExtensibleBlockWidget {
 
 	@Override
 	public AbstractImagePrototype getIcon16() {
-		if (task.isDone()) return Img.bundle.taskDoneIcon16();
-		return Img.bundle.taskIcon16();
+		if (task.isDone()) return Img.bundle.task16();
+		return Img.bundle.task16();
 	}
 
 	@Override

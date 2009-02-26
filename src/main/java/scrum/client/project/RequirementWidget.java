@@ -35,7 +35,7 @@ public class RequirementWidget extends AExtensibleBlockWidget {
 	@Override
 	protected void onCollapsedUpdate() {
 		setBlockTitle(requirement.getLabel());
-		setIcon(requirement.isClosed() ? Img.bundle.storyDoneIcon32() : Img.bundle.storyIcon32());
+		setIcon(requirement.isClosed() ? Img.bundle.done32() : Img.bundle.requirement32());
 		summary.setText(requirement.getProductBacklogSummary());
 		setContent(summary);
 		setToolbar(null);
@@ -136,7 +136,7 @@ public class RequirementWidget extends AExtensibleBlockWidget {
 	@Override
 	protected void onExtendedUpdate() {
 		setBlockTitle(requirement.getLabel());
-		setIcon(requirement.isClosed() ? Img.bundle.storyDoneIcon32() : Img.bundle.storyIcon32());
+		setIcon(requirement.isClosed() ? Img.bundle.done32() : Img.bundle.requirement32());
 		fields.update();
 		setContent(fields);
 		setToolbar(createToolbar());
@@ -164,7 +164,7 @@ public class RequirementWidget extends AExtensibleBlockWidget {
 					}
 				});
 			} else {
-				toolbar.addButton(Img.bundle.sprintIcon16().createImage(), "Add to Sprint").addClickListener(
+				toolbar.addButton(Img.bundle.sprint16().createImage(), "Add to Sprint").addClickListener(
 					new ClickListener() {
 
 						public void onClick(Widget sender) {
@@ -190,8 +190,8 @@ public class RequirementWidget extends AExtensibleBlockWidget {
 
 	@Override
 	public AbstractImagePrototype getIcon16() {
-		if (requirement.isClosed()) return Img.bundle.storyDoneIcon16();
-		return Img.bundle.storyIcon16();
+		if (requirement.isClosed()) return Img.bundle.requirement16();
+		return Img.bundle.requirement16();
 	}
 
 	@Override

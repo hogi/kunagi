@@ -1,8 +1,8 @@
 package scrum.client;
 
+import ilarkesto.gwt.client.AGwtDao;
 import ilarkesto.gwt.client.DataTransferObject;
 import ilarkesto.gwt.client.GwtLogger;
-import scrum.client.common.AGwtDao;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -11,9 +11,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public abstract class AGwtApplication implements EntryPoint {
 
 	protected static AGwtApplication singleton;
-
-	protected String entityIdBase;
-	private int entityIdCounter;
 
 	protected abstract void handleCommunicationError(Throwable ex);
 
@@ -34,11 +31,6 @@ public abstract class AGwtApplication implements EntryPoint {
 
 	protected void handleDataFromServer(DataTransferObject data) {
 		getDao().handleDataFromServer(data);
-	}
-
-	public final String getNewEntityId() {
-		if (entityIdBase == null) throw new RuntimeException("No entityIdBase received.");
-		return entityIdBase + ++entityIdCounter;
 	}
 
 	@Override

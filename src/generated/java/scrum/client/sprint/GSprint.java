@@ -25,13 +25,19 @@ package scrum.client.sprint;
 
 import java.util.*;
 import ilarkesto.auth.*;
+import ilarkesto.gwt.client.*;
 import ilarkesto.logging.*;
 import ilarkesto.base.time.*;
 import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import scrum.client.common.*;
 
 public abstract class GSprint
-            extends scrum.client.common.AGwtEntity {
+            extends ilarkesto.gwt.client.AGwtEntity {
+
+    protected scrum.client.Dao getDao() {
+        return scrum.client.Dao.get();
+    }
 
     public GSprint() {
     }
@@ -50,20 +56,41 @@ public abstract class GSprint
 
     // --- begin ---
 
-    private scrum.client.common.Date begin ;
+    private ilarkesto.gwt.client.Date begin ;
 
-    public final scrum.client.common.Date getBegin() {
+    public final ilarkesto.gwt.client.Date getBegin() {
         return this.begin ;
     }
 
-    public final Sprint setBegin(scrum.client.common.Date begin) {
+    public final Sprint setBegin(ilarkesto.gwt.client.Date begin) {
         this.begin = begin ;
         propertyChanged("begin", this.begin);
         return (Sprint)this;
     }
 
-    public final boolean isBegin(scrum.client.common.Date begin) {
+    public final boolean isBegin(ilarkesto.gwt.client.Date begin) {
         return equals(this.begin, begin);
+    }
+
+    // --- project ---
+
+    private String projectId;
+
+    public final scrum.client.project.Project getProject() {
+        if (projectId == null) return null;
+        return getDao().getProject(this.projectId);
+    }
+
+    public final Sprint setProject(scrum.client.project.Project project) {
+        String id = project == null ? null : project.getId();
+        if (equals(this.projectId, id)) return (Sprint) this;
+        this.projectId = id;
+        propertyChanged("projectId", this.projectId);
+        return (Sprint)this;
+    }
+
+    public final boolean isProject(scrum.client.project.Project project) {
+        return equals(this.projectId, project);
     }
 
     // --- goal ---
@@ -104,63 +131,42 @@ public abstract class GSprint
 
     // --- end ---
 
-    private scrum.client.common.Date end ;
+    private ilarkesto.gwt.client.Date end ;
 
-    public final scrum.client.common.Date getEnd() {
+    public final ilarkesto.gwt.client.Date getEnd() {
         return this.end ;
     }
 
-    public final Sprint setEnd(scrum.client.common.Date end) {
+    public final Sprint setEnd(ilarkesto.gwt.client.Date end) {
         this.end = end ;
         propertyChanged("end", this.end);
         return (Sprint)this;
     }
 
-    public final boolean isEnd(scrum.client.common.Date end) {
+    public final boolean isEnd(ilarkesto.gwt.client.Date end) {
         return equals(this.end, end);
-    }
-
-    // --- project ---
-
-    private String projectId;
-
-    public final scrum.client.project.Project getProject() {
-        if (projectId == null) return null;
-        return getDao().getProject(this.projectId);
-    }
-
-    public final Sprint setProject(scrum.client.project.Project project) {
-        String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Sprint) this;
-        this.projectId = id;
-        propertyChanged("projectId", this.projectId);
-        return (Sprint)this;
-    }
-
-    public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
     }
 
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         String beginAsString = (String) props.get("begin");
-        begin  =  beginAsString == null ? null : new scrum.client.common.Date(beginAsString);
+        begin  =  beginAsString == null ? null : new ilarkesto.gwt.client.Date(beginAsString);
+        projectId = (String) props.get("projectId");
         goal  = (java.lang.String) props.get("goal");
         label  = (java.lang.String) props.get("label");
         String endAsString = (String) props.get("end");
-        end  =  endAsString == null ? null : new scrum.client.common.Date(endAsString);
-        projectId = (String) props.get("projectId");
+        end  =  endAsString == null ? null : new ilarkesto.gwt.client.Date(endAsString);
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("begin", this.begin == null ? null : this.begin.toString());
+        properties.put("projectId", this.projectId);
         properties.put("goal", this.goal);
         properties.put("label", this.label);
         properties.put("end", this.end == null ? null : this.end.toString());
-        properties.put("projectId", this.projectId);
     }
 
 }

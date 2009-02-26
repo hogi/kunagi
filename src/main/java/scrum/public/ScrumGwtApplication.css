@@ -8,11 +8,15 @@ body {padding: 0px; margin: 0px; background: white; backgroundX: #F2F5FE url("bg
 
 .gwt-Button {white-space: nowrap;}
 
-/***** Main Layout *****/
+/***** Master Layout *****/
 
-.HeaderWidget {position: fixed; left: 0; top: 0; width: 100%; height: 25px; background: #F2F5FE url("header_bg.jpg");}
+.page .header {position: fixed; left: 0; top: 0; width: 100%; z-index: 100;}
+.page .content {position: relative; top: 25px;}
+
+/***** Header *****/
+
+.HeaderWidget {width: 100%; height: 25px; background: #F2F5FE url("header_bg.jpg");}
 .HeaderWidget .title {font-size: 12px; font-weight: bold; color: white; padding-left: 5px;}
-.page .content {margin-top: 25px;}
 
 .WorkspaceWidget {}
 .WorkspaceWidget .sidebar {width: 300px;}

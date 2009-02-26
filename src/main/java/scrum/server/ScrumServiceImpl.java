@@ -79,6 +79,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 
 		for (SessionData s : getOtherSessions(session)) {
+			LOG.debug("Sending changes to", s);
 			s.getNextData().addEntity(toPropertyMap(entity));
 		}
 	}
@@ -88,6 +89,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		User user = userDao.getUserByName(username);
 		if (user == null) throw new RuntimeException("Login failed.");
 
+		session.setUser(user);
 		session.getNextData().setUserId(user.getId());
 		session.getNextData().addEntity(toPropertyMap(user));
 		// TODO limit to users projects
@@ -139,7 +141,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onPing(SessionData session) {
-		LOG.debug("ping");
+	// nop
 	}
 
 	@Override

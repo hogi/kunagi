@@ -25,13 +25,19 @@ package scrum.client.project;
 
 import java.util.*;
 import ilarkesto.auth.*;
+import ilarkesto.gwt.client.*;
 import ilarkesto.logging.*;
 import ilarkesto.base.time.*;
 import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import scrum.client.common.*;
 
 public abstract class GRequirement
-            extends scrum.client.common.AGwtEntity {
+            extends ilarkesto.gwt.client.AGwtEntity {
+
+    protected scrum.client.Dao getDao() {
+        return scrum.client.Dao.get();
+    }
 
     public GRequirement() {
     }
@@ -46,45 +52,6 @@ public abstract class GRequirement
     @Override
     public final String getEntityType() {
         return ENTITY_TYPE;
-    }
-
-    // --- closed ---
-
-    private boolean closed ;
-
-    public final boolean isClosed() {
-        return this.closed ;
-    }
-
-    public final Requirement setClosed(boolean closed) {
-        this.closed = closed ;
-        propertyChanged("closed", this.closed);
-        return (Requirement)this;
-    }
-
-    public final boolean isClosed(boolean closed) {
-        return equals(this.closed, closed);
-    }
-
-    // --- project ---
-
-    private String projectId;
-
-    public final scrum.client.project.Project getProject() {
-        if (projectId == null) return null;
-        return getDao().getProject(this.projectId);
-    }
-
-    public final Requirement setProject(scrum.client.project.Project project) {
-        String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Requirement) this;
-        this.projectId = id;
-        propertyChanged("projectId", this.projectId);
-        return (Requirement)this;
-    }
-
-    public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
     }
 
     // --- sprint ---
@@ -108,22 +75,25 @@ public abstract class GRequirement
         return equals(this.sprintId, sprint);
     }
 
-    // --- estimatedWork ---
+    // --- project ---
 
-    private java.lang.Integer estimatedWork ;
+    private String projectId;
 
-    public final java.lang.Integer getEstimatedWork() {
-        return this.estimatedWork ;
+    public final scrum.client.project.Project getProject() {
+        if (projectId == null) return null;
+        return getDao().getProject(this.projectId);
     }
 
-    public final Requirement setEstimatedWork(java.lang.Integer estimatedWork) {
-        this.estimatedWork = estimatedWork ;
-        propertyChanged("estimatedWork", this.estimatedWork);
+    public final Requirement setProject(scrum.client.project.Project project) {
+        String id = project == null ? null : project.getId();
+        if (equals(this.projectId, id)) return (Requirement) this;
+        this.projectId = id;
+        propertyChanged("projectId", this.projectId);
         return (Requirement)this;
     }
 
-    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
-        return equals(this.estimatedWork, estimatedWork);
+    public final boolean isProject(scrum.client.project.Project project) {
+        return equals(this.projectId, project);
     }
 
     // --- label ---
@@ -144,22 +114,40 @@ public abstract class GRequirement
         return equals(this.label, label);
     }
 
-    // --- testDescription ---
+    // --- estimatedWork ---
 
-    private java.lang.String testDescription ;
+    private java.lang.Integer estimatedWork ;
 
-    public final java.lang.String getTestDescription() {
-        return this.testDescription ;
+    public final java.lang.Integer getEstimatedWork() {
+        return this.estimatedWork ;
     }
 
-    public final Requirement setTestDescription(java.lang.String testDescription) {
-        this.testDescription = testDescription ;
-        propertyChanged("testDescription", this.testDescription);
+    public final Requirement setEstimatedWork(java.lang.Integer estimatedWork) {
+        this.estimatedWork = estimatedWork ;
+        propertyChanged("estimatedWork", this.estimatedWork);
         return (Requirement)this;
     }
 
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        return equals(this.testDescription, testDescription);
+    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
+        return equals(this.estimatedWork, estimatedWork);
+    }
+
+    // --- closed ---
+
+    private boolean closed ;
+
+    public final boolean isClosed() {
+        return this.closed ;
+    }
+
+    public final Requirement setClosed(boolean closed) {
+        this.closed = closed ;
+        propertyChanged("closed", this.closed);
+        return (Requirement)this;
+    }
+
+    public final boolean isClosed(boolean closed) {
+        return equals(this.closed, closed);
     }
 
     // --- description ---
@@ -180,28 +168,46 @@ public abstract class GRequirement
         return equals(this.description, description);
     }
 
+    // --- testDescription ---
+
+    private java.lang.String testDescription ;
+
+    public final java.lang.String getTestDescription() {
+        return this.testDescription ;
+    }
+
+    public final Requirement setTestDescription(java.lang.String testDescription) {
+        this.testDescription = testDescription ;
+        propertyChanged("testDescription", this.testDescription);
+        return (Requirement)this;
+    }
+
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        return equals(this.testDescription, testDescription);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        closed  = (Boolean) props.get("closed");
-        projectId = (String) props.get("projectId");
         sprintId = (String) props.get("sprintId");
-        estimatedWork  = (java.lang.Integer) props.get("estimatedWork");
+        projectId = (String) props.get("projectId");
         label  = (java.lang.String) props.get("label");
-        testDescription  = (java.lang.String) props.get("testDescription");
+        estimatedWork  = (java.lang.Integer) props.get("estimatedWork");
+        closed  = (Boolean) props.get("closed");
         description  = (java.lang.String) props.get("description");
+        testDescription  = (java.lang.String) props.get("testDescription");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("closed", this.closed);
-        properties.put("projectId", this.projectId);
         properties.put("sprintId", this.sprintId);
-        properties.put("estimatedWork", this.estimatedWork);
+        properties.put("projectId", this.projectId);
         properties.put("label", this.label);
-        properties.put("testDescription", this.testDescription);
+        properties.put("estimatedWork", this.estimatedWork);
+        properties.put("closed", this.closed);
         properties.put("description", this.description);
+        properties.put("testDescription", this.testDescription);
     }
 
 }

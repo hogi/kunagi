@@ -33,7 +33,7 @@ public class ProjectWidget extends ABlockWidget {
 	@Override
 	protected void onBlockUpdate() {
 		setBlockTitle(project.getLabel());
-		setIcon(Img.icons().projectIcon32());
+		setIcon(Img.icons().project32());
 
 		String description = project.getDescription();
 		if (description == null) description = "No description.";
@@ -84,7 +84,7 @@ public class ProjectWidget extends ABlockWidget {
 
 	@Override
 	public AbstractImagePrototype getIcon16() {
-		return Img.icons().projectIcon32();
+		return Img.icons().project32();
 	}
 
 }

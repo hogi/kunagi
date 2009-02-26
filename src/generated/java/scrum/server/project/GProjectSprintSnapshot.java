@@ -40,15 +40,15 @@ public abstract class GProjectSprintSnapshot
         return projectSprintSnapshotDao;
     }
 
-    protected void repairDeadValueObject(ADatob valueObject) {
+    protected void repairDeadDatob(ADatob datob) {
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("burnedWork", this.burnedWork);
-        properties.put("sprintId", this.sprintId);
         properties.put("remainingWork", this.remainingWork);
+        properties.put("sprintId", this.sprintId);
+        properties.put("burnedWork", this.burnedWork);
     }
 
     public int compareTo(ProjectSprintSnapshot other) {
@@ -64,34 +64,34 @@ public abstract class GProjectSprintSnapshot
         super(template);
         if (template==null) return;
 
-        setBurnedWork(template.getBurnedWork());
-        setSprint(template.getSprint());
         setRemainingWork(template.getRemainingWork());
+        setSprint(template.getSprint());
+        setBurnedWork(template.getBurnedWork());
     }
 
     // -----------------------------------------------------------
-    // - burnedWork
+    // - remainingWork
     // -----------------------------------------------------------
 
-    private int burnedWork;
+    private int remainingWork;
 
-    public final int getBurnedWork() {
-        return burnedWork;
+    public final int getRemainingWork() {
+        return remainingWork;
     }
 
-    public final void setBurnedWork(int burnedWork) {
-        burnedWork = prepareBurnedWork(burnedWork);
-        if (isBurnedWork(burnedWork)) return;
-        this.burnedWork = burnedWork;
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
         entityModified();
     }
 
-    protected int prepareBurnedWork(int burnedWork) {
-        return burnedWork;
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
     }
 
-    public final boolean isBurnedWork(int burnedWork) {
-        return this.burnedWork == burnedWork;
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
     }
 
     // -----------------------------------------------------------
@@ -133,28 +133,28 @@ public abstract class GProjectSprintSnapshot
     }
 
     // -----------------------------------------------------------
-    // - remainingWork
+    // - burnedWork
     // -----------------------------------------------------------
 
-    private int remainingWork;
+    private int burnedWork;
 
-    public final int getRemainingWork() {
-        return remainingWork;
+    public final int getBurnedWork() {
+        return burnedWork;
     }
 
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
         entityModified();
     }
 
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
     }
 
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
     }
 
     protected void repairDeadReferences(String entityId) {

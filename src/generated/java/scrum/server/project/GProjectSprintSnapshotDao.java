@@ -44,11 +44,11 @@ public abstract class GProjectSprintSnapshotDao
 
     // --- clear caches ---
     public void clearCaches() {
-        projectSprintSnapshotsByBurnedWorkCache.clear();
-        burnedWorksCache = null;
-        sprintsCache = null;
         projectSprintSnapshotsByRemainingWorkCache.clear();
         remainingWorksCache = null;
+        sprintsCache = null;
+        projectSprintSnapshotsByBurnedWorkCache.clear();
+        burnedWorksCache = null;
     }
 
     @Override
@@ -65,79 +65,6 @@ public abstract class GProjectSprintSnapshotDao
         if (event.getEntity() instanceof ProjectSprintSnapshot) {
             clearCaches();
         }
-    }
-
-    // -----------------------------------------------------------
-    // - burnedWork
-    // -----------------------------------------------------------
-
-    private final Cache<Integer,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByBurnedWorkCache = new Cache<Integer,Set<ProjectSprintSnapshot>>(
-            new Cache.Factory<Integer,Set<ProjectSprintSnapshot>>() {
-                public Set<ProjectSprintSnapshot> create(Integer burnedWork) {
-                    return getEntities(new IsBurnedWork(burnedWork));
-                }
-            });
-
-    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByBurnedWork(int burnedWork) {
-        return projectSprintSnapshotsByBurnedWorkCache.get(burnedWork);
-    }
-    private Set<Integer> burnedWorksCache;
-
-    public final Set<Integer> getBurnedWorks() {
-        if (burnedWorksCache == null) {
-            burnedWorksCache = new HashSet<Integer>();
-            for (ProjectSprintSnapshot e : getEntities()) {
-                burnedWorksCache.add(e.getBurnedWork());
-            }
-        }
-        return burnedWorksCache;
-    }
-
-    private static class IsBurnedWork implements Predicate<ProjectSprintSnapshot> {
-
-        private int value;
-
-        public IsBurnedWork(int value) {
-            this.value = value;
-        }
-
-        public boolean test(ProjectSprintSnapshot e) {
-            return e.isBurnedWork(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - sprint
-    // -----------------------------------------------------------
-
-    public final ProjectSprintSnapshot getProjectSprintSnapshotBySprint(scrum.server.sprint.Sprint sprint) {
-        return getEntity(new IsSprint(sprint));
-    }
-    private Set<scrum.server.sprint.Sprint> sprintsCache;
-
-    public final Set<scrum.server.sprint.Sprint> getSprints() {
-        if (sprintsCache == null) {
-            sprintsCache = new HashSet<scrum.server.sprint.Sprint>();
-            for (ProjectSprintSnapshot e : getEntities()) {
-                if (e.isSprintSet()) sprintsCache.add(e.getSprint());
-            }
-        }
-        return sprintsCache;
-    }
-
-    private static class IsSprint implements Predicate<ProjectSprintSnapshot> {
-
-        private scrum.server.sprint.Sprint value;
-
-        public IsSprint(scrum.server.sprint.Sprint value) {
-            this.value = value;
-        }
-
-        public boolean test(ProjectSprintSnapshot e) {
-            return e.isSprint(value);
-        }
-
     }
 
     // -----------------------------------------------------------
@@ -176,6 +103,79 @@ public abstract class GProjectSprintSnapshotDao
 
         public boolean test(ProjectSprintSnapshot e) {
             return e.isRemainingWork(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - sprint
+    // -----------------------------------------------------------
+
+    public final ProjectSprintSnapshot getProjectSprintSnapshotBySprint(scrum.server.sprint.Sprint sprint) {
+        return getEntity(new IsSprint(sprint));
+    }
+    private Set<scrum.server.sprint.Sprint> sprintsCache;
+
+    public final Set<scrum.server.sprint.Sprint> getSprints() {
+        if (sprintsCache == null) {
+            sprintsCache = new HashSet<scrum.server.sprint.Sprint>();
+            for (ProjectSprintSnapshot e : getEntities()) {
+                if (e.isSprintSet()) sprintsCache.add(e.getSprint());
+            }
+        }
+        return sprintsCache;
+    }
+
+    private static class IsSprint implements Predicate<ProjectSprintSnapshot> {
+
+        private scrum.server.sprint.Sprint value;
+
+        public IsSprint(scrum.server.sprint.Sprint value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectSprintSnapshot e) {
+            return e.isSprint(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - burnedWork
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<ProjectSprintSnapshot>> projectSprintSnapshotsByBurnedWorkCache = new Cache<Integer,Set<ProjectSprintSnapshot>>(
+            new Cache.Factory<Integer,Set<ProjectSprintSnapshot>>() {
+                public Set<ProjectSprintSnapshot> create(Integer burnedWork) {
+                    return getEntities(new IsBurnedWork(burnedWork));
+                }
+            });
+
+    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsByBurnedWork(int burnedWork) {
+        return projectSprintSnapshotsByBurnedWorkCache.get(burnedWork);
+    }
+    private Set<Integer> burnedWorksCache;
+
+    public final Set<Integer> getBurnedWorks() {
+        if (burnedWorksCache == null) {
+            burnedWorksCache = new HashSet<Integer>();
+            for (ProjectSprintSnapshot e : getEntities()) {
+                burnedWorksCache.add(e.getBurnedWork());
+            }
+        }
+        return burnedWorksCache;
+    }
+
+    private static class IsBurnedWork implements Predicate<ProjectSprintSnapshot> {
+
+        private int value;
+
+        public IsBurnedWork(int value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectSprintSnapshot e) {
+            return e.isBurnedWork(value);
         }
 
     }

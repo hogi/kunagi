@@ -20,7 +20,7 @@ public class TrashWidget extends AWidget {
 	protected Widget onInitialization() {
 		trash = new HorizontalPanel();
 		trash.setStyleName("TrashWidget");
-		trash.add(Img.icons().trashIcon32().createImage());
+		trash.add(Img.icons().trash32().createImage());
 		// trash.add(new Label("Trash"));
 
 		DndManager.get().getDragController().registerDropController(trashDropController);

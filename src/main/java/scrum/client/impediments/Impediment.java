@@ -1,8 +1,9 @@
 package scrum.client.impediments;
 
+import ilarkesto.gwt.client.Date;
+
 import java.util.Map;
 
-import scrum.client.common.Date;
 import scrum.client.project.Project;
 
 public class Impediment extends GImpediment {

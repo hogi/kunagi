@@ -25,13 +25,19 @@ package scrum.client.sprint;
 
 import java.util.*;
 import ilarkesto.auth.*;
+import ilarkesto.gwt.client.*;
 import ilarkesto.logging.*;
 import ilarkesto.base.time.*;
 import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import scrum.client.common.*;
 
 public abstract class GSprintDaySnapshot
-            extends scrum.client.common.AGwtEntity {
+            extends ilarkesto.gwt.client.AGwtEntity {
+
+    protected scrum.client.Dao getDao() {
+        return scrum.client.Dao.get();
+    }
 
     public GSprintDaySnapshot() {
     }
@@ -69,42 +75,6 @@ public abstract class GSprintDaySnapshot
         return equals(this.sprintId, sprint);
     }
 
-    // --- remainingWork ---
-
-    private int remainingWork ;
-
-    public final int getRemainingWork() {
-        return this.remainingWork ;
-    }
-
-    public final SprintDaySnapshot setRemainingWork(int remainingWork) {
-        this.remainingWork = remainingWork ;
-        propertyChanged("remainingWork", this.remainingWork);
-        return (SprintDaySnapshot)this;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return equals(this.remainingWork, remainingWork);
-    }
-
-    // --- date ---
-
-    private scrum.client.common.Date date ;
-
-    public final scrum.client.common.Date getDate() {
-        return this.date ;
-    }
-
-    public final SprintDaySnapshot setDate(scrum.client.common.Date date) {
-        this.date = date ;
-        propertyChanged("date", this.date);
-        return (SprintDaySnapshot)this;
-    }
-
-    public final boolean isDate(scrum.client.common.Date date) {
-        return equals(this.date, date);
-    }
-
     // --- burnedWork ---
 
     private int burnedWork ;
@@ -123,23 +93,59 @@ public abstract class GSprintDaySnapshot
         return equals(this.burnedWork, burnedWork);
     }
 
+    // --- date ---
+
+    private ilarkesto.gwt.client.Date date ;
+
+    public final ilarkesto.gwt.client.Date getDate() {
+        return this.date ;
+    }
+
+    public final SprintDaySnapshot setDate(ilarkesto.gwt.client.Date date) {
+        this.date = date ;
+        propertyChanged("date", this.date);
+        return (SprintDaySnapshot)this;
+    }
+
+    public final boolean isDate(ilarkesto.gwt.client.Date date) {
+        return equals(this.date, date);
+    }
+
+    // --- remainingWork ---
+
+    private int remainingWork ;
+
+    public final int getRemainingWork() {
+        return this.remainingWork ;
+    }
+
+    public final SprintDaySnapshot setRemainingWork(int remainingWork) {
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
+        return (SprintDaySnapshot)this;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return equals(this.remainingWork, remainingWork);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         sprintId = (String) props.get("sprintId");
-        remainingWork  = (Integer) props.get("remainingWork");
-        String dateAsString = (String) props.get("date");
-        date  =  dateAsString == null ? null : new scrum.client.common.Date(dateAsString);
         burnedWork  = (Integer) props.get("burnedWork");
+        String dateAsString = (String) props.get("date");
+        date  =  dateAsString == null ? null : new ilarkesto.gwt.client.Date(dateAsString);
+        remainingWork  = (Integer) props.get("remainingWork");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("sprintId", this.sprintId);
-        properties.put("remainingWork", this.remainingWork);
-        properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("burnedWork", this.burnedWork);
+        properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("remainingWork", this.remainingWork);
     }
 
 }

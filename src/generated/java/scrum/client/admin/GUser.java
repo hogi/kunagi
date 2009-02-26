@@ -25,13 +25,19 @@ package scrum.client.admin;
 
 import java.util.*;
 import ilarkesto.auth.*;
+import ilarkesto.gwt.client.*;
 import ilarkesto.logging.*;
 import ilarkesto.base.time.*;
 import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import scrum.client.common.*;
 
 public abstract class GUser
-            extends scrum.client.common.AGwtEntity {
+            extends ilarkesto.gwt.client.AGwtEntity {
+
+    protected scrum.client.Dao getDao() {
+        return scrum.client.Dao.get();
+    }
 
     public GUser() {
     }

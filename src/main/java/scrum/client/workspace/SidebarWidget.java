@@ -19,28 +19,28 @@ public class SidebarWidget extends AWidget {
 
 		navigator = new NavigatorWidget();
 
-		navigator.addItem(null, "Project Overview", new Runnable() {
+		navigator.addItem(Img.bundle.project16(), "Project Overview", new Runnable() {
 
 			public void run() {
 				WorkareaWidget.get().showProjectOverview();
 			}
 		});
 
-		navigator.addItem(null, "Product Backlog", new Runnable() {
+		navigator.addItem(Img.bundle.requirement16(), "Product Backlog", new Runnable() {
 
 			public void run() {
 				WorkareaWidget.get().showProductBacklog();
 			}
 		});
 
-		navigator.addItem(Img.bundle.sprintIcon16().createImage(), "Sprint Backlog", new Runnable() {
+		navigator.addItem(Img.bundle.sprint16(), "Sprint Backlog", new Runnable() {
 
 			public void run() {
 				WorkareaWidget.get().showSprintBacklog();
 			}
 		});
 
-		navigator.addItem(Img.bundle.impedimentIcon16().createImage(), "Impediment List", new Runnable() {
+		navigator.addItem(Img.bundle.impediment16(), "Impediment List", new Runnable() {
 
 			public void run() {
 				WorkareaWidget.get().showImpedimentList();

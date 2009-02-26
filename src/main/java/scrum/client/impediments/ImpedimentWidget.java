@@ -33,7 +33,7 @@ public class ImpedimentWidget extends AExtensibleBlockWidget {
 	@Override
 	protected void onCollapsedUpdate() {
 		setBlockTitle(impediment.getLabel());
-		setIcon(impediment.isSolved() ? Img.bundle.impedimentSolvedIcon32() : Img.bundle.impedimentIcon32());
+		setIcon(impediment.isSolved() ? Img.bundle.impedimentSolved32() : Img.bundle.impediment32());
 		summary.setText(impediment.getSummary());
 		setContent(summary);
 		setToolbar(null);
@@ -102,7 +102,7 @@ public class ImpedimentWidget extends AExtensibleBlockWidget {
 	@Override
 	protected void onExtendedUpdate() {
 		setBlockTitle(impediment.getLabel());
-		setIcon(impediment.isSolved() ? Img.bundle.impedimentSolvedIcon32() : Img.bundle.impedimentIcon32());
+		setIcon(impediment.isSolved() ? Img.bundle.impedimentSolved32() : Img.bundle.impediment32());
 		fields.update();
 		setContent(fields);
 		setToolbar(getToolbar());
@@ -111,8 +111,8 @@ public class ImpedimentWidget extends AExtensibleBlockWidget {
 	@Override
 	public AbstractImagePrototype getIcon16() {
 		// return different icon depending on solved-status
-		if (impediment.isSolved()) return Img.bundle.impedimentSolvedIcon16();
-		return Img.bundle.impedimentIcon16();
+		if (impediment.isSolved()) return Img.bundle.impediment16();
+		return Img.bundle.impediment16();
 	}
 
 	protected Widget getToolbar() {

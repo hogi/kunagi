@@ -3,6 +3,7 @@ package scrum.server;
 import ilarkesto.di.Context;
 import ilarkesto.gwt.client.DataTransferObject;
 import ilarkesto.logging.Logger;
+import scrum.server.admin.User;
 import scrum.server.project.Project;
 
 /**
@@ -15,6 +16,7 @@ public class SessionData {
 	private static final Logger LOG = Logger.get(SessionData.class);
 
 	private Context context;
+	private User user;
 	private Project project;
 
 	public SessionData() {
@@ -42,13 +44,27 @@ public class SessionData {
 		return project;
 	}
 
+	public void setUser(User user) {
+		LOG.info("User set:", user);
+		this.user = user;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
 	public void setProject(Project project) {
-		LOG.info("project selected:", project);
+		LOG.info("Project selected:", project);
 		this.project = project;
 	}
 
 	public Context getContext() {
 		return context;
+	}
+
+	@Override
+	public String toString() {
+		return user == null ? "<anonymous>" : user.toString();
 	}
 
 }

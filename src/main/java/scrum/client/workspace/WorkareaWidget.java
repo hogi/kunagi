@@ -42,6 +42,10 @@ public class WorkareaWidget extends AWidget {
 		show(getProjectOverview());
 	}
 
+	public boolean isProjectOverview() {
+		return currentWidget == projectOverview;
+	}
+
 	public void showSprintBacklog() {
 		Ui.get().lock("Loading Sprint...");
 		ScrumGwtApplication.get().callRequestCurrentSprint(new Runnable() {

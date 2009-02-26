@@ -46,12 +46,12 @@ public abstract class GSprintDaySnapshotDao
     public void clearCaches() {
         sprintDaySnapshotsBySprintCache.clear();
         sprintsCache = null;
-        sprintDaySnapshotsByRemainingWorkCache.clear();
-        remainingWorksCache = null;
-        sprintDaySnapshotsByDateCache.clear();
-        datesCache = null;
         sprintDaySnapshotsByBurnedWorkCache.clear();
         burnedWorksCache = null;
+        sprintDaySnapshotsByDateCache.clear();
+        datesCache = null;
+        sprintDaySnapshotsByRemainingWorkCache.clear();
+        remainingWorksCache = null;
     }
 
     @Override
@@ -111,41 +111,41 @@ public abstract class GSprintDaySnapshotDao
     }
 
     // -----------------------------------------------------------
-    // - remainingWork
+    // - burnedWork
     // -----------------------------------------------------------
 
-    private final Cache<Integer,Set<SprintDaySnapshot>> sprintDaySnapshotsByRemainingWorkCache = new Cache<Integer,Set<SprintDaySnapshot>>(
+    private final Cache<Integer,Set<SprintDaySnapshot>> sprintDaySnapshotsByBurnedWorkCache = new Cache<Integer,Set<SprintDaySnapshot>>(
             new Cache.Factory<Integer,Set<SprintDaySnapshot>>() {
-                public Set<SprintDaySnapshot> create(Integer remainingWork) {
-                    return getEntities(new IsRemainingWork(remainingWork));
+                public Set<SprintDaySnapshot> create(Integer burnedWork) {
+                    return getEntities(new IsBurnedWork(burnedWork));
                 }
             });
 
-    public final Set<SprintDaySnapshot> getSprintDaySnapshotsByRemainingWork(int remainingWork) {
-        return sprintDaySnapshotsByRemainingWorkCache.get(remainingWork);
+    public final Set<SprintDaySnapshot> getSprintDaySnapshotsByBurnedWork(int burnedWork) {
+        return sprintDaySnapshotsByBurnedWorkCache.get(burnedWork);
     }
-    private Set<Integer> remainingWorksCache;
+    private Set<Integer> burnedWorksCache;
 
-    public final Set<Integer> getRemainingWorks() {
-        if (remainingWorksCache == null) {
-            remainingWorksCache = new HashSet<Integer>();
+    public final Set<Integer> getBurnedWorks() {
+        if (burnedWorksCache == null) {
+            burnedWorksCache = new HashSet<Integer>();
             for (SprintDaySnapshot e : getEntities()) {
-                remainingWorksCache.add(e.getRemainingWork());
+                burnedWorksCache.add(e.getBurnedWork());
             }
         }
-        return remainingWorksCache;
+        return burnedWorksCache;
     }
 
-    private static class IsRemainingWork implements Predicate<SprintDaySnapshot> {
+    private static class IsBurnedWork implements Predicate<SprintDaySnapshot> {
 
         private int value;
 
-        public IsRemainingWork(int value) {
+        public IsBurnedWork(int value) {
             this.value = value;
         }
 
         public boolean test(SprintDaySnapshot e) {
-            return e.isRemainingWork(value);
+            return e.isBurnedWork(value);
         }
 
     }
@@ -191,41 +191,41 @@ public abstract class GSprintDaySnapshotDao
     }
 
     // -----------------------------------------------------------
-    // - burnedWork
+    // - remainingWork
     // -----------------------------------------------------------
 
-    private final Cache<Integer,Set<SprintDaySnapshot>> sprintDaySnapshotsByBurnedWorkCache = new Cache<Integer,Set<SprintDaySnapshot>>(
+    private final Cache<Integer,Set<SprintDaySnapshot>> sprintDaySnapshotsByRemainingWorkCache = new Cache<Integer,Set<SprintDaySnapshot>>(
             new Cache.Factory<Integer,Set<SprintDaySnapshot>>() {
-                public Set<SprintDaySnapshot> create(Integer burnedWork) {
-                    return getEntities(new IsBurnedWork(burnedWork));
+                public Set<SprintDaySnapshot> create(Integer remainingWork) {
+                    return getEntities(new IsRemainingWork(remainingWork));
                 }
             });
 
-    public final Set<SprintDaySnapshot> getSprintDaySnapshotsByBurnedWork(int burnedWork) {
-        return sprintDaySnapshotsByBurnedWorkCache.get(burnedWork);
+    public final Set<SprintDaySnapshot> getSprintDaySnapshotsByRemainingWork(int remainingWork) {
+        return sprintDaySnapshotsByRemainingWorkCache.get(remainingWork);
     }
-    private Set<Integer> burnedWorksCache;
+    private Set<Integer> remainingWorksCache;
 
-    public final Set<Integer> getBurnedWorks() {
-        if (burnedWorksCache == null) {
-            burnedWorksCache = new HashSet<Integer>();
+    public final Set<Integer> getRemainingWorks() {
+        if (remainingWorksCache == null) {
+            remainingWorksCache = new HashSet<Integer>();
             for (SprintDaySnapshot e : getEntities()) {
-                burnedWorksCache.add(e.getBurnedWork());
+                remainingWorksCache.add(e.getRemainingWork());
             }
         }
-        return burnedWorksCache;
+        return remainingWorksCache;
     }
 
-    private static class IsBurnedWork implements Predicate<SprintDaySnapshot> {
+    private static class IsRemainingWork implements Predicate<SprintDaySnapshot> {
 
         private int value;
 
-        public IsBurnedWork(int value) {
+        public IsRemainingWork(int value) {
             this.value = value;
         }
 
         public boolean test(SprintDaySnapshot e) {
-            return e.isBurnedWork(value);
+            return e.isRemainingWork(value);
         }
 
     }

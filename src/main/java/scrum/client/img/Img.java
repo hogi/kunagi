@@ -4,9 +4,9 @@ import com.google.gwt.core.client.GWT;
 
 public class Img {
 
-	public static ScrumImageBundle bundle = GWT.create(ScrumImageBundle.class);
+	public static GImageBundle bundle = GWT.create(GImageBundle.class);
 
-	public static ScrumImageBundle icons() {
+	public static GImageBundle icons() {
 		return bundle;
 	}
 

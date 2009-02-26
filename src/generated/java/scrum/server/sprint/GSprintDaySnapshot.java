@@ -40,16 +40,16 @@ public abstract class GSprintDaySnapshot
         return sprintDaySnapshotDao;
     }
 
-    protected void repairDeadValueObject(ADatob valueObject) {
+    protected void repairDeadDatob(ADatob datob) {
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("sprintId", this.sprintId);
-        properties.put("remainingWork", this.remainingWork);
-        properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("burnedWork", this.burnedWork);
+        properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("remainingWork", this.remainingWork);
     }
 
     public int compareTo(SprintDaySnapshot other) {
@@ -66,9 +66,9 @@ public abstract class GSprintDaySnapshot
         if (template==null) return;
 
         setSprint(template.getSprint());
-        setRemainingWork(template.getRemainingWork());
-        setDate(template.getDate());
         setBurnedWork(template.getBurnedWork());
+        setDate(template.getDate());
+        setRemainingWork(template.getRemainingWork());
     }
 
     // -----------------------------------------------------------
@@ -110,28 +110,28 @@ public abstract class GSprintDaySnapshot
     }
 
     // -----------------------------------------------------------
-    // - remainingWork
+    // - burnedWork
     // -----------------------------------------------------------
 
-    private int remainingWork;
+    private int burnedWork;
 
-    public final int getRemainingWork() {
-        return remainingWork;
+    public final int getBurnedWork() {
+        return burnedWork;
     }
 
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
         entityModified();
     }
 
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
     }
 
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
     }
 
     // -----------------------------------------------------------
@@ -165,28 +165,28 @@ public abstract class GSprintDaySnapshot
     }
 
     // -----------------------------------------------------------
-    // - burnedWork
+    // - remainingWork
     // -----------------------------------------------------------
 
-    private int burnedWork;
+    private int remainingWork;
 
-    public final int getBurnedWork() {
-        return burnedWork;
+    public final int getRemainingWork() {
+        return remainingWork;
     }
 
-    public final void setBurnedWork(int burnedWork) {
-        burnedWork = prepareBurnedWork(burnedWork);
-        if (isBurnedWork(burnedWork)) return;
-        this.burnedWork = burnedWork;
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
         entityModified();
     }
 
-    protected int prepareBurnedWork(int burnedWork) {
-        return burnedWork;
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
     }
 
-    public final boolean isBurnedWork(int burnedWork) {
-        return this.burnedWork == burnedWork;
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
     }
 
     protected void repairDeadReferences(String entityId) {

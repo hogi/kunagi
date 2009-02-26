@@ -1,6 +1,7 @@
 package scrum.client;
 
 import ilarkesto.gwt.client.DataTransferObject;
+import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.admin.User;
 import scrum.client.dnd.DndManager;
 import scrum.client.project.Project;
@@ -48,6 +49,8 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 				ui.unlock();
 			}
 		});
+
+		new PingTimer().scheduleRepeating(3000);
 	}
 
 	public User getUser() {
@@ -63,8 +66,8 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		super.handleDataFromServer(data);
 
 		if (data.entityIdBase != null) {
-			entityIdBase = data.entityIdBase;
-			System.out.println("entityIdBase: " + entityIdBase);
+			getDao().setEntityIdBase(data.entityIdBase);
+			GwtLogger.DEBUG("entityIdBase:", data.entityIdBase);
 		}
 
 		if (data.isUserSet()) {

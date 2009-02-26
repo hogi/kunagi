@@ -25,13 +25,19 @@ package scrum.client.project;
 
 import java.util.*;
 import ilarkesto.auth.*;
+import ilarkesto.gwt.client.*;
 import ilarkesto.logging.*;
 import ilarkesto.base.time.*;
 import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import scrum.client.common.*;
 
 public abstract class GProjectSprintSnapshot
-            extends scrum.client.common.AGwtEntity {
+            extends ilarkesto.gwt.client.AGwtEntity {
+
+    protected scrum.client.Dao getDao() {
+        return scrum.client.Dao.get();
+    }
 
     public GProjectSprintSnapshot() {
     }
@@ -48,22 +54,22 @@ public abstract class GProjectSprintSnapshot
         return ENTITY_TYPE;
     }
 
-    // --- burnedWork ---
+    // --- remainingWork ---
 
-    private int burnedWork ;
+    private int remainingWork ;
 
-    public final int getBurnedWork() {
-        return this.burnedWork ;
+    public final int getRemainingWork() {
+        return this.remainingWork ;
     }
 
-    public final ProjectSprintSnapshot setBurnedWork(int burnedWork) {
-        this.burnedWork = burnedWork ;
-        propertyChanged("burnedWork", this.burnedWork);
+    public final ProjectSprintSnapshot setRemainingWork(int remainingWork) {
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
         return (ProjectSprintSnapshot)this;
     }
 
-    public final boolean isBurnedWork(int burnedWork) {
-        return equals(this.burnedWork, burnedWork);
+    public final boolean isRemainingWork(int remainingWork) {
+        return equals(this.remainingWork, remainingWork);
     }
 
     // --- sprint ---
@@ -87,38 +93,38 @@ public abstract class GProjectSprintSnapshot
         return equals(this.sprintId, sprint);
     }
 
-    // --- remainingWork ---
+    // --- burnedWork ---
 
-    private int remainingWork ;
+    private int burnedWork ;
 
-    public final int getRemainingWork() {
-        return this.remainingWork ;
+    public final int getBurnedWork() {
+        return this.burnedWork ;
     }
 
-    public final ProjectSprintSnapshot setRemainingWork(int remainingWork) {
-        this.remainingWork = remainingWork ;
-        propertyChanged("remainingWork", this.remainingWork);
+    public final ProjectSprintSnapshot setBurnedWork(int burnedWork) {
+        this.burnedWork = burnedWork ;
+        propertyChanged("burnedWork", this.burnedWork);
         return (ProjectSprintSnapshot)this;
     }
 
-    public final boolean isRemainingWork(int remainingWork) {
-        return equals(this.remainingWork, remainingWork);
+    public final boolean isBurnedWork(int burnedWork) {
+        return equals(this.burnedWork, burnedWork);
     }
 
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        burnedWork  = (Integer) props.get("burnedWork");
-        sprintId = (String) props.get("sprintId");
         remainingWork  = (Integer) props.get("remainingWork");
+        sprintId = (String) props.get("sprintId");
+        burnedWork  = (Integer) props.get("burnedWork");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("burnedWork", this.burnedWork);
-        properties.put("sprintId", this.sprintId);
         properties.put("remainingWork", this.remainingWork);
+        properties.put("sprintId", this.sprintId);
+        properties.put("burnedWork", this.burnedWork);
     }
 
 }

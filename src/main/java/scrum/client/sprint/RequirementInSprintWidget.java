@@ -44,7 +44,7 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget {
 	@Override
 	protected void onCollapsedUpdate() {
 		setBlockTitle(requirement.getLabel());
-		setIcon(requirement.isDone() ? Img.bundle.storyDoneIcon32() : Img.bundle.storyIcon32());
+		setIcon(requirement.isDone() ? Img.bundle.done32() : Img.bundle.requirement32());
 		summary.setText(requirement.getSprintBacklogSummary());
 		setContent(summary);
 		setToolbar(null);
@@ -89,7 +89,7 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget {
 	@Override
 	protected void onExtendedUpdate() {
 		setBlockTitle(requirement.getLabel());
-		setIcon(requirement.isDone() ? Img.bundle.storyDoneIcon32() : Img.bundle.storyIcon32());
+		setIcon(requirement.isDone() ? Img.bundle.done32() : Img.bundle.requirement32());
 		fields.update();
 
 		taskList.update();
@@ -152,8 +152,8 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget {
 
 	@Override
 	public AbstractImagePrototype getIcon16() {
-		if (requirement.isDone()) return Img.bundle.storyDoneIcon16();
-		return Img.bundle.storyIcon16();
+		if (requirement.isDone()) return Img.bundle.requirement16();
+		return Img.bundle.requirement16();
 	}
 
 	@Override

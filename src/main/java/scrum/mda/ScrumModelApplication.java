@@ -6,6 +6,7 @@ import ilarkesto.mda.AGeneratorApplication;
 import ilarkesto.mda.gen.GwtApplicationGenerator;
 import ilarkesto.mda.gen.GwtDaoGenerator;
 import ilarkesto.mda.gen.GwtEntityGenerator;
+import ilarkesto.mda.gen.GwtImageBundleGenerator;
 import ilarkesto.mda.gen.GwtServiceAsyncInterfaceGenerator;
 import ilarkesto.mda.gen.GwtServiceImplementationGenerator;
 import ilarkesto.mda.gen.GwtServiceInterfaceGenerator;
@@ -202,7 +203,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	protected void generate(BeanModel beanModel) {
 		super.generate(beanModel);
 		if (beanModel instanceof EntityModel) {
-			autowire(new GwtEntityGenerator()).generate((EntityModel) beanModel);
+			autowire(new GwtEntityGenerator()).generate((EntityModel) beanModel, getApplicationModel());
 		}
 	}
 
@@ -214,5 +215,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		autowire(new GwtServiceImplementationGenerator()).generate(getServiceModel());
 		autowire(new GwtApplicationGenerator()).generate(getApplicationModel());
 		autowire(new GwtDaoGenerator()).generate(getApplicationModel(), getFinalEntityModels(false));
+		autowire(new GwtImageBundleGenerator()).generate("scrum.client.img");
 	}
 }

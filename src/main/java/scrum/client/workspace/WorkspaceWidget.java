@@ -50,6 +50,10 @@ public class WorkspaceWidget extends AWidget {
 		return sidebar;
 	}
 
+	public boolean isWorkareaActive() {
+		return workarea != null;
+	}
+
 	public static WorkspaceWidget get() {
 		return Ui.get().getWorkspace();
 	}

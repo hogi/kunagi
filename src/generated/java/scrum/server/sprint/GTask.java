@@ -40,18 +40,18 @@ public abstract class GTask
         return taskDao;
     }
 
-    protected void repairDeadValueObject(ADatob valueObject) {
+    protected void repairDeadDatob(ADatob datob) {
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("ownerId", this.ownerId);
-        properties.put("requirementId", this.requirementId);
         properties.put("notice", this.notice);
-        properties.put("label", this.label);
         properties.put("burnedWork", this.burnedWork);
+        properties.put("requirementId", this.requirementId);
+        properties.put("ownerId", this.ownerId);
         properties.put("remainingWork", this.remainingWork);
+        properties.put("label", this.label);
     }
 
     public int compareTo(Task other) {
@@ -67,12 +67,105 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
-        setOwner(template.getOwner());
-        setRequirement(template.getRequirement());
         setNotice(template.getNotice());
-        setLabel(template.getLabel());
         setBurnedWork(template.getBurnedWork());
+        setRequirement(template.getRequirement());
+        setOwner(template.getOwner());
         setRemainingWork(template.getRemainingWork());
+        setLabel(template.getLabel());
+    }
+
+    // -----------------------------------------------------------
+    // - notice
+    // -----------------------------------------------------------
+
+    private java.lang.String notice;
+
+    public final java.lang.String getNotice() {
+        return notice;
+    }
+
+    public final void setNotice(java.lang.String notice) {
+        notice = prepareNotice(notice);
+        if (isNotice(notice)) return;
+        this.notice = notice;
+        entityModified();
+    }
+
+    protected java.lang.String prepareNotice(java.lang.String notice) {
+        notice = Str.removeUnreadableChars(notice);
+        return notice;
+    }
+
+    public final boolean isNoticeSet() {
+        return this.notice != null;
+    }
+
+    public final boolean isNotice(java.lang.String notice) {
+        if (this.notice == null && notice == null) return true;
+        return this.notice != null && this.notice.equals(notice);
+    }
+
+    // -----------------------------------------------------------
+    // - burnedWork
+    // -----------------------------------------------------------
+
+    private int burnedWork;
+
+    public final int getBurnedWork() {
+        return burnedWork;
+    }
+
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
+        entityModified();
+    }
+
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
+    }
+
+    // -----------------------------------------------------------
+    // - requirement
+    // -----------------------------------------------------------
+
+    private String requirementId;
+
+    public final scrum.server.project.Requirement getRequirement() {
+        if (this.requirementId == null) return null;
+        return (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
+    }
+
+    public final void setRequirement(scrum.server.project.Requirement requirement) {
+        requirement = prepareRequirement(requirement);
+        if (isRequirement(requirement)) return;
+        this.requirementId = requirement == null ? null : requirement.getId();
+        entityModified();
+    }
+
+    protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
+        return requirement;
+    }
+
+    protected void repairDeadRequirementReference(String entityId) {
+        if (entityId.equals(this.requirementId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isRequirementSet() {
+        return this.requirementId != null;
+    }
+
+    public final boolean isRequirement(scrum.server.project.Requirement requirement) {
+        if (this.requirementId == null && requirement == null) return true;
+        return requirement != null && requirement.getId().equals(this.requirementId);
     }
 
     // -----------------------------------------------------------
@@ -114,71 +207,28 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
-    // - requirement
+    // - remainingWork
     // -----------------------------------------------------------
 
-    private String requirementId;
+    private int remainingWork;
 
-    public final scrum.server.project.Requirement getRequirement() {
-        if (this.requirementId == null) return null;
-        return (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
+    public final int getRemainingWork() {
+        return remainingWork;
     }
 
-    public final void setRequirement(scrum.server.project.Requirement requirement) {
-        requirement = prepareRequirement(requirement);
-        if (isRequirement(requirement)) return;
-        this.requirementId = requirement == null ? null : requirement.getId();
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
         entityModified();
     }
 
-    protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
-        return requirement;
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
     }
 
-    protected void repairDeadRequirementReference(String entityId) {
-        if (entityId.equals(this.requirementId)) {
-            repairMissingMaster();
-        }
-    }
-
-    public final boolean isRequirementSet() {
-        return this.requirementId != null;
-    }
-
-    public final boolean isRequirement(scrum.server.project.Requirement requirement) {
-        if (this.requirementId == null && requirement == null) return true;
-        return requirement != null && requirement.getId().equals(this.requirementId);
-    }
-
-    // -----------------------------------------------------------
-    // - notice
-    // -----------------------------------------------------------
-
-    private java.lang.String notice;
-
-    public final java.lang.String getNotice() {
-        return notice;
-    }
-
-    public final void setNotice(java.lang.String notice) {
-        notice = prepareNotice(notice);
-        if (isNotice(notice)) return;
-        this.notice = notice;
-        entityModified();
-    }
-
-    protected java.lang.String prepareNotice(java.lang.String notice) {
-        notice = Str.removeUnreadableChars(notice);
-        return notice;
-    }
-
-    public final boolean isNoticeSet() {
-        return this.notice != null;
-    }
-
-    public final boolean isNotice(java.lang.String notice) {
-        if (this.notice == null && notice == null) return true;
-        return this.notice != null && this.notice.equals(notice);
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
     }
 
     // -----------------------------------------------------------
@@ -212,72 +262,16 @@ public abstract class GTask
         return this.label != null && this.label.equals(label);
     }
 
-    // -----------------------------------------------------------
-    // - burnedWork
-    // -----------------------------------------------------------
-
-    private int burnedWork;
-
-    public final int getBurnedWork() {
-        return burnedWork;
-    }
-
-    public final void setBurnedWork(int burnedWork) {
-        burnedWork = prepareBurnedWork(burnedWork);
-        if (isBurnedWork(burnedWork)) return;
-        this.burnedWork = burnedWork;
-        entityModified();
-    }
-
-    protected int prepareBurnedWork(int burnedWork) {
-        return burnedWork;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return this.burnedWork == burnedWork;
-    }
-
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private int remainingWork;
-
-    public final int getRemainingWork() {
-        return remainingWork;
-    }
-
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
-        entityModified();
-    }
-
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
-    }
-
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
-        repairDeadOwnerReference(entityId);
         repairDeadRequirementReference(entityId);
+        repairDeadOwnerReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
-        try {
-            getOwner();
-        } catch (EntityDoesNotExistException ex) {
-            LOG.info("Repairing dead owner reference");
-            repairDeadOwnerReference(this.ownerId);
-        }
         if (!isRequirementSet()) {
             repairMissingMaster();
             return;
@@ -287,6 +281,12 @@ public abstract class GTask
         } catch (EntityDoesNotExistException ex) {
             LOG.info("Repairing dead requirement reference");
             repairDeadRequirementReference(this.requirementId);
+        }
+        try {
+            getOwner();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead owner reference");
+            repairDeadOwnerReference(this.ownerId);
         }
     }
 
