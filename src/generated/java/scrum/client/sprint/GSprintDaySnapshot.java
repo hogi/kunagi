@@ -54,6 +54,42 @@ public abstract class GSprintDaySnapshot
         return ENTITY_TYPE;
     }
 
+    // --- burnedWork ---
+
+    private int burnedWork ;
+
+    public final int getBurnedWork() {
+        return this.burnedWork ;
+    }
+
+    public final SprintDaySnapshot setBurnedWork(int burnedWork) {
+        this.burnedWork = burnedWork ;
+        propertyChanged("burnedWork", this.burnedWork);
+        return (SprintDaySnapshot)this;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return equals(this.burnedWork, burnedWork);
+    }
+
+    // --- remainingWork ---
+
+    private int remainingWork ;
+
+    public final int getRemainingWork() {
+        return this.remainingWork ;
+    }
+
+    public final SprintDaySnapshot setRemainingWork(int remainingWork) {
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
+        return (SprintDaySnapshot)this;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return equals(this.remainingWork, remainingWork);
+    }
+
     // --- sprint ---
 
     private String sprintId;
@@ -75,24 +111,6 @@ public abstract class GSprintDaySnapshot
         return equals(this.sprintId, sprint);
     }
 
-    // --- burnedWork ---
-
-    private int burnedWork ;
-
-    public final int getBurnedWork() {
-        return this.burnedWork ;
-    }
-
-    public final SprintDaySnapshot setBurnedWork(int burnedWork) {
-        this.burnedWork = burnedWork ;
-        propertyChanged("burnedWork", this.burnedWork);
-        return (SprintDaySnapshot)this;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return equals(this.burnedWork, burnedWork);
-    }
-
     // --- date ---
 
     private ilarkesto.gwt.client.Date date ;
@@ -111,41 +129,23 @@ public abstract class GSprintDaySnapshot
         return equals(this.date, date);
     }
 
-    // --- remainingWork ---
-
-    private int remainingWork ;
-
-    public final int getRemainingWork() {
-        return this.remainingWork ;
-    }
-
-    public final SprintDaySnapshot setRemainingWork(int remainingWork) {
-        this.remainingWork = remainingWork ;
-        propertyChanged("remainingWork", this.remainingWork);
-        return (SprintDaySnapshot)this;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return equals(this.remainingWork, remainingWork);
-    }
-
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        sprintId = (String) props.get("sprintId");
         burnedWork  = (Integer) props.get("burnedWork");
+        remainingWork  = (Integer) props.get("remainingWork");
+        sprintId = (String) props.get("sprintId");
         String dateAsString = (String) props.get("date");
         date  =  dateAsString == null ? null : new ilarkesto.gwt.client.Date(dateAsString);
-        remainingWork  = (Integer) props.get("remainingWork");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("sprintId", this.sprintId);
         properties.put("burnedWork", this.burnedWork);
-        properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("remainingWork", this.remainingWork);
+        properties.put("sprintId", this.sprintId);
+        properties.put("date", this.date == null ? null : this.date.toString());
     }
 
 }

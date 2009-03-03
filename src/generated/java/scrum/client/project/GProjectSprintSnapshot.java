@@ -54,24 +54,6 @@ public abstract class GProjectSprintSnapshot
         return ENTITY_TYPE;
     }
 
-    // --- remainingWork ---
-
-    private int remainingWork ;
-
-    public final int getRemainingWork() {
-        return this.remainingWork ;
-    }
-
-    public final ProjectSprintSnapshot setRemainingWork(int remainingWork) {
-        this.remainingWork = remainingWork ;
-        propertyChanged("remainingWork", this.remainingWork);
-        return (ProjectSprintSnapshot)this;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return equals(this.remainingWork, remainingWork);
-    }
-
     // --- sprint ---
 
     private String sprintId;
@@ -91,6 +73,24 @@ public abstract class GProjectSprintSnapshot
 
     public final boolean isSprint(scrum.client.sprint.Sprint sprint) {
         return equals(this.sprintId, sprint);
+    }
+
+    // --- remainingWork ---
+
+    private int remainingWork ;
+
+    public final int getRemainingWork() {
+        return this.remainingWork ;
+    }
+
+    public final ProjectSprintSnapshot setRemainingWork(int remainingWork) {
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
+        return (ProjectSprintSnapshot)this;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return equals(this.remainingWork, remainingWork);
     }
 
     // --- burnedWork ---
@@ -114,16 +114,16 @@ public abstract class GProjectSprintSnapshot
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        remainingWork  = (Integer) props.get("remainingWork");
         sprintId = (String) props.get("sprintId");
+        remainingWork  = (Integer) props.get("remainingWork");
         burnedWork  = (Integer) props.get("burnedWork");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("remainingWork", this.remainingWork);
         properties.put("sprintId", this.sprintId);
+        properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);
     }
 

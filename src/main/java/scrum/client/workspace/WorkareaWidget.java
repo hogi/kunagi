@@ -5,6 +5,7 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.ProjectOverviewWidget;
+import scrum.client.risks.RiskListWidget;
 import scrum.client.sprint.SprintBacklogWidget;
 
 import com.google.gwt.user.client.ui.Label;
@@ -20,6 +21,7 @@ public class WorkareaWidget extends AWidget {
 	private SprintBacklogWidget sprintBacklog;
 	private ProductBacklogWidget productBacklog;
 	private ImpedimentListWidget impedimentList;
+	private RiskListWidget riskList;
 
 	@Override
 	protected Widget onInitialization() {
@@ -76,6 +78,16 @@ public class WorkareaWidget extends AWidget {
 		});
 	}
 
+	public void showRiskList() {
+		Ui.get().lock("Loading Risks...");
+		ScrumGwtApplication.get().callRequestRisks(new Runnable() {
+
+			public void run() {
+				show(getRiskList());
+			}
+		});
+	}
+
 	private void show(AWidget widget) {
 		currentWidget = widget;
 		Ui.get().unlock();
@@ -100,6 +112,11 @@ public class WorkareaWidget extends AWidget {
 	public ImpedimentListWidget getImpedimentList() {
 		if (impedimentList == null) impedimentList = new ImpedimentListWidget();
 		return impedimentList;
+	}
+
+	public RiskListWidget getRiskList() {
+		if (riskList == null) riskList = new RiskListWidget();
+		return riskList;
 	}
 
 	public static WorkareaWidget get() {

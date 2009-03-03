@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.impediments.Impediment;
+import scrum.client.risks.Risk;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
 
@@ -31,8 +32,22 @@ public class Project extends GProject {
 		getDao().deleteImpediment(impediment);
 	}
 
+	public void deleteRisk(Risk risk) {
+		getDao().deleteRisk(risk);
+	}
+
 	public List<Impediment> getImpediments() {
 		return getDao().getImpedimentsByProject(this);
+	}
+
+	public List<Risk> getRisks() {
+		return getDao().getRisksByProject(this);
+	}
+
+	public Risk createNewRisk() {
+		Risk risk = new Risk(this);
+		getDao().createRisk(risk);
+		return risk;
 	}
 
 	public Requirement createNewRequirement() {

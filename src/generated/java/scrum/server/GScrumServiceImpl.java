@@ -36,6 +36,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onLogin(SessionData session, java.lang.String username, java.lang.String password);
     protected abstract void onSelectProject(SessionData session, java.lang.String projectId);
     protected abstract void onRequestImpediments(SessionData session);
+    protected abstract void onRequestRisks(SessionData session);
     protected abstract void onRequestRequirements(SessionData session);
     protected abstract void onRequestCurrentSprint(SessionData session);
     protected abstract void onChangeProperties(SessionData session, java.lang.String entityId, java.util.Map properties);
@@ -97,6 +98,21 @@ public abstract class GScrumServiceImpl
             onRequestImpediments(session);
         } catch (Throwable t) {
             handleServiceMethodException("requestImpediments",t);
+        }
+        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted();
+        return ret;
+    }
+
+
+    public ilarkesto.gwt.client.DataTransferObject requestRisks() {
+        LOG.debug("requestRisks");
+        SessionData session = getSessionData();
+        session.getContext().createSubContext("service:requestRisks");
+        try {
+            onRequestRisks(session);
+        } catch (Throwable t) {
+            handleServiceMethodException("requestRisks",t);
         }
         ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
         onServiceMethodExecuted();

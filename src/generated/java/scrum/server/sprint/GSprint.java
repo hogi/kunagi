@@ -46,11 +46,11 @@ public abstract class GSprint
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("projectId", this.projectId);
-        properties.put("goal", this.goal);
-        properties.put("label", this.label);
         properties.put("end", this.end == null ? null : this.end.toString());
+        properties.put("label", this.label);
+        properties.put("begin", this.begin == null ? null : this.begin.toString());
+        properties.put("goal", this.goal);
     }
 
     public int compareTo(Sprint other) {
@@ -66,41 +66,11 @@ public abstract class GSprint
         super(template);
         if (template==null) return;
 
-        setBegin(template.getBegin());
         setProject(template.getProject());
-        setGoal(template.getGoal());
-        setLabel(template.getLabel());
         setEnd(template.getEnd());
-    }
-
-    // -----------------------------------------------------------
-    // - begin
-    // -----------------------------------------------------------
-
-    private ilarkesto.base.time.Date begin;
-
-    public final ilarkesto.base.time.Date getBegin() {
-        return begin;
-    }
-
-    public final void setBegin(ilarkesto.base.time.Date begin) {
-        begin = prepareBegin(begin);
-        if (isBegin(begin)) return;
-        this.begin = begin;
-        fireModified();
-    }
-
-    protected ilarkesto.base.time.Date prepareBegin(ilarkesto.base.time.Date begin) {
-        return begin;
-    }
-
-    public final boolean isBeginSet() {
-        return this.begin != null;
-    }
-
-    public final boolean isBegin(ilarkesto.base.time.Date begin) {
-        if (this.begin == null && begin == null) return true;
-        return this.begin != null && this.begin.equals(begin);
+        setLabel(template.getLabel());
+        setBegin(template.getBegin());
+        setGoal(template.getGoal());
     }
 
     // -----------------------------------------------------------
@@ -141,34 +111,33 @@ public abstract class GSprint
     }
 
     // -----------------------------------------------------------
-    // - goal
+    // - end
     // -----------------------------------------------------------
 
-    private java.lang.String goal;
+    private ilarkesto.base.time.Date end;
 
-    public final java.lang.String getGoal() {
-        return goal;
+    public final ilarkesto.base.time.Date getEnd() {
+        return end;
     }
 
-    public final void setGoal(java.lang.String goal) {
-        goal = prepareGoal(goal);
-        if (isGoal(goal)) return;
-        this.goal = goal;
+    public final void setEnd(ilarkesto.base.time.Date end) {
+        end = prepareEnd(end);
+        if (isEnd(end)) return;
+        this.end = end;
         fireModified();
     }
 
-    protected java.lang.String prepareGoal(java.lang.String goal) {
-        goal = Str.removeUnreadableChars(goal);
-        return goal;
+    protected ilarkesto.base.time.Date prepareEnd(ilarkesto.base.time.Date end) {
+        return end;
     }
 
-    public final boolean isGoalSet() {
-        return this.goal != null;
+    public final boolean isEndSet() {
+        return this.end != null;
     }
 
-    public final boolean isGoal(java.lang.String goal) {
-        if (this.goal == null && goal == null) return true;
-        return this.goal != null && this.goal.equals(goal);
+    public final boolean isEnd(ilarkesto.base.time.Date end) {
+        if (this.end == null && end == null) return true;
+        return this.end != null && this.end.equals(end);
     }
 
     // -----------------------------------------------------------
@@ -203,33 +172,64 @@ public abstract class GSprint
     }
 
     // -----------------------------------------------------------
-    // - end
+    // - begin
     // -----------------------------------------------------------
 
-    private ilarkesto.base.time.Date end;
+    private ilarkesto.base.time.Date begin;
 
-    public final ilarkesto.base.time.Date getEnd() {
-        return end;
+    public final ilarkesto.base.time.Date getBegin() {
+        return begin;
     }
 
-    public final void setEnd(ilarkesto.base.time.Date end) {
-        end = prepareEnd(end);
-        if (isEnd(end)) return;
-        this.end = end;
+    public final void setBegin(ilarkesto.base.time.Date begin) {
+        begin = prepareBegin(begin);
+        if (isBegin(begin)) return;
+        this.begin = begin;
         fireModified();
     }
 
-    protected ilarkesto.base.time.Date prepareEnd(ilarkesto.base.time.Date end) {
-        return end;
+    protected ilarkesto.base.time.Date prepareBegin(ilarkesto.base.time.Date begin) {
+        return begin;
     }
 
-    public final boolean isEndSet() {
-        return this.end != null;
+    public final boolean isBeginSet() {
+        return this.begin != null;
     }
 
-    public final boolean isEnd(ilarkesto.base.time.Date end) {
-        if (this.end == null && end == null) return true;
-        return this.end != null && this.end.equals(end);
+    public final boolean isBegin(ilarkesto.base.time.Date begin) {
+        if (this.begin == null && begin == null) return true;
+        return this.begin != null && this.begin.equals(begin);
+    }
+
+    // -----------------------------------------------------------
+    // - goal
+    // -----------------------------------------------------------
+
+    private java.lang.String goal;
+
+    public final java.lang.String getGoal() {
+        return goal;
+    }
+
+    public final void setGoal(java.lang.String goal) {
+        goal = prepareGoal(goal);
+        if (isGoal(goal)) return;
+        this.goal = goal;
+        fireModified();
+    }
+
+    protected java.lang.String prepareGoal(java.lang.String goal) {
+        goal = Str.removeUnreadableChars(goal);
+        return goal;
+    }
+
+    public final boolean isGoalSet() {
+        return this.goal != null;
+    }
+
+    public final boolean isGoal(java.lang.String goal) {
+        if (this.goal == null && goal == null) return true;
+        return this.goal != null && this.goal.equals(goal);
     }
 
     protected void repairDeadReferences(String entityId) {

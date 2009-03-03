@@ -72,6 +72,14 @@ public abstract class GScrumGwtApplication
         callRequestImpediments( null);
     }
 
+    public final void callRequestRisks( Runnable callback) {
+        getScrumService().requestRisks( new DefaultCallback(callback));
+    }
+
+    public final void callRequestRisks() {
+        callRequestRisks( null);
+    }
+
     public final void callRequestRequirements( Runnable callback) {
         getScrumService().requestRequirements( new DefaultCallback(callback));
     }

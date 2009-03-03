@@ -128,6 +128,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	protected void onRequestRisks(SessionData session) {
+		Project project = session.getProject();
+		if (project == null) throw new RuntimeException("No project selected.");
+		session.getNextData().addEntities(toPropertyMap(project.getRisks()));
+	}
+
+	@Override
 	public void onRequestRequirements(SessionData session) {
 		Project project = session.getProject();
 		if (project == null) throw new RuntimeException("No project selected.");

@@ -47,6 +47,13 @@ public class SidebarWidget extends AWidget {
 			}
 		});
 
+		navigator.addItem(Img.bundle.risk16(), "Risk Management", new Runnable() {
+
+			public void run() {
+				WorkareaWidget.get().showRiskList();
+			}
+		});
+
 		trash = new TrashWidget();
 
 		clipboard = new ClipboardWidget();

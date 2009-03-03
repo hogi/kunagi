@@ -36,6 +36,8 @@ public interface GScrumService
 
     ilarkesto.gwt.client.DataTransferObject requestImpediments();
 
+    ilarkesto.gwt.client.DataTransferObject requestRisks();
+
     ilarkesto.gwt.client.DataTransferObject requestRequirements();
 
     ilarkesto.gwt.client.DataTransferObject requestCurrentSprint();

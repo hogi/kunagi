@@ -7,6 +7,8 @@ import java.util.Set;
 import scrum.server.admin.User;
 import scrum.server.impediments.Impediment;
 import scrum.server.impediments.ImpedimentDao;
+import scrum.server.risks.Risk;
+import scrum.server.risks.RiskDao;
 import scrum.server.sprint.Sprint;
 
 public class Project extends GProject {
@@ -16,6 +18,7 @@ public class Project extends GProject {
 	private static ImpedimentDao impedimentDao;
 	private static RequirementDao requirementDao;
 	private static ProjectSprintSnapshotDao projectSprintSnapshotDao;
+	private static RiskDao riskDao;
 
 	public Project(GProject template) {
 		super(template);
@@ -23,6 +26,10 @@ public class Project extends GProject {
 
 	public Project() {
 		super(null);
+	}
+
+	public static void setRiskDao(RiskDao riskDao) {
+		Project.riskDao = riskDao;
 	}
 
 	public static void setImpedimentDao(ImpedimentDao impedimentDao) {
@@ -118,6 +125,10 @@ public class Project extends GProject {
 
 	public Set<Impediment> getImpediments() {
 		return impedimentDao.getImpedimentsByProject(this);
+	}
+
+	public Set<Risk> getRisks() {
+		return riskDao.getRisksByProject(this);
 	}
 
 	public Set<Requirement> getRequirements() {

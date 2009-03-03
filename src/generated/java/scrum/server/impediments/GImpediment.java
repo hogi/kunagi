@@ -46,12 +46,12 @@ public abstract class GImpediment
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("date", this.date == null ? null : this.date.toString());
-        properties.put("solution", this.solution);
-        properties.put("projectId", this.projectId);
-        properties.put("label", this.label);
-        properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
         properties.put("description", this.description);
+        properties.put("projectId", this.projectId);
+        properties.put("solution", this.solution);
+        properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
+        properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("label", this.label);
     }
 
     public int compareTo(Impediment other) {
@@ -67,73 +67,43 @@ public abstract class GImpediment
         super(template);
         if (template==null) return;
 
-        setDate(template.getDate());
-        setSolution(template.getSolution());
-        setProject(template.getProject());
-        setLabel(template.getLabel());
-        setSolveDate(template.getSolveDate());
         setDescription(template.getDescription());
+        setProject(template.getProject());
+        setSolution(template.getSolution());
+        setSolveDate(template.getSolveDate());
+        setDate(template.getDate());
+        setLabel(template.getLabel());
     }
 
     // -----------------------------------------------------------
-    // - date
+    // - description
     // -----------------------------------------------------------
 
-    private ilarkesto.base.time.Date date;
+    private java.lang.String description;
 
-    public final ilarkesto.base.time.Date getDate() {
-        return date;
+    public final java.lang.String getDescription() {
+        return description;
     }
 
-    public final void setDate(ilarkesto.base.time.Date date) {
-        date = prepareDate(date);
-        if (isDate(date)) return;
-        this.date = date;
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
         fireModified();
     }
 
-    protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
-        return date;
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
     }
 
-    public final boolean isDateSet() {
-        return this.date != null;
+    public final boolean isDescriptionSet() {
+        return this.description != null;
     }
 
-    public final boolean isDate(ilarkesto.base.time.Date date) {
-        if (this.date == null && date == null) return true;
-        return this.date != null && this.date.equals(date);
-    }
-
-    // -----------------------------------------------------------
-    // - solution
-    // -----------------------------------------------------------
-
-    private java.lang.String solution;
-
-    public final java.lang.String getSolution() {
-        return solution;
-    }
-
-    public final void setSolution(java.lang.String solution) {
-        solution = prepareSolution(solution);
-        if (isSolution(solution)) return;
-        this.solution = solution;
-        fireModified();
-    }
-
-    protected java.lang.String prepareSolution(java.lang.String solution) {
-        solution = Str.removeUnreadableChars(solution);
-        return solution;
-    }
-
-    public final boolean isSolutionSet() {
-        return this.solution != null;
-    }
-
-    public final boolean isSolution(java.lang.String solution) {
-        if (this.solution == null && solution == null) return true;
-        return this.solution != null && this.solution.equals(solution);
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
     }
 
     // -----------------------------------------------------------
@@ -174,34 +144,34 @@ public abstract class GImpediment
     }
 
     // -----------------------------------------------------------
-    // - label
+    // - solution
     // -----------------------------------------------------------
 
-    private java.lang.String label;
+    private java.lang.String solution;
 
-    public final java.lang.String getLabel() {
-        return label;
+    public final java.lang.String getSolution() {
+        return solution;
     }
 
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
+    public final void setSolution(java.lang.String solution) {
+        solution = prepareSolution(solution);
+        if (isSolution(solution)) return;
+        this.solution = solution;
         fireModified();
     }
 
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
+    protected java.lang.String prepareSolution(java.lang.String solution) {
+        solution = Str.removeUnreadableChars(solution);
+        return solution;
     }
 
-    public final boolean isLabelSet() {
-        return this.label != null;
+    public final boolean isSolutionSet() {
+        return this.solution != null;
     }
 
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
+    public final boolean isSolution(java.lang.String solution) {
+        if (this.solution == null && solution == null) return true;
+        return this.solution != null && this.solution.equals(solution);
     }
 
     // -----------------------------------------------------------
@@ -235,34 +205,64 @@ public abstract class GImpediment
     }
 
     // -----------------------------------------------------------
-    // - description
+    // - date
     // -----------------------------------------------------------
 
-    private java.lang.String description;
+    private ilarkesto.base.time.Date date;
 
-    public final java.lang.String getDescription() {
-        return description;
+    public final ilarkesto.base.time.Date getDate() {
+        return date;
     }
 
-    public final void setDescription(java.lang.String description) {
-        description = prepareDescription(description);
-        if (isDescription(description)) return;
-        this.description = description;
+    public final void setDate(ilarkesto.base.time.Date date) {
+        date = prepareDate(date);
+        if (isDate(date)) return;
+        this.date = date;
         fireModified();
     }
 
-    protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
-        return description;
+    protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
+        return date;
     }
 
-    public final boolean isDescriptionSet() {
-        return this.description != null;
+    public final boolean isDateSet() {
+        return this.date != null;
     }
 
-    public final boolean isDescription(java.lang.String description) {
-        if (this.description == null && description == null) return true;
-        return this.description != null && this.description.equals(description);
+    public final boolean isDate(ilarkesto.base.time.Date date) {
+        if (this.date == null && date == null) return true;
+        return this.date != null && this.date.equals(date);
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        fireModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
     }
 
     protected void repairDeadReferences(String entityId) {

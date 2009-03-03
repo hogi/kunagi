@@ -138,6 +138,21 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return impedimentModel;
 	}
 
+	private EntityModel riskModel;
+
+	public EntityModel getRiskModel() {
+		if (riskModel == null) {
+			riskModel = createEntityModel("Risk", "risks");
+			autowire(riskModel);
+			riskModel.addReference("project", getProjectModel()).setMaster(true);
+			riskModel.addProperty("label", String.class).setSearchable(true);
+			riskModel.addProperty("description", String.class).setSearchable(true);
+			riskModel.addProperty("probability", int.class);
+			riskModel.addProperty("impact", int.class);
+		}
+		return riskModel;
+	}
+
 	private EntityModel userModel;
 
 	@Override
@@ -166,6 +181,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				String.class);
 			serviceModel.addMethod("selectProject").addParameter("projectId", String.class);
 			serviceModel.addMethod("requestImpediments");
+			serviceModel.addMethod("requestRisks");
 			serviceModel.addMethod("requestRequirements");
 			serviceModel.addMethod("requestCurrentSprint");
 			serviceModel.addMethod("changeProperties").addParameter("entityId", String.class).addParameter(

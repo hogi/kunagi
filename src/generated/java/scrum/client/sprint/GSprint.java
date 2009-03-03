@@ -54,24 +54,6 @@ public abstract class GSprint
         return ENTITY_TYPE;
     }
 
-    // --- begin ---
-
-    private ilarkesto.gwt.client.Date begin ;
-
-    public final ilarkesto.gwt.client.Date getBegin() {
-        return this.begin ;
-    }
-
-    public final Sprint setBegin(ilarkesto.gwt.client.Date begin) {
-        this.begin = begin ;
-        propertyChanged("begin", this.begin);
-        return (Sprint)this;
-    }
-
-    public final boolean isBegin(ilarkesto.gwt.client.Date begin) {
-        return equals(this.begin, begin);
-    }
-
     // --- project ---
 
     private String projectId;
@@ -93,22 +75,22 @@ public abstract class GSprint
         return equals(this.projectId, project);
     }
 
-    // --- goal ---
+    // --- end ---
 
-    private java.lang.String goal ;
+    private ilarkesto.gwt.client.Date end ;
 
-    public final java.lang.String getGoal() {
-        return this.goal ;
+    public final ilarkesto.gwt.client.Date getEnd() {
+        return this.end ;
     }
 
-    public final Sprint setGoal(java.lang.String goal) {
-        this.goal = goal ;
-        propertyChanged("goal", this.goal);
+    public final Sprint setEnd(ilarkesto.gwt.client.Date end) {
+        this.end = end ;
+        propertyChanged("end", this.end);
         return (Sprint)this;
     }
 
-    public final boolean isGoal(java.lang.String goal) {
-        return equals(this.goal, goal);
+    public final boolean isEnd(ilarkesto.gwt.client.Date end) {
+        return equals(this.end, end);
     }
 
     // --- label ---
@@ -129,44 +111,62 @@ public abstract class GSprint
         return equals(this.label, label);
     }
 
-    // --- end ---
+    // --- begin ---
 
-    private ilarkesto.gwt.client.Date end ;
+    private ilarkesto.gwt.client.Date begin ;
 
-    public final ilarkesto.gwt.client.Date getEnd() {
-        return this.end ;
+    public final ilarkesto.gwt.client.Date getBegin() {
+        return this.begin ;
     }
 
-    public final Sprint setEnd(ilarkesto.gwt.client.Date end) {
-        this.end = end ;
-        propertyChanged("end", this.end);
+    public final Sprint setBegin(ilarkesto.gwt.client.Date begin) {
+        this.begin = begin ;
+        propertyChanged("begin", this.begin);
         return (Sprint)this;
     }
 
-    public final boolean isEnd(ilarkesto.gwt.client.Date end) {
-        return equals(this.end, end);
+    public final boolean isBegin(ilarkesto.gwt.client.Date begin) {
+        return equals(this.begin, begin);
+    }
+
+    // --- goal ---
+
+    private java.lang.String goal ;
+
+    public final java.lang.String getGoal() {
+        return this.goal ;
+    }
+
+    public final Sprint setGoal(java.lang.String goal) {
+        this.goal = goal ;
+        propertyChanged("goal", this.goal);
+        return (Sprint)this;
+    }
+
+    public final boolean isGoal(java.lang.String goal) {
+        return equals(this.goal, goal);
     }
 
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        String beginAsString = (String) props.get("begin");
-        begin  =  beginAsString == null ? null : new ilarkesto.gwt.client.Date(beginAsString);
         projectId = (String) props.get("projectId");
-        goal  = (java.lang.String) props.get("goal");
-        label  = (java.lang.String) props.get("label");
         String endAsString = (String) props.get("end");
         end  =  endAsString == null ? null : new ilarkesto.gwt.client.Date(endAsString);
+        label  = (java.lang.String) props.get("label");
+        String beginAsString = (String) props.get("begin");
+        begin  =  beginAsString == null ? null : new ilarkesto.gwt.client.Date(beginAsString);
+        goal  = (java.lang.String) props.get("goal");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("projectId", this.projectId);
-        properties.put("goal", this.goal);
-        properties.put("label", this.label);
         properties.put("end", this.end == null ? null : this.end.toString());
+        properties.put("label", this.label);
+        properties.put("begin", this.begin == null ? null : this.begin.toString());
+        properties.put("goal", this.goal);
     }
 
 }

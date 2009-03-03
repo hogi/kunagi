@@ -46,12 +46,12 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("remainingWork", this.remainingWork);
+        properties.put("ownerId", this.ownerId);
+        properties.put("label", this.label);
         properties.put("notice", this.notice);
         properties.put("burnedWork", this.burnedWork);
         properties.put("requirementId", this.requirementId);
-        properties.put("ownerId", this.ownerId);
-        properties.put("remainingWork", this.remainingWork);
-        properties.put("label", this.label);
     }
 
     public int compareTo(Task other) {
@@ -67,12 +67,106 @@ public abstract class GTask
         super(template);
         if (template==null) return;
 
+        setRemainingWork(template.getRemainingWork());
+        setOwner(template.getOwner());
+        setLabel(template.getLabel());
         setNotice(template.getNotice());
         setBurnedWork(template.getBurnedWork());
         setRequirement(template.getRequirement());
-        setOwner(template.getOwner());
-        setRemainingWork(template.getRemainingWork());
-        setLabel(template.getLabel());
+    }
+
+    // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private int remainingWork;
+
+    public final int getRemainingWork() {
+        return remainingWork;
+    }
+
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+        fireModified();
+    }
+
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
+    }
+
+    // -----------------------------------------------------------
+    // - owner
+    // -----------------------------------------------------------
+
+    private String ownerId;
+
+    public final scrum.server.admin.User getOwner() {
+        if (this.ownerId == null) return null;
+        return (scrum.server.admin.User)userDao.getById(this.ownerId);
+    }
+
+    public final void setOwner(scrum.server.admin.User owner) {
+        owner = prepareOwner(owner);
+        if (isOwner(owner)) return;
+        this.ownerId = owner == null ? null : owner.getId();
+        fireModified();
+    }
+
+    protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
+        return owner;
+    }
+
+    protected void repairDeadOwnerReference(String entityId) {
+        if (entityId.equals(this.ownerId)) {
+            this.ownerId = null;
+            fireModified();
+        }
+    }
+
+    public final boolean isOwnerSet() {
+        return this.ownerId != null;
+    }
+
+    public final boolean isOwner(scrum.server.admin.User owner) {
+        if (this.ownerId == null && owner == null) return true;
+        return owner != null && owner.getId().equals(this.ownerId);
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        fireModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
     }
 
     // -----------------------------------------------------------
@@ -168,110 +262,22 @@ public abstract class GTask
         return requirement != null && requirement.getId().equals(this.requirementId);
     }
 
-    // -----------------------------------------------------------
-    // - owner
-    // -----------------------------------------------------------
-
-    private String ownerId;
-
-    public final scrum.server.admin.User getOwner() {
-        if (this.ownerId == null) return null;
-        return (scrum.server.admin.User)userDao.getById(this.ownerId);
-    }
-
-    public final void setOwner(scrum.server.admin.User owner) {
-        owner = prepareOwner(owner);
-        if (isOwner(owner)) return;
-        this.ownerId = owner == null ? null : owner.getId();
-        fireModified();
-    }
-
-    protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
-        return owner;
-    }
-
-    protected void repairDeadOwnerReference(String entityId) {
-        if (entityId.equals(this.ownerId)) {
-            this.ownerId = null;
-            fireModified();
-        }
-    }
-
-    public final boolean isOwnerSet() {
-        return this.ownerId != null;
-    }
-
-    public final boolean isOwner(scrum.server.admin.User owner) {
-        if (this.ownerId == null && owner == null) return true;
-        return owner != null && owner.getId().equals(this.ownerId);
-    }
-
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private int remainingWork;
-
-    public final int getRemainingWork() {
-        return remainingWork;
-    }
-
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
-        fireModified();
-    }
-
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        fireModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
-    }
-
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
-        repairDeadRequirementReference(entityId);
         repairDeadOwnerReference(entityId);
+        repairDeadRequirementReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
+        try {
+            getOwner();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead owner reference");
+            repairDeadOwnerReference(this.ownerId);
+        }
         if (!isRequirementSet()) {
             repairMissingMaster();
             return;
@@ -281,12 +287,6 @@ public abstract class GTask
         } catch (EntityDoesNotExistException ex) {
             LOG.info("Repairing dead requirement reference");
             repairDeadRequirementReference(this.requirementId);
-        }
-        try {
-            getOwner();
-        } catch (EntityDoesNotExistException ex) {
-            LOG.info("Repairing dead owner reference");
-            repairDeadOwnerReference(this.ownerId);
         }
     }
 

@@ -36,6 +36,8 @@ public interface GScrumServiceAsync {
 
     void requestImpediments(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
+    void requestRisks(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
+
     void requestRequirements(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
     void requestCurrentSprint(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
