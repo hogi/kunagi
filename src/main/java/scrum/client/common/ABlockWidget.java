@@ -156,7 +156,11 @@ public abstract class ABlockWidget extends AWidget {
 		return selected;
 	}
 
-	public final void setSelected(boolean extended) {
+	/**
+	 * This method is only called by BlockListWidget. To select a block on a BlockListWidget call
+	 * <code>BlockListWidget.selectBlock(B block)</code> instead.
+	 */
+	final void setSelected(boolean extended) {
 		if (this.selected == extended) return;
 		this.selected = extended;
 		if (extended) {

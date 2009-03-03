@@ -107,9 +107,7 @@ public class WorkareaWidget extends AWidget {
 	}
 
 	private void showAndScrollToWidget(AWidget widget, Widget w) {
-		currentWidget = widget;
-		Ui.get().unlock();
-		update();
+		show(widget);
 		if (w != null) {
 			scrollTo(w.getAbsoluteTop() - 32); // rahmen abziehen :-S
 		}

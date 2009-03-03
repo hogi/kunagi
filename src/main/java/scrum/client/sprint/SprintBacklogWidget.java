@@ -107,17 +107,16 @@ public class SprintBacklogWidget extends AWidget {
 	}
 
 	public Widget selectRequirement(Requirement r) {
-		// update();
-		Widget selectedWidget = null;
+		update();
+
 		for (RequirementInSprintWidget rw : requirementList) {
 			if (r.getId().equals(rw.getRequirement().getId())) {
-				rw.setSelected(true);
-				selectedWidget = rw;
-			} else {
-				rw.setSelected(false);
+				requirementList.selectBlock(rw);
+				return rw;
 			}
 		}
-		return selectedWidget;
+
+		return null;
 	}
 
 	private Sprint getSprint() {
