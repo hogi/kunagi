@@ -150,6 +150,18 @@ public class Project extends GProject {
 		impedimentDao.createTestImpediment(this, 3);
 	}
 
+	public void addTestRisks(int variant) {
+		if (variant == 0) return;
+
+		riskDao.createTestRisk(this, 1);
+		riskDao.createTestRisk(this, 2);
+		riskDao.createTestRisk(this, 3);
+		riskDao.createTestRisk(this, 4);
+		riskDao.createTestRisk(this, 5);
+		riskDao.createTestRisk(this, 6);
+		riskDao.createTestRisk(this, 7);
+	}
+
 	public void addTestRequirements(int variant) {
 		if (variant == 0) return;
 

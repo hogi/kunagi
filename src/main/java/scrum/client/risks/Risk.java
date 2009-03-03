@@ -17,8 +17,20 @@ public class Risk extends GRisk {
 		super(data);
 	}
 
+	public String getProbabilityLabel() {
+		return RiskLabeler.getProbabilityLabel(getProbability());
+	}
+
+	public String getImpactLabel() {
+		return RiskLabeler.getImpactLabel(getImpact());
+	}
+
+	public String getPriorityLabel() {
+		return RiskLabeler.getPriorityLabel(getImpact(), getProbability());
+	}
+
 	public String getSummary() {
-		return "Severe (Extreme and Very likely)"; // TODO impl
+		return getPriorityLabel() + " priority because " + getImpactLabel() + " and " + getProbabilityLabel();
 	}
 
 	@Override
