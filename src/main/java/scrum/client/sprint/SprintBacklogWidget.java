@@ -106,6 +106,20 @@ public class SprintBacklogWidget extends AWidget {
 
 	}
 
+	public Widget selectRequirement(Requirement r) {
+		// update();
+		Widget selectedWidget = null;
+		for (RequirementInSprintWidget rw : requirementList) {
+			if (r.getId().equals(rw.getRequirement().getId())) {
+				rw.setSelected(true);
+				selectedWidget = rw;
+			} else {
+				rw.setSelected(false);
+			}
+		}
+		return selectedWidget;
+	}
+
 	private Sprint getSprint() {
 		Project project = ScrumGwtApplication.get().getProject();
 		if (project == null) return null;

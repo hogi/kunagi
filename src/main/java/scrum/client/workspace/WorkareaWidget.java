@@ -5,6 +5,7 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.ProjectOverviewWidget;
+import scrum.client.project.Requirement;
 import scrum.client.risks.RiskListWidget;
 import scrum.client.sprint.SprintBacklogWidget;
 
@@ -58,6 +59,17 @@ public class WorkareaWidget extends AWidget {
 		});
 	}
 
+	public void showSprintBacklog(final Requirement r) {
+		Ui.get().lock("Loading Sprint...");
+		ScrumGwtApplication.get().callRequestCurrentSprint(new Runnable() {
+
+			public void run() {
+				SprintBacklogWidget sprintWidget = getSprintBacklog();
+				showAndScrollToWidget(sprintWidget, sprintWidget.selectRequirement(r));
+			}
+		});
+	}
+
 	public void showProductBacklog() {
 		Ui.get().lock("Loading Product Backlog...");
 		ScrumGwtApplication.get().callRequestRequirements(new Runnable() {
@@ -93,6 +105,19 @@ public class WorkareaWidget extends AWidget {
 		Ui.get().unlock();
 		update();
 	}
+
+	private void showAndScrollToWidget(AWidget widget, Widget w) {
+		currentWidget = widget;
+		Ui.get().unlock();
+		update();
+		if (w != null) {
+			scrollTo(w.getAbsoluteTop() - 32); // rahmen abziehen :-S
+		}
+	}
+
+	public static native void scrollTo(int posY) /*-{
+		$wnd.scrollTo(0, posY);
+	}-*/;
 
 	public ProjectOverviewWidget getProjectOverview() {
 		if (projectOverview == null) projectOverview = new ProjectOverviewWidget();

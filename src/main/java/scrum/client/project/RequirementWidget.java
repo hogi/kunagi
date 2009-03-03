@@ -10,6 +10,7 @@ import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
 import scrum.client.sprint.Sprint;
+import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -169,7 +170,8 @@ public class RequirementWidget extends AExtensibleBlockWidget {
 
 						public void onClick(Widget sender) {
 							requirement.setSprint(currentSprint);
-							update();
+							WorkareaWidget.get().showSprintBacklog(requirement);
+							// update();
 						}
 					});
 			}

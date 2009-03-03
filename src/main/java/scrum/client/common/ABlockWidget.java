@@ -156,7 +156,7 @@ public abstract class ABlockWidget extends AWidget {
 		return selected;
 	}
 
-	final void setSelected(boolean extended) {
+	public final void setSelected(boolean extended) {
 		if (this.selected == extended) return;
 		this.selected = extended;
 		if (extended) {
