@@ -89,7 +89,7 @@ public abstract class GTask
         notice = prepareNotice(notice);
         if (isNotice(notice)) return;
         this.notice = notice;
-        entityModified();
+        fireModified();
     }
 
     protected java.lang.String prepareNotice(java.lang.String notice) {
@@ -120,7 +120,7 @@ public abstract class GTask
         burnedWork = prepareBurnedWork(burnedWork);
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
-        entityModified();
+        fireModified();
     }
 
     protected int prepareBurnedWork(int burnedWork) {
@@ -146,7 +146,7 @@ public abstract class GTask
         requirement = prepareRequirement(requirement);
         if (isRequirement(requirement)) return;
         this.requirementId = requirement == null ? null : requirement.getId();
-        entityModified();
+        fireModified();
     }
 
     protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
@@ -183,7 +183,7 @@ public abstract class GTask
         owner = prepareOwner(owner);
         if (isOwner(owner)) return;
         this.ownerId = owner == null ? null : owner.getId();
-        entityModified();
+        fireModified();
     }
 
     protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
@@ -193,7 +193,7 @@ public abstract class GTask
     protected void repairDeadOwnerReference(String entityId) {
         if (entityId.equals(this.ownerId)) {
             this.ownerId = null;
-            entityModified();
+            fireModified();
         }
     }
 
@@ -220,7 +220,7 @@ public abstract class GTask
         remainingWork = prepareRemainingWork(remainingWork);
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
-        entityModified();
+        fireModified();
     }
 
     protected int prepareRemainingWork(int remainingWork) {
@@ -245,7 +245,7 @@ public abstract class GTask
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        entityModified();
+        fireModified();
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {

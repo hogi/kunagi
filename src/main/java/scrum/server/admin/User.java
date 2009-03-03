@@ -29,7 +29,7 @@ public class User extends GUser {
 	@Override
 	public void setPassword(String value) {
 		this.password = Crypt.cryptWebPassword(value);
-		entityModified();
+		fireModified();
 	}
 
 	@Override

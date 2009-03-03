@@ -86,7 +86,7 @@ public abstract class GSprintDaySnapshot
         sprint = prepareSprint(sprint);
         if (isSprint(sprint)) return;
         this.sprintId = sprint == null ? null : sprint.getId();
-        entityModified();
+        fireModified();
     }
 
     protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
@@ -96,7 +96,7 @@ public abstract class GSprintDaySnapshot
     protected void repairDeadSprintReference(String entityId) {
         if (entityId.equals(this.sprintId)) {
             this.sprintId = null;
-            entityModified();
+            fireModified();
         }
     }
 
@@ -123,7 +123,7 @@ public abstract class GSprintDaySnapshot
         burnedWork = prepareBurnedWork(burnedWork);
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
-        entityModified();
+        fireModified();
     }
 
     protected int prepareBurnedWork(int burnedWork) {
@@ -148,7 +148,7 @@ public abstract class GSprintDaySnapshot
         date = prepareDate(date);
         if (isDate(date)) return;
         this.date = date;
-        entityModified();
+        fireModified();
     }
 
     protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
@@ -178,7 +178,7 @@ public abstract class GSprintDaySnapshot
         remainingWork = prepareRemainingWork(remainingWork);
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
-        entityModified();
+        fireModified();
     }
 
     protected int prepareRemainingWork(int remainingWork) {

@@ -83,7 +83,7 @@ public abstract class GProjectSprintSnapshot
         remainingWork = prepareRemainingWork(remainingWork);
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
-        entityModified();
+        fireModified();
     }
 
     protected int prepareRemainingWork(int remainingWork) {
@@ -109,7 +109,7 @@ public abstract class GProjectSprintSnapshot
         sprint = prepareSprint(sprint);
         if (isSprint(sprint)) return;
         this.sprintId = sprint == null ? null : sprint.getId();
-        entityModified();
+        fireModified();
     }
 
     protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
@@ -119,7 +119,7 @@ public abstract class GProjectSprintSnapshot
     protected void repairDeadSprintReference(String entityId) {
         if (entityId.equals(this.sprintId)) {
             this.sprintId = null;
-            entityModified();
+            fireModified();
         }
     }
 
@@ -146,7 +146,7 @@ public abstract class GProjectSprintSnapshot
         burnedWork = prepareBurnedWork(burnedWork);
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
-        entityModified();
+        fireModified();
     }
 
     protected int prepareBurnedWork(int burnedWork) {

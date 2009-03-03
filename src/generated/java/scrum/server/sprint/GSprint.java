@@ -87,7 +87,7 @@ public abstract class GSprint
         begin = prepareBegin(begin);
         if (isBegin(begin)) return;
         this.begin = begin;
-        entityModified();
+        fireModified();
     }
 
     protected ilarkesto.base.time.Date prepareBegin(ilarkesto.base.time.Date begin) {
@@ -118,7 +118,7 @@ public abstract class GSprint
         project = prepareProject(project);
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
-        entityModified();
+        fireModified();
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -154,7 +154,7 @@ public abstract class GSprint
         goal = prepareGoal(goal);
         if (isGoal(goal)) return;
         this.goal = goal;
-        entityModified();
+        fireModified();
     }
 
     protected java.lang.String prepareGoal(java.lang.String goal) {
@@ -185,7 +185,7 @@ public abstract class GSprint
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        entityModified();
+        fireModified();
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -216,7 +216,7 @@ public abstract class GSprint
         end = prepareEnd(end);
         if (isEnd(end)) return;
         this.end = end;
-        entityModified();
+        fireModified();
     }
 
     protected ilarkesto.base.time.Date prepareEnd(ilarkesto.base.time.Date end) {

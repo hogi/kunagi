@@ -108,7 +108,7 @@ public abstract class GProject
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        entityModified();
+        fireModified();
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -140,7 +140,7 @@ public abstract class GProject
         scrumMaster = prepareScrumMaster(scrumMaster);
         if (isScrumMaster(scrumMaster)) return;
         this.scrumMasterId = scrumMaster == null ? null : scrumMaster.getId();
-        entityModified();
+        fireModified();
     }
 
     protected scrum.server.admin.User prepareScrumMaster(scrum.server.admin.User scrumMaster) {
@@ -150,7 +150,7 @@ public abstract class GProject
     protected void repairDeadScrumMasterReference(String entityId) {
         if (entityId.equals(this.scrumMasterId)) {
             this.scrumMasterId = null;
-            entityModified();
+            fireModified();
         }
     }
 
@@ -177,7 +177,7 @@ public abstract class GProject
         end = prepareEnd(end);
         if (isEnd(end)) return;
         this.end = end;
-        entityModified();
+        fireModified();
     }
 
     protected ilarkesto.base.time.Date prepareEnd(ilarkesto.base.time.Date end) {
@@ -207,7 +207,7 @@ public abstract class GProject
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
-        entityModified();
+        fireModified();
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -239,7 +239,7 @@ public abstract class GProject
         nextSprint = prepareNextSprint(nextSprint);
         if (isNextSprint(nextSprint)) return;
         this.nextSprintId = nextSprint == null ? null : nextSprint.getId();
-        entityModified();
+        fireModified();
     }
 
     protected scrum.server.sprint.Sprint prepareNextSprint(scrum.server.sprint.Sprint nextSprint) {
@@ -249,7 +249,7 @@ public abstract class GProject
     protected void repairDeadNextSprintReference(String entityId) {
         if (entityId.equals(this.nextSprintId)) {
             this.nextSprintId = null;
-            entityModified();
+            fireModified();
         }
     }
 
@@ -277,7 +277,7 @@ public abstract class GProject
         productOwner = prepareProductOwner(productOwner);
         if (isProductOwner(productOwner)) return;
         this.productOwnerId = productOwner == null ? null : productOwner.getId();
-        entityModified();
+        fireModified();
     }
 
     protected scrum.server.admin.User prepareProductOwner(scrum.server.admin.User productOwner) {
@@ -287,7 +287,7 @@ public abstract class GProject
     protected void repairDeadProductOwnerReference(String entityId) {
         if (entityId.equals(this.productOwnerId)) {
             this.productOwnerId = null;
-            entityModified();
+            fireModified();
         }
     }
 
@@ -316,7 +316,7 @@ public abstract class GProject
         java.util.Set<String> ids = getIdsAsSet(admins);
         if (this.adminsIds.equals(ids)) return;
         this.adminsIds = ids;
-        entityModified();
+        fireModified();
     }
 
     protected java.util.Set<scrum.server.admin.User> prepareAdmins(java.util.Set<scrum.server.admin.User> admins) {
@@ -324,7 +324,7 @@ public abstract class GProject
     }
 
     protected void repairDeadAdminReference(String entityId) {
-        if (this.adminsIds.remove(entityId)) entityModified();
+        if (this.adminsIds.remove(entityId)) fireModified();
     }
 
     public final boolean containsAdmin(scrum.server.admin.User admin) {
@@ -343,7 +343,7 @@ public abstract class GProject
     public final boolean addAdmin(scrum.server.admin.User admin) {
         if (admin == null) throw new IllegalArgumentException("admin == null");
         boolean added = this.adminsIds.add(admin.getId());
-        if (added) entityModified();
+        if (added) fireModified();
         return added;
     }
 
@@ -353,7 +353,7 @@ public abstract class GProject
         for (scrum.server.admin.User admin : admins) {
             added = added | this.adminsIds.add(admin.getId());
         }
-        if (added) entityModified();
+        if (added) fireModified();
         return added;
     }
 
@@ -361,7 +361,7 @@ public abstract class GProject
         if (admin == null) throw new IllegalArgumentException("admin == null");
         if (this.adminsIds == null) return false;
         boolean removed = this.adminsIds.remove(admin.getId());
-        if (removed) entityModified();
+        if (removed) fireModified();
         return removed;
     }
 
@@ -378,7 +378,7 @@ public abstract class GProject
     public final boolean clearAdmins() {
         if (this.adminsIds.isEmpty()) return false;
         this.adminsIds.clear();
-        entityModified();
+        fireModified();
         return true;
     }
 
@@ -398,7 +398,7 @@ public abstract class GProject
         java.util.Set<String> ids = getIdsAsSet(teamMembers);
         if (this.teamMembersIds.equals(ids)) return;
         this.teamMembersIds = ids;
-        entityModified();
+        fireModified();
     }
 
     protected java.util.Set<scrum.server.admin.User> prepareTeamMembers(java.util.Set<scrum.server.admin.User> teamMembers) {
@@ -406,7 +406,7 @@ public abstract class GProject
     }
 
     protected void repairDeadTeamMemberReference(String entityId) {
-        if (this.teamMembersIds.remove(entityId)) entityModified();
+        if (this.teamMembersIds.remove(entityId)) fireModified();
     }
 
     public final boolean containsTeamMember(scrum.server.admin.User teamMember) {
@@ -425,7 +425,7 @@ public abstract class GProject
     public final boolean addTeamMember(scrum.server.admin.User teamMember) {
         if (teamMember == null) throw new IllegalArgumentException("teamMember == null");
         boolean added = this.teamMembersIds.add(teamMember.getId());
-        if (added) entityModified();
+        if (added) fireModified();
         return added;
     }
 
@@ -435,7 +435,7 @@ public abstract class GProject
         for (scrum.server.admin.User teamMember : teamMembers) {
             added = added | this.teamMembersIds.add(teamMember.getId());
         }
-        if (added) entityModified();
+        if (added) fireModified();
         return added;
     }
 
@@ -443,7 +443,7 @@ public abstract class GProject
         if (teamMember == null) throw new IllegalArgumentException("teamMember == null");
         if (this.teamMembersIds == null) return false;
         boolean removed = this.teamMembersIds.remove(teamMember.getId());
-        if (removed) entityModified();
+        if (removed) fireModified();
         return removed;
     }
 
@@ -460,7 +460,7 @@ public abstract class GProject
     public final boolean clearTeamMembers() {
         if (this.teamMembersIds.isEmpty()) return false;
         this.teamMembersIds.clear();
-        entityModified();
+        fireModified();
         return true;
     }
 
@@ -479,7 +479,7 @@ public abstract class GProject
         currentSprint = prepareCurrentSprint(currentSprint);
         if (isCurrentSprint(currentSprint)) return;
         this.currentSprintId = currentSprint == null ? null : currentSprint.getId();
-        entityModified();
+        fireModified();
     }
 
     protected scrum.server.sprint.Sprint prepareCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
@@ -489,7 +489,7 @@ public abstract class GProject
     protected void repairDeadCurrentSprintReference(String entityId) {
         if (entityId.equals(this.currentSprintId)) {
             this.currentSprintId = null;
-            entityModified();
+            fireModified();
         }
     }
 
@@ -516,7 +516,7 @@ public abstract class GProject
         begin = prepareBegin(begin);
         if (isBegin(begin)) return;
         this.begin = begin;
-        entityModified();
+        fireModified();
     }
 
     protected ilarkesto.base.time.Date prepareBegin(ilarkesto.base.time.Date begin) {

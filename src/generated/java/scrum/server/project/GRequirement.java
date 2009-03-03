@@ -92,7 +92,7 @@ public abstract class GRequirement
         sprint = prepareSprint(sprint);
         if (isSprint(sprint)) return;
         this.sprintId = sprint == null ? null : sprint.getId();
-        entityModified();
+        fireModified();
     }
 
     protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
@@ -102,7 +102,7 @@ public abstract class GRequirement
     protected void repairDeadSprintReference(String entityId) {
         if (entityId.equals(this.sprintId)) {
             this.sprintId = null;
-            entityModified();
+            fireModified();
         }
     }
 
@@ -130,7 +130,7 @@ public abstract class GRequirement
         project = prepareProject(project);
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
-        entityModified();
+        fireModified();
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -166,7 +166,7 @@ public abstract class GRequirement
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        entityModified();
+        fireModified();
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -197,7 +197,7 @@ public abstract class GRequirement
         estimatedWork = prepareEstimatedWork(estimatedWork);
         if (isEstimatedWork(estimatedWork)) return;
         this.estimatedWork = estimatedWork;
-        entityModified();
+        fireModified();
     }
 
     protected java.lang.Integer prepareEstimatedWork(java.lang.Integer estimatedWork) {
@@ -227,7 +227,7 @@ public abstract class GRequirement
         closed = prepareClosed(closed);
         if (isClosed(closed)) return;
         this.closed = closed;
-        entityModified();
+        fireModified();
     }
 
     protected boolean prepareClosed(boolean closed) {
@@ -252,7 +252,7 @@ public abstract class GRequirement
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
-        entityModified();
+        fireModified();
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -283,7 +283,7 @@ public abstract class GRequirement
         testDescription = prepareTestDescription(testDescription);
         if (isTestDescription(testDescription)) return;
         this.testDescription = testDescription;
-        entityModified();
+        fireModified();
     }
 
     protected java.lang.String prepareTestDescription(java.lang.String testDescription) {

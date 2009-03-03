@@ -89,7 +89,7 @@ public abstract class GImpediment
         date = prepareDate(date);
         if (isDate(date)) return;
         this.date = date;
-        entityModified();
+        fireModified();
     }
 
     protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
@@ -119,7 +119,7 @@ public abstract class GImpediment
         solution = prepareSolution(solution);
         if (isSolution(solution)) return;
         this.solution = solution;
-        entityModified();
+        fireModified();
     }
 
     protected java.lang.String prepareSolution(java.lang.String solution) {
@@ -151,7 +151,7 @@ public abstract class GImpediment
         project = prepareProject(project);
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
-        entityModified();
+        fireModified();
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -187,7 +187,7 @@ public abstract class GImpediment
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        entityModified();
+        fireModified();
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -218,7 +218,7 @@ public abstract class GImpediment
         solveDate = prepareSolveDate(solveDate);
         if (isSolveDate(solveDate)) return;
         this.solveDate = solveDate;
-        entityModified();
+        fireModified();
     }
 
     protected ilarkesto.base.time.Date prepareSolveDate(ilarkesto.base.time.Date solveDate) {
@@ -248,7 +248,7 @@ public abstract class GImpediment
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
-        entityModified();
+        fireModified();
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {

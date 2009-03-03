@@ -79,7 +79,7 @@ public abstract class GUser
         name = prepareName(name);
         if (isName(name)) return;
         this.name = name;
-        entityModified();
+        fireModified();
     }
 
     protected java.lang.String prepareName(java.lang.String name) {
