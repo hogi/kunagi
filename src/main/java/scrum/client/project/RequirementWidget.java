@@ -146,13 +146,15 @@ public class RequirementWidget extends AExtensibleBlockWidget {
 	protected Widget createToolbar() {
 		ToolbarWidget toolbar = new ToolbarWidget();
 
-		toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
+		if (requirement.getSprint() == null) {
+			toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
 
-			public void onClick(Widget sender) {
-				ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
-				ProductBacklogWidget.get().list.removeSelectedRow();
-			}
-		});
+				public void onClick(Widget sender) {
+					ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
+					ProductBacklogWidget.get().list.removeSelectedRow();
+				}
+			});
+		}
 
 		final Sprint currentSprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
 		if (currentSprint != null) {
