@@ -6,11 +6,11 @@ import ilarkesto.io.IO;
 import ilarkesto.logging.Logger;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
+
+import javax.servlet.http.HttpServletRequest;
+
 import scrum.server.admin.UserDao;
 import scrum.server.common.BurndownChart;
-import scrum.server.impediments.Impediment;
-import scrum.server.project.Project;
-import scrum.server.project.Requirement;
 
 public class ScrumWebApplication extends GScrumWebApplication {
 
@@ -83,8 +83,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	@Override
-	protected AWebSession createWebSession() {
-		return autowire(new WebSession(context));
+	protected AWebSession createWebSession(HttpServletRequest httpRequest) {
+		return autowire(new WebSession(context, httpRequest));
 	}
 
 	public static ScrumWebApplication get() {
