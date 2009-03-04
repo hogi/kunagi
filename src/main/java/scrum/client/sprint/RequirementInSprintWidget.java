@@ -6,20 +6,21 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import java.util.ArrayList;
 import java.util.List;
 
-import scrum.client.ScrumGwtApplication;
+import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.FieldsWidget;
+import scrum.client.dnd.ClipboardSupport;
 import scrum.client.img.Img;
 import scrum.client.project.Requirement;
 
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RequirementInSprintWidget extends AExtensibleBlockWidget {
+public class RequirementInSprintWidget extends AExtensibleBlockWidget implements ClipboardSupport {
 
 	private Requirement requirement;
 	private SprintBacklogWidget autoUpdateWidget; // widget to update, when fields modified
@@ -150,15 +151,16 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget {
 		return toolbar;
 	}
 
-	@Override
-	public AbstractImagePrototype getIcon16() {
-		if (requirement.isDone()) return Img.bundle.requirement16();
-		return Img.bundle.requirement16();
+	public Image getClipboardIcon() {
+		return Img.bundle.requirement16().createImage();
 	}
 
-	@Override
-	public void delete() {
-		ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
+	public String getClipboardLabel() {
+		return requirement.getLabel();
+	}
+
+	public ABlockWidget getClipboardPayload() {
+		return this;
 	}
 
 	public Requirement getItem() {

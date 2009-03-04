@@ -6,16 +6,19 @@ import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.FieldsWidget;
+import scrum.client.dnd.ClipboardSupport;
+import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RiskWidget extends AExtensibleBlockWidget {
+public class RiskWidget extends AExtensibleBlockWidget implements TrashSupport, ClipboardSupport {
 
 	private Risk risk;
 
@@ -136,9 +139,16 @@ public class RiskWidget extends AExtensibleBlockWidget {
 		setToolbar(getToolbar());
 	}
 
-	@Override
-	public AbstractImagePrototype getIcon16() {
-		return Img.bundle.risk16();
+	public Image getClipboardIcon() {
+		return Img.bundle.risk16().createImage();
+	}
+
+	public String getClipboardLabel() {
+		return risk.getLabel();
+	}
+
+	public ABlockWidget getClipboardPayload() {
+		return this;
 	}
 
 	protected Widget getToolbar() {
@@ -158,9 +168,16 @@ public class RiskWidget extends AExtensibleBlockWidget {
 		return toolbar;
 	}
 
-	@Override
-	public void delete() {
-		ScrumGwtApplication.get().getProject().deleteRisk(risk);
+	public Risk getRisk() {
+		return risk;
+	}
+
+	public boolean isTrashable() {
+		return true;
+	}
+
+	public void trash() {
+		risk.getProject().deleteRisk(risk);
 		getList().remove(this);
 	}
 }

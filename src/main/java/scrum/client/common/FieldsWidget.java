@@ -52,8 +52,9 @@ public class FieldsWidget extends AWidget {
 	 * @param value Value widget of the field (right).
 	 */
 	public <W extends Widget> W addWidget(String label, W value) {
-		ensureInitialized();
+		initialize();
 
+		if (label == null) label = "";
 		Label l = new Label(label);
 		l.setStyleName(StyleSheet.FIELD_LABEL);
 		value.addStyleName(StyleSheet.FIELD_VALUE);

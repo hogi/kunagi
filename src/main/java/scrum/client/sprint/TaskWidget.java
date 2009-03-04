@@ -6,16 +6,19 @@ import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.FieldsWidget;
+import scrum.client.dnd.ClipboardSupport;
+import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class TaskWidget extends AExtensibleBlockWidget {
+public class TaskWidget extends AExtensibleBlockWidget implements TrashSupport, ClipboardSupport {
 
 	private Task task;
 	private AWidget autoUpdateWidget; // widget to update, when fields edited
@@ -180,14 +183,16 @@ public class TaskWidget extends AExtensibleBlockWidget {
 			});
 		}
 
-		toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
+		if (isTrashable()) {
+			toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
 
-			public void onClick(Widget sender) {
-				delete();
-				autoUpdateWidget.update();
-			}
+				public void onClick(Widget sender) {
+					trash();
+					autoUpdateWidget.update();
+				}
 
-		});
+			});
+		}
 
 		if (!task.isDone()) {
 			toolbar.addButton(Img.bundle.done16().createImage(), "Done").addClickListener(new ClickListener() {
@@ -202,14 +207,23 @@ public class TaskWidget extends AExtensibleBlockWidget {
 		return toolbar;
 	}
 
-	@Override
-	public AbstractImagePrototype getIcon16() {
-		if (task.isDone()) return Img.bundle.task16();
-		return Img.bundle.task16();
+	public Image getClipboardIcon() {
+		return Img.bundle.task16().createImage();
 	}
 
-	@Override
-	public void delete() {
+	public String getClipboardLabel() {
+		return task.getLabel();
+	}
+
+	public ABlockWidget getClipboardPayload() {
+		return this;
+	}
+
+	public boolean isTrashable() {
+		return true;
+	}
+
+	public void trash() {
 		task.getRequirement().deleteTask(task);
 		autoUpdateWidget.update();
 	}

@@ -47,7 +47,7 @@ public class GroupWidget extends AWidget {
 	}
 
 	public GroupWidget setContent(Widget content) {
-		ensureInitialized();
+		initialize();
 		contentPanel.clear();
 		contentPanel.add(content);
 		this.content = content;

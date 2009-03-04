@@ -8,9 +8,9 @@ import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkareaWidget;
 
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectWidget extends ABlockWidget {
@@ -33,7 +33,7 @@ public class ProjectWidget extends ABlockWidget {
 	@Override
 	protected void onBlockUpdate() {
 		setBlockTitle(project.getLabel());
-		setIcon(Img.icons().project32());
+		setIcon(Img.bundle.project32());
 
 		String description = project.getDescription();
 		if (description == null) description = "No description.";
@@ -79,12 +79,8 @@ public class ProjectWidget extends ABlockWidget {
 		});
 	}
 
-	@Override
-	public void delete() {}
-
-	@Override
-	public AbstractImagePrototype getIcon16() {
-		return Img.icons().project32();
+	public Image getClipboardIcon() {
+		return Img.bundle.project32().createImage();
 	}
 
 }

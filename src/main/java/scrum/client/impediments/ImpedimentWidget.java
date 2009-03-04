@@ -4,16 +4,19 @@ import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.FieldsWidget;
+import scrum.client.dnd.ClipboardSupport;
+import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ImpedimentWidget extends AExtensibleBlockWidget {
+public class ImpedimentWidget extends AExtensibleBlockWidget implements TrashSupport, ClipboardSupport {
 
 	private Impediment impediment;
 
@@ -108,11 +111,16 @@ public class ImpedimentWidget extends AExtensibleBlockWidget {
 		setToolbar(getToolbar());
 	}
 
-	@Override
-	public AbstractImagePrototype getIcon16() {
-		// return different icon depending on solved-status
-		if (impediment.isSolved()) return Img.bundle.impediment16();
-		return Img.bundle.impediment16();
+	public String getClipboardLabel() {
+		return impediment.getLabel();
+	}
+
+	public Image getClipboardIcon() {
+		return Img.bundle.impediment16().createImage();
+	}
+
+	public ABlockWidget getClipboardPayload() {
+		return this;
 	}
 
 	protected Widget getToolbar() {
@@ -153,9 +161,12 @@ public class ImpedimentWidget extends AExtensibleBlockWidget {
 		return toolbar;
 	}
 
-	@Override
-	public void delete() {
-		ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
-		ImpedimentListWidget.get().list.remove(this);
+	public boolean isTrashable() {
+		return true;
+	}
+
+	public void trash() {
+		impediment.getProject().deleteImpediment(impediment);
+		getList().remove(this);
 	}
 }

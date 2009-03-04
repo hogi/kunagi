@@ -6,18 +6,21 @@ import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.FieldsWidget;
+import scrum.client.dnd.ClipboardSupport;
+import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 import scrum.client.sprint.Sprint;
 import scrum.client.workspace.WorkareaWidget;
 
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RequirementWidget extends AExtensibleBlockWidget {
+public class RequirementWidget extends AExtensibleBlockWidget implements TrashSupport, ClipboardSupport {
 
 	private Requirement requirement;
 
@@ -192,16 +195,25 @@ public class RequirementWidget extends AExtensibleBlockWidget {
 		return toolbar;
 	}
 
-	@Override
-	public AbstractImagePrototype getIcon16() {
-		if (requirement.isClosed()) return Img.bundle.requirement16();
-		return Img.bundle.requirement16();
+	public Image getClipboardIcon() {
+		return Img.bundle.requirement16().createImage();
 	}
 
-	@Override
-	public void delete() {
-		ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
-		ProductBacklogWidget.get().list.remove(this);
+	public String getClipboardLabel() {
+		return requirement.getLabel();
+	}
+
+	public ABlockWidget getClipboardPayload() {
+		return this;
+	}
+
+	public boolean isTrashable() {
+		return requirement.getSprint() == null;
+	}
+
+	public void trash() {
+		requirement.getProject().deleteRequirement(requirement);
+		getList().remove(this);
 	}
 
 	public Requirement getRequirement() {

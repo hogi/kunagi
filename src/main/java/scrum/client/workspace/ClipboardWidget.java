@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.StyleSheet;
+import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.DndManager;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
@@ -57,9 +58,9 @@ public class ClipboardWidget extends AWidget {
 
 		public void onDrop(DragContext context) {
 			Widget widget = context.draggable;
-			if (widget instanceof ABlockWidget) {
-				ABlockWidget ablockwidget = (ABlockWidget) widget;
-				addItem(ablockwidget.createClipboardItem());
+			if (widget instanceof ClipboardSupport) {
+				ClipboardSupport clipboardSupport = (ClipboardSupport) widget;
+				addItem(new ClipboardItemWidget(clipboardSupport));
 			}
 		}
 
@@ -80,6 +81,13 @@ public class ClipboardWidget extends AWidget {
 		public void onMove(DragContext context) {}
 
 		public void onPreviewDrop(DragContext context) throws VetoDragException {}
+
+		private boolean isDroppable(Widget draggable) {
+			if (draggable instanceof ABlockWidget) {
+
+			}
+			return false;
+		}
 
 	};
 

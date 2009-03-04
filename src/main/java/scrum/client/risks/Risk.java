@@ -4,7 +4,7 @@ import java.util.Map;
 
 import scrum.client.project.Project;
 
-public class Risk extends GRisk {
+public class Risk extends GRisk implements Comparable<Risk> {
 
 	public static final String INITIAL_LABEL = "New Risk";
 
@@ -18,19 +18,27 @@ public class Risk extends GRisk {
 	}
 
 	public String getProbabilityLabel() {
-		return RiskLabeler.getProbabilityLabel(getProbability());
+		return RiskComputer.getProbabilityLabel(getProbability());
 	}
 
 	public String getImpactLabel() {
-		return RiskLabeler.getImpactLabel(getImpact());
+		return RiskComputer.getImpactLabel(getImpact());
+	}
+
+	public int getPriority() {
+		return RiskComputer.getPriority(getImpact(), getProbability());
 	}
 
 	public String getPriorityLabel() {
-		return RiskLabeler.getPriorityLabel(getImpact(), getProbability());
+		return RiskComputer.getPriorityLabel(getImpact(), getProbability());
 	}
 
 	public String getSummary() {
 		return getPriorityLabel() + " priority because " + getImpactLabel() + " and " + getProbabilityLabel();
+	}
+
+	public int compareTo(Risk o) {
+		return getPriority() - o.getPriority();
 	}
 
 	@Override

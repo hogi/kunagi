@@ -3,7 +3,6 @@ package scrum.client.common;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.dnd.BlockListDndMarkerWidget;
 import scrum.client.dnd.DndManager;
-import scrum.client.workspace.ClipboardItemWidget;
 
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -33,10 +32,6 @@ public abstract class ABlockWidget extends AWidget {
 	private boolean selected;
 	private BlockListDndMarkerWidget dndMarkerTop = new BlockListDndMarkerWidget();
 	private BlockListDndMarkerWidget dndMarkerBottom = new BlockListDndMarkerWidget();
-
-	public abstract AbstractImagePrototype getIcon16();
-
-	public abstract void delete();
 
 	protected abstract void onBlockInitialization();
 
@@ -135,17 +130,12 @@ public abstract class ABlockWidget extends AWidget {
 		dndMarkerTop.setActive(false);
 	}
 
-	public final BlockListWidget getList() {
+	public final BlockListWidget<ABlockWidget> getList() {
 		return list;
 	}
 
 	final void setList(BlockListWidget list) {
 		this.list = list;
-	}
-
-	@Deprecated
-	public final boolean isDropSupported() {
-		return true;
 	}
 
 	/**
@@ -171,16 +161,12 @@ public abstract class ABlockWidget extends AWidget {
 		update();
 	}
 
-	public ClipboardItemWidget createClipboardItem() {
-		ClipboardItemWidget item = new ClipboardItemWidget(this);
-
-		return item;
-	}
-
 	@Override
 	protected void onAttach() {
 		super.onAttach();
-		DndManager.get().registerDropTarget(this);
+		if (getList().isDndSorting()) {
+			DndManager.get().registerDropTarget(this);
+		}
 	}
 
 	@Override

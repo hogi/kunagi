@@ -1,9 +1,9 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.ABlockWidget;
 import scrum.client.common.StyleSheet;
 import scrum.client.dnd.DndManager;
+import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
@@ -20,7 +20,7 @@ public class TrashWidget extends AWidget {
 	protected Widget onInitialization() {
 		trash = new HorizontalPanel();
 		trash.setStyleName("TrashWidget");
-		trash.add(Img.icons().trash32().createImage());
+		trash.add(Img.bundle.trash32().createImage());
 		// trash.add(new Label("Trash"));
 
 		DndManager.get().getDragController().registerDropController(trashDropController);
@@ -38,13 +38,12 @@ public class TrashWidget extends AWidget {
 		}
 
 		public void onDrop(DragContext context) {
-			Widget widget = context.draggable;
-			if (widget instanceof ABlockWidget) {
-				((ABlockWidget) widget).delete();
-			}
+			if (!isTrashable(context.draggable)) return;
+			((TrashSupport) context.draggable).trash();
 		}
 
 		public void onEnter(DragContext context) {
+			if (!isTrashable(context.draggable)) return;
 			trash.addStyleName(StyleSheet.DND_DROP_ALLOWED);
 		}
 
@@ -54,11 +53,13 @@ public class TrashWidget extends AWidget {
 
 		public void onMove(DragContext context) {}
 
-		public void onPreviewDrop(DragContext context) throws VetoDragException {
-		// TODO: check if item can be removed
-		// TODO: ask if item should be removed
-		}
+		public void onPreviewDrop(DragContext context) throws VetoDragException {}
 
 	};
+
+	private boolean isTrashable(Widget draggable) {
+		if (draggable instanceof TrashSupport) return ((TrashSupport) draggable).isTrashable();
+		return false;
+	}
 
 }

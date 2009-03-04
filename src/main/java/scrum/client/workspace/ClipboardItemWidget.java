@@ -2,26 +2,28 @@ package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.common.ABlockWidget;
+import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.DndManager;
+import scrum.client.dnd.TrashSupport;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ClipboardItemWidget extends AWidget {
+public class ClipboardItemWidget extends AWidget implements TrashSupport {
 
 	private HorizontalPanel panel;
 
 	private Image icon;
 
-	private ABlockWidget src;
+	private ClipboardSupport clipboardSupport;
 
 	private ClipboardWidget clipboard;
 
-	public ClipboardItemWidget(ABlockWidget src) {
-		this.src = src;
-		this.icon = src.getIcon16().createImage();
+	public ClipboardItemWidget(ClipboardSupport clipboardSupport) {
+		this.clipboardSupport = clipboardSupport;
+		this.icon = clipboardSupport.getClipboardIcon();
 	}
 
 	@Override
@@ -33,10 +35,20 @@ public class ClipboardItemWidget extends AWidget {
 		panel.setStyleName("ClipboardItemWidget");
 		panel.add(icon);
 		panel.setCellWidth(icon, "1%");
-		panel.add(new Label(src.getBlockTitle()));
+		panel.add(new Label(clipboardSupport.getClipboardLabel()));
 
-		DndManager.get().getDragController().makeDraggable(this, this.icon);
+		DndManager.get().makeDraggable(this, icon);
 		return panel;
+	}
+
+	public boolean isTrashable() {
+		if (clipboardSupport instanceof TrashSupport) return ((TrashSupport) clipboardSupport).isTrashable();
+		return false;
+	}
+
+	public void trash() {
+		((TrashSupport) clipboardSupport).trash();
+		removeFromClipboard();
 	}
 
 	@Override
@@ -50,8 +62,8 @@ public class ClipboardItemWidget extends AWidget {
 		this.clipboard = clipboard;
 	}
 
-	public ABlockWidget getSource() {
-		return src;
+	public ABlockWidget getPayload() {
+		return clipboardSupport.getClipboardPayload();
 	}
 
 }

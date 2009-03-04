@@ -50,7 +50,7 @@ body {padding: 0px; margin: 0px; background: white; backgroundX: #F2F5FE url("bg
 .element-BlockWidget-title {font-size: 14px; font-weight: bold;}
 .element-BlockWidget-block {padding: 1px; width: 100%;}
 .element-BlockWidget-center {}
-.state-BlockWidget-selected {border: 3px solid #84C979; cursor: default;}
+.state-BlockWidget-selected {border: 3px solid orange; cursor: default;}
 
 .element-DndMarkerWidget {background: #F2F5FE; height: 3px;}
 .element-DndMarkerWidget-active {background: #192666; height: 3px;}
@@ -68,8 +68,12 @@ body {padding: 0px; margin: 0px; background: white; backgroundX: #F2F5FE url("bg
 
 /***** Toolbar *****/
 
-.element-ToolbarWidget {padding: 3px;}
-.element-ButtonWidget {font-weight: bold; cursor: pointer; color: darkblue; white-space: nowrap;}
+.ButtonWidget {display: block; font-weight: bold; text-decoration: none; cursor: pointer; color: white; white-space: nowrap; padding: 5px 10px; background: orange url("button_bg.png"); vertical-align: middle; float: left;}
+.ButtonWidget:visited {color: white;}
+.ButtonWidget:hover {color: white; background: orange url("button_bg_hover.png");}
+.ToolbarWidget {padding: 3px;}
+.ToolbarWidget .vertical .ButtonWidget {float: none; margin-bottom: 3px;}
+.ToolbarWidget .horizontal .ButtonWidget {float: left; margin-right: 3px;}
 
 /***** Fields *****/
 
@@ -86,3 +90,9 @@ body {padding: 0px; margin: 0px; background: white; backgroundX: #F2F5FE url("bg
 /***** Drag & Drop *****/
 
 .dnd-drop-allowed {background: #192666;}
+
+/***** other *****/
+
+.WaitWidget {margin: 50px 200px; border: 1px solid #DEE5FD;}
+.LoginWidget {margin: 50px 200px; border: 1px solid #DEE5FD;}
+.floatClear {float: none; clear: both;}

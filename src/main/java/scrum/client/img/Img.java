@@ -6,8 +6,4 @@ public class Img {
 
 	public static GImageBundle bundle = GWT.create(GImageBundle.class);
 
-	public static GImageBundle icons() {
-		return bundle;
-	}
-
 }

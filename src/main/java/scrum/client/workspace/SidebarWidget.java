@@ -26,17 +26,17 @@ public class SidebarWidget extends AWidget {
 			}
 		});
 
-		navigator.addItem(Img.bundle.requirement16(), "Product Backlog", new Runnable() {
-
-			public void run() {
-				WorkareaWidget.get().showProductBacklog();
-			}
-		});
-
 		navigator.addItem(Img.bundle.sprint16(), "Sprint Backlog", new Runnable() {
 
 			public void run() {
 				WorkareaWidget.get().showSprintBacklog();
+			}
+		});
+
+		navigator.addItem(Img.bundle.requirement16(), "Product Backlog", new Runnable() {
+
+			public void run() {
+				WorkareaWidget.get().showProductBacklog();
 			}
 		});
 

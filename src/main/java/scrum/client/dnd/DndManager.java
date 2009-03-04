@@ -32,8 +32,8 @@ public class DndManager {
 		}
 	}
 
-	public void makeDraggable(Widget widget, Widget handle) {
-		dragController.makeDraggable(widget, handle);
+	public void makeDraggable(Widget widget, Widget dragHandle) {
+		dragController.makeDraggable(widget, dragHandle);
 	}
 
 	public static DndManager get() {

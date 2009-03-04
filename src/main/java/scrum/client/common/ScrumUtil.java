@@ -1,19 +1,13 @@
 package scrum.client.common;
 
+import ilarkesto.gwt.client.Gwt;
+
 import java.util.Collection;
 
 import com.google.gwt.user.client.ui.CellPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.Widget;
 
-public class ScrumUtil {
-
-	public static final Widget createEmptyDiv(String styleName) {
-		SimplePanel div = new SimplePanel();
-		div.setStyleName(styleName);
-		return div;
-	}
+public class ScrumUtil extends Gwt {
 
 	public static void addFiller(CellPanel panel) {
 		Label filler = new Label("");

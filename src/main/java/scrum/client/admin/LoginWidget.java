@@ -6,11 +6,12 @@ import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
+import scrum.client.img.Img;
 import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -26,7 +27,7 @@ public class LoginWidget extends AWidget {
 		username.setText("admin");
 		password = new PasswordTextBox();
 		password.setText("geheim");
-		loginButton = new ButtonWidget(null, "Login");
+		loginButton = new ButtonWidget(Img.bundle.done16().createImage(), "Login");
 		loginButton.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
@@ -37,12 +38,13 @@ public class LoginWidget extends AWidget {
 		FieldsWidget fieldsWidget = new FieldsWidget();
 		fieldsWidget.addWidget("Username", username);
 		fieldsWidget.addWidget("Password", password);
+		fieldsWidget.addWidget(null, loginButton);
 
-		FlowPanel panel = new FlowPanel();
-		panel.add(fieldsWidget);
-		panel.add(loginButton);
+		SimplePanel wrapper = new SimplePanel();
+		wrapper.setStyleName("LoginWidget");
+		wrapper.setWidget(new GroupWidget("Login", fieldsWidget));
 
-		return new GroupWidget("Login", panel);
+		return wrapper;
 	}
 
 	@Override

@@ -2,6 +2,9 @@ package scrum.client.risks;
 
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
+
+import java.util.Comparator;
+
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
@@ -18,8 +21,9 @@ public class RiskListWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		list = new BlockListWidget<RiskWidget>();
+		list.setAutoSorter(new RiskWidgetComparator());
 
-		ToolbarWidget toolbar = new ToolbarWidget();
+		ToolbarWidget toolbar = new ToolbarWidget(true);
 
 		toolbar.addButton("Create new Risk").addClickListener(new CreateClickListener());
 
@@ -33,12 +37,12 @@ public class RiskListWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		list.update();
 		list.clear();
 		for (Risk risk : ScrumGwtApplication.get().getProject().getRisks()) {
 			RiskWidget widget = new RiskWidget(risk);
 			list.addBlock(widget);
 		}
+		list.update();
 	}
 
 	class CreateClickListener implements ClickListener {
@@ -48,6 +52,13 @@ public class RiskListWidget extends AWidget {
 			RiskWidget block = new RiskWidget(risk);
 			list.addBlock(block);
 			list.selectBlock(block);
+		}
+	}
+
+	class RiskWidgetComparator implements Comparator<RiskWidget> {
+
+		public int compare(RiskWidget a, RiskWidget b) {
+			return b.getRisk().compareTo(a.getRisk());
 		}
 	}
 

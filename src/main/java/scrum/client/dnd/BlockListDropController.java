@@ -24,15 +24,26 @@ public class BlockListDropController implements DropController {
 	}
 
 	public void onDrop(DragContext context) {
+		Widget draggable = context.draggable;
+		if (!isDropAllowed(draggable)) return;
+
 		WidgetArea area = new WidgetArea(targetBlock, null);
 		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
 		BlockListWidget targetList = targetBlock.getList();
 
-		if (context.draggable instanceof ClipboardItemWidget) {
+		if (draggable instanceof ABlockWidget) {
+			// move inside list
+			ABlockWidget draggedBlock = (ABlockWidget) draggable;
+			int fromIndex = targetList.indexOf(draggedBlock);
+			int toIndex = targetList.indexOf(targetBlock);
+			if (fromIndex > toIndex) toIndex++;
+			if (isHigher(area, location)) toIndex--;
+			targetList.moveBlock(draggedBlock, toIndex);
+		} else if (draggable instanceof ClipboardItemWidget) {
 			// move from clipboard
-			ClipboardItemWidget item = (ClipboardItemWidget) context.draggable;
+			ClipboardItemWidget item = (ClipboardItemWidget) draggable;
 
-			int fromIndex = targetList.indexOf(item.getSource());
+			int fromIndex = targetList.indexOf(item.getPayload());
 			if (fromIndex < 0) {
 				// TODO move data
 			}
@@ -40,17 +51,8 @@ public class BlockListDropController implements DropController {
 			int toIndex = targetList.indexOf(targetBlock);
 			if (fromIndex > toIndex) toIndex++;
 			if (isHigher(area, location)) toIndex--;
-			targetList.moveBlock(item.getSource(), toIndex);
+			targetList.moveBlock(item.getPayload(), toIndex);
 			item.removeFromClipboard();
-		} else {
-			// move in the list
-			ABlockWidget draggedBlock = (ABlockWidget) context.draggable;
-
-			int fromIndex = targetList.indexOf(draggedBlock);
-			int toIndex = targetList.indexOf(targetBlock);
-			if (fromIndex > toIndex) toIndex++;
-			if (isHigher(area, location)) toIndex--;
-			targetList.moveBlock(draggedBlock, toIndex);
 		}
 	}
 
@@ -61,6 +63,8 @@ public class BlockListDropController implements DropController {
 	}
 
 	public void onMove(DragContext context) {
+		if (!isDropAllowed(context.draggable)) return;
+
 		WidgetArea area = new WidgetArea(targetBlock, null);
 		CoordinateLocation location = new CoordinateLocation(context.mouseX, context.mouseY);
 
@@ -73,7 +77,7 @@ public class BlockListDropController implements DropController {
 	}
 
 	public void onPreviewDrop(DragContext context) throws VetoDragException {
-		if (!isDropAllowed(context)) { throw new VetoDragException(); }
+		if (!isDropAllowed(context.draggable)) { throw new VetoDragException(); }
 	}
 
 	private boolean isHigher(WidgetArea area, CoordinateLocation location) {
@@ -81,11 +85,15 @@ public class BlockListDropController implements DropController {
 		return location.getTop() < mid;
 	}
 
-	private boolean isDropAllowed(DragContext context) {
-		if (context.draggable instanceof ClipboardItemWidget) {
-			ClipboardItemWidget item = (ClipboardItemWidget) context.draggable;
-			return item.getSource().getClass().equals(targetBlock.getClass());
+	private boolean isDropAllowed(Widget draggable) {
+		if (draggable instanceof ABlockWidget) {
+			ABlockWidget block = (ABlockWidget) draggable;
+			return block.getList() == targetBlock.getList();
 		}
-		return context.draggable.getClass().equals(targetBlock.getClass());
+		if (draggable instanceof ClipboardItemWidget) {
+			ClipboardItemWidget item = (ClipboardItemWidget) draggable;
+			return item.getPayload().getList() == targetBlock.getList();
+		}
+		return false;
 	}
 }

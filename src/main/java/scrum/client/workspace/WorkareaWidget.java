@@ -50,54 +50,30 @@ public class WorkareaWidget extends AWidget {
 	}
 
 	public void showSprintBacklog() {
-		Ui.get().lock("Loading Sprint...");
-		ScrumGwtApplication.get().callRequestCurrentSprint(new Runnable() {
-
-			public void run() {
-				show(getSprintBacklog());
-			}
-		});
+		ScrumGwtApplication.get().callRequestCurrentSprint();
+		show(getSprintBacklog());
 	}
 
 	public void showSprintBacklog(final Requirement r) {
-		Ui.get().lock("Loading Sprint...");
-		ScrumGwtApplication.get().callRequestCurrentSprint(new Runnable() {
-
-			public void run() {
-				SprintBacklogWidget sprintWidget = getSprintBacklog();
-				showAndScrollToWidget(sprintWidget, sprintWidget.selectRequirement(r));
-			}
-		});
+		ScrumGwtApplication.get().callRequestCurrentSprint();
+		SprintBacklogWidget sprintWidget = getSprintBacklog();
+		show(getSprintBacklog());
+		sprintWidget.selectRequirement(r);
 	}
 
 	public void showProductBacklog() {
-		Ui.get().lock("Loading Product Backlog...");
-		ScrumGwtApplication.get().callRequestRequirements(new Runnable() {
-
-			public void run() {
-				show(getProductBacklog());
-			}
-		});
+		ScrumGwtApplication.get().callRequestRequirements();
+		show(getProductBacklog());
 	}
 
 	public void showImpedimentList() {
-		Ui.get().lock("Loading Impediments...");
-		ScrumGwtApplication.get().callRequestImpediments(new Runnable() {
-
-			public void run() {
-				show(getImpedimentList());
-			}
-		});
+		ScrumGwtApplication.get().callRequestImpediments();
+		show(getImpedimentList());
 	}
 
 	public void showRiskList() {
-		Ui.get().lock("Loading Risks...");
-		ScrumGwtApplication.get().callRequestRisks(new Runnable() {
-
-			public void run() {
-				show(getRiskList());
-			}
-		});
+		ScrumGwtApplication.get().callRequestRisks();
+		show(getRiskList());
 	}
 
 	private void show(AWidget widget) {
@@ -105,17 +81,6 @@ public class WorkareaWidget extends AWidget {
 		Ui.get().unlock();
 		update();
 	}
-
-	private void showAndScrollToWidget(AWidget widget, Widget w) {
-		show(widget);
-		if (w != null) {
-			scrollTo(w.getAbsoluteTop() - 32); // rahmen abziehen :-S
-		}
-	}
-
-	public static native void scrollTo(int posY) /*-{
-		$wnd.scrollTo(0, posY);
-	}-*/;
 
 	public ProjectOverviewWidget getProjectOverview() {
 		if (projectOverview == null) projectOverview = new ProjectOverviewWidget();

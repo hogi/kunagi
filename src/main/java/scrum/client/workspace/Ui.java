@@ -5,10 +5,8 @@ import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
 import scrum.client.admin.LoginWidget;
 import scrum.client.admin.ProjectSelectorWidget;
-import scrum.client.common.GroupWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -21,6 +19,7 @@ public class Ui extends AWidget {
 	private static final Ui SINGLETON = new Ui();
 
 	private LockWidget locker;
+	private WaitWidget wait;
 	private SimplePanel contentWrapper;
 	private AWidget currentWidget;
 
@@ -31,6 +30,7 @@ public class Ui extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		wait = new WaitWidget();
 		header = new HeaderWidget();
 
 		login = new LoginWidget();
@@ -70,7 +70,8 @@ public class Ui extends AWidget {
 
 	public void lock(String message) {
 		GwtLogger.DEBUG("Locking UI:", message);
-		locker.lock(new GroupWidget("Please Wait", new Label(message)));
+		wait.setMessage(message);
+		locker.lock(wait);
 	}
 
 	public void unlock() {

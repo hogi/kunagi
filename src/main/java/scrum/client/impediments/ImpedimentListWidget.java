@@ -19,8 +19,9 @@ public class ImpedimentListWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		list = new BlockListWidget<ImpedimentWidget>();
+		list.setDndSorting(false);
 
-		ToolbarWidget toolbar = new ToolbarWidget();
+		ToolbarWidget toolbar = new ToolbarWidget(true);
 
 		toolbar.addButton("Create new Impediment").addClickListener(new CreateClickListener());
 
