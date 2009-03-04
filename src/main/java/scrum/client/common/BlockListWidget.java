@@ -135,7 +135,7 @@ public final class BlockListWidget<B extends ABlockWidget> extends AWidget imple
 	}
 
 	public final void scrollToSelectedBlock() {
-		ScrumUtil.scrollTo(getSelectedBlock());
+		getSelectedBlock().getElement().scrollIntoView();
 	}
 
 	public final void remove(B widget) {
