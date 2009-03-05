@@ -60,17 +60,6 @@ public abstract class GSprintDaySnapshot
 
     public static final String TYPE = "sprintDaySnapshot";
 
-    // --- copy constructor ---
-    public GSprintDaySnapshot(GSprintDaySnapshot template) {
-        super(template);
-        if (template==null) return;
-
-        setBurnedWork(template.getBurnedWork());
-        setRemainingWork(template.getRemainingWork());
-        setSprint(template.getSprint());
-        setDate(template.getDate());
-    }
-
     // -----------------------------------------------------------
     // - burnedWork
     // -----------------------------------------------------------

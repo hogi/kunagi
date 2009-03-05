@@ -20,14 +20,6 @@ public class Project extends GProject {
 	private static ProjectSprintSnapshotDao projectSprintSnapshotDao;
 	private static RiskDao riskDao;
 
-	public Project(GProject template) {
-		super(template);
-	}
-
-	public Project() {
-		super(null);
-	}
-
 	public static void setRiskDao(RiskDao riskDao) {
 		Project.riskDao = riskDao;
 	}

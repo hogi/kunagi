@@ -62,19 +62,6 @@ public abstract class GImpediment
 
     public static final String TYPE = "impediment";
 
-    // --- copy constructor ---
-    public GImpediment(GImpediment template) {
-        super(template);
-        if (template==null) return;
-
-        setDescription(template.getDescription());
-        setProject(template.getProject());
-        setSolution(template.getSolution());
-        setSolveDate(template.getSolveDate());
-        setDate(template.getDate());
-        setLabel(template.getLabel());
-    }
-
     // -----------------------------------------------------------
     // - description
     // -----------------------------------------------------------

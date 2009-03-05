@@ -37,12 +37,4 @@ public class User extends GUser {
 		return null;
 	}
 
-	public User(GUser template) {
-		super(template);
-	}
-
-	public User() {
-		super(null);
-	}
-
 }

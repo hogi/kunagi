@@ -16,14 +16,6 @@ public class Sprint extends GSprint {
 	private static TaskDao taskDao;
 	private static SprintDaySnapshotDao sprintDaySnapshotDao;
 
-	public Sprint(Sprint template) {
-		super(template);
-	}
-
-	public Sprint() {
-		super(null);
-	}
-
 	public static void setRequirementDao(RequirementDao storyDao) {
 		Sprint.requirementDao = storyDao;
 	}

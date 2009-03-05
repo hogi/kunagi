@@ -63,20 +63,6 @@ public abstract class GRequirement
 
     public static final String TYPE = "requirement";
 
-    // --- copy constructor ---
-    public GRequirement(GRequirement template) {
-        super(template);
-        if (template==null) return;
-
-        setDescription(template.getDescription());
-        setTestDescription(template.getTestDescription());
-        setEstimatedWork(template.getEstimatedWork());
-        setLabel(template.getLabel());
-        setSprint(template.getSprint());
-        setProject(template.getProject());
-        setClosed(template.isClosed());
-    }
-
     // -----------------------------------------------------------
     // - description
     // -----------------------------------------------------------

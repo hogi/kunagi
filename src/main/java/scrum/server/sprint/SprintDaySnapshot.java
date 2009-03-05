@@ -9,14 +9,6 @@ public class SprintDaySnapshot extends GSprintDaySnapshot implements BurndownSna
 		setBurnedWork(getSprint().getBurnedWork());
 	}
 
-	public SprintDaySnapshot() {
-		super(null);
-	}
-
-	public SprintDaySnapshot(SprintDaySnapshot template) {
-		super(template);
-	}
-
 	@Override
 	public String toString() {
 		return getDate() + ": " + getBurnedWork() + ", " + getRemainingWork();

@@ -62,19 +62,6 @@ public abstract class GTask
 
     public static final String TYPE = "task";
 
-    // --- copy constructor ---
-    public GTask(GTask template) {
-        super(template);
-        if (template==null) return;
-
-        setRemainingWork(template.getRemainingWork());
-        setOwner(template.getOwner());
-        setLabel(template.getLabel());
-        setNotice(template.getNotice());
-        setBurnedWork(template.getBurnedWork());
-        setRequirement(template.getRequirement());
-    }
-
     // -----------------------------------------------------------
     // - remainingWork
     // -----------------------------------------------------------

@@ -61,18 +61,6 @@ public abstract class GSprint
 
     public static final String TYPE = "sprint";
 
-    // --- copy constructor ---
-    public GSprint(GSprint template) {
-        super(template);
-        if (template==null) return;
-
-        setProject(template.getProject());
-        setEnd(template.getEnd());
-        setLabel(template.getLabel());
-        setBegin(template.getBegin());
-        setGoal(template.getGoal());
-    }
-
     // -----------------------------------------------------------
     // - project
     // -----------------------------------------------------------

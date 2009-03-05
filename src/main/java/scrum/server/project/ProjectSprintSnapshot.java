@@ -6,14 +6,6 @@ import scrum.server.common.BurndownSnapshot;
 public class ProjectSprintSnapshot extends GProjectSprintSnapshot implements Comparable<ProjectSprintSnapshot>,
 		BurndownSnapshot {
 
-	public ProjectSprintSnapshot(GProjectSprintSnapshot template) {
-		super(template);
-	}
-
-	public ProjectSprintSnapshot() {
-		super(null);
-	}
-
 	public void update() {
 		setRemainingWork(getProject().getRemainingWork());
 		setBurnedWork(getProject().getBurnedWork());

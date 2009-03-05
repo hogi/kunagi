@@ -61,18 +61,6 @@ public abstract class GRisk
 
     public static final String TYPE = "risk";
 
-    // --- copy constructor ---
-    public GRisk(GRisk template) {
-        super(template);
-        if (template==null) return;
-
-        setProbability(template.getProbability());
-        setImpact(template.getImpact());
-        setDescription(template.getDescription());
-        setLabel(template.getLabel());
-        setProject(template.getProject());
-    }
-
 
     // -----------------------------------------------------------
     // - Searchable

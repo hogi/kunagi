@@ -2,19 +2,6 @@ package scrum.server.sprint;
 
 public class Task extends GTask {
 
-	// --- dependencies ---
-
-	public Task(Task template) {
-		super(template);
-	}
-
-	public Task() {
-		super(null);
-		setRemainingWork(1);
-	}
-
-	// --- ---
-
 	public boolean isDone() {
 		return getRemainingWork() == 0;
 	}

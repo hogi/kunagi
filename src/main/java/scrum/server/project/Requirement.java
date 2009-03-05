@@ -11,14 +11,6 @@ public class Requirement extends GRequirement {
 
 	private static TaskDao taskDao;
 
-	public Requirement(Requirement template) {
-		super(template);
-	}
-
-	public Requirement() {
-		super(null);
-	}
-
 	public static void setTaskDao(TaskDao taskDao) {
 		Requirement.taskDao = taskDao;
 	}

@@ -66,23 +66,6 @@ public abstract class GProject
 
     public static final String TYPE = "project";
 
-    // --- copy constructor ---
-    public GProject(GProject template) {
-        super(template);
-        if (template==null) return;
-
-        setTeamMembers(template.getTeamMembers());
-        setDescription(template.getDescription());
-        setScrumMaster(template.getScrumMaster());
-        setAdmins(template.getAdmins());
-        setCurrentSprint(template.getCurrentSprint());
-        setEnd(template.getEnd());
-        setNextSprint(template.getNextSprint());
-        setLabel(template.getLabel());
-        setBegin(template.getBegin());
-        setProductOwner(template.getProductOwner());
-    }
-
 
     // -----------------------------------------------------------
     // - Searchable

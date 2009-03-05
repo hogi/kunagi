@@ -59,16 +59,6 @@ public abstract class GProjectSprintSnapshot
 
     public static final String TYPE = "projectSprintSnapshot";
 
-    // --- copy constructor ---
-    public GProjectSprintSnapshot(GProjectSprintSnapshot template) {
-        super(template);
-        if (template==null) return;
-
-        setSprint(template.getSprint());
-        setRemainingWork(template.getRemainingWork());
-        setBurnedWork(template.getBurnedWork());
-    }
-
     // -----------------------------------------------------------
     // - sprint
     // -----------------------------------------------------------

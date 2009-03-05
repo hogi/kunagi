@@ -57,14 +57,6 @@ public abstract class GUser
 
     public static final String TYPE = "user";
 
-    // --- copy constructor ---
-    public GUser(GUser template) {
-        super(template);
-        if (template==null) return;
-
-        setName(template.getName());
-    }
-
     // -----------------------------------------------------------
     // - name
     // -----------------------------------------------------------
