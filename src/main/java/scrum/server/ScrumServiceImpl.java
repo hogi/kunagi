@@ -5,6 +5,7 @@ import ilarkesto.base.time.Date;
 import ilarkesto.logging.Logger;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
+import ilarkesto.webapp.AWebApplication;
 
 import java.util.Collection;
 import java.util.Map;
@@ -26,6 +27,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	private ProjectDao projectDao;
 	private UserDao userDao;
+	private ScrumWebApplication webApplication;
+
+	public void setWebApplication(ScrumWebApplication webApplication) {
+		this.webApplication = webApplication;
+	}
 
 	public void setProjectDao(ProjectDao projectDao) {
 		this.projectDao = projectDao;
@@ -38,7 +44,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	// --- ---
 
 	@Override
-	public void onCreateEntity(SessionData session, String type, Map properties) {
+	public void onCreateEntity(WebSession session, String type, Map properties) {
 		String id = (String) properties.get("id");
 		if (id == null) throw new NullPointerException("id == null");
 		ADao dao = getDaoService().getDaoByName(type);
@@ -48,17 +54,17 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	public void onDeleteEntity(SessionData session, String entityId) {
+	public void onDeleteEntity(WebSession session, String entityId) {
 		AEntity entity = getDaoService().getEntityById(entityId);
 		ADao dao = getDaoService().getDao(entity);
 		dao.deleteEntity(entity);
-		for (SessionData s : getOtherSessions(session)) {
+		for (WebSession s : webApplication.getOtherSessionsByProject(session)) {
 			s.getNextData().addDeletedEntity(entityId);
 		}
 	}
 
 	@Override
-	public void onChangeProperties(SessionData session, String entityId, Map properties) {
+	public void onChangeProperties(WebSession session, String entityId, Map properties) {
 		AEntity entity = getDaoService().getEntityById(entityId);
 		entity.updateProperties(properties);
 
@@ -78,14 +84,14 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		}
 
-		for (SessionData s : getOtherSessions(session)) {
+		for (WebSession s : webApplication.getOtherSessionsByProject(session)) {
 			LOG.debug("Sending changes to", s);
 			s.getNextData().addEntity(toPropertyMap(entity));
 		}
 	}
 
 	@Override
-	public void onLogin(SessionData session, String username, String password) {
+	public void onLogin(WebSession session, String username, String password) {
 		User user = userDao.getUserByName(username);
 		if (user == null) throw new RuntimeException("Login failed.");
 
@@ -98,7 +104,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	public void onSelectProject(SessionData session, String projectId) {
+	public void onSelectProject(WebSession session, String projectId) {
 		Project project = projectDao.getById(projectId);
 		session.setProject(project);
 
@@ -111,7 +117,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	public void onRequestCurrentSprint(SessionData session) {
+	public void onRequestCurrentSprint(WebSession session) {
 		Project project = session.getProject();
 		Sprint sprint = project.getCurrentSprint();
 		if (sprint == null) return;
@@ -121,21 +127,21 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	public void onRequestImpediments(SessionData session) {
+	public void onRequestImpediments(WebSession session) {
 		Project project = session.getProject();
 		if (project == null) throw new RuntimeException("No project selected.");
 		session.getNextData().addEntities(toPropertyMap(project.getImpediments()));
 	}
 
 	@Override
-	protected void onRequestRisks(SessionData session) {
+	protected void onRequestRisks(WebSession session) {
 		Project project = session.getProject();
 		if (project == null) throw new RuntimeException("No project selected.");
 		session.getNextData().addEntities(toPropertyMap(project.getRisks()));
 	}
 
 	@Override
-	public void onRequestRequirements(SessionData session) {
+	public void onRequestRequirements(WebSession session) {
 		Project project = session.getProject();
 		if (project == null) throw new RuntimeException("No project selected.");
 		Collection<Requirement> stories = project.getRequirements();
@@ -147,13 +153,18 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	public void onPing(SessionData session) {
+	public void onPing(WebSession session) {
 	// nop
 	}
 
 	@Override
-	public void onSleep(SessionData session, long millis) {
+	public void onSleep(WebSession session, long millis) {
 		Utl.sleep(millis);
+	}
+
+	@Override
+	protected Class<? extends AWebApplication> getWebApplicationClass() {
+		return ScrumWebApplication.class;
 	}
 
 }

@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.EntityGenerator
@@ -47,10 +37,10 @@ public abstract class GRisk
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("probability", this.probability);
-        properties.put("impact", this.impact);
-        properties.put("description", this.description);
         properties.put("label", this.label);
         properties.put("projectId", this.projectId);
+        properties.put("description", this.description);
+        properties.put("impact", this.impact);
     }
 
     public int compareTo(Risk other) {
@@ -68,8 +58,8 @@ public abstract class GRisk
 
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;
-        if (matchesKey(getDescription(), key)) return true;
         if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getDescription(), key)) return true;
         return false;
     }
 
@@ -96,62 +86,6 @@ public abstract class GRisk
 
     public final boolean isProbability(int probability) {
         return this.probability == probability;
-    }
-
-    // -----------------------------------------------------------
-    // - impact
-    // -----------------------------------------------------------
-
-    private int impact;
-
-    public final int getImpact() {
-        return impact;
-    }
-
-    public final void setImpact(int impact) {
-        impact = prepareImpact(impact);
-        if (isImpact(impact)) return;
-        this.impact = impact;
-        fireModified();
-    }
-
-    protected int prepareImpact(int impact) {
-        return impact;
-    }
-
-    public final boolean isImpact(int impact) {
-        return this.impact == impact;
-    }
-
-    // -----------------------------------------------------------
-    // - description
-    // -----------------------------------------------------------
-
-    private java.lang.String description;
-
-    public final java.lang.String getDescription() {
-        return description;
-    }
-
-    public final void setDescription(java.lang.String description) {
-        description = prepareDescription(description);
-        if (isDescription(description)) return;
-        this.description = description;
-        fireModified();
-    }
-
-    protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
-        return description;
-    }
-
-    public final boolean isDescriptionSet() {
-        return this.description != null;
-    }
-
-    public final boolean isDescription(java.lang.String description) {
-        if (this.description == null && description == null) return true;
-        return this.description != null && this.description.equals(description);
     }
 
     // -----------------------------------------------------------
@@ -220,6 +154,62 @@ public abstract class GRisk
     public final boolean isProject(scrum.server.project.Project project) {
         if (this.projectId == null && project == null) return true;
         return project != null && project.getId().equals(this.projectId);
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private java.lang.String description;
+
+    public final java.lang.String getDescription() {
+        return description;
+    }
+
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+        fireModified();
+    }
+
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
+    }
+
+    public final boolean isDescriptionSet() {
+        return this.description != null;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
+    }
+
+    // -----------------------------------------------------------
+    // - impact
+    // -----------------------------------------------------------
+
+    private int impact;
+
+    public final int getImpact() {
+        return impact;
+    }
+
+    public final void setImpact(int impact) {
+        impact = prepareImpact(impact);
+        if (isImpact(impact)) return;
+        this.impact = impact;
+        fireModified();
+    }
+
+    protected int prepareImpact(int impact) {
+        return impact;
+    }
+
+    public final boolean isImpact(int impact) {
+        return this.impact == impact;
     }
 
     protected void repairDeadReferences(String entityId) {

@@ -4,16 +4,11 @@ import ilarkesto.base.Crypt;
 
 public class User extends GUser {
 
-	private String realName;
 	private String password;
 
 	@Override
 	public String getRealName() {
-		return realName;
-	}
-
-	public void setRealName(String realName) {
-		this.realName = realName;
+		return getName();
 	}
 
 	@Override
@@ -35,6 +30,11 @@ public class User extends GUser {
 	@Override
 	public String getAutoLoginString() {
 		return null;
+	}
+
+	@Override
+	public String toString() {
+		return getName();
 	}
 
 }

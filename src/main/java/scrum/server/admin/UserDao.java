@@ -18,7 +18,6 @@ public class UserDao extends GUserDao {
 	public User postUser(String name, String password) {
 		User user = newEntityInstance();
 		user.setName(name);
-		user.setRealName(name);
 		user.setPassword(password);
 		saveEntity(user);
 		return user;

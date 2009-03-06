@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.DaoGenerator
@@ -46,14 +36,14 @@ public abstract class GRiskDao
     public void clearCaches() {
         risksByProbabilityCache.clear();
         probabilitysCache = null;
-        risksByImpactCache.clear();
-        impactsCache = null;
-        risksByDescriptionCache.clear();
-        descriptionsCache = null;
         risksByLabelCache.clear();
         labelsCache = null;
         risksByProjectCache.clear();
         projectsCache = null;
+        risksByDescriptionCache.clear();
+        descriptionsCache = null;
+        risksByImpactCache.clear();
+        impactsCache = null;
     }
 
     @Override
@@ -108,86 +98,6 @@ public abstract class GRiskDao
 
         public boolean test(Risk e) {
             return e.isProbability(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - impact
-    // -----------------------------------------------------------
-
-    private final Cache<Integer,Set<Risk>> risksByImpactCache = new Cache<Integer,Set<Risk>>(
-            new Cache.Factory<Integer,Set<Risk>>() {
-                public Set<Risk> create(Integer impact) {
-                    return getEntities(new IsImpact(impact));
-                }
-            });
-
-    public final Set<Risk> getRisksByImpact(int impact) {
-        return risksByImpactCache.get(impact);
-    }
-    private Set<Integer> impactsCache;
-
-    public final Set<Integer> getImpacts() {
-        if (impactsCache == null) {
-            impactsCache = new HashSet<Integer>();
-            for (Risk e : getEntities()) {
-                impactsCache.add(e.getImpact());
-            }
-        }
-        return impactsCache;
-    }
-
-    private static class IsImpact implements Predicate<Risk> {
-
-        private int value;
-
-        public IsImpact(int value) {
-            this.value = value;
-        }
-
-        public boolean test(Risk e) {
-            return e.isImpact(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - description
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Risk>> risksByDescriptionCache = new Cache<java.lang.String,Set<Risk>>(
-            new Cache.Factory<java.lang.String,Set<Risk>>() {
-                public Set<Risk> create(java.lang.String description) {
-                    return getEntities(new IsDescription(description));
-                }
-            });
-
-    public final Set<Risk> getRisksByDescription(java.lang.String description) {
-        return risksByDescriptionCache.get(description);
-    }
-    private Set<java.lang.String> descriptionsCache;
-
-    public final Set<java.lang.String> getDescriptions() {
-        if (descriptionsCache == null) {
-            descriptionsCache = new HashSet<java.lang.String>();
-            for (Risk e : getEntities()) {
-                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
-            }
-        }
-        return descriptionsCache;
-    }
-
-    private static class IsDescription implements Predicate<Risk> {
-
-        private java.lang.String value;
-
-        public IsDescription(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Risk e) {
-            return e.isDescription(value);
         }
 
     }
@@ -268,6 +178,86 @@ public abstract class GRiskDao
 
         public boolean test(Risk e) {
             return e.isProject(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Risk>> risksByDescriptionCache = new Cache<java.lang.String,Set<Risk>>(
+            new Cache.Factory<java.lang.String,Set<Risk>>() {
+                public Set<Risk> create(java.lang.String description) {
+                    return getEntities(new IsDescription(description));
+                }
+            });
+
+    public final Set<Risk> getRisksByDescription(java.lang.String description) {
+        return risksByDescriptionCache.get(description);
+    }
+    private Set<java.lang.String> descriptionsCache;
+
+    public final Set<java.lang.String> getDescriptions() {
+        if (descriptionsCache == null) {
+            descriptionsCache = new HashSet<java.lang.String>();
+            for (Risk e : getEntities()) {
+                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
+            }
+        }
+        return descriptionsCache;
+    }
+
+    private static class IsDescription implements Predicate<Risk> {
+
+        private java.lang.String value;
+
+        public IsDescription(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Risk e) {
+            return e.isDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - impact
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Risk>> risksByImpactCache = new Cache<Integer,Set<Risk>>(
+            new Cache.Factory<Integer,Set<Risk>>() {
+                public Set<Risk> create(Integer impact) {
+                    return getEntities(new IsImpact(impact));
+                }
+            });
+
+    public final Set<Risk> getRisksByImpact(int impact) {
+        return risksByImpactCache.get(impact);
+    }
+    private Set<Integer> impactsCache;
+
+    public final Set<Integer> getImpacts() {
+        if (impactsCache == null) {
+            impactsCache = new HashSet<Integer>();
+            for (Risk e : getEntities()) {
+                impactsCache.add(e.getImpact());
+            }
+        }
+        return impactsCache;
+    }
+
+    private static class IsImpact implements Predicate<Risk> {
+
+        private int value;
+
+        public IsImpact(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Risk e) {
+            return e.isImpact(value);
         }
 
     }

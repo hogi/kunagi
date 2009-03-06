@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.DaoGenerator
@@ -44,14 +34,14 @@ public abstract class GSprintDaySnapshotDao
 
     // --- clear caches ---
     public void clearCaches() {
-        sprintDaySnapshotsByBurnedWorkCache.clear();
-        burnedWorksCache = null;
         sprintDaySnapshotsByRemainingWorkCache.clear();
         remainingWorksCache = null;
         sprintDaySnapshotsBySprintCache.clear();
         sprintsCache = null;
         sprintDaySnapshotsByDateCache.clear();
         datesCache = null;
+        sprintDaySnapshotsByBurnedWorkCache.clear();
+        burnedWorksCache = null;
     }
 
     @Override
@@ -68,46 +58,6 @@ public abstract class GSprintDaySnapshotDao
         if (event.getEntity() instanceof SprintDaySnapshot) {
             clearCaches();
         }
-    }
-
-    // -----------------------------------------------------------
-    // - burnedWork
-    // -----------------------------------------------------------
-
-    private final Cache<Integer,Set<SprintDaySnapshot>> sprintDaySnapshotsByBurnedWorkCache = new Cache<Integer,Set<SprintDaySnapshot>>(
-            new Cache.Factory<Integer,Set<SprintDaySnapshot>>() {
-                public Set<SprintDaySnapshot> create(Integer burnedWork) {
-                    return getEntities(new IsBurnedWork(burnedWork));
-                }
-            });
-
-    public final Set<SprintDaySnapshot> getSprintDaySnapshotsByBurnedWork(int burnedWork) {
-        return sprintDaySnapshotsByBurnedWorkCache.get(burnedWork);
-    }
-    private Set<Integer> burnedWorksCache;
-
-    public final Set<Integer> getBurnedWorks() {
-        if (burnedWorksCache == null) {
-            burnedWorksCache = new HashSet<Integer>();
-            for (SprintDaySnapshot e : getEntities()) {
-                burnedWorksCache.add(e.getBurnedWork());
-            }
-        }
-        return burnedWorksCache;
-    }
-
-    private static class IsBurnedWork implements Predicate<SprintDaySnapshot> {
-
-        private int value;
-
-        public IsBurnedWork(int value) {
-            this.value = value;
-        }
-
-        public boolean test(SprintDaySnapshot e) {
-            return e.isBurnedWork(value);
-        }
-
     }
 
     // -----------------------------------------------------------
@@ -226,6 +176,46 @@ public abstract class GSprintDaySnapshotDao
 
         public boolean test(SprintDaySnapshot e) {
             return e.isDate(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - burnedWork
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<SprintDaySnapshot>> sprintDaySnapshotsByBurnedWorkCache = new Cache<Integer,Set<SprintDaySnapshot>>(
+            new Cache.Factory<Integer,Set<SprintDaySnapshot>>() {
+                public Set<SprintDaySnapshot> create(Integer burnedWork) {
+                    return getEntities(new IsBurnedWork(burnedWork));
+                }
+            });
+
+    public final Set<SprintDaySnapshot> getSprintDaySnapshotsByBurnedWork(int burnedWork) {
+        return sprintDaySnapshotsByBurnedWorkCache.get(burnedWork);
+    }
+    private Set<Integer> burnedWorksCache;
+
+    public final Set<Integer> getBurnedWorks() {
+        if (burnedWorksCache == null) {
+            burnedWorksCache = new HashSet<Integer>();
+            for (SprintDaySnapshot e : getEntities()) {
+                burnedWorksCache.add(e.getBurnedWork());
+            }
+        }
+        return burnedWorksCache;
+    }
+
+    private static class IsBurnedWork implements Predicate<SprintDaySnapshot> {
+
+        private int value;
+
+        public IsBurnedWork(int value) {
+            this.value = value;
+        }
+
+        public boolean test(SprintDaySnapshot e) {
+            return e.isBurnedWork(value);
         }
 
     }

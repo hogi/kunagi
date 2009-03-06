@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.GwtEntityGenerator
@@ -54,22 +44,22 @@ public abstract class GImpediment
         return ENTITY_TYPE;
     }
 
-    // --- description ---
+    // --- solution ---
 
-    private java.lang.String description ;
+    private java.lang.String solution ;
 
-    public final java.lang.String getDescription() {
-        return this.description ;
+    public final java.lang.String getSolution() {
+        return this.solution ;
     }
 
-    public final Impediment setDescription(java.lang.String description) {
-        this.description = description ;
-        propertyChanged("description", this.description);
+    public final Impediment setSolution(java.lang.String solution) {
+        this.solution = solution ;
+        propertyChanged("solution", this.solution);
         return (Impediment)this;
     }
 
-    public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
+    public final boolean isSolution(java.lang.String solution) {
+        return equals(this.solution, solution);
     }
 
     // --- project ---
@@ -93,42 +83,6 @@ public abstract class GImpediment
         return equals(this.projectId, project);
     }
 
-    // --- solution ---
-
-    private java.lang.String solution ;
-
-    public final java.lang.String getSolution() {
-        return this.solution ;
-    }
-
-    public final Impediment setSolution(java.lang.String solution) {
-        this.solution = solution ;
-        propertyChanged("solution", this.solution);
-        return (Impediment)this;
-    }
-
-    public final boolean isSolution(java.lang.String solution) {
-        return equals(this.solution, solution);
-    }
-
-    // --- solveDate ---
-
-    private ilarkesto.gwt.client.Date solveDate ;
-
-    public final ilarkesto.gwt.client.Date getSolveDate() {
-        return this.solveDate ;
-    }
-
-    public final Impediment setSolveDate(ilarkesto.gwt.client.Date solveDate) {
-        this.solveDate = solveDate ;
-        propertyChanged("solveDate", this.solveDate);
-        return (Impediment)this;
-    }
-
-    public final boolean isSolveDate(ilarkesto.gwt.client.Date solveDate) {
-        return equals(this.solveDate, solveDate);
-    }
-
     // --- date ---
 
     private ilarkesto.gwt.client.Date date ;
@@ -145,6 +99,24 @@ public abstract class GImpediment
 
     public final boolean isDate(ilarkesto.gwt.client.Date date) {
         return equals(this.date, date);
+    }
+
+    // --- description ---
+
+    private java.lang.String description ;
+
+    public final java.lang.String getDescription() {
+        return this.description ;
+    }
+
+    public final Impediment setDescription(java.lang.String description) {
+        this.description = description ;
+        propertyChanged("description", this.description);
+        return (Impediment)this;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        return equals(this.description, description);
     }
 
     // --- label ---
@@ -165,28 +137,46 @@ public abstract class GImpediment
         return equals(this.label, label);
     }
 
+    // --- solveDate ---
+
+    private ilarkesto.gwt.client.Date solveDate ;
+
+    public final ilarkesto.gwt.client.Date getSolveDate() {
+        return this.solveDate ;
+    }
+
+    public final Impediment setSolveDate(ilarkesto.gwt.client.Date solveDate) {
+        this.solveDate = solveDate ;
+        propertyChanged("solveDate", this.solveDate);
+        return (Impediment)this;
+    }
+
+    public final boolean isSolveDate(ilarkesto.gwt.client.Date solveDate) {
+        return equals(this.solveDate, solveDate);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        description  = (java.lang.String) props.get("description");
-        projectId = (String) props.get("projectId");
         solution  = (java.lang.String) props.get("solution");
-        String solveDateAsString = (String) props.get("solveDate");
-        solveDate  =  solveDateAsString == null ? null : new ilarkesto.gwt.client.Date(solveDateAsString);
+        projectId = (String) props.get("projectId");
         String dateAsString = (String) props.get("date");
         date  =  dateAsString == null ? null : new ilarkesto.gwt.client.Date(dateAsString);
+        description  = (java.lang.String) props.get("description");
         label  = (java.lang.String) props.get("label");
+        String solveDateAsString = (String) props.get("solveDate");
+        solveDate  =  solveDateAsString == null ? null : new ilarkesto.gwt.client.Date(solveDateAsString);
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("description", this.description);
-        properties.put("projectId", this.projectId);
         properties.put("solution", this.solution);
-        properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
+        properties.put("projectId", this.projectId);
         properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("description", this.description);
         properties.put("label", this.label);
+        properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
     }
 
 }

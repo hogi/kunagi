@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.DaoGenerator
@@ -44,18 +34,18 @@ public abstract class GTaskDao
 
     // --- clear caches ---
     public void clearCaches() {
-        tasksByRemainingWorkCache.clear();
-        remainingWorksCache = null;
         tasksByOwnerCache.clear();
         ownersCache = null;
+        tasksByRemainingWorkCache.clear();
+        remainingWorksCache = null;
+        tasksByRequirementCache.clear();
+        requirementsCache = null;
         tasksByLabelCache.clear();
         labelsCache = null;
         tasksByNoticeCache.clear();
         noticesCache = null;
         tasksByBurnedWorkCache.clear();
         burnedWorksCache = null;
-        tasksByRequirementCache.clear();
-        requirementsCache = null;
     }
 
     @Override
@@ -72,6 +62,46 @@ public abstract class GTaskDao
         if (event.getEntity() instanceof Task) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - owner
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.admin.User,Set<Task>> tasksByOwnerCache = new Cache<scrum.server.admin.User,Set<Task>>(
+            new Cache.Factory<scrum.server.admin.User,Set<Task>>() {
+                public Set<Task> create(scrum.server.admin.User owner) {
+                    return getEntities(new IsOwner(owner));
+                }
+            });
+
+    public final Set<Task> getTasksByOwner(scrum.server.admin.User owner) {
+        return tasksByOwnerCache.get(owner);
+    }
+    private Set<scrum.server.admin.User> ownersCache;
+
+    public final Set<scrum.server.admin.User> getOwners() {
+        if (ownersCache == null) {
+            ownersCache = new HashSet<scrum.server.admin.User>();
+            for (Task e : getEntities()) {
+                if (e.isOwnerSet()) ownersCache.add(e.getOwner());
+            }
+        }
+        return ownersCache;
+    }
+
+    private static class IsOwner implements Predicate<Task> {
+
+        private scrum.server.admin.User value;
+
+        public IsOwner(scrum.server.admin.User value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isOwner(value);
+        }
+
     }
 
     // -----------------------------------------------------------
@@ -115,41 +145,41 @@ public abstract class GTaskDao
     }
 
     // -----------------------------------------------------------
-    // - owner
+    // - requirement
     // -----------------------------------------------------------
 
-    private final Cache<scrum.server.admin.User,Set<Task>> tasksByOwnerCache = new Cache<scrum.server.admin.User,Set<Task>>(
-            new Cache.Factory<scrum.server.admin.User,Set<Task>>() {
-                public Set<Task> create(scrum.server.admin.User owner) {
-                    return getEntities(new IsOwner(owner));
+    private final Cache<scrum.server.project.Requirement,Set<Task>> tasksByRequirementCache = new Cache<scrum.server.project.Requirement,Set<Task>>(
+            new Cache.Factory<scrum.server.project.Requirement,Set<Task>>() {
+                public Set<Task> create(scrum.server.project.Requirement requirement) {
+                    return getEntities(new IsRequirement(requirement));
                 }
             });
 
-    public final Set<Task> getTasksByOwner(scrum.server.admin.User owner) {
-        return tasksByOwnerCache.get(owner);
+    public final Set<Task> getTasksByRequirement(scrum.server.project.Requirement requirement) {
+        return tasksByRequirementCache.get(requirement);
     }
-    private Set<scrum.server.admin.User> ownersCache;
+    private Set<scrum.server.project.Requirement> requirementsCache;
 
-    public final Set<scrum.server.admin.User> getOwners() {
-        if (ownersCache == null) {
-            ownersCache = new HashSet<scrum.server.admin.User>();
+    public final Set<scrum.server.project.Requirement> getRequirements() {
+        if (requirementsCache == null) {
+            requirementsCache = new HashSet<scrum.server.project.Requirement>();
             for (Task e : getEntities()) {
-                if (e.isOwnerSet()) ownersCache.add(e.getOwner());
+                if (e.isRequirementSet()) requirementsCache.add(e.getRequirement());
             }
         }
-        return ownersCache;
+        return requirementsCache;
     }
 
-    private static class IsOwner implements Predicate<Task> {
+    private static class IsRequirement implements Predicate<Task> {
 
-        private scrum.server.admin.User value;
+        private scrum.server.project.Requirement value;
 
-        public IsOwner(scrum.server.admin.User value) {
+        public IsRequirement(scrum.server.project.Requirement value) {
             this.value = value;
         }
 
         public boolean test(Task e) {
-            return e.isOwner(value);
+            return e.isRequirement(value);
         }
 
     }
@@ -270,46 +300,6 @@ public abstract class GTaskDao
 
         public boolean test(Task e) {
             return e.isBurnedWork(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - requirement
-    // -----------------------------------------------------------
-
-    private final Cache<scrum.server.project.Requirement,Set<Task>> tasksByRequirementCache = new Cache<scrum.server.project.Requirement,Set<Task>>(
-            new Cache.Factory<scrum.server.project.Requirement,Set<Task>>() {
-                public Set<Task> create(scrum.server.project.Requirement requirement) {
-                    return getEntities(new IsRequirement(requirement));
-                }
-            });
-
-    public final Set<Task> getTasksByRequirement(scrum.server.project.Requirement requirement) {
-        return tasksByRequirementCache.get(requirement);
-    }
-    private Set<scrum.server.project.Requirement> requirementsCache;
-
-    public final Set<scrum.server.project.Requirement> getRequirements() {
-        if (requirementsCache == null) {
-            requirementsCache = new HashSet<scrum.server.project.Requirement>();
-            for (Task e : getEntities()) {
-                if (e.isRequirementSet()) requirementsCache.add(e.getRequirement());
-            }
-        }
-        return requirementsCache;
-    }
-
-    private static class IsRequirement implements Predicate<Task> {
-
-        private scrum.server.project.Requirement value;
-
-        public IsRequirement(scrum.server.project.Requirement value) {
-            this.value = value;
-        }
-
-        public boolean test(Task e) {
-            return e.isRequirement(value);
         }
 
     }

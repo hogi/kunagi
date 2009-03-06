@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.GwtEntityGenerator
@@ -54,24 +44,6 @@ public abstract class GTask
         return ENTITY_TYPE;
     }
 
-    // --- remainingWork ---
-
-    private int remainingWork ;
-
-    public final int getRemainingWork() {
-        return this.remainingWork ;
-    }
-
-    public final Task setRemainingWork(int remainingWork) {
-        this.remainingWork = remainingWork ;
-        propertyChanged("remainingWork", this.remainingWork);
-        return (Task)this;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return equals(this.remainingWork, remainingWork);
-    }
-
     // --- owner ---
 
     private String ownerId;
@@ -91,6 +63,45 @@ public abstract class GTask
 
     public final boolean isOwner(scrum.client.admin.User owner) {
         return equals(this.ownerId, owner);
+    }
+
+    // --- remainingWork ---
+
+    private int remainingWork ;
+
+    public final int getRemainingWork() {
+        return this.remainingWork ;
+    }
+
+    public final Task setRemainingWork(int remainingWork) {
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
+        return (Task)this;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return equals(this.remainingWork, remainingWork);
+    }
+
+    // --- requirement ---
+
+    private String requirementId;
+
+    public final scrum.client.project.Requirement getRequirement() {
+        if (requirementId == null) return null;
+        return getDao().getRequirement(this.requirementId);
+    }
+
+    public final Task setRequirement(scrum.client.project.Requirement requirement) {
+        String id = requirement == null ? null : requirement.getId();
+        if (equals(this.requirementId, id)) return (Task) this;
+        this.requirementId = id;
+        propertyChanged("requirementId", this.requirementId);
+        return (Task)this;
+    }
+
+    public final boolean isRequirement(scrum.client.project.Requirement requirement) {
+        return equals(this.requirementId, requirement);
     }
 
     // --- label ---
@@ -147,47 +158,26 @@ public abstract class GTask
         return equals(this.burnedWork, burnedWork);
     }
 
-    // --- requirement ---
-
-    private String requirementId;
-
-    public final scrum.client.project.Requirement getRequirement() {
-        if (requirementId == null) return null;
-        return getDao().getRequirement(this.requirementId);
-    }
-
-    public final Task setRequirement(scrum.client.project.Requirement requirement) {
-        String id = requirement == null ? null : requirement.getId();
-        if (equals(this.requirementId, id)) return (Task) this;
-        this.requirementId = id;
-        propertyChanged("requirementId", this.requirementId);
-        return (Task)this;
-    }
-
-    public final boolean isRequirement(scrum.client.project.Requirement requirement) {
-        return equals(this.requirementId, requirement);
-    }
-
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        remainingWork  = (Integer) props.get("remainingWork");
         ownerId = (String) props.get("ownerId");
+        remainingWork  = (Integer) props.get("remainingWork");
+        requirementId = (String) props.get("requirementId");
         label  = (java.lang.String) props.get("label");
         notice  = (java.lang.String) props.get("notice");
         burnedWork  = (Integer) props.get("burnedWork");
-        requirementId = (String) props.get("requirementId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("remainingWork", this.remainingWork);
         properties.put("ownerId", this.ownerId);
+        properties.put("remainingWork", this.remainingWork);
+        properties.put("requirementId", this.requirementId);
         properties.put("label", this.label);
         properties.put("notice", this.notice);
         properties.put("burnedWork", this.burnedWork);
-        properties.put("requirementId", this.requirementId);
     }
 
 }

@@ -46,9 +46,9 @@ public abstract class GProjectSprintSnapshot
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("burnedWork", this.burnedWork);
         properties.put("sprintId", this.sprintId);
         properties.put("remainingWork", this.remainingWork);
-        properties.put("burnedWork", this.burnedWork);
     }
 
     public int compareTo(ProjectSprintSnapshot other) {
@@ -58,6 +58,31 @@ public abstract class GProjectSprintSnapshot
     private static final Logger LOG = Logger.get(GProjectSprintSnapshot.class);
 
     public static final String TYPE = "projectSprintSnapshot";
+
+    // -----------------------------------------------------------
+    // - burnedWork
+    // -----------------------------------------------------------
+
+    private int burnedWork;
+
+    public final int getBurnedWork() {
+        return burnedWork;
+    }
+
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
+        fireModified();
+    }
+
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
+    }
 
     // -----------------------------------------------------------
     // - sprint
@@ -120,31 +145,6 @@ public abstract class GProjectSprintSnapshot
 
     public final boolean isRemainingWork(int remainingWork) {
         return this.remainingWork == remainingWork;
-    }
-
-    // -----------------------------------------------------------
-    // - burnedWork
-    // -----------------------------------------------------------
-
-    private int burnedWork;
-
-    public final int getBurnedWork() {
-        return burnedWork;
-    }
-
-    public final void setBurnedWork(int burnedWork) {
-        burnedWork = prepareBurnedWork(burnedWork);
-        if (isBurnedWork(burnedWork)) return;
-        this.burnedWork = burnedWork;
-        fireModified();
-    }
-
-    protected int prepareBurnedWork(int burnedWork) {
-        return burnedWork;
-    }
-
-    public final boolean isBurnedWork(int burnedWork) {
-        return this.burnedWork == burnedWork;
     }
 
     protected void repairDeadReferences(String entityId) {

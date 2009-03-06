@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.EntityGenerator
@@ -47,10 +37,10 @@ public abstract class GSprint
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
-        properties.put("end", this.end == null ? null : this.end.toString());
-        properties.put("label", this.label);
-        properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("goal", this.goal);
+        properties.put("end", this.end == null ? null : this.end.toString());
+        properties.put("begin", this.begin == null ? null : this.begin.toString());
+        properties.put("label", this.label);
     }
 
     public int compareTo(Sprint other) {
@@ -99,6 +89,37 @@ public abstract class GSprint
     }
 
     // -----------------------------------------------------------
+    // - goal
+    // -----------------------------------------------------------
+
+    private java.lang.String goal;
+
+    public final java.lang.String getGoal() {
+        return goal;
+    }
+
+    public final void setGoal(java.lang.String goal) {
+        goal = prepareGoal(goal);
+        if (isGoal(goal)) return;
+        this.goal = goal;
+        fireModified();
+    }
+
+    protected java.lang.String prepareGoal(java.lang.String goal) {
+        goal = Str.removeUnreadableChars(goal);
+        return goal;
+    }
+
+    public final boolean isGoalSet() {
+        return this.goal != null;
+    }
+
+    public final boolean isGoal(java.lang.String goal) {
+        if (this.goal == null && goal == null) return true;
+        return this.goal != null && this.goal.equals(goal);
+    }
+
+    // -----------------------------------------------------------
     // - end
     // -----------------------------------------------------------
 
@@ -126,37 +147,6 @@ public abstract class GSprint
     public final boolean isEnd(ilarkesto.base.time.Date end) {
         if (this.end == null && end == null) return true;
         return this.end != null && this.end.equals(end);
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        fireModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
     }
 
     // -----------------------------------------------------------
@@ -190,34 +180,34 @@ public abstract class GSprint
     }
 
     // -----------------------------------------------------------
-    // - goal
+    // - label
     // -----------------------------------------------------------
 
-    private java.lang.String goal;
+    private java.lang.String label;
 
-    public final java.lang.String getGoal() {
-        return goal;
+    public final java.lang.String getLabel() {
+        return label;
     }
 
-    public final void setGoal(java.lang.String goal) {
-        goal = prepareGoal(goal);
-        if (isGoal(goal)) return;
-        this.goal = goal;
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
         fireModified();
     }
 
-    protected java.lang.String prepareGoal(java.lang.String goal) {
-        goal = Str.removeUnreadableChars(goal);
-        return goal;
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
     }
 
-    public final boolean isGoalSet() {
-        return this.goal != null;
+    public final boolean isLabelSet() {
+        return this.label != null;
     }
 
-    public final boolean isGoal(java.lang.String goal) {
-        if (this.goal == null && goal == null) return true;
-        return this.goal != null && this.goal.equals(goal);
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
     }
 
     protected void repairDeadReferences(String entityId) {

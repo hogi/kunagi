@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.EntityGenerator
@@ -46,12 +36,12 @@ public abstract class GImpediment
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("description", this.description);
-        properties.put("projectId", this.projectId);
         properties.put("solution", this.solution);
-        properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
+        properties.put("projectId", this.projectId);
         properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("description", this.description);
         properties.put("label", this.label);
+        properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
     }
 
     public int compareTo(Impediment other) {
@@ -63,34 +53,34 @@ public abstract class GImpediment
     public static final String TYPE = "impediment";
 
     // -----------------------------------------------------------
-    // - description
+    // - solution
     // -----------------------------------------------------------
 
-    private java.lang.String description;
+    private java.lang.String solution;
 
-    public final java.lang.String getDescription() {
-        return description;
+    public final java.lang.String getSolution() {
+        return solution;
     }
 
-    public final void setDescription(java.lang.String description) {
-        description = prepareDescription(description);
-        if (isDescription(description)) return;
-        this.description = description;
+    public final void setSolution(java.lang.String solution) {
+        solution = prepareSolution(solution);
+        if (isSolution(solution)) return;
+        this.solution = solution;
         fireModified();
     }
 
-    protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
-        return description;
+    protected java.lang.String prepareSolution(java.lang.String solution) {
+        solution = Str.removeUnreadableChars(solution);
+        return solution;
     }
 
-    public final boolean isDescriptionSet() {
-        return this.description != null;
+    public final boolean isSolutionSet() {
+        return this.solution != null;
     }
 
-    public final boolean isDescription(java.lang.String description) {
-        if (this.description == null && description == null) return true;
-        return this.description != null && this.description.equals(description);
+    public final boolean isSolution(java.lang.String solution) {
+        if (this.solution == null && solution == null) return true;
+        return this.solution != null && this.solution.equals(solution);
     }
 
     // -----------------------------------------------------------
@@ -131,67 +121,6 @@ public abstract class GImpediment
     }
 
     // -----------------------------------------------------------
-    // - solution
-    // -----------------------------------------------------------
-
-    private java.lang.String solution;
-
-    public final java.lang.String getSolution() {
-        return solution;
-    }
-
-    public final void setSolution(java.lang.String solution) {
-        solution = prepareSolution(solution);
-        if (isSolution(solution)) return;
-        this.solution = solution;
-        fireModified();
-    }
-
-    protected java.lang.String prepareSolution(java.lang.String solution) {
-        solution = Str.removeUnreadableChars(solution);
-        return solution;
-    }
-
-    public final boolean isSolutionSet() {
-        return this.solution != null;
-    }
-
-    public final boolean isSolution(java.lang.String solution) {
-        if (this.solution == null && solution == null) return true;
-        return this.solution != null && this.solution.equals(solution);
-    }
-
-    // -----------------------------------------------------------
-    // - solveDate
-    // -----------------------------------------------------------
-
-    private ilarkesto.base.time.Date solveDate;
-
-    public final ilarkesto.base.time.Date getSolveDate() {
-        return solveDate;
-    }
-
-    public final void setSolveDate(ilarkesto.base.time.Date solveDate) {
-        solveDate = prepareSolveDate(solveDate);
-        if (isSolveDate(solveDate)) return;
-        this.solveDate = solveDate;
-        fireModified();
-    }
-
-    protected ilarkesto.base.time.Date prepareSolveDate(ilarkesto.base.time.Date solveDate) {
-        return solveDate;
-    }
-
-    public final boolean isSolveDateSet() {
-        return this.solveDate != null;
-    }
-
-    public final boolean isSolveDate(ilarkesto.base.time.Date solveDate) {
-        if (this.solveDate == null && solveDate == null) return true;
-        return this.solveDate != null && this.solveDate.equals(solveDate);
-    }
-
-    // -----------------------------------------------------------
     // - date
     // -----------------------------------------------------------
 
@@ -219,6 +148,37 @@ public abstract class GImpediment
     public final boolean isDate(ilarkesto.base.time.Date date) {
         if (this.date == null && date == null) return true;
         return this.date != null && this.date.equals(date);
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private java.lang.String description;
+
+    public final java.lang.String getDescription() {
+        return description;
+    }
+
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+        fireModified();
+    }
+
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
+    }
+
+    public final boolean isDescriptionSet() {
+        return this.description != null;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
     }
 
     // -----------------------------------------------------------
@@ -250,6 +210,36 @@ public abstract class GImpediment
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - solveDate
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date solveDate;
+
+    public final ilarkesto.base.time.Date getSolveDate() {
+        return solveDate;
+    }
+
+    public final void setSolveDate(ilarkesto.base.time.Date solveDate) {
+        solveDate = prepareSolveDate(solveDate);
+        if (isSolveDate(solveDate)) return;
+        this.solveDate = solveDate;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.Date prepareSolveDate(ilarkesto.base.time.Date solveDate) {
+        return solveDate;
+    }
+
+    public final boolean isSolveDateSet() {
+        return this.solveDate != null;
+    }
+
+    public final boolean isSolveDate(ilarkesto.base.time.Date solveDate) {
+        if (this.solveDate == null && solveDate == null) return true;
+        return this.solveDate != null && this.solveDate.equals(solveDate);
     }
 
     protected void repairDeadReferences(String entityId) {

@@ -1,11 +1,15 @@
 package scrum.server;
 
 import ilarkesto.base.Url;
+import ilarkesto.base.Utl;
 import ilarkesto.concurrent.TaskManager;
 import ilarkesto.io.IO;
 import ilarkesto.logging.Logger;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -80,6 +84,16 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			autowire(userDao);
 		}
 		return userDao;
+	}
+
+	public Set<WebSession> getOtherSessionsByProject(WebSession currentSession) {
+		Set<WebSession> ret = new HashSet<WebSession>();
+		for (AWebSession webSession : getWebSessions()) {
+			if (webSession == currentSession) continue;
+			WebSession session = (WebSession) webSession;
+			if (Utl.equals(currentSession.getProject(), session.getProject())) ret.add(session);
+		}
+		return ret;
 	}
 
 	@Override

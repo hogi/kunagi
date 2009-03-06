@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.DaoGenerator
@@ -44,18 +34,18 @@ public abstract class GImpedimentDao
 
     // --- clear caches ---
     public void clearCaches() {
-        impedimentsByDescriptionCache.clear();
-        descriptionsCache = null;
-        impedimentsByProjectCache.clear();
-        projectsCache = null;
         impedimentsBySolutionCache.clear();
         solutionsCache = null;
-        impedimentsBySolveDateCache.clear();
-        solveDatesCache = null;
+        impedimentsByProjectCache.clear();
+        projectsCache = null;
         impedimentsByDateCache.clear();
         datesCache = null;
+        impedimentsByDescriptionCache.clear();
+        descriptionsCache = null;
         impedimentsByLabelCache.clear();
         labelsCache = null;
+        impedimentsBySolveDateCache.clear();
+        solveDatesCache = null;
     }
 
     @Override
@@ -75,41 +65,41 @@ public abstract class GImpedimentDao
     }
 
     // -----------------------------------------------------------
-    // - description
+    // - solution
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Impediment>> impedimentsByDescriptionCache = new Cache<java.lang.String,Set<Impediment>>(
+    private final Cache<java.lang.String,Set<Impediment>> impedimentsBySolutionCache = new Cache<java.lang.String,Set<Impediment>>(
             new Cache.Factory<java.lang.String,Set<Impediment>>() {
-                public Set<Impediment> create(java.lang.String description) {
-                    return getEntities(new IsDescription(description));
+                public Set<Impediment> create(java.lang.String solution) {
+                    return getEntities(new IsSolution(solution));
                 }
             });
 
-    public final Set<Impediment> getImpedimentsByDescription(java.lang.String description) {
-        return impedimentsByDescriptionCache.get(description);
+    public final Set<Impediment> getImpedimentsBySolution(java.lang.String solution) {
+        return impedimentsBySolutionCache.get(solution);
     }
-    private Set<java.lang.String> descriptionsCache;
+    private Set<java.lang.String> solutionsCache;
 
-    public final Set<java.lang.String> getDescriptions() {
-        if (descriptionsCache == null) {
-            descriptionsCache = new HashSet<java.lang.String>();
+    public final Set<java.lang.String> getSolutions() {
+        if (solutionsCache == null) {
+            solutionsCache = new HashSet<java.lang.String>();
             for (Impediment e : getEntities()) {
-                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
+                if (e.isSolutionSet()) solutionsCache.add(e.getSolution());
             }
         }
-        return descriptionsCache;
+        return solutionsCache;
     }
 
-    private static class IsDescription implements Predicate<Impediment> {
+    private static class IsSolution implements Predicate<Impediment> {
 
         private java.lang.String value;
 
-        public IsDescription(java.lang.String value) {
+        public IsSolution(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(Impediment e) {
-            return e.isDescription(value);
+            return e.isSolution(value);
         }
 
     }
@@ -155,86 +145,6 @@ public abstract class GImpedimentDao
     }
 
     // -----------------------------------------------------------
-    // - solution
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Impediment>> impedimentsBySolutionCache = new Cache<java.lang.String,Set<Impediment>>(
-            new Cache.Factory<java.lang.String,Set<Impediment>>() {
-                public Set<Impediment> create(java.lang.String solution) {
-                    return getEntities(new IsSolution(solution));
-                }
-            });
-
-    public final Set<Impediment> getImpedimentsBySolution(java.lang.String solution) {
-        return impedimentsBySolutionCache.get(solution);
-    }
-    private Set<java.lang.String> solutionsCache;
-
-    public final Set<java.lang.String> getSolutions() {
-        if (solutionsCache == null) {
-            solutionsCache = new HashSet<java.lang.String>();
-            for (Impediment e : getEntities()) {
-                if (e.isSolutionSet()) solutionsCache.add(e.getSolution());
-            }
-        }
-        return solutionsCache;
-    }
-
-    private static class IsSolution implements Predicate<Impediment> {
-
-        private java.lang.String value;
-
-        public IsSolution(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Impediment e) {
-            return e.isSolution(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - solveDate
-    // -----------------------------------------------------------
-
-    private final Cache<ilarkesto.base.time.Date,Set<Impediment>> impedimentsBySolveDateCache = new Cache<ilarkesto.base.time.Date,Set<Impediment>>(
-            new Cache.Factory<ilarkesto.base.time.Date,Set<Impediment>>() {
-                public Set<Impediment> create(ilarkesto.base.time.Date solveDate) {
-                    return getEntities(new IsSolveDate(solveDate));
-                }
-            });
-
-    public final Set<Impediment> getImpedimentsBySolveDate(ilarkesto.base.time.Date solveDate) {
-        return impedimentsBySolveDateCache.get(solveDate);
-    }
-    private Set<ilarkesto.base.time.Date> solveDatesCache;
-
-    public final Set<ilarkesto.base.time.Date> getSolveDates() {
-        if (solveDatesCache == null) {
-            solveDatesCache = new HashSet<ilarkesto.base.time.Date>();
-            for (Impediment e : getEntities()) {
-                if (e.isSolveDateSet()) solveDatesCache.add(e.getSolveDate());
-            }
-        }
-        return solveDatesCache;
-    }
-
-    private static class IsSolveDate implements Predicate<Impediment> {
-
-        private ilarkesto.base.time.Date value;
-
-        public IsSolveDate(ilarkesto.base.time.Date value) {
-            this.value = value;
-        }
-
-        public boolean test(Impediment e) {
-            return e.isSolveDate(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
     // - date
     // -----------------------------------------------------------
 
@@ -275,6 +185,46 @@ public abstract class GImpedimentDao
     }
 
     // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Impediment>> impedimentsByDescriptionCache = new Cache<java.lang.String,Set<Impediment>>(
+            new Cache.Factory<java.lang.String,Set<Impediment>>() {
+                public Set<Impediment> create(java.lang.String description) {
+                    return getEntities(new IsDescription(description));
+                }
+            });
+
+    public final Set<Impediment> getImpedimentsByDescription(java.lang.String description) {
+        return impedimentsByDescriptionCache.get(description);
+    }
+    private Set<java.lang.String> descriptionsCache;
+
+    public final Set<java.lang.String> getDescriptions() {
+        if (descriptionsCache == null) {
+            descriptionsCache = new HashSet<java.lang.String>();
+            for (Impediment e : getEntities()) {
+                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
+            }
+        }
+        return descriptionsCache;
+    }
+
+    private static class IsDescription implements Predicate<Impediment> {
+
+        private java.lang.String value;
+
+        public IsDescription(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Impediment e) {
+            return e.isDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
 
@@ -310,6 +260,46 @@ public abstract class GImpedimentDao
 
         public boolean test(Impediment e) {
             return e.isLabel(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - solveDate
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.Date,Set<Impediment>> impedimentsBySolveDateCache = new Cache<ilarkesto.base.time.Date,Set<Impediment>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<Impediment>>() {
+                public Set<Impediment> create(ilarkesto.base.time.Date solveDate) {
+                    return getEntities(new IsSolveDate(solveDate));
+                }
+            });
+
+    public final Set<Impediment> getImpedimentsBySolveDate(ilarkesto.base.time.Date solveDate) {
+        return impedimentsBySolveDateCache.get(solveDate);
+    }
+    private Set<ilarkesto.base.time.Date> solveDatesCache;
+
+    public final Set<ilarkesto.base.time.Date> getSolveDates() {
+        if (solveDatesCache == null) {
+            solveDatesCache = new HashSet<ilarkesto.base.time.Date>();
+            for (Impediment e : getEntities()) {
+                if (e.isSolveDateSet()) solveDatesCache.add(e.getSolveDate());
+            }
+        }
+        return solveDatesCache;
+    }
+
+    private static class IsSolveDate implements Predicate<Impediment> {
+
+        private ilarkesto.base.time.Date value;
+
+        public IsSolveDate(ilarkesto.base.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(Impediment e) {
+            return e.isSolveDate(value);
         }
 
     }

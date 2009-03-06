@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.EntityGenerator
@@ -46,12 +36,12 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("remainingWork", this.remainingWork);
         properties.put("ownerId", this.ownerId);
+        properties.put("remainingWork", this.remainingWork);
+        properties.put("requirementId", this.requirementId);
         properties.put("label", this.label);
         properties.put("notice", this.notice);
         properties.put("burnedWork", this.burnedWork);
-        properties.put("requirementId", this.requirementId);
     }
 
     public int compareTo(Task other) {
@@ -61,31 +51,6 @@ public abstract class GTask
     private static final Logger LOG = Logger.get(GTask.class);
 
     public static final String TYPE = "task";
-
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private int remainingWork;
-
-    public final int getRemainingWork() {
-        return remainingWork;
-    }
-
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
-        fireModified();
-    }
-
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
-    }
 
     // -----------------------------------------------------------
     // - owner
@@ -123,6 +88,68 @@ public abstract class GTask
     public final boolean isOwner(scrum.server.admin.User owner) {
         if (this.ownerId == null && owner == null) return true;
         return owner != null && owner.getId().equals(this.ownerId);
+    }
+
+    // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private int remainingWork;
+
+    public final int getRemainingWork() {
+        return remainingWork;
+    }
+
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+        fireModified();
+    }
+
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
+    }
+
+    // -----------------------------------------------------------
+    // - requirement
+    // -----------------------------------------------------------
+
+    private String requirementId;
+
+    public final scrum.server.project.Requirement getRequirement() {
+        if (this.requirementId == null) return null;
+        return (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
+    }
+
+    public final void setRequirement(scrum.server.project.Requirement requirement) {
+        requirement = prepareRequirement(requirement);
+        if (isRequirement(requirement)) return;
+        this.requirementId = requirement == null ? null : requirement.getId();
+        fireModified();
+    }
+
+    protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
+        return requirement;
+    }
+
+    protected void repairDeadRequirementReference(String entityId) {
+        if (entityId.equals(this.requirementId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isRequirementSet() {
+        return this.requirementId != null;
+    }
+
+    public final boolean isRequirement(scrum.server.project.Requirement requirement) {
+        if (this.requirementId == null && requirement == null) return true;
+        return requirement != null && requirement.getId().equals(this.requirementId);
     }
 
     // -----------------------------------------------------------
@@ -210,43 +237,6 @@ public abstract class GTask
 
     public final boolean isBurnedWork(int burnedWork) {
         return this.burnedWork == burnedWork;
-    }
-
-    // -----------------------------------------------------------
-    // - requirement
-    // -----------------------------------------------------------
-
-    private String requirementId;
-
-    public final scrum.server.project.Requirement getRequirement() {
-        if (this.requirementId == null) return null;
-        return (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
-    }
-
-    public final void setRequirement(scrum.server.project.Requirement requirement) {
-        requirement = prepareRequirement(requirement);
-        if (isRequirement(requirement)) return;
-        this.requirementId = requirement == null ? null : requirement.getId();
-        fireModified();
-    }
-
-    protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
-        return requirement;
-    }
-
-    protected void repairDeadRequirementReference(String entityId) {
-        if (entityId.equals(this.requirementId)) {
-            repairMissingMaster();
-        }
-    }
-
-    public final boolean isRequirementSet() {
-        return this.requirementId != null;
-    }
-
-    public final boolean isRequirement(scrum.server.project.Requirement requirement) {
-        if (this.requirementId == null && requirement == null) return true;
-        return requirement != null && requirement.getId().equals(this.requirementId);
     }
 
     protected void repairDeadReferences(String entityId) {

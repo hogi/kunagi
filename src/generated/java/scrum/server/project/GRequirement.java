@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.EntityGenerator
@@ -47,12 +37,12 @@ public abstract class GRequirement
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("description", this.description);
-        properties.put("testDescription", this.testDescription);
-        properties.put("estimatedWork", this.estimatedWork);
         properties.put("label", this.label);
+        properties.put("testDescription", this.testDescription);
         properties.put("sprintId", this.sprintId);
-        properties.put("projectId", this.projectId);
+        properties.put("estimatedWork", this.estimatedWork);
         properties.put("closed", this.closed);
+        properties.put("projectId", this.projectId);
     }
 
     public int compareTo(Requirement other) {
@@ -95,67 +85,6 @@ public abstract class GRequirement
     }
 
     // -----------------------------------------------------------
-    // - testDescription
-    // -----------------------------------------------------------
-
-    private java.lang.String testDescription;
-
-    public final java.lang.String getTestDescription() {
-        return testDescription;
-    }
-
-    public final void setTestDescription(java.lang.String testDescription) {
-        testDescription = prepareTestDescription(testDescription);
-        if (isTestDescription(testDescription)) return;
-        this.testDescription = testDescription;
-        fireModified();
-    }
-
-    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
-        testDescription = Str.removeUnreadableChars(testDescription);
-        return testDescription;
-    }
-
-    public final boolean isTestDescriptionSet() {
-        return this.testDescription != null;
-    }
-
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        if (this.testDescription == null && testDescription == null) return true;
-        return this.testDescription != null && this.testDescription.equals(testDescription);
-    }
-
-    // -----------------------------------------------------------
-    // - estimatedWork
-    // -----------------------------------------------------------
-
-    private java.lang.Integer estimatedWork;
-
-    public final java.lang.Integer getEstimatedWork() {
-        return estimatedWork;
-    }
-
-    public final void setEstimatedWork(java.lang.Integer estimatedWork) {
-        estimatedWork = prepareEstimatedWork(estimatedWork);
-        if (isEstimatedWork(estimatedWork)) return;
-        this.estimatedWork = estimatedWork;
-        fireModified();
-    }
-
-    protected java.lang.Integer prepareEstimatedWork(java.lang.Integer estimatedWork) {
-        return estimatedWork;
-    }
-
-    public final boolean isEstimatedWorkSet() {
-        return this.estimatedWork != null;
-    }
-
-    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
-        if (this.estimatedWork == null && estimatedWork == null) return true;
-        return this.estimatedWork != null && this.estimatedWork.equals(estimatedWork);
-    }
-
-    // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
 
@@ -184,6 +113,37 @@ public abstract class GRequirement
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - testDescription
+    // -----------------------------------------------------------
+
+    private java.lang.String testDescription;
+
+    public final java.lang.String getTestDescription() {
+        return testDescription;
+    }
+
+    public final void setTestDescription(java.lang.String testDescription) {
+        testDescription = prepareTestDescription(testDescription);
+        if (isTestDescription(testDescription)) return;
+        this.testDescription = testDescription;
+        fireModified();
+    }
+
+    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
+        testDescription = Str.removeUnreadableChars(testDescription);
+        return testDescription;
+    }
+
+    public final boolean isTestDescriptionSet() {
+        return this.testDescription != null;
+    }
+
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        if (this.testDescription == null && testDescription == null) return true;
+        return this.testDescription != null && this.testDescription.equals(testDescription);
     }
 
     // -----------------------------------------------------------
@@ -225,6 +185,61 @@ public abstract class GRequirement
     }
 
     // -----------------------------------------------------------
+    // - estimatedWork
+    // -----------------------------------------------------------
+
+    private java.lang.Integer estimatedWork;
+
+    public final java.lang.Integer getEstimatedWork() {
+        return estimatedWork;
+    }
+
+    public final void setEstimatedWork(java.lang.Integer estimatedWork) {
+        estimatedWork = prepareEstimatedWork(estimatedWork);
+        if (isEstimatedWork(estimatedWork)) return;
+        this.estimatedWork = estimatedWork;
+        fireModified();
+    }
+
+    protected java.lang.Integer prepareEstimatedWork(java.lang.Integer estimatedWork) {
+        return estimatedWork;
+    }
+
+    public final boolean isEstimatedWorkSet() {
+        return this.estimatedWork != null;
+    }
+
+    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
+        if (this.estimatedWork == null && estimatedWork == null) return true;
+        return this.estimatedWork != null && this.estimatedWork.equals(estimatedWork);
+    }
+
+    // -----------------------------------------------------------
+    // - closed
+    // -----------------------------------------------------------
+
+    private boolean closed;
+
+    public final boolean isClosed() {
+        return closed;
+    }
+
+    public final void setClosed(boolean closed) {
+        closed = prepareClosed(closed);
+        if (isClosed(closed)) return;
+        this.closed = closed;
+        fireModified();
+    }
+
+    protected boolean prepareClosed(boolean closed) {
+        return closed;
+    }
+
+    public final boolean isClosed(boolean closed) {
+        return this.closed == closed;
+    }
+
+    // -----------------------------------------------------------
     // - project
     // -----------------------------------------------------------
 
@@ -259,31 +274,6 @@ public abstract class GRequirement
     public final boolean isProject(scrum.server.project.Project project) {
         if (this.projectId == null && project == null) return true;
         return project != null && project.getId().equals(this.projectId);
-    }
-
-    // -----------------------------------------------------------
-    // - closed
-    // -----------------------------------------------------------
-
-    private boolean closed;
-
-    public final boolean isClosed() {
-        return closed;
-    }
-
-    public final void setClosed(boolean closed) {
-        closed = prepareClosed(closed);
-        if (isClosed(closed)) return;
-        this.closed = closed;
-        fireModified();
-    }
-
-    protected boolean prepareClosed(boolean closed) {
-        return closed;
-    }
-
-    public final boolean isClosed(boolean closed) {
-        return this.closed == closed;
     }
 
     protected void repairDeadReferences(String entityId) {
