@@ -59,6 +59,6 @@
 		<copy tofile="/var/webapps/scrum.war" file="build/scrum.war" />
 	</target>
 
-	<target name="update-deploy" depends="update,deploy" />
-	<target name="update-deploy-clean" depends="update-deploy" />
+	<target name="continousIntegrationBuild" depends="deploy" />
+    
 </project>
