@@ -14,12 +14,12 @@
 package scrum.server.risks;
 
 import java.util.*;
-import ilarkesto.auth.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.time.*;
-import ilarkesto.base.*;
-import ilarkesto.fp.*;
 import ilarkesto.persistence.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
+import ilarkesto.fp.*;
 
 public abstract class GRiskDao
             extends ilarkesto.persistence.ADao<Risk> {
@@ -34,14 +34,14 @@ public abstract class GRiskDao
 
     // --- clear caches ---
     public void clearCaches() {
-        risksByProbabilityCache.clear();
-        probabilitysCache = null;
-        risksByLabelCache.clear();
-        labelsCache = null;
         risksByProjectCache.clear();
         projectsCache = null;
+        risksByLabelCache.clear();
+        labelsCache = null;
         risksByDescriptionCache.clear();
         descriptionsCache = null;
+        risksByProbabilityCache.clear();
+        probabilitysCache = null;
         risksByImpactCache.clear();
         impactsCache = null;
     }
@@ -63,41 +63,41 @@ public abstract class GRiskDao
     }
 
     // -----------------------------------------------------------
-    // - probability
+    // - project
     // -----------------------------------------------------------
 
-    private final Cache<Integer,Set<Risk>> risksByProbabilityCache = new Cache<Integer,Set<Risk>>(
-            new Cache.Factory<Integer,Set<Risk>>() {
-                public Set<Risk> create(Integer probability) {
-                    return getEntities(new IsProbability(probability));
+    private final Cache<scrum.server.project.Project,Set<Risk>> risksByProjectCache = new Cache<scrum.server.project.Project,Set<Risk>>(
+            new Cache.Factory<scrum.server.project.Project,Set<Risk>>() {
+                public Set<Risk> create(scrum.server.project.Project project) {
+                    return getEntities(new IsProject(project));
                 }
             });
 
-    public final Set<Risk> getRisksByProbability(int probability) {
-        return risksByProbabilityCache.get(probability);
+    public final Set<Risk> getRisksByProject(scrum.server.project.Project project) {
+        return risksByProjectCache.get(project);
     }
-    private Set<Integer> probabilitysCache;
+    private Set<scrum.server.project.Project> projectsCache;
 
-    public final Set<Integer> getProbabilitys() {
-        if (probabilitysCache == null) {
-            probabilitysCache = new HashSet<Integer>();
+    public final Set<scrum.server.project.Project> getProjects() {
+        if (projectsCache == null) {
+            projectsCache = new HashSet<scrum.server.project.Project>();
             for (Risk e : getEntities()) {
-                probabilitysCache.add(e.getProbability());
+                if (e.isProjectSet()) projectsCache.add(e.getProject());
             }
         }
-        return probabilitysCache;
+        return projectsCache;
     }
 
-    private static class IsProbability implements Predicate<Risk> {
+    private static class IsProject implements Predicate<Risk> {
 
-        private int value;
+        private scrum.server.project.Project value;
 
-        public IsProbability(int value) {
+        public IsProject(scrum.server.project.Project value) {
             this.value = value;
         }
 
         public boolean test(Risk e) {
-            return e.isProbability(value);
+            return e.isProject(value);
         }
 
     }
@@ -143,46 +143,6 @@ public abstract class GRiskDao
     }
 
     // -----------------------------------------------------------
-    // - project
-    // -----------------------------------------------------------
-
-    private final Cache<scrum.server.project.Project,Set<Risk>> risksByProjectCache = new Cache<scrum.server.project.Project,Set<Risk>>(
-            new Cache.Factory<scrum.server.project.Project,Set<Risk>>() {
-                public Set<Risk> create(scrum.server.project.Project project) {
-                    return getEntities(new IsProject(project));
-                }
-            });
-
-    public final Set<Risk> getRisksByProject(scrum.server.project.Project project) {
-        return risksByProjectCache.get(project);
-    }
-    private Set<scrum.server.project.Project> projectsCache;
-
-    public final Set<scrum.server.project.Project> getProjects() {
-        if (projectsCache == null) {
-            projectsCache = new HashSet<scrum.server.project.Project>();
-            for (Risk e : getEntities()) {
-                if (e.isProjectSet()) projectsCache.add(e.getProject());
-            }
-        }
-        return projectsCache;
-    }
-
-    private static class IsProject implements Predicate<Risk> {
-
-        private scrum.server.project.Project value;
-
-        public IsProject(scrum.server.project.Project value) {
-            this.value = value;
-        }
-
-        public boolean test(Risk e) {
-            return e.isProject(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
     // - description
     // -----------------------------------------------------------
 
@@ -218,6 +178,46 @@ public abstract class GRiskDao
 
         public boolean test(Risk e) {
             return e.isDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - probability
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Risk>> risksByProbabilityCache = new Cache<Integer,Set<Risk>>(
+            new Cache.Factory<Integer,Set<Risk>>() {
+                public Set<Risk> create(Integer probability) {
+                    return getEntities(new IsProbability(probability));
+                }
+            });
+
+    public final Set<Risk> getRisksByProbability(int probability) {
+        return risksByProbabilityCache.get(probability);
+    }
+    private Set<Integer> probabilitysCache;
+
+    public final Set<Integer> getProbabilitys() {
+        if (probabilitysCache == null) {
+            probabilitysCache = new HashSet<Integer>();
+            for (Risk e : getEntities()) {
+                probabilitysCache.add(e.getProbability());
+            }
+        }
+        return probabilitysCache;
+    }
+
+    private static class IsProbability implements Predicate<Risk> {
+
+        private int value;
+
+        public IsProbability(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Risk e) {
+            return e.isProbability(value);
         }
 
     }

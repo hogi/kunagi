@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.DaoGenerator
@@ -24,12 +14,12 @@
 package scrum.server.admin;
 
 import java.util.*;
-import ilarkesto.auth.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.time.*;
-import ilarkesto.base.*;
-import ilarkesto.fp.*;
 import ilarkesto.persistence.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
+import ilarkesto.fp.*;
 
 public abstract class GUserDao
             extends ilarkesto.auth.AUserDao<User> {

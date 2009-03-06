@@ -14,12 +14,12 @@
 package scrum.server.sprint;
 
 import java.util.*;
-import ilarkesto.auth.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.time.*;
-import ilarkesto.base.*;
-import ilarkesto.fp.*;
 import ilarkesto.persistence.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
+import ilarkesto.fp.*;
 
 public abstract class GSprintDao
             extends ilarkesto.persistence.ADao<Sprint> {
@@ -36,14 +36,14 @@ public abstract class GSprintDao
     public void clearCaches() {
         sprintsByProjectCache.clear();
         projectsCache = null;
-        sprintsByGoalCache.clear();
-        goalsCache = null;
-        sprintsByEndCache.clear();
-        endsCache = null;
-        sprintsByBeginCache.clear();
-        beginsCache = null;
         sprintsByLabelCache.clear();
         labelsCache = null;
+        sprintsByGoalCache.clear();
+        goalsCache = null;
+        sprintsByBeginCache.clear();
+        beginsCache = null;
+        sprintsByEndCache.clear();
+        endsCache = null;
     }
 
     @Override
@@ -103,6 +103,46 @@ public abstract class GSprintDao
     }
 
     // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Sprint>> sprintsByLabelCache = new Cache<java.lang.String,Set<Sprint>>(
+            new Cache.Factory<java.lang.String,Set<Sprint>>() {
+                public Set<Sprint> create(java.lang.String label) {
+                    return getEntities(new IsLabel(label));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByLabel(java.lang.String label) {
+        return sprintsByLabelCache.get(label);
+    }
+    private Set<java.lang.String> labelsCache;
+
+    public final Set<java.lang.String> getLabels() {
+        if (labelsCache == null) {
+            labelsCache = new HashSet<java.lang.String>();
+            for (Sprint e : getEntities()) {
+                if (e.isLabelSet()) labelsCache.add(e.getLabel());
+            }
+        }
+        return labelsCache;
+    }
+
+    private static class IsLabel implements Predicate<Sprint> {
+
+        private java.lang.String value;
+
+        public IsLabel(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.isLabel(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - goal
     // -----------------------------------------------------------
 
@@ -138,46 +178,6 @@ public abstract class GSprintDao
 
         public boolean test(Sprint e) {
             return e.isGoal(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - end
-    // -----------------------------------------------------------
-
-    private final Cache<ilarkesto.base.time.Date,Set<Sprint>> sprintsByEndCache = new Cache<ilarkesto.base.time.Date,Set<Sprint>>(
-            new Cache.Factory<ilarkesto.base.time.Date,Set<Sprint>>() {
-                public Set<Sprint> create(ilarkesto.base.time.Date end) {
-                    return getEntities(new IsEnd(end));
-                }
-            });
-
-    public final Set<Sprint> getSprintsByEnd(ilarkesto.base.time.Date end) {
-        return sprintsByEndCache.get(end);
-    }
-    private Set<ilarkesto.base.time.Date> endsCache;
-
-    public final Set<ilarkesto.base.time.Date> getEnds() {
-        if (endsCache == null) {
-            endsCache = new HashSet<ilarkesto.base.time.Date>();
-            for (Sprint e : getEntities()) {
-                if (e.isEndSet()) endsCache.add(e.getEnd());
-            }
-        }
-        return endsCache;
-    }
-
-    private static class IsEnd implements Predicate<Sprint> {
-
-        private ilarkesto.base.time.Date value;
-
-        public IsEnd(ilarkesto.base.time.Date value) {
-            this.value = value;
-        }
-
-        public boolean test(Sprint e) {
-            return e.isEnd(value);
         }
 
     }
@@ -223,41 +223,41 @@ public abstract class GSprintDao
     }
 
     // -----------------------------------------------------------
-    // - label
+    // - end
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Sprint>> sprintsByLabelCache = new Cache<java.lang.String,Set<Sprint>>(
-            new Cache.Factory<java.lang.String,Set<Sprint>>() {
-                public Set<Sprint> create(java.lang.String label) {
-                    return getEntities(new IsLabel(label));
+    private final Cache<ilarkesto.base.time.Date,Set<Sprint>> sprintsByEndCache = new Cache<ilarkesto.base.time.Date,Set<Sprint>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<Sprint>>() {
+                public Set<Sprint> create(ilarkesto.base.time.Date end) {
+                    return getEntities(new IsEnd(end));
                 }
             });
 
-    public final Set<Sprint> getSprintsByLabel(java.lang.String label) {
-        return sprintsByLabelCache.get(label);
+    public final Set<Sprint> getSprintsByEnd(ilarkesto.base.time.Date end) {
+        return sprintsByEndCache.get(end);
     }
-    private Set<java.lang.String> labelsCache;
+    private Set<ilarkesto.base.time.Date> endsCache;
 
-    public final Set<java.lang.String> getLabels() {
-        if (labelsCache == null) {
-            labelsCache = new HashSet<java.lang.String>();
+    public final Set<ilarkesto.base.time.Date> getEnds() {
+        if (endsCache == null) {
+            endsCache = new HashSet<ilarkesto.base.time.Date>();
             for (Sprint e : getEntities()) {
-                if (e.isLabelSet()) labelsCache.add(e.getLabel());
+                if (e.isEndSet()) endsCache.add(e.getEnd());
             }
         }
-        return labelsCache;
+        return endsCache;
     }
 
-    private static class IsLabel implements Predicate<Sprint> {
+    private static class IsEnd implements Predicate<Sprint> {
 
-        private java.lang.String value;
+        private ilarkesto.base.time.Date value;
 
-        public IsLabel(java.lang.String value) {
+        public IsEnd(ilarkesto.base.time.Date value) {
             this.value = value;
         }
 
         public boolean test(Sprint e) {
-            return e.isLabel(value);
+            return e.isEnd(value);
         }
 
     }

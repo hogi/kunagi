@@ -14,11 +14,11 @@
 package scrum.server.sprint;
 
 import java.util.*;
-import ilarkesto.auth.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.time.*;
-import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
 
 public abstract class GTask
             extends AEntity
@@ -36,12 +36,12 @@ public abstract class GTask
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("ownerId", this.ownerId);
-        properties.put("remainingWork", this.remainingWork);
         properties.put("requirementId", this.requirementId);
         properties.put("label", this.label);
-        properties.put("notice", this.notice);
+        properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);
+        properties.put("notice", this.notice);
+        properties.put("ownerId", this.ownerId);
     }
 
     public int compareTo(Task other) {
@@ -51,69 +51,6 @@ public abstract class GTask
     private static final Logger LOG = Logger.get(GTask.class);
 
     public static final String TYPE = "task";
-
-    // -----------------------------------------------------------
-    // - owner
-    // -----------------------------------------------------------
-
-    private String ownerId;
-
-    public final scrum.server.admin.User getOwner() {
-        if (this.ownerId == null) return null;
-        return (scrum.server.admin.User)userDao.getById(this.ownerId);
-    }
-
-    public final void setOwner(scrum.server.admin.User owner) {
-        owner = prepareOwner(owner);
-        if (isOwner(owner)) return;
-        this.ownerId = owner == null ? null : owner.getId();
-        fireModified();
-    }
-
-    protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
-        return owner;
-    }
-
-    protected void repairDeadOwnerReference(String entityId) {
-        if (entityId.equals(this.ownerId)) {
-            this.ownerId = null;
-            fireModified();
-        }
-    }
-
-    public final boolean isOwnerSet() {
-        return this.ownerId != null;
-    }
-
-    public final boolean isOwner(scrum.server.admin.User owner) {
-        if (this.ownerId == null && owner == null) return true;
-        return owner != null && owner.getId().equals(this.ownerId);
-    }
-
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private int remainingWork;
-
-    public final int getRemainingWork() {
-        return remainingWork;
-    }
-
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
-        fireModified();
-    }
-
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
-    }
 
     // -----------------------------------------------------------
     // - requirement
@@ -184,6 +121,56 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private int remainingWork;
+
+    public final int getRemainingWork() {
+        return remainingWork;
+    }
+
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+        fireModified();
+    }
+
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
+    }
+
+    // -----------------------------------------------------------
+    // - burnedWork
+    // -----------------------------------------------------------
+
+    private int burnedWork;
+
+    public final int getBurnedWork() {
+        return burnedWork;
+    }
+
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
+        fireModified();
+    }
+
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
+    }
+
+    // -----------------------------------------------------------
     // - notice
     // -----------------------------------------------------------
 
@@ -215,46 +202,53 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
-    // - burnedWork
+    // - owner
     // -----------------------------------------------------------
 
-    private int burnedWork;
+    private String ownerId;
 
-    public final int getBurnedWork() {
-        return burnedWork;
+    public final scrum.server.admin.User getOwner() {
+        if (this.ownerId == null) return null;
+        return (scrum.server.admin.User)userDao.getById(this.ownerId);
     }
 
-    public final void setBurnedWork(int burnedWork) {
-        burnedWork = prepareBurnedWork(burnedWork);
-        if (isBurnedWork(burnedWork)) return;
-        this.burnedWork = burnedWork;
+    public final void setOwner(scrum.server.admin.User owner) {
+        owner = prepareOwner(owner);
+        if (isOwner(owner)) return;
+        this.ownerId = owner == null ? null : owner.getId();
         fireModified();
     }
 
-    protected int prepareBurnedWork(int burnedWork) {
-        return burnedWork;
+    protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
+        return owner;
     }
 
-    public final boolean isBurnedWork(int burnedWork) {
-        return this.burnedWork == burnedWork;
+    protected void repairDeadOwnerReference(String entityId) {
+        if (entityId.equals(this.ownerId)) {
+            this.ownerId = null;
+            fireModified();
+        }
+    }
+
+    public final boolean isOwnerSet() {
+        return this.ownerId != null;
+    }
+
+    public final boolean isOwner(scrum.server.admin.User owner) {
+        if (this.ownerId == null && owner == null) return true;
+        return owner != null && owner.getId().equals(this.ownerId);
     }
 
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
-        repairDeadOwnerReference(entityId);
         repairDeadRequirementReference(entityId);
+        repairDeadOwnerReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
-        try {
-            getOwner();
-        } catch (EntityDoesNotExistException ex) {
-            LOG.info("Repairing dead owner reference");
-            repairDeadOwnerReference(this.ownerId);
-        }
         if (!isRequirementSet()) {
             repairMissingMaster();
             return;
@@ -264,6 +258,12 @@ public abstract class GTask
         } catch (EntityDoesNotExistException ex) {
             LOG.info("Repairing dead requirement reference");
             repairDeadRequirementReference(this.requirementId);
+        }
+        try {
+            getOwner();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead owner reference");
+            repairDeadOwnerReference(this.ownerId);
         }
     }
 

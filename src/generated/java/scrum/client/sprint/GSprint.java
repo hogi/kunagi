@@ -14,13 +14,13 @@
 package scrum.client.sprint;
 
 import java.util.*;
-import ilarkesto.auth.*;
-import ilarkesto.gwt.client.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.time.*;
-import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
 import scrum.client.common.*;
+import ilarkesto.gwt.client.*;
 
 public abstract class GSprint
             extends ilarkesto.gwt.client.AGwtEntity {
@@ -65,6 +65,24 @@ public abstract class GSprint
         return equals(this.projectId, project);
     }
 
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final Sprint setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
+        return (Sprint)this;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
+    }
+
     // --- goal ---
 
     private java.lang.String goal ;
@@ -81,24 +99,6 @@ public abstract class GSprint
 
     public final boolean isGoal(java.lang.String goal) {
         return equals(this.goal, goal);
-    }
-
-    // --- end ---
-
-    private ilarkesto.gwt.client.Date end ;
-
-    public final ilarkesto.gwt.client.Date getEnd() {
-        return this.end ;
-    }
-
-    public final Sprint setEnd(ilarkesto.gwt.client.Date end) {
-        this.end = end ;
-        propertyChanged("end", this.end);
-        return (Sprint)this;
-    }
-
-    public final boolean isEnd(ilarkesto.gwt.client.Date end) {
-        return equals(this.end, end);
     }
 
     // --- begin ---
@@ -119,44 +119,44 @@ public abstract class GSprint
         return equals(this.begin, begin);
     }
 
-    // --- label ---
+    // --- end ---
 
-    private java.lang.String label ;
+    private ilarkesto.gwt.client.Date end ;
 
-    public final java.lang.String getLabel() {
-        return this.label ;
+    public final ilarkesto.gwt.client.Date getEnd() {
+        return this.end ;
     }
 
-    public final Sprint setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
+    public final Sprint setEnd(ilarkesto.gwt.client.Date end) {
+        this.end = end ;
+        propertyChanged("end", this.end);
         return (Sprint)this;
     }
 
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+    public final boolean isEnd(ilarkesto.gwt.client.Date end) {
+        return equals(this.end, end);
     }
 
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
+        label  = (java.lang.String) props.get("label");
         goal  = (java.lang.String) props.get("goal");
-        String endAsString = (String) props.get("end");
-        end  =  endAsString == null ? null : new ilarkesto.gwt.client.Date(endAsString);
         String beginAsString = (String) props.get("begin");
         begin  =  beginAsString == null ? null : new ilarkesto.gwt.client.Date(beginAsString);
-        label  = (java.lang.String) props.get("label");
+        String endAsString = (String) props.get("end");
+        end  =  endAsString == null ? null : new ilarkesto.gwt.client.Date(endAsString);
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
-        properties.put("goal", this.goal);
-        properties.put("end", this.end == null ? null : this.end.toString());
-        properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("label", this.label);
+        properties.put("goal", this.goal);
+        properties.put("begin", this.begin == null ? null : this.begin.toString());
+        properties.put("end", this.end == null ? null : this.end.toString());
     }
 
 }

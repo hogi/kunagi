@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.EntityGenerator
@@ -24,11 +14,11 @@
 package scrum.server.admin;
 
 import java.util.*;
-import ilarkesto.auth.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.time.*;
-import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
 
 public abstract class GUser
             extends AUser

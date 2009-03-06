@@ -14,13 +14,13 @@
 package scrum.client.risks;
 
 import java.util.*;
-import ilarkesto.auth.*;
-import ilarkesto.gwt.client.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.time.*;
-import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
 import scrum.client.common.*;
+import ilarkesto.gwt.client.*;
 
 public abstract class GRisk
             extends ilarkesto.gwt.client.AGwtEntity {
@@ -44,42 +44,6 @@ public abstract class GRisk
         return ENTITY_TYPE;
     }
 
-    // --- probability ---
-
-    private int probability ;
-
-    public final int getProbability() {
-        return this.probability ;
-    }
-
-    public final Risk setProbability(int probability) {
-        this.probability = probability ;
-        propertyChanged("probability", this.probability);
-        return (Risk)this;
-    }
-
-    public final boolean isProbability(int probability) {
-        return equals(this.probability, probability);
-    }
-
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final Risk setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
-        return (Risk)this;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
-    }
-
     // --- project ---
 
     private String projectId;
@@ -101,6 +65,24 @@ public abstract class GRisk
         return equals(this.projectId, project);
     }
 
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final Risk setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
+        return (Risk)this;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
+    }
+
     // --- description ---
 
     private java.lang.String description ;
@@ -117,6 +99,24 @@ public abstract class GRisk
 
     public final boolean isDescription(java.lang.String description) {
         return equals(this.description, description);
+    }
+
+    // --- probability ---
+
+    private int probability ;
+
+    public final int getProbability() {
+        return this.probability ;
+    }
+
+    public final Risk setProbability(int probability) {
+        this.probability = probability ;
+        propertyChanged("probability", this.probability);
+        return (Risk)this;
+    }
+
+    public final boolean isProbability(int probability) {
+        return equals(this.probability, probability);
     }
 
     // --- impact ---
@@ -140,20 +140,20 @@ public abstract class GRisk
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        probability  = (Integer) props.get("probability");
-        label  = (java.lang.String) props.get("label");
         projectId = (String) props.get("projectId");
+        label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
+        probability  = (Integer) props.get("probability");
         impact  = (Integer) props.get("impact");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("probability", this.probability);
-        properties.put("label", this.label);
         properties.put("projectId", this.projectId);
+        properties.put("label", this.label);
         properties.put("description", this.description);
+        properties.put("probability", this.probability);
         properties.put("impact", this.impact);
     }
 

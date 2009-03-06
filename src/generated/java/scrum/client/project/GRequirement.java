@@ -14,13 +14,13 @@
 package scrum.client.project;
 
 import java.util.*;
-import ilarkesto.auth.*;
-import ilarkesto.gwt.client.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.time.*;
-import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
 import scrum.client.common.*;
+import ilarkesto.gwt.client.*;
 
 public abstract class GRequirement
             extends ilarkesto.gwt.client.AGwtEntity {
@@ -44,58 +44,25 @@ public abstract class GRequirement
         return ENTITY_TYPE;
     }
 
-    // --- description ---
+    // --- project ---
 
-    private java.lang.String description ;
+    private String projectId;
 
-    public final java.lang.String getDescription() {
-        return this.description ;
+    public final scrum.client.project.Project getProject() {
+        if (projectId == null) return null;
+        return getDao().getProject(this.projectId);
     }
 
-    public final Requirement setDescription(java.lang.String description) {
-        this.description = description ;
-        propertyChanged("description", this.description);
+    public final Requirement setProject(scrum.client.project.Project project) {
+        String id = project == null ? null : project.getId();
+        if (equals(this.projectId, id)) return (Requirement) this;
+        this.projectId = id;
+        propertyChanged("projectId", this.projectId);
         return (Requirement)this;
     }
 
-    public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
-    }
-
-    // --- label ---
-
-    private java.lang.String label ;
-
-    public final java.lang.String getLabel() {
-        return this.label ;
-    }
-
-    public final Requirement setLabel(java.lang.String label) {
-        this.label = label ;
-        propertyChanged("label", this.label);
-        return (Requirement)this;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
-    }
-
-    // --- testDescription ---
-
-    private java.lang.String testDescription ;
-
-    public final java.lang.String getTestDescription() {
-        return this.testDescription ;
-    }
-
-    public final Requirement setTestDescription(java.lang.String testDescription) {
-        this.testDescription = testDescription ;
-        propertyChanged("testDescription", this.testDescription);
-        return (Requirement)this;
-    }
-
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        return equals(this.testDescription, testDescription);
+    public final boolean isProject(scrum.client.project.Project project) {
+        return equals(this.projectId, project);
     }
 
     // --- sprint ---
@@ -117,6 +84,60 @@ public abstract class GRequirement
 
     public final boolean isSprint(scrum.client.sprint.Sprint sprint) {
         return equals(this.sprintId, sprint);
+    }
+
+    // --- label ---
+
+    private java.lang.String label ;
+
+    public final java.lang.String getLabel() {
+        return this.label ;
+    }
+
+    public final Requirement setLabel(java.lang.String label) {
+        this.label = label ;
+        propertyChanged("label", this.label);
+        return (Requirement)this;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
+    }
+
+    // --- description ---
+
+    private java.lang.String description ;
+
+    public final java.lang.String getDescription() {
+        return this.description ;
+    }
+
+    public final Requirement setDescription(java.lang.String description) {
+        this.description = description ;
+        propertyChanged("description", this.description);
+        return (Requirement)this;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        return equals(this.description, description);
+    }
+
+    // --- testDescription ---
+
+    private java.lang.String testDescription ;
+
+    public final java.lang.String getTestDescription() {
+        return this.testDescription ;
+    }
+
+    public final Requirement setTestDescription(java.lang.String testDescription) {
+        this.testDescription = testDescription ;
+        propertyChanged("testDescription", this.testDescription);
+        return (Requirement)this;
+    }
+
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        return equals(this.testDescription, testDescription);
     }
 
     // --- estimatedWork ---
@@ -155,49 +176,28 @@ public abstract class GRequirement
         return equals(this.closed, closed);
     }
 
-    // --- project ---
-
-    private String projectId;
-
-    public final scrum.client.project.Project getProject() {
-        if (projectId == null) return null;
-        return getDao().getProject(this.projectId);
-    }
-
-    public final Requirement setProject(scrum.client.project.Project project) {
-        String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Requirement) this;
-        this.projectId = id;
-        propertyChanged("projectId", this.projectId);
-        return (Requirement)this;
-    }
-
-    public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
-    }
-
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        description  = (java.lang.String) props.get("description");
-        label  = (java.lang.String) props.get("label");
-        testDescription  = (java.lang.String) props.get("testDescription");
+        projectId = (String) props.get("projectId");
         sprintId = (String) props.get("sprintId");
+        label  = (java.lang.String) props.get("label");
+        description  = (java.lang.String) props.get("description");
+        testDescription  = (java.lang.String) props.get("testDescription");
         estimatedWork  = (java.lang.Integer) props.get("estimatedWork");
         closed  = (Boolean) props.get("closed");
-        projectId = (String) props.get("projectId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("description", this.description);
-        properties.put("label", this.label);
-        properties.put("testDescription", this.testDescription);
+        properties.put("projectId", this.projectId);
         properties.put("sprintId", this.sprintId);
+        properties.put("label", this.label);
+        properties.put("description", this.description);
+        properties.put("testDescription", this.testDescription);
         properties.put("estimatedWork", this.estimatedWork);
         properties.put("closed", this.closed);
-        properties.put("projectId", this.projectId);
     }
 
 }

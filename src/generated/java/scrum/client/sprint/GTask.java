@@ -14,13 +14,13 @@
 package scrum.client.sprint;
 
 import java.util.*;
-import ilarkesto.auth.*;
-import ilarkesto.gwt.client.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.time.*;
-import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
 import scrum.client.common.*;
+import ilarkesto.gwt.client.*;
 
 public abstract class GTask
             extends ilarkesto.gwt.client.AGwtEntity {
@@ -42,45 +42,6 @@ public abstract class GTask
     @Override
     public final String getEntityType() {
         return ENTITY_TYPE;
-    }
-
-    // --- owner ---
-
-    private String ownerId;
-
-    public final scrum.client.admin.User getOwner() {
-        if (ownerId == null) return null;
-        return getDao().getUser(this.ownerId);
-    }
-
-    public final Task setOwner(scrum.client.admin.User owner) {
-        String id = owner == null ? null : owner.getId();
-        if (equals(this.ownerId, id)) return (Task) this;
-        this.ownerId = id;
-        propertyChanged("ownerId", this.ownerId);
-        return (Task)this;
-    }
-
-    public final boolean isOwner(scrum.client.admin.User owner) {
-        return equals(this.ownerId, owner);
-    }
-
-    // --- remainingWork ---
-
-    private int remainingWork ;
-
-    public final int getRemainingWork() {
-        return this.remainingWork ;
-    }
-
-    public final Task setRemainingWork(int remainingWork) {
-        this.remainingWork = remainingWork ;
-        propertyChanged("remainingWork", this.remainingWork);
-        return (Task)this;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return equals(this.remainingWork, remainingWork);
     }
 
     // --- requirement ---
@@ -122,22 +83,22 @@ public abstract class GTask
         return equals(this.label, label);
     }
 
-    // --- notice ---
+    // --- remainingWork ---
 
-    private java.lang.String notice ;
+    private int remainingWork ;
 
-    public final java.lang.String getNotice() {
-        return this.notice ;
+    public final int getRemainingWork() {
+        return this.remainingWork ;
     }
 
-    public final Task setNotice(java.lang.String notice) {
-        this.notice = notice ;
-        propertyChanged("notice", this.notice);
+    public final Task setRemainingWork(int remainingWork) {
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
         return (Task)this;
     }
 
-    public final boolean isNotice(java.lang.String notice) {
-        return equals(this.notice, notice);
+    public final boolean isRemainingWork(int remainingWork) {
+        return equals(this.remainingWork, remainingWork);
     }
 
     // --- burnedWork ---
@@ -158,26 +119,65 @@ public abstract class GTask
         return equals(this.burnedWork, burnedWork);
     }
 
+    // --- notice ---
+
+    private java.lang.String notice ;
+
+    public final java.lang.String getNotice() {
+        return this.notice ;
+    }
+
+    public final Task setNotice(java.lang.String notice) {
+        this.notice = notice ;
+        propertyChanged("notice", this.notice);
+        return (Task)this;
+    }
+
+    public final boolean isNotice(java.lang.String notice) {
+        return equals(this.notice, notice);
+    }
+
+    // --- owner ---
+
+    private String ownerId;
+
+    public final scrum.client.admin.User getOwner() {
+        if (ownerId == null) return null;
+        return getDao().getUser(this.ownerId);
+    }
+
+    public final Task setOwner(scrum.client.admin.User owner) {
+        String id = owner == null ? null : owner.getId();
+        if (equals(this.ownerId, id)) return (Task) this;
+        this.ownerId = id;
+        propertyChanged("ownerId", this.ownerId);
+        return (Task)this;
+    }
+
+    public final boolean isOwner(scrum.client.admin.User owner) {
+        return equals(this.ownerId, owner);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
-        ownerId = (String) props.get("ownerId");
-        remainingWork  = (Integer) props.get("remainingWork");
         requirementId = (String) props.get("requirementId");
         label  = (java.lang.String) props.get("label");
-        notice  = (java.lang.String) props.get("notice");
+        remainingWork  = (Integer) props.get("remainingWork");
         burnedWork  = (Integer) props.get("burnedWork");
+        notice  = (java.lang.String) props.get("notice");
+        ownerId = (String) props.get("ownerId");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("ownerId", this.ownerId);
-        properties.put("remainingWork", this.remainingWork);
         properties.put("requirementId", this.requirementId);
         properties.put("label", this.label);
-        properties.put("notice", this.notice);
+        properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);
+        properties.put("notice", this.notice);
+        properties.put("ownerId", this.ownerId);
     }
 
 }

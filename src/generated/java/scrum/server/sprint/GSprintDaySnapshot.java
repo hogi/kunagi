@@ -14,11 +14,11 @@
 package scrum.server.sprint;
 
 import java.util.*;
-import ilarkesto.auth.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.time.*;
-import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
 
 public abstract class GSprintDaySnapshot
             extends AEntity
@@ -36,9 +36,9 @@ public abstract class GSprintDaySnapshot
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("remainingWork", this.remainingWork);
         properties.put("sprintId", this.sprintId);
         properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);
     }
 
@@ -49,31 +49,6 @@ public abstract class GSprintDaySnapshot
     private static final Logger LOG = Logger.get(GSprintDaySnapshot.class);
 
     public static final String TYPE = "sprintDaySnapshot";
-
-    // -----------------------------------------------------------
-    // - remainingWork
-    // -----------------------------------------------------------
-
-    private int remainingWork;
-
-    public final int getRemainingWork() {
-        return remainingWork;
-    }
-
-    public final void setRemainingWork(int remainingWork) {
-        remainingWork = prepareRemainingWork(remainingWork);
-        if (isRemainingWork(remainingWork)) return;
-        this.remainingWork = remainingWork;
-        fireModified();
-    }
-
-    protected int prepareRemainingWork(int remainingWork) {
-        return remainingWork;
-    }
-
-    public final boolean isRemainingWork(int remainingWork) {
-        return this.remainingWork == remainingWork;
-    }
 
     // -----------------------------------------------------------
     // - sprint
@@ -141,6 +116,31 @@ public abstract class GSprintDaySnapshot
     public final boolean isDate(ilarkesto.base.time.Date date) {
         if (this.date == null && date == null) return true;
         return this.date != null && this.date.equals(date);
+    }
+
+    // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private int remainingWork;
+
+    public final int getRemainingWork() {
+        return remainingWork;
+    }
+
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+        fireModified();
+    }
+
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
     }
 
     // -----------------------------------------------------------

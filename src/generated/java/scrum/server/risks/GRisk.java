@@ -14,15 +14,15 @@
 package scrum.server.risks;
 
 import java.util.*;
-import ilarkesto.auth.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.time.*;
-import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
 
 public abstract class GRisk
             extends AEntity
-            implements java.lang.Comparable<Risk>, ilarkesto.search.Searchable {
+            implements ilarkesto.search.Searchable, java.lang.Comparable<Risk> {
 
     // --- AEntity ---
 
@@ -36,10 +36,10 @@ public abstract class GRisk
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("probability", this.probability);
-        properties.put("label", this.label);
         properties.put("projectId", this.projectId);
+        properties.put("label", this.label);
         properties.put("description", this.description);
+        properties.put("probability", this.probability);
         properties.put("impact", this.impact);
     }
 
@@ -61,62 +61,6 @@ public abstract class GRisk
         if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
         return false;
-    }
-
-    // -----------------------------------------------------------
-    // - probability
-    // -----------------------------------------------------------
-
-    private int probability;
-
-    public final int getProbability() {
-        return probability;
-    }
-
-    public final void setProbability(int probability) {
-        probability = prepareProbability(probability);
-        if (isProbability(probability)) return;
-        this.probability = probability;
-        fireModified();
-    }
-
-    protected int prepareProbability(int probability) {
-        return probability;
-    }
-
-    public final boolean isProbability(int probability) {
-        return this.probability == probability;
-    }
-
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        fireModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
     }
 
     // -----------------------------------------------------------
@@ -157,6 +101,37 @@ public abstract class GRisk
     }
 
     // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        fireModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
     // - description
     // -----------------------------------------------------------
 
@@ -185,6 +160,31 @@ public abstract class GRisk
     public final boolean isDescription(java.lang.String description) {
         if (this.description == null && description == null) return true;
         return this.description != null && this.description.equals(description);
+    }
+
+    // -----------------------------------------------------------
+    // - probability
+    // -----------------------------------------------------------
+
+    private int probability;
+
+    public final int getProbability() {
+        return probability;
+    }
+
+    public final void setProbability(int probability) {
+        probability = prepareProbability(probability);
+        if (isProbability(probability)) return;
+        this.probability = probability;
+        fireModified();
+    }
+
+    protected int prepareProbability(int probability) {
+        return probability;
+    }
+
+    public final boolean isProbability(int probability) {
+        return this.probability == probability;
     }
 
     // -----------------------------------------------------------

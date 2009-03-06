@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.GwtEntityGenerator
@@ -24,13 +14,13 @@
 package scrum.client.admin;
 
 import java.util.*;
-import ilarkesto.auth.*;
-import ilarkesto.gwt.client.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.time.*;
-import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
 import scrum.client.common.*;
+import ilarkesto.gwt.client.*;
 
 public abstract class GUser
             extends ilarkesto.gwt.client.AGwtEntity {

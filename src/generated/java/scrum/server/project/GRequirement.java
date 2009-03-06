@@ -14,11 +14,11 @@
 package scrum.server.project;
 
 import java.util.*;
-import ilarkesto.auth.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.time.*;
-import ilarkesto.base.*;
 import ilarkesto.persistence.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
 
 public abstract class GRequirement
             extends AEntity
@@ -36,13 +36,13 @@ public abstract class GRequirement
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
-        properties.put("description", this.description);
-        properties.put("label", this.label);
-        properties.put("testDescription", this.testDescription);
+        properties.put("projectId", this.projectId);
         properties.put("sprintId", this.sprintId);
+        properties.put("label", this.label);
+        properties.put("description", this.description);
+        properties.put("testDescription", this.testDescription);
         properties.put("estimatedWork", this.estimatedWork);
         properties.put("closed", this.closed);
-        properties.put("projectId", this.projectId);
     }
 
     public int compareTo(Requirement other) {
@@ -54,96 +54,40 @@ public abstract class GRequirement
     public static final String TYPE = "requirement";
 
     // -----------------------------------------------------------
-    // - description
+    // - project
     // -----------------------------------------------------------
 
-    private java.lang.String description;
+    private String projectId;
 
-    public final java.lang.String getDescription() {
-        return description;
+    public final scrum.server.project.Project getProject() {
+        if (this.projectId == null) return null;
+        return (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
-    public final void setDescription(java.lang.String description) {
-        description = prepareDescription(description);
-        if (isDescription(description)) return;
-        this.description = description;
+    public final void setProject(scrum.server.project.Project project) {
+        project = prepareProject(project);
+        if (isProject(project)) return;
+        this.projectId = project == null ? null : project.getId();
         fireModified();
     }
 
-    protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
-        return description;
+    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
+        return project;
     }
 
-    public final boolean isDescriptionSet() {
-        return this.description != null;
+    protected void repairDeadProjectReference(String entityId) {
+        if (entityId.equals(this.projectId)) {
+            repairMissingMaster();
+        }
     }
 
-    public final boolean isDescription(java.lang.String description) {
-        if (this.description == null && description == null) return true;
-        return this.description != null && this.description.equals(description);
+    public final boolean isProjectSet() {
+        return this.projectId != null;
     }
 
-    // -----------------------------------------------------------
-    // - label
-    // -----------------------------------------------------------
-
-    private java.lang.String label;
-
-    public final java.lang.String getLabel() {
-        return label;
-    }
-
-    public final void setLabel(java.lang.String label) {
-        label = prepareLabel(label);
-        if (isLabel(label)) return;
-        this.label = label;
-        fireModified();
-    }
-
-    protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
-        return label;
-    }
-
-    public final boolean isLabelSet() {
-        return this.label != null;
-    }
-
-    public final boolean isLabel(java.lang.String label) {
-        if (this.label == null && label == null) return true;
-        return this.label != null && this.label.equals(label);
-    }
-
-    // -----------------------------------------------------------
-    // - testDescription
-    // -----------------------------------------------------------
-
-    private java.lang.String testDescription;
-
-    public final java.lang.String getTestDescription() {
-        return testDescription;
-    }
-
-    public final void setTestDescription(java.lang.String testDescription) {
-        testDescription = prepareTestDescription(testDescription);
-        if (isTestDescription(testDescription)) return;
-        this.testDescription = testDescription;
-        fireModified();
-    }
-
-    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
-        testDescription = Str.removeUnreadableChars(testDescription);
-        return testDescription;
-    }
-
-    public final boolean isTestDescriptionSet() {
-        return this.testDescription != null;
-    }
-
-    public final boolean isTestDescription(java.lang.String testDescription) {
-        if (this.testDescription == null && testDescription == null) return true;
-        return this.testDescription != null && this.testDescription.equals(testDescription);
+    public final boolean isProject(scrum.server.project.Project project) {
+        if (this.projectId == null && project == null) return true;
+        return project != null && project.getId().equals(this.projectId);
     }
 
     // -----------------------------------------------------------
@@ -182,6 +126,99 @@ public abstract class GRequirement
     public final boolean isSprint(scrum.server.sprint.Sprint sprint) {
         if (this.sprintId == null && sprint == null) return true;
         return sprint != null && sprint.getId().equals(this.sprintId);
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        fireModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
+    }
+
+    // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private java.lang.String description;
+
+    public final java.lang.String getDescription() {
+        return description;
+    }
+
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+        fireModified();
+    }
+
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
+    }
+
+    public final boolean isDescriptionSet() {
+        return this.description != null;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
+    }
+
+    // -----------------------------------------------------------
+    // - testDescription
+    // -----------------------------------------------------------
+
+    private java.lang.String testDescription;
+
+    public final java.lang.String getTestDescription() {
+        return testDescription;
+    }
+
+    public final void setTestDescription(java.lang.String testDescription) {
+        testDescription = prepareTestDescription(testDescription);
+        if (isTestDescription(testDescription)) return;
+        this.testDescription = testDescription;
+        fireModified();
+    }
+
+    protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
+        testDescription = Str.removeUnreadableChars(testDescription);
+        return testDescription;
+    }
+
+    public final boolean isTestDescriptionSet() {
+        return this.testDescription != null;
+    }
+
+    public final boolean isTestDescription(java.lang.String testDescription) {
+        if (this.testDescription == null && testDescription == null) return true;
+        return this.testDescription != null && this.testDescription.equals(testDescription);
     }
 
     // -----------------------------------------------------------
@@ -239,59 +276,16 @@ public abstract class GRequirement
         return this.closed == closed;
     }
 
-    // -----------------------------------------------------------
-    // - project
-    // -----------------------------------------------------------
-
-    private String projectId;
-
-    public final scrum.server.project.Project getProject() {
-        if (this.projectId == null) return null;
-        return (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
-
-    public final void setProject(scrum.server.project.Project project) {
-        project = prepareProject(project);
-        if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
-        fireModified();
-    }
-
-    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
-        return project;
-    }
-
-    protected void repairDeadProjectReference(String entityId) {
-        if (entityId.equals(this.projectId)) {
-            repairMissingMaster();
-        }
-    }
-
-    public final boolean isProjectSet() {
-        return this.projectId != null;
-    }
-
-    public final boolean isProject(scrum.server.project.Project project) {
-        if (this.projectId == null && project == null) return true;
-        return project != null && project.getId().equals(this.projectId);
-    }
-
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
-        repairDeadSprintReference(entityId);
         repairDeadProjectReference(entityId);
+        repairDeadSprintReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
-        try {
-            getSprint();
-        } catch (EntityDoesNotExistException ex) {
-            LOG.info("Repairing dead sprint reference");
-            repairDeadSprintReference(this.sprintId);
-        }
         if (!isProjectSet()) {
             repairMissingMaster();
             return;
@@ -302,20 +296,26 @@ public abstract class GRequirement
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
         }
+        try {
+            getSprint();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead sprint reference");
+            repairDeadSprintReference(this.sprintId);
+        }
     }
 
     // --- dependencies ---
-
-    protected static scrum.server.sprint.SprintDao sprintDao;
-
-    public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
-        GRequirement.sprintDao = sprintDao;
-    }
 
     protected static scrum.server.project.ProjectDao projectDao;
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GRequirement.projectDao = projectDao;
+    }
+
+    protected static scrum.server.sprint.SprintDao sprintDao;
+
+    public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
+        GRequirement.sprintDao = sprintDao;
     }
 
     protected static RequirementDao requirementDao;
