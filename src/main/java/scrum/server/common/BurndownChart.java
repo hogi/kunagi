@@ -85,10 +85,12 @@ public class BurndownChart {
 	public void wirteProjectBurndownChart(OutputStream out, String projectId, int width, int height) {
 		Project project = projectDao.getById(projectId);
 		List<ProjectSprintSnapshot> snapshots = project.getSprintSnapshots();
+		project.getCurrentSprintSnapshot().update();
 
-		writeProjectBurndownChart(out, snapshots, project.getBegin().addDays(-1), project.getEnd(), snapshots.get(0)
-				.getBurnedWork()
-				+ snapshots.get(0).getRemainingWork(), width, height);
+		ProjectSprintSnapshot firstSnapshot = snapshots.isEmpty() ? null : snapshots.get(0);
+		int initialWork = firstSnapshot == null ? 0 : firstSnapshot.getBurnedWork() + firstSnapshot.getRemainingWork();
+		writeProjectBurndownChart(out, snapshots, project.getBegin().addDays(-1), project.getEnd(), initialWork, width,
+			height);
 	}
 
 	public void wirteSprintBurndownChart(OutputStream out, String sprintId, int width, int height) {
