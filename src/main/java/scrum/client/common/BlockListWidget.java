@@ -6,10 +6,10 @@ import ilarkesto.gwt.client.GwtLogger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.SourcesTableEvents;
 import com.google.gwt.user.client.ui.TableListener;
@@ -18,15 +18,21 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * List of <code>BlockWidget</code>s.
  */
-public final class BlockListWidget<B extends ABlockWidget> extends AWidget implements Iterable<B> {
+public final class BlockListWidget<O extends Object> extends AWidget {
 
 	// private static final Logger LOG = Logger.get(BlockListWidget.class);
 
 	private FlexTable table;
-	private List<B> blocks = new LinkedList<B>();
+	private List<ABlockWidget<O>> blocks = new LinkedList<ABlockWidget<O>>();
+	private List<O> objects = new LinkedList<O>();
 	private int selectedRow = -1;
 	private boolean dndSorting = true;
-	private Comparator<B> autoSorter;
+	private Comparator<O> autoSorter;
+	private Class<ABlockWidget<O>> blockClass;
+
+	public BlockListWidget(Class<? extends ABlockWidget<O>> blockClass) {
+		this.blockClass = (Class<ABlockWidget<O>>) blockClass;
+	}
 
 	@Override
 	protected Widget onInitialization() {
@@ -41,27 +47,26 @@ public final class BlockListWidget<B extends ABlockWidget> extends AWidget imple
 
 	@Override
 	protected void onUpdate() {
-		for (B block : blocks) {
+		for (ABlockWidget<O> block : blocks) {
 			block.update();
 		}
 		if (autoSorter != null) sort(autoSorter);
 	}
 
-	public final void sort(Comparator<B> comparator) {
-		List<B> sortedBlocks = new ArrayList<B>(blocks);
-		Collections.sort(sortedBlocks, comparator);
+	public final void sort(Comparator<O> comparator) {
+		List<O> sortedObjects = new ArrayList<O>(objects);
+		Collections.sort(sortedObjects, comparator);
 		int size = size();
 		for (int i = 0; i < size; i++) {
-			B listBlock = sortedBlocks.get(i);
-			B tableBlock = (B) table.getWidget(i, 0);
-			GwtLogger.DEBUG(i, ">", listBlock, "|", tableBlock);
-			if (listBlock != tableBlock) {
-				moveBlock(listBlock, i);
+			O sortedObject = sortedObjects.get(i);
+			int index = objects.indexOf(sortedObject);
+			if (index != i) {
+				moveBlock(blocks.get(index), i);
 			}
 		}
 	}
 
-	public final void setAutoSorter(Comparator<B> autoSorter) {
+	public final void setAutoSorter(Comparator<O> autoSorter) {
 		this.autoSorter = autoSorter;
 		if (autoSorter != null) setDndSorting(false);
 	}
@@ -83,18 +88,28 @@ public final class BlockListWidget<B extends ABlockWidget> extends AWidget imple
 		}
 	}
 
-	public final B addBlock(B block) {
+	public final ABlockWidget<O> addBlock(O object) {
+		return addBlock(object, false);
+	}
+
+	public final ABlockWidget<O> addBlock(O object, boolean select) {
 		initialize();
+
+		ABlockWidget<O> block = GWT.create(blockClass);
+		block.setObject(object);
 		block.setList(this);
 
+		objects.add(object);
 		blocks.add(block);
 		table.setWidget(table.getRowCount(), 0, block);
 		block.update();
 
+		if (select) selectObject(object);
+
 		return block;
 	}
 
-	public final void moveBlock(B block, int toIndex) {
+	public final void moveBlock(ABlockWidget<O> block, int toIndex) {
 		if (block == null) throw new IllegalArgumentException("block == null");
 		int fromIndex = indexOf(block);
 		GwtLogger.DEBUG("moving block from", fromIndex, "to", toIndex);
@@ -102,26 +117,33 @@ public final class BlockListWidget<B extends ABlockWidget> extends AWidget imple
 		blocks.remove(fromIndex);
 		blocks.add(toIndex, block);
 
+		objects.remove(fromIndex);
+		objects.add(toIndex, block.getObject());
+
 		table.removeRow(fromIndex);
 		table.insertRow(toIndex);
 		table.setWidget(toIndex, 0, block);
 	}
 
-	public final B getBlock(int index) {
-		return blocks.get(index);
+	public final O getObject(int index) {
+		return objects.get(index);
 	}
 
 	public final int size() {
 		return blocks.size();
 	}
 
-	public final int indexOf(B block) {
+	public final int indexOf(ABlockWidget block) {
 		return blocks.indexOf(block);
 	}
 
-	public final B getSelectedBlock() {
+	public final int indexOf(Object object) {
+		return objects.indexOf(object);
+	}
+
+	public final O getSelectedObject() {
 		if (selectedRow < 0) return null;
-		return getBlock(selectedRow);
+		return getObject(selectedRow);
 	}
 
 	public final void selectRow(int row) {
@@ -129,18 +151,18 @@ public final class BlockListWidget<B extends ABlockWidget> extends AWidget imple
 		if (row == selectedRow) return;
 
 		deselect();
-		ABlockWidget block = getBlock(row);
 
-		block.setSelected(true);
+		blocks.get(row).setSelected(true);
 		selectedRow = row;
 	}
 
 	public final void scrollToSelectedBlock() {
-		getSelectedBlock().getElement().scrollIntoView();
+		if (selectedRow < 0) return;
+		blocks.get(selectedRow).getElement().scrollIntoView();
 	}
 
-	public final void remove(B widget) {
-		removeRow(indexOf(widget));
+	public final void removeObject(Object object) {
+		removeRow(indexOf(object));
 	}
 
 	public final void removeSelectedRow() {
@@ -150,6 +172,7 @@ public final class BlockListWidget<B extends ABlockWidget> extends AWidget imple
 	public final void removeRow(int row) {
 		if (row < 0 || row >= size()) return;
 		blocks.remove(row);
+		objects.remove(row);
 		table.removeRow(row);
 		if (selectedRow == row) {
 			selectedRow = -1;
@@ -158,12 +181,12 @@ public final class BlockListWidget<B extends ABlockWidget> extends AWidget imple
 		}
 	}
 
-	public final void selectBlock(B block) {
-		selectRow(blocks.indexOf(block));
+	public final void selectObject(Object object) {
+		selectRow(objects.indexOf(object));
 	}
 
 	public final void deselect() {
-		for (B block : blocks) {
+		for (ABlockWidget block : blocks) {
 			block.setSelected(false);
 		}
 		selectedRow = -1;
@@ -176,7 +199,7 @@ public final class BlockListWidget<B extends ABlockWidget> extends AWidget imple
 		}
 	}
 
-	public Iterator<B> iterator() {
-		return blocks.iterator();
+	public List<O> getObjects() {
+		return objects;
 	}
 }

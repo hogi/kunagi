@@ -20,15 +20,21 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RequirementWidget extends AExtensibleBlockWidget implements TrashSupport, ClipboardSupport {
+public class RequirementWidget extends AExtensibleBlockWidget<Requirement> implements TrashSupport, ClipboardSupport {
 
 	private Requirement requirement;
 
 	private Label summary;
 	private FieldsWidget fields;
 
-	public RequirementWidget(Requirement item) {
-		this.requirement = item;
+	@Override
+	protected Requirement getObject() {
+		return requirement;
+	}
+
+	@Override
+	protected void setObject(Requirement object) {
+		this.requirement = object;
 	}
 
 	@Override
@@ -213,7 +219,7 @@ public class RequirementWidget extends AExtensibleBlockWidget implements TrashSu
 
 	public void trash() {
 		requirement.getProject().deleteRequirement(requirement);
-		getList().remove(this);
+		getList().removeObject(requirement);
 	}
 
 	public Requirement getRequirement() {

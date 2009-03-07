@@ -10,11 +10,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectSelectorWidget extends AWidget {
 
-	private BlockListWidget<ProjectWidget> list;
+	private BlockListWidget<Project> list;
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<ProjectWidget>();
+		list = new BlockListWidget<Project>(ProjectWidget.class);
 		return new GroupWidget("Select Project", list);
 	}
 
@@ -23,8 +23,7 @@ public class ProjectSelectorWidget extends AWidget {
 		list.update();
 		list.clear();
 		for (Project project : ScrumGwtApplication.get().getDao().getProjects()) {
-			ProjectWidget block = new ProjectWidget(project);
-			list.addBlock(block);
+			list.addBlock(project);
 		}
 	}
 

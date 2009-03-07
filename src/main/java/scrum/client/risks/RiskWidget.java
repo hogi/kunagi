@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RiskWidget extends AExtensibleBlockWidget implements TrashSupport, ClipboardSupport {
+public class RiskWidget extends AExtensibleBlockWidget<Risk> implements TrashSupport, ClipboardSupport {
 
 	private Risk risk;
 
@@ -26,8 +26,14 @@ public class RiskWidget extends AExtensibleBlockWidget implements TrashSupport, 
 	private Label summary;
 	private ToolbarWidget toolbar;
 
-	public RiskWidget(Risk risk) {
-		this.risk = risk;
+	@Override
+	protected Risk getObject() {
+		return risk;
+	}
+
+	@Override
+	protected void setObject(Risk object) {
+		this.risk = object;
 	}
 
 	@Override
@@ -178,6 +184,6 @@ public class RiskWidget extends AExtensibleBlockWidget implements TrashSupport, 
 
 	public void trash() {
 		risk.getProject().deleteRisk(risk);
-		getList().remove(this);
+		getList().removeObject(risk);
 	}
 }

@@ -16,15 +16,21 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AttributeWidget extends AExtensibleBlockWidget implements TrashSupport, ClipboardSupport {
+public class AttributeWidget extends AExtensibleBlockWidget<Attribute> implements TrashSupport, ClipboardSupport {
 
 	private Attribute attribute;
 
 	private Label summary;
 	private FieldsWidget fields;
 
-	public AttributeWidget(Attribute item) {
-		this.attribute = item;
+	@Override
+	protected Attribute getObject() {
+		return attribute;
+	}
+
+	@Override
+	protected void setObject(Attribute object) {
+		this.attribute = object;
 	}
 
 	@Override
@@ -144,7 +150,7 @@ public class AttributeWidget extends AExtensibleBlockWidget implements TrashSupp
 
 	public void trash() {
 		attribute.getProject().deleteAttribute(attribute);
-		getList().remove(this);
+		getList().removeObject(attribute);
 	}
 
 	public Attribute getAttribute() {

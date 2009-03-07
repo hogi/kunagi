@@ -14,11 +14,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class AttributeBacklogWidget extends AWidget {
 
-	public BlockListWidget<AttributeWidget> list;
+	public BlockListWidget<Attribute> list;
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<AttributeWidget>();
+		list = new BlockListWidget<Attribute>(AttributeWidget.class);
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 		toolbar.addButton("Create new Attribute").addClickListener(new CreateClickListener());
 
@@ -35,7 +35,7 @@ public class AttributeBacklogWidget extends AWidget {
 		list.update();
 		list.clear();
 		for (Attribute item : ScrumGwtApplication.get().getProject().getAttributes()) {
-			list.addBlock(new AttributeWidget(item));
+			list.addBlock(item);
 		}
 	}
 
@@ -43,9 +43,7 @@ public class AttributeBacklogWidget extends AWidget {
 
 		public void onClick(Widget sender) {
 			Attribute attribute = ScrumGwtApplication.get().getProject().createNewAttribute();
-			AttributeWidget block = new AttributeWidget(attribute);
-			list.addBlock(block);
-			list.selectBlock(block);
+			list.addBlock(attribute, true);
 		}
 	}
 

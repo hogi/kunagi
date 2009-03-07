@@ -13,6 +13,7 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
+import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -21,7 +22,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SprintBacklogWidget extends AWidget {
 
-	private BlockListWidget<RequirementInSprintWidget> requirementList;
+	private BlockListWidget<Requirement> requirementList;
 	private FlowPanel view;
 	private Label remainingWork;
 	private Label begin;
@@ -37,7 +38,7 @@ public class SprintBacklogWidget extends AWidget {
 		remainingWork = new Label();
 		begin = new Label();
 		end = new Label();
-		requirementList = new BlockListWidget<RequirementInSprintWidget>();
+		requirementList = new BlockListWidget<Requirement>(RequirementInSprintWidget.class);
 
 		view = new FlowPanel();
 		fieldsWidget = new FieldsWidget();
@@ -98,7 +99,7 @@ public class SprintBacklogWidget extends AWidget {
 		if (!requirements.equals(previousRequirements)) {
 			requirementList.clear();
 			for (Requirement requirement : requirements) {
-				requirementList.addBlock(new RequirementInSprintWidget(requirement, this));
+				requirementList.addBlock(requirement);
 			}
 			previousRequirements = requirements;
 		}
@@ -106,18 +107,11 @@ public class SprintBacklogWidget extends AWidget {
 		requirementList.update();
 	}
 
-	public RequirementInSprintWidget selectRequirement(Requirement r) {
+	public void selectRequirement(Requirement r) {
 		update();
 
-		for (RequirementInSprintWidget rw : requirementList) {
-			if (r.getId().equals(rw.getRequirement().getId())) {
-				requirementList.selectBlock(rw);
-				requirementList.scrollToSelectedBlock();
-				return rw;
-			}
-		}
-
-		return null;
+		requirementList.selectObject(r);
+		requirementList.scrollToSelectedBlock();
 	}
 
 	private Sprint getSprint() {
@@ -131,6 +125,10 @@ public class SprintBacklogWidget extends AWidget {
 		public void onClick(Widget sender) {
 			update();
 		}
+	}
+
+	public static SprintBacklogWidget get() {
+		return WorkareaWidget.get().getSprintBacklog();
 	}
 
 }

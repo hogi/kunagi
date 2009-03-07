@@ -14,11 +14,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ImpedimentListWidget extends AWidget {
 
-	public BlockListWidget<ImpedimentWidget> list;
+	public BlockListWidget<Impediment> list;
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<ImpedimentWidget>();
+		list = new BlockListWidget<Impediment>(ImpedimentWidget.class);
 		list.setDndSorting(false);
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
@@ -38,8 +38,7 @@ public class ImpedimentListWidget extends AWidget {
 		list.update();
 		list.clear();
 		for (Impediment impediment : ScrumGwtApplication.get().getProject().getImpediments()) {
-			ImpedimentWidget widget = new ImpedimentWidget(impediment);
-			list.addBlock(widget);
+			list.addBlock(impediment);
 		}
 	}
 
@@ -47,9 +46,7 @@ public class ImpedimentListWidget extends AWidget {
 
 		public void onClick(Widget sender) {
 			Impediment impediment = ScrumGwtApplication.get().getProject().createNewImpediment();
-			ImpedimentWidget block = new ImpedimentWidget(impediment);
-			list.addBlock(block);
-			list.selectBlock(block);
+			list.addBlock(impediment, true);
 		}
 	}
 

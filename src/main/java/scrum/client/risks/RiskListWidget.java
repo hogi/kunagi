@@ -16,12 +16,12 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class RiskListWidget extends AWidget {
 
-	public BlockListWidget<RiskWidget> list;
+	public BlockListWidget<Risk> list;
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<RiskWidget>();
-		list.setAutoSorter(new RiskWidgetComparator());
+		list = new BlockListWidget<Risk>(RiskWidget.class);
+		list.setAutoSorter(new RiskComparator());
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 
@@ -39,8 +39,7 @@ public class RiskListWidget extends AWidget {
 	protected void onUpdate() {
 		list.clear();
 		for (Risk risk : ScrumGwtApplication.get().getProject().getRisks()) {
-			RiskWidget widget = new RiskWidget(risk);
-			list.addBlock(widget);
+			list.addBlock(risk);
 		}
 		list.update();
 	}
@@ -49,16 +48,14 @@ public class RiskListWidget extends AWidget {
 
 		public void onClick(Widget sender) {
 			Risk risk = ScrumGwtApplication.get().getProject().createNewRisk();
-			RiskWidget block = new RiskWidget(risk);
-			list.addBlock(block);
-			list.selectBlock(block);
+			list.addBlock(risk, true);
 		}
 	}
 
-	class RiskWidgetComparator implements Comparator<RiskWidget> {
+	class RiskComparator implements Comparator<Risk> {
 
-		public int compare(RiskWidget a, RiskWidget b) {
-			return b.getRisk().compareTo(a.getRisk());
+		public int compare(Risk a, Risk b) {
+			return b.compareTo(a);
 		}
 	}
 

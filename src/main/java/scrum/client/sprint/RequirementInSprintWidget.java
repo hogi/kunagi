@@ -20,21 +20,29 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RequirementInSprintWidget extends AExtensibleBlockWidget implements ClipboardSupport {
+public class RequirementInSprintWidget extends AExtensibleBlockWidget<Requirement> implements ClipboardSupport {
 
 	private Requirement requirement;
-	private SprintBacklogWidget autoUpdateWidget; // widget to update, when fields modified
 
-	private BlockListWidget<TaskWidget> taskList;
+	private BlockListWidget<Task> taskList;
 	private Label summary;
 	private FlowPanel panel;
 	private FieldsWidget fields;
 
 	private List<Task> previousTasks = new ArrayList<Task>(0);
 
-	public RequirementInSprintWidget(Requirement requirement, SprintBacklogWidget autoUpdateWidget) {
+	public RequirementInSprintWidget(Requirement requirement) {
 		this.requirement = requirement;
-		this.autoUpdateWidget = autoUpdateWidget;
+	}
+
+	@Override
+	protected Requirement getObject() {
+		return requirement;
+	}
+
+	@Override
+	protected void setObject(Requirement object) {
+		this.requirement = object;
 	}
 
 	@Override
@@ -55,7 +63,7 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget implements
 	protected void onExtendedInitialization() {
 
 		fields = new FieldsWidget();
-		fields.setAutoUpdateWidget(autoUpdateWidget);
+		fields.setAutoUpdateWidget(SprintBacklogWidget.get());
 		fields.add("Description", new ATextWidget() {
 
 			@Override
@@ -80,7 +88,7 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget implements
 			}
 		});
 
-		taskList = new BlockListWidget<TaskWidget>();
+		taskList = new BlockListWidget<Task>(TaskWidget.class);
 
 		panel = new FlowPanel();
 		panel.add(fields);
@@ -95,17 +103,13 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget implements
 
 		taskList.update();
 
-		TaskWidget selectedBlock = taskList.getSelectedBlock();
-		Task selectedTask = selectedBlock == null ? null : selectedBlock.getTask();
+		Task selectedTask = taskList.getSelectedObject();
 
 		List<Task> tasks = requirement.getTasks();
 		if (!tasks.equals(previousTasks)) {
 			taskList.clear();
 			for (Task task : tasks) {
-				TaskWidget block = addBlock(task);
-				if (selectedTask == task) {
-					taskList.selectBlock(block);
-				}
+				taskList.addBlock(task, selectedTask == task);
 			}
 			previousTasks = tasks;
 		}
@@ -118,12 +122,6 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget implements
 		return requirement;
 	}
 
-	private TaskWidget addBlock(Task task) {
-		TaskWidget block = new TaskWidget(task, autoUpdateWidget);
-		taskList.addBlock(block);
-		return block;
-	}
-
 	protected Widget createToolbar() {
 		ToolbarWidget toolbar = new ToolbarWidget();
 
@@ -132,7 +130,7 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget implements
 
 				public void onClick(Widget sender) {
 					requirement.setClosed(true);
-					autoUpdateWidget.update();
+					SprintBacklogWidget.get().update();
 				}
 			});
 		}
@@ -141,10 +139,8 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget implements
 			toolbar.addButton("Create new Task").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					Task task = requirement.createNewTask();
-					TaskWidget block = addBlock(task);
-					taskList.selectBlock(block);
-					autoUpdateWidget.update();
+					taskList.addBlock(requirement.createNewTask(), true);
+					SprintBacklogWidget.get().update();
 				}
 			});
 		}

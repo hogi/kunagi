@@ -14,11 +14,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProductBacklogWidget extends AWidget {
 
-	public BlockListWidget<RequirementWidget> list;
+	public BlockListWidget<Requirement> list;
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<RequirementWidget>();
+		list = new BlockListWidget<Requirement>(RequirementWidget.class);
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 		toolbar.addButton("Create new Requirement").addClickListener(new CreateClickListener());
 
@@ -35,7 +35,7 @@ public class ProductBacklogWidget extends AWidget {
 		list.update();
 		list.clear();
 		for (Requirement item : ScrumGwtApplication.get().getProject().getRequirements()) {
-			list.addBlock(new RequirementWidget(item));
+			list.addBlock(item);
 		}
 	}
 
@@ -43,9 +43,7 @@ public class ProductBacklogWidget extends AWidget {
 
 		public void onClick(Widget sender) {
 			Requirement requirement = ScrumGwtApplication.get().getProject().createNewRequirement();
-			RequirementWidget block = new RequirementWidget(requirement);
-			list.addBlock(block);
-			list.selectBlock(block);
+			list.addBlock(requirement, true);
 		}
 	}
 

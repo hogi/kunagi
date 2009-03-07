@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ImpedimentWidget extends AExtensibleBlockWidget implements TrashSupport, ClipboardSupport {
+public class ImpedimentWidget extends AExtensibleBlockWidget<Impediment> implements TrashSupport, ClipboardSupport {
 
 	private Impediment impediment;
 
@@ -24,8 +24,14 @@ public class ImpedimentWidget extends AExtensibleBlockWidget implements TrashSup
 	private Label summary;
 	private ToolbarWidget toolbar;
 
-	public ImpedimentWidget(Impediment impediment) {
-		this.impediment = impediment;
+	@Override
+	protected Impediment getObject() {
+		return impediment;
+	}
+
+	@Override
+	protected void setObject(Impediment object) {
+		this.impediment = object;
 	}
 
 	@Override
@@ -167,6 +173,6 @@ public class ImpedimentWidget extends AExtensibleBlockWidget implements TrashSup
 
 	public void trash() {
 		impediment.getProject().deleteImpediment(impediment);
-		getList().remove(this);
+		getList().removeObject(impediment);
 	}
 }

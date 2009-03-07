@@ -3,7 +3,6 @@ package scrum.client.sprint;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
@@ -18,17 +17,25 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class TaskWidget extends AExtensibleBlockWidget implements TrashSupport, ClipboardSupport {
+public class TaskWidget extends AExtensibleBlockWidget<Task> implements TrashSupport, ClipboardSupport {
 
 	private Task task;
-	private AWidget autoUpdateWidget; // widget to update, when fields edited
 
 	private Label summary;
 	private FieldsWidget fields;
 
-	public TaskWidget(Task task, AWidget autoUpdateWidget) {
+	public TaskWidget(Task task) {
 		this.task = task;
-		this.autoUpdateWidget = autoUpdateWidget;
+	}
+
+	@Override
+	protected Task getObject() {
+		return task;
+	}
+
+	@Override
+	protected void setObject(Task object) {
+		this.task = object;
 	}
 
 	@Override
@@ -48,7 +55,7 @@ public class TaskWidget extends AExtensibleBlockWidget implements TrashSupport, 
 	@Override
 	protected void onExtendedInitialization() {
 		fields = new FieldsWidget();
-		fields.setAutoUpdateWidget(autoUpdateWidget);
+		fields.setAutoUpdateWidget(SprintBacklogWidget.get());
 
 		fields.add("Description", new ATextViewEditWidget() {
 
@@ -177,7 +184,7 @@ public class TaskWidget extends AExtensibleBlockWidget implements TrashSupport, 
 
 				public void onClick(Widget sender) {
 					task.setOwner(ScrumGwtApplication.get().getUser());
-					autoUpdateWidget.update();
+					SprintBacklogWidget.get().update();
 				}
 
 			});
@@ -188,7 +195,7 @@ public class TaskWidget extends AExtensibleBlockWidget implements TrashSupport, 
 
 				public void onClick(Widget sender) {
 					trash();
-					autoUpdateWidget.update();
+					SprintBacklogWidget.get().update();
 				}
 
 			});
@@ -199,7 +206,7 @@ public class TaskWidget extends AExtensibleBlockWidget implements TrashSupport, 
 
 				public void onClick(Widget sender) {
 					task.setDone();
-					autoUpdateWidget.update();
+					SprintBacklogWidget.get().update();
 				}
 
 			});
@@ -225,6 +232,6 @@ public class TaskWidget extends AExtensibleBlockWidget implements TrashSupport, 
 
 	public void trash() {
 		task.getRequirement().deleteTask(task);
-		autoUpdateWidget.update();
+		SprintBacklogWidget.get().update();
 	}
 }

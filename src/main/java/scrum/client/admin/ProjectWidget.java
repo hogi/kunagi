@@ -13,15 +13,21 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectWidget extends ABlockWidget {
+public class ProjectWidget extends ABlockWidget<Project> {
 
 	private Project project;
 
 	private HTML content;
 	private ToolbarWidget toolbar;
 
-	public ProjectWidget(Project project) {
-		this.project = project;
+	@Override
+	protected Project getObject() {
+		return project;
+	}
+
+	@Override
+	protected void setObject(Project object) {
+		this.project = object;
 	}
 
 	@Override

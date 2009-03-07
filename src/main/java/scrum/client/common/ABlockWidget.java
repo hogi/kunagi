@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 @SuppressWarnings("unchecked")
-public abstract class ABlockWidget extends AWidget {
+public abstract class ABlockWidget<O extends Object> extends AWidget {
 
 	private Label title;
 	private FocusPanel iconPanel;
@@ -36,6 +36,10 @@ public abstract class ABlockWidget extends AWidget {
 	protected abstract void onBlockInitialization();
 
 	protected abstract void onBlockUpdate();
+
+	protected abstract void setObject(O object);
+
+	protected abstract O getObject();
 
 	public ABlockWidget() {}
 

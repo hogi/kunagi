@@ -2,7 +2,7 @@ package scrum.client.common;
 
 import ilarkesto.gwt.client.GwtLogger;
 
-public abstract class AExtensibleBlockWidget extends ABlockWidget {
+public abstract class AExtensibleBlockWidget<O extends Object> extends ABlockWidget<O> {
 
 	private boolean initializingExtension;
 	private boolean initializedExtension;
