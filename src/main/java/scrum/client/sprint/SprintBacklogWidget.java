@@ -89,7 +89,6 @@ public class SprintBacklogWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		fieldsWidget.update();
-		requirementList.update();
 
 		remainingWork.setText(getSprint().getTaskEffortSumString());
 		begin.setText(getSprint().getBegin().toString());
@@ -104,6 +103,7 @@ public class SprintBacklogWidget extends AWidget {
 			previousRequirements = requirements;
 		}
 
+		requirementList.update();
 	}
 
 	public RequirementInSprintWidget selectRequirement(Requirement r) {

@@ -3,6 +3,7 @@
 
 td {vertical-align: top;}
 body {padding: 0px; margin: 0px; background: white; backgroundX: #F2F5FE url("bg.gif") 0 0 repeat-x;}
+a {cursor: pointer;}
 
 /***** GWT *****/
 

@@ -84,6 +84,7 @@ public final class BlockListWidget<B extends ABlockWidget> extends AWidget imple
 	}
 
 	public final B addBlock(B block) {
+		initialize();
 		block.setList(this);
 
 		blocks.add(block);
