@@ -40,6 +40,13 @@ public class SidebarWidget extends AWidget {
 			}
 		});
 
+		navigator.addItem(Img.bundle.requirement16(), "Attribute Backlog", new Runnable() {
+
+			public void run() {
+				WorkareaWidget.get().showAttributeBacklog();
+			}
+		});
+
 		navigator.addItem(Img.bundle.impediment16(), "Impediment List", new Runnable() {
 
 			public void run() {

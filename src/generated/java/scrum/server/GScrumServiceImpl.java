@@ -28,6 +28,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestImpediments(WebSession session);
     protected abstract void onRequestRisks(WebSession session);
     protected abstract void onRequestRequirements(WebSession session);
+    protected abstract void onRequestAttributes(WebSession session);
     protected abstract void onRequestCurrentSprint(WebSession session);
     protected abstract void onChangeProperties(WebSession session, java.lang.String entityId, java.util.Map properties);
     protected abstract void onCreateEntity(WebSession session, java.lang.String type, java.util.Map properties);
@@ -118,6 +119,21 @@ public abstract class GScrumServiceImpl
             onRequestRequirements(session);
         } catch (Throwable t) {
             handleServiceMethodException("requestRequirements",t);
+        }
+        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public ilarkesto.gwt.client.DataTransferObject requestAttributes() {
+        LOG.debug("requestAttributes");
+        WebSession session = (WebSession) getSession();
+        ilarkesto.di.Context context = session.getContext().createSubContext("service:requestAttributes");
+        try {
+            onRequestAttributes(session);
+        } catch (Throwable t) {
+            handleServiceMethodException("requestAttributes",t);
         }
         ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
         onServiceMethodExecuted(context);

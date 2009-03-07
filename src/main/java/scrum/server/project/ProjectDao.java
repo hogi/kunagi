@@ -50,6 +50,7 @@ public class ProjectDao extends GProjectDao {
 		project.addTestSprints(variant);
 		project.addTestRequirements(variant);
 		project.addTestRisks(variant);
+		project.addTestAttributes(variant);
 	}
 
 }

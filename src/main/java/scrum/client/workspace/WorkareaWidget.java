@@ -3,6 +3,7 @@ package scrum.client.workspace;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.impediments.ImpedimentListWidget;
+import scrum.client.project.AttributeBacklogWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.ProjectOverviewWidget;
 import scrum.client.project.Requirement;
@@ -21,6 +22,7 @@ public class WorkareaWidget extends AWidget {
 	private ProjectOverviewWidget projectOverview;
 	private SprintBacklogWidget sprintBacklog;
 	private ProductBacklogWidget productBacklog;
+	private AttributeBacklogWidget attributeBacklog;
 	private ImpedimentListWidget impedimentList;
 	private RiskListWidget riskList;
 
@@ -66,6 +68,11 @@ public class WorkareaWidget extends AWidget {
 		show(getProductBacklog());
 	}
 
+	public void showAttributeBacklog() {
+		ScrumGwtApplication.get().callRequestAttributes();
+		show(getAttributeBacklog());
+	}
+
 	public void showImpedimentList() {
 		ScrumGwtApplication.get().callRequestImpediments();
 		show(getImpedimentList());
@@ -95,6 +102,11 @@ public class WorkareaWidget extends AWidget {
 	public ProductBacklogWidget getProductBacklog() {
 		if (productBacklog == null) productBacklog = new ProductBacklogWidget();
 		return productBacklog;
+	}
+
+	public AttributeBacklogWidget getAttributeBacklog() {
+		if (attributeBacklog == null) attributeBacklog = new AttributeBacklogWidget();
+		return attributeBacklog;
 	}
 
 	public ImpedimentListWidget getImpedimentList() {

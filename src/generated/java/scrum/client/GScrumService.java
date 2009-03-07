@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.GwtServiceInterfaceGenerator
@@ -39,6 +29,8 @@ public interface GScrumService
     ilarkesto.gwt.client.DataTransferObject requestRisks();
 
     ilarkesto.gwt.client.DataTransferObject requestRequirements();
+
+    ilarkesto.gwt.client.DataTransferObject requestAttributes();
 
     ilarkesto.gwt.client.DataTransferObject requestCurrentSprint();
 

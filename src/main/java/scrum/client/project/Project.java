@@ -56,12 +56,26 @@ public class Project extends GProject {
 		return item;
 	}
 
+	public Attribute createNewAttribute() {
+		Attribute item = new Attribute(this);
+		getDao().createAttribute(item);
+		return item;
+	}
+
 	public void deleteRequirement(Requirement item) {
 		getDao().deleteRequirement(item);
 	}
 
+	public void deleteAttribute(Attribute item) {
+		getDao().deleteAttribute(item);
+	}
+
 	public List<Requirement> getRequirements() {
 		return getDao().getRequirementsByProject(this);
+	}
+
+	public List<Attribute> getAttributes() {
+		return getDao().getAttributesByProject(this);
 	}
 
 	public Sprint createNewSprint() {

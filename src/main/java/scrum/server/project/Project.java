@@ -17,6 +17,7 @@ public class Project extends GProject {
 
 	private static ImpedimentDao impedimentDao;
 	private static RequirementDao requirementDao;
+	private static AttributeDao attributeDao;
 	private static ProjectSprintSnapshotDao projectSprintSnapshotDao;
 	private static RiskDao riskDao;
 
@@ -30,6 +31,10 @@ public class Project extends GProject {
 
 	public static void setRequirementDao(RequirementDao storyDao) {
 		Project.requirementDao = storyDao;
+	}
+
+	public static void setAttributeDao(AttributeDao attributeDao) {
+		Project.attributeDao = attributeDao;
 	}
 
 	public static void setProjectSprintSnapshotDao(ProjectSprintSnapshotDao projectSprintSnapshotDao) {
@@ -127,6 +132,10 @@ public class Project extends GProject {
 		return requirementDao.getRequirementsByProject(this);
 	}
 
+	public Set<Attribute> getAttributes() {
+		return attributeDao.getAttributesByProject(this);
+	}
+
 	@Override
 	public String toString() {
 		return getLabel();
@@ -162,6 +171,13 @@ public class Project extends GProject {
 		requirementDao.createTestRequirement(this, 3);
 		requirementDao.createTestRequirement(this, 4);
 		requirementDao.createTestRequirement(this, 5);
+	}
+
+	public void addTestAttributes(int variant) {
+		if (variant == 0) return;
+
+		attributeDao.createTestAttribute(this, 1);
+		attributeDao.createTestAttribute(this, 2);
 	}
 
 	public void addTestSprints(int variant) {

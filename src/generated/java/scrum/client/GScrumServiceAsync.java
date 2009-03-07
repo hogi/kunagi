@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.GwtServiceAsyncInterfaceGenerator
@@ -39,6 +29,8 @@ public interface GScrumServiceAsync {
     void requestRisks(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
     void requestRequirements(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
+
+    void requestAttributes(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
     void requestCurrentSprint(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 

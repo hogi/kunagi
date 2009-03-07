@@ -153,6 +153,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	protected void onRequestAttributes(WebSession session) {
+		Project project = session.getProject();
+		if (project == null) throw new RuntimeException("No project selected.");
+		session.getNextData().addEntities(toPropertyMap(project.getAttributes()));
+	}
+
+	@Override
 	public void onPing(WebSession session) {
 	// nop
 	}

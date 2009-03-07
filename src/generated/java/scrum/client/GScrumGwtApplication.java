@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 // generator: ilarkesto.mda.gen.GwtApplicationGenerator
@@ -86,6 +76,14 @@ public abstract class GScrumGwtApplication
 
     public final void callRequestRequirements() {
         callRequestRequirements( null);
+    }
+
+    public final void callRequestAttributes( Runnable callback) {
+        getScrumService().requestAttributes( new DefaultCallback(callback));
+    }
+
+    public final void callRequestAttributes() {
+        callRequestAttributes( null);
     }
 
     public final void callRequestCurrentSprint( Runnable callback) {
