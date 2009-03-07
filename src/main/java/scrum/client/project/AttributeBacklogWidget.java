@@ -32,11 +32,7 @@ public class AttributeBacklogWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		list.update();
-		list.clear();
-		for (Attribute item : ScrumGwtApplication.get().getProject().getAttributes()) {
-			list.addBlock(item);
-		}
+		list.setBlocks(ScrumGwtApplication.get().getProject().getAttributes());
 	}
 
 	class CreateClickListener implements ClickListener {

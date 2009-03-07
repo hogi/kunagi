@@ -37,11 +37,7 @@ public class RiskListWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		list.clear();
-		for (Risk risk : ScrumGwtApplication.get().getProject().getRisks()) {
-			list.addBlock(risk);
-		}
-		list.update();
+		list.setBlocks(ScrumGwtApplication.get().getProject().getRisks());
 	}
 
 	class CreateClickListener implements ClickListener {

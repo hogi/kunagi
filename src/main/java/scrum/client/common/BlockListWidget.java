@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.GwtLogger;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -86,6 +87,38 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		for (int i = 0; i < count; i++) {
 			removeRow(0);
 		}
+	}
+
+	public final void setBlocks(Collection<O> newObjects) {
+		initialize();
+
+		// add new objects if not already existing
+		List<O> objectsToAdd = null;
+		for (O newObject : newObjects) {
+			if (objects.contains(newObject)) continue;
+			if (objectsToAdd == null) objectsToAdd = new ArrayList<O>();
+			objectsToAdd.add(newObject);
+		}
+		if (objectsToAdd != null) {
+			for (O newObject : objectsToAdd)
+				addBlock(newObject);
+		}
+
+		if (objects.size() == newObjects.size()) return;
+
+		// remove existing objects, which are not in the new list
+		List<O> objectsToRemove = null;
+		for (O object : objects) {
+			if (newObjects.contains(object)) continue;
+			if (objectsToRemove == null) objectsToRemove = new ArrayList<O>();
+			objectsToRemove.add(object);
+		}
+		if (objectsToRemove != null) {
+			for (O object : objectsToRemove)
+				removeObject(object);
+		}
+
+		update();
 	}
 
 	public final ABlockWidget<O> addBlock(O object) {

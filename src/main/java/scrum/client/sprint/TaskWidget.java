@@ -24,10 +24,6 @@ public class TaskWidget extends AExtensibleBlockWidget<Task> implements TrashSup
 	private Label summary;
 	private FieldsWidget fields;
 
-	public TaskWidget(Task task) {
-		this.task = task;
-	}
-
 	@Override
 	protected Task getObject() {
 		return task;

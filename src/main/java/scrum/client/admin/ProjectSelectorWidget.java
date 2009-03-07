@@ -1,7 +1,7 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.ScrumGwtApplication;
+import scrum.client.Dao;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
 import scrum.client.project.Project;
@@ -20,11 +20,7 @@ public class ProjectSelectorWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		list.update();
-		list.clear();
-		for (Project project : ScrumGwtApplication.get().getDao().getProjects()) {
-			list.addBlock(project);
-		}
+		list.setBlocks(Dao.get().getProjects());
 	}
 
 }

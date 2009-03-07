@@ -2,10 +2,6 @@ package scrum.client.sprint;
 
 import ilarkesto.gwt.client.ATextWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockListWidget;
@@ -28,12 +24,6 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget<Requiremen
 	private Label summary;
 	private FlowPanel panel;
 	private FieldsWidget fields;
-
-	private List<Task> previousTasks = new ArrayList<Task>(0);
-
-	public RequirementInSprintWidget(Requirement requirement) {
-		this.requirement = requirement;
-	}
 
 	@Override
 	protected Requirement getObject() {
@@ -101,18 +91,7 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget<Requiremen
 		setIcon(requirement.isDone() ? Img.bundle.done32() : Img.bundle.requirement32());
 		fields.update();
 
-		taskList.update();
-
-		Task selectedTask = taskList.getSelectedObject();
-
-		List<Task> tasks = requirement.getTasks();
-		if (!tasks.equals(previousTasks)) {
-			taskList.clear();
-			for (Task task : tasks) {
-				taskList.addBlock(task, selectedTask == task);
-			}
-			previousTasks = tasks;
-		}
+		taskList.setBlocks(requirement.getTasks());
 
 		setContent(panel);
 		setToolbar(createToolbar());

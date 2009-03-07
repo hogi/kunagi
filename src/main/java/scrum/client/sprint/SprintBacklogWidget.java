@@ -3,10 +3,6 @@ package scrum.client.sprint;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.FieldsWidget;
@@ -29,8 +25,6 @@ public class SprintBacklogWidget extends AWidget {
 	private Label end;
 
 	private FieldsWidget fieldsWidget;
-
-	private List<Requirement> previousRequirements = new ArrayList<Requirement>(0);
 
 	@Override
 	protected Widget onInitialization() {
@@ -95,16 +89,7 @@ public class SprintBacklogWidget extends AWidget {
 		begin.setText(getSprint().getBegin().toString());
 		end.setText(getSprint().getEnd().toString());
 
-		List<Requirement> requirements = getSprint().getRequirements();
-		if (!requirements.equals(previousRequirements)) {
-			requirementList.clear();
-			for (Requirement requirement : requirements) {
-				requirementList.addBlock(requirement);
-			}
-			previousRequirements = requirements;
-		}
-
-		requirementList.update();
+		requirementList.setBlocks(getSprint().getRequirements());
 	}
 
 	public void selectRequirement(Requirement r) {
