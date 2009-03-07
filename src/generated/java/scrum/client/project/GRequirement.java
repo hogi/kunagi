@@ -86,6 +86,29 @@ public abstract class GRequirement
         return equals(this.sprintId, sprint);
     }
 
+    // --- attributes ---
+
+    private Set<String> attributesIds = new HashSet<String>();
+
+    public final java.util.Set<scrum.client.project.Attribute> getAttributes() {
+        if ( attributesIds.isEmpty()) return Collections.emptySet();
+        return getDao().getAttributes(this.attributesIds);
+    }
+
+    public final void addAttribute(scrum.client.project.Attribute attribute) {
+        String id = attribute.getId();
+        if (attributesIds.contains(id)) return;
+        attributesIds.add(id);
+        propertyChanged("attributes", this.attributesIds);
+    }
+
+    public final void removeAttribute(scrum.client.project.Attribute attribute) {
+        String id = attribute.getId();
+        if (!attributesIds.contains(id)) return;
+        attributesIds.remove(id);
+        propertyChanged("attributes", this.attributesIds);
+    }
+
     // --- label ---
 
     private java.lang.String label ;
@@ -181,6 +204,7 @@ public abstract class GRequirement
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
         sprintId = (String) props.get("sprintId");
+        attributesIds = (Set<String>) props.get("attributesIds");
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
         testDescription  = (java.lang.String) props.get("testDescription");
@@ -193,6 +217,7 @@ public abstract class GRequirement
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("sprintId", this.sprintId);
+        properties.put("attributes", this.attributesIds);
         properties.put("label", this.label);
         properties.put("description", this.description);
         properties.put("testDescription", this.testDescription);

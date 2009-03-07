@@ -72,6 +72,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.setGwtSupport(true);
 			requirementModel.addReference("project", getProjectModel()).setMaster(true);
 			requirementModel.addReference("sprint", getSprintModel());
+			requirementModel.addSetReference("attributes", getAttributeModel());
 			requirementModel.addProperty("label", String.class);
 			requirementModel.addProperty("description", String.class);
 			requirementModel.addProperty("testDescription", String.class);
@@ -79,6 +80,21 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addProperty("closed", boolean.class);
 		}
 		return requirementModel;
+	}
+
+	private EntityModel attributeModel;
+
+	public EntityModel getAttributeModel() {
+		if (attributeModel == null) {
+			attributeModel = createEntityModel("Attribute", "project");
+			autowire(attributeModel);
+			attributeModel.setGwtSupport(true);
+			attributeModel.addReference("project", getProjectModel()).setMaster(true);
+			attributeModel.addProperty("label", String.class);
+			attributeModel.addProperty("description", String.class);
+			attributeModel.addProperty("testDescription", String.class);
+		}
+		return attributeModel;
 	}
 
 	private EntityModel sprintModel;

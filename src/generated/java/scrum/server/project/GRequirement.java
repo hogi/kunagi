@@ -38,6 +38,7 @@ public abstract class GRequirement
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("sprintId", this.sprintId);
+        properties.put("attributesIds", this.attributesIds);
         properties.put("label", this.label);
         properties.put("description", this.description);
         properties.put("testDescription", this.testDescription);
@@ -126,6 +127,88 @@ public abstract class GRequirement
     public final boolean isSprint(scrum.server.sprint.Sprint sprint) {
         if (this.sprintId == null && sprint == null) return true;
         return sprint != null && sprint.getId().equals(this.sprintId);
+    }
+
+    // -----------------------------------------------------------
+    // - attributes
+    // -----------------------------------------------------------
+
+    private java.util.Set<String> attributesIds = new java.util.HashSet<String>();
+
+    public final java.util.Set<scrum.server.project.Attribute> getAttributes() {
+        return (java.util.Set) attributeDao.getByIdsAsSet(this.attributesIds);
+    }
+
+    public final void setAttributes(java.util.Set<scrum.server.project.Attribute> attributes) {
+        attributes = prepareAttributes(attributes);
+        if (attributes == null) throw new IllegalArgumentException("null is not allowed");
+        java.util.Set<String> ids = getIdsAsSet(attributes);
+        if (this.attributesIds.equals(ids)) return;
+        this.attributesIds = ids;
+        fireModified();
+    }
+
+    protected java.util.Set<scrum.server.project.Attribute> prepareAttributes(java.util.Set<scrum.server.project.Attribute> attributes) {
+        return attributes;
+    }
+
+    protected void repairDeadAttributeReference(String entityId) {
+        if (this.attributesIds.remove(entityId)) fireModified();
+    }
+
+    public final boolean containsAttribute(scrum.server.project.Attribute attribute) {
+        if (attribute == null) return false;
+        return this.attributesIds.contains(attribute.getId());
+    }
+
+    public final int getAttributesCount() {
+        return this.attributesIds.size();
+    }
+
+    public final boolean isAttributesEmpty() {
+        return this.attributesIds.isEmpty();
+    }
+
+    public final boolean addAttribute(scrum.server.project.Attribute attribute) {
+        if (attribute == null) throw new IllegalArgumentException("attribute == null");
+        boolean added = this.attributesIds.add(attribute.getId());
+        if (added) fireModified();
+        return added;
+    }
+
+    public final boolean addAttributes(Collection<scrum.server.project.Attribute> attributes) {
+        if (attributes == null) throw new IllegalArgumentException("attributes == null");
+        boolean added = false;
+        for (scrum.server.project.Attribute attribute : attributes) {
+            added = added | this.attributesIds.add(attribute.getId());
+        }
+        if (added) fireModified();
+        return added;
+    }
+
+    public final boolean removeAttribute(scrum.server.project.Attribute attribute) {
+        if (attribute == null) throw new IllegalArgumentException("attribute == null");
+        if (this.attributesIds == null) return false;
+        boolean removed = this.attributesIds.remove(attribute.getId());
+        if (removed) fireModified();
+        return removed;
+    }
+
+    public final boolean removeAttributes(Collection<scrum.server.project.Attribute> attributes) {
+        if (attributes == null) return false;
+        if (attributes.isEmpty()) return false;
+        boolean removed = false;
+        for (scrum.server.project.Attribute _element: attributes) {
+            removed = removed | removeAttribute(_element);
+        }
+        return removed;
+    }
+
+    public final boolean clearAttributes() {
+        if (this.attributesIds.isEmpty()) return false;
+        this.attributesIds.clear();
+        fireModified();
+        return true;
     }
 
     // -----------------------------------------------------------
@@ -280,6 +363,8 @@ public abstract class GRequirement
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadSprintReference(entityId);
+        if (this.attributesIds == null) this.attributesIds = new java.util.HashSet<String>();
+        repairDeadAttributeReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -302,6 +387,16 @@ public abstract class GRequirement
             LOG.info("Repairing dead sprint reference");
             repairDeadSprintReference(this.sprintId);
         }
+        if (this.attributesIds == null) this.attributesIds = new java.util.HashSet<String>();
+        Set<String> attributes = new HashSet<String>(this.attributesIds);
+        for (String entityId : attributes) {
+            try {
+                attributeDao.getById(entityId);
+            } catch (EntityDoesNotExistException ex) {
+                LOG.info("Repairing dead attribute reference");
+                repairDeadAttributeReference(entityId);
+            }
+        }
     }
 
     // --- dependencies ---
@@ -316,6 +411,12 @@ public abstract class GRequirement
 
     public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
         GRequirement.sprintDao = sprintDao;
+    }
+
+    protected static scrum.server.project.AttributeDao attributeDao;
+
+    public static final void setAttributeDao(scrum.server.project.AttributeDao attributeDao) {
+        GRequirement.attributeDao = attributeDao;
     }
 
     protected static RequirementDao requirementDao;

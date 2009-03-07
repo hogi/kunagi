@@ -38,6 +38,8 @@ public abstract class GRequirementDao
         projectsCache = null;
         requirementsBySprintCache.clear();
         sprintsCache = null;
+        requirementsByAttributeCache.clear();
+        attributesCache = null;
         requirementsByLabelCache.clear();
         labelsCache = null;
         requirementsByDescriptionCache.clear();
@@ -141,6 +143,46 @@ public abstract class GRequirementDao
 
         public boolean test(Requirement e) {
             return e.isSprint(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - attributes
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.project.Attribute,Set<Requirement>> requirementsByAttributeCache = new Cache<scrum.server.project.Attribute,Set<Requirement>>(
+            new Cache.Factory<scrum.server.project.Attribute,Set<Requirement>>() {
+                public Set<Requirement> create(scrum.server.project.Attribute attribute) {
+                    return getEntities(new ContainsAttribute(attribute));
+                }
+            });
+
+    public final Set<Requirement> getRequirementsByAttribute(scrum.server.project.Attribute attribute) {
+        return requirementsByAttributeCache.get(attribute);
+    }
+    private Set<scrum.server.project.Attribute> attributesCache;
+
+    public final Set<scrum.server.project.Attribute> getAttributes() {
+        if (attributesCache == null) {
+            attributesCache = new HashSet<scrum.server.project.Attribute>();
+            for (Requirement e : getEntities()) {
+                attributesCache.addAll(e.getAttributes());
+            }
+        }
+        return attributesCache;
+    }
+
+    private static class ContainsAttribute implements Predicate<Requirement> {
+
+        private scrum.server.project.Attribute value;
+
+        public ContainsAttribute(scrum.server.project.Attribute value) {
+            this.value = value;
+        }
+
+        public boolean test(Requirement e) {
+            return e.containsAttribute(value);
         }
 
     }
@@ -359,6 +401,12 @@ public abstract class GRequirementDao
 
     public void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
         this.sprintDao = sprintDao;
+    }
+
+    protected scrum.server.project.AttributeDao attributeDao;
+
+    public void setAttributeDao(scrum.server.project.AttributeDao attributeDao) {
+        this.attributeDao = attributeDao;
     }
 
 }
