@@ -18,7 +18,7 @@ public class AttributeBacklogWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<Attribute>(AttributeWidget.class);
+		list = new BlockListWidget<Attribute>(AttributeBlock.FACTORY);
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 		toolbar.addButton("Create new Attribute").addClickListener(new CreateClickListener());
 

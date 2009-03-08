@@ -18,7 +18,7 @@ public class ProductBacklogWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<Requirement>(RequirementWidget.class);
+		list = new BlockListWidget<Requirement>(RequirementBlock.FACTORY);
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 		toolbar.addButton("Create new Requirement").addClickListener(new CreateClickListener());
 

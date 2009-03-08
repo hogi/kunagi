@@ -20,7 +20,7 @@ public class RiskListWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<Risk>(RiskWidget.class);
+		list = new BlockListWidget<Risk>(RiskBlock.FACTORY);
 		list.setAutoSorter(new RiskComparator());
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);

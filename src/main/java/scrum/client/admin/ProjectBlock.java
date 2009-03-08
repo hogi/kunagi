@@ -3,6 +3,7 @@ package scrum.client.admin;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
+import scrum.client.common.BlockWidgetFactory;
 import scrum.client.img.Img;
 import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
@@ -13,7 +14,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectWidget extends ABlockWidget<Project> {
+public class ProjectBlock extends ABlockWidget<Project> {
 
 	private Project project;
 
@@ -89,4 +90,10 @@ public class ProjectWidget extends ABlockWidget<Project> {
 		return Img.bundle.project32().createImage();
 	}
 
+	public static BlockWidgetFactory<Project> FACTORY = new BlockWidgetFactory<Project>() {
+
+		public ProjectBlock createBlock() {
+			return new ProjectBlock();
+		}
+	};
 }

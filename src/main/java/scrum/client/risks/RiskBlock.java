@@ -1,11 +1,14 @@
-package scrum.client.impediments;
+package scrum.client.risks;
 
+import ilarkesto.gwt.client.ADropdownViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
+import ilarkesto.gwt.client.ATextWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
@@ -16,22 +19,22 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ImpedimentWidget extends AExtensibleBlockWidget<Impediment> implements TrashSupport, ClipboardSupport {
+public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupport, ClipboardSupport {
 
-	private Impediment impediment;
+	private Risk risk;
 
 	private FieldsWidget fields;
 	private Label summary;
 	private ToolbarWidget toolbar;
 
 	@Override
-	protected Impediment getObject() {
-		return impediment;
+	protected Risk getObject() {
+		return risk;
 	}
 
 	@Override
-	protected void setObject(Impediment object) {
-		this.impediment = object;
+	protected void setObject(Risk object) {
+		this.risk = object;
 	}
 
 	@Override
@@ -41,9 +44,9 @@ public class ImpedimentWidget extends AExtensibleBlockWidget<Impediment> impleme
 
 	@Override
 	protected void onCollapsedUpdate() {
-		setBlockTitle(impediment.getLabel());
-		setIcon(impediment.isSolved() ? Img.bundle.impedimentSolved32() : Img.bundle.impediment32());
-		summary.setText(impediment.getSummary());
+		setBlockTitle(risk.getLabel());
+		setIcon(Img.bundle.risk32());
+		summary.setText(risk.getSummary());
 		setContent(summary);
 		setToolbar(null);
 	}
@@ -57,17 +60,17 @@ public class ImpedimentWidget extends AExtensibleBlockWidget<Impediment> impleme
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerText(impediment.getLabel());
+				setViewerText(risk.getLabel());
 			}
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorText(impediment.getLabel());
+				setEditorText(risk.getLabel());
 			}
 
 			@Override
 			protected void onEditorSubmit() {
-				impediment.setLabel(getEditorText());
+				risk.setLabel(getEditorText());
 			}
 
 		});
@@ -75,34 +78,60 @@ public class ImpedimentWidget extends AExtensibleBlockWidget<Impediment> impleme
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerText(impediment.getDescription());
+				setViewerText(risk.getDescription());
 			}
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorText(impediment.getDescription());
+				setEditorText(risk.getDescription());
 			}
 
 			@Override
 			protected void onEditorSubmit() {
-				impediment.setDescription(getEditorText());
+				risk.setDescription(getEditorText());
 			}
 		});
-		fields.add("Solution", new ARichtextViewEditWidget() {
+		fields.add("Impact", new ADropdownViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerText(impediment.getSolution());
+				setViewerText(risk.getImpactLabel());
 			}
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorText(impediment.getSolution());
+				setOptions("20", "40", "60", "80", "100");
+				setSelectedOption(String.valueOf(risk.getImpact()));
 			}
 
 			@Override
 			protected void onEditorSubmit() {
-				impediment.setSolution(getEditorText());
+				risk.setImpact(Integer.parseInt(getSelectedOption()));
+			}
+		});
+		fields.add("Probability", new ADropdownViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerText(risk.getProbabilityLabel());
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setOptions("20", "40", "60", "80", "100");
+				setSelectedOption(String.valueOf(risk.getProbability()));
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				risk.setProbability(Integer.parseInt(getSelectedOption()));
+			}
+		});
+		fields.add("Priority", new ATextWidget() {
+
+			@Override
+			protected void onUpdate() {
+				setText(risk.getPriorityLabel());
 			}
 		});
 
@@ -110,19 +139,19 @@ public class ImpedimentWidget extends AExtensibleBlockWidget<Impediment> impleme
 
 	@Override
 	protected void onExtendedUpdate() {
-		setBlockTitle(impediment.getLabel());
-		setIcon(impediment.isSolved() ? Img.bundle.impedimentSolved32() : Img.bundle.impediment32());
+		setBlockTitle(risk.getLabel());
+		setIcon(Img.bundle.risk32());
 		fields.update();
 		setContent(fields);
 		setToolbar(getToolbar());
 	}
 
-	public String getClipboardLabel() {
-		return impediment.getLabel();
+	public Image getClipboardIcon() {
+		return Img.bundle.risk16().createImage();
 	}
 
-	public Image getClipboardIcon() {
-		return Img.bundle.impediment16().createImage();
+	public String getClipboardLabel() {
+		return risk.getLabel();
 	}
 
 	public ABlockWidget getClipboardPayload() {
@@ -137,34 +166,17 @@ public class ImpedimentWidget extends AExtensibleBlockWidget<Impediment> impleme
 			toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
-					ImpedimentListWidget.get().list.removeSelectedRow();
+					ScrumGwtApplication.get().getProject().deleteRisk(risk);
+					getList().removeSelectedRow();
 				}
 			});
 
-			if (!impediment.isSolved()) {
-				// impediment not solved -> add [Solve] button
-				toolbar.addButton(Img.bundle.done16().createImage(), "Mark Solved").addClickListener(
-					new ClickListener() {
-
-						public void onClick(Widget sender) {
-							impediment.setSolved();
-							update();
-						}
-					});
-			} else {
-				// impediment not solved -> add [Unsolve] button
-				toolbar.addButton("Mark Unsolved").addClickListener(new ClickListener() {
-
-					public void onClick(Widget sender) {
-						impediment.setSolveDate(null);
-						update();
-					}
-				});
-			}
 		}
-
 		return toolbar;
+	}
+
+	public Risk getRisk() {
+		return risk;
 	}
 
 	public boolean isTrashable() {
@@ -172,7 +184,14 @@ public class ImpedimentWidget extends AExtensibleBlockWidget<Impediment> impleme
 	}
 
 	public void trash() {
-		impediment.getProject().deleteImpediment(impediment);
-		getList().removeObject(impediment);
+		risk.getProject().deleteRisk(risk);
+		getList().removeObject(risk);
 	}
+
+	public static BlockWidgetFactory<Risk> FACTORY = new BlockWidgetFactory<Risk>() {
+
+		public RiskBlock createBlock() {
+			return new RiskBlock();
+		}
+	};
 }

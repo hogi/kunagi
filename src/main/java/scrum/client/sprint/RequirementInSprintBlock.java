@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockListWidget;
+import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.img.Img;
@@ -16,7 +17,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RequirementInSprintWidget extends AExtensibleBlockWidget<Requirement> implements ClipboardSupport {
+public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement> implements ClipboardSupport {
 
 	private Requirement requirement;
 
@@ -78,7 +79,7 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget<Requiremen
 			}
 		});
 
-		taskList = new BlockListWidget<Task>(TaskWidget.class);
+		taskList = new BlockListWidget<Task>(TaskBlock.FACTORY);
 
 		panel = new FlowPanel();
 		panel.add(fields);
@@ -142,4 +143,10 @@ public class RequirementInSprintWidget extends AExtensibleBlockWidget<Requiremen
 		return requirement;
 	}
 
+	public static BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {
+
+		public RequirementInSprintBlock createBlock() {
+			return new RequirementInSprintBlock();
+		}
+	};
 }

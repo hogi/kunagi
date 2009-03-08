@@ -32,7 +32,7 @@ public class SprintBacklogWidget extends AWidget {
 		remainingWork = new Label();
 		begin = new Label();
 		end = new Label();
-		requirementList = new BlockListWidget<Requirement>(RequirementInSprintWidget.class);
+		requirementList = new BlockListWidget<Requirement>(RequirementInSprintBlock.FACTORY);
 
 		view = new FlowPanel();
 		fieldsWidget = new FieldsWidget();

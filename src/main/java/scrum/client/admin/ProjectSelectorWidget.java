@@ -14,7 +14,7 @@ public class ProjectSelectorWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<Project>(ProjectWidget.class);
+		list = new BlockListWidget<Project>(ProjectBlock.FACTORY);
 		return new GroupWidget("Select Project", list);
 	}
 

@@ -10,7 +10,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.SourcesTableEvents;
 import com.google.gwt.user.client.ui.TableListener;
@@ -29,10 +28,10 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	private int selectedRow = -1;
 	private boolean dndSorting = true;
 	private Comparator<O> autoSorter;
-	private Class<ABlockWidget<O>> blockClass;
+	private BlockWidgetFactory<O> blockWidgetFactory;
 
-	public BlockListWidget(Class<? extends ABlockWidget<O>> blockClass) {
-		this.blockClass = (Class<ABlockWidget<O>>) blockClass;
+	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory) {
+		this.blockWidgetFactory = blockWidgetFactory;
 	}
 
 	@Override
@@ -128,7 +127,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	public final ABlockWidget<O> addBlock(O object, boolean select) {
 		initialize();
 
-		ABlockWidget<O> block = GWT.create(blockClass);
+		ABlockWidget<O> block = blockWidgetFactory.createBlock();
 		block.setObject(object);
 		block.setList(this);
 

@@ -8,6 +8,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
@@ -20,7 +21,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RequirementWidget extends AExtensibleBlockWidget<Requirement> implements TrashSupport, ClipboardSupport {
+public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implements TrashSupport, ClipboardSupport {
 
 	private Requirement requirement;
 
@@ -225,4 +226,11 @@ public class RequirementWidget extends AExtensibleBlockWidget<Requirement> imple
 	public Requirement getRequirement() {
 		return requirement;
 	}
+
+	public static BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {
+
+		public RequirementBlock createBlock() {
+			return new RequirementBlock();
+		}
+	};
 }

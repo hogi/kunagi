@@ -18,7 +18,7 @@ public class ImpedimentListWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<Impediment>(ImpedimentWidget.class);
+		list = new BlockListWidget<Impediment>(ImpedimentBlock.FACTORY);
 		list.setDndSorting(false);
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);

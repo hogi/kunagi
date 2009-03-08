@@ -6,6 +6,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
@@ -16,7 +17,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AttributeWidget extends AExtensibleBlockWidget<Attribute> implements TrashSupport, ClipboardSupport {
+public class AttributeBlock extends AExtensibleBlockWidget<Attribute> implements TrashSupport, ClipboardSupport {
 
 	private Attribute attribute;
 
@@ -156,4 +157,11 @@ public class AttributeWidget extends AExtensibleBlockWidget<Attribute> implement
 	public Attribute getAttribute() {
 		return attribute;
 	}
+
+	public static BlockWidgetFactory<Attribute> FACTORY = new BlockWidgetFactory<Attribute>() {
+
+		public AttributeBlock createBlock() {
+			return new AttributeBlock();
+		}
+	};
 }

@@ -7,6 +7,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
@@ -17,7 +18,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class TaskWidget extends AExtensibleBlockWidget<Task> implements TrashSupport, ClipboardSupport {
+public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupport, ClipboardSupport {
 
 	private Task task;
 
@@ -230,4 +231,11 @@ public class TaskWidget extends AExtensibleBlockWidget<Task> implements TrashSup
 		task.getRequirement().deleteTask(task);
 		SprintBacklogWidget.get().update();
 	}
+
+	public static BlockWidgetFactory<Task> FACTORY = new BlockWidgetFactory<Task>() {
+
+		public TaskBlock createBlock() {
+			return new TaskBlock();
+		}
+	};
 }
