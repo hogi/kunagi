@@ -9,6 +9,12 @@ a {cursor: pointer;}
 
 .gwt-Button {white-space: nowrap;}
 
+/***** Ilarkesto *****/
+
+.ImageAnchor {}
+.ImageAnchor img {float: left; margin-right: 3px;}
+.floatClear {float: none; clear: both;}
+
 /***** Master Layout *****/
 
 .page .header {position: fixed; left: 0; top: 0; width: 100%; z-index: 100;}
@@ -27,7 +33,7 @@ a {cursor: pointer;}
 .SidebarWidget {position: fixed; width: 300px; height: 1200px; background:#CEDBF9;}
 .SidebarWidget .beforeNavigatorSpacer {height: 10px; margin: 0px 15px 0px 15px; border-bottom: 1px solid #E2EAFC;}
 
-.NavigatorWidget {}
+.NavigatorWidget {background:#CEDBF9;}
 .NavigatorWidget .item {padding: 0px 15px 0px 15px; font-size: 16px;}
 .NavigatorWidget .item a {display:block; padding: 5px 5px 5px 5px; text-decoration:none; border-bottom: 1px solid #E2EAFC;}
 .NavigatorWidget .item a:hover {background-color:#D3DFF8; color:#192666;}
@@ -69,9 +75,10 @@ a {cursor: pointer;}
 
 /***** Toolbar *****/
 
-.ButtonWidget {display: block; font-weight: bold; text-decoration: none; cursor: pointer; color: white; white-space: nowrap; padding: 5px 10px; background: orange url("button_bg.png"); vertical-align: middle; float: left;}
-.ButtonWidget:visited {color: white;}
-.ButtonWidget:hover {color: white; background: orange url("button_bg_hover.png");}
+.ButtonWidget {display: block; font-weight: bold; padding: 3px; text-decoration: none; cursor: pointer; white-space: nowrap; background: orange url("button_bg.png"); border: 1px solid orange;}
+.ButtonWidget a {color: white;}
+.ButtonWidget a:visited {color: white;}
+.ButtonWidget a:hover {color: white; background: orange url("button_bg_hover.png");}
 .ToolbarWidget {padding: 3px;}
 .ToolbarWidget .vertical .ButtonWidget {float: none; margin-bottom: 3px;}
 .ToolbarWidget .horizontal .ButtonWidget {float: left; margin-right: 3px;}
@@ -92,8 +99,12 @@ a {cursor: pointer;}
 
 .dnd-drop-allowed {background: #192666;}
 
+/***** Widgets Tester *****/
+
+.WidgetsTesterWidget .test-section {margin: 5px; margin-bottom: 10px; clear: both; background: gray; color: black;}
+.WidgetsTesterWidget .test-section .test-content {background: white; color: black; border: 1px dotted red;}
+
 /***** other *****/
 
 .WaitWidget {margin: 50px 200px; border: 1px solid #DEE5FD;}
 .LoginWidget {margin: 50px 200px; border: 1px solid #DEE5FD;}
-.floatClear {float: none; clear: both;}

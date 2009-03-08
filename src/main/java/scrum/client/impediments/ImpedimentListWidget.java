@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
+import scrum.client.img.Img;
 import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.user.client.ui.ClickListener;
@@ -23,7 +24,8 @@ public class ImpedimentListWidget extends AWidget {
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 
-		toolbar.addButton("Create new Impediment").addClickListener(new CreateClickListener());
+		toolbar.addButton(Img.bundle.new16().createImage(), "Create new Impediment").addClickListener(
+			new CreateClickListener());
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(toolbar);

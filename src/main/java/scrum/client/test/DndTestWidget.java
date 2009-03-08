@@ -15,9 +15,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SourcesMouseEvents;
 import com.google.gwt.user.client.ui.Widget;
 
-public class TestWidget extends Composite {
+public class DndTestWidget extends Composite {
 
-	public TestWidget() {
+	public DndTestWidget() {
 		AbsolutePanel dndPanel = new AbsolutePanel();
 		dndPanel.setPixelSize(400, 400);
 

@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
+import scrum.client.img.Img;
 import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.user.client.ui.ClickListener;
@@ -20,7 +21,8 @@ public class ProductBacklogWidget extends AWidget {
 	protected Widget onInitialization() {
 		list = new BlockListWidget<Requirement>(RequirementBlock.FACTORY);
 		ToolbarWidget toolbar = new ToolbarWidget(true);
-		toolbar.addButton("Create new Requirement").addClickListener(new CreateClickListener());
+		toolbar.addButton(Img.bundle.new16().createImage(), "Create new Requirement").addClickListener(
+			new CreateClickListener());
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(toolbar);

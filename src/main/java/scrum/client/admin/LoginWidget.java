@@ -7,9 +7,11 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
 import scrum.client.img.Img;
+import scrum.client.test.WidgetsTesterWidget;
 import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -38,13 +40,19 @@ public class LoginWidget extends AWidget {
 		FieldsWidget fieldsWidget = new FieldsWidget();
 		fieldsWidget.addWidget("Username", username);
 		fieldsWidget.addWidget("Password", password);
-		fieldsWidget.addWidget(null, loginButton);
+		fieldsWidget.addWidget(null, loginButton.update());
 
 		SimplePanel wrapper = new SimplePanel();
 		wrapper.setStyleName("LoginWidget");
 		wrapper.setWidget(new GroupWidget("Login", fieldsWidget));
 
-		return wrapper;
+		// TODO remove this
+		FlowPanel test = new FlowPanel();
+		test.add(wrapper);
+		test.add(new WidgetsTesterWidget().update());
+		return test;
+
+		// return wrapper;
 	}
 
 	@Override

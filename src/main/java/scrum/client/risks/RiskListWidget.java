@@ -8,6 +8,7 @@ import java.util.Comparator;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
+import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -25,7 +26,8 @@ public class RiskListWidget extends AWidget {
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 
-		toolbar.addButton("Create new Risk").addClickListener(new CreateClickListener());
+		toolbar.addButton(Img.bundle.new16().createImage(), "Create new Risk").addClickListener(
+			new CreateClickListener());
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(toolbar);

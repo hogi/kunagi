@@ -9,6 +9,7 @@ import scrum.client.project.ProjectOverviewWidget;
 import scrum.client.project.Requirement;
 import scrum.client.risks.RiskListWidget;
 import scrum.client.sprint.SprintBacklogWidget;
+import scrum.client.test.WidgetsTesterWidget;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -25,6 +26,7 @@ public class WorkareaWidget extends AWidget {
 	private AttributeBacklogWidget attributeBacklog;
 	private ImpedimentListWidget impedimentList;
 	private RiskListWidget riskList;
+	private WidgetsTesterWidget widgetsTester;
 
 	@Override
 	protected Widget onInitialization() {
@@ -73,6 +75,10 @@ public class WorkareaWidget extends AWidget {
 		show(getAttributeBacklog());
 	}
 
+	public void showWidgetsTester() {
+		show(getWidgetsTester());
+	}
+
 	public void showImpedimentList() {
 		ScrumGwtApplication.get().callRequestImpediments();
 		show(getImpedimentList());
@@ -117,6 +123,11 @@ public class WorkareaWidget extends AWidget {
 	public RiskListWidget getRiskList() {
 		if (riskList == null) riskList = new RiskListWidget();
 		return riskList;
+	}
+
+	public WidgetsTesterWidget getWidgetsTester() {
+		if (widgetsTester == null) widgetsTester = new WidgetsTesterWidget();
+		return widgetsTester;
 	}
 
 	public static WorkareaWidget get() {

@@ -61,6 +61,13 @@ public class SidebarWidget extends AWidget {
 			}
 		});
 
+		navigator.addItem(Img.bundle.test16(), "WidgetsTester", new Runnable() {
+
+			public void run() {
+				WorkareaWidget.get().showWidgetsTester();
+			}
+		});
+
 		trash = new TrashWidget();
 
 		clipboard = new ClipboardWidget();
