@@ -39,7 +39,9 @@ public abstract class GScrumServiceImpl
     public ilarkesto.gwt.client.DataTransferObject ping() {
         LOG.debug("ping");
         WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = session.getContext().createSubContext("service:ping");
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:ping");
+        context.bindCurrentThread();
         try {
             onPing(session);
         } catch (Throwable t) {
@@ -54,7 +56,9 @@ public abstract class GScrumServiceImpl
     public ilarkesto.gwt.client.DataTransferObject login(java.lang.String username, java.lang.String password) {
         LOG.debug("login");
         WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = session.getContext().createSubContext("service:login");
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:login");
+        context.bindCurrentThread();
         try {
             onLogin(session, username, password);
         } catch (Throwable t) {
@@ -69,7 +73,9 @@ public abstract class GScrumServiceImpl
     public ilarkesto.gwt.client.DataTransferObject selectProject(java.lang.String projectId) {
         LOG.debug("selectProject");
         WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = session.getContext().createSubContext("service:selectProject");
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:selectProject");
+        context.bindCurrentThread();
         try {
             onSelectProject(session, projectId);
         } catch (Throwable t) {
@@ -84,7 +90,9 @@ public abstract class GScrumServiceImpl
     public ilarkesto.gwt.client.DataTransferObject requestImpediments() {
         LOG.debug("requestImpediments");
         WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = session.getContext().createSubContext("service:requestImpediments");
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:requestImpediments");
+        context.bindCurrentThread();
         try {
             onRequestImpediments(session);
         } catch (Throwable t) {
@@ -99,7 +107,9 @@ public abstract class GScrumServiceImpl
     public ilarkesto.gwt.client.DataTransferObject requestRisks() {
         LOG.debug("requestRisks");
         WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = session.getContext().createSubContext("service:requestRisks");
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:requestRisks");
+        context.bindCurrentThread();
         try {
             onRequestRisks(session);
         } catch (Throwable t) {
@@ -114,7 +124,9 @@ public abstract class GScrumServiceImpl
     public ilarkesto.gwt.client.DataTransferObject requestRequirements() {
         LOG.debug("requestRequirements");
         WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = session.getContext().createSubContext("service:requestRequirements");
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:requestRequirements");
+        context.bindCurrentThread();
         try {
             onRequestRequirements(session);
         } catch (Throwable t) {
@@ -129,7 +141,9 @@ public abstract class GScrumServiceImpl
     public ilarkesto.gwt.client.DataTransferObject requestAttributes() {
         LOG.debug("requestAttributes");
         WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = session.getContext().createSubContext("service:requestAttributes");
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:requestAttributes");
+        context.bindCurrentThread();
         try {
             onRequestAttributes(session);
         } catch (Throwable t) {
@@ -144,7 +158,9 @@ public abstract class GScrumServiceImpl
     public ilarkesto.gwt.client.DataTransferObject requestCurrentSprint() {
         LOG.debug("requestCurrentSprint");
         WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = session.getContext().createSubContext("service:requestCurrentSprint");
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:requestCurrentSprint");
+        context.bindCurrentThread();
         try {
             onRequestCurrentSprint(session);
         } catch (Throwable t) {
@@ -159,7 +175,9 @@ public abstract class GScrumServiceImpl
     public ilarkesto.gwt.client.DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties) {
         LOG.debug("changeProperties");
         WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = session.getContext().createSubContext("service:changeProperties");
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:changeProperties");
+        context.bindCurrentThread();
         try {
             onChangeProperties(session, entityId, properties);
         } catch (Throwable t) {
@@ -174,7 +192,9 @@ public abstract class GScrumServiceImpl
     public ilarkesto.gwt.client.DataTransferObject createEntity(java.lang.String type, java.util.Map properties) {
         LOG.debug("createEntity");
         WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = session.getContext().createSubContext("service:createEntity");
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:createEntity");
+        context.bindCurrentThread();
         try {
             onCreateEntity(session, type, properties);
         } catch (Throwable t) {
@@ -189,7 +209,9 @@ public abstract class GScrumServiceImpl
     public ilarkesto.gwt.client.DataTransferObject deleteEntity(java.lang.String entityId) {
         LOG.debug("deleteEntity");
         WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = session.getContext().createSubContext("service:deleteEntity");
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:deleteEntity");
+        context.bindCurrentThread();
         try {
             onDeleteEntity(session, entityId);
         } catch (Throwable t) {
@@ -204,7 +226,9 @@ public abstract class GScrumServiceImpl
     public ilarkesto.gwt.client.DataTransferObject sleep(long millis) {
         LOG.debug("sleep");
         WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = session.getContext().createSubContext("service:sleep");
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:sleep");
+        context.bindCurrentThread();
         try {
             onSleep(session, millis);
         } catch (Throwable t) {

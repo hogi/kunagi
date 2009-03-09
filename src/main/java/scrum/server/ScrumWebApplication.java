@@ -1,5 +1,6 @@
 package scrum.server;
 
+import ilarkesto.base.Tm;
 import ilarkesto.base.Url;
 import ilarkesto.base.Utl;
 import ilarkesto.concurrent.TaskManager;
@@ -7,6 +8,7 @@ import ilarkesto.io.IO;
 import ilarkesto.logging.Logger;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
+import ilarkesto.webapp.DestroyTimeoutedSessionsTask;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -66,7 +68,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	@Override
-	protected void scheduleTasks(TaskManager tm) {}
+	protected void scheduleTasks(TaskManager tm) {
+		tm.scheduleWithFixedDelay(autowire(new DestroyTimeoutedSessionsTask()), Tm.MINUTE);
+	}
 
 	@Override
 	protected void onShutdownWebApplication() {}
