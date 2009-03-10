@@ -94,6 +94,8 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 		});
 
+		fields.add("Attributes", new AttributeSuggestWidget(requirement));
+
 		fields.add("Test", new ARichtextViewEditWidget() {
 
 			@Override
