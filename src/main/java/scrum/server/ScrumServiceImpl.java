@@ -114,6 +114,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (project.isCurrentSprintSet()) {
 			session.getNextData().addEntity(toPropertyMap(project.getCurrentSprint()));
 		}
+		if (project.isNextSprintSet()) {
+			session.getNextData().addEntity(toPropertyMap(project.getNextSprint()));
+		}
 	}
 
 	@Override

@@ -57,12 +57,15 @@
 	
 	<target name="deploy" depends="war">
 		<copy tofile="/var/webapps/scrum-latest.war" file="build/scrum.war" />
+		<copy todir="/var/www/servisto.de/projects/scrum">
+			<fileset dir="src/projectHomepage/html" />
+		</copy>		
 	</target>
 	
 	<target name="release">
 		<copy tofile="/var/webapps/scrum.war" file="build/scrum.war" />
 	</target>
-
+	
 	<target name="continousIntegrationBuild" depends="deploy" />
 
 	<target name="continousIntegrationRelease" depends="release" />	

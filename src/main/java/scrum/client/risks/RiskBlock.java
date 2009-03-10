@@ -100,7 +100,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 
 			@Override
 			protected void onEditorUpdate() {
-				setOptions("20", "40", "60", "80", "100");
+				setOptions(RiskComputer.getImpacts());
 				setSelectedOption(String.valueOf(risk.getImpact()));
 			}
 
@@ -118,7 +118,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 
 			@Override
 			protected void onEditorUpdate() {
-				setOptions("20", "40", "60", "80", "100");
+				setOptions(RiskComputer.getProbabilities());
 				setSelectedOption(String.valueOf(risk.getProbability()));
 			}
 

@@ -28,7 +28,17 @@
 	</servlet>		
 	<servlet-mapping>
 		<servlet-name>sprintBurndownChart</servlet-name>
-		<url-pattern>/sprintBurndownChart.png</url-pattern>
+		<url-pattern>/scrum.ScrumGwtApplication/sprintBurndownChart.png</url-pattern>
+	</servlet-mapping>
+
+	<!-- provides sprint burndown chart -->
+	<servlet>
+		<servlet-name>projectBurndownChart</servlet-name>
+		<servlet-class>scrum.server.project.ProjectBurndownChartServlet</servlet-class>
+	</servlet>		
+	<servlet-mapping>
+		<servlet-name>sprintBurndownChart</servlet-name>
+		<url-pattern>/scrum.ScrumGwtApplication/projectBurndownChart.png</url-pattern>
 	</servlet-mapping>
 
 </web-app>

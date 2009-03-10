@@ -1,6 +1,7 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.GwtLogger;
 
 import java.util.ArrayList;
 
@@ -58,6 +59,7 @@ public class ClipboardWidget extends AWidget {
 
 		public void onDrop(DragContext context) {
 			Widget widget = context.draggable;
+			if (!isDroppable(widget)) return;
 			if (widget instanceof ClipboardSupport) {
 				ClipboardSupport clipboardSupport = (ClipboardSupport) widget;
 				addItem(new ClipboardItemWidget(clipboardSupport));
@@ -65,12 +67,14 @@ public class ClipboardWidget extends AWidget {
 		}
 
 		public void onEnter(DragContext context) {
-			panel.addStyleName(StyleSheet.DND_DROP_ALLOWED); // TODO
+			if (!isDroppable(context.draggable)) {
+				GwtLogger.DEBUG("Not clipable: " + context.draggable);
+			}
+			panel.addStyleName(StyleSheet.DND_DROP_ALLOWED);
 		}
 
 		public void onLeave(DragContext context) {
-			System.out.println("leaving...");
-			panel.removeStyleName(StyleSheet.DND_DROP_ALLOWED); // TODO
+			panel.removeStyleName(StyleSheet.DND_DROP_ALLOWED);
 			// Widget widget = context.draggable;
 			// if (widget instanceof ABlockWidget) {
 			// ABlockWidget ablockwidget = (ABlockWidget) widget;
@@ -83,9 +87,7 @@ public class ClipboardWidget extends AWidget {
 		public void onPreviewDrop(DragContext context) throws VetoDragException {}
 
 		private boolean isDroppable(Widget draggable) {
-			if (draggable instanceof ABlockWidget) {
-
-			}
+			if (draggable instanceof ABlockWidget) { return true; }
 			return false;
 		}
 

@@ -61,6 +61,13 @@ public class SidebarWidget extends AWidget {
 			}
 		});
 
+		navigator.addItem(Img.bundle.sprint16(), "Next Sprint", new Runnable() {
+
+			public void run() {
+				WorkareaWidget.get().showNextSprint();
+			}
+		});
+
 		navigator.addItem(Img.bundle.test16(), "WidgetsTester", new Runnable() {
 
 			public void run() {

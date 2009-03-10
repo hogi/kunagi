@@ -8,6 +8,7 @@ import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.ProjectOverviewWidget;
 import scrum.client.project.Requirement;
 import scrum.client.risks.RiskListWidget;
+import scrum.client.sprint.NextSprintWidget;
 import scrum.client.sprint.SprintBacklogWidget;
 import scrum.client.test.WidgetsTesterWidget;
 
@@ -24,6 +25,7 @@ public class WorkareaWidget extends AWidget {
 	private SprintBacklogWidget sprintBacklog;
 	private ProductBacklogWidget productBacklog;
 	private AttributeBacklogWidget attributeBacklog;
+	private NextSprintWidget nextSprint;
 	private ImpedimentListWidget impedimentList;
 	private RiskListWidget riskList;
 	private WidgetsTesterWidget widgetsTester;
@@ -56,6 +58,10 @@ public class WorkareaWidget extends AWidget {
 	public void showSprintBacklog() {
 		ScrumGwtApplication.get().callRequestCurrentSprint();
 		show(getSprintBacklog());
+	}
+
+	public void showNextSprint() {
+		show(getNextSprint());
 	}
 
 	public void showSprintBacklog(final Requirement r) {
@@ -103,6 +109,11 @@ public class WorkareaWidget extends AWidget {
 	public SprintBacklogWidget getSprintBacklog() {
 		if (sprintBacklog == null) sprintBacklog = new SprintBacklogWidget();
 		return sprintBacklog;
+	}
+
+	public NextSprintWidget getNextSprint() {
+		if (nextSprint == null) nextSprint = new NextSprintWidget();
+		return nextSprint;
 	}
 
 	public ProductBacklogWidget getProductBacklog() {
