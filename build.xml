@@ -33,7 +33,7 @@
 			<fileset dir="src/generated/java" />
 			<fileset dir="../ilarkesto/src/main/java" />
 		</copy>
-		<javac srcdir="build/webapp/WEB-INF/classes" destdir="build/webapp/WEB-INF/classes" encoding="UTF-8" nowarn="true" debug="true" debuglevel="lines">
+		<javac srcdir="build/webapp/WEB-INF/classes" destdir="build/webapp/WEB-INF/classes" encoding="UTF-8" nowarn="true" debug="true" debuglevel="lines,vars,source">
 			<classpath>
 				<fileset dir="../ilarkesto/lib" />
 				<fileset dir="lib" />
