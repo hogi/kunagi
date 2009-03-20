@@ -6,6 +6,13 @@ import scrum.server.project.Project;
 
 public class SprintDao extends GSprintDao {
 
+	@Override
+	public Sprint newEntityInstance() {
+		Sprint sprint = super.newEntityInstance();
+		sprint.setLabel("New Sprint");
+		return sprint;
+	}
+
 	// --- test data ---
 
 	public void createTestSprint(Project project, int variant) {

@@ -25,10 +25,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onPing(WebSession session);
     protected abstract void onLogin(WebSession session, java.lang.String username, java.lang.String password);
     protected abstract void onSelectProject(WebSession session, java.lang.String projectId);
+    protected abstract void onSwitchToNextSprint(WebSession session);
     protected abstract void onRequestImpediments(WebSession session);
     protected abstract void onRequestRisks(WebSession session);
     protected abstract void onRequestRequirements(WebSession session);
-    protected abstract void onRequestAttributes(WebSession session);
+    protected abstract void onRequestQualitys(WebSession session);
     protected abstract void onRequestCurrentSprint(WebSession session);
     protected abstract void onChangeProperties(WebSession session, java.lang.String entityId, java.util.Map properties);
     protected abstract void onCreateEntity(WebSession session, java.lang.String type, java.util.Map properties);
@@ -87,6 +88,23 @@ public abstract class GScrumServiceImpl
     }
 
 
+    public ilarkesto.gwt.client.DataTransferObject switchToNextSprint() {
+        LOG.debug("switchToNextSprint");
+        WebSession session = (WebSession) getSession();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:switchToNextSprint");
+        context.bindCurrentThread();
+        try {
+            onSwitchToNextSprint(session);
+        } catch (Throwable t) {
+            handleServiceMethodException("switchToNextSprint",t);
+        }
+        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
     public ilarkesto.gwt.client.DataTransferObject requestImpediments() {
         LOG.debug("requestImpediments");
         WebSession session = (WebSession) getSession();
@@ -138,16 +156,16 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject requestAttributes() {
-        LOG.debug("requestAttributes");
+    public ilarkesto.gwt.client.DataTransferObject requestQualitys() {
+        LOG.debug("requestQualitys");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
-        context.setName("gwt-srv:requestAttributes");
+        context.setName("gwt-srv:requestQualitys");
         context.bindCurrentThread();
         try {
-            onRequestAttributes(session);
+            onRequestQualitys(session);
         } catch (Throwable t) {
-            handleServiceMethodException("requestAttributes",t);
+            handleServiceMethodException("requestQualitys",t);
         }
         ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
         onServiceMethodExecuted(context);

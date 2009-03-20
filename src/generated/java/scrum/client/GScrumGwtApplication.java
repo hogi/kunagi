@@ -54,6 +54,14 @@ public abstract class GScrumGwtApplication
         callSelectProject(projectId,  null);
     }
 
+    public final void callSwitchToNextSprint( Runnable callback) {
+        getScrumService().switchToNextSprint( new DefaultCallback(callback));
+    }
+
+    public final void callSwitchToNextSprint() {
+        callSwitchToNextSprint( null);
+    }
+
     public final void callRequestImpediments( Runnable callback) {
         getScrumService().requestImpediments( new DefaultCallback(callback));
     }
@@ -78,12 +86,12 @@ public abstract class GScrumGwtApplication
         callRequestRequirements( null);
     }
 
-    public final void callRequestAttributes( Runnable callback) {
-        getScrumService().requestAttributes( new DefaultCallback(callback));
+    public final void callRequestQualitys( Runnable callback) {
+        getScrumService().requestQualitys( new DefaultCallback(callback));
     }
 
-    public final void callRequestAttributes() {
-        callRequestAttributes( null);
+    public final void callRequestQualitys() {
+        callRequestQualitys( null);
     }
 
     public final void callRequestCurrentSprint( Runnable callback) {

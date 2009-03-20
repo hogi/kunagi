@@ -17,21 +17,21 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AttributeBlock extends AExtensibleBlockWidget<Attribute> implements TrashSupport, ClipboardSupport {
+public class QualityBlock extends AExtensibleBlockWidget<Quality> implements TrashSupport, ClipboardSupport {
 
-	private Attribute attribute;
+	private Quality quality;
 
 	private Label summary;
 	private FieldsWidget fields;
 
 	@Override
-	protected Attribute getObject() {
-		return attribute;
+	protected Quality getObject() {
+		return quality;
 	}
 
 	@Override
-	protected void setObject(Attribute object) {
-		this.attribute = object;
+	protected void setObject(Quality object) {
+		this.quality = object;
 	}
 
 	@Override
@@ -41,9 +41,9 @@ public class AttributeBlock extends AExtensibleBlockWidget<Attribute> implements
 
 	@Override
 	protected void onCollapsedUpdate() {
-		setBlockTitle(attribute.getLabel());
+		setBlockTitle(quality.getLabel());
 		setIcon(Img.bundle.requirement32());
-		summary.setText(attribute.getLabel());
+		summary.setText(quality.getLabel());
 		setContent(summary);
 		setToolbar(null);
 	}
@@ -56,17 +56,17 @@ public class AttributeBlock extends AExtensibleBlockWidget<Attribute> implements
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerText(attribute.getLabel());
+				setViewerText(quality.getLabel());
 			}
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorText(attribute.getLabel());
+				setEditorText(quality.getLabel());
 			}
 
 			@Override
 			protected void onEditorSubmit() {
-				attribute.setLabel(getEditorText());
+				quality.setLabel(getEditorText());
 			}
 
 		});
@@ -75,17 +75,17 @@ public class AttributeBlock extends AExtensibleBlockWidget<Attribute> implements
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerText(attribute.getDescription());
+				setViewerText(quality.getDescription());
 			}
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorText(attribute.getDescription());
+				setEditorText(quality.getDescription());
 			}
 
 			@Override
 			protected void onEditorSubmit() {
-				attribute.setDescription(getEditorText());
+				quality.setDescription(getEditorText());
 			}
 
 		});
@@ -94,17 +94,17 @@ public class AttributeBlock extends AExtensibleBlockWidget<Attribute> implements
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerText(attribute.getTestDescription());
+				setViewerText(quality.getTestDescription());
 			}
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorText(attribute.getTestDescription());
+				setEditorText(quality.getTestDescription());
 			}
 
 			@Override
 			protected void onEditorSubmit() {
-				attribute.setTestDescription(getEditorText());
+				quality.setTestDescription(getEditorText());
 			}
 
 		});
@@ -112,7 +112,7 @@ public class AttributeBlock extends AExtensibleBlockWidget<Attribute> implements
 
 	@Override
 	protected void onExtendedUpdate() {
-		setBlockTitle(attribute.getLabel());
+		setBlockTitle(quality.getLabel());
 		// Img.bundle.requirement32();
 		fields.update();
 		setContent(fields);
@@ -125,8 +125,8 @@ public class AttributeBlock extends AExtensibleBlockWidget<Attribute> implements
 		toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				ScrumGwtApplication.get().getProject().deleteAttribute(attribute);
-				AttributeBacklogWidget.get().list.removeSelectedRow();
+				ScrumGwtApplication.get().getProject().deleteQuality(quality);
+				QualityBacklogWidget.get().list.removeSelectedRow();
 			}
 		});
 
@@ -138,7 +138,7 @@ public class AttributeBlock extends AExtensibleBlockWidget<Attribute> implements
 	}
 
 	public String getClipboardLabel() {
-		return attribute.getLabel();
+		return quality.getLabel();
 	}
 
 	public ABlockWidget getClipboardPayload() {
@@ -150,18 +150,18 @@ public class AttributeBlock extends AExtensibleBlockWidget<Attribute> implements
 	}
 
 	public void trash() {
-		attribute.getProject().deleteAttribute(attribute);
-		getList().removeObject(attribute);
+		quality.getProject().deleteQuality(quality);
+		getList().removeObject(quality);
 	}
 
-	public Attribute getAttribute() {
-		return attribute;
+	public Quality getQuality() {
+		return quality;
 	}
 
-	public static BlockWidgetFactory<Attribute> FACTORY = new BlockWidgetFactory<Attribute>() {
+	public static BlockWidgetFactory<Quality> FACTORY = new BlockWidgetFactory<Quality>() {
 
-		public AttributeBlock createBlock() {
-			return new AttributeBlock();
+		public QualityBlock createBlock() {
+			return new QualityBlock();
 		}
 	};
 }

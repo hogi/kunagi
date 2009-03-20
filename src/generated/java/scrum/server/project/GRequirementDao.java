@@ -38,8 +38,8 @@ public abstract class GRequirementDao
         projectsCache = null;
         requirementsBySprintCache.clear();
         sprintsCache = null;
-        requirementsByAttributeCache.clear();
-        attributesCache = null;
+        requirementsByQualityCache.clear();
+        qualitysCache = null;
         requirementsByLabelCache.clear();
         labelsCache = null;
         requirementsByDescriptionCache.clear();
@@ -148,41 +148,41 @@ public abstract class GRequirementDao
     }
 
     // -----------------------------------------------------------
-    // - attributes
+    // - qualitys
     // -----------------------------------------------------------
 
-    private final Cache<scrum.server.project.Attribute,Set<Requirement>> requirementsByAttributeCache = new Cache<scrum.server.project.Attribute,Set<Requirement>>(
-            new Cache.Factory<scrum.server.project.Attribute,Set<Requirement>>() {
-                public Set<Requirement> create(scrum.server.project.Attribute attribute) {
-                    return getEntities(new ContainsAttribute(attribute));
+    private final Cache<scrum.server.project.Quality,Set<Requirement>> requirementsByQualityCache = new Cache<scrum.server.project.Quality,Set<Requirement>>(
+            new Cache.Factory<scrum.server.project.Quality,Set<Requirement>>() {
+                public Set<Requirement> create(scrum.server.project.Quality quality) {
+                    return getEntities(new ContainsQuality(quality));
                 }
             });
 
-    public final Set<Requirement> getRequirementsByAttribute(scrum.server.project.Attribute attribute) {
-        return requirementsByAttributeCache.get(attribute);
+    public final Set<Requirement> getRequirementsByQuality(scrum.server.project.Quality quality) {
+        return requirementsByQualityCache.get(quality);
     }
-    private Set<scrum.server.project.Attribute> attributesCache;
+    private Set<scrum.server.project.Quality> qualitysCache;
 
-    public final Set<scrum.server.project.Attribute> getAttributes() {
-        if (attributesCache == null) {
-            attributesCache = new HashSet<scrum.server.project.Attribute>();
+    public final Set<scrum.server.project.Quality> getQualitys() {
+        if (qualitysCache == null) {
+            qualitysCache = new HashSet<scrum.server.project.Quality>();
             for (Requirement e : getEntities()) {
-                attributesCache.addAll(e.getAttributes());
+                qualitysCache.addAll(e.getQualitys());
             }
         }
-        return attributesCache;
+        return qualitysCache;
     }
 
-    private static class ContainsAttribute implements Predicate<Requirement> {
+    private static class ContainsQuality implements Predicate<Requirement> {
 
-        private scrum.server.project.Attribute value;
+        private scrum.server.project.Quality value;
 
-        public ContainsAttribute(scrum.server.project.Attribute value) {
+        public ContainsQuality(scrum.server.project.Quality value) {
             this.value = value;
         }
 
         public boolean test(Requirement e) {
-            return e.containsAttribute(value);
+            return e.containsQuality(value);
         }
 
     }
@@ -403,10 +403,10 @@ public abstract class GRequirementDao
         this.sprintDao = sprintDao;
     }
 
-    protected scrum.server.project.AttributeDao attributeDao;
+    protected scrum.server.project.QualityDao qualityDao;
 
-    public void setAttributeDao(scrum.server.project.AttributeDao attributeDao) {
-        this.attributeDao = attributeDao;
+    public void setQualityDao(scrum.server.project.QualityDao qualityDao) {
+        this.qualityDao = qualityDao;
     }
 
 }

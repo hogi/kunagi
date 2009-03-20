@@ -17,7 +17,7 @@ public class Project extends GProject {
 
 	private static ImpedimentDao impedimentDao;
 	private static RequirementDao requirementDao;
-	private static AttributeDao attributeDao;
+	private static QualityDao qualityDao;
 	private static ProjectSprintSnapshotDao projectSprintSnapshotDao;
 	private static RiskDao riskDao;
 
@@ -33,8 +33,8 @@ public class Project extends GProject {
 		Project.requirementDao = storyDao;
 	}
 
-	public static void setAttributeDao(AttributeDao attributeDao) {
-		Project.attributeDao = attributeDao;
+	public static void setQualityDao(QualityDao qualityDao) {
+		Project.qualityDao = qualityDao;
 	}
 
 	public static void setProjectSprintSnapshotDao(ProjectSprintSnapshotDao projectSprintSnapshotDao) {
@@ -99,6 +99,7 @@ public class Project extends GProject {
 		sprint.setProject(this);
 		sprint.setLabel("Next Sprint");
 		if (isCurrentSprintSet()) sprint.setBegin(getCurrentSprint().getEnd());
+		sprintDao.saveEntity(sprint);
 		setNextSprint(sprint);
 		return sprint;
 	}
@@ -132,13 +133,26 @@ public class Project extends GProject {
 		return requirementDao.getRequirementsByProject(this);
 	}
 
-	public Set<Attribute> getAttributes() {
-		return attributeDao.getAttributesByProject(this);
+	public Set<Quality> getQualitys() {
+		return qualityDao.getQualitysByProject(this);
 	}
 
 	@Override
 	public String toString() {
 		return getLabel();
+	}
+
+	@Override
+	public void ensureIntegrity() {
+		super.ensureIntegrity();
+		if (!isCurrentSprintSet()) {
+			Sprint sprint = sprintDao.newEntityInstance();
+			sprintDao.saveEntity(sprint);
+			setCurrentSprint(sprint);
+		}
+		if (!isNextSprintSet()) {
+			createNextSprint();
+		}
 	}
 
 	// --- test data ---
@@ -173,11 +187,11 @@ public class Project extends GProject {
 		requirementDao.createTestRequirement(this, 5);
 	}
 
-	public void addTestAttributes(int variant) {
+	public void addTestQualitys(int variant) {
 		if (variant == 0) return;
 
-		attributeDao.createTestAttribute(this, 1);
-		attributeDao.createTestAttribute(this, 2);
+		qualityDao.createTestQuality(this, 1);
+		qualityDao.createTestQuality(this, 2);
 	}
 
 	public void addTestSprints(int variant) {

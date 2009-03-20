@@ -23,8 +23,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	private static final Logger LOG = Logger.get(ScrumWebApplication.class);
 
 	private BurndownChart burndownChart;
+	private ScrumConfig config;
 
-	// --- components ---
+	// --- composites ---
 
 	public BurndownChart getBurndownChart() {
 		if (burndownChart == null) {
@@ -34,12 +35,21 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return burndownChart;
 	}
 
+	public ScrumConfig getConfig() {
+		if (config == null) {
+			config = new ScrumConfig(getApplicationDataDir());
+		}
+		return config;
+	}
+
 	// --- ---
 
 	@Override
 	public void ensureIntegrity() {
-		// delete entities
-		IO.delete(getApplicationDataDir() + "/entities");
+		// in demo mode delete entities
+		if (getConfig().isDemoMode()) {
+			IO.delete(getApplicationDataDir() + "/entities");
+		}
 
 		super.ensureIntegrity();
 	}

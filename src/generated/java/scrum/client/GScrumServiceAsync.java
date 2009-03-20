@@ -24,13 +24,15 @@ public interface GScrumServiceAsync {
 
     void selectProject(java.lang.String projectId, AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
+    void switchToNextSprint(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
+
     void requestImpediments(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
     void requestRisks(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
     void requestRequirements(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
-    void requestAttributes(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
+    void requestQualitys(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
     void requestCurrentSprint(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 

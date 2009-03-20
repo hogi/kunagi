@@ -13,15 +13,15 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AttributeBacklogWidget extends AWidget {
+public class QualityBacklogWidget extends AWidget {
 
-	public BlockListWidget<Attribute> list;
+	public BlockListWidget<Quality> list;
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<Attribute>(AttributeBlock.FACTORY);
+		list = new BlockListWidget<Quality>(QualityBlock.FACTORY);
 		ToolbarWidget toolbar = new ToolbarWidget(true);
-		toolbar.addButton(Img.bundle.new16().createImage(), "Create new Attribute").addClickListener(
+		toolbar.addButton(Img.bundle.new16().createImage(), "Create new Quality").addClickListener(
 			new CreateClickListener());
 
 		FlowPanel panel = new FlowPanel();
@@ -29,23 +29,23 @@ public class AttributeBacklogWidget extends AWidget {
 		panel.add(new HTML("<br>"));
 		panel.add(list);
 
-		return new GroupWidget("Attribute Backlog", panel);
+		return new GroupWidget("Quality Backlog", panel);
 	}
 
 	@Override
 	protected void onUpdate() {
-		list.setBlocks(ScrumGwtApplication.get().getProject().getAttributes());
+		list.setBlocks(ScrumGwtApplication.get().getProject().getQualitys());
 	}
 
 	class CreateClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			Attribute attribute = ScrumGwtApplication.get().getProject().createNewAttribute();
-			list.addBlock(attribute, true);
+			Quality quality = ScrumGwtApplication.get().getProject().createNewQuality();
+			list.addBlock(quality, true);
 		}
 	}
 
-	public static AttributeBacklogWidget get() {
-		return WorkareaWidget.get().getAttributeBacklog();
+	public static QualityBacklogWidget get() {
+		return WorkareaWidget.get().getQualityBacklog();
 	}
 }

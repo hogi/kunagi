@@ -38,7 +38,7 @@ public abstract class GRequirement
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("sprintId", this.sprintId);
-        properties.put("attributesIds", this.attributesIds);
+        properties.put("qualitysIds", this.qualitysIds);
         properties.put("label", this.label);
         properties.put("description", this.description);
         properties.put("testDescription", this.testDescription);
@@ -130,83 +130,83 @@ public abstract class GRequirement
     }
 
     // -----------------------------------------------------------
-    // - attributes
+    // - qualitys
     // -----------------------------------------------------------
 
-    private java.util.Set<String> attributesIds = new java.util.HashSet<String>();
+    private java.util.Set<String> qualitysIds = new java.util.HashSet<String>();
 
-    public final java.util.Set<scrum.server.project.Attribute> getAttributes() {
-        return (java.util.Set) attributeDao.getByIdsAsSet(this.attributesIds);
+    public final java.util.Set<scrum.server.project.Quality> getQualitys() {
+        return (java.util.Set) qualityDao.getByIdsAsSet(this.qualitysIds);
     }
 
-    public final void setAttributes(java.util.Set<scrum.server.project.Attribute> attributes) {
-        attributes = prepareAttributes(attributes);
-        if (attributes == null) throw new IllegalArgumentException("null is not allowed");
-        java.util.Set<String> ids = getIdsAsSet(attributes);
-        if (this.attributesIds.equals(ids)) return;
-        this.attributesIds = ids;
+    public final void setQualitys(java.util.Set<scrum.server.project.Quality> qualitys) {
+        qualitys = prepareQualitys(qualitys);
+        if (qualitys == null) throw new IllegalArgumentException("null is not allowed");
+        java.util.Set<String> ids = getIdsAsSet(qualitys);
+        if (this.qualitysIds.equals(ids)) return;
+        this.qualitysIds = ids;
         fireModified();
     }
 
-    protected java.util.Set<scrum.server.project.Attribute> prepareAttributes(java.util.Set<scrum.server.project.Attribute> attributes) {
-        return attributes;
+    protected java.util.Set<scrum.server.project.Quality> prepareQualitys(java.util.Set<scrum.server.project.Quality> qualitys) {
+        return qualitys;
     }
 
-    protected void repairDeadAttributeReference(String entityId) {
-        if (this.attributesIds.remove(entityId)) fireModified();
+    protected void repairDeadQualityReference(String entityId) {
+        if (this.qualitysIds.remove(entityId)) fireModified();
     }
 
-    public final boolean containsAttribute(scrum.server.project.Attribute attribute) {
-        if (attribute == null) return false;
-        return this.attributesIds.contains(attribute.getId());
+    public final boolean containsQuality(scrum.server.project.Quality quality) {
+        if (quality == null) return false;
+        return this.qualitysIds.contains(quality.getId());
     }
 
-    public final int getAttributesCount() {
-        return this.attributesIds.size();
+    public final int getQualitysCount() {
+        return this.qualitysIds.size();
     }
 
-    public final boolean isAttributesEmpty() {
-        return this.attributesIds.isEmpty();
+    public final boolean isQualitysEmpty() {
+        return this.qualitysIds.isEmpty();
     }
 
-    public final boolean addAttribute(scrum.server.project.Attribute attribute) {
-        if (attribute == null) throw new IllegalArgumentException("attribute == null");
-        boolean added = this.attributesIds.add(attribute.getId());
+    public final boolean addQuality(scrum.server.project.Quality quality) {
+        if (quality == null) throw new IllegalArgumentException("quality == null");
+        boolean added = this.qualitysIds.add(quality.getId());
         if (added) fireModified();
         return added;
     }
 
-    public final boolean addAttributes(Collection<scrum.server.project.Attribute> attributes) {
-        if (attributes == null) throw new IllegalArgumentException("attributes == null");
+    public final boolean addQualitys(Collection<scrum.server.project.Quality> qualitys) {
+        if (qualitys == null) throw new IllegalArgumentException("qualitys == null");
         boolean added = false;
-        for (scrum.server.project.Attribute attribute : attributes) {
-            added = added | this.attributesIds.add(attribute.getId());
+        for (scrum.server.project.Quality quality : qualitys) {
+            added = added | this.qualitysIds.add(quality.getId());
         }
         if (added) fireModified();
         return added;
     }
 
-    public final boolean removeAttribute(scrum.server.project.Attribute attribute) {
-        if (attribute == null) throw new IllegalArgumentException("attribute == null");
-        if (this.attributesIds == null) return false;
-        boolean removed = this.attributesIds.remove(attribute.getId());
+    public final boolean removeQuality(scrum.server.project.Quality quality) {
+        if (quality == null) throw new IllegalArgumentException("quality == null");
+        if (this.qualitysIds == null) return false;
+        boolean removed = this.qualitysIds.remove(quality.getId());
         if (removed) fireModified();
         return removed;
     }
 
-    public final boolean removeAttributes(Collection<scrum.server.project.Attribute> attributes) {
-        if (attributes == null) return false;
-        if (attributes.isEmpty()) return false;
+    public final boolean removeQualitys(Collection<scrum.server.project.Quality> qualitys) {
+        if (qualitys == null) return false;
+        if (qualitys.isEmpty()) return false;
         boolean removed = false;
-        for (scrum.server.project.Attribute _element: attributes) {
-            removed = removed | removeAttribute(_element);
+        for (scrum.server.project.Quality _element: qualitys) {
+            removed = removed | removeQuality(_element);
         }
         return removed;
     }
 
-    public final boolean clearAttributes() {
-        if (this.attributesIds.isEmpty()) return false;
-        this.attributesIds.clear();
+    public final boolean clearQualitys() {
+        if (this.qualitysIds.isEmpty()) return false;
+        this.qualitysIds.clear();
         fireModified();
         return true;
     }
@@ -363,8 +363,8 @@ public abstract class GRequirement
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadSprintReference(entityId);
-        if (this.attributesIds == null) this.attributesIds = new java.util.HashSet<String>();
-        repairDeadAttributeReference(entityId);
+        if (this.qualitysIds == null) this.qualitysIds = new java.util.HashSet<String>();
+        repairDeadQualityReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -387,14 +387,14 @@ public abstract class GRequirement
             LOG.info("Repairing dead sprint reference");
             repairDeadSprintReference(this.sprintId);
         }
-        if (this.attributesIds == null) this.attributesIds = new java.util.HashSet<String>();
-        Set<String> attributes = new HashSet<String>(this.attributesIds);
-        for (String entityId : attributes) {
+        if (this.qualitysIds == null) this.qualitysIds = new java.util.HashSet<String>();
+        Set<String> qualitys = new HashSet<String>(this.qualitysIds);
+        for (String entityId : qualitys) {
             try {
-                attributeDao.getById(entityId);
+                qualityDao.getById(entityId);
             } catch (EntityDoesNotExistException ex) {
-                LOG.info("Repairing dead attribute reference");
-                repairDeadAttributeReference(entityId);
+                LOG.info("Repairing dead quality reference");
+                repairDeadQualityReference(entityId);
             }
         }
     }
@@ -413,10 +413,10 @@ public abstract class GRequirement
         GRequirement.sprintDao = sprintDao;
     }
 
-    protected static scrum.server.project.AttributeDao attributeDao;
+    protected static scrum.server.project.QualityDao qualityDao;
 
-    public static final void setAttributeDao(scrum.server.project.AttributeDao attributeDao) {
-        GRequirement.attributeDao = attributeDao;
+    public static final void setQualityDao(scrum.server.project.QualityDao qualityDao) {
+        GRequirement.qualityDao = qualityDao;
     }
 
     protected static RequirementDao requirementDao;

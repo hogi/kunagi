@@ -120,6 +120,15 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	protected void onSwitchToNextSprint(WebSession session) {
+		Project project = session.getProject();
+		project.switchToNextSprint();
+		session.getNextData().addEntity(toPropertyMap(project));
+		session.getNextData().addEntity(toPropertyMap(project.getCurrentSprint()));
+		session.getNextData().addEntity(toPropertyMap(project.getNextSprint()));
+	}
+
+	@Override
 	public void onRequestCurrentSprint(WebSession session) {
 		Project project = session.getProject();
 		Sprint sprint = project.getCurrentSprint();
@@ -156,10 +165,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	protected void onRequestAttributes(WebSession session) {
+	protected void onRequestQualitys(WebSession session) {
 		Project project = session.getProject();
 		if (project == null) throw new RuntimeException("No project selected.");
-		session.getNextData().addEntities(toPropertyMap(project.getAttributes()));
+		session.getNextData().addEntities(toPropertyMap(project.getQualitys()));
 	}
 
 	@Override

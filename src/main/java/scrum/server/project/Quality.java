@@ -1,7 +1,7 @@
 package scrum.server.project;
 
 
-public class Attribute extends GAttribute {
+public class Quality extends GQuality {
 
 	@Override
 	public String toString() {

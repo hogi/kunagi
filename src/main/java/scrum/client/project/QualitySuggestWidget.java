@@ -16,15 +16,15 @@ import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AttributeSuggestWidget extends AWidget {
+public class QualitySuggestWidget extends AWidget {
 
 	private Requirement requirement;
 	private FlexTable table;
-	private List<Attribute> attributes = new LinkedList<Attribute>();
+	private List<Quality> qualitys = new LinkedList<Quality>();
 	private SuggestBox suggest;
 	private MultiWordSuggestOracle oracle;
 
-	public AttributeSuggestWidget(Requirement requirement) {
+	public QualitySuggestWidget(Requirement requirement) {
 		this.requirement = requirement;
 	}
 
@@ -42,9 +42,9 @@ public class AttributeSuggestWidget extends AWidget {
 		add.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				List<Attribute> attributes = requirement.getDao().getAttributesByLabel(suggest.getText());
-				if (attributes.size() > 0) {
-					addAttribute(attributes.get(0));
+				List<Quality> qualitys = requirement.getDao().getQualitysByLabel(suggest.getText());
+				if (qualitys.size() > 0) {
+					addQuality(qualitys.get(0));
 				}
 				suggest.setText("");
 			}
@@ -60,36 +60,36 @@ public class AttributeSuggestWidget extends AWidget {
 			table.removeRow(i);
 		}
 
-		for (Attribute a : requirement.getAttributes()) {
-			addAttribute(a);
+		for (Quality a : requirement.getQualitys()) {
+			addQuality(a);
 		}
 
 		oracle.clear();
-		for (Attribute a : ScrumGwtApplication.get().getProject().getAttributes()) {
+		for (Quality a : ScrumGwtApplication.get().getProject().getQualitys()) {
 			oracle.add(a.getLabel());
 		}
 	}
 
-	private void addAttribute(final Attribute a) {
+	private void addQuality(final Quality a) {
 		int row = table.getRowCount() - 1;
-		attributes.add(a);
+		qualitys.add(a);
 		table.insertRow(row);
-		table.setWidget(row, 0, createAttributeWidget(a));
+		table.setWidget(row, 0, createQualityWidget(a));
 
 		ButtonWidget delete = new ButtonWidget(Img.bundle.delete16().createImage(), null);
 		delete.addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
-				int row = attributes.indexOf(a);
+				int row = qualitys.indexOf(a);
 				table.removeRow(row);
-				attributes.remove(row);
+				qualitys.remove(row);
 			}
 		});
 		table.setWidget(row, 1, delete.update());
 	}
 
-	private Widget createAttributeWidget(Attribute a) {
-		AttributeBlock block = new AttributeBlock();
+	private Widget createQualityWidget(Quality a) {
+		QualityBlock block = new QualityBlock();
 		block.setObject(a);
 		return new ClipboardItemWidget(block).update();
 	}

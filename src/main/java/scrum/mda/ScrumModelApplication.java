@@ -72,7 +72,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.setGwtSupport(true);
 			requirementModel.addReference("project", getProjectModel()).setMaster(true);
 			requirementModel.addReference("sprint", getSprintModel());
-			requirementModel.addSetReference("attributes", getAttributeModel());
+			requirementModel.addSetReference("qualitys", getQualityModel());
 			requirementModel.addProperty("label", String.class);
 			requirementModel.addProperty("description", String.class);
 			requirementModel.addProperty("testDescription", String.class);
@@ -82,19 +82,19 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return requirementModel;
 	}
 
-	private EntityModel attributeModel;
+	private EntityModel qualityModel;
 
-	public EntityModel getAttributeModel() {
-		if (attributeModel == null) {
-			attributeModel = createEntityModel("Attribute", "project");
-			autowire(attributeModel);
-			attributeModel.setGwtSupport(true);
-			attributeModel.addReference("project", getProjectModel()).setMaster(true);
-			attributeModel.addProperty("label", String.class);
-			attributeModel.addProperty("description", String.class);
-			attributeModel.addProperty("testDescription", String.class);
+	public EntityModel getQualityModel() {
+		if (qualityModel == null) {
+			qualityModel = createEntityModel("Quality", "project");
+			autowire(qualityModel);
+			qualityModel.setGwtSupport(true);
+			qualityModel.addReference("project", getProjectModel()).setMaster(true);
+			qualityModel.addProperty("label", String.class);
+			qualityModel.addProperty("description", String.class);
+			qualityModel.addProperty("testDescription", String.class);
 		}
-		return attributeModel;
+		return qualityModel;
 	}
 
 	private EntityModel sprintModel;
@@ -205,10 +205,11 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("login").addParameter("username", String.class).addParameter("password",
 				String.class);
 			gwtServiceModel.addMethod("selectProject").addParameter("projectId", String.class);
+			gwtServiceModel.addMethod("switchToNextSprint");
 			gwtServiceModel.addMethod("requestImpediments");
 			gwtServiceModel.addMethod("requestRisks");
 			gwtServiceModel.addMethod("requestRequirements");
-			gwtServiceModel.addMethod("requestAttributes");
+			gwtServiceModel.addMethod("requestQualitys");
 			gwtServiceModel.addMethod("requestCurrentSprint");
 			gwtServiceModel.addMethod("changeProperties").addParameter("entityId", String.class).addParameter(
 				"properties", Map.class);

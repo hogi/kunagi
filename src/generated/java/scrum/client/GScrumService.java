@@ -24,13 +24,15 @@ public interface GScrumService
 
     ilarkesto.gwt.client.DataTransferObject selectProject(java.lang.String projectId);
 
+    ilarkesto.gwt.client.DataTransferObject switchToNextSprint();
+
     ilarkesto.gwt.client.DataTransferObject requestImpediments();
 
     ilarkesto.gwt.client.DataTransferObject requestRisks();
 
     ilarkesto.gwt.client.DataTransferObject requestRequirements();
 
-    ilarkesto.gwt.client.DataTransferObject requestAttributes();
+    ilarkesto.gwt.client.DataTransferObject requestQualitys();
 
     ilarkesto.gwt.client.DataTransferObject requestCurrentSprint();
 

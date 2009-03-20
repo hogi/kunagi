@@ -86,27 +86,27 @@ public abstract class GRequirement
         return equals(this.sprintId, sprint);
     }
 
-    // --- attributes ---
+    // --- qualitys ---
 
-    private Set<String> attributesIds = new HashSet<String>();
+    private Set<String> qualitysIds = new HashSet<String>();
 
-    public final java.util.Set<scrum.client.project.Attribute> getAttributes() {
-        if ( attributesIds.isEmpty()) return Collections.emptySet();
-        return getDao().getAttributes(this.attributesIds);
+    public final java.util.Set<scrum.client.project.Quality> getQualitys() {
+        if ( qualitysIds.isEmpty()) return Collections.emptySet();
+        return getDao().getQualitys(this.qualitysIds);
     }
 
-    public final void addAttribute(scrum.client.project.Attribute attribute) {
-        String id = attribute.getId();
-        if (attributesIds.contains(id)) return;
-        attributesIds.add(id);
-        propertyChanged("attributes", this.attributesIds);
+    public final void addQuality(scrum.client.project.Quality quality) {
+        String id = quality.getId();
+        if (qualitysIds.contains(id)) return;
+        qualitysIds.add(id);
+        propertyChanged("qualitys", this.qualitysIds);
     }
 
-    public final void removeAttribute(scrum.client.project.Attribute attribute) {
-        String id = attribute.getId();
-        if (!attributesIds.contains(id)) return;
-        attributesIds.remove(id);
-        propertyChanged("attributes", this.attributesIds);
+    public final void removeQuality(scrum.client.project.Quality quality) {
+        String id = quality.getId();
+        if (!qualitysIds.contains(id)) return;
+        qualitysIds.remove(id);
+        propertyChanged("qualitys", this.qualitysIds);
     }
 
     // --- label ---
@@ -204,7 +204,7 @@ public abstract class GRequirement
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
         sprintId = (String) props.get("sprintId");
-        attributesIds = (Set<String>) props.get("attributesIds");
+        qualitysIds = (Set<String>) props.get("qualitysIds");
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
         testDescription  = (java.lang.String) props.get("testDescription");
@@ -217,7 +217,7 @@ public abstract class GRequirement
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("sprintId", this.sprintId);
-        properties.put("attributes", this.attributesIds);
+        properties.put("qualitys", this.qualitysIds);
         properties.put("label", this.label);
         properties.put("description", this.description);
         properties.put("testDescription", this.testDescription);

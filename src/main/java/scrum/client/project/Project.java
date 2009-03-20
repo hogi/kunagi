@@ -56,9 +56,9 @@ public class Project extends GProject {
 		return item;
 	}
 
-	public Attribute createNewAttribute() {
-		Attribute item = new Attribute(this);
-		getDao().createAttribute(item);
+	public Quality createNewQuality() {
+		Quality item = new Quality(this);
+		getDao().createQuality(item);
 		return item;
 	}
 
@@ -66,16 +66,16 @@ public class Project extends GProject {
 		getDao().deleteRequirement(item);
 	}
 
-	public void deleteAttribute(Attribute item) {
-		getDao().deleteAttribute(item);
+	public void deleteQuality(Quality item) {
+		getDao().deleteQuality(item);
 	}
 
 	public List<Requirement> getRequirements() {
 		return getDao().getRequirementsByProject(this);
 	}
 
-	public List<Attribute> getAttributes() {
-		return getDao().getAttributesByProject(this);
+	public List<Quality> getQualitys() {
+		return getDao().getQualitysByProject(this);
 	}
 
 	public Sprint createNewSprint() {

@@ -2,16 +2,16 @@ package scrum.client.project;
 
 import java.util.Map;
 
-public class Attribute extends GAttribute {
+public class Quality extends GQuality {
 
-	public static final String INITIAL_LABEL = "New Attribute";
+	public static final String INITIAL_LABEL = "New Quality";
 
-	public Attribute(Project project) {
+	public Quality(Project project) {
 		setProject(project);
 		setLabel(INITIAL_LABEL);
 	}
 
-	public Attribute(Map data) {
+	public Quality(Map data) {
 		super(data);
 	}
 
