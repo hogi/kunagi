@@ -16,6 +16,7 @@ import scrum.client.img.Img;
 import scrum.client.sprint.Sprint;
 import scrum.client.workspace.WorkareaWidget;
 
+import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -46,10 +47,26 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	@Override
 	protected void onCollapsedUpdate() {
 		setBlockTitle(requirement.getLabel());
-		setIcon(requirement.isClosed() ? Img.bundle.done32() : Img.bundle.requirement32());
+		setIcon(getProperIcon());
 		summary.setText(requirement.getProductBacklogSummary());
 		setContent(summary);
 		setToolbar(null);
+	}
+
+	private AbstractImagePrototype getProperIcon() {
+		AbstractImagePrototype icon = null;
+
+		if (requirement.isClosed()) {
+			icon = Img.bundle.done32();
+		} else if (requirement.isDone()) {
+			icon = Img.bundle.requirementIsDone32();
+		} else if (requirement.getSprint() != null) {
+			icon = Img.bundle.requirementInSprint32();
+		} else {
+			icon = Img.bundle.requirement32();
+		}
+
+		return icon;
 	}
 
 	@Override
@@ -149,7 +166,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	@Override
 	protected void onExtendedUpdate() {
 		setBlockTitle(requirement.getLabel());
-		setIcon(requirement.isClosed() ? Img.bundle.done32() : Img.bundle.requirement32());
+		setIcon(getProperIcon());
 		fields.update();
 		setContent(fields);
 		setToolbar(createToolbar());
