@@ -2,6 +2,7 @@ package scrum.client.test;
 
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.ImageAnchor;
 import ilarkesto.gwt.client.NavigatorWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.img.Img;
@@ -20,11 +21,17 @@ public class WidgetsTesterWidget extends AWidget {
 		panel = new FlowPanel();
 		panel.setStyleName("WidgetsTesterWidget");
 
+		testImageAnchor();
 		testNavigator();
 		testToolbars();
 		testButtons();
 
 		return panel;
+	}
+
+	private void testImageAnchor() {
+		ImageAnchor a = new ImageAnchor(Img.bundle.test16().createImage(), "click");
+		addTest("ImageAnchor", a);
 	}
 
 	private void testNavigator() {

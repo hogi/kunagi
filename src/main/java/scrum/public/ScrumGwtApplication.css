@@ -13,7 +13,9 @@ a {cursor: pointer;}
 
 .ImageAnchor {}
 .ImageAnchor img {float: left; margin-right: 3px;}
-.floatClear {float: none; clear: both;}
+.ImageAnchor .text { display: inline;}
+
+.floatClear {clear: both;}
 
 /***** Master Layout *****/
 

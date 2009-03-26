@@ -1,12 +1,11 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.GwtLogger;
+import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
-import scrum.client.img.Img;
 import scrum.client.test.WidgetsTesterWidget;
 import scrum.client.workspace.Ui;
 
@@ -21,7 +20,6 @@ public class LoginWidget extends AWidget {
 
 	private TextBox username;
 	private PasswordTextBox password;
-	private ButtonWidget loginButton;
 
 	@Override
 	protected Widget onInitialization() {
@@ -29,8 +27,9 @@ public class LoginWidget extends AWidget {
 		username.setText("admin");
 		password = new PasswordTextBox();
 		password.setText("geheim");
-		loginButton = new ButtonWidget(Img.bundle.done16().createImage(), "Login");
-		loginButton.addClickListener(new ClickListener() {
+
+		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar.addButton("Login").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
 				login();
@@ -40,7 +39,7 @@ public class LoginWidget extends AWidget {
 		FieldsWidget fieldsWidget = new FieldsWidget();
 		fieldsWidget.addWidget("Username", username);
 		fieldsWidget.addWidget("Password", password);
-		fieldsWidget.addWidget(null, loginButton.update());
+		fieldsWidget.addWidget(null, toolbar.update());
 
 		SimplePanel wrapper = new SimplePanel();
 		wrapper.setStyleName("LoginWidget");
