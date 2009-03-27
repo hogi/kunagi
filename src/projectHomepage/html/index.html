@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
 <html>
 
@@ -9,17 +9,21 @@
 
 	<style type="text/css">
 
-p {font-size: 14px; font-family: "Bitstream Vera Sans", "Lucida Grande", "Trebuchet MS", sans-serif;}
-td {font-size: 14px; font-family: "Bitstream Vera Sans", "Lucida Grande", "Trebuchet MS", sans-serif;}
-a {color: #002b80; text-decoration: none; font-weight: bold;}
-h1 {font-size: 14px; font-family: "Bitstream Vera Sans", "Lucida Grande", "Trebuchet MS", sans-serif;}
-img {border: 0;}
-form {display: inline;}
+* {margin: 0; padding: 0;}
+body {background: #F2F5FE url("bg.gif") 0 0 repeat-x; font:12px/16px "verdana",sans-serif; color: #192666;}
+    #main {width: 600px; margin-left: auto; margin-right: auto; margin-top: 50px;}
 
-.panel {border: 1px solid #002b80; background: white; margin-bottom: 10px;}
-.panel h1 {background: #002b80; color: white; margin: 0px; padding: 5px;}
-.panel .content {padding: 10px;}
-
+    #header {height: 80px; background: #233C9B url("header.jpg") 0 0 no-repeat; color:#FFF;}
+        h1 {font: 30pt/55pt "georgia",serif; color: white; margin: 0px 20px;}
+            h1 .orange {color: orange;}
+        h2 {font: 12pt/12pt "georgia",serif; color: white; margin: 0px 20px;}
+    
+    #content {background: white; border: 1px solid #192666; padding: 10px;}
+        #starter {background: orange url("bg_button.png") 0 0 repeat-x; border: 1px solid orange; width: 150px; margin-left: auto; padding: 5px; text-align: center; -moz-border-radius: 5px;}
+            #starter a {color: white; font-size: 16px; font-weight: bold; text-decoration: none;}
+        
+    #footer {background:#192666; color: #CCC; padding: 0px 10px; font-size: 8px; text-align: right;}
+            
 	</style>
 	
 	<title>Scrum Project</title>
@@ -28,34 +32,34 @@ form {display: inline;}
 
 <body bgcolor="#808080" background="../bg.png" onload="$('organizantoCommandInput').focus();">
 
-<table border="0" cellspacing="10" cellpadding="0" width="100%">
-	<tr>
-		<td height="100px"></td>
-		<td width="350"></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td valign="top">
+<div id="main">
 
-<div class="panel">
-	<h1>Scrum Project</h1>
-<div class="content">
-	<a target="_blank" href="https://servisto.de/scrum/scrum.ScrumGwtApplication/ScrumGwtApplication.html">Released Application</a><br>
-	<a target="_blank" href="https://servisto.de/scrum-latest/scrum.ScrumGwtApplication/ScrumGwtApplication.html">Latest Test Application</a><br>
-	<br>
-	<a target="_blank" href="http://spreadsheets.google.com/ccc?key=pO4f820H8bM3ckVvlddLTHw&hl=en">Project Management (Google Doc)</a><br>
-	<a target="_blank" href="http://spreadsheets.google.com/ccc?key=pO4f820H8bM3ckVvlddLTHw&hl=en">Organizanto Project</a><br>
-	<br>
-	<a target="_blank" href="https://servisto.de/organizanto/entity.xhtml?entity=5cfe9dd8-a1dd-4a37-8314-c40b242ed33f">Continous Integration</a><br>
-	<a target="_blank" href="https://servisto.de/projects/ilarkesto/javadoc/">Ilarkesto Javadocs</a><br>
+    <div id="header">
+        <h1>Scrum<span class="orange">42<span></h1>
+    </div>
+    
+    <div id="content">
+        
+        <div id="starter">
+            <a target="_blank" href="https://servisto.de/scrum/scrum.ScrumGwtApplication/ScrumGwtApplication.html">Start Scrum42</a>
+        </div>
+        
+    	<a target="_blank" href="https://servisto.de/scrum-latest/scrum.ScrumGwtApplication/ScrumGwtApplication.html">Latest Test Application</a><br>
+    	<br>
+    	<a target="_blank" href="http://spreadsheets.google.com/ccc?key=pO4f820H8bM3ckVvlddLTHw&hl=en">Project Management (Google Doc)</a><br>
+    	<a target="_blank" href="http://spreadsheets.google.com/ccc?key=pO4f820H8bM3ckVvlddLTHw&hl=en">Organizanto Project</a><br>
+    	<br>
+    	<a target="_blank" href="https://servisto.de/organizanto/entity.xhtml?entity=5cfe9dd8-a1dd-4a37-8314-c40b242ed33f">Continous Integration</a><br>
+    	<a target="_blank" href="https://servisto.de/projects/ilarkesto/javadoc/">Ilarkesto Javadocs</a><br>
+    
+    </div>
+    
+    <div id="footer">
+        Artjom Kochtchi, Fabian Hager, Kacper Grubalski and Witoslaw Koczewski.
+    </div>
+    
 </div>
-</div>				
-		
-		</td>
-		<td></td>
-	</tr>
-</table>
+
 
 </body>
 </html>
