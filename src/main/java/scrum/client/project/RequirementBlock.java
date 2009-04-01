@@ -202,8 +202,8 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 						public void onClick(Widget sender) {
 							requirement.setSprint(currentSprint);
+							update();
 							WorkareaWidget.get().showSprintBacklog(requirement);
-							// update();
 						}
 					});
 			}
