@@ -76,7 +76,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		fields.add("Burned Work", new AIntegerViewEditWidget() {
 
 			@Override
-			protected void onViewerUpdate() {
+			protected void onIntegerViewerUpdate() {
 				setViewerValue(task.getBurnedWork(), "hours");
 			}
 
@@ -111,7 +111,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		fields.add("Remaining Work", new AIntegerViewEditWidget() {
 
 			@Override
-			protected void onViewerUpdate() {
+			protected void onIntegerViewerUpdate() {
 				setViewerValue(task.getRemainingWork(), "hours");
 			}
 

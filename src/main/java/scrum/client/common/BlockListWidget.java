@@ -103,7 +103,10 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 				addBlock(newObject);
 		}
 
-		if (objects.size() == newObjects.size()) return;
+		if (objects.size() == newObjects.size()) {
+			update();
+			return;
+		}
 
 		// remove existing objects, which are not in the new list
 		List<O> objectsToRemove = null;

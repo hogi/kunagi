@@ -50,7 +50,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			}
 		});
 
-		new PingTimer().scheduleRepeating(3000);
+		new PingTimer().scheduleRepeating(15000);
 	}
 
 	public User getUser() {
