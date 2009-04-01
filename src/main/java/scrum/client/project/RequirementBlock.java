@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
+import scrum.client.ClientConstants;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
@@ -141,7 +142,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 			@Override
 			protected void onEditorUpdate() {
-				setOptions("", "1", "2", "3", "5", "8", "13", "21");
+				setOptions(ClientConstants.EFFORT_ROW);
 				Integer work = requirement.getEstimatedWork();
 				setSelectedOption(work == null ? "" : work.toString());
 			}
