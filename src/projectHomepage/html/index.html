@@ -5,25 +5,30 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-	<script src="http://www.prototypejs.org/assets/2008/9/29/prototype-1.6.0.3.js" ></script>
+	<!--<script src="http://www.prototypejs.org/assets/2008/9/29/prototype-1.6.0.3.js" ></script>-->
 
 	<style type="text/css">
 
 * {margin: 0; padding: 0;}
-body {background: #F2F5FE url("bg.gif") 0 0 repeat-x; font:12px/16px "verdana",sans-serif; color: #192666;}
-    #main {width: 600px; margin-left: auto; margin-right: auto; margin-top: 50px;}
+body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",sans-serif; color: #192666;}
+    #main {width: 600px; margin-left: auto; margin-right: auto; margin-top: 50px; border: 1px solid #555;}
 
     #header {height: 80px; background: #233C9B url("header.jpg") 0 0 no-repeat; color:#FFF;}
         h1 {font: 30pt/55pt "georgia",serif; color: white; margin: 0px 20px;}
             h1 .orange {color: orange;}
-        h2 {font: 12pt/12pt "georgia",serif; color: white; margin: 0px 20px;}
     
-    #content {background: white; border: 1px solid #192666; padding: 10px;}
-        #starter {background: orange url("bg_button.png") 0 0 repeat-x; border: 1px solid orange; width: 150px; margin-left: auto; padding: 5px; text-align: center; -moz-border-radius: 5px;}
-            #starter a {color: white; font-size: 16px; font-weight: bold; text-decoration: none;}
-        
+    #content {background: white; padding: 25px;}
+		#content a {color: #B37400;}
+		#content .section {padding: 0px 0px;}
+			h2 {font: 15pt/20pt "georgia",serif; color: #233C9B; margin-bottom: 10px;}
+			.middle {float: left; width: 350px;}
+			.sidebar {float: right;}
+		        #content .starter {background: orange url("button_bg.png") 0 0 repeat-x; border: 1px solid orange; width: 150px; padding: 5px; text-align: center; -moz-border-radius: 5px; margin-bottom: 5px;}
+		            #content .starter a {color: #B37400; font-size: 16px; font-weight: bold; text-decoration: none;}
+        #content .separator {height: 25px; margin-bottom: 25px; border-bottom: 1px solid #CCC;}
     #footer {background:#192666; color: #CCC; padding: 0px 10px; font-size: 8px; text-align: right;}
-            
+    
+	.clear {clear: both;}
 	</style>
 	
 	<title>Scrum Project</title>
@@ -39,23 +44,46 @@ body {background: #F2F5FE url("bg.gif") 0 0 repeat-x; font:12px/16px "verdana",s
     </div>
     
     <div id="content">
-        
-        <div id="starter">
-            <a target="_blank" href="https://servisto.de/scrum/scrum.ScrumGwtApplication/ScrumGwtApplication.html">Start Scrum42</a>
-        </div>
-        
-    	<a target="_blank" href="https://servisto.de/scrum-latest/scrum.ScrumGwtApplication/ScrumGwtApplication.html">Latest Test Application</a><br>
-    	<br>
-    	<a target="_blank" href="http://spreadsheets.google.com/ccc?key=pO4f820H8bM3ckVvlddLTHw&hl=en">Project Management (Google Doc)</a><br>
-    	<a target="_blank" href="http://spreadsheets.google.com/ccc?key=pO4f820H8bM3ckVvlddLTHw&hl=en">Organizanto Project</a><br>
-    	<br>
-    	<a target="_blank" href="https://servisto.de/organizanto/entity.xhtml?entity=5cfe9dd8-a1dd-4a37-8314-c40b242ed33f">Continous Integration</a><br>
-    	<a target="_blank" href="https://servisto.de/projects/ilarkesto/javadoc/">Ilarkesto Javadocs</a><br>
-    
+
+		<div class="section">
+			<h2>Visitor Information</h2>
+			<div class="middle">
+				<p>Scrum42 is for managing agile software development projects.
+				For now, it is in early alpha stage. There is no date for a stable release.</p>
+			</div>
+			<div class="sidebar">
+		        <div class="starter">
+		            <a target="_blank" href="https://servisto.de/scrum-latest/scrum.ScrumGwtApplication/ScrumGwtApplication.html">Start Demo</a>
+		        </div>
+			</div>
+			<div class="clear"></div>
+		</div>
+
+		<div class="separator"></div>
+		
+		<div class="section">
+			<h2>Developer Information</h2>
+			<div class="middle">
+		    	<a target="_blank" href="http://spreadsheets.google.com/ccc?key=pO4f820H8bM3ckVvlddLTHw&hl=en">Project Management (Google Doc)</a><br>
+		    	<a target="_blank" href="http://spreadsheets.google.com/ccc?key=pO4f820H8bM3ckVvlddLTHw&hl=en">Organizanto Project</a><br>
+		    	<a target="_blank" href="https://servisto.de/organizanto/entity.xhtml?entity=5cfe9dd8-a1dd-4a37-8314-c40b242ed33f">Continous Integration</a><br>
+		    	<a target="_blank" href="https://servisto.de/projects/ilarkesto/javadoc/">Ilarkesto Javadocs</a><br>
+			</div>
+			<div class="sidebar">
+		        <div class="starter">
+		            <a target="_blank" href="https://servisto.de/scrum-latest/scrum.ScrumGwtApplication/ScrumGwtApplication.html">Start Latest</a>
+				</div>
+		        <div class="starter">
+		            <a target="_blank" href="https://servisto.de/scrum/scrum.ScrumGwtApplication/ScrumGwtApplication.html">Start Release</a>
+		        </div>
+			</div>
+			<div class="clear"></div>
+		</div>		
+            
     </div>
     
     <div id="footer">
-        Artjom Kochtchi, Fabian Hager, Kacper Grubalski and Witoslaw Koczewski.
+        Artjom Kochtchi, Fabian Hager, Fabian Wischnewski, Kacper Grubalski and Witoslaw Koczewski.
     </div>
     
 </div>

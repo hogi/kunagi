@@ -46,8 +46,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	@Override
 	public void ensureIntegrity() {
-		// in demo mode delete entities
-		if (getConfig().isDemoMode()) {
+		if (getConfig().isStartupDelete()) {
+			LOG.warn("DELETING ALL ENTITIES (set startup.delete=false in config.properties to prevent this behavior)");
 			IO.delete(getApplicationDataDir() + "/entities");
 		}
 

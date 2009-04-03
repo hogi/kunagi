@@ -15,8 +15,9 @@ public class ScrumConfig {
 
 	// --- ---
 
-	public boolean isDemoMode() {
-		return p.getBoolean("demoMode", true);
+	public boolean isStartupDelete() {
+		// TODO set default to 'false', when going productive
+		return p.getBoolean("startup.delete", true);
 	}
 
 }

@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class ScrumModelApplication extends AGeneratorApplication {
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) {
 		ApplicationStarter.startApplication(ScrumModelApplication.class).generateClasses().shutdown();
 	}
 
