@@ -3,6 +3,7 @@ package scrum.client.project;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.admin.User;
 import scrum.client.impediments.Impediment;
 import scrum.client.risks.Risk;
 import scrum.client.sprint.Sprint;
@@ -11,8 +12,12 @@ import scrum.client.sprint.Task;
 public class Project extends GProject {
 
 	private static final String effortUnit = "StoryPoints";
+	public static final String INIT_LABEL = "New Project";
 
-	public Project() {}
+	public Project(User creator) {
+		setLabel(INIT_LABEL);
+		addAdmin(creator);
+	}
 
 	public Project(Map data) {
 		super(data);

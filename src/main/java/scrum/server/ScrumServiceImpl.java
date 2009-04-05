@@ -111,6 +111,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		// TODO limit to users projects
 		session.getNextData().addEntities(toPropertyMap(projectDao.getEntities()));
 		session.getNextData().entityIdBase = UUID.randomUUID().toString();
+		session.getNextData().addEntities(toPropertyMap(userDao.getEntitiesVisibleForUser(user)));
 	}
 
 	@Override
@@ -120,7 +121,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		// prepare data for client
 		session.getNextData().addEntity(toPropertyMap(project));
-		session.getNextData().addEntities(toPropertyMap(project.getMembers()));
 		if (project.isCurrentSprintSet()) {
 			session.getNextData().addEntity(toPropertyMap(project.getCurrentSprint()));
 		}
