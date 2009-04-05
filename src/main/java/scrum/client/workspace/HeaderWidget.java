@@ -67,9 +67,7 @@ public class HeaderWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		boolean loggedIn = ScrumGwtApplication.get().getUser() != null;
-		if (loggedIn) {
-			currentUserLabel.setText(ScrumGwtApplication.get().getUser().getName());
-		}
+		currentUserLabel.setText(loggedIn ? ScrumGwtApplication.get().getUser().getName() : "");
 		logoutButton.setVisible(loggedIn);
 		changePasswordButton.setVisible(loggedIn);
 	}
