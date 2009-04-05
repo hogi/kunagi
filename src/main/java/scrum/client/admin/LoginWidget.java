@@ -28,7 +28,7 @@ public class LoginWidget extends AWidget {
 		password = new PasswordTextBox();
 		password.setText("geheim");
 
-		ToolbarWidget toolbar = new ToolbarWidget();
+		ToolbarWidget toolbar = new ToolbarWidget(true);
 		toolbar.addButton("Login").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
