@@ -25,7 +25,7 @@ public class NextSprintWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 
-		ToolbarWidget toolbar = new ToolbarWidget();
+		ToolbarWidget toolbar = new ToolbarWidget(true);
 
 		toolbar.addButton("Activate this Sprint").addClickListener(new ClickListener() {
 
