@@ -399,7 +399,10 @@ public abstract class GRequirement
         }
     }
 
-    // --- dependencies ---
+
+    // -----------------------------------------------------------
+    // - dependencies
+    // -----------------------------------------------------------
 
     protected static scrum.server.project.ProjectDao projectDao;
 
@@ -424,10 +427,5 @@ public abstract class GRequirement
     public static final void setRequirementDao(RequirementDao requirementDao) {
         GRequirement.requirementDao = requirementDao;
     }
-
-
-    // -----------------------------------------------------------
-    // - composites
-    // -----------------------------------------------------------
 
 }

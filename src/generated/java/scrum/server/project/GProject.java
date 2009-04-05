@@ -567,7 +567,10 @@ public abstract class GProject
         }
     }
 
-    // --- dependencies ---
+
+    // -----------------------------------------------------------
+    // - dependencies
+    // -----------------------------------------------------------
 
     protected static scrum.server.sprint.SprintDao sprintDao;
 
@@ -580,10 +583,5 @@ public abstract class GProject
     public static final void setProjectDao(ProjectDao projectDao) {
         GProject.projectDao = projectDao;
     }
-
-
-    // -----------------------------------------------------------
-    // - composites
-    // -----------------------------------------------------------
 
 }

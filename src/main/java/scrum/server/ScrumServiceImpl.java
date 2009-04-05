@@ -49,6 +49,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	protected void onChangePassword(WebSession session, String oldPassword, String newPassword) {
+
+	}
+
+	@Override
 	public void onCreateEntity(WebSession session, String type, Map properties) {
 		String id = (String) properties.get("id");
 		if (id == null) throw new NullPointerException("id == null");

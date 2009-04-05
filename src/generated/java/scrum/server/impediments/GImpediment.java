@@ -263,7 +263,10 @@ public abstract class GImpediment
         }
     }
 
-    // --- dependencies ---
+
+    // -----------------------------------------------------------
+    // - dependencies
+    // -----------------------------------------------------------
 
     protected static scrum.server.project.ProjectDao projectDao;
 
@@ -276,10 +279,5 @@ public abstract class GImpediment
     public static final void setImpedimentDao(ImpedimentDao impedimentDao) {
         GImpediment.impedimentDao = impedimentDao;
     }
-
-
-    // -----------------------------------------------------------
-    // - composites
-    // -----------------------------------------------------------
 
 }

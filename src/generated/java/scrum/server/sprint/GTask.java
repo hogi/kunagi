@@ -267,7 +267,10 @@ public abstract class GTask
         }
     }
 
-    // --- dependencies ---
+
+    // -----------------------------------------------------------
+    // - dependencies
+    // -----------------------------------------------------------
 
     protected static scrum.server.project.RequirementDao requirementDao;
 
@@ -280,10 +283,5 @@ public abstract class GTask
     public static final void setTaskDao(TaskDao taskDao) {
         GTask.taskDao = taskDao;
     }
-
-
-    // -----------------------------------------------------------
-    // - composites
-    // -----------------------------------------------------------
 
 }

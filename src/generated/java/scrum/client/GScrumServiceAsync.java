@@ -22,6 +22,10 @@ public interface GScrumServiceAsync {
 
     void login(java.lang.String username, java.lang.String password, AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
+    void logout(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
+
+    void changePassword(java.lang.String oldPassword, java.lang.String newPassword, AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
+
     void selectProject(java.lang.String projectId, AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);
 
     void switchToNextSprint(AsyncCallback<ilarkesto.gwt.client.DataTransferObject> callback);

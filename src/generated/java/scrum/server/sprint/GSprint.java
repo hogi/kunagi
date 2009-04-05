@@ -231,7 +231,10 @@ public abstract class GSprint
         }
     }
 
-    // --- dependencies ---
+
+    // -----------------------------------------------------------
+    // - dependencies
+    // -----------------------------------------------------------
 
     protected static scrum.server.project.ProjectDao projectDao;
 
@@ -244,10 +247,5 @@ public abstract class GSprint
     public static final void setSprintDao(SprintDao sprintDao) {
         GSprint.sprintDao = sprintDao;
     }
-
-
-    // -----------------------------------------------------------
-    // - composites
-    // -----------------------------------------------------------
 
 }

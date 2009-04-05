@@ -24,6 +24,8 @@ public abstract class GScrumServiceImpl
 
     protected abstract void onPing(WebSession session);
     protected abstract void onLogin(WebSession session, java.lang.String username, java.lang.String password);
+    protected abstract void onLogout(WebSession session);
+    protected abstract void onChangePassword(WebSession session, java.lang.String oldPassword, java.lang.String newPassword);
     protected abstract void onSelectProject(WebSession session, java.lang.String projectId);
     protected abstract void onSwitchToNextSprint(WebSession session);
     protected abstract void onRequestImpediments(WebSession session);
@@ -64,6 +66,40 @@ public abstract class GScrumServiceImpl
             onLogin(session, username, password);
         } catch (Throwable t) {
             handleServiceMethodException("login",t);
+        }
+        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public ilarkesto.gwt.client.DataTransferObject logout() {
+        LOG.debug("logout");
+        WebSession session = (WebSession) getSession();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:logout");
+        context.bindCurrentThread();
+        try {
+            onLogout(session);
+        } catch (Throwable t) {
+            handleServiceMethodException("logout",t);
+        }
+        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public ilarkesto.gwt.client.DataTransferObject changePassword(java.lang.String oldPassword, java.lang.String newPassword) {
+        LOG.debug("changePassword");
+        WebSession session = (WebSession) getSession();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:changePassword");
+        context.bindCurrentThread();
+        try {
+            onChangePassword(session, oldPassword, newPassword);
+        } catch (Throwable t) {
+            handleServiceMethodException("changePassword",t);
         }
         ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
         onServiceMethodExecuted(context);

@@ -46,6 +46,22 @@ public abstract class GScrumGwtApplication
         callLogin(username, password,  null);
     }
 
+    public final void callLogout( Runnable callback) {
+        getScrumService().logout( new DefaultCallback(callback));
+    }
+
+    public final void callLogout() {
+        callLogout( null);
+    }
+
+    public final void callChangePassword(java.lang.String oldPassword, java.lang.String newPassword,  Runnable callback) {
+        getScrumService().changePassword(oldPassword, newPassword,  new DefaultCallback(callback));
+    }
+
+    public final void callChangePassword(java.lang.String oldPassword, java.lang.String newPassword) {
+        callChangePassword(oldPassword, newPassword,  null);
+    }
+
     public final void callSelectProject(java.lang.String projectId,  Runnable callback) {
         getScrumService().selectProject(projectId,  new DefaultCallback(callback));
     }
