@@ -36,6 +36,8 @@ public abstract class GUserDao
     public void clearCaches() {
         usersByNameCache.clear();
         namesCache = null;
+        usersByEmailCache.clear();
+        emailsCache = null;
     }
 
     @Override
@@ -90,6 +92,46 @@ public abstract class GUserDao
 
         public boolean test(User e) {
             return e.isName(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - email
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<User>> usersByEmailCache = new Cache<java.lang.String,Set<User>>(
+            new Cache.Factory<java.lang.String,Set<User>>() {
+                public Set<User> create(java.lang.String email) {
+                    return getEntities(new IsEmail(email));
+                }
+            });
+
+    public final Set<User> getUsersByEmail(java.lang.String email) {
+        return usersByEmailCache.get(email);
+    }
+    private Set<java.lang.String> emailsCache;
+
+    public final Set<java.lang.String> getEmails() {
+        if (emailsCache == null) {
+            emailsCache = new HashSet<java.lang.String>();
+            for (User e : getEntities()) {
+                if (e.isEmailSet()) emailsCache.add(e.getEmail());
+            }
+        }
+        return emailsCache;
+    }
+
+    private static class IsEmail implements Predicate<User> {
+
+        private java.lang.String value;
+
+        public IsEmail(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return e.isEmail(value);
         }
 
     }

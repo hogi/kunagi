@@ -66,6 +66,7 @@ public class LoginWidget extends AWidget {
 				if (ScrumGwtApplication.get().getUser() == null) {
 					GwtLogger.DEBUG("LOGIN FAILED!");
 					ScrumGwtApplication.get().getUi().unlock();
+					Ui.get().showError("Login failed.");
 				} else {
 					GwtLogger.DEBUG("Login succeded:", ScrumGwtApplication.get().getUi());
 					Ui.get().showProjectSelector();

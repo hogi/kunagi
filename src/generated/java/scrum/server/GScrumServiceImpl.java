@@ -26,6 +26,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onLogin(WebSession session, java.lang.String username, java.lang.String password);
     protected abstract void onLogout(WebSession session);
     protected abstract void onChangePassword(WebSession session, java.lang.String oldPassword, java.lang.String newPassword);
+    protected abstract void onResetPassword(WebSession session, java.lang.String userId);
     protected abstract void onSelectProject(WebSession session, java.lang.String projectId);
     protected abstract void onSwitchToNextSprint(WebSession session);
     protected abstract void onRequestImpediments(WebSession session);
@@ -100,6 +101,23 @@ public abstract class GScrumServiceImpl
             onChangePassword(session, oldPassword, newPassword);
         } catch (Throwable t) {
             handleServiceMethodException("changePassword",t);
+        }
+        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public ilarkesto.gwt.client.DataTransferObject resetPassword(java.lang.String userId) {
+        LOG.debug("resetPassword");
+        WebSession session = (WebSession) getSession();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:resetPassword");
+        context.bindCurrentThread();
+        try {
+            onResetPassword(session, userId);
+        } catch (Throwable t) {
+            handleServiceMethodException("resetPassword",t);
         }
         ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
         onServiceMethodExecuted(context);

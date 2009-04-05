@@ -186,7 +186,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(userModel);
 			userModel.setGwtSupport(true);
 			userModel.setSuperbean(super.getUserModel());
-			userModel.addProperty("name", String.class);
+			userModel.addProperty("name", String.class).setSearchable(true);
+			userModel.addProperty("email", String.class).setSearchable(true);
 		}
 		return userModel;
 	}
@@ -207,6 +208,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("logout");
 			gwtServiceModel.addMethod("changePassword").addParameter("oldPassword", String.class).addParameter(
 				"newPassword", String.class);
+			gwtServiceModel.addMethod("resetPassword").addParameter("userId", String.class);
 			gwtServiceModel.addMethod("selectProject").addParameter("projectId", String.class);
 			gwtServiceModel.addMethod("switchToNextSprint");
 			gwtServiceModel.addMethod("requestImpediments");

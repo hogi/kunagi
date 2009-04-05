@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GUser
             extends AUser
-            implements java.lang.Comparable<User> {
+            implements ilarkesto.search.Searchable, java.lang.Comparable<User> {
 
     // --- AEntity ---
 
@@ -37,6 +37,7 @@ public abstract class GUser
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("name", this.name);
+        properties.put("email", this.email);
     }
 
     public int compareTo(User other) {
@@ -46,6 +47,18 @@ public abstract class GUser
     private static final Logger LOG = Logger.get(GUser.class);
 
     public static final String TYPE = "user";
+
+
+    // -----------------------------------------------------------
+    // - Searchable
+    // -----------------------------------------------------------
+
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getName(), key)) return true;
+        if (matchesKey(getEmail(), key)) return true;
+        return false;
+    }
 
     // -----------------------------------------------------------
     // - name
@@ -76,6 +89,37 @@ public abstract class GUser
     public final boolean isName(java.lang.String name) {
         if (this.name == null && name == null) return true;
         return this.name != null && this.name.equals(name);
+    }
+
+    // -----------------------------------------------------------
+    // - email
+    // -----------------------------------------------------------
+
+    private java.lang.String email;
+
+    public final java.lang.String getEmail() {
+        return email;
+    }
+
+    public final void setEmail(java.lang.String email) {
+        email = prepareEmail(email);
+        if (isEmail(email)) return;
+        this.email = email;
+        fireModified();
+    }
+
+    protected java.lang.String prepareEmail(java.lang.String email) {
+        email = Str.removeUnreadableChars(email);
+        return email;
+    }
+
+    public final boolean isEmailSet() {
+        return this.email != null;
+    }
+
+    public final boolean isEmail(java.lang.String email) {
+        if (this.email == null && email == null) return true;
+        return this.email != null && this.email.equals(email);
     }
 
     protected void repairDeadReferences(String entityId) {

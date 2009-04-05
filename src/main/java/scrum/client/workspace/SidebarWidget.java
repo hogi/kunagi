@@ -68,6 +68,13 @@ public class SidebarWidget extends AWidget {
 			}
 		});
 
+		navigator.addItem(Img.bundle.user16(), "User Management", new Runnable() {
+
+			public void run() {
+				WorkareaWidget.get().showUserList();
+			}
+		});
+
 		navigator.addItem(Img.bundle.test16(), "WidgetsTester", new Runnable() {
 
 			public void run() {

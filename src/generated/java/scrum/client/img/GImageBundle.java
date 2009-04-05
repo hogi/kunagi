@@ -91,4 +91,10 @@ public interface GImageBundle
     @Resource(value="trash32.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype trash32();
 
+    @Resource(value="user16.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype user16();
+
+    @Resource(value="user32.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype user32();
+
 }

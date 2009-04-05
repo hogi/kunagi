@@ -10,6 +10,10 @@ public class User extends GUser {
 		super(data);
 	}
 
+	public int compareTo(User u) {
+		return getName().compareTo(u.getName());
+	}
+
 	@Override
 	public String toString() {
 		return getName();

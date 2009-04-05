@@ -26,6 +26,8 @@ public interface GScrumService
 
     ilarkesto.gwt.client.DataTransferObject changePassword(java.lang.String oldPassword, java.lang.String newPassword);
 
+    ilarkesto.gwt.client.DataTransferObject resetPassword(java.lang.String userId);
+
     ilarkesto.gwt.client.DataTransferObject selectProject(java.lang.String projectId);
 
     ilarkesto.gwt.client.DataTransferObject switchToNextSprint();
