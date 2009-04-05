@@ -77,10 +77,10 @@ a {cursor: pointer;}
 
 /***** Toolbar *****/
 
-.ButtonWidget {display: block; font-weight: bold; padding: 3px; text-decoration: none; cursor: pointer; white-space: nowrap; background: orange url("button_bg.png"); border: 1px solid orange;}
-.ButtonWidget a {color: white;}
+.ButtonWidget { }
+.ButtonWidget a { display: block; font-weight: bold; padding: 3px; text-decoration: none; cursor: pointer; white-space: nowrap; background: #FF8000 url("button_bg.png"); border: 1px solid orange; }
 .ButtonWidget a:visited {color: white;}
-.ButtonWidget a:hover {color: white; background: orange url("button_bg_hover.png");}
+.ButtonWidget a:hover { display: block; font-weight: bold; padding: 3px; text-decoration: none; cursor: pointer; white-space: nowrap; background: #FFC20E url("button_bg.png"); border: 1px solid orange; }
 .ToolbarWidget {padding: 3px;}
 .ToolbarWidget .vertical .ButtonWidget {float: none; margin-bottom: 3px;}
 .ToolbarWidget .horizontal .ButtonWidget {float: left; margin-right: 3px;}
