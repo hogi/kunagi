@@ -20,7 +20,7 @@ public class HeaderWidget extends AWidget {
 
 	private ButtonWidget logoutButton;
 
-	private LogoutClickListener logoutClickListener;
+	private ButtonWidget changePasswordButton;
 
 	@Override
 	protected Widget onInitialization() {
@@ -49,9 +49,13 @@ public class HeaderWidget extends AWidget {
 
 		toolbar = new ToolbarWidget(true);
 		logoutButton = new ButtonWidget("logout");
-		logoutClickListener = new LogoutClickListener();
-		logoutButton.addClickListener(logoutClickListener);
+		logoutButton.addClickListener(new LogoutClickListener());
 		toolbar.add(logoutButton);
+
+		changePasswordButton = new ButtonWidget("change pwd");
+		changePasswordButton.addClickListener(new ChangePasswordClickListener());
+		toolbar.add(changePasswordButton);
+
 		currentUserPanel.add(toolbar);
 
 		panel.add(currentUserPanel);
@@ -62,15 +66,26 @@ public class HeaderWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		if (ScrumGwtApplication.get().getUser() != null) {
+		boolean loggedIn = ScrumGwtApplication.get().getUser() != null;
+		if (loggedIn) {
 			currentUserLabel.setText(ScrumGwtApplication.get().getUser().getName());
 		}
+		logoutButton.setVisible(loggedIn);
+		changePasswordButton.setVisible(loggedIn);
 	}
 
 	class LogoutClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
 			ScrumGwtApplication.get().logout();
+		}
+
+	}
+
+	class ChangePasswordClickListener implements ClickListener {
+
+		public void onClick(Widget sender) {
+			Ui.get().showConfiguration();
 		}
 
 	}

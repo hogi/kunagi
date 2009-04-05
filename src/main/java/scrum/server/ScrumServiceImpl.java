@@ -50,7 +50,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	protected void onChangePassword(WebSession session, String oldPassword, String newPassword) {
+		if (session.getUser().matchesPassword(oldPassword) == false) { throw new RuntimeException("bad password"); }
 
+		session.getUser().setPassword(newPassword);
+
+		LOG.info("password changed by user");
 	}
 
 	@Override
@@ -104,6 +108,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	public void onLogin(WebSession session, String username, String password) {
 		User user = userDao.getUserByName(username);
 		if (user == null) throw new RuntimeException("Login failed.");
+
+		if (user.matchesPassword(password) == false) { throw new RuntimeException("Wrong password"); }
 
 		session.setUser(user);
 		session.getNextData().setUserId(user.getId());

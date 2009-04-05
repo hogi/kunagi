@@ -1,11 +1,6 @@
 package scrum.client;
 
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
+import scrum.client.workspace.Ui;
 
 public class ClientLogger {
 
@@ -14,24 +9,7 @@ public class ClientLogger {
 	}
 
 	public static final void showClientMessage(String message) {
-		final DialogBox db = new DialogBox();
-		db.setSize("200", "150");
-
-		FlowPanel panel = new FlowPanel();
-		Label text = new Label(message);
-		panel.add(text);
-
-		Button close = new Button("close");
-		close.addClickListener(new ClickListener() {
-
-			public void onClick(Widget sender) {
-				db.hide();
-			}
-		});
-		panel.add(close);
-
-		db.add(panel);
-		db.show();
+		Ui.get().showError(message);
 	}
 
 }

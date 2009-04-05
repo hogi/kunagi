@@ -6,7 +6,11 @@ import ilarkesto.gwt.client.LockWidget;
 import scrum.client.admin.LoginWidget;
 import scrum.client.admin.ProjectSelectorWidget;
 
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -27,6 +31,7 @@ public class Ui extends AWidget {
 	private LoginWidget login;
 	private ProjectSelectorWidget projectSelector;
 	private WorkspaceWidget workspace;
+	private UserConfigWidget userconfig;
 
 	@Override
 	protected Widget onInitialization() {
@@ -53,15 +58,21 @@ public class Ui extends AWidget {
 		return locker;
 	}
 
+	public void reset() {
+		projectSelector = null;
+		workspace = null;
+		userconfig = null;
+	}
+
 	@Override
 	protected void onUpdate() {
 		header.update();
 		contentWrapper.setWidget(currentWidget);
-		currentWidget.update();
+		if (currentWidget != null) currentWidget.update();
 		locker.update();
 	}
 
-	private void setCurrentWidget(AWidget widget) {
+	public void setCurrentWidget(AWidget widget) {
 		GwtLogger.DEBUG("Setting UI widget:", widget);
 		this.currentWidget = widget;
 		unlock();
@@ -85,7 +96,14 @@ public class Ui extends AWidget {
 	}
 
 	public void showLogin() {
+		reset();
 		setCurrentWidget(login);
+	}
+
+	public void showConfiguration() {
+		userconfig = getUserconfig();
+		userconfig.setPrevWidget(currentWidget);
+		setCurrentWidget(userconfig);
 	}
 
 	public void showProjectSelector() {
@@ -97,8 +115,35 @@ public class Ui extends AWidget {
 		return workspace;
 	}
 
+	public UserConfigWidget getUserconfig() {
+		if (userconfig == null) userconfig = new UserConfigWidget();
+		return userconfig;
+	}
+
 	public void showWorkspace() {
 		setCurrentWidget(getWorkspace());
+	}
+
+	public void showError(String message) {
+		final DialogBox db = new DialogBox();
+		db.setSize("200", "150");
+		db.setPopupPosition(100, 100);
+
+		FlowPanel panel = new FlowPanel();
+		Label text = new Label(message);
+		panel.add(text);
+
+		Button close = new Button("close");
+		close.addClickListener(new ClickListener() {
+
+			public void onClick(Widget sender) {
+				db.hide();
+			}
+		});
+		panel.add(close);
+
+		db.add(panel);
+		db.show();
 	}
 
 	public static Ui get() {
