@@ -100,6 +100,10 @@ public abstract class GRisk
         return project != null && project.getId().equals(this.projectId);
     }
 
+    protected final void updateProject(Object value) {
+        setProject(value == null ? null : (scrum.server.project.Project)projectDao.getById((String)value));
+    }
+
     // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
@@ -129,6 +133,10 @@ public abstract class GRisk
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
+    }
+
+    protected final void updateLabel(Object value) {
+        setLabel((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -162,6 +170,10 @@ public abstract class GRisk
         return this.description != null && this.description.equals(description);
     }
 
+    protected final void updateDescription(Object value) {
+        setDescription((java.lang.String)value);
+    }
+
     // -----------------------------------------------------------
     // - probability
     // -----------------------------------------------------------
@@ -187,6 +199,10 @@ public abstract class GRisk
         return this.probability == probability;
     }
 
+    protected final void updateProbability(Object value) {
+        setProbability((Integer)value);
+    }
+
     // -----------------------------------------------------------
     // - impact
     // -----------------------------------------------------------
@@ -210,6 +226,23 @@ public abstract class GRisk
 
     public final boolean isImpact(int impact) {
         return this.impact == impact;
+    }
+
+    protected final void updateImpact(Object value) {
+        setImpact((Integer)value);
+    }
+
+    public void updateProperties(Map<?, ?> properties) {
+        for (Map.Entry entry : properties.entrySet()) {
+            String property = (String) entry.getKey();
+            if (property.equals("id")) continue;
+            Object value = entry.getValue();
+            if (property.equals("projectId")) updateProject(value);
+            if (property.equals("label")) updateLabel(value);
+            if (property.equals("description")) updateDescription(value);
+            if (property.equals("probability")) updateProbability(value);
+            if (property.equals("impact")) updateImpact(value);
+        }
     }
 
     protected void repairDeadReferences(String entityId) {

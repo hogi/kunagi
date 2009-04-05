@@ -89,6 +89,10 @@ public abstract class GImpediment
         return project != null && project.getId().equals(this.projectId);
     }
 
+    protected final void updateProject(Object value) {
+        setProject(value == null ? null : (scrum.server.project.Project)projectDao.getById((String)value));
+    }
+
     // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
@@ -120,6 +124,10 @@ public abstract class GImpediment
         return this.label != null && this.label.equals(label);
     }
 
+    protected final void updateLabel(Object value) {
+        setLabel((java.lang.String)value);
+    }
+
     // -----------------------------------------------------------
     // - date
     // -----------------------------------------------------------
@@ -148,6 +156,11 @@ public abstract class GImpediment
     public final boolean isDate(ilarkesto.base.time.Date date) {
         if (this.date == null && date == null) return true;
         return this.date != null && this.date.equals(date);
+    }
+
+    protected final void updateDate(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setDate((ilarkesto.base.time.Date)value);
     }
 
     // -----------------------------------------------------------
@@ -181,6 +194,10 @@ public abstract class GImpediment
         return this.description != null && this.description.equals(description);
     }
 
+    protected final void updateDescription(Object value) {
+        setDescription((java.lang.String)value);
+    }
+
     // -----------------------------------------------------------
     // - solution
     // -----------------------------------------------------------
@@ -212,6 +229,10 @@ public abstract class GImpediment
         return this.solution != null && this.solution.equals(solution);
     }
 
+    protected final void updateSolution(Object value) {
+        setSolution((java.lang.String)value);
+    }
+
     // -----------------------------------------------------------
     // - solveDate
     // -----------------------------------------------------------
@@ -240,6 +261,25 @@ public abstract class GImpediment
     public final boolean isSolveDate(ilarkesto.base.time.Date solveDate) {
         if (this.solveDate == null && solveDate == null) return true;
         return this.solveDate != null && this.solveDate.equals(solveDate);
+    }
+
+    protected final void updateSolveDate(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setSolveDate((ilarkesto.base.time.Date)value);
+    }
+
+    public void updateProperties(Map<?, ?> properties) {
+        for (Map.Entry entry : properties.entrySet()) {
+            String property = (String) entry.getKey();
+            if (property.equals("id")) continue;
+            Object value = entry.getValue();
+            if (property.equals("projectId")) updateProject(value);
+            if (property.equals("label")) updateLabel(value);
+            if (property.equals("date")) updateDate(value);
+            if (property.equals("description")) updateDescription(value);
+            if (property.equals("solution")) updateSolution(value);
+            if (property.equals("solveDate")) updateSolveDate(value);
+        }
     }
 
     protected void repairDeadReferences(String entityId) {

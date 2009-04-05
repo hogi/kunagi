@@ -88,6 +88,10 @@ public abstract class GSprint
         return project != null && project.getId().equals(this.projectId);
     }
 
+    protected final void updateProject(Object value) {
+        setProject(value == null ? null : (scrum.server.project.Project)projectDao.getById((String)value));
+    }
+
     // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
@@ -117,6 +121,10 @@ public abstract class GSprint
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
+    }
+
+    protected final void updateLabel(Object value) {
+        setLabel((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -150,6 +158,10 @@ public abstract class GSprint
         return this.goal != null && this.goal.equals(goal);
     }
 
+    protected final void updateGoal(Object value) {
+        setGoal((java.lang.String)value);
+    }
+
     // -----------------------------------------------------------
     // - begin
     // -----------------------------------------------------------
@@ -180,6 +192,11 @@ public abstract class GSprint
         return this.begin != null && this.begin.equals(begin);
     }
 
+    protected final void updateBegin(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setBegin((ilarkesto.base.time.Date)value);
+    }
+
     // -----------------------------------------------------------
     // - end
     // -----------------------------------------------------------
@@ -208,6 +225,24 @@ public abstract class GSprint
     public final boolean isEnd(ilarkesto.base.time.Date end) {
         if (this.end == null && end == null) return true;
         return this.end != null && this.end.equals(end);
+    }
+
+    protected final void updateEnd(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setEnd((ilarkesto.base.time.Date)value);
+    }
+
+    public void updateProperties(Map<?, ?> properties) {
+        for (Map.Entry entry : properties.entrySet()) {
+            String property = (String) entry.getKey();
+            if (property.equals("id")) continue;
+            Object value = entry.getValue();
+            if (property.equals("projectId")) updateProject(value);
+            if (property.equals("label")) updateLabel(value);
+            if (property.equals("goal")) updateGoal(value);
+            if (property.equals("begin")) updateBegin(value);
+            if (property.equals("end")) updateEnd(value);
+        }
     }
 
     protected void repairDeadReferences(String entityId) {

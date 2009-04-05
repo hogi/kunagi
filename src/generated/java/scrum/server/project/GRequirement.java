@@ -91,6 +91,10 @@ public abstract class GRequirement
         return project != null && project.getId().equals(this.projectId);
     }
 
+    protected final void updateProject(Object value) {
+        setProject(value == null ? null : (scrum.server.project.Project)projectDao.getById((String)value));
+    }
+
     // -----------------------------------------------------------
     // - sprint
     // -----------------------------------------------------------
@@ -127,6 +131,10 @@ public abstract class GRequirement
     public final boolean isSprint(scrum.server.sprint.Sprint sprint) {
         if (this.sprintId == null && sprint == null) return true;
         return sprint != null && sprint.getId().equals(this.sprintId);
+    }
+
+    protected final void updateSprint(Object value) {
+        setSprint(value == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById((String)value));
     }
 
     // -----------------------------------------------------------
@@ -211,6 +219,11 @@ public abstract class GRequirement
         return true;
     }
 
+    protected final void updateQualitys(Object value) {
+        Collection<String> ids = (Collection<String>) value;
+        setQualitys((java.util.Set) qualityDao.getByIdsAsSet(ids));
+    }
+
     // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
@@ -240,6 +253,10 @@ public abstract class GRequirement
     public final boolean isLabel(java.lang.String label) {
         if (this.label == null && label == null) return true;
         return this.label != null && this.label.equals(label);
+    }
+
+    protected final void updateLabel(Object value) {
+        setLabel((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -273,6 +290,10 @@ public abstract class GRequirement
         return this.description != null && this.description.equals(description);
     }
 
+    protected final void updateDescription(Object value) {
+        setDescription((java.lang.String)value);
+    }
+
     // -----------------------------------------------------------
     // - testDescription
     // -----------------------------------------------------------
@@ -302,6 +323,10 @@ public abstract class GRequirement
     public final boolean isTestDescription(java.lang.String testDescription) {
         if (this.testDescription == null && testDescription == null) return true;
         return this.testDescription != null && this.testDescription.equals(testDescription);
+    }
+
+    protected final void updateTestDescription(Object value) {
+        setTestDescription((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -334,6 +359,10 @@ public abstract class GRequirement
         return this.estimatedWork != null && this.estimatedWork.equals(estimatedWork);
     }
 
+    protected final void updateEstimatedWork(Object value) {
+        setEstimatedWork((java.lang.Integer)value);
+    }
+
     // -----------------------------------------------------------
     // - closed
     // -----------------------------------------------------------
@@ -357,6 +386,26 @@ public abstract class GRequirement
 
     public final boolean isClosed(boolean closed) {
         return this.closed == closed;
+    }
+
+    protected final void updateClosed(Object value) {
+        setClosed((Boolean)value);
+    }
+
+    public void updateProperties(Map<?, ?> properties) {
+        for (Map.Entry entry : properties.entrySet()) {
+            String property = (String) entry.getKey();
+            if (property.equals("id")) continue;
+            Object value = entry.getValue();
+            if (property.equals("projectId")) updateProject(value);
+            if (property.equals("sprintId")) updateSprint(value);
+            if (property.equals("qualitysId")) updateQualitys(value);
+            if (property.equals("label")) updateLabel(value);
+            if (property.equals("description")) updateDescription(value);
+            if (property.equals("testDescription")) updateTestDescription(value);
+            if (property.equals("estimatedWork")) updateEstimatedWork(value);
+            if (property.equals("closed")) updateClosed(value);
+        }
     }
 
     protected void repairDeadReferences(String entityId) {

@@ -98,6 +98,10 @@ public abstract class GProject
         return this.label != null && this.label.equals(label);
     }
 
+    protected final void updateLabel(Object value) {
+        setLabel((java.lang.String)value);
+    }
+
     // -----------------------------------------------------------
     // - description
     // -----------------------------------------------------------
@@ -127,6 +131,10 @@ public abstract class GProject
     public final boolean isDescription(java.lang.String description) {
         if (this.description == null && description == null) return true;
         return this.description != null && this.description.equals(description);
+    }
+
+    protected final void updateDescription(Object value) {
+        setDescription((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -159,6 +167,11 @@ public abstract class GProject
         return this.begin != null && this.begin.equals(begin);
     }
 
+    protected final void updateBegin(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setBegin((ilarkesto.base.time.Date)value);
+    }
+
     // -----------------------------------------------------------
     // - end
     // -----------------------------------------------------------
@@ -187,6 +200,11 @@ public abstract class GProject
     public final boolean isEnd(ilarkesto.base.time.Date end) {
         if (this.end == null && end == null) return true;
         return this.end != null && this.end.equals(end);
+    }
+
+    protected final void updateEnd(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setEnd((ilarkesto.base.time.Date)value);
     }
 
     // -----------------------------------------------------------
@@ -271,6 +289,11 @@ public abstract class GProject
         return true;
     }
 
+    protected final void updateAdmins(Object value) {
+        Collection<String> ids = (Collection<String>) value;
+        setAdmins((java.util.Set) userDao.getByIdsAsSet(ids));
+    }
+
     // -----------------------------------------------------------
     // - productOwner
     // -----------------------------------------------------------
@@ -309,6 +332,10 @@ public abstract class GProject
         return productOwner != null && productOwner.getId().equals(this.productOwnerId);
     }
 
+    protected final void updateProductOwner(Object value) {
+        setProductOwner(value == null ? null : (scrum.server.admin.User)userDao.getById((String)value));
+    }
+
     // -----------------------------------------------------------
     // - scrumMaster
     // -----------------------------------------------------------
@@ -345,6 +372,10 @@ public abstract class GProject
     public final boolean isScrumMaster(scrum.server.admin.User scrumMaster) {
         if (this.scrumMasterId == null && scrumMaster == null) return true;
         return scrumMaster != null && scrumMaster.getId().equals(this.scrumMasterId);
+    }
+
+    protected final void updateScrumMaster(Object value) {
+        setScrumMaster(value == null ? null : (scrum.server.admin.User)userDao.getById((String)value));
     }
 
     // -----------------------------------------------------------
@@ -429,6 +460,11 @@ public abstract class GProject
         return true;
     }
 
+    protected final void updateTeamMembers(Object value) {
+        Collection<String> ids = (Collection<String>) value;
+        setTeamMembers((java.util.Set) userDao.getByIdsAsSet(ids));
+    }
+
     // -----------------------------------------------------------
     // - currentSprint
     // -----------------------------------------------------------
@@ -467,6 +503,10 @@ public abstract class GProject
         return currentSprint != null && currentSprint.getId().equals(this.currentSprintId);
     }
 
+    protected final void updateCurrentSprint(Object value) {
+        setCurrentSprint(value == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById((String)value));
+    }
+
     // -----------------------------------------------------------
     // - nextSprint
     // -----------------------------------------------------------
@@ -503,6 +543,28 @@ public abstract class GProject
     public final boolean isNextSprint(scrum.server.sprint.Sprint nextSprint) {
         if (this.nextSprintId == null && nextSprint == null) return true;
         return nextSprint != null && nextSprint.getId().equals(this.nextSprintId);
+    }
+
+    protected final void updateNextSprint(Object value) {
+        setNextSprint(value == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById((String)value));
+    }
+
+    public void updateProperties(Map<?, ?> properties) {
+        for (Map.Entry entry : properties.entrySet()) {
+            String property = (String) entry.getKey();
+            if (property.equals("id")) continue;
+            Object value = entry.getValue();
+            if (property.equals("label")) updateLabel(value);
+            if (property.equals("description")) updateDescription(value);
+            if (property.equals("begin")) updateBegin(value);
+            if (property.equals("end")) updateEnd(value);
+            if (property.equals("adminsId")) updateAdmins(value);
+            if (property.equals("productOwnerId")) updateProductOwner(value);
+            if (property.equals("scrumMasterId")) updateScrumMaster(value);
+            if (property.equals("teamMembersId")) updateTeamMembers(value);
+            if (property.equals("currentSprintId")) updateCurrentSprint(value);
+            if (property.equals("nextSprintId")) updateNextSprint(value);
+        }
     }
 
     protected void repairDeadReferences(String entityId) {

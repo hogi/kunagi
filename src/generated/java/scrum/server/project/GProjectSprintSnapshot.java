@@ -87,6 +87,10 @@ public abstract class GProjectSprintSnapshot
         return sprint != null && sprint.getId().equals(this.sprintId);
     }
 
+    protected final void updateSprint(Object value) {
+        setSprint(value == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById((String)value));
+    }
+
     // -----------------------------------------------------------
     // - remainingWork
     // -----------------------------------------------------------
@@ -112,6 +116,10 @@ public abstract class GProjectSprintSnapshot
         return this.remainingWork == remainingWork;
     }
 
+    protected final void updateRemainingWork(Object value) {
+        setRemainingWork((Integer)value);
+    }
+
     // -----------------------------------------------------------
     // - burnedWork
     // -----------------------------------------------------------
@@ -135,6 +143,21 @@ public abstract class GProjectSprintSnapshot
 
     public final boolean isBurnedWork(int burnedWork) {
         return this.burnedWork == burnedWork;
+    }
+
+    protected final void updateBurnedWork(Object value) {
+        setBurnedWork((Integer)value);
+    }
+
+    public void updateProperties(Map<?, ?> properties) {
+        for (Map.Entry entry : properties.entrySet()) {
+            String property = (String) entry.getKey();
+            if (property.equals("id")) continue;
+            Object value = entry.getValue();
+            if (property.equals("sprintId")) updateSprint(value);
+            if (property.equals("remainingWork")) updateRemainingWork(value);
+            if (property.equals("burnedWork")) updateBurnedWork(value);
+        }
     }
 
     protected void repairDeadReferences(String entityId) {

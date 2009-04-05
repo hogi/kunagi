@@ -89,6 +89,10 @@ public abstract class GTask
         return requirement != null && requirement.getId().equals(this.requirementId);
     }
 
+    protected final void updateRequirement(Object value) {
+        setRequirement(value == null ? null : (scrum.server.project.Requirement)requirementDao.getById((String)value));
+    }
+
     // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
@@ -120,6 +124,10 @@ public abstract class GTask
         return this.label != null && this.label.equals(label);
     }
 
+    protected final void updateLabel(Object value) {
+        setLabel((java.lang.String)value);
+    }
+
     // -----------------------------------------------------------
     // - remainingWork
     // -----------------------------------------------------------
@@ -145,6 +153,10 @@ public abstract class GTask
         return this.remainingWork == remainingWork;
     }
 
+    protected final void updateRemainingWork(Object value) {
+        setRemainingWork((Integer)value);
+    }
+
     // -----------------------------------------------------------
     // - burnedWork
     // -----------------------------------------------------------
@@ -168,6 +180,10 @@ public abstract class GTask
 
     public final boolean isBurnedWork(int burnedWork) {
         return this.burnedWork == burnedWork;
+    }
+
+    protected final void updateBurnedWork(Object value) {
+        setBurnedWork((Integer)value);
     }
 
     // -----------------------------------------------------------
@@ -199,6 +215,10 @@ public abstract class GTask
     public final boolean isNotice(java.lang.String notice) {
         if (this.notice == null && notice == null) return true;
         return this.notice != null && this.notice.equals(notice);
+    }
+
+    protected final void updateNotice(Object value) {
+        setNotice((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -237,6 +257,24 @@ public abstract class GTask
     public final boolean isOwner(scrum.server.admin.User owner) {
         if (this.ownerId == null && owner == null) return true;
         return owner != null && owner.getId().equals(this.ownerId);
+    }
+
+    protected final void updateOwner(Object value) {
+        setOwner(value == null ? null : (scrum.server.admin.User)userDao.getById((String)value));
+    }
+
+    public void updateProperties(Map<?, ?> properties) {
+        for (Map.Entry entry : properties.entrySet()) {
+            String property = (String) entry.getKey();
+            if (property.equals("id")) continue;
+            Object value = entry.getValue();
+            if (property.equals("requirementId")) updateRequirement(value);
+            if (property.equals("label")) updateLabel(value);
+            if (property.equals("remainingWork")) updateRemainingWork(value);
+            if (property.equals("burnedWork")) updateBurnedWork(value);
+            if (property.equals("notice")) updateNotice(value);
+            if (property.equals("ownerId")) updateOwner(value);
+        }
     }
 
     protected void repairDeadReferences(String entityId) {

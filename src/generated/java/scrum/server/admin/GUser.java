@@ -91,6 +91,10 @@ public abstract class GUser
         return this.name != null && this.name.equals(name);
     }
 
+    protected final void updateName(Object value) {
+        setName((java.lang.String)value);
+    }
+
     // -----------------------------------------------------------
     // - email
     // -----------------------------------------------------------
@@ -120,6 +124,20 @@ public abstract class GUser
     public final boolean isEmail(java.lang.String email) {
         if (this.email == null && email == null) return true;
         return this.email != null && this.email.equals(email);
+    }
+
+    protected final void updateEmail(Object value) {
+        setEmail((java.lang.String)value);
+    }
+
+    public void updateProperties(Map<?, ?> properties) {
+        for (Map.Entry entry : properties.entrySet()) {
+            String property = (String) entry.getKey();
+            if (property.equals("id")) continue;
+            Object value = entry.getValue();
+            if (property.equals("name")) updateName(value);
+            if (property.equals("email")) updateEmail(value);
+        }
     }
 
     protected void repairDeadReferences(String entityId) {
