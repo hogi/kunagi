@@ -37,9 +37,9 @@ a {cursor: pointer;}
 
 .NavigatorWidget {background:#CEDBF9;}
 .NavigatorWidget .item {padding: 0px 15px 0px 15px; font-size: 16px;}
-.NavigatorWidget .item a {display:block; padding: 5px 5px 5px 5px; text-decoration:none; border-bottom: 1px solid #E2EAFC;}
-.NavigatorWidget .item a:hover {background-color:#D3DFF8; color:#192666;}
-.NavigatorWidget .selected .item a {background-color: #D3DFF8;}
+.NavigatorWidget .item a {display:block; padding: 5px 5px 5px 5px; text-decoration:none; border-bottom: 1px solid #E2EAFC; color:#192666;}
+.NavigatorWidget .item a:hover {background-color:#D3DFF8;}
+.NavigatorWidget .selected .item a {background-color: #192666; color: #CEDBF9;}
 
 .TrashWidget {margin: 15px 15px 0px 15px; background: #F2F5FE; padding: 5px;}
 
