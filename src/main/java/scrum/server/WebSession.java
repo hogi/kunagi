@@ -18,7 +18,6 @@ public class WebSession extends AWebSession {
 
 	public WebSession(Context parentContext, HttpServletRequest initialRequest) {
 		super(parentContext, initialRequest);
-
 	}
 
 	public Project getProject() {
@@ -38,6 +37,12 @@ public class WebSession extends AWebSession {
 	public void setProject(Project project) {
 		LOG.info("Project selected:", project);
 		this.project = project;
+	}
+
+	@Override
+	protected void onInvalidate() {
+		setUser(null);
+		setProject(null);
 	}
 
 	@Override

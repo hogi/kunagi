@@ -105,6 +105,17 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		return dndManager;
 	}
 
+	public void logout() {
+		Ui.get().lock("logging out");
+		ScrumGwtApplication.get().callLogout(new Runnable() {
+
+			public void run() {
+				Ui.get().showLogin();
+			}
+
+		});
+	}
+
 	// --- helper ---
 
 	public WorkspaceWidget getWorkspaceWidget() {

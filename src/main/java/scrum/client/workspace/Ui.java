@@ -84,6 +84,10 @@ public class Ui extends AWidget {
 		return projectSelector;
 	}
 
+	public void showLogin() {
+		setCurrentWidget(login);
+	}
+
 	public void showProjectSelector() {
 		setCurrentWidget(getProjectSelector());
 	}

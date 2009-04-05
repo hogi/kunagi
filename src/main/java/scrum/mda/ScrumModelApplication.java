@@ -204,6 +204,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("ping");
 			gwtServiceModel.addMethod("login").addParameter("username", String.class).addParameter("password",
 				String.class);
+			gwtServiceModel.addMethod("logout");
 			gwtServiceModel.addMethod("selectProject").addParameter("projectId", String.class);
 			gwtServiceModel.addMethod("switchToNextSprint");
 			gwtServiceModel.addMethod("requestImpediments");
