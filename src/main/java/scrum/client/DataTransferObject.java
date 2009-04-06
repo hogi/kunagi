@@ -2,6 +2,8 @@ package scrum.client;
 
 import ilarkesto.gwt.client.ADataTransferObject;
 
-public class DataTransferObject extends ADataTransferObject {
+import java.io.Serializable;
+
+public class DataTransferObject extends ADataTransferObject implements Serializable {
 
 }
