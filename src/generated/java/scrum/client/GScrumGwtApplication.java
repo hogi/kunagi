@@ -31,7 +31,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callPing( Runnable callback) {
-        getScrumService().ping( new DefaultCallback(callback));
+        getScrumService().ping( new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callPing() {
@@ -39,7 +39,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callLogin(java.lang.String username, java.lang.String password,  Runnable callback) {
-        getScrumService().login(username, password,  new DefaultCallback(callback));
+        getScrumService().login(username, password,  new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callLogin(java.lang.String username, java.lang.String password) {
@@ -47,7 +47,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callLogout( Runnable callback) {
-        getScrumService().logout( new DefaultCallback(callback));
+        getScrumService().logout( new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callLogout() {
@@ -55,7 +55,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callChangePassword(java.lang.String oldPassword, java.lang.String newPassword,  Runnable callback) {
-        getScrumService().changePassword(oldPassword, newPassword,  new DefaultCallback(callback));
+        getScrumService().changePassword(oldPassword, newPassword,  new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callChangePassword(java.lang.String oldPassword, java.lang.String newPassword) {
@@ -63,7 +63,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callResetPassword(java.lang.String userId,  Runnable callback) {
-        getScrumService().resetPassword(userId,  new DefaultCallback(callback));
+        getScrumService().resetPassword(userId,  new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callResetPassword(java.lang.String userId) {
@@ -71,7 +71,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callSelectProject(java.lang.String projectId,  Runnable callback) {
-        getScrumService().selectProject(projectId,  new DefaultCallback(callback));
+        getScrumService().selectProject(projectId,  new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callSelectProject(java.lang.String projectId) {
@@ -79,7 +79,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callSwitchToNextSprint( Runnable callback) {
-        getScrumService().switchToNextSprint( new DefaultCallback(callback));
+        getScrumService().switchToNextSprint( new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callSwitchToNextSprint() {
@@ -87,7 +87,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callRequestImpediments( Runnable callback) {
-        getScrumService().requestImpediments( new DefaultCallback(callback));
+        getScrumService().requestImpediments( new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callRequestImpediments() {
@@ -95,7 +95,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callRequestRisks( Runnable callback) {
-        getScrumService().requestRisks( new DefaultCallback(callback));
+        getScrumService().requestRisks( new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callRequestRisks() {
@@ -103,7 +103,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callRequestRequirements( Runnable callback) {
-        getScrumService().requestRequirements( new DefaultCallback(callback));
+        getScrumService().requestRequirements( new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callRequestRequirements() {
@@ -111,7 +111,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callRequestQualitys( Runnable callback) {
-        getScrumService().requestQualitys( new DefaultCallback(callback));
+        getScrumService().requestQualitys( new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callRequestQualitys() {
@@ -119,7 +119,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callRequestCurrentSprint( Runnable callback) {
-        getScrumService().requestCurrentSprint( new DefaultCallback(callback));
+        getScrumService().requestCurrentSprint( new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callRequestCurrentSprint() {
@@ -127,7 +127,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callChangeProperties(java.lang.String entityId, java.util.Map properties,  Runnable callback) {
-        getScrumService().changeProperties(entityId, properties,  new DefaultCallback(callback));
+        getScrumService().changeProperties(entityId, properties,  new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callChangeProperties(java.lang.String entityId, java.util.Map properties) {
@@ -135,7 +135,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callCreateEntity(java.lang.String type, java.util.Map properties,  Runnable callback) {
-        getScrumService().createEntity(type, properties,  new DefaultCallback(callback));
+        getScrumService().createEntity(type, properties,  new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callCreateEntity(java.lang.String type, java.util.Map properties) {
@@ -143,7 +143,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callDeleteEntity(java.lang.String entityId,  Runnable callback) {
-        getScrumService().deleteEntity(entityId,  new DefaultCallback(callback));
+        getScrumService().deleteEntity(entityId,  new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callDeleteEntity(java.lang.String entityId) {
@@ -151,7 +151,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callSleep(long millis,  Runnable callback) {
-        getScrumService().sleep(millis,  new DefaultCallback(callback));
+        getScrumService().sleep(millis,  new DefaultCallback<DataTransferObject>(callback));
     }
 
     public final void callSleep(long millis) {

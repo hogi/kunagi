@@ -40,7 +40,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onSleep(WebSession session, long millis);
 
 
-    public ilarkesto.gwt.client.DataTransferObject ping() {
+    public scrum.client.DataTransferObject ping() {
         LOG.debug("ping");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -51,13 +51,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("ping",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject login(java.lang.String username, java.lang.String password) {
+    public scrum.client.DataTransferObject login(java.lang.String username, java.lang.String password) {
         LOG.debug("login");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -68,13 +68,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("login",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject logout() {
+    public scrum.client.DataTransferObject logout() {
         LOG.debug("logout");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -85,13 +85,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("logout",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject changePassword(java.lang.String oldPassword, java.lang.String newPassword) {
+    public scrum.client.DataTransferObject changePassword(java.lang.String oldPassword, java.lang.String newPassword) {
         LOG.debug("changePassword");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -102,13 +102,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("changePassword",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject resetPassword(java.lang.String userId) {
+    public scrum.client.DataTransferObject resetPassword(java.lang.String userId) {
         LOG.debug("resetPassword");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -119,13 +119,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("resetPassword",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject selectProject(java.lang.String projectId) {
+    public scrum.client.DataTransferObject selectProject(java.lang.String projectId) {
         LOG.debug("selectProject");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -136,13 +136,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("selectProject",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject switchToNextSprint() {
+    public scrum.client.DataTransferObject switchToNextSprint() {
         LOG.debug("switchToNextSprint");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -153,13 +153,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("switchToNextSprint",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject requestImpediments() {
+    public scrum.client.DataTransferObject requestImpediments() {
         LOG.debug("requestImpediments");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -170,13 +170,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("requestImpediments",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject requestRisks() {
+    public scrum.client.DataTransferObject requestRisks() {
         LOG.debug("requestRisks");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -187,13 +187,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("requestRisks",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject requestRequirements() {
+    public scrum.client.DataTransferObject requestRequirements() {
         LOG.debug("requestRequirements");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -204,13 +204,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("requestRequirements",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject requestQualitys() {
+    public scrum.client.DataTransferObject requestQualitys() {
         LOG.debug("requestQualitys");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -221,13 +221,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("requestQualitys",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject requestCurrentSprint() {
+    public scrum.client.DataTransferObject requestCurrentSprint() {
         LOG.debug("requestCurrentSprint");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -238,13 +238,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("requestCurrentSprint",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties) {
+    public scrum.client.DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties) {
         LOG.debug("changeProperties");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -255,13 +255,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("changeProperties",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject createEntity(java.lang.String type, java.util.Map properties) {
+    public scrum.client.DataTransferObject createEntity(java.lang.String type, java.util.Map properties) {
         LOG.debug("createEntity");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -272,13 +272,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("createEntity",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject deleteEntity(java.lang.String entityId) {
+    public scrum.client.DataTransferObject deleteEntity(java.lang.String entityId) {
         LOG.debug("deleteEntity");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -289,13 +289,13 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("deleteEntity",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }
 
 
-    public ilarkesto.gwt.client.DataTransferObject sleep(long millis) {
+    public scrum.client.DataTransferObject sleep(long millis) {
         LOG.debug("sleep");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -306,7 +306,7 @@ public abstract class GScrumServiceImpl
         } catch (Throwable t) {
             handleServiceMethodException("sleep",t);
         }
-        ilarkesto.gwt.client.DataTransferObject ret = session.popNextData();
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
         return ret;
     }

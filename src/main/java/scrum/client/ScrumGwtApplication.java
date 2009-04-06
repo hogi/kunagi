@@ -1,6 +1,6 @@
 package scrum.client;
 
-import ilarkesto.gwt.client.DataTransferObject;
+import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.admin.User;
 import scrum.client.dnd.DndManager;
@@ -14,21 +14,11 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	private Dao dao = new Dao();
 
-	/**
-	 * Current, logged in user.
-	 * 
-	 * TODO potential security problem. User could change this variable.
-	 */
 	private User user;
-
-	/**
-	 * Currently selected project.
-	 */
 	private Project project;
-
 	private DndManager dndManager;
-
 	private Ui ui;
+	private boolean developmentMode;
 
 	/**
 	 * Application entry point.
@@ -42,11 +32,11 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		ui = Ui.get();
 		ui.update();
 		RootPanel.get("workspace").add(ui);
-		ui.lock("Connecting to server...");
+		ui.lock("Loading...");
 		callPing(new Runnable() {
 
 			public void run() {
-				ui.unlock();
+				ui.showLogin();
 			}
 		});
 
@@ -61,13 +51,22 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		return ui;
 	}
 
+	public boolean isDevelopmentMode() {
+		return developmentMode;
+	}
+
 	@Override
-	protected void handleDataFromServer(DataTransferObject data) {
-		super.handleDataFromServer(data);
+	protected void handleDataFromServer(ADataTransferObject adata) {
+		super.handleDataFromServer(adata);
+		DataTransferObject data = (DataTransferObject) adata;
 
 		if (data.entityIdBase != null) {
 			getDao().setEntityIdBase(data.entityIdBase);
 			GwtLogger.DEBUG("entityIdBase:", data.entityIdBase);
+		}
+
+		if (data.developmentMode != null) {
+			developmentMode = data.developmentMode;
 		}
 
 		if (data.isUserSet()) {
@@ -109,13 +108,9 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		Ui.get().lock("logging out");
 		user = null;
 		project = null;
-		ScrumGwtApplication.get().callLogout(new Runnable() {
-
-			public void run() {
-				Ui.get().showLogin();
-			}
-
-		});
+		getDao().clearAllEntities();
+		ScrumGwtApplication.get().callLogout();
+		Ui.get().showLogin();
 	}
 
 	// --- helper ---

@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.SourcesTableEvents;
 import com.google.gwt.user.client.ui.TableListener;
 import com.google.gwt.user.client.ui.Widget;
@@ -42,7 +43,10 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		table.setStyleName(StyleSheet.ELEMENT_BLOCK_LIST_WIDGET_TABLE);
 		table.addTableListener(new Listener());
 
-		return table;
+		SimplePanel panel = new SimplePanel();
+		panel.setStyleName("BlockListWidget");
+		panel.setWidget(table);
+		return panel;
 	}
 
 	@Override

@@ -23,6 +23,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 	private Task task;
 
 	private Label summary;
+	private Label owner;
 	private FieldsWidget fields;
 
 	@Override
@@ -156,7 +157,8 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 		});
 
-		fields.add("Owner", new Label(task.getOwner() == null ? "No owner specified." : task.getOwner().getName()));
+		owner = new Label();
+		fields.add("Owner", owner);
 
 	}
 
@@ -165,6 +167,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		setBlockTitle(task.getLabel());
 		setIcon(task.isDone() ? Img.bundle.done32() : Img.bundle.task32());
 		fields.update();
+		owner.setText(task.getOwner() == null ? "No owner specified." : task.getOwner().getName());
 		setContent(fields);
 		setToolbar(createToolbar());
 	}

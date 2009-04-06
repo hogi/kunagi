@@ -19,68 +19,74 @@ public class SidebarWidget extends AWidget {
 
 		navigator = new NavigatorWidget();
 
-		navigator.addItem(Img.bundle.project16(), "Project Overview", new Runnable() {
+		navigator.addItem(Img.bundle.project16(), "Project Overview", WorkareaWidget.get().getProjectOverview(),
+			new Runnable() {
 
-			public void run() {
-				WorkareaWidget.get().showProjectOverview();
-			}
-		});
+				public void run() {
+					WorkareaWidget.get().showProjectOverview();
+				}
+			});
 
-		navigator.addItem(Img.bundle.sprint16(), "Sprint Backlog", new Runnable() {
+		navigator.addItem(Img.bundle.sprint16(), "Sprint Backlog", WorkareaWidget.get().getSprintBacklog(),
+			new Runnable() {
 
-			public void run() {
-				WorkareaWidget.get().showSprintBacklog();
-			}
-		});
+				public void run() {
+					WorkareaWidget.get().showSprintBacklog();
+				}
+			});
 
-		navigator.addItem(Img.bundle.requirement16(), "Product Backlog", new Runnable() {
+		navigator.addItem(Img.bundle.requirement16(), "Product Backlog", WorkareaWidget.get().getProductBacklog(),
+			new Runnable() {
 
-			public void run() {
-				WorkareaWidget.get().showProductBacklog();
-			}
-		});
+				public void run() {
+					WorkareaWidget.get().showProductBacklog();
+				}
+			});
 
-		navigator.addItem(Img.bundle.requirement16(), "Quality Backlog", new Runnable() {
+		navigator.addItem(Img.bundle.requirement16(), "Quality Backlog", WorkareaWidget.get().getQualityBacklog(),
+			new Runnable() {
 
-			public void run() {
-				WorkareaWidget.get().showQualityBacklog();
-			}
-		});
+				public void run() {
+					WorkareaWidget.get().showQualityBacklog();
+				}
+			});
 
-		navigator.addItem(Img.bundle.impediment16(), "Impediment List", new Runnable() {
+		navigator.addItem(Img.bundle.impediment16(), "Impediment List", WorkareaWidget.get().getImpedimentList(),
+			new Runnable() {
 
-			public void run() {
-				WorkareaWidget.get().showImpedimentList();
-			}
-		});
+				public void run() {
+					WorkareaWidget.get().showImpedimentList();
+				}
+			});
 
-		navigator.addItem(Img.bundle.risk16(), "Risk Management", new Runnable() {
+		navigator.addItem(Img.bundle.risk16(), "Risk Management", WorkareaWidget.get().getRiskList(), new Runnable() {
 
 			public void run() {
 				WorkareaWidget.get().showRiskList();
 			}
 		});
 
-		navigator.addItem(Img.bundle.sprint16(), "Next Sprint", new Runnable() {
+		navigator.addItem(Img.bundle.sprint16(), "Next Sprint", WorkareaWidget.get().getNextSprint(), new Runnable() {
 
 			public void run() {
 				WorkareaWidget.get().showNextSprint();
 			}
 		});
 
-		navigator.addItem(Img.bundle.user16(), "User Management", new Runnable() {
+		navigator.addItem(Img.bundle.user16(), "User Management", WorkareaWidget.get().getUserList(), new Runnable() {
 
 			public void run() {
 				WorkareaWidget.get().showUserList();
 			}
 		});
 
-		navigator.addItem(Img.bundle.test16(), "WidgetsTester", new Runnable() {
+		navigator.addItem(Img.bundle.test16(), "WidgetsTester", WorkareaWidget.get().getWidgetsTester(),
+			new Runnable() {
 
-			public void run() {
-				WorkareaWidget.get().showWidgetsTester();
-			}
-		});
+				public void run() {
+					WorkareaWidget.get().showWidgetsTester();
+				}
+			});
 
 		trash = new TrashWidget();
 
@@ -96,11 +102,19 @@ public class SidebarWidget extends AWidget {
 		return sidebar;
 	}
 
+	public void navigateToSprintBacklog() {
+		navigator.select(WorkareaWidget.get().getSprintBacklog());
+	}
+
 	@Override
 	protected void onUpdate() {
 		navigator.update();
 		trash.update();
 		clipboard.update();
+	}
+
+	public static SidebarWidget get() {
+		return WorkspaceWidget.get().getSidebar();
 	}
 
 }

@@ -68,9 +68,8 @@ public class WorkareaWidget extends AWidget {
 
 	public void showSprintBacklog(final Requirement r) {
 		ScrumGwtApplication.get().callRequestCurrentSprint();
-		SprintBacklogWidget sprintWidget = getSprintBacklog();
-		show(getSprintBacklog());
-		sprintWidget.selectRequirement(r);
+		SidebarWidget.get().navigateToSprintBacklog();
+		getSprintBacklog().selectRequirement(r);
 	}
 
 	public void showProductBacklog() {

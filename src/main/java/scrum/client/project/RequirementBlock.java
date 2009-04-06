@@ -197,15 +197,17 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 					}
 				});
 			} else {
-				toolbar.addButton(Img.bundle.sprint16().createImage(), "Add to Sprint").addClickListener(
-					new ClickListener() {
+				if (requirement.getEstimatedWork() != null) {
+					toolbar.addButton(Img.bundle.sprint16().createImage(), "Add to Sprint").addClickListener(
+						new ClickListener() {
 
-						public void onClick(Widget sender) {
-							requirement.setSprint(currentSprint);
-							update();
-							WorkareaWidget.get().showSprintBacklog(requirement);
-						}
-					});
+							public void onClick(Widget sender) {
+								requirement.setSprint(currentSprint);
+								update();
+								WorkareaWidget.get().showSprintBacklog(requirement);
+							}
+						});
+				}
 			}
 		}
 

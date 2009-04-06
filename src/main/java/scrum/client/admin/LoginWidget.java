@@ -9,6 +9,7 @@ import scrum.client.common.GroupWidget;
 import scrum.client.test.WidgetsTesterWidget;
 import scrum.client.workspace.Ui;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -24,9 +25,12 @@ public class LoginWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		username = new TextBox();
-		username.setText("admin");
 		password = new PasswordTextBox();
-		password.setText("geheim");
+
+		if (ScrumGwtApplication.get().isDevelopmentMode()) {
+			username.setText("admin");
+			password.setText("geheim");
+		}
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 		toolbar.addButton("Login").addClickListener(new ClickListener() {
@@ -45,13 +49,13 @@ public class LoginWidget extends AWidget {
 		wrapper.setStyleName("LoginWidget");
 		wrapper.setWidget(new GroupWidget("Login", fieldsWidget));
 
-		// TODO remove this
+		if (GWT.isScript()) { return wrapper; }
+
 		FlowPanel test = new FlowPanel();
 		test.add(wrapper);
 		test.add(new WidgetsTesterWidget().update());
 		return test;
 
-		// return wrapper;
 	}
 
 	@Override

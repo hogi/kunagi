@@ -36,9 +36,9 @@ public class WidgetsTesterWidget extends AWidget {
 
 	private void testNavigator() {
 		NavigatorWidget navigator = new NavigatorWidget();
-		navigator.addItem(Img.bundle.test16(), "Item 1", null);
-		navigator.addItem(Img.bundle.test16(), "Item 2", null);
-		navigator.addItem(Img.bundle.test16(), "Item 3", null);
+		navigator.addItem(Img.bundle.test16(), "Item 1", "1", null);
+		navigator.addItem(Img.bundle.test16(), "Item 2", "2", null);
+		navigator.addItem(Img.bundle.test16(), "Item 3", "3", null);
 		addTest("NavigatorWidget", navigator);
 	}
 

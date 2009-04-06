@@ -38,12 +38,20 @@ public class Ui extends AWidget {
 		wait = new WaitWidget();
 		header = new HeaderWidget();
 
-		login = new LoginWidget();
-		currentWidget = login;
+		currentWidget = new AWidget() {
+
+			@Override
+			protected void onUpdate() {}
+
+			@Override
+			protected Widget onInitialization() {
+				return new Label("Loading...");
+			}
+		}.update();
 
 		contentWrapper = new SimplePanel();
 		contentWrapper.setStyleName("content");
-		contentWrapper.setWidget(login);
+		contentWrapper.setWidget(currentWidget);
 
 		SimplePanel headerWrapper = new SimplePanel();
 		headerWrapper.setStyleName("header");
@@ -59,6 +67,7 @@ public class Ui extends AWidget {
 	}
 
 	public void reset() {
+		login = null;
 		projectSelector = null;
 		workspace = null;
 		userconfig = null;
@@ -97,7 +106,7 @@ public class Ui extends AWidget {
 
 	public void showLogin() {
 		reset();
-		setCurrentWidget(login);
+		setCurrentWidget(getLogin());
 	}
 
 	public void showConfiguration() {
@@ -118,6 +127,13 @@ public class Ui extends AWidget {
 	public UserConfigWidget getUserconfig() {
 		if (userconfig == null) userconfig = new UserConfigWidget();
 		return userconfig;
+	}
+
+	public LoginWidget getLogin() {
+		if (login == null) {
+			login = new LoginWidget();
+		}
+		return login;
 	}
 
 	public void showWorkspace() {

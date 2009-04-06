@@ -46,6 +46,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	protected void onLogout(WebSession session) {
 		session.invalidate();
+		webApplication.destroyWebSession(session, getThreadLocalRequest().getSession());
 	}
 
 	@Override

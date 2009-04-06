@@ -1,7 +1,7 @@
 package scrum.client;
 
+import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.gwt.client.AGwtDao;
-import ilarkesto.gwt.client.DataTransferObject;
 import ilarkesto.gwt.client.GwtLogger;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -29,7 +29,7 @@ public abstract class AGwtApplication implements EntryPoint {
 		});
 	}
 
-	protected void handleDataFromServer(DataTransferObject data) {
+	protected void handleDataFromServer(ADataTransferObject data) {
 		getDao().handleDataFromServer(data);
 	}
 
@@ -42,7 +42,7 @@ public abstract class AGwtApplication implements EntryPoint {
 		return singleton;
 	}
 
-	protected class DefaultCallback implements AsyncCallback<DataTransferObject> {
+	protected class DefaultCallback<T extends ADataTransferObject> implements AsyncCallback<T> {
 
 		private Runnable successAction;
 
@@ -52,7 +52,7 @@ public abstract class AGwtApplication implements EntryPoint {
 			this.successAction = successAction;
 		}
 
-		public void onSuccess(DataTransferObject data) {
+		public void onSuccess(T data) {
 			handleDataFromServer(data);
 			if (successAction != null) successAction.run();
 		}

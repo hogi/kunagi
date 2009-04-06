@@ -55,6 +55,7 @@ public class Task extends GTask {
 
 	public void adjustRemainingWork(int burned) {
 		int remaining = getRemainingWork();
+		if (remaining == 0) return;
 		remaining -= burned;
 		if (remaining < 1) remaining = 1;
 		setRemainingWork(remaining);

@@ -1,11 +1,13 @@
 package scrum.server;
 
 import ilarkesto.di.Context;
+import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.logging.Logger;
 import ilarkesto.webapp.AWebSession;
 
 import javax.servlet.http.HttpServletRequest;
 
+import scrum.client.DataTransferObject;
 import scrum.server.admin.User;
 import scrum.server.project.Project;
 
@@ -43,6 +45,11 @@ public class WebSession extends AWebSession {
 	protected void onInvalidate() {
 		setUser(null);
 		setProject(null);
+	}
+
+	@Override
+	protected ADataTransferObject createDataTransferObject() {
+		return new DataTransferObject();
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import ilarkesto.di.app.ApplicationStarter;
 import ilarkesto.mda.AGeneratorApplication;
 import ilarkesto.mda.gen.GwtApplicationGenerator;
 import ilarkesto.mda.gen.GwtDaoGenerator;
+import ilarkesto.mda.gen.GwtEntityDtoGenerator;
 import ilarkesto.mda.gen.GwtEntityGenerator;
 import ilarkesto.mda.gen.GwtEntityTemplateGenerator;
 import ilarkesto.mda.gen.GwtImageBundleGenerator;
@@ -254,6 +255,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			DatobModel datobModel = (DatobModel) beanModel;
 			if (datobModel.isGwtSupport()) {
 				autowire(new GwtEntityGenerator()).generate(datobModel, getApplicationModel());
+				autowire(new GwtEntityDtoGenerator()).generate(datobModel, getApplicationModel());
 				autowire(new GwtEntityTemplateGenerator()).generate(datobModel);
 			}
 		}
