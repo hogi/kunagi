@@ -62,6 +62,24 @@ public abstract class GUser
         return equals(this.name, name);
     }
 
+    // --- admin ---
+
+    private boolean admin ;
+
+    public final boolean isAdmin() {
+        return this.admin ;
+    }
+
+    public final User setAdmin(boolean admin) {
+        this.admin = admin ;
+        propertyChanged("admin", this.admin);
+        return (User)this;
+    }
+
+    public final boolean isAdmin(boolean admin) {
+        return equals(this.admin, admin);
+    }
+
     // --- email ---
 
     private java.lang.String email ;
@@ -84,6 +102,7 @@ public abstract class GUser
 
     public void updateProperties(Map props) {
         name  = (java.lang.String) props.get("name");
+        admin  = (Boolean) props.get("admin");
         email  = (java.lang.String) props.get("email");
     }
 
@@ -91,6 +110,7 @@ public abstract class GUser
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("name", this.name);
+        properties.put("admin", this.admin);
         properties.put("email", this.email);
     }
 

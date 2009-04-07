@@ -3,6 +3,7 @@ package scrum.client.test;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.ImageAnchor;
+import ilarkesto.gwt.client.MultiSelectionWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.img.Img;
@@ -21,17 +22,22 @@ public class WidgetsTesterWidget extends AWidget {
 		panel = new FlowPanel();
 		panel.setStyleName("WidgetsTesterWidget");
 
-		testImageAnchor();
+		testMultiSelection();
 		testNavigator();
 		testToolbars();
-		testButtons();
+		// testButtons();
+		// testImageAnchor();
 
 		return panel;
 	}
 
-	private void testImageAnchor() {
-		ImageAnchor a = new ImageAnchor(Img.bundle.test16().createImage(), "click");
-		addTest("ImageAnchor", a);
+	private void testMultiSelection() {
+		MultiSelectionWidget<String> ms = new MultiSelectionWidget<String>();
+		ms.add("Item 1");
+		ms.add("Item 2");
+		ms.add("Item 3");
+		ms.update();
+		addTest("MultiSelectionWidget", ms);
 	}
 
 	private void testNavigator() {
@@ -44,15 +50,15 @@ public class WidgetsTesterWidget extends AWidget {
 
 	private void testToolbars() {
 		ToolbarWidget vertical = new ToolbarWidget();
-		vertical.add(new ButtonWidget("Button 1"));
-		vertical.add(new ButtonWidget("Button 2"));
-		vertical.add(new ButtonWidget("Button 3"));
+		vertical.add(new ButtonWidget(Img.bundle.test16().createImage(), "icon and text"));
+		vertical.add(new ButtonWidget("text only"));
+		vertical.add(new ButtonWidget(Img.bundle.test16().createImage(), null));
 		addTest("ToolbarWidget:vertical", vertical);
 
 		ToolbarWidget horizontal = new ToolbarWidget(true);
-		horizontal.add(new ButtonWidget("Button 1"));
-		horizontal.add(new ButtonWidget("Button 2"));
-		horizontal.add(new ButtonWidget("Button 3"));
+		horizontal.add(new ButtonWidget(Img.bundle.test16().createImage(), "icon and text"));
+		horizontal.add(new ButtonWidget("text only"));
+		horizontal.add(new ButtonWidget(Img.bundle.test16().createImage(), null));
 		addTest("ToolbarWidget:horizontal", horizontal);
 	}
 
@@ -66,6 +72,11 @@ public class WidgetsTesterWidget extends AWidget {
 		multipleButtons.add(new ButtonWidget("Button 2").update());
 		multipleButtons.add(new ButtonWidget("Button 3").update());
 		addTest("multiple ButtonWidgets", multipleButtons);
+	}
+
+	private void testImageAnchor() {
+		ImageAnchor a = new ImageAnchor(Img.bundle.test16().createImage(), "click");
+		addTest("ImageAnchor", a);
 	}
 
 	@Override

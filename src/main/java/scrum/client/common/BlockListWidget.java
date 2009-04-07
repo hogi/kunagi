@@ -231,6 +231,18 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		selectedRow = -1;
 	}
 
+	public void deactivateDndMarkers(ABlockWidget<O> block) {
+		block.deactivateDndMarkers();
+	}
+
+	public void activateDndMarkerBefore(ABlockWidget<O> block) {
+		block.activateDndMarkerTop();
+	}
+
+	public void activateDndMarkerAfter(ABlockWidget<O> block) {
+		block.activateDndMarkerBottom();
+	}
+
 	private final class Listener implements TableListener {
 
 		public void onCellClicked(SourcesTableEvents sender, int row, int cell) {

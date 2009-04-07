@@ -1,13 +1,14 @@
 package scrum.client.admin;
 
+import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
+import scrum.client.Dao;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
-import scrum.client.common.ScrumUtil;
 import scrum.client.img.Img;
 import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
@@ -17,7 +18,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectBlock extends AExtensibleBlockWidget<Project> {
@@ -107,25 +107,100 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 
 		});
 
-		User productOwner = project.getProductOwner();
-		if (productOwner != null) {
-			fields.add("Product Owner", new Label(productOwner.getName()));
-		}
+		fields.add("Participants", new AMultiSelectionViewEditWidget<User>() {
 
-		User scrumMaster = project.getScrumMaster();
-		if (scrumMaster != null) {
-			fields.add("Scrum Master", new Label(scrumMaster.getName()));
-		}
+			@Override
+			protected void onViewerUpdate() {
+				setViewerItems(project.getParticipants());
+			}
 
-		String team = ScrumUtil.toCommataSeperatedString(project.getTeamMembers());
-		if (team.length() > 0) {
-			fields.add("Team", new Label(team));
-		}
+			@Override
+			protected void onEditorUpdate() {
+				setEditorItems(project.getParticipantsAvailableForConfiguration());
+				setEditorSelectedItems(Dao.get().getUsers());
+			}
 
-		String admins = ScrumUtil.toCommataSeperatedString(project.getAdmins());
-		if (admins.length() > 0) {
-			fields.add("Project Admins", new Label(admins));
-		}
+			@Override
+			protected void onEditorSubmit() {
+				project.setParticipantsConfigured(getEditorSelectedItems());
+			}
+		});
+
+		fields.add("Admins", new AMultiSelectionViewEditWidget<User>() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerItems(project.getAdmins());
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setEditorItems(project.getParticipants());
+				setEditorSelectedItems(project.getAdmins());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				project.setAdmins(getEditorSelectedItems());
+			}
+		});
+
+		fields.add("Product Owner", new AMultiSelectionViewEditWidget<User>() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerItems(project.getProductOwners());
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setEditorItems(project.getParticipants());
+				setEditorSelectedItems(project.getProductOwners());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				project.setProductOwners(getEditorSelectedItems());
+			}
+		});
+
+		fields.add("Scrum Master", new AMultiSelectionViewEditWidget<User>() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerItems(project.getScrumMasters());
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setEditorItems(project.getParticipants());
+				setEditorSelectedItems(project.getScrumMasters());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				project.setScrumMasters(getEditorSelectedItems());
+			}
+		});
+
+		fields.add("Development Team", new AMultiSelectionViewEditWidget<User>() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerItems(project.getTeamMembers());
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setEditorItems(project.getParticipants());
+				setEditorSelectedItems(project.getTeamMembers());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				project.setTeamMembers(getEditorSelectedItems());
+			}
+		});
 
 	}
 

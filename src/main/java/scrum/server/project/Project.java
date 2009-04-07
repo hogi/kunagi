@@ -1,6 +1,5 @@
 package scrum.server.project;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -104,19 +103,6 @@ public class Project extends GProject {
 		return sprint;
 	}
 
-	public Set<User> getMembers() {
-		Set<User> ret = new HashSet<User>();
-		ret.add(getProductOwner());
-		ret.add(getScrumMaster());
-		ret.addAll(getTeamMembers());
-		ret.addAll(getAdmins());
-		return ret;
-	}
-
-	public boolean isMember(User user) {
-		return containsTeamMember(user) || containsAdmin(user) || isProductOwner(user) || isScrumMaster(user);
-	}
-
 	public Set<Sprint> getSprints() {
 		return sprintDao.getSprintsByProject(this);
 	}
@@ -145,6 +131,10 @@ public class Project extends GProject {
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
+		addParticipants(getAdmins());
+		addParticipants(getProductOwners());
+		addParticipants(getScrumMasters());
+		addParticipants(getTeamMembers());
 		if (!isCurrentSprintSet()) {
 			Sprint sprint = sprintDao.newEntityInstance();
 			sprintDao.saveEntity(sprint);
@@ -153,6 +143,14 @@ public class Project extends GProject {
 		if (!isNextSprintSet()) {
 			createNextSprint();
 		}
+	}
+
+	public boolean isVisibleFor(User user) {
+		return containsParticipant(user);
+	}
+
+	public boolean isDeletableBy(User user) {
+		return containsAdmin(user);
 	}
 
 	// --- test data ---

@@ -58,7 +58,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	protected void onStartWebApplication() {
 		if (getUserDao().getEntities().isEmpty()) {
 			LOG.warn("No users. Creating initial user: admin");
-			getUserDao().postUser("admin");
+			getUserDao().postUser("admin").setAdmin(true);
+			getTransactionService().commit();
 		}
 
 		// test data

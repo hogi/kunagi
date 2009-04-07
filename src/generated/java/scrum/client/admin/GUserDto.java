@@ -26,6 +26,7 @@ public class GUserDto
             extends ilarkesto.gwt.client.AGwtEntityDto {
 
     public java.lang.String name ;
+    public boolean admin ;
     public java.lang.String email ;
 
 }

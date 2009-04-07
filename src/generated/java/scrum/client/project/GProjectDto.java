@@ -29,9 +29,10 @@ public class GProjectDto
     public java.lang.String description ;
     public ilarkesto.gwt.client.Date begin ;
     public ilarkesto.gwt.client.Date end ;
+    public Set<String> participantsIds = new HashSet<String>();
     public Set<String> adminsIds = new HashSet<String>();
-    public String productOwnerId;
-    public String scrumMasterId;
+    public Set<String> productOwnersIds = new HashSet<String>();
+    public Set<String> scrumMastersIds = new HashSet<String>();
     public Set<String> teamMembersIds = new HashSet<String>();
     public String currentSprintId;
     public String nextSprintId;

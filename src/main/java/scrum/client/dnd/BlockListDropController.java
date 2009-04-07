@@ -59,7 +59,7 @@ public class BlockListDropController implements DropController {
 	public void onEnter(DragContext context) {}
 
 	public void onLeave(DragContext context) {
-		targetBlock.deactivateDndMarkers();
+		targetBlock.getList().deactivateDndMarkers(targetBlock);
 	}
 
 	public void onMove(DragContext context) {
@@ -70,9 +70,9 @@ public class BlockListDropController implements DropController {
 
 		boolean isHigher = isHigher(area, location);
 		if (isHigher) {
-			targetBlock.activateDndMarkerTop();
+			targetBlock.getList().activateDndMarkerBefore(targetBlock);
 		} else {
-			targetBlock.activateDndMarkerBottom();
+			targetBlock.getList().activateDndMarkerAfter(targetBlock);
 		}
 	}
 

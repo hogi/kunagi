@@ -55,7 +55,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		fields = new FieldsWidget();
 		fields.setAutoUpdateWidget(SprintBacklogWidget.get());
 
-		fields.add("Description", new ATextViewEditWidget() {
+		fields.add("Label", new ATextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {

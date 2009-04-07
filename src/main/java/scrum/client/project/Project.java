@@ -1,8 +1,11 @@
 package scrum.client.project;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import scrum.client.Dao;
 import scrum.client.admin.User;
 import scrum.client.impediments.Impediment;
 import scrum.client.risks.Risk;
@@ -21,6 +24,24 @@ public class Project extends GProject {
 
 	public Project(Map data) {
 		super(data);
+	}
+
+	public Set<User> getParticipantsAvailableForConfiguration() {
+		Set<User> ret = getParticipants();
+		ret.addAll(Dao.get().getUsers());
+		ret.removeAll(getTeamMembers());
+		ret.removeAll(getAdmins());
+		ret.removeAll(getProductOwners());
+		ret.removeAll(getScrumMasters());
+		return ret;
+	}
+
+	public void setParticipantsConfigured(Collection<User> users) {
+		users.addAll(getTeamMembers());
+		users.addAll(getAdmins());
+		users.addAll(getProductOwners());
+		users.addAll(getScrumMasters());
+		setParticipants(users);
 	}
 
 	public String getEffortUnit() {

@@ -1,8 +1,10 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.NavigatorWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.UserListWidget;
+import scrum.client.img.Img;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.ProjectOverviewWidget;
@@ -19,6 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class WorkareaWidget extends AWidget {
 
+	private NavigatorWidget navigator;
 	private SimplePanel wrapper = new SimplePanel();
 	private Widget currentWidget; // TODO AWidget
 
@@ -34,6 +37,77 @@ public class WorkareaWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
+
+		navigator = getNavigator();
+
+		navigator.addItem(Img.bundle.project16(), "Project Overview", getProjectOverview(), new Runnable() {
+
+			public void run() {
+				show(getProjectOverview());
+			}
+		});
+
+		navigator.addItem(Img.bundle.sprint16(), "Sprint Backlog", getSprintBacklog(), new Runnable() {
+
+			public void run() {
+				ScrumGwtApplication.get().callRequestCurrentSprint();
+				show(getSprintBacklog());
+			}
+		});
+
+		navigator.addItem(Img.bundle.requirement16(), "Product Backlog", getProductBacklog(), new Runnable() {
+
+			public void run() {
+				ScrumGwtApplication.get().callRequestRequirements();
+				show(getProductBacklog());
+			}
+		});
+
+		navigator.addItem(Img.bundle.requirement16(), "Quality Backlog", getQualityBacklog(), new Runnable() {
+
+			public void run() {
+				ScrumGwtApplication.get().callRequestQualitys();
+				show(getQualityBacklog());
+			}
+		});
+
+		navigator.addItem(Img.bundle.impediment16(), "Impediment List", getImpedimentList(), new Runnable() {
+
+			public void run() {
+				ScrumGwtApplication.get().callRequestImpediments();
+				show(getImpedimentList());
+			}
+		});
+
+		navigator.addItem(Img.bundle.risk16(), "Risk Management", getRiskList(), new Runnable() {
+
+			public void run() {
+				ScrumGwtApplication.get().callRequestRisks();
+				show(getRiskList());
+			}
+		});
+
+		navigator.addItem(Img.bundle.sprint16(), "Next Sprint", getNextSprint(), new Runnable() {
+
+			public void run() {
+				show(getNextSprint());
+			}
+		});
+
+		navigator.addItem(Img.bundle.user16(), "User Management", getUserList(), new Runnable() {
+
+			public void run() {
+				show(getUserList());
+			}
+		});
+
+		navigator.addItem(Img.bundle.test16(), "WidgetsTester", getWidgetsTester(), new Runnable() {
+
+			public void run() {
+				show(getWidgetsTester());
+			}
+		});
+
 		currentWidget = new Label("workarea");
 		wrapper = new SimplePanel();
 		wrapper.setStyleName("WorkareaWidget");
@@ -43,61 +117,28 @@ public class WorkareaWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		navigator.update();
 		wrapper.setWidget(currentWidget);
 		if (currentWidget != null && currentWidget instanceof AWidget) {
 			((AWidget) currentWidget).update();
 		}
 	}
 
+	public void showSprintBacklog(final Requirement r) {
+		showSprintBacklog();
+		getSprintBacklog().selectRequirement(r);
+	}
+
+	public void showSprintBacklog() {
+		navigator.select(getSprintBacklog());
+	}
+
 	public void showProjectOverview() {
-		show(getProjectOverview());
+		navigator.select(getProjectOverview());
 	}
 
 	public boolean isProjectOverview() {
 		return currentWidget == projectOverview;
-	}
-
-	public void showSprintBacklog() {
-		ScrumGwtApplication.get().callRequestCurrentSprint();
-		show(getSprintBacklog());
-	}
-
-	public void showNextSprint() {
-		show(getNextSprint());
-	}
-
-	public void showSprintBacklog(final Requirement r) {
-		ScrumGwtApplication.get().callRequestCurrentSprint();
-		SidebarWidget.get().navigateToSprintBacklog();
-		getSprintBacklog().selectRequirement(r);
-	}
-
-	public void showProductBacklog() {
-		ScrumGwtApplication.get().callRequestRequirements();
-		show(getProductBacklog());
-	}
-
-	public void showQualityBacklog() {
-		ScrumGwtApplication.get().callRequestQualitys();
-		show(getQualityBacklog());
-	}
-
-	public void showWidgetsTester() {
-		show(getWidgetsTester());
-	}
-
-	public void showImpedimentList() {
-		ScrumGwtApplication.get().callRequestImpediments();
-		show(getImpedimentList());
-	}
-
-	public void showRiskList() {
-		ScrumGwtApplication.get().callRequestRisks();
-		show(getRiskList());
-	}
-
-	public void showUserList() {
-		show(getUserList());
 	}
 
 	private void show(AWidget widget) {
@@ -149,6 +190,11 @@ public class WorkareaWidget extends AWidget {
 	public WidgetsTesterWidget getWidgetsTester() {
 		if (widgetsTester == null) widgetsTester = new WidgetsTesterWidget();
 		return widgetsTester;
+	}
+
+	public NavigatorWidget getNavigator() {
+		if (navigator == null) navigator = new NavigatorWidget();
+		return navigator;
 	}
 
 	public static WorkareaWidget get() {

@@ -28,6 +28,81 @@ public abstract class GScrumWebApplication
     // - composites
     // -----------------------------------------------------------
 
+    // --- riskDao ---
+
+    private scrum.server.risks.RiskDao riskDao;
+
+    public final scrum.server.risks.RiskDao getRiskDao() {
+        if (riskDao == null) {
+            riskDao = createRiskDao();
+            initializeRiskDao(riskDao);
+        }
+        return riskDao;
+    }
+
+    protected scrum.server.risks.RiskDao createRiskDao() {
+        return riskDao = ilarkesto.base.Reflect.newInstance(scrum.server.risks.RiskDao.class);
+    }
+
+    protected void initializeRiskDao(scrum.server.risks.RiskDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetRiskDao() {
+        riskDao = null;
+    }
+
+    // --- sprintDao ---
+
+    private scrum.server.sprint.SprintDao sprintDao;
+
+    public final scrum.server.sprint.SprintDao getSprintDao() {
+        if (sprintDao == null) {
+            sprintDao = createSprintDao();
+            initializeSprintDao(sprintDao);
+        }
+        return sprintDao;
+    }
+
+    protected scrum.server.sprint.SprintDao createSprintDao() {
+        return sprintDao = ilarkesto.base.Reflect.newInstance(scrum.server.sprint.SprintDao.class);
+    }
+
+    protected void initializeSprintDao(scrum.server.sprint.SprintDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetSprintDao() {
+        sprintDao = null;
+    }
+
+    // --- qualityDao ---
+
+    private scrum.server.project.QualityDao qualityDao;
+
+    public final scrum.server.project.QualityDao getQualityDao() {
+        if (qualityDao == null) {
+            qualityDao = createQualityDao();
+            initializeQualityDao(qualityDao);
+        }
+        return qualityDao;
+    }
+
+    protected scrum.server.project.QualityDao createQualityDao() {
+        return qualityDao = ilarkesto.base.Reflect.newInstance(scrum.server.project.QualityDao.class);
+    }
+
+    protected void initializeQualityDao(scrum.server.project.QualityDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetQualityDao() {
+        qualityDao = null;
+    }
+
     // --- sprintDaySnapshotDao ---
 
     private scrum.server.sprint.SprintDaySnapshotDao sprintDaySnapshotDao;
@@ -53,29 +128,54 @@ public abstract class GScrumWebApplication
         sprintDaySnapshotDao = null;
     }
 
-    // --- riskDao ---
+    // --- requirementDao ---
 
-    private scrum.server.risks.RiskDao riskDao;
+    private scrum.server.project.RequirementDao requirementDao;
 
-    public final scrum.server.risks.RiskDao getRiskDao() {
-        if (riskDao == null) {
-            riskDao = createRiskDao();
-            initializeRiskDao(riskDao);
+    public final scrum.server.project.RequirementDao getRequirementDao() {
+        if (requirementDao == null) {
+            requirementDao = createRequirementDao();
+            initializeRequirementDao(requirementDao);
         }
-        return riskDao;
+        return requirementDao;
     }
 
-    protected scrum.server.risks.RiskDao createRiskDao() {
-        return riskDao = ilarkesto.base.Reflect.newInstance(scrum.server.risks.RiskDao.class);
+    protected scrum.server.project.RequirementDao createRequirementDao() {
+        return requirementDao = ilarkesto.base.Reflect.newInstance(scrum.server.project.RequirementDao.class);
     }
 
-    protected void initializeRiskDao(scrum.server.risks.RiskDao bean) {
+    protected void initializeRequirementDao(scrum.server.project.RequirementDao bean) {
         autowire(bean);
         ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
     }
 
-    public final void resetRiskDao() {
-        riskDao = null;
+    public final void resetRequirementDao() {
+        requirementDao = null;
+    }
+
+    // --- projectDao ---
+
+    private scrum.server.project.ProjectDao projectDao;
+
+    public final scrum.server.project.ProjectDao getProjectDao() {
+        if (projectDao == null) {
+            projectDao = createProjectDao();
+            initializeProjectDao(projectDao);
+        }
+        return projectDao;
+    }
+
+    protected scrum.server.project.ProjectDao createProjectDao() {
+        return projectDao = ilarkesto.base.Reflect.newInstance(scrum.server.project.ProjectDao.class);
+    }
+
+    protected void initializeProjectDao(scrum.server.project.ProjectDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetProjectDao() {
+        projectDao = null;
     }
 
     // --- taskDao ---
@@ -126,106 +226,6 @@ public abstract class GScrumWebApplication
 
     public final void resetProjectSprintSnapshotDao() {
         projectSprintSnapshotDao = null;
-    }
-
-    // --- projectDao ---
-
-    private scrum.server.project.ProjectDao projectDao;
-
-    public final scrum.server.project.ProjectDao getProjectDao() {
-        if (projectDao == null) {
-            projectDao = createProjectDao();
-            initializeProjectDao(projectDao);
-        }
-        return projectDao;
-    }
-
-    protected scrum.server.project.ProjectDao createProjectDao() {
-        return projectDao = ilarkesto.base.Reflect.newInstance(scrum.server.project.ProjectDao.class);
-    }
-
-    protected void initializeProjectDao(scrum.server.project.ProjectDao bean) {
-        autowire(bean);
-        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
-    }
-
-    public final void resetProjectDao() {
-        projectDao = null;
-    }
-
-    // --- requirementDao ---
-
-    private scrum.server.project.RequirementDao requirementDao;
-
-    public final scrum.server.project.RequirementDao getRequirementDao() {
-        if (requirementDao == null) {
-            requirementDao = createRequirementDao();
-            initializeRequirementDao(requirementDao);
-        }
-        return requirementDao;
-    }
-
-    protected scrum.server.project.RequirementDao createRequirementDao() {
-        return requirementDao = ilarkesto.base.Reflect.newInstance(scrum.server.project.RequirementDao.class);
-    }
-
-    protected void initializeRequirementDao(scrum.server.project.RequirementDao bean) {
-        autowire(bean);
-        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
-    }
-
-    public final void resetRequirementDao() {
-        requirementDao = null;
-    }
-
-    // --- qualityDao ---
-
-    private scrum.server.project.QualityDao qualityDao;
-
-    public final scrum.server.project.QualityDao getQualityDao() {
-        if (qualityDao == null) {
-            qualityDao = createQualityDao();
-            initializeQualityDao(qualityDao);
-        }
-        return qualityDao;
-    }
-
-    protected scrum.server.project.QualityDao createQualityDao() {
-        return qualityDao = ilarkesto.base.Reflect.newInstance(scrum.server.project.QualityDao.class);
-    }
-
-    protected void initializeQualityDao(scrum.server.project.QualityDao bean) {
-        autowire(bean);
-        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
-    }
-
-    public final void resetQualityDao() {
-        qualityDao = null;
-    }
-
-    // --- sprintDao ---
-
-    private scrum.server.sprint.SprintDao sprintDao;
-
-    public final scrum.server.sprint.SprintDao getSprintDao() {
-        if (sprintDao == null) {
-            sprintDao = createSprintDao();
-            initializeSprintDao(sprintDao);
-        }
-        return sprintDao;
-    }
-
-    protected scrum.server.sprint.SprintDao createSprintDao() {
-        return sprintDao = ilarkesto.base.Reflect.newInstance(scrum.server.sprint.SprintDao.class);
-    }
-
-    protected void initializeSprintDao(scrum.server.sprint.SprintDao bean) {
-        autowire(bean);
-        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
-    }
-
-    public final void resetSprintDao() {
-        sprintDao = null;
     }
 
     // --- impedimentDao ---

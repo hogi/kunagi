@@ -12,11 +12,6 @@ public class User extends GUser {
 	}
 
 	@Override
-	public boolean isAdmin() {
-		return false;
-	}
-
-	@Override
 	public boolean matchesPassword(String password) {
 		return Crypt.cryptWebPassword(password).equals(this.password);
 	}

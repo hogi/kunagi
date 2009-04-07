@@ -1,6 +1,7 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.ADropdownViewEditWidget;
+import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
@@ -112,7 +113,24 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 		});
 
-		fields.add("Qualities", new QualitySuggestWidget(requirement));
+		fields.add("Qualities", new AMultiSelectionViewEditWidget<Quality>() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerItems(requirement.getQualitys());
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setEditorItems(requirement.getProject().getQualitys());
+				setEditorSelectedItems(requirement.getQualitys());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				requirement.setQualitys(getEditorSelectedItems());
+			}
+		});
 
 		fields.add("Test", new ARichtextViewEditWidget() {
 

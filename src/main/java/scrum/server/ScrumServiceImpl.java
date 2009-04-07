@@ -9,7 +9,6 @@ import ilarkesto.webapp.AWebApplication;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.UUID;
 
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
@@ -121,9 +120,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		session.setUser(user);
 		session.getNextData().setUserId(user.getId());
 		session.getNextData().addEntity(toPropertyMap(user));
-		// TODO limit to users projects
-		session.getNextData().addEntities(toPropertyMap(projectDao.getEntities()));
-		session.getNextData().entityIdBase = UUID.randomUUID().toString();
+		session.getNextData().addEntities(toPropertyMap(projectDao.getEntitiesVisibleForUser(user)));
 		session.getNextData().addEntities(toPropertyMap(userDao.getEntitiesVisibleForUser(user)));
 	}
 

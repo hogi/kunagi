@@ -95,6 +95,11 @@ public abstract class GRequirement
         return getDao().getQualitys(this.qualitysIds);
     }
 
+    public final void setQualitys(Collection<scrum.client.project.Quality> values) {
+        qualitysIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("qualitys", this.qualitysIds);
+    }
+
     public final void addQuality(scrum.client.project.Quality quality) {
         String id = quality.getId();
         if (qualitysIds.contains(id)) return;

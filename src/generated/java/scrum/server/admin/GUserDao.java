@@ -36,6 +36,7 @@ public abstract class GUserDao
     public void clearCaches() {
         usersByNameCache.clear();
         namesCache = null;
+        usersByAdminCache.clear();
         usersByEmailCache.clear();
         emailsCache = null;
     }
@@ -92,6 +93,35 @@ public abstract class GUserDao
 
         public boolean test(User e) {
             return e.isName(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - admin
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByAdminCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean admin) {
+                    return getEntities(new IsAdmin(admin));
+                }
+            });
+
+    public final Set<User> getUsersByAdmin(boolean admin) {
+        return usersByAdminCache.get(admin);
+    }
+
+    private static class IsAdmin implements Predicate<User> {
+
+        private boolean value;
+
+        public IsAdmin(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isAdmin();
         }
 
     }

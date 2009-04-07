@@ -4,17 +4,14 @@ import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.admin.User;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
-import scrum.client.common.ScrumUtil;
 import scrum.client.sprint.Sprint;
 import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectOverviewWidget extends AWidget {
@@ -60,26 +57,6 @@ public class ProjectOverviewWidget extends AWidget {
 				ScrumGwtApplication.get().getProject().setDescription(getEditorText());
 			}
 		});
-
-		User productOwner = ScrumGwtApplication.get().getProject().getProductOwner();
-		if (productOwner != null) {
-			fields.add("Product Owner", new Label(productOwner.getName()));
-		}
-
-		User scrumMaster = ScrumGwtApplication.get().getProject().getScrumMaster();
-		if (scrumMaster != null) {
-			fields.add("Scrum Master", new Label(scrumMaster.getName()));
-		}
-
-		String team = ScrumUtil.toCommataSeperatedString(ScrumGwtApplication.get().getProject().getTeamMembers());
-		if (team.length() > 0) {
-			fields.add("Team", new Label(team));
-		}
-
-		String admins = ScrumUtil.toCommataSeperatedString(ScrumGwtApplication.get().getProject().getAdmins());
-		if (admins.length() > 0) {
-			fields.add("Project Admins", new Label(admins));
-		}
 
 		int chartWidth = 500;
 		int chartHeight = 300;

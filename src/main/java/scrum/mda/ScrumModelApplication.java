@@ -36,14 +36,17 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (projectModel == null) {
 			projectModel = createEntityModel("Project", "project");
 			autowire(projectModel);
+			projectModel.setViewProtected(true);
+			projectModel.setDeleteProtected(true);
 			projectModel.setGwtSupport(true);
 			projectModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);
 			projectModel.addProperty("description", String.class);
 			projectModel.addProperty("begin", Date.class);
 			projectModel.addProperty("end", Date.class);
+			projectModel.addSetReference("participants", getUserModel());
 			projectModel.addSetReference("admins", getUserModel());
-			projectModel.addReference("productOwner", getUserModel());
-			projectModel.addReference("scrumMaster", getUserModel());
+			projectModel.addSetReference("productOwners", getUserModel());
+			projectModel.addSetReference("scrumMasters", getUserModel());
 			projectModel.addSetReference("teamMembers", getUserModel());
 			projectModel.addReference("currentSprint", getSprintModel());
 			projectModel.addReference("nextSprint", getSprintModel());
@@ -188,6 +191,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.setGwtSupport(true);
 			userModel.setSuperbean(super.getUserModel());
 			userModel.addProperty("name", String.class).setSearchable(true);
+			userModel.addProperty("admin", boolean.class);
 			userModel.addProperty("email", String.class).setSearchable(true);
 		}
 		return userModel;

@@ -37,6 +37,7 @@ public abstract class GUser
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("name", this.name);
+        properties.put("admin", this.admin);
         properties.put("email", this.email);
     }
 
@@ -96,6 +97,35 @@ public abstract class GUser
     }
 
     // -----------------------------------------------------------
+    // - admin
+    // -----------------------------------------------------------
+
+    private boolean admin;
+
+    public final boolean isAdmin() {
+        return admin;
+    }
+
+    public final void setAdmin(boolean admin) {
+        admin = prepareAdmin(admin);
+        if (isAdmin(admin)) return;
+        this.admin = admin;
+        fireModified();
+    }
+
+    protected boolean prepareAdmin(boolean admin) {
+        return admin;
+    }
+
+    public final boolean isAdmin(boolean admin) {
+        return this.admin == admin;
+    }
+
+    protected final void updateAdmin(Object value) {
+        setAdmin((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
     // - email
     // -----------------------------------------------------------
 
@@ -136,6 +166,7 @@ public abstract class GUser
             if (property.equals("id")) continue;
             Object value = entry.getValue();
             if (property.equals("name")) updateName(value);
+            if (property.equals("admin")) updateAdmin(value);
             if (property.equals("email")) updateEmail(value);
         }
     }

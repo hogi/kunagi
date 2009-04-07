@@ -116,6 +116,34 @@ public abstract class GProject
         return equals(this.end, end);
     }
 
+    // --- participants ---
+
+    private Set<String> participantsIds = new HashSet<String>();
+
+    public final java.util.Set<scrum.client.admin.User> getParticipants() {
+        if ( participantsIds.isEmpty()) return Collections.emptySet();
+        return getDao().getUsers(this.participantsIds);
+    }
+
+    public final void setParticipants(Collection<scrum.client.admin.User> values) {
+        participantsIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("participants", this.participantsIds);
+    }
+
+    public final void addParticipant(scrum.client.admin.User participant) {
+        String id = participant.getId();
+        if (participantsIds.contains(id)) return;
+        participantsIds.add(id);
+        propertyChanged("participants", this.participantsIds);
+    }
+
+    public final void removeParticipant(scrum.client.admin.User participant) {
+        String id = participant.getId();
+        if (!participantsIds.contains(id)) return;
+        participantsIds.remove(id);
+        propertyChanged("participants", this.participantsIds);
+    }
+
     // --- admins ---
 
     private Set<String> adminsIds = new HashSet<String>();
@@ -123,6 +151,11 @@ public abstract class GProject
     public final java.util.Set<scrum.client.admin.User> getAdmins() {
         if ( adminsIds.isEmpty()) return Collections.emptySet();
         return getDao().getUsers(this.adminsIds);
+    }
+
+    public final void setAdmins(Collection<scrum.client.admin.User> values) {
+        adminsIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("admins", this.adminsIds);
     }
 
     public final void addAdmin(scrum.client.admin.User admin) {
@@ -139,46 +172,60 @@ public abstract class GProject
         propertyChanged("admins", this.adminsIds);
     }
 
-    // --- productOwner ---
+    // --- productOwners ---
 
-    private String productOwnerId;
+    private Set<String> productOwnersIds = new HashSet<String>();
 
-    public final scrum.client.admin.User getProductOwner() {
-        if (productOwnerId == null) return null;
-        return getDao().getUser(this.productOwnerId);
+    public final java.util.Set<scrum.client.admin.User> getProductOwners() {
+        if ( productOwnersIds.isEmpty()) return Collections.emptySet();
+        return getDao().getUsers(this.productOwnersIds);
     }
 
-    public final Project setProductOwner(scrum.client.admin.User productOwner) {
-        String id = productOwner == null ? null : productOwner.getId();
-        if (equals(this.productOwnerId, id)) return (Project) this;
-        this.productOwnerId = id;
-        propertyChanged("productOwnerId", this.productOwnerId);
-        return (Project)this;
+    public final void setProductOwners(Collection<scrum.client.admin.User> values) {
+        productOwnersIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("productOwners", this.productOwnersIds);
     }
 
-    public final boolean isProductOwner(scrum.client.admin.User productOwner) {
-        return equals(this.productOwnerId, productOwner);
+    public final void addProductOwner(scrum.client.admin.User productOwner) {
+        String id = productOwner.getId();
+        if (productOwnersIds.contains(id)) return;
+        productOwnersIds.add(id);
+        propertyChanged("productOwners", this.productOwnersIds);
     }
 
-    // --- scrumMaster ---
-
-    private String scrumMasterId;
-
-    public final scrum.client.admin.User getScrumMaster() {
-        if (scrumMasterId == null) return null;
-        return getDao().getUser(this.scrumMasterId);
+    public final void removeProductOwner(scrum.client.admin.User productOwner) {
+        String id = productOwner.getId();
+        if (!productOwnersIds.contains(id)) return;
+        productOwnersIds.remove(id);
+        propertyChanged("productOwners", this.productOwnersIds);
     }
 
-    public final Project setScrumMaster(scrum.client.admin.User scrumMaster) {
-        String id = scrumMaster == null ? null : scrumMaster.getId();
-        if (equals(this.scrumMasterId, id)) return (Project) this;
-        this.scrumMasterId = id;
-        propertyChanged("scrumMasterId", this.scrumMasterId);
-        return (Project)this;
+    // --- scrumMasters ---
+
+    private Set<String> scrumMastersIds = new HashSet<String>();
+
+    public final java.util.Set<scrum.client.admin.User> getScrumMasters() {
+        if ( scrumMastersIds.isEmpty()) return Collections.emptySet();
+        return getDao().getUsers(this.scrumMastersIds);
     }
 
-    public final boolean isScrumMaster(scrum.client.admin.User scrumMaster) {
-        return equals(this.scrumMasterId, scrumMaster);
+    public final void setScrumMasters(Collection<scrum.client.admin.User> values) {
+        scrumMastersIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("scrumMasters", this.scrumMastersIds);
+    }
+
+    public final void addScrumMaster(scrum.client.admin.User scrumMaster) {
+        String id = scrumMaster.getId();
+        if (scrumMastersIds.contains(id)) return;
+        scrumMastersIds.add(id);
+        propertyChanged("scrumMasters", this.scrumMastersIds);
+    }
+
+    public final void removeScrumMaster(scrum.client.admin.User scrumMaster) {
+        String id = scrumMaster.getId();
+        if (!scrumMastersIds.contains(id)) return;
+        scrumMastersIds.remove(id);
+        propertyChanged("scrumMasters", this.scrumMastersIds);
     }
 
     // --- teamMembers ---
@@ -188,6 +235,11 @@ public abstract class GProject
     public final java.util.Set<scrum.client.admin.User> getTeamMembers() {
         if ( teamMembersIds.isEmpty()) return Collections.emptySet();
         return getDao().getUsers(this.teamMembersIds);
+    }
+
+    public final void setTeamMembers(Collection<scrum.client.admin.User> values) {
+        teamMembersIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("teamMembers", this.teamMembersIds);
     }
 
     public final void addTeamMember(scrum.client.admin.User teamMember) {
@@ -255,9 +307,10 @@ public abstract class GProject
         begin  =  beginAsString == null ? null : new ilarkesto.gwt.client.Date(beginAsString);
         String endAsString = (String) props.get("end");
         end  =  endAsString == null ? null : new ilarkesto.gwt.client.Date(endAsString);
+        participantsIds = (Set<String>) props.get("participantsIds");
         adminsIds = (Set<String>) props.get("adminsIds");
-        productOwnerId = (String) props.get("productOwnerId");
-        scrumMasterId = (String) props.get("scrumMasterId");
+        productOwnersIds = (Set<String>) props.get("productOwnersIds");
+        scrumMastersIds = (Set<String>) props.get("scrumMastersIds");
         teamMembersIds = (Set<String>) props.get("teamMembersIds");
         currentSprintId = (String) props.get("currentSprintId");
         nextSprintId = (String) props.get("nextSprintId");
@@ -270,9 +323,10 @@ public abstract class GProject
         properties.put("description", this.description);
         properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("end", this.end == null ? null : this.end.toString());
+        properties.put("participants", this.participantsIds);
         properties.put("admins", this.adminsIds);
-        properties.put("productOwnerId", this.productOwnerId);
-        properties.put("scrumMasterId", this.scrumMasterId);
+        properties.put("productOwners", this.productOwnersIds);
+        properties.put("scrumMasters", this.scrumMastersIds);
         properties.put("teamMembers", this.teamMembersIds);
         properties.put("currentSprintId", this.currentSprintId);
         properties.put("nextSprintId", this.nextSprintId);
