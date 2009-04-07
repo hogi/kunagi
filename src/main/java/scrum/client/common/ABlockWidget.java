@@ -176,6 +176,11 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 	@Override
 	protected void onDetach() {
 		DndManager.get().unregisterDropTarget(this);
+
+		if (list != null)
+			list.deselect();
+		else setSelected(false);
+
 		super.onDetach();
 	}
 }
