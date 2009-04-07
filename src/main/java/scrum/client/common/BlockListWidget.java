@@ -231,16 +231,40 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		selectedRow = -1;
 	}
 
+	private ABlockWidget<O> getPreviousBlock(ABlockWidget<O> block) {
+		int idx = blocks.indexOf(block);
+		if (idx < 1) return null;
+		return blocks.get(idx - 1);
+	}
+
+	private ABlockWidget<O> getNextBlock(ABlockWidget<O> block) {
+		int idx = blocks.indexOf(block);
+		if (idx < 0 || idx > blocks.size() - 2) return null;
+		return blocks.get(idx + 1);
+	}
+
 	public void deactivateDndMarkers(ABlockWidget<O> block) {
 		block.deactivateDndMarkers();
+		ABlockWidget<O> previous = getPreviousBlock(block);
+		if (previous != null) previous.deactivateDndMarkers();
+		ABlockWidget<O> next = getNextBlock(block);
+		if (next != null) next.deactivateDndMarkers();
 	}
 
 	public void activateDndMarkerBefore(ABlockWidget<O> block) {
 		block.activateDndMarkerTop();
+		ABlockWidget<O> previous = getPreviousBlock(block);
+		if (previous != null) previous.activateDndMarkerBottom();
+		ABlockWidget<O> next = getNextBlock(block);
+		if (next != null) next.deactivateDndMarkers();
 	}
 
 	public void activateDndMarkerAfter(ABlockWidget<O> block) {
 		block.activateDndMarkerBottom();
+		ABlockWidget<O> previous = getPreviousBlock(block);
+		if (previous != null) previous.deactivateDndMarkers();
+		ABlockWidget<O> next = getNextBlock(block);
+		if (next != null) next.activateDndMarkerTop();
 	}
 
 	private final class Listener implements TableListener {
