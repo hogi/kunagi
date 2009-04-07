@@ -12,6 +12,8 @@ import scrum.client.workspace.Ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.KeyboardListener;
+import com.google.gwt.user.client.ui.KeyboardListenerAdapter;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -26,6 +28,15 @@ public class LoginWidget extends AWidget {
 	protected Widget onInitialization() {
 		username = new TextBox();
 		password = new PasswordTextBox();
+		password.addKeyboardListener(new KeyboardListenerAdapter() {
+
+			@Override
+			public void onKeyPress(Widget sender, char keyCode, int modifiers) {
+				super.onKeyPress(sender, keyCode, modifiers);
+				if (keyCode == KeyboardListener.KEY_ENTER) login();
+			}
+
+		});
 
 		if (ScrumGwtApplication.get().isDevelopmentMode()) {
 			username.setText("admin");
