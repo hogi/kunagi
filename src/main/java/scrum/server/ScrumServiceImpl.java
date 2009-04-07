@@ -9,6 +9,7 @@ import ilarkesto.webapp.AWebApplication;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.UUID;
 
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
@@ -118,6 +119,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (user.matchesPassword(password) == false) { throw new RuntimeException("Wrong password"); }
 
 		session.setUser(user);
+		session.getNextData().entityIdBase = UUID.randomUUID().toString();
 		session.getNextData().setUserId(user.getId());
 		session.getNextData().addEntity(toPropertyMap(user));
 		session.getNextData().addEntities(toPropertyMap(projectDao.getEntitiesVisibleForUser(user)));
