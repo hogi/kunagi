@@ -27,6 +27,13 @@ public class UserDao extends GUserDao {
 		return postUser(name, "geheim");
 	}
 
+	@Override
+	public User newEntityInstance() {
+		User user = super.newEntityInstance();
+		user.setPassword("geheim");
+		return user;
+	}
+
 	// --- test data ---
 
 	public User getTestUser(String name) {

@@ -1,5 +1,6 @@
 package scrum.client;
 
+import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.gwt.client.AGwtEntity;
 
 import java.util.HashMap;
@@ -13,14 +14,20 @@ public class Dao extends GDao {
 	private String entityIdBase;
 	private int entityIdCounter;
 
+	@Override
+	public void handleDataFromServer(ADataTransferObject data) {
+		super.handleDataFromServer(data);
+		if (data.containsEntities()) {
+			if (WorkspaceWidget.get().isWorkareaActive()) {
+				WorkareaWidget.get().update();
+			}
+		}
+	}
+
 	// --- remote events (incoming from server) ---
 
 	@Override
-	protected void onEntityModifiedRemotely(AGwtEntity entity) {
-		if (WorkspaceWidget.get().isWorkareaActive()) {
-			WorkareaWidget.get().update();
-		}
-	}
+	protected void onEntityModifiedRemotely(AGwtEntity entity) {}
 
 	@Override
 	protected void onEntityDeletedRemotely(AGwtEntity entity) {}

@@ -55,16 +55,22 @@ public abstract class GSprintDaySnapshot
     // -----------------------------------------------------------
 
     private String sprintId;
+    private transient scrum.server.sprint.Sprint sprintCache;
+
+    private void updateSprintCache() {
+        sprintCache = this.sprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
+    }
 
     public final scrum.server.sprint.Sprint getSprint() {
-        if (this.sprintId == null) return null;
-        return (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
+        if (sprintCache == null) updateSprintCache();
+        return sprintCache;
     }
 
     public final void setSprint(scrum.server.sprint.Sprint sprint) {
         sprint = prepareSprint(sprint);
         if (isSprint(sprint)) return;
         this.sprintId = sprint == null ? null : sprint.getId();
+        sprintCache = sprint;
         fireModified();
     }
 

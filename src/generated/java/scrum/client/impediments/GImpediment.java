@@ -53,6 +53,10 @@ public abstract class GImpediment
         return getDao().getProject(this.projectId);
     }
 
+    public final boolean isProjectSet() {
+        return projectId != null;
+    }
+
     public final Impediment setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (Impediment) this;

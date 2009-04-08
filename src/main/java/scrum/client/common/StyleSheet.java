@@ -11,13 +11,6 @@ public class StyleSheet extends BaseStyleSheet {
 
 	// BlockWidget
 
-	public static final String ELEMENT_BLOCK_WIDGET_MAIN = "element-BlockWidget-main";
-	public static final String ELEMENT_BLOCK_WIDGET = "element-BlockWidget";
-	public static final String ELEMENT_BLOCK_WIDGET_TITLE = "element-BlockWidget-title";
-	public static final String ELEMENT_BLOCK_WIDGET_BLOCK = "element-BlockWidget-block";
-	public static final String ELEMENT_BLOCK_WIDGET_CENTER = "element-BlockWidget-center";
-	public static final String STATE_BLOCK_WIDGET_SELECTED = "state-BlockWidget-selected";
-
 	// WorkspaceWidget
 
 	public static final String ELEMENT_WORKSPACE_WIDGET = "element-WorkspaceWidget";
@@ -45,9 +38,6 @@ public class StyleSheet extends BaseStyleSheet {
 	// others
 
 	public static final String INTEGER_EDITOR = "Integer-editor";
-	public static final String A_ITEM_FIELDS_WIDGET_GRID = "AItemFieldsWidget-grid";
-	public static final String FIELD_LABEL = "fieldLabel";
 	public static final String DND_DROP_ALLOWED = "dnd-drop-allowed";
-	public static final String FIELD_VALUE = "fieldValue";
 
 }

@@ -33,7 +33,6 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestRisks(WebSession session);
     protected abstract void onRequestRequirements(WebSession session);
     protected abstract void onRequestQualitys(WebSession session);
-    protected abstract void onRequestCurrentSprint(WebSession session);
     protected abstract void onChangeProperties(WebSession session, java.lang.String entityId, java.util.Map properties);
     protected abstract void onCreateEntity(WebSession session, java.lang.String type, java.util.Map properties);
     protected abstract void onDeleteEntity(WebSession session, java.lang.String entityId);
@@ -50,6 +49,7 @@ public abstract class GScrumServiceImpl
             onPing(session);
         } catch (Throwable t) {
             handleServiceMethodException("ping",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
@@ -67,6 +67,7 @@ public abstract class GScrumServiceImpl
             onLogin(session, username, password);
         } catch (Throwable t) {
             handleServiceMethodException("login",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
@@ -84,6 +85,7 @@ public abstract class GScrumServiceImpl
             onLogout(session);
         } catch (Throwable t) {
             handleServiceMethodException("logout",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
@@ -101,6 +103,7 @@ public abstract class GScrumServiceImpl
             onChangePassword(session, oldPassword, newPassword);
         } catch (Throwable t) {
             handleServiceMethodException("changePassword",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
@@ -118,6 +121,7 @@ public abstract class GScrumServiceImpl
             onResetPassword(session, userId);
         } catch (Throwable t) {
             handleServiceMethodException("resetPassword",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
@@ -135,6 +139,7 @@ public abstract class GScrumServiceImpl
             onSelectProject(session, projectId);
         } catch (Throwable t) {
             handleServiceMethodException("selectProject",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
@@ -152,6 +157,7 @@ public abstract class GScrumServiceImpl
             onSwitchToNextSprint(session);
         } catch (Throwable t) {
             handleServiceMethodException("switchToNextSprint",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
@@ -169,6 +175,7 @@ public abstract class GScrumServiceImpl
             onRequestImpediments(session);
         } catch (Throwable t) {
             handleServiceMethodException("requestImpediments",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
@@ -186,6 +193,7 @@ public abstract class GScrumServiceImpl
             onRequestRisks(session);
         } catch (Throwable t) {
             handleServiceMethodException("requestRisks",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
@@ -203,6 +211,7 @@ public abstract class GScrumServiceImpl
             onRequestRequirements(session);
         } catch (Throwable t) {
             handleServiceMethodException("requestRequirements",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
@@ -220,23 +229,7 @@ public abstract class GScrumServiceImpl
             onRequestQualitys(session);
         } catch (Throwable t) {
             handleServiceMethodException("requestQualitys",t);
-        }
-        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
-        onServiceMethodExecuted(context);
-        return ret;
-    }
-
-
-    public scrum.client.DataTransferObject requestCurrentSprint() {
-        LOG.debug("requestCurrentSprint");
-        WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = ilarkesto.di.Context.get();
-        context.setName("gwt-srv:requestCurrentSprint");
-        context.bindCurrentThread();
-        try {
-            onRequestCurrentSprint(session);
-        } catch (Throwable t) {
-            handleServiceMethodException("requestCurrentSprint",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
@@ -254,6 +247,7 @@ public abstract class GScrumServiceImpl
             onChangeProperties(session, entityId, properties);
         } catch (Throwable t) {
             handleServiceMethodException("changeProperties",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
@@ -271,6 +265,7 @@ public abstract class GScrumServiceImpl
             onCreateEntity(session, type, properties);
         } catch (Throwable t) {
             handleServiceMethodException("createEntity",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
@@ -288,6 +283,7 @@ public abstract class GScrumServiceImpl
             onDeleteEntity(session, entityId);
         } catch (Throwable t) {
             handleServiceMethodException("deleteEntity",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);
@@ -305,6 +301,7 @@ public abstract class GScrumServiceImpl
             onSleep(session, millis);
         } catch (Throwable t) {
             handleServiceMethodException("sleep",t);
+            throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
         onServiceMethodExecuted(context);

@@ -40,8 +40,6 @@ public interface GScrumServiceAsync {
 
     void requestQualitys(AsyncCallback<DataTransferObject> callback);
 
-    void requestCurrentSprint(AsyncCallback<DataTransferObject> callback);
-
     void changeProperties(java.lang.String entityId, java.util.Map properties, AsyncCallback<DataTransferObject> callback);
 
     void createEntity(java.lang.String type, java.util.Map properties, AsyncCallback<DataTransferObject> callback);

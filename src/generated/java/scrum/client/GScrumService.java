@@ -40,8 +40,6 @@ public interface GScrumService
 
     DataTransferObject requestQualitys();
 
-    DataTransferObject requestCurrentSprint();
-
     DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties);
 
     DataTransferObject createEntity(java.lang.String type, java.util.Map properties);

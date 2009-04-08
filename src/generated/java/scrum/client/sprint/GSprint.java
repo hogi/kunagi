@@ -53,6 +53,10 @@ public abstract class GSprint
         return getDao().getProject(this.projectId);
     }
 
+    public final boolean isProjectSet() {
+        return projectId != null;
+    }
+
     public final Sprint setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (Sprint) this;

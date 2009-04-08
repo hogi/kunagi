@@ -1,11 +1,13 @@
 package scrum.client.test;
 
+import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.ImageAnchor;
 import ilarkesto.gwt.client.MultiSelectionWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
+import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -22,6 +24,7 @@ public class WidgetsTesterWidget extends AWidget {
 		panel = new FlowPanel();
 		panel.setStyleName("WidgetsTesterWidget");
 
+		testFields();
 		testMultiSelection();
 		testNavigator();
 		testToolbars();
@@ -29,6 +32,31 @@ public class WidgetsTesterWidget extends AWidget {
 		// testImageAnchor();
 
 		return panel;
+	}
+
+	private String fieldsText = "test";
+
+	private void testFields() {
+		FieldsWidget fields = new FieldsWidget();
+		fields.add("ATextViewEditWidget", new ATextViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerText(fieldsText);
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setEditorText(fieldsText);
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				fieldsText = getEditorText();
+			}
+		});
+		fields.update();
+		addTest("FieldsWidget", fields);
 	}
 
 	private void testMultiSelection() {

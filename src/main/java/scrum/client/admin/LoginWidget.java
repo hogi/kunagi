@@ -70,7 +70,9 @@ public class LoginWidget extends AWidget {
 	}
 
 	@Override
-	protected void onUpdate() {}
+	protected void onUpdate() {
+		username.setFocus(true);
+	}
 
 	private void login() {
 		ScrumGwtApplication.get().getUi().lock("Checking login data...");

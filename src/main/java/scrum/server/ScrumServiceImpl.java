@@ -1,5 +1,7 @@
 package scrum.server;
 
+import ilarkesto.auth.Auth;
+import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.logging.Logger;
@@ -16,7 +18,6 @@ import scrum.server.admin.UserDao;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
-import scrum.server.sprint.Sprint;
 import scrum.server.sprint.Task;
 
 public class ScrumServiceImpl extends GScrumServiceImpl {
@@ -77,9 +78,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onDeleteEntity(WebSession session, String entityId) {
 		AEntity entity = getDaoService().getEntityById(entityId);
+		if (!Auth.isDeletable(entity, session.getUser())) throw new PermissionDeniedException();
 		ADao dao = getDaoService().getDao(entity);
 		dao.deleteEntity(entity);
 		for (WebSession s : webApplication.getOtherSessionsByProject(session)) {
+			// TODO do this only if client is tracking this entity
 			s.getNextData().addDeletedEntity(entityId);
 		}
 	}
@@ -87,6 +90,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onChangeProperties(WebSession session, String entityId, Map properties) {
 		AEntity entity = getDaoService().getEntityById(entityId);
+		if (!Auth.isEditable(entity, session.getUser())) throw new PermissionDeniedException();
 		entity.updateProperties(properties);
 
 		// probably dirty hacked stuff x-ing
@@ -106,91 +110,85 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 
 		for (WebSession s : webApplication.getOtherSessionsByProject(session)) {
+			// TODO do this only if client is tracking this entity
 			LOG.debug("Sending changes to", s);
-			s.getNextData().addEntity(toPropertyMap(entity));
+			session.sendToClient(entity);
 		}
 	}
 
 	@Override
 	public void onLogin(WebSession session, String username, String password) {
 		User user = userDao.getUserByName(username);
-		if (user == null) throw new RuntimeException("Login failed.");
 
-		if (user.matchesPassword(password) == false) { throw new RuntimeException("Wrong password"); }
+		if (user == null || user.matchesPassword(password) == false) {
+			session.getNextData().errors.add("Login failed.");
+			return;
+		}
 
 		session.setUser(user);
 		session.getNextData().entityIdBase = UUID.randomUUID().toString();
 		session.getNextData().setUserId(user.getId());
-		session.getNextData().addEntity(toPropertyMap(user));
-		session.getNextData().addEntities(toPropertyMap(projectDao.getEntitiesVisibleForUser(user)));
-		session.getNextData().addEntities(toPropertyMap(userDao.getEntitiesVisibleForUser(user)));
+		session.sendToClient(user);
+		session.sendToClient(projectDao.getEntitiesVisibleForUser(user));
+		session.sendToClient(userDao.getEntitiesVisibleForUser(user));
 	}
 
 	@Override
 	public void onSelectProject(WebSession session, String projectId) {
 		Project project = projectDao.getById(projectId);
+		if (!project.isVisibleFor(session.getUser()))
+			throw new RuntimeException("Project '" + project + "' is not visible for user '" + session.getUser() + "'");
 		session.setProject(project);
 
 		// prepare data for client
-		session.getNextData().addEntity(toPropertyMap(project));
-		if (project.isCurrentSprintSet()) {
-			session.getNextData().addEntity(toPropertyMap(project.getCurrentSprint()));
-		}
-		if (project.isNextSprintSet()) {
-			session.getNextData().addEntity(toPropertyMap(project.getNextSprint()));
-		}
+		session.sendToClient(project);
+		session.sendToClient(project.getCurrentSprint());
+		session.sendToClient(project.getNextSprint());
+		session.sendToClient(project.getParticipants());
 	}
 
 	@Override
 	protected void onSwitchToNextSprint(WebSession session) {
+		assertProjectSelected(session);
 		Project project = session.getProject();
 		project.switchToNextSprint();
-		session.getNextData().addEntity(toPropertyMap(project));
-		session.getNextData().addEntity(toPropertyMap(project.getCurrentSprint()));
-		session.getNextData().addEntity(toPropertyMap(project.getNextSprint()));
-	}
-
-	@Override
-	public void onRequestCurrentSprint(WebSession session) {
-		Project project = session.getProject();
-		Sprint sprint = project.getCurrentSprint();
-		if (sprint == null) return;
-		session.getNextData().addEntity(toPropertyMap(sprint));
-		session.getNextData().addEntities(toPropertyMap(project.getRequirements()));
-		session.getNextData().addEntities(toPropertyMap(sprint.getTasks()));
+		session.sendToClient(project);
+		session.sendToClient(project.getCurrentSprint());
+		session.sendToClient(project.getNextSprint());
 	}
 
 	@Override
 	public void onRequestImpediments(WebSession session) {
+		assertProjectSelected(session);
 		Project project = session.getProject();
-		if (project == null) throw new RuntimeException("No project selected.");
-		session.getNextData().addEntities(toPropertyMap(project.getImpediments()));
+		session.sendToClient(project.getImpediments());
 	}
 
 	@Override
 	protected void onRequestRisks(WebSession session) {
+		assertProjectSelected(session);
 		Project project = session.getProject();
-		if (project == null) throw new RuntimeException("No project selected.");
-		session.getNextData().addEntities(toPropertyMap(project.getRisks()));
+		session.sendToClient(project.getRisks());
 	}
 
 	@Override
 	public void onRequestRequirements(WebSession session) {
+		assertProjectSelected(session);
 		Project project = session.getProject();
-		if (project == null) throw new RuntimeException("No project selected.");
-		Collection<Requirement> stories = project.getRequirements();
-		for (Requirement item : stories) {
-			Sprint sprint = item.getSprint();
-			if (sprint != null) session.getNextData().addEntity(toPropertyMap(sprint));
+		Collection<Requirement> requirements = project.getRequirements();
+		for (Requirement requirement : requirements) {
+			if (requirement.isSprintSet()) session.sendToClient(requirement.getSprint());
+			session.sendToClient(requirement.getTasks());
+			session.sendToClient(requirement.getQualitys());
 		}
-		session.getNextData().addEntities(toPropertyMap(stories));
+		session.sendToClient(requirements);
 	}
 
 	@Override
 	protected void onRequestQualitys(WebSession session) {
+		assertProjectSelected(session);
 		Project project = session.getProject();
-		if (project == null) throw new RuntimeException("No project selected.");
-		session.getNextData().addEntities(toPropertyMap(project.getQualitys()));
+		session.sendToClient(project.getQualitys());
 	}
 
 	@Override
@@ -201,6 +199,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onSleep(WebSession session, long millis) {
 		Utl.sleep(millis);
+	}
+
+	// --- helper ---
+
+	private void assertProjectSelected(WebSession session) {
+		if (session.getProject() == null) throw new RuntimeException("No project selected.");
 	}
 
 	@Override

@@ -53,6 +53,10 @@ public abstract class GRequirement
         return getDao().getProject(this.projectId);
     }
 
+    public final boolean isProjectSet() {
+        return projectId != null;
+    }
+
     public final Requirement setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (Requirement) this;
@@ -72,6 +76,10 @@ public abstract class GRequirement
     public final scrum.client.sprint.Sprint getSprint() {
         if (sprintId == null) return null;
         return getDao().getSprint(this.sprintId);
+    }
+
+    public final boolean isSprintSet() {
+        return sprintId != null;
     }
 
     public final Requirement setSprint(scrum.client.sprint.Sprint sprint) {
@@ -97,21 +105,21 @@ public abstract class GRequirement
 
     public final void setQualitys(Collection<scrum.client.project.Quality> values) {
         qualitysIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("qualitys", this.qualitysIds);
+        propertyChanged("qualitysIds", this.qualitysIds);
     }
 
     public final void addQuality(scrum.client.project.Quality quality) {
         String id = quality.getId();
         if (qualitysIds.contains(id)) return;
         qualitysIds.add(id);
-        propertyChanged("qualitys", this.qualitysIds);
+        propertyChanged("qualitysIds", this.qualitysIds);
     }
 
     public final void removeQuality(scrum.client.project.Quality quality) {
         String id = quality.getId();
         if (!qualitysIds.contains(id)) return;
         qualitysIds.remove(id);
-        propertyChanged("qualitys", this.qualitysIds);
+        propertyChanged("qualitysIds", this.qualitysIds);
     }
 
     // --- label ---
@@ -222,7 +230,7 @@ public abstract class GRequirement
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("sprintId", this.sprintId);
-        properties.put("qualitys", this.qualitysIds);
+        properties.put("qualitysIds", this.qualitysIds);
         properties.put("label", this.label);
         properties.put("description", this.description);
         properties.put("testDescription", this.testDescription);

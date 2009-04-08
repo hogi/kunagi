@@ -127,21 +127,21 @@ public abstract class GProject
 
     public final void setParticipants(Collection<scrum.client.admin.User> values) {
         participantsIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("participants", this.participantsIds);
+        propertyChanged("participantsIds", this.participantsIds);
     }
 
     public final void addParticipant(scrum.client.admin.User participant) {
         String id = participant.getId();
         if (participantsIds.contains(id)) return;
         participantsIds.add(id);
-        propertyChanged("participants", this.participantsIds);
+        propertyChanged("participantsIds", this.participantsIds);
     }
 
     public final void removeParticipant(scrum.client.admin.User participant) {
         String id = participant.getId();
         if (!participantsIds.contains(id)) return;
         participantsIds.remove(id);
-        propertyChanged("participants", this.participantsIds);
+        propertyChanged("participantsIds", this.participantsIds);
     }
 
     // --- admins ---
@@ -155,21 +155,21 @@ public abstract class GProject
 
     public final void setAdmins(Collection<scrum.client.admin.User> values) {
         adminsIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("admins", this.adminsIds);
+        propertyChanged("adminsIds", this.adminsIds);
     }
 
     public final void addAdmin(scrum.client.admin.User admin) {
         String id = admin.getId();
         if (adminsIds.contains(id)) return;
         adminsIds.add(id);
-        propertyChanged("admins", this.adminsIds);
+        propertyChanged("adminsIds", this.adminsIds);
     }
 
     public final void removeAdmin(scrum.client.admin.User admin) {
         String id = admin.getId();
         if (!adminsIds.contains(id)) return;
         adminsIds.remove(id);
-        propertyChanged("admins", this.adminsIds);
+        propertyChanged("adminsIds", this.adminsIds);
     }
 
     // --- productOwners ---
@@ -183,21 +183,21 @@ public abstract class GProject
 
     public final void setProductOwners(Collection<scrum.client.admin.User> values) {
         productOwnersIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("productOwners", this.productOwnersIds);
+        propertyChanged("productOwnersIds", this.productOwnersIds);
     }
 
     public final void addProductOwner(scrum.client.admin.User productOwner) {
         String id = productOwner.getId();
         if (productOwnersIds.contains(id)) return;
         productOwnersIds.add(id);
-        propertyChanged("productOwners", this.productOwnersIds);
+        propertyChanged("productOwnersIds", this.productOwnersIds);
     }
 
     public final void removeProductOwner(scrum.client.admin.User productOwner) {
         String id = productOwner.getId();
         if (!productOwnersIds.contains(id)) return;
         productOwnersIds.remove(id);
-        propertyChanged("productOwners", this.productOwnersIds);
+        propertyChanged("productOwnersIds", this.productOwnersIds);
     }
 
     // --- scrumMasters ---
@@ -211,21 +211,21 @@ public abstract class GProject
 
     public final void setScrumMasters(Collection<scrum.client.admin.User> values) {
         scrumMastersIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("scrumMasters", this.scrumMastersIds);
+        propertyChanged("scrumMastersIds", this.scrumMastersIds);
     }
 
     public final void addScrumMaster(scrum.client.admin.User scrumMaster) {
         String id = scrumMaster.getId();
         if (scrumMastersIds.contains(id)) return;
         scrumMastersIds.add(id);
-        propertyChanged("scrumMasters", this.scrumMastersIds);
+        propertyChanged("scrumMastersIds", this.scrumMastersIds);
     }
 
     public final void removeScrumMaster(scrum.client.admin.User scrumMaster) {
         String id = scrumMaster.getId();
         if (!scrumMastersIds.contains(id)) return;
         scrumMastersIds.remove(id);
-        propertyChanged("scrumMasters", this.scrumMastersIds);
+        propertyChanged("scrumMastersIds", this.scrumMastersIds);
     }
 
     // --- teamMembers ---
@@ -239,21 +239,21 @@ public abstract class GProject
 
     public final void setTeamMembers(Collection<scrum.client.admin.User> values) {
         teamMembersIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("teamMembers", this.teamMembersIds);
+        propertyChanged("teamMembersIds", this.teamMembersIds);
     }
 
     public final void addTeamMember(scrum.client.admin.User teamMember) {
         String id = teamMember.getId();
         if (teamMembersIds.contains(id)) return;
         teamMembersIds.add(id);
-        propertyChanged("teamMembers", this.teamMembersIds);
+        propertyChanged("teamMembersIds", this.teamMembersIds);
     }
 
     public final void removeTeamMember(scrum.client.admin.User teamMember) {
         String id = teamMember.getId();
         if (!teamMembersIds.contains(id)) return;
         teamMembersIds.remove(id);
-        propertyChanged("teamMembers", this.teamMembersIds);
+        propertyChanged("teamMembersIds", this.teamMembersIds);
     }
 
     // --- currentSprint ---
@@ -263,6 +263,10 @@ public abstract class GProject
     public final scrum.client.sprint.Sprint getCurrentSprint() {
         if (currentSprintId == null) return null;
         return getDao().getSprint(this.currentSprintId);
+    }
+
+    public final boolean isCurrentSprintSet() {
+        return currentSprintId != null;
     }
 
     public final Project setCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
@@ -284,6 +288,10 @@ public abstract class GProject
     public final scrum.client.sprint.Sprint getNextSprint() {
         if (nextSprintId == null) return null;
         return getDao().getSprint(this.nextSprintId);
+    }
+
+    public final boolean isNextSprintSet() {
+        return nextSprintId != null;
     }
 
     public final Project setNextSprint(scrum.client.sprint.Sprint nextSprint) {
@@ -323,11 +331,11 @@ public abstract class GProject
         properties.put("description", this.description);
         properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("end", this.end == null ? null : this.end.toString());
-        properties.put("participants", this.participantsIds);
-        properties.put("admins", this.adminsIds);
-        properties.put("productOwners", this.productOwnersIds);
-        properties.put("scrumMasters", this.scrumMastersIds);
-        properties.put("teamMembers", this.teamMembersIds);
+        properties.put("participantsIds", this.participantsIds);
+        properties.put("adminsIds", this.adminsIds);
+        properties.put("productOwnersIds", this.productOwnersIds);
+        properties.put("scrumMastersIds", this.scrumMastersIds);
+        properties.put("teamMembersIds", this.teamMembersIds);
         properties.put("currentSprintId", this.currentSprintId);
         properties.put("nextSprintId", this.nextSprintId);
     }

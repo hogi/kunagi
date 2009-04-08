@@ -47,8 +47,8 @@ public class Requirement extends GRequirement {
 		if (isClosed()) return "Closed.";
 		if (isDone()) return "Done. Test required.";
 		if (getEstimatedWork() == null) return "No effort estimated.";
+		if (!isSprintSet()) return getEstimatedWorkAsString() + " to do. No sprint assigned.";
 		Sprint sprint = getSprint();
-		if (sprint == null) return getEstimatedWorkAsString() + " to do. No sprint assigned.";
 		return getEstimatedWorkAsString() + " to do in sprint " + sprint.getLabel() + ".";
 	}
 

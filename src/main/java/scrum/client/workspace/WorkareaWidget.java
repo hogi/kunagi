@@ -50,7 +50,7 @@ public class WorkareaWidget extends AWidget {
 		navigator.addItem(Img.bundle.sprint16(), "Sprint Backlog", getSprintBacklog(), new Runnable() {
 
 			public void run() {
-				ScrumGwtApplication.get().callRequestCurrentSprint();
+				ScrumGwtApplication.get().callRequestRequirements();
 				show(getSprintBacklog());
 			}
 		});

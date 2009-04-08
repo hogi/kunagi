@@ -49,30 +49,31 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		toolbarWrapper = new SimplePanel();
 
 		title = new Label();
-		title.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_TITLE);
+		title.setStyleName("ABlockWidget-title");
 
 		iconPanel = new FocusPanel();
 
 		FlowPanel center = new FlowPanel();
-		center.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_CENTER);
+		center.setStyleName("ABlockWidget-center");
 		center.add(title);
 		center.add(contentWrapper);
 		DndManager.get().makeDraggable(this, iconPanel);
 
 		blockPanel = new HorizontalPanel();
 		blockPanel.setSpacing(5);
-		blockPanel.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_BLOCK);
+		blockPanel.setStyleName("ABlockWidget-block");
 		blockPanel.add(iconPanel);
+		blockPanel.setCellWidth(iconPanel, "32px");
 		blockPanel.add(center);
-		blockPanel.setCellWidth(center, "99%");
+		// blockPanel.setCellWidth(center, "99%");
 		blockPanel.add(toolbarWrapper);
 
 		mainPanel = new FlowPanel();
-		mainPanel.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET_MAIN);
+		mainPanel.setStyleName("ABlockWidget-main");
 
 		panel = new SimplePanel();
 		panel.setWidget(blockPanel);
-		panel.setStyleName(StyleSheet.ELEMENT_BLOCK_WIDGET);
+		panel.setStyleName("ABlockWidget");
 
 		mainPanel.add(dndMarkerTop);
 		mainPanel.add(panel);
@@ -158,9 +159,9 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		if (this.selected == extended) return;
 		this.selected = extended;
 		if (extended) {
-			getBorderPanel().addStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
+			getBorderPanel().addStyleName("ABlockWidget-selected");
 		} else {
-			getBorderPanel().removeStyleName(StyleSheet.STATE_BLOCK_WIDGET_SELECTED);
+			getBorderPanel().removeStyleName("ABlockWidget-selected");
 		}
 		update();
 	}

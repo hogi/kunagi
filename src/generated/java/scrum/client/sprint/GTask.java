@@ -53,6 +53,10 @@ public abstract class GTask
         return getDao().getRequirement(this.requirementId);
     }
 
+    public final boolean isRequirementSet() {
+        return requirementId != null;
+    }
+
     public final Task setRequirement(scrum.client.project.Requirement requirement) {
         String id = requirement == null ? null : requirement.getId();
         if (equals(this.requirementId, id)) return (Task) this;
@@ -144,6 +148,10 @@ public abstract class GTask
     public final scrum.client.admin.User getOwner() {
         if (ownerId == null) return null;
         return getDao().getUser(this.ownerId);
+    }
+
+    public final boolean isOwnerSet() {
+        return ownerId != null;
     }
 
     public final Task setOwner(scrum.client.admin.User owner) {

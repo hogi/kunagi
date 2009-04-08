@@ -62,7 +62,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 			icon = Img.bundle.done32();
 		} else if (requirement.isDone()) {
 			icon = Img.bundle.requirementIsDone32();
-		} else if (requirement.getSprint() != null) {
+		} else if (requirement.isSprintSet()) {
 			icon = Img.bundle.requirementInSprint32();
 		} else {
 			icon = Img.bundle.requirement32();
@@ -176,8 +176,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 			@Override
 			protected void onUpdate() {
-				Sprint sprint = requirement.getSprint();
-				setText(sprint == null ? "-" : sprint.toString());
+				setText(requirement.isSprintSet() ? requirement.getSprint().toString() : "-");
 			}
 		});
 	}
@@ -194,7 +193,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	protected Widget createToolbar() {
 		ToolbarWidget toolbar = new ToolbarWidget();
 
-		if (requirement.getSprint() == null) {
+		if (!requirement.isSprintSet()) {
 			toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
@@ -255,7 +254,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	}
 
 	public boolean isTrashable() {
-		return requirement.getSprint() == null;
+		return !requirement.isSprintSet();
 	}
 
 	public void trash() {

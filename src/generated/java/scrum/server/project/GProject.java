@@ -648,16 +648,22 @@ public abstract class GProject
     // -----------------------------------------------------------
 
     private String currentSprintId;
+    private transient scrum.server.sprint.Sprint currentSprintCache;
+
+    private void updateCurrentSprintCache() {
+        currentSprintCache = this.currentSprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.currentSprintId);
+    }
 
     public final scrum.server.sprint.Sprint getCurrentSprint() {
-        if (this.currentSprintId == null) return null;
-        return (scrum.server.sprint.Sprint)sprintDao.getById(this.currentSprintId);
+        if (currentSprintCache == null) updateCurrentSprintCache();
+        return currentSprintCache;
     }
 
     public final void setCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
         currentSprint = prepareCurrentSprint(currentSprint);
         if (isCurrentSprint(currentSprint)) return;
         this.currentSprintId = currentSprint == null ? null : currentSprint.getId();
+        currentSprintCache = currentSprint;
         fireModified();
     }
 
@@ -690,16 +696,22 @@ public abstract class GProject
     // -----------------------------------------------------------
 
     private String nextSprintId;
+    private transient scrum.server.sprint.Sprint nextSprintCache;
+
+    private void updateNextSprintCache() {
+        nextSprintCache = this.nextSprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.nextSprintId);
+    }
 
     public final scrum.server.sprint.Sprint getNextSprint() {
-        if (this.nextSprintId == null) return null;
-        return (scrum.server.sprint.Sprint)sprintDao.getById(this.nextSprintId);
+        if (nextSprintCache == null) updateNextSprintCache();
+        return nextSprintCache;
     }
 
     public final void setNextSprint(scrum.server.sprint.Sprint nextSprint) {
         nextSprint = prepareNextSprint(nextSprint);
         if (isNextSprint(nextSprint)) return;
         this.nextSprintId = nextSprint == null ? null : nextSprint.getId();
+        nextSprintCache = nextSprint;
         fireModified();
     }
 
@@ -736,11 +748,11 @@ public abstract class GProject
             if (property.equals("description")) updateDescription(value);
             if (property.equals("begin")) updateBegin(value);
             if (property.equals("end")) updateEnd(value);
-            if (property.equals("participantsId")) updateParticipants(value);
-            if (property.equals("adminsId")) updateAdmins(value);
-            if (property.equals("productOwnersId")) updateProductOwners(value);
-            if (property.equals("scrumMastersId")) updateScrumMasters(value);
-            if (property.equals("teamMembersId")) updateTeamMembers(value);
+            if (property.equals("participantsIds")) updateParticipants(value);
+            if (property.equals("adminsIds")) updateAdmins(value);
+            if (property.equals("productOwnersIds")) updateProductOwners(value);
+            if (property.equals("scrumMastersIds")) updateScrumMasters(value);
+            if (property.equals("teamMembersIds")) updateTeamMembers(value);
             if (property.equals("currentSprintId")) updateCurrentSprint(value);
             if (property.equals("nextSprintId")) updateNextSprint(value);
         }

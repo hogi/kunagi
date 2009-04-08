@@ -118,14 +118,6 @@ public abstract class GScrumGwtApplication
         callRequestQualitys( null);
     }
 
-    public final void callRequestCurrentSprint( Runnable callback) {
-        getScrumService().requestCurrentSprint( new DefaultCallback<DataTransferObject>(callback));
-    }
-
-    public final void callRequestCurrentSprint() {
-        callRequestCurrentSprint( null);
-    }
-
     public final void callChangeProperties(java.lang.String entityId, java.util.Map properties,  Runnable callback) {
         getScrumService().changeProperties(entityId, properties,  new DefaultCallback<DataTransferObject>(callback));
     }

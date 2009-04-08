@@ -57,16 +57,22 @@ public abstract class GTask
     // -----------------------------------------------------------
 
     private String requirementId;
+    private transient scrum.server.project.Requirement requirementCache;
+
+    private void updateRequirementCache() {
+        requirementCache = this.requirementId == null ? null : (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
+    }
 
     public final scrum.server.project.Requirement getRequirement() {
-        if (this.requirementId == null) return null;
-        return (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
+        if (requirementCache == null) updateRequirementCache();
+        return requirementCache;
     }
 
     public final void setRequirement(scrum.server.project.Requirement requirement) {
         requirement = prepareRequirement(requirement);
         if (isRequirement(requirement)) return;
         this.requirementId = requirement == null ? null : requirement.getId();
+        requirementCache = requirement;
         fireModified();
     }
 
@@ -226,16 +232,22 @@ public abstract class GTask
     // -----------------------------------------------------------
 
     private String ownerId;
+    private transient scrum.server.admin.User ownerCache;
+
+    private void updateOwnerCache() {
+        ownerCache = this.ownerId == null ? null : (scrum.server.admin.User)userDao.getById(this.ownerId);
+    }
 
     public final scrum.server.admin.User getOwner() {
-        if (this.ownerId == null) return null;
-        return (scrum.server.admin.User)userDao.getById(this.ownerId);
+        if (ownerCache == null) updateOwnerCache();
+        return ownerCache;
     }
 
     public final void setOwner(scrum.server.admin.User owner) {
         owner = prepareOwner(owner);
         if (isOwner(owner)) return;
         this.ownerId = owner == null ? null : owner.getId();
+        ownerCache = owner;
         fireModified();
     }
 

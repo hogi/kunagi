@@ -59,16 +59,22 @@ public abstract class GRequirement
     // -----------------------------------------------------------
 
     private String projectId;
+    private transient scrum.server.project.Project projectCache;
+
+    private void updateProjectCache() {
+        projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
+    }
 
     public final scrum.server.project.Project getProject() {
-        if (this.projectId == null) return null;
-        return (scrum.server.project.Project)projectDao.getById(this.projectId);
+        if (projectCache == null) updateProjectCache();
+        return projectCache;
     }
 
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
+        projectCache = project;
         fireModified();
     }
 
@@ -100,16 +106,22 @@ public abstract class GRequirement
     // -----------------------------------------------------------
 
     private String sprintId;
+    private transient scrum.server.sprint.Sprint sprintCache;
+
+    private void updateSprintCache() {
+        sprintCache = this.sprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
+    }
 
     public final scrum.server.sprint.Sprint getSprint() {
-        if (this.sprintId == null) return null;
-        return (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
+        if (sprintCache == null) updateSprintCache();
+        return sprintCache;
     }
 
     public final void setSprint(scrum.server.sprint.Sprint sprint) {
         sprint = prepareSprint(sprint);
         if (isSprint(sprint)) return;
         this.sprintId = sprint == null ? null : sprint.getId();
+        sprintCache = sprint;
         fireModified();
     }
 
@@ -399,7 +411,7 @@ public abstract class GRequirement
             Object value = entry.getValue();
             if (property.equals("projectId")) updateProject(value);
             if (property.equals("sprintId")) updateSprint(value);
-            if (property.equals("qualitysId")) updateQualitys(value);
+            if (property.equals("qualitysIds")) updateQualitys(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("description")) updateDescription(value);
             if (property.equals("testDescription")) updateTestDescription(value);

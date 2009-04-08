@@ -24,7 +24,8 @@ public class FieldsWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		grid = new Grid(0, 2);
-		grid.setStyleName(StyleSheet.A_ITEM_FIELDS_WIDGET_GRID);
+		grid.setWidth("100%");
+		grid.setStyleName("FieldsWidget-grid");
 		return grid;
 	}
 
@@ -56,15 +57,15 @@ public class FieldsWidget extends AWidget {
 
 		if (label == null) label = "";
 		Label l = new Label(label);
-		l.setStyleName(StyleSheet.FIELD_LABEL);
-		value.addStyleName(StyleSheet.FIELD_VALUE);
+		l.setStyleName("FieldsWidget-fieldLabel");
+		value.addStyleName("FieldsWidget-fieldValue");
 		l.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
 		int row = grid.getRowCount();
 		grid.resizeRows(row + 1);
 		if (row == 0) {
-			grid.getCellFormatter().setWidth(row, 0, "25%");
-			grid.getCellFormatter().setWidth(row, 1, "75%");
+			grid.getCellFormatter().setWidth(row, 0, "10%");
+			grid.getCellFormatter().setWidth(row, 1, "90%");
 		}
 		grid.setWidget(row, 0, l);
 		grid.setWidget(row, 1, value);

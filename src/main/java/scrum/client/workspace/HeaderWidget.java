@@ -42,10 +42,8 @@ public class HeaderWidget extends AWidget {
 		panel.add(title);
 		panel.setCellVerticalAlignment(title, HasVerticalAlignment.ALIGN_MIDDLE);
 
-		HorizontalPanel currentUserPanel = new HorizontalPanel();
 		currentUserLabel = new Label();
 		currentUserLabel.setStyleName("title");
-		currentUserPanel.add(currentUserLabel);
 
 		toolbar = new ToolbarWidget(true);
 		logoutButton = new ButtonWidget("logout");
@@ -56,10 +54,13 @@ public class HeaderWidget extends AWidget {
 		changePasswordButton.addClickListener(new ChangePasswordClickListener());
 		toolbar.add(changePasswordButton);
 
-		currentUserPanel.add(toolbar);
+		HorizontalPanel controlPanel = new HorizontalPanel();
+		controlPanel.setStyleName("HeaderWidget-controlPanel");
+		controlPanel.add(currentUserLabel);
+		controlPanel.add(toolbar);
 
-		panel.add(currentUserPanel);
-		panel.setCellHorizontalAlignment(currentUserPanel, HasHorizontalAlignment.ALIGN_RIGHT);
+		panel.add(controlPanel);
+		panel.setCellHorizontalAlignment(controlPanel, HasHorizontalAlignment.ALIGN_RIGHT);
 
 		return panel;
 	}

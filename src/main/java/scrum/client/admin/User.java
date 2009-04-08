@@ -4,7 +4,12 @@ import java.util.Map;
 
 public class User extends GUser {
 
-	public User() {}
+	public static final String INITIAL_NAME = "newuser";
+	public static final String INITIAL_PASSWORD = "geheim";
+
+	public User() {
+		setName(INITIAL_NAME);
+	}
 
 	public User(Map data) {
 		super(data);

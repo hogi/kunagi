@@ -68,16 +68,22 @@ public abstract class GRisk
     // -----------------------------------------------------------
 
     private String projectId;
+    private transient scrum.server.project.Project projectCache;
+
+    private void updateProjectCache() {
+        projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
+    }
 
     public final scrum.server.project.Project getProject() {
-        if (this.projectId == null) return null;
-        return (scrum.server.project.Project)projectDao.getById(this.projectId);
+        if (projectCache == null) updateProjectCache();
+        return projectCache;
     }
 
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
+        projectCache = project;
         fireModified();
     }
 
