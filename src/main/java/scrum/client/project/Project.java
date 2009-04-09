@@ -1,6 +1,9 @@
 package scrum.client.project;
 
+import ilarkesto.gwt.client.Gwt;
+
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,6 +20,8 @@ public class Project extends GProject {
 	private static final String effortUnit = "StoryPoints";
 	public static final String INIT_LABEL = "New Project";
 
+	private transient Comparator<Requirement> requirementsOrderComparator;
+
 	public Project(User creator) {
 		setLabel(INIT_LABEL);
 		addAdmin(creator);
@@ -24,6 +29,10 @@ public class Project extends GProject {
 
 	public Project(Map data) {
 		super(data);
+	}
+
+	public void updateRequirementsOrder(List<Requirement> requirements) {
+		setRequirementsOrderIds(Gwt.getIdsAsList(requirements));
 	}
 
 	public Set<User> getParticipantsAvailableForConfiguration() {
@@ -125,6 +134,21 @@ public class Project extends GProject {
 	@Override
 	public String toString() {
 		return getLabel();
+	}
+
+	public Comparator<Requirement> getRequirementsOrderComparator() {
+		if (requirementsOrderComparator == null) requirementsOrderComparator = new Comparator<Requirement>() {
+
+			public int compare(Requirement a, Requirement b) {
+				List<String> order = getRequirementsOrderIds();
+				int ia = order.indexOf(a.getId());
+				if (ia < 0) ia = Integer.MAX_VALUE;
+				int ib = order.indexOf(b.getId());
+				if (ib < 0) ib = Integer.MAX_VALUE;
+				return ia - ib;
+			}
+		};
+		return requirementsOrderComparator;
 	}
 
 }

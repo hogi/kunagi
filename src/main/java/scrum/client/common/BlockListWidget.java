@@ -30,6 +30,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	private boolean dndSorting = true;
 	private Comparator<O> autoSorter;
 	private BlockWidgetFactory<O> blockWidgetFactory;
+	private BlockMoveObserver<O> moveObserver;
 
 	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory) {
 		this.blockWidgetFactory = blockWidgetFactory;
@@ -68,6 +69,10 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 				moveBlock(blocks.get(index), i);
 			}
 		}
+	}
+
+	public void setMoveObserver(BlockMoveObserver<O> orderObserver) {
+		this.moveObserver = orderObserver;
 	}
 
 	public final void setAutoSorter(Comparator<O> autoSorter) {
@@ -162,6 +167,8 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		table.removeRow(fromIndex);
 		table.insertRow(toIndex);
 		table.setWidget(toIndex, 0, block);
+
+		if (moveObserver != null) moveObserver.onBlockMoved();
 	}
 
 	public final O getObject(int index) {

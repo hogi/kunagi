@@ -64,6 +64,8 @@ public abstract class GProjectDao
         currentSprintsCache = null;
         projectsByNextSprintCache.clear();
         nextSprintsCache = null;
+        projectsByRequirementsOrderIdCache.clear();
+        requirementsOrderIdsCache = null;
     }
 
     @Override
@@ -518,6 +520,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isNextSprint(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - requirementsOrderIds
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByRequirementsOrderIdCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String requirementsOrderId) {
+                    return getEntities(new ContainsRequirementsOrderId(requirementsOrderId));
+                }
+            });
+
+    public final Set<Project> getProjectsByRequirementsOrderId(java.lang.String requirementsOrderId) {
+        return projectsByRequirementsOrderIdCache.get(requirementsOrderId);
+    }
+    private Set<java.lang.String> requirementsOrderIdsCache;
+
+    public final Set<java.lang.String> getRequirementsOrderIds() {
+        if (requirementsOrderIdsCache == null) {
+            requirementsOrderIdsCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                requirementsOrderIdsCache.addAll(e.getRequirementsOrderIds());
+            }
+        }
+        return requirementsOrderIdsCache;
+    }
+
+    private static class ContainsRequirementsOrderId implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public ContainsRequirementsOrderId(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.containsRequirementsOrderId(value);
         }
 
     }

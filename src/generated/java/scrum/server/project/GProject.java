@@ -47,6 +47,7 @@ public abstract class GProject
         properties.put("teamMembersIds", this.teamMembersIds);
         properties.put("currentSprintId", this.currentSprintId);
         properties.put("nextSprintId", this.nextSprintId);
+        properties.put("requirementsOrderIds", this.requirementsOrderIds);
     }
 
     public int compareTo(Project other) {
@@ -739,6 +740,96 @@ public abstract class GProject
         setNextSprint(value == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById((String)value));
     }
 
+    // -----------------------------------------------------------
+    // - requirementsOrderIds
+    // -----------------------------------------------------------
+
+    private java.util.List<java.lang.String> requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getRequirementsOrderIds() {
+        return new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
+    }
+
+    public final void setRequirementsOrderIds(java.util.List<java.lang.String> requirementsOrderIds) {
+        requirementsOrderIds = prepareRequirementsOrderIds(requirementsOrderIds);
+        if (requirementsOrderIds == null) throw new IllegalArgumentException("null is not allowed");
+        if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
+        this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
+        fireModified();
+    }
+
+    protected java.util.List<java.lang.String> prepareRequirementsOrderIds(java.util.List<java.lang.String> requirementsOrderIds) {
+        return requirementsOrderIds;
+    }
+
+    public final boolean containsRequirementsOrderId(java.lang.String requirementsOrderId) {
+        if (requirementsOrderId == null) return false;
+        return this.requirementsOrderIds.contains(requirementsOrderId);
+    }
+
+    public final int getRequirementsOrderIdsCount() {
+        return this.requirementsOrderIds.size();
+    }
+
+    public final boolean isRequirementsOrderIdsEmpty() {
+        return this.requirementsOrderIds.isEmpty();
+    }
+
+    public final boolean addRequirementsOrderId(java.lang.String requirementsOrderId) {
+        if (requirementsOrderId == null) throw new IllegalArgumentException("requirementsOrderId == null");
+        boolean added = this.requirementsOrderIds.add(requirementsOrderId);
+        if (added) fireModified();
+        return added;
+    }
+
+    public final boolean addRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
+        if (requirementsOrderIds == null) throw new IllegalArgumentException("requirementsOrderIds == null");
+        boolean added = false;
+        for (java.lang.String requirementsOrderId : requirementsOrderIds) {
+            added = added | this.requirementsOrderIds.add(requirementsOrderId);
+        }
+        if (added) fireModified();
+        return added;
+    }
+
+    public final boolean removeRequirementsOrderId(java.lang.String requirementsOrderId) {
+        if (requirementsOrderId == null) throw new IllegalArgumentException("requirementsOrderId == null");
+        if (this.requirementsOrderIds == null) return false;
+        boolean removed = this.requirementsOrderIds.remove(requirementsOrderId);
+        if (removed) fireModified();
+        return removed;
+    }
+
+    public final boolean removeRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
+        if (requirementsOrderIds == null) return false;
+        if (requirementsOrderIds.isEmpty()) return false;
+        boolean removed = false;
+        for (java.lang.String _element: requirementsOrderIds) {
+            removed = removed | removeRequirementsOrderId(_element);
+        }
+        return removed;
+    }
+
+    public final boolean clearRequirementsOrderIds() {
+        if (this.requirementsOrderIds.isEmpty()) return false;
+        this.requirementsOrderIds.clear();
+        fireModified();
+        return true;
+    }
+
+    public final String getRequirementsOrderIdsAsCommaSeparatedString() {
+        if (this.requirementsOrderIds.isEmpty()) return null;
+        return Str.concat(this.requirementsOrderIds,", ");
+    }
+
+    public final void setRequirementsOrderIdsAsCommaSeparatedString(String requirementsOrderIds) {
+        this.requirementsOrderIds = new java.util.ArrayList(Str.parseCommaSeparatedString(requirementsOrderIds));
+    }
+
+    protected final void updateRequirementsOrderIds(Object value) {
+        setRequirementsOrderIds((java.util.List<java.lang.String>) value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -755,6 +846,7 @@ public abstract class GProject
             if (property.equals("teamMembersIds")) updateTeamMembers(value);
             if (property.equals("currentSprintId")) updateCurrentSprint(value);
             if (property.equals("nextSprintId")) updateNextSprint(value);
+            if (property.equals("requirementsOrderIds")) updateRequirementsOrderIds(value);
         }
     }
 
@@ -772,6 +864,7 @@ public abstract class GProject
         repairDeadTeamMemberReference(entityId);
         repairDeadCurrentSprintReference(entityId);
         repairDeadNextSprintReference(entityId);
+        if (this.requirementsOrderIds == null) this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
     }
 
     // --- ensure integrity ---
@@ -840,6 +933,7 @@ public abstract class GProject
             LOG.info("Repairing dead nextSprint reference");
             repairDeadNextSprintReference(this.nextSprintId);
         }
+        if (this.requirementsOrderIds == null) this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
     }
 
 

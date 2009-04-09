@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
+import scrum.client.common.BlockMoveObserver;
 import scrum.client.common.GroupWidget;
 import scrum.client.img.Img;
 import scrum.client.workspace.WorkareaWidget;
@@ -20,6 +21,7 @@ public class ProductBacklogWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		list = new BlockListWidget<Requirement>(RequirementBlock.FACTORY);
+		list.setMoveObserver(new MoveObserver());
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 		toolbar.addButton(Img.bundle.new16().createImage(), "Create new Requirement").addClickListener(
 			new CreateClickListener());
@@ -35,6 +37,7 @@ public class ProductBacklogWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		list.setBlocks(ScrumGwtApplication.get().getProject().getRequirements());
+		list.sort(ScrumGwtApplication.get().getProject().getRequirementsOrderComparator());
 	}
 
 	class CreateClickListener implements ClickListener {
@@ -43,6 +46,14 @@ public class ProductBacklogWidget extends AWidget {
 			Requirement requirement = ScrumGwtApplication.get().getProject().createNewRequirement();
 			list.addBlock(requirement, true);
 		}
+	}
+
+	class MoveObserver implements BlockMoveObserver<Requirement> {
+
+		public void onBlockMoved() {
+			ScrumGwtApplication.get().getProject().updateRequirementsOrder(list.getObjects());
+		}
+
 	}
 
 	public static ProductBacklogWidget get() {

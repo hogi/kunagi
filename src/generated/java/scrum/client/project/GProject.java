@@ -306,6 +306,21 @@ public abstract class GProject
         return equals(this.nextSprintId, nextSprint);
     }
 
+    // --- requirementsOrderIds ---
+
+    private java.util.List<java.lang.String> requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getRequirementsOrderIds() {
+        return new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
+    }
+
+    public final void setRequirementsOrderIds(java.util.List<java.lang.String> requirementsOrderIds) {
+        if (requirementsOrderIds == null) throw new IllegalArgumentException("null is not allowed");
+        if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
+        this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
+        propertyChanged("requirementsOrderIds", this.requirementsOrderIds);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -322,6 +337,7 @@ public abstract class GProject
         teamMembersIds = (Set<String>) props.get("teamMembersIds");
         currentSprintId = (String) props.get("currentSprintId");
         nextSprintId = (String) props.get("nextSprintId");
+        requirementsOrderIds  = (java.util.List<java.lang.String>) props.get("requirementsOrderIds");
     }
 
     @Override
@@ -338,6 +354,7 @@ public abstract class GProject
         properties.put("teamMembersIds", this.teamMembersIds);
         properties.put("currentSprintId", this.currentSprintId);
         properties.put("nextSprintId", this.nextSprintId);
+        properties.put("requirementsOrderIds", this.requirementsOrderIds);
     }
 
 }
