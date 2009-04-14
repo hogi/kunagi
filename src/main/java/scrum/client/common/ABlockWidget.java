@@ -60,7 +60,7 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		DndManager.get().makeDraggable(this, iconPanel);
 
 		blockPanel = new HorizontalPanel();
-		blockPanel.setSpacing(5);
+		blockPanel.setSpacing(1);
 		blockPanel.setStyleName("ABlockWidget-block");
 		blockPanel.add(iconPanel);
 		blockPanel.setCellWidth(iconPanel, "32px");
@@ -68,12 +68,12 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		// blockPanel.setCellWidth(center, "99%");
 		blockPanel.add(toolbarWrapper);
 
-		mainPanel = new FlowPanel();
-		mainPanel.setStyleName("ABlockWidget-main");
-
 		panel = new SimplePanel();
 		panel.setWidget(blockPanel);
 		panel.setStyleName("ABlockWidget");
+
+		mainPanel = new FlowPanel();
+		mainPanel.setStyleName("ABlockWidget-main");
 
 		mainPanel.add(dndMarkerTop);
 		mainPanel.add(panel);

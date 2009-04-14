@@ -260,18 +260,18 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 
 	public void activateDndMarkerBefore(ABlockWidget<O> block) {
 		block.activateDndMarkerTop();
-		ABlockWidget<O> previous = getPreviousBlock(block);
-		if (previous != null) previous.activateDndMarkerBottom();
-		ABlockWidget<O> next = getNextBlock(block);
-		if (next != null) next.deactivateDndMarkers();
+		// ABlockWidget<O> previous = getPreviousBlock(block);
+		// if (previous != null) previous.activateDndMarkerBottom();
+		// ABlockWidget<O> next = getNextBlock(block);
+		// if (next != null) next.deactivateDndMarkers();
 	}
 
 	public void activateDndMarkerAfter(ABlockWidget<O> block) {
 		block.activateDndMarkerBottom();
-		ABlockWidget<O> previous = getPreviousBlock(block);
-		if (previous != null) previous.deactivateDndMarkers();
-		ABlockWidget<O> next = getNextBlock(block);
-		if (next != null) next.activateDndMarkerTop();
+		// ABlockWidget<O> previous = getPreviousBlock(block);
+		// if (previous != null) previous.deactivateDndMarkers();
+		// ABlockWidget<O> next = getNextBlock(block);
+		// if (next != null) next.activateDndMarkerTop();
 	}
 
 	private final class Listener implements TableListener {

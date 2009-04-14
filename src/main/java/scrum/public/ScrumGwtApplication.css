@@ -64,8 +64,8 @@ a {cursor: pointer;}
 .ABlockWidget-center {}
 .ABlockWidget-selected {border: 3px solid orange; cursor: default;}
 
-.element-DndMarkerWidget {background: white; height: 3px;}
-.element-DndMarkerWidget-active {background: #192666; height: 3px;}
+.element-DndMarkerWidget {display: none;}
+.element-DndMarkerWidget-active {display: block; background: #192666; height: 5px;}
 
 /***** Panel *****/
 
