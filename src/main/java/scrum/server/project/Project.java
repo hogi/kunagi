@@ -137,6 +137,7 @@ public class Project extends GProject {
 		addParticipants(getTeamMembers());
 		if (!isCurrentSprintSet()) {
 			Sprint sprint = sprintDao.newEntityInstance();
+			sprint.setProject(this);
 			sprintDao.saveEntity(sprint);
 			setCurrentSprint(sprint);
 		}

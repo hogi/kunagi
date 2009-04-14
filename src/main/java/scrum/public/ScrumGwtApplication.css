@@ -96,12 +96,12 @@ a {cursor: pointer;}
 
 /***** Editables *****/
 
-.AIntegerViewEditWidget .ButtonWidget a {font-size: 8px; line-height: 8px;}
 
-.editableViewer {cursor: pointer; background: #F2F5FE; min-width: 16px; min-height: 16px; border: 1px dotted #CCCCCC; display: block; padding: 3px;}
-.Viewer {}
+.AViewEditWidget-viewer {cursor: pointer; background: #F2F5FE; min-width: 16px; min-height: 16px; border: 1px dotted #CCCCCC; display: block; padding: 3px;}
+.AViewEditWidget-editor {}
+
+.AIntegerViewEditWidget .ButtonWidget a {font-size: 8px; line-height: 8px;}
 .Textarea-editor {height: 100px; width: 96%;}
-.editableEditor {}
 .AEditableTextareaWidget-editorPanel {width: 100%;}
 .Integer-editor {width: 10%;}
 
