@@ -3,7 +3,6 @@ package scrum.client.sprint;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
@@ -44,10 +43,8 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 	@Override
 	protected void onCollapsedUpdate() {
 		setBlockTitle(task.getLabel());
-		setIcon(task.isDone() ? Img.bundle.done32() : Img.bundle.task32());
-		summary.setText(task.getSummary());
-		setContent(summary);
-		setToolbar(null);
+		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
+		createToolbar();
 	}
 
 	@Override
@@ -165,22 +162,20 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 	@Override
 	protected void onExtendedUpdate() {
 		setBlockTitle(task.getLabel());
-		setIcon(task.isDone() ? Img.bundle.done32() : Img.bundle.task32());
+		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
 		fields.update();
 		owner.setText(task.getOwner() == null ? "No owner specified." : task.getOwner().getName());
 		setContent(fields);
-		setToolbar(createToolbar());
+		createToolbar();
 	}
 
 	public Task getTask() {
 		return task;
 	}
 
-	protected Widget createToolbar() {
-
-		ToolbarWidget toolbar = new ToolbarWidget();
+	protected void createToolbar() {
 		if (!task.isDone()) {
-			toolbar.addButton("Own").addClickListener(new ClickListener() {
+			addToolbarButton("Own").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					task.setOwner(ScrumGwtApplication.get().getUser());
@@ -191,7 +186,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		}
 
 		if (isTrashable()) {
-			toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
+			addToolbarButton("Delete").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					trash();
@@ -202,7 +197,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		}
 
 		if (!task.isDone()) {
-			toolbar.addButton(Img.bundle.done16().createImage(), "Done").addClickListener(new ClickListener() {
+			addToolbarButton("Done").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					task.setDone();
@@ -211,7 +206,6 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 			});
 		}
-		return toolbar;
 	}
 
 	public Image getClipboardIcon() {

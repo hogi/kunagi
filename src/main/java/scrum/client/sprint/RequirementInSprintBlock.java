@@ -1,7 +1,6 @@
 package scrum.client.sprint;
 
 import ilarkesto.gwt.client.ATextWidget;
-import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockListWidget;
@@ -44,10 +43,8 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	@Override
 	protected void onCollapsedUpdate() {
 		setBlockTitle(requirement.getLabel());
-		setIcon(requirement.isDone() ? Img.bundle.done32() : Img.bundle.requirement32());
-		summary.setText(requirement.getSprintBacklogSummary());
-		setContent(summary);
-		setToolbar(null);
+		setIcon(requirement.isDone() ? Img.bundle.done16() : Img.bundle.requirement16());
+		createToolbar();
 	}
 
 	@Override
@@ -89,24 +86,22 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	@Override
 	protected void onExtendedUpdate() {
 		setBlockTitle(requirement.getLabel());
-		setIcon(requirement.isDone() ? Img.bundle.done32() : Img.bundle.requirement32());
+		setIcon(requirement.isDone() ? Img.bundle.done16() : Img.bundle.requirement16());
 		fields.update();
 
 		taskList.setBlocks(requirement.getTasks());
 
 		setContent(panel);
-		setToolbar(createToolbar());
+		createToolbar();
 	}
 
 	public Requirement getRequirement() {
 		return requirement;
 	}
 
-	protected Widget createToolbar() {
-		ToolbarWidget toolbar = new ToolbarWidget();
-
+	protected void createToolbar() {
 		if (requirement.isDone() && !requirement.isClosed()) {
-			toolbar.addButton("Close").addClickListener(new ClickListener() {
+			addToolbarButton("Close").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					requirement.setClosed(true);
@@ -116,7 +111,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 		}
 
 		if (!requirement.isClosed()) {
-			toolbar.addButton("Create new Task").addClickListener(new ClickListener() {
+			addToolbarButton("Create new Task").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					taskList.addBlock(requirement.createNewTask(), true);
@@ -124,7 +119,6 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 				}
 			});
 		}
-		return toolbar;
 	}
 
 	public Image getClipboardIcon() {

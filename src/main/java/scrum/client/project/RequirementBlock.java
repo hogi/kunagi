@@ -5,7 +5,6 @@ import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
-import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ClientConstants;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
@@ -50,25 +49,25 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	protected void onCollapsedUpdate() {
 		setBlockTitle(requirement.getLabel());
 		setIcon(getProperIcon());
-		summary.setText(requirement.getProductBacklogSummary());
-		setContent(summary);
-		setToolbar(null);
+		createToolbar();
 	}
 
 	private AbstractImagePrototype getProperIcon() {
-		AbstractImagePrototype icon = null;
 
-		if (requirement.isClosed()) {
-			icon = Img.bundle.done32();
-		} else if (requirement.isDone()) {
-			icon = Img.bundle.requirementIsDone32();
-		} else if (requirement.isSprintSet()) {
-			icon = Img.bundle.requirementInSprint32();
-		} else {
-			icon = Img.bundle.requirement32();
-		}
+		return Img.bundle.requirement16();
 
-		return icon;
+		// AbstractImagePrototype icon = null;
+		// if (requirement.isClosed()) {
+		// icon = Img.bundle.done32();
+		// } else if (requirement.isDone()) {
+		// icon = Img.bundle.requirementIsDone32();
+		// } else if (requirement.isSprintSet()) {
+		// icon = Img.bundle.requirementInSprint32();
+		// } else {
+		// icon = Img.bundle.requirement32();
+		// }
+		//
+		// return icon;
 	}
 
 	@Override
@@ -187,14 +186,12 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 		setIcon(getProperIcon());
 		fields.update();
 		setContent(fields);
-		setToolbar(createToolbar());
+		createToolbar();
 	}
 
-	protected Widget createToolbar() {
-		ToolbarWidget toolbar = new ToolbarWidget();
-
+	protected void createToolbar() {
 		if (!requirement.isSprintSet()) {
-			toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
+			addToolbarButton("Delete").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
@@ -206,7 +203,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 		final Sprint currentSprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
 		if (currentSprint != null) {
 			if (requirement.isSprint(currentSprint)) {
-				toolbar.addButton("Remove from Sprint").addClickListener(new ClickListener() {
+				addToolbarButton("Remove from Sprint").addClickListener(new ClickListener() {
 
 					public void onClick(Widget sender) {
 						requirement.setSprint(null);
@@ -215,21 +212,20 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 				});
 			} else {
 				if (requirement.getEstimatedWork() != null) {
-					toolbar.addButton(Img.bundle.sprint16().createImage(), "Add to Sprint").addClickListener(
-						new ClickListener() {
+					addToolbarButton("Add to Sprint").addClickListener(new ClickListener() {
 
-							public void onClick(Widget sender) {
-								requirement.setSprint(currentSprint);
-								update();
-								WorkareaWidget.get().showSprintBacklog(requirement);
-							}
-						});
+						public void onClick(Widget sender) {
+							requirement.setSprint(currentSprint);
+							update();
+							WorkareaWidget.get().showSprintBacklog(requirement);
+						}
+					});
 				}
 			}
 		}
 
 		if (!requirement.isClosed() && requirement.isDone()) {
-			toolbar.addButton(Img.bundle.done16().createImage(), "Close").addClickListener(new ClickListener() {
+			addToolbarButton("Close").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
 					// item.setDone(false);
@@ -237,8 +233,6 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 				}
 			});
 		}
-
-		return toolbar;
 	}
 
 	public Image getClipboardIcon() {
