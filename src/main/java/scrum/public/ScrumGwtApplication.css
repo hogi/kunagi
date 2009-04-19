@@ -52,20 +52,33 @@ a {cursor: pointer;}
 
 .WorkareaWidget {background: white;}
 
+/***** Toolbar *****/
+
+.ButtonWidget { }
+.ButtonWidget a { display: block; font-weight: bold; padding: 3px; text-decoration: none; cursor: pointer; white-space: nowrap; background: #FFC20E url("button_bg.png"); border: 1px solid orange; }
+.ButtonWidget a:visited {color: white;}
+.ButtonWidget a:hover { display: block; font-weight: bold; padding: 3px; text-decoration: none; cursor: pointer; white-space: nowrap; background: #FF8000 url("button_bg.png"); border: 1px solid orange; }
+.ToolbarWidget {padding: 3px;}
+.ToolbarWidget .vertical .ButtonWidget {float: none; margin-bottom: 3px;}
+.ToolbarWidget .horizontal .ButtonWidget {float: left; margin-right: 3px;}
+
 /***** Block List *****/
 
 .BlockListWidget {padding: 5px;}
 .element-BlockListWidget-table {width: 100%; background: white;}
 
-.ABlockWidget-main {}
+.ABlockWidget-main {border-top: 2px solid white; }
 .ABlockWidget {cursor: pointer; color: black;}
-.ABlockWidget-title {padding: 1px; width: 100%; background: #DEE5FD; border-top: 1px solid white; }
+.ABlockWidget-title {padding: 1px; width: 100%; background: #DEE5FD; }
 .ABlockWidget-title-label {font-size: 12px; line-height: 16px;}
 .ABlockWidget-center {}
-.ABlockWidget-selected {border: 3px solid orange; cursor: default;}
+.ABlockWidget-selected {border: 2px solid orange; cursor: default;}
 
 .element-DndMarkerWidget {display: none;}
 .element-DndMarkerWidget-active {display: block; background: #192666; height: 5px;}
+
+.ABlockWidget .ButtonWidget {margin-left: 15px;}
+.ABlockWidget .ButtonWidget a {font-size: 12px; line-height: 16px;  padding: 0px; font-weight: normal; background: #DEE5FD; border: 0px;}
 
 /***** Panel *****/
 
@@ -77,16 +90,6 @@ a {cursor: pointer;}
 
 .element-GroupWidget-title {background: #DEE5FD; color:#192666; padding: 7px; font-size: 20px; font-family: "georgia",serif;}
 .element-GroupWidget-content {padding: 5px;}
-
-/***** Toolbar *****/
-
-.ButtonWidget { }
-.ButtonWidget a { display: block; font-weight: bold; padding: 3px; text-decoration: none; cursor: pointer; white-space: nowrap; background: #FFC20E url("button_bg.png"); border: 1px solid orange; }
-.ButtonWidget a:visited {color: white;}
-.ButtonWidget a:hover { display: block; font-weight: bold; padding: 3px; text-decoration: none; cursor: pointer; white-space: nowrap; background: #FF8000 url("button_bg.png"); border: 1px solid orange; }
-.ToolbarWidget {padding: 3px;}
-.ToolbarWidget .vertical .ButtonWidget {float: none; margin-bottom: 3px;}
-.ToolbarWidget .horizontal .ButtonWidget {float: left; margin-right: 3px;}
 
 /***** Fields *****/
 

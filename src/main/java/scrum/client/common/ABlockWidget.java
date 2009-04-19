@@ -1,6 +1,7 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.dnd.BlockListDndMarkerWidget;
 import scrum.client.dnd.DndManager;
 
@@ -24,11 +25,11 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 	private FocusPanel iconPanel;
 	private HorizontalPanel titlePanel;
 	private SimplePanel contentWrapper;
-	private SimplePanel toolbarWrapper;
+	private HorizontalPanel toolbar;
 
 	private BlockListWidget list;
 	private FlowPanel mainPanel;
-	private SimplePanel panel;
+	private FlowPanel panel;
 	private boolean selected;
 	private BlockListDndMarkerWidget dndMarkerTop = new BlockListDndMarkerWidget();
 	private BlockListDndMarkerWidget dndMarkerBottom = new BlockListDndMarkerWidget();
@@ -46,7 +47,8 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 	@Override
 	protected final Widget onInitialization() {
 		contentWrapper = new SimplePanel();
-		toolbarWrapper = new SimplePanel();
+		contentWrapper.setStyleName("ABlockWidget-content");
+		toolbar = new HorizontalPanel();
 
 		label = new Label();
 		label.setStyleName("ABlockWidget-label");
@@ -67,11 +69,13 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 
 		titlePanel.add(label);
 		// blockPanel.setCellWidth(center, "99%");
-		titlePanel.add(toolbarWrapper);
+		titlePanel.add(toolbar);
+		titlePanel.setCellWidth(toolbar, "1%");
 
 		// ----
-		panel = new SimplePanel();
+		panel = new FlowPanel();
 		panel.add(titlePanel);
+		panel.add(contentWrapper);
 		panel.setStyleName("ABlockWidget");
 
 		mainPanel = new FlowPanel();
@@ -89,8 +93,27 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		return mainPanel;
 	}
 
+	protected ButtonWidget addToolbarButton(Image icon, String label) {
+		ButtonWidget button = new ButtonWidget(icon, label);
+		addToolbarItem(button);
+		return button;
+	}
+
+	protected ButtonWidget addToolbarButton(String label) {
+		ButtonWidget button = new ButtonWidget(label);
+		addToolbarItem(button);
+		return button;
+	}
+
+	protected void addToolbarItem(AWidget toolbarItem) {
+		// toolbar.add(new Label("|"));
+		toolbar.add(toolbarItem);
+		toolbarItem.update();
+	}
+
 	@Override
 	protected final void onUpdate() {
+		toolbar.clear();
 		onBlockUpdate();
 	}
 
@@ -98,8 +121,9 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		contentWrapper.setWidget(content);
 	}
 
+	@Deprecated
 	protected final void setToolbar(Widget toolbar) {
-		toolbarWrapper.setWidget(toolbar);
+
 	}
 
 	protected final void setBlockTitle(String text) {
@@ -164,6 +188,7 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 			getBorderPanel().addStyleName("ABlockWidget-selected");
 		} else {
 			getBorderPanel().removeStyleName("ABlockWidget-selected");
+			setContent(null);
 		}
 		update();
 	}

@@ -61,7 +61,8 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 		content.setHTML(description);
 
 		setContent(null);
-		setToolbar(null);
+
+		createToolbar();
 	}
 
 	@Override
@@ -208,33 +209,28 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 		setBlockTitle(project.getLabel());
 		fields.update();
 		setContent(fields);
-		setToolbar(getToolbar());
+		createToolbar();
 	}
 
-	protected Widget getToolbar() {
-		if (toolbar == null) {
-			toolbar = new ToolbarWidget();
-			toolbar.addButton("Open Project").addClickListener(new ClickListener() {
+	protected void createToolbar() {
+		addToolbarButton("Open Project").addClickListener(new ClickListener() {
 
-				public void onClick(Widget sender) {
-					select();
+			public void onClick(Widget sender) {
+				select();
+			}
+		});
+
+		addToolbarButton("Delete").addClickListener(new ClickListener() {
+
+			public void onClick(Widget sender) {
+
+				if (Window
+						.confirm("'R you crazy, Jesus? You crazy??\n\nOK - That's what my Ex-Wife said!\nCancel - No, of course not!")) {
+					ScrumGwtApplication.get().getDao().deleteProject(project);
+					ProjectSelectorWidget.get().getList().removeSelectedRow();
 				}
-			});
-
-			toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
-
-				public void onClick(Widget sender) {
-
-					if (Window
-							.confirm("'R you crazy, Jesus? You crazy??\n\nOK - That's what my Ex-Wife said!\nCancel - No, of course not!")) {
-						ScrumGwtApplication.get().getDao().deleteProject(project);
-						ProjectSelectorWidget.get().getList().removeSelectedRow();
-					}
-				}
-			});
-		}
-
-		return toolbar;
+			}
+		});
 	}
 
 	private void select() {
