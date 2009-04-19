@@ -4,7 +4,6 @@ import ilarkesto.gwt.client.ADropdownViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
-import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
@@ -16,7 +15,6 @@ import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupport, ClipboardSupport {
@@ -24,8 +22,6 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 	private Risk risk;
 
 	private FieldsWidget fields;
-	private Label summary;
-	private ToolbarWidget toolbar;
 
 	@Override
 	protected Risk getObject() {
@@ -39,16 +35,15 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 
 	@Override
 	protected void onCollapsedInitialization() {
-		summary = new Label();
+
 	}
 
 	@Override
 	protected void onCollapsedUpdate() {
 		setBlockTitle(risk.getLabel());
-		setIcon(Img.bundle.risk32());
-		summary.setText(risk.getSummary());
-		setContent(summary);
-		setToolbar(null);
+		setIcon(Img.bundle.risk16());
+		setContent(null);
+		createToolbar();
 	}
 
 	@Override
@@ -140,10 +135,10 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 	@Override
 	protected void onExtendedUpdate() {
 		setBlockTitle(risk.getLabel());
-		setIcon(Img.bundle.risk32());
+		setIcon(Img.bundle.risk16());
 		fields.update();
 		setContent(fields);
-		setToolbar(getToolbar());
+		createToolbar();
 	}
 
 	public Image getClipboardIcon() {
@@ -158,21 +153,14 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 		return this;
 	}
 
-	protected Widget getToolbar() {
-		if (toolbar == null) {
+	protected void createToolbar() {
+		addToolbarButton("Delete").addClickListener(new ClickListener() {
 
-			toolbar = new ToolbarWidget();
-
-			toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
-
-				public void onClick(Widget sender) {
-					ScrumGwtApplication.get().getProject().deleteRisk(risk);
-					getList().removeSelectedRow();
-				}
-			});
-
-		}
-		return toolbar;
+			public void onClick(Widget sender) {
+				ScrumGwtApplication.get().getProject().deleteRisk(risk);
+				getList().removeSelectedRow();
+			}
+		});
 	}
 
 	public Risk getRisk() {

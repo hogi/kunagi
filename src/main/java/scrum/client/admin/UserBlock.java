@@ -1,7 +1,6 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
@@ -22,7 +21,6 @@ public class UserBlock extends AExtensibleBlockWidget<User> implements TrashSupp
 
 	private FieldsWidget fields;
 	private Label summary;
-	private ToolbarWidget toolbar;
 
 	@Override
 	protected User getObject() {
@@ -42,10 +40,10 @@ public class UserBlock extends AExtensibleBlockWidget<User> implements TrashSupp
 	@Override
 	protected void onCollapsedUpdate() {
 		setBlockTitle(user.getName());
-		setIcon(Img.bundle.user32());
+		setIcon(Img.bundle.user16());
 		summary.setText(user.getName());
-		setContent(summary);
-		setToolbar(null);
+		setContent(null);
+		createToolbar();
 	}
 
 	@Override
@@ -96,10 +94,10 @@ public class UserBlock extends AExtensibleBlockWidget<User> implements TrashSupp
 	@Override
 	protected void onExtendedUpdate() {
 		setBlockTitle(user.getName());
-		setIcon(Img.bundle.user32());
+		setIcon(Img.bundle.user16());
 		fields.update();
 		setContent(fields);
-		setToolbar(getToolbar());
+		createToolbar();
 	}
 
 	public Image getClipboardIcon() {
@@ -114,35 +112,27 @@ public class UserBlock extends AExtensibleBlockWidget<User> implements TrashSupp
 		return this;
 	}
 
-	protected Widget getToolbar() {
-		if (toolbar == null) {
+	protected void createToolbar() {
+		addToolbarButton("Delete").addClickListener(new ClickListener() {
 
-			toolbar = new ToolbarWidget();
+			public void onClick(Widget sender) {
+				ScrumGwtApplication.get().getDao().deleteUser(user);
+				getList().removeSelectedRow();
+			}
+		});
 
-			toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
+		addToolbarButton("Reset password").addClickListener(new ClickListener() {
 
-				public void onClick(Widget sender) {
-					ScrumGwtApplication.get().getDao().deleteUser(user);
-					getList().removeSelectedRow();
-				}
-			});
+			public void onClick(Widget sender) {
+				ScrumGwtApplication.get().callResetPassword(user.getId(), new Runnable() {
 
-			toolbar.addButton(Img.bundle.delete16().createImage(), "Reset password").addClickListener(
-				new ClickListener() {
+					public void run() {
+					// TODO Auto-generated method stub
 
-					public void onClick(Widget sender) {
-						ScrumGwtApplication.get().callResetPassword(user.getId(), new Runnable() {
-
-							public void run() {
-							// TODO Auto-generated method stub
-
-							}
-						});
 					}
 				});
-
-		}
-		return toolbar;
+			}
+		});
 	}
 
 	public User getUser() {
