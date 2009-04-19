@@ -2,7 +2,6 @@ package scrum.client.project;
 
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
@@ -14,14 +13,12 @@ import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class QualityBlock extends AExtensibleBlockWidget<Quality> implements TrashSupport, ClipboardSupport {
 
 	private Quality quality;
 
-	private Label summary;
 	private FieldsWidget fields;
 
 	@Override
@@ -36,16 +33,15 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 
 	@Override
 	protected void onCollapsedInitialization() {
-		summary = new Label();
+
 	}
 
 	@Override
 	protected void onCollapsedUpdate() {
 		setBlockTitle(quality.getLabel());
-		setIcon(Img.bundle.requirement32());
-		summary.setText(quality.getLabel());
-		setContent(summary);
-		setToolbar(null);
+		setIcon(Img.bundle.requirement16());
+		setContent(null);
+		createToolbar();
 	}
 
 	@Override
@@ -113,24 +109,19 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 	@Override
 	protected void onExtendedUpdate() {
 		setBlockTitle(quality.getLabel());
-		// Img.bundle.requirement32();
 		fields.update();
 		setContent(fields);
-		setToolbar(createToolbar());
+		createToolbar();
 	}
 
-	protected Widget createToolbar() {
-		ToolbarWidget toolbar = new ToolbarWidget();
-
-		toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
+	protected void createToolbar() {
+		addToolbarButton("Delete").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
 				ScrumGwtApplication.get().getProject().deleteQuality(quality);
 				QualityBacklogWidget.get().list.removeSelectedRow();
 			}
 		});
-
-		return toolbar;
 	}
 
 	public Image getClipboardIcon() {
