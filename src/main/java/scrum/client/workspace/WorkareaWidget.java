@@ -13,6 +13,7 @@ import scrum.client.project.Requirement;
 import scrum.client.risks.RiskListWidget;
 import scrum.client.sprint.NextSprintWidget;
 import scrum.client.sprint.SprintBacklogWidget;
+import scrum.client.tasks.TaskOverviewWidget;
 import scrum.client.test.WidgetsTesterWidget;
 
 import com.google.gwt.user.client.ui.Label;
@@ -26,6 +27,7 @@ public class WorkareaWidget extends AWidget {
 	private Widget currentWidget; // TODO AWidget
 
 	private ProjectOverviewWidget projectOverview;
+	private TaskOverviewWidget taskOverview;
 	private SprintBacklogWidget sprintBacklog;
 	private ProductBacklogWidget productBacklog;
 	private QualityBacklogWidget qualityBacklog;
@@ -44,6 +46,14 @@ public class WorkareaWidget extends AWidget {
 
 			public void run() {
 				show(getProjectOverview());
+			}
+		});
+
+		navigator.addItem(Img.bundle.task16(), "Task Overview", getTaskOverview(), new Runnable() {
+
+			public void run() {
+				ScrumGwtApplication.get().callRequestRequirements();
+				show(getTaskOverview());
 			}
 		});
 
@@ -150,6 +160,11 @@ public class WorkareaWidget extends AWidget {
 	public ProjectOverviewWidget getProjectOverview() {
 		if (projectOverview == null) projectOverview = new ProjectOverviewWidget();
 		return projectOverview;
+	}
+
+	public TaskOverviewWidget getTaskOverview() {
+		if (taskOverview == null) taskOverview = new TaskOverviewWidget();
+		return taskOverview;
 	}
 
 	public SprintBacklogWidget getSprintBacklog() {

@@ -1,6 +1,9 @@
 package scrum.client.tasks;
 
 import ilarkesto.gwt.client.AWidget;
+
+import java.util.Collection;
+
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
 import scrum.client.sprint.Task;
@@ -30,6 +33,12 @@ public class TaskListWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		panel.update();
+	}
+
+	public void setTasks(Collection<Task> tasks) {
+		initialize();
+		list.setBlocks(tasks);
+		update();
 	}
 
 }

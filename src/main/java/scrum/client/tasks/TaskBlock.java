@@ -178,7 +178,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 				public void onClick(Widget sender) {
 					task.setOwner(ScrumGwtApplication.get().getUser());
-					SprintBacklogWidget.get().update();
+					TaskOverviewWidget.get().update();
 				}
 
 			});
@@ -189,7 +189,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 				public void onClick(Widget sender) {
 					trash();
-					SprintBacklogWidget.get().update();
+					TaskOverviewWidget.get().update();
 				}
 
 			});
@@ -200,7 +200,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 				public void onClick(Widget sender) {
 					task.setDone();
-					SprintBacklogWidget.get().update();
+					TaskOverviewWidget.get().update();
 				}
 
 			});
@@ -225,7 +225,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 	public void trash() {
 		task.getRequirement().deleteTask(task);
-		SprintBacklogWidget.get().update();
+		TaskOverviewWidget.get().update();
 	}
 
 	public static BlockWidgetFactory<Task> FACTORY = new BlockWidgetFactory<Task>() {
