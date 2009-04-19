@@ -16,14 +16,12 @@ import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupport, ClipboardSupport {
 
 	private Task task;
 
-	private Label owner;
 	private FieldsWidget fields;
 
 	@Override
@@ -153,9 +151,6 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 		});
 
-		owner = new Label();
-		fields.add("Owner", owner);
-
 	}
 
 	@Override
@@ -163,7 +158,6 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		setBlockTitle(task.getLabel());
 		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
 		fields.update();
-		owner.setText(task.getOwner() == null ? "No owner specified." : task.getOwner().getName());
 		setContent(fields);
 		createToolbar();
 	}
@@ -173,7 +167,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 	}
 
 	protected void createToolbar() {
-		if (!task.isDone()) {
+		if (!task.isDone() && !task.isOwner(ScrumGwtApplication.get().getUser())) {
 			addToolbarButton("Own").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
