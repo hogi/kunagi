@@ -58,9 +58,9 @@ a {cursor: pointer;}
 .element-BlockListWidget-table {width: 100%; background: white;}
 
 .ABlockWidget-main {}
-.ABlockWidget {border: 1px solid #AEB5FD; background: white; cursor: pointer; color: black;}
-.ABlockWidget-title {font-size: 14px; font-weight: bold;}
-.ABlockWidget-block {padding: 1px; width: 100%;}
+.ABlockWidget {cursor: pointer; color: black;}
+.ABlockWidget-title {padding: 1px; width: 100%; background: #DEE5FD; border-top: 1px solid white; }
+.ABlockWidget-title-label {font-size: 12px; line-height: 16px;}
 .ABlockWidget-center {}
 .ABlockWidget-selected {border: 3px solid orange; cursor: default;}
 

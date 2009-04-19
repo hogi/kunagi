@@ -45,7 +45,7 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 	@Override
 	protected void onCollapsedUpdate() {
 		setBlockTitle(project.getLabel());
-		setIcon(Img.bundle.project32());
+		setIcon(Img.bundle.project16());
 
 		String description = project.getDescription();
 		if (description == null) description = "No description.";
@@ -60,8 +60,8 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 		}
 		content.setHTML(description);
 
-		setContent(content);
-		setToolbar(isSelected() ? getToolbar() : null);
+		setContent(null);
+		setToolbar(null);
 	}
 
 	@Override

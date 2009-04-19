@@ -43,9 +43,9 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	@Override
 	protected void onCollapsedUpdate() {
 		setBlockTitle(impediment.getLabel());
-		setIcon(impediment.isSolved() ? Img.bundle.impedimentSolved32() : Img.bundle.impediment32());
-		summary.setText(impediment.getSummary());
-		setContent(summary);
+		setIcon(Img.bundle.impediment16());
+		// summary.setText(impediment.getSummary());
+		// setContent(summary);
 		setToolbar(null);
 	}
 
@@ -112,7 +112,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	@Override
 	protected void onExtendedUpdate() {
 		setBlockTitle(impediment.getLabel());
-		setIcon(impediment.isSolved() ? Img.bundle.impedimentSolved32() : Img.bundle.impediment32());
+		setIcon(Img.bundle.impediment16());
 		fields.update();
 		setContent(fields);
 		setToolbar(getToolbar());

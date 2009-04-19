@@ -20,9 +20,9 @@ import com.google.gwt.user.client.ui.Widget;
 @SuppressWarnings("unchecked")
 public abstract class ABlockWidget<O extends Object> extends AWidget {
 
-	private Label title;
+	private Label label;
 	private FocusPanel iconPanel;
-	private HorizontalPanel blockPanel;
+	private HorizontalPanel titlePanel;
 	private SimplePanel contentWrapper;
 	private SimplePanel toolbarWrapper;
 
@@ -48,28 +48,30 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		contentWrapper = new SimplePanel();
 		toolbarWrapper = new SimplePanel();
 
-		title = new Label();
-		title.setStyleName("ABlockWidget-title");
+		label = new Label();
+		label.setStyleName("ABlockWidget-label");
 
 		iconPanel = new FocusPanel();
 
-		FlowPanel center = new FlowPanel();
-		center.setStyleName("ABlockWidget-center");
-		center.add(title);
-		center.add(contentWrapper);
+		// FlowPanel center = new FlowPanel();
+		// center.setStyleName("ABlockWidget-center");
+		// center.add(title);
+		// center.add(contentWrapper);
 		DndManager.get().makeDraggable(this, iconPanel);
 
-		blockPanel = new HorizontalPanel();
-		blockPanel.setSpacing(1);
-		blockPanel.setStyleName("ABlockWidget-block");
-		blockPanel.add(iconPanel);
-		blockPanel.setCellWidth(iconPanel, "32px");
-		blockPanel.add(center);
-		// blockPanel.setCellWidth(center, "99%");
-		blockPanel.add(toolbarWrapper);
+		titlePanel = new HorizontalPanel();
+		titlePanel.setSpacing(1);
+		titlePanel.setStyleName("ABlockWidget-title");
+		titlePanel.add(iconPanel);
+		titlePanel.setCellWidth(iconPanel, "16px");
 
+		titlePanel.add(label);
+		// blockPanel.setCellWidth(center, "99%");
+		titlePanel.add(toolbarWrapper);
+
+		// ----
 		panel = new SimplePanel();
-		panel.setWidget(blockPanel);
+		panel.add(titlePanel);
 		panel.setStyleName("ABlockWidget");
 
 		mainPanel = new FlowPanel();
@@ -101,7 +103,7 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 	}
 
 	protected final void setBlockTitle(String text) {
-		title.setText(text);
+		label.setText(text);
 	}
 
 	protected final void setIcon(Image icon) {
@@ -113,7 +115,7 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 	}
 
 	public final String getBlockTitle() {
-		return title.getText();
+		return label.getText();
 	}
 
 	public Widget getBorderPanel() {
