@@ -76,7 +76,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 			}
 		});
 
-		taskList = new BlockListWidget<Task>(TaskBlock.FACTORY);
+		taskList = new BlockListWidget<Task>(TaskInRequirementBlock.FACTORY);
 
 		panel = new FlowPanel();
 		panel.add(fields);

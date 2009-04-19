@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupport, ClipboardSupport {
+public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> implements TrashSupport, ClipboardSupport {
 
 	private Task task;
 
@@ -231,8 +231,8 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 	public static BlockWidgetFactory<Task> FACTORY = new BlockWidgetFactory<Task>() {
 
-		public TaskBlock createBlock() {
-			return new TaskBlock();
+		public TaskInRequirementBlock createBlock() {
+			return new TaskInRequirementBlock();
 		}
 	};
 }
