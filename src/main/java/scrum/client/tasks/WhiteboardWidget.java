@@ -47,7 +47,6 @@ public class WhiteboardWidget extends AWidget {
 			closedTasks.put(requirement, new TaskListWidget("closed"));
 		}
 
-		Grid grid = new Grid(requirements.size(), 4);
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement requirement = requirements.get(i);
 
