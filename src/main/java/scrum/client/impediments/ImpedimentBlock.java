@@ -46,7 +46,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 		setIcon(Img.bundle.impediment16());
 		// summary.setText(impediment.getSummary());
 		// setContent(summary);
-		setToolbar(null);
+		createToolbar();
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 		setIcon(Img.bundle.impediment16());
 		fields.update();
 		setContent(fields);
-		setToolbar(getToolbar());
+		createToolbar();
 	}
 
 	public String getClipboardLabel() {
@@ -130,42 +130,34 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 		return this;
 	}
 
-	protected Widget getToolbar() {
-		if (toolbar == null) {
+	private void createToolbar() {
+		addToolbarButton("Delete").addClickListener(new ClickListener() {
 
-			toolbar = new ToolbarWidget();
+			public void onClick(Widget sender) {
+				ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
+				ImpedimentListWidget.get().list.removeSelectedRow();
+			}
+		});
 
-			toolbar.addButton(Img.bundle.delete16().createImage(), "Delete").addClickListener(new ClickListener() {
+		if (!impediment.isSolved()) {
+			// impediment not solved -> add [Solve] button
+			addToolbarButton("Mark Solved").addClickListener(new ClickListener() {
 
 				public void onClick(Widget sender) {
-					ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
-					ImpedimentListWidget.get().list.removeSelectedRow();
+					impediment.setSolved();
+					update();
 				}
 			});
+		} else {
+			// impediment not solved -> add [Unsolve] button
+			addToolbarButton("Mark Unsolved").addClickListener(new ClickListener() {
 
-			if (!impediment.isSolved()) {
-				// impediment not solved -> add [Solve] button
-				toolbar.addButton(Img.bundle.done16().createImage(), "Mark Solved").addClickListener(
-					new ClickListener() {
-
-						public void onClick(Widget sender) {
-							impediment.setSolved();
-							update();
-						}
-					});
-			} else {
-				// impediment not solved -> add [Unsolve] button
-				toolbar.addButton("Mark Unsolved").addClickListener(new ClickListener() {
-
-					public void onClick(Widget sender) {
-						impediment.setSolveDate(null);
-						update();
-					}
-				});
-			}
+				public void onClick(Widget sender) {
+					impediment.setSolveDate(null);
+					update();
+				}
+			});
 		}
-
-		return toolbar;
 	}
 
 	public boolean isTrashable() {
