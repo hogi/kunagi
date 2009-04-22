@@ -31,28 +31,9 @@ public class WhiteboardWidget extends AWidget {
 
 		List<Requirement> requirements = ScrumGwtApplication.get().getProject().getCurrentSprint().getRequirements();
 		for (Requirement requirement : requirements) {
-			TaskListWidget open = new TaskListWidget("open");
-			TaskListWidget owned = new TaskListWidget("owned");
-			TaskListWidget closed = new TaskListWidget("closed");
-
-			Collection<Task> openTaskList = new ArrayList<Task>();
-			Collection<Task> ownedTaskList = new ArrayList<Task>();
-			Collection<Task> closedTaskList = new ArrayList<Task>();
-			for (Task task : requirement.getTasks()) {
-				if (task.isDone())
-					closedTaskList.add(task);
-				else if (task.isOwnerSet())
-					ownedTaskList.add(task);
-				else openTaskList.add(task);
-			}
-
-			open.setTasks(openTaskList);
-			owned.setTasks(ownedTaskList);
-			closed.setTasks(closedTaskList);
-
-			openTasks.put(requirement, open);
-			ownedTasks.put(requirement, owned);
-			closedTasks.put(requirement, closed);
+			openTasks.put(requirement, new TaskListWidget("open"));
+			ownedTasks.put(requirement, new TaskListWidget("owned"));
+			closedTasks.put(requirement, new TaskListWidget("closed"));
 		}
 
 		Grid grid = new Grid(requirements.size(), 4);
