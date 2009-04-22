@@ -14,6 +14,7 @@ import scrum.client.risks.RiskListWidget;
 import scrum.client.sprint.NextSprintWidget;
 import scrum.client.sprint.SprintBacklogWidget;
 import scrum.client.tasks.TaskOverviewWidget;
+import scrum.client.tasks.WhiteboardWidget;
 import scrum.client.test.WidgetsTesterWidget;
 
 import com.google.gwt.user.client.ui.Label;
@@ -28,6 +29,7 @@ public class WorkareaWidget extends AWidget {
 
 	private ProjectOverviewWidget projectOverview;
 	private TaskOverviewWidget taskOverview;
+	private WhiteboardWidget whiteboard;
 	private SprintBacklogWidget sprintBacklog;
 	private ProductBacklogWidget productBacklog;
 	private QualityBacklogWidget qualityBacklog;
@@ -54,6 +56,14 @@ public class WorkareaWidget extends AWidget {
 			public void run() {
 				ScrumGwtApplication.get().callRequestRequirements();
 				show(getTaskOverview());
+			}
+		});
+
+		navigator.addItem(Img.bundle.task16(), "Whiteboard", getWhiteboard(), new Runnable() {
+
+			public void run() {
+				ScrumGwtApplication.get().callRequestRequirements();
+				show(getWhiteboard());
 			}
 		});
 
@@ -165,6 +175,11 @@ public class WorkareaWidget extends AWidget {
 	public TaskOverviewWidget getTaskOverview() {
 		if (taskOverview == null) taskOverview = new TaskOverviewWidget();
 		return taskOverview;
+	}
+
+	public WhiteboardWidget getWhiteboard() {
+		if (whiteboard == null) whiteboard = new WhiteboardWidget();
+		return whiteboard;
 	}
 
 	public SprintBacklogWidget getSprintBacklog() {
