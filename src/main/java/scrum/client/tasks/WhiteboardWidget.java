@@ -19,6 +19,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class WhiteboardWidget extends AWidget {
 
+	private Grid grid;
+
 	private Map<Requirement, TaskListWidget> openTasks;
 	private Map<Requirement, TaskListWidget> ownedTasks;
 	private Map<Requirement, TaskListWidget> closedTasks;
@@ -29,21 +31,7 @@ public class WhiteboardWidget extends AWidget {
 		ownedTasks = new HashMap<Requirement, TaskListWidget>();
 		closedTasks = new HashMap<Requirement, TaskListWidget>();
 
-		List<Requirement> requirements = ScrumGwtApplication.get().getProject().getCurrentSprint().getRequirements();
-		for (Requirement requirement : requirements) {
-			openTasks.put(requirement, new TaskListWidget("open"));
-			ownedTasks.put(requirement, new TaskListWidget("owned"));
-			closedTasks.put(requirement, new TaskListWidget("closed"));
-		}
-
-		Grid grid = new Grid(requirements.size(), 4);
-		for (Requirement requirement : requirements) {
-			grid.add(new Label(requirement.getLabel()));
-			grid.add(openTasks.get(requirement));
-			grid.add(ownedTasks.get(requirement));
-			grid.add(closedTasks.get(requirement));
-		}
-
+		grid = new Grid();
 		return grid;
 	}
 
@@ -51,7 +39,18 @@ public class WhiteboardWidget extends AWidget {
 	protected void onUpdate() {
 		List<Requirement> requirements = ScrumGwtApplication.get().getProject().getCurrentSprint().getRequirements();
 
+		grid.resize(requirements.size(), 4);
+
 		for (Requirement requirement : requirements) {
+			openTasks.put(requirement, new TaskListWidget("open"));
+			ownedTasks.put(requirement, new TaskListWidget("owned"));
+			closedTasks.put(requirement, new TaskListWidget("closed"));
+		}
+
+		Grid grid = new Grid(requirements.size(), 4);
+		for (int i = 0; i < requirements.size(); i++) {
+			Requirement requirement = requirements.get(i);
+
 			Collection<Task> openTaskList = new ArrayList<Task>();
 			Collection<Task> ownedTaskList = new ArrayList<Task>();
 			Collection<Task> closedTaskList = new ArrayList<Task>();
@@ -66,6 +65,11 @@ public class WhiteboardWidget extends AWidget {
 			openTasks.get(requirement).setTasks(openTaskList);
 			ownedTasks.get(requirement).setTasks(ownedTaskList);
 			closedTasks.get(requirement).setTasks(closedTaskList);
+
+			grid.setWidget(i, 0, new Label(requirement.getLabel()));
+			grid.setWidget(i, 1, openTasks.get(requirement));
+			grid.setWidget(i, 2, ownedTasks.get(requirement));
+			grid.setWidget(i, 3, closedTasks.get(requirement));
 		}
 	}
 
