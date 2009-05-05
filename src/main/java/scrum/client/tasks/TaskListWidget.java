@@ -20,9 +20,13 @@ public class TaskListWidget extends AWidget {
 		this.title = title;
 	}
 
+	public TaskListWidget() {}
+
 	@Override
 	protected Widget onInitialization() {
 		list = new BlockListWidget<Task>(TaskBlock.FACTORY);
+
+		if (title == null) return list;
 
 		panel = new GroupWidget(title);
 		panel.setContent(list);
@@ -32,7 +36,11 @@ public class TaskListWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		panel.update();
+		if (panel != null) {
+			panel.update();
+		} else {
+			list.update();
+		}
 	}
 
 	public void setTasks(Collection<Task> tasks) {
