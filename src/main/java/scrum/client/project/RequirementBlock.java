@@ -17,11 +17,10 @@ import scrum.client.img.Img;
 import scrum.client.sprint.Sprint;
 import scrum.client.workspace.WorkareaWidget;
 
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
 
 public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implements TrashSupport, ClipboardSupport {
 
@@ -191,9 +190,9 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 	protected void createToolbar() {
 		if (!requirement.isSprintSet()) {
-			addToolbarButton("Delete").addClickListener(new ClickListener() {
+			addMenuCommand("Delete", new Command() {
 
-				public void onClick(Widget sender) {
+				public void execute() {
 					ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
 					ProductBacklogWidget.get().list.removeSelectedRow();
 				}
@@ -203,18 +202,18 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 		final Sprint currentSprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
 		if (currentSprint != null) {
 			if (requirement.isSprint(currentSprint)) {
-				addToolbarButton("Remove from Sprint").addClickListener(new ClickListener() {
+				addMenuCommand("Remove from Spring", new Command() {
 
-					public void onClick(Widget sender) {
+					public void execute() {
 						requirement.setSprint(null);
 						update();
 					}
 				});
 			} else {
 				if (requirement.getEstimatedWork() != null) {
-					addToolbarButton("Add to Sprint").addClickListener(new ClickListener() {
+					addMenuCommand("Add to Spring", new Command() {
 
-						public void onClick(Widget sender) {
+						public void execute() {
 							requirement.setSprint(currentSprint);
 							update();
 							WorkareaWidget.get().showSprintBacklog(requirement);
@@ -225,9 +224,9 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 		}
 
 		if (!requirement.isClosed() && requirement.isDone()) {
-			addToolbarButton("Close").addClickListener(new ClickListener() {
+			addMenuCommand("Close", new Command() {
 
-				public void onClick(Widget sender) {
+				public void execute() {
 					// item.setDone(false);
 					update();
 				}

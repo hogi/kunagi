@@ -10,10 +10,9 @@ import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
 
 public class UserBlock extends AExtensibleBlockWidget<User> implements TrashSupport, ClipboardSupport {
 
@@ -113,24 +112,18 @@ public class UserBlock extends AExtensibleBlockWidget<User> implements TrashSupp
 	}
 
 	protected void createToolbar() {
-		addToolbarButton("Delete").addClickListener(new ClickListener() {
+		addMenuCommand("Delete", new Command() {
 
-			public void onClick(Widget sender) {
+			public void execute() {
 				ScrumGwtApplication.get().getDao().deleteUser(user);
 				getList().removeSelectedRow();
 			}
 		});
 
-		addToolbarButton("Reset password").addClickListener(new ClickListener() {
+		addMenuCommand("Reset Password", new Command() {
 
-			public void onClick(Widget sender) {
-				ScrumGwtApplication.get().callResetPassword(user.getId(), new Runnable() {
-
-					public void run() {
-					// TODO Auto-generated method stub
-
-					}
-				});
+			public void execute() {
+			// TODO reset password
 			}
 		});
 	}

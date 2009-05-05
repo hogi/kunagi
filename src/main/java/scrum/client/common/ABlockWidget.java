@@ -1,7 +1,6 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.dnd.BlockListDndMarkerWidget;
 import scrum.client.dnd.DndManager;
 
@@ -29,7 +28,7 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 	private HorizontalPanel titlePanel;
 	private SimplePanel contentWrapper;
 	private HorizontalPanel toolbar;
-	private MenuBar dropdown;
+	private MenuBar menu;
 
 	private BlockListWidget list;
 	private FlowPanel mainPanel;
@@ -97,32 +96,18 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		return mainPanel;
 	}
 
-	protected ButtonWidget addToolbarButton(Image icon, String label) {
-		ButtonWidget button = new ButtonWidget(icon, label);
-		addToolbarItem(button);
-		return button;
-	}
-
 	protected void addMenuCommand(String label, Command command) {
-		if (dropdown == null) {
-			dropdown = new MenuBar(true);
+		if (menu == null) {
+			MenuBar menuBar = new MenuBar();
 
-			MenuBar menu = new MenuBar();
-			menu.addItem("v", dropdown);
-			addToolbarItem(menu);
+			menu = new MenuBar(true);
+			menuBar.addItem("v", menu);
+			addToolbarItem(menuBar);
 		}
-
-		dropdown.addItem(new MenuItem(label, command));
-	}
-
-	protected ButtonWidget addToolbarButton(String label) {
-		ButtonWidget button = new ButtonWidget(label);
-		addToolbarItem(button);
-		return button;
+		menu.addItem(new MenuItem(label, command));
 	}
 
 	protected void addToolbarItem(Widget toolbarItem) {
-		// toolbar.add(new Label("|"));
 		toolbar.add(toolbarItem);
 		if (toolbarItem instanceof AWidget) {
 			((AWidget) toolbarItem).update();
@@ -132,7 +117,7 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 	@Override
 	protected final void onUpdate() {
 		toolbar.clear();
-		dropdown = null;
+		menu = null;
 		onBlockUpdate();
 	}
 

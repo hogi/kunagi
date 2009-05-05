@@ -10,11 +10,10 @@ import scrum.client.dnd.ClipboardSupport;
 import scrum.client.img.Img;
 import scrum.client.project.Requirement;
 
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
 
 public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement> implements ClipboardSupport {
 
@@ -101,9 +100,9 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 
 	protected void createToolbar() {
 		if (requirement.isDone() && !requirement.isClosed()) {
-			addToolbarButton("Close").addClickListener(new ClickListener() {
+			addMenuCommand("Close", new Command() {
 
-				public void onClick(Widget sender) {
+				public void execute() {
 					requirement.setClosed(true);
 					SprintBacklogWidget.get().update();
 				}
@@ -111,9 +110,9 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 		}
 
 		if (!requirement.isClosed()) {
-			addToolbarButton("Create new Task").addClickListener(new ClickListener() {
+			addMenuCommand("Create new Task", new Command() {
 
-				public void onClick(Widget sender) {
+				public void execute() {
 					taskList.addBlock(requirement.createNewTask(), true);
 					SprintBacklogWidget.get().update();
 				}

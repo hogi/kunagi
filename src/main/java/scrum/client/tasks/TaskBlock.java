@@ -15,9 +15,7 @@ import scrum.client.sprint.SprintBacklogWidget;
 import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Widget;
 
 public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupport, ClipboardSupport {
 
@@ -180,26 +178,24 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		}
 
 		if (isTrashable()) {
-			addToolbarButton("Delete").addClickListener(new ClickListener() {
+			addMenuCommand("Delete", new Command() {
 
-				public void onClick(Widget sender) {
+				public void execute() {
 					trash();
 					TaskOverviewWidget.get().update();
 					WhiteboardWidget.get().update();
 				}
-
 			});
 		}
 
 		if (!task.isDone()) {
-			addToolbarButton("Done").addClickListener(new ClickListener() {
+			addMenuCommand("Done", new Command() {
 
-				public void onClick(Widget sender) {
+				public void execute() {
 					task.setDone();
 					TaskOverviewWidget.get().update();
 					WhiteboardWidget.get().update();
 				}
-
 			});
 		}
 	}

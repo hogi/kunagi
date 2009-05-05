@@ -15,10 +15,8 @@ import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 
@@ -215,9 +213,9 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 
 	protected void createToolbar() {
 
-		addToolbarButton("Open Project").addClickListener(new ClickListener() {
+		addMenuCommand("Open Project", new Command() {
 
-			public void onClick(Widget sender) {
+			public void execute() {
 				select();
 			}
 		});

@@ -11,9 +11,8 @@ import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Widget;
 
 public class QualityBlock extends AExtensibleBlockWidget<Quality> implements TrashSupport, ClipboardSupport {
 
@@ -115,9 +114,9 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 	}
 
 	protected void createToolbar() {
-		addToolbarButton("Delete").addClickListener(new ClickListener() {
+		addMenuCommand("Delete", new Command() {
 
-			public void onClick(Widget sender) {
+			public void execute() {
 				ScrumGwtApplication.get().getProject().deleteQuality(quality);
 				QualityBacklogWidget.get().list.removeSelectedRow();
 			}

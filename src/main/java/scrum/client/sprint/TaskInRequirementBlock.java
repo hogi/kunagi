@@ -12,10 +12,9 @@ import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
 
 public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> implements TrashSupport, ClipboardSupport {
 
@@ -175,35 +174,32 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 
 	protected void createToolbar() {
 		if (!task.isDone()) {
-			addToolbarButton("Own").addClickListener(new ClickListener() {
+			addMenuCommand("Own", new Command() {
 
-				public void onClick(Widget sender) {
+				public void execute() {
 					task.setOwner(ScrumGwtApplication.get().getUser());
 					SprintBacklogWidget.get().update();
 				}
-
 			});
 		}
 
 		if (isTrashable()) {
-			addToolbarButton("Delete").addClickListener(new ClickListener() {
+			addMenuCommand("Delete", new Command() {
 
-				public void onClick(Widget sender) {
+				public void execute() {
 					trash();
 					SprintBacklogWidget.get().update();
 				}
-
 			});
 		}
 
 		if (!task.isDone()) {
-			addToolbarButton("Done").addClickListener(new ClickListener() {
+			addMenuCommand("Done", new Command() {
 
-				public void onClick(Widget sender) {
+				public void execute() {
 					task.setDone();
 					SprintBacklogWidget.get().update();
 				}
-
 			});
 		}
 	}
