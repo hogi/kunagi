@@ -13,6 +13,7 @@ import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkareaWidget;
 
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HTML;
@@ -213,6 +214,7 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 	}
 
 	protected void createToolbar() {
+
 		addToolbarButton("Open Project").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {
@@ -220,10 +222,9 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 			}
 		});
 
-		addToolbarButton("Delete").addClickListener(new ClickListener() {
+		addMenuCommand("Delete", new Command() {
 
-			public void onClick(Widget sender) {
-
+			public void execute() {
 				if (Window
 						.confirm("'R you crazy, Jesus? You crazy??\n\nOK - That's what my Ex-Wife said!\nCancel - No, of course not!")) {
 					ScrumGwtApplication.get().getDao().deleteProject(project);

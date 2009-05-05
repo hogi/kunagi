@@ -12,6 +12,7 @@ import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -131,6 +132,13 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	}
 
 	private void createToolbar() {
+		addMenuCommand("Delete", new Command() {
+
+			public void execute() {
+				ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
+				ImpedimentListWidget.get().list.removeSelectedRow();
+			}
+		});
 		addToolbarButton("Delete").addClickListener(new ClickListener() {
 
 			public void onClick(Widget sender) {

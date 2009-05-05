@@ -5,12 +5,15 @@ import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.dnd.BlockListDndMarkerWidget;
 import scrum.client.dnd.DndManager;
 
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -26,6 +29,7 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 	private HorizontalPanel titlePanel;
 	private SimplePanel contentWrapper;
 	private HorizontalPanel toolbar;
+	private MenuBar dropdown;
 
 	private BlockListWidget list;
 	private FlowPanel mainPanel;
@@ -99,21 +103,36 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		return button;
 	}
 
+	protected void addMenuCommand(String label, Command command) {
+		if (dropdown == null) {
+			dropdown = new MenuBar(true);
+
+			MenuBar menu = new MenuBar();
+			menu.addItem("v", dropdown);
+			addToolbarItem(menu);
+		}
+
+		dropdown.addItem(new MenuItem(label, command));
+	}
+
 	protected ButtonWidget addToolbarButton(String label) {
 		ButtonWidget button = new ButtonWidget(label);
 		addToolbarItem(button);
 		return button;
 	}
 
-	protected void addToolbarItem(AWidget toolbarItem) {
+	protected void addToolbarItem(Widget toolbarItem) {
 		// toolbar.add(new Label("|"));
 		toolbar.add(toolbarItem);
-		toolbarItem.update();
+		if (toolbarItem instanceof AWidget) {
+			((AWidget) toolbarItem).update();
+		}
 	}
 
 	@Override
 	protected final void onUpdate() {
 		toolbar.clear();
+		dropdown = null;
 		onBlockUpdate();
 	}
 

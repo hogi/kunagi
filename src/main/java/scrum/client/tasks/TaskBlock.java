@@ -14,6 +14,7 @@ import scrum.client.img.Img;
 import scrum.client.sprint.SprintBacklogWidget;
 import scrum.client.sprint.Task;
 
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
@@ -168,14 +169,13 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 	protected void createToolbar() {
 		if (!task.isDone() && !task.isOwner(ScrumGwtApplication.get().getUser())) {
-			addToolbarButton("Own").addClickListener(new ClickListener() {
+			addMenuCommand("Own", new Command() {
 
-				public void onClick(Widget sender) {
+				public void execute() {
 					task.setOwner(ScrumGwtApplication.get().getUser());
 					TaskOverviewWidget.get().update();
 					WhiteboardWidget.get().update();
 				}
-
 			});
 		}
 
