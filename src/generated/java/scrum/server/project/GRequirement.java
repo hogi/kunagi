@@ -44,6 +44,7 @@ public abstract class GRequirement
         properties.put("testDescription", this.testDescription);
         properties.put("estimatedWork", this.estimatedWork);
         properties.put("closed", this.closed);
+        properties.put("dirty", this.dirty);
     }
 
     public int compareTo(Requirement other) {
@@ -159,16 +160,16 @@ public abstract class GRequirement
         return (java.util.Set) qualityDao.getByIdsAsSet(this.qualitysIds);
     }
 
-    public final void setQualitys(java.util.Set<scrum.server.project.Quality> qualitys) {
+    public final void setQualitys(Collection<scrum.server.project.Quality> qualitys) {
         qualitys = prepareQualitys(qualitys);
-        if (qualitys == null) throw new IllegalArgumentException("null is not allowed");
+        if (qualitys == null) qualitys = Collections.emptyList();
         java.util.Set<String> ids = getIdsAsSet(qualitys);
         if (this.qualitysIds.equals(ids)) return;
         this.qualitysIds = ids;
         fireModified();
     }
 
-    protected java.util.Set<scrum.server.project.Quality> prepareQualitys(java.util.Set<scrum.server.project.Quality> qualitys) {
+    protected Collection<scrum.server.project.Quality> prepareQualitys(Collection<scrum.server.project.Quality> qualitys) {
         return qualitys;
     }
 
@@ -404,6 +405,35 @@ public abstract class GRequirement
         setClosed((Boolean)value);
     }
 
+    // -----------------------------------------------------------
+    // - dirty
+    // -----------------------------------------------------------
+
+    private boolean dirty;
+
+    public final boolean isDirty() {
+        return dirty;
+    }
+
+    public final void setDirty(boolean dirty) {
+        dirty = prepareDirty(dirty);
+        if (isDirty(dirty)) return;
+        this.dirty = dirty;
+        fireModified();
+    }
+
+    protected boolean prepareDirty(boolean dirty) {
+        return dirty;
+    }
+
+    public final boolean isDirty(boolean dirty) {
+        return this.dirty == dirty;
+    }
+
+    protected final void updateDirty(Object value) {
+        setDirty((Boolean)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -417,6 +447,7 @@ public abstract class GRequirement
             if (property.equals("testDescription")) updateTestDescription(value);
             if (property.equals("estimatedWork")) updateEstimatedWork(value);
             if (property.equals("closed")) updateClosed(value);
+            if (property.equals("dirty")) updateDirty(value);
         }
     }
 

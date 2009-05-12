@@ -82,6 +82,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addProperty("testDescription", String.class);
 			requirementModel.addProperty("estimatedWork", Integer.class);
 			requirementModel.addProperty("closed", boolean.class);
+			requirementModel.addProperty("dirty", boolean.class);
 		}
 		return requirementModel;
 	}

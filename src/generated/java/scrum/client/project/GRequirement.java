@@ -212,6 +212,24 @@ public abstract class GRequirement
         return equals(this.closed, closed);
     }
 
+    // --- dirty ---
+
+    private boolean dirty ;
+
+    public final boolean isDirty() {
+        return this.dirty ;
+    }
+
+    public final Requirement setDirty(boolean dirty) {
+        this.dirty = dirty ;
+        propertyChanged("dirty", this.dirty);
+        return (Requirement)this;
+    }
+
+    public final boolean isDirty(boolean dirty) {
+        return equals(this.dirty, dirty);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -223,6 +241,7 @@ public abstract class GRequirement
         testDescription  = (java.lang.String) props.get("testDescription");
         estimatedWork  = (java.lang.Integer) props.get("estimatedWork");
         closed  = (Boolean) props.get("closed");
+        dirty  = (Boolean) props.get("dirty");
     }
 
     @Override
@@ -236,6 +255,7 @@ public abstract class GRequirement
         properties.put("testDescription", this.testDescription);
         properties.put("estimatedWork", this.estimatedWork);
         properties.put("closed", this.closed);
+        properties.put("dirty", this.dirty);
     }
 
 }

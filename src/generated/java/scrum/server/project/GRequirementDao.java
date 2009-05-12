@@ -49,6 +49,7 @@ public abstract class GRequirementDao
         requirementsByEstimatedWorkCache.clear();
         estimatedWorksCache = null;
         requirementsByClosedCache.clear();
+        requirementsByDirtyCache.clear();
     }
 
     @Override
@@ -372,6 +373,35 @@ public abstract class GRequirementDao
 
         public boolean test(Requirement e) {
             return value == e.isClosed();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - dirty
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<Requirement>> requirementsByDirtyCache = new Cache<Boolean,Set<Requirement>>(
+            new Cache.Factory<Boolean,Set<Requirement>>() {
+                public Set<Requirement> create(Boolean dirty) {
+                    return getEntities(new IsDirty(dirty));
+                }
+            });
+
+    public final Set<Requirement> getRequirementsByDirty(boolean dirty) {
+        return requirementsByDirtyCache.get(dirty);
+    }
+
+    private static class IsDirty implements Predicate<Requirement> {
+
+        private boolean value;
+
+        public IsDirty(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(Requirement e) {
+            return value == e.isDirty();
         }
 
     }

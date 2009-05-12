@@ -46,7 +46,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 	@Override
 	protected void onCollapsedUpdate() {
-		setBlockTitle(requirement.getLabel());
+		setBlockTitle(createTitle());
 		setIcon(getProperIcon());
 		createToolbar();
 	}
@@ -181,11 +181,15 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 	@Override
 	protected void onExtendedUpdate() {
-		setBlockTitle(requirement.getLabel());
+		setBlockTitle(createTitle());
 		setIcon(getProperIcon());
 		fields.update();
 		setContent(fields);
 		createToolbar();
+	}
+
+	private String createTitle() {
+		return (requirement.isDirty() ? "[dirty] " : "[clean] ") + requirement.getLabel();
 	}
 
 	protected void createToolbar() {
@@ -229,6 +233,22 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 				public void execute() {
 					// item.setDone(false);
 					update();
+				}
+			});
+		}
+
+		if (!requirement.isDirty()) {
+			addMenuCommand("Set dirty", new Command() {
+
+				public void execute() {
+					requirement.setDirty(true);
+				}
+			});
+		} else {
+			addMenuCommand("Set clean", new Command() {
+
+				public void execute() {
+					requirement.setDirty(false);
 				}
 			});
 		}

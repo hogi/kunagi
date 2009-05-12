@@ -219,16 +219,16 @@ public abstract class GProject
         return (java.util.Set) userDao.getByIdsAsSet(this.participantsIds);
     }
 
-    public final void setParticipants(java.util.Set<scrum.server.admin.User> participants) {
+    public final void setParticipants(Collection<scrum.server.admin.User> participants) {
         participants = prepareParticipants(participants);
-        if (participants == null) throw new IllegalArgumentException("null is not allowed");
+        if (participants == null) participants = Collections.emptyList();
         java.util.Set<String> ids = getIdsAsSet(participants);
         if (this.participantsIds.equals(ids)) return;
         this.participantsIds = ids;
         fireModified();
     }
 
-    protected java.util.Set<scrum.server.admin.User> prepareParticipants(java.util.Set<scrum.server.admin.User> participants) {
+    protected Collection<scrum.server.admin.User> prepareParticipants(Collection<scrum.server.admin.User> participants) {
         return participants;
     }
 
@@ -306,16 +306,16 @@ public abstract class GProject
         return (java.util.Set) userDao.getByIdsAsSet(this.adminsIds);
     }
 
-    public final void setAdmins(java.util.Set<scrum.server.admin.User> admins) {
+    public final void setAdmins(Collection<scrum.server.admin.User> admins) {
         admins = prepareAdmins(admins);
-        if (admins == null) throw new IllegalArgumentException("null is not allowed");
+        if (admins == null) admins = Collections.emptyList();
         java.util.Set<String> ids = getIdsAsSet(admins);
         if (this.adminsIds.equals(ids)) return;
         this.adminsIds = ids;
         fireModified();
     }
 
-    protected java.util.Set<scrum.server.admin.User> prepareAdmins(java.util.Set<scrum.server.admin.User> admins) {
+    protected Collection<scrum.server.admin.User> prepareAdmins(Collection<scrum.server.admin.User> admins) {
         return admins;
     }
 
@@ -393,16 +393,16 @@ public abstract class GProject
         return (java.util.Set) userDao.getByIdsAsSet(this.productOwnersIds);
     }
 
-    public final void setProductOwners(java.util.Set<scrum.server.admin.User> productOwners) {
+    public final void setProductOwners(Collection<scrum.server.admin.User> productOwners) {
         productOwners = prepareProductOwners(productOwners);
-        if (productOwners == null) throw new IllegalArgumentException("null is not allowed");
+        if (productOwners == null) productOwners = Collections.emptyList();
         java.util.Set<String> ids = getIdsAsSet(productOwners);
         if (this.productOwnersIds.equals(ids)) return;
         this.productOwnersIds = ids;
         fireModified();
     }
 
-    protected java.util.Set<scrum.server.admin.User> prepareProductOwners(java.util.Set<scrum.server.admin.User> productOwners) {
+    protected Collection<scrum.server.admin.User> prepareProductOwners(Collection<scrum.server.admin.User> productOwners) {
         return productOwners;
     }
 
@@ -480,16 +480,16 @@ public abstract class GProject
         return (java.util.Set) userDao.getByIdsAsSet(this.scrumMastersIds);
     }
 
-    public final void setScrumMasters(java.util.Set<scrum.server.admin.User> scrumMasters) {
+    public final void setScrumMasters(Collection<scrum.server.admin.User> scrumMasters) {
         scrumMasters = prepareScrumMasters(scrumMasters);
-        if (scrumMasters == null) throw new IllegalArgumentException("null is not allowed");
+        if (scrumMasters == null) scrumMasters = Collections.emptyList();
         java.util.Set<String> ids = getIdsAsSet(scrumMasters);
         if (this.scrumMastersIds.equals(ids)) return;
         this.scrumMastersIds = ids;
         fireModified();
     }
 
-    protected java.util.Set<scrum.server.admin.User> prepareScrumMasters(java.util.Set<scrum.server.admin.User> scrumMasters) {
+    protected Collection<scrum.server.admin.User> prepareScrumMasters(Collection<scrum.server.admin.User> scrumMasters) {
         return scrumMasters;
     }
 
@@ -567,16 +567,16 @@ public abstract class GProject
         return (java.util.Set) userDao.getByIdsAsSet(this.teamMembersIds);
     }
 
-    public final void setTeamMembers(java.util.Set<scrum.server.admin.User> teamMembers) {
+    public final void setTeamMembers(Collection<scrum.server.admin.User> teamMembers) {
         teamMembers = prepareTeamMembers(teamMembers);
-        if (teamMembers == null) throw new IllegalArgumentException("null is not allowed");
+        if (teamMembers == null) teamMembers = Collections.emptyList();
         java.util.Set<String> ids = getIdsAsSet(teamMembers);
         if (this.teamMembersIds.equals(ids)) return;
         this.teamMembersIds = ids;
         fireModified();
     }
 
-    protected java.util.Set<scrum.server.admin.User> prepareTeamMembers(java.util.Set<scrum.server.admin.User> teamMembers) {
+    protected Collection<scrum.server.admin.User> prepareTeamMembers(Collection<scrum.server.admin.User> teamMembers) {
         return teamMembers;
     }
 
@@ -750,15 +750,15 @@ public abstract class GProject
         return new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
     }
 
-    public final void setRequirementsOrderIds(java.util.List<java.lang.String> requirementsOrderIds) {
+    public final void setRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
         requirementsOrderIds = prepareRequirementsOrderIds(requirementsOrderIds);
-        if (requirementsOrderIds == null) throw new IllegalArgumentException("null is not allowed");
+        if (requirementsOrderIds == null) requirementsOrderIds = Collections.emptyList();
         if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
         this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
         fireModified();
     }
 
-    protected java.util.List<java.lang.String> prepareRequirementsOrderIds(java.util.List<java.lang.String> requirementsOrderIds) {
+    protected Collection<java.lang.String> prepareRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
         return requirementsOrderIds;
     }
 

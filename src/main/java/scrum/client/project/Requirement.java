@@ -15,6 +15,7 @@ public class Requirement extends GRequirement {
 	public Requirement(Project project) {
 		setProject(project);
 		setLabel(INIT_LABEL);
+		setDirty(true);
 	}
 
 	public Requirement(Map data) {
@@ -44,12 +45,13 @@ public class Requirement extends GRequirement {
 	 * Summary to show in the product backlog.
 	 */
 	public String getProductBacklogSummary() {
-		if (isClosed()) return "Closed.";
-		if (isDone()) return "Done. Test required.";
-		if (getEstimatedWork() == null) return "No effort estimated.";
-		if (!isSprintSet()) return getEstimatedWorkAsString() + " to do. No sprint assigned.";
+		String summary = isDirty() ? "[dirty] " : "[not dirty] ";
+		if (isClosed()) return summary += "Closed.";
+		if (isDone()) return summary += "Done. Test required.";
+		if (getEstimatedWork() == null) return summary += "No effort estimated.";
+		if (!isSprintSet()) return summary += getEstimatedWorkAsString() + " to do. No sprint assigned.";
 		Sprint sprint = getSprint();
-		return getEstimatedWorkAsString() + " to do in sprint " + sprint.getLabel() + ".";
+		return summary += getEstimatedWorkAsString() + " to do in sprint " + sprint.getLabel() + ".";
 	}
 
 	/**
@@ -116,5 +118,4 @@ public class Requirement extends GRequirement {
 	public String toString() {
 		return getLabel();
 	}
-
 }
