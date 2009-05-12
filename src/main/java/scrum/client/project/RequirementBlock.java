@@ -206,7 +206,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 		final Sprint currentSprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
 		if (currentSprint != null) {
 			if (requirement.isSprint(currentSprint)) {
-				addMenuCommand("Remove from Spring", new Command() {
+				addMenuCommand("Remove from Sprint", new Command() {
 
 					public void execute() {
 						requirement.setSprint(null);
@@ -215,7 +215,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 				});
 			} else {
 				if (requirement.getEstimatedWork() != null) {
-					addMenuCommand("Add to Spring", new Command() {
+					addMenuCommand("Add to Sprint", new Command() {
 
 						public void execute() {
 							requirement.setSprint(currentSprint);
@@ -242,6 +242,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 				public void execute() {
 					requirement.setDirty(true);
+					update();
 				}
 			});
 		} else {
@@ -249,6 +250,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 				public void execute() {
 					requirement.setDirty(false);
+					update();
 				}
 			});
 		}
