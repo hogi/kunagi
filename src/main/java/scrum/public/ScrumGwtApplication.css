@@ -104,7 +104,8 @@ a {cursor: pointer;}
 .AViewEditWidget-editor {}
 
 .AIntegerViewEditWidget .ButtonWidget a {font-size: 8px; line-height: 8px;}
-.Textarea-editor {height: 100px; width: 96%;}
+.Textarea-editor {height: 100px; width: 96%; }
+.Textarea-viewer {white-space: pre; text-align: left; }
 .AEditableTextareaWidget-editorPanel {width: 100%;}
 .Integer-editor {width: 10%;}
 
