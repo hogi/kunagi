@@ -73,6 +73,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		AEntity entity = dao.newEntityInstance(id);
 		entity.updateProperties(properties);
 		dao.saveEntity(entity);
+		session.sendToClient(entity);
+
+		for (WebSession s : webApplication.getOtherSessionsByProject(session)) {
+			// TODO do this only if client is tracking this entity
+			LOG.debug("Sending changes to", s);
+			session.sendToClient(entity);
+		}
 	}
 
 	@Override

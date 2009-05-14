@@ -37,6 +37,7 @@ public abstract class GTask
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("requirementId", this.requirementId);
+        properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);
@@ -97,6 +98,35 @@ public abstract class GTask
 
     protected final void updateRequirement(Object value) {
         setRequirement(value == null ? null : (scrum.server.project.Requirement)requirementDao.getById((String)value));
+    }
+
+    // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private int number;
+
+    public final int getNumber() {
+        return number;
+    }
+
+    public final void setNumber(int number) {
+        number = prepareNumber(number);
+        if (isNumber(number)) return;
+        this.number = number;
+        fireModified();
+    }
+
+    protected int prepareNumber(int number) {
+        return number;
+    }
+
+    public final boolean isNumber(int number) {
+        return this.number == number;
+    }
+
+    protected final void updateNumber(Object value) {
+        setNumber((Integer)value);
     }
 
     // -----------------------------------------------------------
@@ -281,6 +311,7 @@ public abstract class GTask
             if (property.equals("id")) continue;
             Object value = entry.getValue();
             if (property.equals("requirementId")) updateRequirement(value);
+            if (property.equals("number")) updateNumber(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("remainingWork")) updateRemainingWork(value);
             if (property.equals("burnedWork")) updateBurnedWork(value);

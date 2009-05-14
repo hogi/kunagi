@@ -36,6 +36,8 @@ public abstract class GQualityDao
     public void clearCaches() {
         qualitysByProjectCache.clear();
         projectsCache = null;
+        qualitysByNumberCache.clear();
+        numbersCache = null;
         qualitysByLabelCache.clear();
         labelsCache = null;
         qualitysByDescriptionCache.clear();
@@ -96,6 +98,46 @@ public abstract class GQualityDao
 
         public boolean test(Quality e) {
             return e.isProject(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Quality>> qualitysByNumberCache = new Cache<Integer,Set<Quality>>(
+            new Cache.Factory<Integer,Set<Quality>>() {
+                public Set<Quality> create(Integer number) {
+                    return getEntities(new IsNumber(number));
+                }
+            });
+
+    public final Set<Quality> getQualitysByNumber(int number) {
+        return qualitysByNumberCache.get(number);
+    }
+    private Set<Integer> numbersCache;
+
+    public final Set<Integer> getNumbers() {
+        if (numbersCache == null) {
+            numbersCache = new HashSet<Integer>();
+            for (Quality e : getEntities()) {
+                numbersCache.add(e.getNumber());
+            }
+        }
+        return numbersCache;
+    }
+
+    private static class IsNumber implements Predicate<Quality> {
+
+        private int value;
+
+        public IsNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Quality e) {
+            return e.isNumber(value);
         }
 
     }

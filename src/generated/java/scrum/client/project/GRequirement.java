@@ -94,6 +94,24 @@ public abstract class GRequirement
         return equals(this.sprintId, sprint);
     }
 
+    // --- number ---
+
+    private int number ;
+
+    public final int getNumber() {
+        return this.number ;
+    }
+
+    public final Requirement setNumber(int number) {
+        this.number = number ;
+        propertyChanged("number", this.number);
+        return (Requirement)this;
+    }
+
+    public final boolean isNumber(int number) {
+        return equals(this.number, number);
+    }
+
     // --- qualitys ---
 
     private Set<String> qualitysIds = new HashSet<String>();
@@ -235,6 +253,7 @@ public abstract class GRequirement
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
         sprintId = (String) props.get("sprintId");
+        number  = (Integer) props.get("number");
         qualitysIds = (Set<String>) props.get("qualitysIds");
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
@@ -249,6 +268,7 @@ public abstract class GRequirement
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("sprintId", this.sprintId);
+        properties.put("number", this.number);
         properties.put("qualitysIds", this.qualitysIds);
         properties.put("label", this.label);
         properties.put("description", this.description);

@@ -321,6 +321,42 @@ public abstract class GProject
         propertyChanged("requirementsOrderIds", this.requirementsOrderIds);
     }
 
+    // --- lastTaskNumber ---
+
+    private int lastTaskNumber ;
+
+    public final int getLastTaskNumber() {
+        return this.lastTaskNumber ;
+    }
+
+    public final Project setLastTaskNumber(int lastTaskNumber) {
+        this.lastTaskNumber = lastTaskNumber ;
+        propertyChanged("lastTaskNumber", this.lastTaskNumber);
+        return (Project)this;
+    }
+
+    public final boolean isLastTaskNumber(int lastTaskNumber) {
+        return equals(this.lastTaskNumber, lastTaskNumber);
+    }
+
+    // --- lastRequirementNumber ---
+
+    private int lastRequirementNumber ;
+
+    public final int getLastRequirementNumber() {
+        return this.lastRequirementNumber ;
+    }
+
+    public final Project setLastRequirementNumber(int lastRequirementNumber) {
+        this.lastRequirementNumber = lastRequirementNumber ;
+        propertyChanged("lastRequirementNumber", this.lastRequirementNumber);
+        return (Project)this;
+    }
+
+    public final boolean isLastRequirementNumber(int lastRequirementNumber) {
+        return equals(this.lastRequirementNumber, lastRequirementNumber);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -338,6 +374,8 @@ public abstract class GProject
         currentSprintId = (String) props.get("currentSprintId");
         nextSprintId = (String) props.get("nextSprintId");
         requirementsOrderIds  = (java.util.List<java.lang.String>) props.get("requirementsOrderIds");
+        lastTaskNumber  = (Integer) props.get("lastTaskNumber");
+        lastRequirementNumber  = (Integer) props.get("lastRequirementNumber");
     }
 
     @Override
@@ -355,6 +393,8 @@ public abstract class GProject
         properties.put("currentSprintId", this.currentSprintId);
         properties.put("nextSprintId", this.nextSprintId);
         properties.put("requirementsOrderIds", this.requirementsOrderIds);
+        properties.put("lastTaskNumber", this.lastTaskNumber);
+        properties.put("lastRequirementNumber", this.lastRequirementNumber);
     }
 
 }

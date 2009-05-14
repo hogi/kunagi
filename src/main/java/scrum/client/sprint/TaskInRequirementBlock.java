@@ -20,7 +20,6 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 
 	private Task task;
 
-	private Label summary;
 	private Label owner;
 	private FieldsWidget fields;
 
@@ -35,13 +34,11 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 	}
 
 	@Override
-	protected void onCollapsedInitialization() {
-		summary = new Label();
-	}
+	protected void onCollapsedInitialization() {}
 
 	@Override
 	protected void onCollapsedUpdate() {
-		setBlockTitle(task.getLabel());
+		setBlockTitle("[" + task.getReference() + "] " + task.getLabel());
 		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
 		createToolbar();
 	}

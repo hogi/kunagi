@@ -11,7 +11,13 @@ public class Task extends GTask {
 	}
 
 	@Override
+	public void ensureIntegrity() {
+		super.ensureIntegrity();
+		if (getNumber() == 0) setNumber(getRequirement().getProject().generateTaskNumber());
+	}
+
+	@Override
 	public String toString() {
-		return getLabel();
+		return "t" + getNumber() + " " + getLabel();
 	}
 }

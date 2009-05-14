@@ -69,6 +69,24 @@ public abstract class GQuality
         return equals(this.projectId, project);
     }
 
+    // --- number ---
+
+    private int number ;
+
+    public final int getNumber() {
+        return this.number ;
+    }
+
+    public final Quality setNumber(int number) {
+        this.number = number ;
+        propertyChanged("number", this.number);
+        return (Quality)this;
+    }
+
+    public final boolean isNumber(int number) {
+        return equals(this.number, number);
+    }
+
     // --- label ---
 
     private java.lang.String label ;
@@ -127,6 +145,7 @@ public abstract class GQuality
 
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
+        number  = (Integer) props.get("number");
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
         testDescription  = (java.lang.String) props.get("testDescription");
@@ -136,6 +155,7 @@ public abstract class GQuality
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
+        properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("description", this.description);
         properties.put("testDescription", this.testDescription);

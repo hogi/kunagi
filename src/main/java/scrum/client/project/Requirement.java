@@ -22,6 +22,10 @@ public class Requirement extends GRequirement {
 		super(data);
 	}
 
+	public String getReference() {
+		return "r" + getNumber();
+	}
+
 	/**
 	 * No tasks created yet.
 	 */

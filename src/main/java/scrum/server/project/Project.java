@@ -42,6 +42,18 @@ public class Project extends GProject {
 
 	// --- ---
 
+	public synchronized int generateTaskNumber() {
+		int number = getLastTaskNumber() + 1;
+		setLastTaskNumber(number);
+		return number;
+	}
+
+	public synchronized int generateRequirementNumber() {
+		int number = getLastRequirementNumber() + 1;
+		setLastRequirementNumber(number);
+		return number;
+	}
+
 	public ProjectSprintSnapshot getCurrentSprintSnapshot() {
 		ProjectSprintSnapshot snapshot = projectSprintSnapshotDao.getProjectSprintSnapshotBySprint(getCurrentSprint());
 		if (snapshot == null) snapshot = createSprintSnapshot();

@@ -50,6 +50,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addReference("currentSprint", getSprintModel());
 			projectModel.addReference("nextSprint", getSprintModel());
 			projectModel.addListProperty("requirementsOrderIds", String.class);
+			projectModel.addProperty("lastTaskNumber", int.class);
+			projectModel.addProperty("lastRequirementNumber", int.class);
 		}
 		return projectModel;
 	}
@@ -76,6 +78,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.setGwtSupport(true);
 			requirementModel.addReference("project", getProjectModel()).setMaster(true);
 			requirementModel.addReference("sprint", getSprintModel());
+			requirementModel.addProperty("number", int.class);
 			requirementModel.addSetReference("qualitys", getQualityModel());
 			requirementModel.addProperty("label", String.class);
 			requirementModel.addProperty("description", String.class);
@@ -95,6 +98,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(qualityModel);
 			qualityModel.setGwtSupport(true);
 			qualityModel.addReference("project", getProjectModel()).setMaster(true);
+			qualityModel.addProperty("number", int.class);
 			qualityModel.addProperty("label", String.class);
 			qualityModel.addProperty("description", String.class);
 			qualityModel.addProperty("testDescription", String.class);
@@ -140,6 +144,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(taskModel);
 			taskModel.setGwtSupport(true);
 			taskModel.addReference("requirement", getRequirementModel()).setMaster(true);
+			taskModel.addProperty("number", int.class);
 			taskModel.addProperty("label", String.class);
 			taskModel.addProperty("remainingWork", int.class);
 			taskModel.addProperty("burnedWork", int.class);

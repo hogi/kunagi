@@ -36,6 +36,8 @@ public abstract class GTaskDao
     public void clearCaches() {
         tasksByRequirementCache.clear();
         requirementsCache = null;
+        tasksByNumberCache.clear();
+        numbersCache = null;
         tasksByLabelCache.clear();
         labelsCache = null;
         tasksByRemainingWorkCache.clear();
@@ -100,6 +102,46 @@ public abstract class GTaskDao
 
         public boolean test(Task e) {
             return e.isRequirement(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Task>> tasksByNumberCache = new Cache<Integer,Set<Task>>(
+            new Cache.Factory<Integer,Set<Task>>() {
+                public Set<Task> create(Integer number) {
+                    return getEntities(new IsNumber(number));
+                }
+            });
+
+    public final Set<Task> getTasksByNumber(int number) {
+        return tasksByNumberCache.get(number);
+    }
+    private Set<Integer> numbersCache;
+
+    public final Set<Integer> getNumbers() {
+        if (numbersCache == null) {
+            numbersCache = new HashSet<Integer>();
+            for (Task e : getEntities()) {
+                numbersCache.add(e.getNumber());
+            }
+        }
+        return numbersCache;
+    }
+
+    private static class IsNumber implements Predicate<Task> {
+
+        private int value;
+
+        public IsNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isNumber(value);
         }
 
     }

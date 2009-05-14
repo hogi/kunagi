@@ -38,7 +38,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 	@Override
 	protected void onCollapsedUpdate() {
-		setBlockTitle(task.getLabel());
+		setBlockTitle("[" + task.getReference() + "] " + task.getLabel());
 		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
 		createToolbar();
 	}

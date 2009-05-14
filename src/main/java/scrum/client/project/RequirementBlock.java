@@ -189,7 +189,8 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	}
 
 	private String createTitle() {
-		return (requirement.isDirty() ? "[dirty] " : "[clean] ") + requirement.getLabel();
+		return "[" + requirement.getReference() + "] " + requirement.getLabel()
+				+ (requirement.isDirty() ? " [dirty]" : " [clean]");
 	}
 
 	protected void createToolbar() {

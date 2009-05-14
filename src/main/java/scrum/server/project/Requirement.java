@@ -17,13 +17,19 @@ public class Requirement extends GRequirement {
 
 	// --- ---
 
+	@Override
+	public void ensureIntegrity() {
+		super.ensureIntegrity();
+		if (getNumber() == 0) setNumber(getProject().generateRequirementNumber());
+	}
+
 	public Set<Task> getTasks() {
 		return taskDao.getTasksByRequirement(this);
 	}
 
 	@Override
 	public String toString() {
-		return getLabel();
+		return "r" + getNumber() + " " + getLabel();
 	}
 
 	// --- test data ---

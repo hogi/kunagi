@@ -19,6 +19,10 @@ public class Task extends GTask {
 		super(data);
 	}
 
+	public String getReference() {
+		return "t" + getNumber();
+	}
+
 	public void setDone() {
 		setRemainingWork(0);
 	}

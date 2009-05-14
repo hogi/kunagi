@@ -37,6 +37,7 @@ public abstract class GQuality
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
+        properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("description", this.description);
         properties.put("testDescription", this.testDescription);
@@ -95,6 +96,35 @@ public abstract class GQuality
 
     protected final void updateProject(Object value) {
         setProject(value == null ? null : (scrum.server.project.Project)projectDao.getById((String)value));
+    }
+
+    // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private int number;
+
+    public final int getNumber() {
+        return number;
+    }
+
+    public final void setNumber(int number) {
+        number = prepareNumber(number);
+        if (isNumber(number)) return;
+        this.number = number;
+        fireModified();
+    }
+
+    protected int prepareNumber(int number) {
+        return number;
+    }
+
+    public final boolean isNumber(int number) {
+        return this.number == number;
+    }
+
+    protected final void updateNumber(Object value) {
+        setNumber((Integer)value);
     }
 
     // -----------------------------------------------------------
@@ -208,6 +238,7 @@ public abstract class GQuality
             if (property.equals("id")) continue;
             Object value = entry.getValue();
             if (property.equals("projectId")) updateProject(value);
+            if (property.equals("number")) updateNumber(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("description")) updateDescription(value);
             if (property.equals("testDescription")) updateTestDescription(value);

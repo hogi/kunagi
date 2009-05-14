@@ -69,6 +69,24 @@ public abstract class GTask
         return equals(this.requirementId, requirement);
     }
 
+    // --- number ---
+
+    private int number ;
+
+    public final int getNumber() {
+        return this.number ;
+    }
+
+    public final Task setNumber(int number) {
+        this.number = number ;
+        propertyChanged("number", this.number);
+        return (Task)this;
+    }
+
+    public final boolean isNumber(int number) {
+        return equals(this.number, number);
+    }
+
     // --- label ---
 
     private java.lang.String label ;
@@ -170,6 +188,7 @@ public abstract class GTask
 
     public void updateProperties(Map props) {
         requirementId = (String) props.get("requirementId");
+        number  = (Integer) props.get("number");
         label  = (java.lang.String) props.get("label");
         remainingWork  = (Integer) props.get("remainingWork");
         burnedWork  = (Integer) props.get("burnedWork");
@@ -181,6 +200,7 @@ public abstract class GTask
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("requirementId", this.requirementId);
+        properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);

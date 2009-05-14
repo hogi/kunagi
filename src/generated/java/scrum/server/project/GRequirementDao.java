@@ -38,6 +38,8 @@ public abstract class GRequirementDao
         projectsCache = null;
         requirementsBySprintCache.clear();
         sprintsCache = null;
+        requirementsByNumberCache.clear();
+        numbersCache = null;
         requirementsByQualityCache.clear();
         qualitysCache = null;
         requirementsByLabelCache.clear();
@@ -144,6 +146,46 @@ public abstract class GRequirementDao
 
         public boolean test(Requirement e) {
             return e.isSprint(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Requirement>> requirementsByNumberCache = new Cache<Integer,Set<Requirement>>(
+            new Cache.Factory<Integer,Set<Requirement>>() {
+                public Set<Requirement> create(Integer number) {
+                    return getEntities(new IsNumber(number));
+                }
+            });
+
+    public final Set<Requirement> getRequirementsByNumber(int number) {
+        return requirementsByNumberCache.get(number);
+    }
+    private Set<Integer> numbersCache;
+
+    public final Set<Integer> getNumbers() {
+        if (numbersCache == null) {
+            numbersCache = new HashSet<Integer>();
+            for (Requirement e : getEntities()) {
+                numbersCache.add(e.getNumber());
+            }
+        }
+        return numbersCache;
+    }
+
+    private static class IsNumber implements Predicate<Requirement> {
+
+        private int value;
+
+        public IsNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Requirement e) {
+            return e.isNumber(value);
         }
 
     }

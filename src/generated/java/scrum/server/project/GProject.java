@@ -48,6 +48,8 @@ public abstract class GProject
         properties.put("currentSprintId", this.currentSprintId);
         properties.put("nextSprintId", this.nextSprintId);
         properties.put("requirementsOrderIds", this.requirementsOrderIds);
+        properties.put("lastTaskNumber", this.lastTaskNumber);
+        properties.put("lastRequirementNumber", this.lastRequirementNumber);
     }
 
     public int compareTo(Project other) {
@@ -830,6 +832,64 @@ public abstract class GProject
         setRequirementsOrderIds((java.util.List<java.lang.String>) value);
     }
 
+    // -----------------------------------------------------------
+    // - lastTaskNumber
+    // -----------------------------------------------------------
+
+    private int lastTaskNumber;
+
+    public final int getLastTaskNumber() {
+        return lastTaskNumber;
+    }
+
+    public final void setLastTaskNumber(int lastTaskNumber) {
+        lastTaskNumber = prepareLastTaskNumber(lastTaskNumber);
+        if (isLastTaskNumber(lastTaskNumber)) return;
+        this.lastTaskNumber = lastTaskNumber;
+        fireModified();
+    }
+
+    protected int prepareLastTaskNumber(int lastTaskNumber) {
+        return lastTaskNumber;
+    }
+
+    public final boolean isLastTaskNumber(int lastTaskNumber) {
+        return this.lastTaskNumber == lastTaskNumber;
+    }
+
+    protected final void updateLastTaskNumber(Object value) {
+        setLastTaskNumber((Integer)value);
+    }
+
+    // -----------------------------------------------------------
+    // - lastRequirementNumber
+    // -----------------------------------------------------------
+
+    private int lastRequirementNumber;
+
+    public final int getLastRequirementNumber() {
+        return lastRequirementNumber;
+    }
+
+    public final void setLastRequirementNumber(int lastRequirementNumber) {
+        lastRequirementNumber = prepareLastRequirementNumber(lastRequirementNumber);
+        if (isLastRequirementNumber(lastRequirementNumber)) return;
+        this.lastRequirementNumber = lastRequirementNumber;
+        fireModified();
+    }
+
+    protected int prepareLastRequirementNumber(int lastRequirementNumber) {
+        return lastRequirementNumber;
+    }
+
+    public final boolean isLastRequirementNumber(int lastRequirementNumber) {
+        return this.lastRequirementNumber == lastRequirementNumber;
+    }
+
+    protected final void updateLastRequirementNumber(Object value) {
+        setLastRequirementNumber((Integer)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -847,6 +907,8 @@ public abstract class GProject
             if (property.equals("currentSprintId")) updateCurrentSprint(value);
             if (property.equals("nextSprintId")) updateNextSprint(value);
             if (property.equals("requirementsOrderIds")) updateRequirementsOrderIds(value);
+            if (property.equals("lastTaskNumber")) updateLastTaskNumber(value);
+            if (property.equals("lastRequirementNumber")) updateLastRequirementNumber(value);
         }
     }
 
