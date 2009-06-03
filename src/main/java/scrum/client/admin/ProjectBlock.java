@@ -3,7 +3,6 @@ package scrum.client.admin;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -23,7 +22,6 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 	private Project project;
 
 	private HTML content;
-	private ToolbarWidget toolbar;
 	private FieldsWidget fields;
 
 	@Override

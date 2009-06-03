@@ -125,6 +125,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onLogin(WebSession session, String username, String password) {
+		session.reinitialize();
 		User user = userDao.getUserByName(username);
 
 		if (user == null || user.matchesPassword(password) == false) {

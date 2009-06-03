@@ -10,11 +10,12 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.SourcesTableEvents;
-import com.google.gwt.user.client.ui.TableListener;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HTMLTable.Cell;
 
 /**
  * List of <code>BlockWidget</code>s.
@@ -42,7 +43,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		table.setCellPadding(0);
 		table.setCellSpacing(0);
 		table.setStyleName(StyleSheet.ELEMENT_BLOCK_LIST_WIDGET_TABLE);
-		table.addTableListener(new Listener());
+		table.addClickHandler(new TableClickHandler());
 
 		SimplePanel panel = new SimplePanel();
 		panel.setStyleName("BlockListWidget");
@@ -274,11 +275,14 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		// if (next != null) next.activateDndMarkerTop();
 	}
 
-	private final class Listener implements TableListener {
+	private final class TableClickHandler implements ClickHandler {
 
-		public void onCellClicked(SourcesTableEvents sender, int row, int cell) {
-			selectRow(row);
+		public void onClick(ClickEvent event) {
+			Cell cell = table.getCellForEvent(event);
+			if (cell == null) return;
+			selectRow(cell.getRowIndex());
 		}
+
 	}
 
 	public List<O> getObjects() {
