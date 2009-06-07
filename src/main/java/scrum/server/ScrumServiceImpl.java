@@ -8,6 +8,7 @@ import ilarkesto.logging.Logger;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.webapp.AWebApplication;
+import ilarkesto.webapp.AWebSession;
 
 import java.util.Collection;
 import java.util.Map;
@@ -109,14 +110,14 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Requirement) {
 			Requirement requirement = (Requirement) entity;
 			requirement.getProject().getCurrentSprintSnapshot().update();
+			requirement.setDirty(true);
 		}
 
 		if (entity instanceof Project) {
 			Project project = (Project) entity;
-
 		}
 
-		for (WebSession s : webApplication.getOtherSessionsByProject(session)) {
+		for (AWebSession s : webApplication.getWebSessions()) {
 			// TODO do this only if client is tracking this entity
 			LOG.debug("Sending changes to", s);
 			session.sendToClient(entity);
