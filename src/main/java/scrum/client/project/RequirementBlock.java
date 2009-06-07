@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
+import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.ClientConstants;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
@@ -96,16 +97,19 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 			@Override
 			protected void onViewerUpdate() {
+				GwtLogger.DEBUG("setting viewer: <" + requirement.getDescription() + ">");
 				setViewerText(requirement.getDescription());
 			}
 
 			@Override
 			protected void onEditorUpdate() {
+				GwtLogger.DEBUG("setting editor: <" + requirement.getDescription() + ">");
 				setEditorText(requirement.getDescription());
 			}
 
 			@Override
 			protected void onEditorSubmit() {
+				GwtLogger.DEBUG("Text submitted: <" + getEditorText() + ">");
 				requirement.setDescription(getEditorText());
 			}
 

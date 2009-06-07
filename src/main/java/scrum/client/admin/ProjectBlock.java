@@ -3,6 +3,7 @@ package scrum.client.admin;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
+import scrum.client.Dao;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -113,7 +114,7 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorItems(project.getParticipantsAvailableForConfiguration());
+				setEditorItems(Dao.get().getUsers());
 				setEditorSelectedItems(project.getParticipants());
 			}
 
