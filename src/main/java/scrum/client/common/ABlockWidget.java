@@ -98,7 +98,7 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 
 	protected void addMenuCommand(String label, Command command) {
 		if (menu == null) {
-			MenuBar menuBar = new MenuBar();
+			MenuBar menuBar = new EventConsumingMenuBar();
 
 			menu = new MenuBar(true);
 			menuBar.addItem("v", menu);

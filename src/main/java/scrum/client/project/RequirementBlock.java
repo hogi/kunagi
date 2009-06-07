@@ -97,13 +97,11 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 			@Override
 			protected void onViewerUpdate() {
-				GwtLogger.DEBUG("setting viewer: <" + requirement.getDescription() + ">");
 				setViewerText(requirement.getDescription());
 			}
 
 			@Override
 			protected void onEditorUpdate() {
-				GwtLogger.DEBUG("setting editor: <" + requirement.getDescription() + ">");
 				setEditorText(requirement.getDescription());
 			}
 
