@@ -27,12 +27,6 @@ public class StyleSheet extends BaseStyleSheet {
 	public static final String ELEMENT_PANEL_WIDGET_TITLE = "element-PanelWidget-title";
 	public static final String ELEMENT_PANEL_WIDGET_CONTENT = "element-PanelWidget-content";
 
-	// PanelWidget
-
-	public static final String ELEMENT_GROUP_WIDGET = "element-GroupWidget";
-	public static final String ELEMENT_GROUP_WIDGET_TITLE = "element-GroupWidget-title";
-	public static final String ELEMENT_GROUP_WIDGET_CONTENT = "element-GrouplWidget-content";
-
 	// DropWidget
 
 	// others

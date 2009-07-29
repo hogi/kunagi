@@ -86,10 +86,18 @@ a {cursor: pointer;}
 .element-PanelWidget-title {background: #EEEEEE; color: #AAAAAA; font-weight: bold; padding: 5px;}
 .element-PanelWidget-content {padding: 5px;}
 
+/***** Whiteboard *****/
+
+.WhiteboardWidget-requirement-label {background: #192666; color: #DEE5FD; padding: 5px; font-size: 14px; font-family: "georgia",serif;}
+.WhiteboardWidget-columnLabel {padding: 5px; font-size: 16px; font-family: "georgia",serif;}
+.WhiteboardWidget-open {background: #FFE5E5;}
+.WhiteboardWidget-owned {background: #FFFFE5;}
+.WhiteboardWidget-done {background: #E5FFE5;}
+
 /***** Group *****/
 
-.element-GroupWidget-title {background: #DEE5FD; color:#192666; padding: 7px; font-size: 20px; font-family: "georgia",serif;}
-.element-GroupWidget-content {padding: 5px;}
+.GroupWidget-title {background: #192666; color: #DEE5FD; padding: 5px; font-size: 16px; font-family: "georgia",serif;}
+.GroupWidget-content {padding: 5px;}
 
 /***** Fields *****/
 

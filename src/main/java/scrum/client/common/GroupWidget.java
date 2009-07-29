@@ -25,14 +25,14 @@ public class GroupWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		SimplePanel titlePanel = new SimplePanel();
-		titlePanel.setStyleName(StyleSheet.ELEMENT_GROUP_WIDGET_TITLE);
+		titlePanel.setStyleName("GroupWidget-title");
 		titlePanel.add(new Label(title));
 
 		contentPanel = new FlowPanel();
-		contentPanel.setStyleName(StyleSheet.ELEMENT_GROUP_WIDGET_CONTENT);
+		contentPanel.setStyleName("GrouplWidget-content");
 
 		FlowPanel panel = new FlowPanel();
-		panel.setStyleName(StyleSheet.ELEMENT_GROUP_WIDGET);
+		panel.setStyleName("GrouplWidget");
 		panel.add(titlePanel);
 		panel.add(contentPanel);
 
