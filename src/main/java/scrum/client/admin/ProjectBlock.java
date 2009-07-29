@@ -212,7 +212,7 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 
 	protected void createToolbar() {
 
-		addMenuCommand("Open Project", new Command() {
+		addToolbarCommand("Open Project", new Command() {
 
 			public void execute() {
 				select();

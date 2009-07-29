@@ -1,6 +1,7 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.dnd.BlockListDndMarkerWidget;
 import scrum.client.dnd.DndManager;
 
@@ -106,6 +107,20 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 			addToolbarItem(menuBar);
 		}
 		menu.addItem(new MenuItem(label, command));
+	}
+
+	protected void addToolbarCommand(String label, final Command command) {
+		ButtonWidget button = new ButtonWidget(label);
+		button.addCommand(command);
+		addToolbarItem(button);
+		// Anchor a = new Anchor(label);
+		// a.addClickHandler(new ClickHandler() {
+		//
+		// public void onClick(ClickEvent event) {
+		// command.execute();
+		// }
+		// });
+		// addToolbarItem(a);
 	}
 
 	protected void addToolbarItem(Widget toolbarItem) {
