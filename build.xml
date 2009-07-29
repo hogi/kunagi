@@ -23,7 +23,7 @@
             <classpath location="src/main/java" />
             <classpath location="src/generated/java" />
             <classpath location="../ilarkesto/src/main/java" />
-            <classpath location="lib/gwt-dnd-2.5.6.jar" />
+            <classpath location="lib/gwt-dnd.jar" />
             <classpath location="/opt/gwt/gwt-user.jar" />
             <classpath location="/opt/gwt/gwt-dev-linux.jar" />
         </java>
