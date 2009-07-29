@@ -1,3 +1,15 @@
+/*
+ * Copyright 2009 Google Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is
+ * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and limitations under the License.
+ */
 package com.google.gwt.user.client.ui;
 
 import java.util.ArrayList;
@@ -19,7 +31,77 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.ui.PopupPanel.AnimationType;
 
-public class CustomMenuBar extends MenuBar implements PopupListener, HasAnimation, HasCloseHandlers<PopupPanel> {
+/**
+ * A standard menu bar widget. A menu bar can contain any number of menu items, each of which can either fire
+ * a {@link com.google.gwt.user.client.Command} or open a cascaded menu bar.
+ * 
+ * <p>
+ * <img class='gallery' src='MenuBar.png'/>
+ * </p>
+ * 
+ * <h3>CSS Style Rules</h3>
+ * <dl>
+ * <dd>.gwt-MenuBar</dd>
+ * <dt>the menu bar itself</dt>
+ * <dd>.gwt-MenuBar-horizontal</dd>
+ * <dt>dependent style applied to horizontal menu bars</dt>
+ * <dd>.gwt-MenuBar-vertical</dd>
+ * <dt>dependent style applied to vertical menu bars</dt>
+ * <dd>.gwt-MenuBar .gwt-MenuItem</dd>
+ * <dt>menu items</dt>
+ * <dd>.gwt-MenuBar .gwt-MenuItem-selected</dd>
+ * <dt>selected menu items</dt>
+ * <dd>.gwt-MenuBar .gwt-MenuItemSeparator</dd>
+ * <dt>section breaks between menu items</dt>
+ * <dd>.gwt-MenuBar .gwt-MenuItemSeparator .menuSeparatorInner</dd>
+ * <dt>inner component of section separators</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupTopLeft</dd>
+ * <dt>the top left cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupTopLeftInner</dd>
+ * <dt>the inner element of the cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupTopCenter</dd>
+ * <dt>the top center cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupTopCenterInner</dd>
+ * <dt>the inner element of the cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupTopRight</dd>
+ * <dt>the top right cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupTopRightInner</dd>
+ * <dt>the inner element of the cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupMiddleLeft</dd>
+ * <dt>the middle left cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupMiddleLeftInner</dd>
+ * <dt>the inner element of the cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupMiddleCenter</dd>
+ * <dt>the middle center cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupMiddleCenterInner</dd>
+ * <dt>the inner element of the cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupMiddleRight</dd>
+ * <dt>the middle right cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupMiddleRightInner</dd>
+ * <dt>the inner element of the cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupBottomLeft</dd>
+ * <dt>the bottom left cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupBottomLeftInner</dd>
+ * <dt>the inner element of the cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupBottomCenter</dd>
+ * <dt>the bottom center cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupBottomCenterInner</dd>
+ * <dt>the inner element of the cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupBottomRight</dd>
+ * <dt>the bottom right cell</dt>
+ * <dd>.gwt-MenuBarPopup .menuPopupBottomRightInner</dd>
+ * <dt>the inner element of the cell</dt>
+ * </dl>
+ * 
+ * <p>
+ * <h3>Example</h3>
+ * {@example com.google.gwt.examples.MenuBarExample}
+ * </p>
+ */
+// Nothing we can do about MenuBar implementing PopupListener until next
+// release.
+@SuppressWarnings("deprecation")
+public class MenuBar extends Widget implements PopupListener, HasAnimation, HasCloseHandlers<PopupPanel> {
 
 	public enum PopupPosition {
 		LEFT, RIGHT, AUTO;
@@ -73,10 +155,10 @@ public class CustomMenuBar extends MenuBar implements PopupListener, HasAnimatio
 
 	private MenuBarImages images = null;
 	private boolean isAnimationEnabled = false;
-	private CustomMenuBar parentMenu;
+	private MenuBar parentMenu;
 	private PopupPanel popup;
 	private MenuItem selectedItem;
-	private CustomMenuBar shownChildMenu;
+	private MenuBar shownChildMenu;
 	private boolean vertical, autoOpen;
 
 	private PopupPosition popupPosition = PopupPosition.AUTO;
@@ -84,7 +166,7 @@ public class CustomMenuBar extends MenuBar implements PopupListener, HasAnimatio
 	/**
 	 * Creates an empty horizontal menu bar.
 	 */
-	public CustomMenuBar() {
+	public MenuBar() {
 		this(false);
 	}
 
@@ -93,7 +175,7 @@ public class CustomMenuBar extends MenuBar implements PopupListener, HasAnimatio
 	 * 
 	 * @param vertical <code>true</code> to orient the menu bar vertically
 	 */
-	public CustomMenuBar(boolean vertical) {
+	public MenuBar(boolean vertical) {
 		super();
 		if (LocaleInfo.getCurrentLocale().isRTL()) {
 			init(vertical, GWT.<MenuBarImagesRTL> create(MenuBarImagesRTL.class));
@@ -108,7 +190,7 @@ public class CustomMenuBar extends MenuBar implements PopupListener, HasAnimatio
 	 * @param vertical <code>true</code> to orient the menu bar vertically
 	 * @param images a bundle that provides images for this menu
 	 */
-	public CustomMenuBar(boolean vertical, MenuBarImages images) {
+	public MenuBar(boolean vertical, MenuBarImages images) {
 		init(vertical, images);
 	}
 
@@ -117,7 +199,7 @@ public class CustomMenuBar extends MenuBar implements PopupListener, HasAnimatio
 	 * 
 	 * @param images a bundle that provides images for this menu
 	 */
-	public CustomMenuBar(MenuBarImages images) {
+	public MenuBar(MenuBarImages images) {
 		this(false, images);
 	}
 
@@ -416,7 +498,7 @@ public class CustomMenuBar extends MenuBar implements PopupListener, HasAnimatio
 		// When the menu popup closes, remember that no item is
 		// currently showing a popup menu.
 		onHide();
-		CloseEvent.fire(CustomMenuBar.this, sender);
+		CloseEvent.fire(MenuBar.this, sender);
 		shownChildMenu = null;
 		popup = null;
 		if (parentMenu != null && parentMenu.popup != null) {
@@ -515,7 +597,7 @@ public class CustomMenuBar extends MenuBar implements PopupListener, HasAnimatio
 	 * Closes all parent menu popups.
 	 */
 	void closeAllParents() {
-		CustomMenuBar curMenu = this;
+		MenuBar curMenu = this;
 		while (curMenu.parentMenu != null) {
 			curMenu.close();
 			curMenu = curMenu.parentMenu;
@@ -777,7 +859,7 @@ public class CustomMenuBar extends MenuBar implements PopupListener, HasAnimatio
 				if (shownChildMenu == null) {
 					doItemAction(selectedItem, false);
 				}
-				// TODO: argh! selectedItem.getSubMenu().focus();
+				selectedItem.getSubMenu().focus();
 			} else if (parentMenu != null) {
 				if (parentMenu.vertical) {
 					parentMenu.selectNextItem();
@@ -799,7 +881,7 @@ public class CustomMenuBar extends MenuBar implements PopupListener, HasAnimatio
 				if (shownChildMenu == null) {
 					doItemAction(selectedItem, false);
 				}
-				// TODO: argh! selectedItem.getSubMenu().focus();
+				selectedItem.getSubMenu().focus();
 			} else if (parentMenu != null) {
 				if (!parentMenu.vertical) {
 					parentMenu.selectNextItem();
@@ -870,7 +952,7 @@ public class CustomMenuBar extends MenuBar implements PopupListener, HasAnimatio
 			{
 				setWidget(item.getSubMenu());
 				setPreviewingAllNativeEvents(true);
-				// TODO: argh! item.getSubMenu().onShow();
+				item.getSubMenu().onShow();
 			}
 
 			@Override
@@ -908,8 +990,8 @@ public class CustomMenuBar extends MenuBar implements PopupListener, HasAnimatio
 		}
 		popup.addPopupListener(this);
 
-		// shownChildMenu = item.getSubMenu();
-		// TODO: argh! item.getSubMenu().parentMenu = this;
+		shownChildMenu = item.getSubMenu();
+		item.getSubMenu().parentMenu = this;
 
 		// Show the popup, ensuring that the menubar's event preview remains on top
 		// of the popup's.
@@ -919,43 +1001,42 @@ public class CustomMenuBar extends MenuBar implements PopupListener, HasAnimatio
 
 				// depending on the bidi direction position a menu on the left or right
 				// of its base item
-
 				switch (popupPosition) {
 					case AUTO:
 						if (LocaleInfo.getCurrentLocale().isRTL()) {
 							if (vertical) {
-								popup.setPopupPosition(CustomMenuBar.this.getAbsoluteLeft() - offsetWidth + 1, item
+								popup.setPopupPosition(MenuBar.this.getAbsoluteLeft() - offsetWidth + 1, item
 										.getAbsoluteTop());
 							} else {
 								popup.setPopupPosition(item.getAbsoluteLeft() + item.getOffsetWidth() - offsetWidth,
-									CustomMenuBar.this.getAbsoluteTop() + CustomMenuBar.this.getOffsetHeight() - 1);
+									MenuBar.this.getAbsoluteTop() + MenuBar.this.getOffsetHeight() - 1);
 							}
 						} else {
 							if (vertical) {
-								popup.setPopupPosition(CustomMenuBar.this.getAbsoluteLeft()
-										+ CustomMenuBar.this.getOffsetWidth() - 1, item.getAbsoluteTop());
+								popup.setPopupPosition(MenuBar.this.getAbsoluteLeft() + MenuBar.this.getOffsetWidth()
+										- 1, item.getAbsoluteTop());
 							} else {
-								popup.setPopupPosition(item.getAbsoluteLeft(), CustomMenuBar.this.getAbsoluteTop()
-										+ CustomMenuBar.this.getOffsetHeight() - 1);
+								popup.setPopupPosition(item.getAbsoluteLeft(), MenuBar.this.getAbsoluteTop()
+										+ MenuBar.this.getOffsetHeight() - 1);
 							}
 						}
 						break;
 					case RIGHT:
 						if (vertical) {
-							popup.setPopupPosition(CustomMenuBar.this.getAbsoluteLeft()
-									+ CustomMenuBar.this.getOffsetWidth() - 1, item.getAbsoluteTop());
+							popup.setPopupPosition(MenuBar.this.getAbsoluteLeft() + MenuBar.this.getOffsetWidth() - 1,
+								item.getAbsoluteTop());
 						} else {
-							popup.setPopupPosition(item.getAbsoluteLeft(), CustomMenuBar.this.getAbsoluteTop()
-									+ CustomMenuBar.this.getOffsetHeight() - 1);
+							popup.setPopupPosition(item.getAbsoluteLeft(), MenuBar.this.getAbsoluteTop()
+									+ MenuBar.this.getOffsetHeight() - 1);
 						}
 						break;
 					case LEFT:
 						if (vertical) {
-							popup.setPopupPosition(CustomMenuBar.this.getAbsoluteLeft() - offsetWidth + 1, item
+							popup.setPopupPosition(MenuBar.this.getAbsoluteLeft() - offsetWidth + 1, item
 									.getAbsoluteTop());
 						} else {
 							popup.setPopupPosition(item.getAbsoluteLeft() + item.getOffsetWidth() - offsetWidth,
-								CustomMenuBar.this.getAbsoluteTop() + CustomMenuBar.this.getOffsetHeight() - 1);
+								MenuBar.this.getAbsoluteTop() + MenuBar.this.getOffsetHeight() - 1);
 						}
 						break;
 				}

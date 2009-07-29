@@ -6,7 +6,6 @@ import scrum.client.dnd.DndManager;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
-import com.google.gwt.user.client.ui.CustomMenuBar;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -16,7 +15,6 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.CustomMenuBar.PopupPosition;
 
 /**
  * Base class for a block widget, which can be added to a <code>BlockWidgetList</code>.
@@ -100,11 +98,11 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 
 	protected void addMenuCommand(String label, Command command) {
 		if (menu == null) {
-			CustomMenuBar menuBar = new CustomMenuBar();
+			MenuBar menuBar = new MenuBar();
 
-			menu = new CustomMenuBar(true);
+			menu = new MenuBar(true);
 			menuBar.addItem("v", menu);
-			menuBar.setPopupPosition(PopupPosition.LEFT);
+			menuBar.setPopupPosition(MenuBar.PopupPosition.LEFT);
 			addToolbarItem(menuBar);
 		}
 		menu.addItem(new MenuItem(label, command));
