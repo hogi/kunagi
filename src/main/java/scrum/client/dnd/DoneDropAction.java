@@ -9,11 +9,11 @@ import scrum.client.tasks.TaskBlock;
 import scrum.client.tasks.TaskOverviewWidget;
 import scrum.client.tasks.WhiteboardWidget;
 
-public class DoneListDropAction implements BlockListDropAction<Task> {
+public class DoneDropAction implements BlockListDropAction<Task> {
 
 	private Requirement requirement;
 
-	public DoneListDropAction(Requirement requirement) {
+	public DoneDropAction(Requirement requirement) {
 		this.requirement = requirement;
 	}
 
