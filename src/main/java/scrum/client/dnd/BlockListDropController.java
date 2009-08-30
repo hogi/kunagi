@@ -88,7 +88,7 @@ public class BlockListDropController implements DropController {
 	private boolean isDropAllowed(Widget draggable) {
 		if (draggable instanceof ABlockWidget) {
 			ABlockWidget block = (ABlockWidget) draggable;
-			return block.getList() == targetBlock.getList();
+			return targetBlock.getList().acceptsDrop(block);
 		}
 		if (draggable instanceof ClipboardItemWidget) {
 			ClipboardItemWidget item = (ClipboardItemWidget) draggable;

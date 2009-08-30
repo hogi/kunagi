@@ -303,4 +303,9 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	public List<O> getObjects() {
 		return objects;
 	}
+
+	public boolean acceptsDrop(ABlockWidget block) {
+		return this.blockWidgetFactory.createBlock().getClass().getName().equals(block.getClass().getName());
+		// return this == block.getList();
+	}
 }
