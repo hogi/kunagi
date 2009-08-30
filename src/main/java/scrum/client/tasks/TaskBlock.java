@@ -13,6 +13,7 @@ import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 import scrum.client.sprint.SprintBacklogWidget;
 import scrum.client.sprint.Task;
+import scrum.client.test.LinkParserTest;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Image;
@@ -139,7 +140,8 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerText(task.getNotice());
+				// TODO Links parsing zum Testen nur bei Tasks.
+				setViewerText(LinkParserTest.parseEntityLinks(task.getNotice()));
 			}
 
 			@Override
