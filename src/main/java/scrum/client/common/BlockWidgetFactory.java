@@ -1,7 +1,13 @@
 package scrum.client.common;
 
-public interface BlockWidgetFactory<O extends Object> {
+public abstract class BlockWidgetFactory<O extends Object> {
 
-	ABlockWidget<O> createBlock();
+	private ABlockWidget<O> dummy = null;
 
+	public abstract ABlockWidget<O> createBlock();
+
+	public boolean isSameType(Object other) {
+		if (dummy == null) dummy = createBlock();
+		return dummy.getClass().getName().equals(other.getClass().getName());
+	}
 }

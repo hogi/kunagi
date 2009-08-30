@@ -250,7 +250,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		WhiteboardWidget.get().update();
 	}
 
-	public static class TaskBlockFactory implements BlockWidgetFactory<Task> {
+	public static class TaskBlockFactory extends BlockWidgetFactory<Task> {
 
 		private TaskBlockContainer container;
 

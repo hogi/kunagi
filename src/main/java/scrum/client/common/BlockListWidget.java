@@ -313,7 +313,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	public boolean acceptsDrop(ABlockWidget block) {
-		return this.blockWidgetFactory.createBlock().getClass().getName().equals(block.getClass().getName());
+		return this.blockWidgetFactory.isSameType(block);
 		// return this == block.getList();
 	}
 }
