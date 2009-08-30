@@ -205,7 +205,10 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	public final void selectRow(int row) {
-		if (row == selectedRow) return;
+		if (row == selectedRow) {
+			deselect();
+			return;
+		}
 
 		if (selectionManager == null) {
 			deselect();
