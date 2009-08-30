@@ -38,7 +38,7 @@ public class BlockListDropController implements DropController {
 			int toIndex = targetList.indexOf(targetBlock);
 			if (fromIndex > toIndex) toIndex++;
 			if (isHigher(area, location)) toIndex--;
-			targetList.moveBlock(draggedBlock, toIndex);
+			targetList.drop(draggedBlock, toIndex);
 		} else if (draggable instanceof ClipboardItemWidget) {
 			// move from clipboard
 			ClipboardItemWidget item = (ClipboardItemWidget) draggable;
@@ -51,7 +51,7 @@ public class BlockListDropController implements DropController {
 			int toIndex = targetList.indexOf(targetBlock);
 			if (fromIndex > toIndex) toIndex++;
 			if (isHigher(area, location)) toIndex--;
-			targetList.moveBlock(item.getPayload(), toIndex);
+			targetList.drop(item.getPayload(), toIndex);
 			item.removeFromClipboard();
 		}
 	}

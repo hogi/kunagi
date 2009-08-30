@@ -1,7 +1,6 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.GwtLogger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,6 +8,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+
+import scrum.client.dnd.BlockListDropAction;
+import scrum.client.dnd.MoveDropAction;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -33,6 +35,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	private BlockWidgetFactory<O> blockWidgetFactory;
 	private BlockMoveObserver<O> moveObserver;
 	private BlockListSelectionManager selectionManager;
+	private BlockListDropAction<O> dropAction = new MoveDropAction();
 
 	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory) {
 		this.blockWidgetFactory = blockWidgetFactory;
@@ -73,7 +76,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 			O sortedObject = sortedObjects.get(i);
 			int index = objects.indexOf(sortedObject);
 			if (index != i) {
-				moveBlock(blocks.get(index), i);
+				drop(blocks.get(index), i);
 			}
 		}
 	}
@@ -160,22 +163,19 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		return block;
 	}
 
-	public final void moveBlock(ABlockWidget<O> block, int toIndex) {
-		if (block == null) throw new IllegalArgumentException("block == null");
-		int fromIndex = indexOf(block);
-		GwtLogger.DEBUG("moving block from", fromIndex, "to", toIndex);
-
-		blocks.remove(fromIndex);
+	public ABlockWidget<O> addBlock(ABlockWidget<O> block, int toIndex) {
 		blocks.add(toIndex, block);
-
-		objects.remove(fromIndex);
 		objects.add(toIndex, block.getObject());
-
-		table.removeRow(fromIndex);
 		table.insertRow(toIndex);
 		table.setWidget(toIndex, 0, block);
+		return block;
+	}
 
-		if (moveObserver != null) moveObserver.onBlockMoved();
+	public final void drop(ABlockWidget<O> block, int toIndex) {
+		if (block == null) throw new IllegalArgumentException("block == null");
+		int fromIndex = block.getList().indexOf(block);
+		if (dropAction.execute(block, block.getList(), fromIndex, (BlockListWidget<ABlockWidget>) this, toIndex))
+			if (moveObserver != null) moveObserver.onBlockMoved();
 	}
 
 	public final O getObject(int index) {
