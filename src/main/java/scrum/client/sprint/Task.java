@@ -23,8 +23,21 @@ public class Task extends GTask {
 		return "t" + getNumber();
 	}
 
-	public void setDone() {
+	public void setDone(User user) {
+		if (user == null)
+			throw new IllegalArgumentException("a Task cannot be set done without claiming Task ownership");
+		setOwner(user);
 		setRemainingWork(0);
+	}
+
+	public void setUnDone(User user) {
+		setOwner(user);
+		// TODO promt user to input remaining work
+		setRemainingWork(1);
+	}
+
+	public void setUnOwned() {
+		setUnDone(null);
 	}
 
 	public boolean isDone() {

@@ -194,7 +194,7 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 			addMenuCommand("Done", new Command() {
 
 				public void execute() {
-					task.setDone();
+					task.setDone(ScrumGwtApplication.get().getUser());
 					SprintBacklogWidget.get().update();
 				}
 			});

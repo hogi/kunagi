@@ -179,8 +179,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 			addMenuCommand("UnOwn", new Command() {
 
 				public void execute() {
-					task.setOwner(null);
-					task.setRemainingWork(1);
+					task.setUnOwned();
 					TaskOverviewWidget.get().update();
 					WhiteboardWidget.get().update();
 				}
@@ -202,8 +201,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 			addMenuCommand("Done", new Command() {
 
 				public void execute() {
-					task.setOwner(ScrumGwtApplication.get().getUser());
-					task.setDone();
+					task.setDone(ScrumGwtApplication.get().getUser());
 					TaskOverviewWidget.get().update();
 					WhiteboardWidget.get().update();
 				}
@@ -212,8 +210,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 			addMenuCommand("UnDone", new Command() {
 
 				public void execute() {
-					task.setOwner(ScrumGwtApplication.get().getUser());
-					task.setRemainingWork(1);
+					task.setUnDone(ScrumGwtApplication.get().getUser());
 					TaskOverviewWidget.get().update();
 					WhiteboardWidget.get().update();
 				}
