@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class WhiteboardWidget extends AWidget {
+public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 
 	private Grid grid;
 	private Label openLabel;
@@ -59,9 +59,9 @@ public class WhiteboardWidget extends AWidget {
 		grid.resize((requirements.size() * 2) + 1, 3);
 
 		for (Requirement requirement : requirements) {
-			openTasks.put(requirement, new TaskListWidget(selectionManager));
-			ownedTasks.put(requirement, new TaskListWidget(selectionManager));
-			closedTasks.put(requirement, new TaskListWidget(selectionManager));
+			openTasks.put(requirement, new TaskListWidget(this));
+			ownedTasks.put(requirement, new TaskListWidget(this));
+			closedTasks.put(requirement, new TaskListWidget(this));
 		}
 
 		setWidget(0, 0, openLabel, "33%", "WhiteboardWidget-open");
@@ -116,6 +116,14 @@ public class WhiteboardWidget extends AWidget {
 
 	public static WhiteboardWidget get() {
 		return WorkareaWidget.get().getWhiteboard();
+	}
+
+	public BlockListSelectionManager getSelectionManager() {
+		return selectionManager;
+	}
+
+	public void selectTask(Task task) {
+		selectionManager.select(task);
 	}
 
 }

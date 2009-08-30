@@ -16,4 +16,10 @@ public class BlockListSelectionManager {
 			list.deselect();
 	}
 
+	public void select(Object object) {
+		for (BlockListWidget list : lists) {
+			if (list.contains(object)) list.selectObject(object);
+		}
+	}
+
 }

@@ -202,9 +202,11 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	public final void selectRow(int row) {
 		if (row == selectedRow) return;
 
-		deselect();
-
-		if (selectionManager != null) selectionManager.deselectAll();
+		if (selectionManager == null) {
+			deselect();
+		} else {
+			selectionManager.deselectAll();
+		}
 
 		blocks.get(row).setSelected(true);
 		selectedRow = row;
@@ -236,10 +238,16 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	public final void selectObject(Object object) {
-		selectRow(objects.indexOf(object));
+		int idx = objects.indexOf(object);
+		selectRow(idx);
+	}
+
+	public final boolean contains(Object object) {
+		return objects.contains(object);
 	}
 
 	public final void deselect() {
+		if (selectedRow == -1) return;
 		for (ABlockWidget block : blocks) {
 			block.setSelected(false);
 		}

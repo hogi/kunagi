@@ -20,8 +20,12 @@ import com.google.gwt.user.client.ui.Image;
 public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupport, ClipboardSupport {
 
 	private Task task;
-
 	private FieldsWidget fields;
+	private TaskBlockContainer container;
+
+	public TaskBlock(TaskBlockContainer container) {
+		this.container = container;
+	}
 
 	@Override
 	protected Task getObject() {
@@ -173,6 +177,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 					task.setOwner(ScrumGwtApplication.get().getUser());
 					TaskOverviewWidget.get().update();
 					WhiteboardWidget.get().update();
+					container.selectTask(task);
 				}
 			});
 		} else {
@@ -182,6 +187,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 					task.setUnOwned();
 					TaskOverviewWidget.get().update();
 					WhiteboardWidget.get().update();
+					container.selectTask(task);
 				}
 			});
 		}
@@ -204,6 +210,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 					task.setDone(ScrumGwtApplication.get().getUser());
 					TaskOverviewWidget.get().update();
 					WhiteboardWidget.get().update();
+					container.selectTask(task);
 				}
 			});
 		} else {
@@ -213,6 +220,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 					task.setUnDone(ScrumGwtApplication.get().getUser());
 					TaskOverviewWidget.get().update();
 					WhiteboardWidget.get().update();
+					container.selectTask(task);
 				}
 			});
 		}
@@ -240,10 +248,16 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		WhiteboardWidget.get().update();
 	}
 
-	public static BlockWidgetFactory<Task> FACTORY = new BlockWidgetFactory<Task>() {
+	public static class TaskBlockFactory implements BlockWidgetFactory<Task> {
 
-		public TaskBlock createBlock() {
-			return new TaskBlock();
+		private TaskBlockContainer container;
+
+		public TaskBlockFactory(TaskBlockContainer container) {
+			this.container = container;
 		}
-	};
+
+		public ABlockWidget<Task> createBlock() {
+			return new TaskBlock(container);
+		}
+	}
 }

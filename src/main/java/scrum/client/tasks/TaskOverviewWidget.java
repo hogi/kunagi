@@ -9,12 +9,13 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.sprint.Sprint;
+import scrum.client.sprint.Task;
 import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class TaskOverviewWidget extends AWidget {
+public class TaskOverviewWidget extends AWidget implements TaskBlockContainer {
 
 	private TaskListWidget myTasks;
 	private TaskListWidget unownedTasks;
@@ -24,11 +25,11 @@ public class TaskOverviewWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		selectionManager = new BlockListSelectionManager();
-		myTasks = new TaskListWidget("My tasks", selectionManager);
-		unownedTasks = new TaskListWidget("Tasks without owner", selectionManager);
+		myTasks = new TaskListWidget("My tasks", this);
+		unownedTasks = new TaskListWidget("Tasks without owner", this);
 		ownedTasks = new HashMap<User, TaskListWidget>();
 		for (User user : ScrumGwtApplication.get().getProject().getTeamMembers()) {
-			TaskListWidget list = new TaskListWidget(user.getName() + "'s Tasks", selectionManager);
+			TaskListWidget list = new TaskListWidget(user.getName() + "'s Tasks", this);
 			ownedTasks.put(user, list);
 		}
 
@@ -57,6 +58,14 @@ public class TaskOverviewWidget extends AWidget {
 
 	public static TaskOverviewWidget get() {
 		return WorkareaWidget.get().getTaskOverview();
+	}
+
+	public BlockListSelectionManager getSelectionManager() {
+		return selectionManager;
+	}
+
+	public void selectTask(Task task) {
+		selectionManager.select(task);
 	}
 
 }
