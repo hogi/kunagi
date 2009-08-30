@@ -10,6 +10,7 @@ import java.util.Map;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListSelectionManager;
+import scrum.client.dnd.DoneListDropAction;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
 import scrum.client.workspace.WorkareaWidget;
@@ -61,7 +62,7 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 		for (Requirement requirement : requirements) {
 			openTasks.put(requirement, new TaskListWidget(this));
 			ownedTasks.put(requirement, new TaskListWidget(this));
-			closedTasks.put(requirement, new TaskListWidget(this));
+			closedTasks.put(requirement, new TaskListWidget(this, new DoneListDropAction(requirement)));
 		}
 
 		setWidget(0, 0, openLabel, "33%", "WhiteboardWidget-open");

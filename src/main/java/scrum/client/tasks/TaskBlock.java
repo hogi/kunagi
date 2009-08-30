@@ -262,4 +262,8 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 			return new TaskBlock(container);
 		}
 	}
+
+	public TaskBlockContainer getContainer() {
+		return this.container;
+	}
 }

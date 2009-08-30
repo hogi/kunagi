@@ -6,6 +6,8 @@ import java.util.Collection;
 
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
+import scrum.client.dnd.BlockListDropAction;
+import scrum.client.dnd.MoveDropAction;
 import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -15,6 +17,7 @@ public class TaskListWidget extends AWidget {
 	private String title;
 	private GroupWidget panel;
 	private BlockListWidget<Task> list;
+	private BlockListDropAction<Task> dropAction;
 
 	private TaskBlockContainer container;
 
@@ -24,12 +27,17 @@ public class TaskListWidget extends AWidget {
 	}
 
 	public TaskListWidget(TaskBlockContainer container) {
+		this(container, new MoveDropAction());
+	}
+
+	public TaskListWidget(TaskBlockContainer container, BlockListDropAction<Task> dropAction) {
 		this.container = container;
+		this.dropAction = dropAction;
 	}
 
 	@Override
 	protected Widget onInitialization() {
-		list = new BlockListWidget<Task>(new TaskBlock.TaskBlockFactory(container));
+		list = new BlockListWidget<Task>(new TaskBlock.TaskBlockFactory(container), this.dropAction);
 		list.setSelectionManager(container.getSelectionManager());
 
 		if (title == null) return list;

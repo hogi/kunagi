@@ -35,9 +35,14 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	private BlockWidgetFactory<O> blockWidgetFactory;
 	private BlockMoveObserver<O> moveObserver;
 	private BlockListSelectionManager selectionManager;
-	private BlockListDropAction<O> dropAction = new MoveDropAction();
+	private BlockListDropAction<O> dropAction;
 
 	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory) {
+		this(blockWidgetFactory, new MoveDropAction());
+	}
+
+	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory, BlockListDropAction<O> dropAction) {
+		this.dropAction = dropAction;
 		this.blockWidgetFactory = blockWidgetFactory;
 	}
 
