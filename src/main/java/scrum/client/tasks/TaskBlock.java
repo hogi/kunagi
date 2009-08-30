@@ -57,7 +57,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 			@Override
 			protected void onEditorUpdate() {
-				setViewerText(task.getLabel());
+				setEditorText(task.getLabel());
 			}
 
 			@Override
