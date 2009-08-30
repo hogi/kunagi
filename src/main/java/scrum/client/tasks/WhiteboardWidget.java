@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumGwtApplication;
+import scrum.client.common.BlockListSelectionManager;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
 import scrum.client.workspace.WorkareaWidget;
@@ -28,6 +29,7 @@ public class WhiteboardWidget extends AWidget {
 	private Map<Requirement, TaskListWidget> openTasks;
 	private Map<Requirement, TaskListWidget> ownedTasks;
 	private Map<Requirement, TaskListWidget> closedTasks;
+	private BlockListSelectionManager selectionManager;
 
 	@Override
 	protected Widget onInitialization() {
@@ -52,13 +54,14 @@ public class WhiteboardWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		List<Requirement> requirements = ScrumGwtApplication.get().getProject().getCurrentSprint().getRequirements();
+		selectionManager = new BlockListSelectionManager();
 
 		grid.resize((requirements.size() * 2) + 1, 3);
 
 		for (Requirement requirement : requirements) {
-			openTasks.put(requirement, new TaskListWidget());
-			ownedTasks.put(requirement, new TaskListWidget());
-			closedTasks.put(requirement, new TaskListWidget());
+			openTasks.put(requirement, new TaskListWidget(selectionManager));
+			ownedTasks.put(requirement, new TaskListWidget(selectionManager));
+			closedTasks.put(requirement, new TaskListWidget(selectionManager));
 		}
 
 		setWidget(0, 0, openLabel, "33%", "WhiteboardWidget-open");

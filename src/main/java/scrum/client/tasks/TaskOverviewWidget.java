@@ -7,6 +7,7 @@ import java.util.Map;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
+import scrum.client.common.BlockListSelectionManager;
 import scrum.client.sprint.Sprint;
 import scrum.client.workspace.WorkareaWidget;
 
@@ -16,18 +17,18 @@ import com.google.gwt.user.client.ui.Widget;
 public class TaskOverviewWidget extends AWidget {
 
 	private TaskListWidget myTasks;
-
 	private TaskListWidget unownedTasks;
-
 	private Map<User, TaskListWidget> ownedTasks;
+	private BlockListSelectionManager selectionManager;
 
 	@Override
 	protected Widget onInitialization() {
-		myTasks = new TaskListWidget("My tasks");
-		unownedTasks = new TaskListWidget("Tasks without owner");
+		selectionManager = new BlockListSelectionManager();
+		myTasks = new TaskListWidget("My tasks", selectionManager);
+		unownedTasks = new TaskListWidget("Tasks without owner", selectionManager);
 		ownedTasks = new HashMap<User, TaskListWidget>();
 		for (User user : ScrumGwtApplication.get().getProject().getTeamMembers()) {
-			TaskListWidget list = new TaskListWidget(user.getName() + "'s Tasks");
+			TaskListWidget list = new TaskListWidget(user.getName() + "'s Tasks", selectionManager);
 			ownedTasks.put(user, list);
 		}
 

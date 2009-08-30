@@ -32,9 +32,15 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	private Comparator<O> autoSorter;
 	private BlockWidgetFactory<O> blockWidgetFactory;
 	private BlockMoveObserver<O> moveObserver;
+	private BlockListSelectionManager selectionManager;
 
 	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory) {
 		this.blockWidgetFactory = blockWidgetFactory;
+	}
+
+	public void setSelectionManager(BlockListSelectionManager selectionManager) {
+		this.selectionManager = selectionManager;
+		selectionManager.add(this);
 	}
 
 	@Override
@@ -194,10 +200,11 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	public final void selectRow(int row) {
-
 		if (row == selectedRow) return;
 
 		deselect();
+
+		if (selectionManager != null) selectionManager.deselectAll();
 
 		blocks.get(row).setSelected(true);
 		selectedRow = row;

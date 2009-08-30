@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.AWidget;
 
 import java.util.Collection;
 
+import scrum.client.common.BlockListSelectionManager;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
 import scrum.client.sprint.Task;
@@ -16,15 +17,21 @@ public class TaskListWidget extends AWidget {
 	private GroupWidget panel;
 	private BlockListWidget<Task> list;
 
-	public TaskListWidget(String title) {
+	private BlockListSelectionManager selectionManager;
+
+	public TaskListWidget(String title, BlockListSelectionManager selectionManager) {
+		this(selectionManager);
 		this.title = title;
 	}
 
-	public TaskListWidget() {}
+	public TaskListWidget(BlockListSelectionManager selectionManager) {
+		this.selectionManager = selectionManager;
+	}
 
 	@Override
 	protected Widget onInitialization() {
 		list = new BlockListWidget<Task>(TaskBlock.FACTORY);
+		list.setSelectionManager(selectionManager);
 
 		if (title == null) return list;
 
