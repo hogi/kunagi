@@ -71,14 +71,16 @@ a {cursor: pointer;}
 .ABlockWidget {cursor: pointer; color: black;}
 .ABlockWidget-title {padding: 1px; width: 100%; background: #DEE5FD; }
 .ABlockWidget-title-label {font-size: 12px; line-height: 16px;}
+.ABlockWidget-title .ButtonWidget {margin-left: 15px;}
+.ABlockWidget-title .ButtonWidget a {font-size: 12px; line-height: 16px;  padding: 0px; font-weight: normal; background: #DEE5FD; border: 0px;}
+.ABlockWidget-title-menu {margin-left: 15px; border: 0px;}
+.ABlockWidget-title-menu .gwt-MenuItem { font-size: 10px;}
 .ABlockWidget-center {}
 .ABlockWidget-selected {border: 2px solid orange; cursor: default;}
 
 .element-DndMarkerWidget {display: none;}
 .element-DndMarkerWidget-active {display: block; background: #192666; height: 5px;}
 
-.ABlockWidget .ButtonWidget {margin-left: 15px;}
-.ABlockWidget .ButtonWidget a {font-size: 12px; line-height: 16px;  padding: 0px; font-weight: normal; background: #DEE5FD; border: 0px;}
 
 /***** Panel *****/
 

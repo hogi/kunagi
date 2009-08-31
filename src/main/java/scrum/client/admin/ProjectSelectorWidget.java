@@ -44,7 +44,7 @@ public class ProjectSelectorWidget extends AWidget {
 		panel.add(new HTML("<br>"));
 		panel.add(list);
 
-		return new GroupWidget("Select Project", panel);
+		return new GroupWidget("Projects", panel);
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class ProjectSelectorWidget extends AWidget {
 	}
 
 	public static ProjectSelectorWidget get() {
-		return Ui.get().getProjectSelector();
+		return Ui.get().getStartPage().getProjectSelector();
 	}
 
 	public BlockListWidget<Project> getList() {

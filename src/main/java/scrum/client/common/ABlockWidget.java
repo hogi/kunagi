@@ -100,6 +100,7 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 	protected void addMenuCommand(String label, Command command) {
 		if (menu == null) {
 			MenuBar menuBar = new MenuBar();
+			menuBar.addStyleName("ABlockWidget-title-menu");
 
 			menu = new MenuBar(true);
 			menuBar.addItem("v", menu);
@@ -113,14 +114,6 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		ButtonWidget button = new ButtonWidget(label);
 		button.addCommand(command);
 		addToolbarItem(button);
-		// Anchor a = new Anchor(label);
-		// a.addClickHandler(new ClickHandler() {
-		//
-		// public void onClick(ClickEvent event) {
-		// command.execute();
-		// }
-		// });
-		// addToolbarItem(a);
 	}
 
 	protected void addToolbarItem(Widget toolbarItem) {

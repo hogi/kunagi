@@ -3,7 +3,6 @@ package scrum.client.workspace;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.admin.UserListWidget;
 import scrum.client.img.Img;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.ProductBacklogWidget;
@@ -36,7 +35,6 @@ public class WorkareaWidget extends AWidget {
 	private NextSprintWidget nextSprint;
 	private ImpedimentListWidget impedimentList;
 	private RiskListWidget riskList;
-	private UserListWidget userList;
 	private WidgetsTesterWidget widgetsTester;
 
 	@Override
@@ -111,13 +109,6 @@ public class WorkareaWidget extends AWidget {
 
 			public void run() {
 				show(getNextSprint());
-			}
-		});
-
-		navigator.addItem(Img.bundle.user16(), "User Management", getUserList(), new Runnable() {
-
-			public void run() {
-				show(getUserList());
 			}
 		});
 
@@ -210,11 +201,6 @@ public class WorkareaWidget extends AWidget {
 	public RiskListWidget getRiskList() {
 		if (riskList == null) riskList = new RiskListWidget();
 		return riskList;
-	}
-
-	public UserListWidget getUserList() {
-		if (userList == null) userList = new UserListWidget();
-		return userList;
 	}
 
 	public WidgetsTesterWidget getWidgetsTester() {

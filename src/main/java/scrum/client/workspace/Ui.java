@@ -4,7 +4,6 @@ import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
 import scrum.client.admin.LoginWidget;
-import scrum.client.admin.ProjectSelectorWidget;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -29,7 +28,7 @@ public class Ui extends AWidget {
 
 	private HeaderWidget header;
 	private LoginWidget login;
-	private ProjectSelectorWidget projectSelector;
+	private StartPageWidget startPage;
 	private WorkspaceWidget workspace;
 	private UserConfigWidget userconfig;
 
@@ -68,7 +67,7 @@ public class Ui extends AWidget {
 
 	public void reset() {
 		login = null;
-		projectSelector = null;
+		startPage = null;
 		workspace = null;
 		userconfig = null;
 	}
@@ -99,9 +98,9 @@ public class Ui extends AWidget {
 		locker.unlock();
 	}
 
-	public ProjectSelectorWidget getProjectSelector() {
-		if (projectSelector == null) projectSelector = new ProjectSelectorWidget();
-		return projectSelector;
+	public StartPageWidget getStartPage() {
+		if (startPage == null) startPage = new StartPageWidget();
+		return startPage;
 	}
 
 	public void showLogin() {
@@ -115,8 +114,8 @@ public class Ui extends AWidget {
 		setCurrentWidget(userconfig);
 	}
 
-	public void showProjectSelector() {
-		setCurrentWidget(getProjectSelector());
+	public void showStartPage() {
+		setCurrentWidget(getStartPage());
 	}
 
 	public WorkspaceWidget getWorkspace() {

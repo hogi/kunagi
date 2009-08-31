@@ -7,10 +7,15 @@ import ilarkesto.gwt.client.ImageAnchor;
 import ilarkesto.gwt.client.MultiSelectionWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
+import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.BlockListWidget;
+import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
 
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -24,6 +29,7 @@ public class WidgetsTesterWidget extends AWidget {
 		panel = new FlowPanel();
 		panel.setStyleName("WidgetsTesterWidget");
 
+		testBlockList();
 		testFields();
 		testMultiSelection();
 		testNavigator();
@@ -32,6 +38,87 @@ public class WidgetsTesterWidget extends AWidget {
 		// testImageAnchor();
 
 		return panel;
+	}
+
+	private void testBlockList() {
+		BlockListWidget<String> list = new BlockListWidget<String>(TestBlock.FACTORY);
+		list.addBlock("Element A");
+		list.addBlock("Element B");
+		list.addBlock("Element C");
+		list.addBlock("Element D");
+		list.addBlock("Element E");
+		list.update();
+		addTest("BlockList", list);
+	}
+
+	private static class TestBlock extends AExtensibleBlockWidget<String> {
+
+		private String text = "";
+
+		@Override
+		protected String getObject() {
+			return text;
+		}
+
+		@Override
+		protected void onCollapsedInitialization() {}
+
+		@Override
+		protected void onExtendedInitialization() {}
+
+		@Override
+		protected void onCollapsedUpdate() {
+			setBlockTitle(text);
+			setIcon(Img.bundle.project16());
+			createToolbar();
+		}
+
+		@Override
+		protected void onExtendedUpdate() {
+			setBlockTitle(text);
+			HTML content = new HTML(
+					"<h3>"
+							+ text
+							+ "</h3><p>Das ist der Content. Das ist der Content. Das ist der Content. Das ist der Content. </p>");
+			setContent(content);
+			setIcon(Img.bundle.project16());
+			createToolbar();
+		}
+
+		private void createToolbar() {
+			addToolbarCommand("Action 1", new Command() {
+
+				public void execute() {}
+			});
+			addToolbarCommand("Action 2", new Command() {
+
+				public void execute() {}
+			});
+			addMenuCommand("Action 3", new Command() {
+
+				public void execute() {}
+			});
+			addMenuCommand("Action 4", new Command() {
+
+				public void execute() {}
+			});
+			addMenuCommand("Action 5", new Command() {
+
+				public void execute() {}
+			});
+		}
+
+		@Override
+		protected void setObject(String object) {
+			text = object;
+		}
+
+		public static BlockWidgetFactory<String> FACTORY = new BlockWidgetFactory<String>() {
+
+			public TestBlock createBlock() {
+				return new TestBlock();
+			}
+		};
 	}
 
 	private String fieldsText = "test";
