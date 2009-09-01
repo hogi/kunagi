@@ -64,7 +64,7 @@ a {cursor: pointer;}
 
 /***** Block List *****/
 
-.BlockListWidget {padding: 5px; height: 100px;}
+.BlockListWidget {padding: 5px; min-height: 100px;}
 .BlockListWidget-table {width: 100%;}
 
 .ABlockWidget {cursor: pointer; color: black;}
