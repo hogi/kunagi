@@ -32,7 +32,7 @@ public class ProjectSelectorWidget extends AWidget {
 	protected Widget onInitialization() {
 
 		list = new BlockListWidget<Project>(ProjectBlock.FACTORY);
-		list.setDndSorting(true);
+		list.setAutoSorter(Project.LABEL_COMPARATOR);
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 

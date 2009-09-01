@@ -1,5 +1,6 @@
 package scrum.client.sprint;
 
+import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.admin.User;
@@ -32,7 +33,6 @@ public class Task extends GTask {
 
 	public void setUnDone(User user) {
 		setOwner(user);
-		// TODO promt user to input remaining work
 		setRemainingWork(1);
 	}
 
@@ -87,5 +87,12 @@ public class Task extends GTask {
 		if (work <= 1) return;
 		setRemainingWork(work - 1);
 	}
+
+	public static final Comparator<Task> NUMBER_COMPARATOR = new Comparator<Task>() {
+
+		public int compare(Task a, Task b) {
+			return a.getNumber() - b.getNumber();
+		}
+	};
 
 }

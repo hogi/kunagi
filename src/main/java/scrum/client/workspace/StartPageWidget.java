@@ -5,7 +5,7 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.ProjectSelectorWidget;
 import scrum.client.admin.UserListWidget;
 
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class StartPageWidget extends AWidget {
@@ -15,8 +15,7 @@ public class StartPageWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		VerticalPanel panel = new VerticalPanel();
-		panel.setWidth("100%");
+		FlowPanel panel = new FlowPanel();
 		panel.add(getProjectSelector());
 		if (ScrumGwtApplication.get().getUser().isAdmin()) {
 			panel.add(getUserList());

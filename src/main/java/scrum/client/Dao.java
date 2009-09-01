@@ -9,10 +9,13 @@ import java.util.Map;
 import scrum.client.workspace.WorkareaWidget;
 import scrum.client.workspace.WorkspaceWidget;
 
+import com.google.gwt.user.client.Timer;
+
 public class Dao extends GDao {
 
 	private String entityIdBase;
 	private int entityIdCounter;
+	private EntityChangeCache cache = new EntityChangeCache();
 
 	@Override
 	public void handleDataFromServer(ADataTransferObject data) {
@@ -46,10 +49,7 @@ public class Dao extends GDao {
 
 	@Override
 	protected void onEntityPropertyChangedLocaly(AGwtEntity entity, String property, Object value) {
-		String id = entity.getId();
-		Map properties = new HashMap();
-		properties.put(property, value);
-		ScrumGwtApplication.get().callChangeProperties(id, properties);
+		cache.put(entity.getId(), property, value);
 	}
 
 	// --- ---
@@ -68,4 +68,30 @@ public class Dao extends GDao {
 		return ScrumGwtApplication.get().getDao();
 	}
 
+	private class EntityChangeCache extends Timer {
+
+		private Map<String, Map> entityProperties = new HashMap<String, Map>(3);
+
+		public void put(String entityId, String property, Object value) {
+			Map entity = entityProperties.get(entityId);
+			if (entity == null) {
+				entity = new HashMap();
+				entityProperties.put(entityId, entity);
+			}
+			entity.put(property, value);
+			schedule(1000);
+		}
+
+		private void flush() {
+			for (Map.Entry<String, Map> entry : entityProperties.entrySet()) {
+				ScrumGwtApplication.get().callChangeProperties(entry.getKey(), entry.getValue());
+			}
+			entityProperties = new HashMap<String, Map>(3);
+		}
+
+		@Override
+		public void run() {
+			flush();
+		}
+	}
 }

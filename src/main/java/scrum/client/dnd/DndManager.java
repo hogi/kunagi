@@ -5,30 +5,47 @@ import java.util.Map;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
+import scrum.client.common.BlockListWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
 public class DndManager {
 
 	private ScrumDragController dragController;
-	private Map<ABlockWidget, BlockListDropController> blockListDropControllers;
+	private Map<ABlockWidget, BlockDropController> blockDropControllers;
+	private Map<BlockListWidget, BlockListDropController> blockListDropControllers;
 
 	public DndManager() {
 		dragController = new ScrumDragController();
-		blockListDropControllers = new HashMap<ABlockWidget, BlockListDropController>();
+		blockDropControllers = new HashMap<ABlockWidget, BlockDropController>();
+		blockListDropControllers = new HashMap<BlockListWidget, BlockListDropController>();
+	}
+
+	public void registerDropTarget(BlockListWidget list) {
+		BlockListDropController dropController = new BlockListDropController(list);
+		dragController.registerDropController(dropController);
+		blockListDropControllers.put(list, dropController);
+	}
+
+	public void unregisterDropTarget(BlockListWidget list) {
+		BlockListDropController dropController = blockListDropControllers.get(list);
+		if (dropController != null) {
+			dragController.unregisterDropController(dropController);
+			blockListDropControllers.remove(list);
+		}
 	}
 
 	public void registerDropTarget(ABlockWidget block) {
-		BlockListDropController dropController = new BlockListDropController(block);
+		BlockDropController dropController = new BlockDropController(block);
 		dragController.registerDropController(dropController);
-		blockListDropControllers.put(block, dropController);
+		blockDropControllers.put(block, dropController);
 	}
 
 	public void unregisterDropTarget(ABlockWidget block) {
-		BlockListDropController dropController = blockListDropControllers.get(block);
+		BlockDropController dropController = blockDropControllers.get(block);
 		if (dropController != null) {
 			dragController.unregisterDropController(dropController);
-			blockListDropControllers.remove(block);
+			blockDropControllers.remove(block);
 		}
 	}
 

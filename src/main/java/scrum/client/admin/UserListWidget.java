@@ -2,9 +2,6 @@ package scrum.client.admin;
 
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
-
-import java.util.Comparator;
-
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
@@ -22,7 +19,7 @@ public class UserListWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		list = new BlockListWidget<User>(UserBlock.FACTORY);
-		list.setAutoSorter(new UserComparator());
+		list.setAutoSorter(User.NAME_COMPARATOR);
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 
@@ -48,13 +45,6 @@ public class UserListWidget extends AWidget {
 			User user = new User();
 			ScrumGwtApplication.get().getDao().createUser(user);
 			list.addBlock(user, true);
-		}
-	}
-
-	class UserComparator implements Comparator<User> {
-
-		public int compare(User a, User b) {
-			return b.compareTo(a);
 		}
 	}
 

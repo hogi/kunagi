@@ -99,10 +99,17 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	public void onChangeProperties(WebSession session, String entityId, Map properties) {
 		AEntity entity = getDaoService().getEntityById(entityId);
 		if (!Auth.isEditable(entity, session.getUser())) throw new PermissionDeniedException();
+
+		if (entity instanceof Task) {
+			// update sprint day snapshot before change
+			Task task = (Task) entity;
+			task.getRequirement().getSprint().getDaySnapshot(Date.today()).update();
+		}
+
 		entity.updateProperties(properties);
 
-		// probably dirty hacked stuff x-ing
 		if (entity instanceof Task) {
+			// update sprint day snapshot after change
 			Task task = (Task) entity;
 			task.getRequirement().getSprint().getDaySnapshot(Date.today()).update();
 		}

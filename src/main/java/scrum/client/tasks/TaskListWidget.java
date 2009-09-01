@@ -2,7 +2,7 @@ package scrum.client.tasks;
 
 import ilarkesto.gwt.client.AWidget;
 
-import java.util.Collection;
+import java.util.List;
 
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
@@ -39,6 +39,7 @@ public class TaskListWidget extends AWidget {
 	protected Widget onInitialization() {
 		list = new BlockListWidget<Task>(new TaskBlock.TaskBlockFactory(container), this.dropAction);
 		list.setSelectionManager(container.getSelectionManager());
+		list.setAutoSorter(Task.NUMBER_COMPARATOR);
 
 		if (title == null) return list;
 
@@ -61,7 +62,7 @@ public class TaskListWidget extends AWidget {
 		list.selectObject(task);
 	}
 
-	public void setTasks(Collection<Task> tasks) {
+	public void setTasks(List<Task> tasks) {
 		initialize();
 		list.setBlocks(tasks);
 		update();

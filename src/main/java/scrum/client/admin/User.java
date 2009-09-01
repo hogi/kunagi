@@ -1,5 +1,6 @@
 package scrum.client.admin;
 
+import java.util.Comparator;
 import java.util.Map;
 
 public class User extends GUser {
@@ -23,5 +24,12 @@ public class User extends GUser {
 	public String toString() {
 		return getName();
 	}
+
+	public static final Comparator<User> NAME_COMPARATOR = new Comparator<User>() {
+
+		public int compare(User a, User b) {
+			return a.getName().compareTo(b.getName());
+		}
+	};
 
 }

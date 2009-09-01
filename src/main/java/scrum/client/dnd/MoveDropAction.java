@@ -3,7 +3,7 @@ package scrum.client.dnd;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockListWidget;
 
-public class MoveDropAction implements BlockListDropAction {
+public class MoveDropAction<T> implements BlockListDropAction<T> {
 
 	public boolean execute(ABlockWidget block, BlockListWidget fromList, int fromIndex, BlockListWidget toList,
 			int toIndex) {

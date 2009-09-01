@@ -9,13 +9,15 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import scrum.client.dnd.BlockDndMarkerWidget;
 import scrum.client.dnd.BlockListDropAction;
+import scrum.client.dnd.DndManager;
 import scrum.client.dnd.MoveDropAction;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
 
@@ -36,14 +38,17 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	private BlockMoveObserver<O> moveObserver;
 	private BlockListSelectionManager selectionManager;
 	private BlockListDropAction<O> dropAction;
+	private BlockDndMarkerWidget dndMarkerBottom;
 
 	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory) {
-		this(blockWidgetFactory, new MoveDropAction());
+		this(blockWidgetFactory, new MoveDropAction<O>());
 	}
 
 	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory, BlockListDropAction<O> dropAction) {
 		this.dropAction = dropAction;
 		this.blockWidgetFactory = blockWidgetFactory;
+
+		dndMarkerBottom = new BlockDndMarkerWidget();
 	}
 
 	public void setSelectionManager(BlockListSelectionManager selectionManager) {
@@ -56,12 +61,13 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		table = new FlexTable();
 		table.setCellPadding(0);
 		table.setCellSpacing(0);
-		table.setStyleName(StyleSheet.ELEMENT_BLOCK_LIST_WIDGET_TABLE);
+		table.setStyleName("BlockListWidget-table");
 		table.addClickHandler(new TableClickHandler());
 
-		SimplePanel panel = new SimplePanel();
+		FlowPanel panel = new FlowPanel();
 		panel.setStyleName("BlockListWidget");
-		panel.setWidget(table);
+		panel.add(table);
+		panel.add(dndMarkerBottom);
 		return panel;
 	}
 
@@ -81,7 +87,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 			O sortedObject = sortedObjects.get(i);
 			int index = objects.indexOf(sortedObject);
 			if (index != i) {
-				drop(blocks.get(index), i);
+				move(blocks.get(index), i);
 			}
 		}
 	}
@@ -176,6 +182,14 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		return block;
 	}
 
+	public final void move(ABlockWidget<O> block, int toIndex) {
+		if (block == null) throw new IllegalArgumentException("block == null");
+		int fromIndex = block.getList().indexOf(block);
+		if (fromIndex == toIndex) return;
+		removeRow(fromIndex);
+		addBlock(block, toIndex);
+	}
+
 	public final void drop(ABlockWidget<O> block, int toIndex) {
 		if (block == null) throw new IllegalArgumentException("block == null");
 		int fromIndex = block.getList().indexOf(block);
@@ -205,10 +219,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	public final void selectRow(int row) {
-		if (row == selectedRow) {
-			deselect();
-			return;
-		}
+		if (row == selectedRow) { return; }
 
 		if (selectionManager == null) {
 			deselect();
@@ -274,28 +285,48 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		return blocks.get(idx + 1);
 	}
 
+	public void deactivateDndMarkers() {
+		for (ABlockWidget<O> block : blocks) {
+			block.deactivateDndMarkers();
+		}
+		dndMarkerBottom.setActive(false);
+	}
+
 	public void deactivateDndMarkers(ABlockWidget<O> block) {
 		block.deactivateDndMarkers();
 		ABlockWidget<O> previous = getPreviousBlock(block);
 		if (previous != null) previous.deactivateDndMarkers();
 		ABlockWidget<O> next = getNextBlock(block);
 		if (next != null) next.deactivateDndMarkers();
+		dndMarkerBottom.setActive(false);
 	}
 
 	public void activateDndMarkerBefore(ABlockWidget<O> block) {
+		ABlockWidget<O> previous = getPreviousBlock(block);
+		if (previous != null) previous.deactivateDndMarkers();
+		ABlockWidget<O> next = getNextBlock(block);
+		if (next != null) next.deactivateDndMarkers();
+		dndMarkerBottom.setActive(false);
+
 		block.activateDndMarkerTop();
-		// ABlockWidget<O> previous = getPreviousBlock(block);
-		// if (previous != null) previous.activateDndMarkerBottom();
-		// ABlockWidget<O> next = getNextBlock(block);
-		// if (next != null) next.deactivateDndMarkers();
 	}
 
 	public void activateDndMarkerAfter(ABlockWidget<O> block) {
-		block.activateDndMarkerBottom();
-		// ABlockWidget<O> previous = getPreviousBlock(block);
-		// if (previous != null) previous.deactivateDndMarkers();
-		// ABlockWidget<O> next = getNextBlock(block);
-		// if (next != null) next.activateDndMarkerTop();
+		deactivateDndMarkers(block);
+		ABlockWidget<O> next = getNextBlock(block);
+		if (next == null) {
+			dndMarkerBottom.setActive(true);
+		} else {
+			next.activateDndMarkerTop();
+		}
+	}
+
+	public void activateDrop() {
+		dndMarkerBottom.setActive(true);
+	}
+
+	public void deactivateDrop() {
+		dndMarkerBottom.setActive(false);
 	}
 
 	private final class TableClickHandler implements ClickHandler {
@@ -303,7 +334,12 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		public void onClick(ClickEvent event) {
 			Cell cell = table.getCellForEvent(event);
 			if (cell == null) return;
-			selectRow(cell.getRowIndex());
+			int row = cell.getRowIndex();
+			if (row == selectedRow) {
+				// nop
+			} else {
+				selectRow(row);
+			}
 		}
 
 	}
@@ -315,5 +351,17 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	public boolean acceptsDrop(ABlockWidget block) {
 		return this.blockWidgetFactory.isSameType(block);
 		// return this == block.getList();
+	}
+
+	@Override
+	protected void onAttach() {
+		super.onAttach();
+		DndManager.get().registerDropTarget(this);
+	}
+
+	@Override
+	protected void onDetach() {
+		DndManager.get().unregisterDropTarget(this);
+		super.onDetach();
 	}
 }

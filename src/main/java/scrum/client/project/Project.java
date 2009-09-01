@@ -139,4 +139,11 @@ public class Project extends GProject {
 		return requirementsOrderComparator;
 	}
 
+	public static final Comparator<Project> LABEL_COMPARATOR = new Comparator<Project>() {
+
+		public int compare(Project a, Project b) {
+			return a.getLabel().compareTo(b.getLabel());
+		}
+	};
+
 }

@@ -2,7 +2,7 @@ package scrum.client.common;
 
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
-import scrum.client.dnd.BlockListDndMarkerWidget;
+import scrum.client.dnd.BlockDndMarkerWidget;
 import scrum.client.dnd.DndManager;
 
 import com.google.gwt.user.client.Command;
@@ -35,8 +35,7 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 	private FlowPanel mainPanel;
 	private FlowPanel panel;
 	private boolean selected;
-	private BlockListDndMarkerWidget dndMarkerTop = new BlockListDndMarkerWidget();
-	private BlockListDndMarkerWidget dndMarkerBottom = new BlockListDndMarkerWidget();
+	private BlockDndMarkerWidget dndMarkerTop = new BlockDndMarkerWidget();
 
 	protected abstract void onBlockInitialization();
 
@@ -80,17 +79,15 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		panel = new FlowPanel();
 		panel.add(titlePanel);
 		panel.add(contentWrapper);
-		panel.setStyleName("ABlockWidget");
+		panel.setStyleName("ABlockWidget-block");
 
 		mainPanel = new FlowPanel();
-		mainPanel.setStyleName("ABlockWidget-main");
+		mainPanel.setStyleName("ABlockWidget");
 
 		mainPanel.add(dndMarkerTop);
 		mainPanel.add(panel);
-		mainPanel.add(dndMarkerBottom);
 
 		dndMarkerTop.setActive(false);
-		dndMarkerBottom.setActive(false);
 
 		onBlockInitialization();
 
@@ -161,17 +158,10 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 
 	public void deactivateDndMarkers() {
 		dndMarkerTop.setActive(false);
-		dndMarkerBottom.setActive(false);
 	}
 
 	public void activateDndMarkerTop() {
 		dndMarkerTop.setActive(true);
-		dndMarkerBottom.setActive(false);
-	}
-
-	public void activateDndMarkerBottom() {
-		dndMarkerBottom.setActive(true);
-		dndMarkerTop.setActive(false);
 	}
 
 	public final BlockListWidget<ABlockWidget> getList() {
@@ -198,9 +188,9 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		if (this.selected == extended) return;
 		this.selected = extended;
 		if (extended) {
-			getBorderPanel().addStyleName("ABlockWidget-selected");
+			getBorderPanel().addStyleName("ABlockWidget-block-selected");
 		} else {
-			getBorderPanel().removeStyleName("ABlockWidget-selected");
+			getBorderPanel().removeStyleName("ABlockWidget-block-selected");
 			setContent(null);
 		}
 		update();

@@ -3,7 +3,7 @@ package scrum.client.tasks;
 import ilarkesto.gwt.client.AWidget;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +34,8 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 	private Map<Requirement, TaskListWidget> closedTasks;
 	private BlockListSelectionManager selectionManager;
 
+	private List<Requirement> knownRequirements = Collections.emptyList();
+
 	@Override
 	protected Widget onInitialization() {
 		openLabel = new Label("Tasks without Owner");
@@ -57,6 +59,16 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 	@Override
 	protected void onUpdate() {
 		List<Requirement> requirements = ScrumGwtApplication.get().getProject().getCurrentSprint().getRequirements();
+
+		if (requirements.equals(knownRequirements)) {
+			// quick update without recreating whole gui
+			for (Requirement requirement : requirements) {
+				updateTaskLists(requirement);
+			}
+			return;
+		}
+		knownRequirements = requirements;
+
 		selectionManager = new BlockListSelectionManager();
 
 		grid.resize((requirements.size() * 2) + 1, 3);
@@ -78,26 +90,13 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement requirement = requirements.get(i);
 
-			Label label = new Label(requirement.getLabel());
+			Label label = new Label("[" + requirement.getReference() + "] " + requirement.getLabel());
 			label.setStyleName("WhiteboardWidget-requirement-label");
 			grid.setWidget(row, 0, label);
 			grid.getCellFormatter().getElement(row, 0).setAttribute("colspan", "3");
 			row++;
 
-			Collection<Task> openTaskList = new ArrayList<Task>();
-			Collection<Task> ownedTaskList = new ArrayList<Task>();
-			Collection<Task> closedTaskList = new ArrayList<Task>();
-			for (Task task : requirement.getTasks()) {
-				if (task.isDone())
-					closedTaskList.add(task);
-				else if (task.isOwnerSet())
-					ownedTaskList.add(task);
-				else openTaskList.add(task);
-			}
-
-			openTasks.get(requirement).setTasks(openTaskList);
-			ownedTasks.get(requirement).setTasks(ownedTaskList);
-			closedTasks.get(requirement).setTasks(closedTaskList);
+			updateTaskLists(requirement);
 
 			// grid.setWidget(row, 0, new Label(requirement.getLabel()));
 			setWidget(row, 0, openTasks.get(requirement), null, "WhiteboardWidget-open");
@@ -106,6 +105,25 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 
 			row++;
 		}
+	}
+
+	private void updateTaskLists(Requirement requirement) {
+		List<Task> openTaskList = new ArrayList<Task>();
+		List<Task> ownedTaskList = new ArrayList<Task>();
+		List<Task> closedTaskList = new ArrayList<Task>();
+		for (Task task : requirement.getTasks()) {
+			if (task.isDone()) {
+				closedTaskList.add(task);
+			} else if (task.isOwnerSet()) {
+				ownedTaskList.add(task);
+			} else {
+				openTaskList.add(task);
+			}
+		}
+
+		openTasks.get(requirement).setTasks(openTaskList);
+		ownedTasks.get(requirement).setTasks(ownedTaskList);
+		closedTasks.get(requirement).setTasks(closedTaskList);
 	}
 
 	private void setWidget(int row, int col, Widget widget, String width, String className) {

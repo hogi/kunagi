@@ -113,12 +113,18 @@ public class WidgetsTesterWidget extends AWidget {
 			text = object;
 		}
 
+		@Override
+		public String toString() {
+			return text;
+		}
+
 		public static BlockWidgetFactory<String> FACTORY = new BlockWidgetFactory<String>() {
 
 			public TestBlock createBlock() {
 				return new TestBlock();
 			}
 		};
+
 	}
 
 	private String fieldsText = "test";
