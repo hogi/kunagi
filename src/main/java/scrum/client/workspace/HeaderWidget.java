@@ -5,7 +5,7 @@ import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -18,21 +18,12 @@ public class HeaderWidget extends AWidget {
 
 	private ToolbarWidget toolbar;
 
-	private ButtonWidget logoutButton;
-
+	private ButtonWidget changeProjectButton;
 	private ButtonWidget changePasswordButton;
+	private ButtonWidget logoutButton;
 
 	@Override
 	protected Widget onInitialization() {
-		// Label label = new Label("Scrum42");
-		// label.setStyleName("HeaderWidget");
-		// return label;
-
-		// SimplePanel panel = new SimplePanel();
-		// panel.setStyleName("HeaderWidget");
-		// panel.setWidget(new Label("Scrum42"));
-		// return panel;
-
 		Label title = new Label("Scrum42");
 		title.setStyleName("title");
 
@@ -46,13 +37,28 @@ public class HeaderWidget extends AWidget {
 		currentUserLabel.setStyleName("title");
 
 		toolbar = new ToolbarWidget(true);
-		logoutButton = new ButtonWidget("logout");
-		logoutButton.addClickListener(new LogoutClickListener());
-		toolbar.add(logoutButton);
 
-		changePasswordButton = new ButtonWidget("change pwd");
-		changePasswordButton.addClickListener(new ChangePasswordClickListener());
-		toolbar.add(changePasswordButton);
+		changeProjectButton = toolbar.addButton("Change Project", new Command() {
+
+			public void execute() {
+				ScrumGwtApplication.get().setProject(null);
+				Ui.get().showStartPage();
+			}
+		});
+
+		changePasswordButton = toolbar.addButton("Change Password", new Command() {
+
+			public void execute() {
+				Ui.get().showConfiguration();
+			}
+		});
+
+		logoutButton = toolbar.addButton("Logout", new Command() {
+
+			public void execute() {
+				ScrumGwtApplication.get().logout();
+			}
+		});
 
 		HorizontalPanel controlPanel = new HorizontalPanel();
 		controlPanel.setStyleName("HeaderWidget-controlPanel");
@@ -69,24 +75,9 @@ public class HeaderWidget extends AWidget {
 	protected void onUpdate() {
 		boolean loggedIn = ScrumGwtApplication.get().getUser() != null;
 		currentUserLabel.setText(loggedIn ? ScrumGwtApplication.get().getUser().getName() : "");
-		logoutButton.setVisible(loggedIn);
+		changeProjectButton.setVisible(ScrumGwtApplication.get().getProject() != null);
 		changePasswordButton.setVisible(loggedIn);
-	}
-
-	class LogoutClickListener implements ClickListener {
-
-		public void onClick(Widget sender) {
-			ScrumGwtApplication.get().logout();
-		}
-
-	}
-
-	class ChangePasswordClickListener implements ClickListener {
-
-		public void onClick(Widget sender) {
-			Ui.get().showConfiguration();
-		}
-
+		logoutButton.setVisible(loggedIn);
 	}
 
 }

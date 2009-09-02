@@ -20,6 +20,16 @@ public class Task extends GTask {
 		super(data);
 	}
 
+	public String getLongLabel() {
+		StringBuilder sb = new StringBuilder();
+		sb.append('[').append(getReference()).append("] ");
+		sb.append(getLabel());
+		if (isOwnerSet()) {
+			sb.append(" (").append(getOwner().getName()).append(')');
+		}
+		return sb.toString();
+	}
+
 	public String getReference() {
 		return "t" + getNumber();
 	}

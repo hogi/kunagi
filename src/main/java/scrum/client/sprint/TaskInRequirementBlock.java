@@ -38,7 +38,7 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 
 	@Override
 	protected void onCollapsedUpdate() {
-		setBlockTitle("[" + task.getReference() + "] " + task.getLabel());
+		setBlockTitle(task.getLongLabel());
 		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
 		createToolbar();
 	}
