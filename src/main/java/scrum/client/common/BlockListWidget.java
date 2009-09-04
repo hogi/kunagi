@@ -354,14 +354,15 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	@Override
-	protected void onAttach() {
-		super.onAttach();
+	protected void onLoad() {
+		super.onLoad();
 		DndManager.get().registerDropTarget(this);
 	}
 
 	@Override
-	protected void onDetach() {
+	protected void onUnload() {
 		DndManager.get().unregisterDropTarget(this);
-		super.onDetach();
+		super.onUnload();
 	}
+
 }

@@ -197,21 +197,22 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 	}
 
 	@Override
-	protected void onAttach() {
-		super.onAttach();
+	protected void onLoad() {
+		super.onLoad();
 		if (getList().isDndSorting()) {
 			DndManager.get().registerDropTarget(this);
 		}
 	}
 
 	@Override
-	protected void onDetach() {
+	protected void onUnload() {
 		DndManager.get().unregisterDropTarget(this);
 
 		if (list != null)
 			list.deselect();
 		else setSelected(false);
 
-		super.onDetach();
+		super.onUnload();
 	}
+
 }

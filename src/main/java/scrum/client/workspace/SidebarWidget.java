@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SidebarWidget extends AWidget {
 
-	private ClipboardWidget clipboard;
+	// private ClipboardWidget clipboard;
 	private TrashWidget trash;
 
 	@Override
@@ -16,14 +16,14 @@ public class SidebarWidget extends AWidget {
 
 		trash = new TrashWidget();
 
-		clipboard = new ClipboardWidget();
+		// clipboard = new ClipboardWidget();
 
 		FlowPanel sidebar = new FlowPanel();
 		sidebar.setStyleName("SidebarWidget");
 		sidebar.add(ScrumUtil.createEmptyDiv("beforeNavigatorSpacer"));
 		sidebar.add(WorkareaWidget.get().getNavigator());
 		sidebar.add(trash);
-		sidebar.add(clipboard);
+		// sidebar.add(clipboard);
 
 		return sidebar;
 	}
@@ -31,7 +31,7 @@ public class SidebarWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		trash.update();
-		clipboard.update();
+		// clipboard.update();
 	}
 
 	public static SidebarWidget get() {
