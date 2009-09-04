@@ -30,16 +30,16 @@ a {cursor: pointer;}
 .HeaderWidget .ButtonWidget a {font-size: 8px; line-height: 8px;}
 
 .WorkspaceWidget {}
-.WorkspaceWidget .sidebar {width: 300px;}
+.WorkspaceWidget .sidebar {width: 200px;}
 
 /***** Sidebar *****/
 
-.SidebarWidget {position: fixed; width: 300px; height: 1200px; background:#CEDBF9;}
+.SidebarWidget {position: fixed; width: 200px; height: 1200px; background:#CEDBF9;}
 .SidebarWidget .beforeNavigatorSpacer {height: 10px; margin: 0px 15px 0px 15px; border-bottom: 1px solid #E2EAFC;}
 
 .NavigatorWidget {background:#CEDBF9;}
-.NavigatorWidget .item {padding: 0px 15px 0px 15px; font-size: 16px;}
-.NavigatorWidget .item a {display:block; padding: 5px 5px 5px 5px; text-decoration:none; border-bottom: 1px solid #E2EAFC; color:#192666;}
+.NavigatorWidget .item {padding: 0px 15px 0px 15px; font-size: 14px;}
+.NavigatorWidget .item a {display:block; padding: 5px 3px 5px 3px; text-decoration:none; border-bottom: 1px solid #E2EAFC; color:#192666;}
 .NavigatorWidget .item a:hover {background-color:#D3DFF8;}
 .NavigatorWidget .selected .item a {background-color: #192666; color: #CEDBF9;}
 
