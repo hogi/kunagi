@@ -40,7 +40,7 @@ public class LoginWidget extends AWidget {
 		});
 
 		if (ScrumGwtApplication.get().isDevelopmentMode()) {
-			username.setText("admin");
+			username.setText("duke");
 			password.setText("geheim");
 		}
 
