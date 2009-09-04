@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import scrum.client.GenericPredicate;
 import scrum.client.dnd.BlockDndMarkerWidget;
 import scrum.client.dnd.BlockListDropAction;
 import scrum.client.dnd.DndManager;
@@ -38,6 +39,8 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	private BlockListSelectionManager selectionManager;
 	private BlockListDropAction<O> dropAction;
 	private BlockDndMarkerWidget dndMarkerBottom;
+
+	private GenericPredicate<O> predicate;
 
 	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory) {
 		this(blockWidgetFactory, new MoveDropAction<O>());
@@ -74,6 +77,9 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	protected void onUpdate() {
 		for (ABlockWidget<O> block : blocks) {
 			block.update();
+			if (predicate != null && predicate.contains(block.getObject()))
+				table.getCellFormatter().addStyleName(blocks.indexOf(block), 0, "highlighted");
+			else table.getCellFormatter().removeStyleName(blocks.indexOf(block), 0, "highlighted");
 		}
 		if (autoSorter != null) sort(autoSorter);
 	}
@@ -376,4 +382,11 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		super.onUnload();
 	}
 
+	public void setTaskHighlighting(GenericPredicate<O> predicate) {
+		this.predicate = predicate;
+	}
+
+	public void clearTaskHighlighting() {
+		this.predicate = null;
+	}
 }

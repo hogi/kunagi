@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.AWidget;
 
 import java.util.List;
 
+import scrum.client.GenericPredicate;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
 import scrum.client.dnd.BlockListDropAction;
@@ -68,4 +69,13 @@ public class TaskListWidget extends AWidget {
 		update();
 	}
 
+	public void setTaskHighlighting(GenericPredicate<Task> predicate) {
+		list.setTaskHighlighting(predicate);
+		update();
+	}
+
+	public void clearTaskHighlighting() {
+		list.clearTaskHighlighting();
+		update();
+	}
 }

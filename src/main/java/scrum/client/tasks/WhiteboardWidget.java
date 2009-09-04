@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.GenericPredicate;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.dnd.DoneDropAction;
@@ -20,10 +21,12 @@ import scrum.client.workspace.WorkareaWidget;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 
+	private VerticalPanel panel;
 	private Grid grid;
 	private Label openLabel;
 	private Label ownedLabel;
@@ -34,10 +37,14 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 	private Map<Requirement, TaskListWidget> closedTasks;
 	private BlockListSelectionManager selectionManager;
 
+	private GenericPredicate<Task> predicate;
+
 	private List<Requirement> knownRequirements = Collections.emptyList();
 
 	@Override
 	protected Widget onInitialization() {
+		predicate = null;
+
 		openLabel = new Label("Tasks without Owner");
 		openLabel.setStyleName("WhiteboardWidget-columnLabel");
 		ownedLabel = new Label("Owned Tasks");
@@ -53,7 +60,13 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 		grid.setWidth("100%");
 		grid.setCellPadding(0);
 		grid.setCellSpacing(0);
-		return grid;
+
+		panel = new VerticalPanel();
+		panel.setWidth("100%");
+		panel.add(new Label("Users:"));
+		panel.add(new UserHoverPanel(this).update());
+		panel.add(grid);
+		return panel;
 	}
 
 	@Override
@@ -122,8 +135,19 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 		}
 
 		openTasks.get(requirement).setTasks(openTaskList);
+		openTasks.get(requirement).setTaskHighlighting(predicate);
 		ownedTasks.get(requirement).setTasks(ownedTaskList);
+		ownedTasks.get(requirement).setTaskHighlighting(predicate);
 		closedTasks.get(requirement).setTasks(closedTaskList);
+		closedTasks.get(requirement).setTaskHighlighting(predicate);
+	}
+
+	public void setTaskHighlighting(GenericPredicate<Task> predicate) {
+		this.predicate = predicate;
+	}
+
+	public void clearTaskHighlighting() {
+		this.predicate = null;
 	}
 
 	private void setWidget(int row, int col, Widget widget, String width, String className) {
@@ -146,5 +170,4 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 	public void selectTask(Task task) {
 		selectionManager.select(task);
 	}
-
 }

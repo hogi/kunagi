@@ -132,3 +132,4 @@ a {cursor: pointer;}
 
 .WaitWidget {margin: 50px 200px; border: 1px solid #DEE5FD;}
 .LoginWidget {margin: 50px 200px; border: 1px solid #DEE5FD;}
+.highlighted {border:1px solid red;}
