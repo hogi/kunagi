@@ -155,6 +155,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (!project.isVisibleFor(session.getUser()))
 			throw new RuntimeException("Project '" + project + "' is not visible for user '" + session.getUser() + "'");
 		session.setProject(project);
+		session.getUser().setCurrentProject(project);
 
 		// prepare data for client
 		session.sendToClient(project);

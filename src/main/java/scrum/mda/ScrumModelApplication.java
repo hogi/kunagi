@@ -199,6 +199,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.addProperty("name", String.class).setSearchable(true);
 			userModel.addProperty("admin", boolean.class);
 			userModel.addProperty("email", String.class).setSearchable(true);
+			userModel.addReference("currentProject", getProjectModel());
 		}
 		return userModel;
 	}

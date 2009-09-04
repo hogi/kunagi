@@ -10,8 +10,6 @@ import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
 import scrum.client.project.Project;
-import scrum.client.workspace.Ui;
-import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
@@ -215,7 +213,7 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 		addToolbarCommand("Open Project", new Command() {
 
 			public void execute() {
-				select();
+				ScrumGwtApplication.get().openProject(project);
 			}
 		});
 
@@ -227,19 +225,6 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 					ScrumGwtApplication.get().getDao().deleteProject(project);
 					ProjectSelectorWidget.get().getList().removeSelectedRow();
 				}
-			}
-		});
-	}
-
-	private void select() {
-		Ui.get().lock("Loading project...");
-		ScrumGwtApplication.get().setProject(project);
-		ScrumGwtApplication.get().callSelectProject(project.getId(), new Runnable() {
-
-			public void run() {
-				Ui.get().unlock();
-				Ui.get().showWorkspace();
-				WorkareaWidget.get().showProjectOverview();
 			}
 		});
 	}

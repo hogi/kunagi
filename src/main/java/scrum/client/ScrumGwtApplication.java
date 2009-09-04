@@ -6,6 +6,7 @@ import scrum.client.admin.User;
 import scrum.client.dnd.DndManager;
 import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
+import scrum.client.workspace.WorkareaWidget;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.user.client.ui.RootPanel;
@@ -80,8 +81,22 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		ui.lock("Error: " + ex.getMessage());
 	}
 
-	public void setProject(Project project) {
+	public void openProject(Project project) {
+		Ui.get().lock("Loading project...");
 		this.project = project;
+		callSelectProject(project.getId(), new Runnable() {
+
+			public void run() {
+				Ui.get().unlock();
+				Ui.get().showWorkspace();
+				WorkareaWidget.get().showProjectOverview();
+			}
+		});
+	}
+
+	public void closeProject() {
+		this.project = null;
+		Ui.get().showStartPage();
 	}
 
 	public Project getProject() {

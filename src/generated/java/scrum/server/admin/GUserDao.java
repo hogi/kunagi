@@ -39,6 +39,8 @@ public abstract class GUserDao
         usersByAdminCache.clear();
         usersByEmailCache.clear();
         emailsCache = null;
+        usersByCurrentProjectCache.clear();
+        currentProjectsCache = null;
     }
 
     @Override
@@ -166,6 +168,46 @@ public abstract class GUserDao
 
     }
 
+    // -----------------------------------------------------------
+    // - currentProject
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.project.Project,Set<User>> usersByCurrentProjectCache = new Cache<scrum.server.project.Project,Set<User>>(
+            new Cache.Factory<scrum.server.project.Project,Set<User>>() {
+                public Set<User> create(scrum.server.project.Project currentProject) {
+                    return getEntities(new IsCurrentProject(currentProject));
+                }
+            });
+
+    public final Set<User> getUsersByCurrentProject(scrum.server.project.Project currentProject) {
+        return usersByCurrentProjectCache.get(currentProject);
+    }
+    private Set<scrum.server.project.Project> currentProjectsCache;
+
+    public final Set<scrum.server.project.Project> getCurrentProjects() {
+        if (currentProjectsCache == null) {
+            currentProjectsCache = new HashSet<scrum.server.project.Project>();
+            for (User e : getEntities()) {
+                if (e.isCurrentProjectSet()) currentProjectsCache.add(e.getCurrentProject());
+            }
+        }
+        return currentProjectsCache;
+    }
+
+    private static class IsCurrentProject implements Predicate<User> {
+
+        private scrum.server.project.Project value;
+
+        public IsCurrentProject(scrum.server.project.Project value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return e.isCurrentProject(value);
+        }
+
+    }
+
     // --- valueObject classes ---
     @Override
     protected Set<Class> getValueObjectClasses() {
@@ -180,5 +222,11 @@ public abstract class GUserDao
     }
 
     // --- dependencies ---
+
+    protected scrum.server.project.ProjectDao projectDao;
+
+    public void setProjectDao(scrum.server.project.ProjectDao projectDao) {
+        this.projectDao = projectDao;
+    }
 
 }

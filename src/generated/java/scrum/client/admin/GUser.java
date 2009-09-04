@@ -98,12 +98,38 @@ public abstract class GUser
         return equals(this.email, email);
     }
 
+    // --- currentProject ---
+
+    private String currentProjectId;
+
+    public final scrum.client.project.Project getCurrentProject() {
+        if (currentProjectId == null) return null;
+        return getDao().getProject(this.currentProjectId);
+    }
+
+    public final boolean isCurrentProjectSet() {
+        return currentProjectId != null;
+    }
+
+    public final User setCurrentProject(scrum.client.project.Project currentProject) {
+        String id = currentProject == null ? null : currentProject.getId();
+        if (equals(this.currentProjectId, id)) return (User) this;
+        this.currentProjectId = id;
+        propertyChanged("currentProjectId", this.currentProjectId);
+        return (User)this;
+    }
+
+    public final boolean isCurrentProject(scrum.client.project.Project currentProject) {
+        return equals(this.currentProjectId, currentProject);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         name  = (java.lang.String) props.get("name");
         admin  = (Boolean) props.get("admin");
         email  = (java.lang.String) props.get("email");
+        currentProjectId = (String) props.get("currentProjectId");
     }
 
     @Override
@@ -112,6 +138,7 @@ public abstract class GUser
         properties.put("name", this.name);
         properties.put("admin", this.admin);
         properties.put("email", this.email);
+        properties.put("currentProjectId", this.currentProjectId);
     }
 
 }

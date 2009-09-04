@@ -41,8 +41,7 @@ public class HeaderWidget extends AWidget {
 		changeProjectButton = toolbar.addButton("Change Project", new Command() {
 
 			public void execute() {
-				ScrumGwtApplication.get().setProject(null);
-				Ui.get().showStartPage();
+				ScrumGwtApplication.get().closeProject();
 			}
 		});
 

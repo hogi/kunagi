@@ -6,6 +6,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
+import scrum.client.project.Project;
 import scrum.client.test.WidgetsTesterWidget;
 import scrum.client.workspace.Ui;
 
@@ -80,13 +81,19 @@ public class LoginWidget extends AWidget {
 
 			public void run() {
 				GwtLogger.DEBUG("Login response received");
-				if (ScrumGwtApplication.get().getUser() == null) {
+				User user = ScrumGwtApplication.get().getUser();
+				if (user == null) {
 					GwtLogger.DEBUG("LOGIN FAILED!");
 					ScrumGwtApplication.get().getUi().unlock();
 					Ui.get().showError("Login failed.");
 				} else {
 					GwtLogger.DEBUG("Login succeded:", ScrumGwtApplication.get().getUi());
-					Ui.get().showStartPage();
+					Project project = user.getCurrentProject();
+					if (project == null || user.isAdmin()) {
+						Ui.get().showStartPage();
+					} else {
+						ScrumGwtApplication.get().openProject(project);
+					}
 				}
 			}
 		});

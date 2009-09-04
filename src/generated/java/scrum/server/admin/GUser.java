@@ -39,6 +39,7 @@ public abstract class GUser
         properties.put("name", this.name);
         properties.put("admin", this.admin);
         properties.put("email", this.email);
+        properties.put("currentProjectId", this.currentProjectId);
     }
 
     public int compareTo(User other) {
@@ -160,6 +161,54 @@ public abstract class GUser
         setEmail((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - currentProject
+    // -----------------------------------------------------------
+
+    private String currentProjectId;
+    private transient scrum.server.project.Project currentProjectCache;
+
+    private void updateCurrentProjectCache() {
+        currentProjectCache = this.currentProjectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.currentProjectId);
+    }
+
+    public final scrum.server.project.Project getCurrentProject() {
+        if (currentProjectCache == null) updateCurrentProjectCache();
+        return currentProjectCache;
+    }
+
+    public final void setCurrentProject(scrum.server.project.Project currentProject) {
+        currentProject = prepareCurrentProject(currentProject);
+        if (isCurrentProject(currentProject)) return;
+        this.currentProjectId = currentProject == null ? null : currentProject.getId();
+        currentProjectCache = currentProject;
+        fireModified();
+    }
+
+    protected scrum.server.project.Project prepareCurrentProject(scrum.server.project.Project currentProject) {
+        return currentProject;
+    }
+
+    protected void repairDeadCurrentProjectReference(String entityId) {
+        if (entityId.equals(this.currentProjectId)) {
+            this.currentProjectId = null;
+            fireModified();
+        }
+    }
+
+    public final boolean isCurrentProjectSet() {
+        return this.currentProjectId != null;
+    }
+
+    public final boolean isCurrentProject(scrum.server.project.Project currentProject) {
+        if (this.currentProjectId == null && currentProject == null) return true;
+        return currentProject != null && currentProject.getId().equals(this.currentProjectId);
+    }
+
+    protected final void updateCurrentProject(Object value) {
+        setCurrentProject(value == null ? null : (scrum.server.project.Project)projectDao.getById((String)value));
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -168,17 +217,36 @@ public abstract class GUser
             if (property.equals("name")) updateName(value);
             if (property.equals("admin")) updateAdmin(value);
             if (property.equals("email")) updateEmail(value);
+            if (property.equals("currentProjectId")) updateCurrentProject(value);
         }
     }
 
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
+        repairDeadCurrentProjectReference(entityId);
     }
 
     // --- ensure integrity ---
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
+        try {
+            getCurrentProject();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead currentProject reference");
+            repairDeadCurrentProjectReference(this.currentProjectId);
+        }
+    }
+
+
+    // -----------------------------------------------------------
+    // - dependencies
+    // -----------------------------------------------------------
+
+    protected static scrum.server.project.ProjectDao projectDao;
+
+    public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
+        GUser.projectDao = projectDao;
     }
 
     protected static UserDao userDao;
