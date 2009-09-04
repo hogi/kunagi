@@ -5,6 +5,8 @@ import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.dnd.BlockDndMarkerWidget;
 import scrum.client.dnd.DndManager;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -54,7 +56,8 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		toolbar = new HorizontalPanel();
 
 		label = new Label();
-		label.setStyleName("ABlockWidget-label");
+		label.setStyleName("ABlockWidget-title-label");
+		label.addClickHandler(new SelectionClickHandler());
 
 		iconPanel = new FocusPanel();
 
@@ -213,6 +216,14 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		else setSelected(false);
 
 		super.onUnload();
+	}
+
+	private class SelectionClickHandler implements ClickHandler {
+
+		public void onClick(ClickEvent event) {
+			list.toggleSelection(getObject());
+		}
+
 	}
 
 }

@@ -67,15 +67,15 @@ a {cursor: pointer;}
 .BlockListWidget {padding: 5px; min-height: 100px;}
 .BlockListWidget-table {width: 100%;}
 
-.ABlockWidget {cursor: pointer; color: black;}
+.ABlockWidget {color: black;}
 
 .BlockDndMarkerWidget {height: 2px;}
 .BlockDndMarkerWidget-active {height: 2px; background: #192666;}
 
 .ABlockWidget-block {background: white;}
-.ABlockWidget-block-selected {border: 2px solid orange; cursor: default;}
+.ABlockWidget-block-selected {border: 2px solid orange;}
 .ABlockWidget-title {padding: 1px; width: 100%; background: #DEE5FD; }
-.ABlockWidget-title-label {font-size: 12px; line-height: 16px;}
+.ABlockWidget-title-label {font-size: 12px; line-height: 16px; cursor: pointer; display: block;}
 .ABlockWidget-title .ButtonWidget {margin-left: 15px;}
 .ABlockWidget-title .ButtonWidget a {font-size: 12px; line-height: 16px;  padding: 0px; font-weight: normal; background: #DEE5FD; border: 0px;}
 .ABlockWidget-title-menu {margin-left: 15px; border: 0px;}

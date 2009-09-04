@@ -19,7 +19,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.HTMLTable.Cell;
 
 /**
  * List of <code>BlockWidget</code>s.
@@ -205,7 +204,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		return blocks.size();
 	}
 
-	public final int indexOf(ABlockWidget block) {
+	public final int indexOf(ABlockWidget<O> block) {
 		return blocks.indexOf(block);
 	}
 
@@ -256,9 +255,21 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		}
 	}
 
-	public final void selectObject(Object object) {
+	public final void selectObject(O object) {
 		int idx = objects.indexOf(object);
 		selectRow(idx);
+	}
+
+	public final void toggleSelection(O object) {
+		if (isSelected(object)) {
+			deselect();
+		} else {
+			selectObject(object);
+		}
+	}
+
+	public final boolean isSelected(O object) {
+		return getSelectedObject() == object;
 	}
 
 	public final boolean contains(Object object) {
@@ -332,14 +343,14 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	private final class TableClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
-			Cell cell = table.getCellForEvent(event);
-			if (cell == null) return;
-			int row = cell.getRowIndex();
-			if (row == selectedRow) {
-				// nop
-			} else {
-				selectRow(row);
-			}
+		// Cell cell = table.getCellForEvent(event);
+		// if (cell == null) return;
+		// int row = cell.getRowIndex();
+		// if (row == selectedRow) {
+		// // nop
+		// } else {
+		// selectRow(row);
+		// }
 		}
 
 	}
