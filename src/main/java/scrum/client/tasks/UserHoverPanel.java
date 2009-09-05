@@ -26,20 +26,24 @@ public class UserHoverPanel extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		panel = new HorizontalPanel();
+		Label text = new Label("Highlight user's tasks: ");
+		text.addStyleName("UserHoverPanel-label");
+		panel.add(text);
 		for (final User user : ScrumGwtApplication.get().getDao().getUsers()) {
-			Label label = new Label(user.getName());
+			final Label label = new Label(user.getName());
+			label.setStyleName("UserHoverPanel-label");
 			label.addMouseOverHandler(new MouseOverHandler() {
 
 				public void onMouseOver(MouseOverEvent event) {
-					System.out.println("Mouse over...");
 					widget.setTaskHighlighting(new ByUserPredicate(user));
+					label.addStyleName("highlighted");
 				}
 			});
 			label.addMouseOutHandler(new MouseOutHandler() {
 
 				public void onMouseOut(MouseOutEvent event) {
-					System.out.println("Mouse out...");
 					widget.clearTaskHighlighting();
+					label.removeStyleName("highlighted");
 				}
 
 			});

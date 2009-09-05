@@ -63,7 +63,6 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 
 		panel = new VerticalPanel();
 		panel.setWidth("100%");
-		panel.add(new Label("Users:"));
 		panel.add(new UserHoverPanel(this).update());
 		panel.add(grid);
 		return panel;
@@ -135,19 +134,27 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 		}
 
 		openTasks.get(requirement).setTasks(openTaskList);
-		openTasks.get(requirement).setTaskHighlighting(predicate);
 		ownedTasks.get(requirement).setTasks(ownedTaskList);
-		ownedTasks.get(requirement).setTaskHighlighting(predicate);
 		closedTasks.get(requirement).setTasks(closedTaskList);
-		closedTasks.get(requirement).setTaskHighlighting(predicate);
+
+	}
+
+	private void updateHighlighting() {
+		for (Requirement requirement : openTasks.keySet()) {
+			openTasks.get(requirement).setTaskHighlighting(predicate);
+			ownedTasks.get(requirement).setTaskHighlighting(predicate);
+			closedTasks.get(requirement).setTaskHighlighting(predicate);
+		}
 	}
 
 	public void setTaskHighlighting(GenericPredicate<Task> predicate) {
 		this.predicate = predicate;
+		updateHighlighting();
 	}
 
 	public void clearTaskHighlighting() {
 		this.predicate = null;
+		updateHighlighting();
 	}
 
 	private void setWidget(int row, int col, Widget widget, String width, String className) {

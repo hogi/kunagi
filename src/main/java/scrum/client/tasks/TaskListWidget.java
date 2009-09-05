@@ -71,11 +71,9 @@ public class TaskListWidget extends AWidget {
 
 	public void setTaskHighlighting(GenericPredicate<Task> predicate) {
 		list.setTaskHighlighting(predicate);
-		update();
 	}
 
 	public void clearTaskHighlighting() {
 		list.clearTaskHighlighting();
-		update();
 	}
 }

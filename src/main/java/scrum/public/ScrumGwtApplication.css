@@ -95,6 +95,11 @@ a {cursor: pointer;}
 .WhiteboardWidget-owned {background: #FFFFE5;}
 .WhiteboardWidget-done {background: #E5FFE5;}
 
+/***** UserHoverPanel *****/
+
+.UserHoverPanel-label {padding: 5px; font-size: 16px; cursor: default;}
+
+
 /***** Group *****/
 
 .GroupWidget-title {background: #192666; color: #DEE5FD; padding: 5px; font-size: 16px; font-family: "georgia",serif;}
@@ -107,7 +112,6 @@ a {cursor: pointer;}
 .FieldsWidget-fieldValue {}
 
 /***** Editables *****/
-
 
 .AViewEditWidget-viewer {cursor: pointer; background: #F2F5FE; min-width: 16px; min-height: 16px; border: 1px dotted #CCCCCC; display: block; padding: 3px;}
 .AViewEditWidget-editor {}
@@ -128,8 +132,10 @@ a {cursor: pointer;}
 .WidgetsTesterWidget .test-section {margin: 5px; margin-bottom: 10px; clear: both; background: gray; color: black;}
 .WidgetsTesterWidget .test-section .test-content {background: white; color: black; border: 1px dotted red;}
 
-/***** other *****/
+/***** Highlighting *****/
+.highlighted .ABlockWidget-title {padding: 1px; width: 100%; background: #FFC5CE; }
 
+/***** other *****/
 .WaitWidget {margin: 50px 200px; border: 1px solid #DEE5FD;}
 .LoginWidget {margin: 50px 200px; border: 1px solid #DEE5FD;}
-.highlighted {border:1px solid red;}
+

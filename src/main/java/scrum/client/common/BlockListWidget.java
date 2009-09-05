@@ -77,9 +77,6 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	protected void onUpdate() {
 		for (ABlockWidget<O> block : blocks) {
 			block.update();
-			if (predicate != null && predicate.contains(block.getObject()))
-				table.getCellFormatter().addStyleName(blocks.indexOf(block), 0, "highlighted");
-			else table.getCellFormatter().removeStyleName(blocks.indexOf(block), 0, "highlighted");
 		}
 		if (autoSorter != null) sort(autoSorter);
 	}
@@ -382,11 +379,21 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		super.onUnload();
 	}
 
+	private void updateTaskHighlighting() {
+		for (ABlockWidget<O> block : blocks) {
+			if (predicate != null && predicate.contains(block.getObject()))
+				block.addStyleName("highlighted");
+			else block.removeStyleName("highlighted");
+		}
+	}
+
 	public void setTaskHighlighting(GenericPredicate<O> predicate) {
 		this.predicate = predicate;
+		updateTaskHighlighting();
 	}
 
 	public void clearTaskHighlighting() {
 		this.predicate = null;
+		updateTaskHighlighting();
 	}
 }
