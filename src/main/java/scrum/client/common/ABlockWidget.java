@@ -24,7 +24,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 @SuppressWarnings("unchecked")
-public abstract class ABlockWidget<O extends Object> extends AWidget {
+public abstract class ABlockWidget<O> extends AWidget {
 
 	private Label label;
 	private FocusPanel iconPanel;
@@ -33,7 +33,7 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 	private HorizontalPanel toolbar;
 	private MenuBar menu;
 
-	private BlockListWidget list;
+	private BlockListWidget<O> list;
 	private FlowPanel mainPanel;
 	private FlowPanel panel;
 	private boolean selected;
@@ -167,7 +167,7 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		dndMarkerTop.setActive(true);
 	}
 
-	public final BlockListWidget<ABlockWidget> getList() {
+	public final BlockListWidget<O> getList() {
 		return list;
 	}
 

@@ -24,7 +24,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * List of <code>BlockWidget</code>s.
  */
-public final class BlockListWidget<O extends Object> extends AWidget {
+public final class BlockListWidget<O> extends AWidget {
 
 	// private static final Logger LOG = Logger.get(BlockListWidget.class);
 
@@ -73,8 +73,8 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		for (ABlockWidget<O> block : getBlocks()) {
-			block.update();
+		for (Iterator<ABlockWidget<O>> it = widgetIterator(); it.hasNext();) {
+			it.next().update();
 		}
 		if (autoSorter != null) sort(autoSorter);
 	}
@@ -86,19 +86,11 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	public ABlockWidget<O> getBlock(O object) {
-		for (ABlockWidget<O> block : getBlocks()) {
+		for (Iterator<ABlockWidget<O>> it = widgetIterator(); it.hasNext();) {
+			ABlockWidget<O> block = it.next();
 			if (block.getObject().equals(object)) return block;
 		}
 		return null;
-	}
-
-	public List<ABlockWidget<O>> getBlocks() {
-		int count = table.getRowCount();
-		List<ABlockWidget<O>> ret = new ArrayList<ABlockWidget<O>>(count);
-		for (int i = 0; i < count; i++) {
-			ret.add(getBlock(i));
-		}
-		return ret;
 	}
 
 	public final void sort(Comparator<O> comparator) {
@@ -202,7 +194,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 
 	private ABlockWidget<O> addBlock(ABlockWidget<O> block, int toIndex) {
 		if (block == null) throw new IllegalArgumentException("block == null");
-		assert !getBlocks().contains(block);
+		assert !contains(block);
 
 		int oldSize = table.getRowCount();
 
@@ -230,7 +222,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	public final void drop(ABlockWidget<O> block, int toIndex) {
 		if (block == null) throw new IllegalArgumentException("block == null");
 		int fromIndex = block.getList().indexOf(block);
-		if (dropAction.execute(block, block.getList(), fromIndex, (BlockListWidget<ABlockWidget>) this, toIndex))
+		if (dropAction.execute(block, block.getList(), fromIndex, this, toIndex))
 			if (moveObserver != null) moveObserver.onBlockMoved();
 	}
 
@@ -243,11 +235,13 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	public final int indexOf(ABlockWidget<O> block) {
-		return getBlocks().indexOf(block);
+		return indexOf(block.getObject());
 	}
 
-	public final int indexOf(Object object) {
-		return getObjects().indexOf(object);
+	public final int indexOf(O object) {
+		for (BlockListObjectIterator<O> it = objectIterator(); it.hasNext();)
+			if (it.next().equals(object)) return it.getIndex();
+		return -1;
 	}
 
 	public final O getSelectedObject() {
@@ -264,14 +258,14 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 			selectionManager.deselectAll();
 		}
 
-		getBlocks().get(row).setSelected(true);
+		getBlock(row).setSelected(true);
 		selectedRow = row;
 	}
 
 	public final void deselectRow(int row) {
 		if (selectedRow == -1) return;
 		if (row != selectedRow) return;
-		getBlocks().get(row).setSelected(false);
+		getBlock(row).setSelected(false);
 		selectedRow = -1;
 	}
 
@@ -281,10 +275,10 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 
 	public final void scrollToSelectedBlock() {
 		if (selectedRow < 0) return;
-		getBlocks().get(selectedRow).getElement().scrollIntoView();
+		getBlock(selectedRow).getElement().scrollIntoView();
 	}
 
-	public final void removeObject(Object object) {
+	public final void removeObject(O object) {
 		removeRow(indexOf(object));
 	}
 
@@ -324,35 +318,39 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		return getSelectedObject() == object;
 	}
 
-	public final boolean contains(Object object) {
-		return getObjects().contains(object);
+	public final boolean contains(ABlockWidget<O> block) {
+		return contains(block.getObject());
+	}
+
+	public final boolean contains(O object) {
+		for (Iterator<O> it = objectIterator(); it.hasNext();)
+			if (it.next().equals(object)) return true;
+		return false;
 	}
 
 	public final void deselect() {
 		if (selectedRow == -1) return;
-		for (ABlockWidget block : getBlocks()) {
-			block.setSelected(false);
+		for (Iterator<ABlockWidget<O>> it = widgetIterator(); it.hasNext();) {
+			it.next().setSelected(false);
 		}
 		selectedRow = -1;
 	}
 
 	private ABlockWidget<O> getPreviousBlock(ABlockWidget<O> block) {
-		List<ABlockWidget<O>> blocks = getBlocks();
-		int idx = blocks.indexOf(block);
+		int idx = indexOf(block);
 		if (idx < 1) return null;
-		return blocks.get(idx - 1);
+		return getBlock(idx - 1);
 	}
 
 	private ABlockWidget<O> getNextBlock(ABlockWidget<O> block) {
-		List<ABlockWidget<O>> blocks = getBlocks();
-		int idx = blocks.indexOf(block);
-		if (idx < 0 || idx > blocks.size() - 2) return null;
-		return blocks.get(idx + 1);
+		int idx = indexOf(block);
+		if (idx < 0 || idx > size() - 2) return null;
+		return getBlock(idx + 1);
 	}
 
 	public void deactivateDndMarkers() {
-		for (ABlockWidget<O> block : getBlocks()) {
-			block.deactivateDndMarkers();
+		for (Iterator<ABlockWidget<O>> it = widgetIterator(); it.hasNext();) {
+			it.next().deactivateDndMarkers();
 		}
 		dndMarkerBottom.setActive(false);
 	}
@@ -411,8 +409,8 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 
 	public List<O> getObjects() {
 		List<O> ret = new ArrayList<O>(size());
-		for (ABlockWidget<O> block : getBlocks()) {
-			ret.add(block.getObject());
+		for (Iterator<O> it = objectIterator(); it.hasNext();) {
+			ret.add(it.next());
 		}
 		return ret;
 	}
@@ -435,7 +433,8 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	private void updateTaskHighlighting() {
-		for (ABlockWidget<O> block : getBlocks()) {
+		for (Iterator<ABlockWidget<O>> it = widgetIterator(); it.hasNext();) {
+			ABlockWidget<O> block = it.next();
 			if (predicate != null && predicate.contains(block.getObject()))
 				block.addStyleName("highlighted");
 			else block.removeStyleName("highlighted");
@@ -452,14 +451,14 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 		updateTaskHighlighting();
 	}
 
-	public Iterator<O> objectIterator() {
+	public BlockListObjectIterator<O> objectIterator() {
 		initialize();
 		return new BlockListObjectIterator<O>(table);
 	}
 
-	public Iterator<O> widgetIterator() {
+	public Iterator<ABlockWidget<O>> widgetIterator() {
 		initialize();
-		return new BlockListWidgetIterator<O>(table);
+		return new BlockListWidgetIterator<ABlockWidget<O>>(table);
 	}
 
 	private class BlockListObjectIterator<O> implements Iterator<O> {
@@ -480,6 +479,10 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 
 		public void remove() {
 			widgetIterator.remove();
+		}
+
+		public int getIndex() {
+			return widgetIterator.getIndex();
 		}
 	}
 
@@ -502,6 +505,10 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 
 		public void remove() {
 			table.removeRow(i);
+		}
+
+		public int getIndex() {
+			return i;
 		}
 	}
 }

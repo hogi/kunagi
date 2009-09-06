@@ -5,6 +5,6 @@ import scrum.client.common.BlockListWidget;
 
 public interface BlockListDropAction<T> {
 
-	public boolean execute(ABlockWidget<T> block, BlockListWidget<ABlockWidget> fromList, int fromIndex,
-			BlockListWidget<ABlockWidget> toList, int toIndex);
+	public boolean execute(ABlockWidget<T> block, BlockListWidget<T> fromList, int fromIndex,
+			BlockListWidget<T> toList, int toIndex);
 }

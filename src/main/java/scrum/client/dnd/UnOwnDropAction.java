@@ -15,8 +15,8 @@ public class UnOwnDropAction implements BlockListDropAction<Task> {
 		this.requirement = requirement;
 	}
 
-	public boolean execute(ABlockWidget<Task> block, BlockListWidget<ABlockWidget> fromList, int fromIndex,
-			BlockListWidget<ABlockWidget> toList, int toIndex) {
+	public boolean execute(ABlockWidget<Task> block, BlockListWidget<Task> fromList, int fromIndex,
+			BlockListWidget<Task> toList, int toIndex) {
 		TaskBlock taskBlock = (TaskBlock) block;
 		Task task = taskBlock.getTask();
 		task.setRequirement(this.requirement);
