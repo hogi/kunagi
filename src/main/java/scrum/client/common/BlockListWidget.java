@@ -164,16 +164,10 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 			return;
 		}
 
-		// remove existing objects, which are not in the new list
-		List<O> objectsToRemove = null;
-		for (O object : objects) {
-			if (newObjects.contains(object)) continue;
-			if (objectsToRemove == null) objectsToRemove = new ArrayList<O>();
-			objectsToRemove.add(object);
-		}
-		if (objectsToRemove != null) {
-			for (O object : objectsToRemove)
-				removeObject(object);
+		// TODO optimize
+		clear();
+		for (O object : newObjects) {
+			addBlock(object);
 		}
 
 		assert table.getRowCount() == newObjects.size();
