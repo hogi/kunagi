@@ -9,8 +9,7 @@ public class MoveDropAction<T> implements BlockListDropAction<T> {
 			int toIndex) {
 		if (fromList != toList) return false;
 
-		fromList.removeRow(fromIndex);
-		toList.addBlock(block, toIndex);
+		toList.move(block, toIndex);
 
 		return true;
 	}

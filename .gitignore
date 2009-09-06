@@ -1,2 +1,4 @@
 runtimedata
 tomcat
+hs_err_*.log
+

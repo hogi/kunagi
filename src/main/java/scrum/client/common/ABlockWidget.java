@@ -210,11 +210,6 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 	@Override
 	protected void onUnload() {
 		DndManager.get().unregisterDropTarget(this);
-
-		if (list != null)
-			list.deselectObject(getObject());
-		else setSelected(false);
-
 		super.onUnload();
 	}
 
@@ -224,6 +219,11 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 			list.toggleSelection(getObject());
 		}
 
+	}
+
+	@Override
+	public String toString() {
+		return "[" + getObject() + "]";
 	}
 
 }

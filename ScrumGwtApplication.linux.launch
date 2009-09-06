@@ -19,5 +19,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.google.gwt.dev.GWTShell"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-out runtimedata scrum.ScrumGwtApplication/ScrumGwtApplication.html -port 8889"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="scrum"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx256M"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx256M -ea"/>
 </launchConfiguration>

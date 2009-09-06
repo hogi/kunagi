@@ -13,7 +13,10 @@ import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
@@ -41,13 +44,21 @@ public class WidgetsTesterWidget extends AWidget {
 	}
 
 	private void testBlockList() {
-		BlockListWidget<String> list = new BlockListWidget<String>(TestBlock.FACTORY);
+		final BlockListWidget<String> list = new BlockListWidget<String>(TestBlock.FACTORY);
 		list.addBlock("Element A");
 		list.addBlock("Element B");
 		list.addBlock("Element C");
 		list.addBlock("Element D");
 		list.addBlock("Element E");
 		list.update();
+		addTest("test", new Button("click", new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				// list.addBlock("new " + System.currentTimeMillis());
+				// list.removeRow(5);
+				list.move(list.getBlock(4), 3);
+			}
+		}));
 		addTest("BlockList", list);
 	}
 

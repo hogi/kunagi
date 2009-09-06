@@ -4,10 +4,8 @@ import ilarkesto.gwt.client.AWidget;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import scrum.client.GenericPredicate;
@@ -30,8 +28,6 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	// private static final Logger LOG = Logger.get(BlockListWidget.class);
 
 	private FlexTable table;
-	private List<ABlockWidget<O>> blocks = new LinkedList<ABlockWidget<O>>();
-	private List<O> objects = new LinkedList<O>();
 	private int selectedRow = -1;
 	private boolean dndSorting = true;
 	private Comparator<O> autoSorter;
@@ -76,23 +72,46 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		for (ABlockWidget<O> block : blocks) {
+		for (ABlockWidget<O> block : getBlocks()) {
 			block.update();
 		}
 		if (autoSorter != null) sort(autoSorter);
 	}
 
-	public final void sort(Comparator<O> comparator) {
-		List<O> sortedObjects = new ArrayList<O>(objects);
-		Collections.sort(sortedObjects, comparator);
-		int size = size();
-		for (int i = 0; i < size; i++) {
-			O sortedObject = sortedObjects.get(i);
-			int index = objects.indexOf(sortedObject);
-			if (index != i) {
-				move(blocks.get(index), i);
-			}
+	public ABlockWidget<O> getBlock(int row) {
+		ABlockWidget<O> block = (ABlockWidget<O>) table.getWidget(row, 0);
+		assert block != null : "Block at row " + row + " of " + table.getRowCount() + " is null";
+		return block;
+	}
+
+	public ABlockWidget<O> getBlock(O object) {
+		for (ABlockWidget<O> block : getBlocks()) {
+			if (block.getObject().equals(object)) return block;
 		}
+		return null;
+	}
+
+	public List<ABlockWidget<O>> getBlocks() {
+		int count = table.getRowCount();
+		List<ABlockWidget<O>> ret = new ArrayList<ABlockWidget<O>>(count);
+		for (int i = 0; i < count; i++) {
+			ret.add(getBlock(i));
+		}
+		return ret;
+	}
+
+	public final void sort(Comparator<O> comparator) {
+	// TODO sort block list
+	// List<O> sortedObjects = new ArrayList<O>(objects);
+	// Collections.sort(sortedObjects, comparator);
+	// int size = size();
+	// for (int i = 0; i < size; i++) {
+	// O sortedObject = sortedObjects.get(i);
+	// int index = objects.indexOf(sortedObject);
+	// if (index != i) {
+	// move(blocks.get(index), i);
+	// }
+	// }
 	}
 
 	public void setMoveObserver(BlockMoveObserver<O> orderObserver) {
@@ -115,45 +134,54 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 
 	public final void clear() {
 		initialize();
-		int count = size();
-		for (int i = 0; i < count; i++) {
-			removeRow(0);
+		int count = table.getRowCount();
+		for (int i = count - 1; i >= 0; i--) {
+			table.removeRow(i);
 		}
+		table.clear();
+		assert table.getRowCount() == 0;
 	}
 
 	public final void setBlocks(Collection<O> newObjects) {
 		initialize();
 
-		// add new objects if not already existing
-		List<O> objectsToAdd = null;
-		for (O newObject : newObjects) {
-			if (objects.contains(newObject)) continue;
-			if (objectsToAdd == null) objectsToAdd = new ArrayList<O>();
-			objectsToAdd.add(newObject);
-		}
-		if (objectsToAdd != null) {
-			for (O newObject : objectsToAdd)
-				addBlock(newObject);
-		}
+		// // add new objects if not already existing
+		// List<O> objectsToAdd = null;
+		// for (O newObject : newObjects) {
+		// if (objects.contains(newObject)) continue;
+		// if (objectsToAdd == null) objectsToAdd = new ArrayList<O>();
+		// objectsToAdd.add(newObject);
+		// }
+		// if (objectsToAdd != null) {
+		// for (O newObject : objectsToAdd)
+		// addBlock(newObject);
+		// }
+		//
+		// if (objects.size() == newObjects.size()) {
+		// update();
+		// return;
+		// }
+		//
+		// // remove existing objects, which are not in the new list
+		// List<O> objectsToRemove = null;
+		// for (O object : objects) {
+		// if (newObjects.contains(object)) continue;
+		// if (objectsToRemove == null) objectsToRemove = new ArrayList<O>();
+		// objectsToRemove.add(object);
+		// }
+		// if (objectsToRemove != null) {
+		// for (O object : objectsToRemove)
+		// removeObject(object);
+		// }
+		//
+		// update();
 
-		if (objects.size() == newObjects.size()) {
-			update();
-			return;
+		// TODO optimize
+		clear();
+		for (O object : newObjects) {
+			addBlock(object);
 		}
-
-		// remove existing objects, which are not in the new list
-		List<O> objectsToRemove = null;
-		for (O object : objects) {
-			if (newObjects.contains(object)) continue;
-			if (objectsToRemove == null) objectsToRemove = new ArrayList<O>();
-			objectsToRemove.add(object);
-		}
-		if (objectsToRemove != null) {
-			for (O object : objectsToRemove)
-				removeObject(object);
-		}
-
-		update();
+		assert table.getRowCount() == newObjects.size();
 	}
 
 	public final ABlockWidget<O> addBlock(O object) {
@@ -163,34 +191,47 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	public final ABlockWidget<O> addBlock(O object, boolean select) {
 		initialize();
 
-		ABlockWidget<O> block = blockWidgetFactory.createBlock();
+		ABlockWidget<O> block = getBlock(object);
+		if (block != null) return block;
+
+		block = blockWidgetFactory.createBlock();
 		block.setObject(object);
 		block.setList(this);
 
-		objects.add(object);
-		blocks.add(block);
-		table.setWidget(table.getRowCount(), 0, block);
-		block.update();
+		addBlock(block, 0);
 
-		if (select) selectObject(object);
+		if (select) {
+			selectObject(object);
+		} else {
+			block.update();
+		}
 
 		return block;
 	}
 
-	public ABlockWidget<O> addBlock(ABlockWidget<O> block, int toIndex) {
-		blocks.add(toIndex, block);
-		objects.add(toIndex, block.getObject());
+	private ABlockWidget<O> addBlock(ABlockWidget<O> block, int toIndex) {
+		if (block == null) throw new IllegalArgumentException("block == null");
+		assert !getBlocks().contains(block);
+
+		int oldSize = table.getRowCount();
+
 		table.insertRow(toIndex);
 		table.setWidget(toIndex, 0, block);
+
+		assert table.getRowCount() == oldSize + 1;
+		assert contains(block.getObject());
 		return block;
 	}
 
 	public final void move(ABlockWidget<O> block, int toIndex) {
 		if (block == null) throw new IllegalArgumentException("block == null");
-		int fromIndex = block.getList().indexOf(block);
+		int fromIndex = indexOf(block);
+		if (fromIndex < 0) throw new IllegalArgumentException("Block not in list: " + block);
 		if (fromIndex == toIndex) return;
+		int oldSize = table.getRowCount();
 		removeRow(fromIndex);
 		addBlock(block, toIndex);
+		assert oldSize == table.getRowCount();
 	}
 
 	public final void drop(ABlockWidget<O> block, int toIndex) {
@@ -200,20 +241,20 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 			if (moveObserver != null) moveObserver.onBlockMoved();
 	}
 
-	public final O getObject(int index) {
-		return objects.get(index);
+	public final O getObject(int row) {
+		return getBlock(row).getObject();
 	}
 
 	public final int size() {
-		return blocks.size();
+		return table.getRowCount();
 	}
 
 	public final int indexOf(ABlockWidget<O> block) {
-		return blocks.indexOf(block);
+		return getBlocks().indexOf(block);
 	}
 
 	public final int indexOf(Object object) {
-		return objects.indexOf(object);
+		return getObjects().indexOf(object);
 	}
 
 	public final O getSelectedObject() {
@@ -230,24 +271,24 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 			selectionManager.deselectAll();
 		}
 
-		blocks.get(row).setSelected(true);
+		getBlocks().get(row).setSelected(true);
 		selectedRow = row;
 	}
 
 	public final void deselectRow(int row) {
 		if (selectedRow == -1) return;
 		if (row != selectedRow) return;
-		blocks.get(row).setSelected(false);
+		getBlocks().get(row).setSelected(false);
 		selectedRow = -1;
 	}
 
 	public final void deselectObject(O object) {
-		deselectRow(objects.indexOf(object));
+		deselectRow(indexOf(object));
 	}
 
 	public final void scrollToSelectedBlock() {
 		if (selectedRow < 0) return;
-		blocks.get(selectedRow).getElement().scrollIntoView();
+		getBlocks().get(selectedRow).getElement().scrollIntoView();
 	}
 
 	public final void removeObject(Object object) {
@@ -260,9 +301,12 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 
 	public final void removeRow(int row) {
 		if (row < 0 || row >= size()) return;
-		blocks.remove(row);
-		objects.remove(row);
+		int oldSize = table.getRowCount();
+
 		table.removeRow(row);
+
+		assert table.getRowCount() + 1 == oldSize;
+
 		if (selectedRow == row) {
 			selectedRow = -1;
 		} else if (selectedRow > row) {
@@ -271,7 +315,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	public final void selectObject(O object) {
-		int idx = objects.indexOf(object);
+		int idx = indexOf(object);
 		selectRow(idx);
 	}
 
@@ -288,31 +332,33 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	public final boolean contains(Object object) {
-		return objects.contains(object);
+		return getObjects().contains(object);
 	}
 
 	public final void deselect() {
 		if (selectedRow == -1) return;
-		for (ABlockWidget block : blocks) {
+		for (ABlockWidget block : getBlocks()) {
 			block.setSelected(false);
 		}
 		selectedRow = -1;
 	}
 
 	private ABlockWidget<O> getPreviousBlock(ABlockWidget<O> block) {
+		List<ABlockWidget<O>> blocks = getBlocks();
 		int idx = blocks.indexOf(block);
 		if (idx < 1) return null;
 		return blocks.get(idx - 1);
 	}
 
 	private ABlockWidget<O> getNextBlock(ABlockWidget<O> block) {
+		List<ABlockWidget<O>> blocks = getBlocks();
 		int idx = blocks.indexOf(block);
 		if (idx < 0 || idx > blocks.size() - 2) return null;
 		return blocks.get(idx + 1);
 	}
 
 	public void deactivateDndMarkers() {
-		for (ABlockWidget<O> block : blocks) {
+		for (ABlockWidget<O> block : getBlocks()) {
 			block.deactivateDndMarkers();
 		}
 		dndMarkerBottom.setActive(false);
@@ -371,10 +417,14 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	public List<O> getObjects() {
-		return objects;
+		List<O> ret = new ArrayList<O>(size());
+		for (ABlockWidget<O> block : getBlocks()) {
+			ret.add(block.getObject());
+		}
+		return ret;
 	}
 
-	public boolean acceptsDrop(ABlockWidget block) {
+	public boolean acceptsDrop(ABlockWidget<O> block) {
 		return this.blockWidgetFactory.isSameType(block);
 		// return this == block.getList();
 	}
@@ -392,7 +442,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	private void updateTaskHighlighting() {
-		for (ABlockWidget<O> block : blocks) {
+		for (ABlockWidget<O> block : getBlocks()) {
 			if (predicate != null && predicate.contains(block.getObject()))
 				block.addStyleName("highlighted");
 			else block.removeStyleName("highlighted");

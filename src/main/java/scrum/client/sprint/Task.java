@@ -68,7 +68,8 @@ public class Task extends GTask {
 
 	@Override
 	public String toString() {
-		return getLabel();
+		// return getLabel();
+		return getReference();
 	}
 
 	public void incrementBurnedWork() {
