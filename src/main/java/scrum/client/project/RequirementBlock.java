@@ -196,7 +196,9 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	}
 
 	protected void createToolbar() {
-		if (!requirement.isSprintSet()) {
+		Project project = ScrumGwtApplication.get().getProject();
+
+		if (project.isCurrentSprint(requirement.getSprint())) {
 			addMenuCommand("Delete", new Command() {
 
 				public void execute() {
@@ -206,7 +208,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 			});
 		}
 
-		final Sprint currentSprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
+		final Sprint currentSprint = project.getCurrentSprint();
 		if (currentSprint != null) {
 			if (requirement.isSprint(currentSprint)) {
 				addMenuCommand("Remove from Sprint", new Command() {
