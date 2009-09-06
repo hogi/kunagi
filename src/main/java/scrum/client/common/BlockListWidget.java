@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.AWidget;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -101,17 +102,17 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	public final void sort(Comparator<O> comparator) {
-	// TODO sort block list
-	// List<O> sortedObjects = new ArrayList<O>(objects);
-	// Collections.sort(sortedObjects, comparator);
-	// int size = size();
-	// for (int i = 0; i < size; i++) {
-	// O sortedObject = sortedObjects.get(i);
-	// int index = objects.indexOf(sortedObject);
-	// if (index != i) {
-	// move(blocks.get(index), i);
-	// }
-	// }
+		List<O> objects = getObjects();
+		List<O> sortedObjects = new ArrayList<O>(objects);
+		Collections.sort(sortedObjects, comparator);
+		int size = size();
+		for (int i = 0; i < size; i++) {
+			O sortedObject = sortedObjects.get(i);
+			int index = objects.indexOf(sortedObject);
+			if (index != i) {
+				move(getBlock(index), i);
+			}
+		}
 	}
 
 	public void setMoveObserver(BlockMoveObserver<O> orderObserver) {
