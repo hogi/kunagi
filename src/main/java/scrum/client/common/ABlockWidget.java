@@ -212,7 +212,7 @@ public abstract class ABlockWidget<O extends Object> extends AWidget {
 		DndManager.get().unregisterDropTarget(this);
 
 		if (list != null)
-			list.deselect();
+			list.deselectObject(getObject());
 		else setSelected(false);
 
 		super.onUnload();

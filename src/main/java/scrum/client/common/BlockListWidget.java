@@ -221,7 +221,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	}
 
 	public final void selectRow(int row) {
-		if (row == selectedRow) { return; }
+		if (row == selectedRow) return;
 
 		if (selectionManager == null) {
 			deselect();
@@ -231,6 +231,17 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 
 		blocks.get(row).setSelected(true);
 		selectedRow = row;
+	}
+
+	public final void deselectRow(int row) {
+		if (selectedRow == -1) return;
+		if (row != selectedRow) return;
+		blocks.get(row).setSelected(false);
+		selectedRow = -1;
+	}
+
+	public final void deselectObject(O object) {
+		deselectRow(objects.indexOf(object));
 	}
 
 	public final void scrollToSelectedBlock() {
