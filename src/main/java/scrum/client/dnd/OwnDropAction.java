@@ -6,8 +6,7 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
 import scrum.client.tasks.TaskBlock;
-import scrum.client.tasks.TaskOverviewWidget;
-import scrum.client.tasks.WhiteboardWidget;
+import scrum.client.workspace.Ui;
 
 public class OwnDropAction implements BlockListDropAction<Task> {
 
@@ -27,8 +26,7 @@ public class OwnDropAction implements BlockListDropAction<Task> {
 		else task.setOwner(ScrumGwtApplication.get().getUser());
 
 		boolean selected = taskBlock.isSelected();
-		TaskOverviewWidget.get().update();
-		WhiteboardWidget.get().update();
+		Ui.get().update();
 		if (selected) {
 			taskBlock.getContainer().selectTask(task);
 		}

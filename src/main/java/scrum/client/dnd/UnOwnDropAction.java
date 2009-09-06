@@ -5,8 +5,7 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
 import scrum.client.tasks.TaskBlock;
-import scrum.client.tasks.TaskOverviewWidget;
-import scrum.client.tasks.WhiteboardWidget;
+import scrum.client.workspace.Ui;
 
 public class UnOwnDropAction implements BlockListDropAction<Task> {
 
@@ -24,8 +23,7 @@ public class UnOwnDropAction implements BlockListDropAction<Task> {
 		task.setUnOwned();
 
 		boolean selected = taskBlock.isSelected();
-		TaskOverviewWidget.get().update();
-		WhiteboardWidget.get().update();
+		Ui.get().update();
 		if (selected) {
 			taskBlock.getContainer().selectTask(task);
 		}
