@@ -125,9 +125,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 
 		for (AWebSession s : webApplication.getWebSessions()) {
-			// TODO do this only if client is tracking this entity
-			LOG.debug("Sending changes to", s);
-			session.sendToClient(entity);
+			s.sendToClient(entity);
 		}
 	}
 
@@ -200,6 +198,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 		session.sendToClient(requirements);
 		session.sendToClient(project.getQualitys());
+		session.sendToClient(project);
 	}
 
 	@Override

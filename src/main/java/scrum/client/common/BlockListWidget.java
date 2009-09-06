@@ -110,7 +110,7 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 			O sortedObject = sortedObjects.get(i);
 			int index = objects.indexOf(sortedObject);
 			if (index != i) {
-				move(getBlock(index), i);
+				move(getBlock(sortedObject), i);
 			}
 		}
 	}

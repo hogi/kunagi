@@ -3,6 +3,7 @@ package scrum.client.project;
 import ilarkesto.gwt.client.Gwt;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,12 @@ public class Project extends GProject {
 
 	public Project(Map data) {
 		super(data);
+	}
+
+	public void updateRequirementsOrder() {
+		List<Requirement> requirements = getRequirements();
+		Collections.sort(requirements, getRequirementsOrderComparator());
+		updateRequirementsOrder(requirements);
 	}
 
 	public void updateRequirementsOrder(List<Requirement> requirements) {
@@ -76,6 +83,7 @@ public class Project extends GProject {
 	public Requirement createNewRequirement() {
 		Requirement item = new Requirement(this);
 		getDao().createRequirement(item);
+		updateRequirementsOrder();
 		return item;
 	}
 
@@ -129,10 +137,17 @@ public class Project extends GProject {
 
 			public int compare(Requirement a, Requirement b) {
 				List<String> order = getRequirementsOrderIds();
+				int additional = order.size();
 				int ia = order.indexOf(a.getId());
-				if (ia < 0) ia = Integer.MAX_VALUE;
+				if (ia < 0) {
+					ia = additional;
+					additional++;
+				}
 				int ib = order.indexOf(b.getId());
-				if (ib < 0) ib = Integer.MAX_VALUE;
+				if (ib < 0) {
+					ib = additional;
+					additional++;
+				}
 				return ia - ib;
 			}
 		};
