@@ -26,6 +26,8 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	private DndManager dndManager;
 	private Ui ui;
 	private boolean developmentMode;
+	private long lastDataReceiveTime = System.currentTimeMillis();
+	private PingTimer pingTimer;
 
 	/**
 	 * Application entry point.
@@ -47,7 +49,8 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			}
 		});
 
-		new PingTimer().scheduleRepeating(15000);
+		pingTimer = new PingTimer();
+		pingTimer.scheduleRepeating(15000);
 	}
 
 	public ChatMessage postSystemMessage(String text) {
@@ -89,10 +92,20 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		return developmentMode;
 	}
 
+	public long getLastDataReceiveTime() {
+		return lastDataReceiveTime;
+	}
+
 	@Override
 	protected void handleDataFromServer(ADataTransferObject adata) {
 		super.handleDataFromServer(adata);
+
 		DataTransferObject data = (DataTransferObject) adata;
+
+		if (data.containsEntities()) {
+			lastDataReceiveTime = System.currentTimeMillis();
+			pingTimer.schedule();
+		}
 
 		if (data.entityIdBase != null) {
 			getDao().setEntityIdBase(data.entityIdBase);
