@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -406,5 +407,58 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 	public void clearTaskHighlighting() {
 		this.predicate = null;
 		updateTaskHighlighting();
+	}
+
+	public Iterator<O> objectIterator() {
+		initialize();
+		return new BlockListObjectIterator<O>(table);
+	}
+
+	public Iterator<O> widgetIterator() {
+		initialize();
+		return new BlockListWidgetIterator<O>(table);
+	}
+
+	private class BlockListObjectIterator<O> implements Iterator<O> {
+
+		BlockListWidgetIterator<ABlockWidget<O>> widgetIterator;
+
+		public BlockListObjectIterator(FlexTable table) {
+			widgetIterator = new BlockListWidgetIterator<ABlockWidget<O>>(table);
+		}
+
+		public boolean hasNext() {
+			return widgetIterator.hasNext();
+		}
+
+		public O next() {
+			return widgetIterator.next().getObject();
+		}
+
+		public void remove() {
+			widgetIterator.remove();
+		}
+	}
+
+	private class BlockListWidgetIterator<W> implements Iterator<W> {
+
+		int i = -1;
+		final FlexTable table;
+
+		public BlockListWidgetIterator(FlexTable table) {
+			this.table = table;
+		}
+
+		public boolean hasNext() {
+			return i < table.getRowCount() - 1;
+		}
+
+		public W next() {
+			return (W) table.getWidget(++i, 0);
+		}
+
+		public void remove() {
+			table.removeRow(i);
+		}
 	}
 }
