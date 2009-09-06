@@ -195,8 +195,6 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 
 		if (select) {
 			selectObject(object);
-		} else {
-			block.update();
 		}
 
 		return block;
@@ -213,6 +211,8 @@ public final class BlockListWidget<O extends Object> extends AWidget {
 
 		assert table.getRowCount() == oldSize + 1;
 		assert contains(block.getObject());
+
+		block.update();
 		return block;
 	}
 
