@@ -198,7 +198,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	protected void createToolbar() {
 		Project project = ScrumGwtApplication.get().getProject();
 
-		if (project.isCurrentSprint(requirement.getSprint())) {
+		if (!project.isCurrentSprint(requirement.getSprint())) {
 			addMenuCommand("Delete", new Command() {
 
 				public void execute() {
