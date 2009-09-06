@@ -6,6 +6,7 @@ import ilarkesto.gwt.client.AGwtEntity;
 import java.util.HashMap;
 import java.util.Map;
 
+import scrum.client.collaboration.ChatMessage;
 import scrum.client.workspace.WorkareaWidget;
 import scrum.client.workspace.WorkspaceWidget;
 
@@ -30,7 +31,11 @@ public class Dao extends GDao {
 	// --- remote events (incoming from server) ---
 
 	@Override
-	protected void onEntityModifiedRemotely(AGwtEntity entity) {}
+	protected void onEntityModifiedRemotely(AGwtEntity entity) {
+		if (entity instanceof ChatMessage) {
+			ScrumGwtApplication.get().addChatMessage((ChatMessage) entity);
+		}
+	}
 
 	@Override
 	protected void onEntityDeletedRemotely(AGwtEntity entity) {}

@@ -78,8 +78,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		for (WebSession s : webApplication.getOtherSessionsByProject(session)) {
 			// TODO do this only if client is tracking this entity
-			LOG.debug("Sending changes to", s);
-			session.sendToClient(entity);
+			s.sendToClient(entity);
 		}
 	}
 

@@ -2,7 +2,12 @@ package scrum.client;
 
 import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.gwt.client.GwtLogger;
+
+import java.util.LinkedList;
+
 import scrum.client.admin.User;
+import scrum.client.collaboration.ChatMessage;
+import scrum.client.collaboration.ChatWidget;
 import scrum.client.dnd.DndManager;
 import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
@@ -17,6 +22,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	private User user;
 	private Project project;
+	private LinkedList<ChatMessage> chatMessages;
 	private DndManager dndManager;
 	private Ui ui;
 	private boolean developmentMode;
@@ -42,6 +48,33 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		});
 
 		new PingTimer().scheduleRepeating(15000);
+	}
+
+	public ChatMessage postSystemMessage(String text) {
+		return postMessage(null, text);
+	}
+
+	public ChatMessage postMessage(String text) {
+		return postMessage(user, text);
+	}
+
+	public ChatMessage postMessage(User author, String text) {
+		ChatMessage msg = new ChatMessage(getProject(), author, text);
+		getDao().createChatMessage(msg);
+		addChatMessage(msg);
+		return msg;
+	}
+
+	public LinkedList<ChatMessage> getChatMessages() {
+		return chatMessages;
+	}
+
+	void addChatMessage(ChatMessage msg) {
+		if (project == null || !msg.isProject(project)) return;
+		if (chatMessages.contains(msg)) return;
+		chatMessages.add(msg);
+		if (chatMessages.size() > 50) chatMessages.remove(0);
+		ChatWidget.get().update();
 	}
 
 	public User getUser() {
@@ -73,6 +106,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		if (data.isUserSet()) {
 			user = getDao().getUser(data.getUserId());
 		}
+
 	}
 
 	@Override
@@ -84,6 +118,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	public void openProject(Project project) {
 		Ui.get().lock("Loading project...");
 		this.project = project;
+		this.chatMessages = new LinkedList<ChatMessage>();
 		callSelectProject(project.getId(), new Runnable() {
 
 			public void run() {
@@ -92,6 +127,8 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 				WorkareaWidget.get().showProjectOverview();
 			}
 		});
+
+		postSystemMessage(user.getName() + " logged in.");
 	}
 
 	public void closeProject() {

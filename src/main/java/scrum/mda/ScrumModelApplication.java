@@ -204,6 +204,20 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return userModel;
 	}
 
+	private EntityModel chatMessageModel;
+
+	public EntityModel getChatMessageModel() {
+		if (chatMessageModel == null) {
+			chatMessageModel = createEntityModel("ChatMessage", "collaboration");
+			autowire(chatMessageModel);
+			chatMessageModel.setGwtSupport(true);
+			chatMessageModel.addReference("project", getProjectModel()).setMaster(true);
+			chatMessageModel.addReference("author", getUserModel());
+			chatMessageModel.addProperty("text", String.class);
+		}
+		return chatMessageModel;
+	}
+
 	// ---------------
 	// --- service ---
 	// ---------------

@@ -48,6 +48,12 @@ a {cursor: pointer;}
 .ClipboardWidget {margin: 20px 15px 0px 15px; height: 100px; background: #F2F5FE; padding: 5px;}
 .ClipboardItemWidget {background: white; border: 1px solid black; margin-bottom: 5px;}
 
+.ChatWidget {margin: 20px 15px 0px 15px;}
+.ChatWidget-outputScroller {background: #F2F5FE; padding: 5px;}
+.ChatWidget-output p {margin: 0px;}
+.ChatWidget-output .author {font-style: italic; color: gray;}
+.ChatWidget-input {margin-top: 5px; width: 97%;}
+
 /***** Workarea *****/
 
 .WorkareaWidget {background: white;}
