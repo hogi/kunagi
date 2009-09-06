@@ -203,7 +203,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 				public void execute() {
 					ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
-					ProductBacklogWidget.get().list.removeSelectedRow();
+					getList().update();
 				}
 			});
 		}
