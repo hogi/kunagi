@@ -2,6 +2,7 @@ package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.admin.User;
 import scrum.client.workspace.SidebarWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -66,10 +67,13 @@ public class ChatWidget extends AWidget {
 	}
 
 	private void appendMessage(ChatMessage m, StringBuilder sb) {
-		String author = m.isAuthorSet() ? m.getAuthor().getName() : "System";
+		User author = m.getAuthor();
+		String authorLabel = author != null ? author.getName() : "System";
+		String authorStyle = author != null ? (author.equals(ScrumGwtApplication.get().getUser()) ? "author-me"
+				: "author") : "author-system";
 		String text = m.getText();
 		sb.append("<p class='message'>");
-		sb.append("<span class='author'>").append(author).append(":&nbsp;</span>");
+		sb.append("<span class='").append(authorStyle).append("'>").append(authorLabel).append(":&nbsp;</span>");
 		sb.append("<span class='text'>").append(text).append("</span>");
 		sb.append("</p>");
 	}
