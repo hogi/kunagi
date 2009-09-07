@@ -2,10 +2,11 @@ package scrum.server.project;
 
 import java.util.Set;
 
+import scrum.server.common.Numbered;
 import scrum.server.sprint.Task;
 import scrum.server.sprint.TaskDao;
 
-public class Requirement extends GRequirement {
+public class Requirement extends GRequirement implements Numbered {
 
 	// --- dependencies ---
 
@@ -17,10 +18,14 @@ public class Requirement extends GRequirement {
 
 	// --- ---
 
+	public void updateNumber() {
+		if (getNumber() == 0) setNumber(getProject().generateRequirementNumber());
+	}
+
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
-		if (getNumber() == 0) setNumber(getProject().generateRequirementNumber());
+		updateNumber();
 	}
 
 	public Set<Task> getTasks() {

@@ -16,6 +16,7 @@ import java.util.UUID;
 
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
+import scrum.server.common.Numbered;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
@@ -70,9 +71,15 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	public void onCreateEntity(WebSession session, String type, Map properties) {
 		String id = (String) properties.get("id");
 		if (id == null) throw new NullPointerException("id == null");
+
 		ADao dao = getDaoService().getDaoByName(type);
 		AEntity entity = dao.newEntityInstance(id);
 		entity.updateProperties(properties);
+
+		if (entity instanceof Numbered) {
+			((Numbered) entity).updateNumber();
+		}
+
 		dao.saveEntity(entity);
 		session.sendToClient(entity);
 

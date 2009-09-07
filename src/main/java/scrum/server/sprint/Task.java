@@ -1,6 +1,8 @@
 package scrum.server.sprint;
 
-public class Task extends GTask {
+import scrum.server.common.Numbered;
+
+public class Task extends GTask implements Numbered {
 
 	public boolean isDone() {
 		return getRemainingWork() == 0;
@@ -10,10 +12,14 @@ public class Task extends GTask {
 		return getRequirement().isSprint(sprint);
 	}
 
+	public void updateNumber() {
+		if (getNumber() == 0) setNumber(getRequirement().getProject().generateTaskNumber());
+	}
+
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
-		if (getNumber() == 0) setNumber(getRequirement().getProject().generateTaskNumber());
+		updateNumber();
 	}
 
 	@Override

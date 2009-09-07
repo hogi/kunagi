@@ -114,7 +114,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 
 				public void execute() {
 					taskList.addBlock(requirement.createNewTask(), true);
-					SprintBacklogWidget.get().update();
+					// SprintBacklogWidget.get().update();
 				}
 			});
 		}

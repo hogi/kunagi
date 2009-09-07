@@ -304,6 +304,7 @@ public final class BlockListWidget<O> extends AWidget {
 	public final void selectObject(O object) {
 		int idx = indexOf(object);
 		selectRow(idx);
+		assert isSelected(object);
 	}
 
 	public final void toggleSelection(O object) {
