@@ -1,13 +1,13 @@
 package scrum.server.collaboration;
 
-import java.util.*;
-import ilarkesto.persistence.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.*;
-import ilarkesto.base.time.*;
-import ilarkesto.auth.*;
+import scrum.server.common.Transient;
 
-public class ChatMessage
-            extends GChatMessage {
+public class ChatMessage extends GChatMessage implements Transient {
+
+	@Override
+	public void ensureIntegrity() {
+		super.ensureIntegrity();
+		getDao().deleteEntity(this);
+	}
 
 }

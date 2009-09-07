@@ -17,6 +17,7 @@ import java.util.UUID;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.common.Numbered;
+import scrum.server.common.Transient;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
@@ -80,7 +81,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			((Numbered) entity).updateNumber();
 		}
 
-		dao.saveEntity(entity);
+		if (!(entity instanceof Transient)) dao.saveEntity(entity);
 		session.sendToClient(entity);
 
 		for (WebSession s : webApplication.getOtherSessionsByProject(session)) {
