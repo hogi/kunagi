@@ -36,7 +36,7 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 	}
 
 	@Override
-	protected void onCollapsedUpdate() {
+	protected void onHeadUpdate() {
 		setBlockTitle(quality.getLabel());
 		setIcon(Img.bundle.requirement16());
 		setContent(null);
@@ -106,11 +106,9 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 	}
 
 	@Override
-	protected void onExtendedUpdate() {
-		setBlockTitle(quality.getLabel());
+	protected void onContentUpdate() {
 		fields.update();
 		setContent(fields);
-		createToolbar();
 	}
 
 	protected void createToolbar() {

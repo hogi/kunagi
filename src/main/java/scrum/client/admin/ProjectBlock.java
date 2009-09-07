@@ -39,7 +39,7 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 	}
 
 	@Override
-	protected void onCollapsedUpdate() {
+	protected void onHeadUpdate() {
 		setBlockTitle(project.getLabel());
 		setIcon(Img.bundle.project16());
 
@@ -201,11 +201,9 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 	}
 
 	@Override
-	protected void onExtendedUpdate() {
-		setBlockTitle(project.getLabel());
+	protected void onContentUpdate() {
 		fields.update();
 		setContent(fields);
-		createToolbar();
 	}
 
 	protected void createToolbar() {

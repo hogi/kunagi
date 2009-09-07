@@ -37,7 +37,7 @@ public class UserBlock extends AExtensibleBlockWidget<User> implements TrashSupp
 	}
 
 	@Override
-	protected void onCollapsedUpdate() {
+	protected void onHeadUpdate() {
 		setBlockTitle(user.getName());
 		setIcon(Img.bundle.user16());
 		summary.setText(user.getName());
@@ -91,12 +91,9 @@ public class UserBlock extends AExtensibleBlockWidget<User> implements TrashSupp
 	}
 
 	@Override
-	protected void onExtendedUpdate() {
-		setBlockTitle(user.getName());
-		setIcon(Img.bundle.user16());
+	protected void onContentUpdate() {
 		fields.update();
 		setContent(fields);
-		createToolbar();
 	}
 
 	public Image getClipboardIcon() {

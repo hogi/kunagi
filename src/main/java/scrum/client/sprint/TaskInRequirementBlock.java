@@ -37,7 +37,7 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 	protected void onCollapsedInitialization() {}
 
 	@Override
-	protected void onCollapsedUpdate() {
+	protected void onHeadUpdate() {
 		setBlockTitle(task.getLongLabel());
 		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
 		createToolbar();
@@ -156,13 +156,10 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 	}
 
 	@Override
-	protected void onExtendedUpdate() {
-		setBlockTitle(task.getLabel());
-		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
+	protected void onContentUpdate() {
 		fields.update();
 		owner.setText(task.getOwner() == null ? "No owner specified." : task.getOwner().getName());
 		setContent(fields);
-		createToolbar();
 	}
 
 	public Task getTask() {

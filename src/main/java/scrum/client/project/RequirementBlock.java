@@ -46,7 +46,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	}
 
 	@Override
-	protected void onCollapsedUpdate() {
+	protected void onHeadUpdate() {
 		setBlockTitle(createTitle());
 		setIcon(getProperIcon());
 		createToolbar();
@@ -182,12 +182,9 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	}
 
 	@Override
-	protected void onExtendedUpdate() {
-		setBlockTitle(createTitle());
-		setIcon(getProperIcon());
+	protected void onContentUpdate() {
 		fields.update();
 		setContent(fields);
-		createToolbar();
 	}
 
 	private String createTitle() {

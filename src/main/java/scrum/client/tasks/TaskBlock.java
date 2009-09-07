@@ -42,7 +42,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 	protected void onCollapsedInitialization() {}
 
 	@Override
-	protected void onCollapsedUpdate() {
+	protected void onHeadUpdate() {
 		setBlockTitle(task.getLongLabel());
 		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
 		createToolbar();
@@ -159,12 +159,9 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 	}
 
 	@Override
-	protected void onExtendedUpdate() {
-		setBlockTitle(task.getLongLabel());
-		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
+	protected void onContentUpdate() {
 		fields.update();
 		setContent(fields);
-		createToolbar();
 	}
 
 	public Task getTask() {

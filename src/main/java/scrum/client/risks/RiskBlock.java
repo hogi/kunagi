@@ -38,7 +38,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 	}
 
 	@Override
-	protected void onCollapsedUpdate() {
+	protected void onHeadUpdate() {
 		setBlockTitle(risk.getLabel());
 		setIcon(Img.bundle.risk16());
 		setContent(null);
@@ -132,12 +132,9 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 	}
 
 	@Override
-	protected void onExtendedUpdate() {
-		setBlockTitle(risk.getLabel());
-		setIcon(Img.bundle.risk16());
+	protected void onContentUpdate() {
 		fields.update();
 		setContent(fields);
-		createToolbar();
 	}
 
 	public Image getClipboardIcon() {

@@ -9,11 +9,11 @@ public abstract class AExtensibleBlockWidget<O extends Object> extends ABlockWid
 
 	protected abstract void onCollapsedInitialization();
 
-	protected abstract void onCollapsedUpdate();
+	protected abstract void onHeadUpdate();
 
 	protected abstract void onExtendedInitialization();
 
-	protected abstract void onExtendedUpdate();
+	protected abstract void onContentUpdate();
 
 	@Override
 	protected final void onBlockInitialization() {
@@ -24,9 +24,10 @@ public abstract class AExtensibleBlockWidget<O extends Object> extends ABlockWid
 	protected final void onBlockUpdate() {
 		if (isSelected()) {
 			ensureExtendedInitialized();
-			onExtendedUpdate();
+			onHeadUpdate();
+			onContentUpdate();
 		} else {
-			onCollapsedUpdate();
+			onHeadUpdate();
 		}
 	}
 
