@@ -22,10 +22,9 @@ public class Task extends GTask {
 
 	public String getLongLabel() {
 		StringBuilder sb = new StringBuilder();
-		sb.append('[').append(getReference()).append("] ");
-		sb.append(getLabel());
+		sb.append(getReference()).append(" ").append(getLabel());
 		if (isOwnerSet()) {
-			sb.append(" (").append(getOwner().getName()).append(')');
+			sb.append(" [").append(getOwner().getName()).append(']');
 		}
 		return sb.toString();
 	}

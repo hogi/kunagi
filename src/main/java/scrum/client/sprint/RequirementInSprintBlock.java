@@ -41,7 +41,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 
 	@Override
 	protected void onHeadUpdate() {
-		setBlockTitle("[" + requirement.getReference() + "] " + requirement.getLabel());
+		setBlockTitle(requirement.getReference() + " " + requirement.getLabel());
 		setIcon(requirement.isDone() ? Img.bundle.done16() : Img.bundle.requirement16());
 		createToolbar();
 	}

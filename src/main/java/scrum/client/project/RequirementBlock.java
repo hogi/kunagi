@@ -47,7 +47,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 	@Override
 	protected void onHeadUpdate() {
-		setBlockTitle(createTitle());
+		setBlockTitle(requirement.getLongLabel());
 		setIcon(getProperIcon());
 		createToolbar();
 	}
@@ -185,11 +185,6 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	protected void onContentUpdate() {
 		fields.update();
 		setContent(fields);
-	}
-
-	private String createTitle() {
-		return "[" + requirement.getReference() + "] " + requirement.getLabel()
-				+ (requirement.isDirty() ? " [dirty]" : " [clean]");
 	}
 
 	protected void createToolbar() {

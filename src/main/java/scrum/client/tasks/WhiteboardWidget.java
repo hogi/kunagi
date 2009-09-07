@@ -102,7 +102,7 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement requirement = requirements.get(i);
 
-			Label label = new Label("[" + requirement.getReference() + "] " + requirement.getLabel());
+			Label label = new Label(requirement.getReference() + " " + requirement.getLabel());
 			label.setStyleName("WhiteboardWidget-requirement-label");
 			grid.setWidget(row, 0, label);
 			grid.getCellFormatter().getElement(row, 0).setAttribute("colspan", "3");

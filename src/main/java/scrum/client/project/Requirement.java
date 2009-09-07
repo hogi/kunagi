@@ -22,6 +22,15 @@ public class Requirement extends GRequirement {
 		super(data);
 	}
 
+	public String getLongLabel() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getReference()).append(" ").append(getLabel());
+		if (isDirty()) sb.append(" [dirty]");
+		if (isSprintSet() && ScrumGwtApplication.get().getProject().isCurrentSprint(getSprint()))
+			sb.append(" [In Sprint]");
+		return sb.toString();
+	}
+
 	public String getReference() {
 		return "r" + getNumber();
 	}
