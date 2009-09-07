@@ -204,6 +204,8 @@ public final class BlockListWidget<O> extends AWidget {
 		assert table.getRowCount() == oldSize + 1;
 		assert contains(block.getObject());
 
+		if (toIndex <= selectedRow) selectedRow++;
+
 		block.update();
 		return block;
 	}

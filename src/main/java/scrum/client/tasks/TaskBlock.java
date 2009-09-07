@@ -160,7 +160,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 	@Override
 	protected void onExtendedUpdate() {
-		setBlockTitle(task.getLabel());
+		setBlockTitle(task.getLongLabel());
 		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
 		fields.update();
 		setContent(fields);
