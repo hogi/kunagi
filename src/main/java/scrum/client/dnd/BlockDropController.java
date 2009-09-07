@@ -60,7 +60,7 @@ public class BlockDropController implements DropController {
 	public void onEnter(DragContext context) {}
 
 	public void onLeave(DragContext context) {
-		targetList.deactivateDndMarkers(targetBlock);
+		targetList.deactivateDndMarkers();
 	}
 
 	public void onMove(DragContext context) {

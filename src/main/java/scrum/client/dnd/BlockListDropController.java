@@ -32,7 +32,7 @@ public class BlockListDropController implements DropController {
 	}
 
 	public void onLeave(DragContext context) {
-		list.deactivateDrop();
+		list.deactivateDndMarkers();
 	}
 
 	public void onMove(DragContext context) {}

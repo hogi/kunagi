@@ -393,10 +393,6 @@ public final class BlockListWidget<O> extends AWidget {
 		dndMarkerBottom.setActive(true);
 	}
 
-	public void deactivateDrop() {
-		dndMarkerBottom.setActive(false);
-	}
-
 	private final class TableClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
