@@ -78,6 +78,7 @@ public abstract class GQuality
     }
 
     public final Quality setNumber(int number) {
+        if (isNumber(number)) return (Quality)this;
         this.number = number ;
         propertyChanged("number", this.number);
         return (Quality)this;
@@ -96,6 +97,7 @@ public abstract class GQuality
     }
 
     public final Quality setLabel(java.lang.String label) {
+        if (isLabel(label)) return (Quality)this;
         this.label = label ;
         propertyChanged("label", this.label);
         return (Quality)this;
@@ -114,6 +116,7 @@ public abstract class GQuality
     }
 
     public final Quality setDescription(java.lang.String description) {
+        if (isDescription(description)) return (Quality)this;
         this.description = description ;
         propertyChanged("description", this.description);
         return (Quality)this;
@@ -132,6 +135,7 @@ public abstract class GQuality
     }
 
     public final Quality setTestDescription(java.lang.String testDescription) {
+        if (isTestDescription(testDescription)) return (Quality)this;
         this.testDescription = testDescription ;
         propertyChanged("testDescription", this.testDescription);
         return (Quality)this;

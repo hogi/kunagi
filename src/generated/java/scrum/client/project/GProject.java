@@ -53,6 +53,7 @@ public abstract class GProject
     }
 
     public final Project setLabel(java.lang.String label) {
+        if (isLabel(label)) return (Project)this;
         this.label = label ;
         propertyChanged("label", this.label);
         return (Project)this;
@@ -71,6 +72,7 @@ public abstract class GProject
     }
 
     public final Project setDescription(java.lang.String description) {
+        if (isDescription(description)) return (Project)this;
         this.description = description ;
         propertyChanged("description", this.description);
         return (Project)this;
@@ -89,6 +91,7 @@ public abstract class GProject
     }
 
     public final Project setBegin(ilarkesto.gwt.client.Date begin) {
+        if (isBegin(begin)) return (Project)this;
         this.begin = begin ;
         propertyChanged("begin", this.begin);
         return (Project)this;
@@ -107,6 +110,7 @@ public abstract class GProject
     }
 
     public final Project setEnd(ilarkesto.gwt.client.Date end) {
+        if (isEnd(end)) return (Project)this;
         this.end = end ;
         propertyChanged("end", this.end);
         return (Project)this;
@@ -330,6 +334,7 @@ public abstract class GProject
     }
 
     public final Project setLastTaskNumber(int lastTaskNumber) {
+        if (isLastTaskNumber(lastTaskNumber)) return (Project)this;
         this.lastTaskNumber = lastTaskNumber ;
         propertyChanged("lastTaskNumber", this.lastTaskNumber);
         return (Project)this;
@@ -348,6 +353,7 @@ public abstract class GProject
     }
 
     public final Project setLastRequirementNumber(int lastRequirementNumber) {
+        if (isLastRequirementNumber(lastRequirementNumber)) return (Project)this;
         this.lastRequirementNumber = lastRequirementNumber ;
         propertyChanged("lastRequirementNumber", this.lastRequirementNumber);
         return (Project)this;

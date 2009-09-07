@@ -78,6 +78,7 @@ public abstract class GRisk
     }
 
     public final Risk setLabel(java.lang.String label) {
+        if (isLabel(label)) return (Risk)this;
         this.label = label ;
         propertyChanged("label", this.label);
         return (Risk)this;
@@ -96,6 +97,7 @@ public abstract class GRisk
     }
 
     public final Risk setDescription(java.lang.String description) {
+        if (isDescription(description)) return (Risk)this;
         this.description = description ;
         propertyChanged("description", this.description);
         return (Risk)this;
@@ -114,6 +116,7 @@ public abstract class GRisk
     }
 
     public final Risk setProbability(int probability) {
+        if (isProbability(probability)) return (Risk)this;
         this.probability = probability ;
         propertyChanged("probability", this.probability);
         return (Risk)this;
@@ -132,6 +135,7 @@ public abstract class GRisk
     }
 
     public final Risk setImpact(int impact) {
+        if (isImpact(impact)) return (Risk)this;
         this.impact = impact ;
         propertyChanged("impact", this.impact);
         return (Risk)this;

@@ -78,6 +78,7 @@ public abstract class GTask
     }
 
     public final Task setNumber(int number) {
+        if (isNumber(number)) return (Task)this;
         this.number = number ;
         propertyChanged("number", this.number);
         return (Task)this;
@@ -96,6 +97,7 @@ public abstract class GTask
     }
 
     public final Task setLabel(java.lang.String label) {
+        if (isLabel(label)) return (Task)this;
         this.label = label ;
         propertyChanged("label", this.label);
         return (Task)this;
@@ -114,6 +116,7 @@ public abstract class GTask
     }
 
     public final Task setRemainingWork(int remainingWork) {
+        if (isRemainingWork(remainingWork)) return (Task)this;
         this.remainingWork = remainingWork ;
         propertyChanged("remainingWork", this.remainingWork);
         return (Task)this;
@@ -132,6 +135,7 @@ public abstract class GTask
     }
 
     public final Task setBurnedWork(int burnedWork) {
+        if (isBurnedWork(burnedWork)) return (Task)this;
         this.burnedWork = burnedWork ;
         propertyChanged("burnedWork", this.burnedWork);
         return (Task)this;
@@ -150,6 +154,7 @@ public abstract class GTask
     }
 
     public final Task setNotice(java.lang.String notice) {
+        if (isNotice(notice)) return (Task)this;
         this.notice = notice ;
         propertyChanged("notice", this.notice);
         return (Task)this;

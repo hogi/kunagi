@@ -78,6 +78,7 @@ public abstract class GImpediment
     }
 
     public final Impediment setLabel(java.lang.String label) {
+        if (isLabel(label)) return (Impediment)this;
         this.label = label ;
         propertyChanged("label", this.label);
         return (Impediment)this;
@@ -96,6 +97,7 @@ public abstract class GImpediment
     }
 
     public final Impediment setDate(ilarkesto.gwt.client.Date date) {
+        if (isDate(date)) return (Impediment)this;
         this.date = date ;
         propertyChanged("date", this.date);
         return (Impediment)this;
@@ -114,6 +116,7 @@ public abstract class GImpediment
     }
 
     public final Impediment setDescription(java.lang.String description) {
+        if (isDescription(description)) return (Impediment)this;
         this.description = description ;
         propertyChanged("description", this.description);
         return (Impediment)this;
@@ -132,6 +135,7 @@ public abstract class GImpediment
     }
 
     public final Impediment setSolution(java.lang.String solution) {
+        if (isSolution(solution)) return (Impediment)this;
         this.solution = solution ;
         propertyChanged("solution", this.solution);
         return (Impediment)this;
@@ -150,6 +154,7 @@ public abstract class GImpediment
     }
 
     public final Impediment setSolveDate(ilarkesto.gwt.client.Date solveDate) {
+        if (isSolveDate(solveDate)) return (Impediment)this;
         this.solveDate = solveDate ;
         propertyChanged("solveDate", this.solveDate);
         return (Impediment)this;

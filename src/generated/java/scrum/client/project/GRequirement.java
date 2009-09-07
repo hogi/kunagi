@@ -103,6 +103,7 @@ public abstract class GRequirement
     }
 
     public final Requirement setNumber(int number) {
+        if (isNumber(number)) return (Requirement)this;
         this.number = number ;
         propertyChanged("number", this.number);
         return (Requirement)this;
@@ -149,6 +150,7 @@ public abstract class GRequirement
     }
 
     public final Requirement setLabel(java.lang.String label) {
+        if (isLabel(label)) return (Requirement)this;
         this.label = label ;
         propertyChanged("label", this.label);
         return (Requirement)this;
@@ -167,6 +169,7 @@ public abstract class GRequirement
     }
 
     public final Requirement setDescription(java.lang.String description) {
+        if (isDescription(description)) return (Requirement)this;
         this.description = description ;
         propertyChanged("description", this.description);
         return (Requirement)this;
@@ -185,6 +188,7 @@ public abstract class GRequirement
     }
 
     public final Requirement setTestDescription(java.lang.String testDescription) {
+        if (isTestDescription(testDescription)) return (Requirement)this;
         this.testDescription = testDescription ;
         propertyChanged("testDescription", this.testDescription);
         return (Requirement)this;
@@ -203,6 +207,7 @@ public abstract class GRequirement
     }
 
     public final Requirement setEstimatedWork(java.lang.Integer estimatedWork) {
+        if (isEstimatedWork(estimatedWork)) return (Requirement)this;
         this.estimatedWork = estimatedWork ;
         propertyChanged("estimatedWork", this.estimatedWork);
         return (Requirement)this;
@@ -221,6 +226,7 @@ public abstract class GRequirement
     }
 
     public final Requirement setClosed(boolean closed) {
+        if (isClosed(closed)) return (Requirement)this;
         this.closed = closed ;
         propertyChanged("closed", this.closed);
         return (Requirement)this;
@@ -239,6 +245,7 @@ public abstract class GRequirement
     }
 
     public final Requirement setDirty(boolean dirty) {
+        if (isDirty(dirty)) return (Requirement)this;
         this.dirty = dirty ;
         propertyChanged("dirty", this.dirty);
         return (Requirement)this;

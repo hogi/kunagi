@@ -103,6 +103,7 @@ public abstract class GChatMessage
     }
 
     public final ChatMessage setText(java.lang.String text) {
+        if (isText(text)) return (ChatMessage)this;
         this.text = text ;
         propertyChanged("text", this.text);
         return (ChatMessage)this;

@@ -78,6 +78,7 @@ public abstract class GSprint
     }
 
     public final Sprint setLabel(java.lang.String label) {
+        if (isLabel(label)) return (Sprint)this;
         this.label = label ;
         propertyChanged("label", this.label);
         return (Sprint)this;
@@ -96,6 +97,7 @@ public abstract class GSprint
     }
 
     public final Sprint setGoal(java.lang.String goal) {
+        if (isGoal(goal)) return (Sprint)this;
         this.goal = goal ;
         propertyChanged("goal", this.goal);
         return (Sprint)this;
@@ -114,6 +116,7 @@ public abstract class GSprint
     }
 
     public final Sprint setBegin(ilarkesto.gwt.client.Date begin) {
+        if (isBegin(begin)) return (Sprint)this;
         this.begin = begin ;
         propertyChanged("begin", this.begin);
         return (Sprint)this;
@@ -132,6 +135,7 @@ public abstract class GSprint
     }
 
     public final Sprint setEnd(ilarkesto.gwt.client.Date end) {
+        if (isEnd(end)) return (Sprint)this;
         this.end = end ;
         propertyChanged("end", this.end);
         return (Sprint)this;

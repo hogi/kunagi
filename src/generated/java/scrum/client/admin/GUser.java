@@ -53,6 +53,7 @@ public abstract class GUser
     }
 
     public final User setName(java.lang.String name) {
+        if (isName(name)) return (User)this;
         this.name = name ;
         propertyChanged("name", this.name);
         return (User)this;
@@ -71,6 +72,7 @@ public abstract class GUser
     }
 
     public final User setAdmin(boolean admin) {
+        if (isAdmin(admin)) return (User)this;
         this.admin = admin ;
         propertyChanged("admin", this.admin);
         return (User)this;
@@ -89,6 +91,7 @@ public abstract class GUser
     }
 
     public final User setEmail(java.lang.String email) {
+        if (isEmail(email)) return (User)this;
         this.email = email ;
         propertyChanged("email", this.email);
         return (User)this;
