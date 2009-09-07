@@ -210,14 +210,16 @@ public final class BlockListWidget<O> extends AWidget {
 		return block;
 	}
 
-	public final void move(ABlockWidget<O> block, int toIndex) {
+	public final void move(ABlockWidget<O> block, int toRow) {
 		if (block == null) throw new IllegalArgumentException("block == null");
-		int fromIndex = indexOf(block);
-		if (fromIndex < 0) throw new IllegalArgumentException("Block not in list: " + block);
-		if (fromIndex == toIndex) return;
+		int fromRow = indexOf(block);
+		if (fromRow < 0) throw new IllegalArgumentException("Block not in list: " + block);
+		if (fromRow == toRow) return;
+		boolean selected = selectedRow == fromRow;
 		int oldSize = table.getRowCount();
-		removeRow(fromIndex);
-		addBlock(block, toIndex);
+		removeRow(fromRow);
+		addBlock(block, toRow);
+		if (selected) selectedRow = toRow;
 		assert oldSize == table.getRowCount();
 	}
 
