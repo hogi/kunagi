@@ -73,6 +73,7 @@ a {cursor: pointer;}
 /***** Block List *****/
 
 .BlockListWidget {padding: 5px; min-height: 100px;}
+.WhiteboardWidget-requirement-list {padding: 0px; min-height: 5px;}
 .BlockListWidget-table {width: 100%;}
 
 .ABlockWidget {color: black;}

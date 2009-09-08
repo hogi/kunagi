@@ -11,6 +11,7 @@ import java.util.Map;
 import scrum.client.GenericPredicate;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListSelectionManager;
+import scrum.client.common.BlockListWidget;
 import scrum.client.dnd.DoneDropAction;
 import scrum.client.dnd.OwnDropAction;
 import scrum.client.dnd.UnOwnDropAction;
@@ -102,9 +103,7 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement requirement = requirements.get(i);
 
-			Label label = new Label(requirement.getReference() + " " + requirement.getLabel());
-			label.setStyleName("WhiteboardWidget-requirement-label");
-			grid.setWidget(row, 0, label);
+			grid.setWidget(row, 0, createRequirementWidget(requirement));
 			grid.getCellFormatter().getElement(row, 0).setAttribute("colspan", "3");
 			row++;
 
@@ -117,6 +116,17 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 
 			row++;
 		}
+	}
+
+	private Widget createRequirementWidget(Requirement requirement) {
+		BlockListWidget<Requirement> list = new BlockListWidget<Requirement>(RequirementInWhiteboardBlock.FACTORY);
+		list.addAdditionalStyleName("WhiteboardWidget-requirement-list");
+		list.setDndSorting(false);
+		list.addBlock(requirement);
+		return list;
+		// Label label = new Label(requirement.getReference() + " " + requirement.getLabel());
+		// label.setStyleName("WhiteboardWidget-requirement-label");
+		// return label;
 	}
 
 	private void updateTaskLists(Requirement requirement) {

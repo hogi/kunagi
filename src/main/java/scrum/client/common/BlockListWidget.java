@@ -37,7 +37,7 @@ public final class BlockListWidget<O> extends AWidget {
 	private BlockListSelectionManager selectionManager;
 	private BlockListDropAction<O> dropAction;
 	private BlockDndMarkerWidget dndMarkerBottom;
-
+	private FlowPanel panel;
 	private GenericPredicate<O> predicate;
 
 	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory) {
@@ -64,11 +64,21 @@ public final class BlockListWidget<O> extends AWidget {
 		table.setStyleName("BlockListWidget-table");
 		table.addClickHandler(new TableClickHandler());
 
-		FlowPanel panel = new FlowPanel();
+		panel = new FlowPanel();
 		panel.setStyleName("BlockListWidget");
 		panel.add(table);
 		panel.add(dndMarkerBottom);
 		return panel;
+	}
+
+	public void addAdditionalStyleName(String styleName) {
+		initialize();
+		panel.addStyleName(styleName);
+	}
+
+	public void removeAdditionalStyleName(String styleName) {
+		initialize();
+		panel.removeStyleName(styleName);
 	}
 
 	@Override
