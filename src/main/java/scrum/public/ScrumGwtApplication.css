@@ -90,6 +90,8 @@ a {cursor: pointer;}
 .ABlockWidget-title-menu {margin-left: 15px; border: 0px;}
 .ABlockWidget-title-menu .gwt-MenuItem { font-size: 9px;}
 
+.WhiteboardWidget-requirement-list .ABlockWidget-title {background: #192666; color: #DEE5FD;}
+
 /***** Panel *****/
 
 .element-PanelWidget {border: 2px solid #EEEEEE; background: white; }
