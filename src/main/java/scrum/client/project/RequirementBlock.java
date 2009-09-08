@@ -21,13 +21,11 @@ import scrum.client.workspace.WorkareaWidget;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 
 public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implements TrashSupport, ClipboardSupport {
 
 	private Requirement requirement;
 
-	private Label summary;
 	private FieldsWidget fields;
 
 	@Override
@@ -41,33 +39,18 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	}
 
 	@Override
-	protected void onCollapsedInitialization() {
-		summary = new Label();
-	}
+	protected void onCollapsedInitialization() {}
 
 	@Override
 	protected void onHeadUpdate() {
 		setBlockTitle(requirement.getLongLabel());
+		setAdditionalStyleName(requirement.isInCurrentSprint() ? "RequirementBlock-inCurrentSprint" : null);
 		setIcon(getProperIcon());
 		createToolbar();
 	}
 
 	private AbstractImagePrototype getProperIcon() {
-
 		return Img.bundle.requirement16();
-
-		// AbstractImagePrototype icon = null;
-		// if (requirement.isClosed()) {
-		// icon = Img.bundle.done32();
-		// } else if (requirement.isDone()) {
-		// icon = Img.bundle.requirementIsDone32();
-		// } else if (requirement.isSprintSet()) {
-		// icon = Img.bundle.requirementInSprint32();
-		// } else {
-		// icon = Img.bundle.requirement32();
-		// }
-		//
-		// return icon;
 	}
 
 	@Override

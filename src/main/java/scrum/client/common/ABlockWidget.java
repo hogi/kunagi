@@ -32,7 +32,7 @@ public abstract class ABlockWidget<O> extends AWidget {
 	private SimplePanel contentWrapper;
 	private HorizontalPanel toolbar;
 	private MenuBar menu;
-
+	private String additionalStyleName;
 	private BlockListWidget<O> list;
 	private FlowPanel mainPanel;
 	private FlowPanel panel;
@@ -95,6 +95,21 @@ public abstract class ABlockWidget<O> extends AWidget {
 		onBlockInitialization();
 
 		return mainPanel;
+	}
+
+	public void setAdditionalStyleName(String additionalStyleName) {
+		if (additionalStyleName == null) {
+			if (this.additionalStyleName != null) {
+				mainPanel.removeStyleName(this.additionalStyleName);
+			}
+		} else {
+			mainPanel.addStyleName(additionalStyleName);
+		}
+		this.additionalStyleName = additionalStyleName;
+	}
+
+	public String getAdditionalStyleName() {
+		return additionalStyleName;
 	}
 
 	protected void addMenuAction(AAction action) {

@@ -16,7 +16,7 @@ public class UnclaimTaskAction extends AAction {
 
 	@Override
 	public String getLabel() {
-		return "Unclaim";
+		return "Remove Owner";
 	}
 
 	@Override

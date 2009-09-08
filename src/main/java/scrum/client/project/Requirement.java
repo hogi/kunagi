@@ -26,9 +26,12 @@ public class Requirement extends GRequirement {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getReference()).append(" ").append(getLabel());
 		if (isDirty()) sb.append(" [dirty]");
-		if (isSprintSet() && ScrumGwtApplication.get().getProject().isCurrentSprint(getSprint()))
-			sb.append(" [In Sprint]");
+		if (isInCurrentSprint()) sb.append(" [In Sprint]");
 		return sb.toString();
+	}
+
+	public boolean isInCurrentSprint() {
+		return isSprintSet() && ScrumGwtApplication.get().getProject().isCurrentSprint(getSprint());
 	}
 
 	public String getReference() {
