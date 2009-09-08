@@ -18,7 +18,6 @@ public class SidebarWidget extends AWidget {
 
 		trash = new TrashWidget();
 		// clipboard = new ClipboardWidget();
-		chat = new ChatWidget();
 
 		FlowPanel sidebar = new FlowPanel();
 		sidebar.setStyleName("SidebarWidget");
@@ -26,7 +25,7 @@ public class SidebarWidget extends AWidget {
 		sidebar.add(WorkareaWidget.get().getNavigator());
 		sidebar.add(trash);
 		// sidebar.add(clipboard);
-		sidebar.add(chat);
+		sidebar.add(getChat());
 
 		return sidebar;
 	}
@@ -39,6 +38,9 @@ public class SidebarWidget extends AWidget {
 	}
 
 	public ChatWidget getChat() {
+		if (chat == null) {
+			chat = new ChatWidget();
+		}
 		return chat;
 	}
 

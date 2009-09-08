@@ -97,6 +97,12 @@ public abstract class ABlockWidget<O> extends AWidget {
 		return mainPanel;
 	}
 
+	protected void addMenuAction(AAction action) {
+		if (action.isExecutable()) {
+			addMenuCommand(action.getLabel(), action);
+		}
+	}
+
 	protected void addMenuCommand(String label, Command command) {
 		if (menu == null) {
 			MenuBar menuBar = new MenuBar();

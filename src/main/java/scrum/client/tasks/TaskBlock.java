@@ -14,6 +14,7 @@ import scrum.client.img.Img;
 import scrum.client.sprint.SprintBacklogWidget;
 import scrum.client.sprint.Task;
 import scrum.client.test.LinkParserTest;
+import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Image;
@@ -169,35 +170,14 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 	}
 
 	protected void createToolbar() {
-		if (!task.isDone() && !task.isOwner(ScrumGwtApplication.get().getUser())) {
-			addMenuCommand("Own", new Command() {
-
-				public void execute() {
-					task.setOwner(ScrumGwtApplication.get().getUser());
-					TaskOverviewWidget.get().update();
-					WhiteboardWidget.get().update();
-					container.selectTask(task);
-				}
-			});
-		} else {
-			addMenuCommand("UnOwn", new Command() {
-
-				public void execute() {
-					task.setUnOwned();
-					TaskOverviewWidget.get().update();
-					WhiteboardWidget.get().update();
-					container.selectTask(task);
-				}
-			});
-		}
+		addMenuAction(new ClaimTaskAction(task, Ui.get()));
+		addMenuAction(new UnclaimTaskAction(task, Ui.get()));
 
 		if (isTrashable()) {
 			addMenuCommand("Delete", new Command() {
 
 				public void execute() {
 					trash();
-					TaskOverviewWidget.get().update();
-					WhiteboardWidget.get().update();
 				}
 			});
 		}

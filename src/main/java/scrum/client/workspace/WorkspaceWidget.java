@@ -18,12 +18,11 @@ public class WorkspaceWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		sidebar = new SidebarWidget();
 		workarea = new WorkareaWidget();
 
 		SimplePanel sidebarWrapper = new SimplePanel();
 		sidebarWrapper.setStyleName("sidebar");
-		sidebarWrapper.add(sidebar);
+		sidebarWrapper.add(getSidebar());
 
 		workspacePanel = new DockPanel();
 		workspacePanel.setStyleName("WorkspaceWidget");
@@ -47,6 +46,7 @@ public class WorkspaceWidget extends AWidget {
 	}
 
 	public SidebarWidget getSidebar() {
+		if (sidebar == null) sidebar = new SidebarWidget();
 		return sidebar;
 	}
 
