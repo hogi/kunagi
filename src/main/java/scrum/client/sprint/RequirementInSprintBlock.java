@@ -13,14 +13,12 @@ import scrum.client.project.Requirement;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 
 public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement> implements ClipboardSupport {
 
 	private Requirement requirement;
 
 	private BlockListWidget<Task> taskList;
-	private Label summary;
 	private FlowPanel panel;
 	private FieldsWidget fields;
 
@@ -35,9 +33,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	}
 
 	@Override
-	protected void onCollapsedInitialization() {
-		summary = new Label();
-	}
+	protected void onCollapsedInitialization() {}
 
 	@Override
 	protected void onHeadUpdate() {
@@ -84,14 +80,9 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 
 	@Override
 	protected void onContentUpdate() {
-		setBlockTitle(requirement.getLabel());
-		setIcon(requirement.isDone() ? Img.bundle.done16() : Img.bundle.requirement16());
 		fields.update();
-
 		taskList.setBlocks(requirement.getTasks());
-
 		setContent(panel);
-		createToolbar();
 	}
 
 	public Requirement getRequirement() {
