@@ -1,6 +1,7 @@
 package scrum.client.risks;
 
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.ToolbarWidget;
 
 import java.util.Comparator;
@@ -53,7 +54,9 @@ public class RiskListWidget extends AWidget {
 	class RiskComparator implements Comparator<Risk> {
 
 		public int compare(Risk a, Risk b) {
-			return b.compareTo(a);
+			int ret = b.compareTo(a);
+			GwtLogger.DEBUG("Compare", a, b, "=", ret);
+			return ret;
 		}
 	}
 
