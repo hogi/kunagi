@@ -162,18 +162,18 @@ public final class BlockListWidget<O> extends AWidget {
 				addBlock(newObject);
 		}
 
-		if (objects.size() == newObjects.size()) { return; }
-
-		// remove existing objects, which are not in the new list
-		List<O> objectsToRemove = null;
-		for (O object : objects) {
-			if (newObjects.contains(object)) continue;
-			if (objectsToRemove == null) objectsToRemove = new ArrayList<O>();
-			objectsToRemove.add(object);
-		}
-		if (objectsToRemove != null) {
-			for (O object : objectsToRemove)
-				removeObject(object);
+		if (objects.size() != newObjects.size()) {
+			// remove existing objects, which are not in the new list
+			List<O> objectsToRemove = null;
+			for (O object : objects) {
+				if (newObjects.contains(object)) continue;
+				if (objectsToRemove == null) objectsToRemove = new ArrayList<O>();
+				objectsToRemove.add(object);
+			}
+			if (objectsToRemove != null) {
+				for (O object : objectsToRemove)
+					removeObject(object);
+			}
 		}
 
 		assert table.getRowCount() == newObjects.size();
@@ -217,6 +217,8 @@ public final class BlockListWidget<O> extends AWidget {
 		assert contains(block.getObject());
 
 		if (toIndex <= selectedRow) selectedRow++;
+
+		if (autoSorter != null) sort(autoSorter);
 
 		block.update();
 		return block;
