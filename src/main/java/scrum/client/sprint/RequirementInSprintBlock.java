@@ -39,7 +39,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	protected void onUpdateHead() {
 		setBlockTitle(requirement.getReference() + " " + requirement.getLabel());
 		setIcon(requirement.isDone() ? Img.bundle.done16() : Img.bundle.requirement16());
-		addMenuAction(new CreateTaskInRequirementAction(requirement, Ui.get()));
+		addMenuAction(new CreateTaskAction(requirement, Ui.get()));
 	}
 
 	@Override
@@ -83,6 +83,10 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 		fields.update();
 		taskList.setObjects(requirement.getTasks());
 		setContent(panel);
+	}
+
+	public void selectTask(Task task) {
+		taskList.selectObject(task);
 	}
 
 	public Requirement getRequirement() {

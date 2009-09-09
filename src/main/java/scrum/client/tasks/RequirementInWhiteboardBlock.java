@@ -13,7 +13,7 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
 import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
-import scrum.client.sprint.CreateTaskInRequirementAction;
+import scrum.client.sprint.CreateTaskAction;
 import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -41,7 +41,7 @@ public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Require
 	protected void onUpdateHead() {
 		setBlockTitle(requirement.getReference() + " " + requirement.getLabel());
 		setIcon(getProperIcon());
-		addMenuAction(new CreateTaskInRequirementAction(requirement, Ui.get()));
+		addMenuAction(new CreateTaskAction(requirement, Ui.get()));
 	}
 
 	private AbstractImagePrototype getProperIcon() {

@@ -44,6 +44,10 @@ public class ProductBacklogWidget extends AWidget {
 		list.setObjects(ScrumGwtApplication.get().getProject().getRequirements());
 	}
 
+	public void selectRequirement(Requirement requirement) {
+		list.selectObject(requirement);
+	}
+
 	class CreateClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {

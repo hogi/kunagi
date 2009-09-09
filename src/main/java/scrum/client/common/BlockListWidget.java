@@ -274,8 +274,11 @@ public final class BlockListWidget<O> extends AWidget {
 			selectionManager.deselectAll();
 		}
 
-		getBlock(row).setSelected(true);
+		ABlockWidget<O> block = getBlock(row);
+		block.setSelected(true);
 		selectedRow = row;
+
+		block.getElement().scrollIntoView();
 	}
 
 	public final void deselectRow(int row) {
@@ -322,6 +325,12 @@ public final class BlockListWidget<O> extends AWidget {
 		}
 
 		assert table.getRowCount() == oldSize - rows.length;
+	}
+
+	public final void selectBlock(ABlockWidget<O> block) {
+		int idx = indexOf(block);
+		selectRow(idx);
+		assert isSelected(block.getObject());
 	}
 
 	public final void selectObject(O object) {

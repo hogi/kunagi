@@ -3,12 +3,13 @@ package scrum.client.sprint;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.common.AAction;
 import scrum.client.project.Requirement;
+import scrum.client.workspace.WorkareaWidget;
 
-public class CreateTaskInRequirementAction extends AAction {
+public class CreateTaskAction extends AAction {
 
 	private Requirement requirement;
 
-	public CreateTaskInRequirementAction(Requirement task, AWidget... widgetsToUpdate) {
+	public CreateTaskAction(Requirement task, AWidget... widgetsToUpdate) {
 		super(widgetsToUpdate);
 		this.requirement = task;
 	}
@@ -30,7 +31,8 @@ public class CreateTaskInRequirementAction extends AAction {
 
 	@Override
 	protected void onExecute() {
-		requirement.createNewTask();
+		Task task = requirement.createNewTask();
+		WorkareaWidget.get().showTask(task);
 	}
 
 }
