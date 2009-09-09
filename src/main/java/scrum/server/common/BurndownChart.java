@@ -62,10 +62,14 @@ public class BurndownChart {
 		try {
 			ChartUtilities.saveChartAsPNG(new File("E:/Temp/chart.png"), chart, 500, 500);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 
 	}
+
+	private static final Color COLOR_PAST_LINE = new Color(1.0f, 0.3f, 0.3f);
+	private static final Color COLOR_PROJECTION_LINE = COLOR_PAST_LINE;
+	private static final Color COLOR_OPTIMUM_LINE = new Color(0.9f, 0.9f, 0.9f);
 
 	// --- dependencies ---
 
@@ -121,7 +125,7 @@ public class BurndownChart {
 		try {
 			ChartUtilities.writeScaledChartAsPNG(out, chart, width, height, 1, 1);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -144,7 +148,7 @@ public class BurndownChart {
 		try {
 			ChartUtilities.writeScaledChartAsPNG(out, chart, width, height, 1, 1);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -156,13 +160,13 @@ public class BurndownChart {
 
 		XYItemRenderer renderer = chart.getXYPlot().getRenderer();
 
-		renderer.setSeriesPaint(0, new Color(0.1f, 0.9f, 0f));
+		renderer.setSeriesPaint(0, COLOR_PAST_LINE);
 		renderer.setSeriesStroke(0, new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
-		renderer.setSeriesPaint(1, new Color(0.1f, 0.9f, 0f));
+		renderer.setSeriesPaint(1, COLOR_PROJECTION_LINE);
 		renderer.setSeriesStroke(1, new BasicStroke(1.5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL, 1.0f,
 				new float[] { 4, 8 }, 4));
-		renderer.setSeriesPaint(2, new Color(1.0f, 0.85f, 0.85f));
-		renderer.setSeriesStroke(2, new BasicStroke(5.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
+		renderer.setSeriesPaint(2, COLOR_OPTIMUM_LINE);
+		renderer.setSeriesStroke(2, new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
 
 		DateAxis axis = new DateAxis(dateAxisLabel);
 		axis.setDateFormatOverride(Date.FORMAT_DAY_MONTH);
