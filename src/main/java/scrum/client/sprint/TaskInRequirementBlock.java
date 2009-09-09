@@ -3,7 +3,6 @@ package scrum.client.sprint;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -11,8 +10,13 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
+import scrum.client.tasks.ClaimTaskAction;
+import scrum.client.tasks.CloseTaskAction;
+import scrum.client.tasks.DeleteTaskAction;
+import scrum.client.tasks.ReopenTaskAction;
+import scrum.client.tasks.UnclaimTaskAction;
+import scrum.client.workspace.Ui;
 
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
@@ -37,10 +41,14 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 	protected void onCollapsedInitialization() {}
 
 	@Override
-	protected void onHeadUpdate() {
+	protected void onUpdateHead() {
 		setBlockTitle(task.getLongLabel());
 		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
-		createToolbar();
+		addMenuAction(new ClaimTaskAction(task, Ui.get()));
+		addMenuAction(new CloseTaskAction(task, Ui.get()));
+		addMenuAction(new ReopenTaskAction(task, Ui.get()));
+		addMenuAction(new UnclaimTaskAction(task, Ui.get()));
+		addMenuAction(new DeleteTaskAction(task, Ui.get()));
 	}
 
 	@Override
@@ -156,7 +164,7 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 	}
 
 	@Override
-	protected void onContentUpdate() {
+	protected void onUpdateBody() {
 		fields.update();
 		owner.setText(task.getOwner() == null ? "No owner specified." : task.getOwner().getName());
 		setContent(fields);
@@ -164,38 +172,6 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 
 	public Task getTask() {
 		return task;
-	}
-
-	protected void createToolbar() {
-		if (!task.isDone()) {
-			addMenuCommand("Own", new Command() {
-
-				public void execute() {
-					task.setOwner(ScrumGwtApplication.get().getUser());
-					SprintBacklogWidget.get().update();
-				}
-			});
-		}
-
-		if (isTrashable()) {
-			addMenuCommand("Delete", new Command() {
-
-				public void execute() {
-					trash();
-					SprintBacklogWidget.get().update();
-				}
-			});
-		}
-
-		if (!task.isDone()) {
-			addMenuCommand("Done", new Command() {
-
-				public void execute() {
-					task.setDone(ScrumGwtApplication.get().getUser());
-					SprintBacklogWidget.get().update();
-				}
-			});
-		}
 	}
 
 	public Image getClipboardIcon() {

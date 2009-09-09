@@ -1,37 +1,36 @@
 package scrum.client.tasks;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AAction;
 import scrum.client.sprint.Task;
 
-public class ClaimTaskAction extends AAction {
+public class DeleteTaskAction extends AAction {
 
 	private Task task;
 
-	public ClaimTaskAction(Task task, AWidget... widgetsToUpdate) {
+	public DeleteTaskAction(Task task, AWidget... widgetsToUpdate) {
 		super(widgetsToUpdate);
 		this.task = task;
 	}
 
 	@Override
 	public String getLabel() {
-		return "Claim";
+		return "Delete";
 	}
 
 	@Override
 	public String getTooltip() {
-		return "Claim ownership for this task.";
+		return "Delete this task.";
 	}
 
 	@Override
 	public boolean isExecutable() {
-		return !task.isDone() && !task.isOwner(getUser());
+		return !task.isOwnerSet() || task.isOwner(getUser());
 	}
 
 	@Override
 	protected void onExecute() {
-		task.setOwner(ScrumGwtApplication.get().getUser());
+		task.getRequirement().deleteTask(task);
 	}
 
 }

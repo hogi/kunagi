@@ -40,7 +40,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	}
 
 	@Override
-	protected void onHeadUpdate() {
+	protected void onUpdateHead() {
 		setBlockTitle(impediment.getLabel());
 		setIcon(Img.bundle.impediment16());
 		// summary.setText(impediment.getSummary());
@@ -109,7 +109,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	}
 
 	@Override
-	protected void onContentUpdate() {
+	protected void onUpdateBody() {
 		fields.update();
 		setContent(fields);
 	}

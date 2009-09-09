@@ -2,6 +2,9 @@ package scrum.client.common;
 
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.GwtLogger;
+import scrum.client.ScrumGwtApplication;
+import scrum.client.admin.User;
+import scrum.client.project.Project;
 
 import com.google.gwt.user.client.Command;
 
@@ -33,6 +36,16 @@ public abstract class AAction implements Command {
 	@Override
 	public String toString() {
 		return getClass().getName();
+	}
+
+	// --- helper ---
+
+	protected Project getProject() {
+		return ScrumGwtApplication.get().getProject();
+	}
+
+	protected User getUser() {
+		return ScrumGwtApplication.get().getUser();
 	}
 
 }

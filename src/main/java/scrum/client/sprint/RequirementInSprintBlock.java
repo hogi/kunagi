@@ -36,7 +36,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	protected void onCollapsedInitialization() {}
 
 	@Override
-	protected void onHeadUpdate() {
+	protected void onUpdateHead() {
 		setBlockTitle(requirement.getReference() + " " + requirement.getLabel());
 		setIcon(requirement.isDone() ? Img.bundle.done16() : Img.bundle.requirement16());
 		createToolbar();
@@ -79,7 +79,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	}
 
 	@Override
-	protected void onContentUpdate() {
+	protected void onUpdateBody() {
 		fields.update();
 		taskList.setBlocks(requirement.getTasks());
 		setContent(panel);

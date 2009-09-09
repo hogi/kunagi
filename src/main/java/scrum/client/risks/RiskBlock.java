@@ -38,7 +38,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 	}
 
 	@Override
-	protected void onHeadUpdate() {
+	protected void onUpdateHead() {
 		setBlockTitle(risk.getLabel() + " [" + risk.getPriorityLabel() + "]");
 		setIcon(Img.bundle.risk16());
 		setContent(null);
@@ -132,7 +132,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 	}
 
 	@Override
-	protected void onContentUpdate() {
+	protected void onUpdateBody() {
 		fields.update();
 		setContent(fields);
 	}

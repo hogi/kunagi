@@ -39,7 +39,7 @@ public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Require
 	protected void onCollapsedInitialization() {}
 
 	@Override
-	protected void onHeadUpdate() {
+	protected void onUpdateHead() {
 		setBlockTitle(requirement.getReference() + " " + requirement.getLabel());
 		setIcon(getProperIcon());
 		createToolbar();
@@ -161,7 +161,7 @@ public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Require
 	}
 
 	@Override
-	protected void onContentUpdate() {
+	protected void onUpdateBody() {
 		fields.update();
 		setContent(fields);
 	}

@@ -78,14 +78,14 @@ public class WidgetsTesterWidget extends AWidget {
 		protected void onExtendedInitialization() {}
 
 		@Override
-		protected void onHeadUpdate() {
+		protected void onUpdateHead() {
 			setBlockTitle(text);
 			setIcon(Img.bundle.project16());
 			createToolbar();
 		}
 
 		@Override
-		protected void onContentUpdate() {
+		protected void onUpdateBody() {
 			HTML content = new HTML(
 					"<h3>"
 							+ text

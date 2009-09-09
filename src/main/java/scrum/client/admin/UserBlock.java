@@ -37,7 +37,7 @@ public class UserBlock extends AExtensibleBlockWidget<User> implements TrashSupp
 	}
 
 	@Override
-	protected void onHeadUpdate() {
+	protected void onUpdateHead() {
 		setBlockTitle(user.getName());
 		setIcon(Img.bundle.user16());
 		summary.setText(user.getName());
@@ -91,7 +91,7 @@ public class UserBlock extends AExtensibleBlockWidget<User> implements TrashSupp
 	}
 
 	@Override
-	protected void onContentUpdate() {
+	protected void onUpdateBody() {
 		fields.update();
 		setContent(fields);
 	}

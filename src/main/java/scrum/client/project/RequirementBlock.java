@@ -42,7 +42,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	protected void onCollapsedInitialization() {}
 
 	@Override
-	protected void onHeadUpdate() {
+	protected void onUpdateHead() {
 		setBlockTitle(requirement.getLongLabel());
 		setAdditionalStyleName(requirement.isInCurrentSprint() ? "RequirementBlock-inCurrentSprint" : null);
 		setIcon(getProperIcon());
@@ -165,7 +165,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	}
 
 	@Override
-	protected void onContentUpdate() {
+	protected void onUpdateBody() {
 		fields.update();
 		setContent(fields);
 	}

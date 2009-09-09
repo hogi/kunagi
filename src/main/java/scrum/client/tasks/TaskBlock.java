@@ -3,7 +3,6 @@ package scrum.client.tasks;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -11,12 +10,10 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
-import scrum.client.sprint.SprintBacklogWidget;
 import scrum.client.sprint.Task;
 import scrum.client.test.LinkParserTest;
 import scrum.client.workspace.Ui;
 
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Image;
 
 public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupport, ClipboardSupport {
@@ -43,16 +40,20 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 	protected void onCollapsedInitialization() {}
 
 	@Override
-	protected void onHeadUpdate() {
+	protected void onUpdateHead() {
 		setBlockTitle(task.getLongLabel());
 		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
-		createToolbar();
+		addMenuAction(new ClaimTaskAction(task, Ui.get()));
+		addMenuAction(new CloseTaskAction(task, Ui.get()));
+		addMenuAction(new ReopenTaskAction(task, Ui.get()));
+		addMenuAction(new UnclaimTaskAction(task, Ui.get()));
+		addMenuAction(new DeleteTaskAction(task, Ui.get()));
 	}
 
 	@Override
 	protected void onExtendedInitialization() {
 		fields = new FieldsWidget();
-		fields.setAutoUpdateWidget(SprintBacklogWidget.get());
+		fields.setAutoUpdateWidget(Ui.get());
 
 		fields.add("Label", new ATextViewEditWidget() {
 
@@ -160,49 +161,13 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 	}
 
 	@Override
-	protected void onContentUpdate() {
+	protected void onUpdateBody() {
 		fields.update();
 		setContent(fields);
 	}
 
 	public Task getTask() {
 		return task;
-	}
-
-	protected void createToolbar() {
-		addMenuAction(new ClaimTaskAction(task, Ui.get()));
-		addMenuAction(new UnclaimTaskAction(task, Ui.get()));
-
-		if (isTrashable()) {
-			addMenuCommand("Delete", new Command() {
-
-				public void execute() {
-					trash();
-				}
-			});
-		}
-
-		if (!task.isDone()) {
-			addMenuCommand("Done", new Command() {
-
-				public void execute() {
-					task.setDone(ScrumGwtApplication.get().getUser());
-					TaskOverviewWidget.get().update();
-					WhiteboardWidget.get().update();
-					container.selectTask(task);
-				}
-			});
-		} else {
-			addMenuCommand("UnDone", new Command() {
-
-				public void execute() {
-					task.setUnDone(ScrumGwtApplication.get().getUser());
-					TaskOverviewWidget.get().update();
-					WhiteboardWidget.get().update();
-					container.selectTask(task);
-				}
-			});
-		}
 	}
 
 	public Image getClipboardIcon() {
