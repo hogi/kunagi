@@ -67,9 +67,9 @@ public class BurndownChart {
 
 	}
 
-	private static final Color COLOR_PAST_LINE = new Color(1.0f, 0.3f, 0.3f);
+	private static final Color COLOR_PAST_LINE = new Color(0.1f, 0.9f, 0.1f);
 	private static final Color COLOR_PROJECTION_LINE = COLOR_PAST_LINE;
-	private static final Color COLOR_OPTIMUM_LINE = new Color(0.9f, 0.9f, 0.9f);
+	private static final Color COLOR_OPTIMUM_LINE = new Color(0.85f, 0.85f, 0.85f);
 
 	// --- dependencies ---
 
