@@ -95,6 +95,70 @@ public class Requirement extends GRequirement {
 		return getEstimatedWork() + " " + ScrumGwtApplication.get().getProject().getEffortUnit();
 	}
 
+	public Integer getBurnedWorkInClosedTasks() {
+		Integer sum = null;
+		for (Task t : getTasks()) {
+			if (!t.isDone()) continue;
+			Integer value = t.getBurnedWork();
+			if (value != null) {
+				if (sum == null) {
+					sum = value;
+				} else {
+					sum += value;
+				}
+			}
+		}
+		return sum;
+	}
+
+	public Integer getBurnedWorkInClaimedTasks() {
+		Integer sum = null;
+		for (Task t : getTasks()) {
+			if (t.isDone() || !t.isOwnerSet()) continue;
+			Integer value = t.getBurnedWork();
+			if (value != null) {
+				if (sum == null) {
+					sum = value;
+				} else {
+					sum += value;
+				}
+			}
+		}
+		return sum;
+	}
+
+	public Integer getRemainingWorkInClaimedTasks() {
+		Integer sum = null;
+		for (Task t : getTasks()) {
+			if (!t.isOwnerSet() || t.isDone()) continue;
+			Integer effort = t.getRemainingWork();
+			if (effort != null) {
+				if (sum == null) {
+					sum = effort;
+				} else {
+					sum += effort;
+				}
+			}
+		}
+		return sum;
+	}
+
+	public Integer getRemainingWorkInUnclaimedTasks() {
+		Integer sum = null;
+		for (Task t : getTasks()) {
+			if (t.isOwnerSet() || t.isDone()) continue;
+			Integer effort = t.getRemainingWork();
+			if (effort != null) {
+				if (sum == null) {
+					sum = effort;
+				} else {
+					sum += effort;
+				}
+			}
+		}
+		return sum;
+	}
+
 	public Integer getRemainingWork() {
 		Integer sum = null;
 		for (Task t : getTasks()) {

@@ -41,7 +41,67 @@ public class Sprint extends GSprint {
 		return ret;
 	}
 
-	public Integer getTaskEffortSum() {
+	public Integer getBurnedWorkInClosedTasks() {
+		Integer sum = null;
+		for (Requirement s : getRequirements()) {
+			Integer work = s.getBurnedWorkInClosedTasks();
+			if (work != null) {
+				if (sum == null) {
+					sum = work;
+				} else {
+					sum += work;
+				}
+			}
+		}
+		return sum;
+	}
+
+	public Integer getBurnedWorkInClaimedTasks() {
+		Integer sum = null;
+		for (Requirement s : getRequirements()) {
+			Integer work = s.getBurnedWorkInClaimedTasks();
+			if (work != null) {
+				if (sum == null) {
+					sum = work;
+				} else {
+					sum += work;
+				}
+			}
+		}
+		return sum;
+	}
+
+	public Integer getRemainingWorkInClaimedTasks() {
+		Integer sum = null;
+		for (Requirement s : getRequirements()) {
+			Integer work = s.getRemainingWorkInClaimedTasks();
+			if (work != null) {
+				if (sum == null) {
+					sum = work;
+				} else {
+					sum += work;
+				}
+			}
+		}
+		return sum;
+	}
+
+	public Integer getRemainingWorkInUnclaimedTasks() {
+		Integer sum = null;
+		for (Requirement s : getRequirements()) {
+			Integer effort = s.getRemainingWorkInUnclaimedTasks();
+			if (effort != null) {
+				if (sum == null) {
+					sum = effort;
+				} else {
+					sum += effort;
+				}
+			}
+		}
+		return sum;
+	}
+
+	public Integer getRemainingWork() {
 		Integer sum = null;
 		for (Requirement s : getRequirements()) {
 			Integer effort = s.getRemainingWork();
@@ -56,8 +116,8 @@ public class Sprint extends GSprint {
 		return sum;
 	}
 
-	public String getTaskEffortSumString() {
-		Integer sum = getTaskEffortSum();
+	public String getRemainingWorkAsString() {
+		Integer sum = getRemainingWork();
 		if (sum != null) return sum + " hours";
 		return "unknown";
 	}

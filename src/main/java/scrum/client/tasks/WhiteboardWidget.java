@@ -16,6 +16,7 @@ import scrum.client.dnd.DoneDropAction;
 import scrum.client.dnd.OwnDropAction;
 import scrum.client.dnd.UnOwnDropAction;
 import scrum.client.project.Requirement;
+import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
 import scrum.client.workspace.WorkareaWidget;
 
@@ -46,11 +47,11 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 	protected Widget onInitialization() {
 		predicate = null;
 
-		openLabel = new Label("Tasks without Owner");
+		openLabel = new Label();
 		openLabel.setStyleName("WhiteboardWidget-columnLabel");
-		ownedLabel = new Label("Owned Tasks");
+		ownedLabel = new Label();
 		ownedLabel.setStyleName("WhiteboardWidget-columnLabel");
-		doneLabel = new Label("Completed Tasks");
+		doneLabel = new Label();
 		doneLabel.setStyleName("WhiteboardWidget-columnLabel");
 
 		openTasks = new HashMap<Requirement, TaskListWidget>();
@@ -71,7 +72,14 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 
 	@Override
 	protected void onUpdate() {
-		List<Requirement> requirements = ScrumGwtApplication.get().getProject().getCurrentSprint().getRequirements();
+		Sprint sprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
+
+		openLabel.setText("Free Tasks (" + hours(sprint.getRemainingWorkInUnclaimedTasks()) + " to do)");
+		ownedLabel.setText("Claimed Tasks (" + hours(sprint.getRemainingWorkInClaimedTasks()) + " to do, "
+				+ hours(sprint.getBurnedWorkInClaimedTasks()) + " done)");
+		doneLabel.setText("Completed Tasks (" + hours(sprint.getBurnedWorkInClosedTasks()) + " done)");
+
+		List<Requirement> requirements = sprint.getRequirements();
 
 		if (requirements.equals(knownRequirements)) {
 			// quick update without recreating whole gui
@@ -186,5 +194,11 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 
 	public void selectTask(Task task) {
 		selectionManager.select(task);
+	}
+
+	private String hours(Integer i) {
+		if (i == null || i == 0) return "nothing";
+		if (i == 1) return "1 hour";
+		return i + " hours";
 	}
 }

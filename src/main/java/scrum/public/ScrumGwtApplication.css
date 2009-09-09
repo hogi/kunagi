@@ -102,7 +102,7 @@ a {cursor: pointer;}
 /***** Whiteboard *****/
 
 .WhiteboardWidget-requirement-label {background: #192666; color: #DEE5FD; padding: 5px; font-size: 14px; font-family: "georgia",serif;}
-.WhiteboardWidget-columnLabel {padding: 5px; font-size: 16px; font-family: "georgia",serif;}
+.WhiteboardWidget-columnLabel {padding: 5px; font-size: 13px; font-family: "georgia",serif;}
 .WhiteboardWidget-open {background: #FFE5E5;}
 .WhiteboardWidget-owned {background: #FFFFE5;}
 .WhiteboardWidget-done {background: #E5FFE5;}
