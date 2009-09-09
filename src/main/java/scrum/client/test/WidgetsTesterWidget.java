@@ -7,6 +7,7 @@ import ilarkesto.gwt.client.ImageAnchor;
 import ilarkesto.gwt.client.MultiSelectionWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
+import scrum.client.common.AAction;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -15,7 +16,6 @@ import scrum.client.img.Img;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -81,7 +81,11 @@ public class WidgetsTesterWidget extends AWidget {
 		protected void onUpdateHead() {
 			setBlockTitle(text);
 			setIcon(Img.bundle.project16());
-			createToolbar();
+			addToolbarAction(new DummyAction("Action 1"));
+			addToolbarAction(new DummyAction("Action 2"));
+			addMenuAction(new DummyAction("Action 3"));
+			addMenuAction(new DummyAction("Action 4"));
+			addMenuAction(new DummyAction("Action 5"));
 		}
 
 		@Override
@@ -92,29 +96,6 @@ public class WidgetsTesterWidget extends AWidget {
 							+ "</h3><p>Das ist der Content. Das ist der Content. Das ist der Content. Das ist der Content. </p>");
 			setContent(content);
 			setIcon(Img.bundle.project16());
-		}
-
-		private void createToolbar() {
-			addToolbarCommand("Action 1", new Command() {
-
-				public void execute() {}
-			});
-			addToolbarCommand("Action 2", new Command() {
-
-				public void execute() {}
-			});
-			addMenuCommand("Action 3", new Command() {
-
-				public void execute() {}
-			});
-			addMenuCommand("Action 4", new Command() {
-
-				public void execute() {}
-			});
-			addMenuCommand("Action 5", new Command() {
-
-				public void execute() {}
-			});
 		}
 
 		@Override
@@ -226,6 +207,34 @@ public class WidgetsTesterWidget extends AWidget {
 		section.add(new Label(title));
 		section.add(sectionContent);
 		panel.add(section);
+	}
+
+	static class DummyAction extends AAction {
+
+		private String label;
+
+		public DummyAction(String label) {
+			this.label = label;
+		}
+
+		@Override
+		public String getLabel() {
+			return label;
+		}
+
+		@Override
+		public boolean isExecutable() {
+			return true;
+		}
+
+		@Override
+		public String getTooltip() {
+			return "Tooltip for " + label;
+		}
+
+		@Override
+		protected void onExecute() {}
+
 	}
 
 }

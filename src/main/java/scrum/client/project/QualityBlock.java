@@ -2,7 +2,6 @@ package scrum.client.project;
 
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -10,8 +9,8 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
+import scrum.client.workspace.Ui;
 
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Image;
 
 public class QualityBlock extends AExtensibleBlockWidget<Quality> implements TrashSupport, ClipboardSupport {
@@ -39,8 +38,7 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 	protected void onUpdateHead() {
 		setBlockTitle(quality.getLabel());
 		setIcon(Img.bundle.requirement16());
-		setContent(null);
-		createToolbar();
+		addMenuAction(new DeleteQualityAction(quality, Ui.get()));
 	}
 
 	@Override
@@ -109,16 +107,6 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 	protected void onUpdateBody() {
 		fields.update();
 		setContent(fields);
-	}
-
-	protected void createToolbar() {
-		addMenuCommand("Delete", new Command() {
-
-			public void execute() {
-				ScrumGwtApplication.get().getProject().deleteQuality(quality);
-				QualityBacklogWidget.get().list.removeSelectedRow();
-			}
-		});
 	}
 
 	public Image getClipboardIcon() {

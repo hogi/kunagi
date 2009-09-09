@@ -114,11 +114,11 @@ public abstract class ABlockWidget<O> extends AWidget {
 
 	protected void addMenuAction(AAction action) {
 		if (action.isExecutable()) {
-			addMenuCommand(action.getLabel(), action);
+			addMenuCommand(action.getLabel(), action, action.getTooltip());
 		}
 	}
 
-	protected void addMenuCommand(String label, Command command) {
+	protected void addMenuCommand(String label, Command command, String tooltip) {
 		if (menu == null) {
 			MenuBar menuBar = new MenuBar();
 			menuBar.addStyleName("ABlockWidget-title-menu");
@@ -128,7 +128,9 @@ public abstract class ABlockWidget<O> extends AWidget {
 			menuBar.setPopupPosition(MenuBar.PopupPosition.LEFT);
 			addToolbarItem(menuBar);
 		}
-		menu.addItem(new MenuItem(label, command));
+		MenuItem item = new MenuItem(label, command);
+		if (tooltip != null) item.setTitle(tooltip);
+		menu.addItem(item);
 	}
 
 	protected void addToolbarAction(AAction action) {

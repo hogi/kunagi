@@ -3,7 +3,6 @@ package scrum.client.impediments;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -11,8 +10,8 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
+import scrum.client.workspace.Ui;
 
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
@@ -43,9 +42,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	protected void onUpdateHead() {
 		setBlockTitle(impediment.getLabel());
 		setIcon(Img.bundle.impediment16());
-		// summary.setText(impediment.getSummary());
-		// setContent(summary);
-		createToolbar();
+		addMenuAction(new DeleteImpedimentAction(impediment, Ui.get()));
 	}
 
 	@Override
@@ -124,36 +121,6 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 
 	public ABlockWidget getClipboardPayload() {
 		return this;
-	}
-
-	private void createToolbar() {
-		addMenuCommand("Delete", new Command() {
-
-			public void execute() {
-				ScrumGwtApplication.get().getProject().deleteImpediment(impediment);
-				ImpedimentListWidget.get().list.removeSelectedRow();
-			}
-		});
-
-		if (!impediment.isSolved()) {
-			// impediment not solved -> add [Solve] button
-			addMenuCommand("Mark Solved", new Command() {
-
-				public void execute() {
-					impediment.setSolved();
-					update();
-				}
-			});
-		} else {
-			// impediment not solved -> add [Unsolve] button
-			addMenuCommand("Mark Unsolved", new Command() {
-
-				public void execute() {
-					impediment.setSolveDate(null);
-					update();
-				}
-			});
-		}
 	}
 
 	public boolean isTrashable() {
