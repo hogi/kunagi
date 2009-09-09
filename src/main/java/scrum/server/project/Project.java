@@ -9,6 +9,8 @@ import scrum.server.impediments.ImpedimentDao;
 import scrum.server.risks.Risk;
 import scrum.server.risks.RiskDao;
 import scrum.server.sprint.Sprint;
+import scrum.server.sprint.Task;
+import scrum.server.sprint.TaskDao;
 
 public class Project extends GProject {
 
@@ -19,6 +21,11 @@ public class Project extends GProject {
 	private static QualityDao qualityDao;
 	private static ProjectSprintSnapshotDao projectSprintSnapshotDao;
 	private static RiskDao riskDao;
+	private static TaskDao taskDao;
+
+	public static void setTaskDao(TaskDao taskDao) {
+		Project.taskDao = taskDao;
+	}
 
 	public static void setRiskDao(RiskDao riskDao) {
 		Project.riskDao = riskDao;
@@ -41,6 +48,14 @@ public class Project extends GProject {
 	}
 
 	// --- ---
+
+	public Requirement getRequirementByNumber(int number) {
+		return requirementDao.getRequirementByNumber(number, this);
+	}
+
+	public Task getTaskByNumber(int number) {
+		return taskDao.getTaskByNumber(number, this);
+	}
 
 	public synchronized int generateTaskNumber() {
 		int number = getLastTaskNumber() + 1;

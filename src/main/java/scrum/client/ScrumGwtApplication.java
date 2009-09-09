@@ -1,6 +1,7 @@
 package scrum.client;
 
 import ilarkesto.gwt.client.ADataTransferObject;
+import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.GwtLogger;
 
 import java.util.LinkedList;
@@ -53,18 +54,18 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		pingTimer.scheduleRepeating(15000);
 	}
 
-	public ChatMessage postSystemMessage(String text) {
-		return postMessage(null, text);
+	public ChatMessage postSystemMessage(String text, boolean distribute) {
+		return postMessage(null, text, distribute);
 	}
 
 	public ChatMessage postMessage(String text) {
-		return postMessage(user, text);
+		return postMessage(user, text, true);
 	}
 
-	public ChatMessage postMessage(User author, String text) {
+	private ChatMessage postMessage(User author, String text, boolean distribute) {
 		ChatMessage msg = new ChatMessage(getProject(), author, text);
-		getDao().createChatMessage(msg);
 		addChatMessage(msg);
+		if (distribute) getDao().createChatMessage(msg);
 		return msg;
 	}
 
@@ -141,12 +142,40 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			}
 		});
 
-		postSystemMessage(user.getName() + " logged in.");
+		postSystemMessage(user.getName() + " logged in.", true);
 	}
 
 	public void closeProject() {
+		callCloseProject();
 		this.project = null;
+		Dao dao = getDao();
+		dao.clearChatMessages();
+		dao.clearImpediments();
+		dao.clearQualitys();
+		dao.clearRequirements();
+		dao.clearRisks();
+		dao.clearSprints();
+		dao.clearTasks();
 		Ui.get().showStartPage();
+	}
+
+	public void showEntityByReference(final String reference) {
+		AGwtEntity entity = getDao().getEntityByReference(reference);
+		if (entity != null) {
+			WorkareaWidget.get().showEntity(entity);
+			return;
+		}
+		callRequestEntityByReference(reference, new Runnable() {
+
+			public void run() {
+				AGwtEntity entity = getDao().getEntityByReference(reference);
+				if (entity == null) {
+					postSystemMessage("Object does not exist: " + reference, false);
+					return;
+				}
+				WorkareaWidget.get().showEntity(entity);
+			}
+		});
 	}
 
 	public Project getProject() {
@@ -171,10 +200,10 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	public void logout() {
 		Ui.get().lock("logging out");
-		user = null;
-		project = null;
-		getDao().clearAllEntities();
 		ScrumGwtApplication.get().callLogout();
+		closeProject();
+		user = null;
+		getDao().clearAllEntities();
 		Ui.get().showLogin();
 	}
 

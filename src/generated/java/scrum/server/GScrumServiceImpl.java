@@ -28,6 +28,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onChangePassword(WebSession session, java.lang.String oldPassword, java.lang.String newPassword);
     protected abstract void onResetPassword(WebSession session, java.lang.String userId);
     protected abstract void onSelectProject(WebSession session, java.lang.String projectId);
+    protected abstract void onCloseProject(WebSession session);
     protected abstract void onSwitchToNextSprint(WebSession session);
     protected abstract void onRequestImpediments(WebSession session);
     protected abstract void onRequestRisks(WebSession session);
@@ -36,6 +37,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onChangeProperties(WebSession session, java.lang.String entityId, java.util.Map properties);
     protected abstract void onCreateEntity(WebSession session, java.lang.String type, java.util.Map properties);
     protected abstract void onDeleteEntity(WebSession session, java.lang.String entityId);
+    protected abstract void onRequestEntityByReference(WebSession session, java.lang.String reference);
     protected abstract void onSleep(WebSession session, long millis);
 
 
@@ -139,6 +141,24 @@ public abstract class GScrumServiceImpl
             onSelectProject(session, projectId);
         } catch (Throwable t) {
             handleServiceMethodException("selectProject",t);
+            throw new RuntimeException(t);
+        }
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public scrum.client.DataTransferObject closeProject() {
+        LOG.debug("closeProject");
+        WebSession session = (WebSession) getSession();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:closeProject");
+        context.bindCurrentThread();
+        try {
+            onCloseProject(session);
+        } catch (Throwable t) {
+            handleServiceMethodException("closeProject",t);
             throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
@@ -283,6 +303,24 @@ public abstract class GScrumServiceImpl
             onDeleteEntity(session, entityId);
         } catch (Throwable t) {
             handleServiceMethodException("deleteEntity",t);
+            throw new RuntimeException(t);
+        }
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public scrum.client.DataTransferObject requestEntityByReference(java.lang.String reference) {
+        LOG.debug("requestEntityByReference");
+        WebSession session = (WebSession) getSession();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:requestEntityByReference");
+        context.bindCurrentThread();
+        try {
+            onRequestEntityByReference(session, reference);
+        } catch (Throwable t) {
+            handleServiceMethodException("requestEntityByReference",t);
             throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();

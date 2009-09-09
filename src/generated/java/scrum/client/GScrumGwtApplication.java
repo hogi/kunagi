@@ -78,6 +78,14 @@ public abstract class GScrumGwtApplication
         callSelectProject(projectId,  null);
     }
 
+    public final void callCloseProject( Runnable callback) {
+        getScrumService().closeProject( new DefaultCallback<DataTransferObject>(callback));
+    }
+
+    public final void callCloseProject() {
+        callCloseProject( null);
+    }
+
     public final void callSwitchToNextSprint( Runnable callback) {
         getScrumService().switchToNextSprint( new DefaultCallback<DataTransferObject>(callback));
     }
@@ -140,6 +148,14 @@ public abstract class GScrumGwtApplication
 
     public final void callDeleteEntity(java.lang.String entityId) {
         callDeleteEntity(entityId,  null);
+    }
+
+    public final void callRequestEntityByReference(java.lang.String reference,  Runnable callback) {
+        getScrumService().requestEntityByReference(reference,  new DefaultCallback<DataTransferObject>(callback));
+    }
+
+    public final void callRequestEntityByReference(java.lang.String reference) {
+        callRequestEntityByReference(reference,  null);
     }
 
     public final void callSleep(long millis,  Runnable callback) {

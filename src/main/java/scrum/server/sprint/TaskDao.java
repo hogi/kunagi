@@ -4,9 +4,19 @@ import ilarkesto.fp.Predicate;
 
 import java.util.Set;
 
+import scrum.server.project.Project;
 import scrum.server.project.Requirement;
 
 public class TaskDao extends GTaskDao {
+
+	public Task getTaskByNumber(final int number, final Project project) {
+		return getEntity(new Predicate<Task>() {
+
+			public boolean test(Task t) {
+				return t.isNumber(number) && t.isProject(project);
+			}
+		});
+	}
 
 	@Override
 	public Task newEntityInstance() {

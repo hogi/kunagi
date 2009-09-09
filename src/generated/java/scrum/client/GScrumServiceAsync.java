@@ -30,6 +30,8 @@ public interface GScrumServiceAsync {
 
     void selectProject(java.lang.String projectId, AsyncCallback<DataTransferObject> callback);
 
+    void closeProject(AsyncCallback<DataTransferObject> callback);
+
     void switchToNextSprint(AsyncCallback<DataTransferObject> callback);
 
     void requestImpediments(AsyncCallback<DataTransferObject> callback);
@@ -45,6 +47,8 @@ public interface GScrumServiceAsync {
     void createEntity(java.lang.String type, java.util.Map properties, AsyncCallback<DataTransferObject> callback);
 
     void deleteEntity(java.lang.String entityId, AsyncCallback<DataTransferObject> callback);
+
+    void requestEntityByReference(java.lang.String reference, AsyncCallback<DataTransferObject> callback);
 
     void sleep(long millis, AsyncCallback<DataTransferObject> callback);
 

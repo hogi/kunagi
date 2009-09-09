@@ -1,8 +1,13 @@
 package scrum.server.sprint;
 
 import scrum.server.common.Numbered;
+import scrum.server.project.Project;
 
 public class Task extends GTask implements Numbered {
+
+	public boolean isProject(Project project) {
+		return getRequirement().isProject(project);
+	}
 
 	public boolean isDone() {
 		return getRemainingWork() == 0;
@@ -26,4 +31,5 @@ public class Task extends GTask implements Numbered {
 	public String toString() {
 		return "t" + getNumber() + " " + getLabel();
 	}
+
 }

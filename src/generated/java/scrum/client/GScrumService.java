@@ -30,6 +30,8 @@ public interface GScrumService
 
     DataTransferObject selectProject(java.lang.String projectId);
 
+    DataTransferObject closeProject();
+
     DataTransferObject switchToNextSprint();
 
     DataTransferObject requestImpediments();
@@ -45,6 +47,8 @@ public interface GScrumService
     DataTransferObject createEntity(java.lang.String type, java.util.Map properties);
 
     DataTransferObject deleteEntity(java.lang.String entityId);
+
+    DataTransferObject requestEntityByReference(java.lang.String reference);
 
     DataTransferObject sleep(long millis);
 

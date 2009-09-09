@@ -236,6 +236,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				"newPassword", String.class);
 			gwtServiceModel.addMethod("resetPassword").addParameter("userId", String.class);
 			gwtServiceModel.addMethod("selectProject").addParameter("projectId", String.class);
+			gwtServiceModel.addMethod("closeProject");
 			gwtServiceModel.addMethod("switchToNextSprint");
 			gwtServiceModel.addMethod("requestImpediments");
 			gwtServiceModel.addMethod("requestRisks");
@@ -246,6 +247,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("createEntity").addParameter("type", String.class).addParameter("properties",
 				Map.class);
 			gwtServiceModel.addMethod("deleteEntity").addParameter("entityId", String.class);
+			gwtServiceModel.addMethod("requestEntityByReference").addParameter("reference", String.class);
 			gwtServiceModel.addMethod("sleep").addParameter("millis", long.class);
 		}
 		return gwtServiceModel;

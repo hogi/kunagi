@@ -176,6 +176,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	protected void onCloseProject(WebSession session) {
+		session.setProject(null);
+		session.getUser().setCurrentProject(null);
+	}
+
+	@Override
 	protected void onSwitchToNextSprint(WebSession session) {
 		assertProjectSelected(session);
 		Project project = session.getProject();
@@ -219,6 +225,23 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		assertProjectSelected(session);
 		Project project = session.getProject();
 		session.sendToClient(project.getQualitys());
+	}
+
+	@Override
+	protected void onRequestEntityByReference(WebSession session, String reference) {
+		assertProjectSelected(session);
+		Project project = session.getProject();
+		int number = Integer.parseInt(reference.substring(1));
+		if (reference.startsWith("r")) {
+			Requirement requirement = project.getRequirementByNumber(number);
+			if (requirement != null) session.sendToClient(requirement);
+			return;
+		} else if (reference.startsWith("t")) {
+			Task task = project.getTaskByNumber(number);
+			if (task != null) session.sendToClient(task);
+			return;
+		}
+		LOG.info("Requested entity not found:", reference);
 	}
 
 	@Override

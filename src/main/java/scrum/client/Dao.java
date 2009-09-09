@@ -9,6 +9,8 @@ import java.util.Map;
 
 import scrum.client.collaboration.ChatMessage;
 import scrum.client.project.Project;
+import scrum.client.project.Requirement;
+import scrum.client.sprint.Task;
 import scrum.client.workspace.WorkareaWidget;
 import scrum.client.workspace.WorkspaceWidget;
 
@@ -19,6 +21,23 @@ public class Dao extends GDao {
 	private String entityIdBase;
 	private int entityIdCounter;
 	private EntityChangeCache cache = new EntityChangeCache();
+
+	public AGwtEntity getEntityByReference(String reference) {
+		int number = Integer.parseInt(reference.substring(1));
+		if (reference.startsWith("r")) {
+			for (Requirement requirement : getRequirements()) {
+				if (requirement.isNumber(number)) return requirement;
+			}
+			return null;
+		} else if (reference.startsWith("t")) {
+			for (Task task : getTasks()) {
+				if (task.isNumber(number)) return task;
+			}
+			return null;
+		} else {
+			throw new RuntimeException("Unsupported entity reference: " + reference);
+		}
+	}
 
 	@Override
 	public void handleDataFromServer(ADataTransferObject data) {
