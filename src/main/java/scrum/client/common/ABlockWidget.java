@@ -131,6 +131,12 @@ public abstract class ABlockWidget<O> extends AWidget {
 		menu.addItem(new MenuItem(label, command));
 	}
 
+	protected void addToolbarAction(AAction action) {
+		if (action.isExecutable()) {
+			addToolbarCommand(action.getLabel(), action);
+		}
+	}
+
 	protected void addToolbarCommand(String label, final Command command) {
 		ButtonWidget button = new ButtonWidget(label);
 		button.addCommand(command);

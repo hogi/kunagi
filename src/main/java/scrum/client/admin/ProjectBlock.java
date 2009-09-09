@@ -4,15 +4,12 @@ import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import scrum.client.Dao;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
 import scrum.client.project.Project;
 
-import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 
@@ -58,7 +55,8 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 
 		setContent(null);
 
-		createToolbar();
+		addToolbarAction(new OpenProjectAction(project));
+		addMenuAction(new DeleteProjectAction(project));
 	}
 
 	@Override
@@ -204,27 +202,6 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 	protected void onUpdateBody() {
 		fields.update();
 		setContent(fields);
-	}
-
-	protected void createToolbar() {
-
-		addToolbarCommand("Open Project", new Command() {
-
-			public void execute() {
-				ScrumGwtApplication.get().openProject(project);
-			}
-		});
-
-		addMenuCommand("Delete", new Command() {
-
-			public void execute() {
-				if (Window
-						.confirm("'R you crazy, Jesus? You crazy??\n\nOK - That's what my Ex-Wife said!\nCancel - No, of course not!")) {
-					ScrumGwtApplication.get().getDao().deleteProject(project);
-					ProjectSelectorWidget.get().getList().removeSelectedRow();
-				}
-			}
-		});
 	}
 
 	public Image getClipboardIcon() {
