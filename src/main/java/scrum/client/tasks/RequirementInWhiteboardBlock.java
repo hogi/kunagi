@@ -7,16 +7,15 @@ import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
 import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.ClientConstants;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
-import scrum.client.project.Project;
 import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
+import scrum.client.sprint.CreateTaskInRequirementAction;
+import scrum.client.workspace.Ui;
 
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 
 public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Requirement> {
@@ -42,7 +41,7 @@ public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Require
 	protected void onUpdateHead() {
 		setBlockTitle(requirement.getReference() + " " + requirement.getLabel());
 		setIcon(getProperIcon());
-		createToolbar();
+		addMenuAction(new CreateTaskInRequirementAction(requirement, Ui.get()));
 	}
 
 	private AbstractImagePrototype getProperIcon() {
@@ -164,31 +163,6 @@ public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Require
 	protected void onUpdateBody() {
 		fields.update();
 		setContent(fields);
-	}
-
-	protected void createToolbar() {
-		Project project = ScrumGwtApplication.get().getProject();
-
-		if (!requirement.isClosed()) {
-			addMenuCommand("Create new Task", new Command() {
-
-				public void execute() {
-					requirement.createNewTask();
-					WhiteboardWidget.get().update();
-				}
-			});
-		}
-
-		if (!requirement.isClosed() && requirement.isDone()) {
-			addMenuCommand("Close", new Command() {
-
-				public void execute() {
-					// item.setDone(false);
-					update();
-				}
-			});
-		}
-
 	}
 
 	public Requirement getRequirement() {

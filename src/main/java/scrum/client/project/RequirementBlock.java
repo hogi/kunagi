@@ -7,7 +7,6 @@ import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
 import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.ClientConstants;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -15,10 +14,8 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
-import scrum.client.sprint.Sprint;
-import scrum.client.workspace.WorkareaWidget;
+import scrum.client.workspace.Ui;
 
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Image;
 
@@ -46,7 +43,11 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 		setBlockTitle(requirement.getLongLabel());
 		setAdditionalStyleName(requirement.isInCurrentSprint() ? "RequirementBlock-inCurrentSprint" : null);
 		setIcon(getProperIcon());
-		createToolbar();
+		addMenuAction(new AddRequirementToCurrentSprintAction(requirement, Ui.get()));
+		addMenuAction(new RemoveRequirementFromSprintAction(requirement, Ui.get()));
+		addMenuAction(new SetRequirementDirtyAction(requirement, Ui.get()));
+		addMenuAction(new SetRequirementCleanAction(requirement, Ui.get()));
+		addMenuAction(new DeleteRequirementAction(requirement, Ui.get()));
 	}
 
 	private AbstractImagePrototype getProperIcon() {
@@ -168,72 +169,6 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	protected void onUpdateBody() {
 		fields.update();
 		setContent(fields);
-	}
-
-	protected void createToolbar() {
-		Project project = ScrumGwtApplication.get().getProject();
-
-		if (!project.isCurrentSprint(requirement.getSprint())) {
-			addMenuCommand("Delete", new Command() {
-
-				public void execute() {
-					ScrumGwtApplication.get().getProject().deleteRequirement(requirement);
-					getList().update();
-				}
-			});
-		}
-
-		final Sprint currentSprint = project.getCurrentSprint();
-		if (currentSprint != null) {
-			if (requirement.isSprint(currentSprint)) {
-				addMenuCommand("Remove from Sprint", new Command() {
-
-					public void execute() {
-						requirement.setSprint(null);
-						update();
-					}
-				});
-			} else {
-				if (requirement.getEstimatedWork() != null) {
-					addMenuCommand("Add to Sprint", new Command() {
-
-						public void execute() {
-							requirement.setSprint(currentSprint);
-							update();
-							WorkareaWidget.get().showSprintBacklog(requirement);
-						}
-					});
-				}
-			}
-		}
-
-		if (!requirement.isClosed() && requirement.isDone()) {
-			addMenuCommand("Close", new Command() {
-
-				public void execute() {
-					// item.setDone(false);
-					update();
-				}
-			});
-		}
-
-		if (!requirement.isDirty()) {
-			addMenuCommand("Set dirty", new Command() {
-
-				public void execute() {
-					requirement.setDirty(true);
-					update();
-				}
-			});
-		} else {
-			addMenuCommand("Set clean", new Command() {
-
-				public void execute() {
-					requirement.setDirty(false);
-					update();
-				}
-			});
-		}
 	}
 
 	public Image getClipboardIcon() {

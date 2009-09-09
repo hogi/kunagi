@@ -37,7 +37,6 @@ public class ProductBacklogWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		list.setBlocks(ScrumGwtApplication.get().getProject().getRequirements());
-		list.sort(ScrumGwtApplication.get().getProject().getRequirementsOrderComparator());
 	}
 
 	class CreateClickListener implements ClickListener {

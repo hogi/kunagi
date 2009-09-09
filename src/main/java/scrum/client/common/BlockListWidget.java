@@ -178,7 +178,7 @@ public final class BlockListWidget<O> extends AWidget {
 
 		assert table.getRowCount() == newObjects.size();
 
-		if (autoSorter != null) sort(autoSorter);
+		update();
 	}
 
 	public final ABlockWidget<O> addBlock(O object) {

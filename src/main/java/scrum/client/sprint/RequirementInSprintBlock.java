@@ -9,8 +9,8 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.img.Img;
 import scrum.client.project.Requirement;
+import scrum.client.workspace.Ui;
 
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 
@@ -39,7 +39,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	protected void onUpdateHead() {
 		setBlockTitle(requirement.getReference() + " " + requirement.getLabel());
 		setIcon(requirement.isDone() ? Img.bundle.done16() : Img.bundle.requirement16());
-		createToolbar();
+		addMenuAction(new CreateTaskInRequirementAction(requirement, Ui.get()));
 	}
 
 	@Override
@@ -87,28 +87,6 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 
 	public Requirement getRequirement() {
 		return requirement;
-	}
-
-	protected void createToolbar() {
-		if (requirement.isDone() && !requirement.isClosed()) {
-			addMenuCommand("Close", new Command() {
-
-				public void execute() {
-					requirement.setClosed(true);
-					SprintBacklogWidget.get().update();
-				}
-			});
-		}
-
-		if (!requirement.isClosed()) {
-			addMenuCommand("Create new Task", new Command() {
-
-				public void execute() {
-					taskList.addBlock(requirement.createNewTask(), true);
-					SprintBacklogWidget.get().update();
-				}
-			});
-		}
 	}
 
 	public Image getClipboardIcon() {

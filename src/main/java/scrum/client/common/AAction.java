@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.project.Project;
+import scrum.client.sprint.Sprint;
 
 import com.google.gwt.user.client.Command;
 
@@ -42,6 +43,10 @@ public abstract class AAction implements Command {
 
 	protected Project getProject() {
 		return ScrumGwtApplication.get().getProject();
+	}
+
+	protected boolean isCurrentSprint(Sprint sprint) {
+		return getProject().isCurrentSprint(sprint);
 	}
 
 	protected User getUser() {
