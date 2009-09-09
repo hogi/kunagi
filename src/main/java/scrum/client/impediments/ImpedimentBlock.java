@@ -129,7 +129,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 
 	public void trash() {
 		impediment.getProject().deleteImpediment(impediment);
-		getList().removeObject(impediment);
+		getList().removeObjects(impediment);
 	}
 
 	public static BlockWidgetFactory<Impediment> FACTORY = new BlockWidgetFactory<Impediment>() {

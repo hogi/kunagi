@@ -157,7 +157,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 
 	public void trash() {
 		risk.getProject().deleteRisk(risk);
-		getList().removeObject(risk);
+		getList().removeObjects(risk);
 	}
 
 	public static BlockWidgetFactory<Risk> FACTORY = new BlockWidgetFactory<Risk>() {

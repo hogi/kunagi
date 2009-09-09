@@ -39,6 +39,7 @@ public final class BlockListWidget<O> extends AWidget {
 	private BlockDndMarkerWidget dndMarkerBottom;
 	private FlowPanel panel;
 	private GenericPredicate<O> predicate;
+	private boolean sortingFlag;
 
 	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory) {
 		this(blockWidgetFactory, new MoveDropAction<O>());
@@ -104,6 +105,7 @@ public final class BlockListWidget<O> extends AWidget {
 	}
 
 	public final void sort(Comparator<O> comparator) {
+		sortingFlag = true;
 		List<O> objects = getObjects();
 		List<O> sortedObjects = new ArrayList<O>(objects);
 		Collections.sort(sortedObjects, comparator);
@@ -115,6 +117,7 @@ public final class BlockListWidget<O> extends AWidget {
 				move(getBlock(sortedObject), i);
 			}
 		}
+		sortingFlag = false;
 	}
 
 	public void setMoveObserver(BlockMoveObserver<O> orderObserver) {
@@ -132,7 +135,6 @@ public final class BlockListWidget<O> extends AWidget {
 
 	public final void setDndSorting(boolean dndSorting) {
 		this.dndSorting = dndSorting;
-		if (dndSorting) setAutoSorter(null);
 	}
 
 	public final void clear() {
@@ -145,7 +147,7 @@ public final class BlockListWidget<O> extends AWidget {
 		assert table.getRowCount() == 0;
 	}
 
-	public final void setBlocks(Collection<O> newObjects) {
+	public final void setObjects(Collection<O> newObjects) {
 		initialize();
 
 		Collection<O> objects = getObjects();
@@ -157,10 +159,7 @@ public final class BlockListWidget<O> extends AWidget {
 			if (objectsToAdd == null) objectsToAdd = new ArrayList<O>();
 			objectsToAdd.add(newObject);
 		}
-		if (objectsToAdd != null) {
-			for (O newObject : objectsToAdd)
-				addBlock(newObject);
-		}
+		if (objectsToAdd != null) addObjects((O[]) objectsToAdd.toArray());
 
 		if (objects.size() != newObjects.size()) {
 			// remove existing objects, which are not in the new list
@@ -172,7 +171,7 @@ public final class BlockListWidget<O> extends AWidget {
 			}
 			if (objectsToRemove != null) {
 				for (O object : objectsToRemove)
-					removeObject(object);
+					removeObjects(object);
 			}
 		}
 
@@ -181,47 +180,41 @@ public final class BlockListWidget<O> extends AWidget {
 		update();
 	}
 
-	public final ABlockWidget<O> addBlock(O object) {
-		return addBlock(object, false);
+	public final void addObject(O object, boolean select) {
+		addObjects(object);
+
+		if (select) selectObject(object);
 	}
 
-	public final ABlockWidget<O> addBlock(O object, boolean select) {
+	public final void addObjects(O... objects) {
 		initialize();
 
-		ABlockWidget<O> block = getBlock(object);
-		if (block != null) return block;
-
-		block = blockWidgetFactory.createBlock();
-		block.setObject(object);
-		block.setList(this);
-
-		addBlock(block, 0);
-
-		if (select) {
-			selectObject(object);
+		ABlockWidget<O>[] blocks = new ABlockWidget[objects.length];
+		for (int i = 0; i < blocks.length; i++) {
+			assert objects[i] != null;
+			blocks[i] = blockWidgetFactory.createBlock();
+			blocks[i].setObject(objects[i]);
+			blocks[i].setList(this);
 		}
 
-		return block;
-	}
-
-	private ABlockWidget<O> addBlock(ABlockWidget<O> block, int toIndex) {
-		if (block == null) throw new IllegalArgumentException("block == null");
-		assert !contains(block);
-
-		int oldSize = table.getRowCount();
-
-		table.insertRow(toIndex);
-		table.setWidget(toIndex, 0, block);
-
-		assert table.getRowCount() == oldSize + 1;
-		assert contains(block.getObject());
-
-		if (toIndex <= selectedRow) selectedRow++;
+		addBlocks(0, blocks);
 
 		if (autoSorter != null) sort(autoSorter);
+	}
 
-		block.update();
-		return block;
+	private void addBlocks(int toIndex, ABlockWidget<O>... blocks) {
+		int oldSize = table.getRowCount();
+
+		for (int i = 0; i < blocks.length; i++) {
+			assert blocks[i] != null;
+			table.insertRow(toIndex + i);
+			table.setWidget(toIndex + i, 0, blocks[i]);
+			blocks[i].update();
+		}
+
+		assert table.getRowCount() == oldSize + blocks.length;
+
+		if (toIndex <= selectedRow) selectedRow++;
 	}
 
 	public final void move(ABlockWidget<O> block, int toRow) {
@@ -231,20 +224,22 @@ public final class BlockListWidget<O> extends AWidget {
 		if (fromRow == toRow) return;
 		boolean selected = selectedRow == fromRow;
 		int oldSize = table.getRowCount();
-		removeRow(fromRow);
-		addBlock(block, toRow);
+		removeRows(fromRow);
+		addBlocks(toRow, block);
 		if (selected) selectedRow = toRow;
 
 		assert oldSize == table.getRowCount();
 
-		if (autoSorter != null) sort(autoSorter);
+		if (!sortingFlag) {
+			if (moveObserver != null) moveObserver.onBlockMoved();
+			if (autoSorter != null) sort(autoSorter);
+		}
 	}
 
 	public final void drop(ABlockWidget<O> block, int toIndex) {
 		if (block == null) throw new IllegalArgumentException("block == null");
 		int fromIndex = block.getList().indexOf(block);
-		if (dropAction.execute(block, block.getList(), fromIndex, this, toIndex))
-			if (moveObserver != null) moveObserver.onBlockMoved();
+		dropAction.execute(block, block.getList(), fromIndex, this, toIndex);
 	}
 
 	public final O getObject(int row) {
@@ -299,27 +294,34 @@ public final class BlockListWidget<O> extends AWidget {
 		getBlock(selectedRow).getElement().scrollIntoView();
 	}
 
-	public final void removeObject(O object) {
-		removeRow(indexOf(object));
+	public final void removeObjects(O... objects) {
+		int[] rows = new int[objects.length];
+		for (int i = 0; i < rows.length; i++) {
+			rows[i] = indexOf(objects[i]);
+		}
+		removeRows(rows);
 	}
 
 	public final void removeSelectedRow() {
-		removeRow(selectedRow);
+		removeRows(selectedRow);
 	}
 
-	public final void removeRow(int row) {
-		if (row < 0 || row >= size()) return;
+	public final void removeRows(int... rows) {
 		int oldSize = table.getRowCount();
 
-		table.removeRow(row);
+		for (int row : rows) {
+			if (row < 0 || row >= size()) return;
 
-		assert table.getRowCount() + 1 == oldSize;
+			table.removeRow(row);
 
-		if (selectedRow == row) {
-			selectedRow = -1;
-		} else if (selectedRow > row) {
-			selectedRow--;
+			if (selectedRow == row) {
+				selectedRow = -1;
+			} else if (selectedRow > row) {
+				selectedRow--;
+			}
 		}
+
+		assert table.getRowCount() == oldSize - rows.length;
 	}
 
 	public final void selectObject(O object) {
@@ -529,4 +531,5 @@ public final class BlockListWidget<O> extends AWidget {
 			return i;
 		}
 	}
+
 }

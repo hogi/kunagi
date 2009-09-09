@@ -37,14 +37,14 @@ public class ImpedimentListWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		list.setBlocks(ScrumGwtApplication.get().getProject().getImpediments());
+		list.setObjects(ScrumGwtApplication.get().getProject().getImpediments());
 	}
 
 	class CreateClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
 			Impediment impediment = ScrumGwtApplication.get().getProject().createNewImpediment();
-			list.addBlock(impediment, true);
+			list.addObject(impediment, true);
 		}
 	}
 

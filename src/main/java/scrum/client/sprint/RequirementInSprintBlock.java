@@ -81,7 +81,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	@Override
 	protected void onUpdateBody() {
 		fields.update();
-		taskList.setBlocks(requirement.getTasks());
+		taskList.setObjects(requirement.getTasks());
 		setContent(panel);
 	}
 

@@ -65,7 +65,7 @@ public class TaskListWidget extends AWidget {
 
 	public void setTasks(List<Task> tasks) {
 		initialize();
-		list.setBlocks(tasks);
+		list.setObjects(tasks);
 	}
 
 	public void setTaskHighlighting(GenericPredicate<Task> predicate) {

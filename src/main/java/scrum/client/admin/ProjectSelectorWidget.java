@@ -24,7 +24,7 @@ public class ProjectSelectorWidget extends AWidget {
 		public void onClick(Widget sender) {
 			Project project = new Project(ScrumGwtApplication.get().getUser());
 			ScrumGwtApplication.get().getDao().createProject(project);
-			list.addBlock(project, true);
+			list.addObjects(project);
 		}
 	}
 
@@ -49,7 +49,7 @@ public class ProjectSelectorWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		list.setBlocks(Dao.get().getProjects());
+		list.setObjects(Dao.get().getProjects());
 	}
 
 	public static ProjectSelectorWidget get() {

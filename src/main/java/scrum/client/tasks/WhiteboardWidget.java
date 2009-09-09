@@ -130,7 +130,7 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 		BlockListWidget<Requirement> list = new BlockListWidget<Requirement>(RequirementInWhiteboardBlock.FACTORY);
 		list.addAdditionalStyleName("WhiteboardWidget-requirement-list");
 		list.setDndSorting(false);
-		list.addBlock(requirement);
+		list.addObjects(requirement);
 		return list;
 		// Label label = new Label(requirement.getReference() + " " + requirement.getLabel());
 		// label.setStyleName("WhiteboardWidget-requirement-label");

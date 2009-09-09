@@ -2,11 +2,13 @@ package scrum.client;
 
 import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.gwt.client.AGwtEntity;
+import ilarkesto.gwt.client.GwtLogger;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import scrum.client.collaboration.ChatMessage;
+import scrum.client.project.Project;
 import scrum.client.workspace.WorkareaWidget;
 import scrum.client.workspace.WorkspaceWidget;
 
@@ -34,6 +36,9 @@ public class Dao extends GDao {
 	protected void onEntityModifiedRemotely(AGwtEntity entity) {
 		if (entity instanceof ChatMessage) {
 			ScrumGwtApplication.get().addChatMessage((ChatMessage) entity);
+		}
+		if (entity instanceof Project) {
+			GwtLogger.DEBUG("***** Requirement-Order received:", ((Project) entity).getRequirementsOrderIds());
 		}
 	}
 

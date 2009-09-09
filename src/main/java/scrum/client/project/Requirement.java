@@ -196,6 +196,7 @@ public class Requirement extends GRequirement {
 
 	@Override
 	public String toString() {
-		return getLabel();
+		return getId();
+		// return getLabel();
 	}
 }

@@ -117,7 +117,7 @@ public class SprintBacklogWidget extends AWidget {
 	protected void onUpdate() {
 		fieldsWidget.update();
 		remainingWork.setText(getSprint().getRemainingWorkAsString());
-		requirementList.setBlocks(getSprint().getRequirements());
+		requirementList.setObjects(getSprint().getRequirements());
 	}
 
 	public void selectRequirement(Requirement r) {

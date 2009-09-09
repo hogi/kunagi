@@ -127,7 +127,7 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 
 	public void trash() {
 		quality.getProject().deleteQuality(quality);
-		getList().removeObject(quality);
+		getList().removeObjects(quality);
 	}
 
 	public Quality getQuality() {

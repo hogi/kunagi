@@ -45,11 +45,11 @@ public class WidgetsTesterWidget extends AWidget {
 
 	private void testBlockList() {
 		final BlockListWidget<String> list = new BlockListWidget<String>(TestBlock.FACTORY);
-		list.addBlock("Element A");
-		list.addBlock("Element B");
-		list.addBlock("Element C");
-		list.addBlock("Element D");
-		list.addBlock("Element E");
+		list.addObjects("Element A");
+		list.addObjects("Element B");
+		list.addObjects("Element C");
+		list.addObjects("Element D");
+		list.addObjects("Element E");
 		list.update();
 		addTest("test", new Button("click", new ClickHandler() {
 

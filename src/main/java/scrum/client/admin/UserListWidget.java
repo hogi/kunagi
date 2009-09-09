@@ -36,7 +36,7 @@ public class UserListWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		list.setBlocks(ScrumGwtApplication.get().getDao().getUsers());
+		list.setObjects(ScrumGwtApplication.get().getDao().getUsers());
 	}
 
 	class CreateClickListener implements ClickListener {
@@ -44,7 +44,7 @@ public class UserListWidget extends AWidget {
 		public void onClick(Widget sender) {
 			User user = new User();
 			ScrumGwtApplication.get().getDao().createUser(user);
-			list.addBlock(user, true);
+			list.addObject(user, true);
 		}
 	}
 

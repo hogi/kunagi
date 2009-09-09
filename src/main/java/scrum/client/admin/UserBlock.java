@@ -118,7 +118,7 @@ public class UserBlock extends AExtensibleBlockWidget<User> implements TrashSupp
 
 	public void trash() {
 		ScrumGwtApplication.get().getDao().deleteUser(user);
-		getList().removeObject(user);
+		getList().removeObjects(user);
 	}
 
 	public static BlockWidgetFactory<User> FACTORY = new BlockWidgetFactory<User>() {

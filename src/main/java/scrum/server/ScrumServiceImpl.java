@@ -21,6 +21,7 @@ import scrum.server.common.Transient;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
+import scrum.server.project.RequirementDao;
 import scrum.server.sprint.Task;
 
 public class ScrumServiceImpl extends GScrumServiceImpl {
@@ -31,10 +32,15 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	private ProjectDao projectDao;
 	private UserDao userDao;
+	private RequirementDao requirementDao;
 	private ScrumWebApplication webApplication;
 
 	public void setWebApplication(ScrumWebApplication webApplication) {
 		this.webApplication = webApplication;
+	}
+
+	public void setRequirementDao(RequirementDao requirementDao) {
+		this.requirementDao = requirementDao;
 	}
 
 	public void setProjectDao(ProjectDao projectDao) {

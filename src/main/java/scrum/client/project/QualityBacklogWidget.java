@@ -34,14 +34,14 @@ public class QualityBacklogWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		list.setBlocks(ScrumGwtApplication.get().getProject().getQualitys());
+		list.setObjects(ScrumGwtApplication.get().getProject().getQualitys());
 	}
 
 	class CreateClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
 			Quality quality = ScrumGwtApplication.get().getProject().createNewQuality();
-			list.addBlock(quality, true);
+			list.addObject(quality, true);
 		}
 	}
 

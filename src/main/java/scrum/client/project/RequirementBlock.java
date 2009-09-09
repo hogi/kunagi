@@ -189,7 +189,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 	public void trash() {
 		requirement.getProject().deleteRequirement(requirement);
-		getList().removeObject(requirement);
+		getList().removeObjects(requirement);
 	}
 
 	public Requirement getRequirement() {
