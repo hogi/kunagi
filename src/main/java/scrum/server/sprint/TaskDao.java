@@ -9,6 +9,15 @@ import scrum.server.project.Requirement;
 
 public class TaskDao extends GTaskDao {
 
+	public Set<Task> getTasksByProject(final Project project) {
+		return getEntities(new Predicate<Task>() {
+
+			public boolean test(Task t) {
+				return t.isProject(project);
+			}
+		});
+	}
+
 	public Task getTaskByNumber(final int number, final Project project) {
 		return getEntity(new Predicate<Task>() {
 

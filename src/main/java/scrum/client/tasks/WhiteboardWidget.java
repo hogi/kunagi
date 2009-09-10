@@ -37,7 +37,7 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 	private Map<Requirement, TaskListWidget> openTasks;
 	private Map<Requirement, TaskListWidget> ownedTasks;
 	private Map<Requirement, TaskListWidget> closedTasks;
-	private BlockListSelectionManager selectionManager;
+	private BlockListSelectionManager selectionManager = new BlockListSelectionManager();
 
 	private GenericPredicate<Task> predicate;
 

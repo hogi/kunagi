@@ -3,6 +3,7 @@ package scrum.client.tasks;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
+import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -11,7 +12,6 @@ import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 import scrum.client.sprint.Task;
-import scrum.client.test.LinkParserTest;
 import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.Image;
@@ -142,8 +142,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 			@Override
 			protected void onViewerUpdate() {
-				// TODO Links parsing zum Testen nur bei Tasks.
-				setViewerText(LinkParserTest.parseEntityLinks(task.getNotice()));
+				setViewerHtml(ScrumGwtApplication.get().textToHtml(task.getNotice()));
 			}
 
 			@Override

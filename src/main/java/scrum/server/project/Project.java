@@ -49,6 +49,10 @@ public class Project extends GProject {
 
 	// --- ---
 
+	public Set<Task> getTasks() {
+		return taskDao.getTasksByProject(this);
+	}
+
 	public Requirement getRequirementByNumber(int number) {
 		return requirementDao.getRequirementByNumber(number, this);
 	}

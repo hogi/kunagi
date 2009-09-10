@@ -72,9 +72,10 @@ public class ChatWidget extends AWidget {
 		String authorStyle = author != null ? (author.equals(ScrumGwtApplication.get().getUser()) ? "author-me"
 				: "author") : "author-system";
 		String text = m.getText();
+		String html = ScrumGwtApplication.get().textToHtml(text);
 		sb.append("<p class='message'>");
 		sb.append("<span class='").append(authorStyle).append("'>").append(authorLabel).append(":&nbsp;</span>");
-		sb.append("<span class='text'>").append(text).append("</span>");
+		sb.append("<span class='text'>").append(html).append("</span>");
 		sb.append("</p>");
 	}
 

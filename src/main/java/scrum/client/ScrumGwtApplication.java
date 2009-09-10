@@ -2,6 +2,7 @@ package scrum.client;
 
 import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.gwt.client.AGwtEntity;
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
 
 import java.util.LinkedList;
@@ -30,9 +31,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	private long lastDataReceiveTime = System.currentTimeMillis();
 	private PingTimer pingTimer;
 
-	/**
-	 * Application entry point.
-	 */
 	public void onModuleLoad() {
 
 		// workaround for GWT issue 1813
@@ -52,6 +50,15 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 		pingTimer = new PingTimer();
 		pingTimer.scheduleRepeating(15000);
+
+		ScrumJs.initialize();
+	}
+
+	public String textToHtml(String text) {
+		if (Gwt.isEmpty(text)) return text;
+		String html = ScrumJs.regegxTextToHtml(text);
+		html = html.replace("\n", "<br>");
+		return html;
 	}
 
 	public ChatMessage postSystemMessage(String text, boolean distribute) {
@@ -164,6 +171,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	}
 
 	public void showEntityByReference(final String reference) {
+		GwtLogger.DEBUG("Showing entity:", reference);
 		AGwtEntity entity = getDao().getEntityByReference(reference);
 		if (entity != null) {
 			WorkareaWidget.get().showEntity(entity);

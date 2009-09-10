@@ -50,6 +50,7 @@ a {cursor: pointer;}
 
 .ChatWidget {margin: 20px 15px 0px 15px;}
 .ChatWidget-outputScroller {background: #F2F5FE; padding: 5px;}
+.ChatWidget-output a {text-decoration: underline;}
 .ChatWidget-output p {margin: 3px 0px 0px 0px;}
 .ChatWidget-output .author {font-style: italic; color: green;}
 .ChatWidget-output .author-system {font-style: italic; color: red;}

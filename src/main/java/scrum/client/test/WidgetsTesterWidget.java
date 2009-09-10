@@ -8,6 +8,7 @@ import ilarkesto.gwt.client.ImageAnchor;
 import ilarkesto.gwt.client.MultiSelectionWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
+import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AAction;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockListWidget;
@@ -33,6 +34,7 @@ public class WidgetsTesterWidget extends AWidget {
 		panel = new FlowPanel();
 		panel.setStyleName("WidgetsTesterWidget");
 
+		testTextConverter();
 		testBlockList();
 		testFields();
 		testMultiSelection();
@@ -42,6 +44,15 @@ public class WidgetsTesterWidget extends AWidget {
 		// testImageAnchor();
 
 		return panel;
+	}
+
+	private void testTextConverter() {
+		StringBuilder html = new StringBuilder();
+		html.append(
+			ScrumGwtApplication.get().textToHtml(
+				"r1 aaaa t5 aaaa (r3) aaaa r3. aaaa r3: aaaa [t12] aaar7 aaaa r7x aaaa t9")).append("<hr>");
+		html.append(ScrumGwtApplication.get().textToHtml("<b>html?</b> C&A\nnew line")).append("<hr>");
+		addTest("TextConverter", new HTML(html.toString()));
 	}
 
 	private void testBlockList() {
