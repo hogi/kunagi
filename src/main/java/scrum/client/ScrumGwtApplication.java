@@ -125,8 +125,12 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	@Override
 	protected void handleCommunicationError(Throwable ex) {
-		ex.printStackTrace();
-		ui.lock("Error: " + ex.getMessage());
+		GwtLogger.ERROR("Communication Error:", ex);
+		if (project != null) {
+			postSystemMessage("Communication Error: " + ex.getMessage(), false);
+		} else {
+			ui.lock("Error: " + ex.getMessage());
+		}
 	}
 
 	public void openProject(Project project) {
@@ -165,14 +169,17 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			WorkareaWidget.get().showEntity(entity);
 			return;
 		}
+		ui.lock("Searching for " + reference);
 		callRequestEntityByReference(reference, new Runnable() {
 
 			public void run() {
 				AGwtEntity entity = getDao().getEntityByReference(reference);
 				if (entity == null) {
+					ui.unlock();
 					postSystemMessage("Object does not exist: " + reference, false);
 					return;
 				}
+				ui.unlock();
 				WorkareaWidget.get().showEntity(entity);
 			}
 		});
