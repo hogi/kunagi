@@ -4,6 +4,9 @@ import com.google.gwt.user.client.Timer;
 
 public class PingTimer extends Timer {
 
+	public static final int MIN_DELAY = 500;
+	public static final int MAX_DELAY = 15000;
+
 	@Override
 	public void run() {
 		ScrumGwtApplication.get().callPing();
@@ -12,8 +15,8 @@ public class PingTimer extends Timer {
 
 	public void schedule() {
 		long idle = System.currentTimeMillis() - ScrumGwtApplication.get().getLastDataReceiveTime();
-		if (idle < 500) idle = 500;
-		if (idle > 15000) idle = 15000;
+		if (idle < MIN_DELAY) idle = MIN_DELAY;
+		if (idle > MAX_DELAY) idle = MAX_DELAY;
 		scheduleRepeating((int) idle);
 	}
 

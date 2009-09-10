@@ -1,5 +1,6 @@
 package scrum.server;
 
+import ilarkesto.base.time.TimePeriod;
 import ilarkesto.di.Context;
 import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.logging.Logger;
@@ -8,6 +9,7 @@ import ilarkesto.webapp.AWebSession;
 import javax.servlet.http.HttpServletRequest;
 
 import scrum.client.DataTransferObject;
+import scrum.client.PingTimer;
 import scrum.server.admin.User;
 import scrum.server.project.Project;
 
@@ -15,6 +17,7 @@ public class WebSession extends AWebSession {
 
 	private static final Logger LOG = Logger.get(WebSession.class);
 
+	private TimePeriod TIMEOUT = new TimePeriod(PingTimer.MAX_DELAY * 2);
 	private User user;
 	private Project project;
 
@@ -50,6 +53,11 @@ public class WebSession extends AWebSession {
 	@Override
 	protected ADataTransferObject createDataTransferObject() {
 		return new DataTransferObject();
+	}
+
+	@Override
+	protected TimePeriod getTimeout() {
+		return TIMEOUT;
 	}
 
 	@Override
