@@ -146,9 +146,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			taskModel.addReference("requirement", getRequirementModel()).setMaster(true);
 			taskModel.addProperty("number", int.class);
 			taskModel.addProperty("label", String.class);
+			taskModel.addProperty("description", String.class);
 			taskModel.addProperty("remainingWork", int.class);
 			taskModel.addProperty("burnedWork", int.class);
-			taskModel.addProperty("notice", String.class);
+			// taskModel.addProperty("notice", String.class);
 			taskModel.addReference("owner", getUserModel());
 		}
 		return taskModel;
@@ -181,6 +182,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			riskModel.addReference("project", getProjectModel()).setMaster(true);
 			riskModel.addProperty("label", String.class).setSearchable(true);
 			riskModel.addProperty("description", String.class).setSearchable(true);
+			riskModel.addProperty("mitigationPlans", String.class).setSearchable(true);
 			riskModel.addProperty("probability", int.class);
 			riskModel.addProperty("impact", int.class);
 		}

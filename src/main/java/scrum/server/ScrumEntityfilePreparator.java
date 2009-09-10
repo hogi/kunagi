@@ -24,7 +24,7 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 
 		try {
 			if ("_template_".equals(alias)) prepare_template_(file);
-			if ("buildController".equals(alias)) prepareBuildController(file);
+			if ("task".equals(alias)) prepareTask(file);
 		} catch (Throwable ex) {
 			throw new RuntimeException(ex);
 		}
@@ -33,7 +33,7 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 	/**
 	 * example
 	 */
-	private void prepareBuildController(File file) throws IOException {
+	private void prepareTask(File file) throws IOException {
 		boolean modified = false;
 
 		Document doc;
@@ -44,9 +44,9 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 		}
 		Element root = doc.getRootElement();
 
-		Element changeNotificationEmail = root.getChild("changeNotificationEmail");
-		if (changeNotificationEmail != null) {
-			root.removeContent(changeNotificationEmail);
+		Element notice = root.getChild("notice");
+		if (notice != null) {
+			notice.setName("description");
 			modified = true;
 		}
 
