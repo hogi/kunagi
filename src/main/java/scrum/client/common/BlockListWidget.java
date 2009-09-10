@@ -29,7 +29,6 @@ public final class BlockListWidget<O> extends AWidget {
 	// private static final Logger LOG = Logger.get(BlockListWidget.class);
 
 	private FlexTable table;
-	private int selectedRow = -1;
 	private boolean dndSorting = true;
 	private Comparator<O> autoSorter;
 	private BlockWidgetFactory<O> blockWidgetFactory;
@@ -183,7 +182,7 @@ public final class BlockListWidget<O> extends AWidget {
 	public final void addObject(O object, boolean select) {
 		addObjects(object);
 
-		if (select) selectObject(object);
+		if (select) extendObject(object);
 	}
 
 	public final void addObjects(O... objects) {
@@ -213,8 +212,6 @@ public final class BlockListWidget<O> extends AWidget {
 		}
 
 		assert table.getRowCount() == oldSize + blocks.length;
-
-		if (toIndex <= selectedRow) selectedRow++;
 	}
 
 	public final void move(ABlockWidget<O> block, int toRow) {
@@ -222,11 +219,9 @@ public final class BlockListWidget<O> extends AWidget {
 		int fromRow = indexOf(block);
 		if (fromRow < 0) throw new IllegalArgumentException("Block not in list: " + block);
 		if (fromRow == toRow) return;
-		boolean selected = selectedRow == fromRow;
 		int oldSize = table.getRowCount();
 		removeRows(fromRow);
 		addBlocks(toRow, block);
-		if (selected) selectedRow = toRow;
 
 		assert oldSize == table.getRowCount();
 
@@ -260,41 +255,29 @@ public final class BlockListWidget<O> extends AWidget {
 		return -1;
 	}
 
-	public final O getSelectedObject() {
-		if (selectedRow < 0) return null;
-		return getObject(selectedRow);
-	}
-
-	public final void selectRow(int row) {
-		if (row == selectedRow) return;
-
-		if (selectionManager == null) {
-			deselect();
-		} else {
-			selectionManager.deselectAll();
-		}
+	public final void extendRow(int row) {
+		// if (selectionManager == null) {
+		// deselect();
+		// } else {
+		// selectionManager.deselectAll();
+		// }
 
 		ABlockWidget<O> block = getBlock(row);
-		block.setSelected(true);
-		selectedRow = row;
+		block.setExtended(true);
 
 		block.getElement().scrollIntoView();
 	}
 
-	public final void deselectRow(int row) {
-		if (selectedRow == -1) return;
-		if (row != selectedRow) return;
-		getBlock(row).setSelected(false);
-		selectedRow = -1;
+	public final void collapseRow(int row) {
+		getBlock(row).setExtended(false);
 	}
 
-	public final void deselectObject(O object) {
-		deselectRow(indexOf(object));
+	public final void collapseObject(O object) {
+		collapseRow(indexOf(object));
 	}
 
-	public final void scrollToSelectedBlock() {
-		if (selectedRow < 0) return;
-		getBlock(selectedRow).getElement().scrollIntoView();
+	public final void scrollToObject(O object) {
+		getBlock(object).getElement().scrollIntoView();
 	}
 
 	public final void removeObjects(O... objects) {
@@ -305,10 +288,6 @@ public final class BlockListWidget<O> extends AWidget {
 		removeRows(rows);
 	}
 
-	public final void removeSelectedRow() {
-		removeRows(selectedRow);
-	}
-
 	public final void removeRows(int... rows) {
 		int oldSize = table.getRowCount();
 
@@ -316,39 +295,33 @@ public final class BlockListWidget<O> extends AWidget {
 			if (row < 0 || row >= size()) return;
 
 			table.removeRow(row);
-
-			if (selectedRow == row) {
-				selectedRow = -1;
-			} else if (selectedRow > row) {
-				selectedRow--;
-			}
 		}
 
 		assert table.getRowCount() == oldSize - rows.length;
 	}
 
-	public final void selectBlock(ABlockWidget<O> block) {
+	public final void extendBlock(ABlockWidget<O> block) {
 		int idx = indexOf(block);
-		selectRow(idx);
-		assert isSelected(block.getObject());
+		extendRow(idx);
+		assert isExtended(block.getObject());
 	}
 
-	public final void selectObject(O object) {
+	public final void extendObject(O object) {
 		int idx = indexOf(object);
-		selectRow(idx);
-		assert isSelected(object);
+		extendRow(idx);
+		assert isExtended(object);
 	}
 
-	public final void toggleSelection(O object) {
-		if (isSelected(object)) {
-			deselect();
+	public final void toggleVisualState(O object) {
+		if (isExtended(object)) {
+			collapseObject(object);
 		} else {
-			selectObject(object);
+			extendObject(object);
 		}
 	}
 
-	public final boolean isSelected(O object) {
-		return getSelectedObject() == object;
+	public final boolean isExtended(O object) {
+		return getBlock(object).isExtended();
 	}
 
 	public final boolean contains(ABlockWidget<O> block) {
@@ -361,12 +334,10 @@ public final class BlockListWidget<O> extends AWidget {
 		return false;
 	}
 
-	public final void deselect() {
-		if (selectedRow == -1) return;
+	public final void collapseAll() {
 		for (Iterator<ABlockWidget<O>> it = widgetIterator(); it.hasNext();) {
-			it.next().setSelected(false);
+			it.next().setExtended(false);
 		}
-		selectedRow = -1;
 	}
 
 	private ABlockWidget<O> getPreviousBlock(ABlockWidget<O> block) {

@@ -22,7 +22,7 @@ public class ClaimTaskDropAction implements BlockListDropAction<Task> {
 		task.setRequirement(this.requirement);
 		new ClaimTaskAction(task).execute();
 
-		boolean selected = taskBlock.isSelected();
+		boolean selected = taskBlock.isExtended();
 		Ui.get().update();
 		if (selected) {
 			taskBlock.getContainer().selectTask(task);

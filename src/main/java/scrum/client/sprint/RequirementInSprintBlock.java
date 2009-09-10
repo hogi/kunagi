@@ -86,7 +86,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	}
 
 	public void selectTask(Task task) {
-		taskList.selectObject(task);
+		taskList.extendObject(task);
 	}
 
 	public Requirement getRequirement() {

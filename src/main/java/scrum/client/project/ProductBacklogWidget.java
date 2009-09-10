@@ -45,7 +45,7 @@ public class ProductBacklogWidget extends AWidget {
 	}
 
 	public void selectRequirement(Requirement requirement) {
-		list.selectObject(requirement);
+		list.extendObject(requirement);
 	}
 
 	class CreateClickListener implements ClickListener {

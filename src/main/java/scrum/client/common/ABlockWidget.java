@@ -36,7 +36,7 @@ public abstract class ABlockWidget<O> extends AWidget {
 	private BlockListWidget<O> list;
 	private FlowPanel mainPanel;
 	private FlowPanel panel;
-	private boolean selected;
+	private boolean extended;
 	private BlockDndMarkerWidget dndMarkerTop = new BlockDndMarkerWidget();
 
 	protected abstract void onBlockInitialization();
@@ -205,20 +205,20 @@ public abstract class ABlockWidget<O> extends AWidget {
 	}
 
 	/**
-	 * Indicates if the block is in extended-mode. This method should by called within the
+	 * Indicates if the block is in extended-mode. This method should be called within the
 	 * <code>build()</code>-method.
 	 */
-	public final boolean isSelected() {
-		return selected;
+	public final boolean isExtended() {
+		return extended;
 	}
 
 	/**
 	 * This method is only called by BlockListWidget. To select a block on a BlockListWidget call
 	 * <code>BlockListWidget.selectBlock(B block)</code> instead.
 	 */
-	final void setSelected(boolean extended) {
-		if (this.selected == extended) return;
-		this.selected = extended;
+	final void setExtended(boolean extended) {
+		if (this.extended == extended) return;
+		this.extended = extended;
 		if (extended) {
 			getBorderPanel().addStyleName("ABlockWidget-block-selected");
 		} else {
@@ -245,7 +245,7 @@ public abstract class ABlockWidget<O> extends AWidget {
 	private class SelectionClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
-			list.toggleSelection(getObject());
+			list.toggleVisualState(getObject());
 		}
 
 	}

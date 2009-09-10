@@ -42,7 +42,7 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 
 		String description = project.getDescription();
 		if (description == null) description = "No description.";
-		if (!isSelected()) {
+		if (!isExtended()) {
 			int idx = description.indexOf('.');
 			if (idx > 0) {
 				description = description.substring(0, idx + 1);

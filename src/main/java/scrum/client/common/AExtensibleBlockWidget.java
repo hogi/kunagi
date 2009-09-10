@@ -22,7 +22,7 @@ public abstract class AExtensibleBlockWidget<O extends Object> extends ABlockWid
 
 	@Override
 	protected final void onBlockUpdate() {
-		if (isSelected()) {
+		if (isExtended()) {
 			ensureExtendedInitialized();
 			onUpdateHead();
 			onUpdateBody();

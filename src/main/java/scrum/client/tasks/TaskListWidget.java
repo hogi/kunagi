@@ -60,7 +60,7 @@ public class TaskListWidget extends AWidget {
 	}
 
 	public void selectTask(Task task) {
-		list.selectObject(task);
+		list.extendObject(task);
 	}
 
 	public void setTasks(List<Task> tasks) {

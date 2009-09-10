@@ -13,12 +13,12 @@ public class BlockListSelectionManager {
 
 	public void deselectAll() {
 		for (BlockListWidget list : lists)
-			list.deselect();
+			list.collapseAll();
 	}
 
 	public void select(Object object) {
 		for (BlockListWidget list : lists) {
-			if (list.contains(object)) list.selectObject(object);
+			if (list.contains(object)) list.extendObject(object);
 		}
 	}
 
