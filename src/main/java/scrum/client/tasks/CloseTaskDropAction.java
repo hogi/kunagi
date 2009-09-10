@@ -1,17 +1,17 @@
-package scrum.client.dnd;
+package scrum.client.tasks;
 
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockListWidget;
+import scrum.client.dnd.BlockListDropAction;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
-import scrum.client.tasks.TaskBlock;
 import scrum.client.workspace.Ui;
 
-public class UnOwnDropAction implements BlockListDropAction<Task> {
+public class CloseTaskDropAction implements BlockListDropAction<Task> {
 
 	private Requirement requirement;
 
-	public UnOwnDropAction(Requirement requirement) {
+	public CloseTaskDropAction(Requirement requirement) {
 		this.requirement = requirement;
 	}
 
@@ -20,7 +20,7 @@ public class UnOwnDropAction implements BlockListDropAction<Task> {
 		TaskBlock taskBlock = (TaskBlock) block;
 		Task task = taskBlock.getTask();
 		task.setRequirement(this.requirement);
-		task.setUnOwned();
+		new CloseTaskAction(task).execute();
 
 		boolean selected = taskBlock.isSelected();
 		Ui.get().update();

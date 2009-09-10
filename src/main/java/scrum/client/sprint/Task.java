@@ -3,6 +3,7 @@ package scrum.client.sprint;
 import java.util.Comparator;
 import java.util.Map;
 
+import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.project.Requirement;
 
@@ -18,6 +19,15 @@ public class Task extends GTask {
 
 	public Task(Map data) {
 		super(data);
+	}
+
+	public void claim() {
+		User user = ScrumGwtApplication.get().getUser();
+		if (isDone()) {
+			setUnDone(user);
+		} else {
+			setOwner(user);
+		}
 	}
 
 	public String getLongLabel() {

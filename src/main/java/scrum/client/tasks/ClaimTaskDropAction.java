@@ -1,18 +1,17 @@
-package scrum.client.dnd;
+package scrum.client.tasks;
 
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockListWidget;
+import scrum.client.dnd.BlockListDropAction;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
-import scrum.client.tasks.TaskBlock;
 import scrum.client.workspace.Ui;
 
-public class OwnDropAction implements BlockListDropAction<Task> {
+public class ClaimTaskDropAction implements BlockListDropAction<Task> {
 
 	private Requirement requirement;
 
-	public OwnDropAction(Requirement requirement) {
+	public ClaimTaskDropAction(Requirement requirement) {
 		this.requirement = requirement;
 	}
 
@@ -21,9 +20,7 @@ public class OwnDropAction implements BlockListDropAction<Task> {
 		TaskBlock taskBlock = (TaskBlock) block;
 		Task task = taskBlock.getTask();
 		task.setRequirement(this.requirement);
-		if (task.isDone())
-			task.setUnDone(ScrumGwtApplication.get().getUser());
-		else task.setOwner(ScrumGwtApplication.get().getUser());
+		new ClaimTaskAction(task).execute();
 
 		boolean selected = taskBlock.isSelected();
 		Ui.get().update();
