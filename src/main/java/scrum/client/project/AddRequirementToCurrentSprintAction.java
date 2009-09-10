@@ -1,6 +1,7 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.AWidget;
+import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AAction;
 
 public class AddRequirementToCurrentSprintAction extends AAction {
@@ -32,6 +33,8 @@ public class AddRequirementToCurrentSprintAction extends AAction {
 	@Override
 	protected void onExecute() {
 		requirement.setSprint(getProject().getCurrentSprint());
+		ScrumGwtApplication.get().postSystemMessage(
+			getUser().getName() + " added requirement " + requirement.getReference() + " to current sprint.", true);
 	}
 
 }

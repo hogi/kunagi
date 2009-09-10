@@ -1,6 +1,7 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.AWidget;
+import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AAction;
 
 public class RemoveRequirementFromSprintAction extends AAction {
@@ -30,6 +31,8 @@ public class RemoveRequirementFromSprintAction extends AAction {
 	@Override
 	protected void onExecute() {
 		requirement.setSprint(null);
+		ScrumGwtApplication.get().postSystemMessage(
+			getUser().getName() + " removed requirement " + requirement.getReference() + " from current sprint.", true);
 	}
 
 }

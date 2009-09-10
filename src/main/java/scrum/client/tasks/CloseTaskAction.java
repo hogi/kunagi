@@ -1,6 +1,7 @@
 package scrum.client.tasks;
 
 import ilarkesto.gwt.client.AWidget;
+import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AAction;
 import scrum.client.sprint.Task;
 
@@ -31,6 +32,8 @@ public class CloseTaskAction extends AAction {
 	@Override
 	protected void onExecute() {
 		task.setDone(getUser());
+		ScrumGwtApplication.get().postSystemMessage(getUser().getName() + " closed task " + task.getReference() + ".",
+			true);
 	}
 
 }

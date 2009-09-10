@@ -32,6 +32,8 @@ public class ClaimTaskAction extends AAction {
 	@Override
 	protected void onExecute() {
 		task.setOwner(ScrumGwtApplication.get().getUser());
+		ScrumGwtApplication.get().postSystemMessage(getUser().getName() + " claimed task " + task.getReference() + ".",
+			true);
 	}
 
 }

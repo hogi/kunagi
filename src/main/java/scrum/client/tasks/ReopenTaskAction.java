@@ -1,6 +1,7 @@
 package scrum.client.tasks;
 
 import ilarkesto.gwt.client.AWidget;
+import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AAction;
 import scrum.client.sprint.Task;
 
@@ -31,6 +32,8 @@ public class ReopenTaskAction extends AAction {
 	@Override
 	protected void onExecute() {
 		task.setUnDone(getUser());
+		ScrumGwtApplication.get().postSystemMessage(
+			getUser().getName() + " re-opened task " + task.getReference() + ".", true);
 	}
 
 }

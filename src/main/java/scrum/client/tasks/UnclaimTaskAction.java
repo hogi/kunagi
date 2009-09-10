@@ -32,6 +32,8 @@ public class UnclaimTaskAction extends AAction {
 	@Override
 	protected void onExecute() {
 		task.setUnOwned();
+		ScrumGwtApplication.get().postSystemMessage(
+			getUser().getName() + " rejected task " + task.getReference() + ".", true);
 	}
 
 }
