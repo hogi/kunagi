@@ -24,6 +24,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	private BurndownChart burndownChart;
 	private ScrumConfig config;
+	private ScrumEntityfilePreparator entityfilePreparator;
 
 	// --- composites ---
 
@@ -40,6 +41,14 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			config = new ScrumConfig(getApplicationDataDir());
 		}
 		return config;
+	}
+
+	public ScrumEntityfilePreparator getEntityfilePreparator() {
+		if (entityfilePreparator == null) {
+			entityfilePreparator = new ScrumEntityfilePreparator();
+			entityfilePreparator.setBackupDir(getApplicationDataDir() + "/backup/entities");
+		}
+		return entityfilePreparator;
 	}
 
 	// --- ---

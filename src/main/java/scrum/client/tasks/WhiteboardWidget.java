@@ -80,6 +80,7 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 		doneLabel.setText("Completed Tasks (" + hours(sprint.getBurnedWorkInClosedTasks()) + " done)");
 
 		List<Requirement> requirements = sprint.getRequirements();
+		Collections.sort(requirements, sprint.getProject().getRequirementsOrderComparator());
 
 		if (requirements.equals(knownRequirements)) {
 			// quick update without recreating whole gui
