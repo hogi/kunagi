@@ -74,6 +74,25 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 		});
 
+		fields.add("Description", new ARichtextViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerHtml(ScrumGwtApplication.get().textToHtml(task.getDescription()));
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setEditorText(task.getDescription());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				task.setDescription(getEditorText());
+			}
+
+		});
+
 		fields.add("Burned Work", new AIntegerViewEditWidget() {
 
 			@Override
@@ -137,26 +156,6 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 			}
 
 		});
-
-		fields.add("Note", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerHtml(ScrumGwtApplication.get().textToHtml(task.getNotice()));
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(task.getNotice());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				task.setNotice(getEditorText());
-			}
-
-		});
-
 	}
 
 	@Override

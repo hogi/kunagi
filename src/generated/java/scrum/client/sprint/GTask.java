@@ -107,6 +107,25 @@ public abstract class GTask
         return equals(this.label, label);
     }
 
+    // --- description ---
+
+    private java.lang.String description ;
+
+    public final java.lang.String getDescription() {
+        return this.description ;
+    }
+
+    public final Task setDescription(java.lang.String description) {
+        if (isDescription(description)) return (Task)this;
+        this.description = description ;
+        propertyChanged("description", this.description);
+        return (Task)this;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        return equals(this.description, description);
+    }
+
     // --- remainingWork ---
 
     private int remainingWork ;
@@ -145,25 +164,6 @@ public abstract class GTask
         return equals(this.burnedWork, burnedWork);
     }
 
-    // --- notice ---
-
-    private java.lang.String notice ;
-
-    public final java.lang.String getNotice() {
-        return this.notice ;
-    }
-
-    public final Task setNotice(java.lang.String notice) {
-        if (isNotice(notice)) return (Task)this;
-        this.notice = notice ;
-        propertyChanged("notice", this.notice);
-        return (Task)this;
-    }
-
-    public final boolean isNotice(java.lang.String notice) {
-        return equals(this.notice, notice);
-    }
-
     // --- owner ---
 
     private String ownerId;
@@ -195,9 +195,9 @@ public abstract class GTask
         requirementId = (String) props.get("requirementId");
         number  = (Integer) props.get("number");
         label  = (java.lang.String) props.get("label");
+        description  = (java.lang.String) props.get("description");
         remainingWork  = (Integer) props.get("remainingWork");
         burnedWork  = (Integer) props.get("burnedWork");
-        notice  = (java.lang.String) props.get("notice");
         ownerId = (String) props.get("ownerId");
     }
 
@@ -207,9 +207,9 @@ public abstract class GTask
         properties.put("requirementId", this.requirementId);
         properties.put("number", this.number);
         properties.put("label", this.label);
+        properties.put("description", this.description);
         properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);
-        properties.put("notice", this.notice);
         properties.put("ownerId", this.ownerId);
     }
 

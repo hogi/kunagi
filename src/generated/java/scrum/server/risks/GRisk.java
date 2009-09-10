@@ -39,6 +39,7 @@ public abstract class GRisk
         properties.put("projectId", this.projectId);
         properties.put("label", this.label);
         properties.put("description", this.description);
+        properties.put("mitigationPlans", this.mitigationPlans);
         properties.put("probability", this.probability);
         properties.put("impact", this.impact);
     }
@@ -60,6 +61,7 @@ public abstract class GRisk
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
+        if (matchesKey(getMitigationPlans(), key)) return true;
         return false;
     }
 
@@ -181,6 +183,41 @@ public abstract class GRisk
     }
 
     // -----------------------------------------------------------
+    // - mitigationPlans
+    // -----------------------------------------------------------
+
+    private java.lang.String mitigationPlans;
+
+    public final java.lang.String getMitigationPlans() {
+        return mitigationPlans;
+    }
+
+    public final void setMitigationPlans(java.lang.String mitigationPlans) {
+        mitigationPlans = prepareMitigationPlans(mitigationPlans);
+        if (isMitigationPlans(mitigationPlans)) return;
+        this.mitigationPlans = mitigationPlans;
+        fireModified();
+    }
+
+    protected java.lang.String prepareMitigationPlans(java.lang.String mitigationPlans) {
+        mitigationPlans = Str.removeUnreadableChars(mitigationPlans);
+        return mitigationPlans;
+    }
+
+    public final boolean isMitigationPlansSet() {
+        return this.mitigationPlans != null;
+    }
+
+    public final boolean isMitigationPlans(java.lang.String mitigationPlans) {
+        if (this.mitigationPlans == null && mitigationPlans == null) return true;
+        return this.mitigationPlans != null && this.mitigationPlans.equals(mitigationPlans);
+    }
+
+    protected final void updateMitigationPlans(Object value) {
+        setMitigationPlans((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
     // - probability
     // -----------------------------------------------------------
 
@@ -246,6 +283,7 @@ public abstract class GRisk
             if (property.equals("projectId")) updateProject(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("description")) updateDescription(value);
+            if (property.equals("mitigationPlans")) updateMitigationPlans(value);
             if (property.equals("probability")) updateProbability(value);
             if (property.equals("impact")) updateImpact(value);
         }

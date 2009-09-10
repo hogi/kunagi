@@ -40,6 +40,8 @@ public abstract class GRiskDao
         labelsCache = null;
         risksByDescriptionCache.clear();
         descriptionsCache = null;
+        risksByMitigationPlansCache.clear();
+        mitigationPlanssCache = null;
         risksByProbabilityCache.clear();
         probabilitysCache = null;
         risksByImpactCache.clear();
@@ -178,6 +180,46 @@ public abstract class GRiskDao
 
         public boolean test(Risk e) {
             return e.isDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - mitigationPlans
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Risk>> risksByMitigationPlansCache = new Cache<java.lang.String,Set<Risk>>(
+            new Cache.Factory<java.lang.String,Set<Risk>>() {
+                public Set<Risk> create(java.lang.String mitigationPlans) {
+                    return getEntities(new IsMitigationPlans(mitigationPlans));
+                }
+            });
+
+    public final Set<Risk> getRisksByMitigationPlans(java.lang.String mitigationPlans) {
+        return risksByMitigationPlansCache.get(mitigationPlans);
+    }
+    private Set<java.lang.String> mitigationPlanssCache;
+
+    public final Set<java.lang.String> getMitigationPlanss() {
+        if (mitigationPlanssCache == null) {
+            mitigationPlanssCache = new HashSet<java.lang.String>();
+            for (Risk e : getEntities()) {
+                if (e.isMitigationPlansSet()) mitigationPlanssCache.add(e.getMitigationPlans());
+            }
+        }
+        return mitigationPlanssCache;
+    }
+
+    private static class IsMitigationPlans implements Predicate<Risk> {
+
+        private java.lang.String value;
+
+        public IsMitigationPlans(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Risk e) {
+            return e.isMitigationPlans(value);
         }
 
     }

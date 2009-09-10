@@ -107,6 +107,25 @@ public abstract class GRisk
         return equals(this.description, description);
     }
 
+    // --- mitigationPlans ---
+
+    private java.lang.String mitigationPlans ;
+
+    public final java.lang.String getMitigationPlans() {
+        return this.mitigationPlans ;
+    }
+
+    public final Risk setMitigationPlans(java.lang.String mitigationPlans) {
+        if (isMitigationPlans(mitigationPlans)) return (Risk)this;
+        this.mitigationPlans = mitigationPlans ;
+        propertyChanged("mitigationPlans", this.mitigationPlans);
+        return (Risk)this;
+    }
+
+    public final boolean isMitigationPlans(java.lang.String mitigationPlans) {
+        return equals(this.mitigationPlans, mitigationPlans);
+    }
+
     // --- probability ---
 
     private int probability ;
@@ -151,6 +170,7 @@ public abstract class GRisk
         projectId = (String) props.get("projectId");
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
+        mitigationPlans  = (java.lang.String) props.get("mitigationPlans");
         probability  = (Integer) props.get("probability");
         impact  = (Integer) props.get("impact");
     }
@@ -161,6 +181,7 @@ public abstract class GRisk
         properties.put("projectId", this.projectId);
         properties.put("label", this.label);
         properties.put("description", this.description);
+        properties.put("mitigationPlans", this.mitigationPlans);
         properties.put("probability", this.probability);
         properties.put("impact", this.impact);
     }

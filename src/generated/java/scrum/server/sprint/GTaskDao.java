@@ -40,12 +40,12 @@ public abstract class GTaskDao
         numbersCache = null;
         tasksByLabelCache.clear();
         labelsCache = null;
+        tasksByDescriptionCache.clear();
+        descriptionsCache = null;
         tasksByRemainingWorkCache.clear();
         remainingWorksCache = null;
         tasksByBurnedWorkCache.clear();
         burnedWorksCache = null;
-        tasksByNoticeCache.clear();
-        noticesCache = null;
         tasksByOwnerCache.clear();
         ownersCache = null;
     }
@@ -187,6 +187,46 @@ public abstract class GTaskDao
     }
 
     // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Task>> tasksByDescriptionCache = new Cache<java.lang.String,Set<Task>>(
+            new Cache.Factory<java.lang.String,Set<Task>>() {
+                public Set<Task> create(java.lang.String description) {
+                    return getEntities(new IsDescription(description));
+                }
+            });
+
+    public final Set<Task> getTasksByDescription(java.lang.String description) {
+        return tasksByDescriptionCache.get(description);
+    }
+    private Set<java.lang.String> descriptionsCache;
+
+    public final Set<java.lang.String> getDescriptions() {
+        if (descriptionsCache == null) {
+            descriptionsCache = new HashSet<java.lang.String>();
+            for (Task e : getEntities()) {
+                if (e.isDescriptionSet()) descriptionsCache.add(e.getDescription());
+            }
+        }
+        return descriptionsCache;
+    }
+
+    private static class IsDescription implements Predicate<Task> {
+
+        private java.lang.String value;
+
+        public IsDescription(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - remainingWork
     // -----------------------------------------------------------
 
@@ -262,46 +302,6 @@ public abstract class GTaskDao
 
         public boolean test(Task e) {
             return e.isBurnedWork(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - notice
-    // -----------------------------------------------------------
-
-    private final Cache<java.lang.String,Set<Task>> tasksByNoticeCache = new Cache<java.lang.String,Set<Task>>(
-            new Cache.Factory<java.lang.String,Set<Task>>() {
-                public Set<Task> create(java.lang.String notice) {
-                    return getEntities(new IsNotice(notice));
-                }
-            });
-
-    public final Set<Task> getTasksByNotice(java.lang.String notice) {
-        return tasksByNoticeCache.get(notice);
-    }
-    private Set<java.lang.String> noticesCache;
-
-    public final Set<java.lang.String> getNotices() {
-        if (noticesCache == null) {
-            noticesCache = new HashSet<java.lang.String>();
-            for (Task e : getEntities()) {
-                if (e.isNoticeSet()) noticesCache.add(e.getNotice());
-            }
-        }
-        return noticesCache;
-    }
-
-    private static class IsNotice implements Predicate<Task> {
-
-        private java.lang.String value;
-
-        public IsNotice(java.lang.String value) {
-            this.value = value;
-        }
-
-        public boolean test(Task e) {
-            return e.isNotice(value);
         }
 
     }

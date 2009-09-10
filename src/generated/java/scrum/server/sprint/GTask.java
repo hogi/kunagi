@@ -39,9 +39,9 @@ public abstract class GTask
         properties.put("requirementId", this.requirementId);
         properties.put("number", this.number);
         properties.put("label", this.label);
+        properties.put("description", this.description);
         properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);
-        properties.put("notice", this.notice);
         properties.put("ownerId", this.ownerId);
     }
 
@@ -165,6 +165,41 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
+    // - description
+    // -----------------------------------------------------------
+
+    private java.lang.String description;
+
+    public final java.lang.String getDescription() {
+        return description;
+    }
+
+    public final void setDescription(java.lang.String description) {
+        description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+        fireModified();
+    }
+
+    protected java.lang.String prepareDescription(java.lang.String description) {
+        description = Str.removeUnreadableChars(description);
+        return description;
+    }
+
+    public final boolean isDescriptionSet() {
+        return this.description != null;
+    }
+
+    public final boolean isDescription(java.lang.String description) {
+        if (this.description == null && description == null) return true;
+        return this.description != null && this.description.equals(description);
+    }
+
+    protected final void updateDescription(Object value) {
+        setDescription((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
     // - remainingWork
     // -----------------------------------------------------------
 
@@ -223,41 +258,6 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
-    // - notice
-    // -----------------------------------------------------------
-
-    private java.lang.String notice;
-
-    public final java.lang.String getNotice() {
-        return notice;
-    }
-
-    public final void setNotice(java.lang.String notice) {
-        notice = prepareNotice(notice);
-        if (isNotice(notice)) return;
-        this.notice = notice;
-        fireModified();
-    }
-
-    protected java.lang.String prepareNotice(java.lang.String notice) {
-        notice = Str.removeUnreadableChars(notice);
-        return notice;
-    }
-
-    public final boolean isNoticeSet() {
-        return this.notice != null;
-    }
-
-    public final boolean isNotice(java.lang.String notice) {
-        if (this.notice == null && notice == null) return true;
-        return this.notice != null && this.notice.equals(notice);
-    }
-
-    protected final void updateNotice(Object value) {
-        setNotice((java.lang.String)value);
-    }
-
-    // -----------------------------------------------------------
     // - owner
     // -----------------------------------------------------------
 
@@ -313,9 +313,9 @@ public abstract class GTask
             if (property.equals("requirementId")) updateRequirement(value);
             if (property.equals("number")) updateNumber(value);
             if (property.equals("label")) updateLabel(value);
+            if (property.equals("description")) updateDescription(value);
             if (property.equals("remainingWork")) updateRemainingWork(value);
             if (property.equals("burnedWork")) updateBurnedWork(value);
-            if (property.equals("notice")) updateNotice(value);
             if (property.equals("ownerId")) updateOwner(value);
         }
     }

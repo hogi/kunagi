@@ -143,17 +143,17 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerText(task.getNotice());
+				setViewerText(task.getDescription());
 			}
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorText(task.getNotice());
+				setEditorText(task.getDescription());
 			}
 
 			@Override
 			protected void onEditorSubmit() {
-				task.setNotice(getEditorText());
+				task.setDescription(getEditorText());
 			}
 
 		});

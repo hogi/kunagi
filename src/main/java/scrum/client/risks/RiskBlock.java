@@ -83,6 +83,23 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 				risk.setDescription(getEditorText());
 			}
 		});
+		fields.add("Mitigation Plans", new ARichtextViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerText(risk.getMitigationPlans());
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setEditorText(risk.getMitigationPlans());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				risk.setMitigationPlans(getEditorText());
+			}
+		});
 		fields.add("Impact", new ADropdownViewEditWidget() {
 
 			@Override
