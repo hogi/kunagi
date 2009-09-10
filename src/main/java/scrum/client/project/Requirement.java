@@ -22,10 +22,19 @@ public class Requirement extends GRequirement {
 		super(data);
 	}
 
+	public boolean isValidForSprint() {
+		if (!isEstimatedWorkValid()) return false;
+		return true;
+	}
+
+	public boolean isEstimatedWorkValid() {
+		return !isDirty() && getEstimatedWork() != null;
+	}
+
 	public String getLongLabel() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getReference()).append(" ").append(getLabel());
-		if (isDirty()) sb.append(" [dirty]");
+		if (!isEstimatedWorkValid()) sb.append(" [requires estimation]");
 		if (isInCurrentSprint()) sb.append(" [In Sprint]");
 		return sb.toString();
 	}

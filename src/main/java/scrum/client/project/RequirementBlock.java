@@ -41,7 +41,13 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	@Override
 	protected void onUpdateHead() {
 		setBlockTitle(requirement.getLongLabel());
-		setAdditionalStyleName(requirement.isInCurrentSprint() ? "RequirementBlock-inCurrentSprint" : null);
+		String style = null;
+		if (requirement.isInCurrentSprint()) {
+			style = "RequirementBlock-inCurrentSprint";
+		} else if (!requirement.isValidForSprint()) {
+			style = "RequirementBlock-invalidForSprint";
+		}
+		setAdditionalStyleName(style);
 		setIcon(getProperIcon());
 		addMenuAction(new AddRequirementToCurrentSprintAction(requirement, Ui.get()));
 		addMenuAction(new RemoveRequirementFromSprintAction(requirement, Ui.get()));

@@ -24,7 +24,9 @@ public class AddRequirementToCurrentSprintAction extends AAction {
 
 	@Override
 	public boolean isExecutable() {
-		return !isCurrentSprint(requirement.getSprint());
+		if (!requirement.isEstimatedWorkValid()) return false;
+		if (isCurrentSprint(requirement.getSprint())) return false;
+		return true;
 	}
 
 	@Override

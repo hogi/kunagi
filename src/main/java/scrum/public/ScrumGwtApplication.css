@@ -91,7 +91,8 @@ a {cursor: pointer;}
 .ABlockWidget-title-menu .gwt-MenuItem { font-size: 9px;}
 
 .WhiteboardWidget-requirement-list .ABlockWidget-title {background: #192666; color: #DEE5FD;}
-.RequirementBlock-inCurrentSprint .ABlockWidget-title {background: #DEFDE5;}
+.RequirementBlock-inCurrentSprint .ABlockWidget-title {background: #CEFDC5;}
+.RequirementBlock-invalidForSprint .ABlockWidget-title {background: #DEDEDE;}
 
 /***** Panel *****/
 
