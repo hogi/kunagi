@@ -37,15 +37,17 @@ public class BurndownChart {
 
 		List<BurndownSnapshot> shots = new ArrayList<BurndownSnapshot>();
 
-		shots.add(shot(new Date(2008, 7, 1), 5, 45));
-		shots.add(shot(new Date(2008, 7, 2), 10, 40));
-		shots.add(shot(new Date(2008, 7, 3), 15, 35));
-		shots.add(shot(new Date(2008, 7, 4), 18, 40));
-		shots.add(shot(new Date(2008, 7, 5), 25, 33));
-		shots.add(shot(new Date(2008, 7, 6), 28, 30));
+		shots.add(shot(new Date(2008, 7, 1), 0, 0));
+		shots.add(shot(new Date(2008, 7, 2), 0, 0));
+		shots.add(shot(new Date(2008, 7, 3), 0, 0));
+		shots.add(shot(new Date(2008, 7, 4), 5, 45));
+		shots.add(shot(new Date(2008, 7, 5), 10, 40));
+		shots.add(shot(new Date(2008, 7, 6), 15, 35));
+		shots.add(shot(new Date(2008, 7, 7), 18, 40));
+		shots.add(shot(new Date(2008, 7, 8), 25, 33));
+		shots.add(shot(new Date(2008, 7, 9), 28, 30));
 
-		DefaultXYDataset data = createSprintBurndownChartDataset(shots, new Date(2008, 6, 30), new Date(2008, 7, 30),
-			50.0);
+		DefaultXYDataset data = createSprintBurndownChartDataset(shots, new Date(2008, 7, 1), new Date(2008, 7, 31));
 		double tick = 1.0;
 		double max = getMaximum(data);
 
@@ -56,8 +58,8 @@ public class BurndownChart {
 			if (max / tick <= 25) break;
 			tick *= 2;
 		}
-		JFreeChart chart = createSprintBurndownChart(data, "Date", "Work", new Date(2008, 6, 30),
-			new Date(2008, 7, 30), 1, 3, max * 1.1, tick);
+		JFreeChart chart = createSprintBurndownChart(data, "Date", "Work", new Date(2008, 7, 1), new Date(2008, 7, 31),
+			1, 3, max * 1.1, tick);
 
 		try {
 			ChartUtilities.saveChartAsPNG(new File("E:/Temp/chart.png"), chart, 500, 500);
@@ -91,25 +93,20 @@ public class BurndownChart {
 		List<ProjectSprintSnapshot> snapshots = project.getSprintSnapshots();
 		project.getCurrentSprintSnapshot().update();
 
-		ProjectSprintSnapshot firstSnapshot = snapshots.isEmpty() ? null : snapshots.get(0);
-		int initialWork = firstSnapshot == null ? 0 : firstSnapshot.getBurnedWork() + firstSnapshot.getRemainingWork();
-		writeProjectBurndownChart(out, snapshots, project.getBegin().addDays(-1), project.getEnd(), initialWork, width,
-			height);
+		writeProjectBurndownChart(out, snapshots, project.getBegin(), project.getEnd().addDays(1), width, height);
 	}
 
 	public void wirteSprintBurndownChart(OutputStream out, String sprintId, int width, int height) {
 		Sprint sprint = sprintDao.getById(sprintId);
 		List<SprintDaySnapshot> snapshots = sprint.getDaySnapshots();
 
-		writeSprintBurndownChart(out, snapshots, sprint.getBegin().addDays(-1), sprint.getEnd(), snapshots.get(0)
-				.getBurnedWork()
-				+ snapshots.get(0).getRemainingWork(), width, height);
+		writeSprintBurndownChart(out, snapshots, sprint.getBegin(), sprint.getEnd().addDays(1), width, height);
 	}
 
 	private void writeProjectBurndownChart(OutputStream out, List<ProjectSprintSnapshot> snapshots, Date firstDay,
-			Date lastDay, double initialWork, int width, int height) {
+			Date lastDay, int width, int height) {
 		List<BurndownSnapshot> burndownSnapshots = new ArrayList<BurndownSnapshot>(snapshots);
-		DefaultXYDataset data = createSprintBurndownChartDataset(burndownSnapshots, firstDay, lastDay, initialWork);
+		DefaultXYDataset data = createSprintBurndownChartDataset(burndownSnapshots, firstDay, lastDay);
 		double tick = 1.0;
 		double max = getMaximum(data);
 
@@ -130,9 +127,9 @@ public class BurndownChart {
 	}
 
 	private void writeSprintBurndownChart(OutputStream out, List<SprintDaySnapshot> snapshots, Date firstDay,
-			Date lastDay, double initialWork, int width, int height) {
+			Date lastDay, int width, int height) {
 		List<BurndownSnapshot> burndownSnapshots = new ArrayList<BurndownSnapshot>(snapshots);
-		DefaultXYDataset data = createSprintBurndownChartDataset(burndownSnapshots, firstDay, lastDay, initialWork);
+		DefaultXYDataset data = createSprintBurndownChartDataset(burndownSnapshots, firstDay, lastDay);
 		double tick = 1.0;
 		double max = getMaximum(data);
 
@@ -215,7 +212,7 @@ public class BurndownChart {
 	}
 
 	private static DefaultXYDataset createSprintBurndownChartDataset(List<BurndownSnapshot> snapshots, Date firstDay,
-			Date lastDay, double initialWork) {
+			Date lastDay) {
 
 		List<Double> mainDates = new ArrayList<Double>();
 		List<Double> mainValues = new ArrayList<Double>();
@@ -230,23 +227,25 @@ public class BurndownChart {
 		double remainingWork = 0;
 		double work = 0;
 
+		double jump = 0;
+
 		double newBurnedWork;
 		double newRemainingWork;
 		double newWork;
 
-		double idealWork = initialWork;
+		double idealWork = 0;
 		double idealPerDayBurndown = idealWork / (firstDay.getPeriodTo(lastDay).toDays());
 		Date lastIdealDate;
 
 		burnedWork = 0;
-		remainingWork = initialWork;
-		work = initialWork;
+		remainingWork = 0;
+		work = 0;
 
 		mainDates.add((double) firstDay.toMillis());
-		mainValues.add(initialWork);
+		mainValues.add(0d);
 
 		idealDates.add((double) firstDay.toMillis());
-		idealValues.add(initialWork);
+		idealValues.add(0d);
 
 		lastIdealDate = firstDay;
 
@@ -255,23 +254,22 @@ public class BurndownChart {
 			BurndownSnapshot snapshot = snapshots.get(i);
 			Date snapshotDate = snapshot.getDate();
 			double snapshotDateMillis = snapshotDate.toMillis();
+			double snapshotDateNextMillis = snapshotDate.addDays(1).toMillis();
 			newBurnedWork = snapshot.getBurnedWork();
 			newRemainingWork = snapshot.getRemainingWork();
 			newWork = newBurnedWork + newRemainingWork;
+			jump = newWork - work;
 
-			mainDates.add(snapshotDateMillis);
-			mainValues.add(work - newBurnedWork);
-
-			if (newWork != work) {
+			if (jump != 0) {
 				mainDates.add(snapshotDateMillis);
-				mainValues.add(newRemainingWork);
+				mainValues.add(remainingWork + jump);
 
 				idealWork -= (lastIdealDate.getPeriodTo(snapshotDate).toDays() * idealPerDayBurndown);
 
 				idealDates.add(snapshotDateMillis);
 				idealValues.add(idealWork);
 
-				idealWork += (newWork - work);
+				idealWork += (jump);
 
 				idealDates.add(snapshotDateMillis);
 				idealValues.add(idealWork);
@@ -281,11 +279,48 @@ public class BurndownChart {
 				lastIdealDate = snapshotDate;
 
 				work = newWork;
-
 			}
 
-			burnedWork = newBurnedWork;
+			mainDates.add(snapshotDateNextMillis);
+			mainValues.add(newRemainingWork);
+
 			remainingWork = newRemainingWork;
+			burnedWork = newBurnedWork;
+
+			// BurndownSnapshot snapshot = snapshots.get(i);
+			// Date snapshotDate = snapshot.getDate();
+			// double snapshotDateMillis = snapshotDate.toMillis();
+			// newBurnedWork = snapshot.getBurnedWork();
+			// newRemainingWork = snapshot.getRemainingWork();
+			// newWork = newBurnedWork + newRemainingWork;
+			//
+			// mainDates.add(snapshotDateMillis);
+			// mainValues.add(work - newBurnedWork);
+			//
+			// if (newWork != work) {
+			// mainDates.add(snapshotDateMillis);
+			// mainValues.add(newRemainingWork);
+			//
+			// idealWork -= (lastIdealDate.getPeriodTo(snapshotDate).toDays() * idealPerDayBurndown);
+			//
+			// idealDates.add(snapshotDateMillis);
+			// idealValues.add(idealWork);
+			//
+			// idealWork += (newWork - work);
+			//
+			// idealDates.add(snapshotDateMillis);
+			// idealValues.add(idealWork);
+			//
+			// idealPerDayBurndown = idealWork / (snapshotDate.getPeriodTo(lastDay).toDays());
+			//
+			// lastIdealDate = snapshotDate;
+			//
+			// work = newWork;
+			//
+			// }
+			//
+			// burnedWork = newBurnedWork;
+			// remainingWork = newRemainingWork;
 		}
 
 		idealWork -= (lastIdealDate.getPeriodTo(lastDay).toDays() * idealPerDayBurndown);
@@ -297,9 +332,9 @@ public class BurndownChart {
 
 		dataset.addSeries("Main", toArray(mainDates, mainValues));
 
-		double extrapolationPerDayBurndown = burnedWork / (snapshots.size() - 1);
+		Date d = snapshots.get(snapshots.size() - 1).getDate().addDays(1);
+		double extrapolationPerDayBurndown = burnedWork / (firstDay.getPeriodTo(d).toDays());
 		double remaining = remainingWork;
-		Date d = snapshots.get(snapshots.size() - 1).getDate();
 
 		extrapolationDates.add((double) d.toMillis());
 		extrapolationValues.add(remaining);
