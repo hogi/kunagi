@@ -42,7 +42,8 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 	@Override
 	protected void onUpdateHead() {
 		setBlockTitle(task.getLongLabel());
-		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
+		setAdditionalStyleName(task.isDone() && isTaskOverview() ? "TaskBlock-taskClosed" : null);
+		setIcon(Img.bundle.task16());
 		addMenuAction(new ClaimTaskAction(task, Ui.get()));
 		addMenuAction(new CloseTaskAction(task, Ui.get()));
 		addMenuAction(new ReopenTaskAction(task, Ui.get()));
@@ -188,6 +189,14 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		task.getRequirement().deleteTask(task);
 		TaskOverviewWidget.get().update();
 		WhiteboardWidget.get().update();
+	}
+
+	private boolean isTaskOverview() {
+		return container instanceof TaskOverviewWidget;
+	}
+
+	private boolean isWhiteboard() {
+		return container instanceof WhiteboardWidget;
 	}
 
 	public static class TaskBlockFactory extends BlockWidgetFactory<Task> {

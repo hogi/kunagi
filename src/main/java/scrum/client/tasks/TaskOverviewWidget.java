@@ -29,6 +29,7 @@ public class TaskOverviewWidget extends AWidget implements TaskBlockContainer {
 		unownedTasks = new TaskListWidget("Tasks without owner", this);
 		ownedTasks = new HashMap<User, TaskListWidget>();
 		for (User user : ScrumGwtApplication.get().getProject().getTeamMembers()) {
+			if (user == ScrumGwtApplication.get().getUser()) continue;
 			TaskListWidget list = new TaskListWidget(user.getName() + "'s Tasks", this);
 			ownedTasks.put(user, list);
 		}

@@ -43,7 +43,7 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 	@Override
 	protected void onUpdateHead() {
 		setBlockTitle(task.getLongLabel());
-		setIcon(task.isDone() ? Img.bundle.done16() : Img.bundle.task16());
+		setIcon(Img.bundle.task16());
 		addMenuAction(new ClaimTaskAction(task, Ui.get()));
 		addMenuAction(new CloseTaskAction(task, Ui.get()));
 		addMenuAction(new ReopenTaskAction(task, Ui.get()));
