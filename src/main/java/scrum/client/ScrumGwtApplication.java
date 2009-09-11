@@ -215,8 +215,8 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	public void logout() {
 		Ui.get().lock("logging out");
-		ScrumGwtApplication.get().callLogout();
 		closeProject();
+		ScrumGwtApplication.get().callLogout();
 		user = null;
 		getDao().clearAllEntities();
 		Ui.get().showLogin();

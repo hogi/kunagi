@@ -180,7 +180,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	protected void onCloseProject(WebSession session) {
 		session.setProject(null);
-		session.getUser().setCurrentProject(null);
 	}
 
 	@Override
