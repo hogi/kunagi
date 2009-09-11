@@ -169,12 +169,12 @@ public class WorkareaWidget extends AWidget {
 	}
 
 	public void showProductBacklog(Requirement requirement) {
-		show(productBacklog);
+		navigator.select(productBacklog);
 		productBacklog.selectRequirement(requirement);
 	}
 
 	public void showWhiteboard(Task task) {
-		show(whiteboard);
+		navigator.select(whiteboard);
 		whiteboard.selectTask(task);
 	}
 
