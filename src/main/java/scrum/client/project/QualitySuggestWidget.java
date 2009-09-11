@@ -10,7 +10,8 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.img.Img;
 import scrum.client.workspace.ClipboardItemWidget;
 
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
@@ -39,9 +40,9 @@ public class QualitySuggestWidget extends AWidget {
 		suggest = new SuggestBox(oracle);
 		table.setWidget(0, 0, suggest);
 		ButtonWidget add = new ButtonWidget(Img.bundle.plus16().createImage(), null);
-		add.addClickListener(new ClickListener() {
+		add.addClickHandler(new ClickHandler() {
 
-			public void onClick(Widget sender) {
+			public void onClick(ClickEvent event) {
 				List<Quality> qualitys = requirement.getDao().getQualitysByLabel(suggest.getText());
 				if (qualitys.size() > 0) {
 					addQuality(qualitys.get(0));
@@ -77,9 +78,9 @@ public class QualitySuggestWidget extends AWidget {
 		table.setWidget(row, 0, createQualityWidget(a));
 
 		ButtonWidget delete = new ButtonWidget(Img.bundle.delete16().createImage(), null);
-		delete.addClickListener(new ClickListener() {
+		delete.addClickHandler(new ClickHandler() {
 
-			public void onClick(Widget sender) {
+			public void onClick(ClickEvent event) {
 				int row = qualitys.indexOf(a);
 				table.removeRow(row);
 				qualitys.remove(row);

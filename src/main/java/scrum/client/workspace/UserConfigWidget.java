@@ -7,7 +7,8 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -81,7 +82,7 @@ public class UserConfigWidget extends AWidget {
 		mainpanel.setWidth("100%");
 		mainpanel.add(fields);
 		confirmButton = new ButtonWidget("save changes");
-		confirmButton.addClickListener(new ConfimChangesClickListener());
+		confirmButton.addClickHandler(new ConfimChangesClickListener());
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 		toolbar.add(confirmButton);
 		mainpanel.add(toolbar);
@@ -98,9 +99,9 @@ public class UserConfigWidget extends AWidget {
 		fields.update();
 	}
 
-	class ConfimChangesClickListener implements ClickListener {
+	class ConfimChangesClickListener implements ClickHandler {
 
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			if (oldPassword == null) {
 				Ui.get().showError("old password is empty");
 			} else if (newPassword == null) {

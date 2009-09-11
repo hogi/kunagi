@@ -8,7 +8,8 @@ import scrum.client.common.GroupWidget;
 import scrum.client.img.Img;
 import scrum.client.workspace.WorkareaWidget;
 
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
@@ -21,7 +22,7 @@ public class QualityBacklogWidget extends AWidget {
 	protected Widget onInitialization() {
 		list = new BlockListWidget<Quality>(QualityBlock.FACTORY);
 		ToolbarWidget toolbar = new ToolbarWidget(true);
-		toolbar.addButton(Img.bundle.new16().createImage(), "Create new Quality").addClickListener(
+		toolbar.addButton(Img.bundle.new16().createImage(), "Create new Quality").addClickHandler(
 			new CreateClickListener());
 
 		FlowPanel panel = new FlowPanel();
@@ -37,9 +38,9 @@ public class QualityBacklogWidget extends AWidget {
 		list.setObjects(ScrumGwtApplication.get().getProject().getQualitys());
 	}
 
-	class CreateClickListener implements ClickListener {
+	class CreateClickListener implements ClickHandler {
 
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			Quality quality = ScrumGwtApplication.get().getProject().createNewQuality();
 			list.addObject(quality, true);
 		}

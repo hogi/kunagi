@@ -12,7 +12,8 @@ import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkareaWidget;
 
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -27,9 +28,9 @@ public class NextSprintWidget extends AWidget {
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 
-		toolbar.addButton("Activate this Sprint").addClickListener(new ClickListener() {
+		toolbar.addButton("Activate this Sprint").addClickHandler(new ClickHandler() {
 
-			public void onClick(Widget sender) {
+			public void onClick(ClickEvent event) {
 				Ui.get().lock("Switching to next Sprint");
 				ScrumGwtApplication.get().callSwitchToNextSprint(new Runnable() {
 

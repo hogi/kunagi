@@ -11,10 +11,12 @@ import scrum.client.test.WidgetsTesterWidget;
 import scrum.client.workspace.Ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.KeyboardListener;
-import com.google.gwt.user.client.ui.KeyboardListenerAdapter;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -29,12 +31,10 @@ public class LoginWidget extends AWidget {
 	protected Widget onInitialization() {
 		username = new TextBox();
 		password = new PasswordTextBox();
-		password.addKeyboardListener(new KeyboardListenerAdapter() {
+		password.addKeyPressHandler(new KeyPressHandler() {
 
-			@Override
-			public void onKeyPress(Widget sender, char keyCode, int modifiers) {
-				super.onKeyPress(sender, keyCode, modifiers);
-				if (keyCode == KeyboardListener.KEY_ENTER) login();
+			public void onKeyPress(KeyPressEvent event) {
+				if (event.getCharCode() == KeyCodes.KEY_ENTER) login();
 			}
 
 		});
@@ -45,9 +45,9 @@ public class LoginWidget extends AWidget {
 		}
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
-		toolbar.addButton("Login").addClickListener(new ClickListener() {
+		toolbar.addButton("Login").addClickHandler(new ClickHandler() {
 
-			public void onClick(Widget sender) {
+			public void onClick(ClickEvent event) {
 				login();
 			}
 		});

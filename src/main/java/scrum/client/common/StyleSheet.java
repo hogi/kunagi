@@ -1,9 +1,8 @@
 package scrum.client.common;
 
-import ilarkesto.gwt.client.BaseStyleSheet;
 
 @Deprecated
-public class StyleSheet extends BaseStyleSheet {
+public class StyleSheet {
 
 	public static final String ELEMENT_WORKSPACE_WIDGET = "element-WorkspaceWidget";
 	public static final String ELEMENT_WORKSPACE_WIDGET_WORKSPACE = "element-WorkspaceWidget-workspace";

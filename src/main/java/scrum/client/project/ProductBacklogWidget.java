@@ -12,7 +12,8 @@ import scrum.client.common.GroupWidget;
 import scrum.client.img.Img;
 import scrum.client.workspace.WorkareaWidget;
 
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
@@ -28,7 +29,7 @@ public class ProductBacklogWidget extends AWidget {
 		list.setDndSorting(true);
 		list.setMoveObserver(new MoveObserver());
 		ToolbarWidget toolbar = new ToolbarWidget(true);
-		toolbar.addButton(Img.bundle.new16().createImage(), "Create new Requirement").addClickListener(
+		toolbar.addButton(Img.bundle.new16().createImage(), "Create new Requirement").addClickHandler(
 			new CreateClickListener());
 
 		FlowPanel panel = new FlowPanel();
@@ -48,9 +49,9 @@ public class ProductBacklogWidget extends AWidget {
 		list.extendObject(requirement);
 	}
 
-	class CreateClickListener implements ClickListener {
+	class CreateClickListener implements ClickHandler {
 
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			Requirement requirement = ScrumGwtApplication.get().getProject().createNewRequirement();
 			list.addObject(requirement, true);
 		}

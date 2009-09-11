@@ -7,7 +7,8 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
 import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
@@ -23,7 +24,7 @@ public class UserListWidget extends AWidget {
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 
-		toolbar.addButton(Img.bundle.new16().createImage(), "Create new user").addClickListener(
+		toolbar.addButton(Img.bundle.new16().createImage(), "Create new user").addClickHandler(
 			new CreateClickListener());
 
 		FlowPanel panel = new FlowPanel();
@@ -39,9 +40,9 @@ public class UserListWidget extends AWidget {
 		list.setObjects(ScrumGwtApplication.get().getDao().getUsers());
 	}
 
-	class CreateClickListener implements ClickListener {
+	class CreateClickListener implements ClickHandler {
 
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			User user = new User();
 			ScrumGwtApplication.get().getDao().createUser(user);
 			list.addObject(user, true);

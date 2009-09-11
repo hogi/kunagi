@@ -10,7 +10,8 @@ import scrum.client.img.Img;
 import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
 
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
@@ -19,9 +20,9 @@ public class ProjectSelectorWidget extends AWidget {
 
 	private BlockListWidget<Project> list;
 
-	class CreateClickListener implements ClickListener {
+	class CreateClickListener implements ClickHandler {
 
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			Project project = new Project(ScrumGwtApplication.get().getUser());
 			ScrumGwtApplication.get().getDao().createProject(project);
 			list.addObjects(project);
@@ -36,7 +37,7 @@ public class ProjectSelectorWidget extends AWidget {
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 
-		toolbar.addButton(Img.bundle.new16().createImage(), "Create new Project").addClickListener(
+		toolbar.addButton(Img.bundle.new16().createImage(), "Create new Project").addClickHandler(
 			new CreateClickListener());
 
 		FlowPanel panel = new FlowPanel();
