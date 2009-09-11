@@ -1,11 +1,11 @@
 package scrum.client.sprint;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.AAction;
+import scrum.client.common.AScrumAction;
 import scrum.client.project.Requirement;
 import scrum.client.workspace.WorkareaWidget;
 
-public class CreateTaskAction extends AAction {
+public class CreateTaskAction extends AScrumAction {
 
 	private Requirement requirement;
 

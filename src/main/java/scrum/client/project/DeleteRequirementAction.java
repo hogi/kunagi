@@ -1,9 +1,9 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.AAction;
+import scrum.client.common.AScrumAction;
 
-public class DeleteRequirementAction extends AAction {
+public class DeleteRequirementAction extends AScrumAction {
 
 	private Requirement requirement;
 

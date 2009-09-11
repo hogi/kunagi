@@ -1,9 +1,9 @@
 package scrum.client.impediments;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.AAction;
+import scrum.client.common.AScrumAction;
 
-public class DeleteImpedimentAction extends AAction {
+public class DeleteImpedimentAction extends AScrumAction {
 
 	private Impediment impediment;
 

@@ -1,13 +1,13 @@
 package scrum.client.admin;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AAction;
+import scrum.client.common.AScrumAction;
 import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.Window;
 
-public class DeleteProjectAction extends AAction {
+public class DeleteProjectAction extends AScrumAction {
 
 	private Project project;
 

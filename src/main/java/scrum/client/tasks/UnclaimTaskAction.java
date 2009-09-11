@@ -2,10 +2,10 @@ package scrum.client.tasks;
 
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AAction;
+import scrum.client.common.AScrumAction;
 import scrum.client.sprint.Task;
 
-public class UnclaimTaskAction extends AAction {
+public class UnclaimTaskAction extends AScrumAction {
 
 	private Task task;
 

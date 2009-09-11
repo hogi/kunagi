@@ -1,10 +1,10 @@
 package scrum.client.tasks;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.AAction;
+import scrum.client.common.AScrumAction;
 import scrum.client.sprint.Task;
 
-public class DeleteTaskAction extends AAction {
+public class DeleteTaskAction extends AScrumAction {
 
 	private Task task;
 

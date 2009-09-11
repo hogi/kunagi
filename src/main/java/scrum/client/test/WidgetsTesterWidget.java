@@ -10,7 +10,7 @@ import ilarkesto.gwt.client.MultiSelectionWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AAction;
+import scrum.client.common.AScrumAction;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -270,7 +270,7 @@ public class WidgetsTesterWidget extends AWidget {
 		panel.add(section);
 	}
 
-	static class DummyAction extends AAction {
+	static class DummyAction extends AScrumAction {
 
 		private String label;
 

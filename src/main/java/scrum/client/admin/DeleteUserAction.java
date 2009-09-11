@@ -2,9 +2,9 @@ package scrum.client.admin;
 
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AAction;
+import scrum.client.common.AScrumAction;
 
-public class DeleteUserAction extends AAction {
+public class DeleteUserAction extends AScrumAction {
 
 	private User user;
 

@@ -1,9 +1,9 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.AAction;
+import scrum.client.common.AScrumAction;
 
-public class DeleteQualityAction extends AAction {
+public class DeleteQualityAction extends AScrumAction {
 
 	private Quality quality;
 

@@ -1,9 +1,9 @@
 package scrum.client.risks;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.AAction;
+import scrum.client.common.AScrumAction;
 
-public class DeleteRiskAction extends AAction {
+public class DeleteRiskAction extends AScrumAction {
 
 	private Risk risk;
 

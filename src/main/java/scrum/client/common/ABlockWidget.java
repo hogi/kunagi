@@ -112,7 +112,7 @@ public abstract class ABlockWidget<O> extends AWidget {
 		return additionalStyleName;
 	}
 
-	protected void addMenuAction(AAction action) {
+	protected void addMenuAction(AScrumAction action) {
 		if (action.isExecutable()) {
 			addMenuCommand(action.getLabel(), action, action.getTooltip());
 		}
@@ -133,7 +133,7 @@ public abstract class ABlockWidget<O> extends AWidget {
 		menu.addItem(item);
 	}
 
-	protected void addToolbarAction(AAction action) {
+	protected void addToolbarAction(AScrumAction action) {
 		if (action.isExecutable()) {
 			addToolbarCommand(action.getLabel(), action);
 		}
