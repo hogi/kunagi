@@ -136,7 +136,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		if (project != null) {
 			postSystemMessage("Communication Error: " + ex.getMessage(), false);
 		} else {
-			ui.lock("Error: " + ex.getMessage());
+			ui.showError(ex.getMessage());
 		}
 	}
 
