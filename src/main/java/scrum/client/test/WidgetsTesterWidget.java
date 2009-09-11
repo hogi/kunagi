@@ -1,6 +1,7 @@
 package scrum.client.test;
 
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
+import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
@@ -130,6 +131,7 @@ public class WidgetsTesterWidget extends AWidget {
 	}
 
 	private String fieldsText = "test";
+	private String fieldsRichText = "test";
 	private Integer fieldsInt = 5;
 
 	private void testFields() {
@@ -149,6 +151,24 @@ public class WidgetsTesterWidget extends AWidget {
 			@Override
 			protected void onEditorSubmit() {
 				fieldsText = getEditorText();
+			}
+		});
+		fields.add("ARichtextViewEditWidget", new ARichtextViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerHtml(ScrumGwtApplication.get().textToHtml(fieldsRichText));
+				setViewerText(fieldsRichText);
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setEditorText(fieldsRichText);
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				fieldsRichText = getEditorText();
 			}
 		});
 		fields.add("AIntegerViewEditWidget", new AIntegerViewEditWidget() {
