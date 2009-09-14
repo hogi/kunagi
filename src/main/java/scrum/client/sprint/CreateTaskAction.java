@@ -3,7 +3,7 @@ package scrum.client.sprint;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.project.Requirement;
-import scrum.client.workspace.WorkareaWidget;
+import scrum.client.workspace.Ui;
 
 public class CreateTaskAction extends AScrumAction {
 
@@ -32,7 +32,7 @@ public class CreateTaskAction extends AScrumAction {
 	@Override
 	protected void onExecute() {
 		Task task = requirement.createNewTask();
-		WorkareaWidget.get().showTask(task);
+		Ui.get().showTask(task);
 	}
 
 }

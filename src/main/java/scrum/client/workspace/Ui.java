@@ -1,9 +1,23 @@
 package scrum.client.workspace;
 
+import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
+import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.LoginWidget;
+import scrum.client.impediments.Impediment;
+import scrum.client.impediments.ImpedimentListWidget;
+import scrum.client.project.ProductBacklogWidget;
+import scrum.client.project.Quality;
+import scrum.client.project.QualityBacklogWidget;
+import scrum.client.project.Requirement;
+import scrum.client.risks.Risk;
+import scrum.client.risks.RiskListWidget;
+import scrum.client.sprint.SprintBacklogWidget;
+import scrum.client.sprint.Task;
+import scrum.client.tasks.TaskOverviewWidget;
+import scrum.client.tasks.WhiteboardWidget;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -167,4 +181,89 @@ public class Ui extends AWidget {
 
 	// --- helper ---
 
+	public void showEntity(AGwtEntity entity) {
+		if (entity instanceof Task) {
+			showTask((Task) entity);
+		} else if (entity instanceof Requirement) {
+			showRequirement((Requirement) entity);
+		} else {
+			throw new RuntimeException("Showing entity not supported: " + entity.getClass().getName());
+		}
+	}
+
+	public void showTask(Task task) {
+		if (getWorkspace().getWorkarea().isCurrentWidget(getWorkspace().getWorkarea().getSprintBacklog())) {
+			showSprintBacklog(task);
+		} else if (getWorkspace().getWorkarea().isCurrentWidget(getWorkspace().getWorkarea().getTaskOverview())) {
+			showTaskOverview(task);
+		} else {
+			showWhiteboard(task);
+		}
+	}
+
+	public void showRequirement(Requirement requirement) {
+		ProductBacklogWidget productBacklog = getWorkspace().getWorkarea().getProductBacklog();
+		boolean inCurrentSprint = ScrumGwtApplication.get().getProject().isCurrentSprint(requirement.getSprint());
+		if (inCurrentSprint) {
+			if (getWorkspace().getWorkarea().isCurrentWidget(productBacklog)) {
+				showProductBacklog(requirement);
+			} else {
+				showSprintBacklog(requirement);
+			}
+		} else {
+			showProductBacklog(requirement);
+		}
+	}
+
+	public void showWhiteboard(Task task) {
+		WhiteboardWidget whiteboard = getWorkspace().getWorkarea().getWhiteboard();
+		select(whiteboard);
+		whiteboard.selectTask(task);
+	}
+
+	public void showSprintBacklog(Task task) {
+		SprintBacklogWidget sprintBacklog = getWorkspace().getWorkarea().getSprintBacklog();
+		select(sprintBacklog);
+		sprintBacklog.selectTask(task);
+	}
+
+	public void showTaskOverview(Task task) {
+		TaskOverviewWidget taskOverview = getWorkspace().getWorkarea().getTaskOverview();
+		select(taskOverview);
+		taskOverview.selectTask(task);
+	}
+
+	public void showSprintBacklog(Requirement requirement) {
+		SprintBacklogWidget sprintBacklog = getWorkspace().getWorkarea().getSprintBacklog();
+		select(sprintBacklog);
+		if (requirement != null) sprintBacklog.selectRequirement(requirement);
+	}
+
+	public void showProductBacklog(Requirement requirement) {
+		ProductBacklogWidget productBacklog = getWorkspace().getWorkarea().getProductBacklog();
+		select(productBacklog);
+		productBacklog.selectRequirement(requirement);
+	}
+
+	public void showImpedimentList(Impediment impediment) {
+		ImpedimentListWidget impedimentList = getWorkspace().getWorkarea().getImpedimentList();
+		select(impedimentList);
+		impedimentList.showImpediment(impediment);
+	}
+
+	public void showQualityBacklog(Quality quality) {
+		QualityBacklogWidget qualityBacklog = getWorkspace().getWorkarea().getQualityBacklog();
+		select(qualityBacklog);
+		qualityBacklog.showQuality(quality);
+	}
+
+	public void showRiskList(Risk risk) {
+		RiskListWidget riskList = getWorkspace().getWorkarea().getRiskList();
+		select(riskList);
+		riskList.showRisk(risk);
+	}
+
+	private void select(AWidget widget) {
+		getWorkspace().getWorkarea().getNavigator().select(widget);
+	}
 }

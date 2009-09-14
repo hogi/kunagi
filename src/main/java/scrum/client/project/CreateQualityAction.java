@@ -3,7 +3,7 @@ package scrum.client.project;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumAction;
-import scrum.client.workspace.WorkareaWidget;
+import scrum.client.workspace.Ui;
 
 public class CreateQualityAction extends AScrumAction {
 
@@ -24,7 +24,7 @@ public class CreateQualityAction extends AScrumAction {
 	@Override
 	protected void onExecute() {
 		Quality quality = ScrumGwtApplication.get().getProject().createNewQuality();
-		WorkareaWidget.get().showQualityBacklog(quality);
+		Ui.get().showQualityBacklog(quality);
 	}
 
 }

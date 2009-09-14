@@ -3,7 +3,7 @@ package scrum.client.project;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumAction;
-import scrum.client.workspace.WorkareaWidget;
+import scrum.client.workspace.Ui;
 
 public class CreateRequirementAction extends AScrumAction {
 
@@ -24,7 +24,7 @@ public class CreateRequirementAction extends AScrumAction {
 	@Override
 	protected void onExecute() {
 		Requirement requirement = ScrumGwtApplication.get().getProject().createNewRequirement();
-		WorkareaWidget.get().showRequirement(requirement);
+		Ui.get().showRequirement(requirement);
 	}
 
 }

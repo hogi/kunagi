@@ -2,7 +2,7 @@ package scrum.client.impediments;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumAction;
-import scrum.client.workspace.WorkareaWidget;
+import scrum.client.workspace.Ui;
 
 public class CreateImpedimentAction extends AScrumAction {
 
@@ -19,7 +19,7 @@ public class CreateImpedimentAction extends AScrumAction {
 	@Override
 	protected void onExecute() {
 		Impediment impediment = ScrumGwtApplication.get().getProject().createNewImpediment();
-		WorkareaWidget.get().showImpedimentList(impediment);
+		Ui.get().showImpedimentList(impediment);
 	}
 
 }

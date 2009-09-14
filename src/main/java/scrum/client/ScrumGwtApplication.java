@@ -177,7 +177,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		GwtLogger.DEBUG("Showing entity:", reference);
 		AGwtEntity entity = getDao().getEntityByReference(reference);
 		if (entity != null) {
-			WorkareaWidget.get().showEntity(entity);
+			Ui.get().showEntity(entity);
 			return;
 		}
 		ui.lock("Searching for " + reference);
@@ -191,7 +191,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 					return;
 				}
 				ui.unlock();
-				WorkareaWidget.get().showEntity(entity);
+				Ui.get().showEntity(entity);
 			}
 		});
 	}

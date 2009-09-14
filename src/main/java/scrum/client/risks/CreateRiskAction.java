@@ -2,7 +2,7 @@ package scrum.client.risks;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumAction;
-import scrum.client.workspace.WorkareaWidget;
+import scrum.client.workspace.Ui;
 
 public class CreateRiskAction extends AScrumAction {
 
@@ -19,7 +19,7 @@ public class CreateRiskAction extends AScrumAction {
 	@Override
 	protected void onExecute() {
 		Risk risk = ScrumGwtApplication.get().getProject().createNewRisk();
-		WorkareaWidget.get().showRiskList(risk);
+		Ui.get().showRiskList(risk);
 	}
 
 }

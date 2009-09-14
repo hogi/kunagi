@@ -2,8 +2,8 @@ package scrum.client.sprint;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumAction;
+import scrum.client.project.Requirement;
 import scrum.client.workspace.Ui;
-import scrum.client.workspace.WorkareaWidget;
 
 public class SwitchToNextSprintAction extends AScrumAction {
 
@@ -23,7 +23,7 @@ public class SwitchToNextSprintAction extends AScrumAction {
 		ScrumGwtApplication.get().callSwitchToNextSprint(new Runnable() {
 
 			public void run() {
-				WorkareaWidget.get().showSprintBacklog();
+				Ui.get().showSprintBacklog((Requirement) null);
 			}
 		});
 	}
