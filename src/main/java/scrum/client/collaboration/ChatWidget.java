@@ -55,7 +55,6 @@ public class ChatWidget extends AWidget {
 		}
 		output.setHTML(sb.toString());
 		outputScroller.scrollToBottom();
-		input.setFocus(true);
 	}
 
 	private void postMessage() {
@@ -64,6 +63,7 @@ public class ChatWidget extends AWidget {
 		if (text.length() == 0) return;
 		ScrumGwtApplication.get().postMessage(text);
 		input.setText("");
+		input.setFocus(true);
 	}
 
 	private void appendMessage(ChatMessage m, StringBuilder sb) {
