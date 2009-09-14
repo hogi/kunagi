@@ -9,11 +9,8 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockMoveObserver;
 import scrum.client.common.GroupWidget;
-import scrum.client.img.Img;
 import scrum.client.workspace.WorkareaWidget;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
@@ -29,8 +26,7 @@ public class ProductBacklogWidget extends AWidget {
 		list.setDndSorting(true);
 		list.setMoveObserver(new MoveObserver());
 		ToolbarWidget toolbar = new ToolbarWidget(true);
-		toolbar.addButton(Img.bundle.new16().createImage(), "Create new Requirement").addClickHandler(
-			new CreateClickListener());
+		toolbar.addButton(new CreateRequirementAction());
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(toolbar);
@@ -47,14 +43,6 @@ public class ProductBacklogWidget extends AWidget {
 
 	public void selectRequirement(Requirement requirement) {
 		list.extendObject(requirement);
-	}
-
-	class CreateClickListener implements ClickHandler {
-
-		public void onClick(ClickEvent event) {
-			Requirement requirement = ScrumGwtApplication.get().getProject().createNewRequirement();
-			list.addObject(requirement, true);
-		}
 	}
 
 	class MoveObserver implements BlockMoveObserver<Requirement> {

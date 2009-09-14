@@ -39,4 +39,8 @@ public class StartPageWidget extends AWidget {
 		return userList;
 	}
 
+	public static StartPageWidget get() {
+		return Ui.get().getStartPage();
+	}
+
 }

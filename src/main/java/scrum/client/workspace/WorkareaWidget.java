@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.img.Img;
+import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.ProjectOverviewWidget;
@@ -145,6 +146,15 @@ public class WorkareaWidget extends AWidget {
 		} else {
 			throw new RuntimeException("Showing entity not supported: " + entity.getClass().getName());
 		}
+	}
+
+	public void showImpediment(Impediment impediment) {
+		showImpedimentList();
+		getImpedimentList().showImpediment(impediment);
+	}
+
+	public void showImpedimentList() {
+		navigator.select(getImpedimentList());
 	}
 
 	public void showRequirement(Requirement requirement) {

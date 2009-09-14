@@ -90,6 +90,7 @@ public final class BlockListWidget<O> extends AWidget {
 	}
 
 	public ABlockWidget<O> getBlock(int row) {
+		if (row < 0) return null;
 		ABlockWidget<O> block = (ABlockWidget<O>) table.getWidget(row, 0);
 		assert block != null : "Block at row " + row + " of " + table.getRowCount() + " is null";
 		return block;
@@ -262,6 +263,8 @@ public final class BlockListWidget<O> extends AWidget {
 		// selectionManager.deselectAll();
 		// }
 
+		if (row < 0) return;
+
 		ABlockWidget<O> block = getBlock(row);
 		block.setExtended(true);
 
@@ -308,6 +311,7 @@ public final class BlockListWidget<O> extends AWidget {
 
 	public final void extendObject(O object) {
 		int idx = indexOf(object);
+		if (idx < 0) return;
 		extendRow(idx);
 		assert isExtended(object);
 	}
