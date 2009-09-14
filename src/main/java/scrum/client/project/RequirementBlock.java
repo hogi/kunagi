@@ -9,6 +9,7 @@ import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.ClientConstants;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
@@ -189,13 +190,8 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 		return this;
 	}
 
-	public boolean isTrashable() {
-		return !requirement.isSprintSet();
-	}
-
-	public void trash() {
-		requirement.getProject().deleteRequirement(requirement);
-		getList().removeObjects(requirement);
+	public AScrumAction getTrashAction() {
+		return new DeleteRequirementAction(requirement, Ui.get());
 	}
 
 	public Requirement getRequirement() {

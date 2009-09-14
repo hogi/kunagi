@@ -30,6 +30,26 @@ public class Project extends GProject {
 		super(data);
 	}
 
+	public boolean isPig(User user) {
+		return isProductOwner(user) || isScrumMaster(user) || isTeamMember(user);
+	}
+
+	public boolean isParticipant(User user) {
+		return getParticipants().contains(user);
+	}
+
+	public boolean isTeamMember(User user) {
+		return getTeamMembers().contains(user);
+	}
+
+	public boolean isScrumMaster(User user) {
+		return getScrumMasters().contains(user);
+	}
+
+	public boolean isProductOwner(User user) {
+		return getProductOwners().contains(user);
+	}
+
 	public void updateRequirementsOrder() {
 		List<Requirement> requirements = getRequirements();
 		Collections.sort(requirements, getRequirementsOrderComparator());

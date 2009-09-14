@@ -1,20 +1,16 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import scrum.client.ScrumGwtApplication;
-import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
-import scrum.client.dnd.ClipboardSupport;
-import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
-public class UserBlock extends AExtensibleBlockWidget<User> implements TrashSupport, ClipboardSupport {
+public class UserBlock extends AExtensibleBlockWidget<User> {
 
 	private User user;
 
@@ -104,25 +100,13 @@ public class UserBlock extends AExtensibleBlockWidget<User> implements TrashSupp
 		return user.getName();
 	}
 
-	public ABlockWidget getClipboardPayload() {
-		return this;
-	}
-
 	public User getUser() {
 		return user;
 	}
 
-	public boolean isTrashable() {
-		return true;
-	}
-
-	public void trash() {
-		ScrumGwtApplication.get().getDao().deleteUser(user);
-		getList().removeObjects(user);
-	}
-
 	public static BlockWidgetFactory<User> FACTORY = new BlockWidgetFactory<User>() {
 
+		@Override
 		public UserBlock createBlock() {
 			return new UserBlock();
 		}

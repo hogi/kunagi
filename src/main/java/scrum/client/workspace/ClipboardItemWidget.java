@@ -4,14 +4,13 @@ import ilarkesto.gwt.client.AWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.DndManager;
-import scrum.client.dnd.TrashSupport;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ClipboardItemWidget extends AWidget implements TrashSupport {
+public class ClipboardItemWidget extends AWidget {
 
 	private HorizontalPanel panel;
 
@@ -39,16 +38,6 @@ public class ClipboardItemWidget extends AWidget implements TrashSupport {
 
 		DndManager.get().makeDraggable(this, icon);
 		return panel;
-	}
-
-	public boolean isTrashable() {
-		if (clipboardSupport instanceof TrashSupport) return ((TrashSupport) clipboardSupport).isTrashable();
-		return false;
-	}
-
-	public void trash() {
-		((TrashSupport) clipboardSupport).trash();
-		removeFromClipboard();
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
@@ -123,13 +124,8 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 		return this;
 	}
 
-	public boolean isTrashable() {
-		return true;
-	}
-
-	public void trash() {
-		impediment.getProject().deleteImpediment(impediment);
-		getList().removeObjects(impediment);
+	public AScrumAction getTrashAction() {
+		return new DeleteImpedimentAction(impediment, Ui.get());
 	}
 
 	public static BlockWidgetFactory<Impediment> FACTORY = new BlockWidgetFactory<Impediment>() {

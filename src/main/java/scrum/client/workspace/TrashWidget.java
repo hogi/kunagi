@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class TrashWidget extends AWidget {
 
 	private HorizontalPanel trash;
+	private DropController trashDropController = new TrashDropController();
 
 	@Override
 	protected Widget onInitialization() {
@@ -32,7 +33,18 @@ public class TrashWidget extends AWidget {
 	@Override
 	protected void onUpdate() {}
 
-	private DropController trashDropController = new DropController() {
+	private boolean isTrashable(Widget draggable) {
+		boolean trashable;
+		if (draggable instanceof TrashSupport) {
+			trashable = ((TrashSupport) draggable).getTrashAction().isExecutable();
+		} else {
+			trashable = false;
+		}
+		GwtLogger.DEBUG(trashable ? "Trashable:" : "Not Trashable:", draggable);
+		return trashable;
+	}
+
+	private class TrashDropController implements DropController {
 
 		public Widget getDropTarget() {
 			return trash;
@@ -40,7 +52,7 @@ public class TrashWidget extends AWidget {
 
 		public void onDrop(DragContext context) {
 			if (!isTrashable(context.draggable)) return;
-			((TrashSupport) context.draggable).trash();
+			((TrashSupport) context.draggable).getTrashAction().execute();
 		}
 
 		public void onEnter(DragContext context) {
@@ -60,10 +72,5 @@ public class TrashWidget extends AWidget {
 		public void onPreviewDrop(DragContext context) throws VetoDragException {}
 
 	};
-
-	private boolean isTrashable(Widget draggable) {
-		if (draggable instanceof TrashSupport) return ((TrashSupport) draggable).isTrashable();
-		return false;
-	}
 
 }

@@ -34,8 +34,7 @@ public class Requirement extends GRequirement implements Numbered {
 
 	@Override
 	public String toString() {
-		return getId();
-		// return "r" + getNumber() + " " + getLabel();
+		return "r" + getNumber() + " " + getLabel();
 	}
 
 	// --- test data ---

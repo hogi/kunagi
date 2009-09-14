@@ -24,7 +24,7 @@ public class DeleteRiskAction extends AScrumAction {
 
 	@Override
 	public boolean isExecutable() {
-		return getProject().getProductOwners().contains(getUser());
+		return getProject().isPig(getUser());
 	}
 
 	@Override

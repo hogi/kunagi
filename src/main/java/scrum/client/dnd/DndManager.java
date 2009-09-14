@@ -57,7 +57,6 @@ public class DndManager {
 		return ScrumGwtApplication.get().getDndManager();
 	}
 
-	@Deprecated
 	public ScrumDragController getDragController() {
 		return dragController;
 	}

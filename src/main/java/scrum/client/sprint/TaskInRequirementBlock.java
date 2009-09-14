@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
@@ -186,13 +187,8 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 		return this;
 	}
 
-	public boolean isTrashable() {
-		return true;
-	}
-
-	public void trash() {
-		task.getRequirement().deleteTask(task);
-		SprintBacklogWidget.get().update();
+	public AScrumAction getTrashAction() {
+		return new DeleteTaskAction(task, Ui.get());
 	}
 
 	public static BlockWidgetFactory<Task> FACTORY = new BlockWidgetFactory<Task>() {

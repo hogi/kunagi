@@ -25,7 +25,8 @@ public class DeleteTaskAction extends AScrumAction {
 
 	@Override
 	public boolean isExecutable() {
-		return !task.isOwnerSet() || task.isOwner(getUser());
+		if (task.isOwnerSet() && !task.isOwner(getUser())) return false;
+		return true;
 	}
 
 	@Override

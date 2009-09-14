@@ -6,6 +6,7 @@ import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
@@ -168,13 +169,8 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 		return risk;
 	}
 
-	public boolean isTrashable() {
-		return true;
-	}
-
-	public void trash() {
-		risk.getProject().deleteRisk(risk);
-		getList().removeObjects(risk);
+	public AScrumAction getTrashAction() {
+		return new DeleteRiskAction(risk, Ui.get());
 	}
 
 	public static BlockWidgetFactory<Risk> FACTORY = new BlockWidgetFactory<Risk>() {

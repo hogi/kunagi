@@ -24,7 +24,7 @@ public class DeleteImpedimentAction extends AScrumAction {
 
 	@Override
 	public boolean isExecutable() {
-		return getProject().getScrumMasters().contains(getUser());
+		return getProject().isPig(getUser());
 	}
 
 	@Override

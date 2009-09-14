@@ -24,7 +24,9 @@ public class DeleteRequirementAction extends AScrumAction {
 
 	@Override
 	public boolean isExecutable() {
-		return !getProject().isCurrentSprint(requirement.getSprint());
+		if (!getProject().isProductOwner(getUser())) return false;
+		if (!getProject().isCurrentSprint(requirement.getSprint())) return false;
+		return true;
 	}
 
 	@Override

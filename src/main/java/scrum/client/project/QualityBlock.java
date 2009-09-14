@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
@@ -121,13 +122,8 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 		return this;
 	}
 
-	public boolean isTrashable() {
-		return true;
-	}
-
-	public void trash() {
-		quality.getProject().deleteQuality(quality);
-		getList().removeObjects(quality);
+	public AScrumAction getTrashAction() {
+		return new DeleteQualityAction(quality, Ui.get());
 	}
 
 	public Quality getQuality() {

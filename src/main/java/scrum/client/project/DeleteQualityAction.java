@@ -24,7 +24,7 @@ public class DeleteQualityAction extends AScrumAction {
 
 	@Override
 	public boolean isExecutable() {
-		return getProject().getProductOwners().contains(getUser());
+		return getProject().isProductOwner(getUser());
 	}
 
 	@Override
