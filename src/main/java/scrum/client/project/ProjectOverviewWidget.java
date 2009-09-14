@@ -16,6 +16,9 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectOverviewWidget extends AWidget {
 
+	public static int CHART_WIDTH = 800;
+	public static int CHART_HEIGHT = 300;
+
 	private FieldsWidget fields;
 
 	@Override
@@ -58,11 +61,9 @@ public class ProjectOverviewWidget extends AWidget {
 			}
 		});
 
-		int chartWidth = 500;
-		int chartHeight = 300;
 		String chartUrl = GWT.getModuleBaseURL() + "/projectBurndownChart.png?projectId="
-				+ ScrumGwtApplication.get().getProject().getId() + "&width=" + chartWidth + "&height=" + chartHeight;
-		Image chart = new Image(chartUrl, 0, 0, chartWidth, chartHeight);
+				+ ScrumGwtApplication.get().getProject().getId() + "&width=" + CHART_WIDTH + "&height=" + CHART_HEIGHT;
+		Image chart = new Image(chartUrl, 0, 0, CHART_WIDTH, CHART_HEIGHT);
 
 		FlowPanel projectPropertiesPanel = new FlowPanel();
 		projectPropertiesPanel.add(fields);
@@ -84,11 +85,9 @@ public class ProjectOverviewWidget extends AWidget {
 	}
 
 	private Widget createCurrentSprintOverview(Sprint sprint) {
-		int chartWidth = 500;
-		int chartHeight = 300;
 		String chartUrl = GWT.getModuleBaseURL() + "/sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width="
-				+ chartWidth + "&height=" + chartHeight;
-		return new GroupWidget("Current Sprint", new Image(chartUrl, 0, 0, chartWidth, chartHeight));
+				+ CHART_WIDTH + "&height=" + CHART_HEIGHT;
+		return new GroupWidget("Current Sprint", new Image(chartUrl, 0, 0, CHART_WIDTH, CHART_HEIGHT));
 	}
 
 	public static ProjectOverviewWidget get() {

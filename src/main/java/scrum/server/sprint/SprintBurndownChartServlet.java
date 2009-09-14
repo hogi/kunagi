@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import scrum.client.project.ProjectOverviewWidget;
 import scrum.server.ScrumWebApplication;
 
 public class SprintBurndownChartServlet extends HttpServlet {
@@ -16,9 +17,9 @@ public class SprintBurndownChartServlet extends HttpServlet {
 
 		String sprintId = req.getParameter("sprintId");
 		String width = req.getParameter("width");
-		if (width == null) width = "400";
+		if (width == null) width = String.valueOf(ProjectOverviewWidget.CHART_WIDTH);
 		String height = req.getParameter("height");
-		if (height == null) height = "200";
+		if (height == null) height = String.valueOf(ProjectOverviewWidget.CHART_HEIGHT);
 
 		resp.setContentType("image/png");
 		ScrumWebApplication.get().getBurndownChart().wirteSprintBurndownChart(resp.getOutputStream(), sprintId,

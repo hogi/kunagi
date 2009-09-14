@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import scrum.client.project.ProjectOverviewWidget;
 import scrum.server.ScrumWebApplication;
 
 public class ProjectBurndownChartServlet extends HttpServlet {
@@ -20,9 +21,9 @@ public class ProjectBurndownChartServlet extends HttpServlet {
 
 		String projectId = req.getParameter("projectId");
 		String width = req.getParameter("width");
-		if (width == null) width = "400";
+		if (width == null) width = String.valueOf(ProjectOverviewWidget.CHART_WIDTH);
 		String height = req.getParameter("height");
-		if (height == null) height = "200";
+		if (height == null) height = String.valueOf(ProjectOverviewWidget.CHART_HEIGHT);
 
 		LOG.debug("Generating project burndown chart:", width + "x" + height, projectId);
 
