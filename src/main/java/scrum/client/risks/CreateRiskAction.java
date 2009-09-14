@@ -1,14 +1,14 @@
-package scrum.client.impediments;
+package scrum.client.risks;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumAction;
 import scrum.client.workspace.WorkareaWidget;
 
-public class CreateImpedimentAction extends AScrumAction {
+public class CreateRiskAction extends AScrumAction {
 
 	@Override
 	public String getLabel() {
-		return "Create new Impediment";
+		return "Create new Risk";
 	}
 
 	@Override
@@ -18,8 +18,8 @@ public class CreateImpedimentAction extends AScrumAction {
 
 	@Override
 	protected void onExecute() {
-		Impediment impediment = ScrumGwtApplication.get().getProject().createNewImpediment();
-		WorkareaWidget.get().showImpedimentList(impediment);
+		Risk risk = ScrumGwtApplication.get().getProject().createNewRisk();
+		WorkareaWidget.get().showRiskList(risk);
 	}
 
 }

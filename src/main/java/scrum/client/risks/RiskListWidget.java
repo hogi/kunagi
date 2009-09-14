@@ -8,10 +8,7 @@ import java.util.Comparator;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
-import scrum.client.img.Img;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
@@ -26,9 +23,7 @@ public class RiskListWidget extends AWidget {
 		list.setAutoSorter(new RiskComparator());
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
-
-		toolbar.addButton(Img.bundle.new16().createImage(), "Create new Risk").addClickHandler(
-			new CreateClickListener());
+		toolbar.addButton(new CreateRiskAction());
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(toolbar);
@@ -43,12 +38,8 @@ public class RiskListWidget extends AWidget {
 		list.setObjects(ScrumGwtApplication.get().getProject().getRisks());
 	}
 
-	class CreateClickListener implements ClickHandler {
-
-		public void onClick(ClickEvent event) {
-			Risk risk = ScrumGwtApplication.get().getProject().createNewRisk();
-			list.addObject(risk, true);
-		}
+	public void showRisk(Risk risk) {
+		list.extendObject(risk);
 	}
 
 	class RiskComparator implements Comparator<Risk> {

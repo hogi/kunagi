@@ -9,8 +9,10 @@ import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.ProjectOverviewWidget;
+import scrum.client.project.Quality;
 import scrum.client.project.QualityBacklogWidget;
 import scrum.client.project.Requirement;
+import scrum.client.risks.Risk;
 import scrum.client.risks.RiskListWidget;
 import scrum.client.sprint.NextSprintWidget;
 import scrum.client.sprint.SprintBacklogWidget;
@@ -148,13 +150,19 @@ public class WorkareaWidget extends AWidget {
 		}
 	}
 
-	public void showImpediment(Impediment impediment) {
-		showImpedimentList();
-		getImpedimentList().showImpediment(impediment);
+	public void showRiskList(Risk risk) {
+		navigator.select(getRiskList());
+		getRiskList().showRisk(risk);
 	}
 
-	public void showImpedimentList() {
+	public void showQualityBacklog(Quality quality) {
+		navigator.select(getQualityBacklog());
+		getQualityBacklog().showQuality(quality);
+	}
+
+	public void showImpedimentList(Impediment impediment) {
 		navigator.select(getImpedimentList());
+		getImpedimentList().showImpediment(impediment);
 	}
 
 	public void showRequirement(Requirement requirement) {
