@@ -256,12 +256,14 @@ public final class BlockListWidget<O> extends AWidget {
 		return -1;
 	}
 
-	public final void extendRow(int row) {
-		// if (selectionManager == null) {
-		// deselect();
-		// } else {
-		// selectionManager.deselectAll();
-		// }
+	public final void extendRow(int row, boolean exclusive) {
+		if (exclusive) {
+			if (selectionManager == null) {
+				collapseAll();
+			} else {
+				selectionManager.deselectAll();
+			}
+		}
 
 		if (row < 0) return;
 
@@ -303,24 +305,28 @@ public final class BlockListWidget<O> extends AWidget {
 		assert table.getRowCount() == oldSize - rows.length;
 	}
 
-	public final void extendBlock(ABlockWidget<O> block) {
+	public final void extendBlock(ABlockWidget<O> block, boolean exclusive) {
 		int idx = indexOf(block);
-		extendRow(idx);
+		extendRow(idx, exclusive);
 		assert isExtended(block.getObject());
 	}
 
 	public final void extendObject(O object) {
+		extendObject(object, true);
+	}
+
+	public final void extendObject(O object, boolean exclusive) {
 		int idx = indexOf(object);
 		if (idx < 0) return;
-		extendRow(idx);
+		extendRow(idx, exclusive);
 		assert isExtended(object);
 	}
 
-	public final void toggleVisualState(O object) {
+	public final void toggleExtension(O object, boolean exclusive) {
 		if (isExtended(object)) {
 			collapseObject(object);
 		} else {
-			extendObject(object);
+			extendObject(object, exclusive);
 		}
 	}
 

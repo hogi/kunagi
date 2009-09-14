@@ -245,7 +245,9 @@ public abstract class ABlockWidget<O> extends AWidget {
 	private class SelectionClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
-			list.toggleVisualState(getObject());
+			boolean modifierDown = event.getNativeEvent().getCtrlKey();
+			list.toggleExtension(getObject(), !modifierDown);
+			event.stopPropagation();
 		}
 
 	}

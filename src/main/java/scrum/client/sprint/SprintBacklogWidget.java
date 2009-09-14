@@ -127,7 +127,7 @@ public class SprintBacklogWidget extends AWidget {
 
 	public void selectTask(Task task) {
 		RequirementInSprintBlock rBlock = (RequirementInSprintBlock) requirementList.getBlock(task.getRequirement());
-		requirementList.extendBlock(rBlock);
+		requirementList.extendBlock(rBlock, true);
 		rBlock.selectTask(task);
 	}
 
