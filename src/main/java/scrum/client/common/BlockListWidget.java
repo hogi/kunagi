@@ -324,7 +324,15 @@ public final class BlockListWidget<O> extends AWidget {
 
 	public final void toggleExtension(O object, boolean exclusive) {
 		if (isExtended(object)) {
-			collapseObject(object);
+			if (exclusive) {
+				if (selectionManager != null) {
+					selectionManager.deselectAll();
+				} else {
+					collapseAll();
+				}
+			} else {
+				collapseObject(object);
+			}
 		} else {
 			extendObject(object, exclusive);
 		}

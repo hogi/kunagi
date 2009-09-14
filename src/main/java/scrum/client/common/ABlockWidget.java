@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.dnd.BlockDndMarkerWidget;
 import scrum.client.dnd.DndManager;
 
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
@@ -245,7 +246,8 @@ public abstract class ABlockWidget<O> extends AWidget {
 	private class SelectionClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
-			boolean modifierDown = event.getNativeEvent().getCtrlKey();
+			NativeEvent nativeEvent = event.getNativeEvent();
+			boolean modifierDown = nativeEvent.getCtrlKey() || nativeEvent.getShiftKey() || nativeEvent.getAltKey();
 			list.toggleExtension(getObject(), !modifierDown);
 			event.stopPropagation();
 		}
