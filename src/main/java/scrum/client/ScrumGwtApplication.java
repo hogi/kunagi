@@ -2,6 +2,7 @@ package scrum.client;
 
 import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.gwt.client.AGwtEntity;
+import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
 
@@ -51,12 +52,14 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		pingTimer = new PingTimer();
 		pingTimer.scheduleRepeating(15000);
 
+		ARichtextViewEditWidget.setDefaultRichtextFormater(new ScrumRichtextFormater());
 		ScrumJs.initialize();
 	}
 
-	public String textToHtml(String text) {
+	public String richtextToHtml(String text) {
 		if (Gwt.isEmpty(text)) return text;
 		String html = ScrumJs.regegxTextToHtml(text);
+		html = html.replace("\r\n", "<br>");
 		html = html.replace("\n", "<br>");
 		return html;
 	}

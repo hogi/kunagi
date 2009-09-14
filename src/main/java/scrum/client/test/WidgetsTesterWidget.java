@@ -10,8 +10,8 @@ import ilarkesto.gwt.client.MultiSelectionWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AScrumAction;
 import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
@@ -50,9 +50,9 @@ public class WidgetsTesterWidget extends AWidget {
 	private void testTextConverter() {
 		StringBuilder html = new StringBuilder();
 		html.append(
-			ScrumGwtApplication.get().textToHtml(
+			ScrumGwtApplication.get().richtextToHtml(
 				"r1 aaaa t5 aaaa (r3) aaaa r3. aaaa r3: aaaa [t12] aaar7 aaaa r7x aaaa t9")).append("<hr>");
-		html.append(ScrumGwtApplication.get().textToHtml("<b>html?</b> C&A\nnew line")).append("<hr>");
+		html.append(ScrumGwtApplication.get().richtextToHtml("<b>html?</b> C&A\nnew line")).append("<hr>");
 		addTest("TextConverter", new HTML(html.toString()));
 	}
 
@@ -157,7 +157,6 @@ public class WidgetsTesterWidget extends AWidget {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerHtml(ScrumGwtApplication.get().textToHtml(fieldsRichText));
 				setViewerText(fieldsRichText);
 			}
 

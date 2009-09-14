@@ -3,7 +3,6 @@ package scrum.client.tasks;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -79,7 +78,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerHtml(ScrumGwtApplication.get().textToHtml(task.getDescription()));
+				setViewerText(task.getDescription());
 			}
 
 			@Override
