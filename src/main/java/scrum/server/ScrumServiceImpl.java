@@ -129,7 +129,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		if (entity instanceof Requirement) {
 			Requirement requirement = (Requirement) entity;
-			if (!properties.containsKey("dirty")) requirement.setDirty(true);
+			if (properties.containsKey("description") || properties.containsKey("testDescription")
+					|| properties.containsKey("estimatedWork") || properties.containsKey("qualitysIds")) {
+				requirement.setDirty(true);
+			}
 			requirement.getProject().getCurrentSprintSnapshot().update();
 		}
 
