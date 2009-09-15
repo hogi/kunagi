@@ -90,7 +90,7 @@ a {cursor: pointer;}
 .ABlockWidget-title .ButtonWidget a {font-size: 12px; line-height: 16px;  padding: 0px; font-weight: normal; background: #DEE5FD; border: 0px;}
 .ABlockWidget-title-menu {margin-left: 15px; border: 0px;}
 .ABlockWidget-title-menu .gwt-MenuItem { font-size: 9px;}
-.ABlockWidget-content {border: 1px solid #DEE5FD;}
+.ABlockWidget-block-selected .ABlockWidget-content {border: 1px solid #DEE5FD;}
 
 .WhiteboardWidget-requirement-list .ABlockWidget-title {background: #192666; color: #DEE5FD;}
 
