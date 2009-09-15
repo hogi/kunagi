@@ -206,6 +206,21 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return userModel;
 	}
 
+	private EntityModel issueModel;
+
+	public EntityModel getIssueModel() {
+		if (issueModel == null) {
+			issueModel = createEntityModel("Issue", "issues");
+			autowire(issueModel);
+			issueModel.setGwtSupport(true);
+			issueModel.addReference("project", getProjectModel()).setMaster(true);
+			issueModel.addProperty("type", String.class);
+			issueModel.addProperty("label", String.class).setSearchable(true);
+			issueModel.addProperty("description", String.class).setSearchable(true);
+		}
+		return issueModel;
+	}
+
 	private EntityModel chatMessageModel;
 
 	public EntityModel getChatMessageModel() {
@@ -241,6 +256,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("closeProject");
 			gwtServiceModel.addMethod("switchToNextSprint");
 			gwtServiceModel.addMethod("requestImpediments");
+			gwtServiceModel.addMethod("requestIssues");
 			gwtServiceModel.addMethod("requestRisks");
 			gwtServiceModel.addMethod("requestRequirements");
 			gwtServiceModel.addMethod("requestQualitys");

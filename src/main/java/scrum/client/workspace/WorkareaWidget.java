@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.NavigatorWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.img.Img;
 import scrum.client.impediments.ImpedimentListWidget;
+import scrum.client.issues.IssueListWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.ProjectOverviewWidget;
 import scrum.client.project.QualityBacklogWidget;
@@ -33,6 +34,7 @@ public class WorkareaWidget extends AWidget {
 	private QualityBacklogWidget qualityBacklog;
 	private NextSprintWidget nextSprint;
 	private ImpedimentListWidget impedimentList;
+	private IssueListWidget issueList;
 	private RiskListWidget riskList;
 	private WidgetsTesterWidget widgetsTester;
 
@@ -93,6 +95,14 @@ public class WorkareaWidget extends AWidget {
 			public void run() {
 				ScrumGwtApplication.get().callRequestImpediments();
 				show(getImpedimentList());
+			}
+		});
+
+		navigator.addItem(Img.bundle.issue16(), "Issue List", getIssueList(), new Runnable() {
+
+			public void run() {
+				ScrumGwtApplication.get().callRequestIssues();
+				show(getIssueList());
 			}
 		});
 
@@ -190,6 +200,11 @@ public class WorkareaWidget extends AWidget {
 	public ImpedimentListWidget getImpedimentList() {
 		if (impedimentList == null) impedimentList = new ImpedimentListWidget();
 		return impedimentList;
+	}
+
+	public IssueListWidget getIssueList() {
+		if (issueList == null) issueList = new IssueListWidget();
+		return issueList;
 	}
 
 	public RiskListWidget getRiskList() {

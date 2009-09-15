@@ -8,6 +8,8 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.LoginWidget;
 import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
+import scrum.client.issues.Issue;
+import scrum.client.issues.IssueListWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.Quality;
 import scrum.client.project.QualityBacklogWidget;
@@ -249,6 +251,12 @@ public class Ui extends AWidget {
 		ImpedimentListWidget impedimentList = getWorkspace().getWorkarea().getImpedimentList();
 		select(impedimentList);
 		impedimentList.showImpediment(impediment);
+	}
+
+	public void showIssueList(Issue issue) {
+		IssueListWidget issueList = getWorkspace().getWorkarea().getIssueList();
+		select(issueList);
+		issueList.showIssue(issue);
 	}
 
 	public void showQualityBacklog(Quality quality) {

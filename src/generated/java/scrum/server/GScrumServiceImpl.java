@@ -31,6 +31,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onCloseProject(WebSession session);
     protected abstract void onSwitchToNextSprint(WebSession session);
     protected abstract void onRequestImpediments(WebSession session);
+    protected abstract void onRequestIssues(WebSession session);
     protected abstract void onRequestRisks(WebSession session);
     protected abstract void onRequestRequirements(WebSession session);
     protected abstract void onRequestQualitys(WebSession session);
@@ -195,6 +196,24 @@ public abstract class GScrumServiceImpl
             onRequestImpediments(session);
         } catch (Throwable t) {
             handleServiceMethodException("requestImpediments",t);
+            throw new RuntimeException(t);
+        }
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public scrum.client.DataTransferObject requestIssues() {
+        LOG.debug("requestIssues");
+        WebSession session = (WebSession) getSession();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:requestIssues");
+        context.bindCurrentThread();
+        try {
+            onRequestIssues(session);
+        } catch (Throwable t) {
+            handleServiceMethodException("requestIssues",t);
             throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();

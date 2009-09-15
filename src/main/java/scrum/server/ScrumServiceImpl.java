@@ -203,6 +203,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	protected void onRequestIssues(WebSession session) {
+		assertProjectSelected(session);
+		Project project = session.getProject();
+		session.sendToClient(project.getIssues());
+	}
+
+	@Override
 	protected void onRequestRisks(WebSession session) {
 		assertProjectSelected(session);
 		Project project = session.getProject();

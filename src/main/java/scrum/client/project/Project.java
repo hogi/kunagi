@@ -10,6 +10,7 @@ import java.util.Map;
 
 import scrum.client.admin.User;
 import scrum.client.impediments.Impediment;
+import scrum.client.issues.Issue;
 import scrum.client.risks.Risk;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
@@ -72,6 +73,12 @@ public class Project extends GProject {
 		return effortUnit;
 	}
 
+	public Issue createNewIssue() {
+		Issue issue = new Issue(this);
+		getDao().createIssue(issue);
+		return issue;
+	}
+
 	public Impediment createNewImpediment() {
 		Impediment impediment = new Impediment(this);
 		getDao().createImpediment(impediment);
@@ -82,12 +89,20 @@ public class Project extends GProject {
 		getDao().deleteImpediment(impediment);
 	}
 
+	public void deleteIssue(Issue issue) {
+		getDao().deleteIssue(issue);
+	}
+
 	public void deleteRisk(Risk risk) {
 		getDao().deleteRisk(risk);
 	}
 
 	public List<Impediment> getImpediments() {
 		return getDao().getImpedimentsByProject(this);
+	}
+
+	public List<Issue> getIssues() {
+		return getDao().getIssuesByProject(this);
 	}
 
 	public List<Risk> getRisks() {

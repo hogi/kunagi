@@ -36,6 +36,8 @@ public interface GScrumServiceAsync {
 
     void requestImpediments(AsyncCallback<DataTransferObject> callback);
 
+    void requestIssues(AsyncCallback<DataTransferObject> callback);
+
     void requestRisks(AsyncCallback<DataTransferObject> callback);
 
     void requestRequirements(AsyncCallback<DataTransferObject> callback);

@@ -6,6 +6,8 @@ import java.util.Set;
 import scrum.server.admin.User;
 import scrum.server.impediments.Impediment;
 import scrum.server.impediments.ImpedimentDao;
+import scrum.server.issues.Issue;
+import scrum.server.issues.IssueDao;
 import scrum.server.risks.Risk;
 import scrum.server.risks.RiskDao;
 import scrum.server.sprint.Sprint;
@@ -17,11 +19,16 @@ public class Project extends GProject {
 	// --- dependencies ---
 
 	private static ImpedimentDao impedimentDao;
+	private static IssueDao issueDao;
 	private static RequirementDao requirementDao;
 	private static QualityDao qualityDao;
 	private static ProjectSprintSnapshotDao projectSprintSnapshotDao;
 	private static RiskDao riskDao;
 	private static TaskDao taskDao;
+
+	public static void setIssueDao(IssueDao issueDao) {
+		Project.issueDao = issueDao;
+	}
 
 	public static void setTaskDao(TaskDao taskDao) {
 		Project.taskDao = taskDao;
@@ -140,6 +147,10 @@ public class Project extends GProject {
 
 	public Set<Impediment> getImpediments() {
 		return impedimentDao.getImpedimentsByProject(this);
+	}
+
+	public Set<Issue> getIssues() {
+		return issueDao.getIssuesByProject(this);
 	}
 
 	public Set<Risk> getRisks() {
