@@ -1,19 +1,13 @@
-package scrum.client.admin;
+package scrum.client.project;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AScrumAction;
-import scrum.client.project.Project;
-import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.Window;
 
-public class DeleteProjectAction extends AScrumAction {
-
-	private Project project;
+public class DeleteProjectAction extends GDeleteProjectAction {
 
 	public DeleteProjectAction(Project project) {
-		super(Ui.get());
-		this.project = project;
+		super(project);
 	}
 
 	@Override

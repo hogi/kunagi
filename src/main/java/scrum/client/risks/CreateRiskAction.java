@@ -1,10 +1,9 @@
 package scrum.client.risks;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AScrumAction;
 import scrum.client.workspace.Ui;
 
-public class CreateRiskAction extends AScrumAction {
+public class CreateRiskAction extends GCreateRiskAction {
 
 	@Override
 	public String getLabel() {

@@ -11,12 +11,6 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
-import scrum.client.tasks.ClaimTaskAction;
-import scrum.client.tasks.CloseTaskAction;
-import scrum.client.tasks.DeleteTaskAction;
-import scrum.client.tasks.ReopenTaskAction;
-import scrum.client.tasks.UnclaimTaskAction;
-import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -45,11 +39,11 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 	protected void onUpdateHead() {
 		setBlockTitle(task.getLongLabel());
 		setIcon(Img.bundle.task16());
-		addMenuAction(new ClaimTaskAction(task, Ui.get()));
-		addMenuAction(new CloseTaskAction(task, Ui.get()));
-		addMenuAction(new ReopenTaskAction(task, Ui.get()));
-		addMenuAction(new UnclaimTaskAction(task, Ui.get()));
-		addMenuAction(new DeleteTaskAction(task, Ui.get()));
+		addMenuAction(new ClaimTaskAction(task));
+		addMenuAction(new CloseTaskAction(task));
+		addMenuAction(new ReopenTaskAction(task));
+		addMenuAction(new UnclaimTaskAction(task));
+		addMenuAction(new DeleteTaskAction(task));
 	}
 
 	@Override
@@ -188,7 +182,7 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 	}
 
 	public AScrumAction getTrashAction() {
-		return new DeleteTaskAction(task, Ui.get());
+		return new DeleteTaskAction(task);
 	}
 
 	public static BlockWidgetFactory<Task> FACTORY = new BlockWidgetFactory<Task>() {

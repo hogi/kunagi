@@ -1,15 +1,9 @@
 package scrum.client.issues;
 
-import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.AScrumAction;
+public class DeleteIssueAction extends GDeleteIssueAction {
 
-public class DeleteIssueAction extends AScrumAction {
-
-	private Issue issue;
-
-	public DeleteIssueAction(Issue task, AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-		this.issue = task;
+	public DeleteIssueAction(scrum.client.issues.Issue issue) {
+		super(issue);
 	}
 
 	@Override

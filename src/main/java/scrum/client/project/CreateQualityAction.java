@@ -1,15 +1,9 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AScrumAction;
 import scrum.client.workspace.Ui;
 
-public class CreateQualityAction extends AScrumAction {
-
-	public CreateQualityAction(AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-	}
+public class CreateQualityAction extends GCreateQualityAction {
 
 	@Override
 	public String getLabel() {

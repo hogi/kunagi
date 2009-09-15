@@ -1,15 +1,10 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.AScrumAction;
 
-public class DeleteQualityAction extends AScrumAction {
+public class DeleteQualityAction extends GDeleteQualityAction {
 
-	private Quality quality;
-
-	public DeleteQualityAction(Quality quality, AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-		this.quality = quality;
+	protected DeleteQualityAction(Quality quality) {
+		super(quality);
 	}
 
 	@Override

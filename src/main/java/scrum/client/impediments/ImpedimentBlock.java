@@ -11,7 +11,6 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
-import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -43,7 +42,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	protected void onUpdateHead() {
 		setBlockTitle(impediment.getLabel());
 		setIcon(Img.bundle.impediment16());
-		addMenuAction(new DeleteImpedimentAction(impediment, Ui.get()));
+		addMenuAction(new DeleteImpedimentAction(impediment));
 	}
 
 	@Override
@@ -125,7 +124,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	}
 
 	public AScrumAction getTrashAction() {
-		return new DeleteImpedimentAction(impediment, Ui.get());
+		return new DeleteImpedimentAction(impediment);
 	}
 
 	public static BlockWidgetFactory<Impediment> FACTORY = new BlockWidgetFactory<Impediment>() {

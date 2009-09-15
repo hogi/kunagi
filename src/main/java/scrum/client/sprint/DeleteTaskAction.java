@@ -1,16 +1,9 @@
-package scrum.client.tasks;
+package scrum.client.sprint;
 
-import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.AScrumAction;
-import scrum.client.sprint.Task;
+public class DeleteTaskAction extends GDeleteTaskAction {
 
-public class DeleteTaskAction extends AScrumAction {
-
-	private Task task;
-
-	public DeleteTaskAction(Task task, AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-		this.task = task;
+	public DeleteTaskAction(Task task) {
+		super(task);
 	}
 
 	@Override

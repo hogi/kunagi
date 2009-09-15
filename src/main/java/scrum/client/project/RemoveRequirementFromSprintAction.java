@@ -1,16 +1,11 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AScrumAction;
 
-public class RemoveRequirementFromSprintAction extends AScrumAction {
+public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSprintAction {
 
-	private Requirement requirement;
-
-	public RemoveRequirementFromSprintAction(Requirement task, AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-		this.requirement = task;
+	protected RemoveRequirementFromSprintAction(Requirement requirement) {
+		super(requirement);
 	}
 
 	@Override

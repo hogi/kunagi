@@ -1,15 +1,10 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.AScrumAction;
 
-public class SetRequirementCleanAction extends AScrumAction {
+public class SetRequirementCleanAction extends GSetRequirementCleanAction {
 
-	private Requirement requirement;
-
-	public SetRequirementCleanAction(Requirement task, AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-		this.requirement = task;
+	protected SetRequirementCleanAction(Requirement requirement) {
+		super(requirement);
 	}
 
 	@Override

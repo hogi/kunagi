@@ -1,10 +1,9 @@
 package scrum.client.issues;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AScrumAction;
 import scrum.client.workspace.Ui;
 
-public class CreateIssueAction extends AScrumAction {
+public class CreateIssueAction extends GCreateIssueAction {
 
 	@Override
 	public String getLabel() {

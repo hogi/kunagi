@@ -8,7 +8,6 @@ import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
-import scrum.client.workspace.Ui;
 
 public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSupport {
 
@@ -33,7 +32,7 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 	protected void onUpdateHead() {
 		setBlockTitle(issue.getLabel());
 		setIcon(Img.bundle.issue16());
-		addMenuAction(new DeleteIssueAction(issue, Ui.get()));
+		addMenuAction(new DeleteIssueAction(issue));
 	}
 
 	@Override
@@ -85,7 +84,7 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 	}
 
 	public AScrumAction getTrashAction() {
-		return new DeleteIssueAction(issue, Ui.get());
+		return new DeleteIssueAction(issue);
 	}
 
 	public static BlockWidgetFactory<Issue> FACTORY = new BlockWidgetFactory<Issue>() {

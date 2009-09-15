@@ -21,7 +21,7 @@ public class UserListWidget extends AWidget {
 		list.setAutoSorter(User.NAME_COMPARATOR);
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
-		toolbar.addButton(new CreateUserAction(this));
+		toolbar.addButton(new CreateUserAction());
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(toolbar);

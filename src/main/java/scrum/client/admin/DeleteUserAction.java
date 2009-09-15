@@ -1,16 +1,11 @@
 package scrum.client.admin;
 
-import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AScrumAction;
 
-public class DeleteUserAction extends AScrumAction {
+public class DeleteUserAction extends GDeleteUserAction {
 
-	private User user;
-
-	public DeleteUserAction(User user, AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-		this.user = user;
+	public DeleteUserAction(User user) {
+		super(user);
 	}
 
 	@Override

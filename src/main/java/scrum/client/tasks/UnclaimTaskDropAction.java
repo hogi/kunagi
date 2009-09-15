@@ -5,6 +5,7 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.dnd.BlockListDropAction;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
+import scrum.client.sprint.UnclaimTaskAction;
 import scrum.client.workspace.Ui;
 
 public class UnclaimTaskDropAction implements BlockListDropAction<Task> {

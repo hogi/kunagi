@@ -1,17 +1,11 @@
-package scrum.client.admin;
+package scrum.client.project;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AScrumAction;
-import scrum.client.project.Project;
-import scrum.client.workspace.Ui;
 
-public class OpenProjectAction extends AScrumAction {
-
-	private Project project;
+public class OpenProjectAction extends GOpenProjectAction {
 
 	public OpenProjectAction(Project project) {
-		super(Ui.get());
-		this.project = project;
+		super(project);
 	}
 
 	@Override
@@ -22,11 +16,6 @@ public class OpenProjectAction extends AScrumAction {
 	@Override
 	public String getTooltip() {
 		return "Open this project.";
-	}
-
-	@Override
-	public boolean isExecutable() {
-		return true;
 	}
 
 	@Override

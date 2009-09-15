@@ -1,15 +1,9 @@
 package scrum.client.impediments;
 
-import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.AScrumAction;
+public class DeleteImpedimentAction extends GDeleteImpedimentAction {
 
-public class DeleteImpedimentAction extends AScrumAction {
-
-	private Impediment impediment;
-
-	public DeleteImpedimentAction(Impediment task, AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-		this.impediment = task;
+	public DeleteImpedimentAction(Impediment impediment) {
+		super(impediment);
 	}
 
 	@Override

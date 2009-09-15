@@ -1,11 +1,10 @@
 package scrum.client.sprint;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AScrumAction;
 import scrum.client.project.Requirement;
 import scrum.client.workspace.Ui;
 
-public class SwitchToNextSprintAction extends AScrumAction {
+public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 
 	@Override
 	public String getLabel() {

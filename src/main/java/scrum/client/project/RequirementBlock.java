@@ -15,7 +15,6 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
-import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Image;
@@ -50,11 +49,11 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 		}
 		setAdditionalStyleName(style);
 		setIcon(getProperIcon());
-		addMenuAction(new AddRequirementToCurrentSprintAction(requirement, Ui.get()));
-		addMenuAction(new RemoveRequirementFromSprintAction(requirement, Ui.get()));
-		addMenuAction(new SetRequirementDirtyAction(requirement, Ui.get()));
-		addMenuAction(new SetRequirementCleanAction(requirement, Ui.get()));
-		addMenuAction(new DeleteRequirementAction(requirement, Ui.get()));
+		addMenuAction(new AddRequirementToCurrentSprintAction(requirement));
+		addMenuAction(new RemoveRequirementFromSprintAction(requirement));
+		addMenuAction(new SetRequirementDirtyAction(requirement));
+		addMenuAction(new SetRequirementCleanAction(requirement));
+		addMenuAction(new DeleteRequirementAction(requirement));
 	}
 
 	private AbstractImagePrototype getProperIcon() {
@@ -191,7 +190,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	}
 
 	public AScrumAction getTrashAction() {
-		return new DeleteRequirementAction(requirement, Ui.get());
+		return new DeleteRequirementAction(requirement);
 	}
 
 	public Requirement getRequirement() {

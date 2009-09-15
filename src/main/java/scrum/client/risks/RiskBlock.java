@@ -12,7 +12,6 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
-import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.Image;
 
@@ -41,7 +40,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 	protected void onUpdateHead() {
 		setBlockTitle(risk.getLabel() + " [" + risk.getPriorityLabel() + "]");
 		setIcon(Img.bundle.risk16());
-		addMenuAction(new DeleteRiskAction(risk, Ui.get()));
+		addMenuAction(new DeleteRiskAction(risk));
 	}
 
 	@Override
@@ -170,7 +169,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 	}
 
 	public AScrumAction getTrashAction() {
-		return new DeleteRiskAction(risk, Ui.get());
+		return new DeleteRiskAction(risk);
 	}
 
 	public static BlockWidgetFactory<Risk> FACTORY = new BlockWidgetFactory<Risk>() {

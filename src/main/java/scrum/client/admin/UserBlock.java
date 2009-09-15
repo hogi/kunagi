@@ -5,7 +5,6 @@ import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
-import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -38,7 +37,7 @@ public class UserBlock extends AExtensibleBlockWidget<User> {
 		setIcon(Img.bundle.user16());
 		summary.setText(user.getName());
 		setContent(null);
-		addMenuAction(new DeleteUserAction(user, Ui.get()));
+		addMenuAction(new DeleteUserAction(user));
 	}
 
 	@Override

@@ -1,16 +1,16 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AAction;
-import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.project.Project;
 import scrum.client.sprint.Sprint;
+import scrum.client.workspace.Ui;
 
 public abstract class AScrumAction extends AAction {
 
-	public AScrumAction(AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
+	public AScrumAction() {
+		super(Ui.get());
 	}
 
 	// --- helper ---

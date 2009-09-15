@@ -8,6 +8,8 @@ import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
+import scrum.client.project.DeleteProjectAction;
+import scrum.client.project.OpenProjectAction;
 import scrum.client.project.Project;
 
 import com.google.gwt.user.client.ui.HTML;

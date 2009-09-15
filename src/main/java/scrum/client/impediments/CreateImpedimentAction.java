@@ -1,10 +1,9 @@
 package scrum.client.impediments;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AScrumAction;
 import scrum.client.workspace.Ui;
 
-public class CreateImpedimentAction extends AScrumAction {
+public class CreateImpedimentAction extends GCreateImpedimentAction {
 
 	@Override
 	public String getLabel() {

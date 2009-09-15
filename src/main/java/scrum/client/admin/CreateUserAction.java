@@ -1,14 +1,8 @@
 package scrum.client.admin;
 
-import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AScrumAction;
 
-public class CreateUserAction extends AScrumAction {
-
-	public CreateUserAction(AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-	}
+public class CreateUserAction extends GCreateUserAction {
 
 	@Override
 	public String getLabel() {

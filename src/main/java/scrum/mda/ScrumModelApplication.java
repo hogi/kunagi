@@ -3,6 +3,8 @@ package scrum.mda;
 import ilarkesto.base.time.Date;
 import ilarkesto.di.app.ApplicationStarter;
 import ilarkesto.mda.AGeneratorApplication;
+import ilarkesto.mda.gen.GwtActionGenerator;
+import ilarkesto.mda.gen.GwtActionTemplateGenerator;
 import ilarkesto.mda.gen.GwtApplicationGenerator;
 import ilarkesto.mda.gen.GwtDaoGenerator;
 import ilarkesto.mda.gen.GwtEntityGenerator;
@@ -11,12 +13,14 @@ import ilarkesto.mda.gen.GwtImageBundleGenerator;
 import ilarkesto.mda.gen.GwtServiceAsyncInterfaceGenerator;
 import ilarkesto.mda.gen.GwtServiceImplementationGenerator;
 import ilarkesto.mda.gen.GwtServiceInterfaceGenerator;
+import ilarkesto.mda.model.ActionModel;
 import ilarkesto.mda.model.ApplicationModel;
 import ilarkesto.mda.model.BeanModel;
 import ilarkesto.mda.model.DatobModel;
 import ilarkesto.mda.model.EntityModel;
 import ilarkesto.mda.model.GwtServiceModel;
 
+import java.util.List;
 import java.util.Map;
 
 public class ScrumModelApplication extends AGeneratorApplication {
@@ -52,6 +56,9 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addListProperty("requirementsOrderIds", String.class);
 			projectModel.addProperty("lastTaskNumber", int.class);
 			projectModel.addProperty("lastRequirementNumber", int.class);
+			getApplicationModel().addCreateAction(projectModel);
+			projectModel.addAction("DeleteProject");
+			projectModel.addAction("OpenProject");
 		}
 		return projectModel;
 	}
@@ -86,6 +93,12 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addProperty("estimatedWork", Integer.class);
 			requirementModel.addProperty("closed", boolean.class);
 			requirementModel.addProperty("dirty", boolean.class);
+			getApplicationModel().addCreateAction(requirementModel);
+			requirementModel.addAction("DeleteRequirement");
+			requirementModel.addAction("AddRequirementToCurrentSprint");
+			requirementModel.addAction("RemoveRequirementFromSprint");
+			requirementModel.addAction("SetRequirementDirty");
+			requirementModel.addAction("SetRequirementClean");
 		}
 		return requirementModel;
 	}
@@ -102,6 +115,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			qualityModel.addProperty("label", String.class);
 			qualityModel.addProperty("description", String.class);
 			qualityModel.addProperty("testDescription", String.class);
+			getApplicationModel().addCreateAction(qualityModel);
+			qualityModel.addAction("DeleteQuality");
 		}
 		return qualityModel;
 	}
@@ -151,6 +166,12 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			taskModel.addProperty("burnedWork", int.class);
 			// taskModel.addProperty("notice", String.class);
 			taskModel.addReference("owner", getUserModel());
+			getApplicationModel().addCreateAction(taskModel);
+			taskModel.addAction("DeleteTask");
+			taskModel.addAction("ClaimTask");
+			taskModel.addAction("UnclaimTask");
+			taskModel.addAction("CloseTask");
+			taskModel.addAction("ReopenTask");
 		}
 		return taskModel;
 	}
@@ -168,6 +189,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			impedimentModel.addProperty("description", String.class);
 			impedimentModel.addProperty("solution", String.class);
 			impedimentModel.addProperty("solveDate", Date.class);
+			getApplicationModel().addCreateAction(impedimentModel);
+			impedimentModel.addAction("DeleteImpediment");
 		}
 		return impedimentModel;
 	}
@@ -185,6 +208,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			riskModel.addProperty("mitigationPlans", String.class).setSearchable(true);
 			riskModel.addProperty("probability", int.class);
 			riskModel.addProperty("impact", int.class);
+			getApplicationModel().addCreateAction(riskModel);
+			riskModel.addAction("DeleteRisk");
 		}
 		return riskModel;
 	}
@@ -202,6 +227,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.addProperty("admin", boolean.class);
 			userModel.addProperty("email", String.class).setSearchable(true);
 			userModel.addReference("currentProject", getProjectModel());
+			getApplicationModel().addCreateAction(userModel);
+			userModel.addAction("DeleteUser");
 		}
 		return userModel;
 	}
@@ -217,6 +244,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addProperty("type", String.class);
 			issueModel.addProperty("label", String.class).setSearchable(true);
 			issueModel.addProperty("description", String.class).setSearchable(true);
+			getApplicationModel().addCreateAction(issueModel);
+			issueModel.addAction("DeleteIssue");
 		}
 		return issueModel;
 	}
@@ -283,6 +312,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(applicationModel);
 			applicationModel.addDaosAsComposites(getFinalEntityModels(true));
 			applicationModel.addGwtService(getGwtServiceModel());
+
+			applicationModel.addAction("SwitchToNextSprint", getBasePackageName() + ".sprint");
 		}
 		return applicationModel;
 	}
@@ -303,16 +334,28 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				autowire(new GwtEntityTemplateGenerator()).generate(datobModel);
 			}
 		}
+		if (beanModel instanceof EntityModel) {
+			EntityModel entityModel = (EntityModel) beanModel;
+			generateActions(entityModel.getActions());
+		}
 	}
 
 	@Override
 	protected void onGeneration() {
 		super.onGeneration();
+		generateActions(getApplicationModel().getActions());
 		autowire(new GwtServiceInterfaceGenerator()).generate(getGwtServiceModel());
 		autowire(new GwtServiceAsyncInterfaceGenerator()).generate(getGwtServiceModel());
 		autowire(new GwtServiceImplementationGenerator()).generate(getGwtServiceModel());
 		autowire(new GwtApplicationGenerator()).generate(getApplicationModel());
 		autowire(new GwtDaoGenerator()).generate(getApplicationModel(), getFinalEntityModels(false));
 		autowire(new GwtImageBundleGenerator()).generate("scrum.client.img");
+	}
+
+	private void generateActions(List<ActionModel> actions) {
+		for (ActionModel action : actions) {
+			autowire(new GwtActionGenerator()).generate(action);
+			autowire(new GwtActionTemplateGenerator()).generate(action);
+		}
 	}
 }

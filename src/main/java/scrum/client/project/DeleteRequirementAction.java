@@ -1,15 +1,10 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.AScrumAction;
 
-public class DeleteRequirementAction extends AScrumAction {
+public class DeleteRequirementAction extends GDeleteRequirementAction {
 
-	private Requirement requirement;
-
-	public DeleteRequirementAction(Requirement task, AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-		this.requirement = task;
+	protected DeleteRequirementAction(Requirement requirement) {
+		super(requirement);
 	}
 
 	@Override

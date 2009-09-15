@@ -11,7 +11,12 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
+import scrum.client.sprint.ClaimTaskAction;
+import scrum.client.sprint.CloseTaskAction;
+import scrum.client.sprint.DeleteTaskAction;
+import scrum.client.sprint.ReopenTaskAction;
 import scrum.client.sprint.Task;
+import scrum.client.sprint.UnclaimTaskAction;
 import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.Image;
@@ -44,11 +49,11 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		setBlockTitle(task.getLongLabel());
 		setAdditionalStyleName(task.isDone() && isTaskOverview() ? "TaskBlock-taskClosed" : null);
 		setIcon(Img.bundle.task16());
-		addMenuAction(new ClaimTaskAction(task, Ui.get()));
-		addMenuAction(new CloseTaskAction(task, Ui.get()));
-		addMenuAction(new ReopenTaskAction(task, Ui.get()));
-		addMenuAction(new UnclaimTaskAction(task, Ui.get()));
-		addMenuAction(new DeleteTaskAction(task, Ui.get()));
+		addMenuAction(new ClaimTaskAction(task));
+		addMenuAction(new CloseTaskAction(task));
+		addMenuAction(new ReopenTaskAction(task));
+		addMenuAction(new UnclaimTaskAction(task));
+		addMenuAction(new DeleteTaskAction(task));
 	}
 
 	@Override
@@ -182,15 +187,11 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 	}
 
 	public AScrumAction getTrashAction() {
-		return new DeleteTaskAction(task, Ui.get());
+		return new DeleteTaskAction(task);
 	}
 
 	private boolean isTaskOverview() {
 		return container instanceof TaskOverviewWidget;
-	}
-
-	private boolean isWhiteboard() {
-		return container instanceof WhiteboardWidget;
 	}
 
 	public static class TaskBlockFactory extends BlockWidgetFactory<Task> {

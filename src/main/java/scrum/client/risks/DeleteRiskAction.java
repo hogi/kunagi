@@ -1,15 +1,10 @@
 package scrum.client.risks;
 
-import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.AScrumAction;
 
-public class DeleteRiskAction extends AScrumAction {
+public class DeleteRiskAction extends GDeleteRiskAction {
 
-	private Risk risk;
-
-	public DeleteRiskAction(Risk risk, AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-		this.risk = risk;
+	protected DeleteRiskAction(Risk risk) {
+		super(risk);
 	}
 
 	@Override

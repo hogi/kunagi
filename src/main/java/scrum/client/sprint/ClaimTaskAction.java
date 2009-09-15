@@ -1,17 +1,11 @@
-package scrum.client.tasks;
+package scrum.client.sprint;
 
-import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AScrumAction;
-import scrum.client.sprint.Task;
 
-public class ClaimTaskAction extends AScrumAction {
+public class ClaimTaskAction extends GClaimTaskAction {
 
-	private Task task;
-
-	public ClaimTaskAction(Task task, AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-		this.task = task;
+	public ClaimTaskAction(Task task) {
+		super(task);
 	}
 
 	@Override

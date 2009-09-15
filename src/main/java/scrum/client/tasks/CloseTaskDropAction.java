@@ -4,6 +4,7 @@ import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.dnd.BlockListDropAction;
 import scrum.client.project.Requirement;
+import scrum.client.sprint.CloseTaskAction;
 import scrum.client.sprint.Task;
 import scrum.client.workspace.Ui;
 

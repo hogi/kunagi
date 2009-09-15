@@ -1,17 +1,14 @@
 package scrum.client.sprint;
 
-import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.AScrumAction;
 import scrum.client.project.Requirement;
 import scrum.client.workspace.Ui;
 
-public class CreateTaskAction extends AScrumAction {
+public class CreateTaskAction extends GCreateTaskAction {
 
 	private Requirement requirement;
 
-	public CreateTaskAction(Requirement task, AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-		this.requirement = task;
+	public CreateTaskAction(Requirement requirement) {
+		this.requirement = requirement;
 	}
 
 	@Override

@@ -1,17 +1,11 @@
-package scrum.client.tasks;
+package scrum.client.sprint;
 
-import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AScrumAction;
-import scrum.client.sprint.Task;
 
-public class CloseTaskAction extends AScrumAction {
+public class CloseTaskAction extends GCloseTaskAction {
 
-	private Task task;
-
-	public CloseTaskAction(Task task, AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-		this.task = task;
+	public CloseTaskAction(Task task) {
+		super(task);
 	}
 
 	@Override

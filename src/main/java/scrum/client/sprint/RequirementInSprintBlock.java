@@ -9,7 +9,6 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.img.Img;
 import scrum.client.project.Requirement;
-import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -40,7 +39,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 		setBlockTitle(requirement.getReference() + " " + requirement.getLabel());
 		setAdditionalStyleName(requirement.isDone() ? "RequirementInSprintBlock-done" : null);
 		setIcon(requirement.isDone() ? Img.bundle.done16() : Img.bundle.requirement16());
-		addMenuAction(new CreateTaskAction(requirement, Ui.get()));
+		addMenuAction(new CreateTaskAction(requirement));
 	}
 
 	@Override

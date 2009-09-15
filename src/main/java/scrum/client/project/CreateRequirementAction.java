@@ -1,15 +1,9 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.common.AScrumAction;
 import scrum.client.workspace.Ui;
 
-public class CreateRequirementAction extends AScrumAction {
-
-	public CreateRequirementAction(AWidget... widgetsToUpdate) {
-		super(widgetsToUpdate);
-	}
+public class CreateRequirementAction extends GCreateRequirementAction {
 
 	@Override
 	public String getLabel() {
