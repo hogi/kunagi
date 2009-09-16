@@ -18,6 +18,7 @@ public class ClaimTaskDropAction implements BlockListDropAction<Task> {
 
 	public boolean execute(ABlockWidget<Task> block, BlockListWidget<Task> fromList, int fromIndex,
 			BlockListWidget<Task> toList, int toIndex) {
+		int height = block.getOffsetHeight();
 		TaskBlock taskBlock = (TaskBlock) block;
 		Task task = taskBlock.getTask();
 		task.setRequirement(this.requirement);
@@ -30,5 +31,4 @@ public class ClaimTaskDropAction implements BlockListDropAction<Task> {
 		}
 		return true;
 	}
-
 }

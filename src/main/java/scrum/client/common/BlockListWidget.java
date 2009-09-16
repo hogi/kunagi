@@ -210,6 +210,7 @@ public final class BlockListWidget<O> extends AWidget {
 			table.insertRow(toIndex + i);
 			table.setWidget(toIndex + i, 0, blocks[i]);
 			blocks[i].update();
+
 		}
 
 		assert table.getRowCount() == oldSize + blocks.length;
@@ -230,6 +231,7 @@ public final class BlockListWidget<O> extends AWidget {
 			if (moveObserver != null) moveObserver.onBlockMoved();
 			if (autoSorter != null) sort(autoSorter);
 		}
+
 	}
 
 	public final void drop(ABlockWidget<O> block, int toIndex) {
