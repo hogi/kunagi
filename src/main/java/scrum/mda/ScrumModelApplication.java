@@ -51,6 +51,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addSetReference("productOwners", getUserModel());
 			projectModel.addSetReference("scrumMasters", getUserModel());
 			projectModel.addSetReference("teamMembers", getUserModel());
+			projectModel.addSetReference("onlineTeamMembers", getUserModel());
 			projectModel.addReference("currentSprint", getSprintModel());
 			projectModel.addReference("nextSprint", getSprintModel());
 			projectModel.addListProperty("requirementsOrderIds", String.class);

@@ -60,6 +60,8 @@ public abstract class GProjectDao
         scrumMastersCache = null;
         projectsByTeamMemberCache.clear();
         teamMembersCache = null;
+        projectsByOnlineTeamMemberCache.clear();
+        onlineTeamMembersCache = null;
         projectsByCurrentSprintCache.clear();
         currentSprintsCache = null;
         projectsByNextSprintCache.clear();
@@ -444,6 +446,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.containsTeamMember(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - onlineTeamMembers
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.admin.User,Set<Project>> projectsByOnlineTeamMemberCache = new Cache<scrum.server.admin.User,Set<Project>>(
+            new Cache.Factory<scrum.server.admin.User,Set<Project>>() {
+                public Set<Project> create(scrum.server.admin.User onlineTeamMember) {
+                    return getEntities(new ContainsOnlineTeamMember(onlineTeamMember));
+                }
+            });
+
+    public final Set<Project> getProjectsByOnlineTeamMember(scrum.server.admin.User onlineTeamMember) {
+        return projectsByOnlineTeamMemberCache.get(onlineTeamMember);
+    }
+    private Set<scrum.server.admin.User> onlineTeamMembersCache;
+
+    public final Set<scrum.server.admin.User> getOnlineTeamMembers() {
+        if (onlineTeamMembersCache == null) {
+            onlineTeamMembersCache = new HashSet<scrum.server.admin.User>();
+            for (Project e : getEntities()) {
+                onlineTeamMembersCache.addAll(e.getOnlineTeamMembers());
+            }
+        }
+        return onlineTeamMembersCache;
+    }
+
+    private static class ContainsOnlineTeamMember implements Predicate<Project> {
+
+        private scrum.server.admin.User value;
+
+        public ContainsOnlineTeamMember(scrum.server.admin.User value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.containsOnlineTeamMember(value);
         }
 
     }

@@ -155,8 +155,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 				WorkareaWidget.get().showProjectOverview();
 			}
 		});
-
-		postSystemMessage(user.getName() + " logged in.", true);
 	}
 
 	public void closeProject() {

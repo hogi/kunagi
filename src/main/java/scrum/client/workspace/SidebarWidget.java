@@ -3,6 +3,7 @@ package scrum.client.workspace;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.collaboration.ChatWidget;
 import scrum.client.common.ScrumUtil;
+import scrum.client.communication.UsersStatusWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -12,6 +13,7 @@ public class SidebarWidget extends AWidget {
 	// private ClipboardWidget clipboard;
 	private TrashWidget trash;
 	private ChatWidget chat;
+	private UsersStatusWidget usersStatus;
 
 	@Override
 	protected Widget onInitialization() {
@@ -25,6 +27,7 @@ public class SidebarWidget extends AWidget {
 		sidebar.add(WorkareaWidget.get().getNavigator());
 		sidebar.add(trash);
 		// sidebar.add(clipboard);
+		sidebar.add(getUsersStatus());
 		sidebar.add(getChat());
 
 		return sidebar;
@@ -35,6 +38,7 @@ public class SidebarWidget extends AWidget {
 		trash.update();
 		// clipboard.update();
 		chat.update();
+		usersStatus.update();
 	}
 
 	public ChatWidget getChat() {
@@ -42,6 +46,13 @@ public class SidebarWidget extends AWidget {
 			chat = new ChatWidget();
 		}
 		return chat;
+	}
+
+	public UsersStatusWidget getUsersStatus() {
+		if (usersStatus == null) {
+			usersStatus = new UsersStatusWidget();
+		}
+		return usersStatus;
 	}
 
 	public static SidebarWidget get() {

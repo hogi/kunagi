@@ -260,6 +260,34 @@ public abstract class GProject
         propertyChanged("teamMembersIds", this.teamMembersIds);
     }
 
+    // --- onlineTeamMembers ---
+
+    private Set<String> onlineTeamMembersIds = new HashSet<String>();
+
+    public final java.util.Set<scrum.client.admin.User> getOnlineTeamMembers() {
+        if ( onlineTeamMembersIds.isEmpty()) return Collections.emptySet();
+        return getDao().getUsers(this.onlineTeamMembersIds);
+    }
+
+    public final void setOnlineTeamMembers(Collection<scrum.client.admin.User> values) {
+        onlineTeamMembersIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("onlineTeamMembersIds", this.onlineTeamMembersIds);
+    }
+
+    public final void addOnlineTeamMember(scrum.client.admin.User onlineTeamMember) {
+        String id = onlineTeamMember.getId();
+        if (onlineTeamMembersIds.contains(id)) return;
+        onlineTeamMembersIds.add(id);
+        propertyChanged("onlineTeamMembersIds", this.onlineTeamMembersIds);
+    }
+
+    public final void removeOnlineTeamMember(scrum.client.admin.User onlineTeamMember) {
+        String id = onlineTeamMember.getId();
+        if (!onlineTeamMembersIds.contains(id)) return;
+        onlineTeamMembersIds.remove(id);
+        propertyChanged("onlineTeamMembersIds", this.onlineTeamMembersIds);
+    }
+
     // --- currentSprint ---
 
     private String currentSprintId;
@@ -377,6 +405,7 @@ public abstract class GProject
         productOwnersIds = (Set<String>) props.get("productOwnersIds");
         scrumMastersIds = (Set<String>) props.get("scrumMastersIds");
         teamMembersIds = (Set<String>) props.get("teamMembersIds");
+        onlineTeamMembersIds = (Set<String>) props.get("onlineTeamMembersIds");
         currentSprintId = (String) props.get("currentSprintId");
         nextSprintId = (String) props.get("nextSprintId");
         requirementsOrderIds  = (java.util.List<java.lang.String>) props.get("requirementsOrderIds");
@@ -396,6 +425,7 @@ public abstract class GProject
         properties.put("productOwnersIds", this.productOwnersIds);
         properties.put("scrumMastersIds", this.scrumMastersIds);
         properties.put("teamMembersIds", this.teamMembersIds);
+        properties.put("onlineTeamMembersIds", this.onlineTeamMembersIds);
         properties.put("currentSprintId", this.currentSprintId);
         properties.put("nextSprintId", this.nextSprintId);
         properties.put("requirementsOrderIds", this.requirementsOrderIds);

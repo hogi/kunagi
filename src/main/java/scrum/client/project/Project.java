@@ -31,6 +31,10 @@ public class Project extends GProject {
 		super(data);
 	}
 
+	public boolean isOnline(User user) {
+		return getOnlineTeamMembers().contains(user);
+	}
+
 	public boolean isPig(User user) {
 		return isProductOwner(user) || isScrumMaster(user) || isTeamMember(user);
 	}

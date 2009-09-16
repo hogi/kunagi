@@ -46,8 +46,19 @@ public class WebSession extends AWebSession {
 
 	@Override
 	protected void onInvalidate() {
+		User user = getUser();
+		Project project = getProject();
+		if (user != null) {
+			if (project != null) {
+				project.removeOnlineTeamMember(user);
+				for (WebSession session : ScrumWebApplication.get().getOtherSessionsByProject(this)) {
+					session.sendToClient(project);
+				}
+			}
+		}
 		setUser(null);
 		setProject(null);
+		super.onInvalidate();
 	}
 
 	@Override

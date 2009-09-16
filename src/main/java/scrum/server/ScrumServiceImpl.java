@@ -90,10 +90,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (!(entity instanceof Transient)) dao.saveEntity(entity);
 		session.sendToClient(entity);
 
-		for (WebSession s : webApplication.getOtherSessionsByProject(session)) {
-			// TODO do this only if client is tracking this entity
-			s.sendToClient(entity);
-		}
+		// TODO do this only if clients are tracking this entity
+		sendToOtherSessionsByProject(session, entity);
 	}
 
 	@Override
@@ -140,7 +138,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			Project project = (Project) entity;
 		}
 
-		for (AWebSession s : webApplication.getWebSessions()) {
+		sendToOtherSessionsByProject(session, entity);
+	}
+
+	private void sendToOtherSessionsByProject(WebSession session, AEntity entity) {
+		for (AWebSession s : webApplication.getOtherSessionsByProject(session)) {
 			s.sendToClient(entity);
 		}
 	}
@@ -170,6 +172,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			throw new RuntimeException("Project '" + project + "' is not visible for user '" + session.getUser() + "'");
 		session.setProject(project);
 		session.getUser().setCurrentProject(project);
+		project.addOnlineTeamMember(session.getUser());
+		sendToOtherSessionsByProject(session, project);
 
 		// prepare data for client
 		session.sendToClient(project);
@@ -182,6 +186,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	protected void onCloseProject(WebSession session) {
+		Project project = session.getProject();
+		if (project != null) {
+			project.removeOnlineTeamMember(session.getUser());
+			sendToOtherSessionsByProject(session, project);
+		}
 		session.setProject(null);
 	}
 
