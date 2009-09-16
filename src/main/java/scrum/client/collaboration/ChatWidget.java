@@ -26,7 +26,7 @@ public class ChatWidget extends AWidget {
 
 		outputScroller = new ScrollPanel(output);
 		outputScroller.setStyleName("ChatWidget-outputScroller");
-		outputScroller.setHeight("200px");
+		outputScroller.setHeight("60px");
 
 		input = new TextBox();
 		input.setStyleName("ChatWidget-input");

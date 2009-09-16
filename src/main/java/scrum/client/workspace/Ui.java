@@ -36,6 +36,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class Ui extends AWidget {
 
+	public static final int HEADER_HEIGHT = 25;
 	private static final Ui SINGLETON = new Ui();
 
 	private LockWidget locker;
@@ -85,7 +86,7 @@ public class Ui extends AWidget {
 		master.setWidth("100%");
 		master.setHeight("100%");
 		master.add(header);
-		master.setCellHeight(header, "25px");
+		master.setCellHeight(header, HEADER_HEIGHT + "px");
 		master.add(contentWrapper);
 		master.setCellHeight(contentWrapper, "99%");
 
