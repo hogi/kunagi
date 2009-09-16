@@ -40,7 +40,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 		ui = Ui.get();
 		ui.update();
-		RootPanel.get("workspace").add(ui);
+		RootPanel.get("ScrumGwtApplication").add(ui);
 		ui.lock("Loading...");
 		callPing(new Runnable() {
 

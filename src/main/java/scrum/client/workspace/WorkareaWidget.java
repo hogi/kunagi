@@ -40,7 +40,7 @@ public class WorkareaWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-
+		setHeight100();
 		navigator = getNavigator();
 
 		navigator.addItem(Img.bundle.project16(), "Project Overview", getProjectOverview(), new Runnable() {

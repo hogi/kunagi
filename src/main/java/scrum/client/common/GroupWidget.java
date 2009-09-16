@@ -12,6 +12,7 @@ public class GroupWidget extends AWidget {
 	private String title;
 	private FlowPanel contentPanel;
 	private Widget content;
+	private boolean contentChanged;
 
 	public GroupWidget(String title) {
 		this.title = title;
@@ -41,16 +42,20 @@ public class GroupWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		if (contentChanged) {
+			contentPanel.clear();
+			contentPanel.add(content);
+			contentChanged = false;
+		}
 		if (content instanceof AWidget) {
 			((AWidget) content).update();
 		}
 	}
 
 	public GroupWidget setContent(Widget content) {
-		initialize();
-		contentPanel.clear();
-		contentPanel.add(content);
 		this.content = content;
+		contentChanged = true;
+		update();
 		return this;
 	}
 

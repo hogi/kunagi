@@ -1,9 +1,13 @@
 
 /***** Default HTML *****/
 
-td {vertical-align: top;}
-body {padding: 0px; margin: 0px; background: white; backgroundX: #F2F5FE url("bg.gif") 0 0 repeat-x;}
+html, body {height: 100%; padding: 0px; margin: 0px; background: white;}
+table td {vertical-align: top;}
 a {cursor: pointer;}
+
+/***** Test ****/
+
+.xcontent {height: 100%; background: blue;}
 
 /***** GWT *****/
 
@@ -11,6 +15,7 @@ a {cursor: pointer;}
 
 /***** Ilarkesto *****/
 
+.AWidget-height100 {height: 100%;}
 .ImageAnchor {}
 .ImageAnchor img {float: left; margin-right: 3px;}
 .ImageAnchor .text { display: inline;}
@@ -19,22 +24,21 @@ a {cursor: pointer;}
 
 /***** Master Layout *****/
 
-.page .header {position: fixed; left: 0; top: 0; width: 100%; z-index: 100;}
-.page .content {position: relative; top: 25px;}
+#ScrumGwtApplication {height: 100%;}
+.Ui-content {height: 100%;}
 
 /***** Header *****/
 
-.HeaderWidget {width: 100%; height: 25px; background: #F2F5FE url("header_bg.jpg");}
+.HeaderWidget {background: #F2F5FE url("header_bg.jpg");}
 .HeaderWidget .title {font-size: 12px; font-weight: bold; color: white; padding-left: 5px;}
 .HeaderWidget-controlPanel {line-height: 22px;}
 .HeaderWidget .ButtonWidget a {font-size: 8px; line-height: 8px;}
 
 .WorkspaceWidget {}
-.WorkspaceWidget .sidebar {width: 200px;}
 
 /***** Sidebar *****/
 
-.SidebarWidget {position: fixed; width: 200px; height: 1200px; background:#CEDBF9;}
+.SidebarWidget {height: 100%; background:#CEDBF9;}
 .SidebarWidget .beforeNavigatorSpacer {height: 10px; margin: 0px 15px 0px 15px; border-bottom: 1px solid #E2EAFC;}
 
 .NavigatorWidget {background:#CEDBF9;}
@@ -48,7 +52,7 @@ a {cursor: pointer;}
 .ClipboardWidget {margin: 20px 15px 0px 15px; height: 100px; background: #F2F5FE; padding: 5px;}
 .ClipboardItemWidget {background: white; border: 1px solid black; margin-bottom: 5px;}
 
-.ChatWidget {margin: 20px 15px 0px 15px;}
+.ChatWidget {margin: 15px;}
 .ChatWidget-outputScroller {background: #F2F5FE; padding: 5px;}
 .ChatWidget-output a {text-decoration: underline;}
 .ChatWidget-output p {margin: 3px 0px 0px 0px;}
@@ -122,6 +126,7 @@ a {cursor: pointer;}
 
 /***** Group *****/
 
+.GroupWidget {border: 3px solid orange;}
 .GroupWidget-title {background: #192666; color: #DEE5FD; padding: 5px; font-size: 16px; font-family: "georgia",serif;}
 .GroupWidget-content {padding: 5px;}
 
@@ -157,5 +162,5 @@ a {cursor: pointer;}
 
 /***** other *****/
 .WaitWidget {margin: 50px 200px; border: 1px solid #DEE5FD;}
-.LoginWidget {margin: 50px 200px; border: 1px solid #DEE5FD;}
+.LoginWidget {widht: 300px; margin: 50px 200px; border: 1px solid #DEE5FD; background: white;}
 

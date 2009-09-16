@@ -1,6 +1,5 @@
 package scrum.client.project;
 
-
 public class DeleteRequirementAction extends GDeleteRequirementAction {
 
 	protected DeleteRequirementAction(Requirement requirement) {
@@ -19,8 +18,8 @@ public class DeleteRequirementAction extends GDeleteRequirementAction {
 
 	@Override
 	public boolean isExecutable() {
-		if (!getProject().isProductOwner(getUser())) return false;
-		if (!getProject().isCurrentSprint(requirement.getSprint())) return false;
+		if (!requirement.getProject().isProductOwner(getUser())) return false;
+		if (getProject().isCurrentSprint(requirement.getSprint())) return false;
 		return true;
 	}
 

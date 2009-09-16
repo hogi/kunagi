@@ -15,7 +15,7 @@ public class SidebarWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-
+		setHeight100();
 		trash = new TrashWidget();
 		// clipboard = new ClipboardWidget();
 

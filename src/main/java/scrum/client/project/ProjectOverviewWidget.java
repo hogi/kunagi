@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class ProjectOverviewWidget extends AWidget {
 
 	public static int CHART_WIDTH = 800;
-	public static int CHART_HEIGHT = 300;
+	public static int CHART_HEIGHT = 270;
 
 	private FieldsWidget fields;
 

@@ -24,12 +24,15 @@ public class HeaderWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		setHeight100();
+
 		Label title = new Label("Scrum42");
 		title.setStyleName("title");
 
 		HorizontalPanel panel = new HorizontalPanel();
 		panel.setStyleName("HeaderWidget");
 		panel.setWidth("100%");
+		panel.setHeight("100%");
 		panel.add(title);
 		panel.setCellVerticalAlignment(title, HasVerticalAlignment.ALIGN_MIDDLE);
 
@@ -74,9 +77,10 @@ public class HeaderWidget extends AWidget {
 	protected void onUpdate() {
 		boolean loggedIn = ScrumGwtApplication.get().getUser() != null;
 		currentUserLabel.setText(loggedIn ? ScrumGwtApplication.get().getUser().getName() : "");
-		changeProjectButton.setVisible(ScrumGwtApplication.get().getProject() != null);
-		changePasswordButton.setVisible(loggedIn);
-		logoutButton.setVisible(loggedIn);
+		changeProjectButton.setVisible(true || ScrumGwtApplication.get().getProject() != null);
+		changePasswordButton.setVisible(true || loggedIn);
+		logoutButton.setVisible(true || loggedIn);
+		toolbar.update();
 	}
 
 }

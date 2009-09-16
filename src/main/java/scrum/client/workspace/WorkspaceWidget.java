@@ -2,8 +2,8 @@ package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
 
-import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -11,28 +11,30 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class WorkspaceWidget extends AWidget {
 
-	private DockPanel workspacePanel;
+	private static final String HEIGHT = "700px";
 
 	private SidebarWidget sidebar;
 	private WorkareaWidget workarea;
 
 	@Override
 	protected Widget onInitialization() {
+		setHeight100();
+
 		workarea = new WorkareaWidget();
 
-		SimplePanel sidebarWrapper = new SimplePanel();
-		sidebarWrapper.setStyleName("sidebar");
-		sidebarWrapper.add(getSidebar());
+		ScrollPanel workareaScroller = new ScrollPanel(workarea);
+		workareaScroller.setStyleName("WorkspaceWidget-workareaScroller");
+		workareaScroller.setHeight(HEIGHT);
+		workareaScroller.setAlwaysShowScrollBars(true);
 
-		workspacePanel = new DockPanel();
-		workspacePanel.setStyleName("WorkspaceWidget");
-		workspacePanel.setWidth("100%");
-		workspacePanel.add(sidebarWrapper, DockPanel.WEST);
-		workspacePanel.setCellHeight(sidebarWrapper, "100%");
-		workspacePanel.add(workarea, DockPanel.CENTER);
-		workspacePanel.setCellWidth(workarea, "99%");
-
-		return workspacePanel;
+		HorizontalPanel panel = new HorizontalPanel();
+		panel.setStyleName("WorkspaceWidget");
+		panel.setHeight(HEIGHT);
+		panel.setWidth("100%");
+		panel.add(getSidebar());
+		panel.setCellWidth(getSidebar(), "200px");
+		panel.add(workareaScroller);
+		return panel;
 	}
 
 	@Override

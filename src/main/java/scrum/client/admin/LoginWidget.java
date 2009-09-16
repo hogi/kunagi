@@ -66,6 +66,7 @@ public class LoginWidget extends AWidget {
 		FlowPanel test = new FlowPanel();
 		test.add(wrapper);
 		test.add(new WidgetsTesterWidget().update());
+
 		return test;
 
 	}

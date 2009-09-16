@@ -27,6 +27,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -50,6 +51,8 @@ public class Ui extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		setHeight100();
+
 		wait = new WaitWidget();
 		header = new HeaderWidget();
 
@@ -60,25 +63,33 @@ public class Ui extends AWidget {
 
 			@Override
 			protected Widget onInitialization() {
-				return new Label("Loading...");
+				return new Label("Loading Scrum42...");
 			}
 		}.update();
 
 		contentWrapper = new SimplePanel();
-		contentWrapper.setStyleName("content");
+		contentWrapper.setStyleName("Ui-content");
 		contentWrapper.setWidget(currentWidget);
-
-		SimplePanel headerWrapper = new SimplePanel();
-		headerWrapper.setStyleName("header");
-		headerWrapper.setWidget(header);
 
 		FlowPanel pagePanel = new FlowPanel();
 		pagePanel.setStyleName("page");
-		pagePanel.add(headerWrapper);
+		pagePanel.add(header);
 		pagePanel.add(contentWrapper);
 
 		locker = new LockWidget(pagePanel);
-		return locker;
+		// return locker;
+
+		// --- layout tests ---
+
+		VerticalPanel master = new VerticalPanel();
+		master.setWidth("100%");
+		master.setHeight("100%");
+		master.add(header);
+		master.setCellHeight(header, "25px");
+		master.add(contentWrapper);
+		master.setCellHeight(contentWrapper, "99%");
+
+		return master;
 	}
 
 	public void reset() {
