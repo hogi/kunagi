@@ -1,18 +1,14 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.GwtLogger;
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
-import scrum.client.project.Project;
 import scrum.client.test.WidgetsTesterWidget;
-import scrum.client.workspace.Ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
@@ -22,7 +18,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LoginWidget extends AWidget {
+public class LoginWidget extends AWidget implements LoginDataProvider {
 
 	private TextBox username;
 	private PasswordTextBox password;
@@ -30,14 +26,9 @@ public class LoginWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		username = new TextBox();
+		username.addKeyPressHandler(new InputKeyHandler());
 		password = new PasswordTextBox();
-		password.addKeyPressHandler(new KeyPressHandler() {
-
-			public void onKeyPress(KeyPressEvent event) {
-				if (event.getCharCode() == KeyCodes.KEY_ENTER) login();
-			}
-
-		});
+		password.addKeyPressHandler(new InputKeyHandler());
 
 		if (ScrumGwtApplication.get().isDevelopmentMode()) {
 			username.setText("duke");
@@ -45,12 +36,7 @@ public class LoginWidget extends AWidget {
 		}
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
-		toolbar.addButton("Login").addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				login();
-			}
-		});
+		toolbar.addButton(new LoginAction(this));
 
 		FieldsWidget fieldsWidget = new FieldsWidget();
 		fieldsWidget.addWidget("Username", username);
@@ -76,28 +62,29 @@ public class LoginWidget extends AWidget {
 		username.setFocus(true);
 	}
 
-	private void login() {
-		ScrumGwtApplication.get().getUi().lock("Checking login data...");
-		ScrumGwtApplication.get().callLogin(username.getText(), password.getText(), new Runnable() {
+	public String getUsername() {
+		return username.getText();
+	}
 
-			public void run() {
-				GwtLogger.DEBUG("Login response received");
-				User user = ScrumGwtApplication.get().getUser();
-				if (user == null) {
-					GwtLogger.DEBUG("LOGIN FAILED!");
-					ScrumGwtApplication.get().getUi().unlock();
-					Ui.get().showError("Login failed.");
-				} else {
-					GwtLogger.DEBUG("Login succeded:", ScrumGwtApplication.get().getUi());
-					Project project = user.getCurrentProject();
-					if (project == null || user.isAdmin()) {
-						Ui.get().showStartPage();
-					} else {
-						ScrumGwtApplication.get().openProject(project);
-					}
-				}
+	public String getPassword() {
+		return password.getText();
+	}
+
+	class InputKeyHandler implements KeyPressHandler {
+
+		public void onKeyPress(KeyPressEvent event) {
+			if (event.getCharCode() != KeyCodes.KEY_ENTER) return;
+			if (Gwt.isEmpty(getUsername())) {
+				username.setFocus(true);
+				return;
 			}
-		});
+			if (Gwt.isEmpty(getPassword())) {
+				password.setFocus(true);
+				return;
+			}
+			new LoginAction(LoginWidget.this).execute();
+		}
+
 	}
 
 }

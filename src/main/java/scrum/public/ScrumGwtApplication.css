@@ -164,5 +164,5 @@ a {cursor: pointer;}
 
 /***** other *****/
 .WaitWidget {margin: 50px 200px; border: 1px solid #DEE5FD;}
-.LoginWidget {widht: 300px; margin: 50px 200px; border: 1px solid #DEE5FD; background: white;}
+.LoginWidget {widht: 300px; margin: 50px 300px 10px 100px; border: 1px solid #DEE5FD; background: white;}
 

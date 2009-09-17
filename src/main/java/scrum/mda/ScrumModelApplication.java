@@ -315,6 +315,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			applicationModel.addGwtService(getGwtServiceModel());
 
 			applicationModel.addAction("SwitchToNextSprint", getBasePackageName() + ".sprint");
+			applicationModel.addAction("Login", getBasePackageName() + ".admin");
 		}
 		return applicationModel;
 	}
