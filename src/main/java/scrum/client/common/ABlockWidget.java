@@ -1,5 +1,6 @@
 package scrum.client.common;
 
+import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.dnd.BlockDndMarkerWidget;
@@ -134,16 +135,9 @@ public abstract class ABlockWidget<O> extends AWidget {
 		menu.addItem(item);
 	}
 
-	protected void addToolbarAction(AScrumAction action) {
-		if (action.isExecutable()) {
-			addToolbarCommand(action.getLabel(), action);
-		}
-	}
-
-	protected void addToolbarCommand(String label, final Command command) {
-		ButtonWidget button = new ButtonWidget(label);
-		button.addCommand(command);
-		addToolbarItem(button);
+	protected void addToolbarAction(AAction action) {
+		ButtonWidget button = new ButtonWidget(action);
+		if (action.isExecutable()) addToolbarItem(button); // TODO add always
 	}
 
 	protected void addToolbarItem(Widget toolbarItem) {

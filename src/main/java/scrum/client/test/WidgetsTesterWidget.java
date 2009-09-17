@@ -4,11 +4,9 @@ import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.ImageAnchor;
 import ilarkesto.gwt.client.MultiSelectionWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
-import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
@@ -40,7 +38,7 @@ public class WidgetsTesterWidget extends AWidget {
 		testFields();
 		testMultiSelection();
 		testNavigator();
-		testToolbars();
+		// testToolbars();
 		// testButtons();
 		// testImageAnchor();
 
@@ -219,31 +217,32 @@ public class WidgetsTesterWidget extends AWidget {
 		addTest("NavigatorWidget", navigator);
 	}
 
-	private void testToolbars() {
-		ToolbarWidget vertical = new ToolbarWidget();
-		vertical.add(new ButtonWidget(Img.bundle.test16().createImage(), "icon and text"));
-		vertical.add(new ButtonWidget("text only"));
-		vertical.add(new ButtonWidget(Img.bundle.test16().createImage(), null));
-		addTest("ToolbarWidget:vertical", vertical);
-
-		ToolbarWidget horizontal = new ToolbarWidget(true);
-		horizontal.add(new ButtonWidget(Img.bundle.test16().createImage(), "icon and text"));
-		horizontal.add(new ButtonWidget("text only"));
-		horizontal.add(new ButtonWidget(Img.bundle.test16().createImage(), null));
-		addTest("ToolbarWidget:horizontal", horizontal);
-	}
-
-	private void testButtons() {
-		addTest("ButtonWidget:text-only", new ButtonWidget("text only"));
-		addTest("ButtonWidget:icon-only", new ButtonWidget(Img.bundle.test16().createImage(), null));
-		addTest("ButtonWidget:icon-text", new ButtonWidget(Img.bundle.test16().createImage(), "icon and text"));
-
-		FlowPanel multipleButtons = new FlowPanel();
-		multipleButtons.add(new ButtonWidget("Button 1").update());
-		multipleButtons.add(new ButtonWidget("Button 2").update());
-		multipleButtons.add(new ButtonWidget("Button 3").update());
-		addTest("multiple ButtonWidgets", multipleButtons);
-	}
+	// private void testToolbars() {
+	// ToolbarWidget vertical = new ToolbarWidget();
+	// vertical.add(new ButtonWidget(Img.bundle.test16().createImage(), "icon and text"));
+	// vertical.add(new ButtonWidget("text only"));
+	// vertical.add(new ButtonWidget(Img.bundle.test16().createImage(), null));
+	// addTest("ToolbarWidget:vertical", vertical);
+	//
+	// ToolbarWidget horizontal = new ToolbarWidget(true);
+	// horizontal.add(new ButtonWidget(Img.bundle.test16().createImage(), "icon and text"));
+	// horizontal.add(new ButtonWidget("text only"));
+	// horizontal.add(new ButtonWidget(Img.bundle.test16().createImage(), null));
+	// addTest("ToolbarWidget:horizontal", horizontal);
+	// }
+	//
+	// private void testButtons() {
+	// addTest("ButtonWidget:text-only", new ButtonWidget("text only"));
+	// addTest("ButtonWidget:icon-only", new ButtonWidget(Img.bundle.test16().createImage(), null));
+	// addTest("ButtonWidget:icon-text", new ButtonWidget(Img.bundle.test16().createImage(),
+	// "icon and text"));
+	//
+	// FlowPanel multipleButtons = new FlowPanel();
+	// multipleButtons.add(new ButtonWidget("Button 1").update());
+	// multipleButtons.add(new ButtonWidget("Button 2").update());
+	// multipleButtons.add(new ButtonWidget("Button 3").update());
+	// addTest("multiple ButtonWidgets", multipleButtons);
+	// }
 
 	private void testImageAnchor() {
 		ImageAnchor a = new ImageAnchor(Img.bundle.test16().createImage(), "click");

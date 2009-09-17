@@ -1,5 +1,6 @@
 package scrum.client.workspace;
 
+import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
@@ -7,8 +8,6 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -81,8 +80,7 @@ public class UserConfigWidget extends AWidget {
 		FlowPanel mainpanel = new FlowPanel();
 		mainpanel.setWidth("100%");
 		mainpanel.add(fields);
-		confirmButton = new ButtonWidget("save changes");
-		confirmButton.addClickHandler(new ConfimChangesClickListener());
+		confirmButton = new ButtonWidget(new SaveChangesAction());
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 		toolbar.add(confirmButton);
 		mainpanel.add(toolbar);
@@ -99,9 +97,15 @@ public class UserConfigWidget extends AWidget {
 		fields.update();
 	}
 
-	class ConfimChangesClickListener implements ClickHandler {
+	class SaveChangesAction extends AAction {
 
-		public void onClick(ClickEvent event) {
+		@Override
+		public String getLabel() {
+			return "Save Changes";
+		}
+
+		@Override
+		protected void onExecute() {
 			if (oldPassword == null) {
 				Ui.get().showError("old password is empty");
 			} else if (newPassword == null) {
