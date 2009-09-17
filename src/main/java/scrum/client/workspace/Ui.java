@@ -44,18 +44,15 @@ public class Ui extends AWidget {
 	private ProjectSidebarWidget projectSidebar;
 	private WorkareaWidget workarea;
 
-	private HeaderWidget header;
-
 	@Override
 	protected Widget onInitialization() {
 		setHeight100();
 
 		wait = new WaitWidget();
-		header = new HeaderWidget();
 		sidebar = new SwitcherWidget(true);
 		workarea = new WorkareaWidget();
 
-		FullScreenDockWidget dock = new FullScreenDockWidget(header, 25, sidebar, 200, workarea);
+		FullScreenDockWidget dock = new FullScreenDockWidget(new HeaderWidget(), 25, sidebar, 200, workarea);
 
 		locker = new LockWidget(dock);
 		return locker;
@@ -63,12 +60,7 @@ public class Ui extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		header.update();
-		sidebar.update();
-		if (projectSidebar != null) projectSidebar.update();
-		workarea.update();
 		locker.update();
-		// TODO locker.update() is enough?
 	}
 
 	public void lock(String message) {
