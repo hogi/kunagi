@@ -3,6 +3,7 @@ package scrum.client.workspace;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.admin.LoginWidget;
 import scrum.client.img.Img;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.issues.IssueListWidget;
@@ -37,6 +38,9 @@ public class WorkareaWidget extends AWidget {
 	private IssueListWidget issueList;
 	private RiskListWidget riskList;
 	private WidgetsTesterWidget widgetsTester;
+	private LoginWidget login;
+	private StartPageWidget startPage;
+	private UserConfigWidget userconfig;
 
 	@Override
 	protected Widget onInitialization() {
@@ -139,13 +143,24 @@ public class WorkareaWidget extends AWidget {
 	protected void onUpdate() {
 		navigator.update();
 		wrapper.setWidget(currentWidget);
-		if (currentWidget != null && currentWidget instanceof AWidget) {
-			((AWidget) currentWidget).update();
-		}
+		AWidget.update(currentWidget);
 	}
 
 	public boolean isCurrentWidget(AWidget widget) {
 		return currentWidget == widget;
+	}
+
+	void showLogin() {
+		show(getLogin());
+	}
+
+	void showUserconfig() {
+		getUserconfig().setPrevWidget(currentWidget);
+		show(getUserconfig());
+	}
+
+	void showStartPage() {
+		show(getStartPage());
 	}
 
 	public void showProjectOverview() {
@@ -156,10 +171,25 @@ public class WorkareaWidget extends AWidget {
 		return isCurrentWidget(projectOverview);
 	}
 
-	private void show(AWidget widget) {
+	public void show(Widget widget) {
 		currentWidget = widget;
 		Ui.get().unlock();
 		update();
+	}
+
+	public LoginWidget getLogin() {
+		if (login == null) login = new LoginWidget();
+		return login;
+	}
+
+	public UserConfigWidget getUserconfig() {
+		if (userconfig == null) userconfig = new UserConfigWidget();
+		return userconfig;
+	}
+
+	public StartPageWidget getStartPage() {
+		if (startPage == null) startPage = new StartPageWidget();
+		return startPage;
 	}
 
 	public ProjectOverviewWidget getProjectOverview() {
@@ -223,6 +253,6 @@ public class WorkareaWidget extends AWidget {
 	}
 
 	public static WorkareaWidget get() {
-		return WorkspaceWidget.get().getWorkarea();
+		return Ui.get().getWorkarea();
 	}
 }

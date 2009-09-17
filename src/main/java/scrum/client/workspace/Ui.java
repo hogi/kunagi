@@ -2,10 +2,10 @@ package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.FullScreenDockWidget;
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.admin.LoginWidget;
 import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.issues.Issue;
@@ -26,8 +26,6 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -41,14 +39,11 @@ public class Ui extends AWidget {
 
 	private LockWidget locker;
 	private WaitWidget wait;
-	private SimplePanel contentWrapper;
-	private AWidget currentWidget;
+	private SidebarWidget sidebar;
+	private ProjectSidebarWidget projectSidebar;
+	private WorkareaWidget workarea;
 
 	private HeaderWidget header;
-	private LoginWidget login;
-	private StartPageWidget startPage;
-	private WorkspaceWidget workspace;
-	private UserConfigWidget userconfig;
 
 	@Override
 	protected Widget onInitialization() {
@@ -56,63 +51,23 @@ public class Ui extends AWidget {
 
 		wait = new WaitWidget();
 		header = new HeaderWidget();
+		sidebar = new SidebarWidget();
+		workarea = new WorkareaWidget();
 
-		currentWidget = new AWidget() {
+		FullScreenDockWidget dock = new FullScreenDockWidget(header, 25, sidebar, 200, workarea);
 
-			@Override
-			protected void onUpdate() {}
-
-			@Override
-			protected Widget onInitialization() {
-				return new Label("Loading Scrum42...");
-			}
-		}.update();
-
-		contentWrapper = new SimplePanel();
-		contentWrapper.setStyleName("Ui-content");
-		contentWrapper.setWidget(currentWidget);
-
-		FlowPanel pagePanel = new FlowPanel();
-		pagePanel.setStyleName("page");
-		pagePanel.add(header);
-		pagePanel.add(contentWrapper);
-
-		locker = new LockWidget(pagePanel);
-		// return locker;
-
-		// --- layout tests ---
-
-		VerticalPanel master = new VerticalPanel();
-		master.setWidth("100%");
-		master.setHeight("100%");
-		master.add(header);
-		master.setCellHeight(header, HEADER_HEIGHT + "px");
-		master.add(contentWrapper);
-		master.setCellHeight(contentWrapper, "99%");
-
-		return master;
-	}
-
-	public void reset() {
-		login = null;
-		startPage = null;
-		workspace = null;
-		userconfig = null;
+		locker = new LockWidget(dock);
+		return locker;
 	}
 
 	@Override
 	protected void onUpdate() {
 		header.update();
-		contentWrapper.setWidget(currentWidget);
-		if (currentWidget != null) currentWidget.update();
+		sidebar.update();
+		if (projectSidebar != null) projectSidebar.update();
+		workarea.update();
 		locker.update();
-	}
-
-	public void setCurrentWidget(AWidget widget) {
-		GwtLogger.DEBUG("Setting UI widget:", widget);
-		this.currentWidget = widget;
-		unlock();
-		update();
+		// TODO locker.update() is enough?
 	}
 
 	public void lock(String message) {
@@ -126,45 +81,32 @@ public class Ui extends AWidget {
 		locker.unlock();
 	}
 
-	public StartPageWidget getStartPage() {
-		if (startPage == null) startPage = new StartPageWidget();
-		return startPage;
+	public void showLogin() {
+		sidebar.show(null);
+		workarea.showLogin();
 	}
 
-	public void showLogin() {
-		reset();
-		setCurrentWidget(getLogin());
+	public void showProject() {
+		sidebar.show(getProjectSidebar());
+		workarea.showProjectOverview();
 	}
 
 	public void showConfiguration() {
-		userconfig = getUserconfig();
-		userconfig.setPrevWidget(currentWidget);
-		setCurrentWidget(userconfig);
+		workarea.showUserconfig();
 	}
 
 	public void showStartPage() {
-		setCurrentWidget(getStartPage());
+		sidebar.show(null);
+		workarea.showStartPage();
 	}
 
-	public WorkspaceWidget getWorkspace() {
-		if (workspace == null) workspace = new WorkspaceWidget();
-		return workspace;
+	public WorkareaWidget getWorkarea() {
+		return workarea;
 	}
 
-	public UserConfigWidget getUserconfig() {
-		if (userconfig == null) userconfig = new UserConfigWidget();
-		return userconfig;
-	}
-
-	public LoginWidget getLogin() {
-		if (login == null) {
-			login = new LoginWidget();
-		}
-		return login;
-	}
-
-	public void showWorkspace() {
-		setCurrentWidget(getWorkspace());
+	public ProjectSidebarWidget getProjectSidebar() {
+		if (projectSidebar == null) projectSidebar = new ProjectSidebarWidget();
+		return projectSidebar;
 	}
 
 	public void showError(String message) {
@@ -206,9 +148,9 @@ public class Ui extends AWidget {
 	}
 
 	public void showTask(Task task) {
-		if (getWorkspace().getWorkarea().isCurrentWidget(getWorkspace().getWorkarea().getSprintBacklog())) {
+		if (workarea.isCurrentWidget(workarea.getSprintBacklog())) {
 			showSprintBacklog(task);
-		} else if (getWorkspace().getWorkarea().isCurrentWidget(getWorkspace().getWorkarea().getTaskOverview())) {
+		} else if (workarea.isCurrentWidget(workarea.getTaskOverview())) {
 			showTaskOverview(task);
 		} else {
 			showWhiteboard(task);
@@ -216,10 +158,10 @@ public class Ui extends AWidget {
 	}
 
 	public void showRequirement(Requirement requirement) {
-		ProductBacklogWidget productBacklog = getWorkspace().getWorkarea().getProductBacklog();
+		ProductBacklogWidget productBacklog = workarea.getProductBacklog();
 		boolean inCurrentSprint = ScrumGwtApplication.get().getProject().isCurrentSprint(requirement.getSprint());
 		if (inCurrentSprint) {
-			if (getWorkspace().getWorkarea().isCurrentWidget(productBacklog)) {
+			if (workarea.isCurrentWidget(productBacklog)) {
 				showProductBacklog(requirement);
 			} else {
 				showSprintBacklog(requirement);
@@ -230,60 +172,60 @@ public class Ui extends AWidget {
 	}
 
 	public void showWhiteboard(Task task) {
-		WhiteboardWidget whiteboard = getWorkspace().getWorkarea().getWhiteboard();
+		WhiteboardWidget whiteboard = workarea.getWhiteboard();
 		select(whiteboard);
 		whiteboard.selectTask(task);
 	}
 
 	public void showSprintBacklog(Task task) {
-		SprintBacklogWidget sprintBacklog = getWorkspace().getWorkarea().getSprintBacklog();
+		SprintBacklogWidget sprintBacklog = workarea.getSprintBacklog();
 		select(sprintBacklog);
 		sprintBacklog.selectTask(task);
 	}
 
 	public void showTaskOverview(Task task) {
-		TaskOverviewWidget taskOverview = getWorkspace().getWorkarea().getTaskOverview();
+		TaskOverviewWidget taskOverview = workarea.getTaskOverview();
 		select(taskOverview);
 		taskOverview.selectTask(task);
 	}
 
 	public void showSprintBacklog(Requirement requirement) {
-		SprintBacklogWidget sprintBacklog = getWorkspace().getWorkarea().getSprintBacklog();
+		SprintBacklogWidget sprintBacklog = workarea.getSprintBacklog();
 		select(sprintBacklog);
 		if (requirement != null) sprintBacklog.selectRequirement(requirement);
 	}
 
 	public void showProductBacklog(Requirement requirement) {
-		ProductBacklogWidget productBacklog = getWorkspace().getWorkarea().getProductBacklog();
+		ProductBacklogWidget productBacklog = workarea.getProductBacklog();
 		select(productBacklog);
 		productBacklog.selectRequirement(requirement);
 	}
 
 	public void showImpedimentList(Impediment impediment) {
-		ImpedimentListWidget impedimentList = getWorkspace().getWorkarea().getImpedimentList();
+		ImpedimentListWidget impedimentList = workarea.getImpedimentList();
 		select(impedimentList);
 		impedimentList.showImpediment(impediment);
 	}
 
 	public void showIssueList(Issue issue) {
-		IssueListWidget issueList = getWorkspace().getWorkarea().getIssueList();
+		IssueListWidget issueList = workarea.getIssueList();
 		select(issueList);
 		issueList.showIssue(issue);
 	}
 
 	public void showQualityBacklog(Quality quality) {
-		QualityBacklogWidget qualityBacklog = getWorkspace().getWorkarea().getQualityBacklog();
+		QualityBacklogWidget qualityBacklog = workarea.getQualityBacklog();
 		select(qualityBacklog);
 		qualityBacklog.showQuality(quality);
 	}
 
 	public void showRiskList(Risk risk) {
-		RiskListWidget riskList = getWorkspace().getWorkarea().getRiskList();
+		RiskListWidget riskList = workarea.getRiskList();
 		select(riskList);
 		riskList.showRisk(risk);
 	}
 
 	private void select(AWidget widget) {
-		getWorkspace().getWorkarea().getNavigator().select(widget);
+		workarea.getNavigator().select(widget);
 	}
 }

@@ -40,7 +40,7 @@ public class StartPageWidget extends AWidget {
 	}
 
 	public static StartPageWidget get() {
-		return Ui.get().getStartPage();
+		return WorkareaWidget.get().getStartPage();
 	}
 
 }

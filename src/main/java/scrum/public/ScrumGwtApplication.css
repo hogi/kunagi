@@ -25,7 +25,6 @@ a {cursor: pointer;}
 /***** Master Layout *****/
 
 #ScrumGwtApplication {height: 100%;}
-.Ui-content {height: 100%;}
 
 /***** Header *****/
 
@@ -34,12 +33,10 @@ a {cursor: pointer;}
 .HeaderWidget-controlPanel {line-height: 22px;}
 .HeaderWidget .ButtonWidget a {font-size: 8px; line-height: 8px;}
 
-.WorkspaceWidget {}
-
 /***** Sidebar *****/
 
-.SidebarWidget {height: 100%; background:#CEDBF9;}
-.SidebarWidget .beforeNavigatorSpacer {height: 10px; margin: 0px 15px 0px 15px; border-bottom: 1px solid #E2EAFC;}
+.ProjectSidebarWidget {height: 100%; background:#CEDBF9;}
+.ProjectSidebarWidget .beforeNavigatorSpacer {height: 10px; margin: 0px 15px 0px 15px; border-bottom: 1px solid #E2EAFC;}
 
 .NavigatorWidget {background:#CEDBF9;}
 .NavigatorWidget .item {padding: 0px 15px 0px 15px; font-size: 14px;}

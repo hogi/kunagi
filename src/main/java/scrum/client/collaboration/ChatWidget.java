@@ -3,7 +3,7 @@ package scrum.client.collaboration;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
-import scrum.client.workspace.SidebarWidget;
+import scrum.client.workspace.ProjectSidebarWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -80,7 +80,7 @@ public class ChatWidget extends AWidget {
 	}
 
 	public static ChatWidget get() {
-		return SidebarWidget.get().getChat();
+		return ProjectSidebarWidget.get().getChat();
 	}
 
 }

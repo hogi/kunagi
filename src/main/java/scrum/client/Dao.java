@@ -13,7 +13,6 @@ import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
 import scrum.client.workspace.WorkareaWidget;
-import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.user.client.Timer;
 
@@ -44,9 +43,7 @@ public class Dao extends GDao {
 	public void handleDataFromServer(ADataTransferObject data) {
 		super.handleDataFromServer(data);
 		if (data.containsEntities()) {
-			if (WorkspaceWidget.get().isWorkareaActive()) {
-				WorkareaWidget.get().update();
-			}
+			WorkareaWidget.get().update();
 		}
 	}
 

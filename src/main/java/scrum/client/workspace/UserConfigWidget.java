@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class UserConfigWidget extends AWidget {
 
-	private AWidget prevWidget;
+	private Widget prevWidget;
 
 	private FieldsWidget fields;
 
@@ -90,7 +90,7 @@ public class UserConfigWidget extends AWidget {
 		return mainpanel;
 	}
 
-	public void setPrevWidget(AWidget prevWidget) {
+	public void setPrevWidget(Widget prevWidget) {
 		this.prevWidget = prevWidget;
 	}
 
@@ -118,7 +118,7 @@ public class UserConfigWidget extends AWidget {
 					oldPassword = null;
 					newPassword = null;
 					newPasswordRepeat = null;
-					Ui.get().setCurrentWidget(prevWidget);
+					WorkareaWidget.get().show(prevWidget);
 				}
 			});
 		}

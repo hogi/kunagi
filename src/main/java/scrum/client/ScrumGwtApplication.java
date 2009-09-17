@@ -14,8 +14,6 @@ import scrum.client.collaboration.ChatWidget;
 import scrum.client.dnd.DndManager;
 import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
-import scrum.client.workspace.WorkareaWidget;
-import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -151,8 +149,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 			public void run() {
 				Ui.get().unlock();
-				Ui.get().showWorkspace();
-				WorkareaWidget.get().showProjectOverview();
+				Ui.get().showProject();
 			}
 		});
 	}
@@ -221,12 +218,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		user = null;
 		getDao().clearAllEntities();
 		Ui.get().showLogin();
-	}
-
-	// --- helper ---
-
-	public WorkspaceWidget getWorkspaceWidget() {
-		return getUi().getWorkspace();
 	}
 
 }

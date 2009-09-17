@@ -7,7 +7,7 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
 import scrum.client.project.CreateProjectAction;
 import scrum.client.project.Project;
-import scrum.client.workspace.Ui;
+import scrum.client.workspace.StartPageWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -40,7 +40,7 @@ public class ProjectSelectorWidget extends AWidget {
 	}
 
 	public static ProjectSelectorWidget get() {
-		return Ui.get().getStartPage().getProjectSelector();
+		return StartPageWidget.get().getProjectSelector();
 	}
 
 	public BlockListWidget<Project> getList() {

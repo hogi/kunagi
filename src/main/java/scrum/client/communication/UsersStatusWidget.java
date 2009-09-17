@@ -9,7 +9,7 @@ import java.util.Set;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.project.Project;
-import scrum.client.workspace.SidebarWidget;
+import scrum.client.workspace.ProjectSidebarWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -46,7 +46,7 @@ public class UsersStatusWidget extends AWidget {
 	}
 
 	public static UsersStatusWidget get() {
-		return SidebarWidget.get().getUsersStatus();
+		return ProjectSidebarWidget.get().getUsersStatus();
 	}
 
 }
