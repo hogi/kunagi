@@ -2,7 +2,6 @@ package scrum.client;
 
 import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.gwt.client.AGwtEntity;
-import ilarkesto.gwt.client.GwtLogger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,12 +55,6 @@ public class Dao extends GDao {
 		}
 		if (entity instanceof Project) {
 			Project project = (Project) entity;
-			GwtLogger.DEBUG("project received ---------->", project);
-			try {
-				GwtLogger.DEBUG("--------------->", project.getOnlineTeamMembers());
-			} catch (Throwable ex) {
-
-			}
 			UsersStatusWidget.get().update();
 		}
 	}

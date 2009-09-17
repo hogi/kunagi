@@ -151,6 +151,7 @@ public class WorkareaWidget extends AWidget {
 	}
 
 	void showLogin() {
+		login = null;
 		show(getLogin());
 	}
 

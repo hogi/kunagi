@@ -1,11 +1,12 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.admin.ConfigureAction;
+import scrum.client.admin.LogoutAction;
+import scrum.client.project.ChangeProjectAction;
 
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -17,10 +18,7 @@ public class HeaderWidget extends AWidget {
 	private Label currentUserLabel;
 
 	private ToolbarWidget toolbar;
-
-	private ButtonWidget changeProjectButton;
-	private ButtonWidget changePasswordButton;
-	private ButtonWidget logoutButton;
+	private HorizontalPanel controlPanel;
 
 	@Override
 	protected Widget onInitialization() {
@@ -41,28 +39,7 @@ public class HeaderWidget extends AWidget {
 
 		toolbar = new ToolbarWidget(true);
 
-		changeProjectButton = toolbar.addButton("Change Project", new Command() {
-
-			public void execute() {
-				ScrumGwtApplication.get().closeProject();
-			}
-		});
-
-		changePasswordButton = toolbar.addButton("Change Password", new Command() {
-
-			public void execute() {
-				Ui.get().showConfiguration();
-			}
-		});
-
-		logoutButton = toolbar.addButton("Logout", new Command() {
-
-			public void execute() {
-				ScrumGwtApplication.get().logout();
-			}
-		});
-
-		HorizontalPanel controlPanel = new HorizontalPanel();
+		controlPanel = new HorizontalPanel();
 		controlPanel.setStyleName("HeaderWidget-controlPanel");
 		controlPanel.add(currentUserLabel);
 		controlPanel.add(toolbar);
@@ -76,11 +53,16 @@ public class HeaderWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		boolean loggedIn = ScrumGwtApplication.get().getUser() != null;
+
 		currentUserLabel.setText(loggedIn ? ScrumGwtApplication.get().getUser().getName() : "");
-		changeProjectButton.setVisible(true || ScrumGwtApplication.get().getProject() != null);
-		changePasswordButton.setVisible(true || loggedIn);
-		logoutButton.setVisible(true || loggedIn);
+
+		controlPanel.remove(toolbar);
+		toolbar = new ToolbarWidget(true);
+		toolbar.addButton(new ChangeProjectAction());
+		toolbar.addButton(new ConfigureAction());
+		toolbar.addButton(new LogoutAction());
 		toolbar.update();
+		controlPanel.add(toolbar);
 	}
 
 }
