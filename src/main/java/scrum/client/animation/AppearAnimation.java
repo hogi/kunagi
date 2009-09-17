@@ -2,9 +2,7 @@ package scrum.client.animation;
 
 import scrum.client.common.ABlockWidget;
 
-import com.google.gwt.animation.client.Animation;
-
-public class AppearAnimation extends Animation {
+public class AppearAnimation extends ObservableAnimation {
 
 	private ABlockWidget widget;
 	private int height;
@@ -30,6 +28,7 @@ public class AppearAnimation extends Animation {
 		super.onComplete();
 		this.widget.getElement().getStyle().setProperty("height", "auto");
 		this.widget.getElement().getStyle().setProperty("overflow", "auto");
+		this.fireCompletionEvent();
 	}
 
 	@Override
