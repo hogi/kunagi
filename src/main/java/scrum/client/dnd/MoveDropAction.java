@@ -19,10 +19,10 @@ public class MoveDropAction<T> implements BlockListDropAction<T> {
 			public void completionEvent(ObservableAnimation source) {
 				AppearAnimation aniAppear = new AppearAnimation(block, height);
 				toList.move(block, toIndex);
-				aniAppear.run(120);
+				aniAppear.run(180);
 			}
 		});
-		aniDisappear.run(120);
+		aniDisappear.run(180);
 
 		return true;
 	}
