@@ -227,6 +227,6 @@ public class Ui extends AWidget {
 	}
 
 	private void select(AWidget widget) {
-		workarea.getNavigator().select(widget);
+		projectSidebar.getNavigator().select(widget);
 	}
 }

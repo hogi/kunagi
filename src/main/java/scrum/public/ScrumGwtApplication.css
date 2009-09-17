@@ -62,10 +62,6 @@ a {cursor: pointer;}
 .UserStatusWidget {color: gray;}
 .UserStatusWidget-online {color: red;}
 
-/***** Workarea *****/
-
-.WorkareaWidget {background: white;}
-
 /***** Toolbar *****/
 
 .ButtonWidget { }

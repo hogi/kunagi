@@ -1,6 +1,7 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.NavigatorWidget;
 import scrum.client.collaboration.ChatWidget;
 import scrum.client.common.ScrumUtil;
 import scrum.client.communication.UsersStatusWidget;
@@ -10,6 +11,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectSidebarWidget extends AWidget {
 
+	private NavigatorWidget navigator;
 	// private ClipboardWidget clipboard;
 	private TrashWidget trash;
 	private ChatWidget chat;
@@ -24,7 +26,7 @@ public class ProjectSidebarWidget extends AWidget {
 		FlowPanel sidebar = new FlowPanel();
 		sidebar.setStyleName("ProjectSidebarWidget");
 		sidebar.add(ScrumUtil.createEmptyDiv("beforeNavigatorSpacer"));
-		sidebar.add(WorkareaWidget.get().getNavigator());
+		sidebar.add(getNavigator());
 		sidebar.add(trash);
 		// sidebar.add(clipboard);
 		sidebar.add(getUsersStatus());
@@ -35,6 +37,7 @@ public class ProjectSidebarWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		navigator.update();
 		trash.update();
 		// clipboard.update();
 		chat.update();
@@ -42,17 +45,18 @@ public class ProjectSidebarWidget extends AWidget {
 	}
 
 	public ChatWidget getChat() {
-		if (chat == null) {
-			chat = new ChatWidget();
-		}
+		if (chat == null) chat = new ChatWidget();
 		return chat;
 	}
 
 	public UsersStatusWidget getUsersStatus() {
-		if (usersStatus == null) {
-			usersStatus = new UsersStatusWidget();
-		}
+		if (usersStatus == null) usersStatus = new UsersStatusWidget();
 		return usersStatus;
+	}
+
+	public NavigatorWidget getNavigator() {
+		if (navigator == null) navigator = new NavigatorWidget();
+		return navigator;
 	}
 
 	public static ProjectSidebarWidget get() {

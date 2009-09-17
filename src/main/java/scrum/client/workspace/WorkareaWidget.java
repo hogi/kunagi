@@ -23,7 +23,6 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class WorkareaWidget extends AWidget {
 
-	private NavigatorWidget navigator;
 	private SimplePanel wrapper = new SimplePanel();
 	private Widget currentWidget; // TODO AWidget
 
@@ -45,7 +44,7 @@ public class WorkareaWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		setHeight100();
-		navigator = getNavigator();
+		NavigatorWidget navigator = ProjectSidebarWidget.get().getNavigator();
 
 		navigator.addItem(Img.bundle.project16(), "Project Overview", getProjectOverview(), new Runnable() {
 
@@ -141,7 +140,6 @@ public class WorkareaWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		navigator.update();
 		wrapper.setWidget(currentWidget);
 		AWidget.update(currentWidget);
 	}
@@ -165,7 +163,7 @@ public class WorkareaWidget extends AWidget {
 	}
 
 	public void showProjectOverview() {
-		navigator.select(getProjectOverview());
+		ProjectSidebarWidget.get().getNavigator().select(getProjectOverview());
 	}
 
 	public boolean isProjectOverview() {
@@ -246,11 +244,6 @@ public class WorkareaWidget extends AWidget {
 	public WidgetsTesterWidget getWidgetsTester() {
 		if (widgetsTester == null) widgetsTester = new WidgetsTesterWidget();
 		return widgetsTester;
-	}
-
-	public NavigatorWidget getNavigator() {
-		if (navigator == null) navigator = new NavigatorWidget();
-		return navigator;
 	}
 
 	public static WorkareaWidget get() {
