@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.FullScreenDockWidget;
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
+import ilarkesto.gwt.client.SwitcherWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
@@ -39,7 +40,7 @@ public class Ui extends AWidget {
 
 	private LockWidget locker;
 	private WaitWidget wait;
-	private SidebarWidget sidebar;
+	private SwitcherWidget sidebar;
 	private ProjectSidebarWidget projectSidebar;
 	private WorkareaWidget workarea;
 
@@ -51,7 +52,7 @@ public class Ui extends AWidget {
 
 		wait = new WaitWidget();
 		header = new HeaderWidget();
-		sidebar = new SidebarWidget();
+		sidebar = new SwitcherWidget(true);
 		workarea = new WorkareaWidget();
 
 		FullScreenDockWidget dock = new FullScreenDockWidget(header, 25, sidebar, 200, workarea);
