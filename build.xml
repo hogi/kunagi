@@ -56,7 +56,7 @@
 	</target>
 	
 	<target name="deploy" depends="war">
-		<copy tofile="/var/webapps/scrum-latest.war" file="build/scrum.war" />
+		<copy tofile="/home/scrum-latest/tomcat/webapps/scrum-latest.war" file="build/scrum.war" />
 		<copy todir="/var/www/servisto.de/projects/scrum">
 			<fileset dir="src/projectHomepage/html" />
 		</copy>		
