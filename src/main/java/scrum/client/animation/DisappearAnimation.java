@@ -2,34 +2,36 @@ package scrum.client.animation;
 
 import scrum.client.common.ABlockWidget;
 
-public class DisappearAnimation extends ObservableAnimation {
+import com.google.gwt.user.client.ui.Widget;
 
-	private ABlockWidget widget;
+public class DisappearAnimation extends ABlockWidgetAnimation {
+
+	private ABlockWidget<?> widget;
 	private int height;
 
-	public DisappearAnimation(ABlockWidget widget, int height) {
-		this.widget = widget;
+	public DisappearAnimation(int height, ABlockWidget<?>... widgets) {
+		super(widgets);
 		this.height = height;
 	}
 
 	@Override
-	protected void onStart() {
-		this.widget.getElement().getStyle().setProperty("overflow", "hidden");
-
-	}
-
-	@Override
-	protected void onComplete() {
-		super.onComplete();
+	protected void onComplete(Widget widget) {
 		this.widget.getElement().getStyle().setProperty("height", "0px");
 		this.widget.getElement().getStyle().setProperty("overflow", "auto");
 		this.widget.getElement().getStyle().setProperty("visible", "false");
-		this.fireCompletionEvent();
 	}
 
 	@Override
-	protected void onUpdate(double progress) {
-		this.widget.getElement().getStyle().setProperty("height", (int) ((1 - progress) * this.height) + "px");
+	protected void onInit(Widget widget) {}
+
+	@Override
+	protected void onStart(Widget widget) {
+		widget.getElement().getStyle().setProperty("overflow", "hidden");
+	}
+
+	@Override
+	protected void onUpdate(double progress, Widget widget) {
+		widget.getElement().getStyle().setProperty("height", (int) ((1 - progress) * this.height) + "px");
 	}
 
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.google.gwt.animation.client.Animation;
 
-public abstract class ObservableAnimation extends Animation {
+public abstract class AObservableAnimation extends Animation {
 
 	private List<CompletionListener> listeners = new ArrayList<CompletionListener>();
 
@@ -20,5 +20,3 @@ public abstract class ObservableAnimation extends Animation {
 	}
 
 }
-
-// $Log:$
