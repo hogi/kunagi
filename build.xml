@@ -63,7 +63,7 @@
 	</target>
 	
 	<target name="release">
-		<copy tofile="/var/webapps/scrum.war" file="build/scrum.war" />
+		<copy tofile="/home/scrum/tomcat/webapps/scrum.war" file="build/scrum.war" />
 	</target>
 	
 	<target name="continousIntegrationBuild" depends="deploy" />
