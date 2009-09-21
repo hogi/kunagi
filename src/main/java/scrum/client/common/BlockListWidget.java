@@ -1,6 +1,7 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.GwtLogger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -198,12 +199,28 @@ public final class BlockListWidget<O> extends AWidget {
 			blocks[i].setList(this);
 		}
 
-		addBlocks(0, blocks);
-
-		if (autoSorter != null) sort(autoSorter);
+		if (autoSorter == null) {
+			addBlocks(0, blocks);
+		} else {
+			// Insert blocks one by at the right index
+			for (ABlockWidget<O> block : blocks) {
+				O newObject = block.getObject();
+				int index = 0;
+				Iterator<O> it = objectIterator();
+				while (it.hasNext()) {
+					O o = it.next();
+					if (autoSorter.compare(newObject, o) <= 0) {
+						break;
+					}
+					index++;
+				}
+				addBlocks(index, block);
+			}
+		}
 	}
 
-	private final void addBlocks(int toIndex, ABlockWidget<O>... blocks) {
+	private void addBlocks(int toIndex, ABlockWidget<O>... blocks) {
+		GwtLogger.DEBUG("Adding blocks to", toIndex, "->", blocks.length);
 		int oldSize = table.getRowCount();
 		AppearAnimation a = new AppearAnimation(100, blocks);
 		for (int i = 0; i < blocks.length; i++) {
@@ -297,6 +314,7 @@ public final class BlockListWidget<O> extends AWidget {
 	}
 
 	public final void removeRows(int... rows) {
+		GwtLogger.DEBUG("Removing rows:", rows);
 		int oldSize = table.getRowCount();
 
 		for (int row : rows) {
