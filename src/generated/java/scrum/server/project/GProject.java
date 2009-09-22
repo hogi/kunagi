@@ -45,7 +45,6 @@ public abstract class GProject
         properties.put("productOwnersIds", this.productOwnersIds);
         properties.put("scrumMastersIds", this.scrumMastersIds);
         properties.put("teamMembersIds", this.teamMembersIds);
-        properties.put("onlineTeamMembersIds", this.onlineTeamMembersIds);
         properties.put("currentSprintId", this.currentSprintId);
         properties.put("nextSprintId", this.nextSprintId);
         properties.put("requirementsOrderIds", this.requirementsOrderIds);
@@ -648,93 +647,6 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
-    // - onlineTeamMembers
-    // -----------------------------------------------------------
-
-    private java.util.Set<String> onlineTeamMembersIds = new java.util.HashSet<String>();
-
-    public final java.util.Set<scrum.server.admin.User> getOnlineTeamMembers() {
-        return (java.util.Set) userDao.getByIdsAsSet(this.onlineTeamMembersIds);
-    }
-
-    public final void setOnlineTeamMembers(Collection<scrum.server.admin.User> onlineTeamMembers) {
-        onlineTeamMembers = prepareOnlineTeamMembers(onlineTeamMembers);
-        if (onlineTeamMembers == null) onlineTeamMembers = Collections.emptyList();
-        java.util.Set<String> ids = getIdsAsSet(onlineTeamMembers);
-        if (this.onlineTeamMembersIds.equals(ids)) return;
-        this.onlineTeamMembersIds = ids;
-        fireModified();
-    }
-
-    protected Collection<scrum.server.admin.User> prepareOnlineTeamMembers(Collection<scrum.server.admin.User> onlineTeamMembers) {
-        return onlineTeamMembers;
-    }
-
-    protected void repairDeadOnlineTeamMemberReference(String entityId) {
-        if (this.onlineTeamMembersIds.remove(entityId)) fireModified();
-    }
-
-    public final boolean containsOnlineTeamMember(scrum.server.admin.User onlineTeamMember) {
-        if (onlineTeamMember == null) return false;
-        return this.onlineTeamMembersIds.contains(onlineTeamMember.getId());
-    }
-
-    public final int getOnlineTeamMembersCount() {
-        return this.onlineTeamMembersIds.size();
-    }
-
-    public final boolean isOnlineTeamMembersEmpty() {
-        return this.onlineTeamMembersIds.isEmpty();
-    }
-
-    public final boolean addOnlineTeamMember(scrum.server.admin.User onlineTeamMember) {
-        if (onlineTeamMember == null) throw new IllegalArgumentException("onlineTeamMember == null");
-        boolean added = this.onlineTeamMembersIds.add(onlineTeamMember.getId());
-        if (added) fireModified();
-        return added;
-    }
-
-    public final boolean addOnlineTeamMembers(Collection<scrum.server.admin.User> onlineTeamMembers) {
-        if (onlineTeamMembers == null) throw new IllegalArgumentException("onlineTeamMembers == null");
-        boolean added = false;
-        for (scrum.server.admin.User onlineTeamMember : onlineTeamMembers) {
-            added = added | this.onlineTeamMembersIds.add(onlineTeamMember.getId());
-        }
-        if (added) fireModified();
-        return added;
-    }
-
-    public final boolean removeOnlineTeamMember(scrum.server.admin.User onlineTeamMember) {
-        if (onlineTeamMember == null) throw new IllegalArgumentException("onlineTeamMember == null");
-        if (this.onlineTeamMembersIds == null) return false;
-        boolean removed = this.onlineTeamMembersIds.remove(onlineTeamMember.getId());
-        if (removed) fireModified();
-        return removed;
-    }
-
-    public final boolean removeOnlineTeamMembers(Collection<scrum.server.admin.User> onlineTeamMembers) {
-        if (onlineTeamMembers == null) return false;
-        if (onlineTeamMembers.isEmpty()) return false;
-        boolean removed = false;
-        for (scrum.server.admin.User _element: onlineTeamMembers) {
-            removed = removed | removeOnlineTeamMember(_element);
-        }
-        return removed;
-    }
-
-    public final boolean clearOnlineTeamMembers() {
-        if (this.onlineTeamMembersIds.isEmpty()) return false;
-        this.onlineTeamMembersIds.clear();
-        fireModified();
-        return true;
-    }
-
-    protected final void updateOnlineTeamMembers(Object value) {
-        Collection<String> ids = (Collection<String>) value;
-        setOnlineTeamMembers((java.util.Set) userDao.getByIdsAsSet(ids));
-    }
-
-    // -----------------------------------------------------------
     // - currentSprint
     // -----------------------------------------------------------
 
@@ -992,7 +904,6 @@ public abstract class GProject
             if (property.equals("productOwnersIds")) updateProductOwners(value);
             if (property.equals("scrumMastersIds")) updateScrumMasters(value);
             if (property.equals("teamMembersIds")) updateTeamMembers(value);
-            if (property.equals("onlineTeamMembersIds")) updateOnlineTeamMembers(value);
             if (property.equals("currentSprintId")) updateCurrentSprint(value);
             if (property.equals("nextSprintId")) updateNextSprint(value);
             if (property.equals("requirementsOrderIds")) updateRequirementsOrderIds(value);
@@ -1013,8 +924,6 @@ public abstract class GProject
         repairDeadScrumMasterReference(entityId);
         if (this.teamMembersIds == null) this.teamMembersIds = new java.util.HashSet<String>();
         repairDeadTeamMemberReference(entityId);
-        if (this.onlineTeamMembersIds == null) this.onlineTeamMembersIds = new java.util.HashSet<String>();
-        repairDeadOnlineTeamMemberReference(entityId);
         repairDeadCurrentSprintReference(entityId);
         repairDeadNextSprintReference(entityId);
         if (this.requirementsOrderIds == null) this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
@@ -1072,16 +981,6 @@ public abstract class GProject
             } catch (EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead teamMember reference");
                 repairDeadTeamMemberReference(entityId);
-            }
-        }
-        if (this.onlineTeamMembersIds == null) this.onlineTeamMembersIds = new java.util.HashSet<String>();
-        Set<String> onlineTeamMembers = new HashSet<String>(this.onlineTeamMembersIds);
-        for (String entityId : onlineTeamMembers) {
-            try {
-                userDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
-                LOG.info("Repairing dead onlineTeamMember reference");
-                repairDeadOnlineTeamMemberReference(entityId);
             }
         }
         try {

@@ -2,7 +2,6 @@ package scrum.server;
 
 import ilarkesto.base.time.TimePeriod;
 import ilarkesto.di.Context;
-import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.logging.Logger;
 import ilarkesto.webapp.AWebSession;
 
@@ -46,23 +45,19 @@ public class WebSession extends AWebSession {
 
 	@Override
 	protected void onInvalidate() {
-		User user = getUser();
-		Project project = getProject();
-		if (user != null) {
-			if (project != null) {
-				project.removeOnlineTeamMember(user);
-				for (WebSession session : ScrumWebApplication.get().getOtherSessionsByProject(this)) {
-					session.sendToClient(project);
-				}
-			}
-		}
+		ScrumWebApplication.get().updateOnlineTeamMembers(getProject());
 		setUser(null);
 		setProject(null);
 		super.onInvalidate();
 	}
 
 	@Override
-	protected ADataTransferObject createDataTransferObject() {
+	public DataTransferObject getNextData() {
+		return (DataTransferObject) super.getNextData();
+	}
+
+	@Override
+	protected DataTransferObject createDataTransferObject() {
 		return new DataTransferObject();
 	}
 

@@ -4,19 +4,24 @@ import ilarkesto.base.Tm;
 import ilarkesto.base.Url;
 import ilarkesto.base.Utl;
 import ilarkesto.concurrent.TaskManager;
+import ilarkesto.fp.FP;
+import ilarkesto.fp.Function;
 import ilarkesto.io.IO;
 import ilarkesto.logging.Logger;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
 import ilarkesto.webapp.DestroyTimeoutedSessionsTask;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.common.BurndownChart;
+import scrum.server.project.Project;
 
 public class ScrumWebApplication extends GScrumWebApplication {
 
@@ -111,13 +116,44 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public Set<WebSession> getOtherSessionsByProject(WebSession currentSession) {
+		Project project = currentSession.getProject();
+		if (project == null) return Collections.emptySet();
+		Set<WebSession> ret = getSessionsByProject(project);
+		ret.remove(currentSession);
+		return ret;
+	}
+
+	public Set<WebSession> getSessionsByProject(Project project) {
 		Set<WebSession> ret = new HashSet<WebSession>();
 		for (AWebSession webSession : getWebSessions()) {
-			if (webSession == currentSession) continue;
+			if (webSession.isSessionInvalidated()) continue;
 			WebSession session = (WebSession) webSession;
-			if (Utl.equals(currentSession.getProject(), session.getProject())) ret.add(session);
+			if (Utl.equals(project, session.getProject())) ret.add(session);
 		}
 		return ret;
+	}
+
+	public Set<User> getSessionUsersByProject(Project project) {
+		Set<User> ret = new HashSet<User>();
+		for (WebSession session : getSessionsByProject(project)) {
+			ret.add(session.getUser());
+		}
+		return ret;
+	}
+
+	public void updateOnlineTeamMembers(Project project) {
+		if (project == null) return;
+		Set<User> users = getSessionUsersByProject(project);
+		LOG.debug("Uupdate online team members on project:", project, "->", users);
+		Set<String> userIds = new HashSet<String>(FP.foreach(users, new Function<User, String>() {
+
+			public String eval(User user) {
+				return user.getId();
+			}
+		}));
+		for (WebSession session : getSessionsByProject(project)) {
+			session.getNextData().onlineTeamMembersIds = userIds;
+		}
 	}
 
 	@Override

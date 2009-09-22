@@ -18,6 +18,14 @@ import java.util.*;
 public abstract class GScrumGwtApplication
             extends scrum.client.AGwtApplication {
 
+    protected abstract void onServerData(DataTransferObject dto);
+
+    @Override
+    protected final void handleDataFromServer(ilarkesto.gwt.client.ADataTransferObject data) {
+        super.handleDataFromServer(data);
+        onServerData((DataTransferObject)data);
+    }
+
     // --- scrum service ---
 
     private ScrumServiceAsync scrumService;

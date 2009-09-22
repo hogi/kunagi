@@ -5,8 +5,10 @@ import ilarkesto.gwt.client.Gwt;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import scrum.client.admin.User;
 import scrum.client.impediments.Impediment;
@@ -21,6 +23,7 @@ public class Project extends GProject {
 	public static final String INIT_LABEL = "New Project";
 
 	private transient Comparator<Requirement> requirementsOrderComparator;
+	private transient Set<String> onlineTeamMembersIds = new HashSet<String>();
 
 	public Project(User creator) {
 		setLabel(INIT_LABEL);
@@ -29,6 +32,15 @@ public class Project extends GProject {
 
 	public Project(Map data) {
 		super(data);
+	}
+
+	public final java.util.Set<scrum.client.admin.User> getOnlineTeamMembers() {
+		if (onlineTeamMembersIds.isEmpty()) return Collections.emptySet();
+		return getDao().getUsers(this.onlineTeamMembersIds);
+	}
+
+	public void setOnlineTeamMembersIds(Set<String> values) {
+		onlineTeamMembersIds = values;
 	}
 
 	public boolean isOnline(User user) {

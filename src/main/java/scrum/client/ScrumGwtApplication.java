@@ -1,6 +1,5 @@
 package scrum.client;
 
-import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
@@ -54,6 +53,34 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		ScrumJs.initialize();
 	}
 
+	@Override
+	protected void onServerData(DataTransferObject dto) {
+		if (dto.containsEntities()) {
+			lastDataReceiveTime = System.currentTimeMillis();
+			pingTimer.schedule();
+		}
+
+		if (dto.onlineTeamMembersIds != null) {
+			GwtLogger.DEBUG("onlineTeamMembersIds:", dto.onlineTeamMembersIds);
+			project.setOnlineTeamMembersIds(dto.onlineTeamMembersIds);
+			getUi().getProjectSidebar().getUsersStatus().update();
+		}
+
+		if (dto.entityIdBase != null) {
+			getDao().setEntityIdBase(dto.entityIdBase);
+			GwtLogger.DEBUG("entityIdBase:", dto.entityIdBase);
+		}
+
+		if (dto.developmentMode != null) {
+			developmentMode = dto.developmentMode;
+		}
+
+		if (dto.isUserSet()) {
+			user = getDao().getUser(dto.getUserId());
+		}
+
+	}
+
 	public String richtextToHtml(String text) {
 		if (Gwt.isEmpty(text)) return text;
 		String html = ScrumJs.regegxTextToHtml(text);
@@ -103,32 +130,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	public long getLastDataReceiveTime() {
 		return lastDataReceiveTime;
-	}
-
-	@Override
-	protected void handleDataFromServer(ADataTransferObject adata) {
-		super.handleDataFromServer(adata);
-
-		DataTransferObject data = (DataTransferObject) adata;
-
-		if (data.containsEntities()) {
-			lastDataReceiveTime = System.currentTimeMillis();
-			pingTimer.schedule();
-		}
-
-		if (data.entityIdBase != null) {
-			getDao().setEntityIdBase(data.entityIdBase);
-			GwtLogger.DEBUG("entityIdBase:", data.entityIdBase);
-		}
-
-		if (data.developmentMode != null) {
-			developmentMode = data.developmentMode;
-		}
-
-		if (data.isUserSet()) {
-			user = getDao().getUser(data.getUserId());
-		}
-
 	}
 
 	@Override
