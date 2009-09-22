@@ -2,6 +2,7 @@ package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
+import ilarkesto.gwt.client.SwitcherWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.LoginWidget;
 import scrum.client.img.Img;
@@ -17,14 +18,11 @@ import scrum.client.tasks.TaskOverviewWidget;
 import scrum.client.tasks.WhiteboardWidget;
 import scrum.client.test.WidgetsTesterWidget;
 
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class WorkareaWidget extends AWidget {
 
-	private SimplePanel wrapper = new SimplePanel();
-	private Widget currentWidget; // TODO AWidget
+	private SwitcherWidget switcher;
 
 	private ProjectOverviewWidget projectOverview;
 	private TaskOverviewWidget taskOverview;
@@ -44,6 +42,7 @@ public class WorkareaWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		setHeight100();
+		switcher = new SwitcherWidget(true);
 		NavigatorWidget navigator = ProjectSidebarWidget.get().getNavigator();
 
 		navigator.addItem(Img.bundle.project16(), "Project Overview", getProjectOverview(), new Runnable() {
@@ -131,21 +130,16 @@ public class WorkareaWidget extends AWidget {
 			}
 		});
 
-		currentWidget = new Label("workarea");
-		wrapper = new SimplePanel();
-		wrapper.setStyleName("WorkareaWidget");
-		wrapper.add(currentWidget);
-		return wrapper;
+		return switcher;
 	}
 
 	@Override
 	protected void onUpdate() {
-		wrapper.setWidget(currentWidget);
-		AWidget.update(currentWidget);
+		switcher.update();
 	}
 
 	public boolean isCurrentWidget(AWidget widget) {
-		return currentWidget == widget;
+		return switcher.isShowing(widget);
 	}
 
 	void showLogin() {
@@ -154,7 +148,7 @@ public class WorkareaWidget extends AWidget {
 	}
 
 	void showUserconfig() {
-		getUserconfig().setPrevWidget(currentWidget);
+		getUserconfig().setPrevWidget(switcher.getCurrentWidget());
 		show(getUserconfig());
 	}
 
@@ -171,9 +165,8 @@ public class WorkareaWidget extends AWidget {
 	}
 
 	public void show(Widget widget) {
-		currentWidget = widget;
+		switcher.show(widget);
 		Ui.get().unlock();
-		update();
 	}
 
 	public LoginWidget getLogin() {
