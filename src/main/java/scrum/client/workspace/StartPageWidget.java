@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.ProjectSelectorWidget;
 import scrum.client.admin.UserListWidget;
+import scrum.client.context.StartContext;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -40,7 +41,7 @@ public class StartPageWidget extends AWidget {
 	}
 
 	public static StartPageWidget get() {
-		return WorkareaWidget.get().getStartPage();
+		return StartContext.get().getStartPage();
 	}
 
 }

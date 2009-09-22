@@ -34,7 +34,7 @@ public class LoginAction extends GLoginAction {
 					GwtLogger.DEBUG("Login succeded:", ScrumGwtApplication.get().getUi());
 					Project project = user.getCurrentProject();
 					if (project == null || user.isAdmin()) {
-						Ui.get().showStartPage();
+						Ui.get().activateStartView();
 					} else {
 						ScrumGwtApplication.get().openProject(project);
 					}

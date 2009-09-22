@@ -6,8 +6,8 @@ import ilarkesto.gwt.client.AWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
+import scrum.client.context.ProjectContext;
 import scrum.client.sprint.Sprint;
-import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -91,6 +91,6 @@ public class ProjectOverviewWidget extends AWidget {
 	}
 
 	public static ProjectOverviewWidget get() {
-		return WorkareaWidget.get().getProjectOverview();
+		return ProjectContext.get().getProjectOverview();
 	}
 }

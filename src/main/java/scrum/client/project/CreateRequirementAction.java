@@ -1,7 +1,7 @@
 package scrum.client.project;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.workspace.Ui;
+import scrum.client.context.ProjectContext;
 
 public class CreateRequirementAction extends GCreateRequirementAction {
 
@@ -18,7 +18,7 @@ public class CreateRequirementAction extends GCreateRequirementAction {
 	@Override
 	protected void onExecute() {
 		Requirement requirement = ScrumGwtApplication.get().getProject().createNewRequirement();
-		Ui.get().showRequirement(requirement);
+		ProjectContext.get().showRequirement(requirement);
 	}
 
 }

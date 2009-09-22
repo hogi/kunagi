@@ -1,7 +1,7 @@
 package scrum.client.issues;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.workspace.Ui;
+import scrum.client.context.ProjectContext;
 
 public class CreateIssueAction extends GCreateIssueAction {
 
@@ -18,7 +18,7 @@ public class CreateIssueAction extends GCreateIssueAction {
 	@Override
 	protected void onExecute() {
 		Issue issue = ScrumGwtApplication.get().getProject().createNewIssue();
-		Ui.get().showIssueList(issue);
+		ProjectContext.get().showIssueList(issue);
 	}
 
 }

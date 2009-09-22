@@ -55,7 +55,7 @@ public class ProjectSidebarWidget extends AWidget {
 	}
 
 	public SwitchingNavigatorWidget getNavigator() {
-		if (navigator == null) navigator = new SwitchingNavigatorWidget(WorkareaWidget.get().getSwitcher());
+		if (navigator == null) navigator = new SwitchingNavigatorWidget(Ui.get().getWorkarea());
 		return navigator;
 	}
 

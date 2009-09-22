@@ -8,9 +8,9 @@ import java.util.Map;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.common.BlockListSelectionManager;
+import scrum.client.context.ProjectContext;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
-import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -58,7 +58,7 @@ public class TaskOverviewWidget extends AWidget implements TaskBlockContainer {
 	}
 
 	public static TaskOverviewWidget get() {
-		return WorkareaWidget.get().getTaskOverview();
+		return ProjectContext.get().getTaskOverview();
 	}
 
 	public BlockListSelectionManager getSelectionManager() {

@@ -8,9 +8,9 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
+import scrum.client.context.ProjectContext;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
-import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -145,7 +145,7 @@ public class SprintBacklogWidget extends AWidget {
 	}
 
 	public static SprintBacklogWidget get() {
-		return WorkareaWidget.get().getSprintBacklog();
+		return ProjectContext.get().getSprintBacklog();
 	}
 
 }

@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ChatMessage;
 import scrum.client.collaboration.ChatWidget;
+import scrum.client.context.ProjectContext;
 import scrum.client.dnd.DndManager;
 import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
@@ -42,7 +43,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		callPing(new Runnable() {
 
 			public void run() {
-				ui.showLogin();
+				ui.activateLoginView();
 			}
 		});
 
@@ -149,7 +150,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 			public void run() {
 				Ui.get().unlock();
-				Ui.get().showProject();
+				Ui.get().activateProjectView();
 			}
 		});
 	}
@@ -165,14 +166,14 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		dao.clearRisks();
 		dao.clearSprints();
 		dao.clearTasks();
-		Ui.get().showStartPage();
+		Ui.get().activateStartView();
 	}
 
 	public void showEntityByReference(final String reference) {
 		GwtLogger.DEBUG("Showing entity:", reference);
 		AGwtEntity entity = getDao().getEntityByReference(reference);
 		if (entity != null) {
-			Ui.get().showEntity(entity);
+			ProjectContext.get().showEntity(entity);
 			return;
 		}
 		ui.lock("Searching for " + reference);
@@ -186,7 +187,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 					return;
 				}
 				ui.unlock();
-				Ui.get().showEntity(entity);
+				ProjectContext.get().showEntity(entity);
 			}
 		});
 	}
@@ -217,7 +218,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		ScrumGwtApplication.get().callLogout();
 		user = null;
 		getDao().clearAllEntities();
-		Ui.get().showLogin();
+		Ui.get().activateLoginView();
 	}
 
 }

@@ -12,10 +12,10 @@ import scrum.client.GenericPredicate;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.common.BlockListWidget;
+import scrum.client.context.ProjectContext;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
-import scrum.client.workspace.WorkareaWidget;
 
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Grid;
@@ -183,7 +183,7 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 	}
 
 	public static WhiteboardWidget get() {
-		return WorkareaWidget.get().getWhiteboard();
+		return ProjectContext.get().getWhiteboard();
 	}
 
 	public BlockListSelectionManager getSelectionManager() {

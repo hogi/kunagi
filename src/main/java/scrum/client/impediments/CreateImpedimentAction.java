@@ -1,7 +1,7 @@
 package scrum.client.impediments;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.workspace.Ui;
+import scrum.client.context.ProjectContext;
 
 public class CreateImpedimentAction extends GCreateImpedimentAction {
 
@@ -18,7 +18,7 @@ public class CreateImpedimentAction extends GCreateImpedimentAction {
 	@Override
 	protected void onExecute() {
 		Impediment impediment = ScrumGwtApplication.get().getProject().createNewImpediment();
-		Ui.get().showImpedimentList(impediment);
+		ProjectContext.get().showImpedimentList(impediment);
 	}
 
 }

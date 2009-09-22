@@ -1,26 +1,14 @@
 package scrum.client.workspace;
 
-import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.FullScreenDockWidget;
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
-import scrum.client.ScrumGwtApplication;
-import scrum.client.impediments.Impediment;
-import scrum.client.impediments.ImpedimentListWidget;
-import scrum.client.issues.Issue;
-import scrum.client.issues.IssueListWidget;
-import scrum.client.project.ProductBacklogWidget;
-import scrum.client.project.Quality;
-import scrum.client.project.QualityBacklogWidget;
-import scrum.client.project.Requirement;
-import scrum.client.risks.Risk;
-import scrum.client.risks.RiskListWidget;
-import scrum.client.sprint.SprintBacklogWidget;
-import scrum.client.sprint.Task;
-import scrum.client.tasks.TaskOverviewWidget;
-import scrum.client.tasks.WhiteboardWidget;
+import scrum.client.context.AContext;
+import scrum.client.context.LoginContext;
+import scrum.client.context.ProjectContext;
+import scrum.client.context.StartContext;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -42,7 +30,7 @@ public class Ui extends AWidget {
 	private WaitWidget wait;
 	private SwitcherWidget sidebar;
 	private ProjectSidebarWidget projectSidebar;
-	private WorkareaWidget workarea;
+	private SwitcherWidget workarea;
 
 	@Override
 	protected Widget onInitialization() {
@@ -50,7 +38,7 @@ public class Ui extends AWidget {
 
 		wait = new WaitWidget();
 		sidebar = new SwitcherWidget(true);
-		workarea = new WorkareaWidget();
+		workarea = new SwitcherWidget(true);
 
 		FullScreenDockWidget dock = new FullScreenDockWidget(new HeaderWidget(), 25, sidebar, 200, workarea);
 
@@ -61,6 +49,29 @@ public class Ui extends AWidget {
 	@Override
 	protected void onUpdate() {
 		locker.update();
+	}
+
+	public void activateLoginView() {
+		ProjectContext.destroy();
+		StartContext.destroy();
+		activateView(new LoginContext());
+	}
+
+	public void activateStartView() {
+		ProjectContext.destroy();
+		activateView(new StartContext());
+	}
+
+	public void activateProjectView() {
+		StartContext.destroy();
+		activateView(new ProjectContext());
+	}
+
+	private void activateView(AContext view) {
+		GwtLogger.DEBUG("Activating view:", view);
+		sidebar.show(view.getSidebarWidget());
+		workarea.show(view.getWorkareaWidget());
+		unlock();
 	}
 
 	public void lock(String message) {
@@ -74,27 +85,8 @@ public class Ui extends AWidget {
 		locker.unlock();
 	}
 
-	public void showLogin() {
-		sidebar.show(null);
-		workarea.showLogin();
-	}
-
-	public void showProject() {
-		sidebar.show(getProjectSidebar());
-		workarea.showProjectOverview();
-	}
-
 	public void showConfiguration() {
-		workarea.showUserconfig();
-	}
-
-	public void showStartPage() {
-		sidebar.show(null);
-		workarea.showStartPage();
-	}
-
-	public WorkareaWidget getWorkarea() {
-		return workarea;
+		workarea.show(ProjectContext.get().getUserconfig());
 	}
 
 	public ProjectSidebarWidget getProjectSidebar() {
@@ -124,101 +116,12 @@ public class Ui extends AWidget {
 		db.show();
 	}
 
+	public SwitcherWidget getWorkarea() {
+		return workarea;
+	}
+
 	public static Ui get() {
 		return SINGLETON;
 	}
 
-	// --- helper ---
-
-	public void showEntity(AGwtEntity entity) {
-		if (entity instanceof Task) {
-			showTask((Task) entity);
-		} else if (entity instanceof Requirement) {
-			showRequirement((Requirement) entity);
-		} else {
-			throw new RuntimeException("Showing entity not supported: " + entity.getClass().getName());
-		}
-	}
-
-	public void showTask(Task task) {
-		if (workarea.isCurrentWidget(workarea.getSprintBacklog())) {
-			showSprintBacklog(task);
-		} else if (workarea.isCurrentWidget(workarea.getTaskOverview())) {
-			showTaskOverview(task);
-		} else {
-			showWhiteboard(task);
-		}
-	}
-
-	public void showRequirement(Requirement requirement) {
-		ProductBacklogWidget productBacklog = workarea.getProductBacklog();
-		boolean inCurrentSprint = ScrumGwtApplication.get().getProject().isCurrentSprint(requirement.getSprint());
-		if (inCurrentSprint) {
-			if (workarea.isCurrentWidget(productBacklog)) {
-				showProductBacklog(requirement);
-			} else {
-				showSprintBacklog(requirement);
-			}
-		} else {
-			showProductBacklog(requirement);
-		}
-	}
-
-	public void showWhiteboard(Task task) {
-		WhiteboardWidget whiteboard = workarea.getWhiteboard();
-		select(whiteboard);
-		whiteboard.selectTask(task);
-	}
-
-	public void showSprintBacklog(Task task) {
-		SprintBacklogWidget sprintBacklog = workarea.getSprintBacklog();
-		select(sprintBacklog);
-		sprintBacklog.selectTask(task);
-	}
-
-	public void showTaskOverview(Task task) {
-		TaskOverviewWidget taskOverview = workarea.getTaskOverview();
-		select(taskOverview);
-		taskOverview.selectTask(task);
-	}
-
-	public void showSprintBacklog(Requirement requirement) {
-		SprintBacklogWidget sprintBacklog = workarea.getSprintBacklog();
-		select(sprintBacklog);
-		if (requirement != null) sprintBacklog.selectRequirement(requirement);
-	}
-
-	public void showProductBacklog(Requirement requirement) {
-		ProductBacklogWidget productBacklog = workarea.getProductBacklog();
-		select(productBacklog);
-		productBacklog.selectRequirement(requirement);
-	}
-
-	public void showImpedimentList(Impediment impediment) {
-		ImpedimentListWidget impedimentList = workarea.getImpedimentList();
-		select(impedimentList);
-		impedimentList.showImpediment(impediment);
-	}
-
-	public void showIssueList(Issue issue) {
-		IssueListWidget issueList = workarea.getIssueList();
-		select(issueList);
-		issueList.showIssue(issue);
-	}
-
-	public void showQualityBacklog(Quality quality) {
-		QualityBacklogWidget qualityBacklog = workarea.getQualityBacklog();
-		select(qualityBacklog);
-		qualityBacklog.showQuality(quality);
-	}
-
-	public void showRiskList(Risk risk) {
-		RiskListWidget riskList = workarea.getRiskList();
-		select(riskList);
-		riskList.showRisk(risk);
-	}
-
-	private void select(AWidget widget) {
-		projectSidebar.getNavigator().select(widget);
-	}
 }

@@ -7,7 +7,6 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
 import scrum.client.project.CreateProjectAction;
 import scrum.client.project.Project;
-import scrum.client.workspace.StartPageWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -37,10 +36,6 @@ public class ProjectSelectorWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		list.setObjects(Dao.get().getProjects());
-	}
-
-	public static ProjectSelectorWidget get() {
-		return StartPageWidget.get().getProjectSelector();
 	}
 
 	public BlockListWidget<Project> getList() {

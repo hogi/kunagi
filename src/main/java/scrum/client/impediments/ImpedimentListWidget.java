@@ -5,7 +5,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
-import scrum.client.workspace.WorkareaWidget;
+import scrum.client.context.ProjectContext;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -43,6 +43,6 @@ public class ImpedimentListWidget extends AWidget {
 	}
 
 	public static ImpedimentListWidget get() {
-		return WorkareaWidget.get().getImpedimentList();
+		return ProjectContext.get().getImpedimentList();
 	}
 }
