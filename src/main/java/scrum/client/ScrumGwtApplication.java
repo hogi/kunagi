@@ -47,7 +47,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		});
 
 		pingTimer = new PingTimer();
-		pingTimer.scheduleRepeating(15000);
 
 		ARichtextViewEditWidget.setDefaultRichtextFormater(new ScrumRichtextFormater());
 		ScrumJs.initialize();

@@ -17,6 +17,8 @@ public class IssueListWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		ScrumGwtApplication.get().callRequestIssues();
+
 		list = new BlockListWidget<Issue>(IssueBlock.FACTORY);
 		list.setDndSorting(false);
 

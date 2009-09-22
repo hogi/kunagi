@@ -287,8 +287,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("requestImpediments");
 			gwtServiceModel.addMethod("requestIssues");
 			gwtServiceModel.addMethod("requestRisks");
-			gwtServiceModel.addMethod("requestRequirements");
-			gwtServiceModel.addMethod("requestQualitys");
 			gwtServiceModel.addMethod("changeProperties").addParameter("entityId", String.class).addParameter(
 				"properties", Map.class);
 			gwtServiceModel.addMethod("createEntity").addParameter("type", String.class).addParameter("properties",

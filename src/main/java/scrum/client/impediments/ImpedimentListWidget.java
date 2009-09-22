@@ -17,6 +17,8 @@ public class ImpedimentListWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		ScrumGwtApplication.get().callRequestImpediments();
+
 		list = new BlockListWidget<Impediment>(ImpedimentBlock.FACTORY);
 		list.setDndSorting(false);
 

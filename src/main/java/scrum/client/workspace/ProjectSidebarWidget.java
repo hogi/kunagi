@@ -1,7 +1,7 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.NavigatorWidget;
+import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.collaboration.ChatWidget;
 import scrum.client.common.ScrumUtil;
 import scrum.client.communication.UsersStatusWidget;
@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectSidebarWidget extends AWidget {
 
-	private NavigatorWidget navigator;
+	private SwitchingNavigatorWidget navigator;
 	// private ClipboardWidget clipboard;
 	private TrashWidget trash;
 	private ChatWidget chat;
@@ -54,8 +54,8 @@ public class ProjectSidebarWidget extends AWidget {
 		return usersStatus;
 	}
 
-	public NavigatorWidget getNavigator() {
-		if (navigator == null) navigator = new NavigatorWidget();
+	public SwitchingNavigatorWidget getNavigator() {
+		if (navigator == null) navigator = new SwitchingNavigatorWidget(WorkareaWidget.get().getSwitcher());
 		return navigator;
 	}
 

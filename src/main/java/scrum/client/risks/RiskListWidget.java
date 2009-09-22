@@ -19,6 +19,8 @@ public class RiskListWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		ScrumGwtApplication.get().callRequestRisks();
+
 		list = new BlockListWidget<Risk>(RiskBlock.FACTORY);
 		list.setAutoSorter(new RiskComparator());
 

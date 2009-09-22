@@ -10,7 +10,6 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 
@@ -180,6 +179,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		session.sendToClient(project.getNextSprint());
 		session.sendToClient(project.getParticipants());
 		session.sendToClient(project.getRequirements());
+		session.sendToClient(project.getQualitys());
 		session.sendToClient(project.getTasks());
 	}
 
@@ -219,28 +219,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		assertProjectSelected(session);
 		Project project = session.getProject();
 		session.sendToClient(project.getRisks());
-	}
-
-	@Override
-	public void onRequestRequirements(WebSession session) {
-		assertProjectSelected(session);
-		Project project = session.getProject();
-		Collection<Requirement> requirements = project.getRequirements();
-		for (Requirement requirement : requirements) {
-			if (requirement.isSprintSet()) session.sendToClient(requirement.getSprint());
-			session.sendToClient(requirement.getTasks());
-			session.sendToClient(requirement.getQualitys());
-		}
-		session.sendToClient(requirements);
-		session.sendToClient(project.getQualitys());
-		session.sendToClient(project);
-	}
-
-	@Override
-	protected void onRequestQualitys(WebSession session) {
-		assertProjectSelected(session);
-		Project project = session.getProject();
-		session.sendToClient(project.getQualitys());
 	}
 
 	@Override

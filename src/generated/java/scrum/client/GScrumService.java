@@ -40,10 +40,6 @@ public interface GScrumService
 
     DataTransferObject requestRisks();
 
-    DataTransferObject requestRequirements();
-
-    DataTransferObject requestQualitys();
-
     DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties);
 
     DataTransferObject createEntity(java.lang.String type, java.util.Map properties);

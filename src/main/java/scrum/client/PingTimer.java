@@ -7,6 +7,10 @@ public class PingTimer extends Timer {
 	public static final int MIN_DELAY = 500;
 	public static final int MAX_DELAY = 15000;
 
+	public PingTimer() {
+		scheduleRepeating(MAX_DELAY);
+	}
+
 	@Override
 	public void run() {
 		ScrumGwtApplication.get().callPing();

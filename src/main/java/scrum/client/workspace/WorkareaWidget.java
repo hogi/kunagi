@@ -1,9 +1,8 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.NavigatorWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
-import scrum.client.ScrumGwtApplication;
+import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.admin.LoginWidget;
 import scrum.client.img.Img;
 import scrum.client.impediments.ImpedimentListWidget;
@@ -43,93 +42,24 @@ public class WorkareaWidget extends AWidget {
 	protected Widget onInitialization() {
 		setHeight100();
 		switcher = new SwitcherWidget(true);
-		NavigatorWidget navigator = ProjectSidebarWidget.get().getNavigator();
 
-		navigator.addItem(Img.bundle.project16(), "Project Overview", getProjectOverview(), new Runnable() {
+		SwitchingNavigatorWidget navigator = ProjectSidebarWidget.get().getNavigator();
+		navigator.addItem(Img.bundle.project16(), "Project Overview", getProjectOverview());
+		navigator.addItem(Img.bundle.task16(), "Task Overview", getTaskOverview());
+		navigator.addItem(Img.bundle.task16(), "Whiteboard", getWhiteboard());
+		navigator.addItem(Img.bundle.sprint16(), "Sprint Backlog", getSprintBacklog());
+		navigator.addItem(Img.bundle.requirement16(), "Product Backlog", getProductBacklog());
+		navigator.addItem(Img.bundle.requirement16(), "Quality Backlog", getQualityBacklog());
+		navigator.addItem(Img.bundle.impediment16(), "Impediment List", getImpedimentList());
+		navigator.addItem(Img.bundle.issue16(), "Issue List", getIssueList());
+		navigator.addItem(Img.bundle.risk16(), "Risk Management", getRiskList());
+		navigator.addItem(Img.bundle.sprint16(), "Next Sprint", getNextSprint());
+		navigator.addItem(Img.bundle.test16(), "WidgetsTester", getWidgetsTester());
 
-			public void run() {
-				show(getProjectOverview());
-			}
-		});
+		return switcher;
+	}
 
-		navigator.addItem(Img.bundle.task16(), "Task Overview", getTaskOverview(), new Runnable() {
-
-			public void run() {
-				ScrumGwtApplication.get().callRequestRequirements();
-				show(getTaskOverview());
-			}
-		});
-
-		navigator.addItem(Img.bundle.task16(), "Whiteboard", getWhiteboard(), new Runnable() {
-
-			public void run() {
-				ScrumGwtApplication.get().callRequestRequirements();
-				show(getWhiteboard());
-			}
-		});
-
-		navigator.addItem(Img.bundle.sprint16(), "Sprint Backlog", getSprintBacklog(), new Runnable() {
-
-			public void run() {
-				ScrumGwtApplication.get().callRequestRequirements();
-				show(getSprintBacklog());
-			}
-		});
-
-		navigator.addItem(Img.bundle.requirement16(), "Product Backlog", getProductBacklog(), new Runnable() {
-
-			public void run() {
-				ScrumGwtApplication.get().callRequestRequirements();
-				show(getProductBacklog());
-			}
-		});
-
-		navigator.addItem(Img.bundle.requirement16(), "Quality Backlog", getQualityBacklog(), new Runnable() {
-
-			public void run() {
-				ScrumGwtApplication.get().callRequestQualitys();
-				show(getQualityBacklog());
-			}
-		});
-
-		navigator.addItem(Img.bundle.impediment16(), "Impediment List", getImpedimentList(), new Runnable() {
-
-			public void run() {
-				ScrumGwtApplication.get().callRequestImpediments();
-				show(getImpedimentList());
-			}
-		});
-
-		navigator.addItem(Img.bundle.issue16(), "Issue List", getIssueList(), new Runnable() {
-
-			public void run() {
-				ScrumGwtApplication.get().callRequestIssues();
-				show(getIssueList());
-			}
-		});
-
-		navigator.addItem(Img.bundle.risk16(), "Risk Management", getRiskList(), new Runnable() {
-
-			public void run() {
-				ScrumGwtApplication.get().callRequestRisks();
-				show(getRiskList());
-			}
-		});
-
-		navigator.addItem(Img.bundle.sprint16(), "Next Sprint", getNextSprint(), new Runnable() {
-
-			public void run() {
-				show(getNextSprint());
-			}
-		});
-
-		navigator.addItem(Img.bundle.test16(), "WidgetsTester", getWidgetsTester(), new Runnable() {
-
-			public void run() {
-				show(getWidgetsTester());
-			}
-		});
-
+	public SwitcherWidget getSwitcher() {
 		return switcher;
 	}
 

@@ -33,8 +33,6 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestImpediments(WebSession session);
     protected abstract void onRequestIssues(WebSession session);
     protected abstract void onRequestRisks(WebSession session);
-    protected abstract void onRequestRequirements(WebSession session);
-    protected abstract void onRequestQualitys(WebSession session);
     protected abstract void onChangeProperties(WebSession session, java.lang.String entityId, java.util.Map properties);
     protected abstract void onCreateEntity(WebSession session, java.lang.String type, java.util.Map properties);
     protected abstract void onDeleteEntity(WebSession session, java.lang.String entityId);
@@ -232,42 +230,6 @@ public abstract class GScrumServiceImpl
             onRequestRisks(session);
         } catch (Throwable t) {
             handleServiceMethodException("requestRisks",t);
-            throw new RuntimeException(t);
-        }
-        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
-        onServiceMethodExecuted(context);
-        return ret;
-    }
-
-
-    public scrum.client.DataTransferObject requestRequirements() {
-        LOG.debug("requestRequirements");
-        WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = ilarkesto.di.Context.get();
-        context.setName("gwt-srv:requestRequirements");
-        context.bindCurrentThread();
-        try {
-            onRequestRequirements(session);
-        } catch (Throwable t) {
-            handleServiceMethodException("requestRequirements",t);
-            throw new RuntimeException(t);
-        }
-        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
-        onServiceMethodExecuted(context);
-        return ret;
-    }
-
-
-    public scrum.client.DataTransferObject requestQualitys() {
-        LOG.debug("requestQualitys");
-        WebSession session = (WebSession) getSession();
-        ilarkesto.di.Context context = ilarkesto.di.Context.get();
-        context.setName("gwt-srv:requestQualitys");
-        context.bindCurrentThread();
-        try {
-            onRequestQualitys(session);
-        } catch (Throwable t) {
-            handleServiceMethodException("requestQualitys",t);
             throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
