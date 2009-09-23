@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.img.Img;
 import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
@@ -47,6 +48,7 @@ public class ProjectContext extends AContext {
 	private RiskListWidget riskList;
 	private WidgetsTesterWidget widgetsTester;
 	private UserConfigWidget userconfig;
+	private ProjectUserConfigWidget projectUserConfig;
 
 	public ProjectContext() {
 		assert singleton == null;
@@ -64,6 +66,7 @@ public class ProjectContext extends AContext {
 		riskList = new RiskListWidget();
 		widgetsTester = new WidgetsTesterWidget();
 		userconfig = new UserConfigWidget();
+		projectUserConfig = new ProjectUserConfigWidget();
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
 		navigator.addItem(Img.bundle.project16(), "Project Overview", getProjectOverview());
@@ -76,7 +79,12 @@ public class ProjectContext extends AContext {
 		navigator.addItem(Img.bundle.issue16(), "Issue List", getIssueList());
 		navigator.addItem(Img.bundle.risk16(), "Risk Management", getRiskList());
 		navigator.addItem(Img.bundle.sprint16(), "Next Sprint", getNextSprint());
+		navigator.addItem(Img.bundle.test16(), "Config", getProjectUserConfig());
 		navigator.addItem(Img.bundle.test16(), "WidgetsTester", getWidgetsTester());
+	}
+
+	public ProjectUserConfigWidget getProjectUserConfig() {
+		return projectUserConfig;
 	}
 
 	@Override

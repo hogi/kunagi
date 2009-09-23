@@ -3,6 +3,8 @@ package scrum.client.admin;
 import java.util.Comparator;
 import java.util.Map;
 
+import scrum.client.ScrumGwtApplication;
+
 public class User extends GUser {
 
 	public static final String INITIAL_NAME = "newuser";
@@ -14,6 +16,10 @@ public class User extends GUser {
 
 	public User(Map data) {
 		super(data);
+	}
+
+	public ProjectUserConfig getProjectConfig() {
+		return ScrumGwtApplication.get().getProject().getUserConfig(this);
 	}
 
 	public int compareTo(User u) {

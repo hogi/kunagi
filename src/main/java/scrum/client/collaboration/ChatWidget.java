@@ -69,12 +69,14 @@ public class ChatWidget extends AWidget {
 	private void appendMessage(ChatMessage m, StringBuilder sb) {
 		User author = m.getAuthor();
 		String authorLabel = author != null ? author.getName() : "System";
-		String authorStyle = author != null ? (author.equals(ScrumGwtApplication.get().getUser()) ? "author-me"
+		String authorClass = author != null ? (author.equals(ScrumGwtApplication.get().getUser()) ? "author-me"
 				: "author") : "author-system";
+		String authorStyle = author != null ? "color: " + author.getProjectConfig().getColor() + ";" : "";
 		String text = m.getText();
 		String html = ScrumGwtApplication.get().richtextToHtml(text);
 		sb.append("<p class='message'>");
-		sb.append("<span class='").append(authorStyle).append("'>").append(authorLabel).append(":&nbsp;</span>");
+		sb.append("<span class='").append(authorClass).append("' style='").append(authorStyle).append("'>").append(
+			authorLabel).append(":&nbsp;</span>");
 		sb.append("<span class='text'>").append(html).append("</span>");
 		sb.append("</p>");
 	}
