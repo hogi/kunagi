@@ -6,7 +6,6 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class DisappearAnimation extends ABlockWidgetAnimation {
 
-	private ABlockWidget<?> widget;
 	private int height;
 
 	public DisappearAnimation(int height, ABlockWidget<?>... widgets) {
@@ -16,9 +15,9 @@ public class DisappearAnimation extends ABlockWidgetAnimation {
 
 	@Override
 	protected void onComplete(Widget widget) {
-		this.widget.getElement().getStyle().setProperty("height", "0px");
-		this.widget.getElement().getStyle().setProperty("overflow", "auto");
-		this.widget.getElement().getStyle().setProperty("visible", "false");
+		widget.getElement().getStyle().setProperty("height", "0px");
+		widget.getElement().getStyle().setProperty("overflow", "auto");
+		widget.getElement().getStyle().setProperty("visible", "false");
 	}
 
 	@Override
