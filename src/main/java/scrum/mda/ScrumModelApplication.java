@@ -233,6 +233,20 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return userModel;
 	}
 
+	private EntityModel projectUserConfigModel;
+
+	public EntityModel getProjectUserConfigModel() {
+		if (projectUserConfigModel == null) {
+			projectUserConfigModel = createEntityModel("ProjectUserConfig", "admin");
+			autowire(projectUserConfigModel);
+			projectUserConfigModel.setGwtSupport(true);
+			projectUserConfigModel.addReference("project", getProjectModel()).setMaster(true);
+			projectUserConfigModel.addReference("user", getUserModel()).setMaster(true);
+			projectUserConfigModel.addProperty("color", String.class);
+		}
+		return projectUserConfigModel;
+	}
+
 	private EntityModel issueModel;
 
 	public EntityModel getIssueModel() {

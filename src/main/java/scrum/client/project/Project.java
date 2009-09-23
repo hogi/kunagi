@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -32,6 +33,13 @@ public class Project extends GProject {
 
 	public Project(Map data) {
 		super(data);
+	}
+
+	public ProjectUserConfig getUserConfig(User user) {
+		for (ProjectUserConfig config : getDao().getProjectUserConfigsByProject(this)) {
+			if (config.isUser(user)) { return config; }
+		}
+		throw new IllegalStateException("User has no project config: " + user);
 	}
 
 	public final java.util.Set<scrum.client.admin.User> getOnlineTeamMembers() {

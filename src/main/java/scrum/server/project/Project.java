@@ -1,8 +1,11 @@
 package scrum.server.project;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import scrum.server.admin.ProjectUserConfig;
+import scrum.server.admin.ProjectUserConfigDao;
 import scrum.server.admin.User;
 import scrum.server.impediments.Impediment;
 import scrum.server.impediments.ImpedimentDao;
@@ -18,6 +21,7 @@ public class Project extends GProject {
 
 	// --- dependencies ---
 
+	private static ProjectUserConfigDao projectUserConfigDao;
 	private static ImpedimentDao impedimentDao;
 	private static IssueDao issueDao;
 	private static RequirementDao requirementDao;
@@ -25,6 +29,10 @@ public class Project extends GProject {
 	private static ProjectSprintSnapshotDao projectSprintSnapshotDao;
 	private static RiskDao riskDao;
 	private static TaskDao taskDao;
+
+	public static void setProjectUserConfigDao(ProjectUserConfigDao projectUserConfigDao) {
+		Project.projectUserConfigDao = projectUserConfigDao;
+	}
 
 	public static void setIssueDao(IssueDao issueDao) {
 		Project.issueDao = issueDao;
@@ -55,6 +63,18 @@ public class Project extends GProject {
 	}
 
 	// --- ---
+
+	public Set<ProjectUserConfig> getUserConfigs() {
+		Set<ProjectUserConfig> configs = new HashSet<ProjectUserConfig>();
+		for (User user : getParticipants()) {
+			configs.add(getUserConfig(user));
+		}
+		return configs;
+	}
+
+	public ProjectUserConfig getUserConfig(User user) {
+		return projectUserConfigDao.getProjectUserConfig(this, user);
+	}
 
 	public Set<Task> getTasks() {
 		return taskDao.getTasksByProject(this);
@@ -242,4 +262,5 @@ public class Project extends GProject {
 		sprintDao.createTestSprint(this, 2);
 		sprintDao.createTestSprint(this, 3);
 	}
+
 }
