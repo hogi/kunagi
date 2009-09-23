@@ -1,7 +1,6 @@
 package scrum.client.communication;
 
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 
@@ -27,7 +26,6 @@ public class UserStatusWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		String color = ScrumGwtApplication.get().getProject().getUserConfig(user).getColor();
-		GwtLogger.DEBUG("COLOR: ----------------- > ", color);
 		label.getElement().getStyle().setProperty("color", color);
 		if (ScrumGwtApplication.get().getProject().isOnline(user)) {
 			label.addStyleName("UserStatusWidget-online");
