@@ -2,9 +2,11 @@ package scrum.client.communication;
 
 import ilarkesto.gwt.client.AWidget;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
@@ -32,7 +34,8 @@ public class UsersStatusWidget extends AWidget {
 	protected void onUpdate() {
 		Project project = ScrumGwtApplication.get().getProject();
 		if (project == null) return;
-		Set<User> users = project.getParticipants();
+		List<User> users = new ArrayList<User>(project.getParticipants());
+		Collections.sort(users, User.ONLINE_OFFLINE_COMPARATOR);
 		for (User user : users) {
 			if (user == ScrumGwtApplication.get().getUser()) continue;
 			UserStatusWidget widget = userWidgets.get(user);

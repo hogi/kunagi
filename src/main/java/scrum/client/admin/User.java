@@ -26,6 +26,10 @@ public class User extends GUser {
 		return getName().compareTo(u.getName());
 	}
 
+	public boolean isOnline() {
+		return ScrumGwtApplication.get().getProject().isOnline(this);
+	}
+
 	@Override
 	public String toString() {
 		return getName();
@@ -35,6 +39,17 @@ public class User extends GUser {
 
 		public int compare(User a, User b) {
 			return a.getName().compareTo(b.getName());
+		}
+	};
+
+	public transient static final Comparator<User> ONLINE_OFFLINE_COMPARATOR = new Comparator<User>() {
+
+		public int compare(User a, User b) {
+			boolean aOnline = a.isOnline();
+			boolean bOnline = b.isOnline();
+			if (aOnline == bOnline) return a.getName().compareTo(b.getName());
+			if (aOnline) return -1;
+			return 1;
 		}
 	};
 

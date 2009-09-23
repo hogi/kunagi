@@ -59,6 +59,8 @@ public class Dao extends GDao {
 		}
 		if (entity instanceof ProjectUserConfig) {
 			if (ProjectContext.isActive()) {
+				ProjectUserConfig config = (ProjectUserConfig) entity;
+				// GwtLogger.DEBUG("---->", config.getUser(), "----->", config.getSelectedEntitysIds());
 				Ui.get().update();
 			}
 		}

@@ -59,8 +59,8 @@ a {cursor: pointer;}
 .ChatWidget-input {margin-top: 5px; width: 97%;}
 
 .UsersStatusWidget {margin: 15px;}
-.UserStatusWidget {}
-.UserStatusWidget-online {font-weight: bold;}
+.UserStatusWidget {text-decoration: line-through; font-style: italic;}
+.UserStatusWidget-online {text-decoration: none; font-style: normal;}
 
 /***** Toolbar *****/
 
