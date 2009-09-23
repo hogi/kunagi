@@ -10,7 +10,7 @@ public class UnclaimTaskAction extends GReopenTaskAction {
 
 	@Override
 	public String getLabel() {
-		return "Remove Owner";
+		return "Unclaim";
 	}
 
 	@Override
