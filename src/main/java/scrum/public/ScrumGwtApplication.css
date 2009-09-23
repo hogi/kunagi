@@ -93,6 +93,8 @@ a {cursor: pointer;}
 .ABlockWidget-title-menu .gwt-MenuItem { font-size: 9px;}
 .ABlockWidget-block-selected .ABlockWidget-content {border: 1px solid #DEE5FD;}
 
+.ABlockWidget-block-title .UserOnBlockWidget {margin-right: 5px;}
+
 .WhiteboardWidget-requirement-list .ABlockWidget-title {background: #192666; color: #DEE5FD;}
 
 .RequirementBlock-inCurrentSprint .ABlockWidget-title {background: #FDCEC5;}

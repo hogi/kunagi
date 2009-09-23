@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import scrum.client.DataTransferObject;
 import scrum.client.PingTimer;
+import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.User;
 import scrum.server.project.Project;
 
@@ -43,9 +44,23 @@ public class WebSession extends AWebSession {
 		this.project = project;
 	}
 
+	public void clearUsersSelectedEntities() {
+		if (user == null) return;
+		if (project == null) return;
+
+		ProjectUserConfig userConfig = project.getUserConfig(user);
+		userConfig.clearSelectedEntitysIds();
+
+		for (AWebSession s : ScrumWebApplication.get().getOtherSessionsByProject(this)) {
+			s.sendToClient(userConfig);
+		}
+	}
+
 	@Override
 	protected void onInvalidate() {
 		ScrumWebApplication.get().updateOnlineTeamMembers(getProject());
+		clearUsersSelectedEntities();
+
 		setUser(null);
 		setProject(null);
 		super.onInvalidate();

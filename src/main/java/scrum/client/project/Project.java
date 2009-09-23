@@ -1,5 +1,6 @@
 package scrum.client.project;
 
+import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.Gwt;
 
 import java.util.Collection;
@@ -225,5 +226,19 @@ public class Project extends GProject {
 			return a.getLabel().compareTo(b.getLabel());
 		}
 	};
+
+	public Set<User> getUsersSelecting(AGwtEntity entity) {
+		Set<User> users = new HashSet<User>();
+		for (ProjectUserConfig config : getUserConfigs()) {
+			if (config.getSelectedEntitysIds().contains(entity.getId())) {
+				users.add(config.getUser());
+			}
+		}
+		return users;
+	}
+
+	private List<ProjectUserConfig> getUserConfigs() {
+		return getDao().getProjectUserConfigsByProject(this);
+	}
 
 }

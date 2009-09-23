@@ -6,7 +6,9 @@ import ilarkesto.gwt.client.AGwtEntity;
 import java.util.HashMap;
 import java.util.Map;
 
+import scrum.client.admin.ProjectUserConfig;
 import scrum.client.collaboration.ChatMessage;
+import scrum.client.context.ProjectContext;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
@@ -54,6 +56,11 @@ public class Dao extends GDao {
 		}
 		if (entity instanceof Project) {
 			Project project = (Project) entity;
+		}
+		if (entity instanceof ProjectUserConfig) {
+			if (ProjectContext.isActive()) {
+				Ui.get().update();
+			}
 		}
 	}
 

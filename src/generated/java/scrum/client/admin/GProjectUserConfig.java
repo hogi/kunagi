@@ -113,12 +113,28 @@ public abstract class GProjectUserConfig
         return equals(this.color, color);
     }
 
+    // --- selectedEntitysIds ---
+
+    private java.util.Set<java.lang.String> selectedEntitysIds = new java.util.HashSet<java.lang.String>();
+
+    public final java.util.Set<java.lang.String> getSelectedEntitysIds() {
+        return new java.util.HashSet<java.lang.String>(selectedEntitysIds);
+    }
+
+    public final void setSelectedEntitysIds(java.util.Set<java.lang.String> selectedEntitysIds) {
+        if (selectedEntitysIds == null) throw new IllegalArgumentException("null is not allowed");
+        if (this.selectedEntitysIds.equals(selectedEntitysIds)) return;
+        this.selectedEntitysIds = new java.util.HashSet<java.lang.String>(selectedEntitysIds);
+        propertyChanged("selectedEntitysIds", this.selectedEntitysIds);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
         userId = (String) props.get("userId");
         color  = (java.lang.String) props.get("color");
+        selectedEntitysIds  = (java.util.Set<java.lang.String>) props.get("selectedEntitysIds");
     }
 
     @Override
@@ -127,6 +143,7 @@ public abstract class GProjectUserConfig
         properties.put("projectId", this.projectId);
         properties.put("userId", this.userId);
         properties.put("color", this.color);
+        properties.put("selectedEntitysIds", this.selectedEntitysIds);
     }
 
 }

@@ -148,7 +148,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onLogin(WebSession session, String username, String password) {
-		session.reinitialize();
+		session.clearRemoteEntities();
 		User user = userDao.getUserByName(username);
 
 		if (user == null || user.matchesPassword(password) == false) {
@@ -187,6 +187,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	protected void onCloseProject(WebSession session) {
 		Project project = session.getProject();
+		session.clearUsersSelectedEntities();
+		session.clearRemoteEntities();
+
 		session.setProject(null);
 		if (project != null) webApplication.updateOnlineTeamMembers(project);
 	}

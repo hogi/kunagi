@@ -1,8 +1,16 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AAction;
+import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
+
+import java.util.Set;
+
+import scrum.client.ScrumGwtApplication;
+import scrum.client.admin.ProjectUserConfig;
+import scrum.client.admin.User;
+import scrum.client.context.ProjectContext;
 import scrum.client.dnd.BlockDndMarkerWidget;
 import scrum.client.dnd.DndManager;
 
@@ -151,6 +159,20 @@ public abstract class ABlockWidget<O> extends AWidget {
 	protected final void onUpdate() {
 		toolbar.clear();
 		menu = null;
+
+		User me = ScrumGwtApplication.get().getUser();
+		if (ProjectContext.isActive()) {
+			O o = getObject();
+			if (o instanceof AGwtEntity) {
+				Set<User> users = ScrumGwtApplication.get().getProject().getUsersSelecting(((AGwtEntity) o));
+				for (User user : users) {
+					if (user == me) continue;
+					UserOnBlockWidget userOnBlockWidget = new UserOnBlockWidget(user);
+					addToolbarItem(userOnBlockWidget);
+				}
+			}
+		}
+
 		onBlockUpdate();
 	}
 
@@ -220,7 +242,27 @@ public abstract class ABlockWidget<O> extends AWidget {
 			getBorderPanel().removeStyleName("ABlockWidget-block-selected");
 			setContent(null);
 		}
+
+		updateSelectedStatus();
+
 		update();
+	}
+
+	private void updateSelectedStatus() {
+		if (ProjectContext.isActive()) {
+			O o = getObject();
+			if (o instanceof AGwtEntity) {
+				String id = ((AGwtEntity) o).getId();
+				ProjectUserConfig projectConfig = ScrumGwtApplication.get().getUser().getProjectConfig();
+				Set<String> selectedEntitysIds = projectConfig.getSelectedEntitysIds();
+				if (extended) {
+					selectedEntitysIds.add(id);
+				} else {
+					selectedEntitysIds.remove(id);
+				}
+				projectConfig.setSelectedEntitysIds(selectedEntitysIds);
+			}
+		}
 	}
 
 	@Override
@@ -229,10 +271,14 @@ public abstract class ABlockWidget<O> extends AWidget {
 		if (getList().isDndSorting()) {
 			DndManager.get().registerDropTarget(this);
 		}
+		updateSelectedStatus();
 	}
 
 	@Override
 	protected void onUnload() {
+		if (extended) {
+			updateSelectedStatus();
+		}
 		DndManager.get().unregisterDropTarget(this);
 		super.onUnload();
 	}

@@ -40,6 +40,8 @@ public abstract class GProjectUserConfigDao
         usersCache = null;
         projectUserConfigsByColorCache.clear();
         colorsCache = null;
+        projectUserConfigsBySelectedEntitysIdCache.clear();
+        selectedEntitysIdsCache = null;
     }
 
     @Override
@@ -174,6 +176,46 @@ public abstract class GProjectUserConfigDao
 
         public boolean test(ProjectUserConfig e) {
             return e.isColor(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - selectedEntitysIds
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<ProjectUserConfig>> projectUserConfigsBySelectedEntitysIdCache = new Cache<java.lang.String,Set<ProjectUserConfig>>(
+            new Cache.Factory<java.lang.String,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(java.lang.String selectedEntitysId) {
+                    return getEntities(new ContainsSelectedEntitysId(selectedEntitysId));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsBySelectedEntitysId(java.lang.String selectedEntitysId) {
+        return projectUserConfigsBySelectedEntitysIdCache.get(selectedEntitysId);
+    }
+    private Set<java.lang.String> selectedEntitysIdsCache;
+
+    public final Set<java.lang.String> getSelectedEntitysIds() {
+        if (selectedEntitysIdsCache == null) {
+            selectedEntitysIdsCache = new HashSet<java.lang.String>();
+            for (ProjectUserConfig e : getEntities()) {
+                selectedEntitysIdsCache.addAll(e.getSelectedEntitysIds());
+            }
+        }
+        return selectedEntitysIdsCache;
+    }
+
+    private static class ContainsSelectedEntitysId implements Predicate<ProjectUserConfig> {
+
+        private java.lang.String value;
+
+        public ContainsSelectedEntitysId(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return e.containsSelectedEntitysId(value);
         }
 
     }

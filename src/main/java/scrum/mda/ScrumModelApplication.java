@@ -243,6 +243,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectUserConfigModel.addReference("project", getProjectModel()).setMaster(true);
 			projectUserConfigModel.addReference("user", getUserModel()).setMaster(true);
 			projectUserConfigModel.addProperty("color", String.class);
+			projectUserConfigModel.addSetProperty("selectedEntitysIds", String.class);
 		}
 		return projectUserConfigModel;
 	}
