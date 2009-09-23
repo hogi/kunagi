@@ -36,14 +36,15 @@ public class UsersStatusWidget extends AWidget {
 		if (project == null) return;
 		List<User> users = new ArrayList<User>(project.getParticipants());
 		Collections.sort(users, User.ONLINE_OFFLINE_COMPARATOR);
+		containerPanel.clear();
 		for (User user : users) {
 			if (user == ScrumGwtApplication.get().getUser()) continue;
 			UserStatusWidget widget = userWidgets.get(user);
 			if (widget == null) {
 				widget = new UserStatusWidget(user);
 				userWidgets.put(user, widget);
-				containerPanel.add(widget);
 			}
+			containerPanel.add(widget);
 			widget.update();
 		}
 	}
