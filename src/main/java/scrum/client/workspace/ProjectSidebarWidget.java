@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.collaboration.ChatWidget;
 import scrum.client.common.ScrumUtil;
 import scrum.client.communication.UsersStatusWidget;
+import scrum.client.context.ProjectContext;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -60,7 +61,7 @@ public class ProjectSidebarWidget extends AWidget {
 	}
 
 	public static ProjectSidebarWidget get() {
-		return Ui.get().getProjectSidebar();
+		return ProjectContext.get().getSidebar();
 	}
 
 }

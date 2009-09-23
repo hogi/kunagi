@@ -227,6 +227,10 @@ public class ProjectContext extends AContext {
 		return widgetsTester;
 	}
 
+	public static boolean isActive() {
+		return singleton != null;
+	}
+
 	public static ProjectContext get() {
 		assert singleton != null;
 		return singleton;

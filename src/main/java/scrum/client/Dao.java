@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import scrum.client.collaboration.ChatMessage;
-import scrum.client.communication.UsersStatusWidget;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
@@ -55,7 +54,6 @@ public class Dao extends GDao {
 		}
 		if (entity instanceof Project) {
 			Project project = (Project) entity;
-			UsersStatusWidget.get().update();
 		}
 	}
 

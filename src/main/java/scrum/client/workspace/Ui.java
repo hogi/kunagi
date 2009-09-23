@@ -29,7 +29,6 @@ public class Ui extends AWidget {
 	private LockWidget locker;
 	private WaitWidget wait;
 	private SwitcherWidget sidebar;
-	private ProjectSidebarWidget projectSidebar;
 	private SwitcherWidget workarea;
 
 	@Override
@@ -87,11 +86,6 @@ public class Ui extends AWidget {
 
 	public void showConfiguration() {
 		workarea.show(ProjectContext.get().getUserconfig());
-	}
-
-	public ProjectSidebarWidget getProjectSidebar() {
-		if (projectSidebar == null) projectSidebar = new ProjectSidebarWidget();
-		return projectSidebar;
 	}
 
 	public void showError(String message) {

@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ChatMessage;
 import scrum.client.collaboration.ChatWidget;
+import scrum.client.communication.UsersStatusWidget;
 import scrum.client.context.ProjectContext;
 import scrum.client.dnd.DndManager;
 import scrum.client.project.Project;
@@ -63,7 +64,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		if (dto.onlineTeamMembersIds != null) {
 			GwtLogger.DEBUG("onlineTeamMembersIds:", dto.onlineTeamMembersIds);
 			project.setOnlineTeamMembersIds(dto.onlineTeamMembersIds);
-			getUi().getProjectSidebar().getUsersStatus().update();
+			if (ProjectContext.isActive()) UsersStatusWidget.get().update();
 		}
 
 		if (dto.entityIdBase != null) {
