@@ -5,7 +5,7 @@ import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.admin.ProjectUserConfigWidget;
+import scrum.client.admin.UserConfigWidget;
 import scrum.client.img.Img;
 import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
@@ -24,9 +24,9 @@ import scrum.client.sprint.Task;
 import scrum.client.tasks.TaskOverviewWidget;
 import scrum.client.tasks.WhiteboardWidget;
 import scrum.client.test.WidgetsTesterWidget;
+import scrum.client.workspace.PasswordChangeWidget;
 import scrum.client.workspace.ProjectSidebarWidget;
 import scrum.client.workspace.Ui;
-import scrum.client.workspace.UserConfigWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -47,8 +47,8 @@ public class ProjectContext extends AContext {
 	private IssueListWidget issueList;
 	private RiskListWidget riskList;
 	private WidgetsTesterWidget widgetsTester;
-	private UserConfigWidget userconfig;
-	private ProjectUserConfigWidget projectUserConfig;
+	private PasswordChangeWidget userconfig;
+	private UserConfigWidget projectUserConfig;
 
 	public ProjectContext() {
 		assert singleton == null;
@@ -65,8 +65,8 @@ public class ProjectContext extends AContext {
 		issueList = new IssueListWidget();
 		riskList = new RiskListWidget();
 		widgetsTester = new WidgetsTesterWidget();
-		userconfig = new UserConfigWidget();
-		projectUserConfig = new ProjectUserConfigWidget();
+		userconfig = new PasswordChangeWidget();
+		projectUserConfig = new UserConfigWidget();
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
 		navigator.addItem(Img.bundle.project16(), "Project Overview", getProjectOverview());
@@ -79,11 +79,11 @@ public class ProjectContext extends AContext {
 		navigator.addItem(Img.bundle.issue16(), "Issue List", getIssueList());
 		navigator.addItem(Img.bundle.risk16(), "Risk Management", getRiskList());
 		navigator.addItem(Img.bundle.sprint16(), "Next Sprint", getNextSprint());
-		navigator.addItem(Img.bundle.test16(), "Config", getProjectUserConfig());
+		navigator.addItem(Img.bundle.test16(), "Personal Preferences", getProjectUserConfig());
 		navigator.addItem(Img.bundle.test16(), "WidgetsTester", getWidgetsTester());
 	}
 
-	public ProjectUserConfigWidget getProjectUserConfig() {
+	public UserConfigWidget getProjectUserConfig() {
 		return projectUserConfig;
 	}
 
@@ -223,7 +223,7 @@ public class ProjectContext extends AContext {
 		return taskOverview;
 	}
 
-	public UserConfigWidget getUserconfig() {
+	public PasswordChangeWidget getUserconfig() {
 		return userconfig;
 	}
 

@@ -11,7 +11,7 @@ import scrum.client.common.FieldsWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class UserConfigWidget extends AWidget {
+public class PasswordChangeWidget extends AWidget {
 
 	private AWidget prevWidget;
 
