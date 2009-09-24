@@ -129,6 +129,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			if (properties.containsKey("description") || properties.containsKey("testDescription")
 					|| properties.containsKey("estimatedWork") || properties.containsKey("qualitysIds")) {
 				requirement.setDirty(true);
+				session.sendToClient(requirement);
 			}
 			requirement.getProject().getCurrentSprintSnapshot().update();
 		}

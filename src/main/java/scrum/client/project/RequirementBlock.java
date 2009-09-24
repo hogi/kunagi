@@ -1,12 +1,10 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.ADropdownViewEditWidget;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
 import ilarkesto.gwt.client.GwtLogger;
-import scrum.client.ClientConstants;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
@@ -141,26 +139,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 		});
 
-		fields.add("Estimated Work", new ADropdownViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(requirement.getEstimatedWorkAsString());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setOptions(ClientConstants.EFFORT_ROW);
-				Integer work = requirement.getEstimatedWork();
-				setSelectedOption(work == null ? "" : work.toString());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				String value = getSelectedOption();
-				requirement.setEstimatedWork(value.length() == 0 ? null : Integer.parseInt(value));
-			}
-		});
+		fields.add("Estimated Work", new RequirementEstimatedWorkWidget(requirement));
 
 		fields.add("Sprint", new ATextWidget() {
 

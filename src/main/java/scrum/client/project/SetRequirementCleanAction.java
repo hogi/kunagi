@@ -1,6 +1,5 @@
 package scrum.client.project;
 
-
 public class SetRequirementCleanAction extends GSetRequirementCleanAction {
 
 	protected SetRequirementCleanAction(Requirement requirement) {
@@ -9,7 +8,7 @@ public class SetRequirementCleanAction extends GSetRequirementCleanAction {
 
 	@Override
 	public String getLabel() {
-		return "Set clean";
+		return "Confirm Estimation";
 	}
 
 	@Override
@@ -20,6 +19,8 @@ public class SetRequirementCleanAction extends GSetRequirementCleanAction {
 	@Override
 	public boolean isExecutable() {
 		if (!requirement.isDirty()) return false;
+		if (requirement.getEstimatedWork() == null) return false;
+		if (requirement.isInCurrentSprint()) return false;
 		return true;
 	}
 

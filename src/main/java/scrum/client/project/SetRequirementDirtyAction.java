@@ -1,6 +1,5 @@
 package scrum.client.project;
 
-
 public class SetRequirementDirtyAction extends GSetRequirementDirtyAction {
 
 	protected SetRequirementDirtyAction(Requirement requirement) {
@@ -9,7 +8,7 @@ public class SetRequirementDirtyAction extends GSetRequirementDirtyAction {
 
 	@Override
 	public String getLabel() {
-		return "Set dirty";
+		return "Request Re-Estimation";
 	}
 
 	@Override
@@ -20,6 +19,7 @@ public class SetRequirementDirtyAction extends GSetRequirementDirtyAction {
 	@Override
 	public boolean isExecutable() {
 		if (requirement.isDirty()) return false;
+		if (requirement.isInCurrentSprint()) return false;
 		return true;
 	}
 
