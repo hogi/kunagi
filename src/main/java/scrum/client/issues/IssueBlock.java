@@ -1,5 +1,6 @@
 package scrum.client.issues;
 
+import ilarkesto.gwt.client.ADropdownViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import scrum.client.common.AExtensibleBlockWidget;
@@ -30,8 +31,10 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 
 	@Override
 	protected void onUpdateHead() {
-		setBlockTitle(issue.getLabel());
+		setBlockTitle("[" + issue.getTypeLabel() + "] " + issue.getLabel());
 		setIcon(Img.bundle.issue16());
+		addMenuAction(new ConvertIssueToRequirementAction(issue));
+		addMenuAction(new ConvertIssueToQualityAction(issue));
 		addMenuAction(new DeleteIssueAction(issue));
 	}
 
@@ -73,6 +76,24 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 			@Override
 			protected void onEditorSubmit() {
 				issue.setDescription(getEditorText());
+			}
+		});
+		fields.add("Type", new ADropdownViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerText(issue.getTypeLabel());
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setOptions(Issue.TYPES);
+				setSelectedOption(issue.getType());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				issue.setType(getSelectedOption());
 			}
 		});
 	}

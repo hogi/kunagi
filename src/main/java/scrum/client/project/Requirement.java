@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumGwtApplication;
+import scrum.client.issues.Issue;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
 
@@ -16,6 +17,12 @@ public class Requirement extends GRequirement {
 		setProject(project);
 		setLabel(INIT_LABEL);
 		setDirty(true);
+	}
+
+	public Requirement(Issue issue) {
+		setProject(issue.getProject());
+		setLabel(issue.getLabel());
+		setDescription(issue.getDescription());
 	}
 
 	public Requirement(Map data) {

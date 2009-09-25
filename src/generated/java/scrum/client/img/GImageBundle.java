@@ -40,9 +40,6 @@ public interface GImageBundle
     @Resource(value="impedimentSolved32.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype impedimentSolved32();
 
-    @Resource(value="issue16.png")
-    com.google.gwt.user.client.ui.AbstractImagePrototype issue16();
-
     @Resource(value="minus16.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype minus16();
 
@@ -99,5 +96,8 @@ public interface GImageBundle
 
     @Resource(value="user32.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype user32();
+
+    @Resource(value="issue16.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype issue16();
 
 }

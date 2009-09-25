@@ -238,6 +238,16 @@ public class Project extends GProject {
 		riskDao.createTestRisk(this, 7);
 	}
 
+	public void addTestIssues(int variant) {
+		if (variant == 0) return;
+
+		issueDao.createTestIssue(this, 1);
+		issueDao.createTestIssue(this, 2);
+		issueDao.createTestIssue(this, 3);
+		issueDao.createTestIssue(this, 4);
+		issueDao.createTestIssue(this, 5);
+	}
+
 	public void addTestRequirements(int variant) {
 		if (variant == 0) return;
 

@@ -29,7 +29,7 @@ public class RequirementDao extends GRequirementDao {
 
 		Requirement requirement = newEntityInstance();
 		requirement.setProject(project);
-		requirement.setLabel("Requirement " + variant);
+		requirement.setLabel("Requirement " + (('A') + variant - 1));
 		requirement.setEstimatedWork(estimatedWork);
 		saveEntity(requirement);
 
@@ -39,5 +39,4 @@ public class RequirementDao extends GRequirementDao {
 
 		requirement.addTestTasks(variant);
 	}
-
 }

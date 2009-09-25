@@ -1,6 +1,7 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AAction;
+import scrum.client.Dao;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.project.Project;
@@ -14,6 +15,10 @@ public abstract class AScrumAction extends AAction {
 	}
 
 	// --- helper ---
+
+	protected Dao getDao() {
+		return ScrumGwtApplication.get().getDao();
+	}
 
 	protected Project getProject() {
 		return ScrumGwtApplication.get().getProject();

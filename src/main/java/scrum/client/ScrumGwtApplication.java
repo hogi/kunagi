@@ -12,6 +12,7 @@ import scrum.client.collaboration.ChatMessage;
 import scrum.client.collaboration.ChatWidget;
 import scrum.client.communication.UsersStatusWidget;
 import scrum.client.context.ProjectContext;
+import scrum.client.context.StartContext;
 import scrum.client.dnd.DndManager;
 import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
@@ -219,6 +220,8 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		closeProject();
 		ScrumGwtApplication.get().callLogout();
 		user = null;
+		StartContext.destroy();
+		ProjectContext.destroy();
 		getDao().clearAllEntities();
 		Ui.get().activateLoginView();
 	}

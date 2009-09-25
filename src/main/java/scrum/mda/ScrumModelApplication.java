@@ -261,6 +261,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addProperty("description", String.class).setSearchable(true);
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("DeleteIssue");
+			issueModel.addAction("ConvertIssueToRequirement");
+			issueModel.addAction("ConvertIssueToQuality");
 		}
 		return issueModel;
 	}
