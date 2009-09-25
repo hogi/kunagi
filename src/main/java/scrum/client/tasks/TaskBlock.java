@@ -134,34 +134,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 			}
 		});
 
-		fields.add("Remaining Work", new AIntegerViewEditWidget() {
-
-			@Override
-			protected void onIntegerViewerUpdate() {
-				setViewerValue(task.getRemainingWork(), "hours");
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorValue(task.getRemainingWork());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				task.setRemainingWork(getEditorValue(1));
-			}
-
-			@Override
-			protected void onMinusClicked() {
-				task.decrementRemainingWork();
-			}
-
-			@Override
-			protected void onPlusClicked() {
-				task.incrementRemainingWork();
-			}
-
-		});
+		fields.add("Remaining Work", new TaskRemainingWorkWidget(task));
 	}
 
 	@Override

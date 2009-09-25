@@ -11,6 +11,7 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
+import scrum.client.tasks.TaskRemainingWorkWidget;
 
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -106,34 +107,7 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 			}
 		});
 
-		fields.add("Remaining Work", new AIntegerViewEditWidget() {
-
-			@Override
-			protected void onIntegerViewerUpdate() {
-				setViewerValue(task.getRemainingWork(), "hours");
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorValue(task.getRemainingWork());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				task.setRemainingWork(getEditorValue(1));
-			}
-
-			@Override
-			protected void onMinusClicked() {
-				task.decrementRemainingWork();
-			}
-
-			@Override
-			protected void onPlusClicked() {
-				task.incrementRemainingWork();
-			}
-
-		});
+		fields.add("Remaining Work", new TaskRemainingWorkWidget(task));
 
 		fields.add("Note", new ARichtextViewEditWidget() {
 
