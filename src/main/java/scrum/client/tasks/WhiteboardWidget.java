@@ -10,9 +10,11 @@ import java.util.Map;
 
 import scrum.client.GenericPredicate;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.admin.User;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.common.BlockListWidget;
 import scrum.client.context.ProjectContext;
+import scrum.client.context.UserHighlightSupport;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
@@ -23,7 +25,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
+public class WhiteboardWidget extends AWidget implements TaskBlockContainer, UserHighlightSupport {
 
 	private VerticalPanel panel;
 	private Grid grid;
@@ -60,11 +62,7 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 		grid.setCellPadding(0);
 		grid.setCellSpacing(0);
 
-		panel = new VerticalPanel();
-		panel.setWidth("100%");
-		panel.add(new UserHoverPanel(this).update());
-		panel.add(grid);
-		return panel;
+		return grid;
 	}
 
 	@Override
@@ -163,6 +161,10 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 		}
 	}
 
+	public void highlightUser(User user) {
+		setTaskHighlighting(user == null ? null : new ByUserPredicate(user));
+	}
+
 	public void setTaskHighlighting(GenericPredicate<Task> predicate) {
 		this.predicate = predicate;
 		updateHighlighting();
@@ -198,5 +200,18 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer {
 		if (i == null || i == 0) return "nothing";
 		if (i == 1) return "1 hour";
 		return i + " hours";
+	}
+
+	private class ByUserPredicate implements GenericPredicate<Task> {
+
+		private final User user;
+
+		public ByUserPredicate(User user) {
+			this.user = user;
+		}
+
+		public boolean contains(Task element) {
+			return element.getOwner() != null && element.getOwner().equals(user);
+		}
 	}
 }

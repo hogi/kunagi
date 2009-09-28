@@ -6,7 +6,7 @@ import scrum.client.project.Project;
 
 public class Issue extends GIssue {
 
-	public static final String[] TYPES = new String[] { "issue", "bug", "requirement", "quality" };
+	public static final String[] TYPES = new String[] { "issue", "bug", "requirement", "quality", "idea" };
 	public static final String INIT_TYPE = TYPES[0];
 
 	public static final String INIT_LABEL = "New Issue";

@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.admin.User;
 import scrum.client.admin.UserConfigWidget;
 import scrum.client.img.Img;
 import scrum.client.impediments.Impediment;
@@ -50,6 +51,8 @@ public class ProjectContext extends AContext {
 	private PasswordChangeWidget userconfig;
 	private UserConfigWidget projectUserConfig;
 
+	private User highlightedUser;
+
 	public ProjectContext() {
 		assert singleton == null;
 		singleton = this;
@@ -81,6 +84,15 @@ public class ProjectContext extends AContext {
 		navigator.addItem(Img.bundle.sprint16(), "Next Sprint", getNextSprint());
 		navigator.addItem(Img.bundle.test16(), "Personal Preferences", getProjectUserConfig());
 		navigator.addItem(Img.bundle.test16(), "WidgetsTester", getWidgetsTester());
+	}
+
+	public void highlightUser(User user) {
+		if (highlightedUser == user) return;
+		Widget currentWidget = Ui.get().getWorkarea().getCurrentWidget();
+		if (currentWidget instanceof UserHighlightSupport) {
+			((UserHighlightSupport) currentWidget).highlightUser(user);
+		}
+		highlightedUser = user;
 	}
 
 	public UserConfigWidget getProjectUserConfig() {
