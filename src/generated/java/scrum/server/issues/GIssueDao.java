@@ -38,6 +38,8 @@ public abstract class GIssueDao
         projectsCache = null;
         issuesByTypeCache.clear();
         typesCache = null;
+        issuesByDateCache.clear();
+        datesCache = null;
         issuesByLabelCache.clear();
         labelsCache = null;
         issuesByDescriptionCache.clear();
@@ -136,6 +138,46 @@ public abstract class GIssueDao
 
         public boolean test(Issue e) {
             return e.isType(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - date
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.Date,Set<Issue>> issuesByDateCache = new Cache<ilarkesto.base.time.Date,Set<Issue>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<Issue>>() {
+                public Set<Issue> create(ilarkesto.base.time.Date date) {
+                    return getEntities(new IsDate(date));
+                }
+            });
+
+    public final Set<Issue> getIssuesByDate(ilarkesto.base.time.Date date) {
+        return issuesByDateCache.get(date);
+    }
+    private Set<ilarkesto.base.time.Date> datesCache;
+
+    public final Set<ilarkesto.base.time.Date> getDates() {
+        if (datesCache == null) {
+            datesCache = new HashSet<ilarkesto.base.time.Date>();
+            for (Issue e : getEntities()) {
+                if (e.isDateSet()) datesCache.add(e.getDate());
+            }
+        }
+        return datesCache;
+    }
+
+    private static class IsDate implements Predicate<Issue> {
+
+        private ilarkesto.base.time.Date value;
+
+        public IsDate(ilarkesto.base.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isDate(value);
         }
 
     }

@@ -88,6 +88,25 @@ public abstract class GIssue
         return equals(this.type, type);
     }
 
+    // --- date ---
+
+    private ilarkesto.gwt.client.Date date ;
+
+    public final ilarkesto.gwt.client.Date getDate() {
+        return this.date ;
+    }
+
+    public final Issue setDate(ilarkesto.gwt.client.Date date) {
+        if (isDate(date)) return (Issue)this;
+        this.date = date ;
+        propertyChanged("date", this.date);
+        return (Issue)this;
+    }
+
+    public final boolean isDate(ilarkesto.gwt.client.Date date) {
+        return equals(this.date, date);
+    }
+
     // --- label ---
 
     private java.lang.String label ;
@@ -131,6 +150,8 @@ public abstract class GIssue
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
         type  = (java.lang.String) props.get("type");
+        String dateAsString = (String) props.get("date");
+        date  =  dateAsString == null ? null : new ilarkesto.gwt.client.Date(dateAsString);
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
     }
@@ -140,6 +161,7 @@ public abstract class GIssue
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("type", this.type);
+        properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("label", this.label);
         properties.put("description", this.description);
     }

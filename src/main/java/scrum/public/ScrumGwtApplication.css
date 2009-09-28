@@ -161,6 +161,6 @@ a {cursor: pointer;}
 .highlighted .ABlockWidget-title {padding: 1px; width: 100%; background: #FFC5CE; }
 
 /***** other *****/
-.WaitWidget {margin: 50px 200px; border: 1px solid #DEE5FD;}
+.WaitWidget {margin: 50px 200px; border: 1px solid #DEE5FD; font-size: 14px;}
 .LoginWidget {widht: 300px; margin: 50px 300px 10px 100px; border: 1px solid #DEE5FD; background: white;}
 

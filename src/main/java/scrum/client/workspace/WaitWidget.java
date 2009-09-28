@@ -1,9 +1,9 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.common.GroupWidget;
-import scrum.client.common.ScrumUtil;
 
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -14,7 +14,13 @@ public class WaitWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		message = new Label();
-		return ScrumUtil.createDiv("WaitWidget", new GroupWidget("Please wait...", message));
+		HorizontalPanel panel = new HorizontalPanel();
+		panel.setStyleName("WaitWidget");
+		panel.setSpacing(10);
+		panel.add(new Image("spinner.gif"));
+		panel.add(message);
+		panel.setCellVerticalAlignment(message, HorizontalPanel.ALIGN_MIDDLE);
+		return panel;
 	}
 
 	public void setMessage(String text) {

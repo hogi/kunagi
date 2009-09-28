@@ -38,6 +38,7 @@ public abstract class GIssue
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("type", this.type);
+        properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("label", this.label);
         properties.put("description", this.description);
     }
@@ -145,6 +146,41 @@ public abstract class GIssue
     }
 
     // -----------------------------------------------------------
+    // - date
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date date;
+
+    public final ilarkesto.base.time.Date getDate() {
+        return date;
+    }
+
+    public final void setDate(ilarkesto.base.time.Date date) {
+        date = prepareDate(date);
+        if (isDate(date)) return;
+        this.date = date;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
+        return date;
+    }
+
+    public final boolean isDateSet() {
+        return this.date != null;
+    }
+
+    public final boolean isDate(ilarkesto.base.time.Date date) {
+        if (this.date == null && date == null) return true;
+        return this.date != null && this.date.equals(date);
+    }
+
+    protected final void updateDate(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setDate((ilarkesto.base.time.Date)value);
+    }
+
+    // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
 
@@ -221,6 +257,7 @@ public abstract class GIssue
             Object value = entry.getValue();
             if (property.equals("projectId")) updateProject(value);
             if (property.equals("type")) updateType(value);
+            if (property.equals("date")) updateDate(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("description")) updateDescription(value);
         }
