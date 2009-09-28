@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.ConfigureAction;
 import scrum.client.admin.LogoutAction;
+import scrum.client.context.ProjectContext;
 import scrum.client.project.ChangeProjectAction;
 
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -54,7 +55,14 @@ public class HeaderWidget extends AWidget {
 	protected void onUpdate() {
 		boolean loggedIn = ScrumGwtApplication.get().getUser() != null;
 
-		currentUserLabel.setText(loggedIn ? ScrumGwtApplication.get().getUser().getName() : "");
+		String text = "";
+		if (loggedIn) {
+			text = ScrumGwtApplication.get().getUser().getName();
+			if (ProjectContext.isActive()) {
+				text = text + " @ " + ScrumGwtApplication.get().getProject().getLabel();
+			}
+		}
+		currentUserLabel.setText(text);
 
 		controlPanel.remove(toolbar);
 		toolbar = new ToolbarWidget(true);
