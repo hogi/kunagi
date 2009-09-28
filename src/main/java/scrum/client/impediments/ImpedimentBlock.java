@@ -2,7 +2,6 @@ package scrum.client.impediments;
 
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
@@ -13,15 +12,12 @@ import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 
 public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implements TrashSupport, ClipboardSupport {
 
 	private Impediment impediment;
 
 	private FieldsWidget fields;
-	private Label summary;
-	private ToolbarWidget toolbar;
 
 	@Override
 	protected Impediment getObject() {
@@ -34,13 +30,11 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	}
 
 	@Override
-	protected void onCollapsedInitialization() {
-		summary = new Label();
-	}
+	protected void onCollapsedInitialization() {}
 
 	@Override
 	protected void onUpdateHead() {
-		setBlockTitle(impediment.getLabel());
+		setBlockTitle("[" + impediment.getDate() + "] " + impediment.getLabel());
 		setIcon(Img.bundle.impediment16());
 		addMenuAction(new DeleteImpedimentAction(impediment));
 	}
@@ -133,4 +127,5 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 			return new ImpedimentBlock();
 		}
 	};
+
 }

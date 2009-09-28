@@ -20,7 +20,7 @@ public class ImpedimentListWidget extends AWidget {
 		ScrumGwtApplication.get().callRequestImpediments();
 
 		list = new BlockListWidget<Impediment>(ImpedimentBlock.FACTORY);
-		list.setDndSorting(false);
+		list.setAutoSorter(Impediment.REVERSE_DATE_COMPARATOR);
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 		toolbar.addButton(new CreateImpedimentAction());

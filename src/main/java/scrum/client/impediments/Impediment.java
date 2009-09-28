@@ -2,6 +2,7 @@ package scrum.client.impediments;
 
 import ilarkesto.gwt.client.Date;
 
+import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.project.Project;
@@ -12,6 +13,7 @@ public class Impediment extends GImpediment {
 
 	public Impediment(Project project) {
 		setLabel(INIT_LABEL);
+		setDate(Date.today());
 		setProject(project);
 	}
 
@@ -37,4 +39,18 @@ public class Impediment extends GImpediment {
 	public String toString() {
 		return getLabel();
 	}
+
+	public static Comparator<Impediment> DATE_COMPARATOR = new Comparator<Impediment>() {
+
+		public int compare(Impediment a, Impediment b) {
+			return a.getDate().compareTo(b.getDate());
+		}
+	};
+
+	public static Comparator<Impediment> REVERSE_DATE_COMPARATOR = new Comparator<Impediment>() {
+
+		public int compare(Impediment a, Impediment b) {
+			return DATE_COMPARATOR.compare(b, a);
+		}
+	};
 }

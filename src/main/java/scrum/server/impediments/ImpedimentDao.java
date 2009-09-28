@@ -1,5 +1,6 @@
 package scrum.server.impediments;
 
+import ilarkesto.base.time.Date;
 import scrum.server.project.Project;
 
 public class ImpedimentDao extends GImpedimentDao {
@@ -14,10 +15,11 @@ public class ImpedimentDao extends GImpedimentDao {
 	// --- test data ---
 
 	public void createTestImpediment(Project project, int variant) {
-		Impediment impediment1 = newEntityInstance();
-		impediment1.setProject(project);
-		impediment1.setLabel("Impediment " + variant);
-		saveEntity(impediment1);
+		Impediment im = newEntityInstance();
+		im.setProject(project);
+		im.setLabel("Impediment " + variant);
+		im.setDate(Date.beforeDays(variant * 5));
+		saveEntity(im);
 	}
 
 }

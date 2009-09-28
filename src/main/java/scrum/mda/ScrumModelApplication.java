@@ -184,8 +184,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(impedimentModel);
 			impedimentModel.setGwtSupport(true);
 			impedimentModel.addReference("project", getProjectModel()).setMaster(true);
-			impedimentModel.addProperty("label", String.class);
-			impedimentModel.addProperty("date", Date.class);
+			impedimentModel.addProperty("label", String.class).setMandatory(true);
+			impedimentModel.addProperty("date", Date.class).setMandatory(true);
 			impedimentModel.addProperty("description", String.class);
 			impedimentModel.addProperty("solution", String.class);
 			impedimentModel.addProperty("solveDate", Date.class);
@@ -256,8 +256,9 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(issueModel);
 			issueModel.setGwtSupport(true);
 			issueModel.addReference("project", getProjectModel()).setMaster(true);
-			issueModel.addProperty("type", String.class);
-			issueModel.addProperty("label", String.class).setSearchable(true);
+			issueModel.addProperty("type", String.class).setMandatory(true);
+			issueModel.addProperty("date", Date.class);
+			issueModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);
 			issueModel.addProperty("description", String.class).setSearchable(true);
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("DeleteIssue");
