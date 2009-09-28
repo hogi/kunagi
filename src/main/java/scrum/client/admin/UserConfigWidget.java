@@ -80,6 +80,7 @@ public class UserConfigWidget extends AWidget {
 				user.setEmail(getEditorText());
 			}
 		});
+		globalFields.add("Password", new PasswordChangeWidget());
 
 		// ---
 

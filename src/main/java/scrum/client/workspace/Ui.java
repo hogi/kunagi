@@ -84,10 +84,6 @@ public class Ui extends AWidget {
 		locker.unlock();
 	}
 
-	public void showConfiguration() {
-		workarea.show(ProjectContext.get().getUserconfig());
-	}
-
 	public void showError(String message) {
 		final DialogBox db = new DialogBox();
 		db.setSize("200", "150");

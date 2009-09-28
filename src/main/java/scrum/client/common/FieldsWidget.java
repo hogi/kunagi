@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class FieldsWidget extends AWidget {
 
 	private Grid grid;
-	private List<AWidget> widgets = new ArrayList<AWidget>();
+	private List<Widget> widgets = new ArrayList<Widget>();
 
 	private AWidget autoUpdateWidget;
 
@@ -31,12 +31,12 @@ public class FieldsWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		for (AWidget widget : widgets) {
-			widget.update();
+		for (Widget widget : widgets) {
+			AWidget.update(widget);
 		}
 	}
 
-	public <W extends AWidget> W add(String label, W value) {
+	public <W extends Widget> W add(String label, W value) {
 		widgets.add(value);
 		if (autoUpdateWidget != null && value instanceof AViewEditWidget) {
 			((AViewEditWidget) value).setAutoUpdateWidget(autoUpdateWidget);
@@ -53,6 +53,7 @@ public class FieldsWidget extends AWidget {
 	 * @param value Value widget of the field (right).
 	 */
 	public <W extends Widget> W addWidget(String label, W value) {
+		assert value != null;
 		initialize();
 
 		if (label == null) label = "";

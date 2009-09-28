@@ -3,7 +3,6 @@ package scrum.client.workspace;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.admin.ConfigureAction;
 import scrum.client.admin.LogoutAction;
 import scrum.client.context.ProjectContext;
 import scrum.client.project.ChangeProjectAction;
@@ -67,7 +66,6 @@ public class HeaderWidget extends AWidget {
 		controlPanel.remove(toolbar);
 		toolbar = new ToolbarWidget(true);
 		toolbar.addButton(new ChangeProjectAction());
-		toolbar.addButton(new ConfigureAction());
 		toolbar.addButton(new LogoutAction());
 		toolbar.update();
 		controlPanel.add(toolbar);

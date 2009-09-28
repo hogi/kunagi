@@ -25,7 +25,6 @@ import scrum.client.sprint.Task;
 import scrum.client.tasks.TaskOverviewWidget;
 import scrum.client.tasks.WhiteboardWidget;
 import scrum.client.test.WidgetsTesterWidget;
-import scrum.client.workspace.PasswordChangeWidget;
 import scrum.client.workspace.ProjectSidebarWidget;
 import scrum.client.workspace.Ui;
 
@@ -48,7 +47,6 @@ public class ProjectContext extends AContext {
 	private IssueListWidget issueList;
 	private RiskListWidget riskList;
 	private WidgetsTesterWidget widgetsTester;
-	private PasswordChangeWidget userconfig;
 	private UserConfigWidget projectUserConfig;
 
 	private User highlightedUser;
@@ -68,7 +66,6 @@ public class ProjectContext extends AContext {
 		issueList = new IssueListWidget();
 		riskList = new RiskListWidget();
 		widgetsTester = new WidgetsTesterWidget();
-		userconfig = new PasswordChangeWidget();
 		projectUserConfig = new UserConfigWidget();
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
@@ -233,10 +230,6 @@ public class ProjectContext extends AContext {
 
 	public TaskOverviewWidget getTaskOverview() {
 		return taskOverview;
-	}
-
-	public PasswordChangeWidget getUserconfig() {
-		return userconfig;
 	}
 
 	public WhiteboardWidget getWhiteboard() {
