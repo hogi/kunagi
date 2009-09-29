@@ -1,16 +1,21 @@
 package scrum.client.context;
 
-import scrum.client.workspace.StartPageWidget;
+import ilarkesto.gwt.client.SwitchingNavigatorWidget;
+import scrum.client.ScrumGwtApplication;
+import scrum.client.admin.ProjectSelectorWidget;
+import scrum.client.admin.UserListWidget;
+import scrum.client.workspace.Ui;
 
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
 public class StartContext extends AContext {
 
 	private static StartContext singleton;
 
-	private Label sidebar = new Label("");
-	private StartPageWidget startPage = new StartPageWidget();
+	private SwitchingNavigatorWidget navigator;
+	private ProjectSelectorWidget projectSelector;
+	private UserListWidget userList;
 
 	public StartContext() {
 		singleton = this;
@@ -18,16 +23,24 @@ public class StartContext extends AContext {
 
 	@Override
 	public Widget getSidebarWidget() {
-		return sidebar;
+		projectSelector = new ProjectSelectorWidget();
+		userList = new UserListWidget();
+
+		navigator = new SwitchingNavigatorWidget(Ui.get().getWorkarea());
+		navigator.addItem((Image) null, "Projects", projectSelector);
+		if (ScrumGwtApplication.get().getUser().isAdmin())
+			navigator.addItem((Image) null, "User Management", userList);
+
+		return navigator;
 	}
 
 	@Override
 	public Widget getWorkareaWidget() {
-		return startPage;
+		return projectSelector;
 	}
 
-	public StartPageWidget getStartPage() {
-		return startPage;
+	public UserListWidget getUserList() {
+		return userList;
 	}
 
 	public static StartContext get() {

@@ -5,7 +5,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
-import scrum.client.workspace.StartPageWidget;
+import scrum.client.context.StartContext;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -42,7 +42,7 @@ public class UserListWidget extends AWidget {
 	}
 
 	public static UserListWidget get() {
-		return StartPageWidget.get().getUserList();
+		return StartContext.get().getUserList();
 	}
 
 }
