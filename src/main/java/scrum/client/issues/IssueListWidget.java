@@ -20,7 +20,7 @@ public class IssueListWidget extends AWidget {
 		ScrumGwtApplication.get().callRequestIssues();
 
 		list = new BlockListWidget<Issue>(IssueBlock.FACTORY);
-		list.setDndSorting(false);
+		list.setAutoSorter(Issue.REVERSE_DATE_COMPARATOR);
 
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 		toolbar.addButton(new CreateIssueAction());

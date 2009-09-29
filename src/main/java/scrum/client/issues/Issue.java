@@ -1,5 +1,8 @@
 package scrum.client.issues;
 
+import ilarkesto.gwt.client.Date;
+
+import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.project.Project;
@@ -15,6 +18,7 @@ public class Issue extends GIssue {
 		setLabel(INIT_LABEL);
 		setType(INIT_TYPE);
 		setProject(project);
+		setDate(Date.today());
 	}
 
 	public String getTypeLabel() {
@@ -38,4 +42,17 @@ public class Issue extends GIssue {
 		return "[" + getType() + "] " + getLabel();
 	}
 
+	public static Comparator<Issue> DATE_COMPARATOR = new Comparator<Issue>() {
+
+		public int compare(Issue a, Issue b) {
+			return a.getDate().compareTo(b.getDate());
+		}
+	};
+
+	public static Comparator<Issue> REVERSE_DATE_COMPARATOR = new Comparator<Issue>() {
+
+		public int compare(Issue a, Issue b) {
+			return DATE_COMPARATOR.compare(b, a);
+		}
+	};
 }

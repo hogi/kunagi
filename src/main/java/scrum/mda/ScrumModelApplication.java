@@ -257,7 +257,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.setGwtSupport(true);
 			issueModel.addReference("project", getProjectModel()).setMaster(true);
 			issueModel.addProperty("type", String.class).setMandatory(true);
-			issueModel.addProperty("date", Date.class);
+			issueModel.addProperty("date", Date.class).setMandatory(true);
 			issueModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);
 			issueModel.addProperty("description", String.class).setSearchable(true);
 			getApplicationModel().addCreateAction(issueModel);
