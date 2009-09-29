@@ -26,8 +26,10 @@ public class LoginWidget extends AWidget implements LoginDataProvider {
 	@Override
 	protected Widget onInitialization() {
 		username = new TextBox();
+		username.setWidth("150px");
 		username.addKeyPressHandler(new InputKeyHandler());
 		password = new PasswordTextBox();
+		password.setWidth("150px");
 		password.addKeyPressHandler(new InputKeyHandler());
 
 		if (ScrumGwtApplication.get().isDevelopmentMode()) {

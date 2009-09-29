@@ -13,11 +13,17 @@ public class WaitWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		Label spacer = new Label();
 		message = new Label();
+		Image spinner = new Image("spinner.gif");
 		HorizontalPanel panel = new HorizontalPanel();
 		panel.setStyleName("WaitWidget");
+		panel.setWidth("100%");
 		panel.setSpacing(10);
-		panel.add(new Image("spinner.gif"));
+		panel.add(spacer);
+		panel.setCellWidth(spacer, "200px");
+		panel.add(spinner);
+		panel.setCellWidth(spinner, "36px");
 		panel.add(message);
 		panel.setCellVerticalAlignment(message, HorizontalPanel.ALIGN_MIDDLE);
 		return panel;
