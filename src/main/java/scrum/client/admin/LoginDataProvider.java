@@ -6,4 +6,6 @@ public interface LoginDataProvider {
 
 	String getPassword();
 
+	void setFailed();
+
 }

@@ -6,25 +6,25 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
-import scrum.client.test.WidgetsTesterWidget;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class LoginWidget extends AWidget implements LoginDataProvider {
 
+	private Label errorMessage;
 	private TextBox username;
 	private PasswordTextBox password;
 
 	@Override
 	protected Widget onInitialization() {
+		errorMessage = new Label();
 		username = new TextBox();
 		username.setWidth("150px");
 		username.addKeyPressHandler(new InputKeyHandler());
@@ -45,18 +45,16 @@ public class LoginWidget extends AWidget implements LoginDataProvider {
 		fieldsWidget.addWidget("Password", password);
 		fieldsWidget.addWidget(null, toolbar.update());
 
-		SimplePanel wrapper = new SimplePanel();
-		wrapper.setStyleName("LoginWidget");
-		wrapper.setWidget(new GroupWidget("Login", fieldsWidget));
+		FlowPanel panel = new FlowPanel();
+		panel.add(errorMessage);
+		panel.add(fieldsWidget);
 
-		if (GWT.isScript()) { return wrapper; }
+		return Gwt.createDiv("LoginWidget", new GroupWidget("Login", panel));
+	}
 
-		FlowPanel test = new FlowPanel();
-		test.add(wrapper);
-		test.add(new WidgetsTesterWidget().update());
-
-		return test;
-
+	public void setFailed() {
+		errorMessage.setStyleName("LoginWidget-errorMessage");
+		errorMessage.setText("Login failed. Try again.");
 	}
 
 	@Override

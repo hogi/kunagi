@@ -35,8 +35,8 @@ a {cursor: pointer;}
 
 /***** Sidebar *****/
 
-.ProjectSidebarWidget {height: 100%; background:#CEDBF9;}
-.ProjectSidebarWidget .beforeNavigatorSpacer {height: 10px; margin: 0px 15px 0px 15px; border-bottom: 1px solid #E2EAFC;}
+.FullScreenDockWidget-west {height: 100%; background:#CEDBF9;}
+.NavigatorWidget-head {height: 10px; margin: 0px 15px 0px 15px; border-bottom: 1px solid #E2EAFC;}
 
 .NavigatorWidget {background:#CEDBF9;}
 .NavigatorWidget .item {padding: 0px 15px 0px 15px; font-size: 14px;}
@@ -162,5 +162,6 @@ a {cursor: pointer;}
 
 /***** other *****/
 .WaitWidget {margin: 200px 0px; border: 1px solid #DEE5FD; background: #EEF5FF; font-size: 14px;}
-.LoginWidget {width: 230px; margin: 150px 200px 50px 0px; border: 1px solid #DEE5FD; background: #EEF5FF;}
+.LoginWidget {width: 230px; margin: 10px auto; border: 1px solid #DEE5FD; background: #EEF5FF;}
+.LoginWidget-errorMessage {color: red; border: 1px solid red; background: #FFEFEF; font-size: 12px; padding: 5px; margin: 5px;}
 

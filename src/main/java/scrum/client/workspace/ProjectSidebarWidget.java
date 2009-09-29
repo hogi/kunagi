@@ -3,7 +3,6 @@ package scrum.client.workspace;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.collaboration.ChatWidget;
-import scrum.client.common.ScrumUtil;
 import scrum.client.communication.UsersStatusWidget;
 import scrum.client.context.ProjectContext;
 
@@ -26,7 +25,6 @@ public class ProjectSidebarWidget extends AWidget {
 
 		FlowPanel sidebar = new FlowPanel();
 		sidebar.setStyleName("ProjectSidebarWidget");
-		sidebar.add(ScrumUtil.createEmptyDiv("beforeNavigatorSpacer"));
 		sidebar.add(getNavigator());
 		sidebar.add(trash);
 		// sidebar.add(clipboard);

@@ -13,7 +13,6 @@ public class StartContext extends AContext {
 	private StartPageWidget startPage = new StartPageWidget();
 
 	public StartContext() {
-		assert singleton == null;
 		singleton = this;
 	}
 

@@ -6,7 +6,7 @@ import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
 import scrum.client.context.AContext;
-import scrum.client.context.LoginContext;
+import scrum.client.context.PublicContext;
 import scrum.client.context.ProjectContext;
 import scrum.client.context.StartContext;
 
@@ -50,10 +50,10 @@ public class Ui extends AWidget {
 		locker.update();
 	}
 
-	public void activateLoginView() {
+	public void activatePublicView() {
 		ProjectContext.destroy();
 		StartContext.destroy();
-		activateView(new LoginContext());
+		activateView(new PublicContext());
 	}
 
 	public void activateStartView() {

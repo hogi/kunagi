@@ -46,7 +46,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		callPing(new Runnable() {
 
 			public void run() {
-				ui.activateLoginView();
+				ui.activatePublicView();
 			}
 		});
 
@@ -223,7 +223,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		StartContext.destroy();
 		ProjectContext.destroy();
 		getDao().clearAllEntities();
-		Ui.get().activateLoginView();
+		Ui.get().activatePublicView();
 	}
 
 }
