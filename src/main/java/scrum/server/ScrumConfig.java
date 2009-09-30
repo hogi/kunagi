@@ -20,4 +20,7 @@ public class ScrumConfig {
 		return p.getBoolean("startup.delete", true);
 	}
 
+	public boolean isStageIntegration() {
+		return p.getBoolean("stage.integration", false);
+	}
 }

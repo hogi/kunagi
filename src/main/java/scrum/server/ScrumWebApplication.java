@@ -14,10 +14,12 @@ import ilarkesto.webapp.DestroyTimeoutedSessionsTask;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import scrum.client.ApplicationInfo;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.common.BurndownChart;
@@ -30,6 +32,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	private BurndownChart burndownChart;
 	private ScrumConfig config;
 	private ScrumEntityfilePreparator entityfilePreparator;
+	private ApplicationInfo applicationInfo;
 
 	// --- composites ---
 
@@ -54,6 +57,13 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			entityfilePreparator.setBackupDir(getApplicationDataDir() + "/backup/entities");
 		}
 		return entityfilePreparator;
+	}
+
+	public ApplicationInfo getApplicationInfo() {
+		if (applicationInfo == null) {
+			applicationInfo = new ApplicationInfo("Scrum42", getBuild(), getDeploymentStage());
+		}
+		return applicationInfo;
 	}
 
 	// --- ---
@@ -159,6 +169,17 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	@Override
 	protected AWebSession createWebSession(HttpServletRequest httpRequest) {
 		return autowire(new WebSession(context, httpRequest));
+	}
+
+	public String getDeploymentStage() {
+		if (isDevelopmentMode()) return ApplicationInfo.DEPLOYMENT_STAGE_DEVELOPMENT;
+		if (getConfig().isStageIntegration()) return ApplicationInfo.DEPLOYMENT_STAGE_INTEGRATION;
+		return ApplicationInfo.DEPLOYMENT_STAGE_PRODUCTION;
+	}
+
+	public String getBuild() {
+		Properties properties = IO.loadPropertiesFromClasspath("scrum/server/build.properties");
+		return properties.getProperty("build.date");
 	}
 
 	public static ScrumWebApplication get() {

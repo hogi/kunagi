@@ -52,6 +52,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	// --- ---
 
+	private void onStartSession(WebSession session) {
+		session.clearRemoteEntities();
+		session.clearUsersSelectedEntities();
+		session.getNextData().applicationInfo = webApplication.getApplicationInfo();
+		session.getNextData().entityIdBase = UUID.randomUUID().toString();
+	}
+
 	@Override
 	protected void onLogout(WebSession session) {
 		session.invalidate();
@@ -251,6 +258,23 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onSleep(WebSession session, long millis) {
 		Utl.sleep(millis);
+	}
+
+	public scrum.client.DataTransferObject startSession() {
+		LOG.debug("startSession");
+		WebSession session = (WebSession) getSession();
+		ilarkesto.di.Context context = ilarkesto.di.Context.get();
+		context.setName("gwt-srv:startSession");
+		context.bindCurrentThread();
+		try {
+			onStartSession(session);
+		} catch (Throwable t) {
+			handleServiceMethodException("startSession", t);
+			throw new RuntimeException(t);
+		}
+		scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
+		onServiceMethodExecuted(context);
+		return ret;
 	}
 
 	// --- helper ---

@@ -3,6 +3,7 @@ package scrum.client.admin;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.ToolbarWidget;
+import scrum.client.ApplicationInfo;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
@@ -32,11 +33,6 @@ public class LoginWidget extends AWidget implements LoginDataProvider {
 		password.setWidth("150px");
 		password.addKeyPressHandler(new InputKeyHandler());
 
-		if (ScrumGwtApplication.get().isDevelopmentMode()) {
-			username.setText("duke");
-			password.setText("geheim");
-		}
-
 		ToolbarWidget toolbar = new ToolbarWidget(true);
 		toolbar.addButton(new LoginAction(this));
 
@@ -59,6 +55,11 @@ public class LoginWidget extends AWidget implements LoginDataProvider {
 
 	@Override
 	protected void onUpdate() {
+		ApplicationInfo applicationInfo = ScrumGwtApplication.get().getApplicationInfo();
+		if (applicationInfo != null && applicationInfo.isDevelopmentStage()) {
+			username.setText("duke");
+			password.setText("geheim");
+		}
 		username.setFocus(true);
 	}
 

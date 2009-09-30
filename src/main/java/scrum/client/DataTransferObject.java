@@ -10,5 +10,5 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class DataTransferObject extends ADataTransferObject implements Serializable, IsSerializable {
 
 	public Set<String> onlineTeamMembersIds;
-
+	public ApplicationInfo applicationInfo;
 }

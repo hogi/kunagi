@@ -2,6 +2,7 @@ package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
+import scrum.client.ApplicationInfo;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.LogoutAction;
 import scrum.client.context.ProjectContext;
@@ -15,6 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class HeaderWidget extends AWidget {
 
+	private Label title;
 	private Label currentUserLabel;
 
 	private ToolbarWidget toolbar;
@@ -24,7 +26,7 @@ public class HeaderWidget extends AWidget {
 	protected Widget onInitialization() {
 		setHeight100();
 
-		Label title = new Label("Scrum42");
+		title = new Label("");
 		title.setStyleName("title");
 
 		HorizontalPanel panel = new HorizontalPanel();
@@ -53,6 +55,12 @@ public class HeaderWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		boolean loggedIn = ScrumGwtApplication.get().getUser() != null;
+
+		ApplicationInfo applicationInfo = ScrumGwtApplication.get().getApplicationInfo();
+		if (applicationInfo != null) {
+			title.setText(applicationInfo.getName());
+			title.setTitle(applicationInfo.getVersionDescription());
+		}
 
 		String text = "";
 		if (loggedIn) {

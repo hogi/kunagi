@@ -23,12 +23,12 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	private Dao dao = new Dao();
 
+	private ApplicationInfo applicationInfo;
 	private User user;
 	private Project project;
 	private LinkedList<ChatMessage> chatMessages;
 	private DndManager dndManager;
 	private Ui ui;
-	private boolean developmentMode;
 	private long lastDataReceiveTime = System.currentTimeMillis();
 	private PingTimer pingTimer;
 
@@ -43,14 +43,13 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		ui.update();
 		RootPanel.get("ScrumGwtApplication").add(ui);
 		ui.lock("Loading...");
-		callPing(new Runnable() {
+		callStartSession(new Runnable() {
 
 			public void run() {
 				ui.activatePublicView();
+				pingTimer = new PingTimer();
 			}
 		});
-
-		pingTimer = new PingTimer();
 
 		ARichtextViewEditWidget.setDefaultRichtextFormater(new ScrumRichtextFormater());
 		ScrumJs.initialize();
@@ -60,7 +59,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	protected void onServerData(DataTransferObject dto) {
 		if (dto.containsEntities()) {
 			lastDataReceiveTime = System.currentTimeMillis();
-			pingTimer.schedule();
+			if (pingTimer != null) pingTimer.schedule();
 		}
 
 		if (dto.onlineTeamMembersIds != null) {
@@ -74,14 +73,21 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			GwtLogger.DEBUG("entityIdBase:", dto.entityIdBase);
 		}
 
-		if (dto.developmentMode != null) {
-			developmentMode = dto.developmentMode;
+		if (dto.applicationInfo != null) {
+			this.applicationInfo = dto.applicationInfo;
+			GwtLogger.DEBUG("applicationInfo:", dto.applicationInfo);
+		} else {
+			assert this.applicationInfo != null;
 		}
 
 		if (dto.isUserSet()) {
 			user = getDao().getUser(dto.getUserId());
 		}
 
+	}
+
+	public ApplicationInfo getApplicationInfo() {
+		return applicationInfo;
 	}
 
 	public String richtextToHtml(String text) {
@@ -125,10 +131,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	public Ui getUi() {
 		return ui;
-	}
-
-	public boolean isDevelopmentMode() {
-		return developmentMode;
 	}
 
 	public long getLastDataReceiveTime() {
@@ -224,6 +226,10 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		ProjectContext.destroy();
 		getDao().clearAllEntities();
 		Ui.get().activatePublicView();
+	}
+
+	public final void callStartSession(Runnable callback) {
+		getScrumService().startSession(new DefaultCallback<DataTransferObject>(callback));
 	}
 
 }

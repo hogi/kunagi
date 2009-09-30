@@ -11,11 +11,17 @@
 		</exec>
 	</target>
 
+	<target name="init">
+	    <tstamp>
+	        <format property="build.tstamp" pattern="yyyy-MM-dd HH:mm" locale="de,DE"/>
+	    </tstamp>
+	</target>
+	
 	<target name="clean">
 		<delete dir="build" />
 	</target>
 
-	<target name="compile" depends="clean">
+	<target name="compile" depends="clean, init">
         <java classname="com.google.gwt.dev.Compiler" failonerror="true" fork="true">
             <arg value="-war" />
             <arg value="build/webapp" />
@@ -39,6 +45,7 @@
 				<fileset dir="lib" />
 			</classpath>
 		</javac>
+		<replace file="build/webapp/WEB-INF/classes/scrum/server/build.properties" token="@build-date@" value="${build.tstamp}" />
 	</target>
 
 	<target name="webapp" depends="compile">
