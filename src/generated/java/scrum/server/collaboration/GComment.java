@@ -39,6 +39,7 @@ public abstract class GComment
         properties.put("parentId", this.parentId);
         properties.put("authorId", this.authorId);
         properties.put("text", this.text);
+        properties.put("dateAndTime", this.dateAndTime);
     }
 
     public int compareTo(Comment other) {
@@ -179,6 +180,40 @@ public abstract class GComment
         setText((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - dateAndTime
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.DateAndTime dateAndTime;
+
+    public final ilarkesto.base.time.DateAndTime getDateAndTime() {
+        return dateAndTime;
+    }
+
+    public final void setDateAndTime(ilarkesto.base.time.DateAndTime dateAndTime) {
+        dateAndTime = prepareDateAndTime(dateAndTime);
+        if (isDateAndTime(dateAndTime)) return;
+        this.dateAndTime = dateAndTime;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.DateAndTime prepareDateAndTime(ilarkesto.base.time.DateAndTime dateAndTime) {
+        return dateAndTime;
+    }
+
+    public final boolean isDateAndTimeSet() {
+        return this.dateAndTime != null;
+    }
+
+    public final boolean isDateAndTime(ilarkesto.base.time.DateAndTime dateAndTime) {
+        if (this.dateAndTime == null && dateAndTime == null) return true;
+        return this.dateAndTime != null && this.dateAndTime.equals(dateAndTime);
+    }
+
+    protected final void updateDateAndTime(Object value) {
+        setDateAndTime((ilarkesto.base.time.DateAndTime)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -187,6 +222,7 @@ public abstract class GComment
             if (property.equals("parentId")) updateParent(value);
             if (property.equals("authorId")) updateAuthor(value);
             if (property.equals("text")) updateText(value);
+            if (property.equals("dateAndTime")) updateDateAndTime(value);
         }
     }
 

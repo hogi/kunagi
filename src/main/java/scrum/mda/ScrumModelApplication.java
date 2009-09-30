@@ -1,6 +1,7 @@
 package scrum.mda;
 
 import ilarkesto.base.time.Date;
+import ilarkesto.base.time.DateAndTime;
 import ilarkesto.di.app.ApplicationStarter;
 import ilarkesto.mda.AGeneratorApplication;
 import ilarkesto.mda.gen.GwtActionGenerator;
@@ -294,7 +295,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			commentModel.addReference("parent", getRequirementModel()).setMaster(true);
 			commentModel.addReference("author", getUserModel());
 			commentModel.addProperty("text", String.class);
-			// commentModel.addProperty("time", DateAndTime.class);
+			commentModel.addProperty("dateAndTime", DateAndTime.class);
 		}
 		return commentModel;
 	}

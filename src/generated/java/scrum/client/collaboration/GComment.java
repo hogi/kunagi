@@ -113,12 +113,33 @@ public abstract class GComment
         return equals(this.text, text);
     }
 
+    // --- dateAndTime ---
+
+    private ilarkesto.gwt.client.DateAndTime dateAndTime ;
+
+    public final ilarkesto.gwt.client.DateAndTime getDateAndTime() {
+        return this.dateAndTime ;
+    }
+
+    public final Comment setDateAndTime(ilarkesto.gwt.client.DateAndTime dateAndTime) {
+        if (isDateAndTime(dateAndTime)) return (Comment)this;
+        this.dateAndTime = dateAndTime ;
+        propertyChanged("dateAndTime", this.dateAndTime);
+        return (Comment)this;
+    }
+
+    public final boolean isDateAndTime(ilarkesto.gwt.client.DateAndTime dateAndTime) {
+        return equals(this.dateAndTime, dateAndTime);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         parentId = (String) props.get("parentId");
         authorId = (String) props.get("authorId");
         text  = (java.lang.String) props.get("text");
+        String dateAndTimeAsString = (String) props.get("dateAndTime");
+        dateAndTime  =  dateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(dateAndTimeAsString);
     }
 
     @Override
@@ -127,6 +148,7 @@ public abstract class GComment
         properties.put("parentId", this.parentId);
         properties.put("authorId", this.authorId);
         properties.put("text", this.text);
+        properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
     }
 
 }
