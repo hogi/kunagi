@@ -283,6 +283,21 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return chatMessageModel;
 	}
 
+	private EntityModel commentModel;
+
+	public EntityModel getCommentModel() {
+		if (commentModel == null) {
+			commentModel = createEntityModel("Comment", "collaboration");
+			autowire(commentModel);
+			commentModel.setGwtSupport(true);
+			commentModel.addReference("parent", getRequirementModel()).setMaster(true);
+			commentModel.addReference("author", getUserModel());
+			commentModel.addProperty("text", String.class);
+			// commentModel.addProperty("time", DateAndTime.class);
+		}
+		return commentModel;
+	}
+
 	// ---------------
 	// --- service ---
 	// ---------------
