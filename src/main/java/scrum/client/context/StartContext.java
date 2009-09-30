@@ -3,6 +3,7 @@ package scrum.client.context;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.ProjectSelectorWidget;
+import scrum.client.admin.UserConfigWidget;
 import scrum.client.admin.UserListWidget;
 import scrum.client.workspace.Ui;
 
@@ -15,6 +16,7 @@ public class StartContext extends AContext {
 
 	private SwitchingNavigatorWidget navigator;
 	private ProjectSelectorWidget projectSelector;
+	private UserConfigWidget userConfig;
 	private UserListWidget userList;
 
 	public StartContext() {
@@ -24,12 +26,15 @@ public class StartContext extends AContext {
 	@Override
 	public Widget getSidebarWidget() {
 		projectSelector = new ProjectSelectorWidget();
-		userList = new UserListWidget();
+		userConfig = new UserConfigWidget();
 
 		navigator = new SwitchingNavigatorWidget(Ui.get().getWorkarea());
 		navigator.addItem((Image) null, "Projects", projectSelector);
-		if (ScrumGwtApplication.get().getUser().isAdmin())
+		navigator.addItem((Image) null, "Personal Preferences", userConfig);
+		if (ScrumGwtApplication.get().getUser().isAdmin()) {
+			userList = new UserListWidget();
 			navigator.addItem((Image) null, "User Management", userList);
+		}
 
 		return navigator;
 	}

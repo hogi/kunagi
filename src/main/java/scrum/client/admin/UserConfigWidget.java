@@ -6,47 +6,19 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
 
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class UserConfigWidget extends AWidget {
 
-	private FieldsWidget projectFields;
-	private FieldsWidget globalFields;
+	private FieldsWidget fields;
 
 	@Override
 	protected Widget onInitialization() {
 
-		// --- project config ---
-
-		final ProjectUserConfig config = ScrumGwtApplication.get().getUser().getProjectConfig();
-
-		projectFields = new FieldsWidget();
-		projectFields.add("Color", new ATextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(config.getColor());
-				getViewer().getElement().getStyle().setProperty("color", config.getColor());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(config.getColor());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				config.setColor(getEditorText());
-			}
-		});
-
-		// --- global config ---
-
 		final User user = ScrumGwtApplication.get().getUser();
 
-		globalFields = new FieldsWidget();
-		globalFields.add("Name", new ATextViewEditWidget() {
+		fields = new FieldsWidget();
+		fields.add("Name", new ATextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -63,7 +35,7 @@ public class UserConfigWidget extends AWidget {
 				user.setName(getEditorText());
 			}
 		});
-		globalFields.add("Email", new ATextViewEditWidget() {
+		fields.add("Email", new ATextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -80,20 +52,14 @@ public class UserConfigWidget extends AWidget {
 				user.setEmail(getEditorText());
 			}
 		});
-		globalFields.add("Password", new PasswordChangeWidget());
+		fields.add("Password", new PasswordChangeWidget());
 
-		// ---
-
-		FlowPanel panel = new FlowPanel();
-		panel.add(new GroupWidget("Project Preferences", projectFields));
-		panel.add(new GroupWidget("Global Preferences", globalFields));
-
-		return panel;
+		return new GroupWidget("Global Preferences", fields);
 	}
 
 	@Override
 	protected void onUpdate() {
-		projectFields.update();
+		fields.update();
 	}
 
 }

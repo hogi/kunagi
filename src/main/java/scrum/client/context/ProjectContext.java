@@ -5,8 +5,8 @@ import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.User;
-import scrum.client.admin.UserConfigWidget;
 import scrum.client.img.Img;
 import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
@@ -47,7 +47,7 @@ public class ProjectContext extends AContext {
 	private IssueListWidget issueList;
 	private RiskListWidget riskList;
 	private WidgetsTesterWidget widgetsTester;
-	private UserConfigWidget projectUserConfig;
+	private ProjectUserConfigWidget projectUserConfig;
 
 	private User highlightedUser;
 
@@ -66,7 +66,7 @@ public class ProjectContext extends AContext {
 		issueList = new IssueListWidget();
 		riskList = new RiskListWidget();
 		widgetsTester = new WidgetsTesterWidget();
-		projectUserConfig = new UserConfigWidget();
+		projectUserConfig = new ProjectUserConfigWidget();
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
 		navigator.addItem(Img.bundle.project16(), "Project Overview", getProjectOverview());
@@ -92,7 +92,7 @@ public class ProjectContext extends AContext {
 		highlightedUser = user;
 	}
 
-	public UserConfigWidget getProjectUserConfig() {
+	public ProjectUserConfigWidget getProjectUserConfig() {
 		return projectUserConfig;
 	}
 
