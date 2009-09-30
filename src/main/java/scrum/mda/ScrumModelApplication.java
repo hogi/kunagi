@@ -299,6 +299,20 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return commentModel;
 	}
 
+	private EntityModel wikipageModel;
+
+	public EntityModel getWikipageModel() {
+		if (wikipageModel == null) {
+			wikipageModel = createEntityModel("Wikipage", "collaboration");
+			autowire(wikipageModel);
+			wikipageModel.setGwtSupport(true);
+			wikipageModel.addReference("project", getProjectModel()).setMaster(true);
+			wikipageModel.addProperty("name", String.class).setMandatory(true).setSearchable(true);
+			wikipageModel.addProperty("text", String.class).setSearchable(true);
+		}
+		return wikipageModel;
+	}
+
 	// ---------------
 	// --- service ---
 	// ---------------
