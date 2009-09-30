@@ -13,7 +13,7 @@ public class ScrumJs {
 		ScrumGwtApplication.get().showEntityByReference(reference);
 	}
 
-	public static native String regegxTextToHtml(String text) /*-{
+	public static native String regexTextToHtml(String text) /*-{
 
 		// escape html
 		text = text.replace( /&/g , "&amp;" );
