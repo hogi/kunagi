@@ -33,6 +33,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestImpediments(WebSession session);
     protected abstract void onRequestIssues(WebSession session);
     protected abstract void onRequestRisks(WebSession session);
+    protected abstract void onRequestComments(WebSession session, java.lang.String parentId);
     protected abstract void onChangeProperties(WebSession session, java.lang.String entityId, java.util.Map properties);
     protected abstract void onCreateEntity(WebSession session, java.lang.String type, java.util.Map properties);
     protected abstract void onDeleteEntity(WebSession session, java.lang.String entityId);
@@ -230,6 +231,24 @@ public abstract class GScrumServiceImpl
             onRequestRisks(session);
         } catch (Throwable t) {
             handleServiceMethodException("requestRisks",t);
+            throw new RuntimeException(t);
+        }
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public scrum.client.DataTransferObject requestComments(java.lang.String parentId) {
+        LOG.debug("requestComments");
+        WebSession session = (WebSession) getSession();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:requestComments");
+        context.bindCurrentThread();
+        try {
+            onRequestComments(session, parentId);
+        } catch (Throwable t) {
+            handleServiceMethodException("requestComments",t);
             throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();

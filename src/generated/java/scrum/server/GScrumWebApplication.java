@@ -28,54 +28,129 @@ public abstract class GScrumWebApplication
     // - composites
     // -----------------------------------------------------------
 
-    // --- wikipageDao ---
+    // --- sprintDao ---
 
-    private scrum.server.collaboration.WikipageDao wikipageDao;
+    private scrum.server.sprint.SprintDao sprintDao;
 
-    public final scrum.server.collaboration.WikipageDao getWikipageDao() {
-        if (wikipageDao == null) {
-            wikipageDao = createWikipageDao();
-            initializeWikipageDao(wikipageDao);
+    public final scrum.server.sprint.SprintDao getSprintDao() {
+        if (sprintDao == null) {
+            sprintDao = createSprintDao();
+            initializeSprintDao(sprintDao);
         }
-        return wikipageDao;
+        return sprintDao;
     }
 
-    protected scrum.server.collaboration.WikipageDao createWikipageDao() {
-        return wikipageDao = ilarkesto.base.Reflect.newInstance(scrum.server.collaboration.WikipageDao.class);
+    protected scrum.server.sprint.SprintDao createSprintDao() {
+        return sprintDao = ilarkesto.base.Reflect.newInstance(scrum.server.sprint.SprintDao.class);
     }
 
-    protected void initializeWikipageDao(scrum.server.collaboration.WikipageDao bean) {
+    protected void initializeSprintDao(scrum.server.sprint.SprintDao bean) {
         autowire(bean);
         ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
     }
 
-    public final void resetWikipageDao() {
-        wikipageDao = null;
+    public final void resetSprintDao() {
+        sprintDao = null;
     }
 
-    // --- projectSprintSnapshotDao ---
+    // --- chatMessageDao ---
 
-    private scrum.server.project.ProjectSprintSnapshotDao projectSprintSnapshotDao;
+    private scrum.server.collaboration.ChatMessageDao chatMessageDao;
 
-    public final scrum.server.project.ProjectSprintSnapshotDao getProjectSprintSnapshotDao() {
-        if (projectSprintSnapshotDao == null) {
-            projectSprintSnapshotDao = createProjectSprintSnapshotDao();
-            initializeProjectSprintSnapshotDao(projectSprintSnapshotDao);
+    public final scrum.server.collaboration.ChatMessageDao getChatMessageDao() {
+        if (chatMessageDao == null) {
+            chatMessageDao = createChatMessageDao();
+            initializeChatMessageDao(chatMessageDao);
         }
-        return projectSprintSnapshotDao;
+        return chatMessageDao;
     }
 
-    protected scrum.server.project.ProjectSprintSnapshotDao createProjectSprintSnapshotDao() {
-        return projectSprintSnapshotDao = ilarkesto.base.Reflect.newInstance(scrum.server.project.ProjectSprintSnapshotDao.class);
+    protected scrum.server.collaboration.ChatMessageDao createChatMessageDao() {
+        return chatMessageDao = ilarkesto.base.Reflect.newInstance(scrum.server.collaboration.ChatMessageDao.class);
     }
 
-    protected void initializeProjectSprintSnapshotDao(scrum.server.project.ProjectSprintSnapshotDao bean) {
+    protected void initializeChatMessageDao(scrum.server.collaboration.ChatMessageDao bean) {
         autowire(bean);
         ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
     }
 
-    public final void resetProjectSprintSnapshotDao() {
-        projectSprintSnapshotDao = null;
+    public final void resetChatMessageDao() {
+        chatMessageDao = null;
+    }
+
+    // --- impedimentDao ---
+
+    private scrum.server.impediments.ImpedimentDao impedimentDao;
+
+    public final scrum.server.impediments.ImpedimentDao getImpedimentDao() {
+        if (impedimentDao == null) {
+            impedimentDao = createImpedimentDao();
+            initializeImpedimentDao(impedimentDao);
+        }
+        return impedimentDao;
+    }
+
+    protected scrum.server.impediments.ImpedimentDao createImpedimentDao() {
+        return impedimentDao = ilarkesto.base.Reflect.newInstance(scrum.server.impediments.ImpedimentDao.class);
+    }
+
+    protected void initializeImpedimentDao(scrum.server.impediments.ImpedimentDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetImpedimentDao() {
+        impedimentDao = null;
+    }
+
+    // --- commentDao ---
+
+    private scrum.server.collaboration.CommentDao commentDao;
+
+    public final scrum.server.collaboration.CommentDao getCommentDao() {
+        if (commentDao == null) {
+            commentDao = createCommentDao();
+            initializeCommentDao(commentDao);
+        }
+        return commentDao;
+    }
+
+    protected scrum.server.collaboration.CommentDao createCommentDao() {
+        return commentDao = ilarkesto.base.Reflect.newInstance(scrum.server.collaboration.CommentDao.class);
+    }
+
+    protected void initializeCommentDao(scrum.server.collaboration.CommentDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetCommentDao() {
+        commentDao = null;
+    }
+
+    // --- issueDao ---
+
+    private scrum.server.issues.IssueDao issueDao;
+
+    public final scrum.server.issues.IssueDao getIssueDao() {
+        if (issueDao == null) {
+            issueDao = createIssueDao();
+            initializeIssueDao(issueDao);
+        }
+        return issueDao;
+    }
+
+    protected scrum.server.issues.IssueDao createIssueDao() {
+        return issueDao = ilarkesto.base.Reflect.newInstance(scrum.server.issues.IssueDao.class);
+    }
+
+    protected void initializeIssueDao(scrum.server.issues.IssueDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetIssueDao() {
+        issueDao = null;
     }
 
     // --- riskDao ---
@@ -103,54 +178,29 @@ public abstract class GScrumWebApplication
         riskDao = null;
     }
 
-    // --- taskDao ---
+    // --- sprintDaySnapshotDao ---
 
-    private scrum.server.sprint.TaskDao taskDao;
+    private scrum.server.sprint.SprintDaySnapshotDao sprintDaySnapshotDao;
 
-    public final scrum.server.sprint.TaskDao getTaskDao() {
-        if (taskDao == null) {
-            taskDao = createTaskDao();
-            initializeTaskDao(taskDao);
+    public final scrum.server.sprint.SprintDaySnapshotDao getSprintDaySnapshotDao() {
+        if (sprintDaySnapshotDao == null) {
+            sprintDaySnapshotDao = createSprintDaySnapshotDao();
+            initializeSprintDaySnapshotDao(sprintDaySnapshotDao);
         }
-        return taskDao;
+        return sprintDaySnapshotDao;
     }
 
-    protected scrum.server.sprint.TaskDao createTaskDao() {
-        return taskDao = ilarkesto.base.Reflect.newInstance(scrum.server.sprint.TaskDao.class);
+    protected scrum.server.sprint.SprintDaySnapshotDao createSprintDaySnapshotDao() {
+        return sprintDaySnapshotDao = ilarkesto.base.Reflect.newInstance(scrum.server.sprint.SprintDaySnapshotDao.class);
     }
 
-    protected void initializeTaskDao(scrum.server.sprint.TaskDao bean) {
+    protected void initializeSprintDaySnapshotDao(scrum.server.sprint.SprintDaySnapshotDao bean) {
         autowire(bean);
         ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
     }
 
-    public final void resetTaskDao() {
-        taskDao = null;
-    }
-
-    // --- chatMessageDao ---
-
-    private scrum.server.collaboration.ChatMessageDao chatMessageDao;
-
-    public final scrum.server.collaboration.ChatMessageDao getChatMessageDao() {
-        if (chatMessageDao == null) {
-            chatMessageDao = createChatMessageDao();
-            initializeChatMessageDao(chatMessageDao);
-        }
-        return chatMessageDao;
-    }
-
-    protected scrum.server.collaboration.ChatMessageDao createChatMessageDao() {
-        return chatMessageDao = ilarkesto.base.Reflect.newInstance(scrum.server.collaboration.ChatMessageDao.class);
-    }
-
-    protected void initializeChatMessageDao(scrum.server.collaboration.ChatMessageDao bean) {
-        autowire(bean);
-        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
-    }
-
-    public final void resetChatMessageDao() {
-        chatMessageDao = null;
+    public final void resetSprintDaySnapshotDao() {
+        sprintDaySnapshotDao = null;
     }
 
     // --- projectDao ---
@@ -203,56 +253,6 @@ public abstract class GScrumWebApplication
         requirementDao = null;
     }
 
-    // --- projectUserConfigDao ---
-
-    private scrum.server.admin.ProjectUserConfigDao projectUserConfigDao;
-
-    public final scrum.server.admin.ProjectUserConfigDao getProjectUserConfigDao() {
-        if (projectUserConfigDao == null) {
-            projectUserConfigDao = createProjectUserConfigDao();
-            initializeProjectUserConfigDao(projectUserConfigDao);
-        }
-        return projectUserConfigDao;
-    }
-
-    protected scrum.server.admin.ProjectUserConfigDao createProjectUserConfigDao() {
-        return projectUserConfigDao = ilarkesto.base.Reflect.newInstance(scrum.server.admin.ProjectUserConfigDao.class);
-    }
-
-    protected void initializeProjectUserConfigDao(scrum.server.admin.ProjectUserConfigDao bean) {
-        autowire(bean);
-        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
-    }
-
-    public final void resetProjectUserConfigDao() {
-        projectUserConfigDao = null;
-    }
-
-    // --- impedimentDao ---
-
-    private scrum.server.impediments.ImpedimentDao impedimentDao;
-
-    public final scrum.server.impediments.ImpedimentDao getImpedimentDao() {
-        if (impedimentDao == null) {
-            impedimentDao = createImpedimentDao();
-            initializeImpedimentDao(impedimentDao);
-        }
-        return impedimentDao;
-    }
-
-    protected scrum.server.impediments.ImpedimentDao createImpedimentDao() {
-        return impedimentDao = ilarkesto.base.Reflect.newInstance(scrum.server.impediments.ImpedimentDao.class);
-    }
-
-    protected void initializeImpedimentDao(scrum.server.impediments.ImpedimentDao bean) {
-        autowire(bean);
-        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
-    }
-
-    public final void resetImpedimentDao() {
-        impedimentDao = null;
-    }
-
     // --- qualityDao ---
 
     private scrum.server.project.QualityDao qualityDao;
@@ -278,104 +278,104 @@ public abstract class GScrumWebApplication
         qualityDao = null;
     }
 
-    // --- issueDao ---
+    // --- wikipageDao ---
 
-    private scrum.server.issues.IssueDao issueDao;
+    private scrum.server.collaboration.WikipageDao wikipageDao;
 
-    public final scrum.server.issues.IssueDao getIssueDao() {
-        if (issueDao == null) {
-            issueDao = createIssueDao();
-            initializeIssueDao(issueDao);
+    public final scrum.server.collaboration.WikipageDao getWikipageDao() {
+        if (wikipageDao == null) {
+            wikipageDao = createWikipageDao();
+            initializeWikipageDao(wikipageDao);
         }
-        return issueDao;
+        return wikipageDao;
     }
 
-    protected scrum.server.issues.IssueDao createIssueDao() {
-        return issueDao = ilarkesto.base.Reflect.newInstance(scrum.server.issues.IssueDao.class);
+    protected scrum.server.collaboration.WikipageDao createWikipageDao() {
+        return wikipageDao = ilarkesto.base.Reflect.newInstance(scrum.server.collaboration.WikipageDao.class);
     }
 
-    protected void initializeIssueDao(scrum.server.issues.IssueDao bean) {
+    protected void initializeWikipageDao(scrum.server.collaboration.WikipageDao bean) {
         autowire(bean);
         ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
     }
 
-    public final void resetIssueDao() {
-        issueDao = null;
+    public final void resetWikipageDao() {
+        wikipageDao = null;
     }
 
-    // --- sprintDaySnapshotDao ---
+    // --- projectSprintSnapshotDao ---
 
-    private scrum.server.sprint.SprintDaySnapshotDao sprintDaySnapshotDao;
+    private scrum.server.project.ProjectSprintSnapshotDao projectSprintSnapshotDao;
 
-    public final scrum.server.sprint.SprintDaySnapshotDao getSprintDaySnapshotDao() {
-        if (sprintDaySnapshotDao == null) {
-            sprintDaySnapshotDao = createSprintDaySnapshotDao();
-            initializeSprintDaySnapshotDao(sprintDaySnapshotDao);
+    public final scrum.server.project.ProjectSprintSnapshotDao getProjectSprintSnapshotDao() {
+        if (projectSprintSnapshotDao == null) {
+            projectSprintSnapshotDao = createProjectSprintSnapshotDao();
+            initializeProjectSprintSnapshotDao(projectSprintSnapshotDao);
         }
-        return sprintDaySnapshotDao;
+        return projectSprintSnapshotDao;
     }
 
-    protected scrum.server.sprint.SprintDaySnapshotDao createSprintDaySnapshotDao() {
-        return sprintDaySnapshotDao = ilarkesto.base.Reflect.newInstance(scrum.server.sprint.SprintDaySnapshotDao.class);
+    protected scrum.server.project.ProjectSprintSnapshotDao createProjectSprintSnapshotDao() {
+        return projectSprintSnapshotDao = ilarkesto.base.Reflect.newInstance(scrum.server.project.ProjectSprintSnapshotDao.class);
     }
 
-    protected void initializeSprintDaySnapshotDao(scrum.server.sprint.SprintDaySnapshotDao bean) {
+    protected void initializeProjectSprintSnapshotDao(scrum.server.project.ProjectSprintSnapshotDao bean) {
         autowire(bean);
         ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
     }
 
-    public final void resetSprintDaySnapshotDao() {
-        sprintDaySnapshotDao = null;
+    public final void resetProjectSprintSnapshotDao() {
+        projectSprintSnapshotDao = null;
     }
 
-    // --- sprintDao ---
+    // --- projectUserConfigDao ---
 
-    private scrum.server.sprint.SprintDao sprintDao;
+    private scrum.server.admin.ProjectUserConfigDao projectUserConfigDao;
 
-    public final scrum.server.sprint.SprintDao getSprintDao() {
-        if (sprintDao == null) {
-            sprintDao = createSprintDao();
-            initializeSprintDao(sprintDao);
+    public final scrum.server.admin.ProjectUserConfigDao getProjectUserConfigDao() {
+        if (projectUserConfigDao == null) {
+            projectUserConfigDao = createProjectUserConfigDao();
+            initializeProjectUserConfigDao(projectUserConfigDao);
         }
-        return sprintDao;
+        return projectUserConfigDao;
     }
 
-    protected scrum.server.sprint.SprintDao createSprintDao() {
-        return sprintDao = ilarkesto.base.Reflect.newInstance(scrum.server.sprint.SprintDao.class);
+    protected scrum.server.admin.ProjectUserConfigDao createProjectUserConfigDao() {
+        return projectUserConfigDao = ilarkesto.base.Reflect.newInstance(scrum.server.admin.ProjectUserConfigDao.class);
     }
 
-    protected void initializeSprintDao(scrum.server.sprint.SprintDao bean) {
+    protected void initializeProjectUserConfigDao(scrum.server.admin.ProjectUserConfigDao bean) {
         autowire(bean);
         ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
     }
 
-    public final void resetSprintDao() {
-        sprintDao = null;
+    public final void resetProjectUserConfigDao() {
+        projectUserConfigDao = null;
     }
 
-    // --- commentDao ---
+    // --- taskDao ---
 
-    private scrum.server.collaboration.CommentDao commentDao;
+    private scrum.server.sprint.TaskDao taskDao;
 
-    public final scrum.server.collaboration.CommentDao getCommentDao() {
-        if (commentDao == null) {
-            commentDao = createCommentDao();
-            initializeCommentDao(commentDao);
+    public final scrum.server.sprint.TaskDao getTaskDao() {
+        if (taskDao == null) {
+            taskDao = createTaskDao();
+            initializeTaskDao(taskDao);
         }
-        return commentDao;
+        return taskDao;
     }
 
-    protected scrum.server.collaboration.CommentDao createCommentDao() {
-        return commentDao = ilarkesto.base.Reflect.newInstance(scrum.server.collaboration.CommentDao.class);
+    protected scrum.server.sprint.TaskDao createTaskDao() {
+        return taskDao = ilarkesto.base.Reflect.newInstance(scrum.server.sprint.TaskDao.class);
     }
 
-    protected void initializeCommentDao(scrum.server.collaboration.CommentDao bean) {
+    protected void initializeTaskDao(scrum.server.sprint.TaskDao bean) {
         autowire(bean);
         ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
     }
 
-    public final void resetCommentDao() {
-        commentDao = null;
+    public final void resetTaskDao() {
+        taskDao = null;
     }
 
 }

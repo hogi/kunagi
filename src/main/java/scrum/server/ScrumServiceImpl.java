@@ -15,6 +15,7 @@ import java.util.UUID;
 
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
+import scrum.server.collaboration.CommentDao;
 import scrum.server.common.Numbered;
 import scrum.server.common.Transient;
 import scrum.server.project.Project;
@@ -32,6 +33,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private ProjectDao projectDao;
 	private UserDao userDao;
 	private RequirementDao requirementDao;
+	private CommentDao commentDao;
 	private ScrumWebApplication webApplication;
 
 	public void setWebApplication(ScrumWebApplication webApplication) {
@@ -48,6 +50,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
+	}
+
+	public void setCommentDao(CommentDao commentDao) {
+		this.commentDao = commentDao;
 	}
 
 	// --- ---
@@ -248,6 +254,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			return;
 		}
 		LOG.info("Requested entity not found:", reference);
+	}
+
+	@Override
+	protected void onRequestComments(WebSession session, String parentId) {
+		session.sendToClient(commentDao.getCommentsByParentId(parentId));
 	}
 
 	@Override
