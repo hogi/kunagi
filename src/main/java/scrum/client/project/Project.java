@@ -13,6 +13,7 @@ import java.util.Set;
 
 import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
+import scrum.client.collaboration.Wikipage;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
 import scrum.client.risks.Risk;
@@ -34,6 +35,14 @@ public class Project extends GProject {
 
 	public Project(Map data) {
 		super(data);
+	}
+
+	public Wikipage getWikipage(String name) {
+		name = name.toLowerCase();
+		for (Wikipage page : getDao().getWikipagesByProject(this)) {
+			if (page.getName().toLowerCase().equals(name)) return page;
+		}
+		return null;
 	}
 
 	public ProjectUserConfig getUserConfig(User user) {
@@ -96,6 +105,12 @@ public class Project extends GProject {
 
 	public String getEffortUnit() {
 		return effortUnit;
+	}
+
+	public Wikipage createNewWikipage(String name) {
+		Wikipage page = new Wikipage(this, name);
+		getDao().createWikipage(page);
+		return page;
 	}
 
 	public Issue createNewIssue() {

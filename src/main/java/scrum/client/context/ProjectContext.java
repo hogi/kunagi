@@ -7,6 +7,7 @@ import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.User;
+import scrum.client.collaboration.WikiWidget;
 import scrum.client.img.Img;
 import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
@@ -46,8 +47,9 @@ public class ProjectContext extends AContext {
 	private ImpedimentListWidget impedimentList;
 	private IssueListWidget issueList;
 	private RiskListWidget riskList;
-	private WidgetsTesterWidget widgetsTester;
+	private WikiWidget wiki;
 	private ProjectUserConfigWidget projectUserConfig;
+	private WidgetsTesterWidget widgetsTester;
 
 	private User highlightedUser;
 
@@ -65,8 +67,9 @@ public class ProjectContext extends AContext {
 		impedimentList = new ImpedimentListWidget();
 		issueList = new IssueListWidget();
 		riskList = new RiskListWidget();
-		widgetsTester = new WidgetsTesterWidget();
 		projectUserConfig = new ProjectUserConfigWidget();
+		wiki = new WikiWidget();
+		widgetsTester = new WidgetsTesterWidget();
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
 		navigator.addItem(Img.bundle.project16(), "Project Overview", getProjectOverview());
@@ -78,6 +81,7 @@ public class ProjectContext extends AContext {
 		navigator.addItem(Img.bundle.impediment16(), "Impediment List", getImpedimentList());
 		navigator.addItem(Img.bundle.issue16(), "Issue List", getIssueList());
 		navigator.addItem(Img.bundle.risk16(), "Risk Management", getRiskList());
+		navigator.addItem(Img.bundle.wiki16(), "Wiki", getWiki());
 		navigator.addItem(Img.bundle.sprint16(), "Next Sprint", getNextSprint());
 		navigator.addItem(Img.bundle.test16(), "Personal Preferences", getProjectUserConfig());
 		navigator.addItem(Img.bundle.test16(), "WidgetsTester", getWidgetsTester());
@@ -139,6 +143,11 @@ public class ProjectContext extends AContext {
 		}
 	}
 
+	public void showWiki(String page) {
+		select(wiki);
+		if (page != null) wiki.showPage(page);
+	}
+
 	private SwitcherWidget getWorkarea() {
 		return Ui.get().getWorkarea();
 	}
@@ -190,6 +199,10 @@ public class ProjectContext extends AContext {
 
 	private void select(AWidget widget) {
 		getSidebar().getNavigator().select(widget);
+	}
+
+	public WikiWidget getWiki() {
+		return wiki;
 	}
 
 	public ImpedimentListWidget getImpedimentList() {

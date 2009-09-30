@@ -7,6 +7,8 @@ import java.util.Set;
 import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.ProjectUserConfigDao;
 import scrum.server.admin.User;
+import scrum.server.collaboration.Wikipage;
+import scrum.server.collaboration.WikipageDao;
 import scrum.server.impediments.Impediment;
 import scrum.server.impediments.ImpedimentDao;
 import scrum.server.issues.Issue;
@@ -29,6 +31,11 @@ public class Project extends GProject {
 	private static ProjectSprintSnapshotDao projectSprintSnapshotDao;
 	private static RiskDao riskDao;
 	private static TaskDao taskDao;
+	private static WikipageDao wikipageDao;
+
+	public static void setWikipageDao(WikipageDao wikipageDao) {
+		Project.wikipageDao = wikipageDao;
+	}
 
 	public static void setProjectUserConfigDao(ProjectUserConfigDao projectUserConfigDao) {
 		Project.projectUserConfigDao = projectUserConfigDao;
@@ -74,6 +81,10 @@ public class Project extends GProject {
 
 	public ProjectUserConfig getUserConfig(User user) {
 		return projectUserConfigDao.getProjectUserConfig(this, user);
+	}
+
+	public Set<Wikipage> getWikipages() {
+		return wikipageDao.getWikipagesByProject(this);
 	}
 
 	public Set<Task> getTasks() {

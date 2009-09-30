@@ -20,8 +20,11 @@ public class ScrumJs {
 		text = text.replace( /</g , "&lt;" );
 		text = text.replace( />/g , "&gt;" );
 		
-		// create links for entity references (r5 or t23)
+		// create links for entity references: "r5" or "t23"
 		text = text.replace( /\b((r|t)\d+)\b/g , "<a onclick='window.scrum.showEntityByReference(\"$1\")'>" + "$1"  + "</a>" );
+		
+		// create links for wiki pages: "[Start]" or "[MyPage]"
+		text = text.replace( /(\[(\w+)\])/g , "<a onclick='window.scrum.showEntityByReference(\"$1\")'>" + "$2"  + "</a>" );
 		
 		return text;
 	}-*/;

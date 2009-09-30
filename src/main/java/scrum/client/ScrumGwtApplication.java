@@ -175,6 +175,13 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	public void showEntityByReference(final String reference) {
 		GwtLogger.DEBUG("Showing entity:", reference);
+
+		if (reference.startsWith("[")) {
+			String page = reference.substring(1, reference.length() - 1);
+			ProjectContext.get().showWiki(page);
+			return;
+		}
+
 		AGwtEntity entity = getDao().getEntityByReference(reference);
 		if (entity != null) {
 			ProjectContext.get().showEntity(entity);

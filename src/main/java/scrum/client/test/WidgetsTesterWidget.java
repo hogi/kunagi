@@ -49,7 +49,7 @@ public class WidgetsTesterWidget extends AWidget {
 		StringBuilder html = new StringBuilder();
 		html.append(
 			ScrumGwtApplication.get().richtextToHtml(
-				"r1 aaaa t5 aaaa (r3) aaaa r3. aaaa r3: aaaa [t12] aaar7 aaaa r7x aaaa t9")).append("<hr>");
+				"[Wiki] r1 aaaa t5 aaaa (r3) aaaa r3. aaaa r3: aaaa [t12] aaar7 aaaa r7x aaaa t9")).append("<hr>");
 		html.append(ScrumGwtApplication.get().richtextToHtml("<b>html?</b> C&A\nnew line")).append("<hr>");
 		addTest("TextConverter", new HTML(html.toString()));
 	}

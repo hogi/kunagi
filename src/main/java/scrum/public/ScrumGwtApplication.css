@@ -119,6 +119,12 @@ a {cursor: pointer;}
 .WhiteboardWidget-owned {background: #FFFFE5;}
 .WhiteboardWidget-done {background: #E5FFE5;}
 
+/***** Wiki *****/
+
+.WikiWidget-navig {margin: 10px 0px;}
+.WikiWidget-title {background: #192666; color: #DEE5FD; padding: 5px; font-size: 16px; font-family: "georgia",serif;}
+.WikiWidget-dummy {color: gray; border: 1px solid darkgray; background: #lightgray; font-size: 12px; padding: 5px; margin: 5px;}
+
 /***** UserHoverPanel *****/
 
 .UserHoverPanel-label {padding: 5px; font-size: 16px; cursor: default;}

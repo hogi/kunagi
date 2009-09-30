@@ -3,6 +3,7 @@ package scrum.server;
 import ilarkesto.base.Tm;
 import ilarkesto.base.Url;
 import ilarkesto.base.Utl;
+import ilarkesto.base.time.Time;
 import ilarkesto.concurrent.TaskManager;
 import ilarkesto.fp.FP;
 import ilarkesto.fp.Function;
@@ -179,7 +180,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	public String getBuild() {
 		Properties properties = IO.loadPropertiesFromClasspath("scrum/server/build.properties");
-		return properties.getProperty("build.date");
+		String date = properties.getProperty("date");
+		if ("@build-date@".equals(date)) date = Time.now().toString();
+		return date;
 	}
 
 	public static ScrumWebApplication get() {

@@ -310,6 +310,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			wikipageModel.addReference("project", getProjectModel()).setMaster(true);
 			wikipageModel.addProperty("name", String.class).setMandatory(true).setSearchable(true);
 			wikipageModel.addProperty("text", String.class).setSearchable(true);
+			getApplicationModel().addCreateAction(wikipageModel);
+			wikipageModel.addAction("DeleteWikipage");
 		}
 		return wikipageModel;
 	}
