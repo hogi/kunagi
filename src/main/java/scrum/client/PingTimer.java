@@ -1,7 +1,5 @@
 package scrum.client;
 
-import ilarkesto.gwt.client.GwtLogger;
-
 import com.google.gwt.user.client.Timer;
 
 public class PingTimer extends Timer {
@@ -24,7 +22,7 @@ public class PingTimer extends Timer {
 		idle = (int) (idle * 0.2);
 		if (idle < MIN_DELAY) idle = MIN_DELAY;
 		if (idle > MAX_DELAY) idle = MAX_DELAY;
-		GwtLogger.DEBUG("new:", idle);
+		scheduleRepeating((int) idle);
 	}
 
 }
