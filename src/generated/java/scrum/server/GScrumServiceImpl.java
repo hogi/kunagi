@@ -38,6 +38,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onCreateEntity(WebSession session, java.lang.String type, java.util.Map properties);
     protected abstract void onDeleteEntity(WebSession session, java.lang.String entityId);
     protected abstract void onRequestEntityByReference(WebSession session, java.lang.String reference);
+    protected abstract void onSetSelectedEntitysIds(WebSession session, java.util.Set ids);
     protected abstract void onSleep(WebSession session, long millis);
 
 
@@ -321,6 +322,24 @@ public abstract class GScrumServiceImpl
             onRequestEntityByReference(session, reference);
         } catch (Throwable t) {
             handleServiceMethodException("requestEntityByReference",t);
+            throw new RuntimeException(t);
+        }
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public scrum.client.DataTransferObject setSelectedEntitysIds(java.util.Set ids) {
+        LOG.debug("setSelectedEntitysIds");
+        WebSession session = (WebSession) getSession();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:setSelectedEntitysIds");
+        context.bindCurrentThread();
+        try {
+            onSetSelectedEntitysIds(session, ids);
+        } catch (Throwable t) {
+            handleServiceMethodException("setSelectedEntitysIds",t);
             throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();

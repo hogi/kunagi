@@ -167,6 +167,12 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		}
 	}
 
+	public void setUsersSelectedEntities(Project project, User user, Set<String> ids) {
+		for (WebSession session : getSessionsByProject(project)) {
+			session.getNextData().setUsersSelectedEntitiesIds(user.getId(), ids);
+		}
+	}
+
 	@Override
 	protected AWebSession createWebSession(HttpServletRequest httpRequest) {
 		return autowire(new WebSession(context, httpRequest));

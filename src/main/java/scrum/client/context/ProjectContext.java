@@ -4,6 +4,12 @@ import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.User;
@@ -36,7 +42,6 @@ public class ProjectContext extends AContext {
 	private static ProjectContext singleton;
 
 	private ProjectSidebarWidget sidebar = new ProjectSidebarWidget();
-
 	private ProjectOverviewWidget projectOverview;
 	private TaskOverviewWidget taskOverview;
 	private WhiteboardWidget whiteboard;
@@ -52,6 +57,7 @@ public class ProjectContext extends AContext {
 	private WidgetsTesterWidget widgetsTester;
 
 	private User highlightedUser;
+	private Map<String, Set<String>> usersSelectedEntitysIds = new HashMap<String, Set<String>>();
 
 	public ProjectContext() {
 		assert singleton == null;
@@ -85,6 +91,43 @@ public class ProjectContext extends AContext {
 		navigator.addItem(Img.bundle.sprint16(), "Next Sprint", getNextSprint());
 		navigator.addItem(Img.bundle.test16(), "Personal Preferences", getProjectUserConfig());
 		navigator.addItem(Img.bundle.test16(), "WidgetsTester", getWidgetsTester());
+	}
+
+	public Set<String> getSelectedEntitysIds(User user) {
+		Set<String> ids = usersSelectedEntitysIds.get(user.getId());
+		if (ids == null) {
+			ids = new HashSet<String>();
+			usersSelectedEntitysIds.put(user.getId(), ids);
+		}
+		return ids;
+	}
+
+	public void addSelectedEntityId(String id) {
+		User user = ScrumGwtApplication.get().getUser();
+		Set<String> ids = usersSelectedEntitysIds.get(user.getId());
+		if (ids == null) {
+			ids = new HashSet<String>();
+			usersSelectedEntitysIds.put(user.getId(), ids);
+		}
+		ids.add(id);
+		ScrumGwtApplication.get().callSetSelectedEntitysIds(ids);
+	}
+
+	public void removeSelectedEntityId(String id) {
+		User user = ScrumGwtApplication.get().getUser();
+		Set<String> ids = usersSelectedEntitysIds.get(user.getId());
+		if (ids == null) {
+			ids = new HashSet<String>();
+			usersSelectedEntitysIds.put(user.getId(), ids);
+		}
+		ids.remove(id);
+		ScrumGwtApplication.get().callSetSelectedEntitysIds(ids);
+	}
+
+	public void updateUsersSelectedEntitysIds(Map<String, Set<String>> usersIds) {
+		for (Map.Entry<String, Set<String>> entry : usersIds.entrySet()) {
+			usersSelectedEntitysIds.put(entry.getKey(), entry.getValue());
+		}
 	}
 
 	public void highlightUser(User user) {

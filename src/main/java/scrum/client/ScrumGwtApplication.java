@@ -61,6 +61,11 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			if (pingTimer != null) pingTimer.schedule();
 		}
 
+		if (dto.usersSelectedEntitysIds != null) {
+			ProjectContext.get().updateUsersSelectedEntitysIds(dto.usersSelectedEntitysIds);
+			Ui.get().update();
+		}
+
 		if (dto.onlineTeamMembersIds != null) {
 			GwtLogger.DEBUG("onlineTeamMembersIds:", dto.onlineTeamMembersIds);
 			project.setOnlineTeamMembersIds(dto.onlineTeamMembersIds);

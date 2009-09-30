@@ -23,6 +23,7 @@ import ilarkesto.mda.model.GwtServiceModel;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ScrumModelApplication extends AGeneratorApplication {
 
@@ -245,7 +246,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectUserConfigModel.addReference("project", getProjectModel()).setMaster(true);
 			projectUserConfigModel.addReference("user", getUserModel()).setMaster(true);
 			projectUserConfigModel.addProperty("color", String.class);
-			projectUserConfigModel.addSetProperty("selectedEntitysIds", String.class);
 		}
 		return projectUserConfigModel;
 	}
@@ -346,6 +346,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				Map.class);
 			gwtServiceModel.addMethod("deleteEntity").addParameter("entityId", String.class);
 			gwtServiceModel.addMethod("requestEntityByReference").addParameter("reference", String.class);
+			gwtServiceModel.addMethod("setSelectedEntitysIds").addParameter("ids", Set.class);
 			gwtServiceModel.addMethod("sleep").addParameter("millis", long.class);
 		}
 		return gwtServiceModel;

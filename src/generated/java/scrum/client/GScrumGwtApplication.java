@@ -166,6 +166,14 @@ public abstract class GScrumGwtApplication
         callRequestEntityByReference(reference,  null);
     }
 
+    public final void callSetSelectedEntitysIds(java.util.Set ids,  Runnable callback) {
+        getScrumService().setSelectedEntitysIds(ids,  new DefaultCallback<DataTransferObject>(callback));
+    }
+
+    public final void callSetSelectedEntitysIds(java.util.Set ids) {
+        callSetSelectedEntitysIds(ids,  null);
+    }
+
     public final void callSleep(long millis,  Runnable callback) {
         getScrumService().sleep(millis,  new DefaultCallback<DataTransferObject>(callback));
     }

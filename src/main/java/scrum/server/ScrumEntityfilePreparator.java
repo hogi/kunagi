@@ -23,17 +23,14 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 	public void prepareEntityfile(File file, Class type, String alias) {
 
 		try {
-			if ("_template_".equals(alias)) prepare_template_(file);
-			if ("task".equals(alias)) prepareTask(file);
+			if ("_template_".equalsIgnoreCase(alias)) prepare_template_(file);
+			if ("projectUserConfig".equalsIgnoreCase(alias)) prepareProjectUserConfig(file);
 		} catch (Throwable ex) {
 			throw new RuntimeException(ex);
 		}
 	}
 
-	/**
-	 * example
-	 */
-	private void prepareTask(File file) throws IOException {
+	private void prepareProjectUserConfig(File file) throws IOException {
 		boolean modified = false;
 
 		Document doc;
@@ -44,9 +41,9 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 		}
 		Element root = doc.getRootElement();
 
-		Element notice = root.getChild("notice");
-		if (notice != null) {
-			notice.setName("description");
+		Element ids = root.getChild("selectedEntitysIds");
+		if (ids != null) {
+			root.removeContent(ids);
 			modified = true;
 		}
 

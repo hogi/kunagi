@@ -5,11 +5,12 @@ import ilarkesto.di.Context;
 import ilarkesto.logging.Logger;
 import ilarkesto.webapp.AWebSession;
 
+import java.util.HashSet;
+
 import javax.servlet.http.HttpServletRequest;
 
 import scrum.client.DataTransferObject;
 import scrum.client.PingTimer;
-import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.User;
 import scrum.server.project.Project;
 
@@ -44,22 +45,11 @@ public class WebSession extends AWebSession {
 		this.project = project;
 	}
 
-	public void clearUsersSelectedEntities() {
-		if (user == null) return;
-		if (project == null) return;
-
-		ProjectUserConfig userConfig = project.getUserConfig(user);
-		userConfig.clearSelectedEntitysIds();
-
-		for (AWebSession s : ScrumWebApplication.get().getOtherSessionsByProject(this)) {
-			s.sendToClient(userConfig);
-		}
-	}
-
 	@Override
 	protected void onInvalidate() {
 		ScrumWebApplication.get().updateOnlineTeamMembers(getProject());
-		clearUsersSelectedEntities();
+		if (user != null && project != null)
+			ScrumWebApplication.get().setUsersSelectedEntities(project, user, new HashSet<String>(0));
 
 		setUser(null);
 		setProject(null);

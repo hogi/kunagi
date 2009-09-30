@@ -8,7 +8,6 @@ import ilarkesto.gwt.client.ButtonWidget;
 import java.util.Set;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
 import scrum.client.context.ProjectContext;
 import scrum.client.dnd.BlockDndMarkerWidget;
@@ -257,17 +256,15 @@ public abstract class ABlockWidget<O> extends AWidget {
 
 	private void updateSelectedStatus() {
 		if (ProjectContext.isActive()) {
+			ProjectContext context = ProjectContext.get();
 			O o = getObject();
 			if (o instanceof AGwtEntity) {
 				String id = ((AGwtEntity) o).getId();
-				ProjectUserConfig projectConfig = ScrumGwtApplication.get().getUser().getProjectConfig();
-				Set<String> selectedEntitysIds = projectConfig.getSelectedEntitysIds();
 				if (extended) {
-					selectedEntitysIds.add(id);
+					context.addSelectedEntityId(id);
 				} else {
-					selectedEntitysIds.remove(id);
+					context.removeSelectedEntityId(id);
 				}
-				projectConfig.setSelectedEntitysIds(selectedEntitysIds);
 			}
 		}
 	}

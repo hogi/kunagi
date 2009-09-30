@@ -10,7 +10,9 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import scrum.server.admin.User;
@@ -60,9 +62,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	private void onStartSession(WebSession session) {
 		session.clearRemoteEntities();
-		session.clearUsersSelectedEntities();
 		session.getNextData().applicationInfo = webApplication.getApplicationInfo();
 		session.getNextData().entityIdBase = UUID.randomUUID().toString();
+	}
+
+	@Override
+	protected void onSetSelectedEntitysIds(WebSession session, Set ids) {
+		webApplication.setUsersSelectedEntities(session.getProject(), session.getUser(), ids);
 	}
 
 	@Override
@@ -202,7 +208,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	protected void onCloseProject(WebSession session) {
 		Project project = session.getProject();
-		session.clearUsersSelectedEntities();
+		webApplication.setUsersSelectedEntities(project, session.getUser(), new HashSet<String>(0));
 		session.clearRemoteEntities();
 
 		session.setProject(null);

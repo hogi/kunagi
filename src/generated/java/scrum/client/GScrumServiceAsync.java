@@ -50,6 +50,8 @@ public interface GScrumServiceAsync {
 
     void requestEntityByReference(java.lang.String reference, AsyncCallback<DataTransferObject> callback);
 
+    void setSelectedEntitysIds(java.util.Set ids, AsyncCallback<DataTransferObject> callback);
+
     void sleep(long millis, AsyncCallback<DataTransferObject> callback);
 
 }

@@ -50,6 +50,8 @@ public interface GScrumService
 
     DataTransferObject requestEntityByReference(java.lang.String reference);
 
+    DataTransferObject setSelectedEntitysIds(java.util.Set ids);
+
     DataTransferObject sleep(long millis);
 
 }
