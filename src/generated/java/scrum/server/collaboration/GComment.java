@@ -39,7 +39,7 @@ public abstract class GComment
         properties.put("parentId", this.parentId);
         properties.put("authorId", this.authorId);
         properties.put("text", this.text);
-        properties.put("dateAndTime", this.dateAndTime);
+        properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
     }
 
     public int compareTo(Comment other) {
@@ -211,6 +211,7 @@ public abstract class GComment
     }
 
     protected final void updateDateAndTime(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.DateAndTime((String)value);
         setDateAndTime((ilarkesto.base.time.DateAndTime)value);
     }
 
