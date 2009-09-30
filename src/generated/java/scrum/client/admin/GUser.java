@@ -126,6 +126,25 @@ public abstract class GUser
         return equals(this.currentProjectId, currentProject);
     }
 
+    // --- color ---
+
+    private java.lang.String color ;
+
+    public final java.lang.String getColor() {
+        return this.color ;
+    }
+
+    public final User setColor(java.lang.String color) {
+        if (isColor(color)) return (User)this;
+        this.color = color ;
+        propertyChanged("color", this.color);
+        return (User)this;
+    }
+
+    public final boolean isColor(java.lang.String color) {
+        return equals(this.color, color);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -133,6 +152,7 @@ public abstract class GUser
         admin  = (Boolean) props.get("admin");
         email  = (java.lang.String) props.get("email");
         currentProjectId = (String) props.get("currentProjectId");
+        color  = (java.lang.String) props.get("color");
     }
 
     @Override
@@ -142,6 +162,7 @@ public abstract class GUser
         properties.put("admin", this.admin);
         properties.put("email", this.email);
         properties.put("currentProjectId", this.currentProjectId);
+        properties.put("color", this.color);
     }
 
 }

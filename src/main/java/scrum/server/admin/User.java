@@ -1,6 +1,10 @@
 package scrum.server.admin;
 
 import ilarkesto.base.Crypt;
+import ilarkesto.base.Utl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class User extends GUser {
 
@@ -28,8 +32,32 @@ public class User extends GUser {
 	}
 
 	@Override
+	public void ensureIntegrity() {
+		super.ensureIntegrity();
+		if (!isColorSet()) setColor(getDefaultColor());
+	}
+
+	@Override
 	public String toString() {
 		return getName();
 	}
 
+	public static String getDefaultColor() {
+		return Utl.randomElement(getDefaultColors());
+	}
+
+	public static List<String> getDefaultColors() {
+		List<String> colors = new ArrayList<String>();
+		colors.add("black");
+		colors.add("darkred");
+		colors.add("darkgreen");
+		colors.add("darkblue");
+		colors.add("darkorange");
+		colors.add("darkorchid");
+		colors.add("darkslateblue");
+		colors.add("darkgray");
+		colors.add("orange");
+		colors.add("green");
+		return colors;
+	}
 }

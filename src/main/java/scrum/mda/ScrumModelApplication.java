@@ -227,6 +227,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.addProperty("admin", boolean.class);
 			userModel.addProperty("email", String.class).setSearchable(true);
 			userModel.addReference("currentProject", getProjectModel());
+			userModel.addProperty("color", String.class);
 			getApplicationModel().addCreateAction(userModel);
 			userModel.addAction("DeleteUser");
 		}

@@ -40,6 +40,7 @@ public abstract class GUser
         properties.put("admin", this.admin);
         properties.put("email", this.email);
         properties.put("currentProjectId", this.currentProjectId);
+        properties.put("color", this.color);
     }
 
     public int compareTo(User other) {
@@ -209,6 +210,41 @@ public abstract class GUser
         setCurrentProject(value == null ? null : (scrum.server.project.Project)projectDao.getById((String)value));
     }
 
+    // -----------------------------------------------------------
+    // - color
+    // -----------------------------------------------------------
+
+    private java.lang.String color;
+
+    public final java.lang.String getColor() {
+        return color;
+    }
+
+    public final void setColor(java.lang.String color) {
+        color = prepareColor(color);
+        if (isColor(color)) return;
+        this.color = color;
+        fireModified();
+    }
+
+    protected java.lang.String prepareColor(java.lang.String color) {
+        color = Str.removeUnreadableChars(color);
+        return color;
+    }
+
+    public final boolean isColorSet() {
+        return this.color != null;
+    }
+
+    public final boolean isColor(java.lang.String color) {
+        if (this.color == null && color == null) return true;
+        return this.color != null && this.color.equals(color);
+    }
+
+    protected final void updateColor(Object value) {
+        setColor((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -218,6 +254,7 @@ public abstract class GUser
             if (property.equals("admin")) updateAdmin(value);
             if (property.equals("email")) updateEmail(value);
             if (property.equals("currentProjectId")) updateCurrentProject(value);
+            if (property.equals("color")) updateColor(value);
         }
     }
 

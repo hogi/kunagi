@@ -41,6 +41,8 @@ public abstract class GUserDao
         emailsCache = null;
         usersByCurrentProjectCache.clear();
         currentProjectsCache = null;
+        usersByColorCache.clear();
+        colorsCache = null;
     }
 
     @Override
@@ -204,6 +206,46 @@ public abstract class GUserDao
 
         public boolean test(User e) {
             return e.isCurrentProject(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - color
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<User>> usersByColorCache = new Cache<java.lang.String,Set<User>>(
+            new Cache.Factory<java.lang.String,Set<User>>() {
+                public Set<User> create(java.lang.String color) {
+                    return getEntities(new IsColor(color));
+                }
+            });
+
+    public final Set<User> getUsersByColor(java.lang.String color) {
+        return usersByColorCache.get(color);
+    }
+    private Set<java.lang.String> colorsCache;
+
+    public final Set<java.lang.String> getColors() {
+        if (colorsCache == null) {
+            colorsCache = new HashSet<java.lang.String>();
+            for (User e : getEntities()) {
+                if (e.isColorSet()) colorsCache.add(e.getColor());
+            }
+        }
+        return colorsCache;
+    }
+
+    private static class IsColor implements Predicate<User> {
+
+        private java.lang.String value;
+
+        public IsColor(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return e.isColor(value);
         }
 
     }

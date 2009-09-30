@@ -53,6 +53,24 @@ public class UserConfigWidget extends AWidget {
 			}
 		});
 		fields.add("Password", new PasswordChangeWidget());
+		fields.add("Default Color", new ATextViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerText(user.getColor());
+				getViewer().getElement().getStyle().setProperty("color", user.getColor());
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setEditorText(user.getColor());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				user.setColor(getEditorText());
+			}
+		});
 
 		return new GroupWidget("Global Preferences", fields);
 	}
