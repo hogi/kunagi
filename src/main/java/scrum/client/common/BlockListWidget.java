@@ -11,7 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import scrum.client.GenericPredicate;
-import scrum.client.animation.AppearAnimation;
 import scrum.client.dnd.BlockDndMarkerWidget;
 import scrum.client.dnd.BlockListDropAction;
 import scrum.client.dnd.DndManager;
@@ -222,15 +221,12 @@ public final class BlockListWidget<O> extends AWidget {
 	private void addBlocks(int toIndex, ABlockWidget<O>... blocks) {
 		GwtLogger.DEBUG("Adding blocks to", toIndex, "->", blocks.length);
 		int oldSize = table.getRowCount();
-		AppearAnimation a = new AppearAnimation(100, blocks);
 		for (int i = 0; i < blocks.length; i++) {
 			assert blocks[i] != null;
 			table.insertRow(toIndex + i);
 			table.setWidget(toIndex + i, 0, blocks[i]);
 			blocks[i].update();
 		}
-		a.run(500);
-
 		assert table.getRowCount() == oldSize + blocks.length;
 	}
 
