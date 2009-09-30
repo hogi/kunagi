@@ -43,7 +43,6 @@ public abstract class GScrumServiceImpl
 
 
     public scrum.client.DataTransferObject ping() {
-        LOG.debug("ping");
         WebSession session = (WebSession) getSession();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
         context.setName("gwt-srv:ping");
