@@ -33,7 +33,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	private PingTimer pingTimer;
 
 	public void onModuleLoad() {
-
 		// TODO remove workaround if issue is fixed
 		// workaround for GWT issue 1813
 		// http://code.google.com/p/google-web-toolkit/issues/detail?id=1813
