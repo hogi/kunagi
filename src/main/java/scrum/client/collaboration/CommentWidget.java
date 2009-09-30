@@ -2,6 +2,7 @@ package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
+import scrum.client.ScrumGwtApplication;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -40,6 +41,12 @@ public class CommentWidget extends AWidget {
 			protected void onViewerUpdate() {
 				setViewerText(comment.getText());
 			}
+
+			@Override
+			public boolean isEditable() {
+				return comment.getAuthor().equals(ScrumGwtApplication.get().getUser());
+			}
+
 		};
 
 		FlowPanel panel = new FlowPanel();
@@ -51,7 +58,7 @@ public class CommentWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-
+		editor.update();
 	}
 
 }

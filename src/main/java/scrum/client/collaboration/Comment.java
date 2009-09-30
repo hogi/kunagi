@@ -1,5 +1,7 @@
 package scrum.client.collaboration;
 
+import ilarkesto.gwt.client.DateAndTime;
+
 import java.util.Map;
 
 import scrum.client.ScrumGwtApplication;
@@ -9,6 +11,8 @@ public class Comment extends GComment {
 
 	public Comment(Requirement parent) {
 		setParent(parent);
+		setText("no comment");
+		setDateAndTime(DateAndTime.now());
 		setAuthor(ScrumGwtApplication.get().getUser());
 	}
 
