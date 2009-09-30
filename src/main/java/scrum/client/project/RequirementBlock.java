@@ -5,6 +5,8 @@ import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
 import ilarkesto.gwt.client.GwtLogger;
+import scrum.client.collaboration.CommentsWidget;
+import scrum.client.collaboration.CreateCommentAction;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
@@ -15,13 +17,18 @@ import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 
 public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implements TrashSupport, ClipboardSupport {
 
+	private FlowPanel container = new FlowPanel();
+
 	private Requirement requirement;
 
 	private FieldsWidget fields;
+
+	private CommentsWidget commentsWidget;
 
 	@Override
 	protected Requirement getObject() {
@@ -52,6 +59,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 		addMenuAction(new SetRequirementDirtyAction(requirement));
 		addMenuAction(new SetRequirementCleanAction(requirement));
 		addMenuAction(new DeleteRequirementAction(requirement));
+		addMenuAction(new CreateCommentAction(requirement));
 	}
 
 	private AbstractImagePrototype getProperIcon() {
@@ -148,12 +156,18 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 				setText(requirement.isSprintSet() ? requirement.getSprint().toString() : "-");
 			}
 		});
+
+		container.add(fields);
+
+		commentsWidget = new CommentsWidget(requirement);
+		container.add(commentsWidget);
 	}
 
 	@Override
 	protected void onUpdateBody() {
 		fields.update();
-		setContent(fields);
+		commentsWidget.update();
+		setContent(container);
 	}
 
 	public Image getClipboardIcon() {
