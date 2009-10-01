@@ -8,7 +8,6 @@ import scrum.client.GenericPredicate;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
 import scrum.client.dnd.BlockListDropAction;
-import scrum.client.dnd.MoveDropAction;
 import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -28,7 +27,7 @@ public class TaskListWidget extends AWidget {
 	}
 
 	public TaskListWidget(TaskBlockContainer container) {
-		this(container, new MoveDropAction());
+		this(container, null);
 	}
 
 	public TaskListWidget(TaskBlockContainer container, BlockListDropAction<Task> dropAction) {

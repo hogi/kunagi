@@ -35,25 +35,11 @@ public class BlockDropController implements DropController {
 		if (draggable instanceof ABlockWidget) {
 			// move inside list
 			ABlockWidget draggedBlock = (ABlockWidget) draggable;
-			int fromIndex = targetList.indexOf(draggedBlock);
-			int toIndex = targetList.indexOf(targetBlock);
+			int fromIndex = targetList.indexOfBlock(draggedBlock);
+			int toIndex = targetList.indexOfBlock(targetBlock);
 			if (fromIndex > toIndex) toIndex++;
 			if (isHigher(area, location)) toIndex--;
 			targetList.drop(draggedBlock, toIndex);
-		} else if (draggable instanceof ClipboardItemWidget) {
-			// move from clipboard
-			ClipboardItemWidget item = (ClipboardItemWidget) draggable;
-
-			int fromIndex = targetList.indexOf(item.getPayload());
-			if (fromIndex < 0) {
-				// TODO move data
-			}
-
-			int toIndex = targetList.indexOf(targetBlock);
-			if (fromIndex > toIndex) toIndex++;
-			if (isHigher(area, location)) toIndex--;
-			targetList.drop(item.getPayload(), toIndex);
-			item.removeFromClipboard();
 		}
 	}
 

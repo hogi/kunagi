@@ -15,9 +15,6 @@ import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
@@ -56,20 +53,8 @@ public class WidgetsTesterWidget extends AWidget {
 
 	private void testBlockList() {
 		final BlockListWidget<String> list = new BlockListWidget<String>(TestBlock.FACTORY);
-		list.addObjects("Element A");
-		list.addObjects("Element B");
-		list.addObjects("Element C");
-		list.addObjects("Element D");
-		list.addObjects("Element E");
+		list.setObjects("Element A", "Element B", "Element C", "Element D", "Element E");
 		list.update();
-		addTest("test", new Button("click", new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				// list.addBlock("new " + System.currentTimeMillis());
-				// list.removeRow(5);
-				list.move(list.getBlock(4), 3);
-			}
-		}));
 		addTest("BlockList", list);
 	}
 

@@ -109,8 +109,8 @@ public class ProjectContext extends AContext {
 			ids = new HashSet<String>();
 			usersSelectedEntitysIds.put(user.getId(), ids);
 		}
-		ids.add(id);
-		ScrumGwtApplication.get().callSetSelectedEntitysIds(ids);
+		boolean added = ids.add(id);
+		if (added) ScrumGwtApplication.get().callSetSelectedEntitysIds(ids);
 	}
 
 	public void removeSelectedEntityId(String id) {
@@ -120,8 +120,8 @@ public class ProjectContext extends AContext {
 			ids = new HashSet<String>();
 			usersSelectedEntitysIds.put(user.getId(), ids);
 		}
-		ids.remove(id);
-		ScrumGwtApplication.get().callSetSelectedEntitysIds(ids);
+		boolean removed = ids.remove(id);
+		if (removed) ScrumGwtApplication.get().callSetSelectedEntitysIds(ids);
 	}
 
 	public void updateUsersSelectedEntitysIds(Map<String, Set<String>> usersIds) {

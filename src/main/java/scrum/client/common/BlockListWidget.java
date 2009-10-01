@@ -1,24 +1,20 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
+import ilarkesto.gwt.client.ObjectMappedFlowPanel;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import scrum.client.GenericPredicate;
 import scrum.client.dnd.BlockDndMarkerWidget;
 import scrum.client.dnd.BlockListDropAction;
 import scrum.client.dnd.DndManager;
-import scrum.client.dnd.MoveDropAction;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -29,7 +25,7 @@ public final class BlockListWidget<O> extends AWidget {
 
 	// private static final Logger LOG = Logger.get(BlockListWidget.class);
 
-	private FlexTable table;
+	private ObjectMappedFlowPanel<O, ABlockWidget<O>> list;
 	private boolean dndSorting = true;
 	private Comparator<O> autoSorter;
 	private BlockWidgetFactory<O> blockWidgetFactory;
@@ -39,17 +35,16 @@ public final class BlockListWidget<O> extends AWidget {
 	private BlockDndMarkerWidget dndMarkerBottom;
 	private FlowPanel panel;
 	private GenericPredicate<O> predicate;
-	private boolean sortingFlag;
-
-	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory) {
-		this(blockWidgetFactory, new MoveDropAction<O>());
-	}
 
 	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory, BlockListDropAction<O> dropAction) {
 		this.dropAction = dropAction;
 		this.blockWidgetFactory = blockWidgetFactory;
 
 		dndMarkerBottom = new BlockDndMarkerWidget();
+	}
+
+	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory) {
+		this(blockWidgetFactory, null);
 	}
 
 	public void setSelectionManager(BlockListSelectionManager selectionManager) {
@@ -59,15 +54,20 @@ public final class BlockListWidget<O> extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		table = new FlexTable();
-		table.setCellPadding(0);
-		table.setCellSpacing(0);
-		table.setStyleName("BlockListWidget-table");
-		table.addClickHandler(new TableClickHandler());
+		list = new ObjectMappedFlowPanel<O, ABlockWidget<O>>(
+				new ObjectMappedFlowPanel.WidgetFactory<O, ABlockWidget<O>>() {
+
+					public ABlockWidget<O> createWidget(O object) {
+						ABlockWidget<O> block = blockWidgetFactory.createBlock();
+						block.setObject(object);
+						block.setList(BlockListWidget.this);
+						return block;
+					}
+				});
 
 		panel = new FlowPanel();
 		panel.setStyleName("BlockListWidget");
-		panel.add(table);
+		panel.add(list);
 		panel.add(dndMarkerBottom);
 		return panel;
 	}
@@ -84,41 +84,17 @@ public final class BlockListWidget<O> extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		for (Iterator<ABlockWidget<O>> it = widgetIterator(); it.hasNext();) {
-			it.next().update();
+		for (ABlockWidget<O> block : list.getWidgets()) {
+			block.update();
 		}
-		if (autoSorter != null) sort(autoSorter);
 	}
 
 	public ABlockWidget<O> getBlock(int row) {
-		if (row < 0) return null;
-		ABlockWidget<O> block = (ABlockWidget<O>) table.getWidget(row, 0);
-		assert block != null : "Block at row " + row + " of " + table.getRowCount() + " is null";
-		return block;
+		return list.getWidget(row);
 	}
 
 	public ABlockWidget<O> getBlock(O object) {
-		for (Iterator<ABlockWidget<O>> it = widgetIterator(); it.hasNext();) {
-			ABlockWidget<O> block = it.next();
-			if (block.getObject().equals(object)) return block;
-		}
-		return null;
-	}
-
-	public final void sort(Comparator<O> comparator) {
-		sortingFlag = true;
-		List<O> objects = getObjects();
-		List<O> sortedObjects = new ArrayList<O>(objects);
-		Collections.sort(sortedObjects, comparator);
-		int size = size();
-		for (int i = 0; i < size; i++) {
-			O sortedObject = sortedObjects.get(i);
-			int index = objects.indexOf(sortedObject);
-			if (index != i) {
-				move(getBlock(sortedObject), i);
-			}
-		}
-		sortingFlag = false;
+		return list.getWidget(object);
 	}
 
 	public void setMoveObserver(BlockMoveObserver<O> orderObserver) {
@@ -140,136 +116,58 @@ public final class BlockListWidget<O> extends AWidget {
 
 	public final void clear() {
 		initialize();
-		int count = table.getRowCount();
-		for (int i = count - 1; i >= 0; i--) {
-			table.removeRow(i);
+		list.clear();
+	}
+
+	public final void setObjects(O... objects) {
+		setObjects(Gwt.toList(objects));
+	}
+
+	public final void setObjects(List<O> newObjects) {
+		initialize();
+		if (autoSorter != null) {
+			Collections.sort(newObjects, autoSorter);
 		}
-		table.clear();
-		assert table.getRowCount() == 0;
+		list.set(newObjects);
+		update();
 	}
 
 	public final void setObjects(Collection<O> newObjects) {
 		initialize();
-
-		Collection<O> objects = getObjects();
-
-		// add new objects if not already existing
-		List<O> objectsToAdd = null;
-		for (O newObject : newObjects) {
-			if (objects.contains(newObject)) continue;
-			if (objectsToAdd == null) objectsToAdd = new ArrayList<O>();
-			objectsToAdd.add(newObject);
+		if (autoSorter != null) {
+			setObjects(Gwt.toList(newObjects));
+			return;
 		}
-		if (objectsToAdd != null) addObjects((O[]) objectsToAdd.toArray());
-
-		if (objects.size() != newObjects.size()) {
-			// remove existing objects, which are not in the new list
-			List<O> objectsToRemove = null;
-			for (O object : objects) {
-				if (newObjects.contains(object)) continue;
-				if (objectsToRemove == null) objectsToRemove = new ArrayList<O>();
-				objectsToRemove.add(object);
-			}
-			if (objectsToRemove != null) {
-				for (O object : objectsToRemove)
-					removeObjects(object);
-			}
-		}
-
-		assert table.getRowCount() == newObjects.size();
-
+		list.set(newObjects);
 		update();
 	}
 
-	public final void addObject(O object, boolean select) {
-		addObjects(object);
-
-		if (select) extendObject(object);
-	}
-
-	public final void addObjects(O... objects) {
-		initialize();
-
-		ABlockWidget<O>[] blocks = new ABlockWidget[objects.length];
-		for (int i = 0; i < blocks.length; i++) {
-			assert objects[i] != null;
-			blocks[i] = blockWidgetFactory.createBlock();
-			blocks[i].setObject(objects[i]);
-			blocks[i].setList(this);
-		}
-
-		if (autoSorter == null) {
-			addBlocks(0, blocks);
-		} else {
-			// Insert blocks one by at the right index
-			for (ABlockWidget<O> block : blocks) {
-				O newObject = block.getObject();
-				int index = 0;
-				Iterator<O> it = objectIterator();
-				while (it.hasNext()) {
-					O o = it.next();
-					if (autoSorter.compare(newObject, o) <= 0) {
-						break;
-					}
-					index++;
-				}
-				addBlocks(index, block);
-			}
-		}
-	}
-
-	private void addBlocks(int toIndex, ABlockWidget<O>... blocks) {
-		GwtLogger.DEBUG("Adding blocks to", toIndex, "->", blocks.length);
-		int oldSize = table.getRowCount();
-		for (int i = 0; i < blocks.length; i++) {
-			assert blocks[i] != null;
-			table.insertRow(toIndex + i);
-			table.setWidget(toIndex + i, 0, blocks[i]);
-			blocks[i].update();
-		}
-		assert table.getRowCount() == oldSize + blocks.length;
-	}
-
-	public final void move(ABlockWidget<O> block, int toRow) {
-		if (block == null) throw new IllegalArgumentException("block == null");
-		int fromRow = indexOf(block);
-		if (fromRow < 0) throw new IllegalArgumentException("Block not in list: " + block);
-		if (fromRow == toRow) return;
-		int oldSize = table.getRowCount();
-		removeRows(fromRow);
-		addBlocks(toRow, block);
-
-		assert oldSize == table.getRowCount();
-
-		if (!sortingFlag) {
-			if (moveObserver != null) moveObserver.onBlockMoved();
-			if (autoSorter != null) sort(autoSorter);
-		}
-
+	public final void move(O object, int toRow) {
+		list.move(toRow, object);
+		if (moveObserver != null) moveObserver.onBlockMoved();
 	}
 
 	public final void drop(ABlockWidget<O> block, int toIndex) {
-		if (block == null) throw new IllegalArgumentException("block == null");
-		int fromIndex = block.getList().indexOf(block);
-		dropAction.execute(block, block.getList(), fromIndex, this, toIndex);
-	}
-
-	public final O getObject(int row) {
-		return getBlock(row).getObject();
+		GwtLogger.DEBUG("Dropping to index", toIndex, "->", block);
+		assert block != null;
+		if (block.getList() == this) {
+			move(block.getObject(), toIndex);
+			return;
+		}
+		int fromIndex = block.getList().indexOfBlock(block);
+		dropAction.execute(block.getObject());
 	}
 
 	public final int size() {
-		return table.getRowCount();
+		return list.size();
 	}
 
-	public final int indexOf(ABlockWidget<O> block) {
-		return indexOf(block.getObject());
+	public final int indexOfBlock(ABlockWidget<O> block) {
+		return indexOfObject(block.getObject());
 	}
 
-	public final int indexOf(O object) {
-		for (BlockListObjectIterator<O> it = objectIterator(); it.hasNext();)
-			if (it.next().equals(object)) return it.getIndex();
-		return -1;
+	private final int indexOfObject(O object) {
+		return list.indexOfObject(object);
 	}
 
 	public final void extendRow(int row, boolean exclusive) {
@@ -294,36 +192,15 @@ public final class BlockListWidget<O> extends AWidget {
 	}
 
 	public final void collapseObject(O object) {
-		collapseRow(indexOf(object));
+		collapseRow(indexOfObject(object));
 	}
 
 	public final void scrollToObject(O object) {
 		getBlock(object).getElement().scrollIntoView();
 	}
 
-	public final void removeObjects(O... objects) {
-		int[] rows = new int[objects.length];
-		for (int i = 0; i < rows.length; i++) {
-			rows[i] = indexOf(objects[i]);
-		}
-		removeRows(rows);
-	}
-
-	public final void removeRows(int... rows) {
-		GwtLogger.DEBUG("Removing rows:", rows);
-		int oldSize = table.getRowCount();
-
-		for (int row : rows) {
-			if (row < 0 || row >= size()) return;
-
-			table.removeRow(row);
-		}
-
-		assert table.getRowCount() == oldSize - rows.length;
-	}
-
 	public final void extendBlock(ABlockWidget<O> block, boolean exclusive) {
-		int idx = indexOf(block);
+		int idx = indexOfBlock(block);
 		extendRow(idx, exclusive);
 		assert isExtended(block.getObject());
 	}
@@ -333,7 +210,7 @@ public final class BlockListWidget<O> extends AWidget {
 	}
 
 	public final void extendObject(O object, boolean exclusive) {
-		int idx = indexOf(object);
+		int idx = indexOfObject(object);
 		if (idx < 0) return;
 		extendRow(idx, exclusive);
 		assert isExtended(object);
@@ -359,37 +236,31 @@ public final class BlockListWidget<O> extends AWidget {
 		return getBlock(object).isExtended();
 	}
 
-	public final boolean contains(ABlockWidget<O> block) {
-		return contains(block.getObject());
-	}
-
 	public final boolean contains(O object) {
-		for (Iterator<O> it = objectIterator(); it.hasNext();)
-			if (it.next().equals(object)) return true;
-		return false;
+		return list.containsObject(object);
 	}
 
 	public final void collapseAll() {
-		for (Iterator<ABlockWidget<O>> it = widgetIterator(); it.hasNext();) {
-			it.next().setExtended(false);
+		for (ABlockWidget<O> block : list.getWidgets()) {
+			block.setExtended(false);
 		}
 	}
 
 	private ABlockWidget<O> getPreviousBlock(ABlockWidget<O> block) {
-		int idx = indexOf(block);
+		int idx = indexOfBlock(block);
 		if (idx < 1) return null;
 		return getBlock(idx - 1);
 	}
 
 	private ABlockWidget<O> getNextBlock(ABlockWidget<O> block) {
-		int idx = indexOf(block);
+		int idx = indexOfBlock(block);
 		if (idx < 0 || idx > size() - 2) return null;
 		return getBlock(idx + 1);
 	}
 
 	public void deactivateDndMarkers() {
-		for (Iterator<ABlockWidget<O>> it = widgetIterator(); it.hasNext();) {
-			it.next().deactivateDndMarkers();
+		for (ABlockWidget<O> block : list.getWidgets()) {
+			block.deactivateDndMarkers();
 		}
 		dndMarkerBottom.setActive(false);
 	}
@@ -427,27 +298,8 @@ public final class BlockListWidget<O> extends AWidget {
 		dndMarkerBottom.setActive(true);
 	}
 
-	private final class TableClickHandler implements ClickHandler {
-
-		public void onClick(ClickEvent event) {
-		// Cell cell = table.getCellForEvent(event);
-		// if (cell == null) return;
-		// int row = cell.getRowIndex();
-		// if (row == selectedRow) {
-		// // nop
-		// } else {
-		// selectRow(row);
-		// }
-		}
-
-	}
-
 	public List<O> getObjects() {
-		List<O> ret = new ArrayList<O>(size());
-		for (Iterator<O> it = objectIterator(); it.hasNext();) {
-			ret.add(it.next());
-		}
-		return ret;
+		return list.getObjects();
 	}
 
 	public boolean acceptsDrop(ABlockWidget<O> block) {
@@ -468,8 +320,7 @@ public final class BlockListWidget<O> extends AWidget {
 	}
 
 	private void updateTaskHighlighting() {
-		for (Iterator<ABlockWidget<O>> it = widgetIterator(); it.hasNext();) {
-			ABlockWidget<O> block = it.next();
+		for (ABlockWidget<O> block : list.getWidgets()) {
 			if (predicate != null && predicate.contains(block.getObject()))
 				block.addStyleName("highlighted");
 			else block.removeStyleName("highlighted");
@@ -484,67 +335,6 @@ public final class BlockListWidget<O> extends AWidget {
 	public void clearTaskHighlighting() {
 		this.predicate = null;
 		updateTaskHighlighting();
-	}
-
-	public BlockListObjectIterator<O> objectIterator() {
-		initialize();
-		return new BlockListObjectIterator<O>(table);
-	}
-
-	public Iterator<ABlockWidget<O>> widgetIterator() {
-		initialize();
-		return new BlockListWidgetIterator<ABlockWidget<O>>(table);
-	}
-
-	private class BlockListObjectIterator<O> implements Iterator<O> {
-
-		BlockListWidgetIterator<ABlockWidget<O>> widgetIterator;
-
-		public BlockListObjectIterator(FlexTable table) {
-			widgetIterator = new BlockListWidgetIterator<ABlockWidget<O>>(table);
-		}
-
-		public boolean hasNext() {
-			return widgetIterator.hasNext();
-		}
-
-		public O next() {
-			return widgetIterator.next().getObject();
-		}
-
-		public void remove() {
-			widgetIterator.remove();
-		}
-
-		public int getIndex() {
-			return widgetIterator.getIndex();
-		}
-	}
-
-	private class BlockListWidgetIterator<W> implements Iterator<W> {
-
-		int i = -1;
-		final FlexTable table;
-
-		public BlockListWidgetIterator(FlexTable table) {
-			this.table = table;
-		}
-
-		public boolean hasNext() {
-			return i < table.getRowCount() - 1;
-		}
-
-		public W next() {
-			return (W) table.getWidget(++i, 0);
-		}
-
-		public void remove() {
-			table.removeRow(i);
-		}
-
-		public int getIndex() {
-			return i;
-		}
 	}
 
 }
