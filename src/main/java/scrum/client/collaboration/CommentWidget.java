@@ -10,8 +10,6 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CommentWidget extends AWidget {
 
-	private Label label;
-
 	private ARichtextViewEditWidget editor;
 
 	private Comment comment;
@@ -22,8 +20,18 @@ public class CommentWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		label = new Label(comment.getAuthor().getName());
-		label.setStyleName("UserStatusWidget");
+		Label author = new Label(comment.getAuthor().getName());
+		author.setStyleName("CommentWidget-header-author");
+		String color = ScrumGwtApplication.get().getProject().getUserConfig(comment.getAuthor()).getColor();
+		author.getElement().getStyle().setProperty("color", color);
+
+		Label date = new Label(comment.getDateAndTime().toString());
+		date.setStyleName("CommentWidget-header-date");
+
+		FlowPanel header = new FlowPanel();
+		header.setStyleName("CommentWidget-header");
+		header.add(author);
+		header.add(date);
 
 		editor = new ARichtextViewEditWidget() {
 
@@ -50,7 +58,8 @@ public class CommentWidget extends AWidget {
 		};
 
 		FlowPanel panel = new FlowPanel();
-		panel.add(label);
+		panel.setStyleName("CommentWidget");
+		panel.add(header);
 		panel.add(editor);
 
 		return panel;
@@ -59,6 +68,10 @@ public class CommentWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		editor.update();
+	}
+
+	public void activateEditor() {
+		editor.switchToEditMode();
 	}
 
 }

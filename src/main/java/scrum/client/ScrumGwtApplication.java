@@ -63,8 +63,10 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 		if (dto.usersSelectedEntitysIds != null) {
 			lastDataReceiveTime = System.currentTimeMillis();
-			ProjectContext.get().updateUsersSelectedEntitysIds(dto.usersSelectedEntitysIds);
-			Ui.get().update();
+			if (ProjectContext.isActive()) {
+				ProjectContext.get().updateUsersSelectedEntitysIds(dto.usersSelectedEntitysIds);
+				Ui.get().update();
+			}
 		}
 
 		if (dto.onlineTeamMembersIds != null) {

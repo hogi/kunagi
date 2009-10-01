@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
 import ilarkesto.gwt.client.GwtLogger;
+import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.collaboration.CreateCommentAction;
 import scrum.client.common.ABlockWidget;
@@ -190,10 +191,15 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 		return requirement;
 	}
 
+	public void activateCommentEditor(Comment comment) {
+		commentsWidget.activateCommentEditor(comment);
+	}
+
 	public static BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {
 
 		public RequirementBlock createBlock() {
 			return new RequirementBlock();
 		}
 	};
+
 }

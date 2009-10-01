@@ -62,6 +62,11 @@ a {cursor: pointer;}
 .UserStatusWidget {text-decoration: line-through; font-style: italic;}
 .UserStatusWidget-online {text-decoration: none; font-style: normal;}
 
+.CommentsWidget {margin: 0px 5px 5px 5px; Xmax-height: 500px;}
+.CommentWidget {margin-top: 5px;}
+.CommentWidget-header-author {float: left; margin: 0px 5px 0px 2px;}
+.CommentWidget-header-date {color: #333;}
+
 /***** Toolbar *****/
 
 .ButtonWidget { }
@@ -76,7 +81,6 @@ a {cursor: pointer;}
 
 .BlockListWidget {padding: 5px; min-height: 100px;}
 .WhiteboardWidget-requirement-list {padding: 0px; min-height: 5px;}
-.BlockListWidget-table {width: 100%;}
 
 .ABlockWidget {color: black;}
 

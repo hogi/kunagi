@@ -13,6 +13,7 @@ import java.util.Set;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.User;
+import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.WikiWidget;
 import scrum.client.img.Img;
 import scrum.client.impediments.Impediment;
@@ -151,6 +152,10 @@ public class ProjectContext extends AContext {
 	@Override
 	public Widget getWorkareaWidget() {
 		return projectOverview;
+	}
+
+	public void activateCommentEditor(Comment comment) {
+		getProductBacklog().activateCommentEditor(comment);
 	}
 
 	public void showEntity(AGwtEntity entity) {

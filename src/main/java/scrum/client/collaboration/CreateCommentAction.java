@@ -1,5 +1,6 @@
 package scrum.client.collaboration;
 
+import scrum.client.context.ProjectContext;
 import scrum.client.project.Requirement;
 
 public class CreateCommentAction extends GCreateCommentAction {
@@ -17,8 +18,8 @@ public class CreateCommentAction extends GCreateCommentAction {
 
 	@Override
 	protected void onExecute() {
-		parent.createNewComment();
-		// ProjectContext.get().showIssueList(issue);
+		Comment comment = parent.createNewComment();
+		ProjectContext.get().activateCommentEditor(comment);
 	}
 
 }
