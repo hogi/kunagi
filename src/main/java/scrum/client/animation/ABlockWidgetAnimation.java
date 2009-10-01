@@ -1,5 +1,6 @@
 package scrum.client.animation;
 
+import ilarkesto.gwt.client.animation.AObservableAnimation;
 import scrum.client.common.ABlockWidget;
 
 import com.google.gwt.user.client.ui.Widget;

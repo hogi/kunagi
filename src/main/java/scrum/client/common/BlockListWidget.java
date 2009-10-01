@@ -61,6 +61,7 @@ public final class BlockListWidget<O> extends AWidget {
 						ABlockWidget<O> block = blockWidgetFactory.createBlock();
 						block.setObject(object);
 						block.setList(BlockListWidget.this);
+						block.update();
 						return block;
 					}
 				});
@@ -142,8 +143,8 @@ public final class BlockListWidget<O> extends AWidget {
 		update();
 	}
 
-	public final void move(O object, int toRow) {
-		list.move(toRow, object);
+	public final void move(O object, int toRow, boolean animate) {
+		list.move(toRow, object, animate);
 		if (moveObserver != null) moveObserver.onBlockMoved();
 	}
 
@@ -151,7 +152,7 @@ public final class BlockListWidget<O> extends AWidget {
 		GwtLogger.DEBUG("Dropping to index", toIndex, "->", block);
 		assert block != null;
 		if (block.getList() == this) {
-			move(block.getObject(), toIndex);
+			move(block.getObject(), toIndex, true);
 			return;
 		}
 		int fromIndex = block.getList().indexOfBlock(block);
