@@ -2,6 +2,7 @@ package scrum.client.context;
 
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.ObjectMappedFlowPanel;
 import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 
@@ -311,6 +312,7 @@ public class ProjectContext extends AContext {
 	}
 
 	public static void destroy() {
+		ObjectMappedFlowPanel.objectHeights.clear();
 		singleton = null;
 	}
 

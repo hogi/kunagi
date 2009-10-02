@@ -32,7 +32,8 @@ a {cursor: pointer;}
 .HeaderWidget {background: #F2F5FE url("header_bg.jpg");}
 .HeaderWidget .title {font-size: 12px; font-weight: bold; color: white; padding-left: 5px;}
 .HeaderWidget-controlPanel {line-height: 22px;}
-.HeaderWidget .ButtonWidget a {font-size: 8px; line-height: 8px;}
+.HeaderWidget .ToolbarWidget {margin: 3px 0px 0px 10px;}
+.HeaderWidget .ToolbarWidget .ButtonWidget a {font-size: 10px; line-height: 10px;}
 
 /***** Sidebar *****/
 
@@ -76,7 +77,7 @@ a {cursor: pointer;}
 .ButtonWidget-disabled a { cursor: default; color: #888; background: #DFD2CF url("button_bg.png"); border: 1px solid gray;}
 .ButtonWidget-enabled a:hover {background: #FFD22E url("button_bg.png"); color: #009; border: 1px solid #FFB510;}
 .ToolbarWidget {}
-.ToolbarWidget .ButtonWidget {float: left; margin-right: 3px;}
+.ToolbarWidget-element {float: left; margin-right: 3px;}
 
 /***** Block List *****/
 
