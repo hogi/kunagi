@@ -19,6 +19,7 @@ a {cursor: pointer;}
 .ImageAnchor {}
 .ImageAnchor img {float: left; margin-right: 3px;}
 .ImageAnchor .text { display: inline;}
+.BugMarker {display: block; margin: 3px; padding: 3px; border: 1px solid red; background: #FEE; color: darkred; font-weight: bold; font-size: 10px; }
 
 .floatClear {clear: both;}
 
@@ -69,10 +70,11 @@ a {cursor: pointer;}
 
 /***** Toolbar *****/
 
-.ButtonWidget { }
-.ButtonWidget a { display: block; font-weight: bold; padding: 3px; text-decoration: none; cursor: pointer; white-space: nowrap; background: #FFC20E url("button_bg.png"); border: 1px solid orange; }
-.ButtonWidget a:visited {color: white;}
-.ButtonWidget a:hover { display: block; font-weight: bold; padding: 3px; text-decoration: none; cursor: pointer; white-space: nowrap; background: #FF8000 url("button_bg.png"); border: 1px solid orange; }
+.ButtonWidget {}
+.ButtonWidget a { display: block; font-weight: bold; padding: 3px; text-decoration: none; white-space: nowrap; }
+.ButtonWidget-enabled a { cursor: pointer;  background: #FFC20E url("button_bg.png"); border: 1px solid orange;}
+.ButtonWidget-disabled a { cursor: default; color: #888; background: #DFD2CF url("button_bg.png"); border: 1px solid gray;}
+.ButtonWidget-enabled a:hover {background: #FFD22E url("button_bg.png"); color: #009; border: 1px solid #FFB510;}
 .ToolbarWidget {}
 .ToolbarWidget .ButtonWidget {float: left; margin-right: 3px;}
 

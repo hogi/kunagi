@@ -1,12 +1,15 @@
 package scrum.client.test;
 
+import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.ImageAnchor;
 import ilarkesto.gwt.client.MultiSelectionWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
+import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
@@ -17,6 +20,7 @@ import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -35,8 +39,8 @@ public class WidgetsTesterWidget extends AWidget {
 		testFields();
 		testMultiSelection();
 		testNavigator();
-		// testToolbars();
-		// testButtons();
+		testToolbar();
+		testButtons();
 		// testImageAnchor();
 
 		return panel;
@@ -202,32 +206,28 @@ public class WidgetsTesterWidget extends AWidget {
 		addTest("NavigatorWidget", navigator);
 	}
 
-	// private void testToolbars() {
-	// ToolbarWidget vertical = new ToolbarWidget();
-	// vertical.add(new ButtonWidget(Img.bundle.test16().createImage(), "icon and text"));
-	// vertical.add(new ButtonWidget("text only"));
-	// vertical.add(new ButtonWidget(Img.bundle.test16().createImage(), null));
-	// addTest("ToolbarWidget:vertical", vertical);
-	//
-	// ToolbarWidget horizontal = new ToolbarWidget(true);
-	// horizontal.add(new ButtonWidget(Img.bundle.test16().createImage(), "icon and text"));
-	// horizontal.add(new ButtonWidget("text only"));
-	// horizontal.add(new ButtonWidget(Img.bundle.test16().createImage(), null));
-	// addTest("ToolbarWidget:horizontal", horizontal);
-	// }
-	//
-	// private void testButtons() {
-	// addTest("ButtonWidget:text-only", new ButtonWidget("text only"));
-	// addTest("ButtonWidget:icon-only", new ButtonWidget(Img.bundle.test16().createImage(), null));
-	// addTest("ButtonWidget:icon-text", new ButtonWidget(Img.bundle.test16().createImage(),
-	// "icon and text"));
-	//
-	// FlowPanel multipleButtons = new FlowPanel();
-	// multipleButtons.add(new ButtonWidget("Button 1").update());
-	// multipleButtons.add(new ButtonWidget("Button 2").update());
-	// multipleButtons.add(new ButtonWidget("Button 3").update());
-	// addTest("multiple ButtonWidgets", multipleButtons);
-	// }
+	private void testToolbar() {
+		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar.add(new ButtonWidget(createAction(Img.bundle.test16().createImage(), "icon and text")));
+		toolbar.add(new ButtonWidget(createAction("text only")));
+		toolbar.add(new ButtonWidget(createAction(Img.bundle.test16().createImage(), null)));
+		addTest("ToolbarWidget", toolbar);
+	}
+
+	private void testButtons() {
+		addTest("ButtonWidget:text-only", new ButtonWidget(createAction("text only")));
+		addTest("ButtonWidget:icon-only", new ButtonWidget(createAction(Img.bundle.test16().createImage(), null)));
+		addTest("ButtonWidget:icon-text", new ButtonWidget(createAction(Img.bundle.test16().createImage(),
+			"icon and text")));
+		addTest("ButtonWidget:nonexecutable", new ButtonWidget(createAction(Img.bundle.test16().createImage(),
+			"icon and text", false)));
+
+		FlowPanel multipleButtons = new FlowPanel();
+		multipleButtons.add(new ButtonWidget(createAction("Button 1")).update());
+		multipleButtons.add(new ButtonWidget(createAction("Button 2")).update());
+		multipleButtons.add(new ButtonWidget(createAction("Button 3")).update());
+		addTest("multiple ButtonWidgets", multipleButtons);
+	}
 
 	private void testImageAnchor() {
 		ImageAnchor a = new ImageAnchor(Img.bundle.test16().createImage(), "click");
@@ -251,6 +251,42 @@ public class WidgetsTesterWidget extends AWidget {
 		section.add(new Label(title));
 		section.add(sectionContent);
 		panel.add(section);
+	}
+
+	private AAction createAction(String label) {
+		return createAction(null, label);
+	}
+
+	private AAction createAction(final Image icon, final String label) {
+		return createAction(icon, label, true);
+	}
+
+	private AAction createAction(final Image icon, final String label, final boolean executable) {
+		return new AAction() {
+
+			@Override
+			protected void onExecute() {}
+
+			@Override
+			public String getLabel() {
+				return label;
+			}
+
+			@Override
+			public Image getIcon() {
+				return icon;
+			}
+
+			@Override
+			public boolean isExecutable() {
+				return executable;
+			}
+
+			@Override
+			public String getTooltip() {
+				return "Tooltip for " + getLabel();
+			}
+		};
 	}
 
 	static class DummyAction extends AScrumAction {

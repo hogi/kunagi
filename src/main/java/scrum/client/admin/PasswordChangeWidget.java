@@ -2,7 +2,6 @@ package scrum.client.admin;
 
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AViewEditWidget;
-import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
@@ -17,7 +16,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class PasswordChangeWidget extends AViewEditWidget {
 
 	private FieldsWidget fields;
-	private ButtonWidget confirmButton;
 	private TextBox currentPasswordBox;
 	private TextBox newPasswordBox;
 	private TextBox newPasswordRepeatBox;
@@ -44,10 +42,10 @@ public class PasswordChangeWidget extends AViewEditWidget {
 		FlowPanel mainpanel = new FlowPanel();
 		mainpanel.setWidth("100%");
 		mainpanel.add(fields);
-		confirmButton = new ButtonWidget(new SaveChangesAction());
 		ToolbarWidget toolbar = new ToolbarWidget();
-		toolbar.add(confirmButton);
-		mainpanel.add(toolbar);
+		toolbar.addButton(new SaveChangesAction());
+		toolbar.addButton(new CancelAction());
+		mainpanel.add(toolbar.update());
 
 		return mainpanel;
 	}
@@ -91,6 +89,20 @@ public class PasswordChangeWidget extends AViewEditWidget {
 		@Override
 		protected void onExecute() {
 			submitEditor();
+		}
+
+	}
+
+	class CancelAction extends AAction {
+
+		@Override
+		public String getLabel() {
+			return "Cancel";
+		}
+
+		@Override
+		protected void onExecute() {
+			cancelEditor();
 		}
 
 	}

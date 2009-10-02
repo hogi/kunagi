@@ -76,7 +76,7 @@ public class HeaderWidget extends AWidget {
 		toolbar.addButton(new ChangeProjectAction());
 		toolbar.addButton(new LogoutAction());
 		toolbar.update();
-		controlPanel.add(toolbar);
+		controlPanel.add(toolbar.update());
 	}
 
 }

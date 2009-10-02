@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class RiskListWidget extends AWidget {
 
 	public BlockListWidget<Risk> list;
+	private ToolbarWidget toolbar;
 
 	@Override
 	protected Widget onInitialization() {
@@ -24,7 +25,7 @@ public class RiskListWidget extends AWidget {
 		list = new BlockListWidget<Risk>(RiskBlock.FACTORY);
 		list.setAutoSorter(new RiskComparator());
 
-		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateRiskAction());
 
 		FlowPanel panel = new FlowPanel();
@@ -37,6 +38,7 @@ public class RiskListWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		toolbar.update();
 		list.setObjects(ScrumGwtApplication.get().getProject().getRisks());
 	}
 

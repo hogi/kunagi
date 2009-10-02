@@ -14,11 +14,12 @@ import com.google.gwt.user.client.ui.Widget;
 public class QualityBacklogWidget extends AWidget {
 
 	public BlockListWidget<Quality> list;
+	private ToolbarWidget toolbar;
 
 	@Override
 	protected Widget onInitialization() {
 		list = new BlockListWidget<Quality>(QualityBlock.FACTORY);
-		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateQualityAction());
 
 		FlowPanel panel = new FlowPanel();
@@ -31,6 +32,7 @@ public class QualityBacklogWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		toolbar.update();
 		list.setObjects(ScrumGwtApplication.get().getProject().getQualitys());
 	}
 

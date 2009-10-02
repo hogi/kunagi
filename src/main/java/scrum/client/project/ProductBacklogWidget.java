@@ -18,7 +18,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProductBacklogWidget extends AWidget {
 
-	public BlockListWidget<Requirement> list;
+	private BlockListWidget<Requirement> list;
+	private ToolbarWidget toolbar;
 
 	@Override
 	protected Widget onInitialization() {
@@ -26,7 +27,7 @@ public class ProductBacklogWidget extends AWidget {
 		list.setAutoSorter(ScrumGwtApplication.get().getProject().getRequirementsOrderComparator());
 		list.setDndSorting(true);
 		list.setMoveObserver(new MoveObserver());
-		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateRequirementAction());
 
 		FlowPanel panel = new FlowPanel();
@@ -39,6 +40,7 @@ public class ProductBacklogWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		toolbar.update();
 		list.setObjects(ScrumGwtApplication.get().getProject().getRequirements());
 	}
 

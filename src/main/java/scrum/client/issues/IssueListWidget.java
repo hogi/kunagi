@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class IssueListWidget extends AWidget {
 
 	public BlockListWidget<Issue> list;
+	private ToolbarWidget toolbar;
 
 	@Override
 	protected Widget onInitialization() {
@@ -22,7 +23,7 @@ public class IssueListWidget extends AWidget {
 		list = new BlockListWidget<Issue>(IssueBlock.FACTORY);
 		list.setAutoSorter(Issue.REVERSE_DATE_COMPARATOR);
 
-		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateIssueAction());
 
 		FlowPanel panel = new FlowPanel();
@@ -35,6 +36,7 @@ public class IssueListWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		toolbar.update();
 		list.setObjects(ScrumGwtApplication.get().getProject().getIssues());
 	}
 

@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectSelectorWidget extends AWidget {
 
+	ToolbarWidget toolbar;
 	private BlockListWidget<Project> list;
 
 	@Override
@@ -22,7 +23,7 @@ public class ProjectSelectorWidget extends AWidget {
 		list = new BlockListWidget<Project>(ProjectBlock.FACTORY);
 		list.setAutoSorter(Project.LABEL_COMPARATOR);
 
-		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateProjectAction());
 
 		FlowPanel panel = new FlowPanel();
@@ -35,6 +36,7 @@ public class ProjectSelectorWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		toolbar.update();
 		list.setObjects(Dao.get().getProjects());
 	}
 

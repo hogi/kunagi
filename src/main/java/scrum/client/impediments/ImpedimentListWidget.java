@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class ImpedimentListWidget extends AWidget {
 
 	public BlockListWidget<Impediment> list;
+	private ToolbarWidget toolbar;
 
 	@Override
 	protected Widget onInitialization() {
@@ -22,7 +23,7 @@ public class ImpedimentListWidget extends AWidget {
 		list = new BlockListWidget<Impediment>(ImpedimentBlock.FACTORY);
 		list.setAutoSorter(Impediment.REVERSE_DATE_COMPARATOR);
 
-		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateImpedimentAction());
 
 		FlowPanel panel = new FlowPanel();
@@ -35,6 +36,7 @@ public class ImpedimentListWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		toolbar.update();
 		list.setObjects(ScrumGwtApplication.get().getProject().getImpediments());
 	}
 

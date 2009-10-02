@@ -68,7 +68,7 @@ public class WikiWidget extends AWidget {
 			editor.update();
 			panel.add(editor);
 		}
-		panel.add(toolbar);
+		panel.add(toolbar.update());
 
 	}
 

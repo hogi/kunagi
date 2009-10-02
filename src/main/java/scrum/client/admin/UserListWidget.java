@@ -14,13 +14,14 @@ import com.google.gwt.user.client.ui.Widget;
 public class UserListWidget extends AWidget {
 
 	public BlockListWidget<User> list;
+	private ToolbarWidget toolbar;
 
 	@Override
 	protected Widget onInitialization() {
 		list = new BlockListWidget<User>(UserBlock.FACTORY);
 		list.setAutoSorter(User.NAME_COMPARATOR);
 
-		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateUserAction());
 
 		FlowPanel panel = new FlowPanel();
@@ -33,6 +34,7 @@ public class UserListWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		toolbar.update();
 		list.setObjects(ScrumGwtApplication.get().getDao().getUsers());
 	}
 

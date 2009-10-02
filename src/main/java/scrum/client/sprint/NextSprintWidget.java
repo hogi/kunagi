@@ -20,10 +20,12 @@ public class NextSprintWidget extends AWidget {
 
 	private FieldsWidget fieldsWidget;
 
+	private ToolbarWidget toolbar;
+
 	@Override
 	protected Widget onInitialization() {
 
-		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar = new ToolbarWidget();
 		toolbar.addButton(new SwitchToNextSprintAction());
 
 		fieldsWidget = new FieldsWidget();
@@ -108,6 +110,7 @@ public class NextSprintWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		toolbar.update();
 		fieldsWidget.update();
 	}
 
