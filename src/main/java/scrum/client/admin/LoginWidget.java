@@ -33,7 +33,7 @@ public class LoginWidget extends AWidget implements LoginDataProvider {
 		password.setWidth("150px");
 		password.addKeyPressHandler(new InputKeyHandler());
 
-		ToolbarWidget toolbar = new ToolbarWidget(true);
+		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton(new LoginAction(this));
 
 		FieldsWidget fieldsWidget = new FieldsWidget();

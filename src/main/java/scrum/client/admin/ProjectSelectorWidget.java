@@ -22,7 +22,7 @@ public class ProjectSelectorWidget extends AWidget {
 		list = new BlockListWidget<Project>(ProjectBlock.FACTORY);
 		list.setAutoSorter(Project.LABEL_COMPARATOR);
 
-		ToolbarWidget toolbar = new ToolbarWidget(true);
+		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateProjectAction());
 
 		FlowPanel panel = new FlowPanel();

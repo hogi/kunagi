@@ -39,7 +39,7 @@ public class HeaderWidget extends AWidget {
 		currentUserLabel = new Label();
 		currentUserLabel.setStyleName("title");
 
-		toolbar = new ToolbarWidget(true);
+		toolbar = new ToolbarWidget();
 
 		controlPanel = new HorizontalPanel();
 		controlPanel.setStyleName("HeaderWidget-controlPanel");
@@ -72,7 +72,7 @@ public class HeaderWidget extends AWidget {
 		currentUserLabel.setText(text);
 
 		controlPanel.remove(toolbar);
-		toolbar = new ToolbarWidget(true);
+		toolbar = new ToolbarWidget();
 		toolbar.addButton(new ChangeProjectAction());
 		toolbar.addButton(new LogoutAction());
 		toolbar.update();

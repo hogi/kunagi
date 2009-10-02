@@ -35,7 +35,7 @@ public class WikiWidget extends AWidget {
 		navigPanel.add(pageNameBox);
 		titleLabel = new Label();
 		titleLabel.setStyleName("WikiWidget-title");
-		toolbar = new ToolbarWidget(true);
+		toolbar = new ToolbarWidget();
 		editor = new WikipageEditor();
 		dummyLabel = new Label();
 		dummyLabel.setStyleName("WikiWidget-dummy");

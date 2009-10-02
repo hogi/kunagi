@@ -22,7 +22,7 @@ public class IssueListWidget extends AWidget {
 		list = new BlockListWidget<Issue>(IssueBlock.FACTORY);
 		list.setAutoSorter(Issue.REVERSE_DATE_COMPARATOR);
 
-		ToolbarWidget toolbar = new ToolbarWidget(true);
+		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateIssueAction());
 
 		FlowPanel panel = new FlowPanel();

@@ -26,7 +26,7 @@ public class ProductBacklogWidget extends AWidget {
 		list.setAutoSorter(ScrumGwtApplication.get().getProject().getRequirementsOrderComparator());
 		list.setDndSorting(true);
 		list.setMoveObserver(new MoveObserver());
-		ToolbarWidget toolbar = new ToolbarWidget(true);
+		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateRequirementAction());
 
 		FlowPanel panel = new FlowPanel();

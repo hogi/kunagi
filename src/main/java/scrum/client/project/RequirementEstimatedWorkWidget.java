@@ -3,6 +3,7 @@ package scrum.client.project;
 import ilarkesto.gwt.client.ADropdownViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ClientConstants;
 import scrum.client.common.AScrumAction;
 
@@ -14,7 +15,7 @@ public class RequirementEstimatedWorkWidget extends AWidget {
 	private Requirement requirement;
 	private HorizontalPanel panel;
 	private EstimatedWorkWidget estimatedWork;
-	private ButtonWidget currentButton;
+	private ToolbarWidget toolbar;
 
 	public RequirementEstimatedWorkWidget(Requirement requirement) {
 		this.requirement = requirement;
@@ -22,26 +23,25 @@ public class RequirementEstimatedWorkWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-
 		estimatedWork = new EstimatedWorkWidget();
+		toolbar = new ToolbarWidget();
 
 		panel = new HorizontalPanel();
 		panel.setWidth("100%");
 		panel.add(estimatedWork);
+		panel.add(toolbar);
 		return panel;
 	}
 
 	@Override
 	protected void onUpdate() {
 		estimatedWork.update();
+		toolbar.clear();
 		AScrumAction action = requirement.isDirty() ? new SetRequirementCleanAction(requirement)
 				: new SetRequirementDirtyAction(requirement);
 		ButtonWidget newButton = action.isExecutable() ? new ButtonWidget(action) : null;
-		if (currentButton != null) panel.remove(currentButton);
 		if (newButton != null) {
-			panel.add(newButton);
-			newButton.update();
-			currentButton = newButton;
+			toolbar.add(newButton);
 		}
 	}
 

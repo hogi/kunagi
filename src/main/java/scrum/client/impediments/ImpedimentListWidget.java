@@ -22,7 +22,7 @@ public class ImpedimentListWidget extends AWidget {
 		list = new BlockListWidget<Impediment>(ImpedimentBlock.FACTORY);
 		list.setAutoSorter(Impediment.REVERSE_DATE_COMPARATOR);
 
-		ToolbarWidget toolbar = new ToolbarWidget(true);
+		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateImpedimentAction());
 
 		FlowPanel panel = new FlowPanel();

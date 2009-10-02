@@ -23,7 +23,7 @@ public class NextSprintWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 
-		ToolbarWidget toolbar = new ToolbarWidget(true);
+		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton(new SwitchToNextSprintAction());
 
 		fieldsWidget = new FieldsWidget();

@@ -45,7 +45,7 @@ public class PasswordChangeWidget extends AViewEditWidget {
 		mainpanel.setWidth("100%");
 		mainpanel.add(fields);
 		confirmButton = new ButtonWidget(new SaveChangesAction());
-		ToolbarWidget toolbar = new ToolbarWidget(true);
+		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.add(confirmButton);
 		mainpanel.add(toolbar);
 

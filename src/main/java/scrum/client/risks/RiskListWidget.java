@@ -24,7 +24,7 @@ public class RiskListWidget extends AWidget {
 		list = new BlockListWidget<Risk>(RiskBlock.FACTORY);
 		list.setAutoSorter(new RiskComparator());
 
-		ToolbarWidget toolbar = new ToolbarWidget(true);
+		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateRiskAction());
 
 		FlowPanel panel = new FlowPanel();

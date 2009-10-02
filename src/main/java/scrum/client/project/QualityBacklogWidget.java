@@ -18,7 +18,7 @@ public class QualityBacklogWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		list = new BlockListWidget<Quality>(QualityBlock.FACTORY);
-		ToolbarWidget toolbar = new ToolbarWidget(true);
+		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateQualityAction());
 
 		FlowPanel panel = new FlowPanel();
