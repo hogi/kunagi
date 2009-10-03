@@ -6,8 +6,8 @@ import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
 import scrum.client.context.AContext;
-import scrum.client.context.PublicContext;
 import scrum.client.context.ProjectContext;
+import scrum.client.context.PublicContext;
 import scrum.client.context.StartContext;
 
 import com.google.gwt.user.client.ui.Button;
@@ -27,7 +27,7 @@ public class Ui extends AWidget {
 	private static final Ui SINGLETON = new Ui();
 
 	private LockWidget locker;
-	private WaitWidget wait;
+	private LockInfoWidget lockInfo;
 	private SwitcherWidget sidebar;
 	private SwitcherWidget workarea;
 
@@ -35,7 +35,7 @@ public class Ui extends AWidget {
 	protected Widget onInitialization() {
 		setHeight100();
 
-		wait = new WaitWidget();
+		lockInfo = new LockInfoWidget();
 		sidebar = new SwitcherWidget(true);
 		workarea = new SwitcherWidget(true);
 
@@ -75,8 +75,14 @@ public class Ui extends AWidget {
 
 	public void lock(String message) {
 		GwtLogger.DEBUG("Locking UI:", message);
-		wait.setMessage(message);
-		locker.lock(wait);
+		lockInfo.showWait(message);
+		locker.lock(lockInfo);
+	}
+
+	public void abort(String message) {
+		GwtLogger.DEBUG("Locking UI for ABORT:", message);
+		lockInfo.showBug(message);
+		locker.lock(lockInfo);
 	}
 
 	public void unlock() {

@@ -72,8 +72,10 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		if (dto.onlineTeamMembersIds != null) {
 			lastDataReceiveTime = System.currentTimeMillis();
 			GwtLogger.DEBUG("onlineTeamMembersIds:", dto.onlineTeamMembersIds);
-			project.setOnlineTeamMembersIds(dto.onlineTeamMembersIds);
-			if (ProjectContext.isActive()) UsersStatusWidget.get().update();
+			if (ProjectContext.isActive()) {
+				project.setOnlineTeamMembersIds(dto.onlineTeamMembersIds);
+				UsersStatusWidget.get().update();
+			}
 		}
 
 		if (dto.entityIdBase != null) {
@@ -148,11 +150,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	@Override
 	protected void handleCommunicationError(Throwable ex) {
 		GwtLogger.ERROR("Communication Error:", ex);
-		if (project != null) {
-			postSystemMessage("Communication Error: " + ex.getMessage(), false);
-		} else {
-			ui.showError(ex.getMessage());
-		}
+		ui.abort("Lost connection to server, please reload.");
 	}
 
 	public void openProject(Project project) {

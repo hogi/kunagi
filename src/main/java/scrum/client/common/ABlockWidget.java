@@ -179,11 +179,6 @@ public abstract class ABlockWidget<O> extends AWidget {
 		contentWrapper.setWidget(content);
 	}
 
-	@Deprecated
-	protected final void setToolbar(Widget toolbar) {
-
-	}
-
 	protected final void setBlockTitle(String text) {
 		label.setText(text);
 	}
