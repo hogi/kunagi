@@ -42,13 +42,14 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 	}
 
 	@Override
-	protected void onCollapsedInitialization() {}
+	protected void onCollapsedInitialization() {
+		setIcon(Img.bundle.task16());
+	}
 
 	@Override
 	protected void onUpdateHead() {
 		setBlockTitle(task.getLongLabel());
 		setAdditionalStyleName(task.isDone() && isTaskOverview() ? "TaskBlock-taskClosed" : null);
-		setIcon(Img.bundle.task16());
 		addMenuAction(new ClaimTaskAction(task));
 		addMenuAction(new CloseTaskAction(task));
 		addMenuAction(new ReopenTaskAction(task));

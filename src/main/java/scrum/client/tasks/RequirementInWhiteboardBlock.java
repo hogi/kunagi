@@ -15,8 +15,6 @@ import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.CreateTaskAction;
 
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
-
 public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Requirement> {
 
 	private Requirement requirement;
@@ -34,17 +32,14 @@ public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Require
 	}
 
 	@Override
-	protected void onCollapsedInitialization() {}
+	protected void onCollapsedInitialization() {
+		setIcon(Img.bundle.requirement16());
+	}
 
 	@Override
 	protected void onUpdateHead() {
 		setBlockTitle(requirement.getReference() + " " + requirement.getLabel());
-		setIcon(getProperIcon());
 		addMenuAction(new CreateTaskAction(requirement));
-	}
-
-	private AbstractImagePrototype getProperIcon() {
-		return Img.bundle.requirement16();
 	}
 
 	@Override

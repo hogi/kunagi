@@ -33,13 +33,12 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 
 	@Override
 	protected void onCollapsedInitialization() {
-
+		setIcon(Img.bundle.risk16());
 	}
 
 	@Override
 	protected void onUpdateHead() {
 		setBlockTitle(risk.getLabel() + " [" + risk.getPriorityLabel() + "]");
-		setIcon(Img.bundle.risk16());
 		addMenuAction(new DeleteRiskAction(risk));
 	}
 

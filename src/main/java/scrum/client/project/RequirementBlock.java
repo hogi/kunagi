@@ -17,7 +17,6 @@ import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 
@@ -42,7 +41,9 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	}
 
 	@Override
-	protected void onCollapsedInitialization() {}
+	protected void onCollapsedInitialization() {
+		setIcon(Img.bundle.requirement16());
+	}
 
 	@Override
 	protected void onUpdateHead() {
@@ -54,17 +55,12 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 			style = "RequirementBlock-invalidForSprint";
 		}
 		setAdditionalStyleName(style);
-		setIcon(getProperIcon());
 		addMenuAction(new AddRequirementToCurrentSprintAction(requirement));
 		addMenuAction(new RemoveRequirementFromSprintAction(requirement));
 		addMenuAction(new SetRequirementDirtyAction(requirement));
 		addMenuAction(new SetRequirementCleanAction(requirement));
 		addMenuAction(new DeleteRequirementAction(requirement));
 		addMenuAction(new CreateCommentAction(requirement));
-	}
-
-	private AbstractImagePrototype getProperIcon() {
-		return Img.bundle.requirement16();
 	}
 
 	@Override

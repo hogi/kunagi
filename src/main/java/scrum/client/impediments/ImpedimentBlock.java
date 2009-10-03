@@ -30,12 +30,13 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	}
 
 	@Override
-	protected void onCollapsedInitialization() {}
+	protected void onCollapsedInitialization() {
+		setIcon(Img.bundle.impediment16());
+	}
 
 	@Override
 	protected void onUpdateHead() {
 		setBlockTitle("[" + impediment.getDate() + "] " + impediment.getLabel());
-		setIcon(Img.bundle.impediment16());
 		addMenuAction(new DeleteImpedimentAction(impediment));
 	}
 

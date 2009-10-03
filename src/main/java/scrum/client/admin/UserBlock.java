@@ -29,12 +29,12 @@ public class UserBlock extends AExtensibleBlockWidget<User> {
 	@Override
 	protected void onCollapsedInitialization() {
 		summary = new Label();
+		setIcon(Img.bundle.user16());
 	}
 
 	@Override
 	protected void onUpdateHead() {
 		setBlockTitle(user.getName());
-		setIcon(Img.bundle.user16());
 		summary.setText(user.getName());
 		setContent(null);
 		addMenuAction(new DeleteUserAction(user));

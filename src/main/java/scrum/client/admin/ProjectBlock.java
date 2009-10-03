@@ -35,12 +35,12 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 	@Override
 	protected void onCollapsedInitialization() {
 		content = new HTML();
+		setIcon(Img.bundle.project16());
 	}
 
 	@Override
 	protected void onUpdateHead() {
 		setBlockTitle(project.getLabel());
-		setIcon(Img.bundle.project16());
 
 		String description = project.getDescription();
 		if (description == null) description = "No description.";

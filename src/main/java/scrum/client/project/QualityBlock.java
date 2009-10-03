@@ -31,13 +31,12 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 
 	@Override
 	protected void onCollapsedInitialization() {
-
+		setIcon(Img.bundle.requirement16());
 	}
 
 	@Override
 	protected void onUpdateHead() {
 		setBlockTitle(quality.getLabel());
-		setIcon(Img.bundle.requirement16());
 		addMenuAction(new DeleteQualityAction(quality));
 	}
 

@@ -27,12 +27,13 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 	}
 
 	@Override
-	protected void onCollapsedInitialization() {}
+	protected void onCollapsedInitialization() {
+		setIcon(Img.bundle.issue16());
+	}
 
 	@Override
 	protected void onUpdateHead() {
 		setBlockTitle("[" + issue.getTypeLabel() + "] " + issue.getLabel());
-		setIcon(Img.bundle.issue16());
 		addMenuAction(new ConvertIssueToRequirementAction(issue));
 		addMenuAction(new ConvertIssueToQualityAction(issue));
 		addMenuAction(new DeleteIssueAction(issue));
