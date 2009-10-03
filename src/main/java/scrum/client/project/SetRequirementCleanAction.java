@@ -18,6 +18,7 @@ public class SetRequirementCleanAction extends GSetRequirementCleanAction {
 
 	@Override
 	public boolean isExecutable() {
+		if (requirement.isClosed()) return false;
 		if (!requirement.isDirty()) return false;
 		if (requirement.getEstimatedWork() == null) return false;
 		if (requirement.isInCurrentSprint()) return false;

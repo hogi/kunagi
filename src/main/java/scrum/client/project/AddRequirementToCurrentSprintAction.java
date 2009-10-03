@@ -20,6 +20,7 @@ public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurren
 
 	@Override
 	public boolean isExecutable() {
+		if (requirement.isClosed()) return false;
 		if (!requirement.isEstimatedWorkValid()) return false;
 		if (isCurrentSprint(requirement.getSprint())) return false;
 		return true;

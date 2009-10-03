@@ -101,6 +101,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addAction("RemoveRequirementFromSprint");
 			requirementModel.addAction("SetRequirementDirty");
 			requirementModel.addAction("SetRequirementClean");
+			requirementModel.addAction("CloseRequirement");
+			requirementModel.addAction("ReopenRequirement");
 		}
 		return requirementModel;
 	}

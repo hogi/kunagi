@@ -8,6 +8,8 @@ import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.img.Img;
+import scrum.client.project.CloseRequirementAction;
+import scrum.client.project.ReopenRequirementAction;
 import scrum.client.project.Requirement;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -40,6 +42,8 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	protected void onUpdateHead() {
 		setBlockTitle(requirement.getReference() + " " + requirement.getLabel());
 		setAdditionalStyleName(requirement.isDone() ? "RequirementInSprintBlock-done" : null);
+		addMenuAction(new CloseRequirementAction(requirement));
+		addMenuAction(new ReopenRequirementAction(requirement));
 		addMenuAction(new CreateTaskAction(requirement));
 	}
 

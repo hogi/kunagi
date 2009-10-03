@@ -18,6 +18,7 @@ public class SetRequirementDirtyAction extends GSetRequirementDirtyAction {
 
 	@Override
 	public boolean isExecutable() {
+		if (requirement.isClosed()) return false;
 		if (requirement.isDirty()) return false;
 		if (requirement.isInCurrentSprint()) return false;
 		return true;

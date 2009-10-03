@@ -49,7 +49,9 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	protected void onUpdateHead() {
 		setBlockTitle(requirement.getLongLabel());
 		String style = null;
-		if (requirement.isInCurrentSprint()) {
+		if (requirement.isClosed()) {
+			style = "RequirementBlock-closed";
+		} else if (requirement.isInCurrentSprint()) {
 			style = "RequirementBlock-inCurrentSprint";
 		} else if (!requirement.isValidForSprint()) {
 			style = "RequirementBlock-invalidForSprint";
@@ -57,6 +59,8 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 		setAdditionalStyleName(style);
 		addMenuAction(new AddRequirementToCurrentSprintAction(requirement));
 		addMenuAction(new RemoveRequirementFromSprintAction(requirement));
+		addMenuAction(new CloseRequirementAction(requirement));
+		addMenuAction(new ReopenRequirementAction(requirement));
 		addMenuAction(new SetRequirementDirtyAction(requirement));
 		addMenuAction(new SetRequirementCleanAction(requirement));
 		addMenuAction(new DeleteRequirementAction(requirement));
