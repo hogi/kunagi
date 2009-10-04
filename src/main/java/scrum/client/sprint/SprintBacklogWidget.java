@@ -30,6 +30,7 @@ public class SprintBacklogWidget extends AWidget {
 
 		remainingWork = new Label();
 		requirementList = new BlockListWidget<Requirement>(RequirementInSprintBlock.FACTORY);
+		requirementList.setAutoSorter(ScrumGwtApplication.get().getProject().getRequirementsOrderComparator());
 
 		view = new FlowPanel();
 		fieldsWidget = new FieldsWidget();
