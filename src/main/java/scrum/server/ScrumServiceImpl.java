@@ -24,6 +24,7 @@ import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
+import scrum.server.sprint.Sprint;
 import scrum.server.sprint.Task;
 
 public class ScrumServiceImpl extends GScrumServiceImpl {
@@ -106,10 +107,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 
 		if (!(entity instanceof Transient)) dao.saveEntity(entity);
-		session.sendToClient(entity);
 
-		// TODO do this only if clients are tracking this entity
-		sendToOtherSessionsByProject(session, entity);
+		sendToClients(session, entity);
 	}
 
 	@Override
@@ -158,12 +157,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 
 		sendToOtherSessionsByProject(session, entity);
-	}
-
-	private void sendToOtherSessionsByProject(WebSession session, AEntity entity) {
-		for (AWebSession s : webApplication.getOtherSessionsByProject(session)) {
-			s.sendToClient(entity);
-		}
 	}
 
 	@Override
@@ -220,10 +213,18 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	protected void onSwitchToNextSprint(WebSession session) {
 		assertProjectSelected(session);
 		Project project = session.getProject();
+		Sprint oldSprint = project.getCurrentSprint();
+		for (Requirement requirement : oldSprint.getRequirements()) {
+			if (!requirement.isClosed()) {
+				requirement.setDirty(true);
+				session.sendToClient(requirement);
+				sendToClients(session, requirement);
+			}
+		}
 		project.switchToNextSprint();
-		session.sendToClient(project);
-		session.sendToClient(project.getCurrentSprint());
-		session.sendToClient(project.getNextSprint());
+		sendToClients(session, project.getCurrentSprint());
+		sendToClients(session, project.getNextSprint());
+		sendToClients(session, project);
 	}
 
 	@Override
@@ -297,6 +298,17 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	// --- helper ---
+
+	private void sendToClients(WebSession session, AEntity entity) {
+		session.sendToClient(entity);
+		sendToOtherSessionsByProject(session, entity);
+	}
+
+	private void sendToOtherSessionsByProject(WebSession session, AEntity entity) {
+		for (AWebSession s : webApplication.getOtherSessionsByProject(session)) {
+			s.sendToClient(entity);
+		}
+	}
 
 	private void assertProjectSelected(WebSession session) {
 		if (session.getProject() == null) throw new RuntimeException("No project selected.");
