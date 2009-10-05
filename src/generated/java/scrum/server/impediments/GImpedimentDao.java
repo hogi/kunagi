@@ -44,8 +44,7 @@ public abstract class GImpedimentDao
         descriptionsCache = null;
         impedimentsBySolutionCache.clear();
         solutionsCache = null;
-        impedimentsBySolveDateCache.clear();
-        solveDatesCache = null;
+        impedimentsByClosedCache.clear();
     }
 
     @Override
@@ -265,41 +264,30 @@ public abstract class GImpedimentDao
     }
 
     // -----------------------------------------------------------
-    // - solveDate
+    // - closed
     // -----------------------------------------------------------
 
-    private final Cache<ilarkesto.base.time.Date,Set<Impediment>> impedimentsBySolveDateCache = new Cache<ilarkesto.base.time.Date,Set<Impediment>>(
-            new Cache.Factory<ilarkesto.base.time.Date,Set<Impediment>>() {
-                public Set<Impediment> create(ilarkesto.base.time.Date solveDate) {
-                    return getEntities(new IsSolveDate(solveDate));
+    private final Cache<Boolean,Set<Impediment>> impedimentsByClosedCache = new Cache<Boolean,Set<Impediment>>(
+            new Cache.Factory<Boolean,Set<Impediment>>() {
+                public Set<Impediment> create(Boolean closed) {
+                    return getEntities(new IsClosed(closed));
                 }
             });
 
-    public final Set<Impediment> getImpedimentsBySolveDate(ilarkesto.base.time.Date solveDate) {
-        return impedimentsBySolveDateCache.get(solveDate);
-    }
-    private Set<ilarkesto.base.time.Date> solveDatesCache;
-
-    public final Set<ilarkesto.base.time.Date> getSolveDates() {
-        if (solveDatesCache == null) {
-            solveDatesCache = new HashSet<ilarkesto.base.time.Date>();
-            for (Impediment e : getEntities()) {
-                if (e.isSolveDateSet()) solveDatesCache.add(e.getSolveDate());
-            }
-        }
-        return solveDatesCache;
+    public final Set<Impediment> getImpedimentsByClosed(boolean closed) {
+        return impedimentsByClosedCache.get(closed);
     }
 
-    private static class IsSolveDate implements Predicate<Impediment> {
+    private static class IsClosed implements Predicate<Impediment> {
 
-        private ilarkesto.base.time.Date value;
+        private boolean value;
 
-        public IsSolveDate(ilarkesto.base.time.Date value) {
+        public IsClosed(boolean value) {
             this.value = value;
         }
 
         public boolean test(Impediment e) {
-            return e.isSolveDate(value);
+            return value == e.isClosed();
         }
 
     }

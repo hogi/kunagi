@@ -145,23 +145,23 @@ public abstract class GImpediment
         return equals(this.solution, solution);
     }
 
-    // --- solveDate ---
+    // --- closed ---
 
-    private ilarkesto.gwt.client.Date solveDate ;
+    private boolean closed ;
 
-    public final ilarkesto.gwt.client.Date getSolveDate() {
-        return this.solveDate ;
+    public final boolean isClosed() {
+        return this.closed ;
     }
 
-    public final Impediment setSolveDate(ilarkesto.gwt.client.Date solveDate) {
-        if (isSolveDate(solveDate)) return (Impediment)this;
-        this.solveDate = solveDate ;
-        propertyChanged("solveDate", this.solveDate);
+    public final Impediment setClosed(boolean closed) {
+        if (isClosed(closed)) return (Impediment)this;
+        this.closed = closed ;
+        propertyChanged("closed", this.closed);
         return (Impediment)this;
     }
 
-    public final boolean isSolveDate(ilarkesto.gwt.client.Date solveDate) {
-        return equals(this.solveDate, solveDate);
+    public final boolean isClosed(boolean closed) {
+        return equals(this.closed, closed);
     }
 
     // --- update properties by map ---
@@ -173,8 +173,7 @@ public abstract class GImpediment
         date  =  dateAsString == null ? null : new ilarkesto.gwt.client.Date(dateAsString);
         description  = (java.lang.String) props.get("description");
         solution  = (java.lang.String) props.get("solution");
-        String solveDateAsString = (String) props.get("solveDate");
-        solveDate  =  solveDateAsString == null ? null : new ilarkesto.gwt.client.Date(solveDateAsString);
+        closed  = (Boolean) props.get("closed");
     }
 
     @Override
@@ -185,7 +184,7 @@ public abstract class GImpediment
         properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("description", this.description);
         properties.put("solution", this.solution);
-        properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
+        properties.put("closed", this.closed);
     }
 
 }

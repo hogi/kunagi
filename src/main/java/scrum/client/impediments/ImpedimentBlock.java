@@ -2,18 +2,14 @@ package scrum.client.impediments;
 
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
-import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.Image;
-
-public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implements TrashSupport, ClipboardSupport {
+public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implements TrashSupport {
 
 	private Impediment impediment;
 
@@ -37,6 +33,15 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	@Override
 	protected void onUpdateHead() {
 		setBlockTitle("[" + impediment.getDate() + "] " + impediment.getLabel());
+		String style = null;
+		if (impediment.isClosed()) {
+			style = "ImpedimentBlock-closed";
+		} else {
+			style = "ImpedimentBlock-open";
+		}
+		setAdditionalStyleName(style);
+		setIcon(Img.bundle.impediment16());
+		addMenuAction(new CloseImpedimentAction(impediment));
 		addMenuAction(new DeleteImpedimentAction(impediment));
 	}
 
@@ -104,18 +109,6 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	protected void onUpdateBody() {
 		fields.update();
 		setContent(fields);
-	}
-
-	public String getClipboardLabel() {
-		return impediment.getLabel();
-	}
-
-	public Image getClipboardIcon() {
-		return Img.bundle.impediment16().createImage();
-	}
-
-	public ABlockWidget getClipboardPayload() {
-		return this;
 	}
 
 	public AScrumAction getTrashAction() {

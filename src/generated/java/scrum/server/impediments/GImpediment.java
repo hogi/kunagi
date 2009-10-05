@@ -41,7 +41,7 @@ public abstract class GImpediment
         properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("description", this.description);
         properties.put("solution", this.solution);
-        properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
+        properties.put("closed", this.closed);
     }
 
     public int compareTo(Impediment other) {
@@ -240,38 +240,32 @@ public abstract class GImpediment
     }
 
     // -----------------------------------------------------------
-    // - solveDate
+    // - closed
     // -----------------------------------------------------------
 
-    private ilarkesto.base.time.Date solveDate;
+    private boolean closed;
 
-    public final ilarkesto.base.time.Date getSolveDate() {
-        return solveDate;
+    public final boolean isClosed() {
+        return closed;
     }
 
-    public final void setSolveDate(ilarkesto.base.time.Date solveDate) {
-        solveDate = prepareSolveDate(solveDate);
-        if (isSolveDate(solveDate)) return;
-        this.solveDate = solveDate;
+    public final void setClosed(boolean closed) {
+        closed = prepareClosed(closed);
+        if (isClosed(closed)) return;
+        this.closed = closed;
         fireModified();
     }
 
-    protected ilarkesto.base.time.Date prepareSolveDate(ilarkesto.base.time.Date solveDate) {
-        return solveDate;
+    protected boolean prepareClosed(boolean closed) {
+        return closed;
     }
 
-    public final boolean isSolveDateSet() {
-        return this.solveDate != null;
+    public final boolean isClosed(boolean closed) {
+        return this.closed == closed;
     }
 
-    public final boolean isSolveDate(ilarkesto.base.time.Date solveDate) {
-        if (this.solveDate == null && solveDate == null) return true;
-        return this.solveDate != null && this.solveDate.equals(solveDate);
-    }
-
-    protected final void updateSolveDate(Object value) {
-        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
-        setSolveDate((ilarkesto.base.time.Date)value);
+    protected final void updateClosed(Object value) {
+        setClosed((Boolean)value);
     }
 
     public void updateProperties(Map<?, ?> properties) {
@@ -284,7 +278,7 @@ public abstract class GImpediment
             if (property.equals("date")) updateDate(value);
             if (property.equals("description")) updateDescription(value);
             if (property.equals("solution")) updateSolution(value);
-            if (property.equals("solveDate")) updateSolveDate(value);
+            if (property.equals("closed")) updateClosed(value);
         }
     }
 

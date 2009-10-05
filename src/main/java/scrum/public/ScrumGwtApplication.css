@@ -112,6 +112,9 @@ a {cursor: pointer;}
 .RequirementInSprintBlock-done .ABlockWidget-title {background: #CEFDC5;}
 .TaskInRequirementBlock-taskClosed .ABlockWidget-title {background: #CEFDC5;}
 
+.ImpedimentBlock-open .ABlockWidget-title {background: #FDCEC5;}
+.ImpedimentBlock-closed .ABlockWidget-title {background: #CEFDC5;}
+
 /***** Panel *****/
 
 .element-PanelWidget {border: 2px solid #EEEEEE; background: white; }

@@ -192,9 +192,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			impedimentModel.addProperty("date", Date.class).setMandatory(true);
 			impedimentModel.addProperty("description", String.class);
 			impedimentModel.addProperty("solution", String.class);
-			impedimentModel.addProperty("solveDate", Date.class);
+			impedimentModel.addProperty("closed", boolean.class);
 			getApplicationModel().addCreateAction(impedimentModel);
 			impedimentModel.addAction("DeleteImpediment");
+			impedimentModel.addAction("CloseImpediment");
 		}
 		return impedimentModel;
 	}

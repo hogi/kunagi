@@ -21,20 +21,6 @@ public class Impediment extends GImpediment {
 		super(data);
 	}
 
-	public String getSummary() {
-		if (isSolved()) return "Solved.";
-		String solution = getSolution();
-		return (solution == null || "".equals(solution)) ? "Unsolved." : "Unsolved, with solution proposal.";
-	}
-
-	public boolean isSolved() {
-		return getSolveDate() != null;
-	}
-
-	public void setSolved() {
-		setSolveDate(Date.today());
-	}
-
 	@Override
 	public String toString() {
 		return getLabel();
