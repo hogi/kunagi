@@ -145,6 +145,7 @@ public final class BlockListWidget<O> extends AWidget {
 
 	public final void move(O object, int toRow, boolean animate) {
 		list.move(toRow, object, animate);
+		assert list.indexOfObject(object) == toRow;
 		if (moveObserver != null) moveObserver.onBlockMoved();
 	}
 
@@ -155,7 +156,6 @@ public final class BlockListWidget<O> extends AWidget {
 			move(block.getObject(), toIndex, true);
 			return;
 		}
-		int fromIndex = block.getList().indexOfBlock(block);
 		dropAction.execute(block.getObject());
 	}
 
@@ -250,13 +250,17 @@ public final class BlockListWidget<O> extends AWidget {
 	private ABlockWidget<O> getPreviousBlock(ABlockWidget<O> block) {
 		int idx = indexOfBlock(block);
 		if (idx < 1) return null;
-		return getBlock(idx - 1);
+		ABlockWidget<O> previous = getBlock(idx - 1);
+		assert list.indexOfObject(previous.getObject()) == list.indexOfObject(block.getObject()) - 1;
+		return previous;
 	}
 
 	private ABlockWidget<O> getNextBlock(ABlockWidget<O> block) {
 		int idx = indexOfBlock(block);
 		if (idx < 0 || idx > size() - 2) return null;
-		return getBlock(idx + 1);
+		ABlockWidget<O> next = getBlock(idx + 1);
+		assert list.indexOfObject(next.getObject()) == list.indexOfObject(block.getObject()) + 1;
+		return next;
 	}
 
 	public void deactivateDndMarkers() {
