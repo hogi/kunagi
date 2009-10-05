@@ -145,23 +145,23 @@ public abstract class GImpediment
         return equals(this.solution, solution);
     }
 
-    // --- closed ---
+    // --- solveDate ---
 
-    private boolean closed ;
+    private ilarkesto.gwt.client.Date solveDate ;
 
-    public final boolean isClosed() {
-        return this.closed ;
+    public final ilarkesto.gwt.client.Date getSolveDate() {
+        return this.solveDate ;
     }
 
-    public final Impediment setClosed(boolean closed) {
-        if (isClosed(closed)) return (Impediment)this;
-        this.closed = closed ;
-        propertyChanged("closed", this.closed);
+    public final Impediment setSolveDate(ilarkesto.gwt.client.Date solveDate) {
+        if (isSolveDate(solveDate)) return (Impediment)this;
+        this.solveDate = solveDate ;
+        propertyChanged("solveDate", this.solveDate);
         return (Impediment)this;
     }
 
-    public final boolean isClosed(boolean closed) {
-        return equals(this.closed, closed);
+    public final boolean isSolveDate(ilarkesto.gwt.client.Date solveDate) {
+        return equals(this.solveDate, solveDate);
     }
 
     // --- update properties by map ---
@@ -173,7 +173,8 @@ public abstract class GImpediment
         date  =  dateAsString == null ? null : new ilarkesto.gwt.client.Date(dateAsString);
         description  = (java.lang.String) props.get("description");
         solution  = (java.lang.String) props.get("solution");
-        closed  = (Boolean) props.get("closed");
+        String solveDateAsString = (String) props.get("solveDate");
+        solveDate  =  solveDateAsString == null ? null : new ilarkesto.gwt.client.Date(solveDateAsString);
     }
 
     @Override
@@ -184,7 +185,7 @@ public abstract class GImpediment
         properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("description", this.description);
         properties.put("solution", this.solution);
-        properties.put("closed", this.closed);
+        properties.put("solveDate", this.solveDate == null ? null : this.solveDate.toString());
     }
 
 }
