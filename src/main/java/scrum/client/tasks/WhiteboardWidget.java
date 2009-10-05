@@ -197,6 +197,14 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer, Use
 		selectionManager.select(task);
 	}
 
+	public boolean isShowOwner() {
+		return true;
+	}
+
+	public boolean isShowRequirement() {
+		return false;
+	}
+
 	private String hours(Integer i) {
 		return Gwt.formatHours(i);
 	}

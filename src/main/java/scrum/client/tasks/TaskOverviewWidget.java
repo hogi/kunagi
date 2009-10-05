@@ -69,4 +69,12 @@ public class TaskOverviewWidget extends AWidget implements TaskBlockContainer {
 		selectionManager.select(task);
 	}
 
+	public boolean isShowOwner() {
+		return false;
+	}
+
+	public boolean isShowRequirement() {
+		return true;
+	}
+
 }

@@ -103,8 +103,8 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	public String richtextToHtml(String text) {
 		if (Gwt.isEmpty(text)) return text;
 		String html = ScrumJs.regexTextToHtml(text);
-		html = html.replace("\r\n", "<br>\n");
 		html = html.replace("\n", "<br>\n");
+		html = html.replace("\r", "");
 		return html;
 	}
 

@@ -146,14 +146,14 @@ a {cursor: pointer;}
 /***** Fields *****/
 
 .fieldLabel {color: gray; line-height: 22px; white-space: nowrap;}
-.AFieldValueWidget {background: #F2F5FE; min-width: 16px; min-height: 16px; border: 1px dotted #CCCCCC; display: block; padding: 3px;}
+.AFieldValueWidget {background: white; min-width: 16px; min-height: 16px; border: 1px dotted white; display: block; padding: 3px;}
 .FieldsWidget {}
 .FieldsWidget-fieldLabel {color: gray; line-height: 22px; white-space: nowrap;}
 .FieldsWidget-fieldValue {}
 
 /***** Editables *****/
 
-.AViewEditWidget-viewer {cursor: pointer; background: #F2F5FE; min-width: 16px; min-height: 16px; border: 1px dotted #CCCCCC; display: block; padding: 3px;}
+.AViewEditWidget-viewer {cursor: pointer; background: #FAFDFF; min-width: 16px; min-height: 16px; border: 1px dotted #DDD; display: block; padding: 3px;}
 .AViewEditWidget-editor {}
 
 .AIntegerViewEditWidget .ButtonWidget a {font-size: 8px; line-height: 8px;}

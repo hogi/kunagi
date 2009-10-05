@@ -48,7 +48,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 	@Override
 	protected void onUpdateHead() {
-		setBlockTitle(task.getLongLabel());
+		setBlockTitle(task.getLongLabel(container.isShowOwner(), container.isShowRequirement()));
 		setAdditionalStyleName(task.isDone() && isTaskOverview() ? "TaskBlock-taskClosed" : null);
 		addMenuAction(new ClaimTaskAction(task));
 		addMenuAction(new CloseTaskAction(task));

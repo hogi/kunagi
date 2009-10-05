@@ -12,4 +12,8 @@ public interface TaskBlockContainer {
 
 	BlockListSelectionManager getSelectionManager();
 
+	boolean isShowRequirement();
+
+	boolean isShowOwner();
+
 }

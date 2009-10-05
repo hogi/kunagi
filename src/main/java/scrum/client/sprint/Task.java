@@ -30,11 +30,15 @@ public class Task extends GTask {
 		}
 	}
 
-	public String getLongLabel() {
+	public String getLongLabel(boolean showOwner, boolean showRequirement) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getReference()).append(" ").append(getLabel());
-		if (isOwnerSet()) {
-			sb.append(" [").append(getOwner().getName()).append(']');
+		if (showOwner && isOwnerSet()) {
+			sb.append(" (").append(getOwner().getName()).append(')');
+		}
+		if (showRequirement) {
+			Requirement requirement = getRequirement();
+			sb.append(" (").append(requirement.getReference()).append(" ").append(requirement.getLabel()).append(')');
 		}
 		return sb.toString();
 	}
