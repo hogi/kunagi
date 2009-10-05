@@ -23,6 +23,7 @@ public class ProductBacklogWidget extends AWidget {
 
 	private BlockListWidget<Requirement> list;
 	private ToolbarWidget toolbar;
+	private AMultiSelectionViewEditWidget<ListPredicate<Requirement>> predicateSelect;
 	private List<ListPredicate<Requirement>> predicates;
 
 	@Override
@@ -47,7 +48,7 @@ public class ProductBacklogWidget extends AWidget {
 		panel.setWidth("100%");
 		panel.add(toolbar);
 		panel.add(new HTML("<br />"));
-		AMultiSelectionViewEditWidget<ListPredicate<Requirement>> predicateSelect = new AMultiSelectionViewEditWidget<ListPredicate<Requirement>>() {
+		predicateSelect = new AMultiSelectionViewEditWidget<ListPredicate<Requirement>>() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -56,7 +57,7 @@ public class ProductBacklogWidget extends AWidget {
 
 			@Override
 			protected void onEditorUpdate() {
-				setViewerItems(predicates);
+				setEditorItems(predicates);
 				setEditorSelectedItems(filter(predicates));
 			}
 
@@ -77,7 +78,6 @@ public class ProductBacklogWidget extends AWidget {
 				}
 			}
 		};
-		predicateSelect.update();
 		panel.add(predicateSelect);
 		panel.add(list);
 
@@ -87,6 +87,7 @@ public class ProductBacklogWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		toolbar.update();
+		predicateSelect.update();
 		list.setObjects(ScrumGwtApplication.get().getProject().getRequirements());
 	}
 
