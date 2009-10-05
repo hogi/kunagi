@@ -113,7 +113,7 @@ a {cursor: pointer;}
 .TaskInRequirementBlock-taskClosed .ABlockWidget-title {background: #CEFDC5;}
 
 .ImpedimentBlock-open .ABlockWidget-title {background: #FDCEC5;}
-.ImpedimentBlock-closed .ABlockWidget-title {background: #CEFDC5;}
+.ImpedimentBlock-closed .ABlockWidget-title {background: #DEDEDE;}
 
 /***** Panel *****/
 
