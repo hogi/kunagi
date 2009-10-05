@@ -236,6 +236,16 @@ public class Project extends GProject {
 		return requirementsOrderComparator;
 	}
 
+	public String formatEfford(Integer i) {
+		if (i == null || i == 0) return "nothing";
+		String unit = getEffortUnit();
+		if (i == 1) {
+			if (unit.endsWith("s")) unit = unit.substring(0, unit.length() - 2);
+			return "1 " + unit;
+		}
+		return i + " " + unit;
+	}
+
 	public static final Comparator<Project> LABEL_COMPARATOR = new Comparator<Project>() {
 
 		public int compare(Project a, Project b) {

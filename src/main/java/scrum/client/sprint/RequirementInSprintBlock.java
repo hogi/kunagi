@@ -1,5 +1,6 @@
 package scrum.client.sprint;
 
+import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.ATextWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
@@ -11,6 +12,7 @@ import scrum.client.img.Img;
 import scrum.client.project.CloseRequirementAction;
 import scrum.client.project.ReopenRequirementAction;
 import scrum.client.project.Requirement;
+import scrum.client.project.RequirementEstimatedWorkWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -68,11 +70,13 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 			}
 		});
 
-		fields.add("Remainig Work", new ATextWidget() {
+		fields.add("Estimated Work", new RequirementEstimatedWorkWidget(requirement));
+
+		fields.add("Remainig Task Work", new AFieldValueWidget() {
 
 			@Override
 			protected void onUpdate() {
-				setText(requirement.getRemainingWorkAsString());
+				setHours(requirement.getRemainingWork());
 			}
 		});
 

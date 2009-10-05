@@ -19,6 +19,25 @@ public class Sprint extends GSprint {
 		super(data);
 	}
 
+	public int getEstimatedRequirementWork() {
+		int sum = 0;
+		for (Requirement requirement : getRequirements()) {
+			Integer work = requirement.getEstimatedWork();
+			if (work != null) sum += work;
+		}
+		return sum;
+	}
+
+	public int getCompletedRequirementWork() {
+		int sum = 0;
+		for (Requirement requirement : getRequirements()) {
+			if (!requirement.isClosed()) continue;
+			Integer work = requirement.getEstimatedWork();
+			if (work != null) sum += work;
+		}
+		return sum;
+	}
+
 	public List<Requirement> getRequirements() {
 		return getDao().getRequirementsBySprint(this);
 	}
@@ -41,85 +60,48 @@ public class Sprint extends GSprint {
 		return ret;
 	}
 
-	public Integer getBurnedWorkInClosedTasks() {
-		Integer sum = null;
-		for (Requirement s : getRequirements()) {
-			Integer work = s.getBurnedWorkInClosedTasks();
-			if (work != null) {
-				if (sum == null) {
-					sum = work;
-				} else {
-					sum += work;
-				}
-			}
+	public int getBurnedWorkInClosedTasks() {
+		int sum = 0;
+		for (Requirement requirement : getRequirements()) {
+			sum += requirement.getBurnedWorkInClosedTasks();
 		}
 		return sum;
 	}
 
-	public Integer getBurnedWorkInClaimedTasks() {
-		Integer sum = null;
-		for (Requirement s : getRequirements()) {
-			Integer work = s.getBurnedWorkInClaimedTasks();
-			if (work != null) {
-				if (sum == null) {
-					sum = work;
-				} else {
-					sum += work;
-				}
-			}
+	public int getBurnedWork() {
+		return Requirement.sumBurnedWork(getRequirements());
+	}
+
+	public int getBurnedWorkInClaimedTasks() {
+		int sum = 0;
+		for (Requirement requirement : getRequirements()) {
+			sum += requirement.getBurnedWorkInClaimedTasks();
 		}
 		return sum;
 	}
 
-	public Integer getRemainingWorkInClaimedTasks() {
-		Integer sum = null;
-		for (Requirement s : getRequirements()) {
-			Integer work = s.getRemainingWorkInClaimedTasks();
-			if (work != null) {
-				if (sum == null) {
-					sum = work;
-				} else {
-					sum += work;
-				}
-			}
+	public int getRemainingWorkInClaimedTasks() {
+		int sum = 0;
+		for (Requirement requirement : getRequirements()) {
+			sum += requirement.getRemainingWorkInClaimedTasks();
 		}
 		return sum;
 	}
 
-	public Integer getRemainingWorkInUnclaimedTasks() {
-		Integer sum = null;
-		for (Requirement s : getRequirements()) {
-			Integer effort = s.getRemainingWorkInUnclaimedTasks();
-			if (effort != null) {
-				if (sum == null) {
-					sum = effort;
-				} else {
-					sum += effort;
-				}
-			}
+	public int getRemainingWorkInUnclaimedTasks() {
+		int sum = 0;
+		for (Requirement requirement : getRequirements()) {
+			sum += requirement.getRemainingWorkInUnclaimedTasks();
 		}
 		return sum;
 	}
 
-	public Integer getRemainingWork() {
-		Integer sum = null;
-		for (Requirement s : getRequirements()) {
-			Integer effort = s.getRemainingWork();
-			if (effort != null) {
-				if (sum == null) {
-					sum = effort;
-				} else {
-					sum += effort;
-				}
-			}
+	public int getRemainingWork() {
+		int sum = 0;
+		for (Requirement requirement : getRequirements()) {
+			sum += requirement.getRemainingWork();
 		}
 		return sum;
-	}
-
-	public String getRemainingWorkAsString() {
-		Integer sum = getRemainingWork();
-		if (sum != null) return sum + " hours";
-		return "unknown";
 	}
 
 	@Override

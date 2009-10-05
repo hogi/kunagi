@@ -1,6 +1,7 @@
 package scrum.client.tasks;
 
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.Gwt;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -197,9 +198,7 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer, Use
 	}
 
 	private String hours(Integer i) {
-		if (i == null || i == 0) return "nothing";
-		if (i == 1) return "1 hour";
-		return i + " hours";
+		return Gwt.formatHours(i);
 	}
 
 	private class ByUserPredicate implements GenericPredicate<Task> {

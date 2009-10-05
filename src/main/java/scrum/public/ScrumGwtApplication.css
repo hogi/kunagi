@@ -145,6 +145,8 @@ a {cursor: pointer;}
 
 /***** Fields *****/
 
+.fieldLabel {color: gray; line-height: 22px; white-space: nowrap;}
+.AFieldValueWidget {background: #F2F5FE; min-width: 16px; min-height: 16px; border: 1px dotted #CCCCCC; display: block; padding: 3px;}
 .FieldsWidget {}
 .FieldsWidget-fieldLabel {color: gray; line-height: 22px; white-space: nowrap;}
 .FieldsWidget-fieldValue {}

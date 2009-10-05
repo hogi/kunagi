@@ -1,5 +1,6 @@
 package scrum.client.project;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -122,93 +123,64 @@ public class Requirement extends GRequirement {
 		return getEstimatedWork() + " " + ScrumGwtApplication.get().getProject().getEffortUnit();
 	}
 
-	public Integer getBurnedWorkInClosedTasks() {
-		Integer sum = null;
-		for (Task t : getTasks()) {
-			if (!t.isDone()) continue;
-			Integer value = t.getBurnedWork();
-			if (value != null) {
-				if (sum == null) {
-					sum = value;
-				} else {
-					sum += value;
-				}
-			}
-		}
-		return sum;
+	public int getBurnedWorkInClosedTasks() {
+		return Task.sumBurnedWork(getClosedTasks());
 	}
 
-	public Integer getBurnedWorkInClaimedTasks() {
-		Integer sum = null;
-		for (Task t : getTasks()) {
-			if (t.isDone() || !t.isOwnerSet()) continue;
-			Integer value = t.getBurnedWork();
-			if (value != null) {
-				if (sum == null) {
-					sum = value;
-				} else {
-					sum += value;
-				}
-			}
-		}
-		return sum;
+	public int getBurnedWork() {
+		return Task.sumBurnedWork(getTasks());
 	}
 
-	public Integer getRemainingWorkInClaimedTasks() {
-		Integer sum = null;
-		for (Task t : getTasks()) {
-			if (!t.isOwnerSet() || t.isDone()) continue;
-			Integer effort = t.getRemainingWork();
-			if (effort != null) {
-				if (sum == null) {
-					sum = effort;
-				} else {
-					sum += effort;
-				}
-			}
-		}
-		return sum;
+	public int getBurnedWorkInClaimedTasks() {
+		return Task.sumBurnedWork(getClaimedTasks());
 	}
 
-	public Integer getRemainingWorkInUnclaimedTasks() {
-		Integer sum = null;
-		for (Task t : getTasks()) {
-			if (t.isOwnerSet() || t.isDone()) continue;
-			Integer effort = t.getRemainingWork();
-			if (effort != null) {
-				if (sum == null) {
-					sum = effort;
-				} else {
-					sum += effort;
-				}
-			}
-		}
-		return sum;
+	public int getRemainingWorkInClaimedTasks() {
+		return Task.sumRemainingWork(getClaimedTasks());
 	}
 
-	public Integer getRemainingWork() {
-		Integer sum = null;
-		for (Task t : getTasks()) {
-			Integer effort = t.getRemainingWork();
-			if (effort != null) {
-				if (sum == null) {
-					sum = effort;
-				} else {
-					sum += effort;
-				}
-			}
-		}
-		return sum;
+	public int getRemainingWorkInUnclaimedTasks() {
+		return Task.sumRemainingWork(getUnlaimedTasks());
 	}
 
-	public String getRemainingWorkAsString() {
-		Integer sum = getRemainingWork();
-		if (sum != null) return sum + " hours";
-		return "unknown";
+	public int getRemainingWork() {
+		return Task.sumRemainingWork(getTasks());
+	}
+
+	public List<Task> getClaimedTasks() {
+		List<Task> ret = new ArrayList<Task>();
+		for (Task task : getTasks()) {
+			if (task.isOwnerSet()) ret.add(task);
+		}
+		return ret;
+	}
+
+	public List<Task> getClosedTasks() {
+		List<Task> ret = new ArrayList<Task>();
+		for (Task task : getTasks()) {
+			if (task.isDone()) ret.add(task);
+		}
+		return ret;
+	}
+
+	public List<Task> getUnlaimedTasks() {
+		List<Task> ret = new ArrayList<Task>();
+		for (Task task : getTasks()) {
+			if (!task.isOwnerSet()) ret.add(task);
+		}
+		return ret;
 	}
 
 	public List<Task> getTasks() {
 		return getDao().getTasksByRequirement(this);
+	}
+
+	public static int sumBurnedWork(Iterable<Requirement> requirements) {
+		int sum = 0;
+		for (Requirement requirement : requirements) {
+			sum += requirement.getBurnedWork();
+		}
+		return sum;
 	}
 
 	public Task createNewTask() {

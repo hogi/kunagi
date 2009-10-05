@@ -2,6 +2,7 @@ package scrum.client.common;
 
 import ilarkesto.gwt.client.AViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.Gwt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +32,7 @@ public class FieldsWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		for (Widget widget : widgets) {
-			AWidget.update(widget);
-		}
+		Gwt.update(widgets);
 	}
 
 	public <W extends Widget> W add(String label, W value) {

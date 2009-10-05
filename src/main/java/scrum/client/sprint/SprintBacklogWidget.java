@@ -1,41 +1,39 @@
 package scrum.client.sprint;
 
 import ilarkesto.gwt.client.ADateViewEditWidget;
+import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
 import scrum.client.context.ProjectContext;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SprintBacklogWidget extends AWidget {
 
 	private BlockListWidget<Requirement> requirementList;
-	private FlowPanel view;
-	private Label remainingWork;
 
-	private FieldsWidget fieldsWidget;
+	private FlexTable headerFields;
 
 	@Override
 	protected Widget onInitialization() {
 
-		remainingWork = new Label();
 		requirementList = new BlockListWidget<Requirement>(RequirementInSprintBlock.FACTORY);
 		requirementList.setAutoSorter(ScrumGwtApplication.get().getProject().getRequirementsOrderComparator());
 
-		view = new FlowPanel();
-		fieldsWidget = new FieldsWidget();
+		TableBuilder tb = new TableBuilder();
 
-		fieldsWidget.add("Label", new ATextViewEditWidget() {
+		tb.addFieldRow("Label", new ATextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -51,9 +49,9 @@ public class SprintBacklogWidget extends AWidget {
 			protected void onEditorSubmit() {
 				getSprint().setLabel(getEditorText());
 			}
-		});
+		}, 4);
 
-		fieldsWidget.add("Goal", new ARichtextViewEditWidget() {
+		tb.addFieldRow("Goal", new ARichtextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -69,9 +67,10 @@ public class SprintBacklogWidget extends AWidget {
 			protected void onEditorSubmit() {
 				getSprint().setGoal(getEditorText());
 			}
-		});
+		}, 4);
 
-		fieldsWidget.add("Begin", new ADateViewEditWidget() {
+		tb.addFieldLabel("Dates");
+		tb.addField("Begin", new ADateViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -89,7 +88,7 @@ public class SprintBacklogWidget extends AWidget {
 			}
 		});
 
-		fieldsWidget.add("End", new ADateViewEditWidget() {
+		tb.addFieldRow("End", new ADateViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -107,8 +106,44 @@ public class SprintBacklogWidget extends AWidget {
 			}
 		});
 
-		fieldsWidget.add("Remaining Work", remainingWork);
-		view.add(fieldsWidget);
+		tb.addFieldLabel("Requirements");
+		tb.addField("Completed", new AFieldValueWidget() {
+
+			@Override
+			protected void onUpdate() {
+				setText(getProject().formatEfford(getSprint().getCompletedRequirementWork()));
+			}
+		});
+		tb.addField("Estimated", new AFieldValueWidget() {
+
+			@Override
+			protected void onUpdate() {
+				setText(getProject().formatEfford(getSprint().getEstimatedRequirementWork()));
+			}
+		});
+		tb.nextRow();
+
+		tb.addFieldLabel("Tasks");
+		tb.addField("Burned", new AFieldValueWidget() {
+
+			@Override
+			protected void onUpdate() {
+				setHours(getSprint().getBurnedWork());
+			}
+		});
+		tb.addField("Remaining", new AFieldValueWidget() {
+
+			@Override
+			protected void onUpdate() {
+				setHours(getSprint().getRemainingWork());
+			}
+		});
+		tb.nextRow();
+
+		headerFields = tb.createTable();
+
+		FlowPanel view = new FlowPanel();
+		view.add(headerFields);
 		view.add(requirementList);
 
 		return new GroupWidget("Sprint Backlog", view);
@@ -116,8 +151,7 @@ public class SprintBacklogWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		fieldsWidget.update();
-		remainingWork.setText(getSprint().getRemainingWorkAsString());
+		Gwt.update(headerFields);
 		requirementList.setObjects(getSprint().getRequirements());
 	}
 
@@ -132,8 +166,12 @@ public class SprintBacklogWidget extends AWidget {
 		rBlock.selectTask(task);
 	}
 
+	private Project getProject() {
+		return ScrumGwtApplication.get().getProject();
+	}
+
 	private Sprint getSprint() {
-		Project project = ScrumGwtApplication.get().getProject();
+		Project project = getProject();
 		if (project == null) return null;
 		return project.getCurrentSprint();
 	}

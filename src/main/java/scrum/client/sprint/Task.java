@@ -108,6 +108,22 @@ public class Task extends GTask {
 		setRemainingWork(work - 1);
 	}
 
+	public static int sumBurnedWork(Iterable<Task> tasks) {
+		int sum = 0;
+		for (Task task : tasks) {
+			sum += task.getBurnedWork();
+		}
+		return sum;
+	}
+
+	public static int sumRemainingWork(Iterable<Task> tasks) {
+		int sum = 0;
+		for (Task task : tasks) {
+			sum += task.getRemainingWork();
+		}
+		return sum;
+	}
+
 	public static final Comparator<Task> NUMBER_COMPARATOR = new Comparator<Task>() {
 
 		public int compare(Task a, Task b) {
