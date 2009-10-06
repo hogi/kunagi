@@ -40,7 +40,7 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 
 	@Override
 	protected void onUpdateHead() {
-		setBlockTitle(task.getLongLabel(false, false));
+		setBlockTitle(task.getLongLabel(true, false));
 		setAdditionalStyleName(task.isDone() ? "TaskInRequirementBlock-taskClosed" : null);
 		addMenuAction(new ClaimTaskAction(task));
 		addMenuAction(new CloseTaskAction(task));

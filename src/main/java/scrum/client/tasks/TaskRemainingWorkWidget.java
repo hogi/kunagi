@@ -2,7 +2,7 @@ package scrum.client.tasks;
 
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.sprint.CloseTaskAction;
 import scrum.client.sprint.ReopenTaskAction;
@@ -16,6 +16,7 @@ public class TaskRemainingWorkWidget extends AWidget {
 	private Task task;
 	private HorizontalPanel panel;
 	private RemainingWorkWidget remainingWork;
+	private ToolbarWidget toolbar;
 
 	public TaskRemainingWorkWidget(Task task) {
 		this.task = task;
@@ -24,26 +25,28 @@ public class TaskRemainingWorkWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		remainingWork = new RemainingWorkWidget();
+		toolbar = new ToolbarWidget();
+
 		panel = new HorizontalPanel();
 		panel.setWidth("100%");
 		panel.add(remainingWork);
+		panel.add(toolbar);
 		return panel;
 	}
 
 	@Override
 	protected void onUpdate() {
 		remainingWork.update();
-		panel.clear();
+		toolbar.clear();
 		if (task.isDone()) {
 			AScrumAction action = new ReopenTaskAction(task);
 			if (action.isExecutable()) {
-				panel.add(new ButtonWidget(action).update());
+				toolbar.addButton(action);
 			}
 		} else {
-			panel.add(remainingWork);
 			AScrumAction action = new CloseTaskAction(task);
 			if (action.isExecutable()) {
-				panel.add(new ButtonWidget(action).update());
+				toolbar.addButton(action);
 			}
 		}
 	}
