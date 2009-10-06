@@ -81,6 +81,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	@Override
 	protected void onStartWebApplication() {
+
+		Logger.setDebugEnabled(true); // TODO remove this for production
+
 		if (getUserDao().getEntities().isEmpty()) {
 			LOG.warn("No users. Creating initial user: admin");
 			getUserDao().postUser("admin").setAdmin(true);
