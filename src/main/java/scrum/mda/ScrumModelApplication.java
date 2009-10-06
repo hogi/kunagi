@@ -283,6 +283,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			chatMessageModel.addReference("project", getProjectModel()).setMaster(true);
 			chatMessageModel.addReference("author", getUserModel());
 			chatMessageModel.addProperty("text", String.class);
+			chatMessageModel.addProperty("dateAndTime", DateAndTime.class);
 		}
 		return chatMessageModel;
 	}

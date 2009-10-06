@@ -40,6 +40,8 @@ public abstract class GChatMessageDao
         authorsCache = null;
         chatMessagesByTextCache.clear();
         textsCache = null;
+        chatMessagesByDateAndTimeCache.clear();
+        dateAndTimesCache = null;
     }
 
     @Override
@@ -174,6 +176,46 @@ public abstract class GChatMessageDao
 
         public boolean test(ChatMessage e) {
             return e.isText(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - dateAndTime
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.DateAndTime,Set<ChatMessage>> chatMessagesByDateAndTimeCache = new Cache<ilarkesto.base.time.DateAndTime,Set<ChatMessage>>(
+            new Cache.Factory<ilarkesto.base.time.DateAndTime,Set<ChatMessage>>() {
+                public Set<ChatMessage> create(ilarkesto.base.time.DateAndTime dateAndTime) {
+                    return getEntities(new IsDateAndTime(dateAndTime));
+                }
+            });
+
+    public final Set<ChatMessage> getChatMessagesByDateAndTime(ilarkesto.base.time.DateAndTime dateAndTime) {
+        return chatMessagesByDateAndTimeCache.get(dateAndTime);
+    }
+    private Set<ilarkesto.base.time.DateAndTime> dateAndTimesCache;
+
+    public final Set<ilarkesto.base.time.DateAndTime> getDateAndTimes() {
+        if (dateAndTimesCache == null) {
+            dateAndTimesCache = new HashSet<ilarkesto.base.time.DateAndTime>();
+            for (ChatMessage e : getEntities()) {
+                if (e.isDateAndTimeSet()) dateAndTimesCache.add(e.getDateAndTime());
+            }
+        }
+        return dateAndTimesCache;
+    }
+
+    private static class IsDateAndTime implements Predicate<ChatMessage> {
+
+        private ilarkesto.base.time.DateAndTime value;
+
+        public IsDateAndTime(ilarkesto.base.time.DateAndTime value) {
+            this.value = value;
+        }
+
+        public boolean test(ChatMessage e) {
+            return e.isDateAndTime(value);
         }
 
     }

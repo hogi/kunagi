@@ -39,6 +39,7 @@ public abstract class GChatMessage
         properties.put("projectId", this.projectId);
         properties.put("authorId", this.authorId);
         properties.put("text", this.text);
+        properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
     }
 
     public int compareTo(ChatMessage other) {
@@ -179,6 +180,41 @@ public abstract class GChatMessage
         setText((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - dateAndTime
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.DateAndTime dateAndTime;
+
+    public final ilarkesto.base.time.DateAndTime getDateAndTime() {
+        return dateAndTime;
+    }
+
+    public final void setDateAndTime(ilarkesto.base.time.DateAndTime dateAndTime) {
+        dateAndTime = prepareDateAndTime(dateAndTime);
+        if (isDateAndTime(dateAndTime)) return;
+        this.dateAndTime = dateAndTime;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.DateAndTime prepareDateAndTime(ilarkesto.base.time.DateAndTime dateAndTime) {
+        return dateAndTime;
+    }
+
+    public final boolean isDateAndTimeSet() {
+        return this.dateAndTime != null;
+    }
+
+    public final boolean isDateAndTime(ilarkesto.base.time.DateAndTime dateAndTime) {
+        if (this.dateAndTime == null && dateAndTime == null) return true;
+        return this.dateAndTime != null && this.dateAndTime.equals(dateAndTime);
+    }
+
+    protected final void updateDateAndTime(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.DateAndTime((String)value);
+        setDateAndTime((ilarkesto.base.time.DateAndTime)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -187,6 +223,7 @@ public abstract class GChatMessage
             if (property.equals("projectId")) updateProject(value);
             if (property.equals("authorId")) updateAuthor(value);
             if (property.equals("text")) updateText(value);
+            if (property.equals("dateAndTime")) updateDateAndTime(value);
         }
     }
 

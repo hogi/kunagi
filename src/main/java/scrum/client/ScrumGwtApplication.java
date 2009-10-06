@@ -5,6 +5,8 @@ import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import scrum.client.admin.User;
@@ -120,8 +122,18 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		if (project == null || !msg.isProject(project)) return;
 		if (chatMessages.contains(msg)) return;
 		chatMessages.add(msg);
-		if (chatMessages.size() > 50) chatMessages.remove(0);
+		cleanupChatMessages();
 		ChatWidget.get().update();
+	}
+
+	private void cleanupChatMessages() {
+		for (Iterator it = chatMessages.iterator(); it.hasNext();) {
+			ChatMessage message = (ChatMessage) it.next();
+			if (message.isOld()) it.remove();
+		}
+		while (chatMessages.size() > 50)
+			chatMessages.remove(0);
+		Collections.sort(chatMessages);
 	}
 
 	public User getUser() {
