@@ -3,6 +3,7 @@ package scrum.client.tasks;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
+import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
@@ -19,6 +20,7 @@ import scrum.client.sprint.Task;
 import scrum.client.sprint.UnclaimTaskAction;
 import scrum.client.workspace.Ui;
 
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 
 public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupport, ClipboardSupport {
@@ -26,6 +28,8 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 	private Task task;
 	private FieldsWidget fields;
 	private TaskBlockContainer container;
+	private FlowPanel panel;
+	private CommentsWidget comments;
 
 	public TaskBlock(TaskBlockContainer container) {
 		this.container = container;
@@ -136,12 +140,19 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		});
 
 		fields.add("Remaining Work", new TaskRemainingWorkWidget(task));
+
+		comments = new CommentsWidget(task);
+
+		panel = new FlowPanel();
+		panel.add(fields);
+		panel.add(comments);
 	}
 
 	@Override
 	protected void onUpdateBody() {
 		fields.update();
-		setContent(fields);
+		comments.update();
+		setContent(panel);
 	}
 
 	public Task getTask() {

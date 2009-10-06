@@ -6,6 +6,7 @@ import ilarkesto.gwt.client.ObjectMappedFlowPanel;
 import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 
+import java.util.List;
 import java.util.Set;
 
 import scrum.client.ScrumGwtApplication;
@@ -95,6 +96,10 @@ public class ProjectContext extends AContext {
 		navigator.addItem(Img.bundle.test16(), "WidgetsTester", getWidgetsTester());
 	}
 
+	public List<Comment> getComments(AGwtEntity entity) {
+		return ScrumGwtApplication.get().getDao().getCommentsByParent(entity);
+	}
+
 	public boolean isOnline(User user) {
 		return usersStatus.get(user.getId()).isOnline();
 	}
@@ -143,10 +148,6 @@ public class ProjectContext extends AContext {
 	@Override
 	public Widget getWorkareaWidget() {
 		return projectOverview;
-	}
-
-	public void activateCommentEditor(Comment comment) {
-		getProductBacklog().activateCommentEditor(comment);
 	}
 
 	public void showEntity(AGwtEntity entity) {

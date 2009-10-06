@@ -55,18 +55,18 @@ public abstract class GComment
     // -----------------------------------------------------------
 
     private String parentId;
-    private transient scrum.server.project.Requirement parentCache;
+    private transient ilarkesto.persistence.AEntity parentCache;
 
     private void updateParentCache() {
-        parentCache = this.parentId == null ? null : (scrum.server.project.Requirement)requirementDao.getById(this.parentId);
+        parentCache = this.parentId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.parentId);
     }
 
-    public final scrum.server.project.Requirement getParent() {
+    public final ilarkesto.persistence.AEntity getParent() {
         if (parentCache == null) updateParentCache();
         return parentCache;
     }
 
-    public final void setParent(scrum.server.project.Requirement parent) {
+    public final void setParent(ilarkesto.persistence.AEntity parent) {
         parent = prepareParent(parent);
         if (isParent(parent)) return;
         this.parentId = parent == null ? null : parent.getId();
@@ -74,7 +74,7 @@ public abstract class GComment
         fireModified();
     }
 
-    protected scrum.server.project.Requirement prepareParent(scrum.server.project.Requirement parent) {
+    protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
         return parent;
     }
 
@@ -88,13 +88,13 @@ public abstract class GComment
         return this.parentId != null;
     }
 
-    public final boolean isParent(scrum.server.project.Requirement parent) {
+    public final boolean isParent(ilarkesto.persistence.AEntity parent) {
         if (this.parentId == null && parent == null) return true;
         return parent != null && parent.getId().equals(this.parentId);
     }
 
     protected final void updateParent(Object value) {
-        setParent(value == null ? null : (scrum.server.project.Requirement)requirementDao.getById((String)value));
+        setParent(value == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById((String)value));
     }
 
     // -----------------------------------------------------------
@@ -253,17 +253,6 @@ public abstract class GComment
             LOG.info("Repairing dead author reference");
             repairDeadAuthorReference(this.authorId);
         }
-    }
-
-
-    // -----------------------------------------------------------
-    // - dependencies
-    // -----------------------------------------------------------
-
-    protected static scrum.server.project.RequirementDao requirementDao;
-
-    public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
-        GComment.requirementDao = requirementDao;
     }
 
     protected static CommentDao commentDao;

@@ -1,16 +1,16 @@
 package scrum.client.collaboration;
 
+import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.DateAndTime;
 
 import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.project.Requirement;
 
 public class Comment extends GComment {
 
-	public Comment(Requirement parent) {
+	public Comment(AGwtEntity parent) {
 		setParent(parent);
 		setText("");
 		setDateAndTime(DateAndTime.now());

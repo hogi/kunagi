@@ -232,13 +232,6 @@ public abstract class ABlockWidget<O> extends AWidget {
 		this.extended = extended;
 		if (extended) {
 			getBorderPanel().addStyleName("ABlockWidget-block-selected");
-
-			// TODO optimize
-			O o = getObject();
-			if (o instanceof AGwtEntity) {
-				String id = ((AGwtEntity) o).getId();
-				ScrumGwtApplication.get().callRequestComments(id);
-			}
 		} else {
 			getBorderPanel().removeStyleName("ABlockWidget-block-selected");
 			setContent(null);

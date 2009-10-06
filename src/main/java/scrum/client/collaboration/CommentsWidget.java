@@ -1,13 +1,16 @@
 package scrum.client.collaboration;
 
+import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.ToolbarWidget;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import scrum.client.project.Requirement;
+import scrum.client.ScrumGwtApplication;
+import scrum.client.context.ProjectContext;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -17,18 +20,23 @@ public class CommentsWidget extends AWidget {
 
 	private FlowPanel containerPanel;
 
-	private Requirement parent;
+	private AGwtEntity parent;
+	private ToolbarWidget toolbar;
 
 	private Map<Comment, CommentWidget> widgets;
 
-	public CommentsWidget(Requirement parent) {
+	public CommentsWidget(AGwtEntity parent) {
 		this.parent = parent;
 	}
 
 	@Override
 	protected Widget onInitialization() {
+		ScrumGwtApplication.get().callRequestComments(parent.getId());
+
 		widgets = new HashMap<Comment, CommentWidget>();
 		containerPanel = new FlowPanel();
+		toolbar = new ToolbarWidget();
+		toolbar.addButton(new CreateCommentAction(parent, this));
 
 		ScrollPanel scroller = new ScrollPanel(containerPanel);
 		containerPanel.setStyleName("CommentsWidget");
@@ -38,8 +46,10 @@ public class CommentsWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
+		toolbar.update();
 		containerPanel.clear();
-		List<Comment> comments = parent.getComments();
+		containerPanel.add(toolbar);
+		List<Comment> comments = ProjectContext.get().getComments(parent);
 		Collections.sort(comments, Comment.REVERSE_DATEANDTIME_COMPARATOR);
 		for (Comment comment : comments) {
 			CommentWidget widget = getWidget(comment);

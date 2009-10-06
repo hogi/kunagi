@@ -64,21 +64,21 @@ public abstract class GCommentDao
     // - parent
     // -----------------------------------------------------------
 
-    private final Cache<scrum.server.project.Requirement,Set<Comment>> commentsByParentCache = new Cache<scrum.server.project.Requirement,Set<Comment>>(
-            new Cache.Factory<scrum.server.project.Requirement,Set<Comment>>() {
-                public Set<Comment> create(scrum.server.project.Requirement parent) {
+    private final Cache<ilarkesto.persistence.AEntity,Set<Comment>> commentsByParentCache = new Cache<ilarkesto.persistence.AEntity,Set<Comment>>(
+            new Cache.Factory<ilarkesto.persistence.AEntity,Set<Comment>>() {
+                public Set<Comment> create(ilarkesto.persistence.AEntity parent) {
                     return getEntities(new IsParent(parent));
                 }
             });
 
-    public final Set<Comment> getCommentsByParent(scrum.server.project.Requirement parent) {
+    public final Set<Comment> getCommentsByParent(ilarkesto.persistence.AEntity parent) {
         return commentsByParentCache.get(parent);
     }
-    private Set<scrum.server.project.Requirement> parentsCache;
+    private Set<ilarkesto.persistence.AEntity> parentsCache;
 
-    public final Set<scrum.server.project.Requirement> getParents() {
+    public final Set<ilarkesto.persistence.AEntity> getParents() {
         if (parentsCache == null) {
-            parentsCache = new HashSet<scrum.server.project.Requirement>();
+            parentsCache = new HashSet<ilarkesto.persistence.AEntity>();
             for (Comment e : getEntities()) {
                 if (e.isParentSet()) parentsCache.add(e.getParent());
             }
@@ -88,9 +88,9 @@ public abstract class GCommentDao
 
     private static class IsParent implements Predicate<Comment> {
 
-        private scrum.server.project.Requirement value;
+        private ilarkesto.persistence.AEntity value;
 
-        public IsParent(scrum.server.project.Requirement value) {
+        public IsParent(ilarkesto.persistence.AEntity value) {
             this.value = value;
         }
 
@@ -234,11 +234,5 @@ public abstract class GCommentDao
     }
 
     // --- dependencies ---
-
-    protected scrum.server.project.RequirementDao requirementDao;
-
-    public void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
-        this.requirementDao = requirementDao;
-    }
 
 }

@@ -296,7 +296,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(commentModel);
 			commentModel.setGwtSupport(true);
 			getApplicationModel().addCreateAction(commentModel);
-			commentModel.addReference("parent", getRequirementModel()).setMaster(true);
+			commentModel.addReference("parent", getEntityModel()).setMaster(true);
 			commentModel.addReference("author", getUserModel());
 			commentModel.addProperty("text", String.class);
 			commentModel.addProperty("dateAndTime", DateAndTime.class);

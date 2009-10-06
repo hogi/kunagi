@@ -9,7 +9,6 @@ import java.util.List;
 
 import scrum.client.ListPredicate;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.collaboration.Comment;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockMoveObserver;
 import scrum.client.common.GroupWidget;
@@ -118,11 +117,6 @@ public class ProductBacklogWidget extends AWidget {
 
 	public void selectRequirement(Requirement requirement) {
 		list.extendObject(requirement);
-	}
-
-	public void activateCommentEditor(Comment comment) {
-		RequirementBlock block = (RequirementBlock) list.getBlock(comment.getParent());
-		block.activateCommentEditor(comment);
 	}
 
 	class MoveObserver implements BlockMoveObserver<Requirement> {

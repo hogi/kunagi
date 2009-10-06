@@ -156,7 +156,7 @@ public abstract class GDao
         return new ArrayList<scrum.client.collaboration.Comment>(comments.values());
     }
 
-    public final List<scrum.client.collaboration.Comment> getCommentsByParent(scrum.client.project.Requirement parent) {
+    public final List<scrum.client.collaboration.Comment> getCommentsByParent(ilarkesto.gwt.client.AGwtEntity parent) {
         List<scrum.client.collaboration.Comment> ret = new ArrayList<scrum.client.collaboration.Comment>();
         for (scrum.client.collaboration.Comment entity : comments.values()) {
             if (entity.isParent(parent)) ret.add(entity);

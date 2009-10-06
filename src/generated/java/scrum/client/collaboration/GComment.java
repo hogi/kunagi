@@ -48,16 +48,16 @@ public abstract class GComment
 
     private String parentId;
 
-    public final scrum.client.project.Requirement getParent() {
+    public final ilarkesto.gwt.client.AGwtEntity getParent() {
         if (parentId == null) return null;
-        return getDao().getRequirement(this.parentId);
+        return getDao().getEntity(this.parentId);
     }
 
     public final boolean isParentSet() {
         return parentId != null;
     }
 
-    public final Comment setParent(scrum.client.project.Requirement parent) {
+    public final Comment setParent(ilarkesto.gwt.client.AGwtEntity parent) {
         String id = parent == null ? null : parent.getId();
         if (equals(this.parentId, id)) return (Comment) this;
         this.parentId = id;
@@ -65,7 +65,7 @@ public abstract class GComment
         return (Comment)this;
     }
 
-    public final boolean isParent(scrum.client.project.Requirement parent) {
+    public final boolean isParent(ilarkesto.gwt.client.AGwtEntity parent) {
         return equals(this.parentId, parent);
     }
 

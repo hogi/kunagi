@@ -5,9 +5,7 @@ import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
 import ilarkesto.gwt.client.GwtLogger;
-import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.CommentsWidget;
-import scrum.client.collaboration.CreateCommentAction;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
@@ -23,11 +21,8 @@ import com.google.gwt.user.client.ui.Image;
 public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implements TrashSupport, ClipboardSupport {
 
 	private FlowPanel container = new FlowPanel();
-
 	private Requirement requirement;
-
 	private FieldsWidget fields;
-
 	private CommentsWidget commentsWidget;
 
 	@Override
@@ -64,7 +59,6 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 		addMenuAction(new SetRequirementDirtyAction(requirement));
 		addMenuAction(new SetRequirementCleanAction(requirement));
 		addMenuAction(new DeleteRequirementAction(requirement));
-		addMenuAction(new CreateCommentAction(requirement));
 	}
 
 	@Override
@@ -189,10 +183,6 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 
 	public Requirement getRequirement() {
 		return requirement;
-	}
-
-	public void activateCommentEditor(Comment comment) {
-		commentsWidget.activateCommentEditor(comment);
 	}
 
 	public static BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {

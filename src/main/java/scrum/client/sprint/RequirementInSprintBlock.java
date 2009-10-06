@@ -2,6 +2,7 @@ package scrum.client.sprint;
 
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.ATextWidget;
+import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockListWidget;
@@ -24,6 +25,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	private BlockListWidget<Task> taskList;
 	private FlowPanel panel;
 	private FieldsWidget fields;
+	private CommentsWidget commentsWidget;
 
 	@Override
 	protected Requirement getObject() {
@@ -85,11 +87,15 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 		panel = new FlowPanel();
 		panel.add(fields);
 		panel.add(taskList);
+
+		commentsWidget = new CommentsWidget(requirement);
+		panel.add(commentsWidget);
 	}
 
 	@Override
 	protected void onUpdateBody() {
 		fields.update();
+		commentsWidget.update();
 		taskList.setObjects(requirement.getTasks());
 		setContent(panel);
 	}

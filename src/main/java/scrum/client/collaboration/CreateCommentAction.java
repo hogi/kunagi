@@ -1,25 +1,27 @@
 package scrum.client.collaboration;
 
-import scrum.client.context.ProjectContext;
-import scrum.client.project.Requirement;
+import ilarkesto.gwt.client.AGwtEntity;
 
 public class CreateCommentAction extends GCreateCommentAction {
 
-	private Requirement parent;
+	private AGwtEntity parent;
+	private CommentsWidget commentsWidget;
 
-	public CreateCommentAction(Requirement parent) {
+	public CreateCommentAction(AGwtEntity parent, CommentsWidget commentsWidget) {
 		this.parent = parent;
+		this.commentsWidget = commentsWidget;
 	}
 
 	@Override
 	public String getLabel() {
-		return "Create new comment";
+		return "Create new Comment";
 	}
 
 	@Override
 	protected void onExecute() {
-		Comment comment = parent.createNewComment();
-		ProjectContext.get().activateCommentEditor(comment);
+		Comment comment = new Comment(parent);
+		getDao().createComment(comment);
+		commentsWidget.activateCommentEditor(comment);
 	}
 
 }

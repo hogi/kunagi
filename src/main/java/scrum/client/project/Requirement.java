@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumGwtApplication;
-import scrum.client.collaboration.Comment;
 import scrum.client.issues.Issue;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
@@ -29,16 +28,6 @@ public class Requirement extends GRequirement {
 
 	public Requirement(Map data) {
 		super(data);
-	}
-
-	public Comment createNewComment() {
-		Comment comment = new Comment(this);
-		getDao().createComment(comment);
-		return comment;
-	}
-
-	public List<Comment> getComments() {
-		return getDao().getCommentsByParent(this);
 	}
 
 	public boolean isValidForSprint() {
