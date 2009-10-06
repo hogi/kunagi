@@ -1,6 +1,7 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.Gwt;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -47,9 +48,7 @@ public class GroupWidget extends AWidget {
 			contentPanel.add(content);
 			contentChanged = false;
 		}
-		if (content instanceof AWidget) {
-			((AWidget) content).update();
-		}
+		Gwt.update(content);
 	}
 
 	public GroupWidget setContent(Widget content) {
@@ -59,4 +58,8 @@ public class GroupWidget extends AWidget {
 		return this;
 	}
 
+	@Override
+	public String toString() {
+		return "GroupWidget(" + title + ")";
+	}
 }

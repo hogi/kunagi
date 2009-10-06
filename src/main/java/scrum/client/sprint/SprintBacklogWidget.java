@@ -5,7 +5,6 @@ import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
@@ -151,8 +150,8 @@ public class SprintBacklogWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		Gwt.update(headerFields);
 		requirementList.setObjects(getSprint().getRequirements());
+		super.onUpdate();
 	}
 
 	public void selectRequirement(Requirement r) {
