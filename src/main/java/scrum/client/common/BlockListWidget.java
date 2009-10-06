@@ -34,7 +34,7 @@ public final class BlockListWidget<O> extends AWidget {
 	private BlockListDropAction<O> dropAction;
 	private BlockDndMarkerWidget dndMarkerBottom;
 	private FlowPanel panel;
-	private GenericPredicate<O> predicate;
+	private GenericPredicate<O> highlightPredicate;
 
 	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory, BlockListDropAction<O> dropAction) {
 		this.dropAction = dropAction;
@@ -326,19 +326,19 @@ public final class BlockListWidget<O> extends AWidget {
 
 	private void updateTaskHighlighting() {
 		for (ABlockWidget<O> block : list.getWidgets()) {
-			if (predicate != null && predicate.contains(block.getObject()))
+			if (highlightPredicate != null && highlightPredicate.contains(block.getObject()))
 				block.addStyleName("highlighted");
 			else block.removeStyleName("highlighted");
 		}
 	}
 
 	public void setTaskHighlighting(GenericPredicate<O> predicate) {
-		this.predicate = predicate;
+		this.highlightPredicate = predicate;
 		updateTaskHighlighting();
 	}
 
 	public void clearTaskHighlighting() {
-		this.predicate = null;
+		this.highlightPredicate = null;
 		updateTaskHighlighting();
 	}
 
