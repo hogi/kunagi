@@ -2,8 +2,8 @@ package scrum.client.tasks;
 
 import scrum.client.dnd.BlockListDropAction;
 import scrum.client.project.Requirement;
-import scrum.client.sprint.ClaimTaskAction;
 import scrum.client.sprint.Task;
+import scrum.client.workspace.Ui;
 
 public class ClaimTaskDropAction implements BlockListDropAction<Task> {
 
@@ -15,7 +15,8 @@ public class ClaimTaskDropAction implements BlockListDropAction<Task> {
 
 	public boolean execute(Task task) {
 		task.setRequirement(this.requirement);
-		new ClaimTaskAction(task).execute();
+		task.claim();
+		Ui.get().update();
 		return true;
 	}
 }

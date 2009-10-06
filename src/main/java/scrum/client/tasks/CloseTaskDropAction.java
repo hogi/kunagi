@@ -1,8 +1,8 @@
 package scrum.client.tasks;
 
+import scrum.client.ScrumGwtApplication;
 import scrum.client.dnd.BlockListDropAction;
 import scrum.client.project.Requirement;
-import scrum.client.sprint.CloseTaskAction;
 import scrum.client.sprint.Task;
 
 public class CloseTaskDropAction implements BlockListDropAction<Task> {
@@ -15,7 +15,7 @@ public class CloseTaskDropAction implements BlockListDropAction<Task> {
 
 	public boolean execute(Task task) {
 		task.setRequirement(this.requirement);
-		new CloseTaskAction(task).execute();
+		if (!task.isDone()) task.setDone(ScrumGwtApplication.get().getUser());
 		return true;
 	}
 

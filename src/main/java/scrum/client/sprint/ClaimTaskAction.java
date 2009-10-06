@@ -1,6 +1,5 @@
 package scrum.client.sprint;
 
-import scrum.client.ScrumGwtApplication;
 
 public class ClaimTaskAction extends GClaimTaskAction {
 
@@ -20,14 +19,14 @@ public class ClaimTaskAction extends GClaimTaskAction {
 
 	@Override
 	public boolean isExecutable() {
-		return !task.isDone() && !task.isOwner(getUser());
+		if (task.isDone()) return false;
+		if (task.isOwner(getUser())) return false;
+		return true;
 	}
 
 	@Override
 	protected void onExecute() {
 		task.claim();
-		ScrumGwtApplication.get().postSystemMessage(getUser().getName() + " claimed task " + task.getReference() + ".",
-			true);
 	}
 
 }

@@ -1,6 +1,5 @@
 package scrum.client.sprint;
 
-import scrum.client.ScrumGwtApplication;
 import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.Image;
@@ -29,8 +28,6 @@ public class CloseTaskAction extends GCloseTaskAction {
 	@Override
 	protected void onExecute() {
 		task.setDone(getUser());
-		ScrumGwtApplication.get().postSystemMessage(getUser().getName() + " closed task " + task.getReference() + ".",
-			true);
 	}
 
 	@Override

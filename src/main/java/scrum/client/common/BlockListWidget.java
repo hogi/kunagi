@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.ObjectMappedFlowPanel;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -134,13 +135,7 @@ public final class BlockListWidget<O> extends AWidget {
 	}
 
 	public final void setObjects(Collection<O> newObjects) {
-		initialize();
-		if (autoSorter != null) {
-			setObjects(Gwt.toList(newObjects));
-			return;
-		}
-		list.set(newObjects);
-		update();
+		setObjects(new ArrayList<O>(newObjects));
 	}
 
 	public final void move(O object, int toRow, boolean animate) {

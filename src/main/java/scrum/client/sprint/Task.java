@@ -23,11 +23,14 @@ public class Task extends GTask {
 
 	public void claim() {
 		User user = ScrumGwtApplication.get().getUser();
+		boolean ownerchange = !isOwner(user);
 		if (isDone()) {
 			setUnDone(user);
 		} else {
 			setOwner(user);
 		}
+		if (ownerchange)
+			ScrumGwtApplication.get().postSystemMessage(user.getName() + " claimed task " + getReference() + ".", true);
 	}
 
 	public String getLongLabel(boolean showOwner, boolean showRequirement) {
@@ -52,6 +55,8 @@ public class Task extends GTask {
 			throw new IllegalArgumentException("a Task cannot be set done without claiming Task ownership");
 		setOwner(user);
 		setRemainingWork(0);
+		ScrumGwtApplication.get().postSystemMessage(
+			ScrumGwtApplication.get().getUser().getName() + " closed task " + getReference() + ".", true);
 	}
 
 	public void setUnDone(User user) {
@@ -61,6 +66,8 @@ public class Task extends GTask {
 
 	public void setUnOwned() {
 		setUnDone(null);
+		ScrumGwtApplication.get().postSystemMessage(
+			ScrumGwtApplication.get().getUser().getName() + " rejected task " + getReference() + ".", true);
 	}
 
 	public boolean isDone() {
