@@ -6,12 +6,10 @@ import ilarkesto.gwt.client.ObjectMappedFlowPanel;
 import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import scrum.client.ScrumGwtApplication;
+import scrum.client.UsersStatus;
 import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.User;
 import scrum.client.collaboration.Comment;
@@ -59,11 +57,13 @@ public class ProjectContext extends AContext {
 	private WidgetsTesterWidget widgetsTester;
 
 	private User highlightedUser;
-	private Map<String, Set<String>> usersSelectedEntitysIds = new HashMap<String, Set<String>>();
+	private UsersStatus usersStatus;
 
 	public ProjectContext() {
 		assert singleton == null;
 		singleton = this;
+
+		usersStatus = new UsersStatus();
 
 		projectOverview = new ProjectOverviewWidget();
 		taskOverview = new TaskOverviewWidget();
@@ -95,41 +95,31 @@ public class ProjectContext extends AContext {
 		navigator.addItem(Img.bundle.test16(), "WidgetsTester", getWidgetsTester());
 	}
 
+	public boolean isOnline(User user) {
+		return usersStatus.get(user.getId()).isOnline();
+	}
+
 	public Set<String> getSelectedEntitysIds(User user) {
-		Set<String> ids = usersSelectedEntitysIds.get(user.getId());
-		if (ids == null) {
-			ids = new HashSet<String>();
-			usersSelectedEntitysIds.put(user.getId(), ids);
-		}
-		return ids;
+		return usersStatus.get(user.getId()).getSelectedEntitysIds();
 	}
 
 	public void addSelectedEntityId(String id) {
-		User user = ScrumGwtApplication.get().getUser();
-		Set<String> ids = usersSelectedEntitysIds.get(user.getId());
-		if (ids == null) {
-			ids = new HashSet<String>();
-			usersSelectedEntitysIds.put(user.getId(), ids);
-		}
-		boolean added = ids.add(id);
-		if (added) ScrumGwtApplication.get().callSetSelectedEntitysIds(ids);
+		String userId = ScrumGwtApplication.get().getUser().getId();
+		boolean added = usersStatus.addSelectedEntityId(userId, id);
+		if (added)
+			ScrumGwtApplication.get().callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());
 	}
 
 	public void removeSelectedEntityId(String id) {
-		User user = ScrumGwtApplication.get().getUser();
-		Set<String> ids = usersSelectedEntitysIds.get(user.getId());
-		if (ids == null) {
-			ids = new HashSet<String>();
-			usersSelectedEntitysIds.put(user.getId(), ids);
-		}
-		boolean removed = ids.remove(id);
-		if (removed) ScrumGwtApplication.get().callSetSelectedEntitysIds(ids);
+		String userId = ScrumGwtApplication.get().getUser().getId();
+		boolean removed = usersStatus.removeSelectedEntityId(userId, id);
+		if (removed)
+			ScrumGwtApplication.get().callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());
 	}
 
-	public void updateUsersSelectedEntitysIds(Map<String, Set<String>> usersIds) {
-		for (Map.Entry<String, Set<String>> entry : usersIds.entrySet()) {
-			usersSelectedEntitysIds.put(entry.getKey(), entry.getValue());
-		}
+	public void setUsersStatus(UsersStatus usersStatus) {
+		this.usersStatus = usersStatus;
+		Ui.get().update();
 	}
 
 	public void highlightUser(User user) {

@@ -35,7 +35,7 @@ public class UserStatusWidget extends AWidget {
 		Highlighter highlighter = new Highlighter();
 		label.addMouseMoveHandler(highlighter);
 		label.addMouseOutHandler(highlighter);
-		if (ScrumGwtApplication.get().getProject().isOnline(user)) {
+		if (ProjectContext.get().isOnline(user)) {
 			label.addStyleName("UserStatusWidget-online");
 		} else {
 			label.removeStyleName("UserStatusWidget-online");

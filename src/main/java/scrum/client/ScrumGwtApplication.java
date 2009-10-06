@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ChatMessage;
 import scrum.client.collaboration.ChatWidget;
-import scrum.client.communication.UsersStatusWidget;
 import scrum.client.context.ProjectContext;
 import scrum.client.context.StartContext;
 import scrum.client.dnd.DndManager;
@@ -61,20 +60,10 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			if (pingTimer != null) pingTimer.schedule();
 		}
 
-		if (dto.usersSelectedEntitysIds != null) {
+		if (dto.usersStatus != null) {
 			lastDataReceiveTime = System.currentTimeMillis();
 			if (ProjectContext.isActive()) {
-				ProjectContext.get().updateUsersSelectedEntitysIds(dto.usersSelectedEntitysIds);
-				Ui.get().update();
-			}
-		}
-
-		if (dto.onlineTeamMembersIds != null) {
-			lastDataReceiveTime = System.currentTimeMillis();
-			GwtLogger.DEBUG("onlineTeamMembersIds:", dto.onlineTeamMembersIds);
-			if (ProjectContext.isActive()) {
-				project.setOnlineTeamMembersIds(dto.onlineTeamMembersIds);
-				UsersStatusWidget.get().update();
+				ProjectContext.get().setUsersStatus(dto.usersStatus);
 			}
 		}
 

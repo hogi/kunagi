@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.ScrumGwtApplication;
+import scrum.client.context.ProjectContext;
 
 public class User extends GUser {
 
@@ -27,7 +28,7 @@ public class User extends GUser {
 	}
 
 	public boolean isOnline() {
-		return ScrumGwtApplication.get().getProject().isOnline(this);
+		return ProjectContext.get().isOnline(this);
 	}
 
 	@Override

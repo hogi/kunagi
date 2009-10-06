@@ -21,6 +21,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import scrum.client.ApplicationInfo;
+import scrum.client.UsersStatus;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.common.BurndownChart;
@@ -165,15 +166,20 @@ public class ScrumWebApplication extends GScrumWebApplication {
 				return user.getId();
 			}
 		}));
+		project.getUsersStatus().setOnlineUsers(userIds);
+		sendUsersStatusToClients(project);
+	}
+
+	private void sendUsersStatusToClients(Project project) {
+		UsersStatus status = project.getUsersStatus();
 		for (WebSession session : getSessionsByProject(project)) {
-			session.getNextData().onlineTeamMembersIds = userIds;
+			session.getNextData().usersStatus = status;
 		}
 	}
 
 	public void setUsersSelectedEntities(Project project, User user, Set<String> ids) {
-		for (WebSession session : getSessionsByProject(project)) {
-			session.getNextData().setUsersSelectedEntitiesIds(user.getId(), ids);
-		}
+		project.getUsersStatus().setUsersSelectedEntities(user.getId(), ids);
+		sendUsersStatusToClients(project);
 	}
 
 	@Override

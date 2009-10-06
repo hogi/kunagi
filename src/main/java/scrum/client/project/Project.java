@@ -27,7 +27,6 @@ public class Project extends GProject {
 	public static final String INIT_LABEL = "New Project";
 
 	private transient Comparator<Requirement> requirementsOrderComparator;
-	private transient Set<String> onlineTeamMembersIds = new HashSet<String>();
 
 	public Project(User creator) {
 		setLabel(INIT_LABEL);
@@ -51,19 +50,6 @@ public class Project extends GProject {
 			if (config.isUser(user)) { return config; }
 		}
 		throw new IllegalStateException("User has no project config: " + user);
-	}
-
-	public final java.util.Set<scrum.client.admin.User> getOnlineTeamMembers() {
-		if (onlineTeamMembersIds.isEmpty()) return Collections.emptySet();
-		return getDao().getUsers(this.onlineTeamMembersIds);
-	}
-
-	public void setOnlineTeamMembersIds(Set<String> values) {
-		onlineTeamMembersIds = values;
-	}
-
-	public boolean isOnline(User user) {
-		return getOnlineTeamMembers().contains(user);
 	}
 
 	public boolean isPig(User user) {
