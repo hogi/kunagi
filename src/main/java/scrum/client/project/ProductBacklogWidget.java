@@ -15,7 +15,10 @@ import scrum.client.common.BlockMoveObserver;
 import scrum.client.common.GroupWidget;
 import scrum.client.context.ProjectContext;
 
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -29,11 +32,11 @@ public class ProductBacklogWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		predicates = new ArrayList<ListPredicate<Requirement>>();
-		predicates.add(new ListPredicate<Requirement>("filter closed", true) {
+		predicates.add(new ListPredicate<Requirement>("closed", true) {
 
 			@Override
 			protected boolean test(Requirement element) {
-				return !element.isClosed();
+				return element.isClosed();
 			}
 		});
 
@@ -48,6 +51,10 @@ public class ProductBacklogWidget extends AWidget {
 		panel.setWidth("100%");
 		panel.add(toolbar);
 		panel.add(new HTML("<br />"));
+
+		// Filters
+		Panel filterPanel = new FlowPanel();
+		filterPanel.add(new Label("Filter: "));
 		predicateSelect = new AMultiSelectionViewEditWidget<ListPredicate<Requirement>>() {
 
 			@Override
@@ -76,9 +83,12 @@ public class ProductBacklogWidget extends AWidget {
 				for (ListPredicate<Requirement> p : predicates) {
 					p.setEnabled(selected.contains(p));
 				}
+				ProductBacklogWidget.this.update();
 			}
 		};
-		panel.add(predicateSelect);
+		filterPanel.add(predicateSelect);
+		panel.add(filterPanel);
+
 		panel.add(list);
 
 		return new GroupWidget("Product Backlog", panel);
@@ -88,7 +98,22 @@ public class ProductBacklogWidget extends AWidget {
 	protected void onUpdate() {
 		toolbar.update();
 		predicateSelect.update();
-		list.setObjects(ScrumGwtApplication.get().getProject().getRequirements());
+		list.setObjects(filter(ScrumGwtApplication.get().getProject().getRequirements()));
+	}
+
+	private List<Requirement> filter(List<Requirement> requirements) {
+		ArrayList<Requirement> result = new ArrayList<Requirement>(requirements.size());
+		for (Requirement r : requirements) {
+			if (noPredicateContains(r)) result.add(r);
+		}
+		return result;
+	}
+
+	private boolean noPredicateContains(Requirement r) {
+		for (ListPredicate<Requirement> p : predicates) {
+			if (p.contains(r)) return false;
+		}
+		return true;
 	}
 
 	public void selectRequirement(Requirement requirement) {
