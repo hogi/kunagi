@@ -1,6 +1,6 @@
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
-// generator: ilarkesto.mda.gen.GwtImageBundleGenerator
+// generator: ilarkesto.mda.gen.gwt.GwtImageBundleGenerator
 
 
 
