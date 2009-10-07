@@ -40,8 +40,7 @@ public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Require
 
 	@Override
 	protected void onUpdateBody() {
-		requirementWidget.update();
-		setContent(requirementWidget);
+		setContent(requirementWidget.update());
 	}
 
 	public Requirement getRequirement() {
