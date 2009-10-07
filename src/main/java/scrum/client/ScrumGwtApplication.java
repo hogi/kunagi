@@ -22,8 +22,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 public class ScrumGwtApplication extends GScrumGwtApplication {
 
-	private Dao dao = new Dao();
-
+	private Components components;
 	private ApplicationInfo applicationInfo;
 	private User user;
 	private Project project;
@@ -34,10 +33,13 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	private PingTimer pingTimer;
 
 	public void onModuleLoad() {
+
 		// TODO remove workaround if issue is fixed
 		// workaround for GWT issue 1813
 		// http://code.google.com/p/google-web-toolkit/issues/detail?id=1813
 		RootPanel.get().getElement().getStyle().setProperty("position", "relative");
+
+		components = new Components();
 
 		ui = Ui.get();
 		ui.update();
@@ -56,33 +58,35 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	}
 
 	@Override
-	protected void onServerData(DataTransferObject dto) {
-		if (dto.containsEntities()) {
+	protected void onServerData(DataTransferObject data) {
+		components.getEventBus().fireServerDataReceived(data);
+
+		if (data.containsEntities()) {
 			lastDataReceiveTime = System.currentTimeMillis();
 			if (pingTimer != null) pingTimer.schedule();
 		}
 
-		if (dto.usersStatus != null) {
+		if (data.usersStatus != null) {
 			lastDataReceiveTime = System.currentTimeMillis();
 			if (ProjectContext.isActive()) {
-				ProjectContext.get().setUsersStatus(dto.usersStatus);
+				ProjectContext.get().setUsersStatus(data.usersStatus);
 			}
 		}
 
-		if (dto.entityIdBase != null) {
-			getDao().setEntityIdBase(dto.entityIdBase);
-			GwtLogger.DEBUG("entityIdBase:", dto.entityIdBase);
+		if (data.entityIdBase != null) {
+			getDao().setEntityIdBase(data.entityIdBase);
+			GwtLogger.DEBUG("entityIdBase:", data.entityIdBase);
 		}
 
-		if (dto.applicationInfo != null) {
-			this.applicationInfo = dto.applicationInfo;
-			GwtLogger.DEBUG("applicationInfo:", dto.applicationInfo);
+		if (data.applicationInfo != null) {
+			this.applicationInfo = data.applicationInfo;
+			GwtLogger.DEBUG("applicationInfo:", data.applicationInfo);
 		} else {
 			assert this.applicationInfo != null;
 		}
 
-		if (dto.isUserSet()) {
-			user = getDao().getUser(dto.getUserId());
+		if (data.isUserSet()) {
+			user = getDao().getUser(data.getUserId());
 		}
 
 	}
@@ -217,7 +221,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	@Override
 	public Dao getDao() {
-		return dao;
+		return components.getDao();
 	}
 
 	public static ScrumGwtApplication get() {

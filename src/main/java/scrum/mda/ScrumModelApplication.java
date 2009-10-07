@@ -7,10 +7,12 @@ import ilarkesto.mda.AGeneratorApplication;
 import ilarkesto.mda.gen.gwt.GwtActionGenerator;
 import ilarkesto.mda.gen.gwt.GwtActionTemplateGenerator;
 import ilarkesto.mda.gen.gwt.GwtApplicationGenerator;
+import ilarkesto.mda.gen.gwt.GwtComponentsGenerator;
 import ilarkesto.mda.gen.gwt.GwtDaoGenerator;
 import ilarkesto.mda.gen.gwt.GwtEntityGenerator;
 import ilarkesto.mda.gen.gwt.GwtEntityTemplateGenerator;
 import ilarkesto.mda.gen.gwt.GwtEventBusGenerator;
+import ilarkesto.mda.gen.gwt.GwtEventListenerGenerator;
 import ilarkesto.mda.gen.gwt.GwtImageBundleGenerator;
 import ilarkesto.mda.gen.gwt.GwtServiceAsyncInterfaceGenerator;
 import ilarkesto.mda.gen.gwt.GwtServiceImplementationGenerator;
@@ -18,8 +20,11 @@ import ilarkesto.mda.gen.gwt.GwtServiceInterfaceGenerator;
 import ilarkesto.mda.model.ActionModel;
 import ilarkesto.mda.model.ApplicationModel;
 import ilarkesto.mda.model.BeanModel;
+import ilarkesto.mda.model.ComponentModel;
 import ilarkesto.mda.model.DatobModel;
 import ilarkesto.mda.model.EntityModel;
+import ilarkesto.mda.model.EventModel;
+import ilarkesto.mda.model.GwtEventBusModel;
 import ilarkesto.mda.model.GwtServiceModel;
 
 import java.util.List;
@@ -30,6 +35,94 @@ public class ScrumModelApplication extends AGeneratorApplication {
 
 	public static void main(String[] args) {
 		ApplicationStarter.startApplication(ScrumModelApplication.class).generateClasses().shutdown();
+	}
+
+	// ------------------
+	// --- components ---
+	// ------------------
+
+	private ComponentModel gwtComponentsModel;
+
+	public ComponentModel getGwtComponentsModel() {
+		if (gwtComponentsModel == null) {
+			gwtComponentsModel = new ComponentModel("GwtComponents", getBasePackageName());
+			gwtComponentsModel.setGwt(true);
+			gwtComponentsModel.addComposite("Auth");
+		}
+		return gwtComponentsModel;
+	}
+
+	// --------------
+	// --- events ---
+	// --------------
+
+	private GwtEventBusModel gwtEventBusModel;
+
+	public GwtEventBusModel getGwtEventBusModel() {
+		if (gwtEventBusModel == null) {
+			gwtEventBusModel = new GwtEventBusModel();
+			gwtEventBusModel.addEvent("ServerDataReceived").addParameter("data", "DataTransferObject").setQuiet(true);
+			gwtEventBusModel.addEvent("Login");
+			gwtEventBusModel.addEvent("Logout");
+		}
+		return gwtEventBusModel;
+	}
+
+	// ---------------
+	// --- service ---
+	// ---------------
+
+	private GwtServiceModel gwtServiceModel;
+
+	public GwtServiceModel getGwtServiceModel() {
+		if (gwtServiceModel == null) {
+			gwtServiceModel = createGwtServiceModel("scrum");
+			autowire(gwtServiceModel);
+			gwtServiceModel.addMethod("ping");
+			gwtServiceModel.addMethod("login").addParameter("username", String.class).addParameter("password",
+				String.class);
+			gwtServiceModel.addMethod("logout");
+			gwtServiceModel.addMethod("changePassword").addParameter("oldPassword", String.class).addParameter(
+				"newPassword", String.class);
+			gwtServiceModel.addMethod("resetPassword").addParameter("userId", String.class);
+			gwtServiceModel.addMethod("selectProject").addParameter("projectId", String.class);
+			gwtServiceModel.addMethod("closeProject");
+			gwtServiceModel.addMethod("switchToNextSprint");
+			gwtServiceModel.addMethod("requestImpediments");
+			gwtServiceModel.addMethod("requestIssues");
+			gwtServiceModel.addMethod("requestRisks");
+			gwtServiceModel.addMethod("requestComments").addParameter("parentId", String.class);
+			gwtServiceModel.addMethod("changeProperties").addParameter("entityId", String.class).addParameter(
+				"properties", Map.class);
+			gwtServiceModel.addMethod("createEntity").addParameter("type", String.class).addParameter("properties",
+				Map.class);
+			gwtServiceModel.addMethod("deleteEntity").addParameter("entityId", String.class);
+			gwtServiceModel.addMethod("requestEntityByReference").addParameter("reference", String.class);
+			gwtServiceModel.addMethod("setSelectedEntitysIds").addParameter("ids", Set.class);
+			gwtServiceModel.addMethod("sleep").addParameter("millis", long.class);
+		}
+		return gwtServiceModel;
+	}
+
+	// -------------------
+	// --- application ---
+	// -------------------
+
+	private ApplicationModel applicationModel;
+
+	public ApplicationModel getApplicationModel() {
+		if (applicationModel == null) {
+			applicationModel = createWebApplicationModel("Scrum");
+			autowire(applicationModel);
+			applicationModel.addDaosAsComposites(getFinalEntityModels(true));
+			applicationModel.addGwtService(getGwtServiceModel());
+
+			applicationModel.addAction("SwitchToNextSprint", getBasePackageName() + ".sprint");
+			applicationModel.addAction("Login", getBasePackageName() + ".admin");
+			applicationModel.addAction("Logout", getBasePackageName() + ".admin");
+			applicationModel.addAction("ChangeProject", getBasePackageName() + ".project");
+		}
+		return applicationModel;
 	}
 
 	// ----------------
@@ -328,65 +421,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return wikipageModel;
 	}
 
-	// ---------------
-	// --- service ---
-	// ---------------
-
-	private GwtServiceModel gwtServiceModel;
-
-	public GwtServiceModel getGwtServiceModel() {
-		if (gwtServiceModel == null) {
-			gwtServiceModel = createGwtServiceModel("scrum");
-			autowire(gwtServiceModel);
-			gwtServiceModel.addMethod("ping");
-			gwtServiceModel.addMethod("login").addParameter("username", String.class).addParameter("password",
-				String.class);
-			gwtServiceModel.addMethod("logout");
-			gwtServiceModel.addMethod("changePassword").addParameter("oldPassword", String.class).addParameter(
-				"newPassword", String.class);
-			gwtServiceModel.addMethod("resetPassword").addParameter("userId", String.class);
-			gwtServiceModel.addMethod("selectProject").addParameter("projectId", String.class);
-			gwtServiceModel.addMethod("closeProject");
-			gwtServiceModel.addMethod("switchToNextSprint");
-			gwtServiceModel.addMethod("requestImpediments");
-			gwtServiceModel.addMethod("requestIssues");
-			gwtServiceModel.addMethod("requestRisks");
-			gwtServiceModel.addMethod("requestComments").addParameter("parentId", String.class);
-			gwtServiceModel.addMethod("changeProperties").addParameter("entityId", String.class).addParameter(
-				"properties", Map.class);
-			gwtServiceModel.addMethod("createEntity").addParameter("type", String.class).addParameter("properties",
-				Map.class);
-			gwtServiceModel.addMethod("deleteEntity").addParameter("entityId", String.class);
-			gwtServiceModel.addMethod("requestEntityByReference").addParameter("reference", String.class);
-			gwtServiceModel.addMethod("setSelectedEntitysIds").addParameter("ids", Set.class);
-			gwtServiceModel.addMethod("sleep").addParameter("millis", long.class);
-		}
-		return gwtServiceModel;
-	}
-
-	// -------------------
-	// --- application ---
-	// -------------------
-
-	private ApplicationModel applicationModel;
-
-	public ApplicationModel getApplicationModel() {
-		if (applicationModel == null) {
-			applicationModel = createWebApplicationModel("Scrum");
-			autowire(applicationModel);
-			applicationModel.addDaosAsComposites(getFinalEntityModels(true));
-			applicationModel.addGwtService(getGwtServiceModel());
-
-			// applicationModel.addEvent("ProjectOpened");
-
-			applicationModel.addAction("SwitchToNextSprint", getBasePackageName() + ".sprint");
-			applicationModel.addAction("Login", getBasePackageName() + ".admin");
-			applicationModel.addAction("Logout", getBasePackageName() + ".admin");
-			applicationModel.addAction("ChangeProject", getBasePackageName() + ".project");
-		}
-		return applicationModel;
-	}
-
 	@Override
 	protected String getBasePackageName() {
 		return "scrum.server";
@@ -419,7 +453,11 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		autowire(new GwtApplicationGenerator()).generate(getApplicationModel());
 		autowire(new GwtDaoGenerator()).generate(getApplicationModel(), getFinalEntityModels(false));
 		autowire(new GwtImageBundleGenerator()).generate("scrum.client.img");
-		new GwtEventBusGenerator(getApplicationModel()).generate();
+		new GwtEventBusGenerator(getApplicationModel(), getGwtEventBusModel()).generate();
+		for (EventModel eventModel : getGwtEventBusModel().getEvents()) {
+			new GwtEventListenerGenerator(eventModel, applicationModel).generate();
+		}
+		new GwtComponentsGenerator(getGwtComponentsModel()).generate();
 	}
 
 	private void generateActions(List<ActionModel> actions) {

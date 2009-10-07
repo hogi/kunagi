@@ -24,6 +24,8 @@ public class Dao extends GDao {
 	private int entityIdCounter;
 	private EntityChangeCache cache = new EntityChangeCache();
 
+	Dao() {}
+
 	public AGwtEntity getEntityByReference(String reference) {
 		int number = Integer.parseInt(reference.substring(Requirement.REFERENCE_PREFIX.length()));
 		if (reference.startsWith(Requirement.REFERENCE_PREFIX)) {
