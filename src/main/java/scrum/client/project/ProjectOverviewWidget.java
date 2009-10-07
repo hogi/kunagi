@@ -3,7 +3,9 @@ package scrum.client.project;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.Gwt;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
 import scrum.client.context.ProjectContext;
@@ -19,27 +21,27 @@ public class ProjectOverviewWidget extends AWidget {
 	public static int CHART_WIDTH = 800;
 	public static int CHART_HEIGHT = 270;
 
-	private FieldsWidget fields;
-
 	@Override
 	protected Widget onInitialization() {
-		fields = new FieldsWidget();
+		final Project project = ScrumGwtApplication.get().getProject();
+
+		FieldsWidget fields = new FieldsWidget();
 
 		fields.add("Label", new ATextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerText(ScrumGwtApplication.get().getProject().getLabel());
+				setViewerText(project.getLabel());
 			}
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorText(ScrumGwtApplication.get().getProject().getLabel());
+				setEditorText(project.getLabel());
 			}
 
 			@Override
 			protected void onEditorSubmit() {
-				ScrumGwtApplication.get().getProject().setLabel(getEditorText());
+				project.setLabel(getEditorText());
 			}
 		});
 
@@ -47,22 +49,22 @@ public class ProjectOverviewWidget extends AWidget {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerText(ScrumGwtApplication.get().getProject().getDescription());
+				setViewerText(project.getDescription());
 			}
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorText(ScrumGwtApplication.get().getProject().getDescription());
+				setEditorText(project.getDescription());
 			}
 
 			@Override
 			protected void onEditorSubmit() {
-				ScrumGwtApplication.get().getProject().setDescription(getEditorText());
+				project.setDescription(getEditorText());
 			}
 		});
 
-		String chartUrl = GWT.getModuleBaseURL() + "/projectBurndownChart.png?projectId="
-				+ ScrumGwtApplication.get().getProject().getId() + "&width=" + CHART_WIDTH + "&height=" + CHART_HEIGHT;
+		String chartUrl = GWT.getModuleBaseURL() + "/projectBurndownChart.png?projectId=" + project.getId() + "&width="
+				+ CHART_WIDTH + "&height=" + CHART_HEIGHT;
 		Image chart = new Image(chartUrl, 0, 0, CHART_WIDTH, CHART_HEIGHT);
 
 		FlowPanel projectPropertiesPanel = new FlowPanel();
@@ -71,17 +73,12 @@ public class ProjectOverviewWidget extends AWidget {
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(new GroupWidget("Project Properties", projectPropertiesPanel));
-		Sprint sprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
+		Sprint sprint = project.getCurrentSprint();
 		if (sprint != null) {
 			panel.add(createCurrentSprintOverview(sprint));
 		}
 
-		return panel;
-	}
-
-	@Override
-	protected void onUpdate() {
-		fields.update();
+		return Gwt.createFlowPanel(fields, new CommentsWidget(project));
 	}
 
 	private Widget createCurrentSprintOverview(Sprint sprint) {

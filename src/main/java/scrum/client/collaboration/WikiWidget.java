@@ -69,7 +69,7 @@ public class WikiWidget extends AWidget {
 			panel.add(editor);
 		}
 		panel.add(toolbar.update());
-
+		if (page != null) panel.add(new CommentsWidget(page).update());
 	}
 
 	public void showPage(String name) {

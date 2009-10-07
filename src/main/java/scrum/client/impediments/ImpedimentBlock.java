@@ -3,6 +3,8 @@ package scrum.client.impediments;
 import ilarkesto.gwt.client.ADateViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
+import ilarkesto.gwt.client.Gwt;
+import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockWidgetFactory;
@@ -15,8 +17,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implements TrashSupport {
 
 	private Impediment impediment;
-
-	private FieldsWidget fields;
 
 	@Override
 	protected Impediment getObject() {
@@ -50,7 +50,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 
 	@Override
 	protected Widget onExtendedInitialization() {
-		fields = new FieldsWidget();
+		FieldsWidget fields = new FieldsWidget();
 		fields.setAutoUpdateWidget(this);
 
 		fields.add("Label", new ATextViewEditWidget() {
@@ -123,7 +123,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 			}
 		});
 
-		return fields;
+		return Gwt.createFlowPanel(fields, new CommentsWidget(impediment));
 	}
 
 	public AScrumAction getTrashAction() {

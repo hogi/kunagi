@@ -4,6 +4,8 @@ import ilarkesto.gwt.client.ADropdownViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATextWidget;
+import ilarkesto.gwt.client.Gwt;
+import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
@@ -19,8 +21,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupport, ClipboardSupport {
 
 	private Risk risk;
-
-	private FieldsWidget fields;
 
 	@Override
 	protected Risk getObject() {
@@ -45,7 +45,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 
 	@Override
 	protected Widget onExtendedInitialization() {
-		fields = new FieldsWidget();
+		FieldsWidget fields = new FieldsWidget();
 		fields.setAutoUpdateWidget(this);
 
 		fields.add("Label", new ATextViewEditWidget() {
@@ -144,7 +144,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 			}
 		});
 
-		return fields;
+		return Gwt.createFlowPanel(fields, new CommentsWidget(risk));
 	}
 
 	public Image getClipboardIcon() {

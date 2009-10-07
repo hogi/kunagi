@@ -3,6 +3,8 @@ package scrum.client.issues;
 import ilarkesto.gwt.client.ADropdownViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
+import ilarkesto.gwt.client.Gwt;
+import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockWidgetFactory;
@@ -15,8 +17,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSupport {
 
 	private Issue issue;
-
-	private FieldsWidget fields;
 
 	@Override
 	protected Issue getObject() {
@@ -43,7 +43,7 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 
 	@Override
 	protected Widget onExtendedInitialization() {
-		fields = new FieldsWidget();
+		FieldsWidget fields = new FieldsWidget();
 		fields.setAutoUpdateWidget(this);
 
 		fields.add("Label", new ATextViewEditWidget() {
@@ -100,7 +100,7 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 			}
 		});
 
-		return fields;
+		return Gwt.createFlowPanel(fields, new CommentsWidget(issue));
 	}
 
 	public AScrumAction getTrashAction() {

@@ -2,6 +2,8 @@ package scrum.client.project;
 
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
+import ilarkesto.gwt.client.Gwt;
+import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
@@ -17,8 +19,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class QualityBlock extends AExtensibleBlockWidget<Quality> implements TrashSupport, ClipboardSupport {
 
 	private Quality quality;
-
-	private FieldsWidget fields;
 
 	@Override
 	protected Quality getObject() {
@@ -43,7 +43,7 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 
 	@Override
 	protected Widget onExtendedInitialization() {
-		fields = new FieldsWidget();
+		FieldsWidget fields = new FieldsWidget();
 		fields.setAutoUpdateWidget(this);
 		fields.add("Label", new ATextViewEditWidget() {
 
@@ -102,7 +102,7 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 
 		});
 
-		return fields;
+		return Gwt.createFlowPanel(fields, new CommentsWidget(quality));
 	}
 
 	public Image getClipboardIcon() {
