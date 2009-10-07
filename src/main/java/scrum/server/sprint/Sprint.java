@@ -1,6 +1,7 @@
 package scrum.server.sprint;
 
 import ilarkesto.base.time.Date;
+import ilarkesto.logging.Logger;
 
 import java.util.List;
 import java.util.Set;
@@ -9,6 +10,8 @@ import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
 
 public class Sprint extends GSprint {
+
+	private static final Logger LOG = Logger.get(Sprint.class);
 
 	// --- dependencies ---
 
@@ -72,7 +75,9 @@ public class Sprint extends GSprint {
 		super.ensureIntegrity();
 
 		// delete when not current and end date older than 4 weeks
-		if (isEndSet() && !getProject().isCurrentSprint(this) && getEnd().getPeriodToNow().toWeeks() > 4) {
+		if (isEndSet() && !getProject().isCurrentSprint(this) && getEnd().isPast()
+				&& getEnd().getPeriodToNow().toWeeks() > 4) {
+			LOG.info("Deleting sprint, which ended on", getEnd(), "->", toString());
 			getDao().deleteEntity(this);
 		}
 	}

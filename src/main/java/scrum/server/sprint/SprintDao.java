@@ -20,8 +20,8 @@ public class SprintDao extends GSprintDao {
 		Date end = Date.today().getLastDateOfMonth();
 
 		if (variant > 0) {
-			begin = begin.addMonths(-variant);
-			end = begin.addMonths(-variant);
+			begin = begin.addDays(-variant * 3);
+			end = begin.addDays(-variant * 3);
 		}
 
 		int beginBeforeInDays = 7;
