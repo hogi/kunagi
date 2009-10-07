@@ -14,6 +14,7 @@ import scrum.client.project.RequirementWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Widget;
 
 public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement> implements ClipboardSupport {
 
@@ -49,7 +50,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	}
 
 	@Override
-	protected void onExtendedInitialization() {
+	protected Widget onExtendedInitialization() {
 		requirementWidget = new RequirementWidget(requirement, false, false, true, false);
 		taskList = new BlockListWidget<Task>(TaskInRequirementBlock.FACTORY);
 		commentsWidget = new CommentsWidget(requirement);
@@ -58,14 +59,15 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 		panel.add(requirementWidget);
 		panel.add(taskList);
 		panel.add(commentsWidget);
+		return panel;
 	}
 
 	@Override
-	protected void onUpdateBody() {
+	protected Widget onUpdateBody() {
 		requirementWidget.update();
-		commentsWidget.update();
 		taskList.setObjects(requirement.getTasks());
-		setContent(panel);
+		commentsWidget.update();
+		return panel;
 	}
 
 	public void selectTask(Task task) {

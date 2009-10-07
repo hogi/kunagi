@@ -8,6 +8,7 @@ import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 
 public class UserBlock extends AExtensibleBlockWidget<User> {
 
@@ -41,7 +42,7 @@ public class UserBlock extends AExtensibleBlockWidget<User> {
 	}
 
 	@Override
-	protected void onExtendedInitialization() {
+	protected Widget onExtendedInitialization() {
 		fields = new FieldsWidget();
 		fields.setAutoUpdateWidget(this);
 
@@ -83,12 +84,7 @@ public class UserBlock extends AExtensibleBlockWidget<User> {
 
 		});
 
-	}
-
-	@Override
-	protected void onUpdateBody() {
-		fields.update();
-		setContent(fields);
+		return fields;
 	}
 
 	public Image getClipboardIcon() {

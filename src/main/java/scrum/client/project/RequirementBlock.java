@@ -9,6 +9,7 @@ import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Widget;
 
 public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implements TrashSupport, ClipboardSupport {
 
@@ -52,13 +53,8 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 	}
 
 	@Override
-	protected void onExtendedInitialization() {
-		requirementWidget = new RequirementWidget(requirement, true, true, false, true);
-	}
-
-	@Override
-	protected void onUpdateBody() {
-		setContent(requirementWidget.update());
+	protected Widget onExtendedInitialization() {
+		return new RequirementWidget(requirement, true, true, false, true);
 	}
 
 	public Image getClipboardIcon() {

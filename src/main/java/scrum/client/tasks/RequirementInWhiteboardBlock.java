@@ -7,6 +7,8 @@ import scrum.client.project.Requirement;
 import scrum.client.project.RequirementWidget;
 import scrum.client.sprint.CreateTaskAction;
 
+import com.google.gwt.user.client.ui.Widget;
+
 public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Requirement> {
 
 	private Requirement requirement;
@@ -34,13 +36,8 @@ public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Require
 	}
 
 	@Override
-	protected void onExtendedInitialization() {
-		requirementWidget = new RequirementWidget(requirement, true, false, true, true);
-	}
-
-	@Override
-	protected void onUpdateBody() {
-		setContent(requirementWidget.update());
+	protected Widget onExtendedInitialization() {
+		return new RequirementWidget(requirement, true, false, true, true);
 	}
 
 	public Requirement getRequirement() {

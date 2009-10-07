@@ -75,7 +75,9 @@ public class WidgetsTesterWidget extends AWidget {
 		protected void onCollapsedInitialization() {}
 
 		@Override
-		protected void onExtendedInitialization() {}
+		protected Widget onExtendedInitialization() {
+			return null;
+		}
 
 		@Override
 		protected void onUpdateHead() {
@@ -89,13 +91,12 @@ public class WidgetsTesterWidget extends AWidget {
 		}
 
 		@Override
-		protected void onUpdateBody() {
+		protected Widget onUpdateBody() {
 			HTML content = new HTML(
 					"<h3>"
 							+ text
 							+ "</h3><p>Das ist der Content. Das ist der Content. Das ist der Content. Das ist der Content. </p>");
-			setContent(content);
-			setIcon(Img.bundle.project16());
+			return content;
 		}
 
 		@Override

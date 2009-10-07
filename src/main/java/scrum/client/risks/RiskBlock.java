@@ -14,6 +14,7 @@ import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Widget;
 
 public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupport, ClipboardSupport {
 
@@ -43,7 +44,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 	}
 
 	@Override
-	protected void onExtendedInitialization() {
+	protected Widget onExtendedInitialization() {
 		fields = new FieldsWidget();
 		fields.setAutoUpdateWidget(this);
 
@@ -143,12 +144,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 			}
 		});
 
-	}
-
-	@Override
-	protected void onUpdateBody() {
-		fields.update();
-		setContent(fields);
+		return fields;
 	}
 
 	public Image getClipboardIcon() {

@@ -12,6 +12,7 @@ import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Widget;
 
 public class QualityBlock extends AExtensibleBlockWidget<Quality> implements TrashSupport, ClipboardSupport {
 
@@ -41,7 +42,7 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 	}
 
 	@Override
-	protected void onExtendedInitialization() {
+	protected Widget onExtendedInitialization() {
 		fields = new FieldsWidget();
 		fields.setAutoUpdateWidget(this);
 		fields.add("Label", new ATextViewEditWidget() {
@@ -100,12 +101,8 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 			}
 
 		});
-	}
 
-	@Override
-	protected void onUpdateBody() {
-		fields.update();
-		setContent(fields);
+		return fields;
 	}
 
 	public Image getClipboardIcon() {

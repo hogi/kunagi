@@ -10,6 +10,7 @@ import scrum.client.img.Img;
 import scrum.client.tasks.TaskWidget;
 
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Widget;
 
 public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> implements TrashSupport, ClipboardSupport {
 
@@ -43,14 +44,8 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 	}
 
 	@Override
-	protected void onExtendedInitialization() {
-		taskWidget = new TaskWidget(task);
-
-	}
-
-	@Override
-	protected void onUpdateBody() {
-		setContent(taskWidget.update());
+	protected Widget onExtendedInitialization() {
+		return new TaskWidget(task);
 	}
 
 	public Task getTask() {

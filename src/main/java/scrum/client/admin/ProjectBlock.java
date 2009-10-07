@@ -14,6 +14,7 @@ import scrum.client.project.Project;
 
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 
@@ -62,7 +63,7 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 	}
 
 	@Override
-	protected void onExtendedInitialization() {
+	protected Widget onExtendedInitialization() {
 		fields = new FieldsWidget();
 		fields.setAutoUpdateWidget(this);
 		fields.add("Label", new ATextViewEditWidget() {
@@ -198,12 +199,7 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 			}
 		});
 
-	}
-
-	@Override
-	protected void onUpdateBody() {
-		fields.update();
-		setContent(fields);
+		return fields;
 	}
 
 	public Image getClipboardIcon() {

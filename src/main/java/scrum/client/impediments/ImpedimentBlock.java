@@ -10,6 +10,8 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
+import com.google.gwt.user.client.ui.Widget;
+
 public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implements TrashSupport {
 
 	private Impediment impediment;
@@ -47,7 +49,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	}
 
 	@Override
-	protected void onExtendedInitialization() {
+	protected Widget onExtendedInitialization() {
 		fields = new FieldsWidget();
 		fields.setAutoUpdateWidget(this);
 
@@ -121,12 +123,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 			}
 		});
 
-	}
-
-	@Override
-	protected void onUpdateBody() {
-		fields.update();
-		setContent(fields);
+		return fields;
 	}
 
 	public AScrumAction getTrashAction() {

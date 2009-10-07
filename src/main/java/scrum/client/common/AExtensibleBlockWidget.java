@@ -1,19 +1,26 @@
 package scrum.client.common;
 
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
+
+import com.google.gwt.user.client.ui.Widget;
 
 public abstract class AExtensibleBlockWidget<O extends Object> extends ABlockWidget<O> {
 
 	private boolean initializingExtension;
 	private boolean initializedExtension;
+	private Widget body;
 
 	protected abstract void onCollapsedInitialization();
 
 	protected abstract void onUpdateHead();
 
-	protected abstract void onExtendedInitialization();
+	protected abstract Widget onExtendedInitialization();
 
-	protected abstract void onUpdateBody();
+	protected Widget onUpdateBody() {
+		Gwt.update(body);
+		return body;
+	}
 
 	@Override
 	protected final void onBlockInitialization() {
@@ -25,7 +32,8 @@ public abstract class AExtensibleBlockWidget<O extends Object> extends ABlockWid
 		if (isExtended()) {
 			ensureExtendedInitialized();
 			onUpdateHead();
-			onUpdateBody();
+			body = onUpdateBody();
+			setContent(body);
 		} else {
 			onUpdateHead();
 		}
@@ -44,7 +52,8 @@ public abstract class AExtensibleBlockWidget<O extends Object> extends ABlockWid
 		if (initializingExtension) throw new RuntimeException("Extension already initializing: " + toString());
 		initializingExtension = true;
 		GwtLogger.DEBUG("Initializing extension: " + toString());
-		onExtendedInitialization();
+		body = onExtendedInitialization();
+		setContent(body);
 		initializedExtension = true;
 		initializingExtension = false;
 	}
