@@ -26,6 +26,9 @@ public class Requirement extends GRequirement implements Numbered {
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
 		updateNumber();
+
+		// delete when closed and older than 4 weeks
+		if (isClosed() && getLastModified().getPeriodToNow().toWeeks() > 4) getDao().deleteEntity(this);
 	}
 
 	public Set<Task> getTasks() {

@@ -160,6 +160,12 @@ public class Project extends GProject {
 		createNextSprint();
 
 		createSprintSnapshot();
+
+		for (Task task : oldSprint.getTasks()) {
+			if (task.isDone()) {
+				taskDao.deleteEntity(task);
+			}
+		}
 	}
 
 	private ProjectSprintSnapshot createSprintSnapshot() {

@@ -68,6 +68,16 @@ public class Sprint extends GSprint {
 	}
 
 	@Override
+	public void ensureIntegrity() {
+		super.ensureIntegrity();
+
+		// delete when not current and end date older than 4 weeks
+		if (isEndSet() && !getProject().isCurrentSprint(this) && getEnd().getPeriodToNow().toWeeks() > 4) {
+			getDao().deleteEntity(this);
+		}
+	}
+
+	@Override
 	public String toString() {
 		return getLabel();
 	}

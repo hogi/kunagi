@@ -217,7 +217,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		for (Requirement requirement : oldSprint.getRequirements()) {
 			if (!requirement.isClosed()) {
 				requirement.setDirty(true);
-				session.sendToClient(requirement);
 				sendToClients(session, requirement);
 			}
 		}
