@@ -10,6 +10,7 @@ import ilarkesto.mda.gen.gwt.GwtApplicationGenerator;
 import ilarkesto.mda.gen.gwt.GwtDaoGenerator;
 import ilarkesto.mda.gen.gwt.GwtEntityGenerator;
 import ilarkesto.mda.gen.gwt.GwtEntityTemplateGenerator;
+import ilarkesto.mda.gen.gwt.GwtEventBusGenerator;
 import ilarkesto.mda.gen.gwt.GwtImageBundleGenerator;
 import ilarkesto.mda.gen.gwt.GwtServiceAsyncInterfaceGenerator;
 import ilarkesto.mda.gen.gwt.GwtServiceImplementationGenerator;
@@ -376,6 +377,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			applicationModel.addDaosAsComposites(getFinalEntityModels(true));
 			applicationModel.addGwtService(getGwtServiceModel());
 
+			// applicationModel.addEvent("ProjectOpened");
+
 			applicationModel.addAction("SwitchToNextSprint", getBasePackageName() + ".sprint");
 			applicationModel.addAction("Login", getBasePackageName() + ".admin");
 			applicationModel.addAction("Logout", getBasePackageName() + ".admin");
@@ -416,6 +419,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		autowire(new GwtApplicationGenerator()).generate(getApplicationModel());
 		autowire(new GwtDaoGenerator()).generate(getApplicationModel(), getFinalEntityModels(false));
 		autowire(new GwtImageBundleGenerator()).generate("scrum.client.img");
+		new GwtEventBusGenerator(getApplicationModel()).generate();
 	}
 
 	private void generateActions(List<ActionModel> actions) {
