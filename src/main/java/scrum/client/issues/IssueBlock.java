@@ -35,7 +35,7 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 
 	@Override
 	protected void onUpdateHead() {
-		setBlockTitle("[" + issue.getTypeLabel() + "] " + issue.getLabel());
+		setBlockTitle(issue.getReference() + " [" + issue.getTypeLabel() + "] " + issue.getLabel());
 		addMenuAction(new ConvertIssueToRequirementAction(issue));
 		addMenuAction(new ConvertIssueToQualityAction(issue));
 		addMenuAction(new DeleteIssueAction(issue));

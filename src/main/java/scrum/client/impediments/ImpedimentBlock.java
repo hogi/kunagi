@@ -35,7 +35,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 
 	@Override
 	protected void onUpdateHead() {
-		setBlockTitle("[" + impediment.getDate() + "] " + impediment.getLabel());
+		setBlockTitle(impediment.getReference() + " [" + impediment.getDate() + "] " + impediment.getLabel());
 		String style = null;
 		if (impediment.isClosed()) {
 			style = "ImpedimentBlock-closed";

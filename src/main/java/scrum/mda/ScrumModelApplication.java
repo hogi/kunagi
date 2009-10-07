@@ -58,6 +58,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addListProperty("requirementsOrderIds", String.class);
 			projectModel.addProperty("lastTaskNumber", int.class);
 			projectModel.addProperty("lastRequirementNumber", int.class);
+			projectModel.addProperty("lastQualityNumber", int.class);
+			projectModel.addProperty("lastRiskNumber", int.class);
+			projectModel.addProperty("lastIssueNumber", int.class);
+			projectModel.addProperty("lastImpedimentNumber", int.class);
 			getApplicationModel().addCreateAction(projectModel);
 			projectModel.addAction("DeleteProject");
 			projectModel.addAction("OpenProject");
@@ -188,6 +192,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(impedimentModel);
 			impedimentModel.setGwtSupport(true);
 			impedimentModel.addReference("project", getProjectModel()).setMaster(true);
+			impedimentModel.addProperty("number", int.class);
 			impedimentModel.addProperty("label", String.class).setMandatory(true);
 			impedimentModel.addProperty("date", Date.class).setMandatory(true);
 			impedimentModel.addProperty("description", String.class);
@@ -208,6 +213,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(riskModel);
 			riskModel.setGwtSupport(true);
 			riskModel.addReference("project", getProjectModel()).setMaster(true);
+			riskModel.addProperty("number", int.class);
 			riskModel.addProperty("label", String.class).setSearchable(true);
 			riskModel.addProperty("description", String.class).setSearchable(true);
 			riskModel.addProperty("mitigationPlans", String.class).setSearchable(true);
@@ -261,6 +267,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			autowire(issueModel);
 			issueModel.setGwtSupport(true);
 			issueModel.addReference("project", getProjectModel()).setMaster(true);
+			issueModel.addProperty("number", int.class);
 			issueModel.addProperty("type", String.class).setMandatory(true);
 			issueModel.addProperty("date", Date.class).setMandatory(true);
 			issueModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);

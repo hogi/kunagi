@@ -50,6 +50,10 @@ public abstract class GProject
         properties.put("requirementsOrderIds", this.requirementsOrderIds);
         properties.put("lastTaskNumber", this.lastTaskNumber);
         properties.put("lastRequirementNumber", this.lastRequirementNumber);
+        properties.put("lastQualityNumber", this.lastQualityNumber);
+        properties.put("lastRiskNumber", this.lastRiskNumber);
+        properties.put("lastIssueNumber", this.lastIssueNumber);
+        properties.put("lastImpedimentNumber", this.lastImpedimentNumber);
     }
 
     public int compareTo(Project other) {
@@ -890,6 +894,122 @@ public abstract class GProject
         setLastRequirementNumber((Integer)value);
     }
 
+    // -----------------------------------------------------------
+    // - lastQualityNumber
+    // -----------------------------------------------------------
+
+    private int lastQualityNumber;
+
+    public final int getLastQualityNumber() {
+        return lastQualityNumber;
+    }
+
+    public final void setLastQualityNumber(int lastQualityNumber) {
+        lastQualityNumber = prepareLastQualityNumber(lastQualityNumber);
+        if (isLastQualityNumber(lastQualityNumber)) return;
+        this.lastQualityNumber = lastQualityNumber;
+        fireModified();
+    }
+
+    protected int prepareLastQualityNumber(int lastQualityNumber) {
+        return lastQualityNumber;
+    }
+
+    public final boolean isLastQualityNumber(int lastQualityNumber) {
+        return this.lastQualityNumber == lastQualityNumber;
+    }
+
+    protected final void updateLastQualityNumber(Object value) {
+        setLastQualityNumber((Integer)value);
+    }
+
+    // -----------------------------------------------------------
+    // - lastRiskNumber
+    // -----------------------------------------------------------
+
+    private int lastRiskNumber;
+
+    public final int getLastRiskNumber() {
+        return lastRiskNumber;
+    }
+
+    public final void setLastRiskNumber(int lastRiskNumber) {
+        lastRiskNumber = prepareLastRiskNumber(lastRiskNumber);
+        if (isLastRiskNumber(lastRiskNumber)) return;
+        this.lastRiskNumber = lastRiskNumber;
+        fireModified();
+    }
+
+    protected int prepareLastRiskNumber(int lastRiskNumber) {
+        return lastRiskNumber;
+    }
+
+    public final boolean isLastRiskNumber(int lastRiskNumber) {
+        return this.lastRiskNumber == lastRiskNumber;
+    }
+
+    protected final void updateLastRiskNumber(Object value) {
+        setLastRiskNumber((Integer)value);
+    }
+
+    // -----------------------------------------------------------
+    // - lastIssueNumber
+    // -----------------------------------------------------------
+
+    private int lastIssueNumber;
+
+    public final int getLastIssueNumber() {
+        return lastIssueNumber;
+    }
+
+    public final void setLastIssueNumber(int lastIssueNumber) {
+        lastIssueNumber = prepareLastIssueNumber(lastIssueNumber);
+        if (isLastIssueNumber(lastIssueNumber)) return;
+        this.lastIssueNumber = lastIssueNumber;
+        fireModified();
+    }
+
+    protected int prepareLastIssueNumber(int lastIssueNumber) {
+        return lastIssueNumber;
+    }
+
+    public final boolean isLastIssueNumber(int lastIssueNumber) {
+        return this.lastIssueNumber == lastIssueNumber;
+    }
+
+    protected final void updateLastIssueNumber(Object value) {
+        setLastIssueNumber((Integer)value);
+    }
+
+    // -----------------------------------------------------------
+    // - lastImpedimentNumber
+    // -----------------------------------------------------------
+
+    private int lastImpedimentNumber;
+
+    public final int getLastImpedimentNumber() {
+        return lastImpedimentNumber;
+    }
+
+    public final void setLastImpedimentNumber(int lastImpedimentNumber) {
+        lastImpedimentNumber = prepareLastImpedimentNumber(lastImpedimentNumber);
+        if (isLastImpedimentNumber(lastImpedimentNumber)) return;
+        this.lastImpedimentNumber = lastImpedimentNumber;
+        fireModified();
+    }
+
+    protected int prepareLastImpedimentNumber(int lastImpedimentNumber) {
+        return lastImpedimentNumber;
+    }
+
+    public final boolean isLastImpedimentNumber(int lastImpedimentNumber) {
+        return this.lastImpedimentNumber == lastImpedimentNumber;
+    }
+
+    protected final void updateLastImpedimentNumber(Object value) {
+        setLastImpedimentNumber((Integer)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -909,6 +1029,10 @@ public abstract class GProject
             if (property.equals("requirementsOrderIds")) updateRequirementsOrderIds(value);
             if (property.equals("lastTaskNumber")) updateLastTaskNumber(value);
             if (property.equals("lastRequirementNumber")) updateLastRequirementNumber(value);
+            if (property.equals("lastQualityNumber")) updateLastQualityNumber(value);
+            if (property.equals("lastRiskNumber")) updateLastRiskNumber(value);
+            if (property.equals("lastIssueNumber")) updateLastIssueNumber(value);
+            if (property.equals("lastImpedimentNumber")) updateLastImpedimentNumber(value);
         }
     }
 

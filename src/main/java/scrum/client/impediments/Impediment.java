@@ -10,6 +10,7 @@ import scrum.client.project.Project;
 public class Impediment extends GImpediment {
 
 	public static final String INIT_LABEL = "New Impediment";
+	public static final String REFERENCE_PREFIX = "imp";
 
 	public Impediment(Project project) {
 		setLabel(INIT_LABEL);
@@ -21,9 +22,13 @@ public class Impediment extends GImpediment {
 		super(data);
 	}
 
+	public String getReference() {
+		return REFERENCE_PREFIX + getNumber();
+	}
+
 	@Override
 	public String toString() {
-		return getLabel();
+		return getReference() + " " + getLabel();
 	}
 
 	public static Comparator<Impediment> DATE_COMPARATOR = new Comparator<Impediment>() {

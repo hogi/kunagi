@@ -363,6 +363,82 @@ public abstract class GProject
         return equals(this.lastRequirementNumber, lastRequirementNumber);
     }
 
+    // --- lastQualityNumber ---
+
+    private int lastQualityNumber ;
+
+    public final int getLastQualityNumber() {
+        return this.lastQualityNumber ;
+    }
+
+    public final Project setLastQualityNumber(int lastQualityNumber) {
+        if (isLastQualityNumber(lastQualityNumber)) return (Project)this;
+        this.lastQualityNumber = lastQualityNumber ;
+        propertyChanged("lastQualityNumber", this.lastQualityNumber);
+        return (Project)this;
+    }
+
+    public final boolean isLastQualityNumber(int lastQualityNumber) {
+        return equals(this.lastQualityNumber, lastQualityNumber);
+    }
+
+    // --- lastRiskNumber ---
+
+    private int lastRiskNumber ;
+
+    public final int getLastRiskNumber() {
+        return this.lastRiskNumber ;
+    }
+
+    public final Project setLastRiskNumber(int lastRiskNumber) {
+        if (isLastRiskNumber(lastRiskNumber)) return (Project)this;
+        this.lastRiskNumber = lastRiskNumber ;
+        propertyChanged("lastRiskNumber", this.lastRiskNumber);
+        return (Project)this;
+    }
+
+    public final boolean isLastRiskNumber(int lastRiskNumber) {
+        return equals(this.lastRiskNumber, lastRiskNumber);
+    }
+
+    // --- lastIssueNumber ---
+
+    private int lastIssueNumber ;
+
+    public final int getLastIssueNumber() {
+        return this.lastIssueNumber ;
+    }
+
+    public final Project setLastIssueNumber(int lastIssueNumber) {
+        if (isLastIssueNumber(lastIssueNumber)) return (Project)this;
+        this.lastIssueNumber = lastIssueNumber ;
+        propertyChanged("lastIssueNumber", this.lastIssueNumber);
+        return (Project)this;
+    }
+
+    public final boolean isLastIssueNumber(int lastIssueNumber) {
+        return equals(this.lastIssueNumber, lastIssueNumber);
+    }
+
+    // --- lastImpedimentNumber ---
+
+    private int lastImpedimentNumber ;
+
+    public final int getLastImpedimentNumber() {
+        return this.lastImpedimentNumber ;
+    }
+
+    public final Project setLastImpedimentNumber(int lastImpedimentNumber) {
+        if (isLastImpedimentNumber(lastImpedimentNumber)) return (Project)this;
+        this.lastImpedimentNumber = lastImpedimentNumber ;
+        propertyChanged("lastImpedimentNumber", this.lastImpedimentNumber);
+        return (Project)this;
+    }
+
+    public final boolean isLastImpedimentNumber(int lastImpedimentNumber) {
+        return equals(this.lastImpedimentNumber, lastImpedimentNumber);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -382,6 +458,10 @@ public abstract class GProject
         requirementsOrderIds  = (java.util.List<java.lang.String>) props.get("requirementsOrderIds");
         lastTaskNumber  = (Integer) props.get("lastTaskNumber");
         lastRequirementNumber  = (Integer) props.get("lastRequirementNumber");
+        lastQualityNumber  = (Integer) props.get("lastQualityNumber");
+        lastRiskNumber  = (Integer) props.get("lastRiskNumber");
+        lastIssueNumber  = (Integer) props.get("lastIssueNumber");
+        lastImpedimentNumber  = (Integer) props.get("lastImpedimentNumber");
     }
 
     @Override
@@ -401,6 +481,10 @@ public abstract class GProject
         properties.put("requirementsOrderIds", this.requirementsOrderIds);
         properties.put("lastTaskNumber", this.lastTaskNumber);
         properties.put("lastRequirementNumber", this.lastRequirementNumber);
+        properties.put("lastQualityNumber", this.lastQualityNumber);
+        properties.put("lastRiskNumber", this.lastRiskNumber);
+        properties.put("lastIssueNumber", this.lastIssueNumber);
+        properties.put("lastImpedimentNumber", this.lastImpedimentNumber);
     }
 
 }

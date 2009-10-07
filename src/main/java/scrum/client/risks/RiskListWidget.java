@@ -53,4 +53,8 @@ public class RiskListWidget extends AWidget {
 		}
 	}
 
+	public void select(Risk risk) {
+		list.extendObject(risk);
+	}
+
 }

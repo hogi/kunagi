@@ -13,6 +13,7 @@ public class Issue extends GIssue {
 	public static final String INIT_TYPE = TYPES[0];
 
 	public static final String INIT_LABEL = "New Issue";
+	public static final String REFERENCE_PREFIX = "iss";
 
 	public Issue(Project project) {
 		setLabel(INIT_LABEL);
@@ -21,12 +22,16 @@ public class Issue extends GIssue {
 		setDate(Date.today());
 	}
 
-	public String getTypeLabel() {
-		return getType(); // TODO map to labels
-	}
-
 	public Issue(Map data) {
 		super(data);
+	}
+
+	public String getReference() {
+		return REFERENCE_PREFIX + getNumber();
+	}
+
+	public String getTypeLabel() {
+		return getType(); // TODO map to labels
 	}
 
 	public boolean isTypeRequirement() {
@@ -39,7 +44,7 @@ public class Issue extends GIssue {
 
 	@Override
 	public String toString() {
-		return "[" + getType() + "] " + getLabel();
+		return getReference() + " [" + getType() + "] " + getLabel();
 	}
 
 	public static Comparator<Issue> DATE_COMPARATOR = new Comparator<Issue>() {

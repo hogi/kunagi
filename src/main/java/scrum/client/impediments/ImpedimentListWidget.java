@@ -47,4 +47,8 @@ public class ImpedimentListWidget extends AWidget {
 	public static ImpedimentListWidget get() {
 		return ProjectContext.get().getImpedimentList();
 	}
+
+	public void select(Impediment impediment) {
+		list.extendObject(impediment);
+	}
 }

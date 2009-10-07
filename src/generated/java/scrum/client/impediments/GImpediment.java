@@ -69,6 +69,25 @@ public abstract class GImpediment
         return equals(this.projectId, project);
     }
 
+    // --- number ---
+
+    private int number ;
+
+    public final int getNumber() {
+        return this.number ;
+    }
+
+    public final Impediment setNumber(int number) {
+        if (isNumber(number)) return (Impediment)this;
+        this.number = number ;
+        propertyChanged("number", this.number);
+        return (Impediment)this;
+    }
+
+    public final boolean isNumber(int number) {
+        return equals(this.number, number);
+    }
+
     // --- label ---
 
     private java.lang.String label ;
@@ -168,6 +187,7 @@ public abstract class GImpediment
 
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
+        number  = (Integer) props.get("number");
         label  = (java.lang.String) props.get("label");
         String dateAsString = (String) props.get("date");
         date  =  dateAsString == null ? null : new ilarkesto.gwt.client.Date(dateAsString);
@@ -180,6 +200,7 @@ public abstract class GImpediment
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
+        properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("description", this.description);

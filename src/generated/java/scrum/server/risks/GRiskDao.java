@@ -36,6 +36,8 @@ public abstract class GRiskDao
     public void clearCaches() {
         risksByProjectCache.clear();
         projectsCache = null;
+        risksByNumberCache.clear();
+        numbersCache = null;
         risksByLabelCache.clear();
         labelsCache = null;
         risksByDescriptionCache.clear();
@@ -100,6 +102,46 @@ public abstract class GRiskDao
 
         public boolean test(Risk e) {
             return e.isProject(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Risk>> risksByNumberCache = new Cache<Integer,Set<Risk>>(
+            new Cache.Factory<Integer,Set<Risk>>() {
+                public Set<Risk> create(Integer number) {
+                    return getEntities(new IsNumber(number));
+                }
+            });
+
+    public final Set<Risk> getRisksByNumber(int number) {
+        return risksByNumberCache.get(number);
+    }
+    private Set<Integer> numbersCache;
+
+    public final Set<Integer> getNumbers() {
+        if (numbersCache == null) {
+            numbersCache = new HashSet<Integer>();
+            for (Risk e : getEntities()) {
+                numbersCache.add(e.getNumber());
+            }
+        }
+        return numbersCache;
+    }
+
+    private static class IsNumber implements Predicate<Risk> {
+
+        private int value;
+
+        public IsNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Risk e) {
+            return e.isNumber(value);
         }
 
     }

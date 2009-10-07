@@ -36,6 +36,8 @@ public abstract class GImpedimentDao
     public void clearCaches() {
         impedimentsByProjectCache.clear();
         projectsCache = null;
+        impedimentsByNumberCache.clear();
+        numbersCache = null;
         impedimentsByLabelCache.clear();
         labelsCache = null;
         impedimentsByDateCache.clear();
@@ -99,6 +101,46 @@ public abstract class GImpedimentDao
 
         public boolean test(Impediment e) {
             return e.isProject(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Impediment>> impedimentsByNumberCache = new Cache<Integer,Set<Impediment>>(
+            new Cache.Factory<Integer,Set<Impediment>>() {
+                public Set<Impediment> create(Integer number) {
+                    return getEntities(new IsNumber(number));
+                }
+            });
+
+    public final Set<Impediment> getImpedimentsByNumber(int number) {
+        return impedimentsByNumberCache.get(number);
+    }
+    private Set<Integer> numbersCache;
+
+    public final Set<Integer> getNumbers() {
+        if (numbersCache == null) {
+            numbersCache = new HashSet<Integer>();
+            for (Impediment e : getEntities()) {
+                numbersCache.add(e.getNumber());
+            }
+        }
+        return numbersCache;
+    }
+
+    private static class IsNumber implements Predicate<Impediment> {
+
+        private int value;
+
+        public IsNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Impediment e) {
+            return e.isNumber(value);
         }
 
     }

@@ -69,6 +69,25 @@ public abstract class GIssue
         return equals(this.projectId, project);
     }
 
+    // --- number ---
+
+    private int number ;
+
+    public final int getNumber() {
+        return this.number ;
+    }
+
+    public final Issue setNumber(int number) {
+        if (isNumber(number)) return (Issue)this;
+        this.number = number ;
+        propertyChanged("number", this.number);
+        return (Issue)this;
+    }
+
+    public final boolean isNumber(int number) {
+        return equals(this.number, number);
+    }
+
     // --- type ---
 
     private java.lang.String type ;
@@ -149,6 +168,7 @@ public abstract class GIssue
 
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
+        number  = (Integer) props.get("number");
         type  = (java.lang.String) props.get("type");
         String dateAsString = (String) props.get("date");
         date  =  dateAsString == null ? null : new ilarkesto.gwt.client.Date(dateAsString);
@@ -160,6 +180,7 @@ public abstract class GIssue
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
+        properties.put("number", this.number);
         properties.put("type", this.type);
         properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("label", this.label);

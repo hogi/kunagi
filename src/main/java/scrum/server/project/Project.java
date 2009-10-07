@@ -119,6 +119,30 @@ public class Project extends GProject {
 		return number;
 	}
 
+	public synchronized int generateImpedimentNumber() {
+		int number = getLastImpedimentNumber() + 1;
+		setLastImpedimentNumber(number);
+		return number;
+	}
+
+	public synchronized int generateRiskNumber() {
+		int number = getLastRiskNumber() + 1;
+		setLastRiskNumber(number);
+		return number;
+	}
+
+	public synchronized int generateIssueNumber() {
+		int number = getLastIssueNumber() + 1;
+		setLastIssueNumber(number);
+		return number;
+	}
+
+	public synchronized int generateQualityNumber() {
+		int number = getLastQualityNumber() + 1;
+		setLastQualityNumber(number);
+		return number;
+	}
+
 	public ProjectSprintSnapshot getCurrentSprintSnapshot() {
 		ProjectSprintSnapshot snapshot = projectSprintSnapshotDao.getProjectSprintSnapshotBySprint(getCurrentSprint());
 		if (snapshot == null) snapshot = createSprintSnapshot();

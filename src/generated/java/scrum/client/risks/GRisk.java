@@ -69,6 +69,25 @@ public abstract class GRisk
         return equals(this.projectId, project);
     }
 
+    // --- number ---
+
+    private int number ;
+
+    public final int getNumber() {
+        return this.number ;
+    }
+
+    public final Risk setNumber(int number) {
+        if (isNumber(number)) return (Risk)this;
+        this.number = number ;
+        propertyChanged("number", this.number);
+        return (Risk)this;
+    }
+
+    public final boolean isNumber(int number) {
+        return equals(this.number, number);
+    }
+
     // --- label ---
 
     private java.lang.String label ;
@@ -168,6 +187,7 @@ public abstract class GRisk
 
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
+        number  = (Integer) props.get("number");
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
         mitigationPlans  = (java.lang.String) props.get("mitigationPlans");
@@ -179,6 +199,7 @@ public abstract class GRisk
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
+        properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("description", this.description);
         properties.put("mitigationPlans", this.mitigationPlans);

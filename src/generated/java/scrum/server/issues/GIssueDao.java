@@ -36,6 +36,8 @@ public abstract class GIssueDao
     public void clearCaches() {
         issuesByProjectCache.clear();
         projectsCache = null;
+        issuesByNumberCache.clear();
+        numbersCache = null;
         issuesByTypeCache.clear();
         typesCache = null;
         issuesByDateCache.clear();
@@ -98,6 +100,46 @@ public abstract class GIssueDao
 
         public boolean test(Issue e) {
             return e.isProject(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Issue>> issuesByNumberCache = new Cache<Integer,Set<Issue>>(
+            new Cache.Factory<Integer,Set<Issue>>() {
+                public Set<Issue> create(Integer number) {
+                    return getEntities(new IsNumber(number));
+                }
+            });
+
+    public final Set<Issue> getIssuesByNumber(int number) {
+        return issuesByNumberCache.get(number);
+    }
+    private Set<Integer> numbersCache;
+
+    public final Set<Integer> getNumbers() {
+        if (numbersCache == null) {
+            numbersCache = new HashSet<Integer>();
+            for (Issue e : getEntities()) {
+                numbersCache.add(e.getNumber());
+            }
+        }
+        return numbersCache;
+    }
+
+    private static class IsNumber implements Predicate<Issue> {
+
+        private int value;
+
+        public IsNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isNumber(value);
         }
 
     }

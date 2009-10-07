@@ -7,6 +7,7 @@ import scrum.client.issues.Issue;
 public class Quality extends GQuality {
 
 	public static final String INITIAL_LABEL = "New Quality";
+	public static final String REFERENCE_PREFIX = "qlt";
 
 	public Quality(Project project) {
 		setProject(project);
@@ -23,8 +24,12 @@ public class Quality extends GQuality {
 		super(data);
 	}
 
+	public String getReference() {
+		return REFERENCE_PREFIX + getNumber();
+	}
+
 	@Override
 	public String toString() {
-		return getLabel();
+		return getReference() + " " + getLabel();
 	}
 }

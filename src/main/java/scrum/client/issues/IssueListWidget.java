@@ -47,4 +47,8 @@ public class IssueListWidget extends AWidget {
 	public static IssueListWidget get() {
 		return ProjectContext.get().getIssueList();
 	}
+
+	public void select(Issue issue) {
+		list.extendObject(issue);
+	}
 }

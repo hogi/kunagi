@@ -43,4 +43,8 @@ public class QualityBacklogWidget extends AWidget {
 	public static QualityBacklogWidget get() {
 		return ProjectContext.get().getQualityBacklog();
 	}
+
+	public void select(Quality quality) {
+		list.extendObject(quality);
+	}
 }

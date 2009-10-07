@@ -157,9 +157,37 @@ public class ProjectContext extends AContext {
 			showTask((Task) entity);
 		} else if (entity instanceof Requirement) {
 			showRequirement((Requirement) entity);
+		} else if (entity instanceof Issue) {
+			showIssue((Issue) entity);
+		} else if (entity instanceof Risk) {
+			showRisk((Risk) entity);
+		} else if (entity instanceof Quality) {
+			showQuality((Quality) entity);
+		} else if (entity instanceof Impediment) {
+			showImpediment((Impediment) entity);
 		} else {
 			throw new RuntimeException("Showing entity not supported: " + entity.getClass().getName());
 		}
+	}
+
+	public void showIssue(Issue issue) {
+		select(issueList);
+		issueList.select(issue);
+	}
+
+	public void showQuality(Quality quality) {
+		select(qualityBacklog);
+		qualityBacklog.select(quality);
+	}
+
+	public void showImpediment(Impediment impediment) {
+		select(impedimentList);
+		impedimentList.select(impediment);
+	}
+
+	public void showRisk(Risk risk) {
+		select(riskList);
+		riskList.select(risk);
 	}
 
 	public void showTask(Task task) {

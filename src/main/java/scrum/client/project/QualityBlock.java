@@ -37,7 +37,7 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 
 	@Override
 	protected void onUpdateHead() {
-		setBlockTitle(quality.getLabel());
+		setBlockTitle(quality.getReference() + " " + quality.getLabel());
 		addMenuAction(new DeleteQualityAction(quality));
 	}
 

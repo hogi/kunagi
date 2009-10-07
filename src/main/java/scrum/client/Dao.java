@@ -7,8 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import scrum.client.collaboration.ChatMessage;
+import scrum.client.impediments.Impediment;
+import scrum.client.issues.Issue;
 import scrum.client.project.Project;
+import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
+import scrum.client.risks.Risk;
 import scrum.client.sprint.Task;
 import scrum.client.workspace.Ui;
 
@@ -23,13 +27,33 @@ public class Dao extends GDao {
 	public AGwtEntity getEntityByReference(String reference) {
 		int number = Integer.parseInt(reference.substring(Requirement.REFERENCE_PREFIX.length()));
 		if (reference.startsWith(Requirement.REFERENCE_PREFIX)) {
-			for (Requirement requirement : getRequirements()) {
-				if (requirement.isNumber(number)) return requirement;
+			for (Requirement e : getRequirements()) {
+				if (e.isNumber(number)) return e;
 			}
 			return null;
 		} else if (reference.startsWith(Task.REFERENCE_PREFIX)) {
-			for (Task task : getTasks()) {
-				if (task.isNumber(number)) return task;
+			for (Task e : getTasks()) {
+				if (e.isNumber(number)) return e;
+			}
+			return null;
+		} else if (reference.startsWith(Quality.REFERENCE_PREFIX)) {
+			for (Quality e : getQualitys()) {
+				if (e.isNumber(number)) return e;
+			}
+			return null;
+		} else if (reference.startsWith(Issue.REFERENCE_PREFIX)) {
+			for (Issue e : getIssues()) {
+				if (e.isNumber(number)) return e;
+			}
+			return null;
+		} else if (reference.startsWith(Risk.REFERENCE_PREFIX)) {
+			for (Risk e : getRisks()) {
+				if (e.isNumber(number)) return e;
+			}
+			return null;
+		} else if (reference.startsWith(Impediment.REFERENCE_PREFIX)) {
+			for (Impediment e : getImpediments()) {
+				if (e.isNumber(number)) return e;
 			}
 			return null;
 		} else {

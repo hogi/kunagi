@@ -70,6 +70,14 @@ public abstract class GProjectDao
         lastTaskNumbersCache = null;
         projectsByLastRequirementNumberCache.clear();
         lastRequirementNumbersCache = null;
+        projectsByLastQualityNumberCache.clear();
+        lastQualityNumbersCache = null;
+        projectsByLastRiskNumberCache.clear();
+        lastRiskNumbersCache = null;
+        projectsByLastIssueNumberCache.clear();
+        lastIssueNumbersCache = null;
+        projectsByLastImpedimentNumberCache.clear();
+        lastImpedimentNumbersCache = null;
     }
 
     @Override
@@ -644,6 +652,166 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isLastRequirementNumber(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - lastQualityNumber
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Project>> projectsByLastQualityNumberCache = new Cache<Integer,Set<Project>>(
+            new Cache.Factory<Integer,Set<Project>>() {
+                public Set<Project> create(Integer lastQualityNumber) {
+                    return getEntities(new IsLastQualityNumber(lastQualityNumber));
+                }
+            });
+
+    public final Set<Project> getProjectsByLastQualityNumber(int lastQualityNumber) {
+        return projectsByLastQualityNumberCache.get(lastQualityNumber);
+    }
+    private Set<Integer> lastQualityNumbersCache;
+
+    public final Set<Integer> getLastQualityNumbers() {
+        if (lastQualityNumbersCache == null) {
+            lastQualityNumbersCache = new HashSet<Integer>();
+            for (Project e : getEntities()) {
+                lastQualityNumbersCache.add(e.getLastQualityNumber());
+            }
+        }
+        return lastQualityNumbersCache;
+    }
+
+    private static class IsLastQualityNumber implements Predicate<Project> {
+
+        private int value;
+
+        public IsLastQualityNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isLastQualityNumber(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - lastRiskNumber
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Project>> projectsByLastRiskNumberCache = new Cache<Integer,Set<Project>>(
+            new Cache.Factory<Integer,Set<Project>>() {
+                public Set<Project> create(Integer lastRiskNumber) {
+                    return getEntities(new IsLastRiskNumber(lastRiskNumber));
+                }
+            });
+
+    public final Set<Project> getProjectsByLastRiskNumber(int lastRiskNumber) {
+        return projectsByLastRiskNumberCache.get(lastRiskNumber);
+    }
+    private Set<Integer> lastRiskNumbersCache;
+
+    public final Set<Integer> getLastRiskNumbers() {
+        if (lastRiskNumbersCache == null) {
+            lastRiskNumbersCache = new HashSet<Integer>();
+            for (Project e : getEntities()) {
+                lastRiskNumbersCache.add(e.getLastRiskNumber());
+            }
+        }
+        return lastRiskNumbersCache;
+    }
+
+    private static class IsLastRiskNumber implements Predicate<Project> {
+
+        private int value;
+
+        public IsLastRiskNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isLastRiskNumber(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - lastIssueNumber
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Project>> projectsByLastIssueNumberCache = new Cache<Integer,Set<Project>>(
+            new Cache.Factory<Integer,Set<Project>>() {
+                public Set<Project> create(Integer lastIssueNumber) {
+                    return getEntities(new IsLastIssueNumber(lastIssueNumber));
+                }
+            });
+
+    public final Set<Project> getProjectsByLastIssueNumber(int lastIssueNumber) {
+        return projectsByLastIssueNumberCache.get(lastIssueNumber);
+    }
+    private Set<Integer> lastIssueNumbersCache;
+
+    public final Set<Integer> getLastIssueNumbers() {
+        if (lastIssueNumbersCache == null) {
+            lastIssueNumbersCache = new HashSet<Integer>();
+            for (Project e : getEntities()) {
+                lastIssueNumbersCache.add(e.getLastIssueNumber());
+            }
+        }
+        return lastIssueNumbersCache;
+    }
+
+    private static class IsLastIssueNumber implements Predicate<Project> {
+
+        private int value;
+
+        public IsLastIssueNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isLastIssueNumber(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - lastImpedimentNumber
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Project>> projectsByLastImpedimentNumberCache = new Cache<Integer,Set<Project>>(
+            new Cache.Factory<Integer,Set<Project>>() {
+                public Set<Project> create(Integer lastImpedimentNumber) {
+                    return getEntities(new IsLastImpedimentNumber(lastImpedimentNumber));
+                }
+            });
+
+    public final Set<Project> getProjectsByLastImpedimentNumber(int lastImpedimentNumber) {
+        return projectsByLastImpedimentNumberCache.get(lastImpedimentNumber);
+    }
+    private Set<Integer> lastImpedimentNumbersCache;
+
+    public final Set<Integer> getLastImpedimentNumbers() {
+        if (lastImpedimentNumbersCache == null) {
+            lastImpedimentNumbersCache = new HashSet<Integer>();
+            for (Project e : getEntities()) {
+                lastImpedimentNumbersCache.add(e.getLastImpedimentNumber());
+            }
+        }
+        return lastImpedimentNumbersCache;
+    }
+
+    private static class IsLastImpedimentNumber implements Predicate<Project> {
+
+        private int value;
+
+        public IsLastImpedimentNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isLastImpedimentNumber(value);
         }
 
     }

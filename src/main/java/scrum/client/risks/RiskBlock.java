@@ -39,7 +39,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 
 	@Override
 	protected void onUpdateHead() {
-		setBlockTitle(risk.getLabel() + " [" + risk.getPriorityLabel() + "]");
+		setBlockTitle(risk.getReference() + " " + risk.getLabel() + " (" + risk.getPriorityLabel() + ")");
 		addMenuAction(new DeleteRiskAction(risk));
 	}
 
