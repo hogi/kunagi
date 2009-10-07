@@ -21,13 +21,13 @@ public class Dao extends GDao {
 	private EntityChangeCache cache = new EntityChangeCache();
 
 	public AGwtEntity getEntityByReference(String reference) {
-		int number = Integer.parseInt(reference.substring(1));
-		if (reference.startsWith("r")) {
+		int number = Integer.parseInt(reference.substring(Requirement.REFERENCE_PREFIX.length()));
+		if (reference.startsWith(Requirement.REFERENCE_PREFIX)) {
 			for (Requirement requirement : getRequirements()) {
 				if (requirement.isNumber(number)) return requirement;
 			}
 			return null;
-		} else if (reference.startsWith("t")) {
+		} else if (reference.startsWith(Task.REFERENCE_PREFIX)) {
 			for (Task task : getTasks()) {
 				if (task.isNumber(number)) return task;
 			}

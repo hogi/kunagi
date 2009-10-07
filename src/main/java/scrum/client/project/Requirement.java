@@ -13,6 +13,7 @@ import scrum.client.sprint.Task;
 public class Requirement extends GRequirement {
 
 	public static final String INIT_LABEL = "New Requirement";
+	public static final String REFERENCE_PREFIX = "req";
 
 	public Requirement(Project project) {
 		setProject(project);
@@ -52,7 +53,7 @@ public class Requirement extends GRequirement {
 	}
 
 	public String getReference() {
-		return "r" + getNumber();
+		return REFERENCE_PREFIX + getNumber();
 	}
 
 	/**

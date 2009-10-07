@@ -182,7 +182,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	}
 
 	public void showEntityByReference(final String reference) {
-		GwtLogger.DEBUG("Showing entity:", reference);
+		GwtLogger.DEBUG("Showing entity by reference:", reference);
 
 		if (reference.startsWith("[")) {
 			String page = reference.substring(1, reference.length() - 1);

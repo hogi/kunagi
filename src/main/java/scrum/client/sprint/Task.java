@@ -10,6 +10,7 @@ import scrum.client.project.Requirement;
 public class Task extends GTask {
 
 	public static final int INIT_EFFORT = 1;
+	public static final String REFERENCE_PREFIX = "tsk";
 
 	public Task(Requirement requirement) {
 		setRequirement(requirement);
@@ -47,7 +48,7 @@ public class Task extends GTask {
 	}
 
 	public String getReference() {
-		return "t" + getNumber();
+		return REFERENCE_PREFIX + getNumber();
 	}
 
 	public void setDone(User user) {

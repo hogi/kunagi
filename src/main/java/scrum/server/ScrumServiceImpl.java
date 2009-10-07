@@ -251,12 +251,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	protected void onRequestEntityByReference(WebSession session, String reference) {
 		assertProjectSelected(session);
 		Project project = session.getProject();
-		int number = Integer.parseInt(reference.substring(1));
-		if (reference.startsWith("r")) {
+		int number = Integer.parseInt(reference.substring(scrum.client.project.Requirement.REFERENCE_PREFIX.length()));
+		if (reference.startsWith(scrum.client.project.Requirement.REFERENCE_PREFIX)) {
 			Requirement requirement = project.getRequirementByNumber(number);
 			if (requirement != null) session.sendToClient(requirement);
 			return;
-		} else if (reference.startsWith("t")) {
+		} else if (reference.startsWith(scrum.client.sprint.Task.REFERENCE_PREFIX)) {
 			Task task = project.getTaskByNumber(number);
 			if (task != null) session.sendToClient(task);
 			return;
