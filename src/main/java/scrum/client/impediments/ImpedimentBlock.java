@@ -1,5 +1,6 @@
 package scrum.client.impediments;
 
+import ilarkesto.gwt.client.ADateViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import scrum.client.common.AExtensibleBlockWidget;
@@ -67,6 +68,23 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 				impediment.setLabel(getEditorText());
 			}
 
+		});
+		fields.add("Date", new ADateViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerValue(impediment.getDate());
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setEditorValue(impediment.getDate());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				impediment.setDate(getEditorValue());
+			}
 		});
 		fields.add("Description", new ARichtextViewEditWidget() {
 
