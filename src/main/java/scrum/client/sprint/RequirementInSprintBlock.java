@@ -1,19 +1,16 @@
 package scrum.client.sprint;
 
-import ilarkesto.gwt.client.AFieldValueWidget;
-import ilarkesto.gwt.client.ATextWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
-import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.ClipboardSupport;
 import scrum.client.img.Img;
 import scrum.client.project.CloseRequirementAction;
 import scrum.client.project.ReopenRequirementAction;
 import scrum.client.project.Requirement;
-import scrum.client.project.RequirementEstimatedWorkWidget;
+import scrum.client.project.RequirementWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -24,7 +21,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 
 	private BlockListWidget<Task> taskList;
 	private FlowPanel panel;
-	private FieldsWidget fields;
+	private RequirementWidget requirementWidget;
 	private CommentsWidget commentsWidget;
 
 	@Override
@@ -53,48 +50,19 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 
 	@Override
 	protected void onExtendedInitialization() {
-
-		fields = new FieldsWidget();
-		fields.setAutoUpdateWidget(SprintBacklogWidget.get());
-		fields.add("Description", new ATextWidget() {
-
-			@Override
-			protected void onUpdate() {
-				setText(requirement.getDescription());
-			}
-		});
-
-		fields.add("Test", new ATextWidget() {
-
-			@Override
-			protected void onUpdate() {
-				setText(requirement.getTestDescription());
-			}
-		});
-
-		fields.add("Estimated Work", new RequirementEstimatedWorkWidget(requirement));
-
-		fields.add("Remainig Task Work", new AFieldValueWidget() {
-
-			@Override
-			protected void onUpdate() {
-				setHours(requirement.getRemainingWork());
-			}
-		});
-
+		requirementWidget = new RequirementWidget(requirement, false, false, true, false);
 		taskList = new BlockListWidget<Task>(TaskInRequirementBlock.FACTORY);
+		commentsWidget = new CommentsWidget(requirement);
 
 		panel = new FlowPanel();
-		panel.add(fields);
+		panel.add(requirementWidget);
 		panel.add(taskList);
-
-		commentsWidget = new CommentsWidget(requirement);
 		panel.add(commentsWidget);
 	}
 
 	@Override
 	protected void onUpdateBody() {
-		fields.update();
+		requirementWidget.update();
 		commentsWidget.update();
 		taskList.setObjects(requirement.getTasks());
 		setContent(panel);
