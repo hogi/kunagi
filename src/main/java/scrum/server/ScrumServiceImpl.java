@@ -201,6 +201,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	protected void onCloseProject(WebSession session) {
+		assertProjectSelected(session);
 		Project project = session.getProject();
 		webApplication.setUsersSelectedEntities(project, session.getUser(), new HashSet<String>(0));
 		session.clearRemoteEntities();
