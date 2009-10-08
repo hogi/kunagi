@@ -432,9 +432,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (beanModel instanceof DatobModel) {
 			DatobModel datobModel = (DatobModel) beanModel;
 			if (datobModel.isGwtSupport()) {
-				autowire(new GwtEntityGenerator()).generate(datobModel, getApplicationModel());
-				// autowire(new GwtEntityDtoGenerator()).generate(datobModel, getApplicationModel());
-				autowire(new GwtEntityTemplateGenerator()).generate(datobModel);
+				new GwtEntityGenerator(datobModel, getApplicationModel()).generate();
+				new GwtEntityTemplateGenerator(datobModel).generate();
 			}
 		}
 		if (beanModel instanceof EntityModel) {
@@ -447,12 +446,12 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	protected void onGeneration() {
 		super.onGeneration();
 		generateActions(getApplicationModel().getActions());
-		autowire(new GwtServiceInterfaceGenerator()).generate(getGwtServiceModel());
-		autowire(new GwtServiceAsyncInterfaceGenerator()).generate(getGwtServiceModel());
-		autowire(new GwtServiceImplementationGenerator()).generate(getGwtServiceModel());
-		autowire(new GwtApplicationGenerator()).generate(getApplicationModel());
-		autowire(new GwtDaoGenerator()).generate(getApplicationModel(), getFinalEntityModels(false));
-		autowire(new GwtImageBundleGenerator()).generate("scrum.client.img");
+		new GwtServiceInterfaceGenerator(getGwtServiceModel()).generate();
+		new GwtServiceAsyncInterfaceGenerator(getGwtServiceModel()).generate();
+		new GwtServiceImplementationGenerator(getGwtServiceModel()).generate();
+		new GwtApplicationGenerator(getApplicationModel()).generate();
+		new GwtDaoGenerator(getApplicationModel(), getFinalEntityModels(false)).generate();
+		new GwtImageBundleGenerator("scrum.client.img").generate();
 		new GwtEventBusGenerator(getApplicationModel(), getGwtEventBusModel()).generate();
 		for (EventModel eventModel : getGwtEventBusModel().getEvents()) {
 			new GwtEventListenerGenerator(eventModel, applicationModel).generate();
@@ -462,8 +461,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 
 	private void generateActions(List<ActionModel> actions) {
 		for (ActionModel action : actions) {
-			autowire(new GwtActionGenerator()).generate(action);
-			autowire(new GwtActionTemplateGenerator()).generate(action);
+			new GwtActionGenerator(action).generate();
+			new GwtActionTemplateGenerator(action).generate();
 		}
 	}
 }
