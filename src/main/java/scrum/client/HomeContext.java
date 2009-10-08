@@ -1,27 +1,21 @@
-package scrum.client.context;
+package scrum.client;
 
+import ilarkesto.gwt.client.AComponent;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
-import scrum.client.Components;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.ProjectSelectorWidget;
 import scrum.client.admin.UserConfigWidget;
 import scrum.client.admin.UserListWidget;
+import scrum.client.context.UiComponent;
 
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
-public class HomeContext implements UiComponent {
-
-	private static HomeContext singleton;
+public class HomeContext extends AComponent implements UiComponent {
 
 	private SwitchingNavigatorWidget navigator;
 	private ProjectSelectorWidget projectSelector;
 	private UserConfigWidget userConfig;
 	private UserListWidget userList;
-
-	public HomeContext() {
-		singleton = this;
-	}
 
 	public Widget getSidebarWidget() {
 		projectSelector = new ProjectSelectorWidget();
@@ -44,15 +38,6 @@ public class HomeContext implements UiComponent {
 
 	public UserListWidget getUserList() {
 		return userList;
-	}
-
-	public static HomeContext get() {
-		assert singleton != null;
-		return singleton;
-	}
-
-	public static void destroy() {
-		singleton = null;
 	}
 
 }

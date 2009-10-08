@@ -64,6 +64,27 @@ public abstract class GComponents
         auth = null;
     }
 
+    // --- ui ---
+
+    private Ui ui;
+
+    public final Ui getUi() {
+        if (ui == null) {
+            ui = new Ui();
+            initializeUi(ui);
+            initialize(ui);
+        }
+        return ui;
+    }
+
+    protected void initializeUi(Ui ui) {
+    }
+
+    public final void destroyUi() {
+        destroy(ui);
+        ui = null;
+    }
+
     // --- projectContext ---
 
     private ProjectContext projectContext;
@@ -85,25 +106,46 @@ public abstract class GComponents
         projectContext = null;
     }
 
-    // --- ui ---
+    // --- publicContext ---
 
-    private Ui ui;
+    private PublicContext publicContext;
 
-    public final Ui getUi() {
-        if (ui == null) {
-            ui = new Ui();
-            initializeUi(ui);
-            initialize(ui);
+    public final PublicContext getPublicContext() {
+        if (publicContext == null) {
+            publicContext = new PublicContext();
+            initializePublicContext(publicContext);
+            initialize(publicContext);
         }
-        return ui;
+        return publicContext;
     }
 
-    protected void initializeUi(Ui ui) {
+    protected void initializePublicContext(PublicContext publicContext) {
     }
 
-    public final void destroyUi() {
-        destroy(ui);
-        ui = null;
+    public final void destroyPublicContext() {
+        destroy(publicContext);
+        publicContext = null;
+    }
+
+    // --- homeContext ---
+
+    private HomeContext homeContext;
+
+    public final HomeContext getHomeContext() {
+        if (homeContext == null) {
+            homeContext = new HomeContext();
+            initializeHomeContext(homeContext);
+            initialize(homeContext);
+        }
+        return homeContext;
+    }
+
+    protected void initializeHomeContext(HomeContext homeContext) {
+    }
+
+    public final void destroyHomeContext() {
+        destroy(homeContext);
+        homeContext = null;
     }
 
     // --- dndManager ---

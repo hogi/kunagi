@@ -6,8 +6,7 @@ import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
 import scrum.client.Components;
-import scrum.client.context.PublicContext;
-import scrum.client.context.HomeContext;
+import scrum.client.HomeContext;
 import scrum.client.context.UiComponent;
 
 import com.google.gwt.user.client.ui.Button;
@@ -45,17 +44,11 @@ public class Workspace extends AWidget {
 		locker.update();
 	}
 
-	public void activatePublicView() {
-		HomeContext.destroy();
-		activateView(new PublicContext());
-	}
-
 	public void activateStartView() {
 		activateView(new HomeContext());
 	}
 
 	public void activateProjectView() {
-		HomeContext.destroy();
 		activateView(Components.get().getProjectContext());
 	}
 
@@ -108,6 +101,10 @@ public class Workspace extends AWidget {
 
 	public SwitcherWidget getWorkarea() {
 		return workarea;
+	}
+
+	public SwitcherWidget getSidebar() {
+		return sidebar;
 	}
 
 }

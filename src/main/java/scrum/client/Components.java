@@ -2,7 +2,8 @@ package scrum.client;
 
 import ilarkesto.gwt.client.AComponents;
 
-public class Components extends GComponents implements LogoutListener, ProjectClosedListener {
+public class Components extends GComponents implements LogoutListener, ProjectClosedListener, ProjectOpenedListener,
+		LoginListener {
 
 	Components() {
 		super(new EventBus(), new Dao());
@@ -10,6 +11,8 @@ public class Components extends GComponents implements LogoutListener, ProjectCl
 
 	public void onLogout() {
 		destroyAuth();
+		destroyHomeContext();
+		getPublicContext().activate();
 	}
 
 	public void onProjectClosed() {
@@ -17,6 +20,20 @@ public class Components extends GComponents implements LogoutListener, ProjectCl
 		destroyChat();
 		destroyUsersStatus();
 		destroyDndManager();
+	}
+
+	public void onProjectOpened() {
+		destroyHomeContext();
+	}
+
+	public void onLogin() {
+		destroyPublicContext();
+	}
+
+	@Override
+	protected void initializePublicContext(PublicContext publicContext) {
+		super.initializePublicContext(publicContext);
+		publicContext.setUi(getUi());
 	}
 
 	@Override

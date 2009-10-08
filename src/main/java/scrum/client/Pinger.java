@@ -22,7 +22,6 @@ public class Pinger extends AComponent implements ServerDataReceivedListener {
 				reschedule();
 			}
 		};
-		timer.scheduleRepeating(MAX_DELAY);
 	}
 
 	public void onServerDataReceived(DataTransferObject data) {

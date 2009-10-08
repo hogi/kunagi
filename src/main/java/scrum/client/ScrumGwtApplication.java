@@ -32,8 +32,8 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		callStartSession(new Runnable() {
 
 			public void run() {
-				workspace.activatePublicView();
-				components.getPinger();
+				components.getPublicContext().activate();
+				components.getPinger().reschedule();
 			}
 		});
 

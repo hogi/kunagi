@@ -2,7 +2,6 @@ package scrum.client;
 
 import ilarkesto.gwt.client.AComponent;
 import scrum.client.admin.User;
-import scrum.client.context.HomeContext;
 
 public class Auth extends AComponent implements ServerDataReceivedListener {
 
@@ -50,13 +49,11 @@ public class Auth extends AComponent implements ServerDataReceivedListener {
 
 	public void logout() {
 		if (projectContext.isProjectOpen()) projectContext.closeProject(false);
-		HomeContext.destroy();
 		log.info("Logging out");
 		ui.getWorkspace().lock("Logging out...");
 		user = null;
 		eventBus.fireLogout();
 		ScrumGwtApplication.get().callLogout();
-		ui.getWorkspace().activatePublicView();
 	}
 
 	public boolean isUserLoggedIn() {
