@@ -21,6 +21,8 @@ public class ProjectOverviewWidget extends AWidget {
 	public static int CHART_WIDTH = 800;
 	public static int CHART_HEIGHT = 270;
 
+	private Image sprintChart;
+
 	@Override
 	protected Widget onInitialization() {
 		final Project project = ScrumGwtApplication.get().getProject();
@@ -63,13 +65,14 @@ public class ProjectOverviewWidget extends AWidget {
 			}
 		});
 
-		String chartUrl = GWT.getModuleBaseURL() + "/projectBurndownChart.png?projectId=" + project.getId() + "&width="
-				+ CHART_WIDTH + "&height=" + CHART_HEIGHT;
-		Image chart = new Image(chartUrl, 0, 0, CHART_WIDTH, CHART_HEIGHT);
+		// String chartUrl = GWT.getModuleBaseURL() + "/projectBurndownChart.png?projectId=" + project.getId()
+		// + "&width="
+		// + CHART_WIDTH + "&height=" + CHART_HEIGHT;
+		// Image chart = new Image(chartUrl, 0, 0, CHART_WIDTH, CHART_HEIGHT);
 
 		FlowPanel projectPropertiesPanel = new FlowPanel();
 		projectPropertiesPanel.add(fields);
-		projectPropertiesPanel.add(chart);
+		// projectPropertiesPanel.add(chart);
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(new GroupWidget("Project Properties", projectPropertiesPanel));
@@ -78,13 +81,27 @@ public class ProjectOverviewWidget extends AWidget {
 			panel.add(createCurrentSprintOverview(sprint));
 		}
 
-		return Gwt.createFlowPanel(fields, new CommentsWidget(project));
+		return Gwt.createFlowPanel(panel, new CommentsWidget(project));
+	}
+
+	@Override
+	protected void onUpdate() {
+		super.onUpdate();
+		if (sprintChart != null) {
+			Sprint sprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
+			if (sprint != null) sprintChart.setUrl(getChartUrl(sprint));
+		}
 	}
 
 	private Widget createCurrentSprintOverview(Sprint sprint) {
-		String chartUrl = GWT.getModuleBaseURL() + "/sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width="
-				+ CHART_WIDTH + "&height=" + CHART_HEIGHT;
-		return new GroupWidget("Current Sprint", new Image(chartUrl, 0, 0, CHART_WIDTH, CHART_HEIGHT));
+		String chartUrl = getChartUrl(sprint);
+		sprintChart = new Image(chartUrl, 0, 0, CHART_WIDTH, CHART_HEIGHT);
+		return new GroupWidget("Current Sprint", sprintChart);
+	}
+
+	private String getChartUrl(Sprint sprint) {
+		return GWT.getModuleBaseURL() + "/sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width=" + CHART_WIDTH
+				+ "&height=" + CHART_HEIGHT;
 	}
 
 	public static ProjectOverviewWidget get() {
