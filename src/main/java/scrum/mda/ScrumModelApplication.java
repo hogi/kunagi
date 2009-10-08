@@ -77,7 +77,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public GwtServiceModel getGwtServiceModel() {
 		if (gwtServiceModel == null) {
 			gwtServiceModel = createGwtServiceModel("scrum");
-			autowire(gwtServiceModel);
 			gwtServiceModel.addMethod("ping");
 			gwtServiceModel.addMethod("login").addParameter("username", String.class).addParameter("password",
 				String.class);
@@ -113,7 +112,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public ApplicationModel getApplicationModel() {
 		if (applicationModel == null) {
 			applicationModel = createWebApplicationModel("Scrum");
-			autowire(applicationModel);
 			applicationModel.addDaosAsComposites(getFinalEntityModels(true));
 			applicationModel.addGwtService(getGwtServiceModel());
 
@@ -134,7 +132,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getProjectModel() {
 		if (projectModel == null) {
 			projectModel = createEntityModel("Project", "project");
-			autowire(projectModel);
 			projectModel.setViewProtected(true);
 			projectModel.setDeleteProtected(true);
 			projectModel.setGwtSupport(true);
@@ -168,7 +165,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getProjectSprintSnapshotModel() {
 		if (projectSprintSnapshotModel == null) {
 			projectSprintSnapshotModel = createEntityModel("ProjectSprintSnapshot", "project");
-			autowire(projectSprintSnapshotModel);
 			projectSprintSnapshotModel.addReference("sprint", getSprintModel()).setUnique(true);
 			projectSprintSnapshotModel.addProperty("remainingWork", int.class);
 			projectSprintSnapshotModel.addProperty("burnedWork", int.class);
@@ -181,7 +177,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getRequirementModel() {
 		if (requirementModel == null) {
 			requirementModel = createEntityModel("Requirement", "project");
-			autowire(requirementModel);
 			requirementModel.setGwtSupport(true);
 			requirementModel.addReference("project", getProjectModel()).setMaster(true);
 			requirementModel.addReference("sprint", getSprintModel());
@@ -210,7 +205,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getQualityModel() {
 		if (qualityModel == null) {
 			qualityModel = createEntityModel("Quality", "project");
-			autowire(qualityModel);
 			qualityModel.setGwtSupport(true);
 			qualityModel.addReference("project", getProjectModel()).setMaster(true);
 			qualityModel.addProperty("number", int.class);
@@ -228,7 +222,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getSprintModel() {
 		if (sprintModel == null) {
 			sprintModel = createEntityModel("Sprint", "sprint");
-			autowire(sprintModel);
 			sprintModel.setGwtSupport(true);
 			sprintModel.addReference("project", getProjectModel()).setMaster(true);
 			sprintModel.addProperty("label", String.class);
@@ -244,7 +237,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getSprintDaySnapshotModel() {
 		if (sprintDaySnapshotModel == null) {
 			sprintDaySnapshotModel = createEntityModel("SprintDaySnapshot", "sprint");
-			autowire(sprintDaySnapshotModel);
 			sprintDaySnapshotModel.addReference("sprint", getSprintModel());
 			sprintDaySnapshotModel.addProperty("date", Date.class);
 			sprintDaySnapshotModel.addProperty("remainingWork", int.class);
@@ -258,7 +250,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getTaskModel() {
 		if (taskModel == null) {
 			taskModel = createEntityModel("Task", "sprint");
-			autowire(taskModel);
 			taskModel.setGwtSupport(true);
 			taskModel.addReference("requirement", getRequirementModel()).setMaster(true);
 			taskModel.addProperty("number", int.class);
@@ -283,7 +274,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getImpedimentModel() {
 		if (impedimentModel == null) {
 			impedimentModel = createEntityModel("Impediment", "impediments");
-			autowire(impedimentModel);
 			impedimentModel.setGwtSupport(true);
 			impedimentModel.addReference("project", getProjectModel()).setMaster(true);
 			impedimentModel.addProperty("number", int.class);
@@ -304,7 +294,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getRiskModel() {
 		if (riskModel == null) {
 			riskModel = createEntityModel("Risk", "risks");
-			autowire(riskModel);
 			riskModel.setGwtSupport(true);
 			riskModel.addReference("project", getProjectModel()).setMaster(true);
 			riskModel.addProperty("number", int.class);
@@ -325,7 +314,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getUserModel() {
 		if (userModel == null) {
 			userModel = createEntityModel("User", "admin");
-			autowire(userModel);
 			userModel.setGwtSupport(true);
 			userModel.setSuperbean(super.getUserModel());
 			userModel.addProperty("name", String.class).setSearchable(true);
@@ -344,7 +332,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getProjectUserConfigModel() {
 		if (projectUserConfigModel == null) {
 			projectUserConfigModel = createEntityModel("ProjectUserConfig", "admin");
-			autowire(projectUserConfigModel);
 			projectUserConfigModel.setGwtSupport(true);
 			projectUserConfigModel.addReference("project", getProjectModel()).setMaster(true);
 			projectUserConfigModel.addReference("user", getUserModel()).setMaster(true);
@@ -358,7 +345,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getIssueModel() {
 		if (issueModel == null) {
 			issueModel = createEntityModel("Issue", "issues");
-			autowire(issueModel);
 			issueModel.setGwtSupport(true);
 			issueModel.addReference("project", getProjectModel()).setMaster(true);
 			issueModel.addProperty("number", int.class);
@@ -379,7 +365,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getChatMessageModel() {
 		if (chatMessageModel == null) {
 			chatMessageModel = createEntityModel("ChatMessage", "collaboration");
-			autowire(chatMessageModel);
 			chatMessageModel.setGwtSupport(true);
 			chatMessageModel.addReference("project", getProjectModel()).setMaster(true);
 			chatMessageModel.addReference("author", getUserModel());
@@ -394,7 +379,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getCommentModel() {
 		if (commentModel == null) {
 			commentModel = createEntityModel("Comment", "collaboration");
-			autowire(commentModel);
 			commentModel.setGwtSupport(true);
 			getApplicationModel().addCreateAction(commentModel);
 			commentModel.addReference("parent", getEntityModel()).setMaster(true);
@@ -410,7 +394,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getWikipageModel() {
 		if (wikipageModel == null) {
 			wikipageModel = createEntityModel("Wikipage", "collaboration");
-			autowire(wikipageModel);
 			wikipageModel.setGwtSupport(true);
 			wikipageModel.addReference("project", getProjectModel()).setMaster(true);
 			wikipageModel.addProperty("name", String.class).setMandatory(true).setSearchable(true);
