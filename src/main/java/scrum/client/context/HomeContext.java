@@ -1,34 +1,33 @@
 package scrum.client.context;
 
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
+import scrum.client.Components;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.ProjectSelectorWidget;
 import scrum.client.admin.UserConfigWidget;
 import scrum.client.admin.UserListWidget;
-import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
-public class StartContext extends AContext {
+public class HomeContext implements UiComponent {
 
-	private static StartContext singleton;
+	private static HomeContext singleton;
 
 	private SwitchingNavigatorWidget navigator;
 	private ProjectSelectorWidget projectSelector;
 	private UserConfigWidget userConfig;
 	private UserListWidget userList;
 
-	public StartContext() {
+	public HomeContext() {
 		singleton = this;
 	}
 
-	@Override
 	public Widget getSidebarWidget() {
 		projectSelector = new ProjectSelectorWidget();
 		userConfig = new UserConfigWidget();
 
-		navigator = new SwitchingNavigatorWidget(Ui.get().getWorkarea());
+		navigator = new SwitchingNavigatorWidget(Components.get().getUi().getWorkspace().getWorkarea());
 		navigator.addItem((Image) null, "Projects", projectSelector);
 		navigator.addItem((Image) null, "Personal Preferences", userConfig);
 		if (ScrumGwtApplication.get().getUser().isAdmin()) {
@@ -39,7 +38,6 @@ public class StartContext extends AContext {
 		return navigator;
 	}
 
-	@Override
 	public Widget getWorkareaWidget() {
 		return projectSelector;
 	}
@@ -48,7 +46,7 @@ public class StartContext extends AContext {
 		return userList;
 	}
 
-	public static StartContext get() {
+	public static HomeContext get() {
 		assert singleton != null;
 		return singleton;
 	}

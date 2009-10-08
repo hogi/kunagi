@@ -1,7 +1,5 @@
 package scrum.client.risks;
 
-import scrum.client.ScrumGwtApplication;
-import scrum.client.context.ProjectContext;
 
 public class CreateRiskAction extends GCreateRiskAction {
 
@@ -17,8 +15,8 @@ public class CreateRiskAction extends GCreateRiskAction {
 
 	@Override
 	protected void onExecute() {
-		Risk risk = ScrumGwtApplication.get().getProject().createNewRisk();
-		ProjectContext.get().showRiskList(risk);
+		Risk risk = getProject().createNewRisk();
+		getProjectContext().showRiskList(risk);
 	}
 
 }

@@ -5,10 +5,11 @@ import ilarkesto.gwt.client.GwtLogger;
 
 import java.util.ArrayList;
 
+import scrum.client.Components;
+import scrum.client.DndManager;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.StyleSheet;
 import scrum.client.dnd.ClipboardSupport;
-import scrum.client.dnd.DndManager;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.VetoDragException;
@@ -18,6 +19,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ClipboardWidget extends AWidget {
 
+	private DndManager dndManager = Components.get().getDndManager();
 	private FlowPanel panel;
 	private ArrayList<ClipboardItemWidget> clipboardItems = new ArrayList<ClipboardItemWidget>();
 
@@ -26,7 +28,7 @@ public class ClipboardWidget extends AWidget {
 		panel = new FlowPanel();
 		panel.setStyleName("ClipboardWidget");
 
-		DndManager.get().getDragController().registerDropController(itemDropController);
+		dndManager.getDragController().registerDropController(itemDropController);
 
 		return panel;
 	}

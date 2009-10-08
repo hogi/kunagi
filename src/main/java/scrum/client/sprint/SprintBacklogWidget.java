@@ -6,10 +6,10 @@ import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.TableBuilder;
+import scrum.client.Components;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
-import scrum.client.context.ProjectContext;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 
@@ -183,7 +183,7 @@ public class SprintBacklogWidget extends AWidget {
 	}
 
 	public static SprintBacklogWidget get() {
-		return ProjectContext.get().getSprintBacklog();
+		return Components.get().getProjectContext().getSprintBacklog();
 	}
 
 }

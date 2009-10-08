@@ -1,7 +1,6 @@
 package scrum.client.project;
 
-import scrum.client.ScrumGwtApplication;
-import scrum.client.context.ProjectContext;
+import scrum.client.ProjectContext;
 
 public class CreateQualityAction extends GCreateQualityAction {
 
@@ -17,8 +16,8 @@ public class CreateQualityAction extends GCreateQualityAction {
 
 	@Override
 	protected void onExecute() {
-		Quality quality = ScrumGwtApplication.get().getProject().createNewQuality();
-		ProjectContext.get().showQualityBacklog(quality);
+		Quality quality = getProject().createNewQuality();
+		getProjectContext().showQualityBacklog(quality);
 	}
 
 }

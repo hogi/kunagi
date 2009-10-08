@@ -1,74 +1,58 @@
 package scrum.client;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import ilarkesto.gwt.client.AComponent;
+
 import java.util.Set;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+import scrum.client.admin.User;
 
-public class UsersStatus implements Serializable, IsSerializable {
+public class UsersStatus extends AComponent implements ServerDataReceivedListener {
 
-	private Map<String, UserStatus> statuses = new HashMap<String, UserStatus>();
+	private UsersStatusData usersStatus;
 
-	public boolean addSelectedEntityId(String userId, String entityId) {
-		synchronized (statuses) {
-			return get(userId).selectedEntitysIds.add(entityId);
+	// --- dependencies ---
+
+	private Ui ui;
+
+	public void setUi(Ui ui) {
+		this.ui = ui;
+	}
+
+	// --- ---
+
+	@Override
+	protected void onInitialization() {
+		super.onInitialization();
+		usersStatus = new UsersStatusData();
+	}
+
+	public void onServerDataReceived(DataTransferObject data) {
+		if (data.usersStatus != null) {
+			usersStatus = data.usersStatus;
+			ui.getWorkspace().update();
 		}
 	}
 
-	public boolean removeSelectedEntityId(String userId, String entityId) {
-		synchronized (statuses) {
-			return get(userId).selectedEntitysIds.remove(entityId);
-		}
+	public boolean isOnline(User user) {
+		return usersStatus.get(user.getId()).isOnline();
 	}
 
-	public void setUsersSelectedEntities(String userId, Set<String> ids) {
-		synchronized (statuses) {
-			get(userId).selectedEntitysIds = ids;
-		}
+	public Set<String> getSelectedEntitysIds(User user) {
+		return usersStatus.get(user.getId()).getSelectedEntitysIds();
 	}
 
-	public void setOnlineUsers(Set<String> userIds) {
-		synchronized (statuses) {
-			Set<String> updated = new HashSet<String>();
-			for (Map.Entry<String, UserStatus> entry : statuses.entrySet()) {
-				String userId = entry.getKey();
-				entry.getValue().online = userIds.contains(userId);
-				updated.add(userId);
-			}
-			for (String userId : userIds) {
-				if (updated.contains(userId)) continue;
-				get(userId).online = false;
-			}
-		}
+	public void addSelectedEntityId(String id) {
+		String userId = ScrumGwtApplication.get().getUser().getId();
+		boolean added = usersStatus.addSelectedEntityId(userId, id);
+		if (added)
+			ScrumGwtApplication.get().callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());
 	}
 
-	public UserStatus get(String userId) {
-		synchronized (statuses) {
-			UserStatus status = statuses.get(userId);
-			if (status == null) {
-				status = new UserStatus();
-				statuses.put(userId, status);
-			}
-			return status;
-		}
-	}
-
-	public static class UserStatus implements Serializable, IsSerializable {
-
-		private Set<String> selectedEntitysIds = new HashSet<String>();
-		private boolean online;
-
-		public Set<String> getSelectedEntitysIds() {
-			return selectedEntitysIds;
-		}
-
-		public boolean isOnline() {
-			return online;
-		}
-
+	public void removeSelectedEntityId(String id) {
+		String userId = ScrumGwtApplication.get().getUser().getId();
+		boolean removed = usersStatus.removeSelectedEntityId(userId, id);
+		if (removed)
+			ScrumGwtApplication.get().callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());
 	}
 
 }

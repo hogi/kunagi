@@ -1,6 +1,5 @@
 package scrum.client.sprint;
 
-import scrum.client.context.ProjectContext;
 import scrum.client.project.Requirement;
 
 public class CreateTaskAction extends GCreateTaskAction {
@@ -29,7 +28,7 @@ public class CreateTaskAction extends GCreateTaskAction {
 	@Override
 	protected void onExecute() {
 		Task task = requirement.createNewTask();
-		ProjectContext.get().showTask(task);
+		getProjectContext().showTask(task);
 	}
 
 }

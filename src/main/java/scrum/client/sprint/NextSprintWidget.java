@@ -8,7 +8,6 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
-import scrum.client.context.ProjectContext;
 import scrum.client.project.Project;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -118,10 +117,6 @@ public class NextSprintWidget extends AWidget {
 		Project project = ScrumGwtApplication.get().getProject();
 		if (project == null) return null;
 		return project.getNextSprint();
-	}
-
-	public static NextSprintWidget get() {
-		return ProjectContext.get().getNextSprint();
 	}
 
 }

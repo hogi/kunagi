@@ -7,6 +7,7 @@ import ilarkesto.mda.AGeneratorApplication;
 import ilarkesto.mda.gen.gwt.GwtActionGenerator;
 import ilarkesto.mda.gen.gwt.GwtActionTemplateGenerator;
 import ilarkesto.mda.gen.gwt.GwtApplicationGenerator;
+import ilarkesto.mda.gen.gwt.GwtComponentTemplateGenerator;
 import ilarkesto.mda.gen.gwt.GwtComponentsGenerator;
 import ilarkesto.mda.gen.gwt.GwtDaoGenerator;
 import ilarkesto.mda.gen.gwt.GwtEntityGenerator;
@@ -21,6 +22,7 @@ import ilarkesto.mda.model.ActionModel;
 import ilarkesto.mda.model.ApplicationModel;
 import ilarkesto.mda.model.BeanModel;
 import ilarkesto.mda.model.ComponentModel;
+import ilarkesto.mda.model.CompositeModel;
 import ilarkesto.mda.model.DatobModel;
 import ilarkesto.mda.model.EntityModel;
 import ilarkesto.mda.model.EventModel;
@@ -47,7 +49,15 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (gwtComponentsModel == null) {
 			gwtComponentsModel = new ComponentModel("GwtComponents", getBasePackageName());
 			gwtComponentsModel.setGwt(true);
+			gwtComponentsModel.addComposite("Pinger");
 			gwtComponentsModel.addComposite("Auth");
+			gwtComponentsModel.addComposite("ProjectContext");
+			gwtComponentsModel.addComposite("Ui");
+			// gwtComponentsModel.addComposite("PublicUi");
+			// gwtComponentsModel.addComposite("UserUi");
+			gwtComponentsModel.addComposite("DndManager");
+			gwtComponentsModel.addComposite("Chat");
+			gwtComponentsModel.addComposite("UsersStatus");
 		}
 		return gwtComponentsModel;
 	}
@@ -64,6 +74,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtEventBusModel.addEvent("ServerDataReceived").addParameter("data", "DataTransferObject").setQuiet(true);
 			gwtEventBusModel.addEvent("Login");
 			gwtEventBusModel.addEvent("Logout");
+			gwtEventBusModel.addEvent("ProjectOpened");
+			gwtEventBusModel.addEvent("ProjectClosed");
 		}
 		return gwtEventBusModel;
 	}
@@ -440,6 +452,9 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			new GwtEventListenerGenerator(eventModel, applicationModel).generate();
 		}
 		new GwtComponentsGenerator(getGwtComponentsModel()).generate();
+		for (CompositeModel composite : getGwtComponentsModel().getComposites()) {
+			new GwtComponentTemplateGenerator(getApplicationModel(), composite).generate();
+		}
 	}
 
 	private void generateActions(List<ActionModel> actions) {

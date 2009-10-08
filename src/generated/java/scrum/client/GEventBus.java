@@ -49,7 +49,7 @@ public abstract class GEventBus
     }
 
     public void fireLogin() {
-        ilarkesto.gwt.client.GwtLogger.DEBUG("EventBus: Login");
+        log.debug("Event fired: Login");
         for (LoginListener listener : loginListeners) {
             listener.onLogin();
         }
@@ -68,9 +68,47 @@ public abstract class GEventBus
     }
 
     public void fireLogout() {
-        ilarkesto.gwt.client.GwtLogger.DEBUG("EventBus: Logout");
+        log.debug("Event fired: Logout");
         for (LogoutListener listener : logoutListeners) {
             listener.onLogout();
+        }
+    }
+
+    // --- ProjectOpened ---
+
+    private Set<ProjectOpenedListener> projectOpenedListeners = new HashSet<ProjectOpenedListener>();
+
+    public void addProjectOpenedListener(ProjectOpenedListener listener) {
+        projectOpenedListeners.add(listener);
+    }
+
+    public void removeProjectOpenedListener(ProjectOpenedListener listener) {
+        projectOpenedListeners.remove(listener);
+    }
+
+    public void fireProjectOpened() {
+        log.debug("Event fired: ProjectOpened");
+        for (ProjectOpenedListener listener : projectOpenedListeners) {
+            listener.onProjectOpened();
+        }
+    }
+
+    // --- ProjectClosed ---
+
+    private Set<ProjectClosedListener> projectClosedListeners = new HashSet<ProjectClosedListener>();
+
+    public void addProjectClosedListener(ProjectClosedListener listener) {
+        projectClosedListeners.add(listener);
+    }
+
+    public void removeProjectClosedListener(ProjectClosedListener listener) {
+        projectClosedListeners.remove(listener);
+    }
+
+    public void fireProjectClosed() {
+        log.debug("Event fired: ProjectClosed");
+        for (ProjectClosedListener listener : projectClosedListeners) {
+            listener.onProjectClosed();
         }
     }
 
@@ -80,12 +118,16 @@ public abstract class GEventBus
         if (listener instanceof ServerDataReceivedListener) addServerDataReceivedListener((ServerDataReceivedListener)listener);
         if (listener instanceof LoginListener) addLoginListener((LoginListener)listener);
         if (listener instanceof LogoutListener) addLogoutListener((LogoutListener)listener);
+        if (listener instanceof ProjectOpenedListener) addProjectOpenedListener((ProjectOpenedListener)listener);
+        if (listener instanceof ProjectClosedListener) addProjectClosedListener((ProjectClosedListener)listener);
     }
 
     public void removeListener(Object listener) {
         if (listener instanceof ServerDataReceivedListener) removeServerDataReceivedListener((ServerDataReceivedListener)listener);
         if (listener instanceof LoginListener) removeLoginListener((LoginListener)listener);
         if (listener instanceof LogoutListener) removeLogoutListener((LogoutListener)listener);
+        if (listener instanceof ProjectOpenedListener) removeProjectOpenedListener((ProjectOpenedListener)listener);
+        if (listener instanceof ProjectClosedListener) removeProjectClosedListener((ProjectClosedListener)listener);
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.HashSet;
 import javax.servlet.http.HttpServletRequest;
 
 import scrum.client.DataTransferObject;
-import scrum.client.PingTimer;
+import scrum.client.Pinger;
 import scrum.server.admin.User;
 import scrum.server.project.Project;
 
@@ -18,7 +18,7 @@ public class WebSession extends AWebSession {
 
 	private static final Logger LOG = Logger.get(WebSession.class);
 
-	private TimePeriod TIMEOUT = new TimePeriod(PingTimer.MAX_DELAY * 2);
+	private TimePeriod TIMEOUT = new TimePeriod(Pinger.MAX_DELAY * 2);
 	private User user;
 	private Project project;
 

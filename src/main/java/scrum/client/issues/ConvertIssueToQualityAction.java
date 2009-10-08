@@ -1,6 +1,5 @@
 package scrum.client.issues;
 
-import scrum.client.context.ProjectContext;
 import scrum.client.project.Quality;
 
 public class ConvertIssueToQualityAction extends GConvertIssueToQualityAction {
@@ -31,7 +30,7 @@ public class ConvertIssueToQualityAction extends GConvertIssueToQualityAction {
 		Quality quality = new Quality(issue);
 		getDao().createQuality(quality);
 		getDao().deleteIssue(issue);
-		ProjectContext.get().showQualityBacklog(quality);
+		getProjectContext().showQualityBacklog(quality);
 	}
 
 }

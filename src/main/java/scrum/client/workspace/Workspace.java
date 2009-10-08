@@ -5,10 +5,10 @@ import ilarkesto.gwt.client.FullScreenDockWidget;
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
-import scrum.client.context.AContext;
-import scrum.client.context.ProjectContext;
+import scrum.client.Components;
 import scrum.client.context.PublicContext;
-import scrum.client.context.StartContext;
+import scrum.client.context.HomeContext;
+import scrum.client.context.UiComponent;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -17,14 +17,9 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * The applications root panel. It manages the top widgets (LoginWidget, ProjectSelectorWidget and
- * WorkspaceWidget). It also provides the global UI locking.
- */
-public class Ui extends AWidget {
+public class Workspace extends AWidget {
 
 	public static final int HEADER_HEIGHT = 25;
-	private static final Ui SINGLETON = new Ui();
 
 	private LockWidget locker;
 	private LockInfoWidget lockInfo;
@@ -51,37 +46,36 @@ public class Ui extends AWidget {
 	}
 
 	public void activatePublicView() {
-		ProjectContext.destroy();
-		StartContext.destroy();
+		HomeContext.destroy();
 		activateView(new PublicContext());
 	}
 
 	public void activateStartView() {
-		ProjectContext.destroy();
-		activateView(new StartContext());
+		activateView(new HomeContext());
 	}
 
 	public void activateProjectView() {
-		StartContext.destroy();
-		activateView(new ProjectContext());
+		HomeContext.destroy();
+		activateView(Components.get().getProjectContext());
 	}
 
-	private void activateView(AContext view) {
+	private void activateView(UiComponent view) {
 		GwtLogger.DEBUG("Activating view:", view);
 		sidebar.show(view.getSidebarWidget());
 		workarea.show(view.getWorkareaWidget());
 		unlock();
 	}
 
-	public void lock(String message) {
-		GwtLogger.DEBUG("Locking UI:", message);
-		lockInfo.showWait(message);
-		locker.lock(lockInfo);
-	}
-
 	public void abort(String message) {
 		GwtLogger.DEBUG("Locking UI for ABORT:", message);
 		lockInfo.showBug(message);
+		locker.lock(lockInfo);
+	}
+
+	public void lock(String message) {
+		initialize();
+		GwtLogger.DEBUG("Locking UI:", message);
+		lockInfo.showWait(message);
 		locker.lock(lockInfo);
 	}
 
@@ -114,10 +108,6 @@ public class Ui extends AWidget {
 
 	public SwitcherWidget getWorkarea() {
 		return workarea;
-	}
-
-	public static Ui get() {
-		return SINGLETON;
 	}
 
 }

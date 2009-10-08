@@ -12,7 +12,6 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockMoveObserver;
 import scrum.client.common.GroupWidget;
-import scrum.client.context.ProjectContext;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -126,10 +125,6 @@ public class ProductBacklogWidget extends AWidget {
 			ScrumGwtApplication.get().getProject().updateRequirementsOrder(requirements);
 		}
 
-	}
-
-	public static ProductBacklogWidget get() {
-		return ProjectContext.get().getProductBacklog();
 	}
 
 }

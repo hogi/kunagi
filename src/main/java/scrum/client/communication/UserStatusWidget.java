@@ -1,9 +1,10 @@
 package scrum.client.communication;
 
 import ilarkesto.gwt.client.AWidget;
+import scrum.client.Components;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.UsersStatus;
 import scrum.client.admin.User;
-import scrum.client.context.ProjectContext;
 
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
@@ -13,6 +14,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class UserStatusWidget extends AWidget {
+
+	private UsersStatus usersStatus = Components.get().getUsersStatus();
 
 	private Label label;
 	private User user;
@@ -35,7 +38,7 @@ public class UserStatusWidget extends AWidget {
 		Highlighter highlighter = new Highlighter();
 		label.addMouseMoveHandler(highlighter);
 		label.addMouseOutHandler(highlighter);
-		if (ProjectContext.get().isOnline(user)) {
+		if (usersStatus.isOnline(user)) {
 			label.addStyleName("UserStatusWidget-online");
 		} else {
 			label.removeStyleName("UserStatusWidget-online");
@@ -45,11 +48,11 @@ public class UserStatusWidget extends AWidget {
 	class Highlighter implements MouseMoveHandler, MouseOutHandler {
 
 		public void onMouseMove(MouseMoveEvent event) {
-			ProjectContext.get().highlightUser(user);
+			Components.get().getProjectContext().highlightUser(user);
 		}
 
 		public void onMouseOut(MouseOutEvent event) {
-			ProjectContext.get().highlightUser(null);
+			Components.get().getProjectContext().highlightUser(null);
 		}
 	}
 }

@@ -9,14 +9,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.Components;
+import scrum.client.ProjectContext;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.context.ProjectContext;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class CommentsWidget extends AWidget {
+
+	private ProjectContext projectContext = Components.get().getProjectContext();
 
 	private FlowPanel containerPanel;
 
@@ -49,7 +52,7 @@ public class CommentsWidget extends AWidget {
 		toolbar.update();
 		containerPanel.clear();
 		containerPanel.add(toolbar);
-		List<Comment> comments = ProjectContext.get().getComments(parent);
+		List<Comment> comments = projectContext.getComments(parent);
 		Collections.sort(comments, Comment.REVERSE_DATEANDTIME_COMPARATOR);
 		for (Comment comment : comments) {
 			CommentWidget widget = getWidget(comment);

@@ -1,7 +1,5 @@
 package scrum.client.project;
 
-import scrum.client.ScrumGwtApplication;
-
 public class ChangeProjectAction extends GChangeProjectAction {
 
 	@Override
@@ -16,7 +14,7 @@ public class ChangeProjectAction extends GChangeProjectAction {
 
 	@Override
 	protected void onExecute() {
-		ScrumGwtApplication.get().closeProject();
+		getComponents().getProjectContext().closeProject(true);
 	}
 
 }

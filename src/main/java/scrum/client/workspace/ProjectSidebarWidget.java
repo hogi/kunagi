@@ -2,9 +2,9 @@ package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
+import scrum.client.Components;
 import scrum.client.collaboration.ChatWidget;
 import scrum.client.communication.UsersStatusWidget;
-import scrum.client.context.ProjectContext;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -54,12 +54,13 @@ public class ProjectSidebarWidget extends AWidget {
 	}
 
 	public SwitchingNavigatorWidget getNavigator() {
-		if (navigator == null) navigator = new SwitchingNavigatorWidget(Ui.get().getWorkarea());
+		if (navigator == null)
+			navigator = new SwitchingNavigatorWidget(Components.get().getUi().getWorkspace().getWorkarea());
 		return navigator;
 	}
 
 	public static ProjectSidebarWidget get() {
-		return ProjectContext.get().getSidebar();
+		return Components.get().getProjectContext().getSidebar();
 	}
 
 }

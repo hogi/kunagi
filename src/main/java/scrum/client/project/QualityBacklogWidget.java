@@ -2,10 +2,10 @@ package scrum.client.project;
 
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
+import scrum.client.Components;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
-import scrum.client.context.ProjectContext;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -41,7 +41,7 @@ public class QualityBacklogWidget extends AWidget {
 	}
 
 	public static QualityBacklogWidget get() {
-		return ProjectContext.get().getQualityBacklog();
+		return Components.get().getProjectContext().getQualityBacklog();
 	}
 
 	public void select(Quality quality) {

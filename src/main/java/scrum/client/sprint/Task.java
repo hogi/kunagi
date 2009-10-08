@@ -3,6 +3,7 @@ package scrum.client.sprint;
 import java.util.Comparator;
 import java.util.Map;
 
+import scrum.client.Components;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.project.Requirement;
@@ -31,7 +32,8 @@ public class Task extends GTask {
 			setOwner(user);
 		}
 		if (ownerchange)
-			ScrumGwtApplication.get().postSystemMessage(user.getName() + " claimed task " + getReference() + ".", true);
+			Components.get().getChat()
+					.postSystemMessage(user.getName() + " claimed task " + getReference() + ".", true);
 	}
 
 	public String getLongLabel(boolean showOwner, boolean showRequirement) {
@@ -56,7 +58,7 @@ public class Task extends GTask {
 			throw new IllegalArgumentException("a Task cannot be set done without claiming Task ownership");
 		setOwner(user);
 		setRemainingWork(0);
-		ScrumGwtApplication.get().postSystemMessage(
+		Components.get().getChat().postSystemMessage(
 			ScrumGwtApplication.get().getUser().getName() + " closed task " + getReference() + ".", true);
 	}
 
@@ -67,7 +69,7 @@ public class Task extends GTask {
 
 	public void setUnOwned() {
 		setUnDone(null);
-		ScrumGwtApplication.get().postSystemMessage(
+		Components.get().getChat().postSystemMessage(
 			ScrumGwtApplication.get().getUser().getName() + " rejected task " + getReference() + ".", true);
 	}
 

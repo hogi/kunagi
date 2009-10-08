@@ -3,8 +3,9 @@ package scrum.client.admin;
 import java.util.Comparator;
 import java.util.Map;
 
+import scrum.client.Components;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.context.ProjectContext;
+import scrum.client.UsersStatus;
 
 public class User extends GUser {
 
@@ -27,10 +28,6 @@ public class User extends GUser {
 		return getName().compareTo(u.getName());
 	}
 
-	public boolean isOnline() {
-		return ProjectContext.get().isOnline(this);
-	}
-
 	@Override
 	public String toString() {
 		return getName();
@@ -46,8 +43,9 @@ public class User extends GUser {
 	public transient static final Comparator<User> ONLINE_OFFLINE_COMPARATOR = new Comparator<User>() {
 
 		public int compare(User a, User b) {
-			boolean aOnline = a.isOnline();
-			boolean bOnline = b.isOnline();
+			UsersStatus usersStatus = Components.get().getUsersStatus();
+			boolean aOnline = usersStatus.isOnline(a);
+			boolean bOnline = usersStatus.isOnline(b);
 			if (aOnline == bOnline) return a.getName().compareTo(b.getName());
 			if (aOnline) return -1;
 			return 1;

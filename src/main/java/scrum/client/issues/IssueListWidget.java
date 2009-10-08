@@ -5,7 +5,6 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
-import scrum.client.context.ProjectContext;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -42,10 +41,6 @@ public class IssueListWidget extends AWidget {
 
 	public void showIssue(Issue issue) {
 		list.extendObject(issue);
-	}
-
-	public static IssueListWidget get() {
-		return ProjectContext.get().getIssueList();
 	}
 
 	public void select(Issue issue) {

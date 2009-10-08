@@ -8,7 +8,6 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
-import scrum.client.context.ProjectContext;
 import scrum.client.sprint.Sprint;
 
 import com.google.gwt.core.client.GWT;
@@ -104,7 +103,4 @@ public class ProjectOverviewWidget extends AWidget {
 				+ "&height=" + CHART_HEIGHT;
 	}
 
-	public static ProjectOverviewWidget get() {
-		return ProjectContext.get().getProjectOverview();
-	}
 }

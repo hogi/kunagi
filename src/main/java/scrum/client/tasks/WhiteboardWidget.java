@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.Components;
 import scrum.client.GenericPredicate;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.common.BlockListWidget;
-import scrum.client.context.ProjectContext;
 import scrum.client.context.UserHighlightSupport;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Sprint;
@@ -186,7 +186,7 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer, Use
 	}
 
 	public static WhiteboardWidget get() {
-		return ProjectContext.get().getWhiteboard();
+		return Components.get().getProjectContext().getWhiteboard();
 	}
 
 	public BlockListSelectionManager getSelectionManager() {

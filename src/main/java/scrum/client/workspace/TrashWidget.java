@@ -2,8 +2,9 @@ package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.GwtLogger;
+import scrum.client.Components;
+import scrum.client.DndManager;
 import scrum.client.common.StyleSheet;
-import scrum.client.dnd.DndManager;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
@@ -15,6 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class TrashWidget extends AWidget {
 
+	private DndManager dndManager = Components.get().getDndManager();
 	private HorizontalPanel trash;
 	private DropController trashDropController = new TrashDropController();
 
@@ -25,7 +27,7 @@ public class TrashWidget extends AWidget {
 		trash.add(Img.bundle.trash32().createImage());
 		// trash.add(new Label("Trash"));
 
-		DndManager.get().getDragController().registerDropController(trashDropController);
+		dndManager.getDragController().registerDropController(trashDropController);
 
 		return trash;
 	}

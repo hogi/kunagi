@@ -3,7 +3,6 @@ package scrum.client.admin;
 import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.project.Project;
-import scrum.client.workspace.Ui;
 
 public class LoginAction extends GLoginAction {
 
@@ -20,7 +19,7 @@ public class LoginAction extends GLoginAction {
 
 	@Override
 	protected void onExecute() {
-		ScrumGwtApplication.get().getUi().lock("Checking login data...");
+		getUi().getWorkspace().lock("Checking login data...");
 		ScrumGwtApplication.get().callLogin(loginData.getUsername(), loginData.getPassword(), new Runnable() {
 
 			public void run() {
@@ -28,15 +27,15 @@ public class LoginAction extends GLoginAction {
 				User user = ScrumGwtApplication.get().getUser();
 				if (user == null) {
 					GwtLogger.DEBUG("Login failed!");
-					ScrumGwtApplication.get().getUi().unlock();
+					getUi().getWorkspace().unlock();
 					loginData.setFailed();
 				} else {
-					GwtLogger.DEBUG("Login succeded:", ScrumGwtApplication.get().getUi());
+					GwtLogger.DEBUG("Login succeded:", user);
 					Project project = user.getCurrentProject();
 					if (project == null || user.isAdmin()) {
-						Ui.get().activateStartView();
+						getUi().getWorkspace().activateStartView();
 					} else {
-						ScrumGwtApplication.get().openProject(project);
+						getProjectContext().openProject(project);
 					}
 				}
 			}

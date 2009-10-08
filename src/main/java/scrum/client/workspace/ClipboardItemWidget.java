@@ -1,9 +1,10 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
+import scrum.client.Components;
+import scrum.client.DndManager;
 import scrum.client.common.ABlockWidget;
 import scrum.client.dnd.ClipboardSupport;
-import scrum.client.dnd.DndManager;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -12,12 +13,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ClipboardItemWidget extends AWidget {
 
+	private DndManager dndManager = Components.get().getDndManager();
+
 	private HorizontalPanel panel;
-
 	private Image icon;
-
 	private ClipboardSupport clipboardSupport;
-
 	private ClipboardWidget clipboard;
 
 	public ClipboardItemWidget(ClipboardSupport clipboardSupport) {
@@ -36,7 +36,7 @@ public class ClipboardItemWidget extends AWidget {
 		panel.setCellWidth(icon, "1%");
 		panel.add(new Label(clipboardSupport.getClipboardLabel()));
 
-		DndManager.get().makeDraggable(this, icon);
+		dndManager.makeDraggable(this, icon);
 		return panel;
 	}
 

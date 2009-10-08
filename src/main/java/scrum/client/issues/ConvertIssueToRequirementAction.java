@@ -1,6 +1,5 @@
 package scrum.client.issues;
 
-import scrum.client.context.ProjectContext;
 import scrum.client.project.Requirement;
 
 public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementAction {
@@ -31,7 +30,7 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 		Requirement requirement = new Requirement(issue);
 		getDao().createRequirement(requirement);
 		getDao().deleteIssue(issue);
-		ProjectContext.get().showProductBacklog(requirement);
+		getProjectContext().showProductBacklog(requirement);
 	}
 
 }

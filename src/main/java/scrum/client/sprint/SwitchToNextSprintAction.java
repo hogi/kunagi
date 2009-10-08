@@ -1,9 +1,8 @@
 package scrum.client.sprint;
 
+import scrum.client.Components;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.context.ProjectContext;
 import scrum.client.project.Requirement;
-import scrum.client.workspace.Ui;
 
 public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 
@@ -19,11 +18,11 @@ public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 
 	@Override
 	protected void onExecute() {
-		Ui.get().lock("Switching to next Sprint");
+		getUi().getWorkspace().lock("Switching to next Sprint");
 		ScrumGwtApplication.get().callSwitchToNextSprint(new Runnable() {
 
 			public void run() {
-				ProjectContext.get().showSprintBacklog((Requirement) null);
+				Components.get().getProjectContext().showSprintBacklog((Requirement) null);
 			}
 		});
 	}

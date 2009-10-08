@@ -21,7 +21,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import scrum.client.ApplicationInfo;
-import scrum.client.UsersStatus;
+import scrum.client.UsersStatusData;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.common.BurndownChart;
@@ -171,7 +171,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	private void sendUsersStatusToClients(Project project) {
-		UsersStatus status = project.getUsersStatus();
+		UsersStatusData status = project.getUsersStatus();
 		for (WebSession session : getSessionsByProject(project)) {
 			session.getNextData().usersStatus = status;
 		}

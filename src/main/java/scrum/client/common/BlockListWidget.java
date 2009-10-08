@@ -11,10 +11,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import scrum.client.Components;
+import scrum.client.DndManager;
 import scrum.client.GenericPredicate;
 import scrum.client.dnd.BlockDndMarkerWidget;
 import scrum.client.dnd.BlockListDropAction;
-import scrum.client.dnd.DndManager;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -25,6 +26,8 @@ import com.google.gwt.user.client.ui.Widget;
 public final class BlockListWidget<O> extends AWidget {
 
 	// private static final Logger LOG = Logger.get(BlockListWidget.class);
+
+	private DndManager dndManager = Components.get().getDndManager();
 
 	private ObjectMappedFlowPanel<O, ABlockWidget<O>> list;
 	private boolean dndSorting = true;
@@ -310,12 +313,12 @@ public final class BlockListWidget<O> extends AWidget {
 	@Override
 	protected void onLoad() {
 		super.onLoad();
-		DndManager.get().registerDropTarget(this);
+		dndManager.registerDropTarget(this);
 	}
 
 	@Override
 	protected void onUnload() {
-		DndManager.get().unregisterDropTarget(this);
+		dndManager.unregisterDropTarget(this);
 		super.onUnload();
 	}
 

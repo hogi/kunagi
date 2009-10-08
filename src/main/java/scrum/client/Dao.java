@@ -9,22 +9,44 @@ import java.util.Map;
 import scrum.client.collaboration.ChatMessage;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
-import scrum.client.project.Project;
 import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
 import scrum.client.risks.Risk;
 import scrum.client.sprint.Task;
-import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.Timer;
 
-public class Dao extends GDao {
+public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
 
-	private String entityIdBase;
-	private int entityIdCounter;
 	private EntityChangeCache cache = new EntityChangeCache();
 
+	// --- dependencies ---
+
+	private Ui ui;
+
+	public void setUi(Ui ui) {
+		this.ui = ui;
+	}
+
+	// --- ---
+
 	Dao() {}
+
+	public void onProjectClosed() {
+		clearChatMessages();
+		clearImpediments();
+		clearQualitys();
+		clearRequirements();
+		clearRisks();
+		clearSprints();
+		clearTasks();
+		clearComments();
+		clearWikipages();
+	}
+
+	public void onLogout() {
+		clearAllEntities();
+	}
 
 	public AGwtEntity getEntityByReference(String reference) {
 		int number = Integer.parseInt(reference.substring(Requirement.REFERENCE_PREFIX.length()));
@@ -67,7 +89,7 @@ public class Dao extends GDao {
 	public void handleDataFromServer(ADataTransferObject data) {
 		super.handleDataFromServer(data);
 		if (data.containsEntities()) {
-			Ui.get().getWorkarea().update();
+			ui.getWorkspace().getWorkarea().update();
 		}
 	}
 
@@ -76,10 +98,7 @@ public class Dao extends GDao {
 	@Override
 	protected void onEntityModifiedRemotely(AGwtEntity entity) {
 		if (entity instanceof ChatMessage) {
-			ScrumGwtApplication.get().addChatMessage((ChatMessage) entity);
-		}
-		if (entity instanceof Project) {
-			Project project = (Project) entity;
+			Components.get().getChat().addChatMessage((ChatMessage) entity);
 		}
 	}
 
@@ -104,16 +123,6 @@ public class Dao extends GDao {
 	}
 
 	// --- ---
-
-	@Override
-	public String getNewEntityId() {
-		if (entityIdBase == null) throw new RuntimeException("No entityIdBase received.");
-		return entityIdBase + ++entityIdCounter;
-	}
-
-	public void setEntityIdBase(String entityIdBase) {
-		this.entityIdBase = entityIdBase;
-	}
 
 	public static Dao get() {
 		return ScrumGwtApplication.get().getDao();

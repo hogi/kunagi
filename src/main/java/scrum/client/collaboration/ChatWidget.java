@@ -1,6 +1,8 @@
 package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.AWidget;
+import scrum.client.Chat;
+import scrum.client.Components;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.workspace.ProjectSidebarWidget;
@@ -14,6 +16,8 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ChatWidget extends AWidget {
+
+	private Chat chat = Components.get().getChat();
 
 	private HTML output;
 	private ScrollPanel outputScroller;
@@ -50,7 +54,7 @@ public class ChatWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		StringBuilder sb = new StringBuilder();
-		for (ChatMessage m : ScrumGwtApplication.get().getChatMessages()) {
+		for (ChatMessage m : chat.getChatMessages()) {
 			appendMessage(m, sb);
 		}
 		output.setHTML(sb.toString());
@@ -61,7 +65,7 @@ public class ChatWidget extends AWidget {
 		String text = input.getText();
 		text = text.trim();
 		if (text.length() == 0) return;
-		ScrumGwtApplication.get().postMessage(text);
+		chat.postMessage(text);
 		input.setText("");
 		input.setFocus(true);
 	}

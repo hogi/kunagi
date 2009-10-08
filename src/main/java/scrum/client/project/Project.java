@@ -11,10 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import scrum.client.Components;
+import scrum.client.UsersStatus;
 import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
 import scrum.client.collaboration.Wikipage;
-import scrum.client.context.ProjectContext;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
 import scrum.client.risks.Risk;
@@ -240,10 +241,10 @@ public class Project extends GProject {
 	};
 
 	public Set<User> getUsersSelecting(AGwtEntity entity) {
-		ProjectContext context = ProjectContext.get();
+		UsersStatus usersStatus = Components.get().getUsersStatus();
 		Set<User> users = new HashSet<User>();
 		for (User user : getParticipants()) {
-			if (context.getSelectedEntitysIds(user).contains(entity.getId())) {
+			if (usersStatus.getSelectedEntitysIds(user).contains(entity.getId())) {
 				users.add(user);
 			}
 		}

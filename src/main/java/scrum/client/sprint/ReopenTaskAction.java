@@ -1,6 +1,5 @@
 package scrum.client.sprint;
 
-import scrum.client.ScrumGwtApplication;
 
 public class ReopenTaskAction extends GReopenTaskAction {
 
@@ -26,7 +25,7 @@ public class ReopenTaskAction extends GReopenTaskAction {
 	@Override
 	protected void onExecute() {
 		task.setUnDone(getUser());
-		ScrumGwtApplication.get().postSystemMessage(
+		getComponents().getChat().postSystemMessage(
 			getUser().getName() + " re-opened task " + task.getReference() + ".", true);
 	}
 

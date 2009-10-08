@@ -1,35 +1,48 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AAction;
+import scrum.client.Components;
 import scrum.client.Dao;
-import scrum.client.ScrumGwtApplication;
+import scrum.client.ProjectContext;
+import scrum.client.Ui;
 import scrum.client.admin.User;
 import scrum.client.project.Project;
 import scrum.client.sprint.Sprint;
-import scrum.client.workspace.Ui;
 
 public abstract class AScrumAction extends AAction {
 
 	public AScrumAction() {
-		super(Ui.get());
+		super(Components.get().getUi().getWorkspace());
 	}
 
 	// --- helper ---
 
-	protected Dao getDao() {
-		return ScrumGwtApplication.get().getDao();
+	protected final Ui getUi() {
+		return getComponents().getUi();
 	}
 
-	protected Project getProject() {
-		return ScrumGwtApplication.get().getProject();
+	protected final Dao getDao() {
+		return getComponents().getDao();
 	}
 
-	protected boolean isCurrentSprint(Sprint sprint) {
+	protected final Project getProject() {
+		return getProjectContext().getProject();
+	}
+
+	protected final ProjectContext getProjectContext() {
+		return getComponents().getProjectContext();
+	}
+
+	protected final boolean isCurrentSprint(Sprint sprint) {
 		return getProject().isCurrentSprint(sprint);
 	}
 
-	protected User getUser() {
-		return ScrumGwtApplication.get().getUser();
+	protected final User getUser() {
+		return getComponents().getAuth().getUser();
+	}
+
+	protected final Components getComponents() {
+		return Components.get();
 	}
 
 }

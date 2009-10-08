@@ -5,10 +5,10 @@ import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
+import scrum.client.Components;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.sprint.Task;
-import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -24,7 +24,7 @@ public class TaskWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
-		fields.setAutoUpdateWidget(Ui.get());
+		fields.setAutoUpdateWidget(Components.get().getUi().getWorkspace());
 
 		fields.add("Label", new ATextViewEditWidget() {
 

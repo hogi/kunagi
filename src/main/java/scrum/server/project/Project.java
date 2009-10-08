@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import scrum.client.UsersStatus;
+import scrum.client.UsersStatusData;
 import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.ProjectUserConfigDao;
 import scrum.server.admin.User;
@@ -22,7 +22,7 @@ import scrum.server.sprint.TaskDao;
 
 public class Project extends GProject {
 
-	private transient UsersStatus usersStatus;
+	private transient UsersStatusData usersStatus;
 
 	// --- dependencies ---
 
@@ -74,8 +74,8 @@ public class Project extends GProject {
 
 	// --- ---
 
-	public UsersStatus getUsersStatus() {
-		if (usersStatus == null) usersStatus = new UsersStatus();
+	public UsersStatusData getUsersStatus() {
+		if (usersStatus == null) usersStatus = new UsersStatusData();
 		return usersStatus;
 	}
 

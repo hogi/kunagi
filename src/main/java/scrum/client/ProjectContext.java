@@ -1,5 +1,6 @@
-package scrum.client.context;
+package scrum.client;
 
+import ilarkesto.gwt.client.AComponent;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.GwtLogger;
@@ -8,20 +9,20 @@ import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 
 import java.util.List;
-import java.util.Set;
 
-import scrum.client.ScrumGwtApplication;
-import scrum.client.UsersStatus;
 import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.User;
 import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.WikiWidget;
+import scrum.client.context.UiComponent;
+import scrum.client.context.UserHighlightSupport;
 import scrum.client.img.Img;
 import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.issues.Issue;
 import scrum.client.issues.IssueListWidget;
 import scrum.client.project.ProductBacklogWidget;
+import scrum.client.project.Project;
 import scrum.client.project.ProjectOverviewWidget;
 import scrum.client.project.Quality;
 import scrum.client.project.QualityBacklogWidget;
@@ -35,13 +36,27 @@ import scrum.client.tasks.TaskOverviewWidget;
 import scrum.client.tasks.WhiteboardWidget;
 import scrum.client.test.WidgetsTesterWidget;
 import scrum.client.workspace.ProjectSidebarWidget;
-import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectContext extends AContext {
+public class ProjectContext extends AComponent implements UiComponent {
 
-	private static ProjectContext singleton;
+	// --- dependencies ---
+
+	private Ui ui;
+	private EventBus eventBus;
+
+	public void setUi(Ui ui) {
+		this.ui = ui;
+	}
+
+	public void setEventBus(EventBus eventBus) {
+		this.eventBus = eventBus;
+	}
+
+	// --- ---
+
+	private Project project;
 
 	private ProjectSidebarWidget sidebar = new ProjectSidebarWidget();
 	private ProjectOverviewWidget projectOverview;
@@ -59,14 +74,8 @@ public class ProjectContext extends AContext {
 	private WidgetsTesterWidget widgetsTester;
 
 	private User highlightedUser;
-	private UsersStatus usersStatus;
 
-	public ProjectContext() {
-		assert singleton == null;
-		singleton = this;
-
-		usersStatus = new UsersStatus();
-
+	ProjectContext() {
 		projectOverview = new ProjectOverviewWidget();
 		taskOverview = new TaskOverviewWidget();
 		whiteboard = new WhiteboardWidget();
@@ -97,40 +106,50 @@ public class ProjectContext extends AContext {
 		navigator.addItem(Img.bundle.test16(), "WidgetsTester", getWidgetsTester());
 	}
 
+	@Override
+	protected void onDestroy() {
+		ObjectMappedFlowPanel.objectHeights.clear();
+	}
+
+	public void openProject(Project project) {
+		this.project = project;
+
+		ui.getWorkspace().lock("Loading project...");
+		ScrumGwtApplication.get().callSelectProject(project.getId(), new Runnable() {
+
+			public void run() {
+				ui.getWorkspace().unlock();
+				ui.getWorkspace().activateProjectView();
+			}
+		});
+
+		eventBus.fireProjectOpened();
+	}
+
+	public void closeProject(boolean activateHomeView) {
+		assert project != null;
+		ui.getWorkspace().lock("Closing project...");
+		project = null;
+		ScrumGwtApplication.get().callCloseProject();
+		eventBus.fireProjectClosed();
+		if (activateHomeView) ui.getWorkspace().activateStartView();
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public boolean isProjectOpen() {
+		return project != null;
+	}
+
 	public List<Comment> getComments(AGwtEntity entity) {
 		return ScrumGwtApplication.get().getDao().getCommentsByParent(entity);
 	}
 
-	public boolean isOnline(User user) {
-		return usersStatus.get(user.getId()).isOnline();
-	}
-
-	public Set<String> getSelectedEntitysIds(User user) {
-		return usersStatus.get(user.getId()).getSelectedEntitysIds();
-	}
-
-	public void addSelectedEntityId(String id) {
-		String userId = ScrumGwtApplication.get().getUser().getId();
-		boolean added = usersStatus.addSelectedEntityId(userId, id);
-		if (added)
-			ScrumGwtApplication.get().callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());
-	}
-
-	public void removeSelectedEntityId(String id) {
-		String userId = ScrumGwtApplication.get().getUser().getId();
-		boolean removed = usersStatus.removeSelectedEntityId(userId, id);
-		if (removed)
-			ScrumGwtApplication.get().callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());
-	}
-
-	public void setUsersStatus(UsersStatus usersStatus) {
-		this.usersStatus = usersStatus;
-		Ui.get().update();
-	}
-
 	public void highlightUser(User user) {
 		if (highlightedUser == user) return;
-		Widget currentWidget = Ui.get().getWorkarea().getCurrentWidget();
+		Widget currentWidget = getWorkarea().getCurrentWidget();
 		if (currentWidget instanceof UserHighlightSupport) {
 			((UserHighlightSupport) currentWidget).highlightUser(user);
 		}
@@ -141,12 +160,10 @@ public class ProjectContext extends AContext {
 		return projectUserConfig;
 	}
 
-	@Override
 	public Widget getSidebarWidget() {
 		return sidebar;
 	}
 
-	@Override
 	public Widget getWorkareaWidget() {
 		return projectOverview;
 	}
@@ -219,7 +236,7 @@ public class ProjectContext extends AContext {
 	}
 
 	private SwitcherWidget getWorkarea() {
-		return Ui.get().getWorkarea();
+		return ui.getWorkspace().getWorkarea();
 	}
 
 	public void showWhiteboard(Task task) {
@@ -321,20 +338,6 @@ public class ProjectContext extends AContext {
 
 	public WidgetsTesterWidget getWidgetsTester() {
 		return widgetsTester;
-	}
-
-	public static boolean isActive() {
-		return singleton != null;
-	}
-
-	public static ProjectContext get() {
-		assert singleton != null;
-		return singleton;
-	}
-
-	public static void destroy() {
-		ObjectMappedFlowPanel.objectHeights.clear();
-		singleton = null;
 	}
 
 }

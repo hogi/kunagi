@@ -7,11 +7,13 @@ import ilarkesto.gwt.client.ButtonWidget;
 
 import java.util.Set;
 
+import scrum.client.Components;
+import scrum.client.DndManager;
+import scrum.client.ProjectContext;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.UsersStatus;
 import scrum.client.admin.User;
-import scrum.client.context.ProjectContext;
 import scrum.client.dnd.BlockDndMarkerWidget;
-import scrum.client.dnd.DndManager;
 
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -34,6 +36,10 @@ import com.google.gwt.user.client.ui.Widget;
  */
 @SuppressWarnings("unchecked")
 public abstract class ABlockWidget<O> extends AWidget {
+
+	private DndManager dndManager = Components.get().getDndManager();
+	private UsersStatus usersStatus = Components.get().getUsersStatus();
+	private ProjectContext projectContext = Components.get().getProjectContext();
 
 	private Label label;
 	private FocusPanel iconPanel;
@@ -74,7 +80,7 @@ public abstract class ABlockWidget<O> extends AWidget {
 		// center.setStyleName("ABlockWidget-center");
 		// center.add(title);
 		// center.add(contentWrapper);
-		DndManager.get().makeDraggable(this, iconPanel);
+		dndManager.makeDraggable(this, iconPanel);
 
 		titlePanel = new HorizontalPanel();
 		titlePanel.setSpacing(1);
@@ -160,7 +166,7 @@ public abstract class ABlockWidget<O> extends AWidget {
 		menu = null;
 
 		User me = ScrumGwtApplication.get().getUser();
-		if (ProjectContext.isActive()) {
+		if (projectContext.isProjectOpen()) {
 			O o = getObject();
 			if (o instanceof AGwtEntity) {
 				Set<User> users = ScrumGwtApplication.get().getProject().getUsersSelecting(((AGwtEntity) o));
@@ -243,15 +249,14 @@ public abstract class ABlockWidget<O> extends AWidget {
 	}
 
 	private void updateSelectedStatus() {
-		if (ProjectContext.isActive()) {
-			ProjectContext context = ProjectContext.get();
+		if (projectContext.isProjectOpen()) {
 			O o = getObject();
 			if (o instanceof AGwtEntity) {
 				String id = ((AGwtEntity) o).getId();
 				if (extended) {
-					context.addSelectedEntityId(id);
+					usersStatus.addSelectedEntityId(id);
 				} else {
-					context.removeSelectedEntityId(id);
+					usersStatus.removeSelectedEntityId(id);
 				}
 			}
 		}
@@ -261,7 +266,7 @@ public abstract class ABlockWidget<O> extends AWidget {
 	protected void onLoad() {
 		super.onLoad();
 		if (getList().isDndSorting()) {
-			DndManager.get().registerDropTarget(this);
+			dndManager.registerDropTarget(this);
 		}
 		updateSelectedStatus();
 	}
@@ -271,7 +276,7 @@ public abstract class ABlockWidget<O> extends AWidget {
 		if (extended) {
 			updateSelectedStatus();
 		}
-		DndManager.get().unregisterDropTarget(this);
+		dndManager.unregisterDropTarget(this);
 		super.onUnload();
 	}
 

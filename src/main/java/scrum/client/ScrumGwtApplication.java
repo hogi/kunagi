@@ -4,33 +4,18 @@ import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
-
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedList;
-
 import scrum.client.admin.User;
-import scrum.client.collaboration.ChatMessage;
-import scrum.client.collaboration.ChatWidget;
-import scrum.client.context.ProjectContext;
-import scrum.client.context.StartContext;
-import scrum.client.dnd.DndManager;
 import scrum.client.project.Project;
-import scrum.client.workspace.Ui;
+import scrum.client.workspace.Workspace;
 
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class ScrumGwtApplication extends GScrumGwtApplication {
 
+	private final GwtLogger log = GwtLogger.createLogger(getClass());
+
 	private Components components;
 	private ApplicationInfo applicationInfo;
-	private User user;
-	private Project project;
-	private LinkedList<ChatMessage> chatMessages;
-	private DndManager dndManager;
-	private Ui ui;
-	private long lastDataReceiveTime = System.currentTimeMillis();
-	private PingTimer pingTimer;
 
 	public void onModuleLoad() {
 
@@ -41,15 +26,14 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 		components = new Components();
 
-		ui = Ui.get();
-		ui.update();
-		RootPanel.get("ScrumGwtApplication").add(ui);
-		ui.lock("Loading...");
+		final Workspace workspace = components.getUi().getWorkspace();
+		workspace.lock("Loading...");
+		RootPanel.get("ScrumGwtApplication").add(workspace);
 		callStartSession(new Runnable() {
 
 			public void run() {
-				ui.activatePublicView();
-				pingTimer = new PingTimer();
+				workspace.activatePublicView();
+				components.getPinger();
 			}
 		});
 
@@ -61,32 +45,11 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	protected void onServerData(DataTransferObject data) {
 		components.getEventBus().fireServerDataReceived(data);
 
-		if (data.containsEntities()) {
-			lastDataReceiveTime = System.currentTimeMillis();
-			if (pingTimer != null) pingTimer.schedule();
-		}
-
-		if (data.usersStatus != null) {
-			lastDataReceiveTime = System.currentTimeMillis();
-			if (ProjectContext.isActive()) {
-				ProjectContext.get().setUsersStatus(data.usersStatus);
-			}
-		}
-
-		if (data.entityIdBase != null) {
-			getDao().setEntityIdBase(data.entityIdBase);
-			GwtLogger.DEBUG("entityIdBase:", data.entityIdBase);
-		}
-
 		if (data.applicationInfo != null) {
 			this.applicationInfo = data.applicationInfo;
-			GwtLogger.DEBUG("applicationInfo:", data.applicationInfo);
+			log.debug("applicationInfo:", data.applicationInfo);
 		} else {
 			assert this.applicationInfo != null;
-		}
-
-		if (data.isUserSet()) {
-			user = getDao().getUser(data.getUserId());
 		}
 
 	}
@@ -103,86 +66,14 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		return html;
 	}
 
-	public ChatMessage postSystemMessage(String text, boolean distribute) {
-		return postMessage(null, text, distribute);
-	}
-
-	public ChatMessage postMessage(String text) {
-		return postMessage(user, text, true);
-	}
-
-	private ChatMessage postMessage(User author, String text, boolean distribute) {
-		ChatMessage msg = new ChatMessage(getProject(), author, text);
-		addChatMessage(msg);
-		if (distribute) getDao().createChatMessage(msg);
-		return msg;
-	}
-
-	public LinkedList<ChatMessage> getChatMessages() {
-		return chatMessages;
-	}
-
-	void addChatMessage(ChatMessage msg) {
-		if (project == null || !msg.isProject(project)) return;
-		if (chatMessages.contains(msg)) return;
-		chatMessages.add(msg);
-		cleanupChatMessages();
-		ChatWidget.get().update();
-	}
-
-	private void cleanupChatMessages() {
-		for (Iterator it = chatMessages.iterator(); it.hasNext();) {
-			ChatMessage message = (ChatMessage) it.next();
-			if (message.isOld()) it.remove();
-		}
-		while (chatMessages.size() > 50)
-			chatMessages.remove(0);
-		Collections.sort(chatMessages);
-	}
-
 	public User getUser() {
-		return user;
-	}
-
-	public Ui getUi() {
-		return ui;
-	}
-
-	public long getLastDataReceiveTime() {
-		return lastDataReceiveTime;
+		return components.getAuth().getUser();
 	}
 
 	@Override
 	protected void handleCommunicationError(Throwable ex) {
 		GwtLogger.ERROR("Communication Error:", ex);
-		ui.abort("Lost connection to server, please reload.");
-	}
-
-	public void openProject(Project project) {
-		Ui.get().lock("Loading project...");
-		this.project = project;
-		this.chatMessages = new LinkedList<ChatMessage>();
-		callSelectProject(project.getId(), new Runnable() {
-
-			public void run() {
-				Ui.get().unlock();
-				Ui.get().activateProjectView();
-			}
-		});
-	}
-
-	public void closeProject() {
-		callCloseProject();
-		this.project = null;
-		Dao dao = getDao();
-		dao.clearChatMessages();
-		dao.clearImpediments();
-		dao.clearQualitys();
-		dao.clearRequirements();
-		dao.clearRisks();
-		dao.clearSprints();
-		dao.clearTasks();
-		Ui.get().activateStartView();
+		components.getUi().getWorkspace().abort("Lost connection to server, please reload.");
 	}
 
 	public void showEntityByReference(final String reference) {
@@ -190,33 +81,34 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 		if (reference.startsWith("[")) {
 			String page = reference.substring(1, reference.length() - 1);
-			ProjectContext.get().showWiki(page);
+			components.getProjectContext().showWiki(page);
 			return;
 		}
 
 		AGwtEntity entity = getDao().getEntityByReference(reference);
 		if (entity != null) {
-			ProjectContext.get().showEntity(entity);
+			components.getProjectContext().showEntity(entity);
 			return;
 		}
-		ui.lock("Searching for " + reference);
+		components.getUi().getWorkspace().lock("Searching for " + reference);
 		callRequestEntityByReference(reference, new Runnable() {
 
 			public void run() {
 				AGwtEntity entity = getDao().getEntityByReference(reference);
 				if (entity == null) {
-					ui.unlock();
-					postSystemMessage("Object does not exist: " + reference, false);
+					components.getUi().getWorkspace().unlock();
+					components.getChat().postSystemMessage("Object does not exist: " + reference, false);
 					return;
 				}
-				ui.unlock();
-				ProjectContext.get().showEntity(entity);
+				components.getUi().getWorkspace().unlock();
+				components.getProjectContext().showEntity(entity);
 			}
 		});
 	}
 
+	@Deprecated
 	public Project getProject() {
-		return project;
+		return components.getProjectContext().getProject();
 	}
 
 	@Override
@@ -226,24 +118,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	public static ScrumGwtApplication get() {
 		return (ScrumGwtApplication) singleton;
-	}
-
-	public DndManager getDndManager() {
-		if (dndManager == null) {
-			dndManager = new DndManager();
-		}
-		return dndManager;
-	}
-
-	public void logout() {
-		Ui.get().lock("logging out");
-		closeProject();
-		ScrumGwtApplication.get().callLogout();
-		user = null;
-		StartContext.destroy();
-		ProjectContext.destroy();
-		getDao().clearAllEntities();
-		Ui.get().activatePublicView();
 	}
 
 	public final void callStartSession(Runnable callback) {
