@@ -12,6 +12,7 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 
 	@Override
 	protected void onCollapsedInitialization() {
+		Issue issue = getObject();
 		setIcon(Img.bundle.issue16());
 	}
 

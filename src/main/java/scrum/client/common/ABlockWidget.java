@@ -13,7 +13,6 @@ import scrum.client.dnd.BlockDndMarkerWidget;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -127,12 +126,6 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	}
 
 	protected void addMenuAction(AScrumAction action) {
-		if (action.isExecutable()) {
-			addMenuCommand(action.getLabel(), action, action.getTooltip());
-		}
-	}
-
-	protected void addMenuCommand(String label, Command command, String tooltip) {
 		if (menu == null) {
 			MenuBar menuBar = new MenuBar();
 			menuBar.addStyleName("ABlockWidget-title-menu");
@@ -142,14 +135,14 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 			menuBar.setPopupPosition(MenuBar.PopupPosition.LEFT);
 			addToolbarItem(menuBar);
 		}
-		MenuItem item = new MenuItem(label, command);
-		if (tooltip != null) item.setTitle(tooltip);
-		menu.addItem(item);
+		MenuItem menuItem = new MenuItem(action.getLabel(), action);
+		menuItem.setTitle(action.getTooltip());
+		menuItem.setVisible(action.isExecutable());
+		menu.addItem(menuItem);
 	}
 
 	protected void addToolbarAction(AAction action) {
-		ButtonWidget button = new ButtonWidget(action);
-		if (action.isExecutable()) addToolbarItem(button); // TODO add always
+		addToolbarItem(new ButtonWidget(action));
 	}
 
 	protected void addToolbarItem(Widget toolbarItem) {
