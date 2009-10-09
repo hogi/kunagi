@@ -7,7 +7,6 @@ import ilarkesto.gwt.client.ButtonWidget;
 
 import java.util.Set;
 
-import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.dnd.BlockDndMarkerWidget;
 
@@ -157,11 +156,11 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		toolbar.clear();
 		menu = null;
 
-		User me = ScrumGwtApplication.get().getUser();
+		User me = getCurrentUser();
 		if (cm.getProjectContext().isProjectOpen()) {
 			O o = getObject();
 			if (o instanceof AGwtEntity) {
-				Set<User> users = ScrumGwtApplication.get().getProject().getUsersSelecting(((AGwtEntity) o));
+				Set<User> users = getCurrentProject().getUsersSelecting(((AGwtEntity) o));
 				for (User user : users) {
 					if (user == me) continue;
 					UserOnBlockWidget userOnBlockWidget = new UserOnBlockWidget(user);

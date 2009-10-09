@@ -20,7 +20,7 @@ public class ConvertIssueToQualityAction extends GConvertIssueToQualityAction {
 
 	@Override
 	public boolean isExecutable() {
-		if (!issue.getProject().isProductOwner(getUser())) return false;
+		if (!issue.getProject().isProductOwner(getCurrentUser())) return false;
 		if (!issue.isTypeQuality()) return false;
 		return true;
 	}

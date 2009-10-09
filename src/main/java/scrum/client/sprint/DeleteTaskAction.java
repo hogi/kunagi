@@ -18,7 +18,7 @@ public class DeleteTaskAction extends GDeleteTaskAction {
 
 	@Override
 	public boolean isExecutable() {
-		if (task.isOwnerSet() && !task.isOwner(getUser())) return false;
+		if (task.isOwnerSet() && !task.isOwner(getCurrentUser())) return false;
 		return true;
 	}
 

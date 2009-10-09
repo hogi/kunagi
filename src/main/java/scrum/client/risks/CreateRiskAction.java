@@ -14,7 +14,7 @@ public class CreateRiskAction extends GCreateRiskAction {
 
 	@Override
 	protected void onExecute() {
-		Risk risk = getProject().createNewRisk();
+		Risk risk = getCurrentProject().createNewRisk();
 		cm.getProjectContext().showRiskList(risk);
 	}
 

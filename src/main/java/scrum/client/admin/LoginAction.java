@@ -24,12 +24,12 @@ public class LoginAction extends GLoginAction {
 
 			public void run() {
 				GwtLogger.DEBUG("Login response received");
-				User user = ScrumGwtApplication.get().getUser();
-				if (user == null) {
+				if (!cm.getAuth().isUserLoggedIn()) {
 					GwtLogger.DEBUG("Login failed!");
 					cm.getUi().getWorkspace().unlock();
 					loginData.setFailed();
 				} else {
+					User user = getCurrentUser();
 					GwtLogger.DEBUG("Login succeded:", user);
 					Project project = user.getCurrentProject();
 					if (project == null || user.isAdmin()) {

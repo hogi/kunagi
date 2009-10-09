@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.ComponentManager;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.UsersStatus;
 
 public class User extends GUser {
@@ -21,7 +20,7 @@ public class User extends GUser {
 	}
 
 	public ProjectUserConfig getProjectConfig() {
-		return ScrumGwtApplication.get().getProject().getUserConfig(this);
+		return ComponentManager.get().getProjectContext().getProject().getUserConfig(this);
 	}
 
 	public int compareTo(User u) {

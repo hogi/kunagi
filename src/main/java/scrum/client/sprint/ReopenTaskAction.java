@@ -23,8 +23,8 @@ public class ReopenTaskAction extends GReopenTaskAction {
 
 	@Override
 	protected void onExecute() {
-		task.setUnDone(getUser());
-		cm.getChat().postSystemMessage(getUser().getName() + " re-opened task " + task.getReference() + ".", true);
+		task.setUnDone(getCurrentUser());
+		cm.getChat().postSystemMessage(getCurrentUser().getName() + " re-opened task " + task.getReference() + ".", true);
 	}
 
 }

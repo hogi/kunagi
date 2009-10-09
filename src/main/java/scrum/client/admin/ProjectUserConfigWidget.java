@@ -1,22 +1,21 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.Gwt;
-import scrum.client.ScrumGwtApplication;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectUserConfigWidget extends AWidget {
+public class ProjectUserConfigWidget extends AScrumWidget {
 
 	private FieldsWidget fields;
 	private UserConfigWidget globalUserConfig;
 
 	@Override
 	protected Widget onInitialization() {
-		final ProjectUserConfig config = ScrumGwtApplication.get().getUser().getProjectConfig();
+		final ProjectUserConfig config = getCurrentUser().getProjectConfig();
 
 		fields = new FieldsWidget();
 		fields.add("Color", new ATextViewEditWidget() {

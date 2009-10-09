@@ -1,12 +1,10 @@
 package scrum.client.workspace;
 
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ApplicationInfo;
-import scrum.client.ComponentManager;
-import scrum.client.ProjectContext;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.LogoutAction;
+import scrum.client.common.AScrumWidget;
 import scrum.client.project.ChangeProjectAction;
 
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -15,9 +13,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class HeaderWidget extends AWidget {
-
-	private ProjectContext projectContext = ComponentManager.get().getProjectContext();
+public class HeaderWidget extends AScrumWidget {
 
 	private Label title;
 	private Label currentUserLabel;
@@ -57,7 +53,7 @@ public class HeaderWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		boolean loggedIn = ScrumGwtApplication.get().getUser() != null;
+		boolean loggedIn = cm.getAuth().isUserLoggedIn();
 
 		ApplicationInfo applicationInfo = ScrumGwtApplication.get().getApplicationInfo();
 		if (applicationInfo != null) {
@@ -67,9 +63,9 @@ public class HeaderWidget extends AWidget {
 
 		String text = "";
 		if (loggedIn) {
-			text = ScrumGwtApplication.get().getUser().getName();
-			if (projectContext.isProjectOpen()) {
-				text = text + " @ " + ScrumGwtApplication.get().getProject().getLabel();
+			text = getCurrentUser().getName();
+			if (cm.getProjectContext().isProjectOpen()) {
+				text = text + " @ " + getCurrentProject().getLabel();
 			}
 		}
 		currentUserLabel.setText(text);

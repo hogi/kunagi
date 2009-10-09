@@ -26,9 +26,9 @@ public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurren
 
 	@Override
 	protected void onExecute() {
-		requirement.setSprint(getProject().getCurrentSprint());
+		requirement.setSprint(getCurrentProject().getCurrentSprint());
 		cm.getChat().postSystemMessage(
-			getUser().getName() + " added requirement " + requirement.getReference() + " to current sprint.", true);
+			getCurrentUser().getName() + " added requirement " + requirement.getReference() + " to current sprint.", true);
 	}
 
 }

@@ -20,7 +20,7 @@ public class DeleteUserAction extends GDeleteUserAction {
 
 	@Override
 	public boolean isExecutable() {
-		return getUser().isAdmin();
+		return getCurrentUser().isAdmin();
 	}
 
 	@Override

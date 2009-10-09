@@ -1,9 +1,9 @@
 package scrum.client.impediments;
 
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ComponentManager;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
 
@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ImpedimentListWidget extends AWidget {
+public class ImpedimentListWidget extends AScrumWidget {
 
 	public BlockListWidget<Impediment> list;
 	private ToolbarWidget toolbar;
@@ -37,7 +37,7 @@ public class ImpedimentListWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		toolbar.update();
-		list.setObjects(ScrumGwtApplication.get().getProject().getImpediments());
+		list.setObjects(getCurrentProject().getImpediments());
 	}
 
 	public void showImpediment(Impediment impediment) {

@@ -20,7 +20,7 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 
 	@Override
 	public boolean isExecutable() {
-		if (!issue.getProject().isProductOwner(getUser())) return false;
+		if (!issue.getProject().isProductOwner(getCurrentUser())) return false;
 		if (!issue.isTypeRequirement()) return false;
 		return true;
 	}

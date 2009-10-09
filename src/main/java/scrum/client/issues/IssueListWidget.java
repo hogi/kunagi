@@ -1,8 +1,8 @@
 package scrum.client.issues;
 
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
 
@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
-public class IssueListWidget extends AWidget {
+public class IssueListWidget extends AScrumWidget {
 
 	public BlockListWidget<Issue> list;
 	private ToolbarWidget toolbar;
@@ -36,7 +36,7 @@ public class IssueListWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		toolbar.update();
-		list.setObjects(ScrumGwtApplication.get().getProject().getIssues());
+		list.setObjects(getCurrentProject().getIssues());
 	}
 
 	public void showIssue(Issue issue) {

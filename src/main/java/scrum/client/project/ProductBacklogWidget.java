@@ -1,14 +1,13 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import scrum.client.ListPredicate;
-import scrum.client.ScrumGwtApplication;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockMoveObserver;
 import scrum.client.common.GroupWidget;
@@ -20,7 +19,7 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProductBacklogWidget extends AWidget {
+public class ProductBacklogWidget extends AScrumWidget {
 
 	private BlockListWidget<Requirement> list;
 	private ToolbarWidget toolbar;
@@ -39,7 +38,7 @@ public class ProductBacklogWidget extends AWidget {
 		});
 
 		list = new BlockListWidget<Requirement>(RequirementBlock.FACTORY);
-		list.setAutoSorter(ScrumGwtApplication.get().getProject().getRequirementsOrderComparator());
+		list.setAutoSorter(getCurrentProject().getRequirementsOrderComparator());
 		list.setDndSorting(true);
 		list.setMoveObserver(new MoveObserver());
 		toolbar = new ToolbarWidget();
@@ -96,7 +95,7 @@ public class ProductBacklogWidget extends AWidget {
 	protected void onUpdate() {
 		toolbar.update();
 		predicateSelect.update();
-		list.setObjects(filter(ScrumGwtApplication.get().getProject().getRequirements()));
+		list.setObjects(filter(getCurrentProject().getRequirements()));
 	}
 
 	private List<Requirement> filter(List<Requirement> requirements) {
@@ -122,7 +121,7 @@ public class ProductBacklogWidget extends AWidget {
 
 		public void onBlockMoved() {
 			List<Requirement> requirements = list.getObjects();
-			ScrumGwtApplication.get().getProject().updateRequirementsOrder(requirements);
+			getCurrentProject().updateRequirementsOrder(requirements);
 		}
 
 	}

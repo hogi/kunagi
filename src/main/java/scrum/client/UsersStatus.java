@@ -46,14 +46,14 @@ public class UsersStatus extends AScrumComponent implements ServerDataReceivedLi
 	}
 
 	private void addSelectedEntityId(String id) {
-		String userId = ScrumGwtApplication.get().getUser().getId();
+		String userId = getCurrentUser().getId();
 		boolean added = usersStatus.addSelectedEntityId(userId, id);
 		if (added)
 			ScrumGwtApplication.get().callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());
 	}
 
 	private void removeSelectedEntityId(String id) {
-		String userId = ScrumGwtApplication.get().getUser().getId();
+		String userId = getCurrentUser().getId();
 		boolean removed = usersStatus.removeSelectedEntityId(userId, id);
 		if (removed)
 			ScrumGwtApplication.get().callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());

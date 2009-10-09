@@ -1,13 +1,11 @@
 package scrum.client.tasks;
 
-import ilarkesto.gwt.client.AWidget;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import scrum.client.ComponentManager;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
@@ -15,7 +13,7 @@ import scrum.client.sprint.Task;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class TaskOverviewWidget extends AWidget implements TaskBlockContainer {
+public class TaskOverviewWidget extends AScrumWidget implements TaskBlockContainer {
 
 	private TaskListWidget myTasks;
 	private TaskListWidget unownedTasks;
@@ -28,8 +26,8 @@ public class TaskOverviewWidget extends AWidget implements TaskBlockContainer {
 		myTasks = new TaskListWidget("My tasks", this);
 		unownedTasks = new TaskListWidget("Tasks without owner", this);
 		ownedTasks = new HashMap<User, TaskListWidget>();
-		for (User user : ScrumGwtApplication.get().getProject().getTeamMembers()) {
-			if (user == ScrumGwtApplication.get().getUser()) continue;
+		for (User user : getCurrentProject().getTeamMembers()) {
+			if (user == getCurrentUser()) continue;
 			TaskListWidget list = new TaskListWidget(user.getName() + "'s Tasks", this);
 			ownedTasks.put(user, list);
 		}
@@ -47,8 +45,8 @@ public class TaskOverviewWidget extends AWidget implements TaskBlockContainer {
 
 	@Override
 	protected void onUpdate() {
-		Sprint currentSprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
-		myTasks.setTasks(currentSprint.getTasks(ScrumGwtApplication.get().getUser()));
+		Sprint currentSprint = getCurrentProject().getCurrentSprint();
+		myTasks.setTasks(currentSprint.getTasks(getCurrentUser()));
 
 		unownedTasks.setTasks(currentSprint.getTasks(null));
 

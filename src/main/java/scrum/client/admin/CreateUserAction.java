@@ -11,7 +11,7 @@ public class CreateUserAction extends GCreateUserAction {
 
 	@Override
 	public boolean isExecutable() {
-		return getUser().isAdmin();
+		return getCurrentUser().isAdmin();
 	}
 
 	@Override

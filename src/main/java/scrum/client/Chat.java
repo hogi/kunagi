@@ -27,14 +27,14 @@ public class Chat extends AScrumComponent {
 	}
 
 	private ChatMessage postMessage(User author, String text, boolean distribute) {
-		ChatMessage msg = new ChatMessage(ScrumGwtApplication.get().getProject(), author, text);
+		ChatMessage msg = new ChatMessage(getCurrentProject(), author, text);
 		addChatMessage(msg);
 		if (distribute) cm.getDao().createChatMessage(msg);
 		return msg;
 	}
 
 	void addChatMessage(ChatMessage msg) {
-		Project project = ScrumGwtApplication.get().getProject();
+		Project project = getCurrentProject();
 		if (project == null || !msg.isProject(project)) return;
 		if (chatMessages.contains(msg)) return;
 		chatMessages.add(msg);

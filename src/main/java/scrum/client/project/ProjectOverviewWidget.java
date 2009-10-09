@@ -2,10 +2,9 @@ package scrum.client.project;
 
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.Gwt;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.collaboration.CommentsWidget;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
 import scrum.client.sprint.Sprint;
@@ -15,7 +14,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectOverviewWidget extends AWidget {
+public class ProjectOverviewWidget extends AScrumWidget {
 
 	public static int CHART_WIDTH = 800;
 	public static int CHART_HEIGHT = 270;
@@ -24,7 +23,7 @@ public class ProjectOverviewWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		final Project project = ScrumGwtApplication.get().getProject();
+		final Project project = getCurrentProject();
 
 		FieldsWidget fields = new FieldsWidget();
 
@@ -87,7 +86,7 @@ public class ProjectOverviewWidget extends AWidget {
 	protected void onUpdate() {
 		super.onUpdate();
 		if (sprintChart != null) {
-			Sprint sprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
+			Sprint sprint = getCurrentProject().getCurrentSprint();
 			if (sprint != null) sprintChart.setUrl(getChartUrl(sprint));
 		}
 	}

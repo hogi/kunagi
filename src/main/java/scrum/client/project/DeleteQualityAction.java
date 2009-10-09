@@ -19,12 +19,12 @@ public class DeleteQualityAction extends GDeleteQualityAction {
 
 	@Override
 	public boolean isExecutable() {
-		return getProject().isProductOwner(getUser());
+		return getCurrentProject().isProductOwner(getCurrentUser());
 	}
 
 	@Override
 	protected void onExecute() {
-		getProject().deleteQuality(quality);
+		getCurrentProject().deleteQuality(quality);
 	}
 
 }

@@ -19,12 +19,12 @@ public class DeleteRiskAction extends GDeleteRiskAction {
 
 	@Override
 	public boolean isExecutable() {
-		return getProject().isPig(getUser());
+		return getCurrentProject().isPig(getCurrentUser());
 	}
 
 	@Override
 	protected void onExecute() {
-		getProject().deleteRisk(risk);
+		getCurrentProject().deleteRisk(risk);
 	}
 
 }

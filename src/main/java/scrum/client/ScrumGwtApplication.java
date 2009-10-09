@@ -4,8 +4,6 @@ import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
-import scrum.client.admin.User;
-import scrum.client.project.Project;
 import scrum.client.workspace.Workspace;
 
 import com.google.gwt.user.client.ui.RootPanel;
@@ -66,10 +64,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		return html;
 	}
 
-	public User getUser() {
-		return components.getAuth().getUser();
-	}
-
 	@Override
 	protected void handleCommunicationError(Throwable ex) {
 		GwtLogger.ERROR("Communication Error:", ex);
@@ -104,11 +98,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 				components.getProjectContext().showEntity(entity);
 			}
 		});
-	}
-
-	@Deprecated
-	public Project getProject() {
-		return components.getProjectContext().getProject();
 	}
 
 	@Override

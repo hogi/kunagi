@@ -1,11 +1,11 @@
 package scrum.client.risks;
 
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 
 import java.util.Comparator;
 
 import scrum.client.ScrumGwtApplication;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
 
@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RiskListWidget extends AWidget {
+public class RiskListWidget extends AScrumWidget {
 
 	public BlockListWidget<Risk> list;
 	private ToolbarWidget toolbar;
@@ -39,7 +39,7 @@ public class RiskListWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		toolbar.update();
-		list.setObjects(ScrumGwtApplication.get().getProject().getRisks());
+		list.setObjects(getCurrentProject().getRisks());
 	}
 
 	public void showRisk(Risk risk) {

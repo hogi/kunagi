@@ -1,6 +1,5 @@
 package scrum.client.tasks;
 
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.Gwt;
 
 import java.util.ArrayList;
@@ -11,8 +10,8 @@ import java.util.Map;
 
 import scrum.client.ComponentManager;
 import scrum.client.GenericPredicate;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.common.BlockListWidget;
 import scrum.client.context.UserHighlightSupport;
@@ -23,12 +22,10 @@ import scrum.client.sprint.Task;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class WhiteboardWidget extends AWidget implements TaskBlockContainer, UserHighlightSupport {
+public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer, UserHighlightSupport {
 
-	private VerticalPanel panel;
 	private Grid grid;
 	private Label openLabel;
 	private Label ownedLabel;
@@ -68,7 +65,7 @@ public class WhiteboardWidget extends AWidget implements TaskBlockContainer, Use
 
 	@Override
 	protected void onUpdate() {
-		Sprint sprint = ScrumGwtApplication.get().getProject().getCurrentSprint();
+		Sprint sprint = getCurrentProject().getCurrentSprint();
 
 		openLabel.setText("Free Tasks (" + hours(sprint.getRemainingWorkInUnclaimedTasks()) + " to do)");
 		ownedLabel.setText("Claimed Tasks (" + hours(sprint.getRemainingWorkInClaimedTasks()) + " to do, "

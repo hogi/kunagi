@@ -14,7 +14,7 @@ public class CreateIssueAction extends GCreateIssueAction {
 
 	@Override
 	protected void onExecute() {
-		Issue issue = getProject().createNewIssue();
+		Issue issue = getCurrentProject().createNewIssue();
 		cm.getProjectContext().showIssueList(issue);
 	}
 

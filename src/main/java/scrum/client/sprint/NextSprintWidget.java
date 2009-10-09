@@ -3,9 +3,8 @@ package scrum.client.sprint;
 import ilarkesto.gwt.client.ADateViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
-import scrum.client.ScrumGwtApplication;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
 import scrum.client.project.Project;
@@ -13,7 +12,7 @@ import scrum.client.project.Project;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class NextSprintWidget extends AWidget {
+public class NextSprintWidget extends AScrumWidget {
 
 	private FlowPanel view;
 
@@ -114,7 +113,7 @@ public class NextSprintWidget extends AWidget {
 	}
 
 	private Sprint getSprint() {
-		Project project = ScrumGwtApplication.get().getProject();
+		Project project = getCurrentProject();
 		if (project == null) return null;
 		return project.getNextSprint();
 	}

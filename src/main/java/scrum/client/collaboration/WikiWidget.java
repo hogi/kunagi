@@ -1,9 +1,8 @@
 package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
-import scrum.client.ScrumGwtApplication;
+import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
@@ -13,7 +12,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class WikiWidget extends AWidget {
+public class WikiWidget extends AScrumWidget {
 
 	private String pageName;
 	private Wikipage page;
@@ -49,7 +48,7 @@ public class WikiWidget extends AWidget {
 	protected void onUpdate() {
 		if (pageName == null || pageName.trim().length() == 0) pageName = "Start";
 
-		page = ScrumGwtApplication.get().getProject().getWikipage(pageName);
+		page = getCurrentProject().getWikipage(pageName);
 
 		pageNameBox.setText(pageName);
 

@@ -1,14 +1,13 @@
 package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.AWidget;
-import scrum.client.ScrumGwtApplication;
+import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CommentWidget extends AWidget {
+public class CommentWidget extends AScrumWidget {
 
 	private ARichtextViewEditWidget editor;
 
@@ -22,7 +21,7 @@ public class CommentWidget extends AWidget {
 	protected Widget onInitialization() {
 		Label author = new Label(comment.getAuthor().getName());
 		author.setStyleName("CommentWidget-header-author");
-		String color = ScrumGwtApplication.get().getProject().getUserConfig(comment.getAuthor()).getColor();
+		String color = getCurrentProject().getUserConfig(comment.getAuthor()).getColor();
 		author.getElement().getStyle().setProperty("color", color);
 
 		Label date = new Label(comment.getDateAndTime().toString());
@@ -52,7 +51,7 @@ public class CommentWidget extends AWidget {
 
 			@Override
 			public boolean isEditable() {
-				return comment.getAuthor().equals(ScrumGwtApplication.get().getUser());
+				return comment.getAuthor().equals(getCurrentUser());
 			}
 
 		};

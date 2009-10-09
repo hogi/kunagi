@@ -14,7 +14,7 @@ public class CreateImpedimentAction extends GCreateImpedimentAction {
 
 	@Override
 	protected void onExecute() {
-		Impediment impediment = getProject().createNewImpediment();
+		Impediment impediment = getCurrentProject().createNewImpediment();
 		cm.getProjectContext().showImpedimentList(impediment);
 	}
 

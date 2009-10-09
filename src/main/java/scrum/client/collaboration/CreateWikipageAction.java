@@ -15,7 +15,7 @@ public class CreateWikipageAction extends GCreateWikipageAction {
 
 	@Override
 	protected void onExecute() {
-		getProject().createNewWikipage(pageName);
+		getCurrentProject().createNewWikipage(pageName);
 	}
 
 }

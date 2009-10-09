@@ -18,14 +18,14 @@ public class DeleteRequirementAction extends GDeleteRequirementAction {
 
 	@Override
 	public boolean isExecutable() {
-		if (!requirement.getProject().isProductOwner(getUser())) return false;
-		if (getProject().isCurrentSprint(requirement.getSprint())) return false;
+		if (!requirement.getProject().isProductOwner(getCurrentUser())) return false;
+		if (getCurrentProject().isCurrentSprint(requirement.getSprint())) return false;
 		return true;
 	}
 
 	@Override
 	protected void onExecute() {
-		getProject().deleteRequirement(requirement);
+		getCurrentProject().deleteRequirement(requirement);
 	}
 
 }

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import scrum.client.ScrumGwtApplication;
 import scrum.client.issues.Issue;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
@@ -49,7 +48,7 @@ public class Requirement extends GRequirement {
 	}
 
 	public boolean isInCurrentSprint() {
-		return isSprintSet() && ScrumGwtApplication.get().getProject().isCurrentSprint(getSprint());
+		return isSprintSet() && getProject().isCurrentSprint(getSprint());
 	}
 
 	public String getReference() {
@@ -110,7 +109,7 @@ public class Requirement extends GRequirement {
 
 	public String getEstimatedWorkAsString() {
 		if (getEstimatedWork() == null) return null;
-		return getEstimatedWork() + " " + ScrumGwtApplication.get().getProject().getEffortUnit();
+		return getEstimatedWork() + " " + getProject().getEffortUnit();
 	}
 
 	public int getBurnedWorkInClosedTasks() {

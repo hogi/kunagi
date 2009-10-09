@@ -18,12 +18,12 @@ public class DeleteIssueAction extends GDeleteIssueAction {
 
 	@Override
 	public boolean isExecutable() {
-		return getProject().isPig(getUser());
+		return getCurrentProject().isPig(getCurrentUser());
 	}
 
 	@Override
 	protected void onExecute() {
-		getProject().deleteIssue(issue);
+		getCurrentProject().deleteIssue(issue);
 	}
 
 }

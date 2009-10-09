@@ -6,7 +6,7 @@ import ilarkesto.gwt.client.DateAndTime;
 import java.util.Comparator;
 import java.util.Map;
 
-import scrum.client.ScrumGwtApplication;
+import scrum.client.ComponentManager;
 
 public class Comment extends GComment {
 
@@ -14,7 +14,7 @@ public class Comment extends GComment {
 		setParent(parent);
 		setText("");
 		setDateAndTime(DateAndTime.now());
-		setAuthor(ScrumGwtApplication.get().getUser());
+		setAuthor(ComponentManager.get().getAuth().getUser());
 	}
 
 	public Comment(Map data) {

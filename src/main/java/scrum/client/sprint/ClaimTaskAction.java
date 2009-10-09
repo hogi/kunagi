@@ -20,7 +20,7 @@ public class ClaimTaskAction extends GClaimTaskAction {
 	@Override
 	public boolean isExecutable() {
 		if (task.isDone()) return false;
-		if (task.isOwner(getUser())) return false;
+		if (task.isOwner(getCurrentUser())) return false;
 		return true;
 	}
 

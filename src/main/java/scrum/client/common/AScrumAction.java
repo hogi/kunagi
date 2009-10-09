@@ -16,16 +16,18 @@ public abstract class AScrumAction extends AAction {
 
 	// --- helper ---
 
-	protected final Project getProject() {
-		return cm.getProjectContext().getProject();
+	protected static final boolean isCurrentSprint(Sprint sprint) {
+		return getCurrentProject().isCurrentSprint(sprint);
 	}
 
-	protected final boolean isCurrentSprint(Sprint sprint) {
-		return getProject().isCurrentSprint(sprint);
-	}
-
-	protected final User getUser() {
+	protected static final User getCurrentUser() {
+		assert cm.getAuth().isUserLoggedIn();
 		return cm.getAuth().getUser();
+	}
+
+	protected static final Project getCurrentProject() {
+		assert cm.getProjectContext().isProjectOpen();
+		return cm.getProjectContext().getProject();
 	}
 
 }

@@ -1,10 +1,10 @@
 package scrum.client.collaboration;
 
-import ilarkesto.gwt.client.AWidget;
 import scrum.client.Chat;
 import scrum.client.ComponentManager;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
+import scrum.client.common.AScrumWidget;
 import scrum.client.workspace.ProjectSidebarWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ChatWidget extends AWidget {
+public class ChatWidget extends AScrumWidget {
 
 	private Chat chat = ComponentManager.get().getChat();
 
@@ -73,8 +73,8 @@ public class ChatWidget extends AWidget {
 	private void appendMessage(ChatMessage m, StringBuilder sb) {
 		User author = m.getAuthor();
 		String authorLabel = author != null ? author.getName() : "System";
-		String authorClass = author != null ? (author.equals(ScrumGwtApplication.get().getUser()) ? "author-me"
-				: "author") : "author-system";
+		String authorClass = author != null ? (author.equals(getCurrentUser()) ? "author-me" : "author")
+				: "author-system";
 		String authorStyle = author != null ? "color: " + author.getProjectConfig().getColor() + ";" : "";
 		String text = m.getText();
 		String html = ScrumGwtApplication.get().richtextToHtml(text);

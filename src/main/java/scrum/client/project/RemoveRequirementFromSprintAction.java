@@ -25,7 +25,7 @@ public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSpr
 	protected void onExecute() {
 		requirement.setSprint(null);
 		cm.getChat().postSystemMessage(
-			getUser().getName() + " removed requirement " + requirement.getReference() + " from current sprint.", true);
+			getCurrentUser().getName() + " removed requirement " + requirement.getReference() + " from current sprint.", true);
 	}
 
 }

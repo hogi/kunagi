@@ -18,12 +18,12 @@ public class DeleteImpedimentAction extends GDeleteImpedimentAction {
 
 	@Override
 	public boolean isExecutable() {
-		return getProject().isPig(getUser());
+		return getCurrentProject().isPig(getCurrentUser());
 	}
 
 	@Override
 	protected void onExecute() {
-		getProject().deleteImpediment(impediment);
+		getCurrentProject().deleteImpediment(impediment);
 	}
 
 }

@@ -22,7 +22,7 @@ public class DeleteProjectAction extends GDeleteProjectAction {
 
 	@Override
 	public boolean isExecutable() {
-		return getUser().isAdmin();
+		return getCurrentUser().isAdmin();
 	}
 
 	@Override

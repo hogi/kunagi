@@ -24,7 +24,7 @@ public class HomeContext extends AScrumComponent implements UiComponent {
 		navigator = new SwitchingNavigatorWidget(ComponentManager.get().getUi().getWorkspace().getWorkarea());
 		navigator.addItem((Image) null, "Projects", projectSelector);
 		navigator.addItem((Image) null, "Personal Preferences", userConfig);
-		if (ScrumGwtApplication.get().getUser().isAdmin()) {
+		if (getCurrentUser().isAdmin()) {
 			userList = new UserListWidget();
 			navigator.addItem((Image) null, "User Management", userList);
 		}

@@ -15,7 +15,7 @@ public class CreateQualityAction extends GCreateQualityAction {
 
 	@Override
 	protected void onExecute() {
-		Quality quality = getProject().createNewQuality();
+		Quality quality = getCurrentProject().createNewQuality();
 		cm.getProjectContext().showQualityBacklog(quality);
 	}
 

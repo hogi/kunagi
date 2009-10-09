@@ -9,7 +9,7 @@ public class LogoutAction extends GLogoutAction {
 
 	@Override
 	public boolean isExecutable() {
-		return getUser() != null;
+		return cm.getAuth().isUserLoggedIn();
 	}
 
 	@Override

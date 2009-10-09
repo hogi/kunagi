@@ -95,10 +95,6 @@ public class UserBlock extends AExtensibleBlockWidget<User> {
 		return user.getName();
 	}
 
-	public User getUser() {
-		return user;
-	}
-
 	public static BlockWidgetFactory<User> FACTORY = new BlockWidgetFactory<User>() {
 
 		@Override

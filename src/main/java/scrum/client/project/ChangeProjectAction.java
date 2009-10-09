@@ -9,7 +9,7 @@ public class ChangeProjectAction extends GChangeProjectAction {
 
 	@Override
 	public boolean isExecutable() {
-		return getProject() != null;
+		return cm.getProjectContext().isProjectOpen();
 	}
 
 	@Override

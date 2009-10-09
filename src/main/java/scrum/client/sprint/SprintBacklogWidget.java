@@ -4,13 +4,11 @@ import ilarkesto.gwt.client.ADateViewEditWidget;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ComponentManager;
-import scrum.client.ScrumGwtApplication;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
-import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 
 import com.google.gwt.user.client.ui.ClickListener;
@@ -18,7 +16,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SprintBacklogWidget extends AWidget {
+public class SprintBacklogWidget extends AScrumWidget {
 
 	private BlockListWidget<Requirement> requirementList;
 
@@ -28,7 +26,7 @@ public class SprintBacklogWidget extends AWidget {
 	protected Widget onInitialization() {
 
 		requirementList = new BlockListWidget<Requirement>(RequirementInSprintBlock.FACTORY);
-		requirementList.setAutoSorter(ScrumGwtApplication.get().getProject().getRequirementsOrderComparator());
+		requirementList.setAutoSorter(getCurrentProject().getRequirementsOrderComparator());
 
 		TableBuilder tb = new TableBuilder();
 
@@ -110,14 +108,14 @@ public class SprintBacklogWidget extends AWidget {
 
 			@Override
 			protected void onUpdate() {
-				setText(getProject().formatEfford(getSprint().getCompletedRequirementWork()));
+				setText(getCurrentProject().formatEfford(getSprint().getCompletedRequirementWork()));
 			}
 		});
 		tb.addField("Estimated", new AFieldValueWidget() {
 
 			@Override
 			protected void onUpdate() {
-				setText(getProject().formatEfford(getSprint().getEstimatedRequirementWork()));
+				setText(getCurrentProject().formatEfford(getSprint().getEstimatedRequirementWork()));
 			}
 		});
 		tb.nextRow();
@@ -165,14 +163,8 @@ public class SprintBacklogWidget extends AWidget {
 		rBlock.selectTask(task);
 	}
 
-	private Project getProject() {
-		return ScrumGwtApplication.get().getProject();
-	}
-
 	private Sprint getSprint() {
-		Project project = getProject();
-		if (project == null) return null;
-		return project.getCurrentSprint();
+		return getCurrentProject().getCurrentSprint();
 	}
 
 	class AssignSprintListener implements ClickListener {

@@ -1,10 +1,9 @@
 package scrum.client.communication;
 
-import ilarkesto.gwt.client.AWidget;
 import scrum.client.ComponentManager;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.UsersStatus;
 import scrum.client.admin.User;
+import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
@@ -13,7 +12,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class UserStatusWidget extends AWidget {
+public class UserStatusWidget extends AScrumWidget {
 
 	private UsersStatus usersStatus = ComponentManager.get().getUsersStatus();
 
@@ -33,7 +32,7 @@ public class UserStatusWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		String color = ScrumGwtApplication.get().getProject().getUserConfig(user).getColor();
+		String color = getCurrentProject().getUserConfig(user).getColor();
 		label.getElement().getStyle().setProperty("color", color);
 		Highlighter highlighter = new Highlighter();
 		label.addMouseMoveHandler(highlighter);

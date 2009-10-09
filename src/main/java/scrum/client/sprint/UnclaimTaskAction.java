@@ -1,6 +1,5 @@
 package scrum.client.sprint;
 
-import scrum.client.ScrumGwtApplication;
 
 public class UnclaimTaskAction extends GReopenTaskAction {
 
@@ -20,7 +19,7 @@ public class UnclaimTaskAction extends GReopenTaskAction {
 
 	@Override
 	public boolean isExecutable() {
-		return !task.isDone() && task.isOwner(ScrumGwtApplication.get().getUser());
+		return !task.isDone() && task.isOwner(getCurrentUser());
 	}
 
 	@Override

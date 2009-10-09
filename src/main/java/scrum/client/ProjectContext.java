@@ -203,7 +203,7 @@ public class ProjectContext extends AScrumComponent implements UiComponent {
 	}
 
 	public void showRequirement(Requirement requirement) {
-		boolean inCurrentSprint = ScrumGwtApplication.get().getProject().isCurrentSprint(requirement.getSprint());
+		boolean inCurrentSprint = getCurrentProject().isCurrentSprint(requirement.getSprint());
 		if (inCurrentSprint) {
 			if (getWorkarea().isShowing(productBacklog)) {
 				showProductBacklog(requirement);

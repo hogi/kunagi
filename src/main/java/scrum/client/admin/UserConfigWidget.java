@@ -1,21 +1,20 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.AWidget;
-import scrum.client.ScrumGwtApplication;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class UserConfigWidget extends AWidget {
+public class UserConfigWidget extends AScrumWidget {
 
 	private FieldsWidget fields;
 
 	@Override
 	protected Widget onInitialization() {
 
-		final User user = ScrumGwtApplication.get().getUser();
+		final User user = getCurrentUser();
 
 		fields = new FieldsWidget();
 		fields.add("Name", new ATextViewEditWidget() {
