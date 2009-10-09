@@ -1,7 +1,7 @@
 package scrum.client;
 
+import ilarkesto.gwt.client.AComponentManager;
 import ilarkesto.gwt.client.ADataTransferObject;
-import ilarkesto.gwt.client.AGwtDao;
 import ilarkesto.gwt.client.GwtLogger;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -13,8 +13,6 @@ public abstract class AGwtApplication implements EntryPoint {
 	protected static AGwtApplication singleton;
 
 	protected abstract void handleCommunicationError(Throwable ex);
-
-	public abstract AGwtDao getDao();
 
 	public AGwtApplication() {
 		if (singleton != null) throw new RuntimeException("GWT application already instantiated: " + singleton);
@@ -30,7 +28,7 @@ public abstract class AGwtApplication implements EntryPoint {
 	}
 
 	protected void handleDataFromServer(ADataTransferObject data) {
-		getDao().handleDataFromServer(data);
+		AComponentManager.get().getDao().handleDataFromServer(data);
 	}
 
 	@Override

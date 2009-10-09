@@ -1,8 +1,7 @@
 package scrum.client.admin;
 
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
-import scrum.client.ScrumGwtApplication;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
 
@@ -10,7 +9,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
-public class UserListWidget extends AWidget {
+public class UserListWidget extends AScrumWidget {
 
 	public BlockListWidget<User> list;
 	private ToolbarWidget toolbar;
@@ -34,7 +33,7 @@ public class UserListWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		toolbar.update();
-		list.setObjects(ScrumGwtApplication.get().getDao().getUsers());
+		list.setObjects(cm.getDao().getUsers());
 	}
 
 	public void showUser(User user) {

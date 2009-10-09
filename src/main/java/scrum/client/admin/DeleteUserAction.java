@@ -1,6 +1,5 @@
 package scrum.client.admin;
 
-import scrum.client.ScrumGwtApplication;
 
 public class DeleteUserAction extends GDeleteUserAction {
 
@@ -25,7 +24,7 @@ public class DeleteUserAction extends GDeleteUserAction {
 
 	@Override
 	protected void onExecute() {
-		ScrumGwtApplication.get().getDao().deleteUser(user);
+		cm.getDao().deleteUser(user);
 	}
 
 }

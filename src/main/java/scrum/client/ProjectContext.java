@@ -129,7 +129,7 @@ public class ProjectContext extends AScrumComponent implements UiComponent {
 	}
 
 	public List<Comment> getComments(AGwtEntity entity) {
-		return ScrumGwtApplication.get().getDao().getCommentsByParent(entity);
+		return cm.getDao().getCommentsByParent(entity);
 	}
 
 	public void highlightUser(User user) {

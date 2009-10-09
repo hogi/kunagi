@@ -132,7 +132,7 @@ public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
 	// --- ---
 
 	public static Dao get() {
-		return ScrumGwtApplication.get().getDao();
+		return ComponentManager.get().getDao();
 	}
 
 	private class EntityChangeCache extends Timer {

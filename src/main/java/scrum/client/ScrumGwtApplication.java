@@ -12,7 +12,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	private final GwtLogger log = GwtLogger.createLogger(getClass());
 
-	private ComponentManager components;
+	private ComponentManager cm;
 	private ApplicationInfo applicationInfo;
 
 	public void onModuleLoad() {
@@ -22,16 +22,16 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		// http://code.google.com/p/google-web-toolkit/issues/detail?id=1813
 		RootPanel.get().getElement().getStyle().setProperty("position", "relative");
 
-		components = new ComponentManager();
+		cm = new ComponentManager();
 
-		final Workspace workspace = components.getUi().getWorkspace();
+		final Workspace workspace = cm.getUi().getWorkspace();
 		workspace.lock("Loading...");
 		RootPanel.get("ScrumGwtApplication").add(workspace);
 		callStartSession(new Runnable() {
 
 			public void run() {
-				components.getPublicContext().activate();
-				components.getPinger().reschedule();
+				cm.getPublicContext().activate();
+				cm.getPinger().reschedule();
 			}
 		});
 
@@ -41,7 +41,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	@Override
 	protected void onServerData(DataTransferObject data) {
-		components.getEventBus().fireServerDataReceived(data);
+		cm.getEventBus().fireServerDataReceived(data);
 
 		if (data.applicationInfo != null) {
 			this.applicationInfo = data.applicationInfo;
@@ -67,7 +67,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	@Override
 	protected void handleCommunicationError(Throwable ex) {
 		GwtLogger.ERROR("Communication Error:", ex);
-		components.getUi().getWorkspace().abort("Lost connection to server, please reload.");
+		cm.getUi().getWorkspace().abort("Lost connection to server, please reload.");
 	}
 
 	public void showEntityByReference(final String reference) {
@@ -75,42 +75,37 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 		if (reference.startsWith("[")) {
 			String page = reference.substring(1, reference.length() - 1);
-			components.getProjectContext().showWiki(page);
+			cm.getProjectContext().showWiki(page);
 			return;
 		}
 
-		AGwtEntity entity = getDao().getEntityByReference(reference);
+		AGwtEntity entity = cm.getDao().getEntityByReference(reference);
 		if (entity != null) {
-			components.getProjectContext().showEntity(entity);
+			cm.getProjectContext().showEntity(entity);
 			return;
 		}
-		components.getUi().getWorkspace().lock("Searching for " + reference);
+		cm.getUi().getWorkspace().lock("Searching for " + reference);
 		callRequestEntityByReference(reference, new Runnable() {
 
 			public void run() {
-				AGwtEntity entity = getDao().getEntityByReference(reference);
+				AGwtEntity entity = cm.getDao().getEntityByReference(reference);
 				if (entity == null) {
-					components.getUi().getWorkspace().unlock();
-					components.getChat().postSystemMessage("Object does not exist: " + reference, false);
+					cm.getUi().getWorkspace().unlock();
+					cm.getChat().postSystemMessage("Object does not exist: " + reference, false);
 					return;
 				}
-				components.getUi().getWorkspace().unlock();
-				components.getProjectContext().showEntity(entity);
+				cm.getUi().getWorkspace().unlock();
+				cm.getProjectContext().showEntity(entity);
 			}
 		});
 	}
 
-	@Override
-	public Dao getDao() {
-		return components.getDao();
+	public final void callStartSession(Runnable callback) {
+		getScrumService().startSession(new DefaultCallback<DataTransferObject>(callback));
 	}
 
 	public static ScrumGwtApplication get() {
 		return (ScrumGwtApplication) singleton;
-	}
-
-	public final void callStartSession(Runnable callback) {
-		getScrumService().startSession(new DefaultCallback<DataTransferObject>(callback));
 	}
 
 }

@@ -1,7 +1,5 @@
 package scrum.client.project;
 
-import scrum.client.ScrumGwtApplication;
-
 import com.google.gwt.user.client.Window;
 
 public class DeleteProjectAction extends GDeleteProjectAction {
@@ -28,7 +26,7 @@ public class DeleteProjectAction extends GDeleteProjectAction {
 	@Override
 	protected void onExecute() {
 		if (Window.confirm("Delete project " + project.getLabel() + "?")) {
-			ScrumGwtApplication.get().getDao().deleteProject(project);
+			cm.getDao().deleteProject(project);
 		}
 	}
 
