@@ -44,7 +44,6 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 	@Override
 	protected Widget onExtendedInitialization() {
 		FieldsWidget fields = new FieldsWidget();
-		fields.setAutoUpdateWidget(this);
 
 		fields.add("Label", new ATextViewEditWidget() {
 

@@ -44,7 +44,6 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 	@Override
 	protected Widget onExtendedInitialization() {
 		FieldsWidget fields = new FieldsWidget();
-		fields.setAutoUpdateWidget(this);
 		fields.add("Label", new ATextViewEditWidget() {
 
 			@Override

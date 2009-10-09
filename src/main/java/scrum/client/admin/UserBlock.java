@@ -44,7 +44,6 @@ public class UserBlock extends AExtensibleBlockWidget<User> {
 	@Override
 	protected Widget onExtendedInitialization() {
 		fields = new FieldsWidget();
-		fields.setAutoUpdateWidget(this);
 
 		fields.add("Name", new ATextViewEditWidget() {
 
@@ -97,7 +96,6 @@ public class UserBlock extends AExtensibleBlockWidget<User> {
 
 	public static BlockWidgetFactory<User> FACTORY = new BlockWidgetFactory<User>() {
 
-		@Override
 		public UserBlock createBlock() {
 			return new UserBlock();
 		}

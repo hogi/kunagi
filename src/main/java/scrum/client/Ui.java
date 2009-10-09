@@ -1,6 +1,7 @@
 package scrum.client;
 
 import ilarkesto.gwt.client.AComponent;
+import ilarkesto.gwt.client.Gwt;
 import scrum.client.workspace.Workspace;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -13,6 +14,7 @@ public class Ui extends AComponent {
 	protected void onInitialization() {
 		super.onInitialization();
 		workspace = new Workspace();
+		Gwt.rootWidget = workspace;
 	}
 
 	public void show(Widget sidebar, Widget workarea) {

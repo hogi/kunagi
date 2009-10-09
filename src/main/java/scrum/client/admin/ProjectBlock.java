@@ -65,7 +65,6 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 	@Override
 	protected Widget onExtendedInitialization() {
 		fields = new FieldsWidget();
-		fields.setAutoUpdateWidget(this);
 		fields.add("Label", new ATextViewEditWidget() {
 
 			@Override

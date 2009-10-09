@@ -33,7 +33,6 @@ public class RequirementWidget extends AWidget {
 	protected Widget onInitialization() {
 
 		FieldsWidget fields = new FieldsWidget();
-		fields.setAutoUpdateWidget(this);
 
 		if (showLabel) fields.add("Label", new ATextViewEditWidget() {
 

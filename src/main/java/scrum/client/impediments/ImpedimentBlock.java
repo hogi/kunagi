@@ -51,7 +51,6 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	@Override
 	protected Widget onExtendedInitialization() {
 		FieldsWidget fields = new FieldsWidget();
-		fields.setAutoUpdateWidget(this);
 
 		fields.add("Label", new ATextViewEditWidget() {
 
@@ -135,6 +134,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 		public ImpedimentBlock createBlock() {
 			return new ImpedimentBlock();
 		}
+
 	};
 
 }

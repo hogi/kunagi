@@ -25,7 +25,7 @@ public class LoginAction extends GLoginAction {
 			public void run() {
 				GwtLogger.DEBUG("Login response received");
 				if (!cm.getAuth().isUserLoggedIn()) {
-					GwtLogger.DEBUG("Login failed!");
+					log.info("Login failed.");
 					cm.getUi().getWorkspace().unlock();
 					loginData.setFailed();
 				} else {

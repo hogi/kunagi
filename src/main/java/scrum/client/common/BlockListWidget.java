@@ -87,13 +87,6 @@ public final class BlockListWidget<O> extends AWidget {
 		panel.removeStyleName(styleName);
 	}
 
-	@Override
-	protected void onUpdate() {
-		for (ABlockWidget<O> block : list.getWidgets()) {
-			block.update();
-		}
-	}
-
 	public ABlockWidget<O> getBlock(int row) {
 		return list.getWidget(row);
 	}
@@ -306,9 +299,12 @@ public final class BlockListWidget<O> extends AWidget {
 	}
 
 	public boolean acceptsDrop(ABlockWidget<O> block) {
-		return this.blockWidgetFactory.isSameType(block);
-		// return this == block.getList();
+		if (this == block.getList()) return true;
+		if (dummy == null) dummy = blockWidgetFactory.createBlock();
+		return dummy.getClass().getName().equals(block.getClass().getName());
 	}
+
+	private ABlockWidget<O> dummy = null;
 
 	@Override
 	protected void onLoad() {

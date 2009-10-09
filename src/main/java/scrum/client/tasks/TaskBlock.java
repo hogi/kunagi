@@ -82,7 +82,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		return container instanceof TaskOverviewWidget;
 	}
 
-	public static class TaskBlockFactory extends BlockWidgetFactory<Task> {
+	public static class TaskBlockFactory implements BlockWidgetFactory<Task> {
 
 		private TaskBlockContainer container;
 

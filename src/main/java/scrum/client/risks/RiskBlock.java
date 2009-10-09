@@ -46,7 +46,6 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 	@Override
 	protected Widget onExtendedInitialization() {
 		FieldsWidget fields = new FieldsWidget();
-		fields.setAutoUpdateWidget(this);
 
 		fields.add("Label", new ATextViewEditWidget() {
 
