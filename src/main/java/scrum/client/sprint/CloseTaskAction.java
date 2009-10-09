@@ -1,8 +1,5 @@
 package scrum.client.sprint;
 
-import scrum.client.img.Img;
-
-import com.google.gwt.user.client.ui.Image;
 
 public class CloseTaskAction extends GCloseTaskAction {
 
@@ -28,11 +25,6 @@ public class CloseTaskAction extends GCloseTaskAction {
 	@Override
 	protected void onExecute() {
 		task.setDone(getCurrentUser());
-	}
-
-	@Override
-	public Image getIcon() {
-		return Img.bundle.done16().createImage();
 	}
 
 }

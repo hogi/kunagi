@@ -5,8 +5,8 @@ import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.collaboration.CommentsWidget;
-import scrum.client.common.FieldsWidget;
 import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -22,9 +22,10 @@ public class TaskWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		FieldsWidget fields = new FieldsWidget();
 
-		fields.add("Label", new ATextViewEditWidget() {
+		TableBuilder tb = new TableBuilder();
+
+		tb.addFieldRow("Label", new ATextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -41,9 +42,9 @@ public class TaskWidget extends AWidget {
 				task.setLabel(getEditorText());
 			}
 
-		});
+		}, 3);
 
-		fields.add("Description", new ARichtextViewEditWidget() {
+		tb.addFieldRow("Description", new ARichtextViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -60,9 +61,9 @@ public class TaskWidget extends AWidget {
 				task.setDescription(getEditorText());
 			}
 
-		});
+		}, 3);
 
-		fields.add("Burned Work", new AIntegerViewEditWidget() {
+		tb.addField("Burned Work", new AIntegerViewEditWidget() {
 
 			@Override
 			protected void onIntegerViewerUpdate() {
@@ -97,20 +98,19 @@ public class TaskWidget extends AWidget {
 			}
 		});
 
-		fields.add("Remaining Work", new TaskRemainingWorkWidget(task));
+		tb.addFieldRow("Remaining Work", new TaskRemainingWorkWidget(task));
 
-		fields.add("Owner", new AFieldValueWidget() {
+		tb.addFieldRow("Owner", new AFieldValueWidget() {
 
 			@Override
 			protected void onUpdate() {
 				setText(task.getOwner() == null ? null : task.getOwner().getName());
 			}
-		});
+		}, 3);
 
 		FlowPanel panel = new FlowPanel();
-		panel.add(fields);
+		panel.add(tb.createTable());
 		panel.add(new CommentsWidget(task));
 		return panel;
 	}
-
 }

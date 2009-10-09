@@ -1,10 +1,10 @@
 package scrum.client.admin;
 
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ApplicationInfo;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.common.GroupWidget;
 
@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LoginWidget extends AWidget implements LoginDataProvider {
+public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 
 	private Label errorMessage;
 	private TextBox username;

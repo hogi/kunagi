@@ -157,15 +157,17 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		toolbar.clear();
 		menu = null;
 
-		User me = getCurrentUser();
-		if (cm.getProjectContext().isProjectOpen()) {
-			O o = getObject();
-			if (o instanceof AGwtEntity) {
-				Set<User> users = getCurrentProject().getUsersSelecting(((AGwtEntity) o));
-				for (User user : users) {
-					if (user == me) continue;
-					UserOnBlockWidget userOnBlockWidget = new UserOnBlockWidget(user);
-					addToolbarItem(userOnBlockWidget);
+		if (cm.getAuth().isUserLoggedIn()) {
+			User me = getCurrentUser();
+			if (cm.getProjectContext().isProjectOpen()) {
+				O o = getObject();
+				if (o instanceof AGwtEntity) {
+					Set<User> users = getCurrentProject().getUsersSelecting(((AGwtEntity) o));
+					for (User user : users) {
+						if (user == me) continue;
+						UserOnBlockWidget userOnBlockWidget = new UserOnBlockWidget(user);
+						addToolbarItem(userOnBlockWidget);
+					}
 				}
 			}
 		}

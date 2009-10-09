@@ -28,7 +28,8 @@ public class TaskRemainingWorkWidget extends AWidget {
 		toolbar = new ToolbarWidget();
 
 		panel = new HorizontalPanel();
-		panel.setWidth("100%");
+		panel.setStyleName("TaskRemainingWorkWidget");
+		// panel.setWidth("100%");
 		panel.add(remainingWork);
 		panel.add(toolbar);
 		return panel;

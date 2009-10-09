@@ -27,7 +27,7 @@ public class RequirementEstimatedWorkWidget extends AWidget {
 		toolbar = new ToolbarWidget();
 
 		panel = new HorizontalPanel();
-		panel.setWidth("100%");
+		panel.setStyleName("RequirementEstimatedWorkWidget");
 		panel.add(estimatedWork);
 		panel.add(toolbar);
 		return panel;
@@ -42,6 +42,8 @@ public class RequirementEstimatedWorkWidget extends AWidget {
 		ButtonWidget newButton = action.isExecutable() ? new ButtonWidget(action) : null;
 		if (newButton != null) {
 			toolbar.add(newButton);
+		} else {
+			toolbar.update();
 		}
 	}
 

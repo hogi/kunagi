@@ -20,6 +20,7 @@ a {cursor: pointer;}
 .ImageAnchor img {float: left; margin-right: 3px;}
 .ImageAnchor .text { display: inline;}
 .BugMarker {display: block; margin: 3px; padding: 3px; border: 1px solid red; background: #FEE; color: darkred; font-weight: bold; font-size: 10px; }
+.FloatingFlowPanel-element {float: left;}
 
 .floatClear {clear: both;}
 
@@ -32,8 +33,7 @@ a {cursor: pointer;}
 .HeaderWidget {background: #F2F5FE url("header_bg.jpg");}
 .HeaderWidget .title {font-size: 12px; font-weight: bold; color: white; padding-left: 5px;}
 .HeaderWidget-controlPanel {line-height: 22px;}
-.HeaderWidget .ToolbarWidget {margin: 3px 0px 0px 10px;}
-.HeaderWidget .ToolbarWidget .ButtonWidget a {font-size: 10px; line-height: 10px;}
+.HeaderWidget .ToolbarWidget {background: none; margin: 0px;}
 
 /***** Sidebar *****/
 
@@ -69,15 +69,21 @@ a {cursor: pointer;}
 .CommentWidget-header-author {float: left; margin: 0px 5px 0px 2px;}
 .CommentWidget-header-date {color: #333;}
 
+.TaskRemainingWorkWidget {margin-left: 3px;}
+
+.RequirementEstimatedWorkWidget {margin-left: 3px;}
+
+
 /***** Toolbar *****/
 
 .ButtonWidget {}
-.ButtonWidget a { display: block; font-weight: bold; padding: 3px; text-decoration: none; white-space: nowrap; }
+.ButtonWidget a { display: block; font-weight: bold; padding: 3px; text-decoration: none; white-space: nowrap; font-size: 10px; line-height: 10px; }
 .ButtonWidget-enabled a { cursor: pointer;  background: #FFC20E url("button_bg.png"); border: 1px solid orange;}
 .ButtonWidget-disabled a { cursor: default; color: #888; background: #DFD2CF url("button_bg.png"); border: 1px solid gray;}
 .ButtonWidget-enabled a:hover {background: #FFD22E url("button_bg.png"); color: #009; border: 1px solid #FFB510;}
-.ToolbarWidget {}
-.ToolbarWidget-element {float: left; margin-right: 3px;}
+
+.ToolbarWidget {background: #CEDBF9; padding: 3px 0px 3px 3px;}
+.ToolbarWidget .FloatingFlowPanel-element {margin-right: 3px;}
 
 /***** Block List *****/
 
@@ -93,8 +99,9 @@ a {cursor: pointer;}
 .ABlockWidget-block-selected {border: 0px solid orange;}
 .ABlockWidget-title {padding: 1px; width: 100%; background: #DEE5FD; }
 .ABlockWidget-title-label {font-size: 12px; line-height: 16px; cursor: pointer; display: block;}
+.ABlockWidget-title .ToolbarWidget {margin: 0px;}
 .ABlockWidget-title .ButtonWidget {margin-left: 15px;}
-.ABlockWidget-title .ButtonWidget a {font-size: 12px; line-height: 16px;  padding: 0px; font-weight: normal; background: #DEE5FD; border: 0px;}
+.ABlockWidget-title .ButtonWidget a {font-size: 8px; line-height: 8px;}
 .ABlockWidget-title-menu {margin-left: 15px; border: 0px;}
 .ABlockWidget-title-menu .gwt-MenuItem { font-size: 9px;}
 .ABlockWidget-block-selected .ABlockWidget-content {border: 1px solid #DEE5FD;}

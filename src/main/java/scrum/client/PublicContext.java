@@ -17,6 +17,8 @@ public class PublicContext extends AScrumComponent {
 	protected void onInitialization() {
 		super.onInitialization();
 
+		login = new LoginWidget();
+
 		navigator = new SwitchingNavigatorWidget(ComponentManager.get().getUi().getWorkspace().getWorkarea());
 		navigator.addItem((Image) null, "Login", login);
 		navigator.addItem((Image) null, "Register", new Label(""));
@@ -26,7 +28,6 @@ public class PublicContext extends AScrumComponent {
 			navigator.addItem((Image) null, "Widgets Tests", new WidgetsTesterWidget());
 		}
 
-		login = new LoginWidget();
 	}
 
 	public void activate() {
