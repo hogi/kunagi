@@ -4,31 +4,16 @@ import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
 import scrum.client.collaboration.CommentsWidget;
-import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
-import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
-public class QualityBlock extends AExtensibleBlockWidget<Quality> implements TrashSupport, ClipboardSupport {
-
-	private Quality quality;
-
-	@Override
-	protected Quality getObject() {
-		return quality;
-	}
-
-	@Override
-	protected void setObject(Quality object) {
-		this.quality = object;
-	}
+public class QualityBlock extends AExtensibleBlockWidget<Quality> implements TrashSupport {
 
 	@Override
 	protected void onCollapsedInitialization() {
@@ -37,12 +22,14 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 
 	@Override
 	protected void onUpdateHead() {
+		Quality quality = getObject();
 		setBlockTitle(quality.getReference() + " " + quality.getLabel());
 		addMenuAction(new DeleteQualityAction(quality));
 	}
 
 	@Override
 	protected Widget onExtendedInitialization() {
+		final Quality quality = getObject();
 		FieldsWidget fields = new FieldsWidget();
 		fields.add("Label", new ATextViewEditWidget() {
 
@@ -104,24 +91,8 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 		return Gwt.createFlowPanel(fields, new CommentsWidget(quality));
 	}
 
-	public Image getClipboardIcon() {
-		return Img.bundle.requirement16().createImage();
-	}
-
-	public String getClipboardLabel() {
-		return quality.getLabel();
-	}
-
-	public ABlockWidget getClipboardPayload() {
-		return this;
-	}
-
 	public AScrumAction getTrashAction() {
-		return new DeleteQualityAction(quality);
-	}
-
-	public Quality getQuality() {
-		return quality;
+		return new DeleteQualityAction(getObject());
 	}
 
 	public static BlockWidgetFactory<Quality> FACTORY = new BlockWidgetFactory<Quality>() {

@@ -147,7 +147,7 @@ public final class BlockListWidget<O> extends AWidget {
 			move(block.getObject(), toIndex, true);
 			return;
 		}
-		dropAction.execute(block.getObject());
+		dropAction.onDrop(block.getObject());
 	}
 
 	public final int size() {

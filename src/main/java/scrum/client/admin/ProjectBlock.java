@@ -18,20 +18,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 
-	private Project project;
-
 	private HTML content;
 	private FieldsWidget fields;
-
-	@Override
-	protected Project getObject() {
-		return project;
-	}
-
-	@Override
-	protected void setObject(Project object) {
-		this.project = object;
-	}
 
 	@Override
 	protected void onCollapsedInitialization() {
@@ -41,6 +29,7 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 
 	@Override
 	protected void onUpdateHead() {
+		Project project = getObject();
 		setBlockTitle(project.getLabel());
 
 		String description = project.getDescription();
@@ -64,6 +53,7 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 
 	@Override
 	protected Widget onExtendedInitialization() {
+		final Project project = getObject();
 		fields = new FieldsWidget();
 		fields.add("Label", new ATextViewEditWidget() {
 

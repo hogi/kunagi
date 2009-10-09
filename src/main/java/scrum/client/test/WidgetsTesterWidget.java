@@ -64,13 +64,6 @@ public class WidgetsTesterWidget extends AWidget {
 
 	private static class TestBlock extends AExtensibleBlockWidget<String> {
 
-		private String text = "";
-
-		@Override
-		protected String getObject() {
-			return text;
-		}
-
 		@Override
 		protected void onCollapsedInitialization() {}
 
@@ -81,7 +74,7 @@ public class WidgetsTesterWidget extends AWidget {
 
 		@Override
 		protected void onUpdateHead() {
-			setBlockTitle(text);
+			setBlockTitle(getObject());
 			setIcon(Img.bundle.project16());
 			addToolbarAction(new DummyAction("Action 1"));
 			addToolbarAction(new DummyAction("Action 2"));
@@ -94,19 +87,9 @@ public class WidgetsTesterWidget extends AWidget {
 		protected Widget onUpdateBody() {
 			HTML content = new HTML(
 					"<h3>"
-							+ text
+							+ getObject()
 							+ "</h3><p>Das ist der Content. Das ist der Content. Das ist der Content. Das ist der Content. </p>");
 			return content;
-		}
-
-		@Override
-		protected void setObject(String object) {
-			text = object;
-		}
-
-		@Override
-		public String toString() {
-			return text;
 		}
 
 		public static BlockWidgetFactory<String> FACTORY = new BlockWidgetFactory<String>() {

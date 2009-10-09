@@ -6,31 +6,16 @@ import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
 import scrum.client.collaboration.CommentsWidget;
-import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
-import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupport, ClipboardSupport {
-
-	private Risk risk;
-
-	@Override
-	protected Risk getObject() {
-		return risk;
-	}
-
-	@Override
-	protected void setObject(Risk object) {
-		this.risk = object;
-	}
+public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupport {
 
 	@Override
 	protected void onCollapsedInitialization() {
@@ -39,12 +24,14 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 
 	@Override
 	protected void onUpdateHead() {
+		Risk risk = getObject();
 		setBlockTitle(risk.getReference() + " " + risk.getLabel() + " (" + risk.getPriorityLabel() + ")");
 		addMenuAction(new DeleteRiskAction(risk));
 	}
 
 	@Override
 	protected Widget onExtendedInitialization() {
+		final Risk risk = getObject();
 		FieldsWidget fields = new FieldsWidget();
 
 		fields.add("Label", new ATextViewEditWidget() {
@@ -146,24 +133,8 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 		return Gwt.createFlowPanel(fields, new CommentsWidget(risk));
 	}
 
-	public Image getClipboardIcon() {
-		return Img.bundle.risk16().createImage();
-	}
-
-	public String getClipboardLabel() {
-		return risk.getLabel();
-	}
-
-	public ABlockWidget getClipboardPayload() {
-		return this;
-	}
-
-	public Risk getRisk() {
-		return risk;
-	}
-
 	public AScrumAction getTrashAction() {
-		return new DeleteRiskAction(risk);
+		return new DeleteRiskAction(getObject());
 	}
 
 	public static BlockWidgetFactory<Risk> FACTORY = new BlockWidgetFactory<Risk>() {

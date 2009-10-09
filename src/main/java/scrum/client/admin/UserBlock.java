@@ -6,26 +6,13 @@ import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
 
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class UserBlock extends AExtensibleBlockWidget<User> {
 
-	private User user;
-
 	private FieldsWidget fields;
 	private Label summary;
-
-	@Override
-	protected User getObject() {
-		return user;
-	}
-
-	@Override
-	protected void setObject(User object) {
-		this.user = object;
-	}
 
 	@Override
 	protected void onCollapsedInitialization() {
@@ -35,6 +22,7 @@ public class UserBlock extends AExtensibleBlockWidget<User> {
 
 	@Override
 	protected void onUpdateHead() {
+		User user = getObject();
 		setBlockTitle(user.getName());
 		summary.setText(user.getName());
 		setContent(null);
@@ -43,6 +31,7 @@ public class UserBlock extends AExtensibleBlockWidget<User> {
 
 	@Override
 	protected Widget onExtendedInitialization() {
+		final User user = getObject();
 		fields = new FieldsWidget();
 
 		fields.add("Name", new ATextViewEditWidget() {
@@ -84,14 +73,6 @@ public class UserBlock extends AExtensibleBlockWidget<User> {
 		});
 
 		return fields;
-	}
-
-	public Image getClipboardIcon() {
-		return Img.bundle.user16().createImage();
-	}
-
-	public String getClipboardLabel() {
-		return user.getName();
 	}
 
 	public static BlockWidgetFactory<User> FACTORY = new BlockWidgetFactory<User>() {

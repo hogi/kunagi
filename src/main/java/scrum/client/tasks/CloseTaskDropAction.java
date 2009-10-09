@@ -13,7 +13,7 @@ public class CloseTaskDropAction implements BlockListDropAction<Task> {
 		this.requirement = requirement;
 	}
 
-	public boolean execute(Task task) {
+	public boolean onDrop(Task task) {
 		task.setRequirement(this.requirement);
 		if (!task.isDone()) task.setDone(ComponentManager.get().getAuth().getUser());
 		return true;

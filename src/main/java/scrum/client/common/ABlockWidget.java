@@ -32,6 +32,8 @@ import com.google.gwt.user.client.ui.Widget;
 @SuppressWarnings("unchecked")
 public abstract class ABlockWidget<O> extends AScrumWidget {
 
+	private O object;
+
 	private Label label;
 	private FocusPanel iconPanel;
 	private HorizontalPanel titlePanel;
@@ -49,11 +51,17 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 
 	protected abstract void onBlockUpdate();
 
-	protected abstract void setObject(O object);
-
-	protected abstract O getObject();
-
 	public ABlockWidget() {}
+
+	protected final void setObject(O object) {
+		assert this.object == null;
+		assert object != null;
+		this.object = object;
+	}
+
+	protected final O getObject() {
+		return object;
+	}
 
 	@Override
 	protected final Widget onInitialization() {
@@ -272,7 +280,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 
 	@Override
 	public String toString() {
-		return "[" + getObject() + "]";
+		return "[" + object + "]";
 	}
 
 }

@@ -49,15 +49,6 @@ public class TaskListWidget extends AWidget {
 		return panel;
 	}
 
-	@Override
-	protected void onUpdate() {
-		if (panel != null) {
-			panel.update();
-		} else {
-			list.update();
-		}
-	}
-
 	public void selectTask(Task task) {
 		list.extendObject(task);
 	}

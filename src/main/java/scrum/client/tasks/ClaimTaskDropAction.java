@@ -13,7 +13,7 @@ public class ClaimTaskDropAction implements BlockListDropAction<Task> {
 		this.requirement = requirement;
 	}
 
-	public boolean execute(Task task) {
+	public boolean onDrop(Task task) {
 		task.setRequirement(this.requirement);
 		task.claim();
 		ComponentManager.get().getUi().getWorkspace().update();

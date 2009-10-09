@@ -16,18 +16,6 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSupport {
 
-	private Issue issue;
-
-	@Override
-	protected Issue getObject() {
-		return issue;
-	}
-
-	@Override
-	protected void setObject(Issue object) {
-		this.issue = object;
-	}
-
 	@Override
 	protected void onCollapsedInitialization() {
 		setIcon(Img.bundle.issue16());
@@ -35,6 +23,7 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 
 	@Override
 	protected void onUpdateHead() {
+		Issue issue = getObject();
 		setBlockTitle(issue.getReference() + " [" + issue.getTypeLabel() + "] " + issue.getLabel());
 		addMenuAction(new ConvertIssueToRequirementAction(issue));
 		addMenuAction(new ConvertIssueToQualityAction(issue));
@@ -43,6 +32,7 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 
 	@Override
 	protected Widget onExtendedInitialization() {
+		final Issue issue = getObject();
 		FieldsWidget fields = new FieldsWidget();
 
 		fields.add("Label", new ATextViewEditWidget() {
@@ -103,7 +93,7 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 	}
 
 	public AScrumAction getTrashAction() {
-		return new DeleteIssueAction(issue);
+		return new DeleteIssueAction(getObject());
 	}
 
 	public static BlockWidgetFactory<Issue> FACTORY = new BlockWidgetFactory<Issue>() {

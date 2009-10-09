@@ -11,19 +11,6 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Requirement> {
 
-	private Requirement requirement;
-	private RequirementWidget requirementWidget;
-
-	@Override
-	protected Requirement getObject() {
-		return requirement;
-	}
-
-	@Override
-	protected void setObject(Requirement object) {
-		this.requirement = object;
-	}
-
 	@Override
 	protected void onCollapsedInitialization() {
 		setIcon(Img.bundle.requirement16());
@@ -31,17 +18,14 @@ public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Require
 
 	@Override
 	protected void onUpdateHead() {
+		Requirement requirement = getObject();
 		setBlockTitle(requirement.getReference() + " " + requirement.getLabel());
 		addMenuAction(new CreateTaskAction(requirement));
 	}
 
 	@Override
 	protected Widget onExtendedInitialization() {
-		return new RequirementWidget(requirement, true, false, true, true);
-	}
-
-	public Requirement getRequirement() {
-		return requirement;
+		return new RequirementWidget(getObject(), true, false, true, true);
 	}
 
 	public static BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {

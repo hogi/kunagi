@@ -4,7 +4,6 @@ import scrum.client.common.ABlockWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockWidgetFactory;
-import scrum.client.dnd.ClipboardSupport;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 import scrum.client.sprint.ClaimTaskAction;
@@ -14,27 +13,14 @@ import scrum.client.sprint.ReopenTaskAction;
 import scrum.client.sprint.Task;
 import scrum.client.sprint.UnclaimTaskAction;
 
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
-public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupport, ClipboardSupport {
+public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupport {
 
-	private Task task;
 	private TaskBlockContainer container;
-	private TaskWidget taskWidget;
 
 	public TaskBlock(TaskBlockContainer container) {
 		this.container = container;
-	}
-
-	@Override
-	protected Task getObject() {
-		return task;
-	}
-
-	@Override
-	protected void setObject(Task object) {
-		this.task = object;
 	}
 
 	@Override
@@ -44,6 +30,7 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 	@Override
 	protected void onUpdateHead() {
+		Task task = getObject();
 		setBlockTitle(task.getLongLabel(container.isShowOwner(), container.isShowRequirement()));
 		setAdditionalStyleName(task.isDone() && isTaskOverview() ? "TaskBlock-taskClosed" : null);
 		addMenuAction(new ClaimTaskAction(task));
@@ -55,31 +42,19 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 
 	@Override
 	protected Widget onExtendedInitialization() {
-		return new TaskWidget(task);
-	}
-
-	public Task getTask() {
-		return task;
-	}
-
-	public Image getClipboardIcon() {
-		return Img.bundle.task16().createImage();
-	}
-
-	public String getClipboardLabel() {
-		return task.getLabel();
-	}
-
-	public ABlockWidget getClipboardPayload() {
-		return this;
+		return new TaskWidget(getObject());
 	}
 
 	public AScrumAction getTrashAction() {
-		return new DeleteTaskAction(task);
+		return new DeleteTaskAction(getObject());
 	}
 
 	private boolean isTaskOverview() {
 		return container instanceof TaskOverviewWidget;
+	}
+
+	public TaskBlockContainer getContainer() {
+		return this.container;
 	}
 
 	public static class TaskBlockFactory implements BlockWidgetFactory<Task> {
@@ -93,9 +68,5 @@ public class TaskBlock extends AExtensibleBlockWidget<Task> implements TrashSupp
 		public ABlockWidget<Task> createBlock() {
 			return new TaskBlock(container);
 		}
-	}
-
-	public TaskBlockContainer getContainer() {
-		return this.container;
 	}
 }

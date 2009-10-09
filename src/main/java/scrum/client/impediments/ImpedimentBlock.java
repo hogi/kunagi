@@ -16,18 +16,6 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implements TrashSupport {
 
-	private Impediment impediment;
-
-	@Override
-	protected Impediment getObject() {
-		return impediment;
-	}
-
-	@Override
-	protected void setObject(Impediment object) {
-		this.impediment = object;
-	}
-
 	@Override
 	protected void onCollapsedInitialization() {
 		setIcon(Img.bundle.impediment16());
@@ -35,6 +23,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 
 	@Override
 	protected void onUpdateHead() {
+		Impediment impediment = getObject();
 		setBlockTitle(impediment.getReference() + " [" + impediment.getDate() + "] " + impediment.getLabel());
 		String style = null;
 		if (impediment.isClosed()) {
@@ -50,6 +39,8 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 
 	@Override
 	protected Widget onExtendedInitialization() {
+		final Impediment impediment = getObject();
+
 		FieldsWidget fields = new FieldsWidget();
 
 		fields.add("Label", new ATextViewEditWidget() {
@@ -126,7 +117,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 	}
 
 	public AScrumAction getTrashAction() {
-		return new DeleteImpedimentAction(impediment);
+		return new DeleteImpedimentAction(getObject());
 	}
 
 	public static BlockWidgetFactory<Impediment> FACTORY = new BlockWidgetFactory<Impediment>() {
