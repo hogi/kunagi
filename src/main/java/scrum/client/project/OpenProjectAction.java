@@ -1,6 +1,5 @@
 package scrum.client.project;
 
-
 public class OpenProjectAction extends GOpenProjectAction {
 
 	public OpenProjectAction(Project project) {
@@ -19,7 +18,7 @@ public class OpenProjectAction extends GOpenProjectAction {
 
 	@Override
 	protected void onExecute() {
-		getProjectContext().openProject(project);
+		cm.getProjectContext().openProject(project);
 	}
 
 }

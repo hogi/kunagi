@@ -1,7 +1,5 @@
 package scrum.client;
 
-import ilarkesto.gwt.client.AComponent;
-
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -9,24 +7,10 @@ import java.util.LinkedList;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ChatMessage;
 import scrum.client.collaboration.ChatWidget;
+import scrum.client.common.AScrumComponent;
 import scrum.client.project.Project;
 
-public class Chat extends AComponent {
-
-	// --- dependencies ---
-
-	private Dao dao;
-	private Auth auth;
-
-	public void setDao(Dao dao) {
-		this.dao = dao;
-	}
-
-	public void setAuth(Auth auth) {
-		this.auth = auth;
-	}
-
-	// --- ---
+public class Chat extends AScrumComponent {
 
 	private LinkedList<ChatMessage> chatMessages = new LinkedList<ChatMessage>();
 
@@ -39,13 +23,13 @@ public class Chat extends AComponent {
 	}
 
 	public ChatMessage postMessage(String text) {
-		return postMessage(auth.getUser(), text, true);
+		return postMessage(cm.getAuth().getUser(), text, true);
 	}
 
 	private ChatMessage postMessage(User author, String text, boolean distribute) {
 		ChatMessage msg = new ChatMessage(ScrumGwtApplication.get().getProject(), author, text);
 		addChatMessage(msg);
-		if (distribute) dao.createChatMessage(msg);
+		if (distribute) cm.getDao().createChatMessage(msg);
 		return msg;
 	}
 

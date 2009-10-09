@@ -28,7 +28,7 @@ public class CreateTaskAction extends GCreateTaskAction {
 	@Override
 	protected void onExecute() {
 		Task task = requirement.createNewTask();
-		getProjectContext().showTask(task);
+		cm.getProjectContext().showTask(task);
 	}
 
 }

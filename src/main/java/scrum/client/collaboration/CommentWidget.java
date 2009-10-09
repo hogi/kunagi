@@ -65,11 +65,6 @@ public class CommentWidget extends AWidget {
 		return panel;
 	}
 
-	@Override
-	protected void onUpdate() {
-		editor.update();
-	}
-
 	public void activateEditor() {
 		editor.switchToEditMode();
 	}

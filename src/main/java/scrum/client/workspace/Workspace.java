@@ -5,8 +5,7 @@ import ilarkesto.gwt.client.FullScreenDockWidget;
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
-import scrum.client.Components;
-import scrum.client.HomeContext;
+import scrum.client.ComponentManager;
 import scrum.client.context.UiComponent;
 
 import com.google.gwt.user.client.ui.Button;
@@ -40,11 +39,11 @@ public class Workspace extends AWidget {
 	}
 
 	public void activateStartView() {
-		activateView(new HomeContext());
+		activateView(ComponentManager.get().getHomeContext());
 	}
 
 	public void activateProjectView() {
-		activateView(Components.get().getProjectContext());
+		activateView(ComponentManager.get().getProjectContext());
 	}
 
 	private void activateView(UiComponent view) {

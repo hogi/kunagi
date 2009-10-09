@@ -1,6 +1,5 @@
 package scrum.client.collaboration;
 
-
 public class DeleteWikipageAction extends GDeleteWikipageAction {
 
 	public DeleteWikipageAction(scrum.client.collaboration.Wikipage wikipage) {
@@ -14,7 +13,7 @@ public class DeleteWikipageAction extends GDeleteWikipageAction {
 
 	@Override
 	protected void onExecute() {
-		getDao().deleteWikipage(wikipage);
+		cm.getDao().deleteWikipage(wikipage);
 	}
 
 }

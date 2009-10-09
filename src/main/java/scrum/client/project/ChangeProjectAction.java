@@ -14,7 +14,7 @@ public class ChangeProjectAction extends GChangeProjectAction {
 
 	@Override
 	protected void onExecute() {
-		getComponents().getProjectContext().closeProject(true);
+		cm.getProjectContext().closeProject(true);
 	}
 
 }

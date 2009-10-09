@@ -1,6 +1,5 @@
 package scrum.client.project;
 
-
 public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSprintAction {
 
 	protected RemoveRequirementFromSprintAction(Requirement requirement) {
@@ -25,7 +24,7 @@ public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSpr
 	@Override
 	protected void onExecute() {
 		requirement.setSprint(null);
-		getComponents().getChat().postSystemMessage(
+		cm.getChat().postSystemMessage(
 			getUser().getName() + " removed requirement " + requirement.getReference() + " from current sprint.", true);
 	}
 

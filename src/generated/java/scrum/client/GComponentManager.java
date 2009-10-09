@@ -1,6 +1,6 @@
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
-// generator: ilarkesto.mda.gen.gwt.GwtComponentsGenerator
+// generator: ilarkesto.mda.gen.gwt.GwtComponentManagerGenerator
 
 
 
@@ -15,10 +15,10 @@ package scrum.client;
 
 import java.util.*;
 
-public abstract class GComponents
-            extends ilarkesto.gwt.client.AComponents<EventBus, Dao> {
+public abstract class GComponentManager
+            extends ilarkesto.gwt.client.AComponentManager<EventBus, Dao> {
 
-    GComponents(EventBus eventBus, Dao dao) {
+    GComponentManager(EventBus eventBus, Dao dao) {
         super(eventBus, dao);
     }
 

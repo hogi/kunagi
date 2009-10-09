@@ -1,58 +1,26 @@
 package scrum.client;
 
-import ilarkesto.gwt.client.AComponent;
 import scrum.client.admin.User;
+import scrum.client.common.AScrumComponent;
 
-public class Auth extends AComponent implements ServerDataReceivedListener {
-
-	// --- dependencies ---
-
-	private Ui ui;
-	private Dao dao;
-	private EventBus eventBus;
-	private ProjectContext projectContext;
-
-	public void setUi(Ui ui) {
-		this.ui = ui;
-	}
-
-	public void setDao(Dao dao) {
-		this.dao = dao;
-	}
-
-	public void setEventBus(EventBus eventBus) {
-		this.eventBus = eventBus;
-	}
-
-	public void setProjectContext(ProjectContext projectContext) {
-		this.projectContext = projectContext;
-	}
-
-	// --- ---
+public class Auth extends AScrumComponent implements ServerDataReceivedListener {
 
 	private User user;
 
-	@Override
-	protected void onInitialization() {
-		super.onInitialization();
-		dao = Components.get().getDao();
-		eventBus = Components.get().getEventBus();
-	}
-
 	public void onServerDataReceived(DataTransferObject data) {
 		if (data.isUserSet()) {
-			user = dao.getUser(data.getUserId());
+			user = cm.getDao().getUser(data.getUserId());
 			log.info("User logged in:", user);
-			eventBus.fireLogin();
+			cm.getEventBus().fireLogin();
 		}
 	}
 
 	public void logout() {
-		if (projectContext.isProjectOpen()) projectContext.closeProject(false);
+		if (cm.getProjectContext().isProjectOpen()) cm.getProjectContext().closeProject(false);
 		log.info("Logging out");
-		ui.getWorkspace().lock("Logging out...");
+		cm.getUi().getWorkspace().lock("Logging out...");
 		user = null;
-		eventBus.fireLogout();
+		cm.getEventBus().fireLogout();
 		ScrumGwtApplication.get().callLogout();
 	}
 

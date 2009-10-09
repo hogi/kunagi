@@ -75,9 +75,4 @@ public class UserConfigWidget extends AWidget {
 		return new GroupWidget("Global Preferences", fields);
 	}
 
-	@Override
-	protected void onUpdate() {
-		fields.update();
-	}
-
 }

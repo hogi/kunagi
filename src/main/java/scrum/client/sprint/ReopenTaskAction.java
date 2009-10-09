@@ -1,6 +1,5 @@
 package scrum.client.sprint;
 
-
 public class ReopenTaskAction extends GReopenTaskAction {
 
 	public ReopenTaskAction(Task task) {
@@ -25,8 +24,7 @@ public class ReopenTaskAction extends GReopenTaskAction {
 	@Override
 	protected void onExecute() {
 		task.setUnDone(getUser());
-		getComponents().getChat().postSystemMessage(
-			getUser().getName() + " re-opened task " + task.getReference() + ".", true);
+		cm.getChat().postSystemMessage(getUser().getName() + " re-opened task " + task.getReference() + ".", true);
 	}
 
 }

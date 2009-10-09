@@ -14,7 +14,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	private final GwtLogger log = GwtLogger.createLogger(getClass());
 
-	private Components components;
+	private ComponentManager components;
 	private ApplicationInfo applicationInfo;
 
 	public void onModuleLoad() {
@@ -24,7 +24,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		// http://code.google.com/p/google-web-toolkit/issues/detail?id=1813
 		RootPanel.get().getElement().getStyle().setProperty("position", "relative");
 
-		components = new Components();
+		components = new ComponentManager();
 
 		final Workspace workspace = components.getUi().getWorkspace();
 		workspace.lock("Loading...");

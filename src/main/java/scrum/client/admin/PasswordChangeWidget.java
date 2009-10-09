@@ -3,7 +3,7 @@ package scrum.client.admin;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AViewEditWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
-import scrum.client.Components;
+import scrum.client.ComponentManager;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 
@@ -64,16 +64,16 @@ public class PasswordChangeWidget extends AViewEditWidget {
 		String newPassword = newPasswordBox.getText();
 		String newPasswordRepeat = newPasswordRepeatBox.getText();
 		if (currentPassword == null) {
-			Components.get().getUi().getWorkspace().showError("old password is empty");
+			ComponentManager.get().getUi().getWorkspace().showError("old password is empty");
 			return;
 		} else if (newPassword == null) {
-			Components.get().getUi().getWorkspace().showError("new password is empty");
+			ComponentManager.get().getUi().getWorkspace().showError("new password is empty");
 			return;
 		} else if (newPasswordRepeat == null) {
-			Components.get().getUi().getWorkspace().showError("new password repeat is empty");
+			ComponentManager.get().getUi().getWorkspace().showError("new password repeat is empty");
 			return;
 		} else if (!newPassword.equals(newPasswordRepeat)) {
-			Components.get().getUi().getWorkspace()
+			ComponentManager.get().getUi().getWorkspace()
 					.showError("the new password repeat did not match the new password.");
 			return;
 		}

@@ -1,6 +1,5 @@
 package scrum.client.admin;
 
-
 public class LogoutAction extends GLogoutAction {
 
 	@Override
@@ -15,7 +14,7 @@ public class LogoutAction extends GLogoutAction {
 
 	@Override
 	protected void onExecute() {
-		getComponents().getAuth().logout();
+		cm.getAuth().logout();
 	}
 
 }

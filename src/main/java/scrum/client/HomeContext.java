@@ -1,16 +1,16 @@
 package scrum.client;
 
-import ilarkesto.gwt.client.AComponent;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.admin.ProjectSelectorWidget;
 import scrum.client.admin.UserConfigWidget;
 import scrum.client.admin.UserListWidget;
+import scrum.client.common.AScrumComponent;
 import scrum.client.context.UiComponent;
 
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
-public class HomeContext extends AComponent implements UiComponent {
+public class HomeContext extends AScrumComponent implements UiComponent {
 
 	private SwitchingNavigatorWidget navigator;
 	private ProjectSelectorWidget projectSelector;
@@ -21,7 +21,7 @@ public class HomeContext extends AComponent implements UiComponent {
 		projectSelector = new ProjectSelectorWidget();
 		userConfig = new UserConfigWidget();
 
-		navigator = new SwitchingNavigatorWidget(Components.get().getUi().getWorkspace().getWorkarea());
+		navigator = new SwitchingNavigatorWidget(ComponentManager.get().getUi().getWorkspace().getWorkarea());
 		navigator.addItem((Image) null, "Projects", projectSelector);
 		navigator.addItem((Image) null, "Personal Preferences", userConfig);
 		if (ScrumGwtApplication.get().getUser().isAdmin()) {

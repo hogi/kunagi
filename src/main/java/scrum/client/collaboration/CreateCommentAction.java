@@ -20,7 +20,7 @@ public class CreateCommentAction extends GCreateCommentAction {
 	@Override
 	protected void onExecute() {
 		Comment comment = new Comment(parent);
-		getDao().createComment(comment);
+		cm.getDao().createComment(comment);
 		commentsWidget.activateCommentEditor(comment);
 	}
 

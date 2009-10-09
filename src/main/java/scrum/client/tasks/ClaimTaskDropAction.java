@@ -1,6 +1,6 @@
 package scrum.client.tasks;
 
-import scrum.client.Components;
+import scrum.client.ComponentManager;
 import scrum.client.dnd.BlockListDropAction;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
@@ -16,7 +16,7 @@ public class ClaimTaskDropAction implements BlockListDropAction<Task> {
 	public boolean execute(Task task) {
 		task.setRequirement(this.requirement);
 		task.claim();
-		Components.get().getUi().getWorkspace().update();
+		ComponentManager.get().getUi().getWorkspace().update();
 		return true;
 	}
 }

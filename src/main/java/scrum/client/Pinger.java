@@ -1,10 +1,10 @@
 package scrum.client;
 
-import ilarkesto.gwt.client.AComponent;
+import scrum.client.common.AScrumComponent;
 
 import com.google.gwt.user.client.Timer;
 
-public class Pinger extends AComponent implements ServerDataReceivedListener {
+public class Pinger extends AScrumComponent implements ServerDataReceivedListener {
 
 	public static final int MIN_DELAY = 1000;
 	public static final int MAX_DELAY = 15000;

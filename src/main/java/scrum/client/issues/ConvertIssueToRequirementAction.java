@@ -28,9 +28,9 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 	@Override
 	protected void onExecute() {
 		Requirement requirement = new Requirement(issue);
-		getDao().createRequirement(requirement);
-		getDao().deleteIssue(issue);
-		getProjectContext().showProductBacklog(requirement);
+		cm.getDao().createRequirement(requirement);
+		cm.getDao().deleteIssue(issue);
+		cm.getProjectContext().showProductBacklog(requirement);
 	}
 
 }

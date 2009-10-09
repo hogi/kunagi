@@ -5,7 +5,7 @@ import ilarkesto.gwt.client.AWidget;
 import java.util.HashMap;
 import java.util.Map;
 
-import scrum.client.Components;
+import scrum.client.ComponentManager;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.common.BlockListSelectionManager;
@@ -58,7 +58,7 @@ public class TaskOverviewWidget extends AWidget implements TaskBlockContainer {
 	}
 
 	public static TaskOverviewWidget get() {
-		return Components.get().getProjectContext().getTaskOverview();
+		return ComponentManager.get().getProjectContext().getTaskOverview();
 	}
 
 	public BlockListSelectionManager getSelectionManager() {

@@ -1,6 +1,5 @@
 package scrum.client.project;
 
-
 public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurrentSprintAction {
 
 	public AddRequirementToCurrentSprintAction(Requirement requirement) {
@@ -28,7 +27,7 @@ public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurren
 	@Override
 	protected void onExecute() {
 		requirement.setSprint(getProject().getCurrentSprint());
-		getComponents().getChat().postSystemMessage(
+		cm.getChat().postSystemMessage(
 			getUser().getName() + " added requirement " + requirement.getReference() + " to current sprint.", true);
 	}
 

@@ -2,7 +2,7 @@ package scrum.client.impediments;
 
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
-import scrum.client.Components;
+import scrum.client.ComponentManager;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.GroupWidget;
@@ -45,7 +45,7 @@ public class ImpedimentListWidget extends AWidget {
 	}
 
 	public static ImpedimentListWidget get() {
-		return Components.get().getProjectContext().getImpedimentList();
+		return ComponentManager.get().getProjectContext().getImpedimentList();
 	}
 
 	public void select(Impediment impediment) {

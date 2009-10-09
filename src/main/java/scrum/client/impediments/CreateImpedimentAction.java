@@ -1,6 +1,5 @@
 package scrum.client.impediments;
 
-
 public class CreateImpedimentAction extends GCreateImpedimentAction {
 
 	@Override
@@ -16,7 +15,7 @@ public class CreateImpedimentAction extends GCreateImpedimentAction {
 	@Override
 	protected void onExecute() {
 		Impediment impediment = getProject().createNewImpediment();
-		getProjectContext().showImpedimentList(impediment);
+		cm.getProjectContext().showImpedimentList(impediment);
 	}
 
 }

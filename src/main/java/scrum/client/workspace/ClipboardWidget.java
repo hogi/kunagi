@@ -5,7 +5,7 @@ import ilarkesto.gwt.client.GwtLogger;
 
 import java.util.ArrayList;
 
-import scrum.client.Components;
+import scrum.client.ComponentManager;
 import scrum.client.DndManager;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.StyleSheet;
@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ClipboardWidget extends AWidget {
 
-	private DndManager dndManager = Components.get().getDndManager();
+	private DndManager dndManager = ComponentManager.get().getDndManager();
 	private FlowPanel panel;
 	private ArrayList<ClipboardItemWidget> clipboardItems = new ArrayList<ClipboardItemWidget>();
 

@@ -3,7 +3,7 @@ package scrum.client.workspace;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ApplicationInfo;
-import scrum.client.Components;
+import scrum.client.ComponentManager;
 import scrum.client.ProjectContext;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.LogoutAction;
@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class HeaderWidget extends AWidget {
 
-	private ProjectContext projectContext = Components.get().getProjectContext();
+	private ProjectContext projectContext = ComponentManager.get().getProjectContext();
 
 	private Label title;
 	private Label currentUserLabel;

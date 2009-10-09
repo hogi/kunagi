@@ -1,6 +1,5 @@
 package scrum.client.risks;
 
-
 public class CreateRiskAction extends GCreateRiskAction {
 
 	@Override
@@ -16,7 +15,7 @@ public class CreateRiskAction extends GCreateRiskAction {
 	@Override
 	protected void onExecute() {
 		Risk risk = getProject().createNewRisk();
-		getProjectContext().showRiskList(risk);
+		cm.getProjectContext().showRiskList(risk);
 	}
 
 }

@@ -19,7 +19,7 @@ public class LoginAction extends GLoginAction {
 
 	@Override
 	protected void onExecute() {
-		getUi().getWorkspace().lock("Checking login data...");
+		cm.getUi().getWorkspace().lock("Checking login data...");
 		ScrumGwtApplication.get().callLogin(loginData.getUsername(), loginData.getPassword(), new Runnable() {
 
 			public void run() {
@@ -27,15 +27,15 @@ public class LoginAction extends GLoginAction {
 				User user = ScrumGwtApplication.get().getUser();
 				if (user == null) {
 					GwtLogger.DEBUG("Login failed!");
-					getUi().getWorkspace().unlock();
+					cm.getUi().getWorkspace().unlock();
 					loginData.setFailed();
 				} else {
 					GwtLogger.DEBUG("Login succeded:", user);
 					Project project = user.getCurrentProject();
 					if (project == null || user.isAdmin()) {
-						getUi().getWorkspace().activateStartView();
+						cm.getUi().getWorkspace().activateStartView();
 					} else {
-						getProjectContext().openProject(project);
+						cm.getProjectContext().openProject(project);
 					}
 				}
 			}

@@ -1,24 +1,13 @@
 package scrum.client;
 
-import ilarkesto.gwt.client.AComponent;
-
 import java.util.Set;
 
 import scrum.client.admin.User;
+import scrum.client.common.AScrumComponent;
 
-public class UsersStatus extends AComponent implements ServerDataReceivedListener {
+public class UsersStatus extends AScrumComponent implements ServerDataReceivedListener {
 
 	private UsersStatusData usersStatus;
-
-	// --- dependencies ---
-
-	private Ui ui;
-
-	public void setUi(Ui ui) {
-		this.ui = ui;
-	}
-
-	// --- ---
 
 	@Override
 	protected void onInitialization() {
@@ -29,7 +18,7 @@ public class UsersStatus extends AComponent implements ServerDataReceivedListene
 	public void onServerDataReceived(DataTransferObject data) {
 		if (data.usersStatus != null) {
 			usersStatus = data.usersStatus;
-			ui.getWorkspace().update();
+			cm.getUi().getWorkspace().update();
 		}
 	}
 

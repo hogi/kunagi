@@ -1,6 +1,5 @@
 package scrum.client;
 
-import ilarkesto.gwt.client.AComponent;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.GwtLogger;
@@ -14,6 +13,7 @@ import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.User;
 import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.WikiWidget;
+import scrum.client.common.AScrumComponent;
 import scrum.client.context.UiComponent;
 import scrum.client.context.UserHighlightSupport;
 import scrum.client.img.Img;
@@ -39,22 +39,7 @@ import scrum.client.workspace.ProjectSidebarWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectContext extends AComponent implements UiComponent {
-
-	// --- dependencies ---
-
-	private Ui ui;
-	private EventBus eventBus;
-
-	public void setUi(Ui ui) {
-		this.ui = ui;
-	}
-
-	public void setEventBus(EventBus eventBus) {
-		this.eventBus = eventBus;
-	}
-
-	// --- ---
+public class ProjectContext extends AScrumComponent implements UiComponent {
 
 	private Project project;
 
@@ -114,25 +99,25 @@ public class ProjectContext extends AComponent implements UiComponent {
 	public void openProject(Project project) {
 		this.project = project;
 
-		ui.getWorkspace().lock("Loading project...");
+		cm.getUi().getWorkspace().lock("Loading project...");
 		ScrumGwtApplication.get().callSelectProject(project.getId(), new Runnable() {
 
 			public void run() {
-				ui.getWorkspace().unlock();
-				ui.getWorkspace().activateProjectView();
+				cm.getUi().getWorkspace().unlock();
+				cm.getUi().getWorkspace().activateProjectView();
 			}
 		});
 
-		eventBus.fireProjectOpened();
+		cm.getEventBus().fireProjectOpened();
 	}
 
 	public void closeProject(boolean activateHomeView) {
 		assert project != null;
-		ui.getWorkspace().lock("Closing project...");
+		cm.getUi().getWorkspace().lock("Closing project...");
 		project = null;
 		ScrumGwtApplication.get().callCloseProject();
-		eventBus.fireProjectClosed();
-		if (activateHomeView) ui.getWorkspace().activateStartView();
+		cm.getEventBus().fireProjectClosed();
+		if (activateHomeView) cm.getUi().getWorkspace().activateStartView();
 	}
 
 	public Project getProject() {
@@ -236,7 +221,7 @@ public class ProjectContext extends AComponent implements UiComponent {
 	}
 
 	private SwitcherWidget getWorkarea() {
-		return ui.getWorkspace().getWorkarea();
+		return cm.getUi().getWorkspace().getWorkarea();
 	}
 
 	public void showWhiteboard(Task task) {

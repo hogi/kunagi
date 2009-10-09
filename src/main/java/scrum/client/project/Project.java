@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import scrum.client.Components;
+import scrum.client.ComponentManager;
 import scrum.client.UsersStatus;
 import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
@@ -241,7 +241,7 @@ public class Project extends GProject {
 	};
 
 	public Set<User> getUsersSelecting(AGwtEntity entity) {
-		UsersStatus usersStatus = Components.get().getUsersStatus();
+		UsersStatus usersStatus = ComponentManager.get().getUsersStatus();
 		Set<User> users = new HashSet<User>();
 		for (User user : getParticipants()) {
 			if (usersStatus.getSelectedEntitysIds(user).contains(entity.getId())) {

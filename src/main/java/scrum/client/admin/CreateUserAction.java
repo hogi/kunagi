@@ -18,7 +18,7 @@ public class CreateUserAction extends GCreateUserAction {
 	protected void onExecute() {
 		User user = new User();
 		ScrumGwtApplication.get().getDao().createUser(user);
-		getComponents().getHomeContext().getUserList().showUser(user);
+		cm.getHomeContext().getUserList().showUser(user);
 	}
 
 }

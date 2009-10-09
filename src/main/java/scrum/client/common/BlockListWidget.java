@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import scrum.client.Components;
+import scrum.client.ComponentManager;
 import scrum.client.DndManager;
 import scrum.client.GenericPredicate;
 import scrum.client.dnd.BlockDndMarkerWidget;
@@ -27,7 +27,7 @@ public final class BlockListWidget<O> extends AWidget {
 
 	// private static final Logger LOG = Logger.get(BlockListWidget.class);
 
-	private DndManager dndManager = Components.get().getDndManager();
+	private DndManager dndManager = ComponentManager.get().getDndManager();
 
 	private ObjectMappedFlowPanel<O, ABlockWidget<O>> list;
 	private boolean dndSorting = true;

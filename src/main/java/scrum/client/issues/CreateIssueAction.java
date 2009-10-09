@@ -1,6 +1,5 @@
 package scrum.client.issues;
 
-
 public class CreateIssueAction extends GCreateIssueAction {
 
 	@Override
@@ -16,7 +15,7 @@ public class CreateIssueAction extends GCreateIssueAction {
 	@Override
 	protected void onExecute() {
 		Issue issue = getProject().createNewIssue();
-		getProjectContext().showIssueList(issue);
+		cm.getProjectContext().showIssueList(issue);
 	}
 
 }

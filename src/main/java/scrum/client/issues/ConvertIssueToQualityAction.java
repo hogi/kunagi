@@ -28,9 +28,9 @@ public class ConvertIssueToQualityAction extends GConvertIssueToQualityAction {
 	@Override
 	protected void onExecute() {
 		Quality quality = new Quality(issue);
-		getDao().createQuality(quality);
-		getDao().deleteIssue(issue);
-		getProjectContext().showQualityBacklog(quality);
+		cm.getDao().createQuality(quality);
+		cm.getDao().deleteIssue(issue);
+		cm.getProjectContext().showQualityBacklog(quality);
 	}
 
 }

@@ -8,7 +8,7 @@ import ilarkesto.mda.gen.gwt.GwtActionGenerator;
 import ilarkesto.mda.gen.gwt.GwtActionTemplateGenerator;
 import ilarkesto.mda.gen.gwt.GwtApplicationGenerator;
 import ilarkesto.mda.gen.gwt.GwtComponentTemplateGenerator;
-import ilarkesto.mda.gen.gwt.GwtComponentsGenerator;
+import ilarkesto.mda.gen.gwt.GwtComponentManagerGenerator;
 import ilarkesto.mda.gen.gwt.GwtDaoGenerator;
 import ilarkesto.mda.gen.gwt.GwtEntityGenerator;
 import ilarkesto.mda.gen.gwt.GwtEntityTemplateGenerator;
@@ -451,7 +451,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		for (EventModel eventModel : getGwtEventBusModel().getEvents()) {
 			new GwtEventListenerGenerator(eventModel, applicationModel).generate();
 		}
-		new GwtComponentsGenerator(getGwtComponentsModel()).generate();
+		new GwtComponentManagerGenerator(getGwtComponentsModel()).generate();
 		for (CompositeModel composite : getGwtComponentsModel().getComposites()) {
 			new GwtComponentTemplateGenerator(getApplicationModel(), composite).generate();
 		}

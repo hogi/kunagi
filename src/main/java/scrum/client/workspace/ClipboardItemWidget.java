@@ -1,7 +1,7 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.Components;
+import scrum.client.ComponentManager;
 import scrum.client.DndManager;
 import scrum.client.common.ABlockWidget;
 import scrum.client.dnd.ClipboardSupport;
@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ClipboardItemWidget extends AWidget {
 
-	private DndManager dndManager = Components.get().getDndManager();
+	private DndManager dndManager = ComponentManager.get().getDndManager();
 
 	private HorizontalPanel panel;
 	private Image icon;

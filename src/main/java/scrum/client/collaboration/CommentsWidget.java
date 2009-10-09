@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import scrum.client.Components;
+import scrum.client.ComponentManager;
 import scrum.client.ProjectContext;
 import scrum.client.ScrumGwtApplication;
 
@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CommentsWidget extends AWidget {
 
-	private ProjectContext projectContext = Components.get().getProjectContext();
+	private ProjectContext projectContext = ComponentManager.get().getProjectContext();
 
 	private FlowPanel containerPanel;
 

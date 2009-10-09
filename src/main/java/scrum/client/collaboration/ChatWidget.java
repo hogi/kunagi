@@ -2,7 +2,7 @@ package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.Chat;
-import scrum.client.Components;
+import scrum.client.ComponentManager;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.workspace.ProjectSidebarWidget;
@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ChatWidget extends AWidget {
 
-	private Chat chat = Components.get().getChat();
+	private Chat chat = ComponentManager.get().getChat();
 
 	private HTML output;
 	private ScrollPanel outputScroller;

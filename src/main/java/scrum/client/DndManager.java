@@ -1,11 +1,10 @@
 package scrum.client;
 
-import ilarkesto.gwt.client.AComponent;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import scrum.client.common.ABlockWidget;
+import scrum.client.common.AScrumComponent;
 import scrum.client.common.BlockListWidget;
 import scrum.client.dnd.BlockDropController;
 import scrum.client.dnd.BlockListDropController;
@@ -13,7 +12,7 @@ import scrum.client.dnd.ScrumDragController;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class DndManager extends AComponent {
+public class DndManager extends AScrumComponent {
 
 	private ScrumDragController dragController;
 	private Map<ABlockWidget, BlockDropController> blockDropControllers;

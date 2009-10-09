@@ -43,10 +43,4 @@ public class ProjectUserConfigWidget extends AWidget {
 		return Gwt.createFlowPanel(new GroupWidget("Project Preferences", fields), globalUserConfig);
 	}
 
-	@Override
-	protected void onUpdate() {
-		fields.update();
-		globalUserConfig.update();
-	}
-
 }

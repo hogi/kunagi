@@ -15,7 +15,7 @@ public class CreateRequirementAction extends GCreateRequirementAction {
 	@Override
 	protected void onExecute() {
 		Requirement requirement = getProject().createNewRequirement();
-		getProjectContext().showRequirement(requirement);
+		cm.getProjectContext().showRequirement(requirement);
 	}
 
 }

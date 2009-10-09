@@ -1,7 +1,7 @@
 package scrum.client.communication;
 
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.Components;
+import scrum.client.ComponentManager;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.UsersStatus;
 import scrum.client.admin.User;
@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class UserStatusWidget extends AWidget {
 
-	private UsersStatus usersStatus = Components.get().getUsersStatus();
+	private UsersStatus usersStatus = ComponentManager.get().getUsersStatus();
 
 	private Label label;
 	private User user;
@@ -48,11 +48,11 @@ public class UserStatusWidget extends AWidget {
 	class Highlighter implements MouseMoveHandler, MouseOutHandler {
 
 		public void onMouseMove(MouseMoveEvent event) {
-			Components.get().getProjectContext().highlightUser(user);
+			ComponentManager.get().getProjectContext().highlightUser(user);
 		}
 
 		public void onMouseOut(MouseOutEvent event) {
-			Components.get().getProjectContext().highlightUser(null);
+			ComponentManager.get().getProjectContext().highlightUser(null);
 		}
 	}
 }
