@@ -1,9 +1,9 @@
 package scrum.client.risks;
 
 import ilarkesto.gwt.client.ADropdownViewEditWidget;
+import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.ATextWidget;
 import ilarkesto.gwt.client.Gwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.ABlockWidget;
@@ -136,7 +136,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 				risk.setProbability(Integer.parseInt(getSelectedOption()));
 			}
 		});
-		fields.add("Priority", new ATextWidget() {
+		fields.add("Priority", new AFieldValueWidget() {
 
 			@Override
 			protected void onUpdate() {

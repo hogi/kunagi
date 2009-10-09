@@ -39,11 +39,6 @@ public class Workspace extends AWidget {
 		return locker;
 	}
 
-	@Override
-	protected void onUpdate() {
-		locker.update();
-	}
-
 	public void activateStartView() {
 		activateView(new HomeContext());
 	}
