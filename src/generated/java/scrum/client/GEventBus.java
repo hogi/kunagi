@@ -112,6 +112,44 @@ public abstract class GEventBus
         }
     }
 
+    // --- BlockExpanded ---
+
+    private Set<BlockExpandedListener> blockExpandedListeners = new HashSet<BlockExpandedListener>();
+
+    public void addBlockExpandedListener(BlockExpandedListener listener) {
+        blockExpandedListeners.add(listener);
+    }
+
+    public void removeBlockExpandedListener(BlockExpandedListener listener) {
+        blockExpandedListeners.remove(listener);
+    }
+
+    public void fireBlockExpanded(java.lang.Object object) {
+        log.debug("Event fired: BlockExpanded");
+        for (BlockExpandedListener listener : blockExpandedListeners) {
+            listener.onBlockExpanded(object);
+        }
+    }
+
+    // --- BlockCollapsed ---
+
+    private Set<BlockCollapsedListener> blockCollapsedListeners = new HashSet<BlockCollapsedListener>();
+
+    public void addBlockCollapsedListener(BlockCollapsedListener listener) {
+        blockCollapsedListeners.add(listener);
+    }
+
+    public void removeBlockCollapsedListener(BlockCollapsedListener listener) {
+        blockCollapsedListeners.remove(listener);
+    }
+
+    public void fireBlockCollapsed(java.lang.Object object) {
+        log.debug("Event fired: BlockCollapsed");
+        for (BlockCollapsedListener listener : blockCollapsedListeners) {
+            listener.onBlockCollapsed(object);
+        }
+    }
+
     // --- automatic adding / removing ---
 
     public void addListener(Object listener) {
@@ -120,6 +158,8 @@ public abstract class GEventBus
         if (listener instanceof LogoutListener) addLogoutListener((LogoutListener)listener);
         if (listener instanceof ProjectOpenedListener) addProjectOpenedListener((ProjectOpenedListener)listener);
         if (listener instanceof ProjectClosedListener) addProjectClosedListener((ProjectClosedListener)listener);
+        if (listener instanceof BlockExpandedListener) addBlockExpandedListener((BlockExpandedListener)listener);
+        if (listener instanceof BlockCollapsedListener) addBlockCollapsedListener((BlockCollapsedListener)listener);
     }
 
     public void removeListener(Object listener) {
@@ -128,6 +168,8 @@ public abstract class GEventBus
         if (listener instanceof LogoutListener) removeLogoutListener((LogoutListener)listener);
         if (listener instanceof ProjectOpenedListener) removeProjectOpenedListener((ProjectOpenedListener)listener);
         if (listener instanceof ProjectClosedListener) removeProjectClosedListener((ProjectClosedListener)listener);
+        if (listener instanceof BlockExpandedListener) removeBlockExpandedListener((BlockExpandedListener)listener);
+        if (listener instanceof BlockCollapsedListener) removeBlockCollapsedListener((BlockCollapsedListener)listener);
     }
 
 }

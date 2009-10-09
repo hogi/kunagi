@@ -7,8 +7,8 @@ import ilarkesto.mda.AGeneratorApplication;
 import ilarkesto.mda.gen.gwt.GwtActionGenerator;
 import ilarkesto.mda.gen.gwt.GwtActionTemplateGenerator;
 import ilarkesto.mda.gen.gwt.GwtApplicationGenerator;
-import ilarkesto.mda.gen.gwt.GwtComponentTemplateGenerator;
 import ilarkesto.mda.gen.gwt.GwtComponentManagerGenerator;
+import ilarkesto.mda.gen.gwt.GwtComponentTemplateGenerator;
 import ilarkesto.mda.gen.gwt.GwtDaoGenerator;
 import ilarkesto.mda.gen.gwt.GwtEntityGenerator;
 import ilarkesto.mda.gen.gwt.GwtEntityTemplateGenerator;
@@ -76,6 +76,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtEventBusModel.addEvent("Logout");
 			gwtEventBusModel.addEvent("ProjectOpened");
 			gwtEventBusModel.addEvent("ProjectClosed");
+			gwtEventBusModel.addEvent("BlockExpanded").addParameter("object", Object.class);
+			gwtEventBusModel.addEvent("BlockCollapsed").addParameter("object", Object.class);
 		}
 		return gwtEventBusModel;
 	}

@@ -1,11 +1,14 @@
 package scrum.client;
 
+import ilarkesto.gwt.client.AGwtEntity;
+
 import java.util.Set;
 
 import scrum.client.admin.User;
 import scrum.client.common.AScrumComponent;
 
-public class UsersStatus extends AScrumComponent implements ServerDataReceivedListener {
+public class UsersStatus extends AScrumComponent implements ServerDataReceivedListener, BlockCollapsedListener,
+		BlockExpandedListener {
 
 	private UsersStatusData usersStatus;
 
@@ -13,6 +16,18 @@ public class UsersStatus extends AScrumComponent implements ServerDataReceivedLi
 	protected void onInitialization() {
 		super.onInitialization();
 		usersStatus = new UsersStatusData();
+	}
+
+	public void onBlockExpanded(Object object) {
+		if (object instanceof AGwtEntity && cm.getProjectContext().isProjectOpen()) {
+			addSelectedEntityId(((AGwtEntity) object).getId());
+		}
+	}
+
+	public void onBlockCollapsed(Object object) {
+		if (object instanceof AGwtEntity && cm.getProjectContext().isProjectOpen()) {
+			removeSelectedEntityId(((AGwtEntity) object).getId());
+		}
 	}
 
 	public void onServerDataReceived(DataTransferObject data) {
@@ -30,14 +45,14 @@ public class UsersStatus extends AScrumComponent implements ServerDataReceivedLi
 		return usersStatus.get(user.getId()).getSelectedEntitysIds();
 	}
 
-	public void addSelectedEntityId(String id) {
+	private void addSelectedEntityId(String id) {
 		String userId = ScrumGwtApplication.get().getUser().getId();
 		boolean added = usersStatus.addSelectedEntityId(userId, id);
 		if (added)
 			ScrumGwtApplication.get().callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());
 	}
 
-	public void removeSelectedEntityId(String id) {
+	private void removeSelectedEntityId(String id) {
 		String userId = ScrumGwtApplication.get().getUser().getId();
 		boolean removed = usersStatus.removeSelectedEntityId(userId, id);
 		if (removed)

@@ -235,22 +235,12 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 			setContent(null);
 		}
 
-		updateSelectedStatus();
-
 		update();
-	}
 
-	private void updateSelectedStatus() {
-		if (cm.getProjectContext().isProjectOpen()) {
-			O o = getObject();
-			if (o instanceof AGwtEntity) {
-				String id = ((AGwtEntity) o).getId();
-				if (extended) {
-					cm.getUsersStatus().addSelectedEntityId(id);
-				} else {
-					cm.getUsersStatus().removeSelectedEntityId(id);
-				}
-			}
+		if (extended) {
+			cm.getEventBus().fireBlockExpanded(getObject());
+		} else {
+			cm.getEventBus().fireBlockCollapsed(getObject());
 		}
 	}
 
@@ -260,14 +250,12 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		if (getList().isDndSorting()) {
 			cm.getDndManager().registerDropTarget(this);
 		}
-		updateSelectedStatus();
+		if (extended) cm.getEventBus().fireBlockExpanded(getObject());
 	}
 
 	@Override
 	protected void onUnload() {
-		if (extended) {
-			updateSelectedStatus();
-		}
+		if (extended) cm.getEventBus().fireBlockCollapsed(getObject());
 		cm.getDndManager().unregisterDropTarget(this);
 		super.onUnload();
 	}
