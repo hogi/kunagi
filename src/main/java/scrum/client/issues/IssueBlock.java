@@ -1,14 +1,8 @@
 package scrum.client.issues;
 
-import ilarkesto.gwt.client.ADropdownViewEditWidget;
-import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.Gwt;
-import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockWidgetFactory;
-import scrum.client.common.FieldsWidget;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
@@ -32,64 +26,7 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 
 	@Override
 	protected Widget onExtendedInitialization() {
-		final Issue issue = getObject();
-		FieldsWidget fields = new FieldsWidget();
-
-		fields.add("Label", new ATextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(issue.getLabel());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(issue.getLabel());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				issue.setLabel(getEditorText());
-			}
-
-		});
-		fields.add("Description", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(issue.getDescription());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(issue.getDescription());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				issue.setDescription(getEditorText());
-			}
-		});
-		fields.add("Type", new ADropdownViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(issue.getTypeLabel());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setOptions(Issue.TYPES);
-				setSelectedOption(issue.getType());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				issue.setType(getSelectedOption());
-			}
-		});
-
-		return Gwt.createFlowPanel(fields, new CommentsWidget(issue));
+		return new IssueWidget(getObject());
 	}
 
 	public AScrumAction getTrashAction() {

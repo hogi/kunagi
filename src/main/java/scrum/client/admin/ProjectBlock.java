@@ -12,18 +12,12 @@ import scrum.client.project.DeleteProjectAction;
 import scrum.client.project.OpenProjectAction;
 import scrum.client.project.Project;
 
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 
-	private HTML content;
-	private FieldsWidget fields;
-
 	@Override
 	protected void onCollapsedInitialization() {
-		content = new HTML();
 		setIcon(Img.bundle.project16());
 	}
 
@@ -31,22 +25,6 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 	protected void onUpdateHead() {
 		Project project = getObject();
 		setBlockTitle(project.getLabel());
-
-		String description = project.getDescription();
-		if (description == null) description = "No description.";
-		if (!isExtended()) {
-			int idx = description.indexOf('.');
-			if (idx > 0) {
-				description = description.substring(0, idx + 1);
-			}
-			if (description.length() > 150) {
-				description = description.substring(0, 149) + "...";
-			}
-		}
-		content.setHTML(description);
-
-		setContent(null);
-
 		addToolbarAction(new OpenProjectAction(project));
 		addMenuAction(new DeleteProjectAction(project));
 	}
@@ -54,7 +32,7 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 	@Override
 	protected Widget onExtendedInitialization() {
 		final Project project = getObject();
-		fields = new FieldsWidget();
+		FieldsWidget fields = new FieldsWidget();
 		fields.add("Label", new ATextViewEditWidget() {
 
 			@Override
@@ -189,10 +167,6 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 		});
 
 		return fields;
-	}
-
-	public Image getClipboardIcon() {
-		return Img.bundle.project32().createImage();
 	}
 
 	public static BlockWidgetFactory<Project> FACTORY = new BlockWidgetFactory<Project>() {
