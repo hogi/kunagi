@@ -7,10 +7,8 @@ import java.util.Comparator;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.GroupWidget;
+import scrum.client.workspace.PagePanel;
 
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RiskListWidget extends AScrumWidget {
@@ -28,12 +26,11 @@ public class RiskListWidget extends AScrumWidget {
 		toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateRiskAction());
 
-		FlowPanel panel = new FlowPanel();
-		panel.add(toolbar);
-		panel.add(new HTML("<br>"));
-		panel.add(list);
-
-		return new GroupWidget("Risks", panel);
+		PagePanel page = new PagePanel();
+		page.addHeader("Risk List");
+		page.addSection(toolbar);
+		page.addSection(list);
+		return page;
 	}
 
 	@Override

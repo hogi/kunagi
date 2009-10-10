@@ -3,27 +3,25 @@ package scrum.client.collaboration;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.common.AScrumWidget;
+import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class WikiWidget extends AScrumWidget {
 
 	private String pageName;
-	private Wikipage page;
+	private Wikipage wikipage;
 
 	private FlowPanel panel;
 	private TextBox pageNameBox;
 	private FlowPanel navigPanel;
 	private ToolbarWidget toolbar;
-	private Label titleLabel;
 	private WikipageEditor editor;
-	private Label dummyLabel;
 
 	@Override
 	protected Widget onInitialization() {
@@ -32,12 +30,8 @@ public class WikiWidget extends AScrumWidget {
 		navigPanel = new FlowPanel();
 		navigPanel.setStyleName("WikiWidget-navig");
 		navigPanel.add(pageNameBox);
-		titleLabel = new Label();
-		titleLabel.setStyleName("WikiWidget-title");
 		toolbar = new ToolbarWidget();
 		editor = new WikipageEditor();
-		dummyLabel = new Label();
-		dummyLabel.setStyleName("WikiWidget-dummy");
 
 		panel = new FlowPanel();
 		panel.setStyleName("WikiWidget");
@@ -48,27 +42,28 @@ public class WikiWidget extends AScrumWidget {
 	protected void onUpdate() {
 		if (pageName == null || pageName.trim().length() == 0) pageName = "Start";
 
-		page = getCurrentProject().getWikipage(pageName);
+		wikipage = getCurrentProject().getWikipage(pageName);
 
 		pageNameBox.setText(pageName);
 
 		panel.clear();
 		toolbar.clear();
-		panel.add(navigPanel);
-		panel.add(titleLabel);
-		if (page == null) {
-			titleLabel.setText(pageName);
+
+		PagePanel page = new PagePanel();
+		panel.add(page);
+
+		page.addSection(navigPanel);
+		if (wikipage == null) {
 			toolbar.addButton(new CreateWikipageAction(pageName));
-			dummyLabel.setText("Page \"" + pageName + "\" does not exist.");
-			panel.add(dummyLabel);
+			page.addSection("Page \"" + pageName + "\" does not exist.");
 		} else {
-			titleLabel.setText(page.getName());
-			toolbar.addButton(new DeleteWikipageAction(page));
+			page.addHeader(wikipage.getName());
+			toolbar.addButton(new DeleteWikipageAction(wikipage));
 			editor.update();
-			panel.add(editor);
+			page.addSection(editor);
 		}
-		panel.add(toolbar.update());
-		if (page != null) panel.add(new CommentsWidget(page).update());
+		page.addSection(toolbar.update());
+		if (wikipage != null) page.addSection(new CommentsWidget(wikipage).update());
 	}
 
 	public void showPage(String name) {
@@ -80,17 +75,17 @@ public class WikiWidget extends AScrumWidget {
 
 		@Override
 		protected void onViewerUpdate() {
-			setViewerText(page.getText());
+			setViewerText(wikipage.getText());
 		}
 
 		@Override
 		protected void onEditorUpdate() {
-			setEditorText(page.getText());
+			setEditorText(wikipage.getText());
 		}
 
 		@Override
 		protected void onEditorSubmit() {
-			page.setText(getEditorText());
+			wikipage.setText(getEditorText());
 		}
 
 	}

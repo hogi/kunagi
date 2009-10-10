@@ -4,10 +4,8 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ComponentManager;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.GroupWidget;
+import scrum.client.workspace.PagePanel;
 
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 public class QualityBacklogWidget extends AScrumWidget {
@@ -21,12 +19,11 @@ public class QualityBacklogWidget extends AScrumWidget {
 		toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateQualityAction());
 
-		FlowPanel panel = new FlowPanel();
-		panel.add(toolbar);
-		panel.add(new HTML("<br>"));
-		panel.add(list);
-
-		return new GroupWidget("Quality Backlog", panel);
+		PagePanel page = new PagePanel();
+		page.addHeader("Quality Backlog");
+		page.addSection(toolbar);
+		page.addSection(list);
+		return page;
 	}
 
 	@Override

@@ -110,17 +110,17 @@ a {cursor: pointer;}
 
 /***** Block List *****/
 
-.BlockListWidget {padding: 5px; min-height: 100px;}
+.BlockListWidget {min-height: 100px;}
 .WhiteboardWidget-requirement-list {padding: 0px; min-height: 5px;}
 
 .ABlockWidget {color: black;}
 
 .BlockDndMarkerWidget {height: 2px;}
-.BlockDndMarkerWidget-active {height: 2px; background: #192666;}
+.BlockDndMarkerWidget-active {height: 2px; background: #A31E39;}
 
 .ABlockWidget-block {background: white;}
 .ABlockWidget-block-selected {border: 0px solid orange;}
-.ABlockWidget-title {padding: 1px; width: 100%; background: #DEE5FD; }
+.ABlockWidget-title {padding: 1px; width: 100%; background: #BFCFCC; }
 .ABlockWidget-title-label {font-size: 12px; line-height: 16px; cursor: pointer; display: block;}
 .ABlockWidget-title .ToolbarWidget {margin: 0px;}
 .ABlockWidget-title .ButtonWidget {margin-left: 15px;}
@@ -149,14 +149,9 @@ a {cursor: pointer;}
 
 .PagePanel {padding: 10px; font-size: 12px; line-height: 14px;}
 .PagePanel-content {background: white; border: 1px solid #A31E39;}
-.PagePanel-header {padding: 10px; background: #A31E39; color: white; font-size: 14px; line-height: 16px;}
-.PagePanel-section {padding: 10px; }
-
-/***** Panel *****/
-
-.element-PanelWidget {border: 2px solid #EEEEEE; background: white; }
-.element-PanelWidget-title {background: #EEEEEE; color: #AAAAAA; font-weight: bold; padding: 5px;}
-.element-PanelWidget-content {padding: 5px;}
+.PagePanel-spacer {height: 10px;}
+.PagePanel-header {padding: 10px; background: #A31E39; color: white; font-size: 14px; line-height: 16px; font-family: "georgia",serif;}
+.PagePanel-section {padding: 0px 10px;}
 
 /***** Whiteboard *****/
 

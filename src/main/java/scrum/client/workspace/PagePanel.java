@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class PagePanel extends Composite implements HasWidgets {
 
 	private FlowPanel content;
+	private boolean spacered;
 
 	public PagePanel() {
 		content = new FlowPanel();
@@ -32,11 +33,19 @@ public class PagePanel extends Composite implements HasWidgets {
 	}
 
 	public void addSection(Widget widget) {
+		if (!spacered) addSpacer();
 		add("section", widget);
+		addSpacer();
 	}
 
 	public void add(String styleSuffix, Widget widget) {
 		add(Gwt.createDiv("PagePanel-" + styleSuffix, widget));
+		spacered = false;
+	}
+
+	public void addSpacer() {
+		add(Gwt.createEmptyDiv("PagePanel-spacer"));
+		spacered = true;
 	}
 
 	public void add(Widget w) {
@@ -49,6 +58,7 @@ public class PagePanel extends Composite implements HasWidgets {
 
 	public void clear() {
 		content.clear();
+		spacered = false;
 	}
 
 	public Iterator<Widget> iterator() {

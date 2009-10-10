@@ -5,10 +5,8 @@ import scrum.client.ComponentManager;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.GroupWidget;
+import scrum.client.workspace.PagePanel;
 
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ImpedimentListWidget extends AScrumWidget {
@@ -26,12 +24,11 @@ public class ImpedimentListWidget extends AScrumWidget {
 		toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateImpedimentAction());
 
-		FlowPanel panel = new FlowPanel();
-		panel.add(toolbar);
-		panel.add(new HTML("<br>"));
-		panel.add(list);
-
-		return new GroupWidget("Impediment List", panel);
+		PagePanel page = new PagePanel();
+		page.addHeader("Impediment List");
+		page.addSection(toolbar);
+		page.addSection(list);
+		return page;
 	}
 
 	@Override

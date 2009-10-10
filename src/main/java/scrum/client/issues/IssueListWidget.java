@@ -4,10 +4,8 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.GroupWidget;
+import scrum.client.workspace.PagePanel;
 
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 public class IssueListWidget extends AScrumWidget {
@@ -25,12 +23,11 @@ public class IssueListWidget extends AScrumWidget {
 		toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateIssueAction());
 
-		FlowPanel panel = new FlowPanel();
-		panel.add(toolbar);
-		panel.add(new HTML("<br>"));
-		panel.add(list);
-
-		return new GroupWidget("Issue List", panel);
+		PagePanel page = new PagePanel();
+		page.addHeader("Issue List");
+		page.addSection(toolbar);
+		page.addSection(list);
+		return page;
 	}
 
 	@Override
