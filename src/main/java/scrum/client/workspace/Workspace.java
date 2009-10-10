@@ -1,7 +1,8 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.FullScreenDockWidget;
+import ilarkesto.gwt.client.FullscreenPanel;
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
@@ -13,6 +14,7 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class Workspace extends AWidget {
@@ -29,13 +31,27 @@ public class Workspace extends AWidget {
 		setHeight100();
 
 		lockInfo = new LockInfoWidget();
+		HeaderWidget header = new HeaderWidget();
 		sidebar = new SwitcherWidget(true);
 		workarea = new SwitcherWidget(true);
 
-		FullScreenDockWidget dock = new FullScreenDockWidget(new HeaderWidget(), 25, sidebar, 200, workarea);
+		ScrollPanel sidebarScroller = new ScrollPanel(sidebar);
+		sidebarScroller.setHeight("100%");
 
-		locker = new LockWidget(dock);
-		return locker;
+		ScrollPanel workareaScroller = new ScrollPanel(workarea);
+		workareaScroller.setHeight("100%");
+
+		FlowPanel body = new FlowPanel();
+		body.setStyleName("Workspace-body");
+		body.add(Gwt.createDiv("Workspace-body-west", sidebarScroller));
+		body.add(Gwt.createDiv("Workspace-body-center", workareaScroller));
+
+		FlowPanel workspace = Gwt.createFlowPanel(Gwt.createDiv("Workspace-header", header), body);
+		workspace.setStyleName("Workspace");
+
+		locker = new LockWidget(workspace);
+
+		return new FullscreenPanel(locker);
 	}
 
 	public void activateStartView() {

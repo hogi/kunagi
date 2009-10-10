@@ -1,3 +1,14 @@
+/***** Constants *****
+
+--- dimensions ---
+
+header-height: 25px
+sidebar-width: 200px
+
+--- colors ---
+
+*/
+
 
 /***** Default HTML *****/
 
@@ -26,7 +37,12 @@ a {cursor: pointer;}
 
 /***** Master Layout *****/
 
-#ScrumGwtApplication {height: 100%;}
+.FullscreenPanel { background: #cedbf9; }
+.Workspace {height: 100%;}
+.Workspace-header {height: 25px;}
+.Workspace-body {height: 100%;}
+.Workspace-body-west {float: left; width: 200px; height: 100%;}
+.Workspace-body-center {height: 100%;}
 
 /***** Header *****/
 
@@ -37,10 +53,8 @@ a {cursor: pointer;}
 
 /***** Sidebar *****/
 
-.FullScreenDockWidget-west {height: 100%; background:#CEDBF9;}
+.NavigatorWidget {}
 .NavigatorWidget-head {height: 10px; margin: 0px 15px 0px 15px; border-bottom: 1px solid #E2EAFC;}
-
-.NavigatorWidget {background:#CEDBF9;}
 .NavigatorWidget .item {padding: 0px 15px 0px 15px; font-size: 14px;}
 .NavigatorWidget .item a {display:block; padding: 5px 3px 5px 3px; text-decoration:none; border-bottom: 1px solid #E2EAFC; color:#192666;}
 .NavigatorWidget .item a:hover {background-color:#D3DFF8;}

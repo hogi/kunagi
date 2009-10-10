@@ -20,13 +20,14 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		// TODO remove workaround if issue is fixed
 		// workaround for GWT issue 1813
 		// http://code.google.com/p/google-web-toolkit/issues/detail?id=1813
-		RootPanel.get().getElement().getStyle().setProperty("position", "relative");
+		// RootPanel.get().getElement().getStyle().setProperty("position", "relative");
 
 		cm = new ComponentManager();
 
 		final Workspace workspace = cm.getUi().getWorkspace();
 		workspace.lock("Loading...");
-		RootPanel.get("ScrumGwtApplication").add(workspace);
+
+		RootPanel.get().add(workspace);
 		callStartSession(new Runnable() {
 
 			public void run() {
