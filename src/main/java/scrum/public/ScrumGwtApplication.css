@@ -87,7 +87,7 @@ a {cursor: pointer;}
 .UserStatusWidget {text-decoration: line-through; font-style: italic;}
 .UserStatusWidget-online {text-decoration: none; font-style: normal;}
 
-.CommentsWidget {margin: 10px 5px 5px 5px; Xmax-height: 500px;}
+.CommentsWidget {Xmax-height: 500px;}
 .CommentWidget {margin-top: 5px;}
 .CommentWidget-header-author {float: left; margin: 0px 5px 0px 2px;}
 .CommentWidget-header-date {color: #333;}
@@ -132,8 +132,6 @@ a {cursor: pointer;}
 
 .ABlockWidget-block-title .UserOnBlockWidget {margin-right: 5px;}
 
-.WhiteboardWidget-requirement-list .ABlockWidget-title {background: #192666; color: #DEE5FD;}
-
 .RequirementBlock-closed .ABlockWidget-title {background: #CEFDC5;}
 .RequirementBlock-inCurrentSprint .ABlockWidget-title {background: #FDCEC5;}
 .RequirementBlock-invalidForSprint .ABlockWidget-title {background: #DEDEDE;}
@@ -156,11 +154,10 @@ a {cursor: pointer;}
 
 /***** Whiteboard *****/
 
-.WhiteboardWidget-requirement-label {background: #192666; color: #DEE5FD; padding: 5px; font-size: 14px; font-family: "georgia",serif;}
-.WhiteboardWidget-columnLabel {padding: 5px; font-size: 13px; font-family: "georgia",serif;}
-.WhiteboardWidget-open {background: #FFE5E5;}
-.WhiteboardWidget-owned {background: #FFFFE5;}
-.WhiteboardWidget-done {background: #E5FFE5;}
+.WhiteboardWidget-columnLabel {padding: 10px; background: #A31E39; color: white; font-size: 14px; line-height: 16px; font-family: "georgia",serif;}
+.WhiteboardWidget-open {background: #FFE5E5; padding: 5px;}
+.WhiteboardWidget-owned {background: #FFFFE5; padding: 5px;}
+.WhiteboardWidget-done {background: #E5FFE5; padding: 5px;}
 
 /***** Wiki *****/
 

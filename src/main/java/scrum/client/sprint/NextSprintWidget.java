@@ -6,8 +6,8 @@ import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
-import scrum.client.common.GroupWidget;
 import scrum.client.project.Project;
+import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -100,10 +100,11 @@ public class NextSprintWidget extends AScrumWidget {
 			}
 		});
 
-		view = new FlowPanel();
-		view.add(toolbar);
-		view.add(fieldsWidget);
-		return new GroupWidget("Sprint Backlog", view);
+		PagePanel page = new PagePanel();
+		page.addHeader("Sprint Backlog");
+		page.addSection(toolbar);
+		page.addSection(fieldsWidget);
+		return page;
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package scrum.client.admin;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
-import scrum.client.common.GroupWidget;
+import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -71,7 +71,10 @@ public class UserConfigWidget extends AScrumWidget {
 			}
 		});
 
-		return new GroupWidget("Global Preferences", fields);
+		PagePanel page = new PagePanel();
+		page.addHeader("Global Preferences");
+		page.addSection(fields);
+		return page;
 	}
 
 }

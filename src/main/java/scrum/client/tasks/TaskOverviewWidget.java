@@ -9,8 +9,8 @@ import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
+import scrum.client.workspace.PagePanel;
 
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class TaskOverviewWidget extends AScrumWidget implements TaskBlockContainer {
@@ -23,24 +23,25 @@ public class TaskOverviewWidget extends AScrumWidget implements TaskBlockContain
 	@Override
 	protected Widget onInitialization() {
 		selectionManager = new BlockListSelectionManager();
-		myTasks = new TaskListWidget("My tasks", this);
-		unownedTasks = new TaskListWidget("Tasks without owner", this);
+		myTasks = new TaskListWidget(this);
+		unownedTasks = new TaskListWidget(this);
 		ownedTasks = new HashMap<User, TaskListWidget>();
 		for (User user : getCurrentProject().getTeamMembers()) {
 			if (user == getCurrentUser()) continue;
-			TaskListWidget list = new TaskListWidget(user.getName() + "'s Tasks", this);
+			TaskListWidget list = new TaskListWidget(this);
 			ownedTasks.put(user, list);
 		}
 
-		FlowPanel superPanel = new FlowPanel();
-		superPanel.add(myTasks);
-		superPanel.add(unownedTasks);
-
-		for (TaskListWidget list : ownedTasks.values()) {
-			superPanel.add(list);
+		PagePanel page = new PagePanel();
+		page.addHeader("My Tasks");
+		page.addSection(myTasks);
+		page.addHeader("Tasks without Owner");
+		page.addSection(unownedTasks);
+		for (Map.Entry<User, TaskListWidget> entry : ownedTasks.entrySet()) {
+			page.addHeader(entry.getKey().getName() + "'s Tasks");
+			page.addSection(entry.getValue());
 		}
-
-		return superPanel;
+		return page;
 	}
 
 	@Override

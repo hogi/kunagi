@@ -4,7 +4,7 @@ import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
-import scrum.client.common.GroupWidget;
+import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -38,8 +38,11 @@ public class ProjectUserConfigWidget extends AScrumWidget {
 		});
 
 		globalUserConfig = new UserConfigWidget();
+		PagePanel page = new PagePanel();
+		page.addHeader("Project Preferences");
+		page.addSection(fields);
 
-		return Gwt.createFlowPanel(new GroupWidget("Project Preferences", fields), globalUserConfig);
+		return Gwt.createFlowPanel(page, globalUserConfig);
 	}
 
 }

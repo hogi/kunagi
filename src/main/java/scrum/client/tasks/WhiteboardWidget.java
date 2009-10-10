@@ -98,9 +98,9 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 			closedTasks.put(requirement, new TaskListWidget(this, new CloseTaskDropAction(requirement)));
 		}
 
-		setWidget(0, 0, openLabel, "33%", "WhiteboardWidget-open");
-		setWidget(0, 1, ownedLabel, "33%", "WhiteboardWidget-owned");
-		setWidget(0, 2, doneLabel, "33%", "WhiteboardWidget-done");
+		setWidget(0, 0, openLabel, "33%", "WhiteboardWidget-header");
+		setWidget(0, 1, ownedLabel, "33%", "WhiteboardWidget-header");
+		setWidget(0, 2, doneLabel, "33%", "WhiteboardWidget-header");
 		// grid.getColumnFormatter().setWidth(0, "1*");
 		// grid.getColumnFormatter().setWidth(1, "1*");
 		// grid.getColumnFormatter().setWidth(2, "1*");

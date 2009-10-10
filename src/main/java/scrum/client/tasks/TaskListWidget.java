@@ -14,17 +14,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class TaskListWidget extends AWidget {
 
-	private String title;
 	private GroupWidget panel;
 	private BlockListWidget<Task> list;
 	private BlockListDropAction<Task> dropAction;
 
 	private TaskBlockContainer container;
-
-	public TaskListWidget(String title, TaskBlockContainer container) {
-		this(container);
-		this.title = title;
-	}
 
 	public TaskListWidget(TaskBlockContainer container) {
 		this(container, null);
@@ -40,13 +34,7 @@ public class TaskListWidget extends AWidget {
 		list = new BlockListWidget<Task>(new TaskBlock.TaskBlockFactory(container), this.dropAction);
 		list.setSelectionManager(container.getSelectionManager());
 		list.setAutoSorter(Task.NUMBER_COMPARATOR);
-
-		if (title == null) return list;
-
-		panel = new GroupWidget(title);
-		panel.setContent(list);
-
-		return panel;
+		return list;
 	}
 
 	public void selectTask(Task task) {
