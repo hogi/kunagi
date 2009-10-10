@@ -177,6 +177,11 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 
 	protected final void setContent(Widget content) {
 		contentWrapper.setWidget(content);
+		if (content == null) {
+			contentWrapper.removeStyleName("ABlockWidget-content-expanded");
+		} else {
+			contentWrapper.addStyleName("ABlockWidget-content-expanded");
+		}
 	}
 
 	protected final void setBlockTitle(String text) {

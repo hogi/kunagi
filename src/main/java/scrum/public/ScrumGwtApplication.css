@@ -127,7 +127,8 @@ a {cursor: pointer;}
 .ABlockWidget-title .ButtonWidget a {font-size: 8px; line-height: 8px;}
 .ABlockWidget-title-menu {margin-left: 15px; border: 0px;}
 .ABlockWidget-title-menu .gwt-MenuItem { font-size: 9px;}
-.ABlockWidget-block-selected .ABlockWidget-content {border: 1px solid #DEE5FD;}
+.ABlockWidget-content-expanded {border: 1px solid #DEE5FD; padding: 10px;}
+
 
 .ABlockWidget-block-title .UserOnBlockWidget {margin-right: 5px;}
 
