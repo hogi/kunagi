@@ -18,6 +18,7 @@ import scrum.client.context.UserHighlightSupport;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
+import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Grid;
@@ -60,7 +61,10 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		grid.setCellPadding(0);
 		grid.setCellSpacing(0);
 
-		return grid;
+		PagePanel page = new PagePanel();
+		page.addSection(grid);
+
+		return page;
 	}
 
 	@Override

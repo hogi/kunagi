@@ -6,6 +6,7 @@ import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.ImageAnchor;
 import ilarkesto.gwt.client.MultiSelectionWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
@@ -17,22 +18,22 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
+import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class WidgetsTesterWidget extends AWidget {
 
-	private FlowPanel panel;
+	private PagePanel page;
 
 	@Override
 	protected Widget onInitialization() {
-		panel = new FlowPanel();
-		panel.setStyleName("WidgetsTesterWidget");
+		page = new PagePanel();
+		page.setStyleName("WidgetsTesterWidget");
 
 		testTextConverter();
 		testBlockList();
@@ -43,7 +44,7 @@ public class WidgetsTesterWidget extends AWidget {
 		testButtons();
 		// testImageAnchor();
 
-		return panel;
+		return page;
 	}
 
 	private void testTextConverter() {
@@ -224,17 +225,14 @@ public class WidgetsTesterWidget extends AWidget {
 	}
 
 	private void addTest(String title, Widget content) {
-		if (content instanceof AWidget) ((AWidget) content).update();
+		Gwt.update(content);
 
 		SimplePanel sectionContent = new SimplePanel();
 		sectionContent.setStyleName("test-content");
 		sectionContent.setWidget(content);
 
-		FlowPanel section = new FlowPanel();
-		section.setStyleName("test-section");
-		section.add(new Label(title));
-		section.add(sectionContent);
-		panel.add(section);
+		page.addHeader(title);
+		page.addSection(sectionContent);
 	}
 
 	private AAction createAction(String label) {

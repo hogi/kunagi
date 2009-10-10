@@ -4,9 +4,11 @@ import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.admin.LoginWidget;
 import scrum.client.common.AScrumComponent;
 import scrum.client.test.WidgetsTesterWidget;
+import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 
 public class PublicContext extends AScrumComponent {
 
@@ -21,7 +23,7 @@ public class PublicContext extends AScrumComponent {
 
 		navigator = new SwitchingNavigatorWidget(ComponentManager.get().getUi().getWorkspace().getWorkarea());
 		navigator.addItem((Image) null, "Login", login);
-		navigator.addItem((Image) null, "Register", new Label(""));
+		navigator.addItem((Image) null, "Register", createRegisterWidget());
 		navigator.addItem((Image) null, "About", new Label(""));
 		ApplicationInfo applicationInfo = ScrumGwtApplication.get().getApplicationInfo();
 		if (applicationInfo != null && applicationInfo.isDevelopmentStage()) {
@@ -32,6 +34,14 @@ public class PublicContext extends AScrumComponent {
 
 	public void activate() {
 		cm.getUi().show(navigator, login);
+	}
+
+	private Widget createRegisterWidget() {
+		PagePanel page = new PagePanel();
+		page.addHeader("Free Account Registration");
+		page
+				.addSection("Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. ");
+		return page;
 	}
 
 }

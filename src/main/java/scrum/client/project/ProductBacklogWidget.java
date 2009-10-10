@@ -10,13 +10,11 @@ import scrum.client.ListPredicate;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockMoveObserver;
-import scrum.client.common.GroupWidget;
+import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProductBacklogWidget extends AScrumWidget {
@@ -43,11 +41,6 @@ public class ProductBacklogWidget extends AScrumWidget {
 		list.setMoveObserver(new MoveObserver());
 		toolbar = new ToolbarWidget();
 		toolbar.addButton(new CreateRequirementAction());
-
-		VerticalPanel panel = new VerticalPanel();
-		panel.setWidth("100%");
-		panel.add(toolbar);
-		panel.add(new HTML("<br />"));
 
 		// Filters
 		Panel filterPanel = new FlowPanel();
@@ -84,11 +77,14 @@ public class ProductBacklogWidget extends AScrumWidget {
 			}
 		};
 		filterPanel.add(predicateSelect);
-		panel.add(filterPanel);
 
-		panel.add(list);
+		PagePanel page = new PagePanel();
+		page.addHeader("Product Backlog");
+		page.addSection(toolbar);
+		page.addSection(filterPanel);
+		page.addSection(list);
 
-		return new GroupWidget("Product Backlog", panel);
+		return page;
 	}
 
 	@Override

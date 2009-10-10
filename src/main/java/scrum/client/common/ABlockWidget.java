@@ -3,7 +3,7 @@ package scrum.client.common;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.HyperlinkWidget;
 
 import java.util.Set;
 
@@ -142,7 +142,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	}
 
 	protected void addToolbarAction(AAction action) {
-		addToolbarItem(new ButtonWidget(action));
+		addToolbarItem(new HyperlinkWidget(action));
 	}
 
 	protected void addToolbarItem(Widget toolbarItem) {

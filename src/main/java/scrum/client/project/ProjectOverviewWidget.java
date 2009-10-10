@@ -2,15 +2,14 @@ package scrum.client.project;
 
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.Gwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
-import scrum.client.common.GroupWidget;
 import scrum.client.sprint.Sprint;
+import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -63,23 +62,24 @@ public class ProjectOverviewWidget extends AScrumWidget {
 			}
 		});
 
+		PagePanel page = new PagePanel();
+		page.addHeader("Project Properties");
+		page.addSection(fields);
+
 		// String chartUrl = GWT.getModuleBaseURL() + "/projectBurndownChart.png?projectId=" + project.getId()
 		// + "&width="
 		// + CHART_WIDTH + "&height=" + CHART_HEIGHT;
 		// Image chart = new Image(chartUrl, 0, 0, CHART_WIDTH, CHART_HEIGHT);
 
-		FlowPanel projectPropertiesPanel = new FlowPanel();
-		projectPropertiesPanel.add(fields);
-		// projectPropertiesPanel.add(chart);
-
-		FlowPanel panel = new FlowPanel();
-		panel.add(new GroupWidget("Project Properties", projectPropertiesPanel));
 		Sprint sprint = project.getCurrentSprint();
 		if (sprint != null) {
-			panel.add(createCurrentSprintOverview(sprint));
+			page.addHeader("Current Sprint");
+			page.addSection(createCurrentSprintOverview(sprint));
 		}
 
-		return Gwt.createFlowPanel(panel, new CommentsWidget(project));
+		page.addSection(new CommentsWidget(project));
+
+		return page;
 	}
 
 	@Override
@@ -94,11 +94,12 @@ public class ProjectOverviewWidget extends AScrumWidget {
 	private Widget createCurrentSprintOverview(Sprint sprint) {
 		String chartUrl = getChartUrl(sprint);
 		sprintChart = new Image(chartUrl, 0, 0, CHART_WIDTH, CHART_HEIGHT);
-		return new GroupWidget("Current Sprint", sprintChart);
+		return sprintChart;
 	}
 
 	private String getChartUrl(Sprint sprint) {
-		return GWT.getModuleBaseURL() + "/sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width=" + CHART_WIDTH
+		int width = Window.getClientWidth() - 260;
+		return GWT.getModuleBaseURL() + "/sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width=" + width
 				+ "&height=" + CHART_HEIGHT;
 	}
 

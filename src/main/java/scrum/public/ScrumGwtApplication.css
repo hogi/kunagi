@@ -7,22 +7,29 @@ sidebar-width: 200px
 
 --- colors ---
 
+http://www.colorcombos.com/color-scheme-130.html
+A31E39
+485C5A
+8C9C9A
+9DB2B1
+BFCFCC
+D6E4E1
+
+
 */
 
 
 /***** Default HTML *****/
 
-html, body {height: 100%; padding: 0px; margin: 0px; background: white;}
+html, body {height: 100%; padding: 0px; margin: 0px; background: #D6E4E1;}
 table td {vertical-align: top;}
 a {cursor: pointer;}
 
-/***** Test ****/
-
-.xcontent {height: 100%; background: blue;}
 
 /***** GWT *****/
 
-.gwt-Button {white-space: nowrap;}
+.gwt-Button {font-size: 12px; line-height: 12px; white-space: nowrap; padding: 3px; margin: 0px;}
+.gwt-Hyperlink a {color: #A31E39; white-space: nowrap; text-decoration: underline;}
 
 /***** Ilarkesto *****/
 
@@ -37,28 +44,30 @@ a {cursor: pointer;}
 
 /***** Master Layout *****/
 
-.FullscreenPanel { background: #cedbf9; }
+.FullscreenPanel { }
 .Workspace {height: 100%;}
-.Workspace-header {height: 25px;}
+.Workspace-header {height: 25px; background: #485C5A}
 .Workspace-body {height: 100%;}
 .Workspace-body-west {float: left; width: 200px; height: 100%;}
 .Workspace-body-center {height: 100%;}
 
 /***** Header *****/
 
-.HeaderWidget {background: #F2F5FE url("header_bg.jpg");}
-.HeaderWidget .title {font-size: 12px; font-weight: bold; color: white; padding-left: 5px;}
-.HeaderWidget-controlPanel {line-height: 22px;}
-.HeaderWidget .ToolbarWidget {background: none; margin: 0px;}
+.HeaderWidget {Xbackground: #F2F5FE url("header_bg.jpg");}
+.HeaderWidget-title {font-size: 13px; font-weight: bold; color: white; padding-left: 5px; margin-top: 2px;}
+.HeaderWidget-user {font-size: 12px; color: white; text-align: center; margin-top: 3px;}
+.HeaderWidget .ToolbarWidget {background: none; margin: 0px; text-align: right;}
+.HeaderWidget .ToolbarWidget .FloatingFlowPanel-element {float: right;}
+.HeaderWidget .gwt-Hyperlink a {color: #D6E4E1; }
 
 /***** Sidebar *****/
 
 .NavigatorWidget {}
-.NavigatorWidget-head {height: 10px; margin: 0px 15px 0px 15px; border-bottom: 1px solid #E2EAFC;}
+.NavigatorWidget-head {height: 10px; margin: 0px 15px 0px 15px; border-bottom: 1px solid #EEF;}
 .NavigatorWidget .item {padding: 0px 15px 0px 15px; font-size: 14px;}
-.NavigatorWidget .item a {display:block; padding: 5px 3px 5px 3px; text-decoration:none; border-bottom: 1px solid #E2EAFC; color:#192666;}
-.NavigatorWidget .item a:hover {background-color:#D3DFF8;}
-.NavigatorWidget .selected .item a {background-color: #192666; color: #CEDBF9;}
+.NavigatorWidget .item a {display:block; padding: 5px 3px 5px 3px; text-decoration:none; border-bottom: 1px solid #EEF; color: #333;}
+.NavigatorWidget .item a:hover {background-color: #CFDFDC;}
+.NavigatorWidget .selected .item a {background-color: #8C9C9A; color: white;}
 
 .TrashWidget {margin: 15px 15px 0px 15px; background: #F2F5FE; padding: 5px;}
 
@@ -92,11 +101,11 @@ a {cursor: pointer;}
 
 .ButtonWidget {}
 .ButtonWidget a { display: block; font-weight: bold; padding: 3px; text-decoration: none; white-space: nowrap; font-size: 10px; line-height: 10px; }
-.ButtonWidget-enabled a { cursor: pointer;  background: #FFC20E url("button_bg.png"); border: 1px solid orange;}
-.ButtonWidget-disabled a { cursor: default; color: #888; background: #DFD2CF url("button_bg.png"); border: 1px solid gray;}
-.ButtonWidget-enabled a:hover {background: #FFD22E url("button_bg.png"); color: #009; border: 1px solid #FFB510;}
+.ButtonWidget-enabled a { color: white; background: #A31E39 url("button_bg.png"); border: 1px solid #A31E39; cursor: pointer; }
+.ButtonWidget-disabled a { color: #888; background: #DFD2CF url("button_bg.png"); cursor: default; border: 1px solid gray;}
+.ButtonWidget-enabled a:hover { color: #009; background: #FFD22E url("button_bg.png"); border: 1px solid #FFB510;}
 
-.ToolbarWidget {background: #CEDBF9; padding: 3px 0px 3px 3px;}
+.ToolbarWidget {background: #D6E4E1; padding: 3px 0px 3px 3px;}
 .ToolbarWidget .FloatingFlowPanel-element {margin-right: 3px;}
 
 /***** Block List *****/
@@ -135,6 +144,13 @@ a {cursor: pointer;}
 
 .ImpedimentBlock-open .ABlockWidget-title {background: #FDCEC5;}
 .ImpedimentBlock-closed .ABlockWidget-title {background: #DEDEDE;}
+
+/***** PagePanel *****/
+
+.PagePanel {padding: 10px; font-size: 12px; line-height: 14px;}
+.PagePanel-content {background: white; border: 1px solid #A31E39;}
+.PagePanel-header {padding: 10px; background: #A31E39; color: white; font-size: 14px; line-height: 16px;}
+.PagePanel-section {padding: 10px; }
 
 /***** Panel *****/
 
@@ -193,8 +209,7 @@ a {cursor: pointer;}
 
 /***** Widgets Tester *****/
 
-.WidgetsTesterWidget .test-section {margin: 5px; margin-bottom: 10px; clear: both; background: gray; color: black;}
-.WidgetsTesterWidget .test-section .test-content {background: white; color: black; border: 1px dotted red;}
+.WidgetsTesterWidget .test-content {background: white; color: black; border: 1px solid #AAA;}
 
 /***** Highlighting *****/
 .highlighted .ABlockWidget-title {padding: 1px; width: 100%; background: #FFC5CE; }

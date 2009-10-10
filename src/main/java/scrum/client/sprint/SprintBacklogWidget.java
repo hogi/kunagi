@@ -8,12 +8,11 @@ import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ComponentManager;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.GroupWidget;
 import scrum.client.project.Requirement;
+import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SprintBacklogWidget extends AScrumWidget {
@@ -139,11 +138,13 @@ public class SprintBacklogWidget extends AScrumWidget {
 
 		headerFields = tb.createTable();
 
-		FlowPanel view = new FlowPanel();
-		view.add(headerFields);
-		view.add(requirementList);
+		PagePanel page = new PagePanel();
+		page.addHeader("Sprint Properties");
+		page.addSection(headerFields);
+		page.addHeader("Requirements in this Sprint");
+		page.addSection(requirementList);
 
-		return new GroupWidget("Sprint Backlog", view);
+		return page;
 	}
 
 	@Override

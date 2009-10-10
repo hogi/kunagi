@@ -1,5 +1,8 @@
 package scrum.client.workspace;
 
+import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.HyperlinkWidget;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ApplicationInfo;
 import scrum.client.ScrumGwtApplication;
@@ -7,9 +10,6 @@ import scrum.client.admin.LogoutAction;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.ChangeProjectAction;
 
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -18,41 +18,30 @@ public class HeaderWidget extends AScrumWidget {
 	private Label title;
 	private Label currentUserLabel;
 
-	private ToolbarWidget toolbar;
-	private HorizontalPanel controlPanel;
-
 	@Override
 	protected Widget onInitialization() {
 		setHeight100();
 
 		title = new Label("");
-		title.setStyleName("title");
-
-		HorizontalPanel panel = new HorizontalPanel();
-		panel.setStyleName("HeaderWidget");
-		panel.setWidth("100%");
-		panel.setHeight("100%");
-		panel.add(title);
-		panel.setCellVerticalAlignment(title, HasVerticalAlignment.ALIGN_MIDDLE);
+		title.setStyleName("HeaderWidget-title");
 
 		currentUserLabel = new Label();
-		currentUserLabel.setStyleName("title");
+		currentUserLabel.setStyleName("HeaderWidget-user");
 
-		toolbar = new ToolbarWidget();
+		ToolbarWidget actions = new ToolbarWidget();
+		actions.add(new HyperlinkWidget(new LogoutAction()));
+		actions.add(new HyperlinkWidget(new ChangeProjectAction()));
 
-		controlPanel = new HorizontalPanel();
-		controlPanel.setStyleName("HeaderWidget-controlPanel");
-		controlPanel.add(currentUserLabel);
-		controlPanel.add(toolbar);
+		TableBuilder tb = new TableBuilder();
+		tb.addRow(title, currentUserLabel, actions);
 
-		panel.add(controlPanel);
-		panel.setCellHorizontalAlignment(controlPanel, HasHorizontalAlignment.ALIGN_RIGHT);
-
-		return panel;
+		return Gwt.createDiv("HeaderWidget", tb.createTable());
 	}
 
 	@Override
 	protected void onUpdate() {
+		super.onUpdate();
+
 		boolean loggedIn = cm.getAuth().isUserLoggedIn();
 
 		ApplicationInfo applicationInfo = ScrumGwtApplication.get().getApplicationInfo();
@@ -69,13 +58,6 @@ public class HeaderWidget extends AScrumWidget {
 			}
 		}
 		currentUserLabel.setText(text);
-
-		controlPanel.remove(toolbar);
-		toolbar = new ToolbarWidget();
-		toolbar.addButton(new ChangeProjectAction());
-		toolbar.addButton(new LogoutAction());
-		toolbar.update();
-		controlPanel.add(toolbar.update());
 	}
 
 }

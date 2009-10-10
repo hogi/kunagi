@@ -1,17 +1,17 @@
 package scrum.client.admin;
 
+import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ApplicationInfo;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumWidget;
-import scrum.client.common.FieldsWidget;
-import scrum.client.common.GroupWidget;
+import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -36,16 +36,19 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton(new LoginAction(this));
 
-		FieldsWidget fieldsWidget = new FieldsWidget();
-		fieldsWidget.addWidget("Username", username);
-		fieldsWidget.addWidget("Password", password);
-		fieldsWidget.addWidget(null, toolbar.update());
+		TableBuilder tb = new TableBuilder();
+		tb.setWidth(null);
 
-		FlowPanel panel = new FlowPanel();
-		panel.add(errorMessage);
-		panel.add(fieldsWidget);
+		tb.addRow(errorMessage, 2);
+		tb.addFieldRow("Username", username);
+		tb.addFieldRow("Password", password);
+		tb.addFieldRow("", new ButtonWidget(new LoginAction(this)), 2);
 
-		return Gwt.createDiv("LoginWidget", new GroupWidget("Login", panel));
+		PagePanel page = new PagePanel();
+		page.addHeader("Login");
+		page.addSection(tb.createTable());
+
+		return page;
 	}
 
 	public void setFailed() {
@@ -55,6 +58,7 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 
 	@Override
 	protected void onUpdate() {
+		super.onUpdate();
 		ApplicationInfo applicationInfo = ScrumGwtApplication.get().getApplicationInfo();
 		if (applicationInfo != null && applicationInfo.isDevelopmentStage()) {
 			username.setText("duke");

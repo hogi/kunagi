@@ -39,7 +39,7 @@ public class CommentsWidget extends AWidget {
 		widgets = new HashMap<Comment, CommentWidget>();
 		containerPanel = new FlowPanel();
 		toolbar = new ToolbarWidget();
-		toolbar.addButton(new CreateCommentAction(parent, this));
+		toolbar.addHyperlink(new CreateCommentAction(parent, this));
 
 		ScrollPanel scroller = new ScrollPanel(containerPanel);
 		containerPanel.setStyleName("CommentsWidget");
