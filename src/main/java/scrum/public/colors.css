@@ -1,0 +1,137 @@
+/***** Constants *****
+
+--- colors ---
+
+http://www.colorcombos.com/color-scheme-130.html
+A31E39
+485C5A
+8C9C9A
+9DB2B1
+BFCFCC
+D6E4E1
+
+*/
+
+
+/***** Default HTML *****/
+
+html, body {background: #CAFFBF;}
+
+/***** GWT *****/
+
+.gwt-Hyperlink a {color: #2956B2;}
+
+/***** Ilarkesto *****/
+
+.BugMarker {border: 1px solid red; background: #FEE; color: darkred;}
+
+/***** Master Layout *****/
+
+.Workspace-header {background: #41924B;}
+.Workspace-body-west {}
+
+/***** Header *****/
+
+.HeaderWidget-title {color: white;}
+.HeaderWidget-user {color: white;}
+.HeaderWidget .ToolbarWidget {background: none;}
+.HeaderWidget .gwt-Hyperlink a {color: #D6E4E1; }
+
+/***** Sidebar *****/
+
+.NavigatorWidget-head {border-bottom: 1px solid #FFF492;}
+.NavigatorWidget .item a {border-bottom: 1px solid #FFF492; color: #FE8402;}
+.NavigatorWidget .item a:hover {background-color: #FFD;}
+.NavigatorWidget .selected .item a {background-color: #FFB; color: #FE6400;}
+
+.TrashWidget {background: #F2F5FE;}
+
+.ClipboardWidget {background: #F2F5FE;}
+.ClipboardItemWidget {background: white; border: 1px solid black;}
+
+.ChatWidget-outputScroller {background: #F2F5FE;}
+.ChatWidget-output .author {color: green;}
+.ChatWidget-output .author-system {color: red;}
+.ChatWidget-output .author-me {color: gray;}
+
+.CommentWidget-header-date {color: #333;}
+
+/***** PagePanel *****/
+
+.PagePanel-header {background: #51A5BA; color: white;}
+.PagePanel-content {background: white; border: 1px solid #51A5BA;}
+
+.Workspace-body-west .PagePanel-header {background: #FE8402; color: white;}
+.Workspace-body-west .PagePanel-content {background: white; border: 1px solid #FE8402;}
+
+/***** Toolbar *****/
+
+.ButtonWidget {}
+.ButtonWidget-enabled a { color: white; background: #A31E39 url("button_bg.png"); border: 1px solid #A31E39; }
+.ButtonWidget-disabled a { color: #888; background: #DFD2CF url("button_bg.png"); border: 1px solid gray;}
+.ButtonWidget-enabled a:hover { color: #009; background: #FFD22E url("button_bg.png"); border: 1px solid #FFB510;}
+
+.ToolbarWidget {background: #D6E4E1;}
+
+/***** Block List *****/
+
+.ABlockWidget {color: black;}
+
+.BlockDndMarkerWidget-active {background: #A31E39;}
+
+.ABlockWidget-block {background: white;}
+.ABlockWidget-block-selected {border: 0px solid orange;}
+.ABlockWidget-title {background: #C8D7E3; }
+.ABlockWidget-content-expanded {border: 1px solid #C8D7E3;}
+
+.RequirementBlock-closed .ABlockWidget-title {background: #CEFDC5;}
+.RequirementBlock-inCurrentSprint .ABlockWidget-title {background: #FDCEC5;}
+.RequirementBlock-invalidForSprint .ABlockWidget-title {background: #DEDEDE;}
+
+.TaskBlock-taskClosed .ABlockWidget-title {background: #CEFDC5;}
+
+.RequirementInSprintBlock-done .ABlockWidget-title {background: #CEFDC5;}
+.TaskInRequirementBlock-taskClosed .ABlockWidget-title {background: #CEFDC5;}
+
+.ImpedimentBlock-open .ABlockWidget-title {background: #FDCEC5;}
+.ImpedimentBlock-closed .ABlockWidget-title {background: #DEDEDE;}
+
+
+/***** Whiteboard *****/
+
+.WhiteboardWidget-columnLabel {background: #51A5BA; color: white;}
+.WhiteboardWidget-open {background: #FFE5E5; }
+.WhiteboardWidget-owned {background: #FFFFE5;}
+.WhiteboardWidget-done {background: #E5FFE5; }
+
+/***** Group *****/
+
+.GroupWidget {border: 3px solid orange;}
+.GroupWidget-title {background: #192666; color: #DEE5FD; }
+
+/***** Fields *****/
+
+.fieldLabel {color: gray; }
+.AFieldValueWidget {background: white; border: 1px dotted white;}
+.FieldsWidget-fieldLabel {color: gray; }
+
+/***** Editables *****/
+
+.AViewEditWidget-viewer {background: #FAFDFF; border: 1px dotted #DDD;}
+
+/***** Drag & Drop *****/
+
+.dnd-drop-allowed {background: #192666;}
+
+/***** Widgets Tester *****/
+
+.WidgetsTesterWidget .test-content {background: white; color: black; border: 1px solid #AAA;}
+
+/***** Highlighting *****/
+.highlighted .ABlockWidget-title {background: #FFC5CE; }
+
+/***** other *****/
+.WaitWidget {border: 1px solid #DEE5FD; background: #EEF5FF;}
+.LoginWidget {border: 1px solid #DEE5FD; background: #EEF5FF;}
+.LoginWidget-errorMessage {color: red; border: 1px solid red; background: #FFEFEF;}
+

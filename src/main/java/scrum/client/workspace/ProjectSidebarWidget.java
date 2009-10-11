@@ -6,7 +6,6 @@ import scrum.client.ComponentManager;
 import scrum.client.collaboration.ChatWidget;
 import scrum.client.communication.UsersStatusWidget;
 
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectSidebarWidget extends AWidget {
@@ -23,15 +22,12 @@ public class ProjectSidebarWidget extends AWidget {
 		trash = new TrashWidget();
 		// clipboard = new ClipboardWidget();
 
-		FlowPanel sidebar = new FlowPanel();
-		sidebar.setStyleName("ProjectSidebarWidget");
-		sidebar.add(getNavigator());
-		sidebar.add(trash);
-		// sidebar.add(clipboard);
-		sidebar.add(getUsersStatus());
-		sidebar.add(getChat());
-
-		return sidebar;
+		PagePanel page = new PagePanel();
+		page.addSection(getNavigator());
+		page.addSection(trash);
+		page.addSection(getUsersStatus());
+		page.addSection(getChat());
+		return page;
 	}
 
 	@Override

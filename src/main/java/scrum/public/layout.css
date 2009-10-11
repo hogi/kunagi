@@ -1,0 +1,162 @@
+/***** Constants *****
+
+--- dimensions ---
+
+header-height: 25px
+sidebar-width: 200px
+
+*/
+
+
+/***** Default HTML *****/
+
+html, body {height: 100%; padding: 0px; margin: 0px;}
+table td {vertical-align: top;}
+a {cursor: pointer;}
+
+/***** GWT *****/
+
+.gwt-Button {font-size: 12px; line-height: 12px; white-space: nowrap; padding: 3px; margin: 0px;}
+.gwt-Hyperlink a {white-space: nowrap; text-decoration: underline;}
+
+/***** Ilarkesto *****/
+
+.AWidget-height100 {height: 100%;}
+.ImageAnchor {}
+.ImageAnchor img {float: left; margin-right: 3px;}
+.ImageAnchor .text { display: inline;}
+.BugMarker {display: block; margin: 3px; padding: 3px; font-weight: bold; font-size: 10px; }
+.FloatingFlowPanel-element {float: left;}
+
+.floatClear {clear: both;}
+
+/***** Master Layout *****/
+
+.FullscreenPanel { }
+.Workspace {height: 100%;}
+.Workspace-header {height: 25px;}
+.Workspace-body {height: 100%;}
+.Workspace-body-west {float: left; width: 200px; height: 100%;}
+.Workspace-body-center {height: 100%;}
+
+/***** Header *****/
+
+.HeaderWidget-title {font-size: 13px; font-weight: bold; padding-left: 5px; margin-top: 2px;}
+.HeaderWidget-user {font-size: 12px; text-align: center; margin-top: 3px;}
+.HeaderWidget .ToolbarWidget {margin: 0px; text-align: right;}
+.HeaderWidget .ToolbarWidget .FloatingFlowPanel-element {float: right;}
+
+/***** Sidebar *****/
+
+.NavigatorWidget {}
+.NavigatorWidget-head {}
+.NavigatorWidget .item {font-size: 14px;}
+.NavigatorWidget .item a {display:block; padding: 5px 3px 5px 3px; text-decoration:none;}
+
+.TrashWidget {margin: 15px 15px 0px 15px; padding: 5px;}
+
+.ClipboardWidget {margin: 20px 15px 0px 15px; height: 100px; padding: 5px;}
+.ClipboardItemWidget {margin-bottom: 5px;}
+
+.ChatWidget {margin: 15px;}
+.ChatWidget-outputScroller {padding: 5px;}
+.ChatWidget-output a {text-decoration: underline;}
+.ChatWidget-output p {margin: 3px 0px 0px 0px;}
+.ChatWidget-output .author {font-style: italic;}
+.ChatWidget-output .author-system {font-style: italic;}
+.ChatWidget-output .author-me {font-style: italic;}
+.ChatWidget-input {margin-top: 5px; width: 97%;}
+
+.UsersStatusWidget {margin: 15px;}
+.UserStatusWidget {text-decoration: line-through; font-style: italic;}
+.UserStatusWidget-online {text-decoration: none; font-style: normal;}
+
+.CommentsWidget {Xmax-height: 500px;}
+.CommentWidget {margin-top: 5px;}
+.CommentWidget-header-author {float: left; margin: 0px 5px 0px 2px;}
+
+.TaskRemainingWorkWidget {margin-left: 3px;}
+
+.RequirementEstimatedWorkWidget {margin-left: 3px;}
+
+
+/***** Toolbar *****/
+
+.ButtonWidget a { display: block; font-weight: bold; padding: 3px; text-decoration: none; white-space: nowrap; font-size: 10px; line-height: 10px; }
+.ButtonWidget-enabled a { cursor: pointer; }
+.ButtonWidget-disabled a { cursor: default;}
+
+.ToolbarWidget {padding: 3px 0px 3px 3px;}
+.ToolbarWidget .FloatingFlowPanel-element {margin-right: 3px;}
+
+/***** Block List *****/
+
+.BlockListWidget {min-height: 100px;}
+.WhiteboardWidget-requirement-list {padding: 0px; min-height: 5px;}
+
+
+.BlockDndMarkerWidget {height: 2px;}
+.BlockDndMarkerWidget-active {height: 2px;}
+
+.ABlockWidget-title {padding: 1px; width: 100%;}
+.ABlockWidget-title-label {font-size: 12px; line-height: 16px; cursor: pointer; display: block;}
+.ABlockWidget-title .ToolbarWidget {margin: 0px;}
+.ABlockWidget-title .ButtonWidget {margin-left: 15px;}
+.ABlockWidget-title .ButtonWidget a {font-size: 8px; line-height: 8px;}
+.ABlockWidget-title-menu {margin-left: 15px; border: 0px;}
+.ABlockWidget-title-menu .gwt-MenuItem { font-size: 9px;}
+.ABlockWidget-content-expanded {padding: 10px;}
+
+
+.ABlockWidget-block-title .UserOnBlockWidget {margin-right: 5px;}
+
+/***** PagePanel *****/
+
+.PagePanel {padding: 10px; font-size: 12px; line-height: 14px;}
+.PagePanel-spacer {height: 10px;}
+.PagePanel-header {padding: 10px; font-size: 14px; line-height: 16px; font-family: "georgia",serif;}
+.PagePanel-section {margin: 0px 10px;}
+
+/***** Whiteboard *****/
+
+.WhiteboardWidget-columnLabel {padding: 10px; font-size: 14px; line-height: 16px; font-family: "georgia",serif;}
+.WhiteboardWidget-open {padding: 5px;}
+.WhiteboardWidget-owned {padding: 5px;}
+.WhiteboardWidget-done {padding: 5px;}
+
+/***** Wiki *****/
+
+.WikiWidget-navig {margin: 10px 0px;}
+
+/***** UserHoverPanel *****/
+
+.UserHoverPanel-label {padding: 5px; font-size: 16px; cursor: default;}
+
+/***** Group *****/
+
+.GroupWidget-title {padding: 5px; font-size: 16px; font-family: "georgia",serif;}
+.GroupWidget-content {padding: 5px;}
+
+/***** Fields *****/
+
+.fieldLabel {line-height: 22px; white-space: nowrap;}
+.AFieldValueWidget {min-width: 16px; min-height: 16px; display: block; padding: 3px;}
+.FieldsWidget-fieldLabel {line-height: 22px; white-space: nowrap;}
+
+/***** Editables *****/
+
+.AViewEditWidget-viewer {cursor: pointer; min-width: 16px; min-height: 16px; display: block; padding: 3px;}
+
+.AIntegerViewEditWidget .ButtonWidget a {font-size: 8px; line-height: 8px;}
+.ARichtextViewEditWidget-editor {height: 100px; width: 96%; }
+.AEditableTextareaWidget-editorPanel {width: 100%;}
+.Integer-editor {width: 10%;}
+
+/***** Highlighting *****/
+.highlighted .ABlockWidget-title {padding: 1px; width: 100%; }
+
+/***** other *****/
+.WaitWidget {margin: 200px 0px; font-size: 14px;}
+.LoginWidget {width: 230px; margin: 10px auto;}
+.LoginWidget-errorMessage {font-size: 12px; padding: 5px; margin: 5px;}
+

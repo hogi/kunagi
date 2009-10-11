@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class PublicContext extends AScrumComponent {
 
+	private PagePanel sidebar;
 	private SwitchingNavigatorWidget navigator;
 	private LoginWidget login;
 
@@ -30,10 +31,12 @@ public class PublicContext extends AScrumComponent {
 			navigator.addItem((Image) null, "Widgets Tests", new WidgetsTesterWidget());
 		}
 
+		sidebar = new PagePanel();
+		sidebar.addSection(navigator);
 	}
 
 	public void activate() {
-		cm.getUi().show(navigator, login);
+		cm.getUi().show(sidebar, login);
 	}
 
 	private Widget createRegisterWidget() {
