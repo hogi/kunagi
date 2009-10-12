@@ -2,20 +2,14 @@
 
 --- colors ---
 
-http://www.colorcombos.com/color-scheme-130.html
-A31E39
-485C5A
-8C9C9A
-9DB2B1
-BFCFCC
-D6E4E1
+http://www.colorcombos.com/color-scheme-203.html
 
 */
 
 
 /***** Default HTML *****/
 
-html, body {background: #CAFFBF;}
+html, body {background: #E9EEF6;}
 
 /***** GWT *****/
 
@@ -27,7 +21,7 @@ html, body {background: #CAFFBF;}
 
 /***** Master Layout *****/
 
-.Workspace-header {background: #41924B;}
+.Workspace-header {background: #667B99;}
 .Workspace-body-west {}
 
 /***** Header *****/
@@ -39,10 +33,10 @@ html, body {background: #CAFFBF;}
 
 /***** Sidebar *****/
 
-.NavigatorWidget-head {border-bottom: 1px solid #FFF492;}
-.NavigatorWidget .item a {border-bottom: 1px solid #FFF492; color: #FE8402;}
-.NavigatorWidget .item a:hover {background-color: #FFD;}
-.NavigatorWidget .selected .item a {background-color: #FFB; color: #FE6400;}
+.NavigatorWidget-head {border-bottom: 1px solid #D9DEE6;}
+.NavigatorWidget .item a {border-bottom: 1px solid #D9DEE6; color: #465B79;}
+.NavigatorWidget .item a:hover {background-color: #CCD5E6;}
+.NavigatorWidget .selected .item a {background-color: #AFBBD2;}
 
 .TrashWidget {background: #F2F5FE;}
 
@@ -58,11 +52,11 @@ html, body {background: #CAFFBF;}
 
 /***** PagePanel *****/
 
-.PagePanel-header {background: #51A5BA; color: white;}
-.PagePanel-content {background: white; border: 1px solid #51A5BA;}
+.PagePanel-header {background: #FFF7F0; color: #FF6637;}
+.PagePanel-content {background: white; border: 1px solid #D9DEE6;}
 
 .Workspace-body-west .PagePanel-header {background: #FE8402; color: white;}
-.Workspace-body-west .PagePanel-content {background: white; border: 1px solid #FE8402;}
+.Workspace-body-west .PagePanel-content {background: #E9EEF6; border: 0px;}
 
 /***** Toolbar *****/
 
@@ -75,14 +69,12 @@ html, body {background: #CAFFBF;}
 
 /***** Block List *****/
 
-.ABlockWidget {color: black;}
-
 .BlockDndMarkerWidget-active {background: #A31E39;}
 
 .ABlockWidget-block {background: white;}
 .ABlockWidget-block-selected {border: 0px solid orange;}
-.ABlockWidget-title {background: #C8D7E3; }
-.ABlockWidget-content-expanded {border: 1px solid #C8D7E3;}
+.ABlockWidget-title {background: #E9EEF6; }
+.ABlockWidget-content-expanded {border: 1px solid #E9EEF6;}
 
 .RequirementBlock-closed .ABlockWidget-title {background: #CEFDC5;}
 .RequirementBlock-inCurrentSprint .ABlockWidget-title {background: #FDCEC5;}
@@ -99,10 +91,10 @@ html, body {background: #CAFFBF;}
 
 /***** Whiteboard *****/
 
-.WhiteboardWidget-columnLabel {background: #51A5BA; color: white;}
-.WhiteboardWidget-open {background: #FFE5E5; }
-.WhiteboardWidget-owned {background: #FFFFE5;}
-.WhiteboardWidget-done {background: #E5FFE5; }
+.WhiteboardWidget-columnLabel {background: #FFF7F0; color: #FF6637;}
+.WhiteboardWidget-open .ABlockWidget-title {background: #FDCEC5;}
+.WhiteboardWidget-owned .ABlockWidget-title {background: #DEDEDE;}
+.WhiteboardWidget-done .ABlockWidget-title {background: #CEFDC5;}
 
 /***** Group *****/
 
