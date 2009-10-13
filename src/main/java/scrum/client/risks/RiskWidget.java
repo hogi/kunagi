@@ -2,9 +2,9 @@ package scrum.client.risks;
 
 import ilarkesto.gwt.client.ADropdownViewEditWidget;
 import ilarkesto.gwt.client.AFieldValueWidget;
-import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
@@ -24,58 +24,9 @@ public class RiskWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
 
-		fields.add("Label", new ATextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(risk.getLabel());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(risk.getLabel());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				risk.setLabel(getEditorText());
-			}
-
-		});
-		fields.add("Description", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(risk.getDescription());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(risk.getDescription());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				risk.setDescription(getEditorText());
-			}
-		});
-		fields.add("Mitigation Plans", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(risk.getMitigationPlans());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(risk.getMitigationPlans());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				risk.setMitigationPlans(getEditorText());
-			}
-		});
+		fields.add("Label", new TextPropertyEditorWidget(risk.labelEditor));
+		fields.add("Description", new RichtextPropertyEditorWidget(risk.descriptionEditor));
+		fields.add("Mitigation Plans", new RichtextPropertyEditorWidget(risk.mitigationPlansEditor));
 		fields.add("Impact", new ADropdownViewEditWidget() {
 
 			@Override

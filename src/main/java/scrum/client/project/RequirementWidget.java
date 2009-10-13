@@ -2,10 +2,9 @@ package scrum.client.project;
 
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
-import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.GwtLogger;
+import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.FieldsWidget;
 
@@ -34,44 +33,9 @@ public class RequirementWidget extends AWidget {
 
 		FieldsWidget fields = new FieldsWidget();
 
-		if (showLabel) fields.add("Label", new ATextViewEditWidget() {
+		if (showLabel) fields.add("Label", new TextPropertyEditorWidget(requirement.labelEditor));
 
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(requirement.getLabel());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(requirement.getLabel());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				requirement.setLabel(getEditorText());
-			}
-
-		});
-
-		fields.add("Description", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(requirement.getDescription());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(requirement.getDescription());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				GwtLogger.DEBUG("Text submitted: <" + getEditorText() + ">");
-				requirement.setDescription(getEditorText());
-			}
-
-		});
+		fields.add("Description", new RichtextPropertyEditorWidget(requirement.descriptionEditor));
 
 		fields.add("Qualities", new AMultiSelectionViewEditWidget<Quality>() {
 
@@ -92,24 +56,7 @@ public class RequirementWidget extends AWidget {
 			}
 		});
 
-		fields.add("Test", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(requirement.getTestDescription());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(requirement.getTestDescription());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				requirement.setTestDescription(getEditorText());
-			}
-
-		});
+		fields.add("Test", new RichtextPropertyEditorWidget(requirement.testDescriptionEditor));
 
 		fields.add("Estimated Work", new RequirementEstimatedWorkWidget(requirement));
 

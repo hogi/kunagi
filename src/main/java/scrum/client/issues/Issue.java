@@ -2,18 +2,21 @@ package scrum.client.issues;
 
 import ilarkesto.gwt.client.Date;
 
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import scrum.client.project.Project;
 
 public class Issue extends GIssue {
 
-	public static final String[] TYPES = new String[] { "issue", "bug", "requirement", "quality", "idea" };
-	public static final String INIT_TYPE = TYPES[0];
+	public static final String INIT_TYPE = Types.ISSUE;
 
 	public static final String INIT_LABEL = "New Issue";
 	public static final String REFERENCE_PREFIX = "iss";
+
+	public static final IssueTypeLabelProvider TYPE_LABEL_PROVIDER = new IssueTypeLabelProvider();
 
 	public Issue(Project project) {
 		setLabel(INIT_LABEL);
@@ -30,16 +33,21 @@ public class Issue extends GIssue {
 		return REFERENCE_PREFIX + getNumber();
 	}
 
+	@Override
+	public List<String> getTypeOptions() {
+		return Types.ALL;
+	}
+
 	public String getTypeLabel() {
-		return getType(); // TODO map to labels
+		return TYPE_LABEL_PROVIDER.getLabel(getType());
 	}
 
 	public boolean isTypeRequirement() {
-		return TYPES[2].equals(getType());
+		return Types.REQUIREMENT.equals(getType());
 	}
 
 	public boolean isTypeQuality() {
-		return TYPES[3].equals(getType());
+		return Types.QUALITY.equals(getType());
 	}
 
 	@Override
@@ -60,4 +68,15 @@ public class Issue extends GIssue {
 			return DATE_COMPARATOR.compare(b, a);
 		}
 	};
+
+	public static class Types {
+
+		public static final String ISSUE = "issue";
+		public static final String BUG = "bug";
+		public static final String REQUIREMENT = "requirement";
+		public static final String QUALITY = "quality";
+		public static final String IDEA = "idea";
+
+		public static final List<String> ALL = Arrays.asList(ISSUE, BUG, REQUIREMENT, QUALITY, IDEA);
+	}
 }

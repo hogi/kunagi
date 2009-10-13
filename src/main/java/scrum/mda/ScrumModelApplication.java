@@ -196,7 +196,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addReference("sprint", getSprintModel());
 			requirementModel.addProperty("number", int.class);
 			requirementModel.addSetReference("qualitys", getQualityModel());
-			requirementModel.addProperty("label", String.class);
+			requirementModel.addProperty("label", String.class).setMandatory(true);
 			requirementModel.addProperty("description", String.class);
 			requirementModel.addProperty("testDescription", String.class);
 			requirementModel.addProperty("estimatedWork", Integer.class);
@@ -222,7 +222,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			qualityModel.setGwtSupport(true);
 			qualityModel.addReference("project", getProjectModel()).setMaster(true);
 			qualityModel.addProperty("number", int.class);
-			qualityModel.addProperty("label", String.class);
+			qualityModel.addProperty("label", String.class).setMandatory(true);
 			qualityModel.addProperty("description", String.class);
 			qualityModel.addProperty("testDescription", String.class);
 			getApplicationModel().addCreateAction(qualityModel);
@@ -238,7 +238,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			sprintModel = createEntityModel("Sprint", "sprint");
 			sprintModel.setGwtSupport(true);
 			sprintModel.addReference("project", getProjectModel()).setMaster(true);
-			sprintModel.addProperty("label", String.class);
+			sprintModel.addProperty("label", String.class).setMandatory(true);
 			sprintModel.addProperty("goal", String.class);
 			sprintModel.addProperty("begin", Date.class);
 			sprintModel.addProperty("end", Date.class);
@@ -267,7 +267,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			taskModel.setGwtSupport(true);
 			taskModel.addReference("requirement", getRequirementModel()).setMaster(true);
 			taskModel.addProperty("number", int.class);
-			taskModel.addProperty("label", String.class);
+			taskModel.addProperty("label", String.class).setMandatory(true);
 			taskModel.addProperty("description", String.class);
 			taskModel.addProperty("remainingWork", int.class);
 			taskModel.addProperty("burnedWork", int.class);
@@ -311,7 +311,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			riskModel.setGwtSupport(true);
 			riskModel.addReference("project", getProjectModel()).setMaster(true);
 			riskModel.addProperty("number", int.class);
-			riskModel.addProperty("label", String.class).setSearchable(true);
+			riskModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);
 			riskModel.addProperty("description", String.class).setSearchable(true);
 			riskModel.addProperty("mitigationPlans", String.class).setSearchable(true);
 			riskModel.addProperty("probability", int.class);
@@ -330,7 +330,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel = createEntityModel("User", "admin");
 			userModel.setGwtSupport(true);
 			userModel.setSuperbean(super.getUserModel());
-			userModel.addProperty("name", String.class).setSearchable(true);
+			userModel.addProperty("name", String.class).setMandatory(true).setSearchable(true);
 			userModel.addProperty("admin", boolean.class);
 			userModel.addProperty("email", String.class).setSearchable(true);
 			userModel.addReference("currentProject", getProjectModel());
@@ -362,7 +362,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.setGwtSupport(true);
 			issueModel.addReference("project", getProjectModel()).setMaster(true);
 			issueModel.addProperty("number", int.class);
-			issueModel.addProperty("type", String.class).setMandatory(true);
+			issueModel.addProperty("type", String.class).setOptionRestricted(true).setMandatory(true);
 			issueModel.addProperty("date", Date.class).setMandatory(true);
 			issueModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);
 			issueModel.addProperty("description", String.class).setSearchable(true);
@@ -382,7 +382,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			chatMessageModel.setGwtSupport(true);
 			chatMessageModel.addReference("project", getProjectModel()).setMaster(true);
 			chatMessageModel.addReference("author", getUserModel());
-			chatMessageModel.addProperty("text", String.class);
+			chatMessageModel.addProperty("text", String.class).setMandatory(true);
 			chatMessageModel.addProperty("dateAndTime", DateAndTime.class);
 		}
 		return chatMessageModel;
@@ -397,7 +397,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			getApplicationModel().addCreateAction(commentModel);
 			commentModel.addReference("parent", getEntityModel()).setMaster(true);
 			commentModel.addReference("author", getUserModel());
-			commentModel.addProperty("text", String.class);
+			commentModel.addProperty("text", String.class).setMandatory(true);
 			commentModel.addProperty("dateAndTime", DateAndTime.class);
 		}
 		return commentModel;

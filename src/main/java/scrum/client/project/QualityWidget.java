@@ -1,8 +1,8 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
@@ -21,62 +21,9 @@ public class QualityWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
-		fields.add("Label", new ATextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(quality.getLabel());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(quality.getLabel());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				quality.setLabel(getEditorText());
-			}
-
-		});
-
-		fields.add("Description", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(quality.getDescription());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(quality.getDescription());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				quality.setDescription(getEditorText());
-			}
-
-		});
-
-		fields.add("Test", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(quality.getTestDescription());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(quality.getTestDescription());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				quality.setTestDescription(getEditorText());
-			}
-
-		});
+		fields.add("Label", new TextPropertyEditorWidget(quality.labelEditor));
+		fields.add("Description", new RichtextPropertyEditorWidget(quality.descriptionEditor));
+		fields.add("Test", new RichtextPropertyEditorWidget(quality.testDescriptionEditor));
 
 		return Gwt.createFlowPanel(fields, new CommentsWidget(quality));
 	}

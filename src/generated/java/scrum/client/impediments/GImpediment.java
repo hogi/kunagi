@@ -107,6 +107,23 @@ public abstract class GImpediment
         return equals(this.label, label);
     }
 
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor labelEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getLabel();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setLabel(value);
+        }
+
+
+        @Override
+        public boolean isMandatory() { return true; }
+    };
+
     // --- date ---
 
     private ilarkesto.gwt.client.Date date ;
@@ -145,6 +162,20 @@ public abstract class GImpediment
         return equals(this.description, description);
     }
 
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor descriptionEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getDescription();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setDescription(value);
+        }
+
+    };
+
     // --- solution ---
 
     private java.lang.String solution ;
@@ -163,6 +194,20 @@ public abstract class GImpediment
     public final boolean isSolution(java.lang.String solution) {
         return equals(this.solution, solution);
     }
+
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor solutionEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getSolution();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setSolution(value);
+        }
+
+    };
 
     // --- closed ---
 

@@ -113,6 +113,20 @@ public abstract class GProjectUserConfig
         return equals(this.color, color);
     }
 
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor colorEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getColor();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setColor(value);
+        }
+
+    };
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {

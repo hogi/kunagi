@@ -2,6 +2,9 @@ package scrum.client.project;
 
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
+import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
@@ -26,41 +29,8 @@ public class ProjectOverviewWidget extends AScrumWidget {
 
 		FieldsWidget fields = new FieldsWidget();
 
-		fields.add("Label", new ATextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(project.getLabel());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(project.getLabel());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				project.setLabel(getEditorText());
-			}
-		});
-
-		fields.add("Description", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(project.getDescription());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(project.getDescription());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				project.setDescription(getEditorText());
-			}
-		});
+		fields.add("Label", new TextPropertyEditorWidget(project.labelEditor));
+		fields.add("Description", new RichtextPropertyEditorWidget(project.descriptionEditor));
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Project Properties");

@@ -1,9 +1,9 @@
 package scrum.client.impediments;
 
 import ilarkesto.gwt.client.ADateViewEditWidget;
-import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
@@ -23,24 +23,7 @@ public class ImpedimentWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
 
-		fields.add("Label", new ATextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(impediment.getLabel());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(impediment.getLabel());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				impediment.setLabel(getEditorText());
-			}
-
-		});
+		fields.add("Label", new TextPropertyEditorWidget(impediment.labelEditor));
 		fields.add("Date", new ADateViewEditWidget() {
 
 			@Override
@@ -58,40 +41,8 @@ public class ImpedimentWidget extends AScrumWidget {
 				impediment.setDate(getEditorValue());
 			}
 		});
-		fields.add("Description", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(impediment.getDescription());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(impediment.getDescription());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				impediment.setDescription(getEditorText());
-			}
-		});
-		fields.add("Solution", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(impediment.getSolution());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(impediment.getSolution());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				impediment.setSolution(getEditorText());
-			}
-		});
+		fields.add("Description", new RichtextPropertyEditorWidget(impediment.descriptionEditor));
+		fields.add("Solution", new RichtextPropertyEditorWidget(impediment.solutionEditor));
 
 		return Gwt.createFlowPanel(fields, new CommentsWidget(impediment));
 	}

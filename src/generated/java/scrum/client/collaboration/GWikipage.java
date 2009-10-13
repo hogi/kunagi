@@ -88,6 +88,23 @@ public abstract class GWikipage
         return equals(this.name, name);
     }
 
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor nameEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getName();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setName(value);
+        }
+
+
+        @Override
+        public boolean isMandatory() { return true; }
+    };
+
     // --- text ---
 
     private java.lang.String text ;
@@ -106,6 +123,20 @@ public abstract class GWikipage
     public final boolean isText(java.lang.String text) {
         return equals(this.text, text);
     }
+
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor textEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getText();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setText(value);
+        }
+
+    };
 
     // --- update properties by map ---
 

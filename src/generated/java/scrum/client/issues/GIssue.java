@@ -103,9 +103,32 @@ public abstract class GIssue
         return (Issue)this;
     }
 
+    public abstract List<java.lang.String> getTypeOptions();
+
     public final boolean isType(java.lang.String type) {
         return equals(this.type, type);
     }
+
+    public transient ilarkesto.gwt.client.editor.AOptionPropertyEditor<String> typeEditor = new ilarkesto.gwt.client.editor.AOptionPropertyEditor<String>() {
+
+        @Override
+        public String getValue() {
+            return getType();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setType(value);
+        }
+
+        @Override
+        public List<String> getOptions() {
+            return getTypeOptions();
+        }
+
+        @Override
+        public boolean isMandatory() { return true; }
+    };
 
     // --- date ---
 
@@ -145,6 +168,23 @@ public abstract class GIssue
         return equals(this.label, label);
     }
 
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor labelEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getLabel();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setLabel(value);
+        }
+
+
+        @Override
+        public boolean isMandatory() { return true; }
+    };
+
     // --- description ---
 
     private java.lang.String description ;
@@ -163,6 +203,20 @@ public abstract class GIssue
     public final boolean isDescription(java.lang.String description) {
         return equals(this.description, description);
     }
+
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor descriptionEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getDescription();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setDescription(value);
+        }
+
+    };
 
     // --- update properties by map ---
 

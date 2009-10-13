@@ -113,6 +113,23 @@ public abstract class GChatMessage
         return equals(this.text, text);
     }
 
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor textEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getText();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setText(value);
+        }
+
+
+        @Override
+        public boolean isMandatory() { return true; }
+    };
+
     // --- dateAndTime ---
 
     private ilarkesto.gwt.client.DateAndTime dateAndTime ;

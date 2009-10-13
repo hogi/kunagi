@@ -107,6 +107,23 @@ public abstract class GRisk
         return equals(this.label, label);
     }
 
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor labelEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getLabel();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setLabel(value);
+        }
+
+
+        @Override
+        public boolean isMandatory() { return true; }
+    };
+
     // --- description ---
 
     private java.lang.String description ;
@@ -126,6 +143,20 @@ public abstract class GRisk
         return equals(this.description, description);
     }
 
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor descriptionEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getDescription();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setDescription(value);
+        }
+
+    };
+
     // --- mitigationPlans ---
 
     private java.lang.String mitigationPlans ;
@@ -144,6 +175,20 @@ public abstract class GRisk
     public final boolean isMitigationPlans(java.lang.String mitigationPlans) {
         return equals(this.mitigationPlans, mitigationPlans);
     }
+
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor mitigationPlansEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getMitigationPlans();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setMitigationPlans(value);
+        }
+
+    };
 
     // --- probability ---
 

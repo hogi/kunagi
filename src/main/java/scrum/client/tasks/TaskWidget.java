@@ -2,10 +2,10 @@ package scrum.client.tasks;
 
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
-import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.TableBuilder;
+import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.sprint.Task;
 
@@ -25,43 +25,9 @@ public class TaskWidget extends AWidget {
 
 		TableBuilder tb = new TableBuilder();
 
-		tb.addFieldRow("Label", new ATextViewEditWidget() {
+		tb.addFieldRow("Label", new TextPropertyEditorWidget(task.labelEditor), 3);
 
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(task.getLabel());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(task.getLabel());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				task.setLabel(getEditorText());
-			}
-
-		}, 3);
-
-		tb.addFieldRow("Description", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(task.getDescription());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(task.getDescription());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				task.setDescription(getEditorText());
-			}
-
-		}, 3);
+		tb.addFieldRow("Description", new RichtextPropertyEditorWidget(task.descriptionEditor), 3);
 
 		tb.addField("Burned Work", new AIntegerViewEditWidget() {
 

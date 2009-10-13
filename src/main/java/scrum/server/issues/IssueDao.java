@@ -8,8 +8,8 @@ public class IssueDao extends GIssueDao {
 		Issue issue = new Issue();
 		issue.setProject(project);
 		issue.setLabel("Issue " + variant);
-		if (variant < Issue.TYPES.length) {
-			issue.setType(Issue.TYPES[variant]);
+		if (variant < scrum.client.issues.Issue.Types.ALL.size()) {
+			issue.setType(scrum.client.issues.Issue.Types.ALL.get(variant));
 		} else {
 			issue.setType(scrum.client.issues.Issue.INIT_TYPE);
 		}

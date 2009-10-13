@@ -63,6 +63,23 @@ public abstract class GUser
         return equals(this.name, name);
     }
 
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor nameEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getName();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setName(value);
+        }
+
+
+        @Override
+        public boolean isMandatory() { return true; }
+    };
+
     // --- admin ---
 
     private boolean admin ;
@@ -100,6 +117,20 @@ public abstract class GUser
     public final boolean isEmail(java.lang.String email) {
         return equals(this.email, email);
     }
+
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor emailEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getEmail();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setEmail(value);
+        }
+
+    };
 
     // --- currentProject ---
 
@@ -144,6 +175,20 @@ public abstract class GUser
     public final boolean isColor(java.lang.String color) {
         return equals(this.color, color);
     }
+
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor colorEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getColor();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setColor(value);
+        }
+
+    };
 
     // --- update properties by map ---
 

@@ -88,6 +88,23 @@ public abstract class GSprint
         return equals(this.label, label);
     }
 
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor labelEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getLabel();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setLabel(value);
+        }
+
+
+        @Override
+        public boolean isMandatory() { return true; }
+    };
+
     // --- goal ---
 
     private java.lang.String goal ;
@@ -106,6 +123,20 @@ public abstract class GSprint
     public final boolean isGoal(java.lang.String goal) {
         return equals(this.goal, goal);
     }
+
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor goalEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getGoal();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setGoal(value);
+        }
+
+    };
 
     // --- begin ---
 

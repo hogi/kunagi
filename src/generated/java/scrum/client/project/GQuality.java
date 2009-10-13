@@ -107,6 +107,23 @@ public abstract class GQuality
         return equals(this.label, label);
     }
 
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor labelEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getLabel();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setLabel(value);
+        }
+
+
+        @Override
+        public boolean isMandatory() { return true; }
+    };
+
     // --- description ---
 
     private java.lang.String description ;
@@ -126,6 +143,20 @@ public abstract class GQuality
         return equals(this.description, description);
     }
 
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor descriptionEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getDescription();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setDescription(value);
+        }
+
+    };
+
     // --- testDescription ---
 
     private java.lang.String testDescription ;
@@ -144,6 +175,20 @@ public abstract class GQuality
     public final boolean isTestDescription(java.lang.String testDescription) {
         return equals(this.testDescription, testDescription);
     }
+
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor testDescriptionEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getTestDescription();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setTestDescription(value);
+        }
+
+    };
 
     // --- update properties by map ---
 

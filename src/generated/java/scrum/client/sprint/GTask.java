@@ -107,6 +107,23 @@ public abstract class GTask
         return equals(this.label, label);
     }
 
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor labelEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getLabel();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setLabel(value);
+        }
+
+
+        @Override
+        public boolean isMandatory() { return true; }
+    };
+
     // --- description ---
 
     private java.lang.String description ;
@@ -125,6 +142,20 @@ public abstract class GTask
     public final boolean isDescription(java.lang.String description) {
         return equals(this.description, description);
     }
+
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor descriptionEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getDescription();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setDescription(value);
+        }
+
+    };
 
     // --- remainingWork ---
 
