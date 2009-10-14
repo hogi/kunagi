@@ -182,4 +182,12 @@ public abstract class GScrumGwtApplication
         callSleep(millis,  null);
     }
 
+    public final void callUpdateSystemMessage(scrum.client.admin.SystemMessage systemMessage,  Runnable callback) {
+        getScrumService().updateSystemMessage(systemMessage,  new DefaultCallback<DataTransferObject>(callback));
+    }
+
+    public final void callUpdateSystemMessage(scrum.client.admin.SystemMessage systemMessage) {
+        callUpdateSystemMessage(systemMessage,  null);
+    }
+
 }

@@ -40,6 +40,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestEntityByReference(WebSession session, java.lang.String reference);
     protected abstract void onSetSelectedEntitysIds(WebSession session, java.util.Set ids);
     protected abstract void onSleep(WebSession session, long millis);
+    protected abstract void onUpdateSystemMessage(WebSession session, scrum.client.admin.SystemMessage systemMessage);
 
 
     public scrum.client.DataTransferObject ping() {
@@ -357,6 +358,24 @@ public abstract class GScrumServiceImpl
             onSleep(session, millis);
         } catch (Throwable t) {
             handleServiceMethodException("sleep",t);
+            throw new RuntimeException(t);
+        }
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public scrum.client.DataTransferObject updateSystemMessage(scrum.client.admin.SystemMessage systemMessage) {
+        LOG.debug("updateSystemMessage");
+        WebSession session = (WebSession) getSession();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:updateSystemMessage");
+        context.bindCurrentThread();
+        try {
+            onUpdateSystemMessage(session, systemMessage);
+        } catch (Throwable t) {
+            handleServiceMethodException("updateSystemMessage",t);
             throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();

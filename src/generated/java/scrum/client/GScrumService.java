@@ -54,4 +54,6 @@ public interface GScrumService
 
     DataTransferObject sleep(long millis);
 
+    DataTransferObject updateSystemMessage(scrum.client.admin.SystemMessage systemMessage);
+
 }

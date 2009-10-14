@@ -7,6 +7,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ApplicationInfo;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.LogoutAction;
+import scrum.client.admin.SystemMessageWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.ChangeProjectAction;
 
@@ -33,7 +34,7 @@ public class HeaderWidget extends AScrumWidget {
 		actions.add(new HyperlinkWidget(new ChangeProjectAction()));
 
 		TableBuilder tb = new TableBuilder();
-		tb.addRow(title, currentUserLabel, actions);
+		tb.addRow(title, currentUserLabel, new SystemMessageWidget(), actions);
 
 		return Gwt.createDiv("HeaderWidget", tb.createTable());
 	}

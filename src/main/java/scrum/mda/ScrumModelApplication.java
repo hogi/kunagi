@@ -58,6 +58,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtComponentsModel.addComposite("DndManager");
 			gwtComponentsModel.addComposite("Chat");
 			gwtComponentsModel.addComposite("UsersStatus");
+			gwtComponentsModel.addComposite("SystemMessageManager");
 		}
 		return gwtComponentsModel;
 	}
@@ -113,6 +114,9 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("requestEntityByReference").addParameter("reference", String.class);
 			gwtServiceModel.addMethod("setSelectedEntitysIds").addParameter("ids", Set.class);
 			gwtServiceModel.addMethod("sleep").addParameter("millis", long.class);
+			gwtServiceModel.addMethod("updateSystemMessage").addParameter("systemMessage",
+				"scrum.client.admin.SystemMessage");
+
 		}
 		return gwtServiceModel;
 	}

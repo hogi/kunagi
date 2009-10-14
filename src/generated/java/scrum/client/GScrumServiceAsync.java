@@ -54,4 +54,6 @@ public interface GScrumServiceAsync {
 
     void sleep(long millis, AsyncCallback<DataTransferObject> callback);
 
+    void updateSystemMessage(scrum.client.admin.SystemMessage systemMessage, AsyncCallback<DataTransferObject> callback);
+
 }

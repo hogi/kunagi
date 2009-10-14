@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import scrum.client.ApplicationInfo;
 import scrum.client.UsersStatusData;
+import scrum.client.admin.SystemMessage;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.common.BurndownChart;
@@ -35,6 +36,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	private ScrumConfig config;
 	private ScrumEntityfilePreparator entityfilePreparator;
 	private ApplicationInfo applicationInfo;
+	private SystemMessage systemMessage;
 
 	// --- composites ---
 
@@ -198,6 +200,14 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		String date = properties.getProperty("date");
 		if ("@build-date@".equals(date)) date = Time.now().toString();
 		return date;
+	}
+
+	public void updateSystemMessage(SystemMessage systemMessage) {
+		this.systemMessage = systemMessage;
+		for (AWebSession session : getWebSessions()) {
+			LOG.debug("Sending SystemMessage to:", session);
+			((WebSession) session).getNextData().systemMessage = systemMessage;
+		}
 	}
 
 	public static ScrumWebApplication get() {

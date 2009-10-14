@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import scrum.client.admin.SystemMessage;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.collaboration.CommentDao;
@@ -60,6 +61,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	// --- ---
+
+	@Override
+	protected void onUpdateSystemMessage(WebSession session, SystemMessage systemMessage) {
+		User user = session.getUser();
+		if (user == null || user.isAdmin() == false) throw new PermissionDeniedException();
+		webApplication.updateSystemMessage(systemMessage);
+	}
 
 	private void onStartSession(WebSession session) {
 		session.clearRemoteEntities();
