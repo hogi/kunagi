@@ -39,6 +39,7 @@ public abstract class GProjectUserConfig
         properties.put("projectId", this.projectId);
         properties.put("userId", this.userId);
         properties.put("color", this.color);
+        properties.put("misconducts", this.misconducts);
     }
 
     public int compareTo(ProjectUserConfig other) {
@@ -178,6 +179,35 @@ public abstract class GProjectUserConfig
         setColor((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - misconducts
+    // -----------------------------------------------------------
+
+    private int misconducts;
+
+    public final int getMisconducts() {
+        return misconducts;
+    }
+
+    public final void setMisconducts(int misconducts) {
+        misconducts = prepareMisconducts(misconducts);
+        if (isMisconducts(misconducts)) return;
+        this.misconducts = misconducts;
+        fireModified();
+    }
+
+    protected int prepareMisconducts(int misconducts) {
+        return misconducts;
+    }
+
+    public final boolean isMisconducts(int misconducts) {
+        return this.misconducts == misconducts;
+    }
+
+    protected final void updateMisconducts(Object value) {
+        setMisconducts((Integer)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -186,6 +216,7 @@ public abstract class GProjectUserConfig
             if (property.equals("projectId")) updateProject(value);
             if (property.equals("userId")) updateUser(value);
             if (property.equals("color")) updateColor(value);
+            if (property.equals("misconducts")) updateMisconducts(value);
         }
     }
 

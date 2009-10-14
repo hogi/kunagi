@@ -88,6 +88,30 @@ public abstract class GTask
         return equals(this.number, number);
     }
 
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor numberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getNumber();
+        }
+
+        @Override
+        public void increment() {
+            setNumber(getNumber() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setNumber(getNumber() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setNumber(value);
+        }
+
+    };
+
     // --- label ---
 
     private java.lang.String label ;
@@ -176,6 +200,30 @@ public abstract class GTask
         return equals(this.remainingWork, remainingWork);
     }
 
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor remainingWorkEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getRemainingWork();
+        }
+
+        @Override
+        public void increment() {
+            setRemainingWork(getRemainingWork() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setRemainingWork(getRemainingWork() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setRemainingWork(value);
+        }
+
+    };
+
     // --- burnedWork ---
 
     private int burnedWork ;
@@ -194,6 +242,30 @@ public abstract class GTask
     public final boolean isBurnedWork(int burnedWork) {
         return equals(this.burnedWork, burnedWork);
     }
+
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor burnedWorkEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getBurnedWork();
+        }
+
+        @Override
+        public void increment() {
+            setBurnedWork(getBurnedWork() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setBurnedWork(getBurnedWork() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setBurnedWork(value);
+        }
+
+    };
 
     // --- owner ---
 

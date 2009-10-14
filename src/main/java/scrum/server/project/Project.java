@@ -1,5 +1,7 @@
 package scrum.server.project;
 
+import ilarkesto.base.Money;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -254,6 +256,12 @@ public class Project extends GProject {
 		}
 		if (!isNextSprintSet()) {
 			createNextSprint();
+		}
+		if (!isPunishmentUnitSet()) {
+			setPunishmentUnit(Money.EUR);
+		}
+		if (getPunishmentFactor() == 0) {
+			setPunishmentFactor(1);
 		}
 	}
 

@@ -167,6 +167,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addProperty("lastRiskNumber", int.class);
 			projectModel.addProperty("lastIssueNumber", int.class);
 			projectModel.addProperty("lastImpedimentNumber", int.class);
+			projectModel.addProperty("punishmentFactor", int.class);
+			projectModel.addProperty("punishmentUnit", String.class);
 			getApplicationModel().addCreateAction(projectModel);
 			projectModel.addAction("DeleteProject");
 			projectModel.addAction("OpenProject");
@@ -350,6 +352,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectUserConfigModel.addReference("project", getProjectModel()).setMaster(true);
 			projectUserConfigModel.addReference("user", getUserModel()).setMaster(true);
 			projectUserConfigModel.addProperty("color", String.class);
+			projectUserConfigModel.addProperty("misconducts", int.class);
 		}
 		return projectUserConfigModel;
 	}

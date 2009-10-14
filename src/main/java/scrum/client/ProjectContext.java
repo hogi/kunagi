@@ -10,6 +10,7 @@ import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import java.util.List;
 
 import scrum.client.admin.ProjectUserConfigWidget;
+import scrum.client.admin.PunishmentsWidget;
 import scrum.client.admin.User;
 import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.WikiWidget;
@@ -57,6 +58,7 @@ public class ProjectContext extends AScrumComponent implements UiComponent {
 	private WikiWidget wiki;
 	private ProjectUserConfigWidget projectUserConfig;
 	private WidgetsTesterWidget widgetsTester;
+	private PunishmentsWidget punishments;
 
 	private User highlightedUser;
 
@@ -74,6 +76,7 @@ public class ProjectContext extends AScrumComponent implements UiComponent {
 		projectUserConfig = new ProjectUserConfigWidget();
 		wiki = new WikiWidget();
 		widgetsTester = new WidgetsTesterWidget();
+		punishments = new PunishmentsWidget();
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
 		navigator.addItem(Img.bundle.project16(), "Project Overview", getProjectOverview());
@@ -87,6 +90,7 @@ public class ProjectContext extends AScrumComponent implements UiComponent {
 		navigator.addItem(Img.bundle.risk16(), "Risk Management", getRiskList());
 		navigator.addItem(Img.bundle.wiki16(), "Wiki", getWiki());
 		navigator.addItem(Img.bundle.sprint16(), "Next Sprint", getNextSprint());
+		navigator.addItem(Img.bundle.user16(), "Courtroom", punishments);
 		navigator.addItem(Img.bundle.test16(), "Personal Preferences", getProjectUserConfig());
 		navigator.addItem(Img.bundle.test16(), "WidgetsTester", getWidgetsTester());
 	}

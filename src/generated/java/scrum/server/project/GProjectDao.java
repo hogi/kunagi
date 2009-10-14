@@ -78,6 +78,10 @@ public abstract class GProjectDao
         lastIssueNumbersCache = null;
         projectsByLastImpedimentNumberCache.clear();
         lastImpedimentNumbersCache = null;
+        projectsByPunishmentFactorCache.clear();
+        punishmentFactorsCache = null;
+        projectsByPunishmentUnitCache.clear();
+        punishmentUnitsCache = null;
     }
 
     @Override
@@ -812,6 +816,86 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isLastImpedimentNumber(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - punishmentFactor
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Project>> projectsByPunishmentFactorCache = new Cache<Integer,Set<Project>>(
+            new Cache.Factory<Integer,Set<Project>>() {
+                public Set<Project> create(Integer punishmentFactor) {
+                    return getEntities(new IsPunishmentFactor(punishmentFactor));
+                }
+            });
+
+    public final Set<Project> getProjectsByPunishmentFactor(int punishmentFactor) {
+        return projectsByPunishmentFactorCache.get(punishmentFactor);
+    }
+    private Set<Integer> punishmentFactorsCache;
+
+    public final Set<Integer> getPunishmentFactors() {
+        if (punishmentFactorsCache == null) {
+            punishmentFactorsCache = new HashSet<Integer>();
+            for (Project e : getEntities()) {
+                punishmentFactorsCache.add(e.getPunishmentFactor());
+            }
+        }
+        return punishmentFactorsCache;
+    }
+
+    private static class IsPunishmentFactor implements Predicate<Project> {
+
+        private int value;
+
+        public IsPunishmentFactor(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isPunishmentFactor(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - punishmentUnit
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByPunishmentUnitCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String punishmentUnit) {
+                    return getEntities(new IsPunishmentUnit(punishmentUnit));
+                }
+            });
+
+    public final Set<Project> getProjectsByPunishmentUnit(java.lang.String punishmentUnit) {
+        return projectsByPunishmentUnitCache.get(punishmentUnit);
+    }
+    private Set<java.lang.String> punishmentUnitsCache;
+
+    public final Set<java.lang.String> getPunishmentUnits() {
+        if (punishmentUnitsCache == null) {
+            punishmentUnitsCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isPunishmentUnitSet()) punishmentUnitsCache.add(e.getPunishmentUnit());
+            }
+        }
+        return punishmentUnitsCache;
+    }
+
+    private static class IsPunishmentUnit implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsPunishmentUnit(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isPunishmentUnit(value);
         }
 
     }

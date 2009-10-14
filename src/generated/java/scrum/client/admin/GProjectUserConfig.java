@@ -127,12 +127,56 @@ public abstract class GProjectUserConfig
 
     };
 
+    // --- misconducts ---
+
+    private int misconducts ;
+
+    public final int getMisconducts() {
+        return this.misconducts ;
+    }
+
+    public final ProjectUserConfig setMisconducts(int misconducts) {
+        if (isMisconducts(misconducts)) return (ProjectUserConfig)this;
+        this.misconducts = misconducts ;
+        propertyChanged("misconducts", this.misconducts);
+        return (ProjectUserConfig)this;
+    }
+
+    public final boolean isMisconducts(int misconducts) {
+        return equals(this.misconducts, misconducts);
+    }
+
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor misconductsEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getMisconducts();
+        }
+
+        @Override
+        public void increment() {
+            setMisconducts(getMisconducts() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setMisconducts(getMisconducts() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setMisconducts(value);
+        }
+
+    };
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
         userId = (String) props.get("userId");
         color  = (java.lang.String) props.get("color");
+        misconducts  = (Integer) props.get("misconducts");
     }
 
     @Override
@@ -141,6 +185,7 @@ public abstract class GProjectUserConfig
         properties.put("projectId", this.projectId);
         properties.put("userId", this.userId);
         properties.put("color", this.color);
+        properties.put("misconducts", this.misconducts);
     }
 
 }

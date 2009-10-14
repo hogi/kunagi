@@ -123,6 +123,7 @@ html, body {background: #E9EEF6;}
 .highlighted .ABlockWidget-title {background: #FFC5CE; }
 
 /***** other *****/
+.PunishmentsWidget-tableHeader {background: #FFF7F0; color: #FF6637;}
 .WaitWidget {border: 1px solid #DEE5FD; background: #EEF5FF;}
 .LoginWidget {border: 1px solid #DEE5FD; background: #EEF5FF;}
 .LoginWidget-errorMessage {color: red; border: 1px solid red; background: #FFEFEF;}

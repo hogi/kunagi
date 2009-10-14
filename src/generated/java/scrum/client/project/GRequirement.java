@@ -113,6 +113,30 @@ public abstract class GRequirement
         return equals(this.number, number);
     }
 
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor numberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getNumber();
+        }
+
+        @Override
+        public void increment() {
+            setNumber(getNumber() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setNumber(getNumber() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setNumber(value);
+        }
+
+    };
+
     // --- qualitys ---
 
     private Set<String> qualitysIds = new HashSet<String>();
@@ -261,6 +285,30 @@ public abstract class GRequirement
     public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
         return equals(this.estimatedWork, estimatedWork);
     }
+
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor estimatedWorkEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getEstimatedWork();
+        }
+
+        @Override
+        public void increment() {
+            setEstimatedWork(getEstimatedWork() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setEstimatedWork(getEstimatedWork() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setEstimatedWork(value);
+        }
+
+    };
 
     // --- closed ---
 

@@ -88,6 +88,30 @@ public abstract class GImpediment
         return equals(this.number, number);
     }
 
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor numberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getNumber();
+        }
+
+        @Override
+        public void increment() {
+            setNumber(getNumber() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setNumber(getNumber() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setNumber(value);
+        }
+
+    };
+
     // --- label ---
 
     private java.lang.String label ;

@@ -375,6 +375,30 @@ public abstract class GProject
         return equals(this.lastTaskNumber, lastTaskNumber);
     }
 
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor lastTaskNumberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getLastTaskNumber();
+        }
+
+        @Override
+        public void increment() {
+            setLastTaskNumber(getLastTaskNumber() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setLastTaskNumber(getLastTaskNumber() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setLastTaskNumber(value);
+        }
+
+    };
+
     // --- lastRequirementNumber ---
 
     private int lastRequirementNumber ;
@@ -393,6 +417,30 @@ public abstract class GProject
     public final boolean isLastRequirementNumber(int lastRequirementNumber) {
         return equals(this.lastRequirementNumber, lastRequirementNumber);
     }
+
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor lastRequirementNumberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getLastRequirementNumber();
+        }
+
+        @Override
+        public void increment() {
+            setLastRequirementNumber(getLastRequirementNumber() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setLastRequirementNumber(getLastRequirementNumber() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setLastRequirementNumber(value);
+        }
+
+    };
 
     // --- lastQualityNumber ---
 
@@ -413,6 +461,30 @@ public abstract class GProject
         return equals(this.lastQualityNumber, lastQualityNumber);
     }
 
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor lastQualityNumberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getLastQualityNumber();
+        }
+
+        @Override
+        public void increment() {
+            setLastQualityNumber(getLastQualityNumber() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setLastQualityNumber(getLastQualityNumber() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setLastQualityNumber(value);
+        }
+
+    };
+
     // --- lastRiskNumber ---
 
     private int lastRiskNumber ;
@@ -431,6 +503,30 @@ public abstract class GProject
     public final boolean isLastRiskNumber(int lastRiskNumber) {
         return equals(this.lastRiskNumber, lastRiskNumber);
     }
+
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor lastRiskNumberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getLastRiskNumber();
+        }
+
+        @Override
+        public void increment() {
+            setLastRiskNumber(getLastRiskNumber() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setLastRiskNumber(getLastRiskNumber() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setLastRiskNumber(value);
+        }
+
+    };
 
     // --- lastIssueNumber ---
 
@@ -451,6 +547,30 @@ public abstract class GProject
         return equals(this.lastIssueNumber, lastIssueNumber);
     }
 
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor lastIssueNumberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getLastIssueNumber();
+        }
+
+        @Override
+        public void increment() {
+            setLastIssueNumber(getLastIssueNumber() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setLastIssueNumber(getLastIssueNumber() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setLastIssueNumber(value);
+        }
+
+    };
+
     // --- lastImpedimentNumber ---
 
     private int lastImpedimentNumber ;
@@ -469,6 +589,106 @@ public abstract class GProject
     public final boolean isLastImpedimentNumber(int lastImpedimentNumber) {
         return equals(this.lastImpedimentNumber, lastImpedimentNumber);
     }
+
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor lastImpedimentNumberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getLastImpedimentNumber();
+        }
+
+        @Override
+        public void increment() {
+            setLastImpedimentNumber(getLastImpedimentNumber() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setLastImpedimentNumber(getLastImpedimentNumber() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setLastImpedimentNumber(value);
+        }
+
+    };
+
+    // --- punishmentFactor ---
+
+    private int punishmentFactor ;
+
+    public final int getPunishmentFactor() {
+        return this.punishmentFactor ;
+    }
+
+    public final Project setPunishmentFactor(int punishmentFactor) {
+        if (isPunishmentFactor(punishmentFactor)) return (Project)this;
+        this.punishmentFactor = punishmentFactor ;
+        propertyChanged("punishmentFactor", this.punishmentFactor);
+        return (Project)this;
+    }
+
+    public final boolean isPunishmentFactor(int punishmentFactor) {
+        return equals(this.punishmentFactor, punishmentFactor);
+    }
+
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor punishmentFactorEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getPunishmentFactor();
+        }
+
+        @Override
+        public void increment() {
+            setPunishmentFactor(getPunishmentFactor() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setPunishmentFactor(getPunishmentFactor() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setPunishmentFactor(value);
+        }
+
+    };
+
+    // --- punishmentUnit ---
+
+    private java.lang.String punishmentUnit ;
+
+    public final java.lang.String getPunishmentUnit() {
+        return this.punishmentUnit ;
+    }
+
+    public final Project setPunishmentUnit(java.lang.String punishmentUnit) {
+        if (isPunishmentUnit(punishmentUnit)) return (Project)this;
+        this.punishmentUnit = punishmentUnit ;
+        propertyChanged("punishmentUnit", this.punishmentUnit);
+        return (Project)this;
+    }
+
+    public final boolean isPunishmentUnit(java.lang.String punishmentUnit) {
+        return equals(this.punishmentUnit, punishmentUnit);
+    }
+
+    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor punishmentUnitEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+
+        @Override
+        public String getValue() {
+            return getPunishmentUnit();
+        }
+
+        @Override
+        public void setValue(String value) {
+            setPunishmentUnit(value);
+        }
+
+    };
 
     // --- update properties by map ---
 
@@ -493,6 +713,8 @@ public abstract class GProject
         lastRiskNumber  = (Integer) props.get("lastRiskNumber");
         lastIssueNumber  = (Integer) props.get("lastIssueNumber");
         lastImpedimentNumber  = (Integer) props.get("lastImpedimentNumber");
+        punishmentFactor  = (Integer) props.get("punishmentFactor");
+        punishmentUnit  = (java.lang.String) props.get("punishmentUnit");
     }
 
     @Override
@@ -516,6 +738,8 @@ public abstract class GProject
         properties.put("lastRiskNumber", this.lastRiskNumber);
         properties.put("lastIssueNumber", this.lastIssueNumber);
         properties.put("lastImpedimentNumber", this.lastImpedimentNumber);
+        properties.put("punishmentFactor", this.punishmentFactor);
+        properties.put("punishmentUnit", this.punishmentUnit);
     }
 
 }

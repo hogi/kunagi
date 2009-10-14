@@ -159,4 +159,5 @@ a {cursor: pointer;}
 .WaitWidget {margin: 200px 0px; font-size: 14px;}
 .LoginWidget {width: 230px; margin: 10px auto;}
 .LoginWidget-errorMessage {font-size: 12px; padding: 5px; margin: 5px;}
+.PunishmentsWidget-tableHeader {padding: 10px; font-size: 14px; line-height: 16px; font-family: "georgia",serif;}
 

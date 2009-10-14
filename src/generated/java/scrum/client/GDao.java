@@ -570,6 +570,22 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByPunishmentFactor(int punishmentFactor) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isPunishmentFactor(punishmentFactor)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Project> getProjectsByPunishmentUnit(java.lang.String punishmentUnit) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isPunishmentUnit(punishmentUnit)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- ProjectUserConfig ---
 
     private Map<String, scrum.client.admin.ProjectUserConfig> projectUserConfigs = new HashMap<String, scrum.client.admin.ProjectUserConfig>();
@@ -646,6 +662,14 @@ public abstract class GDao
         List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
         for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
             if (entity.isColor(color)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByMisconducts(int misconducts) {
+        List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
+        for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
+            if (entity.isMisconducts(misconducts)) ret.add(entity);
         }
         return ret;
     }

@@ -40,6 +40,8 @@ public abstract class GProjectUserConfigDao
         usersCache = null;
         projectUserConfigsByColorCache.clear();
         colorsCache = null;
+        projectUserConfigsByMisconductsCache.clear();
+        misconductssCache = null;
     }
 
     @Override
@@ -174,6 +176,46 @@ public abstract class GProjectUserConfigDao
 
         public boolean test(ProjectUserConfig e) {
             return e.isColor(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - misconducts
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<ProjectUserConfig>> projectUserConfigsByMisconductsCache = new Cache<Integer,Set<ProjectUserConfig>>(
+            new Cache.Factory<Integer,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(Integer misconducts) {
+                    return getEntities(new IsMisconducts(misconducts));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsByMisconducts(int misconducts) {
+        return projectUserConfigsByMisconductsCache.get(misconducts);
+    }
+    private Set<Integer> misconductssCache;
+
+    public final Set<Integer> getMisconductss() {
+        if (misconductssCache == null) {
+            misconductssCache = new HashSet<Integer>();
+            for (ProjectUserConfig e : getEntities()) {
+                misconductssCache.add(e.getMisconducts());
+            }
+        }
+        return misconductssCache;
+    }
+
+    private static class IsMisconducts implements Predicate<ProjectUserConfig> {
+
+        private int value;
+
+        public IsMisconducts(int value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return e.isMisconducts(value);
         }
 
     }

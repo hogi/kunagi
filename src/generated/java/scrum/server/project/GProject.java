@@ -54,6 +54,8 @@ public abstract class GProject
         properties.put("lastRiskNumber", this.lastRiskNumber);
         properties.put("lastIssueNumber", this.lastIssueNumber);
         properties.put("lastImpedimentNumber", this.lastImpedimentNumber);
+        properties.put("punishmentFactor", this.punishmentFactor);
+        properties.put("punishmentUnit", this.punishmentUnit);
     }
 
     public int compareTo(Project other) {
@@ -1010,6 +1012,70 @@ public abstract class GProject
         setLastImpedimentNumber((Integer)value);
     }
 
+    // -----------------------------------------------------------
+    // - punishmentFactor
+    // -----------------------------------------------------------
+
+    private int punishmentFactor;
+
+    public final int getPunishmentFactor() {
+        return punishmentFactor;
+    }
+
+    public final void setPunishmentFactor(int punishmentFactor) {
+        punishmentFactor = preparePunishmentFactor(punishmentFactor);
+        if (isPunishmentFactor(punishmentFactor)) return;
+        this.punishmentFactor = punishmentFactor;
+        fireModified();
+    }
+
+    protected int preparePunishmentFactor(int punishmentFactor) {
+        return punishmentFactor;
+    }
+
+    public final boolean isPunishmentFactor(int punishmentFactor) {
+        return this.punishmentFactor == punishmentFactor;
+    }
+
+    protected final void updatePunishmentFactor(Object value) {
+        setPunishmentFactor((Integer)value);
+    }
+
+    // -----------------------------------------------------------
+    // - punishmentUnit
+    // -----------------------------------------------------------
+
+    private java.lang.String punishmentUnit;
+
+    public final java.lang.String getPunishmentUnit() {
+        return punishmentUnit;
+    }
+
+    public final void setPunishmentUnit(java.lang.String punishmentUnit) {
+        punishmentUnit = preparePunishmentUnit(punishmentUnit);
+        if (isPunishmentUnit(punishmentUnit)) return;
+        this.punishmentUnit = punishmentUnit;
+        fireModified();
+    }
+
+    protected java.lang.String preparePunishmentUnit(java.lang.String punishmentUnit) {
+        punishmentUnit = Str.removeUnreadableChars(punishmentUnit);
+        return punishmentUnit;
+    }
+
+    public final boolean isPunishmentUnitSet() {
+        return this.punishmentUnit != null;
+    }
+
+    public final boolean isPunishmentUnit(java.lang.String punishmentUnit) {
+        if (this.punishmentUnit == null && punishmentUnit == null) return true;
+        return this.punishmentUnit != null && this.punishmentUnit.equals(punishmentUnit);
+    }
+
+    protected final void updatePunishmentUnit(Object value) {
+        setPunishmentUnit((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -1033,6 +1099,8 @@ public abstract class GProject
             if (property.equals("lastRiskNumber")) updateLastRiskNumber(value);
             if (property.equals("lastIssueNumber")) updateLastIssueNumber(value);
             if (property.equals("lastImpedimentNumber")) updateLastImpedimentNumber(value);
+            if (property.equals("punishmentFactor")) updatePunishmentFactor(value);
+            if (property.equals("punishmentUnit")) updatePunishmentUnit(value);
         }
     }
 

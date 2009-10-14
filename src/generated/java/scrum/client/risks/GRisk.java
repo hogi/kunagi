@@ -88,6 +88,30 @@ public abstract class GRisk
         return equals(this.number, number);
     }
 
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor numberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getNumber();
+        }
+
+        @Override
+        public void increment() {
+            setNumber(getNumber() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setNumber(getNumber() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setNumber(value);
+        }
+
+    };
+
     // --- label ---
 
     private java.lang.String label ;
@@ -209,6 +233,30 @@ public abstract class GRisk
         return equals(this.probability, probability);
     }
 
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor probabilityEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getProbability();
+        }
+
+        @Override
+        public void increment() {
+            setProbability(getProbability() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setProbability(getProbability() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setProbability(value);
+        }
+
+    };
+
     // --- impact ---
 
     private int impact ;
@@ -227,6 +275,30 @@ public abstract class GRisk
     public final boolean isImpact(int impact) {
         return equals(this.impact, impact);
     }
+
+    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor impactEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+
+        @Override
+        public Integer getValue() {
+            return getImpact();
+        }
+
+        @Override
+        public void increment() {
+            setImpact(getImpact() + 1);
+        }
+
+        @Override
+        public void decrement() {
+            setImpact(getImpact() - 1);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            setImpact(value);
+        }
+
+    };
 
     // --- update properties by map ---
 
