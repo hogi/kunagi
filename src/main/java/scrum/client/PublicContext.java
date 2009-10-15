@@ -23,9 +23,9 @@ public class PublicContext extends AScrumComponent {
 		login = new LoginWidget();
 
 		navigator = new SwitchingNavigatorWidget(ComponentManager.get().getUi().getWorkspace().getWorkarea());
-		navigator.addItem((Image) null, "Login", login);
-		navigator.addItem((Image) null, "Register", createRegisterWidget());
-		navigator.addItem((Image) null, "About", new Label(""));
+		navigator.addItem("Login", login);
+		navigator.addItem("Register", createRegisterWidget());
+		navigator.addItem("About", new Label(""));
 		ApplicationInfo applicationInfo = ScrumGwtApplication.get().getApplicationInfo();
 		if (applicationInfo != null && applicationInfo.isDevelopmentStage()) {
 			navigator.addItem((Image) null, "Widgets Tests", new WidgetsTesterWidget());

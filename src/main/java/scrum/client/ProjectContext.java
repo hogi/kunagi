@@ -17,7 +17,6 @@ import scrum.client.collaboration.WikiWidget;
 import scrum.client.common.AScrumComponent;
 import scrum.client.context.UiComponent;
 import scrum.client.context.UserHighlightSupport;
-import scrum.client.img.Img;
 import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.issues.Issue;
@@ -79,20 +78,20 @@ public class ProjectContext extends AScrumComponent implements UiComponent {
 		punishments = new PunishmentsWidget();
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
-		navigator.addItem(Img.bundle.project16(), "Project Overview", getProjectOverview());
-		navigator.addItem(Img.bundle.task16(), "Task Overview", getTaskOverview());
-		navigator.addItem(Img.bundle.task16(), "Whiteboard", getWhiteboard());
-		navigator.addItem(Img.bundle.sprint16(), "Sprint Backlog", getSprintBacklog());
-		navigator.addItem(Img.bundle.requirement16(), "Product Backlog", getProductBacklog());
-		navigator.addItem(Img.bundle.requirement16(), "Quality Backlog", getQualityBacklog());
-		navigator.addItem(Img.bundle.impediment16(), "Impediment List", getImpedimentList());
-		navigator.addItem(Img.bundle.issue16(), "Issue List", getIssueList());
-		navigator.addItem(Img.bundle.risk16(), "Risk Management", getRiskList());
-		navigator.addItem(Img.bundle.wiki16(), "Wiki", getWiki());
-		navigator.addItem(Img.bundle.sprint16(), "Next Sprint", getNextSprint());
-		navigator.addItem(Img.bundle.user16(), "Courtroom", punishments);
-		navigator.addItem(Img.bundle.test16(), "Personal Preferences", getProjectUserConfig());
-		navigator.addItem(Img.bundle.test16(), "WidgetsTester", getWidgetsTester());
+		navigator.addItem("Project Overview", getProjectOverview());
+		navigator.addItem("Task Overview", getTaskOverview());
+		navigator.addItem("Whiteboard", getWhiteboard());
+		navigator.addItem("Sprint Backlog", getSprintBacklog());
+		navigator.addItem("Product Backlog", getProductBacklog());
+		navigator.addItem("Quality Backlog", getQualityBacklog());
+		navigator.addItem("Impediment List", getImpedimentList());
+		navigator.addItem("Issue List", getIssueList());
+		navigator.addItem("Risk Management", getRiskList());
+		navigator.addItem("Wiki", getWiki());
+		navigator.addItem("Next Sprint", getNextSprint());
+        navigator.addItem("Courtroom", punishments);
+		navigator.addItem("Personal Preferences", getProjectUserConfig());
+		navigator.addItem("WidgetsTester", getWidgetsTester());
 	}
 
 	@Override
