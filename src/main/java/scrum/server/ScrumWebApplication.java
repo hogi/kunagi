@@ -5,6 +5,7 @@ import ilarkesto.base.Url;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Time;
 import ilarkesto.concurrent.TaskManager;
+import ilarkesto.di.app.WebApplicationStarter;
 import ilarkesto.fp.FP;
 import ilarkesto.fp.Function;
 import ilarkesto.io.IO;
@@ -12,12 +13,14 @@ import ilarkesto.logging.Logger;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
 import ilarkesto.webapp.DestroyTimeoutedSessionsTask;
+import ilarkesto.webapp.Servlet;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 
 import scrum.client.ApplicationInfo;
@@ -212,6 +215,12 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	public static ScrumWebApplication get() {
 		return (ScrumWebApplication) AWebApplication.get();
+	}
+
+	public static synchronized ScrumWebApplication get(ServletConfig servletConfig) {
+		if (AWebApplication.isStarted()) return get();
+		return (ScrumWebApplication) WebApplicationStarter.startWebApplication(ScrumWebApplication.class.getName(),
+			Servlet.getContextPath(servletConfig));
 	}
 
 }

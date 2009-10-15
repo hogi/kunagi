@@ -65,4 +65,9 @@ public class PagePanel extends Composite implements HasWidgets {
 		return content.iterator();
 	}
 
+	@Override
+	public String toString() {
+		return Gwt.getSimpleName(getClass());
+	}
+
 }
