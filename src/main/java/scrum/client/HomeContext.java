@@ -6,20 +6,22 @@ import scrum.client.admin.SystemMessageManagerWidget;
 import scrum.client.admin.UserConfigWidget;
 import scrum.client.admin.UserListWidget;
 import scrum.client.common.AScrumComponent;
-import scrum.client.context.UiComponent;
+import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Widget;
 
-public class HomeContext extends AScrumComponent implements UiComponent {
+public class HomeContext extends AScrumComponent {
 
+	private PagePanel sidebar;
 	private SwitchingNavigatorWidget navigator;
 	private ProjectSelectorWidget projectSelector;
 	private UserConfigWidget userConfig;
 	private UserListWidget userList;
 	private SystemMessageManagerWidget messageManager;
 
-	public Widget getSidebarWidget() {
+	@Override
+	protected void onInitialization() {
+		super.onInitialization();
 		projectSelector = new ProjectSelectorWidget();
 		userConfig = new UserConfigWidget();
 		messageManager = new SystemMessageManagerWidget();
@@ -33,11 +35,12 @@ public class HomeContext extends AScrumComponent implements UiComponent {
 			navigator.addItem((Image) null, "System Message Management", messageManager);
 		}
 
-		return navigator;
+		sidebar = new PagePanel();
+		sidebar.addSection(navigator);
 	}
 
-	public Widget getWorkareaWidget() {
-		return projectSelector;
+	public void activate() {
+		cm.getUi().show(sidebar, projectSelector);
 	}
 
 	public UserListWidget getUserList() {

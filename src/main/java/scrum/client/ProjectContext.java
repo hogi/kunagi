@@ -121,7 +121,7 @@ public class ProjectContext extends AScrumComponent implements UiComponent {
 		project = null;
 		ScrumGwtApplication.get().callCloseProject();
 		cm.getEventBus().fireProjectClosed();
-		if (activateHomeView) cm.getUi().getWorkspace().activateStartView();
+		if (activateHomeView) cm.getHomeContext().activate();
 	}
 
 	public Project getProject() {

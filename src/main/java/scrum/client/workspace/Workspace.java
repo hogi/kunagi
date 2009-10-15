@@ -54,10 +54,6 @@ public class Workspace extends AWidget {
 		return new FullscreenPanel(locker);
 	}
 
-	public void activateStartView() {
-		activateView(ComponentManager.get().getHomeContext());
-	}
-
 	public void activateProjectView() {
 		activateView(ComponentManager.get().getProjectContext());
 	}

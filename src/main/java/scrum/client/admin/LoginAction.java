@@ -33,7 +33,7 @@ public class LoginAction extends GLoginAction {
 					GwtLogger.DEBUG("Login succeded:", user);
 					Project project = user.getCurrentProject();
 					if (project == null || user.isAdmin()) {
-						cm.getUi().getWorkspace().activateStartView();
+						cm.getHomeContext().activate();
 					} else {
 						cm.getProjectContext().openProject(project);
 					}
