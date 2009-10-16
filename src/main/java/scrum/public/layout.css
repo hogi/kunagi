@@ -48,9 +48,6 @@ a {cursor: pointer;}
 
 /***** Sidebar *****/
 
-.NavigatorWidget {}
-.NavigatorWidget-head {}
-.NavigatorWidget .item {font-size: 14px;}
 .NavigatorWidget .item a {display:block; padding: 5px 3px 5px 3px; text-decoration:none;}
 
 .TrashWidget {margin: 15px 15px 0px 15px; padding: 5px;}
@@ -114,7 +111,7 @@ a {cursor: pointer;}
 
 .PagePanel {padding: 10px; font-size: 12px; line-height: 14px;}
 .PagePanel-spacer {height: 10px;}
-.PagePanel-header {padding: 8px 10px; font-size: 18px; line-height: 18px; font-family: "georgia",serif;}
+.PagePanel-header {padding: 8px 10px; font-size: 14px; line-height: 14px;}
 .PagePanel-section {margin: 0px 10px;}
 
 /***** Whiteboard *****/
