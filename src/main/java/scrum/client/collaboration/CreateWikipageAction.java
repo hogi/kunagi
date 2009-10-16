@@ -10,7 +10,7 @@ public class CreateWikipageAction extends GCreateWikipageAction {
 
 	@Override
 	public String getLabel() {
-		return "Create Wiki Page";
+		return "Create this Page";
 	}
 
 	@Override

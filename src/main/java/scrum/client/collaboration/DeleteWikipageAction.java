@@ -8,7 +8,7 @@ public class DeleteWikipageAction extends GDeleteWikipageAction {
 
 	@Override
 	public String getLabel() {
-		return "Delete Wiki Page";
+		return "Delete this Page";
 	}
 
 	@Override

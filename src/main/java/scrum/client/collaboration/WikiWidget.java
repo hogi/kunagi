@@ -1,7 +1,9 @@
 package scrum.client.collaboration;
 
+import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.ToolbarWidget;
+import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.Gwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.workspace.PagePanel;
 
@@ -19,18 +21,12 @@ public class WikiWidget extends AScrumWidget {
 
 	private FlowPanel panel;
 	private TextBox pageNameBox;
-	private FlowPanel navigPanel;
-	private ToolbarWidget toolbar;
 	private WikipageEditor editor;
 
 	@Override
 	protected Widget onInitialization() {
 		pageNameBox = new TextBox();
 		pageNameBox.addKeyPressHandler(new PageNameHandler());
-		navigPanel = new FlowPanel();
-		navigPanel.setStyleName("WikiWidget-navig");
-		navigPanel.add(pageNameBox);
-		toolbar = new ToolbarWidget();
 		editor = new WikipageEditor();
 
 		panel = new FlowPanel();
@@ -46,24 +42,22 @@ public class WikiWidget extends AScrumWidget {
 
 		pageNameBox.setText(pageName);
 
-		panel.clear();
-		toolbar.clear();
-
 		PagePanel page = new PagePanel();
-		panel.add(page);
+		AAction action = wikipage == null ? new CreateWikipageAction(pageName) : new DeleteWikipageAction(wikipage);
+		page.addHeader("Wiki", new ButtonWidget(action), pageNameBox);
 
-		page.addSection(navigPanel);
 		if (wikipage == null) {
-			toolbar.addButton(new CreateWikipageAction(pageName));
 			page.addSection("Page \"" + pageName + "\" does not exist.");
 		} else {
 			page.addHeader(wikipage.getName());
-			toolbar.addButton(new DeleteWikipageAction(wikipage));
 			editor.update();
 			page.addSection(editor);
 		}
-		page.addSection(toolbar.update());
 		if (wikipage != null) page.addSection(new CommentsWidget(wikipage).update());
+
+		panel.clear();
+		panel.add(page);
+		Gwt.update(panel);
 	}
 
 	public void showPage(String name) {
