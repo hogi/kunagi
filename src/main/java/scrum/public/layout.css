@@ -16,7 +16,6 @@ a {cursor: pointer;}
 
 /***** GWT *****/
 
-.gwt-Button {font-size: 12px; line-height: 12px; white-space: nowrap; padding: 3px; margin: 0px;}
 .gwt-Hyperlink a {white-space: nowrap; text-decoration: underline;}
 
 /***** Ilarkesto *****/
@@ -26,8 +25,8 @@ a {cursor: pointer;}
 .ImageAnchor img {float: left; margin-right: 3px;}
 .ImageAnchor .text { display: inline;}
 .BugMarker {display: block; margin: 3px; padding: 3px; font-weight: bold; font-size: 10px; }
-.FloatingFlowPanel-element {float: left;}
-
+.FloatingFlowPanel-element-left {float: left;}
+.FloatingFlowPanel-element-right {float: right;}
 .floatClear {clear: both;}
 
 /***** Master Layout *****/
@@ -41,8 +40,8 @@ a {cursor: pointer;}
 
 /***** Header *****/
 
-.HeaderWidget-title {font-size: 13px; font-weight: bold; padding-left: 5px; margin-top: 2px;}
-.HeaderWidget-user {font-size: 12px; text-align: center; margin-top: 3px;}
+.HeaderWidget-title {padding-left: 5px; margin-top: 2px;}
+.HeaderWidget-user {font-size: 12px; text-align: center; margin-top: 3px; margin-right: 5px;}
 .HeaderWidget .ToolbarWidget {margin: 0px; text-align: right;}
 .HeaderWidget .ToolbarWidget .FloatingFlowPanel-element {float: right;}
 
@@ -50,13 +49,8 @@ a {cursor: pointer;}
 
 .NavigatorWidget .item a {display:block; padding: 5px 3px 5px 3px; text-decoration:none;}
 
-.TrashWidget {margin: 15px 15px 0px 15px; padding: 5px;}
+.TrashWidget {padding: 5px;}
 
-.ClipboardWidget {margin: 20px 15px 0px 15px; height: 100px; padding: 5px;}
-.ClipboardItemWidget {margin-bottom: 5px;}
-
-.ChatWidget {margin: 15px;}
-.ChatWidget-outputScroller {padding: 5px;}
 .ChatWidget-output a {text-decoration: underline;}
 .ChatWidget-output p {margin: 3px 0px 0px 0px;}
 .ChatWidget-output .author {font-style: italic;}
@@ -64,7 +58,6 @@ a {cursor: pointer;}
 .ChatWidget-output .author-me {font-style: italic;}
 .ChatWidget-input {margin-top: 5px; width: 97%;}
 
-.UsersStatusWidget {margin: 15px;}
 .UserStatusWidget {text-decoration: line-through; font-style: italic;}
 .UserStatusWidget-online {text-decoration: none; font-style: normal;}
 
@@ -84,7 +77,8 @@ a {cursor: pointer;}
 .ButtonWidget-disabled a { cursor: default;}
 
 .ToolbarWidget {padding: 3px 0px 3px 3px;}
-.ToolbarWidget .FloatingFlowPanel-element {margin-right: 3px;}
+.ToolbarWidget .FloatingFlowPanel-element-left {margin-right: 3px;}
+.ToolbarWidget .FloatingFlowPanel-element-right {margin-left: 3px;}
 
 /***** Block List *****/
 
@@ -111,7 +105,7 @@ a {cursor: pointer;}
 
 .PagePanel {padding: 10px; font-size: 12px; line-height: 14px;}
 .PagePanel-spacer {height: 10px;}
-.PagePanel-header {padding: 8px 10px; font-size: 14px; line-height: 14px;}
+.PagePanel-header {padding: 6px 10px; font-size: 14px; line-height: 18px;}
 .PagePanel-section {margin: 0px 10px;}
 
 /***** Whiteboard *****/

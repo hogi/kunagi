@@ -1,6 +1,6 @@
 package scrum.client.impediments;
 
-import ilarkesto.gwt.client.ToolbarWidget;
+import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.ComponentManager;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
@@ -11,7 +11,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class ImpedimentListWidget extends AScrumWidget {
 
 	public BlockListWidget<Impediment> list;
-	private ToolbarWidget toolbar;
 
 	@Override
 	protected Widget onInitialization() {
@@ -20,19 +19,15 @@ public class ImpedimentListWidget extends AScrumWidget {
 		list = new BlockListWidget<Impediment>(ImpedimentBlock.FACTORY);
 		list.setAutoSorter(Impediment.REVERSE_DATE_COMPARATOR);
 
-		toolbar = new ToolbarWidget();
-		toolbar.addButton(new CreateImpedimentAction());
-
 		PagePanel page = new PagePanel();
-		page.addHeader("Impediment List");
-		page.addSection(toolbar);
+		page.addHeader("Impediment List", new ButtonWidget(new CreateImpedimentAction()));
 		page.addSection(list);
 		return page;
 	}
 
 	@Override
 	protected void onUpdate() {
-		toolbar.update();
+		super.onUpdate();
 		list.setObjects(getCurrentProject().getImpediments());
 	}
 

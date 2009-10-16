@@ -3,8 +3,8 @@ package scrum.client.admin;
 import ilarkesto.gwt.client.ADateViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATimeViewEditWidget;
+import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.DateAndTime;
-import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.workspace.PagePanel;
@@ -71,13 +71,9 @@ public class SystemMessageManagerWidget extends AScrumWidget {
 		});
 
 		PagePanel page = new PagePanel();
-		page.addHeader("System Message Management");
+		page.addHeader("System Message Management", new ButtonWidget(new ActivateSystemMessageAction()),
+			new ButtonWidget(new DeactivateSystemMessageAction()));
 		page.addSection(fields);
-
-		ToolbarWidget toolbar = new ToolbarWidget();
-		toolbar.addButton(new ActivateSystemMessageAction());
-		toolbar.addButton(new DeactivateSystemMessageAction());
-		page.addSection(toolbar);
 
 		return page;
 	}

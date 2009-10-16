@@ -1,6 +1,7 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
+import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 
 import java.util.ArrayList;
@@ -39,8 +40,6 @@ public class ProductBacklogWidget extends AScrumWidget {
 		list.setAutoSorter(getCurrentProject().getRequirementsOrderComparator());
 		list.setDndSorting(true);
 		list.setMoveObserver(new MoveObserver());
-		toolbar = new ToolbarWidget();
-		toolbar.addButton(new CreateRequirementAction());
 
 		// Filters
 		Panel filterPanel = new FlowPanel();
@@ -79,8 +78,7 @@ public class ProductBacklogWidget extends AScrumWidget {
 		filterPanel.add(predicateSelect);
 
 		PagePanel page = new PagePanel();
-		page.addHeader("Product Backlog");
-		page.addSection(toolbar);
+		page.addHeader("Product Backlog", new ButtonWidget(new CreateRequirementAction()));
 		page.addSection(filterPanel);
 		page.addSection(list);
 
@@ -89,8 +87,7 @@ public class ProductBacklogWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		toolbar.update();
-		predicateSelect.update();
+		super.onUpdate();
 		list.setObjects(filter(getCurrentProject().getRequirements()));
 	}
 

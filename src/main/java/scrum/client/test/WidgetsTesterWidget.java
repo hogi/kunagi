@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.ImageAnchor;
 import ilarkesto.gwt.client.MultiSelectionWidget;
@@ -34,6 +35,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 		page = new PagePanel();
 		page.setStyleName("WidgetsTesterWidget");
 
+		testFloatingFlowPanel();
 		testTextConverter();
 		testBlockList();
 		testFields();
@@ -44,6 +46,15 @@ public class WidgetsTesterWidget extends AScrumWidget {
 		// testImageAnchor();
 
 		return page;
+	}
+
+	private void testFloatingFlowPanel() {
+		FloatingFlowPanel panel = new FloatingFlowPanel();
+		panel.add(Gwt.createDiv("title", "Item 1"));
+		panel.add(Gwt.createDiv("title", "Item 2"));
+		panel.add(Gwt.createDiv("title", "Item 3"), true);
+		panel.add(Gwt.createDiv("title", "Item 4"), true);
+		addTest("FloatingFlowPanel", panel);
 	}
 
 	private void testTextConverter() {

@@ -6,7 +6,7 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	// http://www.colorcombos.com/color-scheme-203.html
 
-	String cBackground = "#E9EEF6";
+	String cBackground = "#F2F5FE";
 
 	String cHeaderBackground = "#667B99";
 	String cHeaderLink = "#D6E4E1";
@@ -18,8 +18,8 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	String cNavigatorSeparator = "#D9DEE6";
 	String cNavigatorLink = "#465B79";
-	String cNavigatorHoverItemBackground = "#CCD5E6";
-	String cNavigatorSelectedItemBackground = "#AFBBD2";
+	String cNavigatorSelectedItemBackground = "#CCD5E6";
+	String cNavigatorHoverItemBackground = "#E9EEF6";
 
 	String cBlockTitleBackground = cBackground;
 	String cBlockTitleBackgroundGreen = "#CEFDC5";
@@ -28,12 +28,15 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	String cToolbarBackground = cNavigatorHoverItemBackground;
 
-	String cTrashBackground = "#F2F5FE";
-	String cChatBackground = cTrashBackground;
-
 	String cPagePanelHeaderBackground = "#FFF7F0";
 	String cPagePanelHeader = "#FF6637";
 	String cPagePanelBorder = cNavigatorSeparator;
+
+	String cChatBackground = "white";
+	String cChatBorder = cPagePanelBorder;
+
+	String cTrashBackground = cNavigatorHoverItemBackground;
+	String cTrashBorder = cPagePanelBorder;
 
 	String cFieldBackground = "#FAFDFF";
 
@@ -41,15 +44,16 @@ public class ScreenCssBuilder implements CssBuilder {
 	String cWait = cLink;
 
 	public void buildCss(CssRenderer css) {
-		css.body().background(cBackground);
+		css.body().background(cBackground).fontFamily("Helvetica");
 
 		css.style(".gwt-Hyperlink a").color(cLink);
+		css.style(".gwt-Button").fontFamily("Helvetica").fontSize(10).padding(2).margin(0).whiteSpaceNowrap();
 
 		css.style(".BugMarker").borderSolid(1, cError).background(cErrorBackground).color(cError);
 
 		css.style(".Workspace-header").background(cHeaderBackground);
 
-		css.style(".HeaderWidget-title").color(cHeaderText);
+		css.style(".HeaderWidget-title").color(cHeaderText).fontSize(12).fontWeightBold().paddingLeft(5).paddingTop(3);
 		css.style(".HeaderWidget-user").color(cHeaderText);
 		css.style(".HeaderWidget .ToolbarWidget").background("none");
 		css.style(".HeaderWidget .gwt-Hyperlink a").color(cHeaderLink);
@@ -59,9 +63,9 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".NavigatorWidget .item a:hover").background(cNavigatorHoverItemBackground);
 		css.style(".NavigatorWidget .selected .item a").background(cNavigatorSelectedItemBackground);
 
-		css.style(".TrashWidget").background(cTrashBackground);
+		css.style(".TrashWidget").background(cTrashBackground).border(1, "solid", cTrashBorder);
 
-		css.style(".ChatWidget-outputScroller").background(cChatBackground);
+		css.style(".ChatWidget-outputScroller").background(cChatBackground).border(1, "solid", cChatBorder).padding(5);
 		css.style(".ChatWidget-output .author").color("green");
 		css.style(".ChatWidget-output .author-system").color("red");
 		css.style(".ChatWidget-output .author-me").color("gray");
@@ -71,6 +75,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".PagePanel-header").background(cPagePanelHeaderBackground).color(cPagePanelHeader);
 		css.style(".PagePanel-content").background("white").border(1, "solid", cPagePanelBorder);
 
+		css.style(".Workspace-body-west .PagePanel").padding(0);
 		css.style(".Workspace-body-west .PagePanel-header").background(cBackground).color(cHeaderText);
 		css.style(".Workspace-body-west .PagePanel-content").background(cBackground).border("0");
 
@@ -117,5 +122,4 @@ public class ScreenCssBuilder implements CssBuilder {
 			"solid", cPagePanelBorder);
 		css.style(".LoginWidget-errorMessage").background("#FFEFEF").color("red").border(1, "solid", "red");
 	}
-
 }

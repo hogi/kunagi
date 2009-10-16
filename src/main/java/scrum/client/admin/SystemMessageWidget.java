@@ -9,7 +9,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class SystemMessageWidget extends AScrumWidget {
 
 	private Label text = new Label();
-
 	private Label expires = new Label();
 
 	@Override

@@ -1,6 +1,6 @@
 package scrum.client.admin;
 
-import ilarkesto.gwt.client.ToolbarWidget;
+import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.PagePanel;
@@ -10,26 +10,21 @@ import com.google.gwt.user.client.ui.Widget;
 public class UserListWidget extends AScrumWidget {
 
 	public BlockListWidget<User> list;
-	private ToolbarWidget toolbar;
 
 	@Override
 	protected Widget onInitialization() {
 		list = new BlockListWidget<User>(UserBlock.FACTORY);
 		list.setAutoSorter(User.NAME_COMPARATOR);
 
-		toolbar = new ToolbarWidget();
-		toolbar.addButton(new CreateUserAction());
-
 		PagePanel page = new PagePanel();
-		page.addHeader("Users");
-		page.addSection(toolbar);
+		page.addHeader("Users", new ButtonWidget(new CreateUserAction()));
 		page.addSection(list);
 		return page;
 	}
 
 	@Override
 	protected void onUpdate() {
-		toolbar.update();
+		super.onUpdate();
 		list.setObjects(cm.getDao().getUsers());
 	}
 

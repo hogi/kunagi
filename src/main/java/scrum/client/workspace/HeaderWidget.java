@@ -1,8 +1,8 @@
 package scrum.client.workspace;
 
+import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
-import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ApplicationInfo;
 import scrum.client.admin.LogoutAction;
@@ -28,14 +28,17 @@ public class HeaderWidget extends AScrumWidget {
 		currentUserLabel = new Label();
 		currentUserLabel.setStyleName("HeaderWidget-user");
 
-		ToolbarWidget actions = new ToolbarWidget();
-		actions.add(new HyperlinkWidget(new LogoutAction()));
-		actions.add(new HyperlinkWidget(new ChangeProjectAction()));
+		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar.add(new HyperlinkWidget(new ChangeProjectAction()));
+		toolbar.add(new HyperlinkWidget(new LogoutAction()));
 
-		TableBuilder tb = new TableBuilder();
-		tb.addRow(title, currentUserLabel, new SystemMessageWidget(), actions);
+		FloatingFlowPanel panel = new FloatingFlowPanel();
+		panel.add(title);
+		panel.add(toolbar, true);
+		panel.add(currentUserLabel, true);
+		panel.add(new SystemMessageWidget(), true);
 
-		return Gwt.createDiv("HeaderWidget", tb.createTable());
+		return Gwt.createDiv("HeaderWidget", panel);
 	}
 
 	@Override

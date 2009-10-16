@@ -3,7 +3,7 @@ package scrum.client.sprint;
 import ilarkesto.gwt.client.ADateViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.ToolbarWidget;
+import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.project.Project;
@@ -15,13 +15,8 @@ public class NextSprintWidget extends AScrumWidget {
 
 	private FieldsWidget fieldsWidget;
 
-	private ToolbarWidget toolbar;
-
 	@Override
 	protected Widget onInitialization() {
-
-		toolbar = new ToolbarWidget();
-		toolbar.addButton(new SwitchToNextSprintAction());
 
 		fieldsWidget = new FieldsWidget();
 
@@ -98,16 +93,9 @@ public class NextSprintWidget extends AScrumWidget {
 		});
 
 		PagePanel page = new PagePanel();
-		page.addHeader("Sprint Backlog");
-		page.addSection(toolbar);
+		page.addHeader("Sprint Backlog", new ButtonWidget(new SwitchToNextSprintAction()));
 		page.addSection(fieldsWidget);
 		return page;
-	}
-
-	@Override
-	protected void onUpdate() {
-		toolbar.update();
-		fieldsWidget.update();
 	}
 
 	private Sprint getSprint() {

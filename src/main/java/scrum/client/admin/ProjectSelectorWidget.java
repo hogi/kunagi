@@ -1,7 +1,7 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.ToolbarWidget;
+import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.Dao;
 import scrum.client.common.BlockListWidget;
 import scrum.client.project.CreateProjectAction;
@@ -12,7 +12,6 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectSelectorWidget extends AWidget {
 
-	ToolbarWidget toolbar;
 	private BlockListWidget<Project> list;
 
 	@Override
@@ -21,19 +20,15 @@ public class ProjectSelectorWidget extends AWidget {
 		list = new BlockListWidget<Project>(ProjectBlock.FACTORY);
 		list.setAutoSorter(Project.LABEL_COMPARATOR);
 
-		toolbar = new ToolbarWidget();
-		toolbar.addButton(new CreateProjectAction());
-
 		PagePanel page = new PagePanel();
-		page.addHeader("Projects");
-		page.addSection(toolbar);
+		page.addHeader("Projects", new ButtonWidget(new CreateProjectAction()));
 		page.addSection(list);
 		return page;
 	}
 
 	@Override
 	protected void onUpdate() {
-		toolbar.update();
+		super.onUpdate();
 		list.setObjects(Dao.get().getProjects());
 	}
 

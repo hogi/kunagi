@@ -29,7 +29,7 @@ public class ChatWidget extends AScrumWidget {
 
 		outputScroller = new ScrollPanel(output);
 		outputScroller.setStyleName("ChatWidget-outputScroller");
-		outputScroller.setHeight("60px");
+		outputScroller.setHeight("100px");
 
 		input = new TextBox();
 		input.setStyleName("ChatWidget-input");

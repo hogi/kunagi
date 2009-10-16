@@ -1,6 +1,6 @@
 package scrum.client.risks;
 
-import ilarkesto.gwt.client.ToolbarWidget;
+import ilarkesto.gwt.client.ButtonWidget;
 
 import java.util.Comparator;
 
@@ -13,7 +13,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class RiskListWidget extends AScrumWidget {
 
 	public BlockListWidget<Risk> list;
-	private ToolbarWidget toolbar;
 
 	@Override
 	protected Widget onInitialization() {
@@ -22,19 +21,15 @@ public class RiskListWidget extends AScrumWidget {
 		list = new BlockListWidget<Risk>(RiskBlock.FACTORY);
 		list.setAutoSorter(new RiskComparator());
 
-		toolbar = new ToolbarWidget();
-		toolbar.addButton(new CreateRiskAction());
-
 		PagePanel page = new PagePanel();
-		page.addHeader("Risk List");
-		page.addSection(toolbar);
+		page.addHeader("Risk List", new ButtonWidget(new CreateRiskAction()));
 		page.addSection(list);
 		return page;
 	}
 
 	@Override
 	protected void onUpdate() {
-		toolbar.update();
+		super.onUpdate();
 		list.setObjects(getCurrentProject().getRisks());
 	}
 

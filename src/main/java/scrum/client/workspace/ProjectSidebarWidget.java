@@ -1,6 +1,7 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.ComponentManager;
 import scrum.client.collaboration.ChatWidget;
@@ -22,11 +23,14 @@ public class ProjectSidebarWidget extends AWidget {
 		trash = new TrashWidget();
 		// clipboard = new ClipboardWidget();
 
+		FloatingFlowPanel usersTrashSplitter = new FloatingFlowPanel();
+		usersTrashSplitter.add(getUsersStatus());
+		usersTrashSplitter.add(trash, true);
+
 		PagePanel page = new PagePanel();
 		page.addSection(getNavigator());
-		page.addSection(trash);
-		page.addSection(getUsersStatus());
 		page.addSection(getChat());
+		page.addSection(usersTrashSplitter);
 		return page;
 	}
 

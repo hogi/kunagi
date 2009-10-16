@@ -1,6 +1,6 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.ToolbarWidget;
+import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.ComponentManager;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
@@ -11,24 +11,20 @@ import com.google.gwt.user.client.ui.Widget;
 public class QualityBacklogWidget extends AScrumWidget {
 
 	public BlockListWidget<Quality> list;
-	private ToolbarWidget toolbar;
 
 	@Override
 	protected Widget onInitialization() {
 		list = new BlockListWidget<Quality>(QualityBlock.FACTORY);
-		toolbar = new ToolbarWidget();
-		toolbar.addButton(new CreateQualityAction());
 
 		PagePanel page = new PagePanel();
-		page.addHeader("Quality Backlog");
-		page.addSection(toolbar);
+		page.addHeader("Quality Backlog", new ButtonWidget(new CreateQualityAction()));
 		page.addSection(list);
 		return page;
 	}
 
 	@Override
 	protected void onUpdate() {
-		toolbar.update();
+		super.onUpdate();
 		list.setObjects(getCurrentProject().getQualitys());
 	}
 

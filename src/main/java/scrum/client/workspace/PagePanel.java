@@ -1,5 +1,6 @@
 package scrum.client.workspace;
 
+import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
 
 import java.util.Iterator;
@@ -18,6 +19,19 @@ public class PagePanel extends Composite implements HasWidgets {
 	public PagePanel() {
 		content = new FlowPanel();
 		initWidget(Gwt.createDiv("PagePanel", Gwt.createDiv("PagePanel-content", content)));
+	}
+
+	public void addHeader(String title, Widget... rightWidgets) {
+		addHeader(Gwt.createDiv("title", title), rightWidgets);
+	}
+
+	public void addHeader(Widget left, Widget... rightWidgets) {
+		FloatingFlowPanel panel = new FloatingFlowPanel();
+		panel.add(left);
+		for (Widget right : rightWidgets) {
+			panel.add(right, true);
+		}
+		addHeader(panel);
 	}
 
 	public void addHeader(String text) {
