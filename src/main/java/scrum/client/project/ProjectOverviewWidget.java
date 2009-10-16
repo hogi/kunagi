@@ -1,8 +1,5 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
 import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
@@ -69,7 +66,7 @@ public class ProjectOverviewWidget extends AScrumWidget {
 
 	private String getChartUrl(Sprint sprint) {
 		int width = Window.getClientWidth() - 260;
-		return GWT.getModuleBaseURL() + "/sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width=" + width
+		return GWT.getModuleBaseURL() + "sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width=" + width
 				+ "&height=" + CHART_HEIGHT;
 	}
 

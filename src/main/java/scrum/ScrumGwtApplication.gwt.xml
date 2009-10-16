@@ -9,15 +9,8 @@
 	<inherits name="com.google.gwt.user.theme.standard.Standard" />
     <stylesheet src="screen.css" />
 	<stylesheet src="layout.css" />
-    <stylesheet src="colors.css" />
 
 	<!-- entry points -->
 	<entry-point class="scrum.client.ScrumGwtApplication" />
-
-	<!-- servlets -->
-	<servlet path="/scrum" class="scrum.server.ScrumServiceImpl" />
-    <servlet path="/screen.css" class="scrum.server.css.CssServlet" />
-	<servlet path="/sprintBurndownChart.png" class="scrum.server.sprint.SprintBurndownChartServlet" />
-	<servlet path="/projectBurndownChart.png" class="scrum.server.project.ProjectBurndownChartServlet" />
 
 </module>
