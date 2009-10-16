@@ -89,7 +89,7 @@ public class ProjectContext extends AScrumComponent implements UiComponent {
 		navigator.addItem("Risk Management", getRiskList());
 		navigator.addItem("Wiki", getWiki());
 		navigator.addItem("Next Sprint", getNextSprint());
-        navigator.addItem("Courtroom", punishments);
+		navigator.addItem("Courtroom", punishments);
 		navigator.addItem("Personal Preferences", getProjectUserConfig());
 		navigator.addItem("WidgetsTester", getWidgetsTester());
 	}
@@ -103,7 +103,7 @@ public class ProjectContext extends AScrumComponent implements UiComponent {
 		this.project = project;
 
 		cm.getUi().getWorkspace().lock("Loading project...");
-		ScrumGwtApplication.get().callSelectProject(project.getId(), new Runnable() {
+		cm.getApp().callSelectProject(project.getId(), new Runnable() {
 
 			public void run() {
 				cm.getUi().getWorkspace().unlock();
@@ -118,7 +118,7 @@ public class ProjectContext extends AScrumComponent implements UiComponent {
 		assert project != null;
 		cm.getUi().getWorkspace().lock("Closing project...");
 		project = null;
-		ScrumGwtApplication.get().callCloseProject();
+		cm.getApp().callCloseProject();
 		cm.getEventBus().fireProjectClosed();
 		if (activateHomeView) cm.getHomeContext().activate();
 	}

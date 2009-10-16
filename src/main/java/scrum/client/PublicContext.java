@@ -26,7 +26,7 @@ public class PublicContext extends AScrumComponent {
 		navigator.addItem("Login", login);
 		navigator.addItem("Register", createRegisterWidget());
 		navigator.addItem("About", new Label(""));
-		ApplicationInfo applicationInfo = ScrumGwtApplication.get().getApplicationInfo();
+		ApplicationInfo applicationInfo = cm.getApp().getApplicationInfo();
 		if (applicationInfo != null && applicationInfo.isDevelopmentStage()) {
 			navigator.addItem((Image) null, "Widgets Tests", new WidgetsTesterWidget());
 		}

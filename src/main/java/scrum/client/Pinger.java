@@ -18,7 +18,7 @@ public class Pinger extends AScrumComponent implements ServerDataReceivedListene
 
 			@Override
 			public void run() {
-				ScrumGwtApplication.get().callPing();
+				cm.getApp().callPing();
 				reschedule();
 			}
 		};

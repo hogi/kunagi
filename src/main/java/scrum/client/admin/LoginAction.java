@@ -1,7 +1,6 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.GwtLogger;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.project.Project;
 
 public class LoginAction extends GLoginAction {
@@ -20,7 +19,7 @@ public class LoginAction extends GLoginAction {
 	@Override
 	protected void onExecute() {
 		cm.getUi().getWorkspace().lock("Checking login data...");
-		ScrumGwtApplication.get().callLogin(loginData.getUsername(), loginData.getPassword(), new Runnable() {
+		cm.getApp().callLogin(loginData.getUsername(), loginData.getPassword(), new Runnable() {
 
 			public void run() {
 				GwtLogger.DEBUG("Login response received");

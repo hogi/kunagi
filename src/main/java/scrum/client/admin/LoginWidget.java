@@ -5,7 +5,6 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ApplicationInfo;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumWidget;
 import scrum.client.workspace.PagePanel;
 
@@ -59,7 +58,7 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 	@Override
 	protected void onUpdate() {
 		super.onUpdate();
-		ApplicationInfo applicationInfo = ScrumGwtApplication.get().getApplicationInfo();
+		ApplicationInfo applicationInfo = cm.getApp().getApplicationInfo();
 		if (applicationInfo != null && applicationInfo.isDevelopmentStage()) {
 			username.setText("duke");
 			password.setText("geheim");

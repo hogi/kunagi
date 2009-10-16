@@ -4,16 +4,15 @@ import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.ImageAnchor;
 import ilarkesto.gwt.client.MultiSelectionWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
@@ -26,7 +25,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class WidgetsTesterWidget extends AWidget {
+public class WidgetsTesterWidget extends AScrumWidget {
 
 	private PagePanel page;
 
@@ -50,9 +49,9 @@ public class WidgetsTesterWidget extends AWidget {
 	private void testTextConverter() {
 		StringBuilder html = new StringBuilder();
 		html.append(
-			ScrumGwtApplication.get().richtextToHtml(
+			cm.getApp().richtextToHtml(
 				"[Wiki] r1 aaaa t5 aaaa (r3) aaaa r3. aaaa r3: aaaa [t12] aaar7 aaaa r7x aaaa t9")).append("<hr>");
-		html.append(ScrumGwtApplication.get().richtextToHtml("<b>html?</b> C&A\nnew line")).append("<hr>");
+		html.append(cm.getApp().richtextToHtml("<b>html?</b> C&A\nnew line")).append("<hr>");
 		addTest("TextConverter", new HTML(html.toString()));
 	}
 

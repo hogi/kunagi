@@ -10,7 +10,7 @@ public class ScrumJs {
 	}-*/;
 
 	public static void showEntityByReference(String reference) {
-		ScrumGwtApplication.get().showEntityByReference(reference);
+		ComponentManager.get().getApp().showEntityByReference(reference);
 	}
 
 	public static native String regexTextToHtml(String text) /*-{

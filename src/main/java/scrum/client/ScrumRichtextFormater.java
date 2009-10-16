@@ -5,7 +5,7 @@ import ilarkesto.gwt.client.RichtextFormater;
 public class ScrumRichtextFormater implements RichtextFormater {
 
 	public String toHtml(String s) {
-		return ScrumGwtApplication.get().richtextToHtml(s);
+		return ComponentManager.get().getApp().richtextToHtml(s);
 	}
 
 }

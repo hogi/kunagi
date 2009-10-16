@@ -105,8 +105,4 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		getScrumService().startSession(new DefaultCallback<DataTransferObject>(callback));
 	}
 
-	public static ScrumGwtApplication get() {
-		return (ScrumGwtApplication) singleton;
-	}
-
 }

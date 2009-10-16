@@ -16,7 +16,7 @@ package scrum.client;
 import java.util.*;
 
 public abstract class GScrumGwtApplication
-            extends scrum.client.AGwtApplication {
+            extends ilarkesto.gwt.client.AGwtApplication {
 
     protected abstract void onServerData(DataTransferObject dto);
 

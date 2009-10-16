@@ -4,7 +4,6 @@ import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AViewEditWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ComponentManager;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -73,11 +72,11 @@ public class PasswordChangeWidget extends AViewEditWidget {
 			ComponentManager.get().getUi().getWorkspace().showError("new password repeat is empty");
 			return;
 		} else if (!newPassword.equals(newPasswordRepeat)) {
-			ComponentManager.get().getUi().getWorkspace()
-					.showError("the new password repeat did not match the new password.");
+			ComponentManager.get().getUi().getWorkspace().showError(
+				"the new password repeat did not match the new password.");
 			return;
 		}
-		ScrumGwtApplication.get().callChangePassword(currentPassword, newPassword);
+		ComponentManager.get().getApp().callChangePassword(currentPassword, newPassword);
 	}
 
 	class SaveChangesAction extends AAction {

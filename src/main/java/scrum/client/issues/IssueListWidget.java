@@ -1,7 +1,6 @@
 package scrum.client.issues;
 
 import ilarkesto.gwt.client.ToolbarWidget;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.PagePanel;
@@ -15,7 +14,7 @@ public class IssueListWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		ScrumGwtApplication.get().callRequestIssues();
+		cm.getApp().callRequestIssues();
 
 		list = new BlockListWidget<Issue>(IssueBlock.FACTORY);
 		list.setAutoSorter(Issue.REVERSE_DATE_COMPARATOR);

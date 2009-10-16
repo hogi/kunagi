@@ -1,12 +1,12 @@
 package scrum.client.workspace;
 
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.FullscreenPanel;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
 import scrum.client.ComponentManager;
+import scrum.client.common.AScrumWidget;
 import scrum.client.context.UiComponent;
 
 import com.google.gwt.user.client.ui.Button;
@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class Workspace extends AWidget {
+public class Workspace extends AScrumWidget {
 
 	public static final int HEADER_HEIGHT = 25;
 

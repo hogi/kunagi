@@ -21,7 +21,7 @@ public class Auth extends AScrumComponent implements ServerDataReceivedListener 
 		cm.getUi().getWorkspace().lock("Logging out...");
 		user = null;
 		cm.getEventBus().fireLogout();
-		ScrumGwtApplication.get().callLogout();
+		cm.getApp().callLogout();
 	}
 
 	public boolean isUserLoggedIn() {

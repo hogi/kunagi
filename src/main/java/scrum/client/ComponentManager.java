@@ -2,8 +2,8 @@ package scrum.client;
 
 import ilarkesto.gwt.client.AComponentManager;
 
-public class ComponentManager extends GComponentManager implements LogoutListener, ProjectClosedListener, ProjectOpenedListener,
-		LoginListener {
+public class ComponentManager extends GComponentManager implements LogoutListener, ProjectClosedListener,
+		ProjectOpenedListener, LoginListener {
 
 	ComponentManager() {
 		super(new EventBus(), new Dao());
@@ -37,7 +37,7 @@ public class ComponentManager extends GComponentManager implements LogoutListene
 	}
 
 	public ScrumGwtApplication getApp() {
-		return ScrumGwtApplication.get();
+		return (ScrumGwtApplication) super.getApp();
 	}
 
 	public static ComponentManager get() {

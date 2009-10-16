@@ -2,7 +2,6 @@ package scrum.client.impediments;
 
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ComponentManager;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.PagePanel;
@@ -16,7 +15,7 @@ public class ImpedimentListWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		ScrumGwtApplication.get().callRequestImpediments();
+		cm.getApp().callRequestImpediments();
 
 		list = new BlockListWidget<Impediment>(ImpedimentBlock.FACTORY);
 		list.setAutoSorter(Impediment.REVERSE_DATE_COMPARATOR);

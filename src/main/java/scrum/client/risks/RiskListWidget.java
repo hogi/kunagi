@@ -4,7 +4,6 @@ import ilarkesto.gwt.client.ToolbarWidget;
 
 import java.util.Comparator;
 
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.PagePanel;
@@ -18,7 +17,7 @@ public class RiskListWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		ScrumGwtApplication.get().callRequestRisks();
+		cm.getApp().callRequestRisks();
 
 		list = new BlockListWidget<Risk>(RiskBlock.FACTORY);
 		list.setAutoSorter(new RiskComparator());

@@ -109,12 +109,12 @@ public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
 
 	@Override
 	protected void onEntityCreatedLocaly(AGwtEntity entity) {
-		ScrumGwtApplication.get().callCreateEntity(entity.getEntityType(), entity.createPropertiesMap());
+		ComponentManager.get().getApp().callCreateEntity(entity.getEntityType(), entity.createPropertiesMap());
 	}
 
 	@Override
 	protected void onEntityDeletedLocaly(AGwtEntity entity) {
-		ScrumGwtApplication.get().callDeleteEntity(entity.getId());
+		ComponentManager.get().getApp().callDeleteEntity(entity.getId());
 	}
 
 	@Override
@@ -144,7 +144,7 @@ public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
 
 		private void flush() {
 			for (Map.Entry<String, Map> entry : entityProperties.entrySet()) {
-				ScrumGwtApplication.get().callChangeProperties(entry.getKey(), entry.getValue());
+				ComponentManager.get().getApp().callChangeProperties(entry.getKey(), entry.getValue());
 			}
 			entityProperties = new HashMap<String, Map>(3);
 		}

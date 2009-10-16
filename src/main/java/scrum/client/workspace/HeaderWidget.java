@@ -5,7 +5,6 @@ import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ApplicationInfo;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.LogoutAction;
 import scrum.client.admin.SystemMessageWidget;
 import scrum.client.common.AScrumWidget;
@@ -45,7 +44,7 @@ public class HeaderWidget extends AScrumWidget {
 
 		boolean loggedIn = cm.getAuth().isUserLoggedIn();
 
-		ApplicationInfo applicationInfo = ScrumGwtApplication.get().getApplicationInfo();
+		ApplicationInfo applicationInfo = cm.getApp().getApplicationInfo();
 		if (applicationInfo != null) {
 			title.setText(applicationInfo.getName());
 			title.setTitle(applicationInfo.getVersionDescription());

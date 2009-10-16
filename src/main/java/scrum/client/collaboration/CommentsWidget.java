@@ -1,7 +1,6 @@
 package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.AGwtEntity;
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 
 import java.util.Collections;
@@ -11,13 +10,13 @@ import java.util.Map;
 
 import scrum.client.ComponentManager;
 import scrum.client.ProjectContext;
-import scrum.client.ScrumGwtApplication;
+import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CommentsWidget extends AWidget {
+public class CommentsWidget extends AScrumWidget {
 
 	private ProjectContext projectContext = ComponentManager.get().getProjectContext();
 
@@ -34,7 +33,7 @@ public class CommentsWidget extends AWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		ScrumGwtApplication.get().callRequestComments(parent.getId());
+		cm.getApp().callRequestComments(parent.getId());
 
 		widgets = new HashMap<Comment, CommentWidget>();
 		containerPanel = new FlowPanel();

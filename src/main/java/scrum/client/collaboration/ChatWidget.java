@@ -2,7 +2,6 @@ package scrum.client.collaboration;
 
 import scrum.client.Chat;
 import scrum.client.ComponentManager;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 import scrum.client.workspace.ProjectSidebarWidget;
@@ -77,7 +76,7 @@ public class ChatWidget extends AScrumWidget {
 				: "author-system";
 		String authorStyle = author != null ? "color: " + author.getProjectConfig().getColor() + ";" : "";
 		String text = m.getText();
-		String html = ScrumGwtApplication.get().richtextToHtml(text);
+		String html = cm.getApp().richtextToHtml(text);
 		sb.append("<p class='message'>");
 		sb.append("<span class='").append(authorClass).append("' style='").append(authorStyle).append("'>").append(
 			authorLabel).append(":&nbsp;</span>");
