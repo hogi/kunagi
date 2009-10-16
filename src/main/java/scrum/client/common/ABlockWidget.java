@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.HyperlinkWidget;
+import ilarkesto.gwt.client.Updatable;
 
 import java.util.Set;
 
@@ -148,7 +149,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	protected void addToolbarItem(Widget toolbarItem) {
 		toolbar.add(toolbarItem);
 		if (toolbarItem instanceof AWidget) {
-			((AWidget) toolbarItem).update();
+			((Updatable) toolbarItem).update();
 		}
 	}
 
