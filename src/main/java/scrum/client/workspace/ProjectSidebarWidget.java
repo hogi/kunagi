@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.ComponentManager;
+import scrum.client.admin.SystemMessageWidget;
 import scrum.client.collaboration.ChatWidget;
 import scrum.client.communication.UsersStatusWidget;
 
@@ -28,19 +29,11 @@ public class ProjectSidebarWidget extends AWidget {
 		usersTrashSplitter.add(trash, true);
 
 		PagePanel page = new PagePanel();
+		page.add(new SystemMessageWidget());
 		page.addSection(getNavigator());
 		page.addSection(getChat());
 		page.addSection(usersTrashSplitter);
 		return page;
-	}
-
-	@Override
-	protected void onUpdate() {
-		navigator.update();
-		trash.update();
-		// clipboard.update();
-		chat.update();
-		usersStatus.update();
 	}
 
 	public ChatWidget getChat() {
