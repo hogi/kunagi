@@ -3,6 +3,7 @@ package scrum.client;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.admin.ProjectSelectorWidget;
 import scrum.client.admin.SystemMessageManagerWidget;
+import scrum.client.admin.SystemMessageWidget;
 import scrum.client.admin.UserConfigWidget;
 import scrum.client.admin.UserListWidget;
 import scrum.client.common.AScrumComponent;
@@ -36,6 +37,7 @@ public class HomeContext extends AScrumComponent {
 		}
 
 		sidebar = new PagePanel();
+		sidebar.add(new SystemMessageWidget());
 		sidebar.addSection(navigator);
 	}
 

@@ -121,5 +121,10 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".WaitWidget").background(cWaitBackground).borderTop(1, "solid", cPagePanelBorder).borderBottom(1,
 			"solid", cPagePanelBorder);
 		css.style(".LoginWidget-errorMessage").background("#FFEFEF").color("red").border(1, "solid", "red");
+
+		css.style(".SystemMessageWidget-box").background(cErrorBackground).color(cError).border(1, "solid", cError)
+				.padding(10).margin(10);
+		css.style(".SystemMessageWidget-box-title").fontWeightBold().marginBottom(5);
+		css.style(".SystemMessageWidget-box-time").fontStyleItalic().marginTop(5).textAlignRight();
 	}
 }

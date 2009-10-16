@@ -1,38 +1,42 @@
 package scrum.client.admin;
 
-import ilarkesto.gwt.client.FloatingFlowPanel;
+import ilarkesto.gwt.client.Gwt;
 import scrum.client.common.AScrumWidget;
 
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SystemMessageWidget extends AScrumWidget {
 
+	private SimplePanel panel;
 	private Label text = new Label();
 	private Label expires = new Label();
 
 	@Override
 	protected Widget onInitialization() {
-		FloatingFlowPanel panel = new FloatingFlowPanel();
+		expires.setStyleName("SystemMessageWidget-box-time");
 
-		text.setStyleName("SystemMessageWidget-text");
-		panel.add(text);
-		panel.add(new Label(" "));
-		expires.setStyleName("SystemMessageWidget-expires");
-		panel.add(expires);
+		FlowPanel content = new FlowPanel();
+		content.add(Gwt.createDiv("SystemMessageWidget-box-title", "Message from Admin"));
+		content.add(text);
+		content.add(expires);
 
+		panel = Gwt.createDiv("SystemMessageWidget-box", content);
+		panel.setVisible(false);
 		return panel;
 	}
 
 	@Override
 	protected void onUpdate() {
-		if (cm.getAuth().isUserLoggedIn()) {
-			SystemMessage systemMessage = cm.getSystemMessageManager().getSystemMessage();
-			text.setText(systemMessage.isActive() ? systemMessage.getText() : null);
-			expires.setText(systemMessage.isActive() ? systemMessage.getExpiresAsString() : null);
+		SystemMessage message = cm.getSystemMessageManager().getSystemMessage();
+		if (message.isActive()) {
+			text.setText(message.getText());
+			expires.setText(message.getExpiresAsString());
+			panel.setVisible(true);
 		} else {
-			text.setText(null);
-			expires.setText(null);
+			panel.setVisible(false);
 		}
 	}
 

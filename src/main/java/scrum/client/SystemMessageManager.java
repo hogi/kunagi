@@ -7,12 +7,11 @@ public class SystemMessageManager extends AScrumComponent implements ServerDataR
 
 	private SystemMessage systemMessage = new SystemMessage();
 
-	public SystemMessage getSystemMessage() {
-		return systemMessage;
-	}
-
-	public void setSystemMessage(SystemMessage systemMessage) {
-		this.systemMessage = systemMessage;
+	public void onServerDataReceived(DataTransferObject data) {
+		if (data.systemMessage != null) {
+			systemMessage = data.systemMessage;
+			cm.getUi().getWorkspace().update();
+		}
 	}
 
 	public void activateSystemMessage() {
@@ -27,11 +26,8 @@ public class SystemMessageManager extends AScrumComponent implements ServerDataR
 		cm.getUi().getWorkspace().update();
 	}
 
-	public void onServerDataReceived(DataTransferObject data) {
-		if (data.systemMessage != null) {
-			systemMessage = data.systemMessage;
-			cm.getUi().getWorkspace().update();
-		}
+	public SystemMessage getSystemMessage() {
+		return systemMessage;
 	}
 
 }
