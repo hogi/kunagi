@@ -22,8 +22,6 @@ public class CssServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ScrumWebApplication app = ScrumWebApplication.get();
-
 		resp.setContentType("text/css");
 		CssRenderer css = new CssRenderer(resp.getWriter());
 		getCssBuilder().buildCss(css);
