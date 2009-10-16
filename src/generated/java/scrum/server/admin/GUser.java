@@ -280,13 +280,13 @@ public abstract class GUser
     // - dependencies
     // -----------------------------------------------------------
 
-    protected static scrum.server.project.ProjectDao projectDao;
+    static scrum.server.project.ProjectDao projectDao;
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GUser.projectDao = projectDao;
     }
 
-    protected static UserDao userDao;
+    static UserDao userDao;
 
     public static final void setUserDao(UserDao userDao) {
         GUser.userDao = userDao;

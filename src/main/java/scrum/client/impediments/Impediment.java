@@ -31,14 +31,14 @@ public class Impediment extends GImpediment {
 		return getReference() + " " + getLabel();
 	}
 
-	public static Comparator<Impediment> DATE_COMPARATOR = new Comparator<Impediment>() {
+	public static final Comparator<Impediment> DATE_COMPARATOR = new Comparator<Impediment>() {
 
 		public int compare(Impediment a, Impediment b) {
 			return a.getDate().compareTo(b.getDate());
 		}
 	};
 
-	public static Comparator<Impediment> REVERSE_DATE_COMPARATOR = new Comparator<Impediment>() {
+	public static final Comparator<Impediment> REVERSE_DATE_COMPARATOR = new Comparator<Impediment>() {
 
 		public int compare(Impediment a, Impediment b) {
 			return DATE_COMPARATOR.compare(b, a);

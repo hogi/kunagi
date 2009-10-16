@@ -12,7 +12,6 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 
 	@Override
 	protected void onCollapsedInitialization() {
-		Issue issue = getObject();
 		setIcon(Img.bundle.issue16());
 	}
 
@@ -34,7 +33,7 @@ public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSu
 		return new DeleteIssueAction(getObject());
 	}
 
-	public static BlockWidgetFactory<Issue> FACTORY = new BlockWidgetFactory<Issue>() {
+	public static final BlockWidgetFactory<Issue> FACTORY = new BlockWidgetFactory<Issue>() {
 
 		public IssueBlock createBlock() {
 			return new IssueBlock();

@@ -9,12 +9,9 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.project.Project;
 import scrum.client.workspace.PagePanel;
 
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class NextSprintWidget extends AScrumWidget {
-
-	private FlowPanel view;
 
 	private FieldsWidget fieldsWidget;
 

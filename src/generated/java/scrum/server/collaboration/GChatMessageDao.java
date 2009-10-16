@@ -235,7 +235,7 @@ public abstract class GChatMessageDao
 
     // --- dependencies ---
 
-    protected scrum.server.project.ProjectDao projectDao;
+    scrum.server.project.ProjectDao projectDao;
 
     public void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         this.projectDao = projectDao;

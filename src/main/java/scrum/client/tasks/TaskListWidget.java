@@ -6,7 +6,6 @@ import java.util.List;
 
 import scrum.client.GenericPredicate;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.GroupWidget;
 import scrum.client.dnd.BlockListDropAction;
 import scrum.client.sprint.Task;
 
@@ -14,7 +13,6 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class TaskListWidget extends AWidget {
 
-	private GroupWidget panel;
 	private BlockListWidget<Task> list;
 	private BlockListDropAction<Task> dropAction;
 

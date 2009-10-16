@@ -51,7 +51,7 @@ public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implem
 		return new DeleteRequirementAction(getObject());
 	}
 
-	public static BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {
+	public static final BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {
 
 		public RequirementBlock createBlock() {
 			return new RequirementBlock();

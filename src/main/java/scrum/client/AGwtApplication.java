@@ -10,7 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public abstract class AGwtApplication implements EntryPoint {
 
-	protected static AGwtApplication singleton;
+	static AGwtApplication singleton;
 
 	protected abstract void handleCommunicationError(Throwable ex);
 

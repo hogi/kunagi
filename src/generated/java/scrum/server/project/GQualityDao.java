@@ -277,7 +277,7 @@ public abstract class GQualityDao
 
     // --- dependencies ---
 
-    protected scrum.server.project.ProjectDao projectDao;
+    scrum.server.project.ProjectDao projectDao;
 
     public void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         this.projectDao = projectDao;

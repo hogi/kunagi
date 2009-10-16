@@ -188,13 +188,13 @@ public abstract class GProjectSprintSnapshot
     // - dependencies
     // -----------------------------------------------------------
 
-    protected static scrum.server.sprint.SprintDao sprintDao;
+    static scrum.server.sprint.SprintDao sprintDao;
 
     public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
         GProjectSprintSnapshot.sprintDao = sprintDao;
     }
 
-    protected static ProjectSprintSnapshotDao projectSprintSnapshotDao;
+    static ProjectSprintSnapshotDao projectSprintSnapshotDao;
 
     public static final void setProjectSprintSnapshotDao(ProjectSprintSnapshotDao projectSprintSnapshotDao) {
         GProjectSprintSnapshot.projectSprintSnapshotDao = projectSprintSnapshotDao;

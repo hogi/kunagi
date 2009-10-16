@@ -257,13 +257,13 @@ public abstract class GProjectUserConfig
     // - dependencies
     // -----------------------------------------------------------
 
-    protected static scrum.server.project.ProjectDao projectDao;
+    static scrum.server.project.ProjectDao projectDao;
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GProjectUserConfig.projectDao = projectDao;
     }
 
-    protected static ProjectUserConfigDao projectUserConfigDao;
+    static ProjectUserConfigDao projectUserConfigDao;
 
     public static final void setProjectUserConfigDao(ProjectUserConfigDao projectUserConfigDao) {
         GProjectUserConfig.projectUserConfigDao = projectUserConfigDao;

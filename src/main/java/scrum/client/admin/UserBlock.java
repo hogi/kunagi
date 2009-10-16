@@ -69,7 +69,7 @@ public class UserBlock extends AExtensibleBlockWidget<User> {
 		return fields;
 	}
 
-	public static BlockWidgetFactory<User> FACTORY = new BlockWidgetFactory<User>() {
+	public static final BlockWidgetFactory<User> FACTORY = new BlockWidgetFactory<User>() {
 
 		public UserBlock createBlock() {
 			return new UserBlock();

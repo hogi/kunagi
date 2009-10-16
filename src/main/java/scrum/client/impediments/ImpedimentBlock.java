@@ -40,7 +40,7 @@ public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implemen
 		return new DeleteImpedimentAction(getObject());
 	}
 
-	public static BlockWidgetFactory<Impediment> FACTORY = new BlockWidgetFactory<Impediment>() {
+	public static final BlockWidgetFactory<Impediment> FACTORY = new BlockWidgetFactory<Impediment>() {
 
 		public ImpedimentBlock createBlock() {
 			return new ImpedimentBlock();

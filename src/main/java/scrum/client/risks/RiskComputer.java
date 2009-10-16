@@ -8,7 +8,7 @@ public class RiskComputer {
 	private static Map<String, String> probabilities;
 	private static Map<String, String> impacts;
 
-	public static Map<String, String> getProbabilities() {
+	public static synchronized Map<String, String> getProbabilities() {
 		if (probabilities == null) {
 			probabilities = new LinkedHashMap<String, String>();
 			probabilities.put("20", getProbabilityLabel(20));
@@ -20,7 +20,7 @@ public class RiskComputer {
 		return probabilities;
 	}
 
-	public static Map<String, String> getImpacts() {
+	public static synchronized Map<String, String> getImpacts() {
 		if (impacts == null) {
 			impacts = new LinkedHashMap<String, String>();
 			impacts.put("20", getImpactLabel(20));

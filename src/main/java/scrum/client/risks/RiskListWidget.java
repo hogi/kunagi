@@ -43,7 +43,7 @@ public class RiskListWidget extends AScrumWidget {
 		list.extendObject(risk);
 	}
 
-	class RiskComparator implements Comparator<Risk> {
+	private static class RiskComparator implements Comparator<Risk> {
 
 		public int compare(Risk a, Risk b) {
 			return b.compareTo(a);

@@ -37,7 +37,7 @@ public class TaskInRequirementBlock extends AExtensibleBlockWidget<Task> impleme
 		return new DeleteTaskAction(getObject());
 	}
 
-	public static BlockWidgetFactory<Task> FACTORY = new BlockWidgetFactory<Task>() {
+	public static final BlockWidgetFactory<Task> FACTORY = new BlockWidgetFactory<Task>() {
 
 		public TaskInRequirementBlock createBlock() {
 			return new TaskInRequirementBlock();

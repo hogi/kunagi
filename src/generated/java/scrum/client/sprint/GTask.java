@@ -23,7 +23,7 @@ import scrum.client.common.*;
 import ilarkesto.gwt.client.*;
 
 public abstract class GTask
-            extends ilarkesto.gwt.client.AGwtEntity {
+            extends scrum.client.common.AScrumGwtEntity {
 
     protected scrum.client.Dao getDao() {
         return scrum.client.Dao.get();

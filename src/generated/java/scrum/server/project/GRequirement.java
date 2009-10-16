@@ -527,25 +527,25 @@ public abstract class GRequirement
     // - dependencies
     // -----------------------------------------------------------
 
-    protected static scrum.server.project.ProjectDao projectDao;
+    static scrum.server.project.ProjectDao projectDao;
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GRequirement.projectDao = projectDao;
     }
 
-    protected static scrum.server.sprint.SprintDao sprintDao;
+    static scrum.server.sprint.SprintDao sprintDao;
 
     public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
         GRequirement.sprintDao = sprintDao;
     }
 
-    protected static scrum.server.project.QualityDao qualityDao;
+    static scrum.server.project.QualityDao qualityDao;
 
     public static final void setQualityDao(scrum.server.project.QualityDao qualityDao) {
         GRequirement.qualityDao = qualityDao;
     }
 
-    protected static RequirementDao requirementDao;
+    static RequirementDao requirementDao;
 
     public static final void setRequirementDao(RequirementDao requirementDao) {
         GRequirement.requirementDao = requirementDao;

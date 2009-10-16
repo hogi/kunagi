@@ -339,13 +339,13 @@ public abstract class GImpediment
     // - dependencies
     // -----------------------------------------------------------
 
-    protected static scrum.server.project.ProjectDao projectDao;
+    static scrum.server.project.ProjectDao projectDao;
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GImpediment.projectDao = projectDao;
     }
 
-    protected static ImpedimentDao impedimentDao;
+    static ImpedimentDao impedimentDao;
 
     public static final void setImpedimentDao(ImpedimentDao impedimentDao) {
         GImpediment.impedimentDao = impedimentDao;

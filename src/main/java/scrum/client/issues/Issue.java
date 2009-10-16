@@ -55,14 +55,14 @@ public class Issue extends GIssue {
 		return getReference() + " [" + getType() + "] " + getLabel();
 	}
 
-	public static Comparator<Issue> DATE_COMPARATOR = new Comparator<Issue>() {
+	public static final Comparator<Issue> DATE_COMPARATOR = new Comparator<Issue>() {
 
 		public int compare(Issue a, Issue b) {
 			return a.getDate().compareTo(b.getDate());
 		}
 	};
 
-	public static Comparator<Issue> REVERSE_DATE_COMPARATOR = new Comparator<Issue>() {
+	public static final Comparator<Issue> REVERSE_DATE_COMPARATOR = new Comparator<Issue>() {
 
 		public int compare(Issue a, Issue b) {
 			return DATE_COMPARATOR.compare(b, a);

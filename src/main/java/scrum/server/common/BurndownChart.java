@@ -62,7 +62,7 @@ public class BurndownChart {
 			1, 3, max * 1.1, tick);
 
 		try {
-			ChartUtilities.saveChartAsPNG(new File("E:/Temp/chart.png"), chart, 500, 500);
+			ChartUtilities.saveChartAsPNG(new File("runtimedata/test/chart.png"), chart, 500, 500);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

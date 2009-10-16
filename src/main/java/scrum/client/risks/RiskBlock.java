@@ -31,7 +31,7 @@ public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupp
 		return new DeleteRiskAction(getObject());
 	}
 
-	public static BlockWidgetFactory<Risk> FACTORY = new BlockWidgetFactory<Risk>() {
+	public static final BlockWidgetFactory<Risk> FACTORY = new BlockWidgetFactory<Risk>() {
 
 		public RiskBlock createBlock() {
 			return new RiskBlock();

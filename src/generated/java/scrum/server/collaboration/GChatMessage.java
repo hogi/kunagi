@@ -260,13 +260,13 @@ public abstract class GChatMessage
     // - dependencies
     // -----------------------------------------------------------
 
-    protected static scrum.server.project.ProjectDao projectDao;
+    static scrum.server.project.ProjectDao projectDao;
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GChatMessage.projectDao = projectDao;
     }
 
-    protected static ChatMessageDao chatMessageDao;
+    static ChatMessageDao chatMessageDao;
 
     public static final void setChatMessageDao(ChatMessageDao chatMessageDao) {
         GChatMessage.chatMessageDao = chatMessageDao;

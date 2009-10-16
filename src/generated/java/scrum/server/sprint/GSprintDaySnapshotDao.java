@@ -235,7 +235,7 @@ public abstract class GSprintDaySnapshotDao
 
     // --- dependencies ---
 
-    protected scrum.server.sprint.SprintDao sprintDao;
+    scrum.server.sprint.SprintDao sprintDao;
 
     public void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
         this.sprintDao = sprintDao;

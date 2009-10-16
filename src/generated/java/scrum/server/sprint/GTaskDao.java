@@ -361,7 +361,7 @@ public abstract class GTaskDao
 
     // --- dependencies ---
 
-    protected scrum.server.project.RequirementDao requirementDao;
+    scrum.server.project.RequirementDao requirementDao;
 
     public void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
         this.requirementDao = requirementDao;

@@ -271,13 +271,13 @@ public abstract class GQuality
     // - dependencies
     // -----------------------------------------------------------
 
-    protected static scrum.server.project.ProjectDao projectDao;
+    static scrum.server.project.ProjectDao projectDao;
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GQuality.projectDao = projectDao;
     }
 
-    protected static QualityDao qualityDao;
+    static QualityDao qualityDao;
 
     public static final void setQualityDao(QualityDao qualityDao) {
         GQuality.qualityDao = qualityDao;

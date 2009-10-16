@@ -346,13 +346,13 @@ public abstract class GRisk
     // - dependencies
     // -----------------------------------------------------------
 
-    protected static scrum.server.project.ProjectDao projectDao;
+    static scrum.server.project.ProjectDao projectDao;
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GRisk.projectDao = projectDao;
     }
 
-    protected static RiskDao riskDao;
+    static RiskDao riskDao;
 
     public static final void setRiskDao(RiskDao riskDao) {
         GRisk.riskDao = riskDao;

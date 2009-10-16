@@ -17,8 +17,9 @@ import scrum.server.ScrumWebApplication;
 public class CssServlet extends HttpServlet {
 
 	private static final Logger LOG = Logger.get(CssServlet.class);
+	private static final long serialVersionUID = 1;
 
-	private ScreenCssBuilder screenCssBuilder = new ScreenCssBuilder();
+	private transient final ScreenCssBuilder screenCssBuilder = new ScreenCssBuilder();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

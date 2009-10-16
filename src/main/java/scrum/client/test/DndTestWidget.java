@@ -55,7 +55,7 @@ public class DndTestWidget extends Composite {
 		initWidget(dndPanel);
 	}
 
-	private class DragComposite extends Composite implements SourcesMouseEvents {
+	private static class DragComposite extends Composite implements SourcesMouseEvents {
 
 		MouseListenerCollection mouseListeners;
 

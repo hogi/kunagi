@@ -18,7 +18,6 @@ import com.google.gwt.user.client.Timer;
 
 public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
 
-	private static ComponentManager components;
 	private EntityChangeCache cache = new EntityChangeCache();
 
 	// --- dependencies ---
@@ -32,12 +31,6 @@ public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
 	// --- ---
 
 	Dao() {}
-
-	@Override
-	protected void onInitialization() {
-		super.onInitialization();
-		components = ComponentManager.get();
-	}
 
 	public void onProjectClosed() {
 		clearChatMessages();

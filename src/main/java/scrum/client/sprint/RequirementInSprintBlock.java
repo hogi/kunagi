@@ -62,7 +62,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 		taskList.extendObject(task);
 	}
 
-	public static BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {
+	public static final BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {
 
 		public RequirementInSprintBlock createBlock() {
 			return new RequirementInSprintBlock();

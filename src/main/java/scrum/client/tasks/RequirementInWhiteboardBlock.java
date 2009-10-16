@@ -28,7 +28,7 @@ public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Require
 		return new RequirementWidget(getObject(), true, false, true, true);
 	}
 
-	public static BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {
+	public static final BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {
 
 		public RequirementInWhiteboardBlock createBlock() {
 			return new RequirementInWhiteboardBlock();

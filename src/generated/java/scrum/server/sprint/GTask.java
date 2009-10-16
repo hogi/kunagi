@@ -353,13 +353,13 @@ public abstract class GTask
     // - dependencies
     // -----------------------------------------------------------
 
-    protected static scrum.server.project.RequirementDao requirementDao;
+    static scrum.server.project.RequirementDao requirementDao;
 
     public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
         GTask.requirementDao = requirementDao;
     }
 
-    protected static TaskDao taskDao;
+    static TaskDao taskDao;
 
     public static final void setTaskDao(TaskDao taskDao) {
         GTask.taskDao = taskDao;

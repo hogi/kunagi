@@ -20,7 +20,7 @@ public class FieldsWidget extends AWidget {
 	private Grid grid;
 	private List<Widget> widgets = new ArrayList<Widget>();
 
-	private Widget autoUpdateWidget = Gwt.rootWidget;
+	private Widget autoUpdateWidget = Gwt.getRootWidget();
 
 	@Override
 	protected Widget onInitialization() {

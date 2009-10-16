@@ -255,7 +255,7 @@ public abstract class GComment
         }
     }
 
-    protected static CommentDao commentDao;
+    static CommentDao commentDao;
 
     public static final void setCommentDao(CommentDao commentDao) {
         GComment.commentDao = commentDao;

@@ -210,7 +210,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		return Gwt.formatHours(i);
 	}
 
-	private class ByUserPredicate implements GenericPredicate<Task> {
+	private static class ByUserPredicate implements GenericPredicate<Task> {
 
 		private final User user;
 

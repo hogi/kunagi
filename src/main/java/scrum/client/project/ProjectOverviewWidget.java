@@ -15,8 +15,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectOverviewWidget extends AScrumWidget {
 
-	public static int CHART_WIDTH = 800;
-	public static int CHART_HEIGHT = 270;
+	public static final int CHART_WIDTH = 800;
+	public static final int CHART_HEIGHT = 270;
 
 	private Image sprintChart;
 

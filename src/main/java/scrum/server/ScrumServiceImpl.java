@@ -15,9 +15,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import scrum.client.admin.SystemMessage;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+
+import scrum.client.admin.SystemMessage;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.collaboration.CommentDao;
@@ -33,14 +34,15 @@ import scrum.server.sprint.Task;
 public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	private static final Logger LOG = Logger.get(ScrumServiceImpl.class);
+	private static final long serialVersionUID = 1;
 
 	// --- dependencies ---
 
-	private ProjectDao projectDao;
-	private UserDao userDao;
-	private RequirementDao requirementDao;
-	private CommentDao commentDao;
-	private ScrumWebApplication webApplication;
+	private transient ProjectDao projectDao;
+	private transient UserDao userDao;
+	private transient RequirementDao requirementDao;
+	private transient CommentDao commentDao;
+	private transient ScrumWebApplication webApplication;
 
 	public void setWebApplication(ScrumWebApplication webApplication) {
 		this.webApplication = webApplication;

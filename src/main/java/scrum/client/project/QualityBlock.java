@@ -31,7 +31,7 @@ public class QualityBlock extends AExtensibleBlockWidget<Quality> implements Tra
 		return new DeleteQualityAction(getObject());
 	}
 
-	public static BlockWidgetFactory<Quality> FACTORY = new BlockWidgetFactory<Quality>() {
+	public static final BlockWidgetFactory<Quality> FACTORY = new BlockWidgetFactory<Quality>() {
 
 		public QualityBlock createBlock() {
 			return new QualityBlock();

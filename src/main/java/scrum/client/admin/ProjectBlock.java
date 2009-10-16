@@ -169,7 +169,7 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 		return fields;
 	}
 
-	public static BlockWidgetFactory<Project> FACTORY = new BlockWidgetFactory<Project>() {
+	public static final BlockWidgetFactory<Project> FACTORY = new BlockWidgetFactory<Project>() {
 
 		public ProjectBlock createBlock() {
 			return new ProjectBlock();

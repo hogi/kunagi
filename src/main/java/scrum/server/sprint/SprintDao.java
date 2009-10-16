@@ -24,12 +24,6 @@ public class SprintDao extends GSprintDao {
 			end = begin.addDays(-variant * 3);
 		}
 
-		int beginBeforeInDays = 7;
-		int endAfterInDays = 3;
-
-		beginBeforeInDays += variant * 2;
-		endAfterInDays += variant * 2;
-
 		Sprint sprint = newEntityInstance();
 		sprint.setProject(project);
 		sprint.setLabel("Sprint -" + variant);

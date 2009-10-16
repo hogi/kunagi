@@ -14,7 +14,7 @@ public class Ui extends AComponent {
 	protected void onInitialization() {
 		super.onInitialization();
 		workspace = new Workspace();
-		Gwt.rootWidget = workspace;
+		Gwt.setRootWidget(workspace);
 	}
 
 	public void show(Widget sidebar, Widget workarea) {

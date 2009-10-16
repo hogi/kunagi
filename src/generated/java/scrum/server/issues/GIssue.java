@@ -320,13 +320,13 @@ public abstract class GIssue
     // - dependencies
     // -----------------------------------------------------------
 
-    protected static scrum.server.project.ProjectDao projectDao;
+    static scrum.server.project.ProjectDao projectDao;
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GIssue.projectDao = projectDao;
     }
 
-    protected static IssueDao issueDao;
+    static IssueDao issueDao;
 
     public static final void setIssueDao(IssueDao issueDao) {
         GIssue.issueDao = issueDao;

@@ -215,13 +215,13 @@ public abstract class GWikipage
     // - dependencies
     // -----------------------------------------------------------
 
-    protected static scrum.server.project.ProjectDao projectDao;
+    static scrum.server.project.ProjectDao projectDao;
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GWikipage.projectDao = projectDao;
     }
 
-    protected static WikipageDao wikipageDao;
+    static WikipageDao wikipageDao;
 
     public static final void setWikipageDao(WikipageDao wikipageDao) {
         GWikipage.wikipageDao = wikipageDao;
