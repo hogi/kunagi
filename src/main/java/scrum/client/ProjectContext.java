@@ -15,7 +15,6 @@ import scrum.client.admin.User;
 import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.WikiWidget;
 import scrum.client.common.AScrumComponent;
-import scrum.client.context.UiComponent;
 import scrum.client.context.UserHighlightSupport;
 import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
@@ -39,7 +38,7 @@ import scrum.client.workspace.ProjectSidebarWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectContext extends AScrumComponent implements UiComponent {
+public class ProjectContext extends AScrumComponent {
 
 	private Project project;
 
@@ -99,15 +98,18 @@ public class ProjectContext extends AScrumComponent implements UiComponent {
 		ObjectMappedFlowPanel.objectHeights.clear();
 	}
 
+	public void activate() {
+		cm.getUi().show(sidebar, projectOverview);
+	}
+
 	public void openProject(Project project) {
 		this.project = project;
 
-		cm.getUi().getWorkspace().lock("Loading project...");
+		cm.getUi().lock("Loading project...");
 		cm.getApp().callSelectProject(project.getId(), new Runnable() {
 
 			public void run() {
-				cm.getUi().getWorkspace().unlock();
-				cm.getUi().getWorkspace().activateProjectView();
+				activate();
 			}
 		});
 
@@ -116,7 +118,7 @@ public class ProjectContext extends AScrumComponent implements UiComponent {
 
 	public void closeProject(boolean activateHomeView) {
 		assert project != null;
-		cm.getUi().getWorkspace().lock("Closing project...");
+		cm.getUi().lock("Closing project...");
 		project = null;
 		cm.getApp().callCloseProject();
 		cm.getEventBus().fireProjectClosed();
@@ -146,14 +148,6 @@ public class ProjectContext extends AScrumComponent implements UiComponent {
 
 	public ProjectUserConfigWidget getProjectUserConfig() {
 		return projectUserConfig;
-	}
-
-	public Widget getSidebarWidget() {
-		return sidebar;
-	}
-
-	public Widget getWorkareaWidget() {
-		return projectOverview;
 	}
 
 	public void showEntity(AGwtEntity entity) {

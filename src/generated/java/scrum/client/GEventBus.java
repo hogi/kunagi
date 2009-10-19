@@ -112,6 +112,25 @@ public abstract class GEventBus
         }
     }
 
+    // --- VisibleDataChanged ---
+
+    private Set<VisibleDataChangedListener> visibleDataChangedListeners = new HashSet<VisibleDataChangedListener>();
+
+    public void addVisibleDataChangedListener(VisibleDataChangedListener listener) {
+        visibleDataChangedListeners.add(listener);
+    }
+
+    public void removeVisibleDataChangedListener(VisibleDataChangedListener listener) {
+        visibleDataChangedListeners.remove(listener);
+    }
+
+    public void fireVisibleDataChanged() {
+        log.debug("Event fired: VisibleDataChanged");
+        for (VisibleDataChangedListener listener : visibleDataChangedListeners) {
+            listener.onVisibleDataChanged();
+        }
+    }
+
     // --- BlockExpanded ---
 
     private Set<BlockExpandedListener> blockExpandedListeners = new HashSet<BlockExpandedListener>();
@@ -158,6 +177,7 @@ public abstract class GEventBus
         if (listener instanceof LogoutListener) addLogoutListener((LogoutListener)listener);
         if (listener instanceof ProjectOpenedListener) addProjectOpenedListener((ProjectOpenedListener)listener);
         if (listener instanceof ProjectClosedListener) addProjectClosedListener((ProjectClosedListener)listener);
+        if (listener instanceof VisibleDataChangedListener) addVisibleDataChangedListener((VisibleDataChangedListener)listener);
         if (listener instanceof BlockExpandedListener) addBlockExpandedListener((BlockExpandedListener)listener);
         if (listener instanceof BlockCollapsedListener) addBlockCollapsedListener((BlockCollapsedListener)listener);
     }
@@ -168,6 +188,7 @@ public abstract class GEventBus
         if (listener instanceof LogoutListener) removeLogoutListener((LogoutListener)listener);
         if (listener instanceof ProjectOpenedListener) removeProjectOpenedListener((ProjectOpenedListener)listener);
         if (listener instanceof ProjectClosedListener) removeProjectClosedListener((ProjectClosedListener)listener);
+        if (listener instanceof VisibleDataChangedListener) removeVisibleDataChangedListener((VisibleDataChangedListener)listener);
         if (listener instanceof BlockExpandedListener) removeBlockExpandedListener((BlockExpandedListener)listener);
         if (listener instanceof BlockCollapsedListener) removeBlockCollapsedListener((BlockCollapsedListener)listener);
     }

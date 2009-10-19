@@ -75,17 +75,17 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			cm.getProjectContext().showEntity(entity);
 			return;
 		}
-		cm.getUi().getWorkspace().lock("Searching for " + reference);
+		cm.getUi().lock("Searching for " + reference);
 		callRequestEntityByReference(reference, new Runnable() {
 
 			public void run() {
 				AGwtEntity entity = cm.getDao().getEntityByReference(reference);
 				if (entity == null) {
-					cm.getUi().getWorkspace().unlock();
+					cm.getUi().unlock();
 					cm.getChat().postSystemMessage("Object does not exist: " + reference, false);
 					return;
 				}
-				cm.getUi().getWorkspace().unlock();
+				cm.getUi().unlock();
 				cm.getProjectContext().showEntity(entity);
 			}
 		});

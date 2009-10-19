@@ -17,17 +17,24 @@ public class SystemMessageManager extends AScrumComponent implements ServerDataR
 	public void activateSystemMessage() {
 		systemMessage.setActive(true);
 		cm.getApp().callUpdateSystemMessage(systemMessage);
-		cm.getUi().getWorkspace().update();
+		cm.getEventBus().fireVisibleDataChanged();
 	}
 
 	public void deactivateSystemMessage() {
 		systemMessage.setActive(false);
 		cm.getApp().callUpdateSystemMessage(systemMessage);
-		cm.getUi().getWorkspace().update();
+		cm.getEventBus().fireVisibleDataChanged();
 	}
 
 	public SystemMessage getSystemMessage() {
 		return systemMessage;
+	}
+
+	public void onServerDataReceived(DataTransferObject data) {
+		if (data.systemMessage != null) {
+			systemMessage = data.systemMessage;
+			cm.getEventBus().fireVisibleDataChanged();
+		}
 	}
 
 }

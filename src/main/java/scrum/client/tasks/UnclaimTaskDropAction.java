@@ -16,7 +16,7 @@ public class UnclaimTaskDropAction implements BlockListDropAction<Task> {
 	public boolean onDrop(Task task) {
 		task.setRequirement(this.requirement);
 		task.setUnOwned();
-		ComponentManager.get().getUi().getWorkspace().update();
+		ComponentManager.get().getEventBus().fireVisibleDataChanged();
 		return true;
 	}
 }

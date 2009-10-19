@@ -5,9 +5,7 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
-import scrum.client.ComponentManager;
 import scrum.client.common.AScrumWidget;
-import scrum.client.context.UiComponent;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -52,17 +50,6 @@ public class Workspace extends AScrumWidget {
 		locker = new LockWidget(workspace);
 
 		return new FullscreenPanel(locker);
-	}
-
-	public void activateProjectView() {
-		activateView(ComponentManager.get().getProjectContext());
-	}
-
-	private void activateView(UiComponent view) {
-		GwtLogger.DEBUG("Activating view:", view);
-		sidebar.show(view.getSidebarWidget());
-		workarea.show(view.getWorkareaWidget());
-		unlock();
 	}
 
 	public void abort(String message) {

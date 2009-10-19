@@ -6,7 +6,7 @@ import scrum.client.workspace.Workspace;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Ui extends AComponent {
+public class Ui extends AComponent implements VisibleDataChangedListener {
 
 	private Workspace workspace;
 
@@ -15,6 +15,18 @@ public class Ui extends AComponent {
 		super.onInitialization();
 		workspace = new Workspace();
 		Gwt.setRootWidget(workspace);
+	}
+
+	public void onVisibleDataChanged() {
+		workspace.update();
+	}
+
+	public void lock(String message) {
+		workspace.lock(message);
+	}
+
+	public void unlock() {
+		workspace.unlock();
 	}
 
 	public void show(Widget sidebar, Widget workarea) {

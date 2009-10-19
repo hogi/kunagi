@@ -78,6 +78,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtEventBusModel.addEvent("Logout");
 			gwtEventBusModel.addEvent("ProjectOpened");
 			gwtEventBusModel.addEvent("ProjectClosed");
+			gwtEventBusModel.addEvent("VisibleDataChanged");
 			gwtEventBusModel.addEvent("BlockExpanded").addParameter("object", Object.class);
 			gwtEventBusModel.addEvent("BlockCollapsed").addParameter("object", Object.class);
 		}

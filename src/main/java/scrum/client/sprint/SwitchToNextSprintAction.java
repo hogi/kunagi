@@ -17,7 +17,7 @@ public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getUi().getWorkspace().lock("Switching to next Sprint");
+		cm.getUi().lock("Switching to next Sprint");
 		cm.getApp().callSwitchToNextSprint(new Runnable() {
 
 			public void run() {
