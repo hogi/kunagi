@@ -6,15 +6,13 @@ import ilarkesto.gwt.client.DateAndTime;
 import java.util.Comparator;
 import java.util.Map;
 
-import scrum.client.ComponentManager;
-
 public class Comment extends GComment {
 
 	public Comment(AGwtEntity parent) {
 		setParent(parent);
 		setText("");
 		setDateAndTime(DateAndTime.now());
-		setAuthor(ComponentManager.get().getAuth().getUser());
+		setAuthor(cm.getAuth().getUser());
 	}
 
 	public Comment(Map data) {

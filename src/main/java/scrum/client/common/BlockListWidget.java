@@ -1,6 +1,5 @@
 package scrum.client.common;
 
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.ObjectMappedFlowPanel;
@@ -11,7 +10,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import scrum.client.ComponentManager;
 import scrum.client.DndManager;
 import scrum.client.GenericPredicate;
 import scrum.client.dnd.BlockDndMarkerWidget;
@@ -23,11 +21,11 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * List of <code>BlockWidget</code>s.
  */
-public final class BlockListWidget<O> extends AWidget {
+public final class BlockListWidget<O> extends AScrumWidget {
 
 	// private static final Logger LOG = Logger.get(BlockListWidget.class);
 
-	private DndManager dndManager = ComponentManager.get().getDndManager();
+	private DndManager dndManager = cm.getDndManager();
 
 	private ObjectMappedFlowPanel<O, ABlockWidget<O>> list;
 	private boolean dndSorting = true;

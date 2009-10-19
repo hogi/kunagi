@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import scrum.client.ComponentManager;
 import scrum.client.ProjectContext;
 import scrum.client.common.AScrumWidget;
 
@@ -18,7 +17,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CommentsWidget extends AScrumWidget {
 
-	private ProjectContext projectContext = ComponentManager.get().getProjectContext();
+	private ProjectContext projectContext = cm.getProjectContext();
 
 	private FlowPanel containerPanel;
 

@@ -27,7 +27,7 @@ public class HomeContext extends AScrumComponent {
 		userConfig = new UserConfigWidget();
 		messageManager = new SystemMessageManagerWidget();
 
-		navigator = new SwitchingNavigatorWidget(ComponentManager.get().getUi().getWorkspace().getWorkarea());
+		navigator = new SwitchingNavigatorWidget(cm.getUi().getWorkspace().getWorkarea());
 		navigator.addItem("Projects", projectSelector);
 		navigator.addItem("Personal Preferences", userConfig);
 		if (getCurrentUser().isAdmin()) {

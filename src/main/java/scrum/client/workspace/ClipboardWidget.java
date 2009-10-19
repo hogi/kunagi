@@ -1,13 +1,12 @@
 package scrum.client.workspace;
 
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.GwtLogger;
 
 import java.util.ArrayList;
 
-import scrum.client.ComponentManager;
 import scrum.client.DndManager;
 import scrum.client.common.ABlockWidget;
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.StyleSheet;
 import scrum.client.dnd.ClipboardSupport;
 
@@ -17,9 +16,9 @@ import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ClipboardWidget extends AWidget {
+public class ClipboardWidget extends AScrumWidget {
 
-	private DndManager dndManager = ComponentManager.get().getDndManager();
+	private DndManager dndManager = cm.getDndManager();
 	private FlowPanel panel;
 	private ArrayList<ClipboardItemWidget> clipboardItems = new ArrayList<ClipboardItemWidget>();
 

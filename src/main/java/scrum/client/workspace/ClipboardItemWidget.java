@@ -1,9 +1,8 @@
 package scrum.client.workspace;
 
-import ilarkesto.gwt.client.AWidget;
-import scrum.client.ComponentManager;
 import scrum.client.DndManager;
 import scrum.client.common.ABlockWidget;
+import scrum.client.common.AScrumWidget;
 import scrum.client.dnd.ClipboardSupport;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -11,9 +10,9 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ClipboardItemWidget extends AWidget {
+public class ClipboardItemWidget extends AScrumWidget {
 
-	private DndManager dndManager = ComponentManager.get().getDndManager();
+	private DndManager dndManager = cm.getDndManager();
 
 	private HorizontalPanel panel;
 	private Image icon;

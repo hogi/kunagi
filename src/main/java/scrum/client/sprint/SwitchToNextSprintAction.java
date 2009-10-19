@@ -1,6 +1,5 @@
 package scrum.client.sprint;
 
-import scrum.client.ComponentManager;
 import scrum.client.project.Requirement;
 
 public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
@@ -21,7 +20,7 @@ public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 		cm.getApp().callSwitchToNextSprint(new Runnable() {
 
 			public void run() {
-				ComponentManager.get().getProjectContext().showSprintBacklog((Requirement) null);
+				cm.getProjectContext().showSprintBacklog((Requirement) null);
 			}
 		});
 	}

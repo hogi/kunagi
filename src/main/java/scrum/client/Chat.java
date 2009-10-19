@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 import scrum.client.admin.User;
 import scrum.client.collaboration.ChatMessage;
-import scrum.client.collaboration.ChatWidget;
 import scrum.client.common.AScrumComponent;
 import scrum.client.project.Project;
 
@@ -39,7 +38,7 @@ public class Chat extends AScrumComponent {
 		if (chatMessages.contains(msg)) return;
 		chatMessages.add(msg);
 		cleanupChatMessages();
-		ChatWidget.get().update();
+		cm.getProjectContext().getSidebar().getChat().update();
 	}
 
 	private void cleanupChatMessages() {

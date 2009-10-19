@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import scrum.client.ComponentManager;
 import scrum.client.GenericPredicate;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
@@ -184,10 +183,6 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 			if (width != null) td.setAttribute("width", width);
 			if (className != null) td.setClassName(className);
 		}
-	}
-
-	public static WhiteboardWidget get() {
-		return ComponentManager.get().getProjectContext().getWhiteboard();
 	}
 
 	public BlockListSelectionManager getSelectionManager() {

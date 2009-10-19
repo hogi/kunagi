@@ -5,12 +5,14 @@ import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.ComponentManager;
 import scrum.client.admin.SystemMessageWidget;
+import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.collaboration.ChatWidget;
+import scrum.client.common.AScrumWidget;
 import scrum.client.communication.UsersStatusWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectSidebarWidget extends AWidget {
+public class ProjectSidebarWidget extends AScrumWidget {
 
 	private SwitchingNavigatorWidget navigator;
 	// private ClipboardWidget clipboard;
@@ -47,13 +49,8 @@ public class ProjectSidebarWidget extends AWidget {
 	}
 
 	public SwitchingNavigatorWidget getNavigator() {
-		if (navigator == null)
-			navigator = new SwitchingNavigatorWidget(ComponentManager.get().getUi().getWorkspace().getWorkarea());
+		if (navigator == null) navigator = new SwitchingNavigatorWidget(cm.getUi().getWorkspace().getWorkarea());
 		return navigator;
-	}
-
-	public static ProjectSidebarWidget get() {
-		return ComponentManager.get().getProjectContext().getSidebar();
 	}
 
 }

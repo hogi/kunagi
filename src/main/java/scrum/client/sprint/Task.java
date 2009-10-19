@@ -3,7 +3,6 @@ package scrum.client.sprint;
 import java.util.Comparator;
 import java.util.Map;
 
-import scrum.client.ComponentManager;
 import scrum.client.admin.User;
 import scrum.client.project.Requirement;
 
@@ -23,7 +22,7 @@ public class Task extends GTask {
 	}
 
 	public void claim() {
-		User user = ComponentManager.get().getAuth().getUser();
+		User user = cm.getAuth().getUser();
 		boolean ownerchange = !isOwner(user);
 		if (isDone()) {
 			setUnDone(user);
@@ -31,8 +30,7 @@ public class Task extends GTask {
 			setOwner(user);
 		}
 		if (ownerchange)
-			ComponentManager.get().getChat().postSystemMessage(
-				user.getName() + " claimed task " + getReference() + ".", true);
+			cm.getChat().postSystemMessage(user.getName() + " claimed task " + getReference() + ".", true);
 	}
 
 	public String getLongLabel(boolean showOwner, boolean showRequirement) {
@@ -57,8 +55,7 @@ public class Task extends GTask {
 			throw new IllegalArgumentException("a Task cannot be set done without claiming Task ownership");
 		setOwner(user);
 		setRemainingWork(0);
-		ComponentManager.get().getChat().postSystemMessage(
-			ComponentManager.get().getAuth().getUser().getName() + " closed task " + getReference() + ".", true);
+		cm.getChat().postSystemMessage(cm.getAuth().getUser().getName() + " closed task " + getReference() + ".", true);
 	}
 
 	public void setUnDone(User user) {
@@ -68,8 +65,8 @@ public class Task extends GTask {
 
 	public void setUnOwned() {
 		setUnDone(null);
-		ComponentManager.get().getChat().postSystemMessage(
-			ComponentManager.get().getAuth().getUser().getName() + " rejected task " + getReference() + ".", true);
+		cm.getChat().postSystemMessage(cm.getAuth().getUser().getName() + " rejected task " + getReference() + ".",
+			true);
 	}
 
 	public boolean isDone() {

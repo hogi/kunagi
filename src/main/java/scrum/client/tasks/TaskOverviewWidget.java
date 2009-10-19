@@ -3,7 +3,6 @@ package scrum.client.tasks;
 import java.util.HashMap;
 import java.util.Map;
 
-import scrum.client.ComponentManager;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListSelectionManager;
@@ -54,10 +53,6 @@ public class TaskOverviewWidget extends AScrumWidget implements TaskBlockContain
 		for (Map.Entry<User, TaskListWidget> entry : ownedTasks.entrySet()) {
 			entry.getValue().setTasks(currentSprint.getTasks(entry.getKey()));
 		}
-	}
-
-	public static TaskOverviewWidget get() {
-		return ComponentManager.get().getProjectContext().getTaskOverview();
 	}
 
 	public BlockListSelectionManager getSelectionManager() {

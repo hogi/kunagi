@@ -11,7 +11,7 @@ public abstract class AScrumAction extends AAction {
 	protected static final ComponentManager cm = ComponentManager.get();
 
 	public AScrumAction() {
-		super(ComponentManager.get().getUi().getWorkspace());
+		super(cm.getUi().getWorkspace());
 	}
 
 	// --- helper ---

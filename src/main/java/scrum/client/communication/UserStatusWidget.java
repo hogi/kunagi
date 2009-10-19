@@ -1,6 +1,5 @@
 package scrum.client.communication;
 
-import scrum.client.ComponentManager;
 import scrum.client.UsersStatus;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
@@ -14,7 +13,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class UserStatusWidget extends AScrumWidget {
 
-	private UsersStatus usersStatus = ComponentManager.get().getUsersStatus();
+	private UsersStatus usersStatus = cm.getUsersStatus();
 
 	private Label label;
 	private User user;
@@ -47,11 +46,11 @@ public class UserStatusWidget extends AScrumWidget {
 	class Highlighter implements MouseMoveHandler, MouseOutHandler {
 
 		public void onMouseMove(MouseMoveEvent event) {
-			ComponentManager.get().getProjectContext().highlightUser(user);
+			cm.getProjectContext().highlightUser(user);
 		}
 
 		public void onMouseOut(MouseOutEvent event) {
-			ComponentManager.get().getProjectContext().highlightUser(null);
+			cm.getProjectContext().highlightUser(null);
 		}
 	}
 }

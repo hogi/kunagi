@@ -1,10 +1,8 @@
 package scrum.client.collaboration;
 
 import scrum.client.Chat;
-import scrum.client.ComponentManager;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
-import scrum.client.workspace.ProjectSidebarWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -16,7 +14,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ChatWidget extends AScrumWidget {
 
-	private Chat chat = ComponentManager.get().getChat();
+	private Chat chat = cm.getChat();
 
 	private HTML output;
 	private ScrollPanel outputScroller;
@@ -82,10 +80,6 @@ public class ChatWidget extends AScrumWidget {
 			authorLabel).append(":&nbsp;</span>");
 		sb.append("<span class='text'>").append(html).append("</span>");
 		sb.append("</p>");
-	}
-
-	public static ChatWidget get() {
-		return ProjectSidebarWidget.get().getChat();
 	}
 
 }

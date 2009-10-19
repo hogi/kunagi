@@ -2,6 +2,7 @@ package scrum.client.impediments;
 
 import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.ComponentManager;
+import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.PagePanel;
@@ -33,10 +34,6 @@ public class ImpedimentListWidget extends AScrumWidget {
 
 	public void showImpediment(Impediment impediment) {
 		list.extendObject(impediment);
-	}
-
-	public static ImpedimentListWidget get() {
-		return ComponentManager.get().getProjectContext().getImpedimentList();
 	}
 
 	public void select(Impediment impediment) {

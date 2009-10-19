@@ -22,7 +22,7 @@ public class PublicContext extends AScrumComponent {
 
 		login = new LoginWidget();
 
-		navigator = new SwitchingNavigatorWidget(ComponentManager.get().getUi().getWorkspace().getWorkarea());
+		navigator = new SwitchingNavigatorWidget(cm.getUi().getWorkspace().getWorkarea());
 		navigator.addItem("Login", login);
 		navigator.addItem("Register", createRegisterWidget());
 		navigator.addItem("About", new Label(""));

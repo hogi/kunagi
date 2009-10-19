@@ -9,7 +9,6 @@ import java.util.Map;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.Project;
-import scrum.client.workspace.ProjectSidebarWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -45,10 +44,6 @@ public class UsersStatusWidget extends AScrumWidget {
 			containerPanel.add(widget);
 			widget.update();
 		}
-	}
-
-	public static UsersStatusWidget get() {
-		return ProjectSidebarWidget.get().getUsersStatus();
 	}
 
 }
