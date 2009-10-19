@@ -1,10 +1,11 @@
 package scrum.client.admin;
 
-import ilarkesto.gwt.client.ADateViewEditWidget;
+import ilarkesto.gwt.client.ADateAndTimeViewEditWidget;
 import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ATimeViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.DateAndTime;
+import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.workspace.PagePanel;
@@ -33,40 +34,21 @@ public class SystemMessageManagerWidget extends AScrumWidget {
 				getMessage().setText(getEditorText());
 			}
 		});
-		fields.add("Day Expires", new ADateViewEditWidget() {
+		fields.add("Date and Time", new ADateAndTimeViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerValue(getMessage().getExpiresDate());
+				setViewerValue(getMessage().getExpires());
 			}
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorValue(getMessage().getExpiresDate());
+				setEditorValue(getMessage().getExpires());
 			}
 
 			@Override
 			protected void onEditorSubmit() {
-				DateAndTime datetime = new DateAndTime(getEditorValue(), getMessage().getExpiresTime());
-				getMessage().setExpires(datetime);
-			}
-		});
-		fields.add("Time Expires", new ATimeViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerValue(getMessage().getExpiresTime());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorValue(getMessage().getExpiresTime());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				DateAndTime datetime = new DateAndTime(getMessage().getExpiresDate(), getEditorValue());
-				getMessage().setExpires(datetime);
+				getMessage().setExpires(getEditorValue());
 			}
 		});
 
