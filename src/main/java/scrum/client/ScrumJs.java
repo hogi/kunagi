@@ -2,6 +2,8 @@ package scrum.client;
 
 public class ScrumJs {
 
+	private static final ComponentManager cm = ComponentManager.get();
+
 	static native void initialize() /*-{
 		$wnd.scrum = new Object();
 		$wnd.scrum.showEntityByReference = function(reference) {
@@ -10,7 +12,7 @@ public class ScrumJs {
 	}-*/;
 
 	public static void showEntityByReference(String reference) {
-		ComponentManager.get().getApp().showEntityByReference(reference);
+		cm.getProjectContext().showEntityByReference(reference);
 	}
 
 	public static native String regexTextToHtml(String text) /*-{

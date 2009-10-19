@@ -1,6 +1,5 @@
 package scrum.client;
 
-import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.workspace.Workspace;
 
@@ -14,12 +13,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	private ApplicationInfo applicationInfo;
 
 	public void onModuleLoad() {
-
-		// TODO remove workaround if issue is fixed
-		// workaround for GWT issue 1813
-		// http://code.google.com/p/google-web-toolkit/issues/detail?id=1813
-		// RootPanel.get().getElement().getStyle().setProperty("position", "relative");
-
 		cm = new ComponentManager();
 
 		final Workspace workspace = cm.getUi().getWorkspace();
@@ -59,36 +52,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	protected void handleCommunicationError(Throwable ex) {
 		GwtLogger.ERROR("Communication Error:", ex);
 		cm.getUi().getWorkspace().abort("Lost connection to server, please reload.");
-	}
-
-	public void showEntityByReference(final String reference) {
-		GwtLogger.DEBUG("Showing entity by reference:", reference);
-
-		if (reference.startsWith("[")) {
-			String page = reference.substring(1, reference.length() - 1);
-			cm.getProjectContext().showWiki(page);
-			return;
-		}
-
-		AGwtEntity entity = cm.getDao().getEntityByReference(reference);
-		if (entity != null) {
-			cm.getProjectContext().showEntity(entity);
-			return;
-		}
-		cm.getUi().lock("Searching for " + reference);
-		callRequestEntityByReference(reference, new Runnable() {
-
-			public void run() {
-				AGwtEntity entity = cm.getDao().getEntityByReference(reference);
-				if (entity == null) {
-					cm.getUi().unlock();
-					cm.getChat().postSystemMessage("Object does not exist: " + reference, false);
-					return;
-				}
-				cm.getUi().unlock();
-				cm.getProjectContext().showEntity(entity);
-			}
-		});
 	}
 
 	public final void callStartSession(Runnable callback) {

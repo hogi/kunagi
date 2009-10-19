@@ -150,6 +150,37 @@ public class ProjectContext extends AScrumComponent {
 		return projectUserConfig;
 	}
 
+	public void showEntityByReference(final String reference) {
+		assert project != null;
+		GwtLogger.DEBUG("Showing entity by reference:", reference);
+
+		if (reference.startsWith("[")) {
+			String page = reference.substring(1, reference.length() - 1);
+			showWiki(page);
+			return;
+		}
+
+		AGwtEntity entity = cm.getDao().getEntityByReference(reference);
+		if (entity != null) {
+			showEntity(entity);
+			return;
+		}
+		cm.getUi().lock("Searching for " + reference);
+		cm.getApp().callRequestEntityByReference(reference, new Runnable() {
+
+			public void run() {
+				AGwtEntity entity = cm.getDao().getEntityByReference(reference);
+				if (entity == null) {
+					cm.getUi().unlock();
+					cm.getChat().postSystemMessage("Object does not exist: " + reference, false);
+					return;
+				}
+				cm.getUi().unlock();
+				showEntity(entity);
+			}
+		});
+	}
+
 	public void showEntity(AGwtEntity entity) {
 		GwtLogger.DEBUG("Showing entity:", entity);
 		if (entity instanceof Task) {
