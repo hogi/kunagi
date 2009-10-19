@@ -33,11 +33,6 @@ public class ProjectOverviewWidget extends AScrumWidget {
 		page.addHeader("Project Properties");
 		page.addSection(fields);
 
-		// String chartUrl = GWT.getModuleBaseURL() + "/projectBurndownChart.png?projectId=" + project.getId()
-		// + "&width="
-		// + CHART_WIDTH + "&height=" + CHART_HEIGHT;
-		// Image chart = new Image(chartUrl, 0, 0, CHART_WIDTH, CHART_HEIGHT);
-
 		Sprint sprint = project.getCurrentSprint();
 		if (sprint != null) {
 			page.addHeader("Current Sprint");

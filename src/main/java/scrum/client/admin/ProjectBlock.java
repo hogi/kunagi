@@ -1,8 +1,8 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
-import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.ATextViewEditWidget;
+import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
 import scrum.client.Dao;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -33,43 +33,8 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 	protected Widget onExtendedInitialization() {
 		final Project project = getObject();
 		FieldsWidget fields = new FieldsWidget();
-		fields.add("Label", new ATextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(project.getLabel());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(project.getLabel());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				project.setLabel(getEditorText());
-			}
-
-		});
-
-		fields.add("Description", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(project.getDescription());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(project.getDescription());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				project.setDescription(getEditorText());
-			}
-
-		});
+		fields.add("Label", new TextPropertyEditorWidget(project.labelEditor));
+		fields.add("Description", new RichtextPropertyEditorWidget(project.descriptionEditor));
 
 		fields.add("Participants", new AMultiSelectionViewEditWidget<User>() {
 
