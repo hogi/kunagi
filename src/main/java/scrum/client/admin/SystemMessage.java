@@ -35,7 +35,7 @@ public class SystemMessage implements Serializable, IsSerializable {
 	}
 
 	public String getExpiresAsString() {
-		return expires == null ? null : expires.toString();
+		return expires == null ? null : "in " + expires.getPeriodToNow().toShortestString();
 	}
 
 	public void setExpires(DateAndTime expires) {
