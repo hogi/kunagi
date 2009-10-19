@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CommentWidget extends AScrumWidget {
 
+	private Label date;
 	private ARichtextViewEditWidget editor;
 
 	private Comment comment;
@@ -24,7 +25,7 @@ public class CommentWidget extends AScrumWidget {
 		String color = getCurrentProject().getUserConfig(comment.getAuthor()).getColor();
 		author.getElement().getStyle().setProperty("color", color);
 
-		Label date = new Label(comment.getDateAndTime().toString());
+		date = new Label();
 		date.setStyleName("CommentWidget-header-date");
 
 		FlowPanel header = new FlowPanel();
@@ -62,6 +63,12 @@ public class CommentWidget extends AScrumWidget {
 		panel.add(editor);
 
 		return panel;
+	}
+
+	@Override
+	protected void onUpdate() {
+		date.setText(comment.getDateAndTime().getPeriodToNow().toShortestString() + " ago");
+		super.onUpdate();
 	}
 
 	public void activateEditor() {
