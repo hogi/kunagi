@@ -76,7 +76,7 @@ public class ChatWidget extends AScrumWidget {
 				: "author-system";
 		String authorStyle = author != null ? "color: " + author.getProjectConfig().getColor() + ";" : "";
 		String text = m.getText();
-		String html = cm.getApp().richtextToHtml(text);
+		String html = cm.getRichtextConverter().toHtml(text);
 		sb.append("<p class='message'>");
 		sb.append("<span class='").append(authorClass).append("' style='").append(authorStyle).append("'>").append(
 			authorLabel).append(":&nbsp;</span>");

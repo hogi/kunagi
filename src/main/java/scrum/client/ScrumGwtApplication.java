@@ -1,8 +1,6 @@
 package scrum.client;
 
 import ilarkesto.gwt.client.AGwtEntity;
-import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.workspace.Workspace;
 
@@ -36,7 +34,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			}
 		});
 
-		ARichtextViewEditWidget.setDefaultRichtextFormater(new ScrumRichtextFormater());
+		cm.getRichtextConverter();
 		ScrumJs.initialize();
 	}
 
@@ -55,14 +53,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	public ApplicationInfo getApplicationInfo() {
 		return applicationInfo;
-	}
-
-	public String richtextToHtml(String text) {
-		if (Gwt.isEmpty(text)) return text;
-		String html = ScrumJs.regexTextToHtml(text);
-		html = html.replace("\n", "<br>\n");
-		html = html.replace("\r", "");
-		return html;
 	}
 
 	@Override

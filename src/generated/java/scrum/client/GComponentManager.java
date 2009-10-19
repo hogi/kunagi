@@ -232,4 +232,25 @@ public abstract class GComponentManager
         systemMessageManager = null;
     }
 
+    // --- richtextConverter ---
+
+    private RichtextConverter richtextConverter;
+
+    public final RichtextConverter getRichtextConverter() {
+        if (richtextConverter == null) {
+            richtextConverter = new RichtextConverter();
+            initializeRichtextConverter(richtextConverter);
+            initialize(richtextConverter);
+        }
+        return richtextConverter;
+    }
+
+    protected void initializeRichtextConverter(RichtextConverter richtextConverter) {
+    }
+
+    public final void destroyRichtextConverter() {
+        destroy(richtextConverter);
+        richtextConverter = null;
+    }
+
 }

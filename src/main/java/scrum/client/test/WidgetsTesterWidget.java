@@ -60,9 +60,9 @@ public class WidgetsTesterWidget extends AScrumWidget {
 	private void testTextConverter() {
 		StringBuilder html = new StringBuilder();
 		html.append(
-			cm.getApp().richtextToHtml(
+			cm.getRichtextConverter().toHtml(
 				"[Wiki] r1 aaaa t5 aaaa (r3) aaaa r3. aaaa r3: aaaa [t12] aaar7 aaaa r7x aaaa t9")).append("<hr>");
-		html.append(cm.getApp().richtextToHtml("<b>html?</b> C&A\nnew line")).append("<hr>");
+		html.append(cm.getRichtextConverter().toHtml("<b>html?</b> C&A\nnew line")).append("<hr>");
 		addTest("TextConverter", new HTML(html.toString()));
 	}
 
