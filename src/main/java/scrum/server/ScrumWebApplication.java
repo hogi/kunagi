@@ -189,7 +189,10 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	@Override
 	protected AWebSession createWebSession(HttpServletRequest httpRequest) {
-		return autowire(new WebSession(context, httpRequest));
+		WebSession session = new WebSession(context, httpRequest);
+		autowire(session);
+		session.getNextData().systemMessage = systemMessage;
+		return session;
 	}
 
 	public String getDeploymentStage() {
