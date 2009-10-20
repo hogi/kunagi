@@ -3,8 +3,8 @@ package scrum.client.project;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
-import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.RichtextEditorWidget;
+import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.FieldsWidget;
 
@@ -33,9 +33,9 @@ public class RequirementWidget extends AWidget {
 
 		FieldsWidget fields = new FieldsWidget();
 
-		if (showLabel) fields.add("Label", new TextPropertyEditorWidget(requirement.labelEditor));
+		if (showLabel) fields.add("Label", new TextEditorWidget(requirement.labelModel));
 
-		fields.add("Description", new RichtextPropertyEditorWidget(requirement.descriptionEditor));
+		fields.add("Description", new RichtextEditorWidget(requirement.descriptionModel));
 
 		fields.add("Qualities", new AMultiSelectionViewEditWidget<Quality>() {
 
@@ -56,7 +56,7 @@ public class RequirementWidget extends AWidget {
 			}
 		});
 
-		fields.add("Test", new RichtextPropertyEditorWidget(requirement.testDescriptionEditor));
+		fields.add("Test", new RichtextEditorWidget(requirement.testDescriptionModel));
 
 		fields.add("Estimated Work", new RequirementEstimatedWorkWidget(requirement));
 

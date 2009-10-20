@@ -3,8 +3,8 @@ package scrum.client.admin;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
-import ilarkesto.gwt.client.editor.IntegerPropertyEditorWidget;
-import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.IntegerEditorWidget;
+import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.Project;
 import scrum.client.workspace.PagePanel;
@@ -21,8 +21,8 @@ public class PunishmentsWidget extends AScrumWidget {
 		Project project = cm.getProjectContext().getProject();
 
 		TableBuilder settings = new TableBuilder();
-		settings.addFieldRow("Factor", new IntegerPropertyEditorWidget(project.punishmentFactorEditor));
-		settings.addFieldRow("Unit", new TextPropertyEditorWidget(project.punishmentUnitEditor));
+		settings.addFieldRow("Factor", new IntegerEditorWidget(project.punishmentFactorModel));
+		settings.addFieldRow("Unit", new TextEditorWidget(project.punishmentUnitModel));
 
 		TableBuilder main = new TableBuilder();
 		main.add(Gwt.createDiv("PunishmentsWidget-tableHeader", "User"));
@@ -32,7 +32,7 @@ public class PunishmentsWidget extends AScrumWidget {
 
 		for (User u : project.getParticipants()) {
 			main.add(new Label(u.getName()));
-			main.add(new IntegerPropertyEditorWidget(u.getProjectConfig().misconductsEditor));
+			main.add(new IntegerEditorWidget(u.getProjectConfig().misconductsModel));
 			main.add(new PunishmentViewer(u.getProjectConfig(), project));
 			main.nextRow();
 		}

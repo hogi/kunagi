@@ -2,8 +2,8 @@ package scrum.client.impediments;
 
 import ilarkesto.gwt.client.ADateViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
-import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
-import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.RichtextEditorWidget;
+import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
@@ -23,7 +23,7 @@ public class ImpedimentWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
 
-		fields.add("Label", new TextPropertyEditorWidget(impediment.labelEditor));
+		fields.add("Label", new TextEditorWidget(impediment.labelModel));
 		fields.add("Date", new ADateViewEditWidget() {
 
 			@Override
@@ -41,8 +41,8 @@ public class ImpedimentWidget extends AScrumWidget {
 				impediment.setDate(getEditorValue());
 			}
 		});
-		fields.add("Description", new RichtextPropertyEditorWidget(impediment.descriptionEditor));
-		fields.add("Solution", new RichtextPropertyEditorWidget(impediment.solutionEditor));
+		fields.add("Description", new RichtextEditorWidget(impediment.descriptionModel));
+		fields.add("Solution", new RichtextEditorWidget(impediment.solutionModel));
 
 		return Gwt.createFlowPanel(fields, new CommentsWidget(impediment));
 	}

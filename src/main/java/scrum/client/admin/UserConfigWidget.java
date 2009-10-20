@@ -1,6 +1,6 @@
 package scrum.client.admin;
 
-import ilarkesto.gwt.client.ATextViewEditWidget;
+import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.workspace.PagePanel;
@@ -17,57 +17,15 @@ public class UserConfigWidget extends AScrumWidget {
 		final User user = getCurrentUser();
 
 		fields = new FieldsWidget();
-		fields.add("Name", new ATextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(user.getName());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(user.getName());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				user.setName(getEditorText());
-			}
-		});
-		fields.add("Email", new ATextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(user.getEmail());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(user.getEmail());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				user.setEmail(getEditorText());
-			}
-		});
+		fields.add("Name", new TextEditorWidget(user.nameModel));
+		fields.add("Email", new TextEditorWidget(user.emailModel));
 		fields.add("Password", new PasswordChangeWidget());
-		fields.add("Default Color", new ATextViewEditWidget() {
+		fields.add("Default Color", new TextEditorWidget(user.colorModel) {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerText(user.getColor());
+				super.onViewerUpdate();
 				getViewer().getElement().getStyle().setProperty("color", user.getColor());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(user.getColor());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				user.setColor(getEditorText());
 			}
 		});
 

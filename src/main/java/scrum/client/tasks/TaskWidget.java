@@ -4,8 +4,8 @@ import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.TableBuilder;
-import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
-import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.RichtextEditorWidget;
+import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.sprint.Task;
 
@@ -25,9 +25,9 @@ public class TaskWidget extends AWidget {
 
 		TableBuilder tb = new TableBuilder();
 
-		tb.addFieldRow("Label", new TextPropertyEditorWidget(task.labelEditor), 3);
+		tb.addFieldRow("Label", new TextEditorWidget(task.labelModel), 3);
 
-		tb.addFieldRow("Description", new RichtextPropertyEditorWidget(task.descriptionEditor), 3);
+		tb.addFieldRow("Description", new RichtextEditorWidget(task.descriptionModel), 3);
 
 		tb.addField("Burned Work", new AIntegerViewEditWidget() {
 

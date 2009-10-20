@@ -88,7 +88,7 @@ public abstract class GTask
         return equals(this.number, number);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor numberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel numberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {
@@ -131,7 +131,7 @@ public abstract class GTask
         return equals(this.label, label);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor labelEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
@@ -167,7 +167,7 @@ public abstract class GTask
         return equals(this.description, description);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor descriptionEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel descriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
@@ -200,7 +200,7 @@ public abstract class GTask
         return equals(this.remainingWork, remainingWork);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor remainingWorkEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel remainingWorkModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {
@@ -243,7 +243,7 @@ public abstract class GTask
         return equals(this.burnedWork, burnedWork);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor burnedWorkEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel burnedWorkModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {

@@ -1,8 +1,8 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.Gwt;
-import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
-import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.RichtextEditorWidget;
+import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
@@ -21,9 +21,9 @@ public class QualityWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
-		fields.add("Label", new TextPropertyEditorWidget(quality.labelEditor));
-		fields.add("Description", new RichtextPropertyEditorWidget(quality.descriptionEditor));
-		fields.add("Test", new RichtextPropertyEditorWidget(quality.testDescriptionEditor));
+		fields.add("Label", new TextEditorWidget(quality.labelModel));
+		fields.add("Description", new RichtextEditorWidget(quality.descriptionModel));
+		fields.add("Test", new RichtextEditorWidget(quality.testDescriptionModel));
 
 		return Gwt.createFlowPanel(fields, new CommentsWidget(quality));
 	}

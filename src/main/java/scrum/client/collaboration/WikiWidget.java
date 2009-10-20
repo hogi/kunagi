@@ -1,9 +1,9 @@
 package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.AAction;
-import ilarkesto.gwt.client.ARichtextViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.workspace.PagePanel;
 
@@ -21,13 +21,12 @@ public class WikiWidget extends AScrumWidget {
 
 	private FlowPanel panel;
 	private TextBox pageNameBox;
-	private WikipageEditor editor;
+	private RichtextEditorWidget editor;
 
 	@Override
 	protected Widget onInitialization() {
 		pageNameBox = new TextBox();
 		pageNameBox.addKeyPressHandler(new PageNameHandler());
-		editor = new WikipageEditor();
 
 		panel = new FlowPanel();
 		panel.setStyleName("WikiWidget");
@@ -50,7 +49,7 @@ public class WikiWidget extends AScrumWidget {
 			page.addSection("Page \"" + pageName + "\" does not exist.");
 		} else {
 			page.addHeader(wikipage.getName());
-			editor.update();
+			editor = new RichtextEditorWidget(wikipage.textModel);
 			page.addSection(editor);
 		}
 		if (wikipage != null) page.addSection(new CommentsWidget(wikipage).update());
@@ -63,25 +62,6 @@ public class WikiWidget extends AScrumWidget {
 	public void showPage(String name) {
 		this.pageName = name;
 		update();
-	}
-
-	class WikipageEditor extends ARichtextViewEditWidget {
-
-		@Override
-		protected void onViewerUpdate() {
-			setViewerText(wikipage.getText());
-		}
-
-		@Override
-		protected void onEditorUpdate() {
-			setEditorText(wikipage.getText());
-		}
-
-		@Override
-		protected void onEditorSubmit() {
-			wikipage.setText(getEditorText());
-		}
-
 	}
 
 	class PageNameHandler implements KeyPressHandler {

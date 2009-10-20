@@ -63,7 +63,7 @@ public abstract class GProject
         return equals(this.label, label);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor labelEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
@@ -99,7 +99,7 @@ public abstract class GProject
         return equals(this.description, description);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor descriptionEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel descriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
@@ -375,7 +375,7 @@ public abstract class GProject
         return equals(this.lastTaskNumber, lastTaskNumber);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor lastTaskNumberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastTaskNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {
@@ -418,7 +418,7 @@ public abstract class GProject
         return equals(this.lastRequirementNumber, lastRequirementNumber);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor lastRequirementNumberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastRequirementNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {
@@ -461,7 +461,7 @@ public abstract class GProject
         return equals(this.lastQualityNumber, lastQualityNumber);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor lastQualityNumberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastQualityNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {
@@ -504,7 +504,7 @@ public abstract class GProject
         return equals(this.lastRiskNumber, lastRiskNumber);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor lastRiskNumberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastRiskNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {
@@ -547,7 +547,7 @@ public abstract class GProject
         return equals(this.lastIssueNumber, lastIssueNumber);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor lastIssueNumberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastIssueNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {
@@ -590,7 +590,7 @@ public abstract class GProject
         return equals(this.lastImpedimentNumber, lastImpedimentNumber);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor lastImpedimentNumberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastImpedimentNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {
@@ -633,7 +633,7 @@ public abstract class GProject
         return equals(this.punishmentFactor, punishmentFactor);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor punishmentFactorEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel punishmentFactorModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {
@@ -676,7 +676,7 @@ public abstract class GProject
         return equals(this.punishmentUnit, punishmentUnit);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor punishmentUnitEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel punishmentUnitModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {

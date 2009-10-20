@@ -1,9 +1,9 @@
 package scrum.client.sprint;
 
 import ilarkesto.gwt.client.ADateViewEditWidget;
-import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.editor.RichtextEditorWidget;
+import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.project.Project;
@@ -17,45 +17,11 @@ public class NextSprintWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		Sprint sprint = getSprint();
 
 		fieldsWidget = new FieldsWidget();
-
-		fieldsWidget.add("Label", new ATextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				if (getSprint() != null) setViewerText(getSprint().getLabel());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(getSprint().getLabel());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				getSprint().setLabel(getEditorText());
-			}
-		});
-
-		fieldsWidget.add("Goal", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				if (getSprint() != null) setViewerText(getSprint().getGoal());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(getSprint().getGoal());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				getSprint().setGoal(getEditorText());
-			}
-		});
-
+		fieldsWidget.add("Label", new TextEditorWidget(sprint.labelModel));
+		fieldsWidget.add("Goal", new RichtextEditorWidget(sprint.goalModel));
 		fieldsWidget.add("Begin", new ADateViewEditWidget() {
 
 			@Override

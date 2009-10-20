@@ -113,7 +113,7 @@ public abstract class GProjectUserConfig
         return equals(this.color, color);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor colorEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel colorModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
@@ -146,7 +146,7 @@ public abstract class GProjectUserConfig
         return equals(this.misconducts, misconducts);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor misconductsEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel misconductsModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {

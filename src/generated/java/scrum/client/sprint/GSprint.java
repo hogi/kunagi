@@ -88,7 +88,7 @@ public abstract class GSprint
         return equals(this.label, label);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor labelEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
@@ -124,7 +124,7 @@ public abstract class GSprint
         return equals(this.goal, goal);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor goalEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel goalModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {

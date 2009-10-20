@@ -113,7 +113,7 @@ public abstract class GComment
         return equals(this.text, text);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor textEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel textModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {

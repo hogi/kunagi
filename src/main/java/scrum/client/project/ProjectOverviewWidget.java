@@ -1,7 +1,7 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
-import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.RichtextEditorWidget;
+import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
@@ -26,8 +26,8 @@ public class ProjectOverviewWidget extends AScrumWidget {
 
 		FieldsWidget fields = new FieldsWidget();
 
-		fields.add("Label", new TextPropertyEditorWidget(project.labelEditor));
-		fields.add("Description", new RichtextPropertyEditorWidget(project.descriptionEditor));
+		fields.add("Label", new TextEditorWidget(project.labelModel));
+		fields.add("Description", new RichtextEditorWidget(project.descriptionModel));
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Project Properties");

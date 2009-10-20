@@ -3,8 +3,8 @@ package scrum.client.risks;
 import ilarkesto.gwt.client.ADropdownViewEditWidget;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.Gwt;
-import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
-import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.RichtextEditorWidget;
+import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
@@ -24,9 +24,9 @@ public class RiskWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
 
-		fields.add("Label", new TextPropertyEditorWidget(risk.labelEditor));
-		fields.add("Description", new RichtextPropertyEditorWidget(risk.descriptionEditor));
-		fields.add("Mitigation Plans", new RichtextPropertyEditorWidget(risk.mitigationPlansEditor));
+		fields.add("Label", new TextEditorWidget(risk.labelModel));
+		fields.add("Description", new RichtextEditorWidget(risk.descriptionModel));
+		fields.add("Mitigation Plans", new RichtextEditorWidget(risk.mitigationPlansModel));
 		fields.add("Impact", new ADropdownViewEditWidget() {
 
 			@Override

@@ -1,8 +1,8 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
-import ilarkesto.gwt.client.editor.RichtextPropertyEditorWidget;
-import ilarkesto.gwt.client.editor.TextPropertyEditorWidget;
+import ilarkesto.gwt.client.editor.RichtextEditorWidget;
+import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.Dao;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -33,8 +33,8 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 	protected Widget onExtendedInitialization() {
 		final Project project = getObject();
 		FieldsWidget fields = new FieldsWidget();
-		fields.add("Label", new TextPropertyEditorWidget(project.labelEditor));
-		fields.add("Description", new RichtextPropertyEditorWidget(project.descriptionEditor));
+		fields.add("Label", new TextEditorWidget(project.labelModel));
+		fields.add("Description", new RichtextEditorWidget(project.descriptionModel));
 
 		fields.add("Participants", new AMultiSelectionViewEditWidget<User>() {
 

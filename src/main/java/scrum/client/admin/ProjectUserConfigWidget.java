@@ -1,7 +1,7 @@
 package scrum.client.admin;
 
-import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.workspace.PagePanel;
@@ -18,22 +18,12 @@ public class ProjectUserConfigWidget extends AScrumWidget {
 		final ProjectUserConfig config = getCurrentUser().getProjectConfig();
 
 		fields = new FieldsWidget();
-		fields.add("Color", new ATextViewEditWidget() {
+		fields.add("Color", new TextEditorWidget(config.colorModel) {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerText(config.getColor());
+				super.onViewerUpdate();
 				getViewer().getElement().getStyle().setProperty("color", config.getColor());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(config.getColor());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				config.setColor(getEditorText());
 			}
 		});
 

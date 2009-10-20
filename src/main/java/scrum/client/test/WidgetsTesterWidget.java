@@ -2,8 +2,6 @@ package scrum.client.test;
 
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
-import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
@@ -11,6 +9,9 @@ import ilarkesto.gwt.client.ImageAnchor;
 import ilarkesto.gwt.client.MultiSelectionWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
+import ilarkesto.gwt.client.editor.ATextEditorModel;
+import ilarkesto.gwt.client.editor.RichtextEditorWidget;
+import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
@@ -118,40 +119,30 @@ public class WidgetsTesterWidget extends AScrumWidget {
 
 	private void testFields() {
 		FieldsWidget fields = new FieldsWidget();
-		fields.add("ATextViewEditWidget", new ATextViewEditWidget() {
+		fields.add("TextPropertyEditorWidget", new TextEditorWidget(new ATextEditorModel() {
 
 			@Override
-			protected void onViewerUpdate() {
-				setViewerText(fieldsText);
+			public void setValue(String value) {
+				fieldsText = value;
 			}
 
 			@Override
-			protected void onEditorUpdate() {
-				setEditorText(fieldsText);
+			public String getValue() {
+				return fieldsText;
+			}
+		}));
+		fields.add("RichtextEditorWidget", new RichtextEditorWidget(new ATextEditorModel() {
+
+			@Override
+			public void setValue(String value) {
+				fieldsRichText = value;
 			}
 
 			@Override
-			protected void onEditorSubmit() {
-				fieldsText = getEditorText();
+			public String getValue() {
+				return fieldsRichText;
 			}
-		});
-		fields.add("ARichtextViewEditWidget", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(fieldsRichText);
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(fieldsRichText);
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				fieldsRichText = getEditorText();
-			}
-		});
+		}));
 		fields.add("AIntegerViewEditWidget", new AIntegerViewEditWidget() {
 
 			@Override

@@ -88,7 +88,7 @@ public abstract class GImpediment
         return equals(this.number, number);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor numberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel numberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {
@@ -131,7 +131,7 @@ public abstract class GImpediment
         return equals(this.label, label);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor labelEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
@@ -186,7 +186,7 @@ public abstract class GImpediment
         return equals(this.description, description);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor descriptionEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel descriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
@@ -219,7 +219,7 @@ public abstract class GImpediment
         return equals(this.solution, solution);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor solutionEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel solutionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {

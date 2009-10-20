@@ -88,7 +88,7 @@ public abstract class GRisk
         return equals(this.number, number);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor numberEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel numberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {
@@ -131,7 +131,7 @@ public abstract class GRisk
         return equals(this.label, label);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor labelEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
@@ -167,7 +167,7 @@ public abstract class GRisk
         return equals(this.description, description);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor descriptionEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel descriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
@@ -200,7 +200,7 @@ public abstract class GRisk
         return equals(this.mitigationPlans, mitigationPlans);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor mitigationPlansEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel mitigationPlansModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
@@ -233,7 +233,7 @@ public abstract class GRisk
         return equals(this.probability, probability);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor probabilityEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel probabilityModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {
@@ -276,7 +276,7 @@ public abstract class GRisk
         return equals(this.impact, impact);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerPropertyEditor impactEditor = new ilarkesto.gwt.client.editor.AIntegerPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel impactModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
         @Override
         public Integer getValue() {

@@ -1,6 +1,6 @@
 package scrum.client.admin;
 
-import ilarkesto.gwt.client.ATextViewEditWidget;
+import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
@@ -27,45 +27,8 @@ public class UserBlock extends AExtensibleBlockWidget<User> {
 	protected Widget onExtendedInitialization() {
 		final User user = getObject();
 		FieldsWidget fields = new FieldsWidget();
-
-		fields.add("Name", new ATextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(user.getName());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(user.getName());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				user.setName(getEditorText());
-			}
-
-		});
-
-		fields.add("E-Mail", new ATextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(user.getEmail());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(user.getEmail());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				user.setEmail(getEditorText());
-			}
-
-		});
-
+		fields.add("Name", new TextEditorWidget(user.nameModel));
+		fields.add("E-Mail", new TextEditorWidget(user.emailModel));
 		return fields;
 	}
 

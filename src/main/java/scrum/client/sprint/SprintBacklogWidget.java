@@ -2,9 +2,9 @@ package scrum.client.sprint;
 
 import ilarkesto.gwt.client.ADateViewEditWidget;
 import ilarkesto.gwt.client.AFieldValueWidget;
-import ilarkesto.gwt.client.ARichtextViewEditWidget;
-import ilarkesto.gwt.client.ATextViewEditWidget;
 import ilarkesto.gwt.client.TableBuilder;
+import ilarkesto.gwt.client.editor.RichtextEditorWidget;
+import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.project.Requirement;
@@ -22,47 +22,16 @@ public class SprintBacklogWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		Sprint sprint = getSprint();
 
 		requirementList = new BlockListWidget<Requirement>(RequirementInSprintBlock.FACTORY);
 		requirementList.setAutoSorter(getCurrentProject().getRequirementsOrderComparator());
 
 		TableBuilder tb = new TableBuilder();
 
-		tb.addFieldRow("Label", new ATextViewEditWidget() {
+		tb.addFieldRow("Label", new TextEditorWidget(sprint.labelModel), 4);
 
-			@Override
-			protected void onViewerUpdate() {
-				if (getSprint() != null) setViewerText(getSprint().getLabel());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(getSprint().getLabel());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				getSprint().setLabel(getEditorText());
-			}
-		}, 4);
-
-		tb.addFieldRow("Goal", new ARichtextViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				if (getSprint() != null) setViewerText(getSprint().getGoal());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(getSprint().getGoal());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				getSprint().setGoal(getEditorText());
-			}
-		}, 4);
+		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.goalModel), 4);
 
 		tb.addFieldLabel("Dates");
 		tb.addField("Begin", new ADateViewEditWidget() {

@@ -1,5 +1,6 @@
 package scrum.client;
 
+import ilarkesto.gwt.client.editor.ATextEditorModel;
 import scrum.client.admin.SystemMessage;
 import scrum.client.common.AScrumComponent;
 
@@ -29,5 +30,18 @@ public class SystemMessageManager extends AScrumComponent implements ServerDataR
 	public SystemMessage getSystemMessage() {
 		return systemMessage;
 	}
+
+	public ATextEditorModel systemMessageTextModel = new ATextEditorModel() {
+
+		@Override
+		public void setValue(String value) {
+			systemMessage.setText(value);
+		}
+
+		@Override
+		public String getValue() {
+			return systemMessage.getText();
+		}
+	};
 
 }

@@ -88,7 +88,7 @@ public abstract class GWikipage
         return equals(this.name, name);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor nameEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel nameModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
@@ -124,7 +124,7 @@ public abstract class GWikipage
         return equals(this.text, text);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor textEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel textModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {

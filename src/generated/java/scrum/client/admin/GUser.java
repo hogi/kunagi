@@ -63,7 +63,7 @@ public abstract class GUser
         return equals(this.name, name);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor nameEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel nameModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
@@ -118,7 +118,7 @@ public abstract class GUser
         return equals(this.email, email);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor emailEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel emailModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
@@ -176,7 +176,7 @@ public abstract class GUser
         return equals(this.color, color);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextPropertyEditor colorEditor = new ilarkesto.gwt.client.editor.ATextPropertyEditor() {
+    public transient ilarkesto.gwt.client.editor.ATextEditorModel colorModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
         @Override
         public String getValue() {
