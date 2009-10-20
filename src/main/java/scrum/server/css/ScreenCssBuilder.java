@@ -43,6 +43,8 @@ public class ScreenCssBuilder implements CssBuilder {
 	String cWaitBackground = cFieldBackground;
 	String cWait = cLink;
 
+	String cCommentDate = "darkgray";
+
 	public void buildCss(CssRenderer css) {
 		css.body().background(cBackground).fontFamily("Helvetica");
 
@@ -120,7 +122,7 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style(".WaitWidget").background(cWaitBackground).borderTop(1, "solid", cPagePanelBorder).borderBottom(1,
 			"solid", cPagePanelBorder);
-		css.style(".LoginWidget-errorMessage").background("#FFEFEF").color("red").border(1, "solid", "red");
+		css.style(".LoginWidget-errorMessage").background(cErrorBackground).color(cError).border(1, "solid", cError);
 
 		css.style(".SystemMessageWidget-box").background(cErrorBackground).color(cError).border(1, "solid", cError)
 				.padding(10).margin("10px 10px 0px 10px");
@@ -128,10 +130,10 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".SystemMessageWidget-box-time").fontStyleItalic().marginTop(5).textAlignRight();
 
 		css.style(".CommentsWidget").marginTop(10);
-		css.style(".CommentWidget").margin(5, 0, 15, 0).borderTop(1, "solid", cNavigatorSelectedItemBackground);
+		css.style(".CommentWidget").margin(5, 0, 15, 0).borderTop(1, "solid", cCommentDate);
 		css.style(".CommentWidget-header").margin(7, 0, 4, 0);
 		css.style(".CommentWidget-header-author").floatLeft().marginRight(5);
-		css.style(".CommentWidget-header-date").color("darkgray").fontSize(11);
+		css.style(".CommentWidget-header-date").color(cCommentDate).fontSize(11);
 		css.style(".CommentWidget-editor");
 
 		css.style(".AIntegerViewEditWidget .gwt-Button").padding(0, 3, 0, 3);
