@@ -61,10 +61,6 @@ a {cursor: pointer;}
 .UserStatusWidget {text-decoration: line-through; font-style: italic;}
 .UserStatusWidget-online {text-decoration: none; font-style: normal;}
 
-.CommentsWidget {Xmax-height: 500px;}
-.CommentWidget {margin-top: 5px;}
-.CommentWidget-header-author {float: left; margin: 0px 5px 0px 2px;}
-
 .TaskRemainingWorkWidget {margin-left: 3px;}
 
 .RequirementEstimatedWorkWidget {margin-left: 3px;}

@@ -1,6 +1,10 @@
 package scrum.client.collaboration;
 
+import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AGwtEntity;
+import ilarkesto.gwt.client.ActionKeyPressHandler;
+import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 
 import java.util.Collections;
@@ -8,23 +12,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import scrum.client.ProjectContext;
 import scrum.client.common.AScrumWidget;
 
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
 public class CommentsWidget extends AScrumWidget {
 
-	private ProjectContext projectContext = cm.getProjectContext();
-
 	private FlowPanel containerPanel;
-
 	private AGwtEntity parent;
-	private ToolbarWidget toolbar;
-
 	private Map<Comment, CommentWidget> widgets;
+
+	private HyperlinkWidget activateCommentLink;
+	private TextArea editor;
+	private ToolbarWidget editorSubmitToolbar;
 
 	public CommentsWidget(AGwtEntity parent) {
 		this.parent = parent;
@@ -32,31 +35,42 @@ public class CommentsWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		cm.getApp().callRequestComments(parent.getId());
+		cm.getApp().callRequestComments(parent.getId()); // TODO commentsManagerComponent
+
+		activateCommentLink = new HyperlinkWidget(new ActivateCommentEditorAction());
+
+		editorSubmitToolbar = new ToolbarWidget();
+		editorSubmitToolbar.addButton(new PostCommentAction());
+		editorSubmitToolbar.addButton(new DeactivateCommentEditorAction());
 
 		widgets = new HashMap<Comment, CommentWidget>();
-		containerPanel = new FlowPanel();
-		toolbar = new ToolbarWidget();
-		toolbar.addHyperlink(new CreateCommentAction(parent, this));
 
-		ScrollPanel scroller = new ScrollPanel(containerPanel);
+		containerPanel = new FlowPanel();
 		containerPanel.setStyleName("CommentsWidget");
 
-		return scroller;
+		return containerPanel;
 	}
 
 	@Override
 	protected void onUpdate() {
-		toolbar.update();
 		containerPanel.clear();
-		containerPanel.add(toolbar);
-		List<Comment> comments = projectContext.getComments(parent);
+
+		if (editor != null) {
+			containerPanel.add(editor);
+			containerPanel.add(editorSubmitToolbar);
+			editor.setFocus(true);
+		} else {
+			containerPanel.add(activateCommentLink);
+		}
+
+		List<Comment> comments = cm.getProjectContext().getComments(parent);
 		Collections.sort(comments, Comment.REVERSE_DATEANDTIME_COMPARATOR);
 		for (Comment comment : comments) {
 			CommentWidget widget = getWidget(comment);
 			containerPanel.add(widget);
-			widget.update();
 		}
+
+		super.onUpdate();
 	}
 
 	private CommentWidget getWidget(Comment comment) {
@@ -68,10 +82,70 @@ public class CommentsWidget extends AScrumWidget {
 		return widget;
 	}
 
-	public void activateCommentEditor(Comment comment) {
-		CommentWidget widget = getWidget(comment);
-		widget.update();
-		widget.activateEditor();
+	private void postComment() {
+		String text = editor.getText().trim();
+		if (Gwt.isEmpty(text)) return;
+		Comment comment = new Comment(parent, cm.getAuth().getUser(), text);
+		cm.getDao().createComment(comment);
+		editor = null;
+		update();
+	}
+
+	private void cancelEditor() {
+		editor = null;
+		update();
+	}
+
+	private void activateEditor() {
+		editor = new TextArea();
+		editor.setStyleName("CommentsWidget-editor");
+		editor.setHeight("100px");
+		editor.setWidth("95%");
+		editor.addKeyPressHandler(new ActionKeyPressHandler(new PostCommentAction(), true, 13, 10));
+		editor.addKeyPressHandler(new ActionKeyPressHandler(new DeactivateCommentEditorAction(), false,
+				KeyCodes.KEY_ESCAPE));
+		update();
+	}
+
+	private class PostCommentAction extends AAction {
+
+		@Override
+		public String getLabel() {
+			return "Post this comment";
+		}
+
+		@Override
+		protected void onExecute() {
+			postComment();
+		}
+	}
+
+	private class DeactivateCommentEditorAction extends AAction {
+
+		@Override
+		public String getLabel() {
+			return "Cancel this comment";
+		}
+
+		@Override
+		protected void onExecute() {
+			cancelEditor();
+		}
+
+	}
+
+	private class ActivateCommentEditorAction extends AAction {
+
+		@Override
+		public String getLabel() {
+			return "Create a comment...";
+		}
+
+		@Override
+		protected void onExecute() {
+			activateEditor();
+		}
+
 	}
 
 }

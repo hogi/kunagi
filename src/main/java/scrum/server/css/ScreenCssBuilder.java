@@ -126,5 +126,12 @@ public class ScreenCssBuilder implements CssBuilder {
 				.padding(10).margin("10px 10px 0px 10px");
 		css.style(".SystemMessageWidget-box-title").fontWeightBold().marginBottom(5);
 		css.style(".SystemMessageWidget-box-time").fontStyleItalic().marginTop(5).textAlignRight();
+
+		css.style(".CommentsWidget").marginTop(10);
+		css.style(".CommentWidget").margin(5, 0, 15, 0).borderTop(1, "solid", cNavigatorSelectedItemBackground);
+		css.style(".CommentWidget-header").margin(7, 0, 4, 0);
+		css.style(".CommentWidget-header-author").floatLeft().marginRight(5);
+		css.style(".CommentWidget-header-date").color("darkgray").fontSize(11);
+		css.style(".CommentWidget-editor");
 	}
 }

@@ -1,6 +1,6 @@
 package scrum.client.collaboration;
 
-import ilarkesto.gwt.client.ARichtextViewEditWidget;
+import ilarkesto.gwt.client.ATextWidget;
 import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class CommentWidget extends AScrumWidget {
 
 	private Label date;
-	private ARichtextViewEditWidget editor;
+	private ATextWidget commentText;
 
 	private Comment comment;
 
@@ -33,34 +33,18 @@ public class CommentWidget extends AScrumWidget {
 		header.add(author);
 		header.add(date);
 
-		editor = new ARichtextViewEditWidget() {
+		commentText = new ATextWidget() {
 
 			@Override
-			protected void onEditorSubmit() {
-				comment.setText(getEditorText());
+			protected void onUpdate() {
+				setHtml(cm.getRichtextConverter().toHtml(comment.getText()));
 			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorText(comment.getText());
-			}
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerText(comment.getText());
-			}
-
-			@Override
-			public boolean isEditable() {
-				return comment.getAuthor().equals(getCurrentUser());
-			}
-
 		};
 
 		FlowPanel panel = new FlowPanel();
 		panel.setStyleName("CommentWidget");
 		panel.add(header);
-		panel.add(editor);
+		panel.add(commentText);
 
 		return panel;
 	}
@@ -69,10 +53,6 @@ public class CommentWidget extends AScrumWidget {
 	protected void onUpdate() {
 		date.setText(comment.getDateAndTime().getPeriodToNow().toShortestString() + " ago");
 		super.onUpdate();
-	}
-
-	public void activateEditor() {
-		editor.switchToEditMode();
 	}
 
 }
