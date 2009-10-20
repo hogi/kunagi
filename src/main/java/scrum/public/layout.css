@@ -134,7 +134,6 @@ a {cursor: pointer;}
 
 .AViewEditWidget-viewer {cursor: pointer; min-width: 16px; min-height: 16px; display: block; padding: 3px;}
 
-.AIntegerViewEditWidget .ButtonWidget a {font-size: 8px; line-height: 8px;}
 .ARichtextViewEditWidget-editor {height: 100px; width: 96%; }
 .AEditableTextareaWidget-editorPanel {width: 100%;}
 .Integer-editor {width: 10%;}

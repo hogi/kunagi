@@ -133,5 +133,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".CommentWidget-header-author").floatLeft().marginRight(5);
 		css.style(".CommentWidget-header-date").color("darkgray").fontSize(11);
 		css.style(".CommentWidget-editor");
+
+		css.style(".AIntegerViewEditWidget .gwt-Button").padding(0, 3, 0, 3);
 	}
 }
