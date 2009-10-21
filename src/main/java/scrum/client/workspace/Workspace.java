@@ -7,6 +7,7 @@ import ilarkesto.gwt.client.LockWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
 import scrum.client.common.AScrumWidget;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -54,8 +55,15 @@ public class Workspace extends AScrumWidget {
 
 	public void abort(String message) {
 		GwtLogger.DEBUG("Locking UI for ABORT:", message);
-		lockInfo.showBug(message);
+		lockInfo.showBug(message + " Restarting your session...");
 		locker.lock(lockInfo);
+		Gwt.runLater(5000, new Runnable() {
+
+			public void run() {
+				Window.Location.reload();
+			}
+
+		});
 	}
 
 	public void lock(String message) {

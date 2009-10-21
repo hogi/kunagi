@@ -52,7 +52,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	@Override
 	protected void handleCommunicationError(Throwable ex) {
 		GwtLogger.ERROR("Communication Error:", ex);
-		cm.getUi().getWorkspace().abort("Lost connection to server, please reload.");
+		cm.getUi().getWorkspace().abort("Lost connection to server.");
 	}
 
 	public final void callStartSession(Runnable callback) {

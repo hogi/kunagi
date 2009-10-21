@@ -36,6 +36,8 @@ public class WidgetsTesterWidget extends AScrumWidget {
 		page = new PagePanel();
 		page.setStyleName("WidgetsTesterWidget");
 
+		testActions();
+
 		testFloatingFlowPanel();
 		testTextConverter();
 		testBlockList();
@@ -47,6 +49,23 @@ public class WidgetsTesterWidget extends AScrumWidget {
 		// testImageAnchor();
 
 		return page;
+	}
+
+	private void testActions() {
+		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar.addButton(new AAction() {
+
+			@Override
+			protected void onExecute() {
+				cm.getApp().callSelectProject("invalidprojectid");
+			}
+
+			@Override
+			public String getLabel() {
+				return "Produce Server Error";
+			}
+		});
+		addTest("Actions", toolbar);
 	}
 
 	private void testFloatingFlowPanel() {
