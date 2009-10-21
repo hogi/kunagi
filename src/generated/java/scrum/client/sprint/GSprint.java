@@ -157,6 +157,20 @@ public abstract class GSprint
         return equals(this.begin, begin);
     }
 
+    public transient ilarkesto.gwt.client.editor.ADateEditorModel beginModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
+
+        @Override
+        public ilarkesto.gwt.client.Date getValue() {
+            return getBegin();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.Date value) {
+            setBegin(value);
+        }
+
+    };
+
     // --- end ---
 
     private ilarkesto.gwt.client.Date end ;
@@ -175,6 +189,20 @@ public abstract class GSprint
     public final boolean isEnd(ilarkesto.gwt.client.Date end) {
         return equals(this.end, end);
     }
+
+    public transient ilarkesto.gwt.client.editor.ADateEditorModel endModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
+
+        @Override
+        public ilarkesto.gwt.client.Date getValue() {
+            return getEnd();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.Date value) {
+            setEnd(value);
+        }
+
+    };
 
     // --- update properties by map ---
 

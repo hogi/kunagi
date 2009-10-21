@@ -1,8 +1,8 @@
 package scrum.client.sprint;
 
-import ilarkesto.gwt.client.ADateViewEditWidget;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.TableBuilder;
+import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.common.AScrumWidget;
@@ -10,7 +10,6 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.project.Requirement;
 import scrum.client.workspace.PagePanel;
 
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -32,43 +31,10 @@ public class SprintBacklogWidget extends AScrumWidget {
 		tb.addFieldRow("Label", new TextEditorWidget(sprint.labelModel), 4);
 
 		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.goalModel), 4);
-
 		tb.addFieldLabel("Dates");
-		tb.addField("Begin", new ADateViewEditWidget() {
+		tb.addField("Begin", new DateEditorWidget(sprint.beginModel));
 
-			@Override
-			protected void onViewerUpdate() {
-				setViewerValue(getSprint().getBegin());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorValue(getSprint().getBegin());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				getSprint().setBegin(getEditorValue());
-			}
-		});
-
-		tb.addFieldRow("End", new ADateViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerValue(getSprint().getEnd());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorValue(getSprint().getEnd());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				getSprint().setEnd(getEditorValue());
-			}
-		});
+		tb.addFieldRow("End", new DateEditorWidget(sprint.endModel));
 
 		tb.addFieldLabel("Requirements");
 		tb.addField("Completed", new AFieldValueWidget() {
@@ -134,13 +100,6 @@ public class SprintBacklogWidget extends AScrumWidget {
 
 	private Sprint getSprint() {
 		return getCurrentProject().getCurrentSprint();
-	}
-
-	class AssignSprintListener implements ClickListener {
-
-		public void onClick(Widget sender) {
-			update();
-		}
 	}
 
 }

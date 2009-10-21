@@ -1,7 +1,7 @@
 package scrum.client.impediments;
 
-import ilarkesto.gwt.client.ADateViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
@@ -22,25 +22,8 @@ public class ImpedimentWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
-
 		fields.add("Label", new TextEditorWidget(impediment.labelModel));
-		fields.add("Date", new ADateViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerValue(impediment.getDate());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorValue(impediment.getDate());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				impediment.setDate(getEditorValue());
-			}
-		});
+		fields.add("Date", new DateEditorWidget(impediment.dateModel));
 		fields.add("Description", new RichtextEditorWidget(impediment.descriptionModel));
 		fields.add("Solution", new RichtextEditorWidget(impediment.solutionModel));
 

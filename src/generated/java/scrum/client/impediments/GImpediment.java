@@ -167,6 +167,23 @@ public abstract class GImpediment
         return equals(this.date, date);
     }
 
+    public transient ilarkesto.gwt.client.editor.ADateEditorModel dateModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
+
+        @Override
+        public ilarkesto.gwt.client.Date getValue() {
+            return getDate();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.Date value) {
+            setDate(value);
+        }
+
+
+        @Override
+        public boolean isMandatory() { return true; }
+    };
+
     // --- description ---
 
     private java.lang.String description ;
