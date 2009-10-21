@@ -20,10 +20,10 @@ public class NextSprintWidget extends AScrumWidget {
 		Sprint sprint = getSprint();
 
 		fieldsWidget = new FieldsWidget();
-		fieldsWidget.add("Label", new TextEditorWidget(sprint.labelModel));
-		fieldsWidget.add("Goal", new RichtextEditorWidget(sprint.goalModel));
-		fieldsWidget.add("Begin", new DateEditorWidget(sprint.beginModel));
-		fieldsWidget.add("End", new DateEditorWidget(sprint.endModel));
+		fieldsWidget.add("Label", new TextEditorWidget(sprint.getLabelModel()));
+		fieldsWidget.add("Goal", new RichtextEditorWidget(sprint.getGoalModel()));
+		fieldsWidget.add("Begin", new DateEditorWidget(sprint.getBeginModel()));
+		fieldsWidget.add("End", new DateEditorWidget(sprint.getEndModel()));
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Sprint Backlog", new ButtonWidget(new SwitchToNextSprintAction()));

@@ -113,19 +113,24 @@ public abstract class GProjectUserConfig
         return equals(this.color, color);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel colorModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel colorModel;
 
-        @Override
-        public String getValue() {
-            return getColor();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getColorModel() {
+        if (colorModel == null) colorModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setColor(value);
-        }
+            @Override
+            public String getValue() {
+                return getColor();
+            }
 
-    };
+            @Override
+            public void setValue(String value) {
+                setColor(value);
+            }
+
+        };
+        return colorModel;
+    }
 
     // --- misconducts ---
 
@@ -146,29 +151,34 @@ public abstract class GProjectUserConfig
         return equals(this.misconducts, misconducts);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel misconductsModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel misconductsModel;
 
-        @Override
-        public Integer getValue() {
-            return getMisconducts();
-        }
+    public ilarkesto.gwt.client.editor.AIntegerEditorModel getMisconductsModel() {
+        if (misconductsModel == null) misconductsModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
-        @Override
-        public void increment() {
-            setMisconducts(getMisconducts() + 1);
-        }
+            @Override
+            public Integer getValue() {
+                return getMisconducts();
+            }
 
-        @Override
-        public void decrement() {
-            setMisconducts(getMisconducts() - 1);
-        }
+            @Override
+            public void increment() {
+                setMisconducts(getMisconducts() + 1);
+            }
 
-        @Override
-        public void setValue(Integer value) {
-            setMisconducts(value);
-        }
+            @Override
+            public void decrement() {
+                setMisconducts(getMisconducts() - 1);
+            }
 
-    };
+            @Override
+            public void setValue(Integer value) {
+                setMisconducts(value);
+            }
+
+        };
+        return misconductsModel;
+    }
 
     // --- update properties by map ---
 

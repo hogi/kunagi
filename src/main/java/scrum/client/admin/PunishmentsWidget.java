@@ -21,8 +21,8 @@ public class PunishmentsWidget extends AScrumWidget {
 		Project project = cm.getProjectContext().getProject();
 
 		TableBuilder settings = new TableBuilder();
-		settings.addFieldRow("Factor", new IntegerEditorWidget(project.punishmentFactorModel));
-		settings.addFieldRow("Unit", new TextEditorWidget(project.punishmentUnitModel));
+		settings.addFieldRow("Factor", new IntegerEditorWidget(project.getPunishmentFactorModel()));
+		settings.addFieldRow("Unit", new TextEditorWidget(project.getPunishmentUnitModel()));
 
 		TableBuilder main = new TableBuilder();
 		main.add(Gwt.createDiv("PunishmentsWidget-tableHeader", "User"));
@@ -32,7 +32,7 @@ public class PunishmentsWidget extends AScrumWidget {
 
 		for (User u : project.getParticipants()) {
 			main.add(new Label(u.getName()));
-			main.add(new IntegerEditorWidget(u.getProjectConfig().misconductsModel));
+			main.add(new IntegerEditorWidget(u.getProjectConfig().getMisconductsModel()));
 			main.add(new PunishmentViewer(u.getProjectConfig(), project));
 			main.nextRow();
 		}

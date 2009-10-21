@@ -88,29 +88,34 @@ public abstract class GQuality
         return equals(this.number, number);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel numberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel numberModel;
 
-        @Override
-        public Integer getValue() {
-            return getNumber();
-        }
+    public ilarkesto.gwt.client.editor.AIntegerEditorModel getNumberModel() {
+        if (numberModel == null) numberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
-        @Override
-        public void increment() {
-            setNumber(getNumber() + 1);
-        }
+            @Override
+            public Integer getValue() {
+                return getNumber();
+            }
 
-        @Override
-        public void decrement() {
-            setNumber(getNumber() - 1);
-        }
+            @Override
+            public void increment() {
+                setNumber(getNumber() + 1);
+            }
 
-        @Override
-        public void setValue(Integer value) {
-            setNumber(value);
-        }
+            @Override
+            public void decrement() {
+                setNumber(getNumber() - 1);
+            }
 
-    };
+            @Override
+            public void setValue(Integer value) {
+                setNumber(value);
+            }
+
+        };
+        return numberModel;
+    }
 
     // --- label ---
 
@@ -131,22 +136,27 @@ public abstract class GQuality
         return equals(this.label, label);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel;
 
-        @Override
-        public String getValue() {
-            return getLabel();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getLabelModel() {
+        if (labelModel == null) labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setLabel(value);
-        }
+            @Override
+            public String getValue() {
+                return getLabel();
+            }
+
+            @Override
+            public void setValue(String value) {
+                setLabel(value);
+            }
 
 
-        @Override
-        public boolean isMandatory() { return true; }
-    };
+            @Override
+            public boolean isMandatory() { return true; }
+        };
+        return labelModel;
+    }
 
     // --- description ---
 
@@ -167,19 +177,24 @@ public abstract class GQuality
         return equals(this.description, description);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel descriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel descriptionModel;
 
-        @Override
-        public String getValue() {
-            return getDescription();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getDescriptionModel() {
+        if (descriptionModel == null) descriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setDescription(value);
-        }
+            @Override
+            public String getValue() {
+                return getDescription();
+            }
 
-    };
+            @Override
+            public void setValue(String value) {
+                setDescription(value);
+            }
+
+        };
+        return descriptionModel;
+    }
 
     // --- testDescription ---
 
@@ -200,19 +215,24 @@ public abstract class GQuality
         return equals(this.testDescription, testDescription);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel testDescriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel testDescriptionModel;
 
-        @Override
-        public String getValue() {
-            return getTestDescription();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getTestDescriptionModel() {
+        if (testDescriptionModel == null) testDescriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setTestDescription(value);
-        }
+            @Override
+            public String getValue() {
+                return getTestDescription();
+            }
 
-    };
+            @Override
+            public void setValue(String value) {
+                setTestDescription(value);
+            }
+
+        };
+        return testDescriptionModel;
+    }
 
     // --- update properties by map ---
 

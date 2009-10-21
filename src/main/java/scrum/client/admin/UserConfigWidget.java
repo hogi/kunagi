@@ -17,10 +17,10 @@ public class UserConfigWidget extends AScrumWidget {
 		final User user = getCurrentUser();
 
 		fields = new FieldsWidget();
-		fields.add("Name", new TextEditorWidget(user.nameModel));
-		fields.add("Email", new TextEditorWidget(user.emailModel));
+		fields.add("Name", new TextEditorWidget(user.getNameModel()));
+		fields.add("Email", new TextEditorWidget(user.getEmailModel()));
 		fields.add("Password", new PasswordChangeWidget());
-		fields.add("Default Color", new TextEditorWidget(user.colorModel) {
+		fields.add("Default Color", new TextEditorWidget(user.getColorModel()) {
 
 			@Override
 			protected void onViewerUpdate() {

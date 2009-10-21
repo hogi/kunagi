@@ -21,9 +21,9 @@ public class QualityWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
-		fields.add("Label", new TextEditorWidget(quality.labelModel));
-		fields.add("Description", new RichtextEditorWidget(quality.descriptionModel));
-		fields.add("Test", new RichtextEditorWidget(quality.testDescriptionModel));
+		fields.add("Label", new TextEditorWidget(quality.getLabelModel()));
+		fields.add("Description", new RichtextEditorWidget(quality.getDescriptionModel()));
+		fields.add("Test", new RichtextEditorWidget(quality.getTestDescriptionModel()));
 
 		return Gwt.createFlowPanel(fields, new CommentsWidget(quality));
 	}

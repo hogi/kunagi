@@ -33,8 +33,8 @@ public class ProjectBlock extends AExtensibleBlockWidget<Project> {
 	protected Widget onExtendedInitialization() {
 		final Project project = getObject();
 		FieldsWidget fields = new FieldsWidget();
-		fields.add("Label", new TextEditorWidget(project.labelModel));
-		fields.add("Description", new RichtextEditorWidget(project.descriptionModel));
+		fields.add("Label", new TextEditorWidget(project.getLabelModel()));
+		fields.add("Description", new RichtextEditorWidget(project.getDescriptionModel()));
 
 		fields.add("Participants", new AMultiSelectionViewEditWidget<User>() {
 

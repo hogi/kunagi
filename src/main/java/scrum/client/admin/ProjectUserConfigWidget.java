@@ -18,7 +18,7 @@ public class ProjectUserConfigWidget extends AScrumWidget {
 		final ProjectUserConfig config = getCurrentUser().getProjectConfig();
 
 		fields = new FieldsWidget();
-		fields.add("Color", new TextEditorWidget(config.colorModel) {
+		fields.add("Color", new TextEditorWidget(config.getColorModel()) {
 
 			@Override
 			protected void onViewerUpdate() {

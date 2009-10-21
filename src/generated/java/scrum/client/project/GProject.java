@@ -63,22 +63,27 @@ public abstract class GProject
         return equals(this.label, label);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel;
 
-        @Override
-        public String getValue() {
-            return getLabel();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getLabelModel() {
+        if (labelModel == null) labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setLabel(value);
-        }
+            @Override
+            public String getValue() {
+                return getLabel();
+            }
+
+            @Override
+            public void setValue(String value) {
+                setLabel(value);
+            }
 
 
-        @Override
-        public boolean isMandatory() { return true; }
-    };
+            @Override
+            public boolean isMandatory() { return true; }
+        };
+        return labelModel;
+    }
 
     // --- description ---
 
@@ -99,19 +104,24 @@ public abstract class GProject
         return equals(this.description, description);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel descriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel descriptionModel;
 
-        @Override
-        public String getValue() {
-            return getDescription();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getDescriptionModel() {
+        if (descriptionModel == null) descriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setDescription(value);
-        }
+            @Override
+            public String getValue() {
+                return getDescription();
+            }
 
-    };
+            @Override
+            public void setValue(String value) {
+                setDescription(value);
+            }
+
+        };
+        return descriptionModel;
+    }
 
     // --- begin ---
 
@@ -132,19 +142,24 @@ public abstract class GProject
         return equals(this.begin, begin);
     }
 
-    public transient ilarkesto.gwt.client.editor.ADateEditorModel beginModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ADateEditorModel beginModel;
 
-        @Override
-        public ilarkesto.gwt.client.Date getValue() {
-            return getBegin();
-        }
+    public ilarkesto.gwt.client.editor.ADateEditorModel getBeginModel() {
+        if (beginModel == null) beginModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
 
-        @Override
-        public void setValue(ilarkesto.gwt.client.Date value) {
-            setBegin(value);
-        }
+            @Override
+            public ilarkesto.gwt.client.Date getValue() {
+                return getBegin();
+            }
 
-    };
+            @Override
+            public void setValue(ilarkesto.gwt.client.Date value) {
+                setBegin(value);
+            }
+
+        };
+        return beginModel;
+    }
 
     // --- end ---
 
@@ -165,19 +180,24 @@ public abstract class GProject
         return equals(this.end, end);
     }
 
-    public transient ilarkesto.gwt.client.editor.ADateEditorModel endModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ADateEditorModel endModel;
 
-        @Override
-        public ilarkesto.gwt.client.Date getValue() {
-            return getEnd();
-        }
+    public ilarkesto.gwt.client.editor.ADateEditorModel getEndModel() {
+        if (endModel == null) endModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
 
-        @Override
-        public void setValue(ilarkesto.gwt.client.Date value) {
-            setEnd(value);
-        }
+            @Override
+            public ilarkesto.gwt.client.Date getValue() {
+                return getEnd();
+            }
 
-    };
+            @Override
+            public void setValue(ilarkesto.gwt.client.Date value) {
+                setEnd(value);
+            }
+
+        };
+        return endModel;
+    }
 
     // --- participants ---
 
@@ -403,29 +423,34 @@ public abstract class GProject
         return equals(this.lastTaskNumber, lastTaskNumber);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastTaskNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastTaskNumberModel;
 
-        @Override
-        public Integer getValue() {
-            return getLastTaskNumber();
-        }
+    public ilarkesto.gwt.client.editor.AIntegerEditorModel getLastTaskNumberModel() {
+        if (lastTaskNumberModel == null) lastTaskNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
-        @Override
-        public void increment() {
-            setLastTaskNumber(getLastTaskNumber() + 1);
-        }
+            @Override
+            public Integer getValue() {
+                return getLastTaskNumber();
+            }
 
-        @Override
-        public void decrement() {
-            setLastTaskNumber(getLastTaskNumber() - 1);
-        }
+            @Override
+            public void increment() {
+                setLastTaskNumber(getLastTaskNumber() + 1);
+            }
 
-        @Override
-        public void setValue(Integer value) {
-            setLastTaskNumber(value);
-        }
+            @Override
+            public void decrement() {
+                setLastTaskNumber(getLastTaskNumber() - 1);
+            }
 
-    };
+            @Override
+            public void setValue(Integer value) {
+                setLastTaskNumber(value);
+            }
+
+        };
+        return lastTaskNumberModel;
+    }
 
     // --- lastRequirementNumber ---
 
@@ -446,29 +471,34 @@ public abstract class GProject
         return equals(this.lastRequirementNumber, lastRequirementNumber);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastRequirementNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastRequirementNumberModel;
 
-        @Override
-        public Integer getValue() {
-            return getLastRequirementNumber();
-        }
+    public ilarkesto.gwt.client.editor.AIntegerEditorModel getLastRequirementNumberModel() {
+        if (lastRequirementNumberModel == null) lastRequirementNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
-        @Override
-        public void increment() {
-            setLastRequirementNumber(getLastRequirementNumber() + 1);
-        }
+            @Override
+            public Integer getValue() {
+                return getLastRequirementNumber();
+            }
 
-        @Override
-        public void decrement() {
-            setLastRequirementNumber(getLastRequirementNumber() - 1);
-        }
+            @Override
+            public void increment() {
+                setLastRequirementNumber(getLastRequirementNumber() + 1);
+            }
 
-        @Override
-        public void setValue(Integer value) {
-            setLastRequirementNumber(value);
-        }
+            @Override
+            public void decrement() {
+                setLastRequirementNumber(getLastRequirementNumber() - 1);
+            }
 
-    };
+            @Override
+            public void setValue(Integer value) {
+                setLastRequirementNumber(value);
+            }
+
+        };
+        return lastRequirementNumberModel;
+    }
 
     // --- lastQualityNumber ---
 
@@ -489,29 +519,34 @@ public abstract class GProject
         return equals(this.lastQualityNumber, lastQualityNumber);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastQualityNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastQualityNumberModel;
 
-        @Override
-        public Integer getValue() {
-            return getLastQualityNumber();
-        }
+    public ilarkesto.gwt.client.editor.AIntegerEditorModel getLastQualityNumberModel() {
+        if (lastQualityNumberModel == null) lastQualityNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
-        @Override
-        public void increment() {
-            setLastQualityNumber(getLastQualityNumber() + 1);
-        }
+            @Override
+            public Integer getValue() {
+                return getLastQualityNumber();
+            }
 
-        @Override
-        public void decrement() {
-            setLastQualityNumber(getLastQualityNumber() - 1);
-        }
+            @Override
+            public void increment() {
+                setLastQualityNumber(getLastQualityNumber() + 1);
+            }
 
-        @Override
-        public void setValue(Integer value) {
-            setLastQualityNumber(value);
-        }
+            @Override
+            public void decrement() {
+                setLastQualityNumber(getLastQualityNumber() - 1);
+            }
 
-    };
+            @Override
+            public void setValue(Integer value) {
+                setLastQualityNumber(value);
+            }
+
+        };
+        return lastQualityNumberModel;
+    }
 
     // --- lastRiskNumber ---
 
@@ -532,29 +567,34 @@ public abstract class GProject
         return equals(this.lastRiskNumber, lastRiskNumber);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastRiskNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastRiskNumberModel;
 
-        @Override
-        public Integer getValue() {
-            return getLastRiskNumber();
-        }
+    public ilarkesto.gwt.client.editor.AIntegerEditorModel getLastRiskNumberModel() {
+        if (lastRiskNumberModel == null) lastRiskNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
-        @Override
-        public void increment() {
-            setLastRiskNumber(getLastRiskNumber() + 1);
-        }
+            @Override
+            public Integer getValue() {
+                return getLastRiskNumber();
+            }
 
-        @Override
-        public void decrement() {
-            setLastRiskNumber(getLastRiskNumber() - 1);
-        }
+            @Override
+            public void increment() {
+                setLastRiskNumber(getLastRiskNumber() + 1);
+            }
 
-        @Override
-        public void setValue(Integer value) {
-            setLastRiskNumber(value);
-        }
+            @Override
+            public void decrement() {
+                setLastRiskNumber(getLastRiskNumber() - 1);
+            }
 
-    };
+            @Override
+            public void setValue(Integer value) {
+                setLastRiskNumber(value);
+            }
+
+        };
+        return lastRiskNumberModel;
+    }
 
     // --- lastIssueNumber ---
 
@@ -575,29 +615,34 @@ public abstract class GProject
         return equals(this.lastIssueNumber, lastIssueNumber);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastIssueNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastIssueNumberModel;
 
-        @Override
-        public Integer getValue() {
-            return getLastIssueNumber();
-        }
+    public ilarkesto.gwt.client.editor.AIntegerEditorModel getLastIssueNumberModel() {
+        if (lastIssueNumberModel == null) lastIssueNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
-        @Override
-        public void increment() {
-            setLastIssueNumber(getLastIssueNumber() + 1);
-        }
+            @Override
+            public Integer getValue() {
+                return getLastIssueNumber();
+            }
 
-        @Override
-        public void decrement() {
-            setLastIssueNumber(getLastIssueNumber() - 1);
-        }
+            @Override
+            public void increment() {
+                setLastIssueNumber(getLastIssueNumber() + 1);
+            }
 
-        @Override
-        public void setValue(Integer value) {
-            setLastIssueNumber(value);
-        }
+            @Override
+            public void decrement() {
+                setLastIssueNumber(getLastIssueNumber() - 1);
+            }
 
-    };
+            @Override
+            public void setValue(Integer value) {
+                setLastIssueNumber(value);
+            }
+
+        };
+        return lastIssueNumberModel;
+    }
 
     // --- lastImpedimentNumber ---
 
@@ -618,29 +663,34 @@ public abstract class GProject
         return equals(this.lastImpedimentNumber, lastImpedimentNumber);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastImpedimentNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel lastImpedimentNumberModel;
 
-        @Override
-        public Integer getValue() {
-            return getLastImpedimentNumber();
-        }
+    public ilarkesto.gwt.client.editor.AIntegerEditorModel getLastImpedimentNumberModel() {
+        if (lastImpedimentNumberModel == null) lastImpedimentNumberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
-        @Override
-        public void increment() {
-            setLastImpedimentNumber(getLastImpedimentNumber() + 1);
-        }
+            @Override
+            public Integer getValue() {
+                return getLastImpedimentNumber();
+            }
 
-        @Override
-        public void decrement() {
-            setLastImpedimentNumber(getLastImpedimentNumber() - 1);
-        }
+            @Override
+            public void increment() {
+                setLastImpedimentNumber(getLastImpedimentNumber() + 1);
+            }
 
-        @Override
-        public void setValue(Integer value) {
-            setLastImpedimentNumber(value);
-        }
+            @Override
+            public void decrement() {
+                setLastImpedimentNumber(getLastImpedimentNumber() - 1);
+            }
 
-    };
+            @Override
+            public void setValue(Integer value) {
+                setLastImpedimentNumber(value);
+            }
+
+        };
+        return lastImpedimentNumberModel;
+    }
 
     // --- punishmentFactor ---
 
@@ -661,29 +711,34 @@ public abstract class GProject
         return equals(this.punishmentFactor, punishmentFactor);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel punishmentFactorModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel punishmentFactorModel;
 
-        @Override
-        public Integer getValue() {
-            return getPunishmentFactor();
-        }
+    public ilarkesto.gwt.client.editor.AIntegerEditorModel getPunishmentFactorModel() {
+        if (punishmentFactorModel == null) punishmentFactorModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
-        @Override
-        public void increment() {
-            setPunishmentFactor(getPunishmentFactor() + 1);
-        }
+            @Override
+            public Integer getValue() {
+                return getPunishmentFactor();
+            }
 
-        @Override
-        public void decrement() {
-            setPunishmentFactor(getPunishmentFactor() - 1);
-        }
+            @Override
+            public void increment() {
+                setPunishmentFactor(getPunishmentFactor() + 1);
+            }
 
-        @Override
-        public void setValue(Integer value) {
-            setPunishmentFactor(value);
-        }
+            @Override
+            public void decrement() {
+                setPunishmentFactor(getPunishmentFactor() - 1);
+            }
 
-    };
+            @Override
+            public void setValue(Integer value) {
+                setPunishmentFactor(value);
+            }
+
+        };
+        return punishmentFactorModel;
+    }
 
     // --- punishmentUnit ---
 
@@ -704,19 +759,24 @@ public abstract class GProject
         return equals(this.punishmentUnit, punishmentUnit);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel punishmentUnitModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel punishmentUnitModel;
 
-        @Override
-        public String getValue() {
-            return getPunishmentUnit();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getPunishmentUnitModel() {
+        if (punishmentUnitModel == null) punishmentUnitModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setPunishmentUnit(value);
-        }
+            @Override
+            public String getValue() {
+                return getPunishmentUnit();
+            }
 
-    };
+            @Override
+            public void setValue(String value) {
+                setPunishmentUnit(value);
+            }
+
+        };
+        return punishmentUnitModel;
+    }
 
     // --- update properties by map ---
 

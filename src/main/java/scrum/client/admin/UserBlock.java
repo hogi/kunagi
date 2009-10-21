@@ -27,8 +27,8 @@ public class UserBlock extends AExtensibleBlockWidget<User> {
 	protected Widget onExtendedInitialization() {
 		final User user = getObject();
 		FieldsWidget fields = new FieldsWidget();
-		fields.add("Name", new TextEditorWidget(user.nameModel));
-		fields.add("E-Mail", new TextEditorWidget(user.emailModel));
+		fields.add("Name", new TextEditorWidget(user.getNameModel()));
+		fields.add("E-Mail", new TextEditorWidget(user.getEmailModel()));
 		return fields;
 	}
 

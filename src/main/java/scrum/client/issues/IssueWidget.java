@@ -23,9 +23,9 @@ public class IssueWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
 
-		fields.add("Label", new TextEditorWidget(issue.labelModel));
-		fields.add("Description", new RichtextEditorWidget(issue.descriptionModel));
-		fields.add("Type", new DropdownEditorWidget<String>(issue.typeModel, Issue.TYPE_LABEL_PROVIDER));
+		fields.add("Label", new TextEditorWidget(issue.getLabelModel()));
+		fields.add("Description", new RichtextEditorWidget(issue.getDescriptionModel()));
+		fields.add("Type", new DropdownEditorWidget<String>(issue.getTypeModel(), Issue.TYPE_LABEL_PROVIDER));
 
 		return Gwt.createFlowPanel(fields, new CommentsWidget(issue));
 	}

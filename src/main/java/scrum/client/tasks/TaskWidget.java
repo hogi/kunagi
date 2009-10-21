@@ -25,9 +25,9 @@ public class TaskWidget extends AWidget {
 
 		TableBuilder tb = new TableBuilder();
 
-		tb.addFieldRow("Label", new TextEditorWidget(task.labelModel), 3);
+		tb.addFieldRow("Label", new TextEditorWidget(task.getLabelModel()), 3);
 
-		tb.addFieldRow("Description", new RichtextEditorWidget(task.descriptionModel), 3);
+		tb.addFieldRow("Description", new RichtextEditorWidget(task.getDescriptionModel()), 3);
 
 		tb.addField("Burned Work", new AIntegerViewEditWidget() {
 

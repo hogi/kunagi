@@ -3,6 +3,7 @@ package scrum.client.common;
 import ilarkesto.gwt.client.AViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.TableBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Widget, which displays fields. A field is a pair of a label and a value.
+ * 
+ * @deprecated Use TableBuilder instead
+ * @see TableBuilder
  */
+@Deprecated
 public class FieldsWidget extends AWidget {
 
 	private Grid grid;

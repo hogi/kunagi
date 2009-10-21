@@ -88,29 +88,34 @@ public abstract class GImpediment
         return equals(this.number, number);
     }
 
-    public transient ilarkesto.gwt.client.editor.AIntegerEditorModel numberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel numberModel;
 
-        @Override
-        public Integer getValue() {
-            return getNumber();
-        }
+    public ilarkesto.gwt.client.editor.AIntegerEditorModel getNumberModel() {
+        if (numberModel == null) numberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
 
-        @Override
-        public void increment() {
-            setNumber(getNumber() + 1);
-        }
+            @Override
+            public Integer getValue() {
+                return getNumber();
+            }
 
-        @Override
-        public void decrement() {
-            setNumber(getNumber() - 1);
-        }
+            @Override
+            public void increment() {
+                setNumber(getNumber() + 1);
+            }
 
-        @Override
-        public void setValue(Integer value) {
-            setNumber(value);
-        }
+            @Override
+            public void decrement() {
+                setNumber(getNumber() - 1);
+            }
 
-    };
+            @Override
+            public void setValue(Integer value) {
+                setNumber(value);
+            }
+
+        };
+        return numberModel;
+    }
 
     // --- label ---
 
@@ -131,22 +136,27 @@ public abstract class GImpediment
         return equals(this.label, label);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel;
 
-        @Override
-        public String getValue() {
-            return getLabel();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getLabelModel() {
+        if (labelModel == null) labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setLabel(value);
-        }
+            @Override
+            public String getValue() {
+                return getLabel();
+            }
+
+            @Override
+            public void setValue(String value) {
+                setLabel(value);
+            }
 
 
-        @Override
-        public boolean isMandatory() { return true; }
-    };
+            @Override
+            public boolean isMandatory() { return true; }
+        };
+        return labelModel;
+    }
 
     // --- date ---
 
@@ -167,22 +177,27 @@ public abstract class GImpediment
         return equals(this.date, date);
     }
 
-    public transient ilarkesto.gwt.client.editor.ADateEditorModel dateModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ADateEditorModel dateModel;
 
-        @Override
-        public ilarkesto.gwt.client.Date getValue() {
-            return getDate();
-        }
+    public ilarkesto.gwt.client.editor.ADateEditorModel getDateModel() {
+        if (dateModel == null) dateModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
 
-        @Override
-        public void setValue(ilarkesto.gwt.client.Date value) {
-            setDate(value);
-        }
+            @Override
+            public ilarkesto.gwt.client.Date getValue() {
+                return getDate();
+            }
+
+            @Override
+            public void setValue(ilarkesto.gwt.client.Date value) {
+                setDate(value);
+            }
 
 
-        @Override
-        public boolean isMandatory() { return true; }
-    };
+            @Override
+            public boolean isMandatory() { return true; }
+        };
+        return dateModel;
+    }
 
     // --- description ---
 
@@ -203,19 +218,24 @@ public abstract class GImpediment
         return equals(this.description, description);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel descriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel descriptionModel;
 
-        @Override
-        public String getValue() {
-            return getDescription();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getDescriptionModel() {
+        if (descriptionModel == null) descriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setDescription(value);
-        }
+            @Override
+            public String getValue() {
+                return getDescription();
+            }
 
-    };
+            @Override
+            public void setValue(String value) {
+                setDescription(value);
+            }
+
+        };
+        return descriptionModel;
+    }
 
     // --- solution ---
 
@@ -236,19 +256,24 @@ public abstract class GImpediment
         return equals(this.solution, solution);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel solutionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel solutionModel;
 
-        @Override
-        public String getValue() {
-            return getSolution();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getSolutionModel() {
+        if (solutionModel == null) solutionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setSolution(value);
-        }
+            @Override
+            public String getValue() {
+                return getSolution();
+            }
 
-    };
+            @Override
+            public void setValue(String value) {
+                setSolution(value);
+            }
+
+        };
+        return solutionModel;
+    }
 
     // --- closed ---
 

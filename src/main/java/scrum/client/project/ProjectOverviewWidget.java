@@ -26,8 +26,8 @@ public class ProjectOverviewWidget extends AScrumWidget {
 
 		FieldsWidget fields = new FieldsWidget();
 
-		fields.add("Label", new TextEditorWidget(project.labelModel));
-		fields.add("Description", new RichtextEditorWidget(project.descriptionModel));
+		fields.add("Label", new TextEditorWidget(project.getLabelModel()));
+		fields.add("Description", new RichtextEditorWidget(project.getDescriptionModel()));
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Project Properties");

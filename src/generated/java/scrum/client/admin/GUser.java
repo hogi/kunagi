@@ -63,22 +63,27 @@ public abstract class GUser
         return equals(this.name, name);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel nameModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel nameModel;
 
-        @Override
-        public String getValue() {
-            return getName();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getNameModel() {
+        if (nameModel == null) nameModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setName(value);
-        }
+            @Override
+            public String getValue() {
+                return getName();
+            }
+
+            @Override
+            public void setValue(String value) {
+                setName(value);
+            }
 
 
-        @Override
-        public boolean isMandatory() { return true; }
-    };
+            @Override
+            public boolean isMandatory() { return true; }
+        };
+        return nameModel;
+    }
 
     // --- admin ---
 
@@ -118,19 +123,24 @@ public abstract class GUser
         return equals(this.email, email);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel emailModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel emailModel;
 
-        @Override
-        public String getValue() {
-            return getEmail();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getEmailModel() {
+        if (emailModel == null) emailModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setEmail(value);
-        }
+            @Override
+            public String getValue() {
+                return getEmail();
+            }
 
-    };
+            @Override
+            public void setValue(String value) {
+                setEmail(value);
+            }
+
+        };
+        return emailModel;
+    }
 
     // --- currentProject ---
 
@@ -176,19 +186,24 @@ public abstract class GUser
         return equals(this.color, color);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel colorModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel colorModel;
 
-        @Override
-        public String getValue() {
-            return getColor();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getColorModel() {
+        if (colorModel == null) colorModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setColor(value);
-        }
+            @Override
+            public String getValue() {
+                return getColor();
+            }
 
-    };
+            @Override
+            public void setValue(String value) {
+                setColor(value);
+            }
+
+        };
+        return colorModel;
+    }
 
     // --- update properties by map ---
 

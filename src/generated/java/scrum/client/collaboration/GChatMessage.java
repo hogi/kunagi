@@ -113,22 +113,27 @@ public abstract class GChatMessage
         return equals(this.text, text);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel textModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel textModel;
 
-        @Override
-        public String getValue() {
-            return getText();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getTextModel() {
+        if (textModel == null) textModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setText(value);
-        }
+            @Override
+            public String getValue() {
+                return getText();
+            }
+
+            @Override
+            public void setValue(String value) {
+                setText(value);
+            }
 
 
-        @Override
-        public boolean isMandatory() { return true; }
-    };
+            @Override
+            public boolean isMandatory() { return true; }
+        };
+        return textModel;
+    }
 
     // --- dateAndTime ---
 

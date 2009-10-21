@@ -28,13 +28,13 @@ public class SprintBacklogWidget extends AScrumWidget {
 
 		TableBuilder tb = new TableBuilder();
 
-		tb.addFieldRow("Label", new TextEditorWidget(sprint.labelModel), 4);
+		tb.addFieldRow("Label", new TextEditorWidget(sprint.getLabelModel()), 4);
 
-		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.goalModel), 4);
+		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()), 4);
 		tb.addFieldLabel("Dates");
-		tb.addField("Begin", new DateEditorWidget(sprint.beginModel));
+		tb.addField("Begin", new DateEditorWidget(sprint.getBeginModel()));
 
-		tb.addFieldRow("End", new DateEditorWidget(sprint.endModel));
+		tb.addFieldRow("End", new DateEditorWidget(sprint.getEndModel()));
 
 		tb.addFieldLabel("Requirements");
 		tb.addField("Completed", new AFieldValueWidget() {

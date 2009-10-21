@@ -49,7 +49,7 @@ public class WikiWidget extends AScrumWidget {
 			page.addSection("Page \"" + pageName + "\" does not exist.");
 		} else {
 			page.addHeader(wikipage.getName());
-			editor = new RichtextEditorWidget(wikipage.textModel);
+			editor = new RichtextEditorWidget(wikipage.getTextModel());
 			page.addSection(editor);
 		}
 		if (wikipage != null) page.addSection(new CommentsWidget(wikipage).update());

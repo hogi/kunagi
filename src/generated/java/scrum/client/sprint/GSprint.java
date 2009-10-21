@@ -88,22 +88,27 @@ public abstract class GSprint
         return equals(this.label, label);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel;
 
-        @Override
-        public String getValue() {
-            return getLabel();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getLabelModel() {
+        if (labelModel == null) labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setLabel(value);
-        }
+            @Override
+            public String getValue() {
+                return getLabel();
+            }
+
+            @Override
+            public void setValue(String value) {
+                setLabel(value);
+            }
 
 
-        @Override
-        public boolean isMandatory() { return true; }
-    };
+            @Override
+            public boolean isMandatory() { return true; }
+        };
+        return labelModel;
+    }
 
     // --- goal ---
 
@@ -124,19 +129,24 @@ public abstract class GSprint
         return equals(this.goal, goal);
     }
 
-    public transient ilarkesto.gwt.client.editor.ATextEditorModel goalModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel goalModel;
 
-        @Override
-        public String getValue() {
-            return getGoal();
-        }
+    public ilarkesto.gwt.client.editor.ATextEditorModel getGoalModel() {
+        if (goalModel == null) goalModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
-        @Override
-        public void setValue(String value) {
-            setGoal(value);
-        }
+            @Override
+            public String getValue() {
+                return getGoal();
+            }
 
-    };
+            @Override
+            public void setValue(String value) {
+                setGoal(value);
+            }
+
+        };
+        return goalModel;
+    }
 
     // --- begin ---
 
@@ -157,19 +167,24 @@ public abstract class GSprint
         return equals(this.begin, begin);
     }
 
-    public transient ilarkesto.gwt.client.editor.ADateEditorModel beginModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ADateEditorModel beginModel;
 
-        @Override
-        public ilarkesto.gwt.client.Date getValue() {
-            return getBegin();
-        }
+    public ilarkesto.gwt.client.editor.ADateEditorModel getBeginModel() {
+        if (beginModel == null) beginModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
 
-        @Override
-        public void setValue(ilarkesto.gwt.client.Date value) {
-            setBegin(value);
-        }
+            @Override
+            public ilarkesto.gwt.client.Date getValue() {
+                return getBegin();
+            }
 
-    };
+            @Override
+            public void setValue(ilarkesto.gwt.client.Date value) {
+                setBegin(value);
+            }
+
+        };
+        return beginModel;
+    }
 
     // --- end ---
 
@@ -190,19 +205,24 @@ public abstract class GSprint
         return equals(this.end, end);
     }
 
-    public transient ilarkesto.gwt.client.editor.ADateEditorModel endModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
+    private transient ilarkesto.gwt.client.editor.ADateEditorModel endModel;
 
-        @Override
-        public ilarkesto.gwt.client.Date getValue() {
-            return getEnd();
-        }
+    public ilarkesto.gwt.client.editor.ADateEditorModel getEndModel() {
+        if (endModel == null) endModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
 
-        @Override
-        public void setValue(ilarkesto.gwt.client.Date value) {
-            setEnd(value);
-        }
+            @Override
+            public ilarkesto.gwt.client.Date getValue() {
+                return getEnd();
+            }
 
-    };
+            @Override
+            public void setValue(ilarkesto.gwt.client.Date value) {
+                setEnd(value);
+            }
+
+        };
+        return endModel;
+    }
 
     // --- update properties by map ---
 

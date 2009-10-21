@@ -22,10 +22,10 @@ public class ImpedimentWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
-		fields.add("Label", new TextEditorWidget(impediment.labelModel));
-		fields.add("Date", new DateEditorWidget(impediment.dateModel));
-		fields.add("Description", new RichtextEditorWidget(impediment.descriptionModel));
-		fields.add("Solution", new RichtextEditorWidget(impediment.solutionModel));
+		fields.add("Label", new TextEditorWidget(impediment.getLabelModel()));
+		fields.add("Date", new DateEditorWidget(impediment.getDateModel()));
+		fields.add("Description", new RichtextEditorWidget(impediment.getDescriptionModel()));
+		fields.add("Solution", new RichtextEditorWidget(impediment.getSolutionModel()));
 
 		return Gwt.createFlowPanel(fields, new CommentsWidget(impediment));
 	}
