@@ -184,6 +184,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		session.setUser(user);
 		session.getNextData().entityIdBase = UUID.randomUUID().toString();
 		session.getNextData().setUserId(user.getId());
+		session.getNextData().systemMessage = webApplication.getSystemMessage();
 		session.sendToClient(user);
 		session.sendToClient(projectDao.getEntitiesVisibleForUser(user));
 		session.sendToClient(userDao.getEntitiesVisibleForUser(user));

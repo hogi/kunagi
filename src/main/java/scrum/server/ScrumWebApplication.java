@@ -216,6 +216,10 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		}
 	}
 
+	public SystemMessage getSystemMessage() {
+		return systemMessage;
+	}
+
 	public static ScrumWebApplication get() {
 		return (ScrumWebApplication) AWebApplication.get();
 	}
