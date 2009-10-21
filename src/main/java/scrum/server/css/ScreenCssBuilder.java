@@ -72,8 +72,6 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".ChatWidget-output .author-system").color("red");
 		css.style(".ChatWidget-output .author-me").color("gray");
 
-		css.style(".CommentWidget-header-date").color("#333");
-
 		css.style(".PagePanel-header").background(cPagePanelHeaderBackground).color(cPagePanelHeader);
 		css.style(".PagePanel-content").background("white").border(1, "solid", cPagePanelBorder);
 
@@ -133,7 +131,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".CommentWidget").margin(5, 0, 15, 0).borderTop(1, "solid", cCommentDate);
 		css.style(".CommentWidget-header").margin(7, 0, 4, 0);
 		css.style(".CommentWidget-header-author").floatLeft().marginRight(5);
-		css.style(".CommentWidget-header-date").color(cCommentDate).fontSize(11);
+		css.style(".CommentWidget-header-date").color(cCommentDate);
 		css.style(".CommentWidget-editor");
 
 		css.style(".AIntegerViewEditWidget .gwt-Button").padding(0, 3, 0, 3);

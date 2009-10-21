@@ -1,5 +1,7 @@
 package scrum.client.sprint;
 
+import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AExtensibleBlockWidget;
 import scrum.client.common.BlockListWidget;
@@ -10,15 +12,16 @@ import scrum.client.project.ReopenRequirementAction;
 import scrum.client.project.Requirement;
 import scrum.client.project.RequirementWidget;
 
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement> {
 
 	private BlockListWidget<Task> taskList;
-	private FlowPanel panel;
 	private RequirementWidget requirementWidget;
 	private CommentsWidget commentsWidget;
+	private FlexTable bodyWidget;
 
 	@Override
 	protected void onCollapsedInitialization() {
@@ -43,11 +46,15 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 		taskList = new BlockListWidget<Task>(TaskInRequirementBlock.FACTORY);
 		commentsWidget = new CommentsWidget(requirement);
 
-		panel = new FlowPanel();
-		panel.add(requirementWidget);
-		panel.add(taskList);
-		panel.add(commentsWidget);
-		return panel;
+		FlowPanel left = new FlowPanel();
+		left.add(requirementWidget);
+		left.add(commentsWidget);
+
+		TableBuilder tb = new TableBuilder();
+		tb.setColumnWidths("50%", "20px", "50%");
+		tb.addRow(left, Gwt.createSpacer(20, 1), taskList);
+		bodyWidget = tb.createTable();
+		return bodyWidget;
 	}
 
 	@Override
@@ -55,7 +62,7 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 		requirementWidget.update();
 		taskList.setObjects(getObject().getTasks());
 		commentsWidget.update();
-		return panel;
+		return bodyWidget;
 	}
 
 	public void selectTask(Task task) {
