@@ -1,7 +1,7 @@
 package scrum.client.admin;
 
-import ilarkesto.gwt.client.ADateAndTimeViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.editor.DateAndTimeEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
@@ -15,23 +15,9 @@ public class SystemMessageManagerWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
 		fields.add("Text", new TextEditorWidget(cm.getSystemMessageManager().systemMessageTextModel));
-		fields.add("Date and Time", new ADateAndTimeViewEditWidget() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerValue(getMessage().getExpires());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorValue(getMessage().getExpires());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				getMessage().setExpires(getEditorValue());
-			}
-		});
+		fields
+				.add("Date and Time", new DateAndTimeEditorWidget(
+						cm.getSystemMessageManager().systemMessageExpiresModel));
 
 		PagePanel page = new PagePanel();
 		page.addHeader("System Message Management", new ButtonWidget(new ActivateSystemMessageAction()),
@@ -39,10 +25,6 @@ public class SystemMessageManagerWidget extends AScrumWidget {
 		page.addSection(fields);
 
 		return page;
-	}
-
-	private SystemMessage getMessage() {
-		return cm.getSystemMessageManager().getSystemMessage();
 	}
 
 }

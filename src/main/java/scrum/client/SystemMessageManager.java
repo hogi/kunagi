@@ -1,5 +1,7 @@
 package scrum.client;
 
+import ilarkesto.gwt.client.DateAndTime;
+import ilarkesto.gwt.client.editor.ADateAndTimeEditorModel;
 import ilarkesto.gwt.client.editor.ATextEditorModel;
 import scrum.client.admin.SystemMessage;
 import scrum.client.common.AScrumComponent;
@@ -42,6 +44,20 @@ public class SystemMessageManager extends AScrumComponent implements ServerDataR
 		public String getValue() {
 			return systemMessage.getText();
 		}
+	};
+
+	public ADateAndTimeEditorModel systemMessageExpiresModel = new ADateAndTimeEditorModel() {
+
+		@Override
+		public DateAndTime getValue() {
+			return systemMessage.getExpires();
+		}
+
+		@Override
+		public void setValue(DateAndTime value) {
+			systemMessage.setExpires(value);
+		}
+
 	};
 
 }
