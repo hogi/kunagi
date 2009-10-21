@@ -32,7 +32,6 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	protected void onUpdateHead() {
 		Requirement requirement = getObject();
 		setBlockTitle(requirement.getReference() + " " + requirement.getLabel());
-		setAdditionalStyleName(requirement.isDone() ? "RequirementInSprintBlock-done" : null);
 		addMenuAction(new CloseRequirementAction(requirement));
 		addMenuAction(new ReopenRequirementAction(requirement));
 		addMenuAction(new CreateTaskAction(requirement));
@@ -58,11 +57,10 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	}
 
 	@Override
-	protected Widget onUpdateBody() {
+	protected void onUpdateBody() {
 		requirementWidget.update();
 		taskList.setObjects(getObject().getTasks());
 		commentsWidget.update();
-		return bodyWidget;
 	}
 
 	public void selectTask(Task task) {

@@ -82,17 +82,13 @@ a {cursor: pointer;}
 .WhiteboardWidget-requirement-list {padding: 0px; min-height: 5px;}
 
 
-.BlockDndMarkerWidget {height: 2px;}
-.BlockDndMarkerWidget-active {height: 2px;}
-
-.ABlockWidget-title {padding: 1px; width: 100%;}
-.ABlockWidget-title-label {font-size: 12px; line-height: 16px; cursor: pointer; display: block;}
+.ABlockWidget-title {padding: 1px; width: 100%; font-size: 12px; line-height: 16px;}
+.ABlockWidget-title-label {cursor: pointer; display: block;}
 .ABlockWidget-title .ToolbarWidget {margin: 0px;}
 .ABlockWidget-title .ButtonWidget {margin-left: 15px;}
 .ABlockWidget-title .ButtonWidget a {font-size: 8px; line-height: 8px;}
 .ABlockWidget-title-menu {margin-left: 15px; border: 0px;}
 .ABlockWidget-title-menu .gwt-MenuItem { font-size: 9px;}
-.ABlockWidget-content-expanded {padding: 10px;}
 
 
 .ABlockWidget-block-title .UserOnBlockWidget {margin-right: 5px;}

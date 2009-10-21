@@ -19,7 +19,6 @@ public class UserBlock extends AExtensibleBlockWidget<User> {
 	protected void onUpdateHead() {
 		User user = getObject();
 		setBlockTitle(user.getName());
-		setContent(null);
 		addMenuAction(new DeleteUserAction(user));
 	}
 

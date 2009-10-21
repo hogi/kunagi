@@ -3,6 +3,8 @@ package scrum.client.common;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.Updatable;
 
@@ -40,28 +42,23 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	private SimplePanel contentWrapper;
 	private HorizontalPanel toolbar;
 	private MenuBar menu;
-	private String additionalStyleName;
 	private BlockListWidget<O> list;
 	private FlowPanel mainPanel;
 	private FlowPanel panel;
 	private boolean extended;
 	private BlockDndMarkerWidget dndMarkerTop = new BlockDndMarkerWidget();
 
-	protected abstract void onBlockInitialization();
+	private boolean initializingExtension;
+	private boolean initializedExtension;
+	private Widget body;
 
-	protected abstract void onBlockUpdate();
+	protected abstract void onCollapsedInitialization();
+
+	protected abstract void onUpdateHead();
+
+	protected abstract Widget onExtendedInitialization();
 
 	public ABlockWidget() {}
-
-	protected final void setObject(O object) {
-		assert this.object == null;
-		assert object != null;
-		this.object = object;
-	}
-
-	protected final O getObject() {
-		return object;
-	}
 
 	@Override
 	protected final Widget onInitialization() {
@@ -93,37 +90,55 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		titlePanel.setCellWidth(toolbar, "1%");
 
 		// ----
-		panel = new FlowPanel();
-		panel.add(titlePanel);
-		panel.add(contentWrapper);
-		panel.setStyleName("ABlockWidget-block");
+		panel = Gwt.createFlowPanel("ABlockWidget-block", null, titlePanel);
 
-		mainPanel = new FlowPanel();
-		mainPanel.setStyleName("ABlockWidget");
-
-		mainPanel.add(dndMarkerTop);
-		mainPanel.add(panel);
+		mainPanel = Gwt.createFlowPanel("ABlockWidget", null, dndMarkerTop, panel);
 
 		dndMarkerTop.setActive(false);
 
-		onBlockInitialization();
+		onCollapsedInitialization();
 
 		return mainPanel;
 	}
 
-	public void setAdditionalStyleName(String additionalStyleName) {
-		if (additionalStyleName == null) {
-			if (this.additionalStyleName != null) {
-				mainPanel.removeStyleName(this.additionalStyleName);
+	@Override
+	protected final void onUpdate() {
+		toolbar.clear();
+		menu = null;
+
+		if (cm.getAuth().isUserLoggedIn()) {
+			User me = getCurrentUser();
+			if (cm.getProjectContext().isProjectOpen()) {
+				O o = getObject();
+				if (o instanceof AGwtEntity) {
+					Set<User> users = getCurrentProject().getUsersSelecting(((AGwtEntity) o));
+					for (User user : users) {
+						if (user == me) continue;
+						UserOnBlockWidget userOnBlockWidget = new UserOnBlockWidget(user);
+						addToolbarItem(userOnBlockWidget);
+					}
+				}
 			}
-		} else {
-			mainPanel.addStyleName(additionalStyleName);
 		}
-		this.additionalStyleName = additionalStyleName;
+
+		panel.clear();
+		onUpdateHead();
+		panel.add(titlePanel);
+		if (isExtended()) {
+			ensureExtendedInitialized();
+			onUpdateBody();
+			panel.add(Gwt.createDiv("ABlockWidget-body", body));
+		}
 	}
 
-	public String getAdditionalStyleName() {
-		return additionalStyleName;
+	protected final void setObject(O object) {
+		assert this.object == null;
+		assert object != null;
+		this.object = object;
+	}
+
+	protected final O getObject() {
+		return object;
 	}
 
 	protected void addMenuAction(AScrumAction action) {
@@ -153,40 +168,14 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		}
 	}
 
-	@Override
-	protected final void onUpdate() {
-		toolbar.clear();
-		menu = null;
-
-		if (cm.getAuth().isUserLoggedIn()) {
-			User me = getCurrentUser();
-			if (cm.getProjectContext().isProjectOpen()) {
-				O o = getObject();
-				if (o instanceof AGwtEntity) {
-					Set<User> users = getCurrentProject().getUsersSelecting(((AGwtEntity) o));
-					for (User user : users) {
-						if (user == me) continue;
-						UserOnBlockWidget userOnBlockWidget = new UserOnBlockWidget(user);
-						addToolbarItem(userOnBlockWidget);
-					}
-				}
-			}
-		}
-
-		onBlockUpdate();
-	}
-
-	protected final void setContent(Widget content) {
-		contentWrapper.setWidget(content);
-		if (content == null) {
-			contentWrapper.removeStyleName("ABlockWidget-content-expanded");
-		} else {
-			contentWrapper.addStyleName("ABlockWidget-content-expanded");
-		}
-	}
-
 	protected final void setBlockTitle(String text) {
 		label.setText(text);
+	}
+
+	protected final void setIcon(String icon) {
+		Label label = new Label(icon);
+		label.setSize("50px", "100%");
+		iconPanel.setWidget(label);
 	}
 
 	protected final void setIcon(Image icon) {
@@ -236,12 +225,6 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	final void setExtended(boolean extended) {
 		if (this.extended == extended) return;
 		this.extended = extended;
-		if (extended) {
-			getBorderPanel().addStyleName("ABlockWidget-block-selected");
-		} else {
-			getBorderPanel().removeStyleName("ABlockWidget-block-selected");
-			setContent(null);
-		}
 
 		update();
 
@@ -249,6 +232,24 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 			cm.getEventBus().fireBlockExpanded(getObject());
 		} else {
 			cm.getEventBus().fireBlockCollapsed(getObject());
+		}
+	}
+
+	protected void onUpdateBody() {
+		Gwt.update(body);
+	}
+
+	private void ensureExtendedInitialized() {
+		if (initializingExtension)
+			throw new RuntimeException("Extension initializing. Don't call update() within onInitailization(): "
+					+ toString());
+		if (!initializedExtension) {
+			if (initializingExtension) throw new RuntimeException("Extension already initializing: " + toString());
+			initializingExtension = true;
+			GwtLogger.DEBUG("Initializing extension: " + toString());
+			body = onExtendedInitialization();
+			initializedExtension = true;
+			initializingExtension = false;
 		}
 	}
 

@@ -1,32 +1,22 @@
 package scrum.client.impediments;
 
-import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
-import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class ImpedimentBlock extends AExtensibleBlockWidget<Impediment> implements TrashSupport {
+public class ImpedimentBlock extends ABlockWidget<Impediment> implements TrashSupport {
 
 	@Override
-	protected void onCollapsedInitialization() {
-		setIcon(Img.bundle.impediment16());
-	}
+	protected void onCollapsedInitialization() {}
 
 	@Override
 	protected void onUpdateHead() {
 		Impediment impediment = getObject();
-		setBlockTitle(impediment.getReference() + " [" + impediment.getDate() + "] " + impediment.getLabel());
-		String style = null;
-		if (impediment.isClosed()) {
-			style = "ImpedimentBlock-closed";
-		} else {
-			style = "ImpedimentBlock-open";
-		}
-		setAdditionalStyleName(style);
-		setIcon(Img.bundle.impediment16());
+		setIcon(impediment.getReference());
+		setBlockTitle("[" + impediment.getDate() + "] " + impediment.getLabel());
 		addMenuAction(new CloseImpedimentAction(impediment));
 		addMenuAction(new DeleteImpedimentAction(impediment));
 	}

@@ -12,7 +12,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import ilarkesto.gwt.client.editor.ATextEditorModel;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
-import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
@@ -93,14 +93,18 @@ public class WidgetsTesterWidget extends AScrumWidget {
 		addTest("BlockList", list);
 	}
 
-	private static class TestBlock extends AExtensibleBlockWidget<String> {
+	private static class TestBlock extends ABlockWidget<String> {
 
 		@Override
 		protected void onCollapsedInitialization() {}
 
 		@Override
 		protected Widget onExtendedInitialization() {
-			return null;
+			HTML content = new HTML(
+					"<h3>"
+							+ getObject()
+							+ "</h3><p>Das ist der Content. Das ist der Content. Das ist der Content. Das ist der Content. </p>");
+			return content;
 		}
 
 		@Override
@@ -112,15 +116,6 @@ public class WidgetsTesterWidget extends AScrumWidget {
 			addMenuAction(new DummyAction("Action 3"));
 			addMenuAction(new DummyAction("Action 4"));
 			addMenuAction(new DummyAction("Action 5"));
-		}
-
-		@Override
-		protected Widget onUpdateBody() {
-			HTML content = new HTML(
-					"<h3>"
-							+ getObject()
-							+ "</h3><p>Das ist der Content. Das ist der Content. Das ist der Content. Das ist der Content. </p>");
-			return content;
 		}
 
 		public static BlockWidgetFactory<String> FACTORY = new BlockWidgetFactory<String>() {

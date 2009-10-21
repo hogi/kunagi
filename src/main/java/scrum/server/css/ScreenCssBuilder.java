@@ -21,7 +21,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	String cNavigatorSelectedItemBackground = "#CCD5E6";
 	String cNavigatorHoverItemBackground = "#E9EEF6";
 
-	String cBlockTitleBackground = cBackground;
+	String cBlockTitleBackground = "white";
 	String cBlockTitleBackgroundGreen = "#CEFDC5";
 	String cBlockTitleBackgroundRed = "#FDCEC5";
 	String cBlockTitleBackgroundGrey = "#DEDEDE";
@@ -81,12 +81,12 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style(".ToolbarWidget").background(cToolbarBackground);
 
-		css.style(".BlockDndMarkerWidget-active").background(cHeaderBackground);
-
 		css.style(".ABlockWidget-block").background("white");
-		css.style(".ABlockWidget-block-selected").border("0");
 		css.style(".ABlockWidget-title").background(cBlockTitleBackground);
-		css.style(".ABlockWidget-content-expanded").border(1, "solid", cBlockTitleBackground);
+		css.style(".ABlockWidget-body").border(1, "solid", cBlockTitleBackground).padding(10);
+
+		css.style(".BlockDndMarkerWidget").height(1).background(cNavigatorSeparator);
+		css.style(".BlockDndMarkerWidget-active").height(1).background(cError);
 
 		css.style(".RequirementBlock-closed .ABlockWidget-title").background(cBlockTitleBackgroundGreen);
 		css.style(".RequirementBlock-inCurrentSprint .ABlockWidget-title").background(cBlockTitleBackgroundRed);
