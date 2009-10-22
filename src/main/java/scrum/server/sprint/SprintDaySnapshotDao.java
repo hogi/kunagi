@@ -31,7 +31,7 @@ public class SprintDaySnapshotDao extends GSprintDaySnapshotDao {
 		Date date = sprint.getBegin();
 		Date end = sprint.getEnd();
 		SprintDaySnapshot previousSnapshot = null;
-		while (date.isBeforeOrSame(end)) {
+		while (date.isBeforeOrSame(end) && date.isPastOrToday()) {
 			SprintDaySnapshot snapshot = getSprintDaySnapshot(sprint, date, false);
 			if (snapshot == null) {
 				snapshot = new SprintDaySnapshot();
