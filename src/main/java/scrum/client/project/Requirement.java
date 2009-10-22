@@ -65,11 +65,11 @@ public class Requirement extends GRequirement {
 	/**
 	 * All tasks are done. Not closed yet.
 	 */
-	public boolean isDone() {
+	public boolean isTasksClosed() {
 		Collection<Task> tasks = getTasks();
 		if (tasks.isEmpty()) return false;
 		for (Task task : tasks) {
-			if (!task.isDone()) return false;
+			if (!task.isClosed()) return false;
 		}
 		return true;
 	}
@@ -80,7 +80,7 @@ public class Requirement extends GRequirement {
 	public String getProductBacklogSummary() {
 		String summary = isDirty() ? "[dirty] " : "[not dirty] ";
 		if (isClosed()) return summary += "Closed.";
-		if (isDone()) return summary += "Done. Test required.";
+		if (isTasksClosed()) return summary += "Done. Test required.";
 		if (getEstimatedWork() == null) return summary += "No effort estimated.";
 		if (!isSprintSet()) return summary += getEstimatedWorkAsString() + " to do. No sprint assigned.";
 		Sprint sprint = getSprint();
@@ -93,13 +93,13 @@ public class Requirement extends GRequirement {
 	public String getSprintBacklogSummary() {
 		if (isClosed()) return "Closed.";
 		if (!isPlanned()) return "Not planned yet.";
-		if (isDone()) return "Done. Test required.";
+		if (isTasksClosed()) return "Done. Test required.";
 		int taskCount = 0;
 		int openTaskCount = 0;
 		int effort = 0;
 		for (Task task : getTasks()) {
 			taskCount++;
-			if (!task.isDone()) {
+			if (!task.isClosed()) {
 				openTaskCount++;
 				effort += task.getRemainingWork();
 			}
@@ -139,7 +139,7 @@ public class Requirement extends GRequirement {
 	public List<Task> getClaimedTasks() {
 		List<Task> ret = new ArrayList<Task>();
 		for (Task task : getTasks()) {
-			if (task.isOwnerSet()) ret.add(task);
+			if (task.isOwnerSet() && !task.isClosed()) ret.add(task);
 		}
 		return ret;
 	}
@@ -147,7 +147,7 @@ public class Requirement extends GRequirement {
 	public List<Task> getClosedTasks() {
 		List<Task> ret = new ArrayList<Task>();
 		for (Task task : getTasks()) {
-			if (task.isDone()) ret.add(task);
+			if (task.isClosed()) ret.add(task);
 		}
 		return ret;
 	}

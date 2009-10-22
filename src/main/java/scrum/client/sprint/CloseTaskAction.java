@@ -19,7 +19,7 @@ public class CloseTaskAction extends GCloseTaskAction {
 
 	@Override
 	public boolean isExecutable() {
-		return !task.isDone() && (!task.isOwnerSet() || task.isOwner(getCurrentUser()));
+		return !task.isClosed() && (!task.isOwnerSet() || task.isOwner(getCurrentUser()));
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class TaskRemainingWorkWidget extends AWidget {
 	protected void onUpdate() {
 		remainingWork.update();
 		toolbar.clear();
-		if (task.isDone()) {
+		if (task.isClosed()) {
 			AScrumAction action = new ReopenTaskAction(task);
 			if (action.isExecutable()) {
 				toolbar.addButton(action);

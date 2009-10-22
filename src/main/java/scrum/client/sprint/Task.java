@@ -24,7 +24,7 @@ public class Task extends GTask {
 	public void claim() {
 		User user = cm.getAuth().getUser();
 		boolean ownerchange = !isOwner(user);
-		if (isDone()) {
+		if (isClosed()) {
 			setUnDone(user);
 		} else {
 			setOwner(user);
@@ -61,6 +61,7 @@ public class Task extends GTask {
 	public void setUnDone(User user) {
 		setOwner(user);
 		setRemainingWork(1);
+		getRequirement().setClosed(false);
 	}
 
 	public void setUnOwned() {
@@ -69,12 +70,16 @@ public class Task extends GTask {
 			true);
 	}
 
-	public boolean isDone() {
+	public boolean isClaimed() {
+		return !isClosed() && isOwnerSet();
+	}
+
+	public boolean isClosed() {
 		return getRemainingWork() == 0;
 	}
 
 	public String getSummary() {
-		if (isDone()) return "Done.";
+		if (isClosed()) return "Done.";
 		String s = getRemainingWork() + " hours to do.";
 		User owner = getOwner();
 		if (owner != null) {

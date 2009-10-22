@@ -18,7 +18,7 @@ public class ReopenTaskAction extends GReopenTaskAction {
 
 	@Override
 	public boolean isExecutable() {
-		return task.isDone();
+		return task.isClosed();
 	}
 
 	@Override

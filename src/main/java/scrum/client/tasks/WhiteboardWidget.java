@@ -139,7 +139,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		List<Task> ownedTaskList = new ArrayList<Task>();
 		List<Task> closedTaskList = new ArrayList<Task>();
 		for (Task task : requirement.getTasks()) {
-			if (task.isDone()) {
+			if (task.isClosed()) {
 				closedTaskList.add(task);
 			} else if (task.isOwnerSet()) {
 				ownedTaskList.add(task);

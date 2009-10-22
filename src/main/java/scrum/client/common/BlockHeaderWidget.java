@@ -10,7 +10,6 @@ import java.util.List;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
@@ -56,15 +55,18 @@ public class BlockHeaderWidget extends AWidget {
 		return label;
 	}
 
-	public void insertPrefixIcon(Image icon) {
-		insertPrefixCell(icon, "16px", false, "BlockHeaderWidget-prefixIcon");
+	public SimplePanel insertPrefixIcon() {
+		SimplePanel cell = insertPrefixCell(null, "16px", false, "BlockHeaderWidget-prefixIcon");
+		cell.setHeight("16px");
+		return cell;
 	}
 
-	public void insertPrefixCell(Widget widget, String width, boolean nowrap, String additionalStyleName) {
+	public SimplePanel insertPrefixCell(Widget widget, String width, boolean nowrap, String additionalStyleName) {
 		SimplePanel cell = createCell(widget, nowrap, additionalStyleName);
 		prefixCellCount++;
 		table.insert(cell, prefixCellCount);
 		if (width != null) table.setCellWidth(cell, width);
+		return cell;
 	}
 
 	public void appendCell(Widget widget, String width, boolean nowrap, String additionalStyleName) {

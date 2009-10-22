@@ -15,7 +15,7 @@ public class CloseTaskDropAction implements BlockListDropAction<Task> {
 
 	public boolean onDrop(Task task) {
 		task.setRequirement(this.requirement);
-		if (!task.isDone()) task.setDone(ComponentManager.get().getAuth().getUser());
+		if (!task.isClosed()) task.setDone(ComponentManager.get().getAuth().getUser());
 		return true;
 	}
 
