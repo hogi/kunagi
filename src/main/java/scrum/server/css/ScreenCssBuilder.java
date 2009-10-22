@@ -168,6 +168,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".BlockHeaderWidget-cell").padding(2);
 		css.style(".BlockHeaderWidget-cell .gwt-MenuItem").fontSize(fontSizeSmall).padding(2, 3, 2, 3)
 				.whiteSpaceNowrap();
+		css.style(".BlockHeaderWidget-prefixLabel").cursorPointer();
 		css.style(".BlockHeaderWidget-cell .gwt-Button").fontSize(fontSizeSmall).padding(2, 3, 2, 3).margin(0);
 
 		css.style(".BlockDndMarkerWidget").background("none");

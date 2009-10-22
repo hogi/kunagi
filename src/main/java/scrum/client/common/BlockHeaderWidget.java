@@ -4,6 +4,9 @@ import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -22,6 +25,7 @@ public class BlockHeaderWidget extends AWidget {
 
 	private MenuBar menu;
 	private int prefixCellCount = 0;
+	private List<Label> clickableLabels;
 
 	@Override
 	protected Widget onInitialization() {
@@ -42,28 +46,39 @@ public class BlockHeaderWidget extends AWidget {
 		return table;
 	}
 
-	public void insertPrefixIcon(Image icon) {
-		insertPrefixCell(icon, "16px", false);
+	public Label insertPrefixLabel(String width) {
+		Label label = new Label();
+		insertPrefixCell(label, width, true, "BlockHeaderWidget-prefixLabel");
+
+		if (clickableLabels == null) clickableLabels = new ArrayList<Label>(2);
+		clickableLabels.add(label);
+
+		return label;
 	}
 
-	public void insertPrefixCell(Widget widget, String width, boolean nowrap) {
-		SimplePanel cell = createCell(widget, nowrap);
+	public void insertPrefixIcon(Image icon) {
+		insertPrefixCell(icon, "16px", false, "BlockHeaderWidget-prefixIcon");
+	}
+
+	public void insertPrefixCell(Widget widget, String width, boolean nowrap, String additionalStyleName) {
+		SimplePanel cell = createCell(widget, nowrap, additionalStyleName);
 		prefixCellCount++;
 		table.insert(cell, prefixCellCount);
 		if (width != null) table.setCellWidth(cell, width);
 	}
 
-	public void appendCell(Widget widget, String width, boolean nowrap) {
-		SimplePanel cell = createCell(widget, nowrap);
+	public void appendCell(Widget widget, String width, boolean nowrap, String additionalStyleName) {
+		SimplePanel cell = createCell(widget, nowrap, additionalStyleName);
 		table.add(cell);
 		if (width != null) table.setCellWidth(cell, width);
 	}
 
-	private SimplePanel createCell(Widget widget, boolean nowrap) {
+	private SimplePanel createCell(Widget widget, boolean nowrap, String additionalStyleName) {
 		SimplePanel wrapper = new SimplePanel();
 		wrapper.setStyleName("BlockHeaderWidget-cell");
 		wrapper.setHeight("100%");
 		if (nowrap) wrapper.getElement().getStyle().setProperty("whiteSpace", "nowrap");
+		if (additionalStyleName != null) wrapper.addStyleName(additionalStyleName);
 		wrapper.setWidget(widget);
 		return wrapper;
 	}
@@ -75,7 +90,7 @@ public class BlockHeaderWidget extends AWidget {
 			MenuBar menuBar = new MenuBar();
 			menuBar.addItem("Functions V", menu);
 			menuBar.setPopupPosition(MenuBar.PopupPosition.LEFT);
-			appendCell(menuBar, "30px", true);
+			appendCell(menuBar, "30px", true, null);
 		}
 		MenuItem menuItem = new MenuItem(action.getLabel(), action);
 		menuItem.setTitle(action.getTooltip());
@@ -84,7 +99,7 @@ public class BlockHeaderWidget extends AWidget {
 	}
 
 	public void addToolbarAction(AAction action) {
-		appendCell(new ButtonWidget(action), "5px", true);
+		appendCell(new ButtonWidget(action), "5px", true, null);
 	}
 
 	public void setDragHandle(String text) {
@@ -101,6 +116,11 @@ public class BlockHeaderWidget extends AWidget {
 
 	public void addClickHandler(ClickHandler handler) {
 		centerText.addClickHandler(handler);
+		if (clickableLabels != null) {
+			for (Label label : clickableLabels) {
+				label.addClickHandler(handler);
+			}
+		}
 	}
 
 	public FocusPanel getDragHandle() {

@@ -6,21 +6,26 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RiskBlock extends ABlockWidget<Risk> implements TrashSupport {
 
+	private Label riskLabel;
+
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Risk risk = getObject();
+		riskLabel = header.insertPrefixLabel("100px");
 		header.addMenuAction(new DeleteRiskAction(risk));
 	}
 
 	@Override
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Risk risk = getObject();
+		riskLabel.setText(risk.getPriorityLabel());
 		header.setDragHandle(risk.getReference());
-		header.setCenter(risk.getLabel() + " (" + risk.getPriorityLabel() + ")");
+		header.setCenter(risk.getLabel());
 	}
 
 	@Override

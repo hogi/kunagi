@@ -6,13 +6,18 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 
+	private Label typeLabel;
+
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
+		typeLabel = new Label();
 		Issue issue = getObject();
+		typeLabel = header.insertPrefixLabel("150px");
 		header.addMenuAction(new ConvertIssueToRequirementAction(issue));
 		header.addMenuAction(new ConvertIssueToQualityAction(issue));
 		header.addMenuAction(new DeleteIssueAction(issue));
@@ -21,8 +26,9 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 	@Override
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Issue issue = getObject();
+		typeLabel.setText(issue.getTypeLabel());
 		header.setDragHandle(issue.getReference());
-		header.setCenter("[" + issue.getTypeLabel() + "] " + issue.getLabel());
+		header.setCenter(issue.getLabel());
 	}
 
 	@Override

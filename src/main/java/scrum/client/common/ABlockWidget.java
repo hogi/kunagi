@@ -43,9 +43,8 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	protected final Widget onInitialization() {
 		header = new BlockHeaderWidget();
 		header.initialize();
-		header.addClickHandler(new SelectionClickHandler());
 		if (cm.getProjectContext().isProjectOpen() && getObject() instanceof AScrumGwtEntity) {
-			header.appendCell(new UsersOnBlockWidget((AScrumGwtEntity) getObject()), null, false);
+			header.appendCell(new UsersOnBlockWidget((AScrumGwtEntity) getObject()), null, false, null);
 		}
 
 		cm.getDndManager().makeDraggable(this, header.getDragHandle());
@@ -57,6 +56,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		dndMarkerTop.setActive(false);
 
 		onInitializationHeader(header);
+		header.addClickHandler(new SelectionClickHandler());
 
 		return outerPanel;
 	}
