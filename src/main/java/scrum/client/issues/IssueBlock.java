@@ -22,7 +22,7 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Issue issue = getObject();
 		header.setDragHandle(issue.getReference());
-		header.setCenter(issue.getReference() + " [" + issue.getTypeLabel() + "] " + issue.getLabel());
+		header.setCenter("[" + issue.getTypeLabel() + "] " + issue.getLabel());
 	}
 
 	@Override

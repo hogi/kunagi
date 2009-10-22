@@ -23,7 +23,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 
 	private BlockHeaderWidget header;
 
-	private FlowPanel mainPanel;
+	private FlowPanel outerPanel;
 	private FlowPanel panel;
 	private BlockDndMarkerWidget dndMarkerTop = new BlockDndMarkerWidget();
 
@@ -44,39 +44,25 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		header = new BlockHeaderWidget();
 		header.initialize();
 		header.addClickHandler(new SelectionClickHandler());
+		if (cm.getAuth().isUserLoggedIn() && getObject() instanceof AScrumGwtEntity) {
+			header.appendCell(new UsersOnBlockWidget((AScrumGwtEntity) getObject()), null, false);
+		}
 
 		cm.getDndManager().makeDraggable(this, header.getDragHandle());
 
 		panel = Gwt.createFlowPanel("ABlockWidget", null, header);
 
-		mainPanel = Gwt.createFlowPanel("ABlockWidget-outer", null, dndMarkerTop, panel);
+		outerPanel = Gwt.createFlowPanel("ABlockWidget-outer", null, dndMarkerTop, panel);
 
 		dndMarkerTop.setActive(false);
 
 		onInitializationHeader(header);
 
-		return mainPanel;
+		return outerPanel;
 	}
 
 	@Override
 	protected final void onUpdate() {
-
-		// TODO user-editing
-		// if (cm.getAuth().isUserLoggedIn()) {
-		// User me = getCurrentUser();
-		// if (cm.getProjectContext().isProjectOpen()) {
-		// O o = getObject();
-		// if (o instanceof AGwtEntity) {
-		// Set<User> users = getCurrentProject().getUsersSelecting(((AGwtEntity) o));
-		// for (User user : users) {
-		// if (user == me) continue;
-		// UserOnBlockWidget userOnBlockWidget = new UserOnBlockWidget(user);
-		// addToolbarItem(userOnBlockWidget);
-		// }
-		// }
-		// }
-		// }
-
 		panel.clear();
 		onUpdateHeader(header);
 		panel.add(header.update());
@@ -151,13 +137,15 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		if (this.extended == extended) return;
 		this.extended = extended;
 
-		update();
-
 		if (extended) {
 			cm.getEventBus().fireBlockExpanded(getObject());
+			panel.addStyleName("ABlockWidget-extended");
 		} else {
 			cm.getEventBus().fireBlockCollapsed(getObject());
+			panel.removeStyleName("ABlockWidget-extended");
 		}
+
+		update();
 	}
 
 	@Override

@@ -75,6 +75,11 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		return panel;
 	}
 
+	@Override
+	protected void onUpdate() {
+		super.onUpdate();
+	}
+
 	public void addAdditionalStyleName(String styleName) {
 		initialize();
 		panel.addStyleName(styleName);

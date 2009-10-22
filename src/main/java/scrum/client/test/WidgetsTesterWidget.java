@@ -101,11 +101,11 @@ public class WidgetsTesterWidget extends AScrumWidget {
 			header.insertPrefixIcon(Img.bundle.action16().createImage());
 			header.setDragHandle("dh");
 			header.setCenter(getObject());
-			header.addToolbarAction(new DummyAction("Action 1"));
-			header.addToolbarAction(new DummyAction("Action 2"));
-			header.addMenuAction(new DummyAction("Action 3"));
-			header.addMenuAction(new DummyAction("Action 4"));
-			header.addMenuAction(new DummyAction("Action 5"));
+			header.addToolbarAction(new DummyAction("Function 1"));
+			header.addToolbarAction(new DummyAction("Function 2"));
+			header.addMenuAction(new DummyAction("Function 3"));
+			header.addMenuAction(new DummyAction("Function 4"));
+			header.addMenuAction(new DummyAction("Function 5"));
 		}
 
 		@Override

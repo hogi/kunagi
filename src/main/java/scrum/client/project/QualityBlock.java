@@ -20,7 +20,7 @@ public class QualityBlock extends ABlockWidget<Quality> implements TrashSupport 
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Quality quality = getObject();
 		header.setDragHandle(quality.getReference());
-		header.setCenter(quality.getReference() + " " + quality.getLabel());
+		header.setCenter(quality.getLabel());
 	}
 
 	@Override

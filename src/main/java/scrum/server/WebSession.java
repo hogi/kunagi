@@ -47,9 +47,9 @@ public class WebSession extends AWebSession {
 
 	@Override
 	protected void onInvalidate() {
-		ScrumWebApplication.get().updateOnlineTeamMembers(getProject());
+		ScrumWebApplication.get().updateOnlineTeamMembers(getProject(), this);
 		if (user != null && project != null)
-			ScrumWebApplication.get().setUsersSelectedEntities(project, user, new HashSet<String>(0));
+			ScrumWebApplication.get().setUsersSelectedEntities(project, this, new HashSet<String>(0));
 
 		setUser(null);
 		setProject(null);

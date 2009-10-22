@@ -35,7 +35,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Requirement requirement = getObject();
 		header.setDragHandle(requirement.getReference());
-		header.setCenter(requirement.getReference() + " " + requirement.getLabel());
+		header.setCenter(requirement.getLabel());
 	}
 
 	@Override

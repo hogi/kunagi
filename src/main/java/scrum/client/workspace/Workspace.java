@@ -18,6 +18,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class Workspace extends AScrumWidget {
 
+	private static final GwtLogger LOG = GwtLogger.createLogger(Workspace.class);
+
 	public static final int HEADER_HEIGHT = 25;
 
 	private LockWidget locker;
@@ -51,6 +53,12 @@ public class Workspace extends AScrumWidget {
 		locker = new LockWidget(workspace);
 
 		return new FullscreenPanel(locker);
+	}
+
+	@Override
+	protected void onUpdate() {
+		LOG.debug("Updating whole UI");
+		super.onUpdate();
 	}
 
 	public void abort(String message) {

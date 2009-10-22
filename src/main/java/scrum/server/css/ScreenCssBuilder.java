@@ -9,11 +9,12 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	// http://www.colorcombos.com/color-scheme-203.html
 
-	String fontFamily = "Helvetica, Verdana";
+	String fontFamily = "Arial Unicode MS, Arial, sans-serif";
 	int fontSize = 12;
 	int lineHeight = 14;
 
 	int fontSizeSmall = 9;
+	int lineHeightSmall = 9;
 
 	int fontSizeTitle = 14;
 	int lineHeightTitle = 18;
@@ -33,7 +34,9 @@ public class ScreenCssBuilder implements CssBuilder {
 	String cNavigatorSelectedItemBackground = "#CCD5E6";
 	String cNavigatorHoverItemBackground = "#E9EEF6";
 
-	String cBlockHeaderBackground = "#FBFBFF";
+	String cBlockHeaderBackground = cNavigatorHoverItemBackground;
+	String cBlockHeaderHoverBackground = cBackground;
+	String cBlockHeaderDragHandleBackground = "#FBFBFF";
 
 	String cToolbarBackground = cNavigatorHoverItemBackground;
 
@@ -54,7 +57,12 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	String cCommentDate = "darkgray";
 
-	String cButtonBorder = "darkgray";
+	String cButtonText = "#444";
+	String cButtonTextHover = "#500";
+	String cButtonTextDisabled = "lightgray";
+	String cButtonBorder = "#666";
+	String cButtonBorderHover = "#866";
+	String cButtonBorderDisabled = cButtonTextDisabled;
 
 	public void buildCss(CssRenderer css) {
 		css.html().height100().padding(0).margin(0);
@@ -65,8 +73,11 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.a().cursorPointer();
 
 		css.style(".gwt-Hyperlink a").color(cLink);
-		css.style(".gwt-Button").fontFamily(fontFamily).fontSize(fontSize).padding(2).margin(0).whiteSpaceNowrap()
-				.border(1, "solid", cButtonBorder);
+		css.style(".gwt-Button").fontFamily(fontFamily).fontSize(fontSize).fontWeightBold().color(cButtonText).padding(
+			2).margin(0).whiteSpaceNowrap().border(1, "solid", cButtonBorder);
+		css.style(".gwt-Button:hover").color(cButtonTextHover).border(1, "solid", cButtonBorderHover);
+		css.style(".gwt-Button[disabled], .gwt-Button[disabled]:hover").color(cButtonTextDisabled).border(1, "solid",
+			cButtonBorderDisabled);
 
 		css.style(".BugMarker").borderSolid(1, cError).background(cErrorBackground).color(cError);
 
@@ -137,25 +148,32 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	private void comments(CssRenderer css) {
 		css.style(".CommentsWidget").marginTop(10);
-		css.style(".CommentWidget").margin(5, 0, 15, 0).borderTop(1, "solid", cCommentDate);
-		css.style(".CommentWidget-header").margin(7, 0, 4, 0);
+		css.style(".CommentWidget").margin(5, 0, 10, 0).borderTop(1, "solid", cBlockHeaderBackground);
+		css.style(".CommentWidget-header").margin(4, 0, 2, 0);
 		css.style(".CommentWidget-header-author").floatLeft().marginRight(5);
 		css.style(".CommentWidget-header-date").color(cCommentDate);
 		css.style(".CommentWidget-editor");
 	}
 
 	private void blockList(CssRenderer css) {
-		css.style(".ABlockWidget-body").padding(10);
+		css.style(".ABlockWidget-extended").border(2, "solid", cHeaderBackground).padding(3);
+		css.style(".ABlockWidget-body").padding(10).border(1, "solid", cBlockHeaderBackground);
+
 		css.style(".BlockHeaderWidget").background(cBlockHeaderBackground);
-		css.style(".BlockHeaderWidget-dragHandle").margin(2).padding(0).textAlignCenter().cursorMove().background(
-			cNavigatorHoverItemBackground).border(1, "solid", cNavigatorSeparator).borderRadius(3);
+		css.style(".BlockHeaderWidget:hover").background(cBlockHeaderHoverBackground);
+		css.style(".BlockHeaderWidget-dragHandle").margin(2).padding(2).fontSize(fontSize - 1).lineHeight(
+			lineHeight - 2).textAlignCenter().cursorMove().background(cBlockHeaderDragHandleBackground).border(1,
+			"solid", cNavigatorSeparator).borderRadius(5);
 		css.style(".BlockHeaderWidget-center").padding(2).cursorPointer().displayBlock();
 		css.style(".BlockHeaderWidget-cell").padding(2);
 		css.style(".BlockHeaderWidget-cell .gwt-MenuItem").fontSize(fontSizeSmall).padding(2, 3, 2, 3)
 				.whiteSpaceNowrap();
-		css.style(".BlockHeaderWidget-cell .gwt-Button").fontSize(fontSizeSmall).padding(0).margin(0);
-		css.style(".BlockDndMarkerWidget").background(cNavigatorSeparator);
+		css.style(".BlockHeaderWidget-cell .gwt-Button").fontSize(fontSizeSmall).padding(2, 3, 2, 3).margin(0);
+
+		css.style(".BlockDndMarkerWidget").background("none");
 		css.style(".BlockDndMarkerWidget-active").background(cError);
+
+		css.style(".UsersOnBlockWidget").textAlignRight();
 	}
 
 	private void pagePanel(CssRenderer css) {
@@ -163,6 +181,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".PagePanel-content").background("white").border(1, "solid", cPagePanelBorder);
 		css.style(".PagePanel-header").padding(6, 10, 6, 10).fontSize(fontSizeTitle).lineHeight(lineHeightTitle)
 				.background(cPagePanelHeaderBackground).color(cPagePanelHeader);
+		css.style(".PagePanel-header .gwt-Button").fontSize(fontSizeSmall);
 		css.style(".PagePanel-section").margin(0, 10, 0, 10);
 		css.style(".PagePanel-spacer").height(10);
 	}

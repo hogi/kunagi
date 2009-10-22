@@ -35,7 +35,7 @@ public class Task extends GTask {
 
 	public String getLongLabel(boolean showOwner, boolean showRequirement) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(getReference()).append(" ").append(getLabel());
+		sb.append(getLabel());
 		if (showOwner && isOwnerSet()) {
 			sb.append(" (").append(getOwner().getName()).append(')');
 		}

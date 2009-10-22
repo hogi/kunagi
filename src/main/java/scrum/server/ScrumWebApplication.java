@@ -161,7 +161,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return ret;
 	}
 
-	public void updateOnlineTeamMembers(Project project) {
+	public void updateOnlineTeamMembers(Project project, WebSession excludeSession) {
 		if (project == null) return;
 		Set<User> users = getSessionUsersByProject(project);
 		LOG.debug("Uupdate online team members on project:", project, "->", users);
@@ -172,19 +172,20 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			}
 		}));
 		project.getUsersStatus().setOnlineUsers(userIds);
-		sendUsersStatusToClients(project);
+		sendUsersStatusToClients(project, excludeSession);
 	}
 
-	private void sendUsersStatusToClients(Project project) {
+	private void sendUsersStatusToClients(Project project, WebSession excludeSession) {
 		UsersStatusData status = project.getUsersStatus();
 		for (WebSession session : getSessionsByProject(project)) {
+			if (session == excludeSession) continue;
 			session.getNextData().usersStatus = status;
 		}
 	}
 
-	public void setUsersSelectedEntities(Project project, User user, Set<String> ids) {
-		project.getUsersStatus().setUsersSelectedEntities(user.getId(), ids);
-		sendUsersStatusToClients(project);
+	public void setUsersSelectedEntities(Project project, WebSession usersSession, Set<String> ids) {
+		project.getUsersStatus().setUsersSelectedEntities(usersSession.getUser().getId(), ids);
+		sendUsersStatusToClients(project, usersSession);
 	}
 
 	@Override

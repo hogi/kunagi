@@ -27,7 +27,7 @@ public class BlockHeaderWidget extends AWidget {
 	protected Widget onInitialization() {
 		dragHandleWrapper = new FocusPanel();
 		dragHandleWrapper.setStyleName("BlockHeaderWidget-dragHandle");
-		dragHandleWrapper.setHeight("100%");
+		// dragHandleWrapper.setHeight("100%");
 		centerText = new Label();
 		centerText.setStyleName("BlockHeaderWidget-center");
 		centerText.setWidth("100%");
