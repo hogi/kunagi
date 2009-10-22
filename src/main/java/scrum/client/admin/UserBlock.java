@@ -1,25 +1,26 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.editor.TextEditorWidget;
-import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.ABlockWidget;
+import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
-import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class UserBlock extends AExtensibleBlockWidget<User> {
+public class UserBlock extends ABlockWidget<User> {
 
 	@Override
-	protected void onCollapsedInitialization() {
-		setIcon(Img.bundle.user16());
+	protected void onInitializationHeader(BlockHeaderWidget header) {
+		User user = getObject();
+		header.addMenuAction(new DeleteUserAction(user));
 	}
 
 	@Override
-	protected void onUpdateHead() {
+	protected void onUpdateHeader(BlockHeaderWidget header) {
 		User user = getObject();
-		setBlockTitle(user.getName());
-		addMenuAction(new DeleteUserAction(user));
+		header.setDragHandle("usr");
+		header.setCenter(user.getName());
 	}
 
 	@Override

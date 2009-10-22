@@ -1,7 +1,8 @@
 package scrum.client.project;
 
-import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
+import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
@@ -9,24 +10,25 @@ import scrum.client.img.Img;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RequirementBlock extends AExtensibleBlockWidget<Requirement> implements TrashSupport {
+public class RequirementBlock extends ABlockWidget<Requirement> implements TrashSupport {
 
 	@Override
-	protected void onCollapsedInitialization() {
-		setIcon(Img.bundle.requirement16());
+	protected void onInitializationHeader(BlockHeaderWidget header) {
+		Requirement requirement = getObject();
+		header.addMenuAction(new AddRequirementToCurrentSprintAction(requirement));
+		header.addMenuAction(new RemoveRequirementFromSprintAction(requirement));
+		header.addMenuAction(new CloseRequirementAction(requirement));
+		header.addMenuAction(new ReopenRequirementAction(requirement));
+		header.addMenuAction(new SetRequirementDirtyAction(requirement));
+		header.addMenuAction(new SetRequirementCleanAction(requirement));
+		header.addMenuAction(new DeleteRequirementAction(requirement));
 	}
 
 	@Override
-	protected void onUpdateHead() {
+	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Requirement requirement = getObject();
-		setBlockTitle(requirement.getLongLabel());
-		addMenuAction(new AddRequirementToCurrentSprintAction(requirement));
-		addMenuAction(new RemoveRequirementFromSprintAction(requirement));
-		addMenuAction(new CloseRequirementAction(requirement));
-		addMenuAction(new ReopenRequirementAction(requirement));
-		addMenuAction(new SetRequirementDirtyAction(requirement));
-		addMenuAction(new SetRequirementCleanAction(requirement));
-		addMenuAction(new DeleteRequirementAction(requirement));
+		header.setDragHandle(requirement.getReference());
+		header.setCenter(requirement.getLongLabel());
 	}
 
 	@Override

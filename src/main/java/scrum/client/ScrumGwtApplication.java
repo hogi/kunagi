@@ -19,7 +19,9 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		final Workspace workspace = cm.getUi().getWorkspace();
 		workspace.lock("Loading...");
 
-		RootPanel.get().add(workspace);
+		RootPanel rootPanel = RootPanel.get();
+		rootPanel.getElement().getStyle().setProperty("position", "relative");
+		rootPanel.add(workspace);
 		callStartSession(new Runnable() {
 
 			public void run() {

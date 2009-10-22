@@ -41,7 +41,7 @@ public class Requirement extends GRequirement {
 
 	public String getLongLabel() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(getReference()).append(" ").append(getLabel());
+		sb.append(getLabel());
 		if (!isEstimatedWorkValid()) sb.append(" [requires estimation]");
 		if (isInCurrentSprint()) sb.append(" [In Sprint]");
 		return sb.toString();

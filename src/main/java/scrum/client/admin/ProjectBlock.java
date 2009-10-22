@@ -4,29 +4,30 @@ import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.Dao;
-import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.ABlockWidget;
+import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
-import scrum.client.img.Img;
 import scrum.client.project.DeleteProjectAction;
 import scrum.client.project.OpenProjectAction;
 import scrum.client.project.Project;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectBlock extends AExtensibleBlockWidget<Project> {
+public class ProjectBlock extends ABlockWidget<Project> {
 
 	@Override
-	protected void onCollapsedInitialization() {
-		setIcon(Img.bundle.project16());
+	protected void onInitializationHeader(BlockHeaderWidget header) {
+		Project project = getObject();
+		header.addToolbarAction(new OpenProjectAction(project));
+		header.addMenuAction(new DeleteProjectAction(project));
 	}
 
 	@Override
-	protected void onUpdateHead() {
+	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Project project = getObject();
-		setBlockTitle(project.getLabel());
-		addToolbarAction(new OpenProjectAction(project));
-		addMenuAction(new DeleteProjectAction(project));
+		header.setDragHandle("prj");
+		header.setCenter(project.getLabel());
 	}
 
 	@Override

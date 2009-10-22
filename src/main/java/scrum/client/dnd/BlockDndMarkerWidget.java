@@ -1,6 +1,7 @@
 package scrum.client.dnd;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 
 public class BlockDndMarkerWidget extends Composite {
@@ -10,7 +11,9 @@ public class BlockDndMarkerWidget extends Composite {
 
 	public BlockDndMarkerWidget() {
 		panel = new SimplePanel();
+		panel.setHeight("1px");
 		panel.setStyleName("BlockDndMarkerWidget");
+		panel.add(new Label(""));
 
 		initWidget(panel);
 	}

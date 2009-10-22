@@ -1,27 +1,28 @@
 package scrum.client.issues;
 
-import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
+import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
-import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class IssueBlock extends AExtensibleBlockWidget<Issue> implements TrashSupport {
+public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 
 	@Override
-	protected void onCollapsedInitialization() {
-		setIcon(Img.bundle.issue16());
+	protected void onInitializationHeader(BlockHeaderWidget header) {
+		Issue issue = getObject();
+		header.addMenuAction(new ConvertIssueToRequirementAction(issue));
+		header.addMenuAction(new ConvertIssueToQualityAction(issue));
+		header.addMenuAction(new DeleteIssueAction(issue));
 	}
 
 	@Override
-	protected void onUpdateHead() {
+	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Issue issue = getObject();
-		setBlockTitle(issue.getReference() + " [" + issue.getTypeLabel() + "] " + issue.getLabel());
-		addMenuAction(new ConvertIssueToRequirementAction(issue));
-		addMenuAction(new ConvertIssueToQualityAction(issue));
-		addMenuAction(new DeleteIssueAction(issue));
+		header.setDragHandle(issue.getReference());
+		header.setCenter(issue.getReference() + " [" + issue.getTypeLabel() + "] " + issue.getLabel());
 	}
 
 	@Override

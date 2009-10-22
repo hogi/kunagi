@@ -1,26 +1,27 @@
 package scrum.client.tasks;
 
-import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.ABlockWidget;
+import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
-import scrum.client.img.Img;
 import scrum.client.project.Requirement;
 import scrum.client.project.RequirementWidget;
 import scrum.client.sprint.CreateTaskAction;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class RequirementInWhiteboardBlock extends AExtensibleBlockWidget<Requirement> {
+public class RequirementInWhiteboardBlock extends ABlockWidget<Requirement> {
 
 	@Override
-	protected void onCollapsedInitialization() {
-		setIcon(Img.bundle.requirement16());
+	protected void onInitializationHeader(BlockHeaderWidget header) {
+		Requirement requirement = getObject();
+		header.addMenuAction(new CreateTaskAction(requirement));
 	}
 
 	@Override
-	protected void onUpdateHead() {
+	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Requirement requirement = getObject();
-		setBlockTitle(requirement.getReference() + " " + requirement.getLabel());
-		addMenuAction(new CreateTaskAction(requirement));
+		header.setDragHandle(requirement.getReference());
+		header.setCenter(requirement.getLabel());
 	}
 
 	@Override

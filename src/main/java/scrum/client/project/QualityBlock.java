@@ -1,25 +1,26 @@
 package scrum.client.project;
 
-import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
+import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
-import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class QualityBlock extends AExtensibleBlockWidget<Quality> implements TrashSupport {
+public class QualityBlock extends ABlockWidget<Quality> implements TrashSupport {
 
 	@Override
-	protected void onCollapsedInitialization() {
-		setIcon(Img.bundle.requirement16());
+	protected void onInitializationHeader(BlockHeaderWidget header) {
+		Quality quality = getObject();
+		header.addMenuAction(new DeleteQualityAction(quality));
 	}
 
 	@Override
-	protected void onUpdateHead() {
+	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Quality quality = getObject();
-		setBlockTitle(quality.getReference() + " " + quality.getLabel());
-		addMenuAction(new DeleteQualityAction(quality));
+		header.setDragHandle(quality.getReference());
+		header.setCenter(quality.getReference() + " " + quality.getLabel());
 	}
 
 	@Override

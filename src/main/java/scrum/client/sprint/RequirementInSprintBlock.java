@@ -3,10 +3,10 @@ package scrum.client.sprint;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.collaboration.CommentsWidget;
-import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.ABlockWidget;
+import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
-import scrum.client.img.Img;
 import scrum.client.project.CloseRequirementAction;
 import scrum.client.project.ReopenRequirementAction;
 import scrum.client.project.Requirement;
@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement> {
+public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 
 	private BlockListWidget<Task> taskList;
 	private RequirementWidget requirementWidget;
@@ -24,17 +24,18 @@ public class RequirementInSprintBlock extends AExtensibleBlockWidget<Requirement
 	private FlexTable bodyWidget;
 
 	@Override
-	protected void onCollapsedInitialization() {
-		setIcon(Img.bundle.requirement16());
+	protected void onInitializationHeader(BlockHeaderWidget header) {
+		Requirement requirement = getObject();
+		header.addMenuAction(new CloseRequirementAction(requirement));
+		header.addMenuAction(new ReopenRequirementAction(requirement));
+		header.addMenuAction(new CreateTaskAction(requirement));
 	}
 
 	@Override
-	protected void onUpdateHead() {
+	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Requirement requirement = getObject();
-		setBlockTitle(requirement.getReference() + " " + requirement.getLabel());
-		addMenuAction(new CloseRequirementAction(requirement));
-		addMenuAction(new ReopenRequirementAction(requirement));
-		addMenuAction(new CreateTaskAction(requirement));
+		header.setDragHandle(requirement.getReference());
+		header.setCenter(requirement.getReference() + " " + requirement.getLabel());
 	}
 
 	@Override

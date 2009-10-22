@@ -27,6 +27,7 @@ public class CssServlet extends HttpServlet {
 		CssRenderer css = new CssRenderer(resp.getWriter());
 		getCssBuilder().buildCss(css);
 		css.flush();
+		LOG.debug(css);
 	}
 
 	private CssBuilder getCssBuilder() {

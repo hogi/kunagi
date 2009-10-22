@@ -15,6 +15,7 @@ import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
+import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
@@ -96,7 +97,19 @@ public class WidgetsTesterWidget extends AScrumWidget {
 	private static class TestBlock extends ABlockWidget<String> {
 
 		@Override
-		protected void onCollapsedInitialization() {}
+		protected void onInitializationHeader(BlockHeaderWidget header) {
+			header.insertPrefixIcon(Img.bundle.action16().createImage());
+			header.setDragHandle("dh");
+			header.setCenter(getObject());
+			header.addToolbarAction(new DummyAction("Action 1"));
+			header.addToolbarAction(new DummyAction("Action 2"));
+			header.addMenuAction(new DummyAction("Action 3"));
+			header.addMenuAction(new DummyAction("Action 4"));
+			header.addMenuAction(new DummyAction("Action 5"));
+		}
+
+		@Override
+		protected void onUpdateHeader(BlockHeaderWidget header) {}
 
 		@Override
 		protected Widget onExtendedInitialization() {
@@ -105,17 +118,6 @@ public class WidgetsTesterWidget extends AScrumWidget {
 							+ getObject()
 							+ "</h3><p>Das ist der Content. Das ist der Content. Das ist der Content. Das ist der Content. </p>");
 			return content;
-		}
-
-		@Override
-		protected void onUpdateHead() {
-			setBlockTitle(getObject());
-			setIcon(Img.bundle.project16());
-			addToolbarAction(new DummyAction("Action 1"));
-			addToolbarAction(new DummyAction("Action 2"));
-			addMenuAction(new DummyAction("Action 3"));
-			addMenuAction(new DummyAction("Action 4"));
-			addMenuAction(new DummyAction("Action 5"));
 		}
 
 		public static BlockWidgetFactory<String> FACTORY = new BlockWidgetFactory<String>() {

@@ -1,25 +1,26 @@
 package scrum.client.risks;
 
-import scrum.client.common.AExtensibleBlockWidget;
+import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
+import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
-import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class RiskBlock extends AExtensibleBlockWidget<Risk> implements TrashSupport {
+public class RiskBlock extends ABlockWidget<Risk> implements TrashSupport {
 
 	@Override
-	protected void onCollapsedInitialization() {
-		setIcon(Img.bundle.risk16());
+	protected void onInitializationHeader(BlockHeaderWidget header) {
+		Risk risk = getObject();
+		header.addMenuAction(new DeleteRiskAction(risk));
 	}
 
 	@Override
-	protected void onUpdateHead() {
+	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Risk risk = getObject();
-		setBlockTitle(risk.getReference() + " " + risk.getLabel() + " (" + risk.getPriorityLabel() + ")");
-		addMenuAction(new DeleteRiskAction(risk));
+		header.setDragHandle(risk.getReference());
+		header.setCenter(risk.getLabel() + " (" + risk.getPriorityLabel() + ")");
 	}
 
 	@Override

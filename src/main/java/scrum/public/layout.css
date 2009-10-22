@@ -1,18 +1,3 @@
-/***** Constants *****
-
---- dimensions ---
-
-header-height: 25px
-sidebar-width: 200px
-
-*/
-
-
-/***** Default HTML *****/
-
-html, body {height: 100%; padding: 0px; margin: 0px;}
-table td {vertical-align: top;}
-a {cursor: pointer;}
 
 /***** GWT *****/
 
@@ -68,10 +53,6 @@ a {cursor: pointer;}
 
 /***** Toolbar *****/
 
-.ButtonWidget a { display: block; font-weight: bold; padding: 3px; text-decoration: none; white-space: nowrap; font-size: 10px; line-height: 10px; }
-.ButtonWidget-enabled a { cursor: pointer; }
-.ButtonWidget-disabled a { cursor: default;}
-
 .ToolbarWidget {padding: 3px 0px 3px 3px;}
 .ToolbarWidget .FloatingFlowPanel-element-left {margin-right: 3px;}
 .ToolbarWidget .FloatingFlowPanel-element-right {margin-left: 3px;}
@@ -82,27 +63,12 @@ a {cursor: pointer;}
 .WhiteboardWidget-requirement-list {padding: 0px; min-height: 5px;}
 
 
-.ABlockWidget-title {padding: 1px; width: 100%; font-size: 12px; line-height: 16px;}
-.ABlockWidget-title-label {cursor: pointer; display: block;}
-.ABlockWidget-title .ToolbarWidget {margin: 0px;}
-.ABlockWidget-title .ButtonWidget {margin-left: 15px;}
-.ABlockWidget-title .ButtonWidget a {font-size: 8px; line-height: 8px;}
-.ABlockWidget-title-menu {margin-left: 15px; border: 0px;}
-.ABlockWidget-title-menu .gwt-MenuItem { font-size: 9px;}
+.ABlockWidget .UserOnBlockWidget {margin-right: 5px;}
 
-
-.ABlockWidget-block-title .UserOnBlockWidget {margin-right: 5px;}
-
-/***** PagePanel *****/
-
-.PagePanel {padding: 10px; font-size: 12px; line-height: 14px;}
-.PagePanel-spacer {height: 10px;}
-.PagePanel-header {padding: 6px 10px; font-size: 14px; line-height: 18px;}
-.PagePanel-section {margin: 0px 10px;}
 
 /***** Whiteboard *****/
 
-.WhiteboardWidget-columnLabel {padding: 10px; font-size: 14px; line-height: 16px; font-family: "georgia",serif;}
+.WhiteboardWidget-columnLabel {padding: 10px; font-size: 14px;}
 .WhiteboardWidget-open {padding: 5px;}
 .WhiteboardWidget-owned {padding: 5px;}
 .WhiteboardWidget-done {padding: 5px;}
@@ -110,15 +76,6 @@ a {cursor: pointer;}
 /***** Wiki *****/
 
 .WikiWidget-navig {margin: 10px 0px;}
-
-/***** UserHoverPanel *****/
-
-.UserHoverPanel-label {padding: 5px; font-size: 16px; cursor: default;}
-
-/***** Group *****/
-
-.GroupWidget-title {padding: 5px; font-size: 16px; font-family: "georgia",serif;}
-.GroupWidget-content {padding: 5px;}
 
 /***** Fields *****/
 
@@ -140,4 +97,4 @@ a {cursor: pointer;}
 /***** other *****/
 .WaitWidget {margin: 200px 0px; font-size: 14px;}
 .LoginWidget-errorMessage {font-size: 12px; padding: 5px;}
-.PunishmentsWidget-tableHeader {padding: 10px; font-size: 14px; line-height: 16px; font-family: "georgia",serif;}
+.PunishmentsWidget-tableHeader {padding: 10px; font-size: 14px; line-height: 16px; }
