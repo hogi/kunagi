@@ -44,7 +44,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		header = new BlockHeaderWidget();
 		header.initialize();
 		header.addClickHandler(new SelectionClickHandler());
-		if (cm.getAuth().isUserLoggedIn() && getObject() instanceof AScrumGwtEntity) {
+		if (cm.getProjectContext().isProjectOpen() && getObject() instanceof AScrumGwtEntity) {
 			header.appendCell(new UsersOnBlockWidget((AScrumGwtEntity) getObject()), null, false);
 		}
 
