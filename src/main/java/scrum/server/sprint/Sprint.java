@@ -74,6 +74,11 @@ public class Sprint extends GSprint {
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
 
+		if (getProject().isCurrentSprint(this)) {
+			if (!isBeginSet()) setBegin(Date.today());
+			if (!isEndSet()) setEnd(getBegin().addDays(14));
+		}
+
 		// delete when not current and end date older than 4 weeks
 		// if (isEndSet() && !getProject().isCurrentSprint(this) && getEnd().isPast()
 		// && getEnd().getPeriodToNow().toWeeks() > 4) {

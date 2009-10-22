@@ -1,6 +1,5 @@
 package scrum.client.sprint;
 
-import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.ABlockWidget;
@@ -50,10 +49,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 		left.add(requirementWidget);
 		left.add(commentsWidget);
 
-		TableBuilder tb = new TableBuilder();
-		tb.setColumnWidths("50%", "20px", "50%");
-		tb.addRow(left, Gwt.createSpacer(20, 1), taskList);
-		bodyWidget = tb.createTable();
+		bodyWidget = TableBuilder.row(20, left, taskList);
 		return bodyWidget;
 	}
 

@@ -2,19 +2,17 @@ package scrum.server.sprint;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import scrum.client.project.ProjectOverviewWidget;
 import scrum.server.ScrumWebApplication;
+import scrum.server.common.AHttpServlet;
 
-public class SprintBurndownChartServlet extends HttpServlet {
+public class SprintBurndownChartServlet extends AHttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+	protected void onRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String sprintId = req.getParameter("sprintId");
 		String width = req.getParameter("width");
 		if (width == null) width = String.valueOf(ProjectOverviewWidget.CHART_WIDTH);

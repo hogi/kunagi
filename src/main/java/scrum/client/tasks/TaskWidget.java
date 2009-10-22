@@ -29,7 +29,7 @@ public class TaskWidget extends AWidget {
 
 		tb.addFieldRow("Description", new RichtextEditorWidget(task.getDescriptionModel()), 3);
 
-		tb.addField("Burned Work", new AIntegerViewEditWidget() {
+		tb.addField("Burned", new AIntegerViewEditWidget() {
 
 			@Override
 			protected void onIntegerViewerUpdate() {
@@ -64,7 +64,7 @@ public class TaskWidget extends AWidget {
 			}
 		});
 
-		tb.addFieldRow("Remaining Work", new TaskRemainingWorkWidget(task));
+		tb.addFieldRow("Remaining", new TaskRemainingWorkWidget(task));
 
 		tb.addFieldRow("Owner", new AFieldValueWidget() {
 

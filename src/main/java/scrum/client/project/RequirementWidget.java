@@ -3,12 +3,12 @@ package scrum.client.project;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.FieldsWidget;
 
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RequirementWidget extends AWidget {
@@ -78,12 +78,7 @@ public class RequirementWidget extends AWidget {
 			}
 		});
 
-		FlowPanel container = new FlowPanel();
-		container.add(fields);
-
-		if (showComments) container.add(new CommentsWidget(requirement));
-
-		return container;
+		return showComments ? TableBuilder.row(20, fields, new CommentsWidget(requirement)) : fields;
 	}
 
 }

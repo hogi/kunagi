@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
+import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.project.Requirement;
@@ -77,6 +78,8 @@ public class SprintBacklogWidget extends AScrumWidget {
 		page.addSection(headerFields);
 		page.addHeader("Requirements in this Sprint");
 		page.addSection(requirementList);
+		page.addHeader("Sprint Comments");
+		page.addSection(new CommentsWidget(sprint));
 
 		return page;
 	}

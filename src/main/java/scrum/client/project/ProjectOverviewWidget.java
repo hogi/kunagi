@@ -60,7 +60,7 @@ public class ProjectOverviewWidget extends AScrumWidget {
 	}
 
 	private String getChartUrl(Sprint sprint) {
-		int width = Window.getClientWidth() - 260;
+		int width = Window.getClientWidth() - 280;
 		return GWT.getModuleBaseURL() + "sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width=" + width
 				+ "&height=" + CHART_HEIGHT;
 	}

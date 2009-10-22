@@ -1,6 +1,7 @@
 package scrum.server.common;
 
 import ilarkesto.base.time.Date;
+import ilarkesto.logging.Logger;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -69,6 +70,8 @@ public class BurndownChart {
 
 	}
 
+	private static final Logger LOG = Logger.get(BurndownChart.class);
+
 	private static final Color COLOR_PAST_LINE = new Color(0.1f, 0.9f, 0.1f);
 	private static final Color COLOR_PROJECTION_LINE = COLOR_PAST_LINE;
 	private static final Color COLOR_OPTIMUM_LINE = new Color(0.85f, 0.85f, 0.85f);
@@ -98,7 +101,16 @@ public class BurndownChart {
 
 	public void wirteSprintBurndownChart(OutputStream out, String sprintId, int width, int height) {
 		Sprint sprint = sprintDao.getById(sprintId);
+		if (sprint == null) throw new IllegalArgumentException("Sprint " + sprintId + " does not exist.");
+
 		List<SprintDaySnapshot> snapshots = sprint.getDaySnapshots();
+		if (snapshots.isEmpty()) {
+			Date date = Date.today();
+			date = Date.latest(date, sprint.getBegin());
+			date = Date.earliest(date, sprint.getEnd());
+			sprint.getDaySnapshot(date).update();
+			snapshots = sprint.getDaySnapshots();
+		}
 
 		writeSprintBurndownChart(out, snapshots, sprint.getBegin(), sprint.getEnd().addDays(1), width, height);
 	}
@@ -128,6 +140,9 @@ public class BurndownChart {
 
 	private void writeSprintBurndownChart(OutputStream out, List<SprintDaySnapshot> snapshots, Date firstDay,
 			Date lastDay, int width, int height) {
+		LOG.debug("Creating burndown chart:", snapshots.size(), "snapshots from", firstDay, "to", lastDay, "(" + width
+				+ "x" + height + " px)");
+
 		List<BurndownSnapshot> burndownSnapshots = new ArrayList<BurndownSnapshot>(snapshots);
 		DefaultXYDataset data = createSprintBurndownChartDataset(burndownSnapshots, firstDay, lastDay);
 		double tick = 1.0;
@@ -213,6 +228,7 @@ public class BurndownChart {
 
 	private static DefaultXYDataset createSprintBurndownChartDataset(List<BurndownSnapshot> snapshots, Date firstDay,
 			Date lastDay) {
+		if (snapshots.isEmpty()) throw new IllegalArgumentException("snapshots.isEmpty()");
 
 		List<Double> mainDates = new ArrayList<Double>();
 		List<Double> mainValues = new ArrayList<Double>();

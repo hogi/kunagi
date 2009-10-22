@@ -1,6 +1,6 @@
 package scrum.client.issues;
 
-import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DropdownEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
@@ -27,7 +27,7 @@ public class IssueWidget extends AScrumWidget {
 		fields.add("Description", new RichtextEditorWidget(issue.getDescriptionModel()));
 		fields.add("Type", new DropdownEditorWidget<String>(issue.getTypeModel(), Issue.TYPE_LABEL_PROVIDER));
 
-		return Gwt.createFlowPanel(fields, new CommentsWidget(issue));
+		return TableBuilder.row(20, fields, new CommentsWidget(issue));
 	}
 
 }

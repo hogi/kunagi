@@ -1,9 +1,11 @@
 package scrum.client.sprint;
 
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
+import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.project.Project;
@@ -26,8 +28,8 @@ public class NextSprintWidget extends AScrumWidget {
 		fieldsWidget.add("End", new DateEditorWidget(sprint.getEndModel()));
 
 		PagePanel page = new PagePanel();
-		page.addHeader("Sprint Backlog", new ButtonWidget(new SwitchToNextSprintAction()));
-		page.addSection(fieldsWidget);
+		page.addHeader("Next Sprint", new ButtonWidget(new SwitchToNextSprintAction()));
+		page.addSection(TableBuilder.row(20, fieldsWidget, new CommentsWidget(sprint)));
 		return page;
 	}
 

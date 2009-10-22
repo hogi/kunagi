@@ -147,7 +147,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void comments(CssRenderer css) {
-		css.style(".CommentsWidget").marginTop(10);
+		css.style(".CommentsWidget");
 		css.style(".CommentWidget").margin(5, 0, 10, 0).borderTop(1, "solid", cBlockHeaderBackground);
 		css.style(".CommentWidget-header").margin(4, 0, 2, 0);
 		css.style(".CommentWidget-header-author").floatLeft().marginRight(5);

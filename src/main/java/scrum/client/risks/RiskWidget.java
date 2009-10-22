@@ -2,7 +2,7 @@ package scrum.client.risks;
 
 import ilarkesto.gwt.client.ADropdownViewEditWidget;
 import ilarkesto.gwt.client.AFieldValueWidget;
-import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
@@ -71,7 +71,7 @@ public class RiskWidget extends AScrumWidget {
 			}
 		});
 
-		return Gwt.createFlowPanel(fields, new CommentsWidget(risk));
+		return TableBuilder.row(20, fields, new CommentsWidget(risk));
 	}
 
 }

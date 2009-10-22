@@ -1,6 +1,6 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
@@ -25,7 +25,7 @@ public class QualityWidget extends AScrumWidget {
 		fields.add("Description", new RichtextEditorWidget(quality.getDescriptionModel()));
 		fields.add("Test", new RichtextEditorWidget(quality.getTestDescriptionModel()));
 
-		return Gwt.createFlowPanel(fields, new CommentsWidget(quality));
+		return TableBuilder.row(20, fields, new CommentsWidget(quality));
 	}
 
 }

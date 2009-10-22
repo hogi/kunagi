@@ -7,14 +7,13 @@ import ilarkesto.ui.web.CssRenderer;
 import java.io.IOException;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import scrum.server.ScrumWebApplication;
+import scrum.server.common.AHttpServlet;
 
-public class CssServlet extends HttpServlet {
+public class CssServlet extends AHttpServlet {
 
 	private static final Logger LOG = Logger.get(CssServlet.class);
 	private static final long serialVersionUID = 1;
@@ -22,7 +21,7 @@ public class CssServlet extends HttpServlet {
 	private transient final ScreenCssBuilder screenCssBuilder = new ScreenCssBuilder();
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void onRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/css");
 		CssRenderer css = new CssRenderer(resp.getWriter());
 		getCssBuilder().buildCss(css);
@@ -47,9 +46,8 @@ public class CssServlet extends HttpServlet {
 	}
 
 	@Override
-	public void init(ServletConfig servletConfig) throws ServletException {
-		super.init(servletConfig);
-		ScrumWebApplication.get(servletConfig);
+	protected void onInit(ServletConfig config) {
+		ScrumWebApplication.get(config);
 	}
 
 }
