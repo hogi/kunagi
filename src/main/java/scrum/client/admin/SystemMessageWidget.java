@@ -1,6 +1,8 @@
 package scrum.client.admin;
 
+import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.TimePeriod;
 import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -35,8 +37,30 @@ public class SystemMessageWidget extends AScrumWidget {
 			text.setText(message.getText());
 			expires.setText(message.getExpiresAsString());
 			panel.setVisible(true);
+			DateAndTime expiration = message.getExpires();
+			if (updater == null) {
+				if (expiration != null) {
+					TimePeriod period = expiration.getPeriodFromNow();
+					if (period.isPositive()) {
+						updater = new Updater();
+						Gwt
+								.runLater(period.toMillis() > TimePeriod.MINUTE ? TimePeriod.SECOND * 10
+										: TimePeriod.SECOND, updater);
+					}
+				}
+			}
 		} else {
 			panel.setVisible(false);
+		}
+	}
+
+	private Updater updater;
+
+	private class Updater implements Runnable {
+
+		public void run() {
+			updater = null;
+			update();
 		}
 	}
 

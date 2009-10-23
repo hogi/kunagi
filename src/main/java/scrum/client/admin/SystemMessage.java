@@ -1,6 +1,7 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.DateAndTime;
+import ilarkesto.gwt.client.TimePeriod;
 
 import java.io.Serializable;
 
@@ -35,7 +36,10 @@ public class SystemMessage implements Serializable, IsSerializable {
 	}
 
 	public String getExpiresAsString() {
-		return expires == null ? null : "in " + expires.getPeriodToNow().toShortestString();
+		if (expires == null) return null;
+		TimePeriod timePeriod = expires.getPeriodFromNow();
+		if (!timePeriod.isPositive()) return null;
+		return "in " + timePeriod.toShortestString();
 	}
 
 	public void setExpires(DateAndTime expires) {

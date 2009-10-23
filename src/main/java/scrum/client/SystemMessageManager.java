@@ -13,6 +13,7 @@ public class SystemMessageManager extends AScrumComponent implements ServerDataR
 	public void onServerDataReceived(DataTransferObject data) {
 		if (data.systemMessage != null) {
 			systemMessage = data.systemMessage;
+			log.info("SystemMessage received:", systemMessage);
 			cm.getEventBus().fireVisibleDataChanged();
 		}
 	}
