@@ -13,7 +13,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	private ApplicationInfo applicationInfo;
 
 	public void onModuleLoad() {
-		log.debug("onModuleLoad()");
+		System.out.println("ScrumGwtApplication.onModuleLoad()");
 		cm = new ComponentManager();
 
 		final Workspace workspace = cm.getUi().getWorkspace();

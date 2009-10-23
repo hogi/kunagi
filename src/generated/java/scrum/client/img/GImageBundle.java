@@ -22,6 +22,9 @@ public interface GImageBundle
     @Resource(value="action16.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype action16();
 
+    @Resource(value="impOpen.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype impOpen();
+
     @Resource(value="reqClosed.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype reqClosed();
 

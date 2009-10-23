@@ -22,6 +22,10 @@ public class Impediment extends GImpediment {
 		super(data);
 	}
 
+	public boolean isOpen() {
+		return !isClosed();
+	}
+
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
 	}

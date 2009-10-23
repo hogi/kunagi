@@ -7,8 +7,7 @@
 
 	<!-- style/theme -->
 	<inherits name="com.google.gwt.user.theme.standard.Standard" />
-    <stylesheet src="screen.css" />
-	<stylesheet src="layout.css" />
+	<stylesheet src="screen.css" />
 
 	<!-- entry points -->
 	<entry-point class="scrum.client.ScrumGwtApplication" />
