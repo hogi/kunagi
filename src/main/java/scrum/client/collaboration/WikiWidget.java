@@ -1,9 +1,12 @@
 package scrum.client.collaboration;
 
-import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.HyperlinkWidget;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
+import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
 import scrum.client.workspace.PagePanel;
 
@@ -11,6 +14,7 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -42,17 +46,29 @@ public class WikiWidget extends AScrumWidget {
 		pageNameBox.setText(pageName);
 
 		PagePanel page = new PagePanel();
-		AAction action = wikipage == null ? new CreateWikipageAction(pageName) : new DeleteWikipageAction(wikipage);
-		page.addHeader("Wiki", new ButtonWidget(action), pageNameBox);
+		page.addHeader("Wiki");
+
+		FloatingFlowPanel pagesPanel = new FloatingFlowPanel();
+		pagesPanel.add(pageNameBox);
+		boolean first = true;
+		for (Wikipage wp : getCurrentProject().getWikipages()) {
+			if (first) {
+				first = false;
+			} else {
+				pagesPanel.add(new Label(", "));
+			}
+			pagesPanel.add(new HyperlinkWidget(new ShowPageAction(wp)));
+		}
+		page.addSection(pagesPanel);
 
 		if (wikipage == null) {
-			page.addSection("Page \"" + pageName + "\" does not exist.");
+			page.addHeader(pageName, new ButtonWidget(new CreateWikipageAction(pageName)));
+			page.addSection("Page does not exist.");
 		} else {
-			page.addHeader(wikipage.getName());
+			page.addHeader(wikipage.getName(), new ButtonWidget(new DeleteWikipageAction(wikipage)));
 			editor = new RichtextEditorWidget(wikipage.getTextModel());
-			page.addSection(editor);
+			page.addSection(TableBuilder.row(20, editor, new CommentsWidget(wikipage)));
 		}
-		if (wikipage != null) page.addSection(new CommentsWidget(wikipage).update());
 
 		panel.clear();
 		panel.add(page);
@@ -62,6 +78,26 @@ public class WikiWidget extends AScrumWidget {
 	public void showPage(String name) {
 		this.pageName = name;
 		update();
+	}
+
+	class ShowPageAction extends AScrumAction {
+
+		private Wikipage page;
+
+		public ShowPageAction(Wikipage page) {
+			super();
+			this.page = page;
+		}
+
+		@Override
+		public String getLabel() {
+			return page.getName();
+		}
+
+		@Override
+		protected void onExecute() {
+			showPage(page.getName());
+		}
 	}
 
 	class PageNameHandler implements KeyPressHandler {

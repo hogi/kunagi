@@ -24,9 +24,10 @@ public class CssServlet extends AHttpServlet {
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/css");
 		CssRenderer css = new CssRenderer(resp.getWriter());
-		getCssBuilder().buildCss(css);
+		CssBuilder builder = getCssBuilder();
+		builder.buildCss(css);
 		css.flush();
-		LOG.debug(css);
+		LOG.debug(builder);
 	}
 
 	private CssBuilder getCssBuilder() {

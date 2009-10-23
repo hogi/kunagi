@@ -37,6 +37,10 @@ public class Project extends GProject {
 		super(data);
 	}
 
+	public List<Wikipage> getWikipages() {
+		return cm.getDao().getWikipages(); // TODO filter
+	}
+
 	public Wikipage getWikipage(String name) {
 		name = name.toLowerCase();
 		for (Wikipage page : getDao().getWikipagesByProject(this)) {
