@@ -37,6 +37,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	String cBlockHeaderBackground = cNavigatorHoverItemBackground;
 	String cBlockHeaderHoverBackground = cBackground;
 	String cBlockHeaderDragHandleBackground = "#FBFBFF";
+	String cBlockHeaderCellSecondary = "gray";
 
 	String cToolbarBackground = cNavigatorHoverItemBackground;
 
@@ -215,6 +216,7 @@ public class ScreenCssBuilder implements CssBuilder {
 			"solid", cNavigatorSeparator).borderRadius(5);
 		css.style(".BlockHeaderWidget-center").padding(2).cursorPointer().displayBlock();
 		css.style(".BlockHeaderWidget-cell").padding(2);
+		css.style(".BlockHeaderWidget-cell-secondary").color(cBlockHeaderCellSecondary);
 		css.style(".BlockHeaderWidget-cell .gwt-MenuItem").fontSize(fontSizeSmall).padding(2, 3, 2, 3)
 				.whiteSpaceNowrap();
 		css.style(".BlockHeaderWidget-prefixLabel").cursorPointer();

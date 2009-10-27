@@ -17,7 +17,7 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		typeLabel = new Label();
 		Issue issue = getObject();
-		typeLabel = header.insertPrefixLabel("150px");
+		typeLabel = header.insertPrefixLabel("150px", true);
 		header.addMenuAction(new ConvertIssueToRequirementAction(issue));
 		header.addMenuAction(new ConvertIssueToQualityAction(issue));
 		header.addMenuAction(new DeleteIssueAction(issue));

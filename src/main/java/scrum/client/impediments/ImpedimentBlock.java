@@ -20,7 +20,7 @@ public class ImpedimentBlock extends ABlockWidget<Impediment> implements TrashSu
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Impediment impediment = getObject();
-		dateLabel = header.insertPrefixLabel("70px");
+		dateLabel = header.insertPrefixLabel("70px", true);
 		statusIcon = header.insertPrefixIcon();
 		header.addMenuAction(new CloseImpedimentAction(impediment));
 		header.addMenuAction(new DeleteImpedimentAction(impediment));

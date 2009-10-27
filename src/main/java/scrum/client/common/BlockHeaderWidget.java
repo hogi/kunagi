@@ -45,9 +45,9 @@ public class BlockHeaderWidget extends AWidget {
 		return table;
 	}
 
-	public Label insertPrefixLabel(String width) {
+	public Label insertPrefixLabel(String width, boolean secondary) {
 		Label label = new Label();
-		insertPrefixCell(label, width, true, "BlockHeaderWidget-prefixLabel");
+		insertPrefixCell(label, width, true, "BlockHeaderWidget-prefixLabel", secondary);
 
 		if (clickableLabels == null) clickableLabels = new ArrayList<Label>(2);
 		clickableLabels.add(label);
@@ -56,13 +56,15 @@ public class BlockHeaderWidget extends AWidget {
 	}
 
 	public SimplePanel insertPrefixIcon() {
-		SimplePanel cell = insertPrefixCell(null, "16px", false, "BlockHeaderWidget-prefixIcon");
+		SimplePanel cell = insertPrefixCell(null, "16px", false, "BlockHeaderWidget-prefixIcon", false);
 		cell.setHeight("16px");
 		return cell;
 	}
 
-	public SimplePanel insertPrefixCell(Widget widget, String width, boolean nowrap, String additionalStyleName) {
+	public SimplePanel insertPrefixCell(Widget widget, String width, boolean nowrap, String additionalStyleName,
+			boolean secondary) {
 		SimplePanel cell = createCell(widget, nowrap, additionalStyleName);
+		if (secondary) cell.addStyleName("BlockHeaderWidget-cell-secondary");
 		prefixCellCount++;
 		table.insert(cell, prefixCellCount);
 		if (width != null) table.setCellWidth(cell, width);

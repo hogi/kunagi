@@ -11,19 +11,19 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class RiskBlock extends ABlockWidget<Risk> implements TrashSupport {
 
-	private Label riskLabel;
+	private Label priorityLabel;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Risk risk = getObject();
-		riskLabel = header.insertPrefixLabel("100px");
+		priorityLabel = header.insertPrefixLabel("100px", true);
 		header.addMenuAction(new DeleteRiskAction(risk));
 	}
 
 	@Override
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Risk risk = getObject();
-		riskLabel.setText(risk.getPriorityLabel());
+		priorityLabel.setText(risk.getPriorityLabel());
 		header.setDragHandle(risk.getReference());
 		header.setCenter(risk.getLabel());
 	}
