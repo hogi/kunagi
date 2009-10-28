@@ -3,6 +3,7 @@ package scrum.client.project;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.Gwt;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,6 +36,27 @@ public class Project extends GProject {
 
 	public Project(Map data) {
 		super(data);
+	}
+
+	public Integer getVelocity() {
+		Sprint latest = getLatestCompletedSprint();
+		return latest == null ? null : latest.getVelocity();
+	}
+
+	public Sprint getLatestCompletedSprint() {
+		Sprint latest = null;
+		for (Sprint sprint : getSprints()) {
+			if (latest == null || sprint.getEnd().isAfter(latest.getEnd())) latest = sprint;
+		}
+		return latest;
+	}
+
+	public List<Sprint> getCompletedSprints() {
+		List<Sprint> ret = new ArrayList<Sprint>();
+		for (Sprint sprint : getSprints()) {
+			if (sprint.isCompleted()) ret.add(sprint);
+		}
+		return ret;
 	}
 
 	public List<Wikipage> getWikipages() {

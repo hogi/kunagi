@@ -19,6 +19,10 @@ public class Sprint extends GSprint {
 		super(data);
 	}
 
+	public boolean isCompleted() {
+		return getVelocity() != null;
+	}
+
 	public int getEstimatedRequirementWork() {
 		int sum = 0;
 		for (Requirement requirement : getRequirements()) {
