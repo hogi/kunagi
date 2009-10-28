@@ -15,6 +15,12 @@ public class EstimationBarWidget extends AScrumWidget {
 	private FloatingFlowPanel flowPanel;
 	private static int factor = 3;
 
+	private Requirement req;
+
+	public EstimationBarWidget(Requirement req) {
+		this.req = req;
+	}
+
 	private List<Integer> getEstimations() {
 		List<Integer> estimations = new ArrayList<Integer>();
 		estimations.add(8);
@@ -26,9 +32,7 @@ public class EstimationBarWidget extends AScrumWidget {
 		return 4;
 	}
 
-	@Override
-	protected Widget onInitialization() {
-		flowPanel = new FloatingFlowPanel();
+	private void refresh() {
 		List<Integer> estimations = getEstimations();
 		int first = getFirstExpectedSprint();
 
@@ -49,17 +53,29 @@ public class EstimationBarWidget extends AScrumWidget {
 
 		if (estimations.size() <= 1) {
 			if (first == 0) {
-				tip = "estimated this Sprint";
+				tip = "expected current Sprint";
 			} else if (first == 1) {
-				tip = "estimated next Sprint";
+				tip = "expected next Sprint";
 			} else {
-				tip = "estimated in " + first + " Sprints";
+				tip = "expected in " + first + " Sprints";
 			}
 		} else {
-			tip = "estimated in " + first + " to " + (first + estimations.size() - 1) + " Sprints";
+			tip = "expected in " + first + " to " + (first + estimations.size() - 1) + " Sprints";
 		}
 
 		flowPanel.getElement().setTitle(tip);
+	}
+
+	@Override
+	protected void onUpdate() {
+		flowPanel.clear();
+		refresh();
+	}
+
+	@Override
+	protected Widget onInitialization() {
+		flowPanel = new FloatingFlowPanel();
+		refresh();
 
 		return flowPanel;
 	}

@@ -22,6 +22,9 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 		Requirement requirement = getObject();
 		statusIcon = header.insertPrefixIcon();
 		estimationLabel = header.appendCenterSuffix(null);
+
+		header.appendCell(new EstimationBarWidget(requirement), "150px", false, null);
+
 		header.addMenuAction(new AddRequirementToCurrentSprintAction(requirement));
 		header.addMenuAction(new RemoveRequirementFromSprintAction(requirement));
 		header.addMenuAction(new CloseRequirementAction(requirement));

@@ -103,7 +103,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 			header.setDragHandle("dmy666");
 			header.setCenter(getObject());
 			header.appendCenterSuffix("Suffix");
-			header.insertSuffixCell(new EstimationBarWidget(), "300px", true, null, false);
+			header.insertSuffixCell(new EstimationBarWidget(null), "120px", true, null, false);
 			header.addToolbarAction(new DummyAction("Function 1"));
 			header.addToolbarAction(new DummyAction("Function 2"));
 			header.addMenuAction(new DummyAction("Function 3"));
