@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import scrum.client.ListPredicate;
@@ -79,6 +80,7 @@ public class ProductBacklogWidget extends AScrumWidget {
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Product Backlog", new ButtonWidget(new CreateRequirementAction()));
+		page.addSection("Velocity in last Sprint: " + getCurrentProject().getVelocity());
 		page.addSection(filterPanel);
 		page.addSection(list);
 
@@ -88,7 +90,12 @@ public class ProductBacklogWidget extends AScrumWidget {
 	@Override
 	protected void onUpdate() {
 		super.onUpdate();
-		list.setObjects(filter(getCurrentProject().getRequirements()));
+		List<Requirement> requirements = filter(getCurrentProject().getRequirements());
+		Collections.sort(requirements, getCurrentProject().getRequirementsOrderComparator());
+
+		EstimationBarFactory.createEstimationBars(requirements, getCurrentProject().getVelocity());
+
+		list.setObjects(requirements);
 	}
 
 	private List<Requirement> filter(List<Requirement> requirements) {

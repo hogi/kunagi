@@ -46,6 +46,7 @@ public class Project extends GProject {
 	public Sprint getLatestCompletedSprint() {
 		Sprint latest = null;
 		for (Sprint sprint : getSprints()) {
+			if (!sprint.isCompleted()) continue;
 			if (latest == null || sprint.getEnd().isAfter(latest.getEnd())) latest = sprint;
 		}
 		return latest;

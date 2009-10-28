@@ -1,10 +1,5 @@
 package scrum.client.sprint;
 
-import ilarkesto.gwt.client.GwtLogger;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.PagePanel;
@@ -28,20 +23,8 @@ public class SprintHistoryWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		sprintList.setObjects(getSprintHistory());
+		sprintList.setObjects(getCurrentProject().getCompletedSprints());
 		super.onUpdate();
-	}
-
-	private List<Sprint> getSprintHistory() {
-		List<Sprint> sprintHistory = new ArrayList<Sprint>();
-		for (Sprint sprint : getCurrentProject().getSprints()) {
-			GwtLogger.DEBUG("Sprint:", sprint);
-			if (getCurrentProject().isCurrentSprint(sprint)) continue;
-			if (sprint.getVelocity() == null) continue;
-
-			sprintHistory.add(sprint);
-		}
-		return sprintHistory;
 	}
 
 }

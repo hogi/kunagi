@@ -3,7 +3,6 @@ package scrum.client.project;
 import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import scrum.client.common.AScrumWidget;
@@ -15,26 +14,16 @@ public class EstimationBarWidget extends AScrumWidget {
 	private FloatingFlowPanel flowPanel;
 	private static int factor = 3;
 
-	private Requirement req;
+	private EstimationBar bar;
 
-	public EstimationBarWidget(Requirement req) {
-		this.req = req;
-	}
-
-	private List<Integer> getEstimations() {
-		List<Integer> estimations = new ArrayList<Integer>();
-		estimations.add(8);
-		estimations.add(27);
-		return estimations;
-	}
-
-	private int getFirstExpectedSprint() {
-		return 4;
+	public EstimationBarWidget(EstimationBar bar) {
+		assert bar != null;
+		this.bar = bar;
 	}
 
 	private void refresh() {
-		List<Integer> estimations = getEstimations();
-		int first = getFirstExpectedSprint();
+		List<Integer> estimations = bar.getWorkPerSprint();
+		int first = bar.getSprintOffset();
 
 		for (int i = 0; i < estimations.size(); i++) {
 

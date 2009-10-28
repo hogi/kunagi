@@ -5,14 +5,17 @@ import java.util.List;
 
 public class EstimationBarFactory {
 
-	public void createEstimationBars(List<Requirement> requirements, int velocity) {
-		assert velocity > 0;
+	public static void createEstimationBars(List<Requirement> requirements, Integer velocity) {
 		int sprintOffset = 0;
-		int remainingWorkInSprint = velocity;
+		int remainingWorkInSprint = velocity == null ? 0 : velocity;
 		List<Integer> workPerSprint;
 		for (Requirement requirement : requirements) {
 			workPerSprint = new ArrayList<Integer>();
-			int work = requirement.getEstimatedWork() == null ? 0 : requirement.getEstimatedWork();
+			if (velocity == null || requirement.getEstimatedWork() == null) {
+				requirement.setEstimationBar(new EstimationBar(sprintOffset, workPerSprint));
+				continue;
+			}
+			int work = requirement.getEstimatedWork();
 			while (work > remainingWorkInSprint) {
 				workPerSprint.add(remainingWorkInSprint);
 				work -= remainingWorkInSprint;
@@ -27,9 +30,7 @@ public class EstimationBarFactory {
 				sprintOffset++;
 				remainingWorkInSprint = velocity;
 			}
-			requirement
-					.setEstimationBar(new EstimationBar(sprintOffset, requirement.getEstimatedWork(), workPerSprint));
+			requirement.setEstimationBar(new EstimationBar(sprintOffset, workPerSprint));
 		}
 	}
-
 }
