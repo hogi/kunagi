@@ -20,6 +20,7 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
+import scrum.client.project.EstimationBarWidget;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -102,6 +103,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 			header.setDragHandle("dmy666");
 			header.setCenter(getObject());
 			header.appendCenterSuffix("Suffix");
+			header.insertSuffixCell(new EstimationBarWidget(), "300px", true, null, false);
 			header.addToolbarAction(new DummyAction("Function 1"));
 			header.addToolbarAction(new DummyAction("Function 2"));
 			header.addMenuAction(new DummyAction("Function 3"));
