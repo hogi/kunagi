@@ -6,6 +6,7 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
+import scrum.client.project.Requirement;
 import scrum.client.sprint.ClaimTaskAction;
 import scrum.client.sprint.CloseTaskAction;
 import scrum.client.sprint.DeleteTaskAction;
@@ -56,7 +57,10 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 			statusImage.setTitle("Claimed by " + task.getOwner().getName() + ".");
 		}
 		statusIcon.setWidget(statusImage);
-		if (requirementLabel != null) requirementLabel.setText(task.getRequirement().getLabel());
+		if (requirementLabel != null) {
+			Requirement req = task.getRequirement();
+			requirementLabel.setText(req.getReference() + " " + req.getLabel());
+		}
 		if (ownerLabel != null) ownerLabel.setText(task.isOwnerSet() ? task.getOwner().getName() : null);
 		header.setCenter(task.getLabel());
 	}
