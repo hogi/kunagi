@@ -13,6 +13,7 @@ public class SprintHistoryWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		sprintList = new BlockListWidget<Sprint>(SprintBlock.FACTORY);
+		sprintList.setAutoSorter(Sprint.END_DATE_COMPARATOR);
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Sprint history");

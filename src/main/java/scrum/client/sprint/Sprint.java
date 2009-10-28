@@ -1,6 +1,7 @@
 package scrum.client.sprint;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -112,5 +113,13 @@ public class Sprint extends GSprint {
 	public String toString() {
 		return getLabel();
 	}
+
+	public static final Comparator<Sprint> END_DATE_COMPARATOR = new Comparator<Sprint>() {
+
+		public int compare(Sprint a, Sprint b) {
+			return a.getEnd().compareTo(b.getEnd());
+		}
+
+	};
 
 }
