@@ -8,17 +8,20 @@ import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RequirementBlock extends ABlockWidget<Requirement> implements TrashSupport {
 
 	private SimplePanel statusIcon;
+	private Label estimationLabel;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Requirement requirement = getObject();
 		statusIcon = header.insertPrefixIcon();
+		estimationLabel = header.appendCenterSuffix(null);
 		header.addMenuAction(new AddRequirementToCurrentSprintAction(requirement));
 		header.addMenuAction(new RemoveRequirementFromSprintAction(requirement));
 		header.addMenuAction(new CloseRequirementAction(requirement));
@@ -43,8 +46,9 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 			statusImage = Img.bundle.reqDirty().createImage();
 			statusImage.setTitle("Needs estimation.");
 		}
+		estimationLabel.setText(requirement.getEstimatedWorkAsString());
 		statusIcon.setWidget(statusImage);
-		header.setCenter(requirement.getLongLabel());
+		header.setCenter(requirement.getLabel());
 	}
 
 	@Override

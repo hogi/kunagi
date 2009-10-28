@@ -34,6 +34,7 @@ public class BlockHeaderWidget extends AWidget {
 		// dragHandleWrapper.setHeight("100%");
 
 		centerText = Gwt.createInline(null);
+		centerText.setStyleName("BlockHeaderWidget-center-text");
 
 		centerWrapper = new FlowPanel();
 		centerWrapper.setStyleName("BlockHeaderWidget-center");
