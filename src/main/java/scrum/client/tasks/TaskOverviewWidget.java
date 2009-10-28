@@ -71,4 +71,8 @@ public class TaskOverviewWidget extends AScrumWidget implements TaskBlockContain
 		return true;
 	}
 
+	public boolean isWideMode() {
+		return true;
+	}
+
 }

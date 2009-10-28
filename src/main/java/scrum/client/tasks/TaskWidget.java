@@ -3,21 +3,23 @@ package scrum.client.tasks;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.sprint.Task;
 
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class TaskWidget extends AWidget {
 
 	private Task task;
+	private boolean wideMode;
 
-	public TaskWidget(Task task) {
+	public TaskWidget(Task task, boolean wideMode) {
 		this.task = task;
+		this.wideMode = wideMode;
 	}
 
 	@Override
@@ -74,9 +76,7 @@ public class TaskWidget extends AWidget {
 			}
 		}, 3);
 
-		FlowPanel panel = new FlowPanel();
-		panel.add(tb.createTable());
-		panel.add(new CommentsWidget(task));
-		return panel;
+		return wideMode ? TableBuilder.row(20, tb.createTable(), new CommentsWidget(task)) : Gwt.createFlowPanel(tb
+				.createTable(), new CommentsWidget(task));
 	}
 }

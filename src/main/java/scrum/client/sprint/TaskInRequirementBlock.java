@@ -45,7 +45,7 @@ public class TaskInRequirementBlock extends ABlockWidget<Task> implements TrashS
 
 	@Override
 	protected Widget onExtendedInitialization() {
-		return new TaskWidget(getObject());
+		return new TaskWidget(getObject(), false);
 	}
 
 	public AScrumAction getTrashAction() {

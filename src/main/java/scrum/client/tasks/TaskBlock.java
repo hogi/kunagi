@@ -22,6 +22,7 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 
 	private SimplePanel statusIcon;
 	private Label requirementLabel;
+	private Label ownerLabel;
 
 	private TaskBlockContainer container;
 
@@ -33,9 +34,8 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Task task = getObject();
 		statusIcon = header.insertPrefixIcon();
-		if (container.isShowRequirement()) {
-			requirementLabel = header.appendCenterSuffix(null);
-		}
+		if (container.isShowRequirement()) requirementLabel = header.appendCenterSuffix(null);
+		if (container.isShowOwner()) ownerLabel = header.appendCenterSuffix(null);
 		header.addMenuAction(new ClaimTaskAction(task));
 		header.addMenuAction(new CloseTaskAction(task));
 		header.addMenuAction(new ReopenTaskAction(task));
@@ -56,15 +56,14 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 			statusImage.setTitle("Claimed by " + task.getOwner().getName() + ".");
 		}
 		statusIcon.setWidget(statusImage);
-		if (requirementLabel != null) {
-			requirementLabel.setText(task.getRequirement().getLabel());
-		}
-		header.setCenter(task.getLongLabel(container.isShowOwner(), false));
+		if (requirementLabel != null) requirementLabel.setText(task.getRequirement().getLabel());
+		if (ownerLabel != null) ownerLabel.setText(task.isOwnerSet() ? task.getOwner().getName() : null);
+		header.setCenter(task.getLabel());
 	}
 
 	@Override
 	protected Widget onExtendedInitialization() {
-		return new TaskWidget(getObject());
+		return new TaskWidget(getObject(), container.isWideMode());
 	}
 
 	public AScrumAction getTrashAction() {

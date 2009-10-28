@@ -201,6 +201,10 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		return false;
 	}
 
+	public boolean isWideMode() {
+		return false;
+	}
+
 	private String hours(Integer i) {
 		return Gwt.formatHours(i);
 	}

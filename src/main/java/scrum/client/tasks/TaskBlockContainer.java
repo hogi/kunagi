@@ -16,4 +16,6 @@ public interface TaskBlockContainer {
 
 	boolean isShowOwner();
 
+	boolean isWideMode();
+
 }
