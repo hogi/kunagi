@@ -20,8 +20,9 @@ public class SprintDao extends GSprintDao {
 		Date end = Date.today().getLastDateOfMonth();
 
 		if (variant > 0) {
-			begin = begin.addDays(-variant * 3);
-			end = begin.addDays(-variant * 3);
+			int offset = variant * 14;
+			end = end.addDays(-offset);
+			begin = end.addDays(-14);
 		}
 
 		Sprint sprint = newEntityInstance();
@@ -29,6 +30,7 @@ public class SprintDao extends GSprintDao {
 		sprint.setLabel("Sprint -" + variant);
 		sprint.setBegin(begin);
 		sprint.setEnd(end);
+		if (variant > 0) sprint.setVelocity(20 + variant);
 		saveEntity(sprint);
 
 		if (variant == 0) {
