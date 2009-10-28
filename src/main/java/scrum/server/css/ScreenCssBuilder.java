@@ -24,6 +24,9 @@ public class ScreenCssBuilder implements CssBuilder {
 	String cHeaderBackground = "#667B99";
 	String cHeaderLink = "#D6E4E1";
 
+	String cEstimationBar0 = "#ff6637";
+	String cEstimationBar1 = "#5b37ff";
+
 	String cLink = "#2956B2";
 	String cErrorBackground = "#FEE";
 	String cError = "darkred";
@@ -118,8 +121,9 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".RequirementEstimatedWorkWidget").marginLeft(3);
 		css.style(".RequirementEstimatedWorkWidget .gwt-Button").fontSize(fontSizeSmall);
 
-		css.style(".EstimationBarWidget-bar0").background(cHeaderBackground);
-		css.style(".EstimationBarWidget-bar1").background(cNavigatorSelectedItemBackground);
+		css.style(".EstimationBarWidget").marginTop(7);
+		css.style(".EstimationBarWidget-bar0").background(cEstimationBar0);
+		css.style(".EstimationBarWidget-bar1").background(cEstimationBar1);
 	}
 
 	private void whiteboard(CssRenderer css) {

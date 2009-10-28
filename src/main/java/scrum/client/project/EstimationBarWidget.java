@@ -38,7 +38,7 @@ public class EstimationBarWidget extends AScrumWidget {
 				barIndex = 1;
 			}
 			Widget w = Gwt.createEmptyDiv("EstimationBarWidget-bar" + barIndex);
-			w.setHeight("16px");
+			w.setHeight("6px");
 			w.setWidth((factor * estimations.get(i)) + "px");
 			flowPanel.add(w);
 		}
@@ -63,6 +63,6 @@ public class EstimationBarWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		flowPanel = new FloatingFlowPanel();
-		return flowPanel;
+		return Gwt.createDiv("EstimationBarWidget", flowPanel);
 	}
 }
