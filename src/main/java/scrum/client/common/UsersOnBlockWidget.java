@@ -1,5 +1,7 @@
 package scrum.client.common;
 
+import ilarkesto.gwt.client.Gwt;
+
 import java.util.Set;
 
 import scrum.client.admin.User;
@@ -38,7 +40,7 @@ public class UsersOnBlockWidget extends AScrumWidget {
 				panel.add(new Label(", "));
 			}
 
-			Label label = new Label(user.getName());
+			Label label = Gwt.createInline(user.getName());
 			label.getElement().getStyle().setProperty("color", user.getProjectConfig().getColor());
 			panel.add(label);
 		}
