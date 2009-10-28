@@ -30,6 +30,7 @@ import scrum.client.risks.Risk;
 import scrum.client.risks.RiskListWidget;
 import scrum.client.sprint.NextSprintWidget;
 import scrum.client.sprint.SprintBacklogWidget;
+import scrum.client.sprint.SprintHistoryWidget;
 import scrum.client.sprint.Task;
 import scrum.client.tasks.TaskOverviewWidget;
 import scrum.client.tasks.WhiteboardWidget;
@@ -54,6 +55,7 @@ public class ProjectContext extends AScrumComponent {
 	private IssueListWidget issueList;
 	private RiskListWidget riskList;
 	private WikiWidget wiki;
+	private SprintHistoryWidget sprintHistory;
 	private ProjectUserConfigWidget projectUserConfig;
 	private WidgetsTesterWidget widgetsTester;
 	private PunishmentsWidget punishments;
@@ -72,6 +74,7 @@ public class ProjectContext extends AScrumComponent {
 		issueList = new IssueListWidget();
 		riskList = new RiskListWidget();
 		projectUserConfig = new ProjectUserConfigWidget();
+		sprintHistory = new SprintHistoryWidget();
 		wiki = new WikiWidget();
 		widgetsTester = new WidgetsTesterWidget();
 		punishments = new PunishmentsWidget();
@@ -87,6 +90,7 @@ public class ProjectContext extends AScrumComponent {
 		navigator.addItem("Issue List", getIssueList());
 		navigator.addItem("Risk Management", getRiskList());
 		navigator.addItem("Wiki", getWiki());
+		navigator.addItem("Sprint history", getSprintHistory());
 		navigator.addItem("Next Sprint", getNextSprint());
 		navigator.addItem("Courtroom", punishments);
 		navigator.addItem("Personal Preferences", getProjectUserConfig());
@@ -303,6 +307,10 @@ public class ProjectContext extends AScrumComponent {
 
 	public WikiWidget getWiki() {
 		return wiki;
+	}
+
+	public SprintHistoryWidget getSprintHistory() {
+		return sprintHistory;
 	}
 
 	public ImpedimentListWidget getImpedimentList() {

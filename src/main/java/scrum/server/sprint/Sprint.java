@@ -33,15 +33,20 @@ public class Sprint extends GSprint {
 
 	// --- ---
 
-	public void updateVelocity() {
+	public void close() {
 		int velocity = 0;
+		StringBuilder sb = new StringBuilder();
 		for (Requirement requirement : getRequirements()) {
 			if (requirement.isClosed()) {
 				Integer work = requirement.getEstimatedWork();
 				if (work != null) velocity += work;
+				sb.append(" * ");
+				sb.append(requirement.getLabel());
+				sb.append("\n");
 			}
 		}
 		setVelocity(velocity);
+		setCompletedRequirementLabels(sb.toString());
 	}
 
 	public List<SprintDaySnapshot> getDaySnapshots() {

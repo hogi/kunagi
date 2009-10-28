@@ -42,6 +42,7 @@ public abstract class GSprint
         properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("velocity", this.velocity);
+        properties.put("completedRequirementLabels", this.completedRequirementLabels);
     }
 
     public int compareTo(Sprint other) {
@@ -273,6 +274,41 @@ public abstract class GSprint
         setVelocity((java.lang.Integer)value);
     }
 
+    // -----------------------------------------------------------
+    // - completedRequirementLabels
+    // -----------------------------------------------------------
+
+    private java.lang.String completedRequirementLabels;
+
+    public final java.lang.String getCompletedRequirementLabels() {
+        return completedRequirementLabels;
+    }
+
+    public final void setCompletedRequirementLabels(java.lang.String completedRequirementLabels) {
+        completedRequirementLabels = prepareCompletedRequirementLabels(completedRequirementLabels);
+        if (isCompletedRequirementLabels(completedRequirementLabels)) return;
+        this.completedRequirementLabels = completedRequirementLabels;
+        fireModified();
+    }
+
+    protected java.lang.String prepareCompletedRequirementLabels(java.lang.String completedRequirementLabels) {
+        completedRequirementLabels = Str.removeUnreadableChars(completedRequirementLabels);
+        return completedRequirementLabels;
+    }
+
+    public final boolean isCompletedRequirementLabelsSet() {
+        return this.completedRequirementLabels != null;
+    }
+
+    public final boolean isCompletedRequirementLabels(java.lang.String completedRequirementLabels) {
+        if (this.completedRequirementLabels == null && completedRequirementLabels == null) return true;
+        return this.completedRequirementLabels != null && this.completedRequirementLabels.equals(completedRequirementLabels);
+    }
+
+    protected final void updateCompletedRequirementLabels(Object value) {
+        setCompletedRequirementLabels((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -284,6 +320,7 @@ public abstract class GSprint
             if (property.equals("begin")) updateBegin(value);
             if (property.equals("end")) updateEnd(value);
             if (property.equals("velocity")) updateVelocity(value);
+            if (property.equals("completedRequirementLabels")) updateCompletedRequirementLabels(value);
         }
     }
 

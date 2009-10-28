@@ -272,6 +272,44 @@ public abstract class GSprint
         return velocityModel;
     }
 
+    // --- completedRequirementLabels ---
+
+    private java.lang.String completedRequirementLabels ;
+
+    public final java.lang.String getCompletedRequirementLabels() {
+        return this.completedRequirementLabels ;
+    }
+
+    public final Sprint setCompletedRequirementLabels(java.lang.String completedRequirementLabels) {
+        if (isCompletedRequirementLabels(completedRequirementLabels)) return (Sprint)this;
+        this.completedRequirementLabels = completedRequirementLabels ;
+        propertyChanged("completedRequirementLabels", this.completedRequirementLabels);
+        return (Sprint)this;
+    }
+
+    public final boolean isCompletedRequirementLabels(java.lang.String completedRequirementLabels) {
+        return equals(this.completedRequirementLabels, completedRequirementLabels);
+    }
+
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel completedRequirementLabelsModel;
+
+    public ilarkesto.gwt.client.editor.ATextEditorModel getCompletedRequirementLabelsModel() {
+        if (completedRequirementLabelsModel == null) completedRequirementLabelsModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+
+            @Override
+            public String getValue() {
+                return getCompletedRequirementLabels();
+            }
+
+            @Override
+            public void setValue(String value) {
+                setCompletedRequirementLabels(value);
+            }
+
+        };
+        return completedRequirementLabelsModel;
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -283,6 +321,7 @@ public abstract class GSprint
         String endAsString = (String) props.get("end");
         end  =  endAsString == null ? null : new ilarkesto.gwt.client.Date(endAsString);
         velocity  = (java.lang.Integer) props.get("velocity");
+        completedRequirementLabels  = (java.lang.String) props.get("completedRequirementLabels");
     }
 
     @Override
@@ -294,6 +333,7 @@ public abstract class GSprint
         properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("velocity", this.velocity);
+        properties.put("completedRequirementLabels", this.completedRequirementLabels);
     }
 
 }
