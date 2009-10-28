@@ -14,12 +14,14 @@ import scrum.client.sprint.Task;
 import scrum.client.sprint.UnclaimTaskAction;
 
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 
 	private SimplePanel statusIcon;
+	private Label requirementLabel;
 
 	private TaskBlockContainer container;
 
@@ -31,6 +33,9 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Task task = getObject();
 		statusIcon = header.insertPrefixIcon();
+		if (container.isShowRequirement()) {
+			requirementLabel = header.appendCenterSuffix(null);
+		}
 		header.addMenuAction(new ClaimTaskAction(task));
 		header.addMenuAction(new CloseTaskAction(task));
 		header.addMenuAction(new ReopenTaskAction(task));
@@ -51,7 +56,10 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 			statusImage.setTitle("Claimed by " + task.getOwner().getName() + ".");
 		}
 		statusIcon.setWidget(statusImage);
-		header.setCenter(task.getLongLabel(container.isShowOwner(), container.isShowRequirement()));
+		if (requirementLabel != null) {
+			requirementLabel.setText(task.getRequirement().getLabel());
+		}
+		header.setCenter(task.getLongLabel(container.isShowOwner(), false));
 	}
 
 	@Override

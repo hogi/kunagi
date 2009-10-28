@@ -3,11 +3,10 @@ package scrum.client.common;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
-
-import java.util.ArrayList;
-import java.util.List;
+import ilarkesto.gwt.client.Gwt;
 
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -20,37 +19,50 @@ public class BlockHeaderWidget extends AWidget {
 
 	private HorizontalPanel table;
 	private FocusPanel dragHandleWrapper;
+	private FocusPanel centerFocusPanel;
+	private FlowPanel centerWrapper;
 	private Label centerText;
 
 	private MenuBar menu;
 	private int prefixCellCount = 0;
-	private List<Label> clickableLabels;
+	private int suffixCellCount = 0;
 
 	@Override
 	protected Widget onInitialization() {
 		dragHandleWrapper = new FocusPanel();
 		dragHandleWrapper.setStyleName("BlockHeaderWidget-dragHandle");
 		// dragHandleWrapper.setHeight("100%");
-		centerText = new Label();
-		centerText.setStyleName("BlockHeaderWidget-center");
-		centerText.setWidth("100%");
+
+		centerText = Gwt.createInline(null);
+
+		centerWrapper = new FlowPanel();
+		centerWrapper.setStyleName("BlockHeaderWidget-center");
+		centerWrapper.setWidth("100%");
+		centerWrapper.add(centerText);
+
+		centerFocusPanel = new FocusPanel(centerWrapper);
+		centerFocusPanel.setHeight("100%");
 
 		table = new HorizontalPanel();
 		table.setStyleName("BlockHeaderWidget");
 		table.setWidth("100%");
 		table.add(dragHandleWrapper);
 		table.setCellWidth(dragHandleWrapper, "50px");
-		table.add(centerText);
+		table.add(centerFocusPanel);
 
 		return table;
+	}
+
+	public Label appendCenterSuffix(String text) {
+		Label label = Gwt.createInline(text);
+		label.setStyleName("BlockHeaderWidget-centerSuffix");
+		centerWrapper.add(label);
+		return label;
 	}
 
 	public Label insertPrefixLabel(String width, boolean secondary) {
 		Label label = new Label();
 		insertPrefixCell(label, width, true, "BlockHeaderWidget-prefixLabel", secondary);
-
-		if (clickableLabels == null) clickableLabels = new ArrayList<Label>(2);
-		clickableLabels.add(label);
 
 		return label;
 	}
@@ -61,13 +73,28 @@ public class BlockHeaderWidget extends AWidget {
 		return cell;
 	}
 
+	public SimplePanel insertSuffixCell(Widget widget, String width, boolean nowrap, String additionalStyleName,
+			boolean secondary) {
+		SimplePanel cell = createCell(widget, nowrap, additionalStyleName);
+		if (secondary) cell.addStyleName("BlockHeaderWidget-cell-secondary");
+		suffixCellCount++;
+
+		table.insert(cell, prefixCellCount + 1 + suffixCellCount);
+		if (width != null) table.setCellWidth(cell, width);
+
+		return cell;
+	}
+
 	public SimplePanel insertPrefixCell(Widget widget, String width, boolean nowrap, String additionalStyleName,
 			boolean secondary) {
 		SimplePanel cell = createCell(widget, nowrap, additionalStyleName);
 		if (secondary) cell.addStyleName("BlockHeaderWidget-cell-secondary");
 		prefixCellCount++;
 		table.insert(cell, prefixCellCount);
-		if (width != null) table.setCellWidth(cell, width);
+		if (width != null) {
+			table.setCellWidth(cell, width);
+			cell.setWidth(width);
+		}
 		return cell;
 	}
 
@@ -119,12 +146,7 @@ public class BlockHeaderWidget extends AWidget {
 	}
 
 	public void addClickHandler(ClickHandler handler) {
-		centerText.addClickHandler(handler);
-		if (clickableLabels != null) {
-			for (Label label : clickableLabels) {
-				label.addClickHandler(handler);
-			}
-		}
+		centerFocusPanel.addClickHandler(handler);
 	}
 
 	public FocusPanel getDragHandle() {
