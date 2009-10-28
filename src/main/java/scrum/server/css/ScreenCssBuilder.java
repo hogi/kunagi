@@ -11,7 +11,7 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	String fontFamily = "Arial Unicode MS, Arial, sans-serif";
 	int fontSize = 12;
-	int lineHeight = 14;
+	int lineHeight = 16;
 
 	int fontSizeSmall = 9;
 	int lineHeightSmall = 9;
@@ -203,7 +203,7 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	private void comments(CssRenderer css) {
 		css.style(".CommentsWidget");
-		css.style(".CommentWidget").margin(5, 0, 10, 0).borderTop(1, "solid", cBlockHeaderBackground);
+		css.style(".CommentWidget").margin(15, 0, 10, 0).borderTop(1, "solid", cBlockHeaderBackground);
 		css.style(".CommentWidget-header").margin(4, 0, 2, 0);
 		css.style(".CommentWidget-header-author").floatLeft().marginRight(5);
 		css.style(".CommentWidget-header-date").color(cCommentDate);
