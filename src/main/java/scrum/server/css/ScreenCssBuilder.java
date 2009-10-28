@@ -110,8 +110,13 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".AEditableTextareaWidget-editorPanel").width100();
 		css.style(".Integer-editor").width(10, "%");
 
-		css.style(".AIntegerViewEditWidget .gwt-Button").padding(0, 3, 0, 3);
+		css.style(".AIntegerViewEditWidget .gwt-Button").padding(0, 3, 0, 3).fontSize(fontSizeSmall);
 
+		css.style(".TaskRemainingWorkWidget").marginLeft(3);
+		css.style(".TaskRemainingWorkWidget .gwt-Button").fontSize(fontSizeSmall);
+
+		css.style(".RequirementEstimatedWorkWidget").marginLeft(3);
+		css.style(".RequirementEstimatedWorkWidget .gwt-Button").fontSize(fontSizeSmall);
 	}
 
 	private void whiteboard(CssRenderer css) {
@@ -231,8 +236,6 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".UserStatusWidget").textDecorationLineThrough().fontStyleItalic();
 		css.style(".UserStatusWidget-online").textDecorationNone().fontStyleNormal();
 
-		css.style(".TaskRemainingWorkWidget").marginLeft(3);
-		css.style(".RequirementEstimatedWorkWidget").marginLeft(3);
 	}
 
 	private void pagePanel(CssRenderer css) {
