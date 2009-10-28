@@ -14,6 +14,8 @@ public class Requirement extends GRequirement {
 	public static final String INIT_LABEL = "New Requirement";
 	public static final String REFERENCE_PREFIX = "req";
 
+	private transient EstimationBar estimationBar;
+
 	public Requirement(Project project) {
 		setProject(project);
 		setLabel(INIT_LABEL);
@@ -28,6 +30,14 @@ public class Requirement extends GRequirement {
 
 	public Requirement(Map data) {
 		super(data);
+	}
+
+	public void setEstimationBar(EstimationBar estimationBar) {
+		this.estimationBar = estimationBar;
+	}
+
+	public EstimationBar getEstimationBar() {
+		return estimationBar;
 	}
 
 	public boolean isValidForSprint() {
