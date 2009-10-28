@@ -1,7 +1,5 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.GwtLogger;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -36,7 +34,6 @@ public class Requirement extends GRequirement {
 
 	public void setEstimationBar(EstimationBar estimationBar) {
 		this.estimationBar = estimationBar;
-		GwtLogger.DEBUG("Estimation-Bar updated:", getReference(), "->", estimationBar);
 	}
 
 	public EstimationBar getEstimationBar() {

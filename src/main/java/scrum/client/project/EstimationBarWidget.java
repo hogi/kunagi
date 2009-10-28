@@ -3,6 +3,7 @@ package scrum.client.project;
 import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import scrum.client.common.AScrumWidget;
@@ -14,26 +15,30 @@ public class EstimationBarWidget extends AScrumWidget {
 	private FloatingFlowPanel flowPanel;
 	private static int factor = 3;
 
-	private EstimationBar bar;
+	private Requirement requirement;
 
-	public EstimationBarWidget(EstimationBar bar) {
-		assert bar != null;
-		this.bar = bar;
+	public EstimationBarWidget(Requirement requirement) {
+		this.requirement = requirement;
 	}
 
-	private void refresh() {
+	@Override
+	protected void onUpdate() {
+		EstimationBar bar = requirement == null ? null : requirement.getEstimationBar();
+		if (bar == null) bar = new EstimationBar(0, new ArrayList<Integer>());
+		flowPanel.clear();
 		List<Integer> estimations = bar.getWorkPerSprint();
 		int first = bar.getSprintOffset();
 
 		for (int i = 0; i < estimations.size(); i++) {
 
-			String bar;
+			int barIndex;
 			if ((i + first) % 2 == 0) {
-				bar = "bar0";
+				barIndex = 0;
 			} else {
-				bar = "bar1";
+				barIndex = 1;
 			}
-			Widget w = Gwt.createEmptyDiv("EstimationBarWidget-" + bar);
+			Widget w = Gwt.createEmptyDiv("EstimationBarWidget-bar" + barIndex);
+			w.setHeight("16px");
 			w.setWidth((factor * estimations.get(i)) + "px");
 			flowPanel.add(w);
 		}
@@ -53,12 +58,6 @@ public class EstimationBarWidget extends AScrumWidget {
 		}
 
 		flowPanel.getElement().setTitle(tip);
-	}
-
-	@Override
-	protected void onUpdate() {
-		flowPanel.clear();
-		refresh();
 	}
 
 	@Override
