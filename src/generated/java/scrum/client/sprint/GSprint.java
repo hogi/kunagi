@@ -224,6 +224,54 @@ public abstract class GSprint
         return endModel;
     }
 
+    // --- velocity ---
+
+    private java.lang.Integer velocity ;
+
+    public final java.lang.Integer getVelocity() {
+        return this.velocity ;
+    }
+
+    public final Sprint setVelocity(java.lang.Integer velocity) {
+        if (isVelocity(velocity)) return (Sprint)this;
+        this.velocity = velocity ;
+        propertyChanged("velocity", this.velocity);
+        return (Sprint)this;
+    }
+
+    public final boolean isVelocity(java.lang.Integer velocity) {
+        return equals(this.velocity, velocity);
+    }
+
+    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel velocityModel;
+
+    public ilarkesto.gwt.client.editor.AIntegerEditorModel getVelocityModel() {
+        if (velocityModel == null) velocityModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+
+            @Override
+            public Integer getValue() {
+                return getVelocity();
+            }
+
+            @Override
+            public void increment() {
+                setVelocity(getVelocity() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setVelocity(getVelocity() - 1);
+            }
+
+            @Override
+            public void setValue(Integer value) {
+                setVelocity(value);
+            }
+
+        };
+        return velocityModel;
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -234,6 +282,7 @@ public abstract class GSprint
         begin  =  beginAsString == null ? null : new ilarkesto.gwt.client.Date(beginAsString);
         String endAsString = (String) props.get("end");
         end  =  endAsString == null ? null : new ilarkesto.gwt.client.Date(endAsString);
+        velocity  = (java.lang.Integer) props.get("velocity");
     }
 
     @Override
@@ -244,6 +293,7 @@ public abstract class GSprint
         properties.put("goal", this.goal);
         properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("end", this.end == null ? null : this.end.toString());
+        properties.put("velocity", this.velocity);
     }
 
 }

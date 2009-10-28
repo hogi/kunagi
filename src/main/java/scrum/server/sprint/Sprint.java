@@ -33,6 +33,17 @@ public class Sprint extends GSprint {
 
 	// --- ---
 
+	public void updateVelocity() {
+		int velocity = 0;
+		for (Requirement requirement : getRequirements()) {
+			if (requirement.isClosed()) {
+				Integer work = requirement.getEstimatedWork();
+				if (work != null) velocity += work;
+			}
+		}
+		setVelocity(velocity);
+	}
+
 	public List<SprintDaySnapshot> getDaySnapshots() {
 		return sprintDaySnapshotDao.getSprintDaySnapshots(this);
 	}

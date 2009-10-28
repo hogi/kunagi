@@ -44,6 +44,8 @@ public abstract class GSprintDao
         beginsCache = null;
         sprintsByEndCache.clear();
         endsCache = null;
+        sprintsByVelocityCache.clear();
+        velocitysCache = null;
     }
 
     @Override
@@ -258,6 +260,46 @@ public abstract class GSprintDao
 
         public boolean test(Sprint e) {
             return e.isEnd(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - velocity
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.Integer,Set<Sprint>> sprintsByVelocityCache = new Cache<java.lang.Integer,Set<Sprint>>(
+            new Cache.Factory<java.lang.Integer,Set<Sprint>>() {
+                public Set<Sprint> create(java.lang.Integer velocity) {
+                    return getEntities(new IsVelocity(velocity));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByVelocity(java.lang.Integer velocity) {
+        return sprintsByVelocityCache.get(velocity);
+    }
+    private Set<java.lang.Integer> velocitysCache;
+
+    public final Set<java.lang.Integer> getVelocitys() {
+        if (velocitysCache == null) {
+            velocitysCache = new HashSet<java.lang.Integer>();
+            for (Sprint e : getEntities()) {
+                if (e.isVelocitySet()) velocitysCache.add(e.getVelocity());
+            }
+        }
+        return velocitysCache;
+    }
+
+    private static class IsVelocity implements Predicate<Sprint> {
+
+        private java.lang.Integer value;
+
+        public IsVelocity(java.lang.Integer value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.isVelocity(value);
         }
 
     }

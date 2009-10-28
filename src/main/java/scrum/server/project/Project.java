@@ -177,6 +177,7 @@ public class Project extends GProject {
 
 	public void switchToNextSprint() {
 		Sprint oldSprint = getCurrentSprint();
+		oldSprint.updateVelocity();
 
 		getCurrentSprintSnapshot().update();
 

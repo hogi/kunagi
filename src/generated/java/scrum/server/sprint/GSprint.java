@@ -41,6 +41,7 @@ public abstract class GSprint
         properties.put("goal", this.goal);
         properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("end", this.end == null ? null : this.end.toString());
+        properties.put("velocity", this.velocity);
     }
 
     public int compareTo(Sprint other) {
@@ -238,6 +239,40 @@ public abstract class GSprint
         setEnd((ilarkesto.base.time.Date)value);
     }
 
+    // -----------------------------------------------------------
+    // - velocity
+    // -----------------------------------------------------------
+
+    private java.lang.Integer velocity;
+
+    public final java.lang.Integer getVelocity() {
+        return velocity;
+    }
+
+    public final void setVelocity(java.lang.Integer velocity) {
+        velocity = prepareVelocity(velocity);
+        if (isVelocity(velocity)) return;
+        this.velocity = velocity;
+        fireModified();
+    }
+
+    protected java.lang.Integer prepareVelocity(java.lang.Integer velocity) {
+        return velocity;
+    }
+
+    public final boolean isVelocitySet() {
+        return this.velocity != null;
+    }
+
+    public final boolean isVelocity(java.lang.Integer velocity) {
+        if (this.velocity == null && velocity == null) return true;
+        return this.velocity != null && this.velocity.equals(velocity);
+    }
+
+    protected final void updateVelocity(Object value) {
+        setVelocity((java.lang.Integer)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -248,6 +283,7 @@ public abstract class GSprint
             if (property.equals("goal")) updateGoal(value);
             if (property.equals("begin")) updateBegin(value);
             if (property.equals("end")) updateEnd(value);
+            if (property.equals("velocity")) updateVelocity(value);
         }
     }
 

@@ -250,6 +250,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			sprintModel.addProperty("goal", String.class);
 			sprintModel.addProperty("begin", Date.class);
 			sprintModel.addProperty("end", Date.class);
+			sprintModel.addProperty("velocity", Integer.class);
 		}
 		return sprintModel;
 	}
