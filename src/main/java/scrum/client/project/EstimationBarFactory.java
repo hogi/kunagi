@@ -11,11 +11,13 @@ public class EstimationBarFactory {
 		List<Integer> workPerSprint;
 		for (Requirement requirement : requirements) {
 			workPerSprint = new ArrayList<Integer>();
-			if (velocity == null || requirement.getEstimatedWork() == null) {
+			Integer estimatedWork = requirement.getEstimatedWork();
+			if (velocity == null || estimatedWork == null) {
+				if (estimatedWork != null) workPerSprint.add(estimatedWork);
 				requirement.setEstimationBar(new EstimationBar(sprintOffset, workPerSprint));
 				continue;
 			}
-			int work = requirement.getEstimatedWork();
+			int work = estimatedWork;
 			while (work > remainingWorkInSprint) {
 				workPerSprint.add(remainingWorkInSprint);
 				work -= remainingWorkInSprint;

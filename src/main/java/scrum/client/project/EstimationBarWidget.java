@@ -63,6 +63,6 @@ public class EstimationBarWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		flowPanel = new FloatingFlowPanel();
-		return Gwt.createDiv("EstimationBarWidget", flowPanel);
+		return Gwt.createFloatingFlowPanel(Gwt.createDiv("EstimationBarWidget", flowPanel));
 	}
 }
