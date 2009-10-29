@@ -27,12 +27,12 @@ public class EstimationBarWidget extends AScrumWidget {
 		if (bar == null) bar = new EstimationBar(0, new ArrayList<Integer>());
 		flowPanel.clear();
 		List<Integer> estimations = bar.getWorkPerSprint();
-		int first = bar.getSprintOffset();
+		int sprintOffset = bar.getSprintOffset();
 
 		for (int i = 0; i < estimations.size(); i++) {
 
 			int barIndex;
-			if ((i + first) % 2 == 0) {
+			if ((i + sprintOffset) % 2 == 0) {
 				barIndex = 0;
 			} else {
 				barIndex = 1;
@@ -45,17 +45,8 @@ public class EstimationBarWidget extends AScrumWidget {
 
 		String tip;
 
-		if (estimations.size() <= 1) {
-			if (first == 0) {
-				tip = "expected current Sprint";
-			} else if (first == 1) {
-				tip = "expected next Sprint";
-			} else {
-				tip = "expected in " + first + " Sprints";
-			}
-		} else {
-			tip = "expected in " + first + " to " + (first + estimations.size() - 1) + " Sprints";
-		}
+		int requiredSprints = estimations.size() <= 1 ? sprintOffset + 1 : sprintOffset + estimations.size();
+		tip = "Expected  to be completed after " + requiredSprints + " sprint" + (requiredSprints == 1 ? "." : "s.");
 
 		flowPanel.getElement().setTitle(tip);
 	}
@@ -63,6 +54,6 @@ public class EstimationBarWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		flowPanel = new FloatingFlowPanel();
-		return Gwt.createFloatingFlowPanel(Gwt.createDiv("EstimationBarWidget", flowPanel));
+		return Gwt.createFloatingFlowPanelRight(Gwt.createDiv("EstimationBarWidget", flowPanel));
 	}
 }

@@ -32,7 +32,7 @@ public class EstimationBarFactory {
 				sprintOffset++;
 				remainingWorkInSprint = velocity;
 			}
-			requirement.setEstimationBar(new EstimationBar(sprintOffset, workPerSprint));
+			requirement.setEstimationBar(new EstimationBar(sprintOffset - workPerSprint.size() + 1, workPerSprint));
 		}
 	}
 }
