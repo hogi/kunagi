@@ -1,6 +1,7 @@
 package scrum.client.sprint;
 
 import ilarkesto.gwt.client.AFieldValueWidget;
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.IntegerEditorWidget;
@@ -24,6 +25,7 @@ public class SprintWidget extends AScrumWidget {
 		boolean completed = sprint.isCompleted();
 
 		TableBuilder tb = new TableBuilder();
+		tb.setColumnWidths("100px");
 
 		tb.addFieldRow("Label", new TextEditorWidget(sprint.getLabelModel()), 4);
 		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()), 4);
@@ -38,6 +40,7 @@ public class SprintWidget extends AScrumWidget {
 		tb.addFieldRow("End", new DateEditorWidget(sprint.getEndModel()));
 
 		if (completed == false) {
+			// not completed
 			tb.addFieldLabel("Requirements");
 			tb.addField("Completed", new AFieldValueWidget() {
 
@@ -72,9 +75,18 @@ public class SprintWidget extends AScrumWidget {
 			});
 			tb.nextRow();
 		} else {
-			tb.addFieldRow("Requirements", new RichtextEditorWidget(getSprint().getCompletedRequirementLabelsModel()),
-				4);
+			// completed
+			tb.addFieldRow("Completed Requirements", new RichtextEditorWidget(getSprint()
+					.getCompletedRequirementLabelsModel()), 4);
 		}
+
+		tb.addFieldRow("Review Notes", new RichtextEditorWidget(sprint.getReviewNoteModel()), 4);
+		tb.addFieldRow("Retrospecitve Notes", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel()), 4);
+
+		if (completed)
+			tb.add(Gwt
+					.createServletDownloadLink("sprintReport.pdf?sprintId=" + sprint.getId(), "Downlad Report as PDF"),
+				5);
 
 		return tb.createTable();
 	}

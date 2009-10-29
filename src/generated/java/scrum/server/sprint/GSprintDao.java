@@ -48,6 +48,10 @@ public abstract class GSprintDao
         velocitysCache = null;
         sprintsByCompletedRequirementLabelsCache.clear();
         completedRequirementLabelssCache = null;
+        sprintsByReviewNoteCache.clear();
+        reviewNotesCache = null;
+        sprintsByRetrospectiveNoteCache.clear();
+        retrospectiveNotesCache = null;
     }
 
     @Override
@@ -342,6 +346,86 @@ public abstract class GSprintDao
 
         public boolean test(Sprint e) {
             return e.isCompletedRequirementLabels(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - reviewNote
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Sprint>> sprintsByReviewNoteCache = new Cache<java.lang.String,Set<Sprint>>(
+            new Cache.Factory<java.lang.String,Set<Sprint>>() {
+                public Set<Sprint> create(java.lang.String reviewNote) {
+                    return getEntities(new IsReviewNote(reviewNote));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByReviewNote(java.lang.String reviewNote) {
+        return sprintsByReviewNoteCache.get(reviewNote);
+    }
+    private Set<java.lang.String> reviewNotesCache;
+
+    public final Set<java.lang.String> getReviewNotes() {
+        if (reviewNotesCache == null) {
+            reviewNotesCache = new HashSet<java.lang.String>();
+            for (Sprint e : getEntities()) {
+                if (e.isReviewNoteSet()) reviewNotesCache.add(e.getReviewNote());
+            }
+        }
+        return reviewNotesCache;
+    }
+
+    private static class IsReviewNote implements Predicate<Sprint> {
+
+        private java.lang.String value;
+
+        public IsReviewNote(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.isReviewNote(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - retrospectiveNote
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Sprint>> sprintsByRetrospectiveNoteCache = new Cache<java.lang.String,Set<Sprint>>(
+            new Cache.Factory<java.lang.String,Set<Sprint>>() {
+                public Set<Sprint> create(java.lang.String retrospectiveNote) {
+                    return getEntities(new IsRetrospectiveNote(retrospectiveNote));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByRetrospectiveNote(java.lang.String retrospectiveNote) {
+        return sprintsByRetrospectiveNoteCache.get(retrospectiveNote);
+    }
+    private Set<java.lang.String> retrospectiveNotesCache;
+
+    public final Set<java.lang.String> getRetrospectiveNotes() {
+        if (retrospectiveNotesCache == null) {
+            retrospectiveNotesCache = new HashSet<java.lang.String>();
+            for (Sprint e : getEntities()) {
+                if (e.isRetrospectiveNoteSet()) retrospectiveNotesCache.add(e.getRetrospectiveNote());
+            }
+        }
+        return retrospectiveNotesCache;
+    }
+
+    private static class IsRetrospectiveNote implements Predicate<Sprint> {
+
+        private java.lang.String value;
+
+        public IsRetrospectiveNote(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.isRetrospectiveNote(value);
         }
 
     }

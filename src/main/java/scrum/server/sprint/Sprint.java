@@ -52,7 +52,8 @@ public class Sprint extends GSprint {
 		}
 		setVelocity(velocity);
 		setCompletedRequirementLabels(sb.toString());
-}
+	}
+
 	public void buildReport(APdfBuilder pdf) {
 		FontStyle defaultStyle = new FontStyle().setSize(4);
 		FontStyle labelStyle = new FontStyle().setSize(4).setItalic(true).setColor(Color.DARK_GRAY);
@@ -68,17 +69,19 @@ public class Sprint extends GSprint {
 		pProps.text("Period: ", labelStyle).text(getBegin() + " - " + getEnd() + " / " + getLengthInDays() + " days");
 
 		pdf.nl();
-		pdf.image(BurndownChart.createBurndownChartAsByteArray(this, 470, 200));
+		pdf.image(BurndownChart.createBurndownChartAsByteArray(this, 1000, 500)).setScaleByWidth(150f);
 
-		pdf.paragraph().nl().text("Velocity: ", labelStyle).text("666 StoryPoints"); // TODO
+		pdf.paragraph().nl().text("Velocity: ", labelStyle).text(getVelocity() + " StoryPoints");
 
 		if (isGoalSet()) pdf.paragraph().nl().text("Goal", labelStyle).nl().text(getGoal());
 
-		pdf.paragraph().nl().text("Completed Requirements", labelStyle).nl().text("* Dummy 1\n* Dummy 2"); // TODO
+		if (isCompletedRequirementLabelsSet())
+			pdf.paragraph().nl().text("Completed Requirements", labelStyle).nl().text(getCompletedRequirementLabels());
 
-		pdf.paragraph().nl().text("Review notes", labelStyle).nl().text("-"); // TODO
+		if (isRetrospectiveNoteSet()) pdf.paragraph().nl().text("Review notes", labelStyle).nl().text(getReviewNote());
 
-		pdf.paragraph().nl().text("Retrospective notes", labelStyle).nl().text("-"); // TODO
+		if (isRetrospectiveNoteSet())
+			pdf.paragraph().nl().text("Retrospective notes", labelStyle).nl().text(getRetrospectiveNote());
 	}
 
 	public List<SprintDaySnapshot> getDaySnapshots() {

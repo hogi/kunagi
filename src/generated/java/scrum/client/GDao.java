@@ -1123,6 +1123,22 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.sprint.Sprint> getSprintsByReviewNote(java.lang.String reviewNote) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.isReviewNote(reviewNote)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.Sprint> getSprintsByRetrospectiveNote(java.lang.String retrospectiveNote) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.isRetrospectiveNote(retrospectiveNote)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Task ---
 
     private Map<String, scrum.client.sprint.Task> tasks = new HashMap<String, scrum.client.sprint.Task>();

@@ -90,8 +90,8 @@ public class ProjectContext extends AScrumComponent {
 		navigator.addItem("Issue List", getIssueList());
 		navigator.addItem("Risk Management", getRiskList());
 		navigator.addItem("Wiki", getWiki());
-		navigator.addItem("Sprint history", getSprintHistory());
 		navigator.addItem("Next Sprint", getNextSprint());
+		navigator.addItem("Sprint History", getSprintHistory());
 		navigator.addItem("Courtroom", punishments);
 		navigator.addItem("Personal Preferences", getProjectUserConfig());
 		navigator.addItem("WidgetsTester", getWidgetsTester());

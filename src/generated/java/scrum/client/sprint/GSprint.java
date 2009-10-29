@@ -310,6 +310,82 @@ public abstract class GSprint
         return completedRequirementLabelsModel;
     }
 
+    // --- reviewNote ---
+
+    private java.lang.String reviewNote ;
+
+    public final java.lang.String getReviewNote() {
+        return this.reviewNote ;
+    }
+
+    public final Sprint setReviewNote(java.lang.String reviewNote) {
+        if (isReviewNote(reviewNote)) return (Sprint)this;
+        this.reviewNote = reviewNote ;
+        propertyChanged("reviewNote", this.reviewNote);
+        return (Sprint)this;
+    }
+
+    public final boolean isReviewNote(java.lang.String reviewNote) {
+        return equals(this.reviewNote, reviewNote);
+    }
+
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel reviewNoteModel;
+
+    public ilarkesto.gwt.client.editor.ATextEditorModel getReviewNoteModel() {
+        if (reviewNoteModel == null) reviewNoteModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+
+            @Override
+            public String getValue() {
+                return getReviewNote();
+            }
+
+            @Override
+            public void setValue(String value) {
+                setReviewNote(value);
+            }
+
+        };
+        return reviewNoteModel;
+    }
+
+    // --- retrospectiveNote ---
+
+    private java.lang.String retrospectiveNote ;
+
+    public final java.lang.String getRetrospectiveNote() {
+        return this.retrospectiveNote ;
+    }
+
+    public final Sprint setRetrospectiveNote(java.lang.String retrospectiveNote) {
+        if (isRetrospectiveNote(retrospectiveNote)) return (Sprint)this;
+        this.retrospectiveNote = retrospectiveNote ;
+        propertyChanged("retrospectiveNote", this.retrospectiveNote);
+        return (Sprint)this;
+    }
+
+    public final boolean isRetrospectiveNote(java.lang.String retrospectiveNote) {
+        return equals(this.retrospectiveNote, retrospectiveNote);
+    }
+
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel retrospectiveNoteModel;
+
+    public ilarkesto.gwt.client.editor.ATextEditorModel getRetrospectiveNoteModel() {
+        if (retrospectiveNoteModel == null) retrospectiveNoteModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+
+            @Override
+            public String getValue() {
+                return getRetrospectiveNote();
+            }
+
+            @Override
+            public void setValue(String value) {
+                setRetrospectiveNote(value);
+            }
+
+        };
+        return retrospectiveNoteModel;
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -322,6 +398,8 @@ public abstract class GSprint
         end  =  endAsString == null ? null : new ilarkesto.gwt.client.Date(endAsString);
         velocity  = (java.lang.Integer) props.get("velocity");
         completedRequirementLabels  = (java.lang.String) props.get("completedRequirementLabels");
+        reviewNote  = (java.lang.String) props.get("reviewNote");
+        retrospectiveNote  = (java.lang.String) props.get("retrospectiveNote");
     }
 
     @Override
@@ -334,6 +412,8 @@ public abstract class GSprint
         properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("velocity", this.velocity);
         properties.put("completedRequirementLabels", this.completedRequirementLabels);
+        properties.put("reviewNote", this.reviewNote);
+        properties.put("retrospectiveNote", this.retrospectiveNote);
     }
 
 }

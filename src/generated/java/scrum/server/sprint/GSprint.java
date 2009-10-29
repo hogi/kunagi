@@ -43,6 +43,8 @@ public abstract class GSprint
         properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("velocity", this.velocity);
         properties.put("completedRequirementLabels", this.completedRequirementLabels);
+        properties.put("reviewNote", this.reviewNote);
+        properties.put("retrospectiveNote", this.retrospectiveNote);
     }
 
     public int compareTo(Sprint other) {
@@ -309,6 +311,76 @@ public abstract class GSprint
         setCompletedRequirementLabels((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - reviewNote
+    // -----------------------------------------------------------
+
+    private java.lang.String reviewNote;
+
+    public final java.lang.String getReviewNote() {
+        return reviewNote;
+    }
+
+    public final void setReviewNote(java.lang.String reviewNote) {
+        reviewNote = prepareReviewNote(reviewNote);
+        if (isReviewNote(reviewNote)) return;
+        this.reviewNote = reviewNote;
+        fireModified();
+    }
+
+    protected java.lang.String prepareReviewNote(java.lang.String reviewNote) {
+        reviewNote = Str.removeUnreadableChars(reviewNote);
+        return reviewNote;
+    }
+
+    public final boolean isReviewNoteSet() {
+        return this.reviewNote != null;
+    }
+
+    public final boolean isReviewNote(java.lang.String reviewNote) {
+        if (this.reviewNote == null && reviewNote == null) return true;
+        return this.reviewNote != null && this.reviewNote.equals(reviewNote);
+    }
+
+    protected final void updateReviewNote(Object value) {
+        setReviewNote((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - retrospectiveNote
+    // -----------------------------------------------------------
+
+    private java.lang.String retrospectiveNote;
+
+    public final java.lang.String getRetrospectiveNote() {
+        return retrospectiveNote;
+    }
+
+    public final void setRetrospectiveNote(java.lang.String retrospectiveNote) {
+        retrospectiveNote = prepareRetrospectiveNote(retrospectiveNote);
+        if (isRetrospectiveNote(retrospectiveNote)) return;
+        this.retrospectiveNote = retrospectiveNote;
+        fireModified();
+    }
+
+    protected java.lang.String prepareRetrospectiveNote(java.lang.String retrospectiveNote) {
+        retrospectiveNote = Str.removeUnreadableChars(retrospectiveNote);
+        return retrospectiveNote;
+    }
+
+    public final boolean isRetrospectiveNoteSet() {
+        return this.retrospectiveNote != null;
+    }
+
+    public final boolean isRetrospectiveNote(java.lang.String retrospectiveNote) {
+        if (this.retrospectiveNote == null && retrospectiveNote == null) return true;
+        return this.retrospectiveNote != null && this.retrospectiveNote.equals(retrospectiveNote);
+    }
+
+    protected final void updateRetrospectiveNote(Object value) {
+        setRetrospectiveNote((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -321,6 +393,8 @@ public abstract class GSprint
             if (property.equals("end")) updateEnd(value);
             if (property.equals("velocity")) updateVelocity(value);
             if (property.equals("completedRequirementLabels")) updateCompletedRequirementLabels(value);
+            if (property.equals("reviewNote")) updateReviewNote(value);
+            if (property.equals("retrospectiveNote")) updateRetrospectiveNote(value);
         }
     }
 
