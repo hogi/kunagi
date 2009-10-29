@@ -2,12 +2,15 @@ package scrum.server.sprint;
 
 import ilarkesto.base.time.Date;
 import ilarkesto.logging.Logger;
+import ilarkesto.pdf.AParagraph;
 import ilarkesto.pdf.APdfBuilder;
 import ilarkesto.pdf.FontStyle;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.Set;
 
+import scrum.server.common.BurndownChart;
 import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
 
@@ -51,16 +54,38 @@ public class Sprint extends GSprint {
 		setCompletedRequirementLabels(sb.toString());
 }
 	public void buildReport(APdfBuilder pdf) {
-		FontStyle headerStyle = new FontStyle().setSize(10).setBold(true);
+		FontStyle defaultStyle = new FontStyle().setSize(4);
+		FontStyle labelStyle = new FontStyle().setSize(4).setItalic(true).setColor(Color.DARK_GRAY);
+		FontStyle headerStyle = new FontStyle().setSize(5).setBold(true);
+
+		pdf.setDefaultFontStyle(defaultStyle);
 
 		pdf.paragraph().text("Scrum Sprint Report", headerStyle);
+
+		AParagraph pProps = pdf.paragraph();
+		pProps.nl().text("Project: ", labelStyle).text(getProject().getLabel()).nl();
+		pProps.text("Sprint: ", labelStyle).text(getLabel()).nl();
+		pProps.text("Period: ", labelStyle).text(getBegin() + " - " + getEnd() + " / " + getLengthInDays() + " days");
+
+		pdf.nl();
+		pdf.image(BurndownChart.createBurndownChartAsByteArray(this, 470, 200));
+
+		pdf.paragraph().nl().text("Velocity: ", labelStyle).text("666 StoryPoints"); // TODO
+
+		if (isGoalSet()) pdf.paragraph().nl().text("Goal", labelStyle).nl().text(getGoal());
+
+		pdf.paragraph().nl().text("Completed Requirements", labelStyle).nl().text("* Dummy 1\n* Dummy 2"); // TODO
+
+		pdf.paragraph().nl().text("Review notes", labelStyle).nl().text("-"); // TODO
+
+		pdf.paragraph().nl().text("Retrospective notes", labelStyle).nl().text("-"); // TODO
 	}
 
 	public List<SprintDaySnapshot> getDaySnapshots() {
 		return sprintDaySnapshotDao.getSprintDaySnapshots(this);
 	}
 
-	public int getLenghtInDays() {
+	public int getLengthInDays() {
 		return getBegin().getPeriodTo(getEnd()).toDays();
 	}
 

@@ -5,6 +5,8 @@ import ilarkesto.logging.Logger;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -91,7 +93,13 @@ public class BurndownChart {
 
 	// --- ---
 
-	public void wirteProjectBurndownChart(OutputStream out, String projectId, int width, int height) {
+	public static byte[] createBurndownChartAsByteArray(Sprint sprint, int width, int height) {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		new BurndownChart().writeSprintBurndownChart(out, sprint, width, height);
+		return out.toByteArray();
+	}
+
+	public void writeProjectBurndownChart(OutputStream out, String projectId, int width, int height) {
 		Project project = projectDao.getById(projectId);
 		List<ProjectSprintSnapshot> snapshots = project.getSprintSnapshots();
 		project.getCurrentSprintSnapshot().update();
@@ -99,10 +107,13 @@ public class BurndownChart {
 		writeProjectBurndownChart(out, snapshots, project.getBegin(), project.getEnd().addDays(1), width, height);
 	}
 
-	public void wirteSprintBurndownChart(OutputStream out, String sprintId, int width, int height) {
+	public void writeSprintBurndownChart(OutputStream out, String sprintId, int width, int height) {
 		Sprint sprint = sprintDao.getById(sprintId);
 		if (sprint == null) throw new IllegalArgumentException("Sprint " + sprintId + " does not exist.");
+		writeSprintBurndownChart(out, sprint, width, height);
+	}
 
+	public void writeSprintBurndownChart(OutputStream out, Sprint sprint, int width, int height) {
 		List<SprintDaySnapshot> snapshots = sprint.getDaySnapshots();
 		if (snapshots.isEmpty()) {
 			Date date = Date.today();
@@ -159,6 +170,7 @@ public class BurndownChart {
 		JFreeChart chart = createSprintBurndownChart(data, "Date", "Work", firstDay, lastDay, 1, 3, max * 1.1, tick);
 		try {
 			ChartUtilities.writeScaledChartAsPNG(out, chart, width, height, 1, 1);
+			out.flush();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -181,6 +193,7 @@ public class BurndownChart {
 		renderer.setSeriesStroke(2, new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
 
 		DateAxis axis = new DateAxis(dateAxisLabel);
+		axis.setLabelFont(new Font(axis.getLabelFont().getName(), Font.PLAIN, 7));
 		axis.setDateFormatOverride(Date.FORMAT_DAY_MONTH);
 		axis.setTickUnit(new DateTickUnit(DateTickUnit.DAY, dateLabelTickUnit));
 		axis.setAxisLineVisible(false);
@@ -198,6 +211,7 @@ public class BurndownChart {
 		chart.getXYPlot().setDomainAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
 
 		NumberAxis axis3 = new NumberAxis(valueAxisLabel);
+		axis3.setLabelFont(new Font(axis3.getLabelFont().getName(), Font.PLAIN, 7));
 		axis3.setNumberFormatOverride(NumberFormat.getIntegerInstance());
 		axis3.setTickUnit(new NumberTickUnit(valueLabelTickUnit));
 

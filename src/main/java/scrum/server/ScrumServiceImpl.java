@@ -10,6 +10,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -235,8 +236,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 		}
 		project.switchToNextSprint();
-		sendToClients(session, project.getCurrentSprint());
-		sendToClients(session, project.getNextSprint());
+		sendToClients(session, project.getSprints());
 		sendToClients(session, project);
 	}
 
@@ -317,6 +317,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	// --- helper ---
+
+	private void sendToClients(WebSession session, Collection<? extends AEntity> entities) {
+		for (AEntity entity : entities) {
+			sendToClients(session, entity);
+		}
+	}
 
 	private void sendToClients(WebSession session, AEntity entity) {
 		session.sendToClient(entity);

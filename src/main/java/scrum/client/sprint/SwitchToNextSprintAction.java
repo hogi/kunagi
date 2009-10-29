@@ -21,6 +21,7 @@ public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 
 			public void run() {
 				cm.getProjectContext().showSprintBacklog((Requirement) null);
+				cm.getUi().unlock();
 			}
 		});
 	}

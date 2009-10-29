@@ -1,6 +1,7 @@
 package scrum.server.project;
 
 import ilarkesto.base.Money;
+import ilarkesto.base.time.Date;
 
 import java.util.HashSet;
 import java.util.List;
@@ -178,11 +179,16 @@ public class Project extends GProject {
 	public void switchToNextSprint() {
 		Sprint oldSprint = getCurrentSprint();
 		oldSprint.close();
+		oldSprint.setEnd(Date.today());
 
 		getCurrentSprintSnapshot().update();
 
 		Sprint newSprint = getNextSprint();
 		if (newSprint == null) newSprint = createNextSprint();
+		if (!newSprint.isBeginSet() || newSprint.getBegin().isPast()) newSprint.setBegin(Date.today());
+		if (!newSprint.isEndSet() || newSprint.getEnd().isBeforeOrSame(newSprint.getBegin()))
+			newSprint.setEnd(newSprint.getBegin().addDays(oldSprint.getLengthInDays()));
+
 		setCurrentSprint(newSprint);
 		createNextSprint();
 
@@ -207,7 +213,10 @@ public class Project extends GProject {
 		Sprint sprint = sprintDao.newEntityInstance();
 		sprint.setProject(this);
 		sprint.setLabel("Next Sprint");
-		if (isCurrentSprintSet()) sprint.setBegin(getCurrentSprint().getEnd());
+		if (isCurrentSprintSet()) {
+			sprint.setBegin(getCurrentSprint().getEnd());
+			sprint.setEnd(sprint.getBegin().addDays(getCurrentSprint().getLengthInDays()));
+		}
 		sprintDao.saveEntity(sprint);
 		setNextSprint(sprint);
 		return sprint;

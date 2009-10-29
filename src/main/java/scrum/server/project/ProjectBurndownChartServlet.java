@@ -28,7 +28,7 @@ public class ProjectBurndownChartServlet extends HttpServlet {
 		LOG.debug("Generating project burndown chart:", width + "x" + height, projectId);
 
 		resp.setContentType("image/png");
-		ScrumWebApplication.get().getBurndownChart().wirteProjectBurndownChart(resp.getOutputStream(), projectId,
+		ScrumWebApplication.get().getBurndownChart().writeProjectBurndownChart(resp.getOutputStream(), projectId,
 			Integer.parseInt(width), Integer.parseInt(height));
 	}
 
