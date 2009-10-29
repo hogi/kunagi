@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import scrum.server.ScrumWebApplication;
+import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
 
 public class CssServlet extends AHttpServlet {
@@ -21,7 +22,7 @@ public class CssServlet extends AHttpServlet {
 	private transient final ScreenCssBuilder screenCssBuilder = new ScreenCssBuilder();
 
 	@Override
-	protected void onRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
 		resp.setContentType("text/css");
 		CssRenderer css = new CssRenderer(resp.getWriter());
 		CssBuilder builder = getCssBuilder();

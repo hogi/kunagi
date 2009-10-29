@@ -10,18 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import scrum.server.ScrumWebApplication;
+import scrum.server.WebSession;
+
 public abstract class AHttpServlet extends HttpServlet {
 
 	private static final Logger LOG = Logger.get(AHttpServlet.class);
 
-	protected abstract void onRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException;
+	protected abstract void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session)
+			throws IOException;
 
 	protected void onInit(ServletConfig config) {}
 
 	@Override
 	protected final void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			onRequest(req, resp);
+			onRequest(req, resp, (WebSession) ScrumWebApplication.get().getWebSession(req));
 		} catch (Throwable ex) {
 			LOG.fatal("GET failed:", getClass().getName(), "->", ex);
 		}
@@ -30,7 +34,7 @@ public abstract class AHttpServlet extends HttpServlet {
 	@Override
 	protected final void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			onRequest(req, resp);
+			onRequest(req, resp, (WebSession) ScrumWebApplication.get().getWebSession(req));
 		} catch (Throwable ex) {
 			LOG.fatal("POST failed:", getClass().getName(), "->", ex);
 		}

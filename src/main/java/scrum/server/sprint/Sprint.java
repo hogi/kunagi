@@ -2,6 +2,8 @@ package scrum.server.sprint;
 
 import ilarkesto.base.time.Date;
 import ilarkesto.logging.Logger;
+import ilarkesto.pdf.APdfBuilder;
+import ilarkesto.pdf.FontStyle;
 
 import java.util.List;
 import java.util.Set;
@@ -47,6 +49,11 @@ public class Sprint extends GSprint {
 		}
 		setVelocity(velocity);
 		setCompletedRequirementLabels(sb.toString());
+}
+	public void buildReport(APdfBuilder pdf) {
+		FontStyle headerStyle = new FontStyle().setSize(10).setBold(true);
+
+		pdf.paragraph().text("Scrum Sprint Report", headerStyle);
 	}
 
 	public List<SprintDaySnapshot> getDaySnapshots() {

@@ -41,4 +41,14 @@
 		<url-pattern>/scrum.ScrumGwtApplication/sprintBurndownChart.png</url-pattern>
 	</servlet-mapping>
 
+    <!-- sprint report -->
+    <servlet>
+        <servlet-name>sprintReport</servlet-name>
+        <servlet-class>scrum.server.sprint.SprintReportServlet</servlet-class>
+    </servlet>      
+    <servlet-mapping>
+        <servlet-name>sprintReport</servlet-name>
+        <url-pattern>/scrum.ScrumGwtApplication/sprintReport.pdf</url-pattern>
+    </servlet-mapping>
+
 </web-app>
