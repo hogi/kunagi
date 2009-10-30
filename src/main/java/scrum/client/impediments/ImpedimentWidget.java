@@ -1,6 +1,6 @@
 package scrum.client.impediments;
 
-import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
@@ -27,7 +27,7 @@ public class ImpedimentWidget extends AScrumWidget {
 		fields.add("Description", new RichtextEditorWidget(impediment.getDescriptionModel()));
 		fields.add("Solution", new RichtextEditorWidget(impediment.getSolutionModel()));
 
-		return Gwt.createFlowPanel(fields, new CommentsWidget(impediment));
+		return TableBuilder.row(20, fields, new CommentsWidget(impediment));
 	}
 
 }
