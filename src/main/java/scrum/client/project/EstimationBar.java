@@ -23,6 +23,11 @@ public class EstimationBar {
 		return workPerSprint;
 	}
 
+	public boolean isCompetedOnSameSprint(EstimationBar previous) {
+		if (sprintOffset != previous.sprintOffset) return false;
+		return workPerSprint.size() < 2;
+	}
+
 	@Override
 	public String toString() {
 		return "EstimationBar(" + sprintOffset + ", " + Gwt.toString(workPerSprint) + ")";

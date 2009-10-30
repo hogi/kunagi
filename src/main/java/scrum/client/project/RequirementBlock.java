@@ -16,6 +16,7 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 
 	private SimplePanel statusIcon;
 	private Label estimationLabel;
+	private SprintBorderIndicatorWidget sprintBorderIndicator;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
@@ -52,6 +53,24 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 		estimationLabel.setText(requirement.getEstimatedWorkAsString());
 		statusIcon.setWidget(statusImage);
 		header.setCenter(requirement.getLabel());
+
+		boolean sprintBorder = false;
+		Requirement previous = getList().getPrevious(requirement);
+		if (previous != null) {
+			sprintBorder = !requirement.getEstimationBar().isCompetedOnSameSprint(previous.getEstimationBar());
+		}
+
+		if (sprintBorder) {
+			if (sprintBorderIndicator == null) {
+				sprintBorderIndicator = new SprintBorderIndicatorWidget();
+				getPreHeaderPanel().add(sprintBorderIndicator);
+			}
+		} else {
+			if (sprintBorderIndicator != null) {
+				getPreHeaderPanel().remove(sprintBorderIndicator);
+				sprintBorderIndicator = null;
+			}
+		}
 	}
 
 	@Override

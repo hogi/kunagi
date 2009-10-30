@@ -124,6 +124,10 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".EstimationBarWidget").marginTop(7).border(1, "solid", cNavigatorSelectedItemBackground);
 		css.style(".EstimationBarWidget-bar0").background(cEstimationBar0);
 		css.style(".EstimationBarWidget-bar1").background(cEstimationBar1);
+
+		css.style(".SprintBorderIndicatorWidget").background(cPagePanelHeaderBackground).color(cPagePanelHeader)
+				.border(1, "solid", cPagePanelBorder).textAlignCenter().borderRadius(10).fontSize(fontSizeSmall)
+				.margin(3, 100, 3, 100);
 	}
 
 	private void whiteboard(CssRenderer css) {

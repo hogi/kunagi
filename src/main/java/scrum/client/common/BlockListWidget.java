@@ -31,7 +31,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	private boolean dndSorting = true;
 	private Comparator<O> autoSorter;
 	private BlockWidgetFactory<O> blockWidgetFactory;
-	private BlockMoveObserver<O> moveObserver;
+	private Runnable moveObserver;
 	private BlockListSelectionManager selectionManager;
 	private BlockListDropAction<O> dropAction;
 	private BlockDndMarkerWidget dndMarkerBottom;
@@ -94,11 +94,17 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		return list.getWidget(row);
 	}
 
+	public O getPrevious(O object) {
+		int index = list.getObjects().indexOf(object);
+		if (index < 1) return null;
+		return list.getObjects().get(index - 1);
+	}
+
 	public ABlockWidget<O> getBlock(O object) {
 		return list.getWidget(object);
 	}
 
-	public void setMoveObserver(BlockMoveObserver<O> orderObserver) {
+	public void setMoveObserver(Runnable orderObserver) {
 		this.moveObserver = orderObserver;
 	}
 
@@ -137,17 +143,13 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		setObjects(new ArrayList<O>(newObjects));
 	}
 
-	public final void move(O object, int toRow, boolean animate) {
-		list.move(toRow, object, animate);
-		assert list.indexOfObject(object) == toRow;
-		if (moveObserver != null) moveObserver.onBlockMoved();
-	}
+	private final void move(O object, int toRow, boolean animate) {}
 
 	public final void drop(ABlockWidget<O> block, int toIndex) {
 		GwtLogger.DEBUG("Dropping to index", toIndex, "->", block);
 		assert block != null;
 		if (block.getList() == this) {
-			move(block.getObject(), toIndex, true);
+			list.move(toIndex, block.getObject(), true, moveObserver);
 			return;
 		}
 		dropAction.onDrop(block.getObject());

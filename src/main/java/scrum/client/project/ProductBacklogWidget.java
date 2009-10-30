@@ -11,7 +11,6 @@ import java.util.List;
 import scrum.client.ListPredicate;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.BlockMoveObserver;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -117,11 +116,12 @@ public class ProductBacklogWidget extends AScrumWidget {
 		list.extendObject(requirement);
 	}
 
-	class MoveObserver implements BlockMoveObserver<Requirement> {
+	class MoveObserver implements Runnable {
 
-		public void onBlockMoved() {
+		public void run() {
 			List<Requirement> requirements = list.getObjects();
 			getCurrentProject().updateRequirementsOrder(requirements);
+			update();
 		}
 
 	}

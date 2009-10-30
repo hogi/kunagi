@@ -24,6 +24,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	private BlockHeaderWidget header;
 
 	private FlowPanel outerPanel;
+	private FlowPanel preHeaderPanel;
 	private FlowPanel panel;
 	private BlockDndMarkerWidget dndMarkerTop = new BlockDndMarkerWidget();
 
@@ -71,6 +72,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 			onUpdateBody();
 			panel.add(Gwt.createDiv("ABlockWidget-body", body));
 		}
+		Gwt.update(preHeaderPanel);
 	}
 
 	protected void onUpdateBody() {
@@ -162,6 +164,14 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		if (extended) cm.getEventBus().fireBlockCollapsed(getObject());
 		cm.getDndManager().unregisterDropTarget(this);
 		super.onUnload();
+	}
+
+	public FlowPanel getPreHeaderPanel() {
+		if (preHeaderPanel == null) {
+			preHeaderPanel = new FlowPanel();
+			outerPanel.insert(preHeaderPanel, 0);
+		}
+		return preHeaderPanel;
 	}
 
 	private class SelectionClickHandler implements ClickHandler {
