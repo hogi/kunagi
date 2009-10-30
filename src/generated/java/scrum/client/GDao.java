@@ -770,6 +770,86 @@ public abstract class GDao
         return ret;
     }
 
+    // --- Release ---
+
+    private Map<String, scrum.client.release.Release> releases = new HashMap<String, scrum.client.release.Release>();
+
+    public final void clearReleases() {
+        releases.clear();
+    }
+
+    public final boolean containsRelease(scrum.client.release.Release release) {
+        return releases.containsKey(release.getId());
+    }
+
+    public final void deleteRelease(scrum.client.release.Release release) {
+        releases.remove(release.getId());
+        entityDeleted(release);
+    }
+
+    public final void createRelease(scrum.client.release.Release release) {
+        releases.put(release.getId(), release);
+        entityCreated(release);
+    }
+
+    private final void updateRelease(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.release.Release entity = releases.get(id);
+        if (entity == null) {
+            entity = new scrum.client.release.Release(data);
+            releases.put(id, entity);
+            ilarkesto.gwt.client.GwtLogger.DEBUG("Release received: " + entity.getId() + " ("+entity+")");
+        } else {
+            entity.updateProperties(data);
+            ilarkesto.gwt.client.GwtLogger.DEBUG("Release updated: " + entity);
+        }
+        onEntityModifiedRemotely(entity);
+    }
+
+    public final scrum.client.release.Release getRelease(String id) {
+        scrum.client.release.Release ret = releases.get(id);
+        if (ret == null) throw new RuntimeException("Release does not exist: " + id);
+        return ret;
+    }
+
+    public final Set<scrum.client.release.Release> getReleases(Collection<String> ids) {
+        Set<scrum.client.release.Release> ret = new HashSet<scrum.client.release.Release>();
+        for (String id : ids) {
+            scrum.client.release.Release entity = releases.get(id);
+            if (entity == null) throw new RuntimeException("Release does not exist: " + id);
+            ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.release.Release> getReleases() {
+        return new ArrayList<scrum.client.release.Release>(releases.values());
+    }
+
+    public final List<scrum.client.release.Release> getReleasesByProject(scrum.client.project.Project project) {
+        List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
+        for (scrum.client.release.Release entity : releases.values()) {
+            if (entity.isProject(project)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.release.Release> getReleasesByLabel(java.lang.String label) {
+        List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
+        for (scrum.client.release.Release entity : releases.values()) {
+            if (entity.isLabel(label)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.release.Release> getReleasesByPublicationDate(ilarkesto.gwt.client.Date publicationDate) {
+        List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
+        for (scrum.client.release.Release entity : releases.values()) {
+            if (entity.isPublicationDate(publicationDate)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Requirement ---
 
     private Map<String, scrum.client.project.Requirement> requirements = new HashMap<String, scrum.client.project.Requirement>();
@@ -1435,6 +1515,7 @@ public abstract class GDao
             clearProjects();
             clearProjectUserConfigs();
             clearQualitys();
+            clearReleases();
             clearRequirements();
             clearRisks();
             clearSprints();
@@ -1456,6 +1537,7 @@ public abstract class GDao
             entityMaps.add(projects);
             entityMaps.add(projectUserConfigs);
             entityMaps.add(qualitys);
+            entityMaps.add(releases);
             entityMaps.add(requirements);
             entityMaps.add(risks);
             entityMaps.add(sprints);
@@ -1494,6 +1576,10 @@ public abstract class GDao
         }
         if (type.equals(scrum.client.project.Quality.ENTITY_TYPE)) {
             updateQuality(data);
+            return;
+        }
+        if (type.equals(scrum.client.release.Release.ENTITY_TYPE)) {
+            updateRelease(data);
             return;
         }
         if (type.equals(scrum.client.project.Requirement.ENTITY_TYPE)) {

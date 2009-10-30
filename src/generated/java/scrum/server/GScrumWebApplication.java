@@ -228,6 +228,31 @@ public abstract class GScrumWebApplication
         qualityDao = null;
     }
 
+    // --- releaseDao ---
+
+    private scrum.server.release.ReleaseDao releaseDao;
+
+    public final scrum.server.release.ReleaseDao getReleaseDao() {
+        if (releaseDao == null) {
+            releaseDao = createReleaseDao();
+            initializeReleaseDao(releaseDao);
+        }
+        return releaseDao;
+    }
+
+    protected scrum.server.release.ReleaseDao createReleaseDao() {
+        return releaseDao = ilarkesto.base.Reflect.newInstance(scrum.server.release.ReleaseDao.class);
+    }
+
+    protected void initializeReleaseDao(scrum.server.release.ReleaseDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetReleaseDao() {
+        releaseDao = null;
+    }
+
     // --- requirementDao ---
 
     private scrum.server.project.RequirementDao requirementDao;

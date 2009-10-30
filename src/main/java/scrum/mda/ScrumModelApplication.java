@@ -182,6 +182,20 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return projectModel;
 	}
 
+	private EntityModel releaseModel;
+
+	public EntityModel getReleaseModel() {
+		if (releaseModel == null) {
+			releaseModel = createEntityModel("Release", "release");
+			releaseModel.setGwtSupport(true);
+			releaseModel.setViewProtected(true);
+			releaseModel.addReference("project", getProjectModel()).setMaster(true);
+			releaseModel.addProperty("label", String.class).setSearchable(true);
+			releaseModel.addProperty("publicationDate", Date.class);
+		}
+		return releaseModel;
+	}
+
 	private EntityModel projectSprintSnapshotModel;
 
 	public EntityModel getProjectSprintSnapshotModel() {
