@@ -1,11 +1,13 @@
 package scrum.client.project;
 
+import ilarkesto.gwt.client.Date;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
+import scrum.client.sprint.Sprint;
 
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -16,7 +18,7 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 
 	private SimplePanel statusIcon;
 	private Label estimationLabel;
-	private SprintBorderIndicatorWidget sprintBorderIndicator;
+	private SprintSwitchIndicatorWidget sprintBorderIndicator;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
@@ -57,12 +59,17 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 		boolean sprintBorder = false;
 		Requirement previous = getList().getPrevious(requirement);
 		if (previous != null && previous.getEstimatedWork() != null) {
-			sprintBorder = !requirement.getEstimationBar().isCompetedOnSameSprint(previous.getEstimationBar());
+			EstimationBar estimationBar = previous.getEstimationBar();
+			sprintBorder = !requirement.getEstimationBar().isCompetedOnSameSprint(estimationBar);
 		}
 
 		if (sprintBorder) {
 			if (sprintBorderIndicator == null) {
-				sprintBorderIndicator = new SprintBorderIndicatorWidget();
+				sprintBorderIndicator = new SprintSwitchIndicatorWidget();
+				Sprint sprint = getCurrentProject().getCurrentSprint();
+				int sprints = previous.getEstimationBar().getEndSprintOffset() + 1;
+				sprintBorderIndicator.updateLabel(sprints, sprint.getLength().multiplyBy(sprints).subtract(
+					sprint.getBegin().getPeriodTo(Date.today()).abs()));
 				getPreHeaderPanel().add(sprintBorderIndicator);
 			}
 		} else {

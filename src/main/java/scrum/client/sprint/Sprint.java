@@ -1,5 +1,7 @@
 package scrum.client.sprint;
 
+import ilarkesto.gwt.client.TimePeriod;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -18,6 +20,10 @@ public class Sprint extends GSprint {
 
 	public Sprint(Map data) {
 		super(data);
+	}
+
+	public TimePeriod getLength() {
+		return getBegin().getPeriodTo(getEnd());
 	}
 
 	public boolean isCompleted() {
