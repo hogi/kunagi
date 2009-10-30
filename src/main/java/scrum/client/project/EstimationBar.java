@@ -19,13 +19,16 @@ public class EstimationBar {
 		return sprintOffset;
 	}
 
+	public int getEndSprintOffset() {
+		return sprintOffset + workPerSprint.size() - 1;
+	}
+
 	public List<Integer> getWorkPerSprint() {
 		return workPerSprint;
 	}
 
 	public boolean isCompetedOnSameSprint(EstimationBar previous) {
-		if (sprintOffset != previous.sprintOffset) return false;
-		return workPerSprint.size() < 2;
+		return getEndSprintOffset() == previous.getEndSprintOffset();
 	}
 
 	@Override
