@@ -28,6 +28,8 @@ public class EstimationBar {
 	}
 
 	public boolean isCompetedOnSameSprint(EstimationBar previous) {
+		if (workPerSprint.isEmpty()) return true;
+		if (workPerSprint.size() == 1 && workPerSprint.get(0) == 0) return true;
 		return getEndSprintOffset() == previous.getEndSprintOffset();
 	}
 

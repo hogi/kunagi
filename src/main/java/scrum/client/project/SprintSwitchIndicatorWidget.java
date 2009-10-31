@@ -24,7 +24,7 @@ public class SprintSwitchIndicatorWidget extends AWidget {
 		} else if (sprints == 2) {
 			s = "next";
 		}
-		label.setText("After " + s + " sprint" + (sprints == 1 ? "" : "s") + ", in " + period.toShortestString());
+		label.setText("After " + s + " sprint" + (sprints <= 2 ? "" : "s") + ", in " + period.toShortestString());
 	}
 
 }

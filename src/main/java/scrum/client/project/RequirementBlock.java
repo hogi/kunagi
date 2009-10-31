@@ -58,6 +58,8 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 
 		boolean sprintBorder = false;
 		Requirement previous = getList().getPrevious(requirement);
+		while (previous != null && previous.getEstimatedWork() == null)
+			previous = getList().getPrevious(previous);
 		if (previous != null && previous.getEstimatedWork() != null) {
 			EstimationBar estimationBar = previous.getEstimationBar();
 			sprintBorder = !requirement.getEstimationBar().isCompetedOnSameSprint(estimationBar);
