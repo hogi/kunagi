@@ -1,5 +1,8 @@
 package scrum.client.wiki;
 
+/**
+ * http://de.wikipedia.org/wiki/Hilfe:Textgestaltung
+ */
 public class WikiParser {
 
 	public static void main(String[] args) {
@@ -12,112 +15,130 @@ public class WikiParser {
 	private WikiMasterPlugin plugins = new WikiMasterPlugin();
 	private String input;
 	private WikiModel model;
-	private int length;
-	private int index;
-	private char ch;
-	private StringBuilder word;
-	private StringBuilder text;
 
 	public WikiParser(String input) {
-		super();
 		this.input = input;
 	}
 
-	private void onWordEnd(String w) {
-		System.out.println("word: " + w);
-		boolean processed = plugins.processWord(w, this, model);
-		if (processed) return;
-		appendToText(w);
-	}
+	private void nextPart() {
+		nextLine = null;
 
-	private void onLineEnd() {
-		flushText();
-		model.addNewLine();
-	}
-
-	private void onSpace() {
-		flushWord();
-		appendToText(' ');
-	}
-
-	private void onSpecialChar() {
-		flushWord();
-		appendToText(ch);
-	}
-
-	private void onChar() {
-		if (ch == '\r') return;
-		if (ch == ' ') {
-			onSpace();
+		// empty
+		if (input.length() == 0) {
+			input = null;
 			return;
 		}
-		if (isNewLine(ch)) {
-			onLineEnd();
+
+		// new paragraph
+		if (input.startsWith("\n")) {
+			String line = getNextLine();
+			while (line.trim().length() == 0) {
+				burn(line.length() + 1);
+				line = getNextLine();
+			}
 			return;
 		}
-		if (!isLetterOrDigit(ch)) {
-			onSpecialChar();
-			return;
+
+		// h1
+		if (input.startsWith("= ")) {
+			String line = getNextLine();
+			if (line.length() > 4 && line.endsWith(" =")) {
+				model.addHeader(line.substring(2, line.length() - 2), 1);
+				burn(line.length() + 1);
+				return;
+			}
 		}
-		appendToWord(ch);
-	}
 
-	private boolean isLetterOrDigit(char ch) {
-		return Character.isLetterOrDigit(ch);
-	}
+		// h2
+		if (input.startsWith("== ")) {
+			String line = getNextLine();
+			if (line.length() > 6 && line.endsWith(" ==")) {
+				model.addHeader(line.substring(3, line.length() - 3), 2);
+				burn(line.length() + 1);
+				return;
+			}
+		}
 
-	private boolean isNewLine(char ch) {
-		return ch == '\n';
-	}
+		// h3
+		if (input.startsWith("=== ")) {
+			String line = getNextLine();
+			if (line.length() > 8 && line.endsWith(" ===")) {
+				model.addHeader(line.substring(4, line.length() - 4), 3);
+				burn(line.length() + 1);
+				return;
+			}
+		}
 
-	private void appendToWord(char ch) {
-		if (word == null) word = new StringBuilder();
-		word.append(ch);
-	}
+		// h4
+		if (input.startsWith("==== ")) {
+			String line = getNextLine();
+			if (line.length() > 10 && line.endsWith(" ====")) {
+				model.addHeader(line.substring(5, line.length() - 5), 4);
+				burn(line.length() + 1);
+				return;
+			}
+		}
 
-	private void appendToText(String s) {
-		if (text == null) text = new StringBuilder();
-		text.append(s);
-	}
-
-	private void appendToText(char c) {
-		if (text == null) text = new StringBuilder();
-		text.append(c);
-	}
-
-	private void onEnd() {
-		flushText();
-	}
-
-	public void flushText() {
-		flushWord();
-		if (text == null) return;
-		model.addText(text.toString());
-		text = null;
-	}
-
-	public void clearWord() {
-		word = null;
-	}
-
-	public void flushWord() {
-		if (word == null) return;
-		onWordEnd(word.toString());
-		word = null;
+		// paragraph
+		model.beginParagraph();
+		String paragraph = cutParagraph();
+		model.addText(paragraph);
+		model.endParagraph();
+		// List<String> words = cutParagraphAsWords();
+		// for (String word : words) {
+		// model.addText(word + " ");
+		// }
 	}
 
 	public WikiModel parse() {
 		model = new WikiModel();
 
-		length = input.length();
+		input = input.replace("\r", "");
 
-		for (index = 0; index < length; index++) {
-			ch = input.charAt(index);
-			onChar();
+		while (input != null) {
+			nextPart();
 		}
-		onEnd();
 
 		return model;
+	}
+
+	private String cutParagraph() {
+		StringBuilder sb = new StringBuilder();
+		boolean first = true;
+		while (input.length() > 0) {
+			String line = getNextLine();
+			if (line.trim().length() == 0) {
+				break;
+			}
+			if (first) {
+				first = false;
+			} else {
+				sb.append(' ');
+			}
+			sb.append(line);
+			burn(line.length() + 1);
+		}
+		return sb.toString();
+	}
+
+	private void burn(int length) {
+		nextLine = null;
+		if (length >= input.length()) {
+			input = "";
+		} else {
+			input = input.substring(length);
+		}
+	}
+
+	private String nextLine;
+
+	private String getNextLine() {
+		if (nextLine == null) {
+			int idx = input.indexOf('\n');
+			if (idx < 0) return input;
+			nextLine = input.substring(0, idx);
+		}
+		return nextLine;
 	}
 
 	public void addPlugin(WikiPlugin plugin) {

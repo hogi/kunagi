@@ -10,6 +10,11 @@ public class Text extends AWikiElement {
 	}
 
 	@Override
+	String toHtml() {
+		return text; // TODO escaping
+	}
+
+	@Override
 	public String toString() {
 		return "Text(\"" + text + "\")";
 	}

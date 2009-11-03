@@ -6,15 +6,16 @@ public class EntityReferencePlugin implements WikiPlugin {
 		int len = word.length();
 		if (len < 4) return false;
 		String prefix = word.substring(0, 3);
-		if (prefix.equals("tsk") || prefix.equals("req") || prefix.equals("iss")) {
+		if (prefix.equals("tsk") || prefix.equals("req") || prefix.equals("iss") || prefix.equals("qlt")
+				|| prefix.equals("imp")) {
 			String suffix = word.substring(3);
 			try {
 				Integer.parseInt(suffix);
 			} catch (NumberFormatException ex) {
 				return false;
 			}
-			parser.clearWord();
-			parser.flushText();
+			// parser.clearWord();
+			// parser.flushText();
 			model.add(new EntityReference(word));
 			return true;
 		}

@@ -3,6 +3,7 @@ package scrum.client;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.RichtextFormater;
 import scrum.client.common.AScrumComponent;
+import scrum.client.wiki.Wiki;
 
 public class RichtextConverter extends AScrumComponent implements RichtextFormater {
 
@@ -14,10 +15,7 @@ public class RichtextConverter extends AScrumComponent implements RichtextFormat
 
 	public String toHtml(String text) {
 		if (Gwt.isEmpty(text)) return text;
-		String html = ScrumJs.regexTextToHtml(text);
-		html = html.replace("\n", "<br>\n");
-		html = html.replace("\r", "");
-		return html;
+		return Wiki.toHtml(text);
 	}
 
 }

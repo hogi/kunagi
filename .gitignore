@@ -1,4 +1,6 @@
 runtimedata
+test-output
+temp-testng*
 tomcat
 hs_err_*.log
 
