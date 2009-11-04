@@ -45,7 +45,7 @@ public class Sprint extends GSprint {
 			if (requirement.isClosed()) {
 				Integer work = requirement.getEstimatedWork();
 				if (work != null) velocity += work;
-				sb.append(" * ");
+				sb.append("* ");
 				sb.append(requirement.getLabel());
 				sb.append("\n");
 			}
