@@ -38,8 +38,10 @@ public class ProductBacklogWidget extends AScrumWidget {
 
 		list = new BlockListWidget<Requirement>(RequirementBlock.FACTORY);
 		list.setAutoSorter(getCurrentProject().getRequirementsOrderComparator());
-		list.setDndSorting(true);
-		list.setMoveObserver(new MoveObserver());
+		if (getCurrentProject().isProductOwner(getCurrentUser())) {
+			list.setDndSorting(true);
+			list.setMoveObserver(new MoveObserver());
+		}
 
 		// Filters
 		Panel filterPanel = new FlowPanel();

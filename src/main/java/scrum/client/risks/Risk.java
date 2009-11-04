@@ -1,7 +1,10 @@
 package scrum.client.risks;
 
+import ilarkesto.gwt.client.Predicate;
+
 import java.util.Map;
 
+import scrum.client.admin.User;
 import scrum.client.project.Project;
 
 public class Risk extends GRisk implements Comparable<Risk> {
@@ -49,5 +52,19 @@ public class Risk extends GRisk implements Comparable<Risk> {
 	@Override
 	public String toString() {
 		return getReference() + " " + getLabel();
+	}
+
+	private Predicate priorityEditPredicate;
+
+	public Predicate getPriorityEditPredicate() {
+		if (priorityEditPredicate == null) priorityEditPredicate = new Predicate() {
+
+			public boolean test() {
+				Project project = cm.getProjectContext().getProject();
+				User user = cm.getAuth().getUser();
+				return project.isProductOwner(user) || project.isTeamMember(user);
+			}
+		};
+		return priorityEditPredicate;
 	}
 }

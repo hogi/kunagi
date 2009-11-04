@@ -44,7 +44,7 @@ public class RiskWidget extends AScrumWidget {
 			protected void onEditorSubmit() {
 				risk.setImpact(Integer.parseInt(getSelectedOption()));
 			}
-		});
+		}.setEditable(risk.getPriorityEditPredicate()));
 		fields.add("Probability", new ADropdownViewEditWidget() {
 
 			@Override
@@ -62,7 +62,7 @@ public class RiskWidget extends AScrumWidget {
 			protected void onEditorSubmit() {
 				risk.setProbability(Integer.parseInt(getSelectedOption()));
 			}
-		});
+		}.setEditable(risk.getPriorityEditPredicate()));
 		fields.add("Priority", new AFieldValueWidget() {
 
 			@Override
