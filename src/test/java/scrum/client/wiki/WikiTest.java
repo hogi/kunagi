@@ -6,6 +6,13 @@ import org.testng.annotations.Test;
 public class WikiTest {
 
 	@Test
+	public void testUnorderedList() {
+		Assert.assertEquals(Wiki.toHtml("* item"), "<ul><li>item</li></ul>");
+		Assert.assertEquals(Wiki.toHtml("* item\nxyz"), "<ul><li>item xyz</li></ul>");
+		Assert.assertEquals(Wiki.toHtml("* item 1\n* item 2"), "<ul><li>item 1</li><li>item 2</li></ul>");
+	}
+
+	@Test
 	public void testPreformated() {
 		Assert.assertEquals(Wiki.toHtml(" preformated"), "<pre> preformated</pre>");
 		Assert.assertEquals(Wiki.toHtml("\tpreformated"), "<pre>    preformated</pre>");

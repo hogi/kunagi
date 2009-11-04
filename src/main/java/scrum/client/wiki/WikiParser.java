@@ -98,6 +98,26 @@ public class WikiParser {
 			return;
 		}
 
+		// unordered list
+		if (input.startsWith("* ")) {
+			UnorderedList list = new UnorderedList();
+			ListItem item = null;
+			String line = getNextLine();
+			while (!line.startsWith("\n") && line.length() > 0) {
+				if (line.startsWith("* ")) {
+					item = new ListItem(line.substring(2));
+					list.add(item);
+				} else {
+					item.append(" ");
+					item.append(line);
+				}
+				burn(line.length() + 1);
+				line = getNextLine();
+			}
+			model.add(list);
+			return;
+		}
+
 		// paragraph
 		model.beginParagraph();
 		String paragraph = cutParagraph();
