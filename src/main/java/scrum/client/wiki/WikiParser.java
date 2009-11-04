@@ -79,6 +79,25 @@ public class WikiParser {
 			}
 		}
 
+		// pre
+		if (input.startsWith(" ")) {
+			StringBuilder sb = new StringBuilder();
+			String line = getNextLine();
+			boolean first = true;
+			while (line.startsWith(" ")) {
+				if (first) {
+					first = false;
+				} else {
+					sb.append("\n");
+				}
+				sb.append(line);
+				burn(line.length() + 1);
+				line = getNextLine();
+			}
+			model.add(new Pre(sb.toString()));
+			return;
+		}
+
 		// paragraph
 		model.beginParagraph();
 		String paragraph = cutParagraph();
@@ -94,6 +113,7 @@ public class WikiParser {
 		model = new WikiModel();
 
 		input = input.replace("\r", "");
+		input = input.replace("\t", "    ");
 
 		while (input != null) {
 			nextPart();

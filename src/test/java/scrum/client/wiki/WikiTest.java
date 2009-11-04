@@ -6,13 +6,10 @@ import org.testng.annotations.Test;
 public class WikiTest {
 
 	@Test
-	public void testComplete() {
-		String html = Wiki
-				.toHtml("= header 1 =\nmy first paragraph\nstill first\n\nsecond paragraph\n\n\n\nthird paragraph\n\n== header 2 ==");
-		System.out.println("\n-----\n" + html + "\n-----\n");
-		Assert
-				.assertEquals(html,
-					"<h1>header 1</h1><p>my first paragraph still first</p><p>second paragraph</p><p>third paragraph</p><h2>header 2</h2>");
+	public void testPreformated() {
+		Assert.assertEquals(Wiki.toHtml(" preformated"), "<pre> preformated</pre>");
+		Assert.assertEquals(Wiki.toHtml("\tpreformated"), "<pre>    preformated</pre>");
+		Assert.assertEquals(Wiki.toHtml(" line 1\n line 2"), "<pre> line 1\n line 2</pre>");
 	}
 
 	@Test
@@ -46,6 +43,16 @@ public class WikiTest {
 	@Test
 	public void testSimple() {
 		Assert.assertEquals(Wiki.toHtml("hello world"), "<p>hello world</p>");
+	}
+
+	@Test
+	public void testComplete() {
+		String html = Wiki
+				.toHtml("= header 1 =\nmy first paragraph\nstill first\n\nsecond paragraph\n\n\n\nthird paragraph\n\n== header 2 ==");
+		System.out.println("\n-----\n" + html + "\n-----\n");
+		Assert
+				.assertEquals(html,
+					"<h1>header 1</h1><p>my first paragraph still first</p><p>second paragraph</p><p>third paragraph</p><h2>header 2</h2>");
 	}
 
 }
