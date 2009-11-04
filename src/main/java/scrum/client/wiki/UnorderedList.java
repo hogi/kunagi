@@ -7,9 +7,9 @@ import java.util.List;
 
 public class UnorderedList extends AWikiElement {
 
-	private List<ListItem> items = new ArrayList<ListItem>();
+	private List<Paragraph> items = new ArrayList<Paragraph>();
 
-	public void add(ListItem item) {
+	public void add(Paragraph item) {
 		items.add(item);
 	}
 
@@ -17,8 +17,10 @@ public class UnorderedList extends AWikiElement {
 	String toHtml() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<ul>");
-		for (ListItem item : items) {
+		for (Paragraph item : items) {
+			sb.append("<li>");
 			sb.append(item.toHtml());
+			sb.append("</li>");
 		}
 		sb.append("</ul>");
 		return sb.toString();

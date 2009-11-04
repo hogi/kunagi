@@ -20,6 +20,30 @@ public class WikiParser {
 		this.input = input;
 	}
 
+	private void appendWord(Paragraph p, String word) {
+		if (isEntityReference(word)) {
+			p.add(new EntityReference(word));
+			return;
+		}
+		p.add(new Text(word));
+	}
+
+	private Paragraph appendLine(Paragraph p, String line) {
+		while (line.length() > 0) {
+			int idx = line.indexOf(' ');
+			if (idx < 0) {
+				appendWord(p, line);
+				line = "";
+			} else {
+				appendWord(p, line.substring(0, idx));
+				p.add(Text.SPACE);
+				line = line.substring(idx + 1);
+			}
+		}
+		p.add(new Text(line));
+		return p;
+	}
+
 	private void nextPart() {
 		nextLine = null;
 
@@ -43,7 +67,7 @@ public class WikiParser {
 		if (input.startsWith("= ")) {
 			String line = getNextLine();
 			if (line.length() > 4 && line.endsWith(" =")) {
-				model.addHeader(line.substring(2, line.length() - 2), 1);
+				model.add(new Header(line.substring(2, line.length() - 2), 1));
 				burn(line.length() + 1);
 				return;
 			}
@@ -53,7 +77,7 @@ public class WikiParser {
 		if (input.startsWith("== ")) {
 			String line = getNextLine();
 			if (line.length() > 6 && line.endsWith(" ==")) {
-				model.addHeader(line.substring(3, line.length() - 3), 2);
+				model.add(new Header(line.substring(3, line.length() - 3), 2));
 				burn(line.length() + 1);
 				return;
 			}
@@ -63,7 +87,7 @@ public class WikiParser {
 		if (input.startsWith("=== ")) {
 			String line = getNextLine();
 			if (line.length() > 8 && line.endsWith(" ===")) {
-				model.addHeader(line.substring(4, line.length() - 4), 3);
+				model.add(new Header(line.substring(4, line.length() - 4), 3));
 				burn(line.length() + 1);
 				return;
 			}
@@ -73,7 +97,7 @@ public class WikiParser {
 		if (input.startsWith("==== ")) {
 			String line = getNextLine();
 			if (line.length() > 10 && line.endsWith(" ====")) {
-				model.addHeader(line.substring(5, line.length() - 5), 4);
+				model.add(new Header(line.substring(5, line.length() - 5), 4));
 				burn(line.length() + 1);
 				return;
 			}
@@ -101,15 +125,16 @@ public class WikiParser {
 		// unordered list
 		if (input.startsWith("* ")) {
 			UnorderedList list = new UnorderedList();
-			ListItem item = null;
+			Paragraph item = null;
 			String line = getNextLine();
 			while (!line.startsWith("\n") && line.length() > 0) {
 				if (line.startsWith("* ")) {
-					item = new ListItem(line.substring(2));
+					item = new Paragraph(false);
+					appendLine(item, line.substring(2));
 					list.add(item);
 				} else {
-					item.append(" ");
-					item.append(line);
+					item.add(Text.SPACE);
+					appendLine(item, line);
 				}
 				burn(line.length() + 1);
 				line = getNextLine();
@@ -119,14 +144,7 @@ public class WikiParser {
 		}
 
 		// paragraph
-		model.beginParagraph();
-		String paragraph = cutParagraph();
-		model.addText(paragraph);
-		model.endParagraph();
-		// List<String> words = cutParagraphAsWords();
-		// for (String word : words) {
-		// model.addText(word + " ");
-		// }
+		model.add(appendLine(new Paragraph(true), cutParagraph()));
 	}
 
 	public WikiModel parse() {
@@ -140,6 +158,24 @@ public class WikiParser {
 		}
 
 		return model;
+	}
+
+	private boolean isEntityReference(String s) {
+		if (s.length() < 4) return false;
+		if (!Character.isDigit(s.charAt(3))) return false;
+		if (!s.startsWith("req") && !s.startsWith("tsk") && !s.startsWith("qlt") && !s.startsWith("iss")
+				&& !s.startsWith("imp") && !s.startsWith("rsk")) return false;
+		int len = s.length();
+		for (int i = 3; i < len; i++) {
+			if (!Character.isDigit(s.charAt(i))) return false;
+		}
+		try {
+			String number = s.substring(3);
+			Integer.parseInt(number);
+		} catch (NumberFormatException ex) {
+			return false;
+		}
+		return true;
 	}
 
 	private String cutParagraph() {

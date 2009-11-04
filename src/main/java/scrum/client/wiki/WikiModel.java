@@ -7,26 +7,6 @@ public class WikiModel {
 
 	private List<AWikiElement> elements = new ArrayList<AWikiElement>();
 
-	public void addHeader(String text, int depth) {
-		add(new Header(text, depth));
-	}
-
-	public void addNewLine() {
-		add(new NewLine());
-	}
-
-	public void beginParagraph() {
-		add(new BeginParagraph());
-	}
-
-	public void endParagraph() {
-		add(new EndParagraph());
-	}
-
-	public void addText(String text) {
-		add(new Text(text));
-	}
-
 	public void add(AWikiElement element) {
 		elements.add(element);
 	}

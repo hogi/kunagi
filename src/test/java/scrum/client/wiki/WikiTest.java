@@ -6,6 +6,13 @@ import org.testng.annotations.Test;
 public class WikiTest {
 
 	@Test
+	public void testEntityReference() {
+		Assert.assertTrue(Wiki.toHtml("tsk15 is completed").contains("<a "));
+		// Assert.assertTrue(Wiki.toHtml("tsk15!").contains("<a "));
+		// Assert.assertTrue(Wiki.toHtml("(tsk15)").contains("<a "));
+	}
+
+	@Test
 	public void testUnorderedList() {
 		Assert.assertEquals(Wiki.toHtml("* item"), "<ul><li>item</li></ul>");
 		Assert.assertEquals(Wiki.toHtml("* item\nxyz"), "<ul><li>item xyz</li></ul>");
@@ -20,7 +27,7 @@ public class WikiTest {
 	}
 
 	@Test
-	public void testParagraphs() {
+	public void testParagraph() {
 		Assert.assertEquals(Wiki.toHtml("a\nb"), "<p>a b</p>");
 		Assert.assertEquals(Wiki.toHtml("a\r\nb"), "<p>a b</p>");
 		Assert.assertEquals(Wiki.toHtml("a\n\nb"), "<p>a</p><p>b</p>");
@@ -39,13 +46,6 @@ public class WikiTest {
 		Assert.assertEquals(Wiki.toHtml("=== header ==="), "<h3>header</h3>");
 		Assert.assertEquals(Wiki.toHtml("==== header ===="), "<h4>header</h4>");
 	}
-
-	// @Test
-	// public void testEntityReference() {
-	// Assert.assertTrue(Wiki.toHtml("tsk15").contains("<a "));
-	// Assert.assertTrue(Wiki.toHtml("tsk15!").contains("<a "));
-	// Assert.assertTrue(Wiki.toHtml("(tsk15)").contains("<a "));
-	// }
 
 	@Test
 	public void testSimple() {

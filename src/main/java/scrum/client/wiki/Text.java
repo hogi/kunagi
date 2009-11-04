@@ -19,4 +19,6 @@ public class Text extends AWikiElement {
 		return "Text(\"" + text + "\")";
 	}
 
+	public static final Text SPACE = new Text(" ");
+
 }
