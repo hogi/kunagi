@@ -13,6 +13,7 @@ import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.PunishmentsWidget;
 import scrum.client.admin.User;
 import scrum.client.collaboration.Comment;
+import scrum.client.collaboration.ProjectEventListWidget;
 import scrum.client.collaboration.WikiWidget;
 import scrum.client.common.AScrumComponent;
 import scrum.client.context.UserHighlightSupport;
@@ -59,6 +60,7 @@ public class ProjectContext extends AScrumComponent {
 	private ProjectUserConfigWidget projectUserConfig;
 	private WidgetsTesterWidget widgetsTester;
 	private PunishmentsWidget punishments;
+	private ProjectEventListWidget projectEventListWidget;
 
 	private User highlightedUser;
 
@@ -78,6 +80,7 @@ public class ProjectContext extends AScrumComponent {
 		wiki = new WikiWidget();
 		widgetsTester = new WidgetsTesterWidget();
 		punishments = new PunishmentsWidget();
+		projectEventListWidget = new ProjectEventListWidget();
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
 		navigator.addItem("Project Overview", getProjectOverview());
@@ -93,6 +96,7 @@ public class ProjectContext extends AScrumComponent {
 		navigator.addItem("Next Sprint", getNextSprint());
 		navigator.addItem("Sprint History", getSprintHistory());
 		navigator.addItem("Courtroom", punishments);
+		navigator.addItem("Journal", getProjectEventList());
 		navigator.addItem("Personal Preferences", getProjectUserConfig());
 		navigator.addItem("WidgetsTester", getWidgetsTester());
 	}
@@ -311,6 +315,10 @@ public class ProjectContext extends AScrumComponent {
 
 	public SprintHistoryWidget getSprintHistory() {
 		return sprintHistory;
+	}
+
+	public ProjectEventListWidget getProjectEventList() {
+		return projectEventListWidget;
 	}
 
 	public ImpedimentListWidget getImpedimentList() {

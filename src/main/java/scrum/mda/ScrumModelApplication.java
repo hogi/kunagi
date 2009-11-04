@@ -444,6 +444,19 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return wikipageModel;
 	}
 
+	private EntityModel projectEventModel;
+
+	public EntityModel getProjectEventModel() {
+		if (projectEventModel == null) {
+			projectEventModel = createEntityModel("ProjectEvent", "collaboration");
+			projectEventModel.setGwtSupport(true);
+			projectEventModel.addReference("project", getProjectModel()).setMaster(true);
+			projectEventModel.addProperty("text", String.class).setMandatory(true).setSearchable(true);
+			projectEventModel.addProperty("timestamp", DateAndTime.class).setMandatory(true);
+		}
+		return projectEventModel;
+	}
+
 	@Override
 	protected String getBasePackageName() {
 		return "scrum.server";
