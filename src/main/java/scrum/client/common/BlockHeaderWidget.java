@@ -117,6 +117,9 @@ public class BlockHeaderWidget extends AWidget {
 	}
 
 	public void addMenuAction(AScrumAction action) {
+
+		if (!action.isExecutable()) return;
+
 		if (menu == null) {
 			menu = new MenuBar(true);
 
@@ -126,7 +129,7 @@ public class BlockHeaderWidget extends AWidget {
 			appendCell(menuBar, "30px", true, null);
 		}
 		MenuItem menuItem = null;
-		if (action.isExecutable()) {
+		if (action.isPermitted()) {
 			menuItem = new MenuItem(action.getLabel(), action);
 		} else {
 			menuItem = new MenuItem(action.getLabel(), (Command) null);

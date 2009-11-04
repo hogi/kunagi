@@ -1,5 +1,7 @@
 package scrum.client.project;
 
+import scrum.client.common.TooltipBuilder;
+
 import com.google.gwt.user.client.Window;
 
 public class DeleteProjectAction extends GDeleteProjectAction {
@@ -15,12 +17,22 @@ public class DeleteProjectAction extends GDeleteProjectAction {
 
 	@Override
 	public String getTooltip() {
-		return "Delete this project and destroy all its data.";
+		TooltipBuilder tb = new TooltipBuilder("Delete this project and destroy all its data.");
+
+		if (!getCurrentUser().isAdmin()) tb.addRemark(TooltipBuilder.NOT_AN_ADMIN);
+
+		return tb.getTooltip();
 	}
 
 	@Override
 	public boolean isExecutable() {
-		return getCurrentUser().isAdmin();
+		return true;
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!getCurrentUser().isAdmin()) return false;
+		return true;
 	}
 
 	@Override

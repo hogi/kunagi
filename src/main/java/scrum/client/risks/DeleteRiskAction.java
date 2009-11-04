@@ -1,5 +1,6 @@
 package scrum.client.risks;
 
+import scrum.client.common.TooltipBuilder;
 
 public class DeleteRiskAction extends GDeleteRiskAction {
 
@@ -14,12 +15,23 @@ public class DeleteRiskAction extends GDeleteRiskAction {
 
 	@Override
 	public String getTooltip() {
-		return "Delete this risk.";
+		TooltipBuilder tb = new TooltipBuilder("Delete this Risk");
+
+		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
+			tb.addRemark(TooltipBuilder.NOT_ANYTHING);
+
+		return tb.getTooltip();
 	}
 
 	@Override
 	public boolean isExecutable() {
-		return getCurrentProject().isPig(getCurrentUser());
+		return true;
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
+		return true;
 	}
 
 	@Override

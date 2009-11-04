@@ -1,5 +1,6 @@
 package scrum.client.project;
 
+import scrum.client.common.TooltipBuilder;
 
 public class CreateProjectAction extends GCreateProjectAction {
 
@@ -9,8 +10,23 @@ public class CreateProjectAction extends GCreateProjectAction {
 	}
 
 	@Override
+	public String getTooltip() {
+		TooltipBuilder tb = new TooltipBuilder("Create a new Project.");
+
+		if (!getCurrentUser().isAdmin()) tb.addRemark(TooltipBuilder.NOT_AN_ADMIN);
+
+		return tb.getTooltip();
+	}
+
+	@Override
 	public boolean isExecutable() {
-		return getCurrentUser().isAdmin();
+		return true;
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!getCurrentUser().isAdmin()) return false;
+		return true;
 	}
 
 	@Override

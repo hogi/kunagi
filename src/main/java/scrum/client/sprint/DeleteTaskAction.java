@@ -1,5 +1,7 @@
 package scrum.client.sprint;
 
+import scrum.client.common.TooltipBuilder;
+
 public class DeleteTaskAction extends GDeleteTaskAction {
 
 	public DeleteTaskAction(Task task) {
@@ -13,12 +15,26 @@ public class DeleteTaskAction extends GDeleteTaskAction {
 
 	@Override
 	public String getTooltip() {
-		return "Delete this task.";
+		TooltipBuilder tb = new TooltipBuilder("Delete this Task.");
+
+		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
+			tb.addRemark(TooltipBuilder.NOT_A_TEAM_MEMBER);
+		} else {
+			if (task.isOwnerSet() && !task.isOwner(getCurrentUser())) tb.addRemark("Another user owns this Task.");
+		}
+
+		return tb.getTooltip();
 	}
 
 	@Override
 	public boolean isExecutable() {
 		if (task.isOwnerSet() && !task.isOwner(getCurrentUser())) return false;
+		return true;
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!getCurrentProject().isTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

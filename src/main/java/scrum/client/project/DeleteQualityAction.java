@@ -1,5 +1,6 @@
 package scrum.client.project;
 
+import scrum.client.common.TooltipBuilder;
 
 public class DeleteQualityAction extends GDeleteQualityAction {
 
@@ -14,17 +15,27 @@ public class DeleteQualityAction extends GDeleteQualityAction {
 
 	@Override
 	public String getTooltip() {
-		return "Delete this quality.";
+		TooltipBuilder tb = new TooltipBuilder("Delete this quality.");
+
+		if (!quality.getProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_A_PRODUCT_OWNER);
+
+		return tb.getTooltip();
 	}
 
 	@Override
 	public boolean isExecutable() {
-		return getCurrentProject().isProductOwner(getCurrentUser());
+		return true;
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!quality.getProject().isProductOwner(getCurrentUser())) return false;
+		return true;
 	}
 
 	@Override
 	protected void onExecute() {
-		getCurrentProject().deleteQuality(quality);
+		quality.getProject().deleteQuality(quality);
 	}
 
 }

@@ -1,5 +1,7 @@
 package scrum.client.project;
 
+import scrum.client.common.TooltipBuilder;
+
 public class ChangeProjectAction extends GChangeProjectAction {
 
 	@Override
@@ -8,8 +10,18 @@ public class ChangeProjectAction extends GChangeProjectAction {
 	}
 
 	@Override
+	public String getTooltip() {
+		TooltipBuilder tb = new TooltipBuilder("Switch to another Project.");
+
+		if (!cm.getProjectContext().isProjectOpen()) tb.addRemark("No project is open yet.");
+
+		return tb.getTooltip();
+	}
+
+	@Override
 	public boolean isExecutable() {
-		return cm.getProjectContext().isProjectOpen();
+		if (!cm.getProjectContext().isProjectOpen()) return false;
+		return true;
 	}
 
 	@Override

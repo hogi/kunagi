@@ -18,7 +18,7 @@ public class DeleteIssueAction extends GDeleteIssueAction {
 
 	@Override
 	public boolean isExecutable() {
-		return getCurrentProject().isPig(getCurrentUser());
+		return getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser());
 	}
 
 	@Override

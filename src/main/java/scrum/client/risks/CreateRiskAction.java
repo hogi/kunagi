@@ -1,5 +1,7 @@
 package scrum.client.risks;
 
+import scrum.client.common.TooltipBuilder;
+
 public class CreateRiskAction extends GCreateRiskAction {
 
 	@Override
@@ -8,7 +10,23 @@ public class CreateRiskAction extends GCreateRiskAction {
 	}
 
 	@Override
+	public String getTooltip() {
+		TooltipBuilder tb = new TooltipBuilder("Create new Risk");
+
+		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
+			tb.addRemark(TooltipBuilder.NOT_ANYTHING);
+
+		return tb.getTooltip();
+	}
+
+	@Override
 	public boolean isExecutable() {
+		return true;
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

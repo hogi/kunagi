@@ -1,5 +1,6 @@
 package scrum.client.sprint;
 
+import scrum.client.common.TooltipBuilder;
 import scrum.client.project.Requirement;
 
 public class CreateTaskAction extends GCreateTaskAction {
@@ -17,11 +18,22 @@ public class CreateTaskAction extends GCreateTaskAction {
 
 	@Override
 	public String getTooltip() {
-		return "Create a new Task for this Requirement.";
+
+		TooltipBuilder tb = new TooltipBuilder("Create a new Task for this Requirement.");
+
+		if (!getCurrentProject().isTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_A_TEAM_MEMBER);
+
+		return tb.getTooltip();
 	}
 
 	@Override
 	public boolean isExecutable() {
+		return true;
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!getCurrentProject().isTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

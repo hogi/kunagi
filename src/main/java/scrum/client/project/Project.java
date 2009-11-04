@@ -79,8 +79,14 @@ public class Project extends GProject {
 		throw new IllegalStateException("User has no project config: " + user);
 	}
 
-	public boolean isPig(User user) {
+	// TODO: guten namen für die methode finden.. hieß vorher isPig(), allerdings ist der PO eig. kein Pig,
+	// oder?
+	public boolean isProductOwnerOrScrumMasterOrTeamMember(User user) {
 		return isProductOwner(user) || isScrumMaster(user) || isTeamMember(user);
+	}
+
+	public boolean isProductOwnerOrTeamMember(User user) {
+		return isProductOwner(user) || isTeamMember(user);
 	}
 
 	public boolean isParticipant(User user) {
