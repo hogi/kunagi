@@ -2,6 +2,7 @@ package scrum.client.sprint;
 
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.Predicate;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.IntegerEditorWidget;
@@ -27,17 +28,19 @@ public class SprintWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setColumnWidths("100px");
 
-		tb.addFieldRow("Label", new TextEditorWidget(sprint.getLabelModel()), 4);
-		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()), 4);
+		tb.addFieldRow("Label", new TextEditorWidget(sprint.getLabelModel(), sprint.getEditPredicate()), 4);
+		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel(), sprint.getEditPredicate()), 4);
 
 		if (completed) {
-			tb.addFieldRow("Velocity", new IntegerEditorWidget(sprint.getVelocityModel()), 4);
+			tb.addFieldRow("Velocity", new IntegerEditorWidget(sprint.getVelocityModel(), Predicate.FALSE), 4);
 		}
 
 		tb.addFieldLabel("Dates");
-		tb.addField("Begin", new DateEditorWidget(sprint.getBeginModel()));
+		tb.addField("Begin", new DateEditorWidget(sprint.getBeginModel(), sprint.getDatesEditPredicate()));
+		// TODO restrict editing
 
-		tb.addFieldRow("End", new DateEditorWidget(sprint.getEndModel()));
+		tb.addFieldRow("End", new DateEditorWidget(sprint.getEndModel(), sprint.getDatesEditPredicate()));
+		// TODO restrict editing
 
 		if (completed == false) {
 			// not completed
@@ -77,11 +80,13 @@ public class SprintWidget extends AScrumWidget {
 		} else {
 			// completed
 			tb.addFieldRow("Completed Requirements", new RichtextEditorWidget(getSprint()
-					.getCompletedRequirementLabelsModel()), 4);
+					.getCompletedRequirementLabelsModel(), sprint.getReviewEditPredicate()), 4);
 		}
 
-		tb.addFieldRow("Review Notes", new RichtextEditorWidget(sprint.getReviewNoteModel()), 4);
-		tb.addFieldRow("Retrospecitve Notes", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel()), 4);
+		tb.addFieldRow("Review Notes", new RichtextEditorWidget(sprint.getReviewNoteModel(), sprint
+				.getReviewEditPredicate()), 4);
+		tb.addFieldRow("Retrospecitve Notes", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel(), sprint
+				.getRetrospecitveEditPredicate()), 4);
 
 		if (completed)
 			tb.add(Gwt

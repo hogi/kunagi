@@ -61,7 +61,7 @@ public class HeaderWidget extends AScrumWidget {
 			if (cm.getProjectContext().isProjectOpen()) {
 				List<String> roles = new ArrayList<String>();
 				if (getCurrentProject().isProductOwner(getCurrentUser())) roles.add("PO");
-				if (getCurrentProject().isScrumMaster(getCurrentUser())) roles.add("PO");
+				if (getCurrentProject().isScrumMaster(getCurrentUser())) roles.add("SM");
 				if (getCurrentProject().isTeamMember(getCurrentUser())) roles.add("TM");
 				boolean first = true;
 				if (!roles.isEmpty()) {

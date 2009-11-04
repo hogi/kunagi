@@ -1,5 +1,6 @@
 package scrum.client.sprint;
 
+import ilarkesto.gwt.client.Predicate;
 import ilarkesto.gwt.client.TimePeriod;
 
 import java.util.ArrayList;
@@ -123,9 +124,68 @@ public class Sprint extends GSprint {
 	public static final Comparator<Sprint> END_DATE_COMPARATOR = new Comparator<Sprint>() {
 
 		public int compare(Sprint a, Sprint b) {
-			return a.getEnd().compareTo(b.getEnd());
+			return b.getEnd().compareTo(a.getEnd());
 		}
 
 	};
+
+	private Predicate editPredicate;
+
+	public Predicate getEditPredicate() {
+		if (editPredicate == null) editPredicate = new Predicate() {
+
+			public boolean test() {
+				if (isCompleted()) return false;
+				if (!cm.getProjectContext().getProject().isProductOwner(cm.getAuth().getUser())) return false;
+				return true;
+			}
+		};
+		return editPredicate;
+	}
+
+	private Predicate retrospecitveEditPredicate;
+
+	public Predicate getRetrospecitveEditPredicate() {
+		if (retrospecitveEditPredicate == null) retrospecitveEditPredicate = new Predicate() {
+
+			public boolean test() {
+				if (!isCompleted()) return false;
+				if (!cm.getProjectContext().getProject().isScrumMaster(cm.getAuth().getUser())) return false;
+				return true;
+			}
+		};
+		return retrospecitveEditPredicate;
+	}
+
+	private Predicate reviewEditPredicate;
+
+	public Predicate getReviewEditPredicate() {
+		if (reviewEditPredicate == null) {
+			reviewEditPredicate = new Predicate() {
+
+				public boolean test() {
+					if (!cm.getProjectContext().getProject().isProductOwner(cm.getAuth().getUser())) return false;
+					return true;
+				}
+			};
+		}
+		return reviewEditPredicate;
+	}
+
+	private Predicate datesEditPredicate;
+
+	public Predicate getDatesEditPredicate() {
+		if (datesEditPredicate == null) {
+			datesEditPredicate = new Predicate() {
+
+				public boolean test() {
+					if (isCompleted()) return false;
+					if (!cm.getProjectContext().getProject().isScrumMaster(cm.getAuth().getUser())) return false;
+					return true;
+				}
+			};
+		}
+		return datesEditPredicate;
+	}
 
 }

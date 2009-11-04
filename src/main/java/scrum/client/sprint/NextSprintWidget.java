@@ -22,8 +22,8 @@ public class NextSprintWidget extends AScrumWidget {
 		Sprint sprint = getSprint();
 
 		fieldsWidget = new FieldsWidget();
-		fieldsWidget.add("Label", new TextEditorWidget(sprint.getLabelModel()));
-		fieldsWidget.add("Goal", new RichtextEditorWidget(sprint.getGoalModel()));
+		fieldsWidget.add("Label", new TextEditorWidget(sprint.getLabelModel(), sprint.getEditPredicate()));
+		fieldsWidget.add("Goal", new RichtextEditorWidget(sprint.getGoalModel(), sprint.getEditPredicate()));
 		fieldsWidget.add("Begin", new DateEditorWidget(sprint.getBeginModel()));
 		fieldsWidget.add("End", new DateEditorWidget(sprint.getEndModel()));
 

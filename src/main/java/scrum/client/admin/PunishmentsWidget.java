@@ -32,7 +32,8 @@ public class PunishmentsWidget extends AScrumWidget {
 
 		for (User u : project.getParticipants()) {
 			main.add(new Label(u.getName()));
-			main.add(new IntegerEditorWidget(u.getProjectConfig().getMisconductsModel()));
+			main.add(new IntegerEditorWidget(u.getProjectConfig().getMisconductsModel(), Gwt.predicate(project
+					.isScrumMaster(getCurrentUser()))));
 			main.add(new PunishmentViewer(u.getProjectConfig(), project));
 			main.nextRow();
 		}
