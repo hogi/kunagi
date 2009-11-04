@@ -586,6 +586,86 @@ public abstract class GDao
         return ret;
     }
 
+    // --- ProjectEvent ---
+
+    private Map<String, scrum.client.collaboration.ProjectEvent> projectEvents = new HashMap<String, scrum.client.collaboration.ProjectEvent>();
+
+    public final void clearProjectEvents() {
+        projectEvents.clear();
+    }
+
+    public final boolean containsProjectEvent(scrum.client.collaboration.ProjectEvent projectEvent) {
+        return projectEvents.containsKey(projectEvent.getId());
+    }
+
+    public final void deleteProjectEvent(scrum.client.collaboration.ProjectEvent projectEvent) {
+        projectEvents.remove(projectEvent.getId());
+        entityDeleted(projectEvent);
+    }
+
+    public final void createProjectEvent(scrum.client.collaboration.ProjectEvent projectEvent) {
+        projectEvents.put(projectEvent.getId(), projectEvent);
+        entityCreated(projectEvent);
+    }
+
+    private final void updateProjectEvent(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.collaboration.ProjectEvent entity = projectEvents.get(id);
+        if (entity == null) {
+            entity = new scrum.client.collaboration.ProjectEvent(data);
+            projectEvents.put(id, entity);
+            ilarkesto.gwt.client.GwtLogger.DEBUG("ProjectEvent received: " + entity.getId() + " ("+entity+")");
+        } else {
+            entity.updateProperties(data);
+            ilarkesto.gwt.client.GwtLogger.DEBUG("ProjectEvent updated: " + entity);
+        }
+        onEntityModifiedRemotely(entity);
+    }
+
+    public final scrum.client.collaboration.ProjectEvent getProjectEvent(String id) {
+        scrum.client.collaboration.ProjectEvent ret = projectEvents.get(id);
+        if (ret == null) throw new RuntimeException("ProjectEvent does not exist: " + id);
+        return ret;
+    }
+
+    public final Set<scrum.client.collaboration.ProjectEvent> getProjectEvents(Collection<String> ids) {
+        Set<scrum.client.collaboration.ProjectEvent> ret = new HashSet<scrum.client.collaboration.ProjectEvent>();
+        for (String id : ids) {
+            scrum.client.collaboration.ProjectEvent entity = projectEvents.get(id);
+            if (entity == null) throw new RuntimeException("ProjectEvent does not exist: " + id);
+            ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.collaboration.ProjectEvent> getProjectEvents() {
+        return new ArrayList<scrum.client.collaboration.ProjectEvent>(projectEvents.values());
+    }
+
+    public final List<scrum.client.collaboration.ProjectEvent> getProjectEventsByProject(scrum.client.project.Project project) {
+        List<scrum.client.collaboration.ProjectEvent> ret = new ArrayList<scrum.client.collaboration.ProjectEvent>();
+        for (scrum.client.collaboration.ProjectEvent entity : projectEvents.values()) {
+            if (entity.isProject(project)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.collaboration.ProjectEvent> getProjectEventsByText(java.lang.String text) {
+        List<scrum.client.collaboration.ProjectEvent> ret = new ArrayList<scrum.client.collaboration.ProjectEvent>();
+        for (scrum.client.collaboration.ProjectEvent entity : projectEvents.values()) {
+            if (entity.isText(text)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.collaboration.ProjectEvent> getProjectEventsByTimestamp(ilarkesto.gwt.client.DateAndTime timestamp) {
+        List<scrum.client.collaboration.ProjectEvent> ret = new ArrayList<scrum.client.collaboration.ProjectEvent>();
+        for (scrum.client.collaboration.ProjectEvent entity : projectEvents.values()) {
+            if (entity.isTimestamp(timestamp)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- ProjectUserConfig ---
 
     private Map<String, scrum.client.admin.ProjectUserConfig> projectUserConfigs = new HashMap<String, scrum.client.admin.ProjectUserConfig>();
@@ -1513,6 +1593,7 @@ public abstract class GDao
             clearImpediments();
             clearIssues();
             clearProjects();
+            clearProjectEvents();
             clearProjectUserConfigs();
             clearQualitys();
             clearReleases();
@@ -1535,6 +1616,7 @@ public abstract class GDao
             entityMaps.add(impediments);
             entityMaps.add(issues);
             entityMaps.add(projects);
+            entityMaps.add(projectEvents);
             entityMaps.add(projectUserConfigs);
             entityMaps.add(qualitys);
             entityMaps.add(releases);
@@ -1568,6 +1650,10 @@ public abstract class GDao
         }
         if (type.equals(scrum.client.project.Project.ENTITY_TYPE)) {
             updateProject(data);
+            return;
+        }
+        if (type.equals(scrum.client.collaboration.ProjectEvent.ENTITY_TYPE)) {
+            updateProjectEvent(data);
             return;
         }
         if (type.equals(scrum.client.admin.ProjectUserConfig.ENTITY_TYPE)) {
