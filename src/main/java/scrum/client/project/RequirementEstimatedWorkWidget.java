@@ -1,16 +1,16 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.ADropdownViewEditWidget;
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ClientConstants;
 import scrum.client.common.AScrumAction;
+import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RequirementEstimatedWorkWidget extends AWidget {
+public class RequirementEstimatedWorkWidget extends AScrumWidget {
 
 	private Requirement requirement;
 	private HorizontalPanel panel;
@@ -57,6 +57,7 @@ public class RequirementEstimatedWorkWidget extends AWidget {
 		@Override
 		public boolean isEditable() {
 			if (requirement.isInCurrentSprint()) return false;
+			if (!getCurrentProject().isTeamMember(getCurrentUser())) return false;
 			return super.isEditable();
 		}
 

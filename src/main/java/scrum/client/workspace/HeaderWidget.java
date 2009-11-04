@@ -4,6 +4,10 @@ import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import scrum.client.ApplicationInfo;
 import scrum.client.admin.LogoutAction;
 import scrum.client.common.AScrumWidget;
@@ -51,14 +55,31 @@ public class HeaderWidget extends AScrumWidget {
 			title.setTitle(applicationInfo.getVersionDescription());
 		}
 
-		String text = "";
+		StringBuilder text = new StringBuilder();
 		if (loggedIn) {
-			text = getCurrentUser().getName();
+			text.append(getCurrentUser().getName());
 			if (cm.getProjectContext().isProjectOpen()) {
-				text = text + " @ " + getCurrentProject().getLabel();
+				List<String> roles = new ArrayList<String>();
+				if (getCurrentProject().isProductOwner(getCurrentUser())) roles.add("PO");
+				if (getCurrentProject().isScrumMaster(getCurrentUser())) roles.add("PO");
+				if (getCurrentProject().isTeamMember(getCurrentUser())) roles.add("TM");
+				boolean first = true;
+				if (!roles.isEmpty()) {
+					for (String role : roles) {
+						if (first) {
+							first = false;
+							text.append(" (");
+						} else {
+							text.append(",");
+						}
+						text.append(role);
+					}
+					text.append(")");
+				}
+				text.append(" @ " + getCurrentProject().getLabel());
 			}
 		}
-		currentUserLabel.setText(text);
+		currentUserLabel.setText(text.toString());
 	}
 
 }

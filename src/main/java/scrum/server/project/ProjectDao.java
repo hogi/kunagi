@@ -1,6 +1,9 @@
 package scrum.server.project;
 
 import ilarkesto.base.time.Date;
+
+import java.util.Collection;
+
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 
@@ -30,13 +33,12 @@ public class ProjectDao extends GProjectDao {
 		User po;
 		User sm;
 
-		if (variant == 0) {
-			po = userDao.getTestUser("cartman");
-			sm = userDao.getTestUser("duke");
-		} else {
-			po = userDao.getTestUser("homer");
-			sm = userDao.getTestUser("cartman");
-		}
+		po = userDao.getTestUser("duke");
+		sm = userDao.getTestUser("spinne");
+
+		Collection<User> team = userDao.getEntities();
+		team.remove(po);
+		team.remove(sm);
 
 		Project project = postProject(userDao.getUserByName("admin"));
 		project.setLabel("Project " + variant);
@@ -44,7 +46,7 @@ public class ProjectDao extends GProjectDao {
 		project.setEnd(Date.today().addMonths(5));
 		project.addParticipants(userDao.getEntities());
 		project.addAdmins(userDao.getEntities());
-		project.addTeamMembers(userDao.getEntities());
+		project.addTeamMembers(team);
 		project.addProductOwner(po);
 		project.addScrumMaster(sm);
 		project.addTestImpediments(variant);
