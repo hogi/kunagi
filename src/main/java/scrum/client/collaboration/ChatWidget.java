@@ -60,8 +60,7 @@ public class ChatWidget extends AScrumWidget {
 
 	private void postMessage() {
 		String text = input.getText();
-		text = text.trim();
-		if (text.length() == 0) return;
+		if (text.trim().length() == 0) return;
 		chat.postMessage(text);
 		input.setText("");
 		input.setFocus(true);
