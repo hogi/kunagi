@@ -168,6 +168,11 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.table().borderCollapseCollapse();
 		css.td().verticalAlignTop().fontFamily(fontFamily).fontSize(fontSize).lineHeight(lineHeight);
 		css.a().cursorPointer();
+		css.p().margin(0, 0, 10, 0);
+		css.h1().fontSize(fontSize + 4).lineHeight(lineHeight + 4).fontWeightBold().margin(0, 0, 5, 0);
+		css.h2().fontSize(fontSize + 2).lineHeight(lineHeight + 2).fontWeightBold().margin(0, 0, 5, 0);
+		css.h3().fontSize(fontSize + 1).lineHeight(lineHeight + 1).fontWeightBold().margin(0, 0, 5, 0);
+		css.h4().fontSize(fontSize).lineHeight(lineHeight).fontWeightBold().margin(0, 0, 5, 0);
 	}
 
 	private void workspace(CssRenderer css) {
@@ -200,7 +205,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".ChatWidget-output .author-system").color("red").fontStyleItalic();
 		css.style(".ChatWidget-output .author-me").color("gray").fontStyleItalic();
 		css.style(".ChatWidget-output a").textDecorationUnderline();
-		css.style(".ChatWidget-output p").margin(3, 0, 0, 0);
+		css.style(".ChatWidget-message").margin(0, 0, 0, 5);
 		css.style(".ChatWidget-input").marginTop(5).width(97, "%");
 	}
 
