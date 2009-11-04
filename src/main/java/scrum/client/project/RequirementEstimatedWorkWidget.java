@@ -57,7 +57,7 @@ public class RequirementEstimatedWorkWidget extends AWidget {
 		@Override
 		public boolean isEditable() {
 			if (requirement.isInCurrentSprint()) return false;
-			return true;
+			return super.isEditable();
 		}
 
 		@Override

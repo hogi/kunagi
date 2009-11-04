@@ -11,7 +11,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import scrum.client.DndManager;
-import scrum.client.GenericPredicate;
 import scrum.client.dnd.BlockDndMarkerWidget;
 import scrum.client.dnd.BlockListDropAction;
 
@@ -36,7 +35,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	private BlockListDropAction<O> dropAction;
 	private BlockDndMarkerWidget dndMarkerBottom;
 	private FlowPanel panel;
-	private GenericPredicate<O> highlightPredicate;
+	private ElementPredicate<O> highlightPredicate;
 
 	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory, BlockListDropAction<O> dropAction) {
 		this.dropAction = dropAction;
@@ -331,7 +330,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		}
 	}
 
-	public void setTaskHighlighting(GenericPredicate<O> predicate) {
+	public void setTaskHighlighting(ElementPredicate<O> predicate) {
 		this.highlightPredicate = predicate;
 		updateTaskHighlighting();
 	}

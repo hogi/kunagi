@@ -27,9 +27,9 @@ public class TaskWidget extends AWidget {
 
 		TableBuilder tb = new TableBuilder();
 
-		tb.addFieldRow("Label", new TextEditorWidget(task.getLabelModel()), 3);
+		tb.addFieldRow("Label", new TextEditorWidget(task.getLabelModel(), task.getEditPredicate()), 3);
 
-		tb.addFieldRow("Description", new RichtextEditorWidget(task.getDescriptionModel()), 3);
+		tb.addFieldRow("Description", new RichtextEditorWidget(task.getDescriptionModel(), task.getEditPredicate()), 3);
 
 		tb.addField("Burned", new AIntegerViewEditWidget() {
 
@@ -64,7 +64,7 @@ public class TaskWidget extends AWidget {
 				task.incrementBurnedWork();
 				task.adjustRemainingWork(1);
 			}
-		});
+		}.setEditable(task.getEditPredicate()));
 
 		tb.addFieldRow("Remaining", new TaskRemainingWorkWidget(task));
 

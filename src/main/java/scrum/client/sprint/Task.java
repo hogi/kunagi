@@ -1,5 +1,7 @@
 package scrum.client.sprint;
 
+import ilarkesto.gwt.client.Predicate;
+
 import java.util.Comparator;
 import java.util.Map;
 
@@ -144,5 +146,18 @@ public class Task extends GTask {
 			return a.getNumber() - b.getNumber();
 		}
 	};
+
+	private Predicate editPredicate;
+
+	public Predicate getEditPredicate() {
+		if (editPredicate == null) editPredicate = new Predicate() {
+
+			public boolean test() {
+				if (!cm.getProjectContext().getProject().isTeamMember(cm.getAuth().getUser())) return false;
+				return true;
+			}
+		};
+		return editPredicate;
+	}
 
 }

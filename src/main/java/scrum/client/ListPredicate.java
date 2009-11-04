@@ -1,6 +1,8 @@
 package scrum.client;
 
-public abstract class ListPredicate<G> implements GenericPredicate<G> {
+import scrum.client.common.ElementPredicate;
+
+public abstract class ListPredicate<G> implements ElementPredicate<G> {
 
 	private final String name;
 	private boolean enabled = true;

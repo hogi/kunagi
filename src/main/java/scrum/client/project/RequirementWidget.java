@@ -33,9 +33,11 @@ public class RequirementWidget extends AWidget {
 
 		FieldsWidget fields = new FieldsWidget();
 
-		if (showLabel) fields.add("Label", new TextEditorWidget(requirement.getLabelModel()));
+		if (showLabel)
+			fields.add("Label", new TextEditorWidget(requirement.getLabelModel(), requirement.getEditPredicate()));
 
-		fields.add("Description", new RichtextEditorWidget(requirement.getDescriptionModel()));
+		fields.add("Description", new RichtextEditorWidget(requirement.getDescriptionModel(), requirement
+				.getEditPredicate()));
 
 		fields.add("Qualities", new AMultiSelectionViewEditWidget<Quality>() {
 
@@ -54,9 +56,10 @@ public class RequirementWidget extends AWidget {
 			protected void onEditorSubmit() {
 				requirement.setQualitys(getEditorSelectedItems());
 			}
-		});
+		}.setEditable(requirement.getEditPredicate()));
 
-		fields.add("Test", new RichtextEditorWidget(requirement.getTestDescriptionModel()));
+		fields.add("Test", new RichtextEditorWidget(requirement.getTestDescriptionModel(), requirement
+				.getEditPredicate()));
 
 		fields.add("Estimated Work", new RequirementEstimatedWorkWidget(requirement));
 

@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import scrum.client.GenericPredicate;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.common.BlockListWidget;
+import scrum.client.common.ElementPredicate;
 import scrum.client.context.UserHighlightSupport;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Sprint;
@@ -36,7 +36,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 	private Map<Requirement, TaskListWidget> closedTasks;
 	private BlockListSelectionManager selectionManager = new BlockListSelectionManager();
 
-	private GenericPredicate<Task> predicate;
+	private ElementPredicate<Task> predicate;
 
 	private List<Requirement> knownRequirements = Collections.emptyList();
 
@@ -166,7 +166,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		setTaskHighlighting(user == null ? null : new ByUserPredicate(user));
 	}
 
-	public void setTaskHighlighting(GenericPredicate<Task> predicate) {
+	public void setTaskHighlighting(ElementPredicate<Task> predicate) {
 		this.predicate = predicate;
 		updateHighlighting();
 	}
@@ -209,7 +209,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		return Gwt.formatHours(i);
 	}
 
-	private static class ByUserPredicate implements GenericPredicate<Task> {
+	private static class ByUserPredicate implements ElementPredicate<Task> {
 
 		private final User user;
 

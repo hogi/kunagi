@@ -1,5 +1,7 @@
 package scrum.client.project;
 
+import ilarkesto.gwt.client.Predicate;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -196,4 +198,19 @@ public class Requirement extends GRequirement {
 	public String toString() {
 		return getReference() + " " + getLabel();
 	}
+
+	private Predicate editPredicate;
+
+	public Predicate getEditPredicate() {
+		if (editPredicate == null) editPredicate = new Predicate() {
+
+			public boolean test() {
+				if (isInCurrentSprint()) return false;
+				if (!cm.getProjectContext().getProject().isProductOwner(cm.getAuth().getUser())) return false;
+				return true;
+			}
+		};
+		return editPredicate;
+	}
+
 }
