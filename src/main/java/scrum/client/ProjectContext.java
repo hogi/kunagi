@@ -162,8 +162,8 @@ public class ProjectContext extends AScrumComponent {
 		assert project != null;
 		GwtLogger.DEBUG("Showing entity by reference:", reference);
 
-		if (reference.startsWith("[")) {
-			String page = reference.substring(1, reference.length() - 1);
+		if (reference.length() > 4 && reference.startsWith("[[")) {
+			String page = reference.substring(2, reference.length() - 2);
 			showWiki(page);
 			return;
 		}

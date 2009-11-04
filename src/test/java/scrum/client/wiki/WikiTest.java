@@ -8,8 +8,17 @@ public class WikiTest {
 	@Test
 	public void testEntityReference() {
 		Assert.assertTrue(Wiki.toHtml("tsk15 is completed").contains("<a "));
+		Assert.assertTrue(Wiki.toHtml("[[Wiki]] is cool").contains("<a "));
 		// Assert.assertTrue(Wiki.toHtml("tsk15!").contains("<a "));
 		// Assert.assertTrue(Wiki.toHtml("(tsk15)").contains("<a "));
+	}
+
+	@Test
+	public void testLink() {
+		Assert.assertEquals(Wiki.toHtml("www.servisto.de"),
+			"<p><a href=\"http://www.servisto.de\" target=\"_blank\">servisto.de</a></p>");
+		Assert.assertEquals(Wiki.toHtml("http://www.servisto.de"),
+			"<p><a href=\"http://www.servisto.de\" target=\"_blank\">servisto.de</a></p>");
 	}
 
 	@Test

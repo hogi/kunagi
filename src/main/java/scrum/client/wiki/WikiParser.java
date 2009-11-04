@@ -25,6 +25,10 @@ public class WikiParser {
 			p.add(new EntityReference(word));
 			return;
 		}
+		if (isUrl(word)) {
+			p.add(new Link(word));
+			return;
+		}
 		p.add(new Text(word));
 	}
 
@@ -160,8 +164,17 @@ public class WikiParser {
 		return model;
 	}
 
+	private boolean isUrl(String s) {
+		if (s.startsWith("http://")) return true;
+		if (s.startsWith("https://")) return true;
+		if (s.startsWith("www.")) return true;
+		if (s.startsWith("ftp://")) return true;
+		return false;
+	}
+
 	private boolean isEntityReference(String s) {
 		if (s.length() < 4) return false;
+		if (s.startsWith("[[") && s.endsWith("]]")) return true;
 		if (!Character.isDigit(s.charAt(3))) return false;
 		if (!s.startsWith("req") && !s.startsWith("tsk") && !s.startsWith("qlt") && !s.startsWith("iss")
 				&& !s.startsWith("imp") && !s.startsWith("rsk")) return false;

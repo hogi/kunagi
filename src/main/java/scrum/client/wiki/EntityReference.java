@@ -15,9 +15,14 @@ public class EntityReference extends AWikiElement {
 		sb.append("<a onclick='window.scrum.showEntityByReference(\"");
 		sb.append(reference);
 		sb.append("\")'>");
-		sb.append(reference);
+		sb.append(getLabel());
 		sb.append("</a>");
 		return sb.toString();
+	}
+
+	private String getLabel() {
+		if (reference.startsWith("[[")) return reference.substring(2, reference.length() - 2);
+		return reference;
 	}
 
 	@Override
