@@ -159,6 +159,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".gwt-Button:hover").color(cButtonTextHover).border(1, "solid", cButtonBorderHover);
 		css.style(".gwt-Button[disabled], .gwt-Button[disabled]:hover").color(cButtonTextDisabled).border(1, "solid",
 			cButtonBorderDisabled);
+		css.style(".MenuItem-disabled").color(cButtonTextDisabled);
 	}
 
 	private void html(CssRenderer css) {

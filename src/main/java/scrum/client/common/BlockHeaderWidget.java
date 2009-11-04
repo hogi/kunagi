@@ -6,6 +6,7 @@ import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -124,9 +125,14 @@ public class BlockHeaderWidget extends AWidget {
 			menuBar.setPopupPosition(MenuBar.PopupPosition.LEFT);
 			appendCell(menuBar, "30px", true, null);
 		}
-		MenuItem menuItem = new MenuItem(action.getLabel(), action);
+		MenuItem menuItem = null;
+		if (action.isExecutable()) {
+			menuItem = new MenuItem(action.getLabel(), action);
+		} else {
+			menuItem = new MenuItem(action.getLabel(), (Command) null);
+			menuItem.addStyleName("MenuItem-disabled");
+		}
 		menuItem.setTitle(action.getTooltip());
-		menuItem.setVisible(action.isExecutable());
 		menu.addItem(menuItem);
 	}
 
