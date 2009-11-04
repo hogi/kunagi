@@ -21,15 +21,35 @@ public class WikiParser {
 	}
 
 	private void appendWord(Paragraph p, String word) {
-		if (isEntityReference(word)) {
-			p.add(new EntityReference(word));
-			return;
-		}
 		if (isUrl(word)) {
 			p.add(new Link(word));
 			return;
 		}
+
+		if (word.length() > 1 && isIgnorableWordPrefix(word.charAt(0))) {
+			p.add(new Text(word.substring(0, 1)));
+			word = word.substring(1);
+		}
+
+		StringBuilder suffix = null;
+		for (int i = word.length() - 1; i >= 0; i--) {
+			if (isIgnorableWordSuffix(word.charAt(i))) {
+				if (suffix == null) suffix = new StringBuilder();
+				suffix.insert(0, word.charAt(i));
+			} else {
+				break;
+			}
+		}
+		if (suffix != null) word = word.substring(0, word.length() - suffix.length());
+
+		if (isEntityReference(word)) {
+			p.add(new EntityReference(word));
+			if (suffix != null) p.add(new Text(suffix.toString()));
+			return;
+		}
+
 		p.add(new Text(word));
+		if (suffix != null) p.add(new Text(suffix.toString()));
 	}
 
 	private Paragraph appendLine(Paragraph p, String line) {
@@ -162,6 +182,14 @@ public class WikiParser {
 		}
 
 		return model;
+	}
+
+	private boolean isIgnorableWordPrefix(char c) {
+		return c == '(';
+	}
+
+	private boolean isIgnorableWordSuffix(char c) {
+		return c == '.' || c == ',' || c == '!' || c == '?' || c == ')';
 	}
 
 	private boolean isUrl(String s) {

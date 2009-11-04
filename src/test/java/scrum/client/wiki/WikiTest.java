@@ -9,8 +9,8 @@ public class WikiTest {
 	public void testEntityReference() {
 		Assert.assertTrue(Wiki.toHtml("tsk15 is completed").contains("<a "));
 		Assert.assertTrue(Wiki.toHtml("[[Wiki]] is cool").contains("<a "));
-		// Assert.assertTrue(Wiki.toHtml("tsk15!").contains("<a "));
-		// Assert.assertTrue(Wiki.toHtml("(tsk15)").contains("<a "));
+		Assert.assertTrue(Wiki.toHtml("tsk15!").contains("<a "));
+		Assert.assertTrue(Wiki.toHtml("(tsk15!), :-)").contains("<a "));
 	}
 
 	@Test
