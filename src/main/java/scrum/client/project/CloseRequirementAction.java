@@ -17,10 +17,11 @@ public class CloseRequirementAction extends GCloseRequirementAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Close this Requirement.");
 
-		if (getCurrentProject().isProductOwner(getCurrentUser())) {
+		if (!getCurrentProject().isProductOwner(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_A_PRODUCT_OWNER);
 		} else {
 			if (requirement.isClosed()) tb.addRemark("Requirement is already closed.");
+			if (requirement.getRemainingWork() > 0) tb.addRemark("Requirement contains unclosed tasks.");
 		}
 
 		return tb.getTooltip();
@@ -34,7 +35,8 @@ public class CloseRequirementAction extends GCloseRequirementAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (getCurrentProject().isProductOwner(getCurrentUser())) return false;
+		if (!getCurrentProject().isProductOwner(getCurrentUser())) return false;
+		if (requirement.getRemainingWork() > 0) return false;
 		return true;
 	}
 
