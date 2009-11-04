@@ -20,10 +20,6 @@ public class PunishmentsWidget extends AScrumWidget {
 		PagePanel page = new PagePanel();
 		Project project = cm.getProjectContext().getProject();
 
-		TableBuilder settings = new TableBuilder();
-		settings.addFieldRow("Factor", new IntegerEditorWidget(project.getPunishmentFactorModel()));
-		settings.addFieldRow("Unit", new TextEditorWidget(project.getPunishmentUnitModel()));
-
 		TableBuilder main = new TableBuilder();
 		main.add(Gwt.createDiv("PunishmentsWidget-tableHeader", "User"));
 		main.add(Gwt.createDiv("PunishmentsWidget-tableHeader", "Misconducts"));
@@ -40,8 +36,14 @@ public class PunishmentsWidget extends AScrumWidget {
 
 		page.addHeader("Courtroom");
 		page.addSection(main.createTable());
-		page.addHeader("Laws");
-		page.addSection(settings.createTable());
+
+		if (project.isScrumMaster(getCurrentUser())) {
+			TableBuilder settings = new TableBuilder();
+			settings.addFieldRow("Factor", new IntegerEditorWidget(project.getPunishmentFactorModel()));
+			settings.addFieldRow("Unit", new TextEditorWidget(project.getPunishmentUnitModel()));
+			page.addHeader("Punishment Configuration");
+			page.addSection(settings.createTable());
+		}
 
 		return page;
 	}
