@@ -30,6 +30,10 @@ public class Paragraph extends AWikiElement {
 		return sb.toString();
 	}
 
+	public List<AWikiElement> getItems() {
+		return items;
+	}
+
 	@Override
 	public String toString() {
 		return "Paragraph(" + Gwt.toString(items) + ")";

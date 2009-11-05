@@ -6,6 +6,16 @@ import org.testng.annotations.Test;
 public class WikiTest {
 
 	@Test
+	public void testEmphAndStrong() {
+		Assert.assertEquals(Wiki.toHtml("'''''emph and strong'''''"),
+			"<p><strong><em>emph and strong</em></strong></p>");
+		Assert.assertEquals(Wiki.toHtml("this is '''strong'''"), "<p>this is <strong>strong</strong></p>");
+		Assert.assertEquals(Wiki.toHtml("this is ''emph''"), "<p>this is <em>emph</em></p>");
+		Assert.assertEquals(Wiki.toHtml("''''''''''"), "<p>''''''''''</p>");
+		Assert.assertEquals(Wiki.toHtml("'''''test"), "<p>'''''test</p>");
+	}
+
+	@Test
 	public void testEntityReference() {
 		Assert.assertTrue(Wiki.toHtml("tsk15 is completed").contains("<a "));
 		Assert.assertTrue(Wiki.toHtml("[[Wiki]] is cool").contains("<a "));

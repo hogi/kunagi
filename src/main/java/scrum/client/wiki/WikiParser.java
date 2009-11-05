@@ -1,7 +1,7 @@
 package scrum.client.wiki;
 
 /**
- * http://de.wikipedia.org/wiki/Hilfe:Textgestaltung
+ * http://en.wikipedia.org/wiki/Wikipedia:Cheatsheet
  */
 public class WikiParser {
 
@@ -52,19 +52,75 @@ public class WikiParser {
 		if (suffix != null) p.add(new Text(suffix.toString()));
 	}
 
-	private Paragraph appendLine(Paragraph p, String line) {
-		while (line.length() > 0) {
-			int idx = line.indexOf(' ');
-			if (idx < 0) {
-				appendWord(p, line);
-				line = "";
+	private Paragraph appendText(Paragraph p, String text) {
+
+		// strong end emph
+		int begin = text.indexOf("'''''");
+		if (begin >= 0 && begin < text.length() - 5) {
+			int end = text.indexOf("'''''", begin + 5);
+			if (end >= 0) {
+				String prefix = text.substring(0, begin);
+				String content = text.substring(begin + 5, end);
+				String suffix = text.substring(end + 5);
+				if (content.trim().length() > 0) {
+					appendText(p, prefix);
+					Highlight h = new Highlight(true, true);
+					appendText(h, content);
+					p.add(h);
+					appendText(p, suffix);
+					return p;
+				}
+			}
+		} else {
+			begin = text.indexOf("'''");
+			if (begin >= 0 && begin < text.length() - 3) {
+				int end = text.indexOf("'''", begin + 3);
+				if (end >= 0) {
+					String prefix = text.substring(0, begin);
+					String content = text.substring(begin + 3, end);
+					String suffix = text.substring(end + 3);
+					if (content.trim().length() > 0) {
+						appendText(p, prefix);
+						Highlight h = new Highlight(false, true);
+						appendText(h, content);
+						p.add(h);
+						appendText(p, suffix);
+						return p;
+					}
+				}
 			} else {
-				appendWord(p, line.substring(0, idx));
-				p.add(Text.SPACE);
-				line = line.substring(idx + 1);
+				begin = text.indexOf("''");
+				if (begin >= 0 && begin < text.length() - 2) {
+					int end = text.indexOf("''", begin + 2);
+					if (end >= 0) {
+						String prefix = text.substring(0, begin);
+						String content = text.substring(begin + 2, end);
+						String suffix = text.substring(end + 2);
+						if (content.trim().length() > 0) {
+							appendText(p, prefix);
+							Highlight h = new Highlight(true, false);
+							appendText(h, content);
+							p.add(h);
+							appendText(p, suffix);
+							return p;
+						}
+					}
+				}
 			}
 		}
-		p.add(new Text(line));
+
+		while (text.length() > 0) {
+			int idx = text.indexOf(' ');
+			if (idx < 0) {
+				appendWord(p, text);
+				text = "";
+			} else {
+				appendWord(p, text.substring(0, idx));
+				p.add(Text.SPACE);
+				text = text.substring(idx + 1);
+			}
+		}
+		p.add(new Text(text));
 		return p;
 	}
 
@@ -155,11 +211,11 @@ public class WikiParser {
 			while (!line.startsWith("\n") && line.length() > 0) {
 				if (line.startsWith(ordered ? "# " : "* ")) {
 					item = new Paragraph(false);
-					appendLine(item, line.substring(2));
+					appendText(item, line.substring(2));
 					list.add(item);
 				} else {
 					item.add(Text.SPACE);
-					appendLine(item, line);
+					appendText(item, line);
 				}
 				burn(line.length() + 1);
 				line = getNextLine();
@@ -169,7 +225,7 @@ public class WikiParser {
 		}
 
 		// paragraph
-		model.add(appendLine(new Paragraph(true), cutParagraph()));
+		model.add(appendText(new Paragraph(true), cutParagraph()));
 	}
 
 	public WikiModel parse() {
