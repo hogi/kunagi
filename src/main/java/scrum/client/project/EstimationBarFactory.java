@@ -1,5 +1,7 @@
 package scrum.client.project;
 
+import ilarkesto.gwt.client.GwtLogger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +30,14 @@ public class EstimationBarFactory {
 				workPerSprint.add(work);
 				remainingWorkInSprint -= work;
 			}
+			requirement.setEstimationBar(new EstimationBar(sprintOffset - workPerSprint.size() + 1, workPerSprint));
 			if (remainingWorkInSprint == 0) {
 				sprintOffset++;
 				remainingWorkInSprint = velocity;
 			}
-			requirement.setEstimationBar(new EstimationBar(sprintOffset - workPerSprint.size() + 1, workPerSprint));
+
+			GwtLogger.DEBUG("######################", requirement.getReference(), "->", requirement.getEstimationBar());
 		}
+
 	}
 }
