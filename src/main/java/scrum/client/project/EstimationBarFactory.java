@@ -1,7 +1,5 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.GwtLogger;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +33,6 @@ public class EstimationBarFactory {
 				sprintOffset++;
 				remainingWorkInSprint = velocity;
 			}
-
-			GwtLogger.DEBUG("######################", requirement.getReference(), "->", requirement.getEstimationBar());
 		}
 
 	}

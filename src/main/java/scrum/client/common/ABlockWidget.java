@@ -8,6 +8,7 @@ import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -26,6 +27,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	private FlowPanel outerPanel;
 	private FlowPanel preHeaderPanel;
 	private FlowPanel panel;
+	private SimplePanel bodyWrapper;
 	private BlockDndMarkerWidget dndMarkerTop = new BlockDndMarkerWidget();
 
 	private boolean initializingExtension;
@@ -51,6 +53,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		cm.getDndManager().makeDraggable(this, header.getDragHandle());
 
 		panel = Gwt.createFlowPanel("ABlockWidget", null, header);
+		panel.add(header);
 
 		outerPanel = Gwt.createFlowPanel("ABlockWidget-outer", null, dndMarkerTop, panel);
 
@@ -64,13 +67,20 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 
 	@Override
 	protected final void onUpdate() {
-		panel.clear();
 		onUpdateHeader(header);
-		panel.add(header.update());
+		header.update();
 		if (isExtended()) {
 			ensureExtendedInitialized();
 			onUpdateBody();
-			panel.add(Gwt.createDiv("ABlockWidget-body", body));
+			if (bodyWrapper == null) {
+				bodyWrapper = Gwt.createDiv("ABlockWidget-body", body);
+				panel.add(bodyWrapper);
+			}
+		} else {
+			if (bodyWrapper != null) {
+				panel.remove(bodyWrapper);
+				bodyWrapper = null;
+			}
 		}
 		Gwt.update(preHeaderPanel);
 	}
