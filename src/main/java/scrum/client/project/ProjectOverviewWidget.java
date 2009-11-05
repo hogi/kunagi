@@ -9,7 +9,6 @@ import scrum.client.common.FieldsWidget;
 import scrum.client.sprint.Sprint;
 import scrum.client.workspace.PagePanel;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
@@ -65,8 +64,7 @@ public class ProjectOverviewWidget extends AScrumWidget {
 	private String getChartUrl(Sprint sprint) {
 		int width = Window.getClientWidth() - 280;
 		width = width / 2;
-		return GWT.getModuleBaseURL() + "sprintBurndownChart.png?sprintId=" + sprint.getId() + "&width=" + width
-				+ "&height=" + CHART_HEIGHT;
+		return sprint.getChartUrl(width, CHART_HEIGHT);
 	}
 
 }

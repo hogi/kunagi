@@ -12,6 +12,8 @@ import scrum.client.admin.User;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 
+import com.google.gwt.core.client.GWT;
+
 public class Sprint extends GSprint {
 
 	public Sprint(Project project, String label) {
@@ -21,6 +23,11 @@ public class Sprint extends GSprint {
 
 	public Sprint(Map data) {
 		super(data);
+	}
+
+	public String getChartUrl(int width, int height) {
+		return GWT.getModuleBaseURL() + "sprintBurndownChart.png?sprintId=" + getId() + "&width=" + width + "&height="
+				+ height;
 	}
 
 	public TimePeriod getLength() {
