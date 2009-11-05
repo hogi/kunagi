@@ -67,7 +67,8 @@ public class Task extends GTask {
 	}
 
 	public void setUnOwned() {
-		setUnDone(null);
+		setOwner(null);
+		getRequirement().setClosed(false);
 		cm.getChat().postSystemMessage(cm.getAuth().getUser().getName() + " rejected task " + getReference() + ".",
 			true);
 	}

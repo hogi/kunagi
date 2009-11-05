@@ -6,13 +6,10 @@ import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.MenuBar;
-import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -24,7 +21,7 @@ public class BlockHeaderWidget extends AWidget {
 	private FlowPanel centerWrapper;
 	private Label centerText;
 
-	private MenuBar menu;
+	private DropdownMenuButtonWidget menu;
 	private int prefixCellCount = 0;
 	private int suffixCellCount = 0;
 
@@ -117,26 +114,11 @@ public class BlockHeaderWidget extends AWidget {
 	}
 
 	public void addMenuAction(AScrumAction action) {
-
-		if (!action.isExecutable()) return;
-
 		if (menu == null) {
-			menu = new MenuBar(true);
-
-			MenuBar menuBar = new MenuBar();
-			menuBar.addItem("Functions V", menu);
-			menuBar.setPopupPosition(MenuBar.PopupPosition.LEFT);
-			appendCell(menuBar, "30px", true, null);
+			menu = new DropdownMenuButtonWidget();
+			appendCell(menu, "30px", true, null);
 		}
-		MenuItem menuItem = null;
-		if (action.isPermitted()) {
-			menuItem = new MenuItem(action.getLabel(), action);
-		} else {
-			menuItem = new MenuItem(action.getLabel(), (Command) null);
-			menuItem.addStyleName("MenuItem-disabled");
-		}
-		menuItem.setTitle(action.getTooltip());
-		menu.addItem(menuItem);
+		menu.addAction(action);
 	}
 
 	public void addToolbarAction(AAction action) {
