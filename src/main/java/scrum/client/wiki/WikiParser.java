@@ -147,12 +147,13 @@ public class WikiParser {
 		}
 
 		// unordered list
-		if (input.startsWith("* ")) {
-			UnorderedList list = new UnorderedList();
+		if (input.startsWith("* ") || input.startsWith("# ")) {
+			boolean ordered = input.startsWith("#");
+			ItemList list = new ItemList(ordered);
 			Paragraph item = null;
 			String line = getNextLine();
 			while (!line.startsWith("\n") && line.length() > 0) {
-				if (line.startsWith("* ")) {
+				if (line.startsWith(ordered ? "# " : "* ")) {
 					item = new Paragraph(false);
 					appendLine(item, line.substring(2));
 					list.add(item);

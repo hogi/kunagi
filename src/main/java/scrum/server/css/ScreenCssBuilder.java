@@ -176,6 +176,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.h4().fontSize(fontSize).lineHeight(lineHeight).fontWeightBold().margin(0, 0, 5, 0);
 		css.pre().margin(0, 0, 10, 0).color(cHeaderBackground);
 		css.ul().margin(0, 0, 10, 0).padding(0, 0, 0, 20);
+		css.ol().margin(0, 0, 10, 0).padding(0, 0, 0, 20);
 	}
 
 	private void workspace(CssRenderer css) {

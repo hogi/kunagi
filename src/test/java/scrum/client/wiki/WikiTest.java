@@ -22,8 +22,9 @@ public class WikiTest {
 	}
 
 	@Test
-	public void testUnorderedList() {
+	public void testItemList() {
 		Assert.assertEquals(Wiki.toHtml("* item"), "<ul><li>item</li></ul>");
+		Assert.assertEquals(Wiki.toHtml("# item"), "<ol><li>item</li></ol>");
 		Assert.assertEquals(Wiki.toHtml("* item\nxyz"), "<ul><li>item xyz</li></ul>");
 		Assert.assertEquals(Wiki.toHtml("* item 1\n* item 2"), "<ul><li>item 1</li><li>item 2</li></ul>");
 	}

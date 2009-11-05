@@ -5,9 +5,15 @@ import ilarkesto.gwt.client.Gwt;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UnorderedList extends AWikiElement {
+public class ItemList extends AWikiElement {
 
 	private List<Paragraph> items = new ArrayList<Paragraph>();
+	boolean ordered;
+
+	public ItemList(boolean ordered) {
+		super();
+		this.ordered = ordered;
+	}
 
 	public void add(Paragraph item) {
 		items.add(item);
@@ -16,13 +22,13 @@ public class UnorderedList extends AWikiElement {
 	@Override
 	String toHtml() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<ul>");
+		sb.append(ordered ? "<ol>" : "<ul>");
 		for (Paragraph item : items) {
 			sb.append("<li>");
 			sb.append(item.toHtml());
 			sb.append("</li>");
 		}
-		sb.append("</ul>");
+		sb.append(ordered ? "</ol>" : "</ul>");
 		return sb.toString();
 	}
 
