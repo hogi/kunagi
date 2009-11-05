@@ -9,12 +9,10 @@ import scrum.client.project.Project;
 
 public class Risk extends GRisk implements Comparable<Risk> {
 
-	public static final String INITIAL_LABEL = "New Risk";
 	public static final String REFERENCE_PREFIX = "rsk";
 
 	public Risk(Project project) {
 		setProject(project);
-		setLabel(INITIAL_LABEL);
 	}
 
 	public Risk(Map data) {

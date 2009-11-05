@@ -13,14 +13,12 @@ import scrum.client.sprint.Task;
 
 public class Requirement extends GRequirement {
 
-	public static final String INIT_LABEL = "New Requirement";
 	public static final String REFERENCE_PREFIX = "req";
 
 	private transient EstimationBar estimationBar;
 
 	public Requirement(Project project) {
 		setProject(project);
-		setLabel(INIT_LABEL);
 		setDirty(true);
 	}
 

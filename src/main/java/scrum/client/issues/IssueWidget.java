@@ -23,7 +23,7 @@ public class IssueWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
 
-		fields.add("Label", new TextEditorWidget(issue.getLabelModel()));
+		fields.add("Label", new TextEditorWidget(issue.getLabelModel()).switchToEditModeIfNull());
 		fields.add("Description", new RichtextEditorWidget(issue.getDescriptionModel()));
 		fields.add("Type", new DropdownEditorWidget<String>(issue.getTypeModel(), Issue.TYPE_LABEL_PROVIDER));
 

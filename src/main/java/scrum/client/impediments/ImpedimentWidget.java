@@ -22,7 +22,7 @@ public class ImpedimentWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
-		fields.add("Label", new TextEditorWidget(impediment.getLabelModel()));
+		fields.add("Label", new TextEditorWidget(impediment.getLabelModel()).switchToEditModeIfNull());
 		fields.add("Date", new DateEditorWidget(impediment.getDateModel()));
 		fields.add("Description", new RichtextEditorWidget(impediment.getDescriptionModel()));
 		fields.add("Solution", new RichtextEditorWidget(impediment.getSolutionModel()));

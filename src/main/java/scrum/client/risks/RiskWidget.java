@@ -24,7 +24,7 @@ public class RiskWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
 
-		fields.add("Label", new TextEditorWidget(risk.getLabelModel()));
+		fields.add("Label", new TextEditorWidget(risk.getLabelModel()).switchToEditModeIfNull());
 		fields.add("Description", new RichtextEditorWidget(risk.getDescriptionModel()));
 		fields.add("Mitigation Plans", new RichtextEditorWidget(risk.getMitigationPlansModel()));
 		fields.add("Impact", new ADropdownViewEditWidget() {

@@ -9,11 +9,9 @@ import scrum.client.project.Project;
 
 public class Impediment extends GImpediment {
 
-	public static final String INIT_LABEL = "New Impediment";
 	public static final String REFERENCE_PREFIX = "imp";
 
 	public Impediment(Project project) {
-		setLabel(INIT_LABEL);
 		setDate(Date.today());
 		setProject(project);
 	}

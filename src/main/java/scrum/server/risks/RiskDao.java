@@ -7,7 +7,7 @@ public class RiskDao extends GRiskDao {
 	@Override
 	public Risk newEntityInstance() {
 		Risk risk = super.newEntityInstance();
-		risk.setLabel(scrum.client.risks.Risk.INITIAL_LABEL);
+		risk.setLabel("New Risk");
 		return risk;
 	}
 

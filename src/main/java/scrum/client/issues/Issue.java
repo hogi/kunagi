@@ -13,13 +13,11 @@ public class Issue extends GIssue {
 
 	public static final String INIT_TYPE = Types.ISSUE;
 
-	public static final String INIT_LABEL = "New Issue";
 	public static final String REFERENCE_PREFIX = "iss";
 
 	public static final IssueTypeLabelProvider TYPE_LABEL_PROVIDER = new IssueTypeLabelProvider();
 
 	public Issue(Project project) {
-		setLabel(INIT_LABEL);
 		setType(INIT_TYPE);
 		setProject(project);
 		setDate(Date.today());

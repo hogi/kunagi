@@ -34,7 +34,8 @@ public class RequirementWidget extends AWidget {
 		FieldsWidget fields = new FieldsWidget();
 
 		if (showLabel)
-			fields.add("Label", new TextEditorWidget(requirement.getLabelModel(), requirement.getEditPredicate()));
+			fields.add("Label", new TextEditorWidget(requirement.getLabelModel(), requirement.getEditPredicate())
+					.switchToEditModeIfNull());
 
 		fields.add("Description", new RichtextEditorWidget(requirement.getDescriptionModel(), requirement
 				.getEditPredicate()));

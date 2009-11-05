@@ -15,7 +15,7 @@ public class Task extends GTask {
 
 	public Task(Requirement requirement) {
 		setRequirement(requirement);
-		setLabel("New Task");
+		// setLabel("New Task");
 		setRemainingWork(INIT_EFFORT);
 	}
 

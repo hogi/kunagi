@@ -160,6 +160,13 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		update();
 	}
 
+	final void activate() {
+		getElement().scrollIntoView();
+		onActivation();
+	}
+
+	protected void onActivation() {}
+
 	@Override
 	protected void onLoad() {
 		super.onLoad();

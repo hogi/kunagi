@@ -5,7 +5,7 @@ public class QualityDao extends GQualityDao {
 	@Override
 	public Quality newEntityInstance() {
 		Quality quality = super.newEntityInstance();
-		quality.setLabel(scrum.client.project.Quality.INITIAL_LABEL);
+		quality.setLabel("New Quality");
 		return quality;
 	}
 

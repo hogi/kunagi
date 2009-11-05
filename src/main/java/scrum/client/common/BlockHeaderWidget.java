@@ -134,6 +134,7 @@ public class BlockHeaderWidget extends AWidget {
 	}
 
 	public void setCenter(String text) {
+		if (Gwt.isEmpty(text)) text = "<new>";
 		centerText.setText(text);
 	}
 

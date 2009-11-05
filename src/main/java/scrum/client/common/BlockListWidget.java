@@ -179,8 +179,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 
 		ABlockWidget<O> block = getBlock(row);
 		block.setExtended(true);
-
-		block.getElement().scrollIntoView();
+		block.activate();
 	}
 
 	public final void collapseRow(int row) {

@@ -27,7 +27,8 @@ public class TaskWidget extends AWidget {
 
 		TableBuilder tb = new TableBuilder();
 
-		tb.addFieldRow("Label", new TextEditorWidget(task.getLabelModel(), task.getEditPredicate()), 3);
+		tb.addFieldRow("Label", new TextEditorWidget(task.getLabelModel(), task.getEditPredicate())
+				.switchToEditModeIfNull(), 3);
 
 		tb.addFieldRow("Description", new RichtextEditorWidget(task.getDescriptionModel(), task.getEditPredicate()), 3);
 
