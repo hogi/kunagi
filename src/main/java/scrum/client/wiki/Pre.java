@@ -11,7 +11,7 @@ public class Pre extends AWikiElement {
 
 	@Override
 	String toHtml() {
-		return "<pre>" + text + "</pre>"; // TODO escaping
+		return "<pre>" + escapeHtml(text) + "</pre>";
 	}
 
 	@Override

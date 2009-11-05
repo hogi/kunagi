@@ -11,7 +11,7 @@ public class Text extends AWikiElement {
 
 	@Override
 	String toHtml() {
-		return text; // TODO escaping
+		return escapeHtml(text);
 	}
 
 	@Override

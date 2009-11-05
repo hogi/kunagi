@@ -15,7 +15,7 @@ public class Link extends AWikiElement {
 		sb.append("<a href=\"");
 		sb.append(enhance(url));
 		sb.append("\" target=\"_blank\">");
-		sb.append(shorten(url));
+		sb.append(escapeHtml(shorten(url)));
 		sb.append("</a>");
 		return sb.toString();
 	}
