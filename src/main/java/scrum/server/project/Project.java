@@ -2,7 +2,9 @@ package scrum.server.project;
 
 import ilarkesto.base.Money;
 import ilarkesto.base.time.Date;
+import ilarkesto.rss.Rss20Builder;
 
+import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -83,6 +85,20 @@ public class Project extends GProject {
 	}
 
 	// --- ---
+
+	public void writeJournalAsRss(OutputStream out, String encoding) {
+		Rss20Builder rss = new Rss20Builder();
+		rss.setTitle(getLabel() + " Event Journal");
+		rss.setLanguage("en");
+		for (ProjectEvent event : getEvents()) {
+			Rss20Builder.Item item = rss.addItem();
+			item.setTitle(event.getLabel());
+			item.setGuid(event.getId());
+			item.setPubDate(event.getDateAndTime());
+		}
+		rss.sortItems();
+		rss.write(out, encoding);
+	}
 
 	public Set<ProjectEvent> getEvents() {
 		return projectEventDao.getProjectEventsByProject(this);
