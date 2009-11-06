@@ -1,4 +1,4 @@
-package scrum.client.collaboration;
+package scrum.client.journal;
 
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;

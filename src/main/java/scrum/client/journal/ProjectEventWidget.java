@@ -1,4 +1,4 @@
-package scrum.client.collaboration;
+package scrum.client.journal;
 
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.TableBuilder;

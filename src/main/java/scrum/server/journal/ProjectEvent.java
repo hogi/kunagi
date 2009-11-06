@@ -1,6 +1,7 @@
-package scrum.server.collaboration;
+package scrum.server.journal;
 
 import java.util.*;
+
 import ilarkesto.persistence.*;
 import ilarkesto.logging.*;
 import ilarkesto.base.*;

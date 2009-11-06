@@ -11,7 +11,7 @@
 
 
 
-package scrum.server.collaboration;
+package scrum.server.journal;
 
 import java.util.*;
 import ilarkesto.persistence.*;

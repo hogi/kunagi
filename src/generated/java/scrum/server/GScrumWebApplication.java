@@ -155,9 +155,9 @@ public abstract class GScrumWebApplication
 
     // --- projectEventDao ---
 
-    private scrum.server.collaboration.ProjectEventDao projectEventDao;
+    private scrum.server.journal.ProjectEventDao projectEventDao;
 
-    public final scrum.server.collaboration.ProjectEventDao getProjectEventDao() {
+    public final scrum.server.journal.ProjectEventDao getProjectEventDao() {
         if (projectEventDao == null) {
             projectEventDao = createProjectEventDao();
             initializeProjectEventDao(projectEventDao);
@@ -165,11 +165,11 @@ public abstract class GScrumWebApplication
         return projectEventDao;
     }
 
-    protected scrum.server.collaboration.ProjectEventDao createProjectEventDao() {
-        return projectEventDao = ilarkesto.base.Reflect.newInstance(scrum.server.collaboration.ProjectEventDao.class);
+    protected scrum.server.journal.ProjectEventDao createProjectEventDao() {
+        return projectEventDao = ilarkesto.base.Reflect.newInstance(scrum.server.journal.ProjectEventDao.class);
     }
 
-    protected void initializeProjectEventDao(scrum.server.collaboration.ProjectEventDao bean) {
+    protected void initializeProjectEventDao(scrum.server.journal.ProjectEventDao bean) {
         autowire(bean);
         ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
     }

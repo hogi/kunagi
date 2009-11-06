@@ -1,6 +1,7 @@
-package scrum.client.collaboration;
+package scrum.client.journal;
 
 import java.util.Map;
+
 
 public class ProjectEvent extends GProjectEvent {
 

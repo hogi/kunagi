@@ -448,7 +448,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 
 	public EntityModel getProjectEventModel() {
 		if (projectEventModel == null) {
-			projectEventModel = createEntityModel("ProjectEvent", "collaboration");
+			projectEventModel = createEntityModel("ProjectEvent", "journal");
 			projectEventModel.setGwtSupport(true);
 			projectEventModel.addReference("project", getProjectModel()).setMaster(true);
 			projectEventModel.addProperty("text", String.class).setMandatory(true).setSearchable(true);

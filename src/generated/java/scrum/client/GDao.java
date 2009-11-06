@@ -588,31 +588,31 @@ public abstract class GDao
 
     // --- ProjectEvent ---
 
-    private Map<String, scrum.client.collaboration.ProjectEvent> projectEvents = new HashMap<String, scrum.client.collaboration.ProjectEvent>();
+    private Map<String, scrum.client.journal.ProjectEvent> projectEvents = new HashMap<String, scrum.client.journal.ProjectEvent>();
 
     public final void clearProjectEvents() {
         projectEvents.clear();
     }
 
-    public final boolean containsProjectEvent(scrum.client.collaboration.ProjectEvent projectEvent) {
+    public final boolean containsProjectEvent(scrum.client.journal.ProjectEvent projectEvent) {
         return projectEvents.containsKey(projectEvent.getId());
     }
 
-    public final void deleteProjectEvent(scrum.client.collaboration.ProjectEvent projectEvent) {
+    public final void deleteProjectEvent(scrum.client.journal.ProjectEvent projectEvent) {
         projectEvents.remove(projectEvent.getId());
         entityDeleted(projectEvent);
     }
 
-    public final void createProjectEvent(scrum.client.collaboration.ProjectEvent projectEvent) {
+    public final void createProjectEvent(scrum.client.journal.ProjectEvent projectEvent) {
         projectEvents.put(projectEvent.getId(), projectEvent);
         entityCreated(projectEvent);
     }
 
     private final void updateProjectEvent(Map data) {
         String id = (String) data.get("id");
-        scrum.client.collaboration.ProjectEvent entity = projectEvents.get(id);
+        scrum.client.journal.ProjectEvent entity = projectEvents.get(id);
         if (entity == null) {
-            entity = new scrum.client.collaboration.ProjectEvent(data);
+            entity = new scrum.client.journal.ProjectEvent(data);
             projectEvents.put(id, entity);
             ilarkesto.gwt.client.GwtLogger.DEBUG("ProjectEvent received: " + entity.getId() + " ("+entity+")");
         } else {
@@ -622,45 +622,45 @@ public abstract class GDao
         onEntityModifiedRemotely(entity);
     }
 
-    public final scrum.client.collaboration.ProjectEvent getProjectEvent(String id) {
-        scrum.client.collaboration.ProjectEvent ret = projectEvents.get(id);
+    public final scrum.client.journal.ProjectEvent getProjectEvent(String id) {
+        scrum.client.journal.ProjectEvent ret = projectEvents.get(id);
         if (ret == null) throw new RuntimeException("ProjectEvent does not exist: " + id);
         return ret;
     }
 
-    public final Set<scrum.client.collaboration.ProjectEvent> getProjectEvents(Collection<String> ids) {
-        Set<scrum.client.collaboration.ProjectEvent> ret = new HashSet<scrum.client.collaboration.ProjectEvent>();
+    public final Set<scrum.client.journal.ProjectEvent> getProjectEvents(Collection<String> ids) {
+        Set<scrum.client.journal.ProjectEvent> ret = new HashSet<scrum.client.journal.ProjectEvent>();
         for (String id : ids) {
-            scrum.client.collaboration.ProjectEvent entity = projectEvents.get(id);
+            scrum.client.journal.ProjectEvent entity = projectEvents.get(id);
             if (entity == null) throw new RuntimeException("ProjectEvent does not exist: " + id);
             ret.add(entity);
         }
         return ret;
     }
 
-    public final List<scrum.client.collaboration.ProjectEvent> getProjectEvents() {
-        return new ArrayList<scrum.client.collaboration.ProjectEvent>(projectEvents.values());
+    public final List<scrum.client.journal.ProjectEvent> getProjectEvents() {
+        return new ArrayList<scrum.client.journal.ProjectEvent>(projectEvents.values());
     }
 
-    public final List<scrum.client.collaboration.ProjectEvent> getProjectEventsByProject(scrum.client.project.Project project) {
-        List<scrum.client.collaboration.ProjectEvent> ret = new ArrayList<scrum.client.collaboration.ProjectEvent>();
-        for (scrum.client.collaboration.ProjectEvent entity : projectEvents.values()) {
+    public final List<scrum.client.journal.ProjectEvent> getProjectEventsByProject(scrum.client.project.Project project) {
+        List<scrum.client.journal.ProjectEvent> ret = new ArrayList<scrum.client.journal.ProjectEvent>();
+        for (scrum.client.journal.ProjectEvent entity : projectEvents.values()) {
             if (entity.isProject(project)) ret.add(entity);
         }
         return ret;
     }
 
-    public final List<scrum.client.collaboration.ProjectEvent> getProjectEventsByText(java.lang.String text) {
-        List<scrum.client.collaboration.ProjectEvent> ret = new ArrayList<scrum.client.collaboration.ProjectEvent>();
-        for (scrum.client.collaboration.ProjectEvent entity : projectEvents.values()) {
+    public final List<scrum.client.journal.ProjectEvent> getProjectEventsByText(java.lang.String text) {
+        List<scrum.client.journal.ProjectEvent> ret = new ArrayList<scrum.client.journal.ProjectEvent>();
+        for (scrum.client.journal.ProjectEvent entity : projectEvents.values()) {
             if (entity.isText(text)) ret.add(entity);
         }
         return ret;
     }
 
-    public final List<scrum.client.collaboration.ProjectEvent> getProjectEventsByTimestamp(ilarkesto.gwt.client.DateAndTime timestamp) {
-        List<scrum.client.collaboration.ProjectEvent> ret = new ArrayList<scrum.client.collaboration.ProjectEvent>();
-        for (scrum.client.collaboration.ProjectEvent entity : projectEvents.values()) {
+    public final List<scrum.client.journal.ProjectEvent> getProjectEventsByTimestamp(ilarkesto.gwt.client.DateAndTime timestamp) {
+        List<scrum.client.journal.ProjectEvent> ret = new ArrayList<scrum.client.journal.ProjectEvent>();
+        for (scrum.client.journal.ProjectEvent entity : projectEvents.values()) {
             if (entity.isTimestamp(timestamp)) ret.add(entity);
         }
         return ret;
@@ -1652,7 +1652,7 @@ public abstract class GDao
             updateProject(data);
             return;
         }
-        if (type.equals(scrum.client.collaboration.ProjectEvent.ENTITY_TYPE)) {
+        if (type.equals(scrum.client.journal.ProjectEvent.ENTITY_TYPE)) {
             updateProjectEvent(data);
             return;
         }
