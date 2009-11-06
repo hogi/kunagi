@@ -51,6 +51,7 @@ public class WikiTest {
 		Assert.assertEquals(Wiki.toHtml("a\nb"), "<p>a b</p>");
 		Assert.assertEquals(Wiki.toHtml("a\r\nb"), "<p>a b</p>");
 		Assert.assertEquals(Wiki.toHtml("a\n\nb"), "<p>a</p><p>b</p>");
+		Assert.assertEquals(Wiki.toHtml("a\n\n\n"), "<p>a</p>");
 	}
 
 	@Test

@@ -133,10 +133,10 @@ public class WikiParser {
 			return;
 		}
 
-		// new paragraph
+		// empty lines
 		if (input.startsWith("\n")) {
 			String line = getNextLine();
-			while (line.trim().length() == 0) {
+			while (line.trim().length() == 0 && input.length() > 0) {
 				burn(line.length() + 1);
 				line = getNextLine();
 			}
