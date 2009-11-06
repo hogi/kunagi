@@ -22,9 +22,13 @@ import javax.servlet.ServletException;
 import scrum.client.admin.SystemMessage;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
+import scrum.server.collaboration.Comment;
 import scrum.server.collaboration.CommentDao;
 import scrum.server.common.Numbered;
 import scrum.server.common.Transient;
+import scrum.server.impediments.Impediment;
+import scrum.server.journal.ProjectEvent;
+import scrum.server.journal.ProjectEventDao;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
@@ -44,6 +48,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private transient RequirementDao requirementDao;
 	private transient CommentDao commentDao;
 	private transient ScrumWebApplication webApplication;
+	private transient ProjectEventDao projectEventDao;
+
+	public void setProjectEventDao(ProjectEventDao projectEventDao) {
+		this.projectEventDao = projectEventDao;
+	}
 
 	public void setWebApplication(ScrumWebApplication webApplication) {
 		this.webApplication = webApplication;
@@ -121,6 +130,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		if (!(entity instanceof Transient)) dao.saveEntity(entity);
 
+		if (entity instanceof Comment) {
+			Comment comment = (Comment) entity;
+			postProjectEvent(session, comment.getAuthor().getName() + " commented on " + comment.getParent());
+		}
+
 		sendToClients(session, entity);
 	}
 
@@ -169,6 +183,14 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			Project project = (Project) entity;
 		}
 
+		if (entity instanceof Impediment) {
+			Impediment impediment = (Impediment) entity;
+			if (impediment.isClosed() && properties.containsKey("closed")) {
+				postProjectEvent(session, "Impediment closed: " + impediment.getReference() + " "
+						+ impediment.getLabel());
+			}
+		}
+
 		sendToOtherSessionsByProject(session, entity);
 	}
 
@@ -211,6 +233,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		session.sendToClient(project.getTasks());
 		session.sendToClient(project.getUserConfigs());
 		session.sendToClient(project.getWikipages());
+		session.sendToClient(project.getEvents());
 	}
 
 	@Override
@@ -315,6 +338,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	// --- helper ---
+
+	private void postProjectEvent(WebSession session, String label) {
+		assertProjectSelected(session);
+		ProjectEvent event = projectEventDao.postEvent(session.getProject(), label);
+		sendToClients(session, event);
+	}
 
 	private void sendToClients(WebSession session, Collection<? extends AEntity> entities) {
 		for (AEntity entity : entities) {

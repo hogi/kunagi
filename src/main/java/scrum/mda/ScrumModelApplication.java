@@ -451,8 +451,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectEventModel = createEntityModel("ProjectEvent", "journal");
 			projectEventModel.setGwtSupport(true);
 			projectEventModel.addReference("project", getProjectModel()).setMaster(true);
-			projectEventModel.addProperty("text", String.class).setMandatory(true).setSearchable(true);
-			projectEventModel.addProperty("timestamp", DateAndTime.class).setMandatory(true);
+			projectEventModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);
+			projectEventModel.addProperty("dateAndTime", DateAndTime.class).setMandatory(true);
 		}
 		return projectEventModel;
 	}

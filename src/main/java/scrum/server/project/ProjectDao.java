@@ -55,6 +55,7 @@ public class ProjectDao extends GProjectDao {
 		project.addTestRisks(variant);
 		project.addTestQualitys(variant);
 		project.addTestIssues(variant);
+		project.addTestEvents(variant);
 
 		if (variant == 1) {
 			userDao.getTestUser("duke").setCurrentProject(project);

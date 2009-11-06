@@ -36,10 +36,10 @@ public abstract class GProjectEventDao
     public void clearCaches() {
         projectEventsByProjectCache.clear();
         projectsCache = null;
-        projectEventsByTextCache.clear();
-        textsCache = null;
-        projectEventsByTimestampCache.clear();
-        timestampsCache = null;
+        projectEventsByLabelCache.clear();
+        labelsCache = null;
+        projectEventsByDateAndTimeCache.clear();
+        dateAndTimesCache = null;
     }
 
     @Override
@@ -99,81 +99,81 @@ public abstract class GProjectEventDao
     }
 
     // -----------------------------------------------------------
-    // - text
+    // - label
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<ProjectEvent>> projectEventsByTextCache = new Cache<java.lang.String,Set<ProjectEvent>>(
+    private final Cache<java.lang.String,Set<ProjectEvent>> projectEventsByLabelCache = new Cache<java.lang.String,Set<ProjectEvent>>(
             new Cache.Factory<java.lang.String,Set<ProjectEvent>>() {
-                public Set<ProjectEvent> create(java.lang.String text) {
-                    return getEntities(new IsText(text));
+                public Set<ProjectEvent> create(java.lang.String label) {
+                    return getEntities(new IsLabel(label));
                 }
             });
 
-    public final Set<ProjectEvent> getProjectEventsByText(java.lang.String text) {
-        return projectEventsByTextCache.get(text);
+    public final Set<ProjectEvent> getProjectEventsByLabel(java.lang.String label) {
+        return projectEventsByLabelCache.get(label);
     }
-    private Set<java.lang.String> textsCache;
+    private Set<java.lang.String> labelsCache;
 
-    public final Set<java.lang.String> getTexts() {
-        if (textsCache == null) {
-            textsCache = new HashSet<java.lang.String>();
+    public final Set<java.lang.String> getLabels() {
+        if (labelsCache == null) {
+            labelsCache = new HashSet<java.lang.String>();
             for (ProjectEvent e : getEntities()) {
-                if (e.isTextSet()) textsCache.add(e.getText());
+                if (e.isLabelSet()) labelsCache.add(e.getLabel());
             }
         }
-        return textsCache;
+        return labelsCache;
     }
 
-    private static class IsText implements Predicate<ProjectEvent> {
+    private static class IsLabel implements Predicate<ProjectEvent> {
 
         private java.lang.String value;
 
-        public IsText(java.lang.String value) {
+        public IsLabel(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(ProjectEvent e) {
-            return e.isText(value);
+            return e.isLabel(value);
         }
 
     }
 
     // -----------------------------------------------------------
-    // - timestamp
+    // - dateAndTime
     // -----------------------------------------------------------
 
-    private final Cache<ilarkesto.base.time.DateAndTime,Set<ProjectEvent>> projectEventsByTimestampCache = new Cache<ilarkesto.base.time.DateAndTime,Set<ProjectEvent>>(
+    private final Cache<ilarkesto.base.time.DateAndTime,Set<ProjectEvent>> projectEventsByDateAndTimeCache = new Cache<ilarkesto.base.time.DateAndTime,Set<ProjectEvent>>(
             new Cache.Factory<ilarkesto.base.time.DateAndTime,Set<ProjectEvent>>() {
-                public Set<ProjectEvent> create(ilarkesto.base.time.DateAndTime timestamp) {
-                    return getEntities(new IsTimestamp(timestamp));
+                public Set<ProjectEvent> create(ilarkesto.base.time.DateAndTime dateAndTime) {
+                    return getEntities(new IsDateAndTime(dateAndTime));
                 }
             });
 
-    public final Set<ProjectEvent> getProjectEventsByTimestamp(ilarkesto.base.time.DateAndTime timestamp) {
-        return projectEventsByTimestampCache.get(timestamp);
+    public final Set<ProjectEvent> getProjectEventsByDateAndTime(ilarkesto.base.time.DateAndTime dateAndTime) {
+        return projectEventsByDateAndTimeCache.get(dateAndTime);
     }
-    private Set<ilarkesto.base.time.DateAndTime> timestampsCache;
+    private Set<ilarkesto.base.time.DateAndTime> dateAndTimesCache;
 
-    public final Set<ilarkesto.base.time.DateAndTime> getTimestamps() {
-        if (timestampsCache == null) {
-            timestampsCache = new HashSet<ilarkesto.base.time.DateAndTime>();
+    public final Set<ilarkesto.base.time.DateAndTime> getDateAndTimes() {
+        if (dateAndTimesCache == null) {
+            dateAndTimesCache = new HashSet<ilarkesto.base.time.DateAndTime>();
             for (ProjectEvent e : getEntities()) {
-                if (e.isTimestampSet()) timestampsCache.add(e.getTimestamp());
+                if (e.isDateAndTimeSet()) dateAndTimesCache.add(e.getDateAndTime());
             }
         }
-        return timestampsCache;
+        return dateAndTimesCache;
     }
 
-    private static class IsTimestamp implements Predicate<ProjectEvent> {
+    private static class IsDateAndTime implements Predicate<ProjectEvent> {
 
         private ilarkesto.base.time.DateAndTime value;
 
-        public IsTimestamp(ilarkesto.base.time.DateAndTime value) {
+        public IsDateAndTime(ilarkesto.base.time.DateAndTime value) {
             this.value = value;
         }
 
         public boolean test(ProjectEvent e) {
-            return e.isTimestamp(value);
+            return e.isDateAndTime(value);
         }
 
     }

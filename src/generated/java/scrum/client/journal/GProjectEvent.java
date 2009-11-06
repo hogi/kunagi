@@ -69,81 +69,81 @@ public abstract class GProjectEvent
         return equals(this.projectId, project);
     }
 
-    // --- text ---
+    // --- label ---
 
-    private java.lang.String text ;
+    private java.lang.String label ;
 
-    public final java.lang.String getText() {
-        return this.text ;
+    public final java.lang.String getLabel() {
+        return this.label ;
     }
 
-    public final ProjectEvent setText(java.lang.String text) {
-        if (isText(text)) return (ProjectEvent)this;
-        this.text = text ;
-        propertyChanged("text", this.text);
+    public final ProjectEvent setLabel(java.lang.String label) {
+        if (isLabel(label)) return (ProjectEvent)this;
+        this.label = label ;
+        propertyChanged("label", this.label);
         return (ProjectEvent)this;
     }
 
-    public final boolean isText(java.lang.String text) {
-        return equals(this.text, text);
+    public final boolean isLabel(java.lang.String label) {
+        return equals(this.label, label);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel textModel;
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getTextModel() {
-        if (textModel == null) textModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    public ilarkesto.gwt.client.editor.ATextEditorModel getLabelModel() {
+        if (labelModel == null) labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
 
             @Override
             public String getValue() {
-                return getText();
+                return getLabel();
             }
 
             @Override
             public void setValue(String value) {
-                setText(value);
+                setLabel(value);
             }
 
 
             @Override
             public boolean isMandatory() { return true; }
         };
-        return textModel;
+        return labelModel;
     }
 
-    // --- timestamp ---
+    // --- dateAndTime ---
 
-    private ilarkesto.gwt.client.DateAndTime timestamp ;
+    private ilarkesto.gwt.client.DateAndTime dateAndTime ;
 
-    public final ilarkesto.gwt.client.DateAndTime getTimestamp() {
-        return this.timestamp ;
+    public final ilarkesto.gwt.client.DateAndTime getDateAndTime() {
+        return this.dateAndTime ;
     }
 
-    public final ProjectEvent setTimestamp(ilarkesto.gwt.client.DateAndTime timestamp) {
-        if (isTimestamp(timestamp)) return (ProjectEvent)this;
-        this.timestamp = timestamp ;
-        propertyChanged("timestamp", this.timestamp);
+    public final ProjectEvent setDateAndTime(ilarkesto.gwt.client.DateAndTime dateAndTime) {
+        if (isDateAndTime(dateAndTime)) return (ProjectEvent)this;
+        this.dateAndTime = dateAndTime ;
+        propertyChanged("dateAndTime", this.dateAndTime);
         return (ProjectEvent)this;
     }
 
-    public final boolean isTimestamp(ilarkesto.gwt.client.DateAndTime timestamp) {
-        return equals(this.timestamp, timestamp);
+    public final boolean isDateAndTime(ilarkesto.gwt.client.DateAndTime dateAndTime) {
+        return equals(this.dateAndTime, dateAndTime);
     }
 
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
-        text  = (java.lang.String) props.get("text");
-        String timestampAsString = (String) props.get("timestamp");
-        timestamp  =  timestampAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(timestampAsString);
+        label  = (java.lang.String) props.get("label");
+        String dateAndTimeAsString = (String) props.get("dateAndTime");
+        dateAndTime  =  dateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(dateAndTimeAsString);
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
-        properties.put("text", this.text);
-        properties.put("timestamp", this.timestamp == null ? null : this.timestamp.toString());
+        properties.put("label", this.label);
+        properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
     }
 
 }

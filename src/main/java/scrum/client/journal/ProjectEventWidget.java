@@ -20,8 +20,7 @@ public class ProjectEventWidget extends AWidget {
 		TableBuilder tb = new TableBuilder();
 
 		tb.addFieldRow("Timestamp", new DateAndTimeEditorWidget(null));
-
-		tb.addFieldRow("Text", new TextEditorWidget(projectEvent.getTextModel()));
+		tb.addFieldRow("Label", new TextEditorWidget(projectEvent.getLabelModel()));
 
 		return tb.createTable();
 	}

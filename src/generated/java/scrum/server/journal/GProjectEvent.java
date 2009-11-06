@@ -37,8 +37,8 @@ public abstract class GProjectEvent
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
-        properties.put("text", this.text);
-        properties.put("timestamp", this.timestamp == null ? null : this.timestamp.toString());
+        properties.put("label", this.label);
+        properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
     }
 
     public int compareTo(ProjectEvent other) {
@@ -56,7 +56,7 @@ public abstract class GProjectEvent
 
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;
-        if (matchesKey(getText(), key)) return true;
+        if (matchesKey(getLabel(), key)) return true;
         return false;
     }
 
@@ -108,73 +108,73 @@ public abstract class GProjectEvent
     }
 
     // -----------------------------------------------------------
-    // - text
+    // - label
     // -----------------------------------------------------------
 
-    private java.lang.String text;
+    private java.lang.String label;
 
-    public final java.lang.String getText() {
-        return text;
+    public final java.lang.String getLabel() {
+        return label;
     }
 
-    public final void setText(java.lang.String text) {
-        text = prepareText(text);
-        if (isText(text)) return;
-        this.text = text;
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
         fireModified();
     }
 
-    protected java.lang.String prepareText(java.lang.String text) {
-        text = Str.removeUnreadableChars(text);
-        return text;
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
     }
 
-    public final boolean isTextSet() {
-        return this.text != null;
+    public final boolean isLabelSet() {
+        return this.label != null;
     }
 
-    public final boolean isText(java.lang.String text) {
-        if (this.text == null && text == null) return true;
-        return this.text != null && this.text.equals(text);
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
     }
 
-    protected final void updateText(Object value) {
-        setText((java.lang.String)value);
+    protected final void updateLabel(Object value) {
+        setLabel((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
-    // - timestamp
+    // - dateAndTime
     // -----------------------------------------------------------
 
-    private ilarkesto.base.time.DateAndTime timestamp;
+    private ilarkesto.base.time.DateAndTime dateAndTime;
 
-    public final ilarkesto.base.time.DateAndTime getTimestamp() {
-        return timestamp;
+    public final ilarkesto.base.time.DateAndTime getDateAndTime() {
+        return dateAndTime;
     }
 
-    public final void setTimestamp(ilarkesto.base.time.DateAndTime timestamp) {
-        timestamp = prepareTimestamp(timestamp);
-        if (isTimestamp(timestamp)) return;
-        this.timestamp = timestamp;
+    public final void setDateAndTime(ilarkesto.base.time.DateAndTime dateAndTime) {
+        dateAndTime = prepareDateAndTime(dateAndTime);
+        if (isDateAndTime(dateAndTime)) return;
+        this.dateAndTime = dateAndTime;
         fireModified();
     }
 
-    protected ilarkesto.base.time.DateAndTime prepareTimestamp(ilarkesto.base.time.DateAndTime timestamp) {
-        return timestamp;
+    protected ilarkesto.base.time.DateAndTime prepareDateAndTime(ilarkesto.base.time.DateAndTime dateAndTime) {
+        return dateAndTime;
     }
 
-    public final boolean isTimestampSet() {
-        return this.timestamp != null;
+    public final boolean isDateAndTimeSet() {
+        return this.dateAndTime != null;
     }
 
-    public final boolean isTimestamp(ilarkesto.base.time.DateAndTime timestamp) {
-        if (this.timestamp == null && timestamp == null) return true;
-        return this.timestamp != null && this.timestamp.equals(timestamp);
+    public final boolean isDateAndTime(ilarkesto.base.time.DateAndTime dateAndTime) {
+        if (this.dateAndTime == null && dateAndTime == null) return true;
+        return this.dateAndTime != null && this.dateAndTime.equals(dateAndTime);
     }
 
-    protected final void updateTimestamp(Object value) {
+    protected final void updateDateAndTime(Object value) {
         value = value == null ? null : new ilarkesto.base.time.DateAndTime((String)value);
-        setTimestamp((ilarkesto.base.time.DateAndTime)value);
+        setDateAndTime((ilarkesto.base.time.DateAndTime)value);
     }
 
     public void updateProperties(Map<?, ?> properties) {
@@ -183,8 +183,8 @@ public abstract class GProjectEvent
             if (property.equals("id")) continue;
             Object value = entry.getValue();
             if (property.equals("projectId")) updateProject(value);
-            if (property.equals("text")) updateText(value);
-            if (property.equals("timestamp")) updateTimestamp(value);
+            if (property.equals("label")) updateLabel(value);
+            if (property.equals("dateAndTime")) updateDateAndTime(value);
         }
     }
 

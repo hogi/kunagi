@@ -1,14 +1,11 @@
 package scrum.server.journal;
 
-import java.util.*;
 
-import ilarkesto.persistence.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.*;
-import ilarkesto.base.time.*;
-import ilarkesto.auth.*;
+public class ProjectEvent extends GProjectEvent {
 
-public class ProjectEvent
-            extends GProjectEvent {
+	@Override
+	public String toString() {
+		return getLabel();
+	}
 
 }

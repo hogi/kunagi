@@ -20,7 +20,7 @@ import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.issues.Issue;
 import scrum.client.issues.IssueListWidget;
-import scrum.client.journal.ProjectEventListWidget;
+import scrum.client.journal.JournalWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.Project;
 import scrum.client.project.ProjectOverviewWidget;
@@ -60,7 +60,7 @@ public class ProjectContext extends AScrumComponent {
 	private ProjectUserConfigWidget projectUserConfig;
 	private WidgetsTesterWidget widgetsTester;
 	private PunishmentsWidget punishments;
-	private ProjectEventListWidget projectEventListWidget;
+	private JournalWidget projectEventListWidget;
 
 	private User highlightedUser;
 
@@ -80,7 +80,7 @@ public class ProjectContext extends AScrumComponent {
 		wiki = new WikiWidget();
 		widgetsTester = new WidgetsTesterWidget();
 		punishments = new PunishmentsWidget();
-		projectEventListWidget = new ProjectEventListWidget();
+		projectEventListWidget = new JournalWidget();
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
 		navigator.addItem("Project Overview", getProjectOverview());
@@ -93,10 +93,10 @@ public class ProjectContext extends AScrumComponent {
 		navigator.addItem("Issue List", getIssueList());
 		navigator.addItem("Risk Management", getRiskList());
 		navigator.addItem("Wiki", getWiki());
+		navigator.addItem("Project Journal", getProjectEventList());
 		navigator.addItem("Next Sprint", getNextSprint());
 		navigator.addItem("Sprint History", getSprintHistory());
 		navigator.addItem("Courtroom", punishments);
-		navigator.addItem("Journal", getProjectEventList());
 		navigator.addItem("Personal Preferences", getProjectUserConfig());
 		navigator.addItem("WidgetsTester", getWidgetsTester());
 	}
@@ -317,7 +317,7 @@ public class ProjectContext extends AScrumComponent {
 		return sprintHistory;
 	}
 
-	public ProjectEventListWidget getProjectEventList() {
+	public JournalWidget getProjectEventList() {
 		return projectEventListWidget;
 	}
 

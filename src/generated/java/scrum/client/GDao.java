@@ -650,18 +650,18 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.journal.ProjectEvent> getProjectEventsByText(java.lang.String text) {
+    public final List<scrum.client.journal.ProjectEvent> getProjectEventsByLabel(java.lang.String label) {
         List<scrum.client.journal.ProjectEvent> ret = new ArrayList<scrum.client.journal.ProjectEvent>();
         for (scrum.client.journal.ProjectEvent entity : projectEvents.values()) {
-            if (entity.isText(text)) ret.add(entity);
+            if (entity.isLabel(label)) ret.add(entity);
         }
         return ret;
     }
 
-    public final List<scrum.client.journal.ProjectEvent> getProjectEventsByTimestamp(ilarkesto.gwt.client.DateAndTime timestamp) {
+    public final List<scrum.client.journal.ProjectEvent> getProjectEventsByDateAndTime(ilarkesto.gwt.client.DateAndTime dateAndTime) {
         List<scrum.client.journal.ProjectEvent> ret = new ArrayList<scrum.client.journal.ProjectEvent>();
         for (scrum.client.journal.ProjectEvent entity : projectEvents.values()) {
-            if (entity.isTimestamp(timestamp)) ret.add(entity);
+            if (entity.isDateAndTime(dateAndTime)) ret.add(entity);
         }
         return ret;
     }

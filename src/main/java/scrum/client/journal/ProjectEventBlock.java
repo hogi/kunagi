@@ -9,18 +9,18 @@ import com.google.gwt.user.client.ui.Widget;
 public class ProjectEventBlock extends ABlockWidget<ProjectEvent> {
 
 	@Override
+	protected void onInitializationHeader(BlockHeaderWidget header) {
+		header.setDragHandle("evt");
+		header.insertPrefixLabel("120px", true).setText(getObject().getDateAndTime().toString());
+		header.setCenter(getObject().getLabel());
+	}
+
+	@Override
+	protected void onUpdateHeader(BlockHeaderWidget header) {}
+
+	@Override
 	protected Widget onExtendedInitialization() {
 		return new ProjectEventWidget(getObject());
-	}
-
-	@Override
-	protected void onInitializationHeader(BlockHeaderWidget header) {
-
-	}
-
-	@Override
-	protected void onUpdateHeader(BlockHeaderWidget header) {
-
 	}
 
 	public static final BlockWidgetFactory<ProjectEvent> FACTORY = new BlockWidgetFactory<ProjectEvent>() {

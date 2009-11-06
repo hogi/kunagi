@@ -18,6 +18,7 @@ import scrum.client.admin.User;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
+import scrum.client.journal.ProjectEvent;
 import scrum.client.risks.Risk;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
@@ -58,6 +59,10 @@ public class Project extends GProject {
 			if (sprint.isCompleted()) ret.add(sprint);
 		}
 		return ret;
+	}
+
+	public List<ProjectEvent> getEvents() {
+		return cm.getDao().getProjectEvents();
 	}
 
 	public List<Wikipage> getWikipages() {

@@ -17,6 +17,8 @@ import scrum.server.impediments.Impediment;
 import scrum.server.impediments.ImpedimentDao;
 import scrum.server.issues.Issue;
 import scrum.server.issues.IssueDao;
+import scrum.server.journal.ProjectEvent;
+import scrum.server.journal.ProjectEventDao;
 import scrum.server.risks.Risk;
 import scrum.server.risks.RiskDao;
 import scrum.server.sprint.Sprint;
@@ -38,6 +40,11 @@ public class Project extends GProject {
 	private static RiskDao riskDao;
 	private static TaskDao taskDao;
 	private static WikipageDao wikipageDao;
+	private static ProjectEventDao projectEventDao;
+
+	public static void setProjectEventDao(ProjectEventDao projectEventDao) {
+		Project.projectEventDao = projectEventDao;
+	}
 
 	public static void setWikipageDao(WikipageDao wikipageDao) {
 		Project.wikipageDao = wikipageDao;
@@ -76,6 +83,10 @@ public class Project extends GProject {
 	}
 
 	// --- ---
+
+	public Set<ProjectEvent> getEvents() {
+		return projectEventDao.getProjectEventsByProject(this);
+	}
 
 	public UsersStatusData getUsersStatus() {
 		if (usersStatus == null) usersStatus = new UsersStatusData();
@@ -303,6 +314,14 @@ public class Project extends GProject {
 		riskDao.createTestRisk(this, 5);
 		riskDao.createTestRisk(this, 6);
 		riskDao.createTestRisk(this, 7);
+	}
+
+	public void addTestEvents(int variant) {
+		if (variant == 0) return;
+
+		projectEventDao.createTestEvent(this, 1);
+		projectEventDao.createTestEvent(this, 2);
+		projectEventDao.createTestEvent(this, 3);
 	}
 
 	public void addTestIssues(int variant) {
