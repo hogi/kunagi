@@ -67,6 +67,7 @@ public class WikiWidget extends AScrumWidget {
 		} else {
 			page.addHeader(wikipage.getName(), new ButtonWidget(new DeleteWikipageAction(wikipage)));
 			editor = new RichtextEditorWidget(wikipage.getTextModel());
+			editor.setEditorHeight(500);
 			page.addSection(TableBuilder.row(20, editor, new CommentsWidget(wikipage)));
 		}
 
