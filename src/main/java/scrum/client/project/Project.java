@@ -110,6 +110,28 @@ public class Project extends GProject {
 		return getProductOwners().contains(user);
 	}
 
+	public String getUsersRolesAsString(User user, String prefix, String suffix) {
+		StringBuilder sb = new StringBuilder();
+		List<String> roles = new ArrayList<String>();
+		if (isProductOwner(user)) roles.add("PO");
+		if (isScrumMaster(user)) roles.add("SM");
+		if (isTeamMember(user)) roles.add("T");
+		boolean first = true;
+		if (!roles.isEmpty()) {
+			for (String role : roles) {
+				if (first) {
+					first = false;
+					if (prefix != null) sb.append(prefix);
+				} else {
+					sb.append(",");
+				}
+				sb.append(role);
+			}
+			if (suffix != null) sb.append(suffix);
+		}
+		return sb.toString();
+	}
+
 	public void updateRequirementsOrder() {
 		List<Requirement> requirements = getRequirements();
 		Collections.sort(requirements, getRequirementsOrderComparator());

@@ -24,7 +24,7 @@ public class UserStatusWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		label = new Label(user.getName());
+		label = new Label(user.getName() + getCurrentProject().getUsersRolesAsString(user, " (", ")"));
 		label.setStyleName("UserStatusWidget");
 		return label;
 	}

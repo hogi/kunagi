@@ -4,10 +4,6 @@ import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import scrum.client.ApplicationInfo;
 import scrum.client.admin.LogoutAction;
 import scrum.client.common.AScrumWidget;
@@ -59,23 +55,7 @@ public class HeaderWidget extends AScrumWidget {
 		if (loggedIn) {
 			text.append(getCurrentUser().getName());
 			if (cm.getProjectContext().isProjectOpen()) {
-				List<String> roles = new ArrayList<String>();
-				if (getCurrentProject().isProductOwner(getCurrentUser())) roles.add("PO");
-				if (getCurrentProject().isScrumMaster(getCurrentUser())) roles.add("SM");
-				if (getCurrentProject().isTeamMember(getCurrentUser())) roles.add("TM");
-				boolean first = true;
-				if (!roles.isEmpty()) {
-					for (String role : roles) {
-						if (first) {
-							first = false;
-							text.append(" (");
-						} else {
-							text.append(",");
-						}
-						text.append(role);
-					}
-					text.append(")");
-				}
+				text.append(getCurrentProject().getUsersRolesAsString(getCurrentUser(), " (", ")"));
 				text.append(" @ " + getCurrentProject().getLabel());
 			}
 		}
