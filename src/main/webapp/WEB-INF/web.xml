@@ -10,7 +10,7 @@
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 
-	<!-- provides main communication service -->
+	<!-- main communication service -->
 	<servlet>
 		<servlet-name>scrum</servlet-name>
 		<servlet-class>scrum.server.ScrumServiceImpl</servlet-class>
@@ -21,7 +21,7 @@
 		<url-pattern>/scrum.ScrumGwtApplication/scrum</url-pattern>
 	</servlet-mapping>
 
-    <!-- provides css -->
+    <!-- css -->
     <servlet>
         <servlet-name>css</servlet-name>
         <servlet-class>scrum.server.css.CssServlet</servlet-class>
@@ -31,7 +31,7 @@
         <url-pattern>/scrum.ScrumGwtApplication/screen.css</url-pattern>
     </servlet-mapping>
 
-	<!-- provides sprint burndown chart -->
+	<!-- sprint burndown chart -->
 	<servlet>
 		<servlet-name>sprintBurndownChart</servlet-name>
 		<servlet-class>scrum.server.sprint.SprintBurndownChartServlet</servlet-class>
@@ -49,6 +49,16 @@
     <servlet-mapping>
         <servlet-name>sprintReport</servlet-name>
         <url-pattern>/scrum.ScrumGwtApplication/sprintReport.pdf</url-pattern>
+    </servlet-mapping>
+
+    <!-- journal rss -->
+    <servlet>
+        <servlet-name>journalRss</servlet-name>
+        <servlet-class>scrum.server.journal.JournalRssServlet</servlet-class>
+    </servlet>      
+    <servlet-mapping>
+        <servlet-name>journalRss</servlet-name>
+        <url-pattern>/scrum.ScrumGwtApplication/projectJournal.rss</url-pattern>
     </servlet-mapping>
 
 </web-app>

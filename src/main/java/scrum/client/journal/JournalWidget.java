@@ -1,5 +1,6 @@
 package scrum.client.journal;
 
+import ilarkesto.gwt.client.Gwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.PagePanel;
@@ -18,6 +19,8 @@ public class JournalWidget extends AScrumWidget {
 		PagePanel page = new PagePanel();
 		page.addHeader("Project Journal");
 		page.addSection(list);
+		page.addSection(Gwt.createServletDownloadLink("projectJournal.rss?projectId=" + getCurrentProject().getId(),
+			"RSS Feed"));
 
 		return page;
 	}
