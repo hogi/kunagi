@@ -5,11 +5,19 @@ import scrum.server.project.Project;
 
 public class Task extends GTask implements Numbered {
 
+	public String getReferenceAndLabel() {
+		return getReference() + " (" + getLabel() + ")";
+	}
+
+	public String getReference() {
+		return scrum.client.sprint.Task.REFERENCE_PREFIX + getNumber();
+	}
+
 	public boolean isProject(Project project) {
 		return getRequirement().isProject(project);
 	}
 
-	public boolean isDone() {
+	public boolean isClosed() {
 		return getRemainingWork() == 0;
 	}
 
@@ -29,7 +37,7 @@ public class Task extends GTask implements Numbered {
 
 	@Override
 	public String toString() {
-		return "t" + getNumber() + " " + getLabel();
+		return getReferenceAndLabel();
 	}
 
 }

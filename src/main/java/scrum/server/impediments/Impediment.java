@@ -9,6 +9,10 @@ public class Impediment extends GImpediment implements Numbered {
 		if (getNumber() == 0) setNumber(getProject().generateImpedimentNumber());
 	}
 
+	public String getReferenceAndLabel() {
+		return getReference() + " (" + getLabel() + ")";
+	}
+
 	public String getReference() {
 		return scrum.client.impediments.Impediment.REFERENCE_PREFIX + getNumber();
 	}
@@ -26,6 +30,6 @@ public class Impediment extends GImpediment implements Numbered {
 
 	@Override
 	public String toString() {
-		return getLabel();
+		return getReferenceAndLabel();
 	}
 }

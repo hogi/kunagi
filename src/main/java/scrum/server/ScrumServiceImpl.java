@@ -167,6 +167,19 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			// update sprint day snapshot after change
 			Task task = (Task) entity;
 			task.getRequirement().getSprint().getDaySnapshot(Date.today()).update();
+
+			if (task.isClosed() && properties.containsKey("remainingWork")) {
+				String event = task.getReferenceAndLabel() + " closed by " + task.getOwner().getName();
+				if (task.getRequirement().isTasksClosed()) {
+					event += ", all tasks in " + task.getRequirement().getReferenceAndLabel() + " are closed";
+				}
+				postProjectEvent(session, event);
+			} else if (task.isOwnerSet() && properties.containsKey("ownerId")) {
+				postProjectEvent(session, task.getReferenceAndLabel() + " claimed by " + task.getOwner().getName());
+			}
+			if (!task.isOwnerSet() && properties.containsKey("ownerId")) {
+				postProjectEvent(session, task.getReferenceAndLabel() + " unclaimed");
+			}
 		}
 
 		if (entity instanceof Requirement) {
@@ -186,8 +199,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Impediment) {
 			Impediment impediment = (Impediment) entity;
 			if (impediment.isClosed() && properties.containsKey("closed")) {
-				postProjectEvent(session, "Impediment closed: " + impediment.getReference() + " "
-						+ impediment.getLabel());
+				postProjectEvent(session, impediment.getReferenceAndLabel() + " closed");
 			}
 		}
 

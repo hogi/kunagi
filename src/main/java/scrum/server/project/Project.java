@@ -222,7 +222,7 @@ public class Project extends GProject {
 		createSprintSnapshot();
 
 		for (Task task : oldSprint.getTasks()) {
-			if (task.isDone()) {
+			if (task.isClosed()) {
 				taskDao.deleteEntity(task);
 			}
 		}

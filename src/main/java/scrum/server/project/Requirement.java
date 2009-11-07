@@ -18,6 +18,21 @@ public class Requirement extends GRequirement implements Numbered {
 
 	// --- ---
 
+	public boolean isTasksClosed() {
+		for (Task task : getTasks()) {
+			if (!task.isClosed()) return false;
+		}
+		return true;
+	}
+
+	public String getReferenceAndLabel() {
+		return getReference() + " (" + getLabel() + ")";
+	}
+
+	public String getReference() {
+		return scrum.client.project.Requirement.REFERENCE_PREFIX + getNumber();
+	}
+
 	public void updateNumber() {
 		if (getNumber() == 0) setNumber(getProject().generateRequirementNumber());
 	}
@@ -37,7 +52,7 @@ public class Requirement extends GRequirement implements Numbered {
 
 	@Override
 	public String toString() {
-		return "r" + getNumber() + " " + getLabel();
+		return getReferenceAndLabel();
 	}
 
 	// --- test data ---
