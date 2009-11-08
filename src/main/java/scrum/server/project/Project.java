@@ -86,13 +86,16 @@ public class Project extends GProject {
 
 	// --- ---
 
-	public void writeJournalAsRss(OutputStream out, String encoding) {
+	public void writeJournalAsRss(OutputStream out, String encoding, String baseUrl) {
 		Rss20Builder rss = new Rss20Builder();
 		rss.setTitle(getLabel() + " Event Journal");
 		rss.setLanguage("en");
+		rss.setLink(baseUrl);
 		for (ProjectEvent event : getEvents()) {
 			Rss20Builder.Item item = rss.addItem();
 			item.setTitle(event.getLabel());
+			item.setDescription(event.getLabel());
+			item.setLink(baseUrl);
 			item.setGuid(event.getId());
 			item.setPubDate(event.getDateAndTime());
 		}
