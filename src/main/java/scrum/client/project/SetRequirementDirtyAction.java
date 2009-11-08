@@ -1,5 +1,7 @@
 package scrum.client.project;
 
+import scrum.client.common.TooltipBuilder;
+
 public class SetRequirementDirtyAction extends GSetRequirementDirtyAction {
 
 	protected SetRequirementDirtyAction(Requirement requirement) {
@@ -13,7 +15,17 @@ public class SetRequirementDirtyAction extends GSetRequirementDirtyAction {
 
 	@Override
 	public String getTooltip() {
-		return "Mark this requirement as dirty. This means, the estimated work needs to be reestimated.";
+		TooltipBuilder tb = new TooltipBuilder(
+				"Mark this requirement as dirty. This means, the estimated work needs to be reestimated.");
+		if (!requirement.getProject().isProductOwnerOrTeamMember(getCurrentUser())) {
+			tb.addRemark(TooltipBuilder.NOT_TEAM_MEMBER_NOR_PRODUCT_OWNER);
+		} else {
+			if (requirement.isClosed()) tb.addRemark("Requirement is already closed.");
+			if (requirement.isDirty()) tb.addRemark("Requirement is already dirty.");
+			if (requirement.isInCurrentSprint()) tb.addRemark("Requirement is in Sprint.");
+		}
+
+		return tb.getTooltip();
 	}
 
 	@Override
@@ -21,6 +33,12 @@ public class SetRequirementDirtyAction extends GSetRequirementDirtyAction {
 		if (requirement.isClosed()) return false;
 		if (requirement.isDirty()) return false;
 		if (requirement.isInCurrentSprint()) return false;
+		return true;
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!requirement.getProject().isProductOwnerOrTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

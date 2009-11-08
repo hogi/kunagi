@@ -1,5 +1,7 @@
 package scrum.client.impediments;
 
+import scrum.client.common.TooltipBuilder;
+
 public class CloseImpedimentAction extends GCloseImpedimentAction {
 
 	public CloseImpedimentAction(scrum.client.impediments.Impediment impediment) {
@@ -12,8 +14,26 @@ public class CloseImpedimentAction extends GCloseImpedimentAction {
 	}
 
 	@Override
+	public String getTooltip() {
+		TooltipBuilder tb = new TooltipBuilder("Close this Impediment.");
+		if (!impediment.getProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) {
+			tb.addRemark(TooltipBuilder.NOT_ANYTHING);
+		} else {
+			if (impediment.isClosed()) tb.addRemark("Impediment is already closed.");
+		}
+
+		return tb.getTooltip();
+	}
+
+	@Override
 	public boolean isExecutable() {
 		if (impediment.isClosed()) return false;
+		return true;
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!impediment.getProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

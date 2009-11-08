@@ -1,5 +1,6 @@
 package scrum.client.issues;
 
+import scrum.client.common.TooltipBuilder;
 import scrum.client.project.Requirement;
 
 public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementAction {
@@ -15,13 +16,25 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 
 	@Override
 	public String getTooltip() {
-		return "Convert this issue to a real requirement on the product backlog.";
+		TooltipBuilder tb = new TooltipBuilder("Convert this issue to a real Requirement on the Product Backlog.");
+		if (!issue.getProject().isProductOwner(getCurrentUser())) {
+			tb.addRemark(TooltipBuilder.NOT_A_PRODUCT_OWNER);
+		} else {
+			if (!issue.isTypeRequirement()) tb.addRemark("Issue is not of type Requirement.");
+		}
+
+		return tb.getTooltip();
 	}
 
 	@Override
 	public boolean isExecutable() {
-		if (!issue.getProject().isProductOwner(getCurrentUser())) return false;
 		if (!issue.isTypeRequirement()) return false;
+		return true;
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!issue.getProject().isProductOwner(getCurrentUser())) return false;
 		return true;
 	}
 

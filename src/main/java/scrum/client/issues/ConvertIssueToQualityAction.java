@@ -1,5 +1,6 @@
 package scrum.client.issues;
 
+import scrum.client.common.TooltipBuilder;
 import scrum.client.project.Quality;
 
 public class ConvertIssueToQualityAction extends GConvertIssueToQualityAction {
@@ -15,13 +16,25 @@ public class ConvertIssueToQualityAction extends GConvertIssueToQualityAction {
 
 	@Override
 	public String getTooltip() {
-		return "Convert this issue to a real quality on the quality backlog.";
+		TooltipBuilder tb = new TooltipBuilder("Convert this issue to a real Quality on the Quality Backlog.");
+		if (!issue.getProject().isProductOwner(getCurrentUser())) {
+			tb.addRemark(TooltipBuilder.NOT_A_PRODUCT_OWNER);
+		} else {
+			if (!issue.isTypeQuality()) tb.addRemark("Issue is not of type Quality.");
+		}
+
+		return tb.getTooltip();
 	}
 
 	@Override
 	public boolean isExecutable() {
-		if (!issue.getProject().isProductOwner(getCurrentUser())) return false;
 		if (!issue.isTypeQuality()) return false;
+		return true;
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!issue.getProject().isProductOwner(getCurrentUser())) return false;
 		return true;
 	}
 

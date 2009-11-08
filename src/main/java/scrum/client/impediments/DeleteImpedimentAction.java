@@ -1,5 +1,7 @@
 package scrum.client.impediments;
 
+import scrum.client.common.TooltipBuilder;
+
 public class DeleteImpedimentAction extends GDeleteImpedimentAction {
 
 	public DeleteImpedimentAction(Impediment impediment) {
@@ -13,12 +15,22 @@ public class DeleteImpedimentAction extends GDeleteImpedimentAction {
 
 	@Override
 	public String getTooltip() {
-		return "Delete this impediment.";
+		TooltipBuilder tb = new TooltipBuilder("Delete this Impediment.");
+		if (!impediment.getProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
+			tb.addRemark(TooltipBuilder.NOT_ANYTHING);
+
+		return tb.getTooltip();
 	}
 
 	@Override
 	public boolean isExecutable() {
-		return getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser());
+		return true;
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
+		return true;
 	}
 
 	@Override
