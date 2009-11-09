@@ -20,10 +20,10 @@ public class SprintBacklogWidget extends AScrumWidget {
 		requirementList.setAutoSorter(getCurrentProject().getRequirementsOrderComparator());
 
 		PagePanel page = new PagePanel();
-		page.addHeader("Sprint Properties");
-		page.addSection(new SprintWidget(sprint));
 		page.addHeader("Requirements in this Sprint");
 		page.addSection(requirementList);
+		page.addHeader("Sprint Properties");
+		page.addSection(new SprintWidget(sprint));
 		page.addHeader("Sprint Comments");
 		page.addSection(new CommentsWidget(sprint));
 
