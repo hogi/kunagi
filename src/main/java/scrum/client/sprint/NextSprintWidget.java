@@ -23,11 +23,12 @@ public class NextSprintWidget extends AScrumWidget {
 
 		fieldsWidget = new FieldsWidget();
 		fieldsWidget.add("Label", new TextEditorWidget(sprint.getLabelModel(), sprint.getEditPredicate()));
-		fieldsWidget.add("Goal", new RichtextEditorWidget(sprint.getGoalModel(), sprint.getEditPredicate()));
+		fieldsWidget.add("Goal", new RichtextEditorWidget(sprint.getGoalModel(), sprint.getEditPredicate())
+				.setTemplate(cm.getWiki().getTemplate("sprint.goal")));
 		fieldsWidget.add("Begin", new DateEditorWidget(sprint.getBeginModel()));
 		fieldsWidget.add("End", new DateEditorWidget(sprint.getEndModel()));
 		fieldsWidget.add("Planning Note", new RichtextEditorWidget(sprint.getPlaningNoteModel(), sprint
-				.getPlaningEditPredicate()));
+				.getPlaningEditPredicate()).setTemplate(cm.getWiki().getTemplate("sprint.planning")));
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Next Sprint", new ButtonWidget(new SwitchToNextSprintAction()));

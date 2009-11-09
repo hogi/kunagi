@@ -3,6 +3,8 @@ package scrum.client.wiki;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import scrum.client.Wiki;
+
 public class WikiTest {
 
 	@Test

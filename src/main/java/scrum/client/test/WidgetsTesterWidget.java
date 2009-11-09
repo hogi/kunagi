@@ -12,6 +12,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import ilarkesto.gwt.client.editor.ATextEditorModel;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
+import scrum.client.Wiki;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
@@ -81,10 +82,9 @@ public class WidgetsTesterWidget extends AScrumWidget {
 
 	private void testTextConverter() {
 		StringBuilder html = new StringBuilder();
-		html.append(
-			cm.getRichtextConverter().toHtml(
-				"[Wiki] r1 aaaa t5 aaaa (r3) aaaa r3. aaaa r3: aaaa [t12] aaar7 aaaa r7x aaaa t9")).append("<hr>");
-		html.append(cm.getRichtextConverter().toHtml("<b>html?</b> C&A\nnew line")).append("<hr>");
+		html.append(Wiki.toHtml("[Wiki] r1 aaaa t5 aaaa (r3) aaaa r3. aaaa r3: aaaa [t12] aaar7 aaaa r7x aaaa t9"))
+				.append("<hr>");
+		html.append(Wiki.toHtml("<b>html?</b> C&A\nnew line")).append("<hr>");
 		addTest("TextConverter", new HTML(html.toString()));
 	}
 

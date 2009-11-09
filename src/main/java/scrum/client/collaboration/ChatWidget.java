@@ -1,6 +1,7 @@
 package scrum.client.collaboration;
 
 import scrum.client.Chat;
+import scrum.client.Wiki;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 
@@ -77,7 +78,7 @@ public class ChatWidget extends AScrumWidget {
 			" margin-bottom: 2px;'>").append(authorLabel).append(", ").append(
 			m.getDateAndTime().getTime().toString(false)).append("</p>");
 		sb.append("<div class='ChatWidget-message'>");
-		sb.append(cm.getRichtextConverter().toHtml(text));
+		sb.append(Wiki.toHtml(text));
 		sb.append("</div>");
 	}
 }

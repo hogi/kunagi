@@ -1,6 +1,7 @@
 package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.ATextWidget;
+import scrum.client.Wiki;
 import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -37,7 +38,7 @@ public class CommentWidget extends AScrumWidget {
 
 			@Override
 			protected void onUpdate() {
-				setHtml(cm.getRichtextConverter().toHtml(comment.getText()));
+				setHtml(Wiki.toHtml(comment.getText()));
 			}
 		};
 

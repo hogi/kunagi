@@ -29,7 +29,8 @@ public class SprintWidget extends AScrumWidget {
 		tb.setColumnWidths("100px");
 
 		tb.addFieldRow("Label", new TextEditorWidget(sprint.getLabelModel(), sprint.getEditPredicate()), 4);
-		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel(), sprint.getEditPredicate()), 4);
+		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel(), sprint.getEditPredicate())
+				.setTemplate(cm.getWiki().getTemplate("sprint.goal")), 4);
 
 		if (completed) {
 			tb.addFieldRow("Velocity", new IntegerEditorWidget(sprint.getVelocityModel(), Predicate.FALSE), 4);
@@ -84,11 +85,11 @@ public class SprintWidget extends AScrumWidget {
 		}
 
 		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlaningNoteModel(), sprint
-				.getPlaningEditPredicate()), 4);
+				.getPlaningEditPredicate()).setTemplate(cm.getWiki().getTemplate("sprint.planning")), 4);
 		tb.addFieldRow("Review Note", new RichtextEditorWidget(sprint.getReviewNoteModel(), sprint
-				.getReviewEditPredicate()), 4);
+				.getReviewEditPredicate()).setTemplate(cm.getWiki().getTemplate("sprint.review")), 4);
 		tb.addFieldRow("Retrospecitve Note", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel(), sprint
-				.getRetrospecitveEditPredicate()), 4);
+				.getRetrospecitveEditPredicate()).setTemplate(cm.getWiki().getTemplate("sprint.retrospective")), 4);
 
 		if (completed)
 			tb.add(Gwt
