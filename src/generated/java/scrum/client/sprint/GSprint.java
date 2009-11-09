@@ -310,6 +310,44 @@ public abstract class GSprint
         return completedRequirementLabelsModel;
     }
 
+    // --- planingNote ---
+
+    private java.lang.String planingNote ;
+
+    public final java.lang.String getPlaningNote() {
+        return this.planingNote ;
+    }
+
+    public final Sprint setPlaningNote(java.lang.String planingNote) {
+        if (isPlaningNote(planingNote)) return (Sprint)this;
+        this.planingNote = planingNote ;
+        propertyChanged("planingNote", this.planingNote);
+        return (Sprint)this;
+    }
+
+    public final boolean isPlaningNote(java.lang.String planingNote) {
+        return equals(this.planingNote, planingNote);
+    }
+
+    private transient ilarkesto.gwt.client.editor.ATextEditorModel planingNoteModel;
+
+    public ilarkesto.gwt.client.editor.ATextEditorModel getPlaningNoteModel() {
+        if (planingNoteModel == null) planingNoteModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+
+            @Override
+            public String getValue() {
+                return getPlaningNote();
+            }
+
+            @Override
+            public void setValue(String value) {
+                setPlaningNote(value);
+            }
+
+        };
+        return planingNoteModel;
+    }
+
     // --- reviewNote ---
 
     private java.lang.String reviewNote ;
@@ -398,6 +436,7 @@ public abstract class GSprint
         end  =  endAsString == null ? null : new ilarkesto.gwt.client.Date(endAsString);
         velocity  = (java.lang.Integer) props.get("velocity");
         completedRequirementLabels  = (java.lang.String) props.get("completedRequirementLabels");
+        planingNote  = (java.lang.String) props.get("planingNote");
         reviewNote  = (java.lang.String) props.get("reviewNote");
         retrospectiveNote  = (java.lang.String) props.get("retrospectiveNote");
     }
@@ -412,6 +451,7 @@ public abstract class GSprint
         properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("velocity", this.velocity);
         properties.put("completedRequirementLabels", this.completedRequirementLabels);
+        properties.put("planingNote", this.planingNote);
         properties.put("reviewNote", this.reviewNote);
         properties.put("retrospectiveNote", this.retrospectiveNote);
     }

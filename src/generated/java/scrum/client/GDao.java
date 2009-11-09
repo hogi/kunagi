@@ -1283,6 +1283,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.sprint.Sprint> getSprintsByPlaningNote(java.lang.String planingNote) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.isPlaningNote(planingNote)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.sprint.Sprint> getSprintsByReviewNote(java.lang.String reviewNote) {
         List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
         for (scrum.client.sprint.Sprint entity : sprints.values()) {

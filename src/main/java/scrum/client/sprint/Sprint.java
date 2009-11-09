@@ -150,6 +150,19 @@ public class Sprint extends GSprint {
 		return editPredicate;
 	}
 
+	private Predicate planingEditPredicate;
+
+	public Predicate getPlaningEditPredicate() {
+		if (planingEditPredicate == null) planingEditPredicate = new Predicate() {
+
+			public boolean test() {
+				if (isCompleted()) return false;
+				return true;
+			}
+		};
+		return planingEditPredicate;
+	}
+
 	private Predicate retrospecitveEditPredicate;
 
 	public Predicate getRetrospecitveEditPredicate() {

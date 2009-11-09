@@ -43,6 +43,7 @@ public abstract class GSprint
         properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("velocity", this.velocity);
         properties.put("completedRequirementLabels", this.completedRequirementLabels);
+        properties.put("planingNote", this.planingNote);
         properties.put("reviewNote", this.reviewNote);
         properties.put("retrospectiveNote", this.retrospectiveNote);
     }
@@ -312,6 +313,41 @@ public abstract class GSprint
     }
 
     // -----------------------------------------------------------
+    // - planingNote
+    // -----------------------------------------------------------
+
+    private java.lang.String planingNote;
+
+    public final java.lang.String getPlaningNote() {
+        return planingNote;
+    }
+
+    public final void setPlaningNote(java.lang.String planingNote) {
+        planingNote = preparePlaningNote(planingNote);
+        if (isPlaningNote(planingNote)) return;
+        this.planingNote = planingNote;
+        fireModified();
+    }
+
+    protected java.lang.String preparePlaningNote(java.lang.String planingNote) {
+        planingNote = Str.removeUnreadableChars(planingNote);
+        return planingNote;
+    }
+
+    public final boolean isPlaningNoteSet() {
+        return this.planingNote != null;
+    }
+
+    public final boolean isPlaningNote(java.lang.String planingNote) {
+        if (this.planingNote == null && planingNote == null) return true;
+        return this.planingNote != null && this.planingNote.equals(planingNote);
+    }
+
+    protected final void updatePlaningNote(Object value) {
+        setPlaningNote((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
     // - reviewNote
     // -----------------------------------------------------------
 
@@ -393,6 +429,7 @@ public abstract class GSprint
             if (property.equals("end")) updateEnd(value);
             if (property.equals("velocity")) updateVelocity(value);
             if (property.equals("completedRequirementLabels")) updateCompletedRequirementLabels(value);
+            if (property.equals("planingNote")) updatePlaningNote(value);
             if (property.equals("reviewNote")) updateReviewNote(value);
             if (property.equals("retrospectiveNote")) updateRetrospectiveNote(value);
         }

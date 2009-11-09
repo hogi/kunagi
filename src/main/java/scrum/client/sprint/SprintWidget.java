@@ -83,9 +83,11 @@ public class SprintWidget extends AScrumWidget {
 					.getCompletedRequirementLabelsModel(), sprint.getReviewEditPredicate()), 4);
 		}
 
-		tb.addFieldRow("Review Notes", new RichtextEditorWidget(sprint.getReviewNoteModel(), sprint
+		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlaningNoteModel(), sprint
+				.getPlaningEditPredicate()), 4);
+		tb.addFieldRow("Review Note", new RichtextEditorWidget(sprint.getReviewNoteModel(), sprint
 				.getReviewEditPredicate()), 4);
-		tb.addFieldRow("Retrospecitve Notes", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel(), sprint
+		tb.addFieldRow("Retrospecitve Note", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel(), sprint
 				.getRetrospecitveEditPredicate()), 4);
 
 		if (completed)
