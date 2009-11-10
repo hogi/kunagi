@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.admin.User;
 import scrum.client.issues.Issue;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
@@ -159,6 +160,14 @@ public class Requirement extends GRequirement {
 		List<Task> ret = new ArrayList<Task>();
 		for (Task task : getTasks()) {
 			if (task.isOwnerSet() && !task.isClosed()) ret.add(task);
+		}
+		return ret;
+	}
+
+	public List<Task> getClaimedTasks(User owner) {
+		List<Task> ret = new ArrayList<Task>();
+		for (Task task : getTasks()) {
+			if (task.isOwner(owner) && !task.isClosed()) ret.add(task);
 		}
 		return ret;
 	}

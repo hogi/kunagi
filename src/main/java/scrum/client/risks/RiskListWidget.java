@@ -1,9 +1,6 @@
 package scrum.client.risks;
 
 import ilarkesto.gwt.client.ButtonWidget;
-
-import java.util.Comparator;
-
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.PagePanel;
@@ -19,7 +16,7 @@ public class RiskListWidget extends AScrumWidget {
 		cm.getApp().callRequestRisks();
 
 		list = new BlockListWidget<Risk>(RiskBlock.FACTORY);
-		list.setAutoSorter(new RiskComparator());
+		list.setAutoSorter(Risk.PRIORITY_COMPARATOR);
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Risk List", new ButtonWidget(new CreateRiskAction()));
@@ -35,13 +32,6 @@ public class RiskListWidget extends AScrumWidget {
 
 	public void showRisk(Risk risk) {
 		list.extendObject(risk);
-	}
-
-	private static class RiskComparator implements Comparator<Risk> {
-
-		public int compare(Risk a, Risk b) {
-			return b.compareTo(a);
-		}
 	}
 
 	public void select(Risk risk) {

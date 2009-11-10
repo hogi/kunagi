@@ -80,6 +80,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		chat(css);
 		pagePanel(css);
 		whiteboard(css);
+		dashboard(css);
 
 		css.style(".TrashWidget").background(cTrashBackground).border(1, "solid", cTrashBorder).padding(5);
 
@@ -130,6 +131,11 @@ public class ScreenCssBuilder implements CssBuilder {
 				.margin(3, 100, 3, 100);
 	}
 
+	private void dashboard(CssRenderer css) {
+		css.style(".UsersWorkWidget").lineHeight(lineHeight + 4);
+		css.style(".ProjectInfoWidget").lineHeight(lineHeight + 4);
+	}
+
 	private void whiteboard(CssRenderer css) {
 		css.style(".WhiteboardWidget-columnLabel").padding(10).fontSize(14);
 		css.style(".WhiteboardWidget-open").padding(5);
@@ -153,7 +159,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void gwt(CssRenderer css) {
-		css.style(".gwt-Hyperlink a").color(cLink).whiteSpaceNowrap().textDecorationUnderline();
+		css.style(".gwt-Hyperlink a").whiteSpaceNowrap();
 		css.style(".gwt-Button").fontFamily(fontFamily).fontSize(fontSize).fontWeightBold().color(cButtonText).padding(
 			2).margin(0).whiteSpaceNowrap().border(1, "solid", cButtonBorder);
 		css.style(".gwt-Button:hover").color(cButtonTextHover).border(1, "solid", cButtonBorderHover);
@@ -168,7 +174,7 @@ public class ScreenCssBuilder implements CssBuilder {
 				.lineHeight(lineHeight);
 		css.table().borderCollapseCollapse();
 		css.td().verticalAlignTop().fontFamily(fontFamily).fontSize(fontSize).lineHeight(lineHeight);
-		css.a().cursorPointer();
+		css.a().cursorPointer().color(cLink).textDecorationUnderline();
 		css.p().margin(0, 0, 10, 0);
 		css.h1().fontSize(fontSize + 4).lineHeight(lineHeight + 4).fontWeightBold().margin(0, 0, 5, 0);
 		css.h2().fontSize(fontSize + 2).lineHeight(lineHeight + 2).fontWeightBold().margin(0, 0, 5, 0);

@@ -39,6 +39,14 @@ public class Project extends GProject {
 		super(data);
 	}
 
+	public List<Task> getClaimedTasks(User user) {
+		List<Task> tasks = new ArrayList<Task>();
+		for (Requirement req : getRequirements()) {
+			tasks.addAll(req.getClaimedTasks(user));
+		}
+		return tasks;
+	}
+
 	public Integer getVelocity() {
 		Sprint latest = getLatestCompletedSprint();
 		return latest == null ? null : latest.getVelocity();
@@ -63,6 +71,15 @@ public class Project extends GProject {
 
 	public List<ProjectEvent> getEvents() {
 		return cm.getDao().getProjectEvents();
+	}
+
+	public List<ProjectEvent> getLatestEvents(int max) {
+		List<ProjectEvent> ret = getEvents();
+		Collections.sort(ret, ProjectEvent.DATE_AND_TIME_COMPARATOR);
+		while (ret.size() > max) {
+			ret.remove(ret.size() - 1);
+		}
+		return ret;
 	}
 
 	public List<Wikipage> getWikipages() {
@@ -184,6 +201,15 @@ public class Project extends GProject {
 		getDao().deleteRisk(risk);
 	}
 
+	public List<Impediment> getOpenImpediments() {
+		List<Impediment> ret = new ArrayList<Impediment>();
+		for (Impediment impediment : getImpediments()) {
+			if (impediment.isClosed()) continue;
+			ret.add(impediment);
+		}
+		return ret;
+	}
+
 	public List<Impediment> getImpediments() {
 		return getDao().getImpedimentsByProject(this);
 	}
@@ -194,6 +220,15 @@ public class Project extends GProject {
 
 	public List<Risk> getRisks() {
 		return getDao().getRisksByProject(this);
+	}
+
+	public List<Risk> getHighestRisks(int max) {
+		List<Risk> ret = getRisks();
+		Collections.sort(ret, Risk.PRIORITY_COMPARATOR);
+		while (ret.size() > max) {
+			ret.remove(ret.size() - 1);
+		}
+		return ret;
 	}
 
 	public Risk createNewRisk() {

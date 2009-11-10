@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.AWidget;
 import scrum.client.ComponentManager;
 import scrum.client.admin.User;
 import scrum.client.project.Project;
+import scrum.client.sprint.Sprint;
 
 public abstract class AScrumWidget extends AWidget {
 
@@ -19,6 +20,10 @@ public abstract class AScrumWidget extends AWidget {
 	protected static final Project getCurrentProject() {
 		assert cm.getProjectContext().isProjectOpen();
 		return cm.getProjectContext().getProject();
+	}
+
+	protected static final Sprint getCurrentSprint() {
+		return getCurrentProject().getCurrentSprint();
 	}
 
 }

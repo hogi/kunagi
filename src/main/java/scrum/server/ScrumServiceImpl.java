@@ -245,6 +245,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		session.sendToClient(project.getTasks());
 		session.sendToClient(project.getUserConfigs());
 		session.sendToClient(project.getWikipages());
+		session.sendToClient(project.getImpediments());
+		session.sendToClient(project.getRisks());
 		session.sendToClient(project.getEvents());
 	}
 

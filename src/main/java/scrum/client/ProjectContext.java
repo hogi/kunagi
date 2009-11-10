@@ -16,6 +16,7 @@ import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.WikiWidget;
 import scrum.client.common.AScrumComponent;
 import scrum.client.context.UserHighlightSupport;
+import scrum.client.dashboard.DashboardWidget;
 import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.issues.Issue;
@@ -45,6 +46,7 @@ public class ProjectContext extends AScrumComponent {
 	private Project project;
 
 	private ProjectSidebarWidget sidebar = new ProjectSidebarWidget();
+	private DashboardWidget dashboard;
 	private ProjectOverviewWidget projectOverview;
 	private TaskOverviewWidget taskOverview;
 	private WhiteboardWidget whiteboard;
@@ -66,6 +68,7 @@ public class ProjectContext extends AScrumComponent {
 
 	ProjectContext() {
 		projectOverview = new ProjectOverviewWidget();
+		dashboard = new DashboardWidget();
 		taskOverview = new TaskOverviewWidget();
 		whiteboard = new WhiteboardWidget();
 		sprintBacklog = new SprintBacklogWidget();
@@ -83,7 +86,8 @@ public class ProjectContext extends AScrumComponent {
 		projectEventListWidget = new JournalWidget();
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
-		navigator.addItem("Project Overview", getProjectOverview());
+		// navigator.addItem("Project Overview", getProjectOverview());
+		navigator.addItem("Dashboard", dashboard);
 		navigator.addItem("Task Overview", getTaskOverview());
 		navigator.addItem("Whiteboard", getWhiteboard());
 		navigator.addItem("Sprint Backlog", getSprintBacklog());
@@ -107,7 +111,7 @@ public class ProjectContext extends AScrumComponent {
 	}
 
 	public void activate() {
-		cm.getUi().show(sidebar, projectOverview);
+		cm.getUi().show(sidebar, dashboard);
 	}
 
 	public void openProject(Project project) {

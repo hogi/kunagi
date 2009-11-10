@@ -15,6 +15,10 @@ public class ScrumJs {
 		cm.getProjectContext().showEntityByReference(reference);
 	}
 
+	public static String createShowEntityByReferenceLink(String reference) {
+		return "<a onclick='window.scrum.showEntityByReference(\"" + reference + "\")'>" + reference + "</a>";
+	}
+
 	public static native String regexTextToHtml(String text) /*-{
 
 		// escape html

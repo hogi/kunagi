@@ -56,8 +56,7 @@ public class ProjectOverviewWidget extends AScrumWidget {
 	}
 
 	private Widget createCurrentSprintOverview(Sprint sprint) {
-		String chartUrl = getChartUrl(sprint);
-		sprintChart = new Image(chartUrl, 0, 0, CHART_WIDTH, CHART_HEIGHT);
+		sprintChart = new Image(getChartUrl(sprint), 0, 0, CHART_WIDTH, CHART_HEIGHT);
 		return TableBuilder.row(20, sprintChart, new CommentsWidget(sprint));
 	}
 

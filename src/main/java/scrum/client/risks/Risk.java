@@ -2,6 +2,7 @@ package scrum.client.risks;
 
 import ilarkesto.gwt.client.Predicate;
 
+import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.admin.User;
@@ -51,6 +52,13 @@ public class Risk extends GRisk implements Comparable<Risk> {
 	public String toString() {
 		return getReference() + " " + getLabel();
 	}
+
+	public static final Comparator<Risk> PRIORITY_COMPARATOR = new Comparator<Risk>() {
+
+		public int compare(Risk a, Risk b) {
+			return b.getPriority() - a.getPriority();
+		}
+	};
 
 	private Predicate priorityEditPredicate;
 
