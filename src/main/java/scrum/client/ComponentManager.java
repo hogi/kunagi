@@ -21,6 +21,7 @@ public class ComponentManager extends GComponentManager implements LogoutListene
 		destroyChat();
 		destroyUsersStatus();
 		destroyDndManager();
+		destroyUndo();
 	}
 
 	public void onProjectOpened() {

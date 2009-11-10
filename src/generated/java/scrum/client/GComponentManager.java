@@ -253,4 +253,25 @@ public abstract class GComponentManager
         wiki = null;
     }
 
+    // --- undo ---
+
+    private Undo undo;
+
+    public final Undo getUndo() {
+        if (undo == null) {
+            undo = new Undo();
+            initializeUndo(undo);
+            initialize(undo);
+        }
+        return undo;
+    }
+
+    protected void initializeUndo(Undo undo) {
+    }
+
+    public final void destroyUndo() {
+        destroy(undo);
+        undo = null;
+    }
+
 }
