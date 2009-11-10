@@ -1,5 +1,6 @@
 package scrum.client.project;
 
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.Predicate;
 
 import java.util.ArrayList;
@@ -30,6 +31,14 @@ public class Requirement extends GRequirement {
 
 	public Requirement(Map data) {
 		super(data);
+	}
+
+	public String getTaskStatusLabel() {
+		int burned = Task.sumBurnedWork(getTasks());
+		int remaining = Task.sumRemainingWork(getTasks());
+		if (remaining == 0) return "100% completed";
+		int burnedPercent = Gwt.percent(burned + remaining, burned);
+		return burnedPercent + "% completed, " + remaining + " hrs left";
 	}
 
 	public void setEstimationBar(EstimationBar estimationBar) {

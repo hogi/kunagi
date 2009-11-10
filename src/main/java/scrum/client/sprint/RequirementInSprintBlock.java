@@ -15,6 +15,7 @@ import scrum.client.project.RequirementWidget;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -26,11 +27,13 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 	private FlexTable bodyWidget;
 
 	private SimplePanel statusIcon;
+	private Label statusLabel;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Requirement requirement = getObject();
 		statusIcon = header.insertPrefixIcon();
+		statusLabel = header.appendCenterSuffix("");
 		header.addMenuAction(new CloseRequirementAction(requirement));
 		header.addMenuAction(new ReopenRequirementAction(requirement));
 		header.addMenuAction(new CreateTaskAction(requirement));
@@ -49,6 +52,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 			statusImage.setTitle("All tasks done.");
 		}
 		statusIcon.setWidget(statusImage);
+		statusLabel.setText(requirement.getTaskStatusLabel());
 		header.setCenter(requirement.getLabel());
 	}
 
