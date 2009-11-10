@@ -33,14 +33,12 @@ public class UsersWorkWidget extends AScrumWidget {
 			sb.append("<div class='UsersWorkWidget-user'>");
 			sb.append("<span style='color: ").append(user.getColor()).append("; font-weight: bold;'>");
 			sb.append(user.getName());
-			sb.append("</span>");
+			sb.append("</span> is working on");
 			List<Task> tasks = project.getClaimedTasks(user);
 			if (tasks.isEmpty()) {
-				sb.append(" will work on <span style='color: red; font-weight: bold;'>nothing</span></div>");
+				sb.append(" <span style='color: red; font-weight: bold;'>nothing</span></div>");
 				continue;
 			}
-			int remainingWork = Task.sumRemainingWork(tasks);
-			sb.append(" will work " + remainingWork + " hrs on");
 			Set<Requirement> reqs = new HashSet<Requirement>();
 			for (Task task : tasks) {
 				reqs.add(task.getRequirement());
