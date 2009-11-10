@@ -51,6 +51,7 @@ public class TaskRemainingWorkWidget extends AWidget {
 				toolbar.addButton(action);
 			}
 		}
+		toolbar.update();
 	}
 
 	class RemainingWorkWidget extends AIntegerViewEditWidget {
