@@ -7,12 +7,10 @@ public class WikiParser {
 
 	public static void main(String[] args) {
 		WikiParser wikiParser = new WikiParser("tsk17, (req122)\n");
-		wikiParser.addPlugin(new EntityReferencePlugin());
 		WikiModel model = wikiParser.parse();
 		System.out.println(model);
 	}
 
-	private WikiMasterPlugin plugins = new WikiMasterPlugin();
 	private String input;
 	private WikiModel model;
 
@@ -54,8 +52,32 @@ public class WikiParser {
 
 	private Paragraph appendText(Paragraph p, String text) {
 
+		// links
+		int begin = text.indexOf("[");
+		if (begin >= 0 && begin < text.length() - 3) {
+			if (text.charAt(begin + 1) != '[') {
+				int end = text.indexOf("]", begin);
+				if (end > begin) {
+					String prefix = text.substring(0, begin);
+					String link = text.substring(begin + 1, end);
+					String suffix = text.substring(end + 1);
+					appendText(p, prefix);
+					int spaceIdx = link.indexOf(' ');
+					if (spaceIdx > 0) {
+						String href = link.substring(0, spaceIdx);
+						String label = link.substring(spaceIdx + 1);
+						p.add(new Link(href, label));
+					} else {
+						p.add(new Link(link));
+					}
+					appendText(p, suffix);
+					return p;
+				}
+			}
+		}
+
 		// strong end emph
-		int begin = text.indexOf("'''''");
+		begin = text.indexOf("'''''");
 		if (begin >= 0 && begin < text.length() - 5) {
 			int end = text.indexOf("'''''", begin + 5);
 			if (end >= 0) {
@@ -313,10 +335,6 @@ public class WikiParser {
 			nextLine = input.substring(0, idx);
 		}
 		return nextLine;
-	}
-
-	public void addPlugin(WikiPlugin plugin) {
-		this.plugins.addPlugin(plugin);
 	}
 
 }

@@ -2,20 +2,26 @@ package scrum.client.wiki;
 
 public class Link extends AWikiElement {
 
-	private String url;
+	private String href;
+	private String label;
 
-	public Link(String url) {
+	public Link(String href, String label) {
 		super();
-		this.url = url;
+		this.href = href;
+		this.label = label;
+	}
+
+	public Link(String href) {
+		this(href, shorten(href));
 	}
 
 	@Override
 	String toHtml() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<a href=\"");
-		sb.append(enhance(url));
+		sb.append(enhance(href));
 		sb.append("\" target=\"_blank\">");
-		sb.append(escapeHtml(shorten(url)));
+		sb.append(escapeHtml(label));
 		sb.append("</a>");
 		return sb.toString();
 	}
@@ -27,7 +33,7 @@ public class Link extends AWikiElement {
 		return "http://" + s;
 	}
 
-	private String shorten(String s) {
+	private static String shorten(String s) {
 		if (s.startsWith("http://")) {
 			s = s.substring(7);
 		} else if (s.startsWith("https://")) {
@@ -46,6 +52,6 @@ public class Link extends AWikiElement {
 
 	@Override
 	public String toString() {
-		return "EntityReference(" + url + ")";
+		return "EntityReference(" + href + ")";
 	}
 }
