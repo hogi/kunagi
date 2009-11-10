@@ -25,7 +25,6 @@ public class TaskRemainingWorkWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		remainingWork = new RemainingWorkWidget();
-		remainingWork.setEditable(task.getEditPredicate());
 		toolbar = new ToolbarWidget();
 
 		panel = new HorizontalPanel();
@@ -79,6 +78,11 @@ public class TaskRemainingWorkWidget extends AWidget {
 		@Override
 		protected void onPlusClicked() {
 			task.incrementRemainingWork();
+		}
+
+		@Override
+		public boolean isEditable() {
+			return task.isEditable();
 		}
 
 	}

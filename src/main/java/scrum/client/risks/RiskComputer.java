@@ -1,36 +1,8 @@
 package scrum.client.risks;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import ilarkesto.gwt.client.LabelProvider;
 
 public class RiskComputer {
-
-	private static Map<String, String> probabilities;
-	private static Map<String, String> impacts;
-
-	public static synchronized Map<String, String> getProbabilities() {
-		if (probabilities == null) {
-			probabilities = new LinkedHashMap<String, String>();
-			probabilities.put("20", getProbabilityLabel(20));
-			probabilities.put("40", getProbabilityLabel(40));
-			probabilities.put("60", getProbabilityLabel(60));
-			probabilities.put("80", getProbabilityLabel(80));
-			probabilities.put("100", getProbabilityLabel(100));
-		}
-		return probabilities;
-	}
-
-	public static synchronized Map<String, String> getImpacts() {
-		if (impacts == null) {
-			impacts = new LinkedHashMap<String, String>();
-			impacts.put("20", getImpactLabel(20));
-			impacts.put("40", getImpactLabel(40));
-			impacts.put("60", getImpactLabel(60));
-			impacts.put("80", getImpactLabel(80));
-			impacts.put("100", getImpactLabel(100));
-		}
-		return impacts;
-	}
 
 	public static String getProbabilityLabel(int probability) {
 		if (probability > 80) return "very likely";
@@ -95,5 +67,21 @@ public class RiskComputer {
 		if (priority == -1) return "low";
 		return "very low"; // priority <= -2
 	}
+
+	public static LabelProvider<Integer> IMPACT_LABEL_PROVIDER = new LabelProvider<Integer>() {
+
+		public String getLabel(Integer impact) {
+			if (impact == null) return null;
+			return getImpactLabel(impact);
+		}
+	};
+
+	public static LabelProvider<Integer> PROBABILITY_LABEL_PROVIDER = new LabelProvider<Integer>() {
+
+		public String getLabel(Integer probability) {
+			if (probability == null) return null;
+			return getProbabilityLabel(probability);
+		}
+	};
 
 }

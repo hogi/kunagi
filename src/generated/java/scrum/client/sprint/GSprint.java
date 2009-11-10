@@ -29,6 +29,16 @@ public abstract class GSprint
         return scrum.client.Dao.get();
     }
 
+    public abstract boolean isEditable();
+
+    public abstract boolean isPlanningEditable();
+
+    public abstract boolean isReviewEditable();
+
+    public abstract boolean isRetrospectiveEditable();
+
+    public abstract boolean isDatesEditable();
+
     public GSprint() {
     }
 
@@ -88,26 +98,33 @@ public abstract class GSprint
         return equals(this.label, label);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel;
+    private transient LabelModel labelModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getLabelModel() {
-        if (labelModel == null) labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getLabel();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setLabel(value);
-            }
-
-
-            @Override
-            public boolean isMandatory() { return true; }
-        };
+    public LabelModel getLabelModel() {
+        if (labelModel == null) labelModel = createLabelModel();
         return labelModel;
+    }
+
+    protected LabelModel createLabelModel() { return new LabelModel(); }
+
+    protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getLabel();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLabel(value);
+        }
+
+        @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
+        public boolean isEditable() { return GSprint.this.isEditable(); }
+
     }
 
     // --- goal ---
@@ -129,23 +146,30 @@ public abstract class GSprint
         return equals(this.goal, goal);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel goalModel;
+    private transient GoalModel goalModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getGoalModel() {
-        if (goalModel == null) goalModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getGoal();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setGoal(value);
-            }
-
-        };
+    public GoalModel getGoalModel() {
+        if (goalModel == null) goalModel = createGoalModel();
         return goalModel;
+    }
+
+    protected GoalModel createGoalModel() { return new GoalModel(); }
+
+    protected class GoalModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getGoal();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setGoal(value);
+        }
+
+        @Override
+        public boolean isEditable() { return GSprint.this.isEditable(); }
+
     }
 
     // --- begin ---
@@ -167,23 +191,30 @@ public abstract class GSprint
         return equals(this.begin, begin);
     }
 
-    private transient ilarkesto.gwt.client.editor.ADateEditorModel beginModel;
+    private transient BeginModel beginModel;
 
-    public ilarkesto.gwt.client.editor.ADateEditorModel getBeginModel() {
-        if (beginModel == null) beginModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
-
-            @Override
-            public ilarkesto.gwt.client.Date getValue() {
-                return getBegin();
-            }
-
-            @Override
-            public void setValue(ilarkesto.gwt.client.Date value) {
-                setBegin(value);
-            }
-
-        };
+    public BeginModel getBeginModel() {
+        if (beginModel == null) beginModel = createBeginModel();
         return beginModel;
+    }
+
+    protected BeginModel createBeginModel() { return new BeginModel(); }
+
+    protected class BeginModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public ilarkesto.gwt.client.Date getValue() {
+            return getBegin();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.Date value) {
+            setBegin(value);
+        }
+
+        @Override
+        public boolean isEditable() { return GSprint.this.isDatesEditable(); }
+
     }
 
     // --- end ---
@@ -205,23 +236,30 @@ public abstract class GSprint
         return equals(this.end, end);
     }
 
-    private transient ilarkesto.gwt.client.editor.ADateEditorModel endModel;
+    private transient EndModel endModel;
 
-    public ilarkesto.gwt.client.editor.ADateEditorModel getEndModel() {
-        if (endModel == null) endModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
-
-            @Override
-            public ilarkesto.gwt.client.Date getValue() {
-                return getEnd();
-            }
-
-            @Override
-            public void setValue(ilarkesto.gwt.client.Date value) {
-                setEnd(value);
-            }
-
-        };
+    public EndModel getEndModel() {
+        if (endModel == null) endModel = createEndModel();
         return endModel;
+    }
+
+    protected EndModel createEndModel() { return new EndModel(); }
+
+    protected class EndModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public ilarkesto.gwt.client.Date getValue() {
+            return getEnd();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.Date value) {
+            setEnd(value);
+        }
+
+        @Override
+        public boolean isEditable() { return GSprint.this.isDatesEditable(); }
+
     }
 
     // --- velocity ---
@@ -243,15 +281,26 @@ public abstract class GSprint
         return equals(this.velocity, velocity);
     }
 
-    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel velocityModel;
+    private transient VelocityModel velocityModel;
 
-    public ilarkesto.gwt.client.editor.AIntegerEditorModel getVelocityModel() {
-        if (velocityModel == null) velocityModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    public VelocityModel getVelocityModel() {
+        if (velocityModel == null) velocityModel = createVelocityModel();
+        return velocityModel;
+    }
 
-            @Override
-            public Integer getValue() {
-                return getVelocity();
-            }
+    protected VelocityModel createVelocityModel() { return new VelocityModel(); }
+
+    protected class VelocityModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getVelocity();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setVelocity(value);
+        }
 
             @Override
             public void increment() {
@@ -263,13 +312,6 @@ public abstract class GSprint
                 setVelocity(getVelocity() - 1);
             }
 
-            @Override
-            public void setValue(Integer value) {
-                setVelocity(value);
-            }
-
-        };
-        return velocityModel;
     }
 
     // --- completedRequirementLabels ---
@@ -291,61 +333,72 @@ public abstract class GSprint
         return equals(this.completedRequirementLabels, completedRequirementLabels);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel completedRequirementLabelsModel;
+    private transient CompletedRequirementLabelsModel completedRequirementLabelsModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getCompletedRequirementLabelsModel() {
-        if (completedRequirementLabelsModel == null) completedRequirementLabelsModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getCompletedRequirementLabels();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setCompletedRequirementLabels(value);
-            }
-
-        };
+    public CompletedRequirementLabelsModel getCompletedRequirementLabelsModel() {
+        if (completedRequirementLabelsModel == null) completedRequirementLabelsModel = createCompletedRequirementLabelsModel();
         return completedRequirementLabelsModel;
     }
 
-    // --- planingNote ---
+    protected CompletedRequirementLabelsModel createCompletedRequirementLabelsModel() { return new CompletedRequirementLabelsModel(); }
 
-    private java.lang.String planingNote ;
+    protected class CompletedRequirementLabelsModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
-    public final java.lang.String getPlaningNote() {
-        return this.planingNote ;
+        @Override
+        public java.lang.String getValue() {
+            return getCompletedRequirementLabels();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setCompletedRequirementLabels(value);
+        }
+
     }
 
-    public final Sprint setPlaningNote(java.lang.String planingNote) {
-        if (isPlaningNote(planingNote)) return (Sprint)this;
-        this.planingNote = planingNote ;
-        propertyChanged("planingNote", this.planingNote);
+    // --- planningNote ---
+
+    private java.lang.String planningNote ;
+
+    public final java.lang.String getPlanningNote() {
+        return this.planningNote ;
+    }
+
+    public final Sprint setPlanningNote(java.lang.String planningNote) {
+        if (isPlanningNote(planningNote)) return (Sprint)this;
+        this.planningNote = planningNote ;
+        propertyChanged("planningNote", this.planningNote);
         return (Sprint)this;
     }
 
-    public final boolean isPlaningNote(java.lang.String planingNote) {
-        return equals(this.planingNote, planingNote);
+    public final boolean isPlanningNote(java.lang.String planningNote) {
+        return equals(this.planningNote, planningNote);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel planingNoteModel;
+    private transient PlanningNoteModel planningNoteModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getPlaningNoteModel() {
-        if (planingNoteModel == null) planingNoteModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
+    public PlanningNoteModel getPlanningNoteModel() {
+        if (planningNoteModel == null) planningNoteModel = createPlanningNoteModel();
+        return planningNoteModel;
+    }
 
-            @Override
-            public String getValue() {
-                return getPlaningNote();
-            }
+    protected PlanningNoteModel createPlanningNoteModel() { return new PlanningNoteModel(); }
 
-            @Override
-            public void setValue(String value) {
-                setPlaningNote(value);
-            }
+    protected class PlanningNoteModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
-        };
-        return planingNoteModel;
+        @Override
+        public java.lang.String getValue() {
+            return getPlanningNote();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setPlanningNote(value);
+        }
+
+        @Override
+        public boolean isEditable() { return GSprint.this.isPlanningEditable(); }
+
     }
 
     // --- reviewNote ---
@@ -367,23 +420,30 @@ public abstract class GSprint
         return equals(this.reviewNote, reviewNote);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel reviewNoteModel;
+    private transient ReviewNoteModel reviewNoteModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getReviewNoteModel() {
-        if (reviewNoteModel == null) reviewNoteModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getReviewNote();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setReviewNote(value);
-            }
-
-        };
+    public ReviewNoteModel getReviewNoteModel() {
+        if (reviewNoteModel == null) reviewNoteModel = createReviewNoteModel();
         return reviewNoteModel;
+    }
+
+    protected ReviewNoteModel createReviewNoteModel() { return new ReviewNoteModel(); }
+
+    protected class ReviewNoteModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getReviewNote();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setReviewNote(value);
+        }
+
+        @Override
+        public boolean isEditable() { return GSprint.this.isReviewEditable(); }
+
     }
 
     // --- retrospectiveNote ---
@@ -405,23 +465,30 @@ public abstract class GSprint
         return equals(this.retrospectiveNote, retrospectiveNote);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel retrospectiveNoteModel;
+    private transient RetrospectiveNoteModel retrospectiveNoteModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getRetrospectiveNoteModel() {
-        if (retrospectiveNoteModel == null) retrospectiveNoteModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getRetrospectiveNote();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setRetrospectiveNote(value);
-            }
-
-        };
+    public RetrospectiveNoteModel getRetrospectiveNoteModel() {
+        if (retrospectiveNoteModel == null) retrospectiveNoteModel = createRetrospectiveNoteModel();
         return retrospectiveNoteModel;
+    }
+
+    protected RetrospectiveNoteModel createRetrospectiveNoteModel() { return new RetrospectiveNoteModel(); }
+
+    protected class RetrospectiveNoteModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getRetrospectiveNote();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setRetrospectiveNote(value);
+        }
+
+        @Override
+        public boolean isEditable() { return GSprint.this.isRetrospectiveEditable(); }
+
     }
 
     // --- update properties by map ---
@@ -436,7 +503,7 @@ public abstract class GSprint
         end  =  endAsString == null ? null : new ilarkesto.gwt.client.Date(endAsString);
         velocity  = (java.lang.Integer) props.get("velocity");
         completedRequirementLabels  = (java.lang.String) props.get("completedRequirementLabels");
-        planingNote  = (java.lang.String) props.get("planingNote");
+        planningNote  = (java.lang.String) props.get("planningNote");
         reviewNote  = (java.lang.String) props.get("reviewNote");
         retrospectiveNote  = (java.lang.String) props.get("retrospectiveNote");
     }
@@ -451,7 +518,7 @@ public abstract class GSprint
         properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("velocity", this.velocity);
         properties.put("completedRequirementLabels", this.completedRequirementLabels);
-        properties.put("planingNote", this.planingNote);
+        properties.put("planningNote", this.planningNote);
         properties.put("reviewNote", this.reviewNote);
         properties.put("retrospectiveNote", this.retrospectiveNote);
     }

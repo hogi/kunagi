@@ -54,6 +54,11 @@ public class ProjectBlock extends ABlockWidget<Project> {
 			protected void onEditorSubmit() {
 				project.setParticipantsConfigured(getEditorSelectedItems());
 			}
+
+			@Override
+			public boolean isEditable() {
+				return project.isEditable();
+			}
 		});
 
 		fields.add("Admins", new AMultiSelectionViewEditWidget<User>() {
@@ -73,6 +78,12 @@ public class ProjectBlock extends ABlockWidget<Project> {
 			protected void onEditorSubmit() {
 				project.setAdmins(getEditorSelectedItems());
 			}
+
+			@Override
+			public boolean isEditable() {
+				return project.isEditable();
+			}
+
 		});
 
 		fields.add("Product Owner", new AMultiSelectionViewEditWidget<User>() {
@@ -91,6 +102,11 @@ public class ProjectBlock extends ABlockWidget<Project> {
 			@Override
 			protected void onEditorSubmit() {
 				project.setProductOwners(getEditorSelectedItems());
+			}
+
+			@Override
+			public boolean isEditable() {
+				return project.isEditable();
 			}
 		});
 
@@ -111,6 +127,11 @@ public class ProjectBlock extends ABlockWidget<Project> {
 			protected void onEditorSubmit() {
 				project.setScrumMasters(getEditorSelectedItems());
 			}
+
+			@Override
+			public boolean isEditable() {
+				return project.isEditable();
+			}
 		});
 
 		fields.add("Development Team", new AMultiSelectionViewEditWidget<User>() {
@@ -129,6 +150,11 @@ public class ProjectBlock extends ABlockWidget<Project> {
 			@Override
 			protected void onEditorSubmit() {
 				project.setTeamMembers(getEditorSelectedItems());
+			}
+
+			@Override
+			public boolean isEditable() {
+				return project.isEditable();
 			}
 		});
 

@@ -113,26 +113,30 @@ public abstract class GComment
         return equals(this.text, text);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel textModel;
+    private transient TextModel textModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getTextModel() {
-        if (textModel == null) textModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getText();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setText(value);
-            }
-
-
-            @Override
-            public boolean isMandatory() { return true; }
-        };
+    public TextModel getTextModel() {
+        if (textModel == null) textModel = createTextModel();
         return textModel;
+    }
+
+    protected TextModel createTextModel() { return new TextModel(); }
+
+    protected class TextModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getText();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setText(value);
+        }
+
+        @Override
+        public boolean isMandatory() { return true; }
+
     }
 
     // --- dateAndTime ---
@@ -152,6 +156,29 @@ public abstract class GComment
 
     public final boolean isDateAndTime(ilarkesto.gwt.client.DateAndTime dateAndTime) {
         return equals(this.dateAndTime, dateAndTime);
+    }
+
+    private transient DateAndTimeModel dateAndTimeModel;
+
+    public DateAndTimeModel getDateAndTimeModel() {
+        if (dateAndTimeModel == null) dateAndTimeModel = createDateAndTimeModel();
+        return dateAndTimeModel;
+    }
+
+    protected DateAndTimeModel createDateAndTimeModel() { return new DateAndTimeModel(); }
+
+    protected class DateAndTimeModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
+
+        @Override
+        public ilarkesto.gwt.client.DateAndTime getValue() {
+            return getDateAndTime();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.DateAndTime value) {
+            setDateAndTime(value);
+        }
+
     }
 
     // --- update properties by map ---

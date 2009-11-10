@@ -2,12 +2,11 @@ package scrum.client.sprint;
 
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.Gwt;
-import ilarkesto.gwt.client.Predicate;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DateEditorWidget;
-import ilarkesto.gwt.client.editor.IntegerEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
+import ilarkesto.gwt.client.editor.TextOutputWidget;
 import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -28,19 +27,19 @@ public class SprintWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setColumnWidths("100px");
 
-		tb.addFieldRow("Label", new TextEditorWidget(sprint.getLabelModel(), sprint.getEditPredicate()), 4);
-		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel(), sprint.getEditPredicate())
-				.setTemplate(cm.getWiki().getTemplate("sprint.goal")), 4);
+		tb.addFieldRow("Label", new TextEditorWidget(sprint.getLabelModel()), 4);
+		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()).setTemplate(cm.getWiki().getTemplate(
+			"sprint.goal")), 4);
 
 		if (completed) {
-			tb.addFieldRow("Velocity", new IntegerEditorWidget(sprint.getVelocityModel(), Predicate.FALSE), 4);
+			tb.addFieldRow("Velocity", new TextOutputWidget(sprint.getVelocityModel()), 4);
 		}
 
 		tb.addFieldLabel("Dates");
-		tb.addField("Begin", new DateEditorWidget(sprint.getBeginModel(), sprint.getDatesEditPredicate()));
+		tb.addField("Begin", new DateEditorWidget(sprint.getBeginModel()));
 		// TODO restrict editing
 
-		tb.addFieldRow("End", new DateEditorWidget(sprint.getEndModel(), sprint.getDatesEditPredicate()));
+		tb.addFieldRow("End", new DateEditorWidget(sprint.getEndModel()));
 		// TODO restrict editing
 
 		if (completed == false) {
@@ -81,15 +80,15 @@ public class SprintWidget extends AScrumWidget {
 		} else {
 			// completed
 			tb.addFieldRow("Completed Requirements", new RichtextEditorWidget(getSprint()
-					.getCompletedRequirementLabelsModel(), sprint.getReviewEditPredicate()), 4);
+					.getCompletedRequirementLabelsModel()), 4);
 		}
 
-		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlaningNoteModel(), sprint
-				.getPlaningEditPredicate()).setTemplate(cm.getWiki().getTemplate("sprint.planning")), 4);
-		tb.addFieldRow("Review Note", new RichtextEditorWidget(sprint.getReviewNoteModel(), sprint
-				.getReviewEditPredicate()).setTemplate(cm.getWiki().getTemplate("sprint.review")), 4);
-		tb.addFieldRow("Retrospecitve Note", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel(), sprint
-				.getRetrospecitveEditPredicate()).setTemplate(cm.getWiki().getTemplate("sprint.retrospective")), 4);
+		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()).setTemplate(cm
+				.getWiki().getTemplate("sprint.planning")), 4);
+		tb.addFieldRow("Review Note", new RichtextEditorWidget(sprint.getReviewNoteModel()).setTemplate(cm.getWiki()
+				.getTemplate("sprint.review")), 4);
+		tb.addFieldRow("Retrospecitve Note", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel())
+				.setTemplate(cm.getWiki().getTemplate("sprint.retrospective")), 4);
 
 		if (completed)
 			tb.add(Gwt

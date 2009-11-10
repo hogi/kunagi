@@ -19,8 +19,8 @@ public class SetRequirementCleanAction extends GSetRequirementCleanAction {
 		TooltipBuilder tb = new TooltipBuilder(
 				"Mark this requirement as clean. This means, the estimated work is accurate.");
 
-		if (!requirement.getProject().isProductOwnerOrTeamMember(getCurrentUser())) {
-			tb.addRemark(TooltipBuilder.NOT_TEAM_MEMBER_NOR_PRODUCT_OWNER);
+		if (!requirement.getProject().isTeamMember(getCurrentUser())) {
+			tb.addRemark(TooltipBuilder.NOT_A_TEAM_MEMBER);
 		} else {
 			if (requirement.isClosed()) tb.addRemark("Requirement is already closed.");
 			if (!requirement.isDirty()) tb.addRemark("Requirement is already clean.");

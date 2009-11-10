@@ -88,15 +88,26 @@ public abstract class GIssue
         return equals(this.number, number);
     }
 
-    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel numberModel;
+    private transient NumberModel numberModel;
 
-    public ilarkesto.gwt.client.editor.AIntegerEditorModel getNumberModel() {
-        if (numberModel == null) numberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    public NumberModel getNumberModel() {
+        if (numberModel == null) numberModel = createNumberModel();
+        return numberModel;
+    }
 
-            @Override
-            public Integer getValue() {
-                return getNumber();
-            }
+    protected NumberModel createNumberModel() { return new NumberModel(); }
+
+    protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getNumber();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setNumber(value);
+        }
 
             @Override
             public void increment() {
@@ -108,13 +119,6 @@ public abstract class GIssue
                 setNumber(getNumber() - 1);
             }
 
-            @Override
-            public void setValue(Integer value) {
-                setNumber(value);
-            }
-
-        };
-        return numberModel;
     }
 
     // --- type ---
@@ -138,30 +142,35 @@ public abstract class GIssue
         return equals(this.type, type);
     }
 
-    private transient ilarkesto.gwt.client.editor.AOptionEditorModel<String> typeModel;
+    private transient TypeModel typeModel;
 
-    public ilarkesto.gwt.client.editor.AOptionEditorModel<String> getTypeModel() {
-        if (typeModel == null) typeModel = new ilarkesto.gwt.client.editor.AOptionEditorModel<String>() {
-
-            @Override
-            public String getValue() {
-                return getType();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setType(value);
-            }
-
-            @Override
-            public List<String> getOptions() {
-                return getTypeOptions();
-            }
-
-            @Override
-            public boolean isMandatory() { return true; }
-        };
+    public TypeModel getTypeModel() {
+        if (typeModel == null) typeModel = createTypeModel();
         return typeModel;
+    }
+
+    protected TypeModel createTypeModel() { return new TypeModel(); }
+
+    protected class TypeModel extends ilarkesto.gwt.client.editor.AOptionEditorModel<java.lang.String> {
+
+        @Override
+        public java.lang.String getValue() {
+            return getType();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setType(value);
+        }
+
+        @Override
+        public List<java.lang.String> getOptions() {
+            return getTypeOptions();
+        }
+
+        @Override
+        public boolean isMandatory() { return true; }
+
     }
 
     // --- date ---
@@ -183,26 +192,30 @@ public abstract class GIssue
         return equals(this.date, date);
     }
 
-    private transient ilarkesto.gwt.client.editor.ADateEditorModel dateModel;
+    private transient DateModel dateModel;
 
-    public ilarkesto.gwt.client.editor.ADateEditorModel getDateModel() {
-        if (dateModel == null) dateModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
-
-            @Override
-            public ilarkesto.gwt.client.Date getValue() {
-                return getDate();
-            }
-
-            @Override
-            public void setValue(ilarkesto.gwt.client.Date value) {
-                setDate(value);
-            }
-
-
-            @Override
-            public boolean isMandatory() { return true; }
-        };
+    public DateModel getDateModel() {
+        if (dateModel == null) dateModel = createDateModel();
         return dateModel;
+    }
+
+    protected DateModel createDateModel() { return new DateModel(); }
+
+    protected class DateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public ilarkesto.gwt.client.Date getValue() {
+            return getDate();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.Date value) {
+            setDate(value);
+        }
+
+        @Override
+        public boolean isMandatory() { return true; }
+
     }
 
     // --- label ---
@@ -224,26 +237,30 @@ public abstract class GIssue
         return equals(this.label, label);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel;
+    private transient LabelModel labelModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getLabelModel() {
-        if (labelModel == null) labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getLabel();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setLabel(value);
-            }
-
-
-            @Override
-            public boolean isMandatory() { return true; }
-        };
+    public LabelModel getLabelModel() {
+        if (labelModel == null) labelModel = createLabelModel();
         return labelModel;
+    }
+
+    protected LabelModel createLabelModel() { return new LabelModel(); }
+
+    protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getLabel();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLabel(value);
+        }
+
+        @Override
+        public boolean isMandatory() { return true; }
+
     }
 
     // --- description ---
@@ -265,23 +282,27 @@ public abstract class GIssue
         return equals(this.description, description);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel descriptionModel;
+    private transient DescriptionModel descriptionModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getDescriptionModel() {
-        if (descriptionModel == null) descriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getDescription();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setDescription(value);
-            }
-
-        };
+    public DescriptionModel getDescriptionModel() {
+        if (descriptionModel == null) descriptionModel = createDescriptionModel();
         return descriptionModel;
+    }
+
+    protected DescriptionModel createDescriptionModel() { return new DescriptionModel(); }
+
+    protected class DescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getDescription();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setDescription(value);
+        }
+
     }
 
     // --- update properties by map ---

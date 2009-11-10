@@ -29,6 +29,8 @@ public abstract class GProjectEvent
         return scrum.client.Dao.get();
     }
 
+    public abstract boolean isEditable();
+
     public GProjectEvent() {
     }
 
@@ -88,26 +90,33 @@ public abstract class GProjectEvent
         return equals(this.label, label);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel;
+    private transient LabelModel labelModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getLabelModel() {
-        if (labelModel == null) labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getLabel();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setLabel(value);
-            }
-
-
-            @Override
-            public boolean isMandatory() { return true; }
-        };
+    public LabelModel getLabelModel() {
+        if (labelModel == null) labelModel = createLabelModel();
         return labelModel;
+    }
+
+    protected LabelModel createLabelModel() { return new LabelModel(); }
+
+    protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getLabel();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLabel(value);
+        }
+
+        @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
+        public boolean isEditable() { return GProjectEvent.this.isEditable(); }
+
     }
 
     // --- dateAndTime ---
@@ -127,6 +136,35 @@ public abstract class GProjectEvent
 
     public final boolean isDateAndTime(ilarkesto.gwt.client.DateAndTime dateAndTime) {
         return equals(this.dateAndTime, dateAndTime);
+    }
+
+    private transient DateAndTimeModel dateAndTimeModel;
+
+    public DateAndTimeModel getDateAndTimeModel() {
+        if (dateAndTimeModel == null) dateAndTimeModel = createDateAndTimeModel();
+        return dateAndTimeModel;
+    }
+
+    protected DateAndTimeModel createDateAndTimeModel() { return new DateAndTimeModel(); }
+
+    protected class DateAndTimeModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
+
+        @Override
+        public ilarkesto.gwt.client.DateAndTime getValue() {
+            return getDateAndTime();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.DateAndTime value) {
+            setDateAndTime(value);
+        }
+
+        @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
+        public boolean isEditable() { return GProjectEvent.this.isEditable(); }
+
     }
 
     // --- update properties by map ---

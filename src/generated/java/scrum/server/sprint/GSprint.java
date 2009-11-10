@@ -43,7 +43,7 @@ public abstract class GSprint
         properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("velocity", this.velocity);
         properties.put("completedRequirementLabels", this.completedRequirementLabels);
-        properties.put("planingNote", this.planingNote);
+        properties.put("planningNote", this.planningNote);
         properties.put("reviewNote", this.reviewNote);
         properties.put("retrospectiveNote", this.retrospectiveNote);
     }
@@ -313,38 +313,38 @@ public abstract class GSprint
     }
 
     // -----------------------------------------------------------
-    // - planingNote
+    // - planningNote
     // -----------------------------------------------------------
 
-    private java.lang.String planingNote;
+    private java.lang.String planningNote;
 
-    public final java.lang.String getPlaningNote() {
-        return planingNote;
+    public final java.lang.String getPlanningNote() {
+        return planningNote;
     }
 
-    public final void setPlaningNote(java.lang.String planingNote) {
-        planingNote = preparePlaningNote(planingNote);
-        if (isPlaningNote(planingNote)) return;
-        this.planingNote = planingNote;
+    public final void setPlanningNote(java.lang.String planningNote) {
+        planningNote = preparePlanningNote(planningNote);
+        if (isPlanningNote(planningNote)) return;
+        this.planningNote = planningNote;
         fireModified();
     }
 
-    protected java.lang.String preparePlaningNote(java.lang.String planingNote) {
-        planingNote = Str.removeUnreadableChars(planingNote);
-        return planingNote;
+    protected java.lang.String preparePlanningNote(java.lang.String planningNote) {
+        planningNote = Str.removeUnreadableChars(planningNote);
+        return planningNote;
     }
 
-    public final boolean isPlaningNoteSet() {
-        return this.planingNote != null;
+    public final boolean isPlanningNoteSet() {
+        return this.planningNote != null;
     }
 
-    public final boolean isPlaningNote(java.lang.String planingNote) {
-        if (this.planingNote == null && planingNote == null) return true;
-        return this.planingNote != null && this.planingNote.equals(planingNote);
+    public final boolean isPlanningNote(java.lang.String planningNote) {
+        if (this.planningNote == null && planningNote == null) return true;
+        return this.planningNote != null && this.planningNote.equals(planningNote);
     }
 
-    protected final void updatePlaningNote(Object value) {
-        setPlaningNote((java.lang.String)value);
+    protected final void updatePlanningNote(Object value) {
+        setPlanningNote((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -429,7 +429,7 @@ public abstract class GSprint
             if (property.equals("end")) updateEnd(value);
             if (property.equals("velocity")) updateVelocity(value);
             if (property.equals("completedRequirementLabels")) updateCompletedRequirementLabels(value);
-            if (property.equals("planingNote")) updatePlaningNote(value);
+            if (property.equals("planningNote")) updatePlanningNote(value);
             if (property.equals("reviewNote")) updateReviewNote(value);
             if (property.equals("retrospectiveNote")) updateRetrospectiveNote(value);
         }

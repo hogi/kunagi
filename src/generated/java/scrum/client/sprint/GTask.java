@@ -29,6 +29,8 @@ public abstract class GTask
         return scrum.client.Dao.get();
     }
 
+    public abstract boolean isEditable();
+
     public GTask() {
     }
 
@@ -88,15 +90,26 @@ public abstract class GTask
         return equals(this.number, number);
     }
 
-    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel numberModel;
+    private transient NumberModel numberModel;
 
-    public ilarkesto.gwt.client.editor.AIntegerEditorModel getNumberModel() {
-        if (numberModel == null) numberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    public NumberModel getNumberModel() {
+        if (numberModel == null) numberModel = createNumberModel();
+        return numberModel;
+    }
 
-            @Override
-            public Integer getValue() {
-                return getNumber();
-            }
+    protected NumberModel createNumberModel() { return new NumberModel(); }
+
+    protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getNumber();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setNumber(value);
+        }
 
             @Override
             public void increment() {
@@ -108,13 +121,6 @@ public abstract class GTask
                 setNumber(getNumber() - 1);
             }
 
-            @Override
-            public void setValue(Integer value) {
-                setNumber(value);
-            }
-
-        };
-        return numberModel;
     }
 
     // --- label ---
@@ -136,26 +142,33 @@ public abstract class GTask
         return equals(this.label, label);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel;
+    private transient LabelModel labelModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getLabelModel() {
-        if (labelModel == null) labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getLabel();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setLabel(value);
-            }
-
-
-            @Override
-            public boolean isMandatory() { return true; }
-        };
+    public LabelModel getLabelModel() {
+        if (labelModel == null) labelModel = createLabelModel();
         return labelModel;
+    }
+
+    protected LabelModel createLabelModel() { return new LabelModel(); }
+
+    protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getLabel();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLabel(value);
+        }
+
+        @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
+        public boolean isEditable() { return GTask.this.isEditable(); }
+
     }
 
     // --- description ---
@@ -177,23 +190,30 @@ public abstract class GTask
         return equals(this.description, description);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel descriptionModel;
+    private transient DescriptionModel descriptionModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getDescriptionModel() {
-        if (descriptionModel == null) descriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getDescription();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setDescription(value);
-            }
-
-        };
+    public DescriptionModel getDescriptionModel() {
+        if (descriptionModel == null) descriptionModel = createDescriptionModel();
         return descriptionModel;
+    }
+
+    protected DescriptionModel createDescriptionModel() { return new DescriptionModel(); }
+
+    protected class DescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getDescription();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setDescription(value);
+        }
+
+        @Override
+        public boolean isEditable() { return GTask.this.isEditable(); }
+
     }
 
     // --- remainingWork ---
@@ -215,15 +235,26 @@ public abstract class GTask
         return equals(this.remainingWork, remainingWork);
     }
 
-    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel remainingWorkModel;
+    private transient RemainingWorkModel remainingWorkModel;
 
-    public ilarkesto.gwt.client.editor.AIntegerEditorModel getRemainingWorkModel() {
-        if (remainingWorkModel == null) remainingWorkModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    public RemainingWorkModel getRemainingWorkModel() {
+        if (remainingWorkModel == null) remainingWorkModel = createRemainingWorkModel();
+        return remainingWorkModel;
+    }
 
-            @Override
-            public Integer getValue() {
-                return getRemainingWork();
-            }
+    protected RemainingWorkModel createRemainingWorkModel() { return new RemainingWorkModel(); }
+
+    protected class RemainingWorkModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getRemainingWork();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setRemainingWork(value);
+        }
 
             @Override
             public void increment() {
@@ -235,13 +266,9 @@ public abstract class GTask
                 setRemainingWork(getRemainingWork() - 1);
             }
 
-            @Override
-            public void setValue(Integer value) {
-                setRemainingWork(value);
-            }
+        @Override
+        public boolean isEditable() { return GTask.this.isEditable(); }
 
-        };
-        return remainingWorkModel;
     }
 
     // --- burnedWork ---
@@ -263,15 +290,26 @@ public abstract class GTask
         return equals(this.burnedWork, burnedWork);
     }
 
-    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel burnedWorkModel;
+    private transient BurnedWorkModel burnedWorkModel;
 
-    public ilarkesto.gwt.client.editor.AIntegerEditorModel getBurnedWorkModel() {
-        if (burnedWorkModel == null) burnedWorkModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    public BurnedWorkModel getBurnedWorkModel() {
+        if (burnedWorkModel == null) burnedWorkModel = createBurnedWorkModel();
+        return burnedWorkModel;
+    }
 
-            @Override
-            public Integer getValue() {
-                return getBurnedWork();
-            }
+    protected BurnedWorkModel createBurnedWorkModel() { return new BurnedWorkModel(); }
+
+    protected class BurnedWorkModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getBurnedWork();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setBurnedWork(value);
+        }
 
             @Override
             public void increment() {
@@ -283,13 +321,9 @@ public abstract class GTask
                 setBurnedWork(getBurnedWork() - 1);
             }
 
-            @Override
-            public void setValue(Integer value) {
-                setBurnedWork(value);
-            }
+        @Override
+        public boolean isEditable() { return GTask.this.isEditable(); }
 
-        };
-        return burnedWorkModel;
     }
 
     // --- owner ---

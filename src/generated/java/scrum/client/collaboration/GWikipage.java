@@ -88,26 +88,30 @@ public abstract class GWikipage
         return equals(this.name, name);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel nameModel;
+    private transient NameModel nameModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getNameModel() {
-        if (nameModel == null) nameModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getName();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setName(value);
-            }
-
-
-            @Override
-            public boolean isMandatory() { return true; }
-        };
+    public NameModel getNameModel() {
+        if (nameModel == null) nameModel = createNameModel();
         return nameModel;
+    }
+
+    protected NameModel createNameModel() { return new NameModel(); }
+
+    protected class NameModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getName();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setName(value);
+        }
+
+        @Override
+        public boolean isMandatory() { return true; }
+
     }
 
     // --- text ---
@@ -129,23 +133,27 @@ public abstract class GWikipage
         return equals(this.text, text);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel textModel;
+    private transient TextModel textModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getTextModel() {
-        if (textModel == null) textModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getText();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setText(value);
-            }
-
-        };
+    public TextModel getTextModel() {
+        if (textModel == null) textModel = createTextModel();
         return textModel;
+    }
+
+    protected TextModel createTextModel() { return new TextModel(); }
+
+    protected class TextModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getText();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setText(value);
+        }
+
     }
 
     // --- update properties by map ---

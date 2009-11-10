@@ -88,23 +88,27 @@ public abstract class GRelease
         return equals(this.label, label);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel;
+    private transient LabelModel labelModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getLabelModel() {
-        if (labelModel == null) labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getLabel();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setLabel(value);
-            }
-
-        };
+    public LabelModel getLabelModel() {
+        if (labelModel == null) labelModel = createLabelModel();
         return labelModel;
+    }
+
+    protected LabelModel createLabelModel() { return new LabelModel(); }
+
+    protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getLabel();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLabel(value);
+        }
+
     }
 
     // --- publicationDate ---
@@ -126,23 +130,27 @@ public abstract class GRelease
         return equals(this.publicationDate, publicationDate);
     }
 
-    private transient ilarkesto.gwt.client.editor.ADateEditorModel publicationDateModel;
+    private transient PublicationDateModel publicationDateModel;
 
-    public ilarkesto.gwt.client.editor.ADateEditorModel getPublicationDateModel() {
-        if (publicationDateModel == null) publicationDateModel = new ilarkesto.gwt.client.editor.ADateEditorModel() {
-
-            @Override
-            public ilarkesto.gwt.client.Date getValue() {
-                return getPublicationDate();
-            }
-
-            @Override
-            public void setValue(ilarkesto.gwt.client.Date value) {
-                setPublicationDate(value);
-            }
-
-        };
+    public PublicationDateModel getPublicationDateModel() {
+        if (publicationDateModel == null) publicationDateModel = createPublicationDateModel();
         return publicationDateModel;
+    }
+
+    protected PublicationDateModel createPublicationDateModel() { return new PublicationDateModel(); }
+
+    protected class PublicationDateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public ilarkesto.gwt.client.Date getValue() {
+            return getPublicationDate();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.Date value) {
+            setPublicationDate(value);
+        }
+
     }
 
     // --- update properties by map ---

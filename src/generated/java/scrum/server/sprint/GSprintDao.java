@@ -48,8 +48,8 @@ public abstract class GSprintDao
         velocitysCache = null;
         sprintsByCompletedRequirementLabelsCache.clear();
         completedRequirementLabelssCache = null;
-        sprintsByPlaningNoteCache.clear();
-        planingNotesCache = null;
+        sprintsByPlanningNoteCache.clear();
+        planningNotesCache = null;
         sprintsByReviewNoteCache.clear();
         reviewNotesCache = null;
         sprintsByRetrospectiveNoteCache.clear();
@@ -353,41 +353,41 @@ public abstract class GSprintDao
     }
 
     // -----------------------------------------------------------
-    // - planingNote
+    // - planningNote
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Sprint>> sprintsByPlaningNoteCache = new Cache<java.lang.String,Set<Sprint>>(
+    private final Cache<java.lang.String,Set<Sprint>> sprintsByPlanningNoteCache = new Cache<java.lang.String,Set<Sprint>>(
             new Cache.Factory<java.lang.String,Set<Sprint>>() {
-                public Set<Sprint> create(java.lang.String planingNote) {
-                    return getEntities(new IsPlaningNote(planingNote));
+                public Set<Sprint> create(java.lang.String planningNote) {
+                    return getEntities(new IsPlanningNote(planningNote));
                 }
             });
 
-    public final Set<Sprint> getSprintsByPlaningNote(java.lang.String planingNote) {
-        return sprintsByPlaningNoteCache.get(planingNote);
+    public final Set<Sprint> getSprintsByPlanningNote(java.lang.String planningNote) {
+        return sprintsByPlanningNoteCache.get(planningNote);
     }
-    private Set<java.lang.String> planingNotesCache;
+    private Set<java.lang.String> planningNotesCache;
 
-    public final Set<java.lang.String> getPlaningNotes() {
-        if (planingNotesCache == null) {
-            planingNotesCache = new HashSet<java.lang.String>();
+    public final Set<java.lang.String> getPlanningNotes() {
+        if (planningNotesCache == null) {
+            planningNotesCache = new HashSet<java.lang.String>();
             for (Sprint e : getEntities()) {
-                if (e.isPlaningNoteSet()) planingNotesCache.add(e.getPlaningNote());
+                if (e.isPlanningNoteSet()) planningNotesCache.add(e.getPlanningNote());
             }
         }
-        return planingNotesCache;
+        return planningNotesCache;
     }
 
-    private static class IsPlaningNote implements Predicate<Sprint> {
+    private static class IsPlanningNote implements Predicate<Sprint> {
 
         private java.lang.String value;
 
-        public IsPlaningNote(java.lang.String value) {
+        public IsPlanningNote(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(Sprint e) {
-            return e.isPlaningNote(value);
+            return e.isPlanningNote(value);
         }
 
     }

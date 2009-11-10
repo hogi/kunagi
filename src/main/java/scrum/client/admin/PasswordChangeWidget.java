@@ -79,6 +79,11 @@ public class PasswordChangeWidget extends AViewEditWidget {
 		ComponentManager.get().getApp().callChangePassword(currentPassword, newPassword);
 	}
 
+	@Override
+	public boolean isEditable() {
+		return true;
+	}
+
 	class SaveChangesAction extends AAction {
 
 		@Override

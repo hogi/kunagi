@@ -1,8 +1,9 @@
 package scrum.client.risks;
 
-import ilarkesto.gwt.client.Predicate;
+import ilarkesto.gwt.client.Gwt;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import scrum.client.admin.User;
@@ -11,6 +12,8 @@ import scrum.client.project.Project;
 public class Risk extends GRisk implements Comparable<Risk> {
 
 	public static final String REFERENCE_PREFIX = "rsk";
+	public static final List<Integer> IMPACTS = Gwt.toList(20, 40, 60, 80, 100);
+	public static final List<Integer> PROBABILITIES = Gwt.toList(20, 40, 60, 80, 100);
 
 	public Risk(Project project) {
 		setProject(project);
@@ -18,6 +21,16 @@ public class Risk extends GRisk implements Comparable<Risk> {
 
 	public Risk(Map data) {
 		super(data);
+	}
+
+	@Override
+	public List<Integer> getImpactOptions() {
+		return IMPACTS;
+	}
+
+	@Override
+	public List<Integer> getProbabilityOptions() {
+		return PROBABILITIES;
 	}
 
 	public String getReference() {
@@ -49,6 +62,13 @@ public class Risk extends GRisk implements Comparable<Risk> {
 	}
 
 	@Override
+	public boolean isPriorityEditable() {
+		Project project = cm.getProjectContext().getProject();
+		User user = cm.getAuth().getUser();
+		return project.isProductOwner(user) || project.isTeamMember(user);
+	}
+
+	@Override
 	public String toString() {
 		return getReference() + " " + getLabel();
 	}
@@ -60,17 +80,4 @@ public class Risk extends GRisk implements Comparable<Risk> {
 		}
 	};
 
-	private Predicate priorityEditPredicate;
-
-	public Predicate getPriorityEditPredicate() {
-		if (priorityEditPredicate == null) priorityEditPredicate = new Predicate() {
-
-			public boolean test() {
-				Project project = cm.getProjectContext().getProject();
-				User user = cm.getAuth().getUser();
-				return project.isProductOwner(user) || project.isTeamMember(user);
-			}
-		};
-		return priorityEditPredicate;
-	}
 }

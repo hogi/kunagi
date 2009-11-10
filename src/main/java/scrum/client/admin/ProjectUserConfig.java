@@ -8,6 +8,11 @@ public class ProjectUserConfig extends GProjectUserConfig {
 
 	}
 
+	@Override
+	public boolean isMisconductsEditable() {
+		return cm.getProjectContext().getProject().isScrumMaster(cm.getAuth().getUser());
+	}
+
 	public ProjectUserConfig(Map data) {
 		super(data);
 	}

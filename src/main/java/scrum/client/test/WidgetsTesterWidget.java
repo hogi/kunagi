@@ -189,6 +189,11 @@ public class WidgetsTesterWidget extends AScrumWidget {
 				fieldsInt--;
 			}
 
+			@Override
+			public boolean isEditable() {
+				return true;
+			}
+
 		});
 		fields.update();
 		addTest("FieldsWidget", fields);

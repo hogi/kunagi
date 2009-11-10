@@ -29,6 +29,8 @@ public abstract class GRisk
         return scrum.client.Dao.get();
     }
 
+    public abstract boolean isPriorityEditable();
+
     public GRisk() {
     }
 
@@ -88,15 +90,26 @@ public abstract class GRisk
         return equals(this.number, number);
     }
 
-    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel numberModel;
+    private transient NumberModel numberModel;
 
-    public ilarkesto.gwt.client.editor.AIntegerEditorModel getNumberModel() {
-        if (numberModel == null) numberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    public NumberModel getNumberModel() {
+        if (numberModel == null) numberModel = createNumberModel();
+        return numberModel;
+    }
 
-            @Override
-            public Integer getValue() {
-                return getNumber();
-            }
+    protected NumberModel createNumberModel() { return new NumberModel(); }
+
+    protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getNumber();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setNumber(value);
+        }
 
             @Override
             public void increment() {
@@ -108,13 +121,6 @@ public abstract class GRisk
                 setNumber(getNumber() - 1);
             }
 
-            @Override
-            public void setValue(Integer value) {
-                setNumber(value);
-            }
-
-        };
-        return numberModel;
     }
 
     // --- label ---
@@ -136,26 +142,30 @@ public abstract class GRisk
         return equals(this.label, label);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel;
+    private transient LabelModel labelModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getLabelModel() {
-        if (labelModel == null) labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getLabel();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setLabel(value);
-            }
-
-
-            @Override
-            public boolean isMandatory() { return true; }
-        };
+    public LabelModel getLabelModel() {
+        if (labelModel == null) labelModel = createLabelModel();
         return labelModel;
+    }
+
+    protected LabelModel createLabelModel() { return new LabelModel(); }
+
+    protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getLabel();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLabel(value);
+        }
+
+        @Override
+        public boolean isMandatory() { return true; }
+
     }
 
     // --- description ---
@@ -177,23 +187,27 @@ public abstract class GRisk
         return equals(this.description, description);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel descriptionModel;
+    private transient DescriptionModel descriptionModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getDescriptionModel() {
-        if (descriptionModel == null) descriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getDescription();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setDescription(value);
-            }
-
-        };
+    public DescriptionModel getDescriptionModel() {
+        if (descriptionModel == null) descriptionModel = createDescriptionModel();
         return descriptionModel;
+    }
+
+    protected DescriptionModel createDescriptionModel() { return new DescriptionModel(); }
+
+    protected class DescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getDescription();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setDescription(value);
+        }
+
     }
 
     // --- mitigationPlans ---
@@ -215,23 +229,27 @@ public abstract class GRisk
         return equals(this.mitigationPlans, mitigationPlans);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel mitigationPlansModel;
+    private transient MitigationPlansModel mitigationPlansModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getMitigationPlansModel() {
-        if (mitigationPlansModel == null) mitigationPlansModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getMitigationPlans();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setMitigationPlans(value);
-            }
-
-        };
+    public MitigationPlansModel getMitigationPlansModel() {
+        if (mitigationPlansModel == null) mitigationPlansModel = createMitigationPlansModel();
         return mitigationPlansModel;
+    }
+
+    protected MitigationPlansModel createMitigationPlansModel() { return new MitigationPlansModel(); }
+
+    protected class MitigationPlansModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getMitigationPlans();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setMitigationPlans(value);
+        }
+
     }
 
     // --- probability ---
@@ -249,37 +267,41 @@ public abstract class GRisk
         return (Risk)this;
     }
 
+    public abstract List<java.lang.Integer> getProbabilityOptions();
+
     public final boolean isProbability(int probability) {
         return equals(this.probability, probability);
     }
 
-    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel probabilityModel;
+    private transient ProbabilityModel probabilityModel;
 
-    public ilarkesto.gwt.client.editor.AIntegerEditorModel getProbabilityModel() {
-        if (probabilityModel == null) probabilityModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
-
-            @Override
-            public Integer getValue() {
-                return getProbability();
-            }
-
-            @Override
-            public void increment() {
-                setProbability(getProbability() + 1);
-            }
-
-            @Override
-            public void decrement() {
-                setProbability(getProbability() - 1);
-            }
-
-            @Override
-            public void setValue(Integer value) {
-                setProbability(value);
-            }
-
-        };
+    public ProbabilityModel getProbabilityModel() {
+        if (probabilityModel == null) probabilityModel = createProbabilityModel();
         return probabilityModel;
+    }
+
+    protected ProbabilityModel createProbabilityModel() { return new ProbabilityModel(); }
+
+    protected class ProbabilityModel extends ilarkesto.gwt.client.editor.AOptionEditorModel<java.lang.Integer> {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getProbability();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setProbability(value);
+        }
+
+        @Override
+        public List<java.lang.Integer> getOptions() {
+            return getProbabilityOptions();
+        }
+
+        @Override
+        public boolean isEditable() { return GRisk.this.isPriorityEditable(); }
+
     }
 
     // --- impact ---
@@ -297,37 +319,41 @@ public abstract class GRisk
         return (Risk)this;
     }
 
+    public abstract List<java.lang.Integer> getImpactOptions();
+
     public final boolean isImpact(int impact) {
         return equals(this.impact, impact);
     }
 
-    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel impactModel;
+    private transient ImpactModel impactModel;
 
-    public ilarkesto.gwt.client.editor.AIntegerEditorModel getImpactModel() {
-        if (impactModel == null) impactModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
-
-            @Override
-            public Integer getValue() {
-                return getImpact();
-            }
-
-            @Override
-            public void increment() {
-                setImpact(getImpact() + 1);
-            }
-
-            @Override
-            public void decrement() {
-                setImpact(getImpact() - 1);
-            }
-
-            @Override
-            public void setValue(Integer value) {
-                setImpact(value);
-            }
-
-        };
+    public ImpactModel getImpactModel() {
+        if (impactModel == null) impactModel = createImpactModel();
         return impactModel;
+    }
+
+    protected ImpactModel createImpactModel() { return new ImpactModel(); }
+
+    protected class ImpactModel extends ilarkesto.gwt.client.editor.AOptionEditorModel<java.lang.Integer> {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getImpact();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setImpact(value);
+        }
+
+        @Override
+        public List<java.lang.Integer> getOptions() {
+            return getImpactOptions();
+        }
+
+        @Override
+        public boolean isEditable() { return GRisk.this.isPriorityEditable(); }
+
     }
 
     // --- update properties by map ---

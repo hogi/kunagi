@@ -156,6 +156,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.setViewProtected(true);
 			projectModel.setDeleteProtected(true);
 			projectModel.setGwtSupport(true);
+			projectModel.addPredicate("editable");
 			projectModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);
 			projectModel.addProperty("description", String.class);
 			projectModel.addProperty("begin", Date.class);
@@ -215,13 +216,14 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (requirementModel == null) {
 			requirementModel = createEntityModel("Requirement", "project");
 			requirementModel.setGwtSupport(true);
+			requirementModel.addPredicate("editable");
 			requirementModel.addReference("project", getProjectModel()).setMaster(true);
 			requirementModel.addReference("sprint", getSprintModel());
 			requirementModel.addProperty("number", int.class);
 			requirementModel.addSetReference("qualitys", getQualityModel());
-			requirementModel.addProperty("label", String.class).setMandatory(true);
-			requirementModel.addProperty("description", String.class);
-			requirementModel.addProperty("testDescription", String.class);
+			requirementModel.addProperty("label", String.class).setMandatory(true).setEditablePredicate("editable");
+			requirementModel.addProperty("description", String.class).setEditablePredicate("editable");
+			requirementModel.addProperty("testDescription", String.class).setEditablePredicate("editable");
 			requirementModel.addProperty("estimatedWork", Integer.class);
 			requirementModel.addProperty("closed", boolean.class);
 			requirementModel.addProperty("dirty", boolean.class);
@@ -243,11 +245,12 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (qualityModel == null) {
 			qualityModel = createEntityModel("Quality", "project");
 			qualityModel.setGwtSupport(true);
+			qualityModel.addPredicate("editable");
 			qualityModel.addReference("project", getProjectModel()).setMaster(true);
 			qualityModel.addProperty("number", int.class);
-			qualityModel.addProperty("label", String.class).setMandatory(true);
-			qualityModel.addProperty("description", String.class);
-			qualityModel.addProperty("testDescription", String.class);
+			qualityModel.addProperty("label", String.class).setMandatory(true).setEditablePredicate("editable");
+			qualityModel.addProperty("description", String.class).setEditablePredicate("editable");
+			qualityModel.addProperty("testDescription", String.class).setEditablePredicate("editable");
 			getApplicationModel().addCreateAction(qualityModel);
 			qualityModel.addAction("DeleteQuality");
 		}
@@ -260,16 +263,21 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (sprintModel == null) {
 			sprintModel = createEntityModel("Sprint", "sprint");
 			sprintModel.setGwtSupport(true);
+			sprintModel.addPredicate("editable");
+			sprintModel.addPredicate("planningEditable");
+			sprintModel.addPredicate("reviewEditable");
+			sprintModel.addPredicate("retrospectiveEditable");
+			sprintModel.addPredicate("datesEditable");
 			sprintModel.addReference("project", getProjectModel()).setMaster(true);
-			sprintModel.addProperty("label", String.class).setMandatory(true);
-			sprintModel.addProperty("goal", String.class);
-			sprintModel.addProperty("begin", Date.class);
-			sprintModel.addProperty("end", Date.class);
+			sprintModel.addProperty("label", String.class).setMandatory(true).setEditablePredicate("editable");
+			sprintModel.addProperty("goal", String.class).setEditablePredicate("editable");
+			sprintModel.addProperty("begin", Date.class).setEditablePredicate("datesEditable");
+			sprintModel.addProperty("end", Date.class).setEditablePredicate("datesEditable");
 			sprintModel.addProperty("velocity", Integer.class);
 			sprintModel.addProperty("completedRequirementLabels", String.class);
-			sprintModel.addProperty("planingNote", String.class);
-			sprintModel.addProperty("reviewNote", String.class);
-			sprintModel.addProperty("retrospectiveNote", String.class);
+			sprintModel.addProperty("planningNote", String.class).setEditablePredicate("planningEditable");
+			sprintModel.addProperty("reviewNote", String.class).setEditablePredicate("reviewEditable");
+			sprintModel.addProperty("retrospectiveNote", String.class).setEditablePredicate("retrospectiveEditable");
 		}
 		return sprintModel;
 	}
@@ -293,14 +301,15 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (taskModel == null) {
 			taskModel = createEntityModel("Task", "sprint");
 			taskModel.setGwtSupport(true);
+			taskModel.addPredicate("editable");
 			taskModel.addReference("requirement", getRequirementModel()).setMaster(true);
 			taskModel.addProperty("number", int.class);
-			taskModel.addProperty("label", String.class).setMandatory(true);
-			taskModel.addProperty("description", String.class);
-			taskModel.addProperty("remainingWork", int.class);
-			taskModel.addProperty("burnedWork", int.class);
+			taskModel.addProperty("label", String.class).setMandatory(true).setEditablePredicate("editable");
+			taskModel.addProperty("description", String.class).setEditablePredicate("editable");
+			taskModel.addProperty("remainingWork", int.class).setEditablePredicate("editable");
+			taskModel.addProperty("burnedWork", int.class).setEditablePredicate("editable");
 			// taskModel.addProperty("notice", String.class);
-			taskModel.addReference("owner", getUserModel());
+			taskModel.addReference("owner", getUserModel()).setEditablePredicate("editable");
 			getApplicationModel().addCreateAction(taskModel);
 			taskModel.addAction("DeleteTask");
 			taskModel.addAction("ClaimTask");
@@ -338,12 +347,15 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			riskModel = createEntityModel("Risk", "risks");
 			riskModel.setGwtSupport(true);
 			riskModel.addReference("project", getProjectModel()).setMaster(true);
+			riskModel.addPredicate("priorityEditable");
 			riskModel.addProperty("number", int.class);
 			riskModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);
 			riskModel.addProperty("description", String.class).setSearchable(true);
 			riskModel.addProperty("mitigationPlans", String.class).setSearchable(true);
-			riskModel.addProperty("probability", int.class);
-			riskModel.addProperty("impact", int.class);
+			riskModel.addProperty("probability", int.class).setOptionRestricted(true).setEditablePredicate(
+				"priorityEditable");
+			riskModel.addProperty("impact", int.class).setOptionRestricted(true).setEditablePredicate(
+				"priorityEditable");
 			getApplicationModel().addCreateAction(riskModel);
 			riskModel.addAction("DeleteRisk");
 		}
@@ -375,10 +387,11 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (projectUserConfigModel == null) {
 			projectUserConfigModel = createEntityModel("ProjectUserConfig", "admin");
 			projectUserConfigModel.setGwtSupport(true);
+			projectUserConfigModel.addPredicate("misconductsEditable");
 			projectUserConfigModel.addReference("project", getProjectModel()).setMaster(true);
 			projectUserConfigModel.addReference("user", getUserModel()).setMaster(true);
 			projectUserConfigModel.addProperty("color", String.class);
-			projectUserConfigModel.addProperty("misconducts", int.class);
+			projectUserConfigModel.addProperty("misconducts", int.class).setEditablePredicate("misconductsEditable");
 		}
 		return projectUserConfigModel;
 	}
@@ -452,9 +465,12 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (projectEventModel == null) {
 			projectEventModel = createEntityModel("ProjectEvent", "journal");
 			projectEventModel.setGwtSupport(true);
+			projectEventModel.addPredicate("editable");
 			projectEventModel.addReference("project", getProjectModel()).setMaster(true);
-			projectEventModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);
-			projectEventModel.addProperty("dateAndTime", DateAndTime.class).setMandatory(true);
+			projectEventModel.addProperty("label", String.class).setMandatory(true).setSearchable(true)
+					.setEditablePredicate("editable");
+			projectEventModel.addProperty("dateAndTime", DateAndTime.class).setMandatory(true).setEditablePredicate(
+				"editable");
 		}
 		return projectEventModel;
 	}

@@ -10,6 +10,11 @@ public class ProjectEvent extends GProjectEvent {
 	}
 
 	@Override
+	public boolean isEditable() {
+		return false;
+	}
+
+	@Override
 	public String toString() {
 		return getLabel();
 	}

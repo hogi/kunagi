@@ -39,6 +39,11 @@ public class Project extends GProject {
 		super(data);
 	}
 
+	@Override
+	public boolean isEditable() {
+		return isAdmin(cm.getAuth().getUser());
+	}
+
 	public List<Task> getClaimedTasks(User user) {
 		List<Task> tasks = new ArrayList<Task>();
 		for (Requirement req : getRequirements()) {
@@ -125,6 +130,10 @@ public class Project extends GProject {
 
 	public boolean isProductOwner(User user) {
 		return getProductOwners().contains(user);
+	}
+
+	public boolean isAdmin(User user) {
+		return getAdmins().contains(user);
 	}
 
 	public String getUsersRolesAsString(User user, String prefix, String suffix) {

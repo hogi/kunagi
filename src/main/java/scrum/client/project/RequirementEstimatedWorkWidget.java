@@ -58,7 +58,7 @@ public class RequirementEstimatedWorkWidget extends AScrumWidget {
 		public boolean isEditable() {
 			if (requirement.isInCurrentSprint()) return false;
 			if (!getCurrentProject().isTeamMember(getCurrentUser())) return false;
-			return super.isEditable();
+			return true;
 		}
 
 		@Override

@@ -21,10 +21,9 @@ public class QualityWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		FieldsWidget fields = new FieldsWidget();
-		fields.add("Label", new TextEditorWidget(quality.getLabelModel(), quality.getEditPredicate())
-				.switchToEditModeIfNull());
-		fields.add("Description", new RichtextEditorWidget(quality.getDescriptionModel(), quality.getEditPredicate()));
-		fields.add("Test", new RichtextEditorWidget(quality.getTestDescriptionModel(), quality.getEditPredicate()));
+		fields.add("Label", new TextEditorWidget(quality.getLabelModel()).switchToEditModeIfNull());
+		fields.add("Description", new RichtextEditorWidget(quality.getDescriptionModel()));
+		fields.add("Test", new RichtextEditorWidget(quality.getTestDescriptionModel()));
 
 		return TableBuilder.row(20, fields, new CommentsWidget(quality));
 	}

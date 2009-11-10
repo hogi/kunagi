@@ -29,6 +29,8 @@ public abstract class GQuality
         return scrum.client.Dao.get();
     }
 
+    public abstract boolean isEditable();
+
     public GQuality() {
     }
 
@@ -88,15 +90,26 @@ public abstract class GQuality
         return equals(this.number, number);
     }
 
-    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel numberModel;
+    private transient NumberModel numberModel;
 
-    public ilarkesto.gwt.client.editor.AIntegerEditorModel getNumberModel() {
-        if (numberModel == null) numberModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    public NumberModel getNumberModel() {
+        if (numberModel == null) numberModel = createNumberModel();
+        return numberModel;
+    }
 
-            @Override
-            public Integer getValue() {
-                return getNumber();
-            }
+    protected NumberModel createNumberModel() { return new NumberModel(); }
+
+    protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getNumber();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setNumber(value);
+        }
 
             @Override
             public void increment() {
@@ -108,13 +121,6 @@ public abstract class GQuality
                 setNumber(getNumber() - 1);
             }
 
-            @Override
-            public void setValue(Integer value) {
-                setNumber(value);
-            }
-
-        };
-        return numberModel;
     }
 
     // --- label ---
@@ -136,26 +142,33 @@ public abstract class GQuality
         return equals(this.label, label);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel labelModel;
+    private transient LabelModel labelModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getLabelModel() {
-        if (labelModel == null) labelModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getLabel();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setLabel(value);
-            }
-
-
-            @Override
-            public boolean isMandatory() { return true; }
-        };
+    public LabelModel getLabelModel() {
+        if (labelModel == null) labelModel = createLabelModel();
         return labelModel;
+    }
+
+    protected LabelModel createLabelModel() { return new LabelModel(); }
+
+    protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getLabel();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLabel(value);
+        }
+
+        @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
+        public boolean isEditable() { return GQuality.this.isEditable(); }
+
     }
 
     // --- description ---
@@ -177,23 +190,30 @@ public abstract class GQuality
         return equals(this.description, description);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel descriptionModel;
+    private transient DescriptionModel descriptionModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getDescriptionModel() {
-        if (descriptionModel == null) descriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getDescription();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setDescription(value);
-            }
-
-        };
+    public DescriptionModel getDescriptionModel() {
+        if (descriptionModel == null) descriptionModel = createDescriptionModel();
         return descriptionModel;
+    }
+
+    protected DescriptionModel createDescriptionModel() { return new DescriptionModel(); }
+
+    protected class DescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getDescription();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setDescription(value);
+        }
+
+        @Override
+        public boolean isEditable() { return GQuality.this.isEditable(); }
+
     }
 
     // --- testDescription ---
@@ -215,23 +235,30 @@ public abstract class GQuality
         return equals(this.testDescription, testDescription);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel testDescriptionModel;
+    private transient TestDescriptionModel testDescriptionModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getTestDescriptionModel() {
-        if (testDescriptionModel == null) testDescriptionModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getTestDescription();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setTestDescription(value);
-            }
-
-        };
+    public TestDescriptionModel getTestDescriptionModel() {
+        if (testDescriptionModel == null) testDescriptionModel = createTestDescriptionModel();
         return testDescriptionModel;
+    }
+
+    protected TestDescriptionModel createTestDescriptionModel() { return new TestDescriptionModel(); }
+
+    protected class TestDescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getTestDescription();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setTestDescription(value);
+        }
+
+        @Override
+        public boolean isEditable() { return GQuality.this.isEditable(); }
+
     }
 
     // --- update properties by map ---

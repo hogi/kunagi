@@ -76,6 +76,11 @@ public class ProductBacklogWidget extends AScrumWidget {
 				}
 				ProductBacklogWidget.this.update();
 			}
+
+			@Override
+			public boolean isEditable() {
+				return true;
+			}
 		};
 		filterPanel.add(predicateSelect);
 

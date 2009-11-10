@@ -1,7 +1,5 @@
 package scrum.client.project;
 
-import ilarkesto.gwt.client.Predicate;
-
 import java.util.Map;
 
 import scrum.client.issues.Issue;
@@ -33,17 +31,10 @@ public class Quality extends GQuality {
 		return getReference() + " " + getLabel();
 	}
 
-	private Predicate editPredicate;
-
-	public Predicate getEditPredicate() {
-		if (editPredicate == null) editPredicate = new Predicate() {
-
-			public boolean test() {
-				if (!cm.getProjectContext().getProject().isProductOwner(cm.getAuth().getUser())) return false;
-				return true;
-			}
-		};
-		return editPredicate;
+	@Override
+	public boolean isEditable() {
+		if (!cm.getProjectContext().getProject().isProductOwner(cm.getAuth().getUser())) return false;
+		return true;
 	}
 
 }

@@ -29,6 +29,8 @@ public abstract class GProjectUserConfig
         return scrum.client.Dao.get();
     }
 
+    public abstract boolean isMisconductsEditable();
+
     public GProjectUserConfig() {
     }
 
@@ -113,23 +115,27 @@ public abstract class GProjectUserConfig
         return equals(this.color, color);
     }
 
-    private transient ilarkesto.gwt.client.editor.ATextEditorModel colorModel;
+    private transient ColorModel colorModel;
 
-    public ilarkesto.gwt.client.editor.ATextEditorModel getColorModel() {
-        if (colorModel == null) colorModel = new ilarkesto.gwt.client.editor.ATextEditorModel() {
-
-            @Override
-            public String getValue() {
-                return getColor();
-            }
-
-            @Override
-            public void setValue(String value) {
-                setColor(value);
-            }
-
-        };
+    public ColorModel getColorModel() {
+        if (colorModel == null) colorModel = createColorModel();
         return colorModel;
+    }
+
+    protected ColorModel createColorModel() { return new ColorModel(); }
+
+    protected class ColorModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getColor();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setColor(value);
+        }
+
     }
 
     // --- misconducts ---
@@ -151,15 +157,26 @@ public abstract class GProjectUserConfig
         return equals(this.misconducts, misconducts);
     }
 
-    private transient ilarkesto.gwt.client.editor.AIntegerEditorModel misconductsModel;
+    private transient MisconductsModel misconductsModel;
 
-    public ilarkesto.gwt.client.editor.AIntegerEditorModel getMisconductsModel() {
-        if (misconductsModel == null) misconductsModel = new ilarkesto.gwt.client.editor.AIntegerEditorModel() {
+    public MisconductsModel getMisconductsModel() {
+        if (misconductsModel == null) misconductsModel = createMisconductsModel();
+        return misconductsModel;
+    }
 
-            @Override
-            public Integer getValue() {
-                return getMisconducts();
-            }
+    protected MisconductsModel createMisconductsModel() { return new MisconductsModel(); }
+
+    protected class MisconductsModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getMisconducts();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setMisconducts(value);
+        }
 
             @Override
             public void increment() {
@@ -171,13 +188,9 @@ public abstract class GProjectUserConfig
                 setMisconducts(getMisconducts() - 1);
             }
 
-            @Override
-            public void setValue(Integer value) {
-                setMisconducts(value);
-            }
+        @Override
+        public boolean isEditable() { return GProjectUserConfig.this.isMisconductsEditable(); }
 
-        };
-        return misconductsModel;
     }
 
     // --- update properties by map ---
