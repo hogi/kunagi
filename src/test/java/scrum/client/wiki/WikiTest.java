@@ -18,6 +18,7 @@ public class WikiTest {
 	public void testEntityReference() {
 		Assert.assertTrue(toHtml("tsk15 is completed").contains("<a "));
 		Assert.assertTrue(toHtml("[[Wiki]] is cool").contains("<a "));
+		Assert.assertTrue(toHtml("[[Wiki|Custom Text]] is cool").contains(">Custom Text</a>"));
 		Assert.assertTrue(toHtml("tsk15!").contains("<a "));
 		Assert.assertTrue(toHtml("(tsk15!), :-)").contains("<a "));
 	}

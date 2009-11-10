@@ -3,10 +3,16 @@ package scrum.client.wiki;
 public class EntityReference extends AWikiElement {
 
 	private String reference;
+	private String label;
 
-	public EntityReference(String reference) {
+	public EntityReference(String reference, String label) {
 		super();
 		this.reference = reference;
+		this.label = label;
+	}
+
+	public EntityReference(String reference) {
+		this(reference, reference);
 	}
 
 	@Override
@@ -15,18 +21,13 @@ public class EntityReference extends AWikiElement {
 		sb.append("<a onclick='window.scrum.showEntityByReference(\"");
 		sb.append(reference);
 		sb.append("\")'>");
-		sb.append(getLabel());
+		sb.append(escapeHtml(label));
 		sb.append("</a>");
 		return sb.toString();
 	}
 
-	private String getLabel() {
-		if (reference.startsWith("[[")) return reference.substring(2, reference.length() - 2);
-		return reference;
-	}
-
 	@Override
 	public String toString() {
-		return "EntityReference(" + reference + ")";
+		return "EntityReference(" + reference + "," + label + ")";
 	}
 }

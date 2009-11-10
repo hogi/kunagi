@@ -52,8 +52,32 @@ public class WikiParser {
 
 	private Paragraph appendText(Paragraph p, String text) {
 
-		// links
-		int begin = text.indexOf("[");
+		// internal links
+		int begin = text.indexOf("[[");
+		if (begin >= 0 && begin < text.length() - 4) {
+			int end = text.indexOf("]]", begin);
+			if (end > begin) {
+				String prefix = text.substring(0, begin);
+				String content = text.substring(begin + 2, end);
+				String suffix = text.substring(end + 2);
+				if (content.trim().length() > 0) {
+					appendText(p, prefix);
+					int spaceIdx = content.indexOf('|');
+					if (spaceIdx > 0) {
+						String name = content.substring(0, spaceIdx);
+						String label = content.substring(spaceIdx + 1);
+						p.add(new EntityReference("[[" + name + "]]", label));
+					} else {
+						p.add(new EntityReference("[[" + content + "]]", content));
+					}
+					appendText(p, suffix);
+					return p;
+				}
+			}
+		}
+
+		// external links
+		begin = text.indexOf("[");
 		if (begin >= 0 && begin < text.length() - 3) {
 			if (text.charAt(begin + 1) != '[') {
 				int end = text.indexOf("]", begin);
@@ -281,7 +305,6 @@ public class WikiParser {
 
 	private boolean isEntityReference(String s) {
 		if (s.length() < 4) return false;
-		if (s.startsWith("[[") && s.endsWith("]]")) return true;
 		if (!Character.isDigit(s.charAt(3))) return false;
 		if (!s.startsWith("req") && !s.startsWith("tsk") && !s.startsWith("qlt") && !s.startsWith("iss")
 				&& !s.startsWith("imp") && !s.startsWith("rsk")) return false;
