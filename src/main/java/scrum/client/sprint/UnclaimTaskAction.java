@@ -46,6 +46,21 @@ public class UnclaimTaskAction extends GReopenTaskAction {
 	@Override
 	protected void onExecute() {
 		task.setUnOwned();
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Unclaim " + task.getReference() + " " + task.getLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			task.claim();
+		}
+
 	}
 
 }

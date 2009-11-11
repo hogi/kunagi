@@ -1,6 +1,7 @@
 package scrum.client.project;
 
 import scrum.client.common.TooltipBuilder;
+import scrum.client.sprint.Sprint;
 
 public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSprintAction {
 
@@ -40,11 +41,36 @@ public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSpr
 
 	@Override
 	protected void onExecute() {
+		Sprint sprint = requirement.getSprint();
 		requirement.setSprint(null);
 		cm.getChat()
 				.postSystemMessage(
-					getCurrentUser().getName() + " removed requirement " + requirement.getReference()
-							+ " from current sprint.", true);
+					getCurrentUser().getName() + " removed Requirement " + requirement.getReference()
+							+ " from current Sprint.", true);
+		addUndo(new Undo(sprint));
+	}
+
+	class Undo extends ALocalUndo {
+
+		private Sprint s;
+
+		public Undo(Sprint s) {
+			this.s = s;
+		}
+
+		@Override
+		public String getLabel() {
+			return "Undo Remove " + requirement.getReferenceAndLabel() + " from Sprint";
+		}
+
+		@Override
+		protected void onUndo() {
+			requirement.setSprint(s);
+			cm.getChat().postSystemMessage(
+				getCurrentUser().getName() + " has undone the removal of Requirement " + requirement.getReference()
+						+ " from current Sprint.", true);
+		}
+
 	}
 
 }

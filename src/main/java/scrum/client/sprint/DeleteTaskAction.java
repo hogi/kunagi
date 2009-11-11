@@ -41,6 +41,21 @@ public class DeleteTaskAction extends GDeleteTaskAction {
 	@Override
 	protected void onExecute() {
 		task.getRequirement().deleteTask(task);
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Delete " + task.getReference() + " " + task.getLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			cm.getDao().createTask(task);
+		}
+
 	}
 
 }

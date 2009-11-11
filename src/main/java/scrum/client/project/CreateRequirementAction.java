@@ -33,6 +33,27 @@ public class CreateRequirementAction extends GCreateRequirementAction {
 	protected void onExecute() {
 		Requirement requirement = getCurrentProject().createNewRequirement();
 		cm.getProjectContext().showRequirement(requirement);
+		// addUndo(new Undo(requirement));
 	}
+
+	// class Undo extends ALocalUndo {
+	//
+	// private Requirement requirement;
+	//
+	// public Undo(Requirement requirement) {
+	// this.requirement = requirement;
+	// }
+	//
+	// @Override
+	// public String getLabel() {
+	// return "Create " + requirement.getReferenceAndLabel();
+	// }
+	//
+	// @Override
+	// protected void onUndo() {
+	// requirement.getProject().deleteRequirement(requirement);
+	// }
+	//
+	// }
 
 }

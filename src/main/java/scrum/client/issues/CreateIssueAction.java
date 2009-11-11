@@ -16,6 +16,27 @@ public class CreateIssueAction extends GCreateIssueAction {
 	protected void onExecute() {
 		Issue issue = getCurrentProject().createNewIssue();
 		cm.getProjectContext().showIssueList(issue);
+		addUndo(new Undo(issue));
+	}
+
+	class Undo extends ALocalUndo {
+
+		private Issue issue;
+
+		public Undo(Issue issue) {
+			this.issue = issue;
+		}
+
+		@Override
+		public String getLabel() {
+			return "Undo Create " + issue.getReference() + " " + issue.getLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			issue.getProject().deleteIssue(issue);
+		}
+
 	}
 
 }

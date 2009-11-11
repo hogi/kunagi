@@ -40,6 +40,21 @@ public class DeleteProjectAction extends GDeleteProjectAction {
 		if (Window.confirm("Delete project " + project.getLabel() + "?")) {
 			cm.getDao().deleteProject(project);
 		}
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Delete " + project.getLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			cm.getDao().createProject(project);
+		}
+
 	}
 
 }

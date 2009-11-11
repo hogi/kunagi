@@ -36,6 +36,21 @@ public class DeleteQualityAction extends GDeleteQualityAction {
 	@Override
 	protected void onExecute() {
 		quality.getProject().deleteQuality(quality);
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Delete " + quality.getReference() + " " + quality.getLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			cm.getDao().createQuality(quality);
+		}
+
 	}
 
 }

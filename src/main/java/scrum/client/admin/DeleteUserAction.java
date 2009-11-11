@@ -1,6 +1,5 @@
 package scrum.client.admin;
 
-
 public class DeleteUserAction extends GDeleteUserAction {
 
 	public DeleteUserAction(User user) {
@@ -25,6 +24,21 @@ public class DeleteUserAction extends GDeleteUserAction {
 	@Override
 	protected void onExecute() {
 		cm.getDao().deleteUser(user);
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Delete User " + user.getName();
+		}
+
+		@Override
+		protected void onUndo() {
+			cm.getDao().createUser(user);
+		}
+
 	}
 
 }

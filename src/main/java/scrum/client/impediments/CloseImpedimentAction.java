@@ -40,6 +40,21 @@ public class CloseImpedimentAction extends GCloseImpedimentAction {
 	@Override
 	protected void onExecute() {
 		impediment.setClosed(true);
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Close " + impediment.getReference() + " " + impediment.getLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			impediment.setClosed(false);
+		}
+
 	}
 
 }

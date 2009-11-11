@@ -43,6 +43,21 @@ public class CloseRequirementAction extends GCloseRequirementAction {
 	@Override
 	protected void onExecute() {
 		requirement.setClosed(true);
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Close " + requirement.getReferenceAndLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			requirement.setClosed(false);
+		}
+
 	}
 
 }

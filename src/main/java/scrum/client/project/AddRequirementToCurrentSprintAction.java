@@ -47,8 +47,26 @@ public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurren
 	protected void onExecute() {
 		requirement.setSprint(getCurrentProject().getCurrentSprint());
 		cm.getChat().postSystemMessage(
-			getCurrentUser().getName() + " added requirement " + requirement.getReference() + " to current sprint.",
+			getCurrentUser().getName() + " added Requirement " + requirement.getReference() + " to current Sprint.",
 			true);
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Add to Sprint for " + requirement.getReferenceAndLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			requirement.setSprint(null);
+			cm.getChat().postSystemMessage(
+				getCurrentUser().getName() + " has undone adding Requirement " + requirement.getReference()
+						+ " to current Sprint.", true);
+		}
+
 	}
 
 }

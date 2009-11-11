@@ -44,6 +44,28 @@ public class ConvertIssueToQualityAction extends GConvertIssueToQualityAction {
 		cm.getDao().createQuality(quality);
 		cm.getDao().deleteIssue(issue);
 		cm.getProjectContext().showQualityBacklog(quality);
+		addUndo(new Undo(quality));
+	}
+
+	class Undo extends ALocalUndo {
+
+		private Quality quality;
+
+		public Undo(Quality quality) {
+			this.quality = quality;
+		}
+
+		@Override
+		public String getLabel() {
+			return "Undo Convert " + issue.getReference() + " " + issue.getLabel() + " to Quality";
+		}
+
+		@Override
+		protected void onUndo() {
+			cm.getDao().deleteQuality(quality);
+			cm.getDao().createIssue(issue);
+		}
+
 	}
 
 }

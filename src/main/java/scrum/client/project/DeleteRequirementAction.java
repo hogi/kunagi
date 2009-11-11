@@ -37,7 +37,22 @@ public class DeleteRequirementAction extends GDeleteRequirementAction {
 
 	@Override
 	protected void onExecute() {
-		getCurrentProject().deleteRequirement(requirement);
+		requirement.getProject().deleteRequirement(requirement);
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Delete " + requirement.getReferenceAndLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			cm.getDao().createRequirement(requirement);
+		}
+
 	}
 
 }

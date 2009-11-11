@@ -49,6 +49,21 @@ public class SetRequirementCleanAction extends GSetRequirementCleanAction {
 	@Override
 	protected void onExecute() {
 		requirement.setDirty(false);
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Mark as clean for " + requirement.getReferenceAndLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			requirement.setDirty(true);
+		}
+
 	}
 
 }

@@ -44,6 +44,21 @@ public class ReopenTaskAction extends GReopenTaskAction {
 		task.setUnDone(getCurrentUser());
 		cm.getChat().postSystemMessage(getCurrentUser().getName() + " re-opened task " + task.getReference() + ".",
 			true);
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Set Undone for " + task.getReference() + " " + task.getLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			task.setDone(getCurrentUser());
+		}
+
 	}
 
 }

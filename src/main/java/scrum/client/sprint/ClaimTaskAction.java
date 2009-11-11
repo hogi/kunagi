@@ -1,5 +1,6 @@
 package scrum.client.sprint;
 
+import scrum.client.admin.User;
 import scrum.client.common.TooltipBuilder;
 
 public class ClaimTaskAction extends GClaimTaskAction {
@@ -42,7 +43,29 @@ public class ClaimTaskAction extends GClaimTaskAction {
 
 	@Override
 	protected void onExecute() {
+		User owner = task.getOwner();
 		task.claim();
+		addUndo(new Undo(owner));
+	}
+
+	class Undo extends ALocalUndo {
+
+		User owner;
+
+		public Undo(User owner) {
+			this.owner = owner;
+		}
+
+		@Override
+		public String getLabel() {
+			return "Undo Claim " + task.getReference() + " " + task.getLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			task.setOwner(owner);
+		}
+
 	}
 
 }

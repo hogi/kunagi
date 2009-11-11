@@ -34,6 +34,27 @@ public class CreateQualityAction extends GCreateQualityAction {
 	protected void onExecute() {
 		Quality quality = getCurrentProject().createNewQuality();
 		cm.getProjectContext().showQualityBacklog(quality);
+		// addUndo(new Undo(quality));
 	}
+
+	// class Undo extends ALocalUndo {
+	//
+	// private Quality quality;
+	//
+	// public Undo(Quality quality) {
+	// this.quality = quality;
+	// }
+	//
+	// @Override
+	// public String getLabel() {
+	// return "Create " + quality.getReference() + " " + quality.getLabel();
+	// }
+	//
+	// @Override
+	// protected void onUndo() {
+	// quality.getProject().deleteQuality(quality);
+	// }
+	//
+	// }
 
 }

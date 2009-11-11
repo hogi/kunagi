@@ -41,6 +41,21 @@ public class ReopenRequirementAction extends GReopenRequirementAction {
 	@Override
 	protected void onExecute() {
 		requirement.setClosed(false);
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Reopen " + requirement.getReferenceAndLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			requirement.setClosed(true);
+		}
+
 	}
 
 }

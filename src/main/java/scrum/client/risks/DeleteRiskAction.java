@@ -37,6 +37,21 @@ public class DeleteRiskAction extends GDeleteRiskAction {
 	@Override
 	protected void onExecute() {
 		getCurrentProject().deleteRisk(risk);
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Delete " + risk.getReference() + " " + risk.getLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			cm.getDao().createRisk(risk);
+		}
+
 	}
 
 }

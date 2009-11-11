@@ -44,6 +44,28 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 		cm.getDao().createRequirement(requirement);
 		cm.getDao().deleteIssue(issue);
 		cm.getProjectContext().showProductBacklog(requirement);
+		addUndo(new Undo(requirement));
+	}
+
+	class Undo extends ALocalUndo {
+
+		private Requirement requirement;
+
+		public Undo(Requirement requirement) {
+			this.requirement = requirement;
+		}
+
+		@Override
+		public String getLabel() {
+			return "Undo Convert " + issue.getReference() + " " + issue.getLabel() + " to Requirement";
+		}
+
+		@Override
+		protected void onUndo() {
+			cm.getDao().deleteRequirement(requirement);
+			cm.getDao().createIssue(issue);
+		}
+
 	}
 
 }

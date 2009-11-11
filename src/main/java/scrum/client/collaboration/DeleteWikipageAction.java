@@ -14,6 +14,21 @@ public class DeleteWikipageAction extends GDeleteWikipageAction {
 	@Override
 	protected void onExecute() {
 		cm.getDao().deleteWikipage(wikipage);
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Delete Wikipage " + wikipage.getName();
+		}
+
+		@Override
+		protected void onUndo() {
+			cm.getDao().createWikipage(wikipage);
+		}
+
 	}
 
 }

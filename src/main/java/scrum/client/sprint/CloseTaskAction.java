@@ -46,6 +46,21 @@ public class CloseTaskAction extends GCloseTaskAction {
 	@Override
 	protected void onExecute() {
 		task.setDone(getCurrentUser());
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Set done for " + task.getReference() + " " + task.getLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			task.setUnDone(getCurrentUser());
+		}
+
 	}
 
 }

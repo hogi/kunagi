@@ -36,6 +36,21 @@ public class DeleteImpedimentAction extends GDeleteImpedimentAction {
 	@Override
 	protected void onExecute() {
 		getCurrentProject().deleteImpediment(impediment);
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Delete " + impediment.getReference() + " " + impediment.getLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			cm.getDao().createImpediment(impediment);
+		}
+
 	}
 
 }

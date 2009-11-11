@@ -35,6 +35,21 @@ public class DeleteIssueAction extends GDeleteIssueAction {
 	@Override
 	protected void onExecute() {
 		getCurrentProject().deleteIssue(issue);
+		addUndo(new Undo());
+	}
+
+	class Undo extends ALocalUndo {
+
+		@Override
+		public String getLabel() {
+			return "Undo Delete " + issue.getReference() + " " + issue.getLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			cm.getDao().createIssue(issue);
+		}
+
 	}
 
 }
