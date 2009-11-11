@@ -15,7 +15,7 @@ public class SprintBurndownWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		sprintChart = new Image();
+		sprintChart = new Image(getChartUrl(200));
 		return sprintChart;
 	}
 
@@ -27,7 +27,7 @@ public class SprintBurndownWidget extends AScrumWidget {
 	}
 
 	private String getChartUrl(int width) {
-		return getCurrentSprint().getChartUrl(sprintChart.getWidth(), CHART_HEIGHT);
+		return getCurrentSprint().getChartUrl(width, CHART_HEIGHT);
 	}
 
 	private int getChartWidth() {
