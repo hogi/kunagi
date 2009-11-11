@@ -1,5 +1,6 @@
 package scrum.client.sprint;
 
+import ilarkesto.gwt.client.Gwt;
 import scrum.client.common.TooltipBuilder;
 import scrum.client.project.Requirement;
 
@@ -30,6 +31,7 @@ public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 
 	@Override
 	protected void onExecute() {
+		if (!Gwt.confirm("Switch to next Sprint?")) return;
 		cm.getUi().lock("Switching to next Sprint");
 		cm.getApp().callSwitchToNextSprint(new Runnable() {
 

@@ -1,8 +1,7 @@
 package scrum.client.project;
 
+import ilarkesto.gwt.client.Gwt;
 import scrum.client.common.TooltipBuilder;
-
-import com.google.gwt.user.client.Window;
 
 public class DeleteProjectAction extends GDeleteProjectAction {
 
@@ -37,7 +36,7 @@ public class DeleteProjectAction extends GDeleteProjectAction {
 
 	@Override
 	protected void onExecute() {
-		if (Window.confirm("Delete project " + project.getLabel() + "?")) {
+		if (Gwt.confirm("Delete project " + project.getLabel() + "?")) {
 			cm.getDao().deleteProject(project);
 		}
 		addUndo(new Undo());
