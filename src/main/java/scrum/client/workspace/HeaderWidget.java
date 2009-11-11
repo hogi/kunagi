@@ -8,6 +8,7 @@ import scrum.client.ApplicationInfo;
 import scrum.client.admin.LogoutAction;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.ChangeProjectAction;
+import scrum.client.undo.UndoButtonWidget;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -16,6 +17,7 @@ public class HeaderWidget extends AScrumWidget {
 
 	private Label title;
 	private Label currentUserLabel;
+	private UndoButtonWidget undoButton;
 
 	@Override
 	protected Widget onInitialization() {
@@ -27,7 +29,10 @@ public class HeaderWidget extends AScrumWidget {
 		currentUserLabel = new Label();
 		currentUserLabel.setStyleName("HeaderWidget-user");
 
+		undoButton = new UndoButtonWidget();
+
 		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar.add(undoButton);
 		toolbar.add(new HyperlinkWidget(new ChangeProjectAction()));
 		toolbar.add(new HyperlinkWidget(new LogoutAction()));
 
@@ -41,7 +46,7 @@ public class HeaderWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		super.onUpdate();
+		undoButton.setUndoManager(null);
 
 		boolean loggedIn = cm.getAuth().isUserLoggedIn();
 
@@ -57,9 +62,12 @@ public class HeaderWidget extends AScrumWidget {
 			if (cm.getProjectContext().isProjectOpen()) {
 				text.append(getCurrentProject().getUsersRolesAsString(getCurrentUser(), " (", ")"));
 				text.append(" @ " + getCurrentProject().getLabel());
+				undoButton.setUndoManager(cm.getUndo().getManager());
 			}
 		}
 		currentUserLabel.setText(text.toString());
+
+		super.onUpdate();
 	}
 
 }

@@ -201,6 +201,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".HeaderWidget .ToolbarWidget").background("none").margin(0).textAlignRight();
 		css.style(".HeaderWidget .ToolbarWidget .FloatingFlowPanel-element").floatRight();
 		css.style(".HeaderWidget .gwt-Hyperlink a").color(cHeaderLink);
+		css.style(".HeaderWidget .UndoButtonWidget .gwt-MenuItem").fontSize(fontSizeSmall);
 	}
 
 	private void systemMessage(CssRenderer css) {

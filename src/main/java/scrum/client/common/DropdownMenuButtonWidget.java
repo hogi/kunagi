@@ -15,6 +15,7 @@ public class DropdownMenuButtonWidget extends AWidget {
 
 	private List<AAction> actions;
 	private MenuBar menu;
+	private MenuItem popup;
 
 	@Override
 	protected Widget onInitialization() {
@@ -23,7 +24,7 @@ public class DropdownMenuButtonWidget extends AWidget {
 		menu = new MenuBar(true);
 
 		MenuBar menuBar = new MenuBar();
-		menuBar.addItem("Functions V", menu);
+		popup = menuBar.addItem("Functions V", menu);
 		menuBar.setPopupPosition(MenuBar.PopupPosition.LEFT);
 
 		return menuBar;
@@ -32,24 +33,38 @@ public class DropdownMenuButtonWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		menu.clearItems();
-		for (AAction action : actions) {
-			if (!action.isExecutable()) continue;
+		if (actions.isEmpty()) {
+			menu.setVisible(false);
+		} else {
+			menu.setVisible(true);
+			for (AAction action : actions) {
+				if (!action.isExecutable()) continue;
 
-			MenuItem menuItem;
-			if (action.isPermitted()) {
-				menuItem = new MenuItem(action.getLabel(), action);
-			} else {
-				menuItem = new MenuItem(action.getLabel(), (Command) null);
-				menuItem.addStyleName("MenuItem-disabled");
+				MenuItem menuItem;
+				if (action.isPermitted()) {
+					menuItem = new MenuItem(action.getLabel(), action);
+				} else {
+					menuItem = new MenuItem(action.getLabel(), (Command) null);
+					menuItem.addStyleName("MenuItem-disabled");
+				}
+				menuItem.setTitle(action.getTooltip());
+				menu.addItem(menuItem);
 			}
-			menuItem.setTitle(action.getTooltip());
-			menu.addItem(menuItem);
 		}
 	}
 
 	public void addAction(AAction action) {
 		initialize();
 		actions.add(action);
+	}
+
+	public void clear() {
+		initialize();
+		actions.clear();
+	}
+
+	public void setLabel(String text) {
+		popup.setText(text);
 	}
 
 }

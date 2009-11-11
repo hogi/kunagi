@@ -70,6 +70,10 @@ public class Requirement extends GRequirement {
 		return isSprintSet() && getProject().isCurrentSprint(getSprint());
 	}
 
+	public String getReferenceAndLabel() {
+		return getReference() + " " + getLabel();
+	}
+
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
 	}
@@ -218,7 +222,6 @@ public class Requirement extends GRequirement {
 
 	@Override
 	public String toString() {
-		return getReference() + " " + getLabel();
+		return getReferenceAndLabel();
 	}
-
 }

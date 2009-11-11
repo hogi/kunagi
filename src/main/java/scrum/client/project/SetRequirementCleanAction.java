@@ -42,7 +42,7 @@ public class SetRequirementCleanAction extends GSetRequirementCleanAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (!requirement.getProject().isProductOwnerOrTeamMember(getCurrentUser())) return false;
+		if (!requirement.getProject().isTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 
