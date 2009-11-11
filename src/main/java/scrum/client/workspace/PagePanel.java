@@ -85,4 +85,13 @@ public class PagePanel extends Composite implements HasWidgets {
 		return Gwt.getSimpleName(getClass());
 	}
 
+	public static PagePanel createSimple(String header, Widget... sections) {
+		PagePanel page = new PagePanel();
+		page.addHeader(header);
+		for (Widget section : sections) {
+			page.addSection(section);
+		}
+		return page;
+	}
+
 }

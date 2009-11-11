@@ -25,6 +25,7 @@ public class SprintWidget extends AScrumWidget {
 		boolean completed = sprint.isCompleted();
 
 		TableBuilder tb = new TableBuilder();
+		tb.setCellSpacing(5);
 		tb.setColumnWidths("100px");
 
 		tb.addFieldRow("Label", new TextEditorWidget(sprint.getLabelModel()), 4);

@@ -1,6 +1,7 @@
 package scrum.client.dashboard;
 
 import ilarkesto.gwt.client.TableBuilder;
+import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.workspace.PagePanel;
 
@@ -10,21 +11,17 @@ public class DashboardWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		PagePanel sprintBurndown = PagePanel.createSimple("Sprint Burndown", new SprintBurndownWidget());
+		PagePanel tasks = PagePanel.createSimple("Team Member Tasks", new UsersWorkWidget());
+		PagePanel sprintComments = PagePanel.createSimple("Sprint Comments", new CommentsWidget(getCurrentSprint()));
+		PagePanel impediments = PagePanel.createSimple("Open Impediments", new OpenImpedimentsWidget());
+		PagePanel risks = PagePanel.createSimple("Hight Priority Risks", new HighestRisksWidget());
+		PagePanel events = PagePanel.createSimple("Latest Events", new LatestEventsWidget());
+		PagePanel projectComments = PagePanel.createSimple("Project Comments", new CommentsWidget(getCurrentProject()));
 
-		PagePanel left = new PagePanel();
-		left.addHeader("Sprint Burndown");
-		left.addSection(new SprintBurndownWidget());
-		left.addHeader("Team Member Tasks");
-		left.addSection(new UsersWorkWidget());
+		Widget left = TableBuilder.column(5, sprintBurndown, tasks, sprintComments);
+		Widget right = TableBuilder.column(5, impediments, risks, events, projectComments);
 
-		PagePanel right = new PagePanel();
-		right.addHeader("Open Impediments");
-		right.addSection(new OpenImpedimentsWidget());
-		right.addHeader("Hight Priority Risks");
-		right.addSection(new HighestRisksWidget());
-		right.addHeader("Latest Events");
-		right.addSection(new LatestEventsWidget());
-
-		return TableBuilder.row(7, left, right);
+		return TableBuilder.row(5, left, right);
 	}
 }
