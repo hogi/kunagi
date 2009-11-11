@@ -27,6 +27,7 @@ import scrum.client.workspace.PagePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -41,6 +42,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 
 		testActions();
 
+		testPagePanel();
 		testFloatingFlowPanel();
 		testTextConverter();
 		testBlockList();
@@ -52,6 +54,16 @@ public class WidgetsTesterWidget extends AScrumWidget {
 		// testImageAnchor();
 
 		return page;
+	}
+
+	private void testPagePanel() {
+		PagePanel page = new PagePanel();
+		page.addHeader("Header");
+		page.addSection("section 1");
+		page.addSection("section 2");
+		page.addHeader("Another Header", new Label("extra stuff in the header"));
+		page.addSection("section 3");
+		addTest("PagePanel", page);
 	}
 
 	private void testActions() {

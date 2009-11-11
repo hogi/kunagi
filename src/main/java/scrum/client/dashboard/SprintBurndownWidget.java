@@ -33,6 +33,7 @@ public class SprintBurndownWidget extends AScrumWidget {
 	private int getChartWidth() {
 		int width = Window.getClientWidth() - 280;
 		width = width / 2;
+		if (width < 100) width = 100;
 		return width;
 	}
 }

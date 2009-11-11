@@ -191,6 +191,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".Workspace-body").height100();
 		css.style(".Workspace-body-west").floatLeft().width(200).height100();
 		css.style(".Workspace-body-center").height100();
+		css.style(".Workspace-body-center-content").padding(10);
 		css.style(".Workspace-body-west .PagePanel").padding(0);
 		css.style(".Workspace-body-west .PagePanel-header").background(cBackground).color(cHeaderText);
 		css.style(".Workspace-body-west .PagePanel-content").background(cBackground).border("0");
@@ -267,7 +268,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void pagePanel(CssRenderer css) {
-		css.style(".PagePanel").padding(10);
+		css.style(".PagePanel");// .padding(10);
 		css.style(".PagePanel-content").background("white").border(1, "solid", cPagePanelBorder);
 		css.style(".PagePanel-header").padding(6, 10, 6, 10).fontSize(fontSizeTitle).lineHeight(lineHeightTitle)
 				.background(cPagePanelHeaderBackground).color(cPagePanelHeader);
