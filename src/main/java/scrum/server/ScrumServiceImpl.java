@@ -184,10 +184,15 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		if (entity instanceof Requirement) {
 			Requirement requirement = (Requirement) entity;
+			Sprint sprint = requirement.getSprint();
+			boolean inCurrentSprint = sprint != null && session.getProject().isCurrentSprint(sprint);
 			if (properties.containsKey("description") || properties.containsKey("testDescription")
 					|| properties.containsKey("estimatedWork") || properties.containsKey("qualitysIds")) {
 				requirement.setDirty(true);
 				session.sendToClient(requirement);
+			}
+			if (inCurrentSprint && properties.containsKey("sprintId")) {
+				postProjectEvent(session, requirement.getReferenceAndLabel() + " added to current sprint");
 			}
 			requirement.getProject().getCurrentSprintSnapshot().update();
 		}
