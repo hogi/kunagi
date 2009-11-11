@@ -1,11 +1,11 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AAction;
+import ilarkesto.gwt.client.undo.AUndoOperation;
 import scrum.client.ComponentManager;
 import scrum.client.admin.User;
 import scrum.client.project.Project;
 import scrum.client.sprint.Sprint;
-import scrum.client.undo.AUndoOperation;
 
 public abstract class AScrumAction extends AAction {
 

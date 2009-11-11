@@ -1,19 +1,18 @@
 package scrum.client;
 
+import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.undo.UndoManager;
 import scrum.client.common.AScrumComponent;
-import scrum.client.undo.UndoManager;
 
 public class Undo extends AScrumComponent {
 
-	private UndoManager manager;
-
 	@Override
 	protected void onInitialization() {
-		manager = new UndoManager();
+		getManager().clear();
 	}
 
 	public UndoManager getManager() {
-		return manager;
+		return Gwt.getUndoManager();
 	}
 
 }

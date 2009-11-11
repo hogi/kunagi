@@ -1,15 +1,17 @@
 package scrum.client.test;
 
 import ilarkesto.gwt.client.AAction;
-import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.ImageAnchor;
 import ilarkesto.gwt.client.MultiSelectionWidget;
 import ilarkesto.gwt.client.NavigatorWidget;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.ToolbarWidget;
+import ilarkesto.gwt.client.editor.AIntegerEditorModel;
 import ilarkesto.gwt.client.editor.ATextEditorModel;
+import ilarkesto.gwt.client.editor.IntegerEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.Wiki;
@@ -19,7 +21,6 @@ import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
-import scrum.client.common.FieldsWidget;
 import scrum.client.img.Img;
 import scrum.client.project.EstimationBarWidget;
 import scrum.client.workspace.PagePanel;
@@ -149,8 +150,9 @@ public class WidgetsTesterWidget extends AScrumWidget {
 	private Integer fieldsInt = 5;
 
 	private void testFields() {
-		FieldsWidget fields = new FieldsWidget();
-		fields.add("TextPropertyEditorWidget", new TextEditorWidget(new ATextEditorModel() {
+		TableBuilder tb = new TableBuilder();
+
+		tb.addFieldRow("TextPropertyEditorWidget", new TextEditorWidget(new ATextEditorModel() {
 
 			@Override
 			public void setValue(String value) {
@@ -162,7 +164,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 				return fieldsText;
 			}
 		}));
-		fields.add("RichtextEditorWidget", new RichtextEditorWidget(new ATextEditorModel() {
+		tb.addFieldRow("RichtextEditorWidget", new RichtextEditorWidget(new ATextEditorModel() {
 
 			@Override
 			public void setValue(String value) {
@@ -174,41 +176,30 @@ public class WidgetsTesterWidget extends AScrumWidget {
 				return fieldsRichText;
 			}
 		}));
-		fields.add("AIntegerViewEditWidget", new AIntegerViewEditWidget() {
+		tb.addFieldRow("IntegerEditorWidget", new IntegerEditorWidget(new AIntegerEditorModel() {
 
 			@Override
-			protected void onIntegerViewerUpdate() {
-				setViewerValue(fieldsInt, "times");
+			public void setValue(Integer value) {
+				fieldsInt = value;
 			}
 
 			@Override
-			protected void onEditorUpdate() {
-				setEditorValue(fieldsInt);
+			public Integer getValue() {
+				return fieldsInt;
 			}
 
 			@Override
-			protected void onEditorSubmit() {
-				fieldsInt = getEditorValue();
-			}
-
-			@Override
-			protected void onPlusClicked() {
+			public void increment() {
 				fieldsInt++;
 			}
 
 			@Override
-			protected void onMinusClicked() {
+			public void decrement() {
 				fieldsInt--;
 			}
+		}));
 
-			@Override
-			public boolean isEditable() {
-				return true;
-			}
-
-		});
-		fields.update();
-		addTest("FieldsWidget", fields);
+		addTest("FieldsWidget", tb.createTable());
 	}
 
 	private void testMultiSelection() {

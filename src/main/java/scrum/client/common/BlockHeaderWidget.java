@@ -3,6 +3,7 @@ package scrum.client.common;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.DropdownMenuButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 
 import com.google.gwt.event.dom.client.ClickHandler;

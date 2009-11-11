@@ -4,11 +4,11 @@ import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
+import ilarkesto.gwt.client.undo.UndoButtonWidget;
 import scrum.client.ApplicationInfo;
 import scrum.client.admin.LogoutAction;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.ChangeProjectAction;
-import scrum.client.undo.UndoButtonWidget;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
