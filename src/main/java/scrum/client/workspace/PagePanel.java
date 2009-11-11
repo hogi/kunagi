@@ -29,6 +29,7 @@ public class PagePanel extends Composite implements HasWidgets {
 		FloatingFlowPanel panel = new FloatingFlowPanel();
 		panel.add(left);
 		for (Widget right : rightWidgets) {
+			panel.add(Gwt.createNbsp(), true);
 			panel.add(right, true);
 		}
 		addHeader(panel);

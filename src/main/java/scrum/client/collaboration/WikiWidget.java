@@ -1,9 +1,8 @@
 package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.ButtonWidget;
-import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
-import ilarkesto.gwt.client.HyperlinkWidget;
+import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.common.AScrumAction;
@@ -13,10 +12,12 @@ import scrum.client.workspace.PagePanel;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 
 public class WikiWidget extends AScrumWidget {
 
@@ -24,13 +25,11 @@ public class WikiWidget extends AScrumWidget {
 	private Wikipage wikipage;
 
 	private FlowPanel panel;
-	private TextBox pageNameBox;
+	private SuggestBox pageNameBox;
 	private RichtextEditorWidget editor;
 
 	@Override
 	protected Widget onInitialization() {
-		pageNameBox = new TextBox();
-		pageNameBox.addKeyPressHandler(new PageNameHandler());
 
 		panel = new FlowPanel();
 		panel.setStyleName("WikiWidget");
@@ -43,29 +42,21 @@ public class WikiWidget extends AScrumWidget {
 
 		wikipage = getCurrentProject().getWikipage(pageName);
 
+		pageNameBox = new SuggestBox(cm.getWiki().createPagesSuggestOracle());
+		pageNameBox.setAutoSelectEnabled(false);
+		pageNameBox.setTitle("Enter name of wiki page");
+		pageNameBox.addSelectionHandler(new PageNameHandler());
+		pageNameBox.addKeyPressHandler(new PageNameHandler());
 		pageNameBox.setText(pageName);
 
 		PagePanel page = new PagePanel();
-		page.addHeader("Wiki");
-
-		FloatingFlowPanel pagesPanel = new FloatingFlowPanel();
-		pagesPanel.add(pageNameBox);
-		boolean first = true;
-		for (Wikipage wp : getCurrentProject().getWikipages()) {
-			if (first) {
-				first = false;
-			} else {
-				pagesPanel.add(new Label(", "));
-			}
-			pagesPanel.add(new HyperlinkWidget(new ShowPageAction(wp)));
-		}
-		page.addSection(pagesPanel);
 
 		if (wikipage == null) {
-			page.addHeader(pageName, new ButtonWidget(new CreateWikipageAction(pageName)));
+			page.addHeader("Wiki: " + pageName, pageNameBox, new ButtonWidget(new CreateWikipageAction(pageName)));
 			page.addSection("Page does not exist.");
 		} else {
-			page.addHeader(wikipage.getName(), new ButtonWidget(new DeleteWikipageAction(wikipage)));
+			page.addHeader("Wiki: " + wikipage.getName(), pageNameBox, new ButtonWidget(new DeleteWikipageAction(
+					wikipage)));
 			editor = new RichtextEditorWidget(wikipage.getTextModel());
 			editor.setEditorHeight(500);
 			page.addSection(TableBuilder.row(20, editor, new CommentsWidget(wikipage)));
@@ -101,13 +92,19 @@ public class WikiWidget extends AScrumWidget {
 		}
 	}
 
-	class PageNameHandler implements KeyPressHandler {
+	class PageNameHandler implements KeyPressHandler, SelectionHandler<Suggestion> {
 
 		public void onKeyPress(KeyPressEvent event) {
+			if (pageNameBox.isSuggestionListShowing()) return;
 			if (event.getCharCode() == KeyCodes.KEY_ENTER) {
+				GwtLogger.DEBUG("-------------------- ENTER ----");
 				event.stopPropagation();
 				showPage(pageNameBox.getText());
 			}
+		}
+
+		public void onSelection(SelectionEvent<Suggestion> event) {
+			showPage(event.getSelectedItem().getReplacementString());
 		}
 
 	}

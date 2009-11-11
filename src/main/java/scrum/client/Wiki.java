@@ -7,6 +7,9 @@ import scrum.client.common.AScrumComponent;
 import scrum.client.wiki.WikiModel;
 import scrum.client.wiki.WikiParser;
 
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.SuggestOracle;
+
 public class Wiki extends AScrumComponent implements RichtextFormater {
 
 	@Override
@@ -29,6 +32,14 @@ public class Wiki extends AScrumComponent implements RichtextFormater {
 		WikiParser parser = new WikiParser(wiki);
 		WikiModel model = parser.parse();
 		return model.toHtml();
+	}
+
+	public SuggestOracle createPagesSuggestOracle() {
+		MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
+		for (Wikipage page : getCurrentProject().getWikipages()) {
+			oracle.add(page.getName());
+		}
+		return oracle;
 	}
 
 }
