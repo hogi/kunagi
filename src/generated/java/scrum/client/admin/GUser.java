@@ -87,6 +87,12 @@ public abstract class GUser
         @Override
         public boolean isMandatory() { return true; }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- admin ---
@@ -146,6 +152,12 @@ public abstract class GUser
         @Override
         public void setValue(java.lang.String value) {
             setEmail(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
         }
 
     }
@@ -213,6 +225,12 @@ public abstract class GUser
         @Override
         public void setValue(java.lang.String value) {
             setColor(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
         }
 
     }

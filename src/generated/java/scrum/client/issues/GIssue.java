@@ -119,6 +119,12 @@ public abstract class GIssue
                 setNumber(getNumber() - 1);
             }
 
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- type ---
@@ -171,6 +177,12 @@ public abstract class GIssue
         @Override
         public boolean isMandatory() { return true; }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- date ---
@@ -215,6 +227,12 @@ public abstract class GIssue
 
         @Override
         public boolean isMandatory() { return true; }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
 
     }
 
@@ -261,6 +279,12 @@ public abstract class GIssue
         @Override
         public boolean isMandatory() { return true; }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- description ---
@@ -301,6 +325,12 @@ public abstract class GIssue
         @Override
         public void setValue(java.lang.String value) {
             setDescription(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
         }
 
     }

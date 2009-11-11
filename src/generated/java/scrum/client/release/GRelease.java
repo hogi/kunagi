@@ -109,6 +109,12 @@ public abstract class GRelease
             setLabel(value);
         }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- publicationDate ---
@@ -149,6 +155,12 @@ public abstract class GRelease
         @Override
         public void setValue(ilarkesto.gwt.client.Date value) {
             setPublicationDate(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
         }
 
     }

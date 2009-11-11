@@ -121,6 +121,12 @@ public abstract class GTask
                 setNumber(getNumber() - 1);
             }
 
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- label ---
@@ -169,6 +175,12 @@ public abstract class GTask
         @Override
         public boolean isEditable() { return GTask.this.isEditable(); }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- description ---
@@ -213,6 +225,12 @@ public abstract class GTask
 
         @Override
         public boolean isEditable() { return GTask.this.isEditable(); }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
 
     }
 
@@ -269,6 +287,12 @@ public abstract class GTask
         @Override
         public boolean isEditable() { return GTask.this.isEditable(); }
 
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- burnedWork ---
@@ -323,6 +347,12 @@ public abstract class GTask
 
         @Override
         public boolean isEditable() { return GTask.this.isEditable(); }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
 
     }
 

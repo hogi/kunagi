@@ -136,6 +136,12 @@ public abstract class GProjectUserConfig
             setColor(value);
         }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- misconducts ---
@@ -190,6 +196,12 @@ public abstract class GProjectUserConfig
 
         @Override
         public boolean isEditable() { return GProjectUserConfig.this.isMisconductsEditable(); }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
 
     }
 

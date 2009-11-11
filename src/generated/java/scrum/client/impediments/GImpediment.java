@@ -119,6 +119,12 @@ public abstract class GImpediment
                 setNumber(getNumber() - 1);
             }
 
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- label ---
@@ -163,6 +169,12 @@ public abstract class GImpediment
 
         @Override
         public boolean isMandatory() { return true; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
 
     }
 
@@ -209,6 +221,12 @@ public abstract class GImpediment
         @Override
         public boolean isMandatory() { return true; }
 
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- description ---
@@ -251,6 +269,12 @@ public abstract class GImpediment
             setDescription(value);
         }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- solution ---
@@ -291,6 +315,12 @@ public abstract class GImpediment
         @Override
         public void setValue(java.lang.String value) {
             setSolution(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
         }
 
     }

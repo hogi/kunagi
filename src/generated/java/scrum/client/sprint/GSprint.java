@@ -125,6 +125,12 @@ public abstract class GSprint
         @Override
         public boolean isEditable() { return GSprint.this.isEditable(); }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- goal ---
@@ -169,6 +175,12 @@ public abstract class GSprint
 
         @Override
         public boolean isEditable() { return GSprint.this.isEditable(); }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
 
     }
 
@@ -215,6 +227,12 @@ public abstract class GSprint
         @Override
         public boolean isEditable() { return GSprint.this.isDatesEditable(); }
 
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- end ---
@@ -259,6 +277,12 @@ public abstract class GSprint
 
         @Override
         public boolean isEditable() { return GSprint.this.isDatesEditable(); }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
 
     }
 
@@ -312,6 +336,12 @@ public abstract class GSprint
                 setVelocity(getVelocity() - 1);
             }
 
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- completedRequirementLabels ---
@@ -352,6 +382,12 @@ public abstract class GSprint
         @Override
         public void setValue(java.lang.String value) {
             setCompletedRequirementLabels(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
         }
 
     }
@@ -399,6 +435,12 @@ public abstract class GSprint
         @Override
         public boolean isEditable() { return GSprint.this.isPlanningEditable(); }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- reviewNote ---
@@ -444,6 +486,12 @@ public abstract class GSprint
         @Override
         public boolean isEditable() { return GSprint.this.isReviewEditable(); }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- retrospectiveNote ---
@@ -488,6 +536,12 @@ public abstract class GSprint
 
         @Override
         public boolean isEditable() { return GSprint.this.isRetrospectiveEditable(); }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
 
     }
 

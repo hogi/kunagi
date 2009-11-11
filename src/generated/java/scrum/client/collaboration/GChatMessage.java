@@ -137,6 +137,12 @@ public abstract class GChatMessage
         @Override
         public boolean isMandatory() { return true; }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- dateAndTime ---
@@ -177,6 +183,12 @@ public abstract class GChatMessage
         @Override
         public void setValue(ilarkesto.gwt.client.DateAndTime value) {
             setDateAndTime(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.DateAndTime oldValue, ilarkesto.gwt.client.DateAndTime newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
         }
 
     }

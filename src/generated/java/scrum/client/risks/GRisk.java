@@ -121,6 +121,12 @@ public abstract class GRisk
                 setNumber(getNumber() - 1);
             }
 
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- label ---
@@ -166,6 +172,12 @@ public abstract class GRisk
         @Override
         public boolean isMandatory() { return true; }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- description ---
@@ -208,6 +220,12 @@ public abstract class GRisk
             setDescription(value);
         }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- mitigationPlans ---
@@ -248,6 +266,12 @@ public abstract class GRisk
         @Override
         public void setValue(java.lang.String value) {
             setMitigationPlans(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
         }
 
     }
@@ -302,6 +326,12 @@ public abstract class GRisk
         @Override
         public boolean isEditable() { return GRisk.this.isPriorityEditable(); }
 
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- impact ---
@@ -353,6 +383,12 @@ public abstract class GRisk
 
         @Override
         public boolean isEditable() { return GRisk.this.isPriorityEditable(); }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
 
     }
 

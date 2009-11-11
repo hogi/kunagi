@@ -89,6 +89,12 @@ public abstract class GProject
         @Override
         public boolean isMandatory() { return true; }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- description ---
@@ -129,6 +135,12 @@ public abstract class GProject
         @Override
         public void setValue(java.lang.String value) {
             setDescription(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
         }
 
     }
@@ -173,6 +185,12 @@ public abstract class GProject
             setBegin(value);
         }
 
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- end ---
@@ -213,6 +231,12 @@ public abstract class GProject
         @Override
         public void setValue(ilarkesto.gwt.client.Date value) {
             setEnd(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
         }
 
     }
@@ -472,6 +496,12 @@ public abstract class GProject
                 setLastTaskNumber(getLastTaskNumber() - 1);
             }
 
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- lastRequirementNumber ---
@@ -523,6 +553,12 @@ public abstract class GProject
             public void decrement() {
                 setLastRequirementNumber(getLastRequirementNumber() - 1);
             }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
 
     }
 
@@ -576,6 +612,12 @@ public abstract class GProject
                 setLastQualityNumber(getLastQualityNumber() - 1);
             }
 
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- lastRiskNumber ---
@@ -627,6 +669,12 @@ public abstract class GProject
             public void decrement() {
                 setLastRiskNumber(getLastRiskNumber() - 1);
             }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
 
     }
 
@@ -680,6 +728,12 @@ public abstract class GProject
                 setLastIssueNumber(getLastIssueNumber() - 1);
             }
 
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- lastImpedimentNumber ---
@@ -731,6 +785,12 @@ public abstract class GProject
             public void decrement() {
                 setLastImpedimentNumber(getLastImpedimentNumber() - 1);
             }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
 
     }
 
@@ -784,6 +844,12 @@ public abstract class GProject
                 setPunishmentFactor(getPunishmentFactor() - 1);
             }
 
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- punishmentUnit ---
@@ -824,6 +890,12 @@ public abstract class GProject
         @Override
         public void setValue(java.lang.String value) {
             setPunishmentUnit(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
         }
 
     }

@@ -121,6 +121,12 @@ public abstract class GQuality
                 setNumber(getNumber() - 1);
             }
 
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- label ---
@@ -169,6 +175,12 @@ public abstract class GQuality
         @Override
         public boolean isEditable() { return GQuality.this.isEditable(); }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- description ---
@@ -214,6 +226,12 @@ public abstract class GQuality
         @Override
         public boolean isEditable() { return GQuality.this.isEditable(); }
 
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- testDescription ---
@@ -258,6 +276,12 @@ public abstract class GQuality
 
         @Override
         public boolean isEditable() { return GQuality.this.isEditable(); }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
 
     }
 
