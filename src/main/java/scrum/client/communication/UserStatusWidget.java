@@ -36,7 +36,7 @@ public class UserStatusWidget extends AScrumWidget {
 		Highlighter highlighter = new Highlighter();
 		label.addMouseMoveHandler(highlighter);
 		label.addMouseOutHandler(highlighter);
-		if (usersStatus.isOnline(user)) {
+		if (usersStatus.isOnline(user) || user == getCurrentUser()) {
 			label.addStyleName("UserStatusWidget-online");
 		} else {
 			label.removeStyleName("UserStatusWidget-online");

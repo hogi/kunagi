@@ -35,7 +35,6 @@ public class UsersStatusWidget extends AScrumWidget {
 		Collections.sort(users, User.ONLINE_OFFLINE_COMPARATOR);
 		containerPanel.clear();
 		for (User user : users) {
-			if (user == getCurrentUser()) continue;
 			UserStatusWidget widget = userWidgets.get(user);
 			if (widget == null) {
 				widget = new UserStatusWidget(user);
