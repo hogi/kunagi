@@ -142,7 +142,6 @@ public class Sprint extends GSprint {
 
 	@Override
 	public boolean isRetrospectiveEditable() {
-		if (!isCompleted()) return false;
 		if (!cm.getProjectContext().getProject().isScrumMaster(cm.getAuth().getUser())) return false;
 		return true;
 	}

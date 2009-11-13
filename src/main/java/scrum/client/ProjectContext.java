@@ -12,6 +12,7 @@ import java.util.List;
 import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.PunishmentsWidget;
 import scrum.client.admin.User;
+import scrum.client.calendar.CalendarWidget;
 import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.WikiWidget;
 import scrum.client.common.AScrumComponent;
@@ -53,6 +54,7 @@ public class ProjectContext extends AScrumComponent {
 	private SprintBacklogWidget sprintBacklog;
 	private ProductBacklogWidget productBacklog;
 	private QualityBacklogWidget qualityBacklog;
+	private CalendarWidget calendar;
 	private NextSprintWidget nextSprint;
 	private ImpedimentListWidget impedimentList;
 	private IssueListWidget issueList;
@@ -74,6 +76,7 @@ public class ProjectContext extends AScrumComponent {
 		sprintBacklog = new SprintBacklogWidget();
 		productBacklog = new ProductBacklogWidget();
 		qualityBacklog = new QualityBacklogWidget();
+		calendar = new CalendarWidget();
 		nextSprint = new NextSprintWidget();
 		impedimentList = new ImpedimentListWidget();
 		issueList = new IssueListWidget();
@@ -93,6 +96,7 @@ public class ProjectContext extends AScrumComponent {
 		navigator.addItem("Sprint Backlog", getSprintBacklog());
 		navigator.addItem("Product Backlog", getProductBacklog());
 		navigator.addItem("Quality Backlog", getQualityBacklog());
+		navigator.addItem("Calendar", calendar);
 		navigator.addItem("Impediment List", getImpedimentList());
 		navigator.addItem("Issue List", getIssueList());
 		navigator.addItem("Risk Management", getRiskList());
