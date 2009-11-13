@@ -4,6 +4,7 @@ import ilarkesto.auth.Auth;
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
+import ilarkesto.base.time.DateAndTime;
 import ilarkesto.logging.Logger;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
@@ -22,6 +23,7 @@ import javax.servlet.ServletException;
 import scrum.client.admin.SystemMessage;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
+import scrum.server.collaboration.ChatMessage;
 import scrum.server.collaboration.Comment;
 import scrum.server.collaboration.CommentDao;
 import scrum.server.common.Numbered;
@@ -128,12 +130,23 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			((Numbered) entity).updateNumber();
 		}
 
-		if (!(entity instanceof Transient)) dao.saveEntity(entity);
-
 		if (entity instanceof Comment) {
 			Comment comment = (Comment) entity;
+			comment.setDateAndTime(DateAndTime.now());
 			postProjectEvent(session, comment.getAuthor().getName() + " commented on " + comment.getParent());
 		}
+
+		if (entity instanceof ChatMessage) {
+			ChatMessage chatMessage = (ChatMessage) entity;
+			chatMessage.setDateAndTime(DateAndTime.now());
+		}
+
+		if (entity instanceof Impediment) {
+			Impediment impediment = (Impediment) entity;
+			impediment.setDate(Date.today());
+		}
+
+		if (!(entity instanceof Transient)) dao.saveEntity(entity);
 
 		sendToClients(session, entity);
 	}
