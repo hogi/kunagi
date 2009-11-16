@@ -29,7 +29,7 @@ public class LatestEventsWidget extends AScrumWidget {
 		if (!events.isEmpty()) {
 			for (ProjectEvent event : events) {
 				sb.append("<li>");
-				sb.append(event.getLabel());
+				sb.append(cm.getWiki().richtextToHtml(event.getLabel()));
 				sb.append("</li>");
 			}
 		}

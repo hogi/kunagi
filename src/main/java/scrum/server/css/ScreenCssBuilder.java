@@ -132,7 +132,8 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void dashboard(CssRenderer css) {
-		css.style(".UsersWorkWidget").lineHeight(lineHeight + 4);
+		css.style(".UsersWorkWidget, .OpenImpedimentsWidget, .HighestRisksWidget, .LatestEventsWidget").lineHeight(
+			lineHeight + 4);
 	}
 
 	private void whiteboard(CssRenderer css) {
