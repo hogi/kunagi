@@ -29,7 +29,9 @@ public class PunishmentsWidget extends AScrumWidget {
 		main.nextRow();
 
 		for (User u : project.getParticipants()) {
-			main.add(new Label(u.getName()));
+			Label nameLabel = new Label(u.getName());
+			nameLabel.getElement().getStyle().setProperty("color", u.getColor());
+			main.add(nameLabel);
 			main.add(new IntegerEditorWidget(u.getProjectConfig().getMisconductsModel()));
 			main.add(new PunishmentViewer(u.getProjectConfig(), project));
 			main.nextRow();
