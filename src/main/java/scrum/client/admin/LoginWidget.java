@@ -36,7 +36,7 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 		toolbar.addButton(new LoginAction(this));
 
 		TableBuilder tb = new TableBuilder();
-		tb.setCellSpacing(5);
+		tb.setCellPadding(2);
 		tb.setWidth(null);
 
 		tb.addRow(errorMessage, 2);

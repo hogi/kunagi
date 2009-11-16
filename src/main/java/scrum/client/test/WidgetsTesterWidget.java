@@ -151,7 +151,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 
 	private void testFields() {
 		TableBuilder tb = new TableBuilder();
-		tb.setCellSpacing(5);
+		tb.setCellPadding(2);
 
 		tb.addFieldRow("TextPropertyEditorWidget", new TextEditorWidget(new ATextEditorModel() {
 

@@ -26,7 +26,7 @@ public class TaskWidget extends AWidget {
 	protected Widget onInitialization() {
 
 		TableBuilder tb = new TableBuilder();
-		tb.setCellSpacing(5);
+		tb.setCellPadding(2);
 
 		tb.addFieldRow("Label", new TextEditorWidget(task.getLabelModel()).switchToEditModeIfNull(), 3);
 

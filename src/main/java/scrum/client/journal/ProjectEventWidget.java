@@ -18,7 +18,7 @@ public class ProjectEventWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 		TableBuilder tb = new TableBuilder();
-		tb.setCellSpacing(5);
+		tb.setCellPadding(2);
 
 		// TODO use DateAndTimeEditorWidget
 		tb.addFieldRow("Timestamp", new DateAndTimeEditorWidget(projectEvent.getDateAndTimeModel()));
