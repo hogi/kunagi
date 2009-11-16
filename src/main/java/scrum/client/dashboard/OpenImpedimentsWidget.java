@@ -24,24 +24,19 @@ public class OpenImpedimentsWidget extends AScrumWidget {
 	protected void onUpdate() {
 		Project project = getCurrentProject();
 		StringBuilder sb = new StringBuilder();
-		sb.append("<div class='ProjectInfoWidget'>");
+		sb.append("<ul class='OpenImpedimentsWidget'>");
 
 		List<Impediment> impediments = project.getOpenImpediments();
 		if (!impediments.isEmpty()) {
-			boolean first = true;
 			for (Impediment impediment : impediments) {
-				if (first) {
-					first = false;
-				} else {
-					sb.append("<br>");
-				}
-				sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+				sb.append("<li>");
 				sb.append(ScrumJs.createShowEntityByReferenceLink(impediment.getReference()));
 				sb.append(" ").append(impediment.getLabel());
+				sb.append("</li>");
 			}
 		}
 
-		sb.append("</div>");
+		sb.append("</ul>");
 		html.setHTML(sb.toString());
 	}
 }

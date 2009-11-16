@@ -24,24 +24,19 @@ public class HighestRisksWidget extends AScrumWidget {
 	protected void onUpdate() {
 		Project project = getCurrentProject();
 		StringBuilder sb = new StringBuilder();
-		sb.append("<div class='ProjectInfoWidget'>");
+		sb.append("<ul class='HighestRisksWidget'>");
 
 		List<Risk> risks = project.getHighestRisks(5);
 		if (!risks.isEmpty()) {
-			boolean first = true;
 			for (Risk risk : risks) {
-				if (first) {
-					first = false;
-				} else {
-					sb.append("<br>");
-				}
-				sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+				sb.append("<li>");
 				sb.append(ScrumJs.createShowEntityByReferenceLink(risk.getReference()));
 				sb.append(" ").append(risk.getLabel());
+				sb.append("</li>");
 			}
 		}
 
-		sb.append("</div>");
+		sb.append("</ul>");
 		html.setHTML(sb.toString());
 	}
 }
