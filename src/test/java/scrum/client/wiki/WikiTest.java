@@ -49,6 +49,12 @@ public class WikiTest {
 	}
 
 	@Test
+	public void testCode() {
+		Assert.assertEquals(toHtml("here is <code>code</code>."), "here is <code>code</code>.");
+		Assert.assertEquals(toHtml("simple line\n\n<code>code</code>"), "<p>simple line</p><p><code>code</code></p>");
+	}
+
+	@Test
 	public void testParagraph() {
 		Assert.assertEquals(toHtml("a b"), "a b");
 		Assert.assertEquals(toHtml("a\nb"), "<p>a b</p>");

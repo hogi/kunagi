@@ -156,6 +156,23 @@ public class WikiParser {
 			}
 		}
 
+		// code
+		begin = text.indexOf("<code>");
+		if (begin >= 0 && begin < text.length() - 7) {
+			int end = text.indexOf("</code>", begin);
+			if (end > begin) {
+				String prefix = text.substring(0, begin);
+				String content = text.substring(begin + 6, end);
+				String suffix = text.substring(end + 7);
+				if (content.trim().length() > 0) {
+					appendText(p, prefix);
+					p.add(new Code(content));
+					appendText(p, suffix);
+					return p;
+				}
+			}
+		}
+
 		while (text.length() > 0) {
 			int idx = text.indexOf(' ');
 			if (idx < 0) {
