@@ -7,11 +7,11 @@ public class WikiTest {
 
 	@Test
 	public void testEmphAndStrong() {
-		Assert.assertEquals(toHtml("'''''emph and strong'''''"), "<p><strong><em>emph and strong</em></strong></p>");
-		Assert.assertEquals(toHtml("this is '''strong'''"), "<p>this is <strong>strong</strong></p>");
-		Assert.assertEquals(toHtml("this is ''emph''"), "<p>this is <em>emph</em></p>");
-		Assert.assertEquals(toHtml("''''''''''"), "<p>''''''''''</p>");
-		Assert.assertEquals(toHtml("'''''test"), "<p>'''''test</p>");
+		Assert.assertEquals(toHtml("'''''emph and strong'''''"), "<strong><em>emph and strong</em></strong>");
+		Assert.assertEquals(toHtml("this is '''strong'''"), "this is <strong>strong</strong>");
+		Assert.assertEquals(toHtml("this is ''emph''"), "this is <em>emph</em>");
+		Assert.assertEquals(toHtml("''''''''''"), "''''''''''");
+		Assert.assertEquals(toHtml("'''''test"), "'''''test");
 	}
 
 	@Test
@@ -26,11 +26,11 @@ public class WikiTest {
 	@Test
 	public void testLink() {
 		Assert.assertEquals(toHtml("link www.servisto.de here"),
-			"<p>link <a href=\"http://www.servisto.de\" target=\"_blank\">servisto.de</a> here</p>");
+			"link <a href=\"http://www.servisto.de\" target=\"_blank\">servisto.de</a> here");
 		Assert.assertEquals(toHtml("http://www.servisto.de"),
-			"<p><a href=\"http://www.servisto.de\" target=\"_blank\">servisto.de</a></p>");
+			"<a href=\"http://www.servisto.de\" target=\"_blank\">servisto.de</a>");
 		Assert.assertEquals(toHtml("link [www.servisto.de Servisto] here"),
-			"<p>link <a href=\"http://www.servisto.de\" target=\"_blank\">Servisto</a> here</p>");
+			"link <a href=\"http://www.servisto.de\" target=\"_blank\">Servisto</a> here");
 	}
 
 	@Test
@@ -50,6 +50,7 @@ public class WikiTest {
 
 	@Test
 	public void testParagraph() {
+		Assert.assertEquals(toHtml("a b"), "a b");
 		Assert.assertEquals(toHtml("a\nb"), "<p>a b</p>");
 		Assert.assertEquals(toHtml("a\r\nb"), "<p>a b</p>");
 		Assert.assertEquals(toHtml("a\n\nb"), "<p>a</p><p>b</p>");
@@ -59,12 +60,12 @@ public class WikiTest {
 	@Test
 	public void testHeader() {
 		Assert.assertEquals(toHtml("= header ="), "<h1>header</h1>");
-		Assert.assertEquals(toHtml("= ="), "<p>= =</p>");
-		Assert.assertEquals(toHtml("= header = dummy"), "<p>= header = dummy</p>");
+		Assert.assertEquals(toHtml("= ="), "= =");
+		Assert.assertEquals(toHtml("= header = dummy"), "= header = dummy");
 
 		Assert.assertEquals(toHtml("== header =="), "<h2>header</h2>");
-		Assert.assertEquals(toHtml("== =="), "<p>== ==</p>");
-		Assert.assertEquals(toHtml("== header == dummy"), "<p>== header == dummy</p>");
+		Assert.assertEquals(toHtml("== =="), "== ==");
+		Assert.assertEquals(toHtml("== header == dummy"), "== header == dummy");
 
 		Assert.assertEquals(toHtml("=== header ==="), "<h3>header</h3>");
 		Assert.assertEquals(toHtml("==== header ===="), "<h4>header</h4>");
@@ -72,7 +73,7 @@ public class WikiTest {
 
 	@Test
 	public void testSimple() {
-		Assert.assertEquals(toHtml("hello world"), "<p>hello world</p>");
+		Assert.assertEquals(toHtml("hello world"), "hello world");
 	}
 
 	@Test

@@ -13,6 +13,7 @@ public class WikiParser {
 
 	private String input;
 	private WikiModel model;
+	private boolean oneliner;
 
 	public WikiParser(String input) {
 		this.input = input;
@@ -271,7 +272,7 @@ public class WikiParser {
 		}
 
 		// paragraph
-		model.add(appendText(new Paragraph(true), cutParagraph()));
+		model.add(appendText(new Paragraph(!oneliner), cutParagraph()));
 	}
 
 	public WikiModel parse() {
@@ -279,6 +280,8 @@ public class WikiParser {
 
 		input = input.replace("\r", "");
 		input = input.replace("\t", "    ");
+
+		oneliner = input.indexOf('\n') < 0;
 
 		while (input != null) {
 			nextPart();
