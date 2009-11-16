@@ -123,8 +123,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".RequirementEstimatedWorkWidget .gwt-Button").fontSize(fontSizeSmall);
 
 		css.style(".EstimationBarWidget").marginTop(7).border(1, "solid", cNavigatorSelectedItemBackground);
-		css.style(".EstimationBarWidget-bar0").background(cEstimationBar0);
-		css.style(".EstimationBarWidget-bar1").background(cEstimationBar1);
+		css.style(".EstimationBarWidget-bar0").background(cEstimationBar0).lineHeight(1).fontSize(1);
+		css.style(".EstimationBarWidget-bar1").background(cEstimationBar1).lineHeight(1).fontSize(1);
 
 		css.style(".SprintBorderIndicatorWidget").background(cPagePanelHeaderBackground).color(cPagePanelHeader)
 				.border(1, "solid", cPagePanelBorder).textAlignCenter().borderRadius(10).fontSize(fontSizeSmall)
@@ -201,7 +201,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".HeaderWidget .ToolbarWidget").background("none").margin(0).textAlignRight();
 		css.style(".HeaderWidget .ToolbarWidget .FloatingFlowPanel-element").floatRight();
 		css.style(".HeaderWidget .gwt-Hyperlink a").color(cHeaderLink);
-		css.style(".HeaderWidget .UndoButtonWidget .gwt-MenuItem").fontSize(fontSizeSmall);
+		css.style(".HeaderWidget .UndoButtonWidget .gwt-MenuItem").fontSize(fontSizeSmall).padding(0, 3, 0, 3);
 	}
 
 	private void systemMessage(CssRenderer css) {
@@ -253,7 +253,7 @@ public class ScreenCssBuilder implements CssBuilder {
 			fontSizeSmall);
 		css.style(".BlockHeaderWidget-cell").padding(2);
 		css.style(".BlockHeaderWidget-cell-secondary").color(cBlockHeaderCellSecondary);
-		css.style(".BlockHeaderWidget-cell .gwt-MenuItem").fontSize(fontSizeSmall).padding(2, 3, 2, 3)
+		css.style(".BlockHeaderWidget-cell .gwt-MenuItem").fontSize(fontSizeSmall).padding(0, 3, 0, 3)
 				.whiteSpaceNowrap();
 		css.style(".BlockHeaderWidget-prefixLabel"); // .cursorPointer();
 		css.style(".BlockHeaderWidget-cell .gwt-Button").fontSize(fontSizeSmall).padding(2, 3, 2, 3).margin(0);
