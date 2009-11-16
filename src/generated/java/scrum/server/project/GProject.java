@@ -47,6 +47,7 @@ public abstract class GProject
         properties.put("teamMembersIds", this.teamMembersIds);
         properties.put("currentSprintId", this.currentSprintId);
         properties.put("nextSprintId", this.nextSprintId);
+        properties.put("velocity", this.velocity);
         properties.put("requirementsOrderIds", this.requirementsOrderIds);
         properties.put("lastTaskNumber", this.lastTaskNumber);
         properties.put("lastRequirementNumber", this.lastRequirementNumber);
@@ -749,6 +750,40 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
+    // - velocity
+    // -----------------------------------------------------------
+
+    private java.lang.Integer velocity;
+
+    public final java.lang.Integer getVelocity() {
+        return velocity;
+    }
+
+    public final void setVelocity(java.lang.Integer velocity) {
+        velocity = prepareVelocity(velocity);
+        if (isVelocity(velocity)) return;
+        this.velocity = velocity;
+        fireModified();
+    }
+
+    protected java.lang.Integer prepareVelocity(java.lang.Integer velocity) {
+        return velocity;
+    }
+
+    public final boolean isVelocitySet() {
+        return this.velocity != null;
+    }
+
+    public final boolean isVelocity(java.lang.Integer velocity) {
+        if (this.velocity == null && velocity == null) return true;
+        return this.velocity != null && this.velocity.equals(velocity);
+    }
+
+    protected final void updateVelocity(Object value) {
+        setVelocity((java.lang.Integer)value);
+    }
+
+    // -----------------------------------------------------------
     // - requirementsOrderIds
     // -----------------------------------------------------------
 
@@ -1092,6 +1127,7 @@ public abstract class GProject
             if (property.equals("teamMembersIds")) updateTeamMembers(value);
             if (property.equals("currentSprintId")) updateCurrentSprint(value);
             if (property.equals("nextSprintId")) updateNextSprint(value);
+            if (property.equals("velocity")) updateVelocity(value);
             if (property.equals("requirementsOrderIds")) updateRequirementsOrderIds(value);
             if (property.equals("lastTaskNumber")) updateLastTaskNumber(value);
             if (property.equals("lastRequirementNumber")) updateLastRequirementNumber(value);

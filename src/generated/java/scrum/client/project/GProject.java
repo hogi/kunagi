@@ -431,6 +431,64 @@ public abstract class GProject
         return equals(this.nextSprintId, nextSprint);
     }
 
+    // --- velocity ---
+
+    private java.lang.Integer velocity ;
+
+    public final java.lang.Integer getVelocity() {
+        return this.velocity ;
+    }
+
+    public final Project setVelocity(java.lang.Integer velocity) {
+        if (isVelocity(velocity)) return (Project)this;
+        this.velocity = velocity ;
+        propertyChanged("velocity", this.velocity);
+        return (Project)this;
+    }
+
+    public final boolean isVelocity(java.lang.Integer velocity) {
+        return equals(this.velocity, velocity);
+    }
+
+    private transient VelocityModel velocityModel;
+
+    public VelocityModel getVelocityModel() {
+        if (velocityModel == null) velocityModel = createVelocityModel();
+        return velocityModel;
+    }
+
+    protected VelocityModel createVelocityModel() { return new VelocityModel(); }
+
+    protected class VelocityModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getVelocity();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setVelocity(value);
+        }
+
+            @Override
+            public void increment() {
+                setVelocity(getVelocity() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setVelocity(getVelocity() - 1);
+            }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- requirementsOrderIds ---
 
     private java.util.List<java.lang.String> requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
@@ -916,6 +974,7 @@ public abstract class GProject
         teamMembersIds = (Set<String>) props.get("teamMembersIds");
         currentSprintId = (String) props.get("currentSprintId");
         nextSprintId = (String) props.get("nextSprintId");
+        velocity  = (java.lang.Integer) props.get("velocity");
         requirementsOrderIds  = (java.util.List<java.lang.String>) props.get("requirementsOrderIds");
         lastTaskNumber  = (Integer) props.get("lastTaskNumber");
         lastRequirementNumber  = (Integer) props.get("lastRequirementNumber");
@@ -941,6 +1000,7 @@ public abstract class GProject
         properties.put("teamMembersIds", this.teamMembersIds);
         properties.put("currentSprintId", this.currentSprintId);
         properties.put("nextSprintId", this.nextSprintId);
+        properties.put("velocity", this.velocity);
         properties.put("requirementsOrderIds", this.requirementsOrderIds);
         properties.put("lastTaskNumber", this.lastTaskNumber);
         properties.put("lastRequirementNumber", this.lastRequirementNumber);

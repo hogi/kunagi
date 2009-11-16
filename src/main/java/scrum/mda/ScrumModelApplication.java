@@ -168,6 +168,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addSetReference("teamMembers", getUserModel());
 			projectModel.addReference("currentSprint", getSprintModel());
 			projectModel.addReference("nextSprint", getSprintModel());
+			projectModel.addProperty("velocity", Integer.class);
 			projectModel.addListProperty("requirementsOrderIds", String.class);
 			projectModel.addProperty("lastTaskNumber", int.class);
 			projectModel.addProperty("lastRequirementNumber", int.class);

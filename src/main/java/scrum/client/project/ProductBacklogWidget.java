@@ -1,8 +1,11 @@
 package scrum.client.project;
 
+import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.ToolbarWidget;
+import ilarkesto.gwt.client.editor.IntegerEditorWidget;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -84,9 +87,21 @@ public class ProductBacklogWidget extends AScrumWidget {
 		};
 		filterPanel.add(predicateSelect);
 
+		TableBuilder tb = new TableBuilder();
+		tb.setCellPadding(2);
+		tb.addField("Velocity", new IntegerEditorWidget(getCurrentProject().getVelocityModel()));
+		tb.addField("Velocity in last Sprint", new AFieldValueWidget() {
+
+			@Override
+			protected void onUpdate() {
+				setText(getCurrentProject().getVelocityFromLastSprint());
+				super.onUpdate();
+			}
+		});
+
 		PagePanel page = new PagePanel();
 		page.addHeader("Product Backlog", new ButtonWidget(new CreateRequirementAction()));
-		page.addSection("Velocity in last Sprint: " + getCurrentProject().getVelocity());
+		page.addSection(tb.createTable());
 		page.addSection(filterPanel);
 		page.addSection(list);
 

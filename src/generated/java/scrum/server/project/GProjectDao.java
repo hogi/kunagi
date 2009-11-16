@@ -64,6 +64,8 @@ public abstract class GProjectDao
         currentSprintsCache = null;
         projectsByNextSprintCache.clear();
         nextSprintsCache = null;
+        projectsByVelocityCache.clear();
+        velocitysCache = null;
         projectsByRequirementsOrderIdCache.clear();
         requirementsOrderIdsCache = null;
         projectsByLastTaskNumberCache.clear();
@@ -536,6 +538,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isNextSprint(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - velocity
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.Integer,Set<Project>> projectsByVelocityCache = new Cache<java.lang.Integer,Set<Project>>(
+            new Cache.Factory<java.lang.Integer,Set<Project>>() {
+                public Set<Project> create(java.lang.Integer velocity) {
+                    return getEntities(new IsVelocity(velocity));
+                }
+            });
+
+    public final Set<Project> getProjectsByVelocity(java.lang.Integer velocity) {
+        return projectsByVelocityCache.get(velocity);
+    }
+    private Set<java.lang.Integer> velocitysCache;
+
+    public final Set<java.lang.Integer> getVelocitys() {
+        if (velocitysCache == null) {
+            velocitysCache = new HashSet<java.lang.Integer>();
+            for (Project e : getEntities()) {
+                if (e.isVelocitySet()) velocitysCache.add(e.getVelocity());
+            }
+        }
+        return velocitysCache;
+    }
+
+    private static class IsVelocity implements Predicate<Project> {
+
+        private java.lang.Integer value;
+
+        public IsVelocity(java.lang.Integer value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isVelocity(value);
         }
 
     }

@@ -52,7 +52,7 @@ public class Project extends GProject {
 		return tasks;
 	}
 
-	public Integer getVelocity() {
+	public Integer getVelocityFromLastSprint() {
 		Sprint latest = getLatestCompletedSprint();
 		return latest == null ? null : latest.getVelocity();
 	}

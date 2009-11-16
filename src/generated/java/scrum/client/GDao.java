@@ -521,6 +521,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByVelocity(java.lang.Integer velocity) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isVelocity(velocity)) ret.add(entity);
+        }
+        return ret;
+    }
+
 
     public final List<scrum.client.project.Project> getProjectsByLastTaskNumber(int lastTaskNumber) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
