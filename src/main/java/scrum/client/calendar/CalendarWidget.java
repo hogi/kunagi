@@ -24,14 +24,14 @@ public class CalendarWidget extends AScrumWidget {
 
 		PagePanel right = new PagePanel();
 		right.addHeader("Years");
-		right.addSection("[2008] [2009] [2010] ...");
+		right.addSection(new YearSelectorListWidget());
 		right.addHeader("Months");
-		right.addSection("[Jan] [Feb] [Mar] [Apr] [Mai] [Jun] [Jul] [Aug] [Sep] [Oct] [Nov] [Dec]");
+		right.addSection(new MonthSelectorListWidget());
 		right.addHeader("Days");
-		right.addSection("[01] [02] [03] [04] ...");
+		right.addSection(new DaySelectorListWidget());
 
 		TableBuilder tb = new TableBuilder();
-		tb.setColumnWidths("67%", "0%", "33%");
+		tb.setColumnWidths("67%", "1%", "32%");
 		tb.addRow(left, Gwt.createSpacer(10, 1), right);
 		return tb.createTable();
 	}
