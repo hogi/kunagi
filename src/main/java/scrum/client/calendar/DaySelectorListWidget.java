@@ -2,56 +2,41 @@ package scrum.client.calendar;
 
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.TableBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
 public class DaySelectorListWidget extends AScrumWidget {
 
-	private int selectedDay = Date.today().getDay();
-	private int year = Date.today().getYear();
-	private int month = Date.today().getMonth();
-
-	protected List<DaySelectorWidget> getDayWidgets(int year, int month, int selectedDay) {
-
-		List<Date> days = Date.getDaysInMonth(year, month);
-
-		List<DaySelectorWidget> widgets = new ArrayList<DaySelectorWidget>();
-
-		for (Date d : days) {
-			widgets.add(new DaySelectorWidget(d, d.getDay() == selectedDay));
-		}
-
-		return widgets;
-
-	}
-
-	public void setMonth(int year, int month) {
-		this.year = year;
-		this.month = month;
-	}
-
-	public void setSelectedDay(int selectedDay) {
-		this.selectedDay = selectedDay;
-	}
-
-	public int getSelectedDay() {
-		return this.selectedDay;
-	}
-
-	@Override
-	protected void onUpdate() {
-		replaceContent(TableBuilder.row(10, getDayWidgets(year, month, selectedDay).toArray(new Widget[0])));
-		super.onUpdate();
-	}
+	private Date selectedDate = Date.today();
 
 	@Override
 	protected Widget onInitialization() {
 		return null;
+	}
+
+	@Override
+	protected void onUpdate() {
+		TableBuilder tb = new TableBuilder();
+		int count = 0;
+		for (Date date : Date.getDaysInMonth(selectedDate.getYear(), selectedDate.getMonth())) {
+			tb.add(new DaySelectorWidget(date, date.equals(selectedDate)));
+			count++;
+			if (count == 7) {
+				tb.nextRow();
+				count = 0;
+			}
+		}
+		replaceContent(tb.createTable());
+		super.onUpdate();
+	}
+
+	public void setSelectedDate(Date selectedDate) {
+		this.selectedDate = selectedDate;
+	}
+
+	public int getSelectedDay() {
+		return this.selectedDate.getDay();
 	}
 
 }
