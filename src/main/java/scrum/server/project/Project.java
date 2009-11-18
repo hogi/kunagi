@@ -13,6 +13,8 @@ import scrum.client.UsersStatusData;
 import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.ProjectUserConfigDao;
 import scrum.server.admin.User;
+import scrum.server.calendar.SimpleEvent;
+import scrum.server.calendar.SimpleEventDao;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.collaboration.WikipageDao;
 import scrum.server.impediments.Impediment;
@@ -43,6 +45,11 @@ public class Project extends GProject {
 	private static TaskDao taskDao;
 	private static WikipageDao wikipageDao;
 	private static ProjectEventDao projectEventDao;
+	private static SimpleEventDao simpleEventDao;
+
+	public static void setSimpleEventDao(SimpleEventDao simpleEventDao) {
+		Project.simpleEventDao = simpleEventDao;
+	}
 
 	public static void setProjectEventDao(ProjectEventDao projectEventDao) {
 		Project.projectEventDao = projectEventDao;
@@ -91,7 +98,7 @@ public class Project extends GProject {
 		rss.setTitle(getLabel() + " Event Journal");
 		rss.setLanguage("en");
 		rss.setLink(baseUrl);
-		for (ProjectEvent event : getEvents()) {
+		for (ProjectEvent event : getProjectEvents()) {
 			Rss20Builder.Item item = rss.addItem();
 			item.setTitle(event.getLabel());
 			item.setDescription(event.getLabel());
@@ -103,7 +110,11 @@ public class Project extends GProject {
 		rss.write(out, encoding);
 	}
 
-	public Set<ProjectEvent> getEvents() {
+	public Set<SimpleEvent> getCalendarEvents() {
+		return simpleEventDao.getSimpleEventsByProject(this);
+	}
+
+	public Set<ProjectEvent> getProjectEvents() {
 		return projectEventDao.getProjectEventsByProject(this);
 	}
 

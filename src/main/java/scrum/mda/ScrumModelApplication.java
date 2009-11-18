@@ -2,6 +2,7 @@ package scrum.mda;
 
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
+import ilarkesto.base.time.Time;
 import ilarkesto.di.app.ApplicationStarter;
 import ilarkesto.mda.AGeneratorApplication;
 import ilarkesto.mda.gen.gwt.GwtActionGenerator;
@@ -61,6 +62,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtComponentsModel.addComposite("SystemMessageManager");
 			gwtComponentsModel.addComposite("Wiki");
 			gwtComponentsModel.addComposite("Undo");
+			gwtComponentsModel.addComposite("Calendar");
 		}
 		return gwtComponentsModel;
 	}
@@ -147,6 +149,23 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	// ----------------
 	// --- entities ---
 	// ----------------
+
+	private EntityModel simpleEventModel;
+
+	public EntityModel getSimpleEventModel() {
+		if (simpleEventModel == null) {
+			simpleEventModel = createEntityModel("SimpleEvent", "calendar");
+			simpleEventModel.setGwtSupport(true);
+			simpleEventModel.setViewProtected(true);
+			simpleEventModel.addReference("project", getProjectModel()).setMaster(true);
+			simpleEventModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);
+			simpleEventModel.addProperty("date", Date.class);
+			simpleEventModel.addProperty("time", Time.class);
+			simpleEventModel.addProperty("duration", Integer.class); // minutes
+			autowire(simpleEventModel);
+		}
+		return simpleEventModel;
+	}
 
 	private EntityModel projectModel;
 

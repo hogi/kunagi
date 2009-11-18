@@ -1,5 +1,6 @@
 package scrum.client.calendar;
 
+import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.common.AScrumWidget;
 import scrum.client.workspace.PagePanel;
@@ -13,6 +14,7 @@ public class CalendarWidget extends AScrumWidget {
 
 		PagePanel left = new PagePanel();
 		left.addHeader("Project Calendar");
+		left.addSection(new DayListWidget(new Date(2009, 11, 1), new Date(2009, 11, 30)));
 
 		PagePanel right = new PagePanel();
 		right.addHeader("Years");

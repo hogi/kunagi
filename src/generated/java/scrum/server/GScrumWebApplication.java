@@ -328,6 +328,31 @@ public abstract class GScrumWebApplication
         riskDao = null;
     }
 
+    // --- simpleEventDao ---
+
+    private scrum.server.calendar.SimpleEventDao simpleEventDao;
+
+    public final scrum.server.calendar.SimpleEventDao getSimpleEventDao() {
+        if (simpleEventDao == null) {
+            simpleEventDao = createSimpleEventDao();
+            initializeSimpleEventDao(simpleEventDao);
+        }
+        return simpleEventDao;
+    }
+
+    protected scrum.server.calendar.SimpleEventDao createSimpleEventDao() {
+        return simpleEventDao = ilarkesto.base.Reflect.newInstance(scrum.server.calendar.SimpleEventDao.class);
+    }
+
+    protected void initializeSimpleEventDao(scrum.server.calendar.SimpleEventDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetSimpleEventDao() {
+        simpleEventDao = null;
+    }
+
     // --- sprintDao ---
 
     private scrum.server.sprint.SprintDao sprintDao;

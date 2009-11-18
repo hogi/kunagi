@@ -1,0 +1,301 @@
+// ----------> GENERATED FILE - DON'T TOUCH! <----------
+
+// generator: ilarkesto.mda.gen.EntityGenerator
+
+
+
+
+
+
+
+
+
+
+package scrum.server.calendar;
+
+import java.util.*;
+import ilarkesto.persistence.*;
+import ilarkesto.logging.*;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
+
+public abstract class GSimpleEvent
+            extends AEntity
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, ilarkesto.search.Searchable, java.lang.Comparable<SimpleEvent> {
+
+    // --- AEntity ---
+
+    public final SimpleEventDao getDao() {
+        return simpleEventDao;
+    }
+
+    protected void repairDeadDatob(ADatob datob) {
+    }
+
+    @Override
+    public void storeProperties(Map properties) {
+        super.storeProperties(properties);
+        properties.put("projectId", this.projectId);
+        properties.put("label", this.label);
+        properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("time", this.time);
+        properties.put("duration", this.duration);
+    }
+
+    public int compareTo(SimpleEvent other) {
+        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+    }
+
+    private static final Logger LOG = Logger.get(GSimpleEvent.class);
+
+    public static final String TYPE = "simpleEvent";
+
+
+    // -----------------------------------------------------------
+    // - Searchable
+    // -----------------------------------------------------------
+
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getLabel(), key)) return true;
+        return false;
+    }
+
+    // -----------------------------------------------------------
+    // - project
+    // -----------------------------------------------------------
+
+    private String projectId;
+    private transient scrum.server.project.Project projectCache;
+
+    private void updateProjectCache() {
+        projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
+    }
+
+    public final scrum.server.project.Project getProject() {
+        if (projectCache == null) updateProjectCache();
+        return projectCache;
+    }
+
+    public final void setProject(scrum.server.project.Project project) {
+        project = prepareProject(project);
+        if (isProject(project)) return;
+        this.projectId = project == null ? null : project.getId();
+        projectCache = project;
+        fireModified();
+    }
+
+    protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
+        return project;
+    }
+
+    protected void repairDeadProjectReference(String entityId) {
+        if (entityId.equals(this.projectId)) {
+            repairMissingMaster();
+        }
+    }
+
+    public final boolean isProjectSet() {
+        return this.projectId != null;
+    }
+
+    public final boolean isProject(scrum.server.project.Project project) {
+        if (this.projectId == null && project == null) return true;
+        return project != null && project.getId().equals(this.projectId);
+    }
+
+    protected final void updateProject(Object value) {
+        setProject(value == null ? null : (scrum.server.project.Project)projectDao.getById((String)value));
+    }
+
+    // -----------------------------------------------------------
+    // - label
+    // -----------------------------------------------------------
+
+    private java.lang.String label;
+
+    public final java.lang.String getLabel() {
+        return label;
+    }
+
+    public final void setLabel(java.lang.String label) {
+        label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+        fireModified();
+    }
+
+    protected java.lang.String prepareLabel(java.lang.String label) {
+        label = Str.removeUnreadableChars(label);
+        return label;
+    }
+
+    public final boolean isLabelSet() {
+        return this.label != null;
+    }
+
+    public final boolean isLabel(java.lang.String label) {
+        if (this.label == null && label == null) return true;
+        return this.label != null && this.label.equals(label);
+    }
+
+    protected final void updateLabel(Object value) {
+        setLabel((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - date
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date date;
+
+    public final ilarkesto.base.time.Date getDate() {
+        return date;
+    }
+
+    public final void setDate(ilarkesto.base.time.Date date) {
+        date = prepareDate(date);
+        if (isDate(date)) return;
+        this.date = date;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
+        return date;
+    }
+
+    public final boolean isDateSet() {
+        return this.date != null;
+    }
+
+    public final boolean isDate(ilarkesto.base.time.Date date) {
+        if (this.date == null && date == null) return true;
+        return this.date != null && this.date.equals(date);
+    }
+
+    protected final void updateDate(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setDate((ilarkesto.base.time.Date)value);
+    }
+
+    // -----------------------------------------------------------
+    // - time
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Time time;
+
+    public final ilarkesto.base.time.Time getTime() {
+        return time;
+    }
+
+    public final void setTime(ilarkesto.base.time.Time time) {
+        time = prepareTime(time);
+        if (isTime(time)) return;
+        this.time = time;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.Time prepareTime(ilarkesto.base.time.Time time) {
+        return time;
+    }
+
+    public final boolean isTimeSet() {
+        return this.time != null;
+    }
+
+    public final boolean isTime(ilarkesto.base.time.Time time) {
+        if (this.time == null && time == null) return true;
+        return this.time != null && this.time.equals(time);
+    }
+
+    protected final void updateTime(Object value) {
+        setTime((ilarkesto.base.time.Time)value);
+    }
+
+    // -----------------------------------------------------------
+    // - duration
+    // -----------------------------------------------------------
+
+    private java.lang.Integer duration;
+
+    public final java.lang.Integer getDuration() {
+        return duration;
+    }
+
+    public final void setDuration(java.lang.Integer duration) {
+        duration = prepareDuration(duration);
+        if (isDuration(duration)) return;
+        this.duration = duration;
+        fireModified();
+    }
+
+    protected java.lang.Integer prepareDuration(java.lang.Integer duration) {
+        return duration;
+    }
+
+    public final boolean isDurationSet() {
+        return this.duration != null;
+    }
+
+    public final boolean isDuration(java.lang.Integer duration) {
+        if (this.duration == null && duration == null) return true;
+        return this.duration != null && this.duration.equals(duration);
+    }
+
+    protected final void updateDuration(Object value) {
+        setDuration((java.lang.Integer)value);
+    }
+
+    public void updateProperties(Map<?, ?> properties) {
+        for (Map.Entry entry : properties.entrySet()) {
+            String property = (String) entry.getKey();
+            if (property.equals("id")) continue;
+            Object value = entry.getValue();
+            if (property.equals("projectId")) updateProject(value);
+            if (property.equals("label")) updateLabel(value);
+            if (property.equals("date")) updateDate(value);
+            if (property.equals("time")) updateTime(value);
+            if (property.equals("duration")) updateDuration(value);
+        }
+    }
+
+    protected void repairDeadReferences(String entityId) {
+        super.repairDeadReferences(entityId);
+        repairDeadProjectReference(entityId);
+    }
+
+    // --- ensure integrity ---
+
+    public void ensureIntegrity() {
+        super.ensureIntegrity();
+        if (!isProjectSet()) {
+            repairMissingMaster();
+            return;
+        }
+        try {
+            getProject();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead project reference");
+            repairDeadProjectReference(this.projectId);
+        }
+    }
+
+
+    // -----------------------------------------------------------
+    // - dependencies
+    // -----------------------------------------------------------
+
+    static scrum.server.project.ProjectDao projectDao;
+
+    public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
+        GSimpleEvent.projectDao = projectDao;
+    }
+
+    static SimpleEventDao simpleEventDao;
+
+    public static final void setSimpleEventDao(SimpleEventDao simpleEventDao) {
+        GSimpleEvent.simpleEventDao = simpleEventDao;
+    }
+
+}

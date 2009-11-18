@@ -1179,6 +1179,102 @@ public abstract class GDao
         return ret;
     }
 
+    // --- SimpleEvent ---
+
+    private Map<String, scrum.client.calendar.SimpleEvent> simpleEvents = new HashMap<String, scrum.client.calendar.SimpleEvent>();
+
+    public final void clearSimpleEvents() {
+        simpleEvents.clear();
+    }
+
+    public final boolean containsSimpleEvent(scrum.client.calendar.SimpleEvent simpleEvent) {
+        return simpleEvents.containsKey(simpleEvent.getId());
+    }
+
+    public final void deleteSimpleEvent(scrum.client.calendar.SimpleEvent simpleEvent) {
+        simpleEvents.remove(simpleEvent.getId());
+        entityDeleted(simpleEvent);
+    }
+
+    public final void createSimpleEvent(scrum.client.calendar.SimpleEvent simpleEvent) {
+        simpleEvents.put(simpleEvent.getId(), simpleEvent);
+        entityCreated(simpleEvent);
+    }
+
+    private final void updateSimpleEvent(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.calendar.SimpleEvent entity = simpleEvents.get(id);
+        if (entity == null) {
+            entity = new scrum.client.calendar.SimpleEvent(data);
+            simpleEvents.put(id, entity);
+            ilarkesto.gwt.client.GwtLogger.DEBUG("SimpleEvent received: " + entity.getId() + " ("+entity+")");
+        } else {
+            entity.updateProperties(data);
+            ilarkesto.gwt.client.GwtLogger.DEBUG("SimpleEvent updated: " + entity);
+        }
+        onEntityModifiedRemotely(entity);
+    }
+
+    public final scrum.client.calendar.SimpleEvent getSimpleEvent(String id) {
+        scrum.client.calendar.SimpleEvent ret = simpleEvents.get(id);
+        if (ret == null) throw new RuntimeException("SimpleEvent does not exist: " + id);
+        return ret;
+    }
+
+    public final Set<scrum.client.calendar.SimpleEvent> getSimpleEvents(Collection<String> ids) {
+        Set<scrum.client.calendar.SimpleEvent> ret = new HashSet<scrum.client.calendar.SimpleEvent>();
+        for (String id : ids) {
+            scrum.client.calendar.SimpleEvent entity = simpleEvents.get(id);
+            if (entity == null) throw new RuntimeException("SimpleEvent does not exist: " + id);
+            ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.calendar.SimpleEvent> getSimpleEvents() {
+        return new ArrayList<scrum.client.calendar.SimpleEvent>(simpleEvents.values());
+    }
+
+    public final List<scrum.client.calendar.SimpleEvent> getSimpleEventsByProject(scrum.client.project.Project project) {
+        List<scrum.client.calendar.SimpleEvent> ret = new ArrayList<scrum.client.calendar.SimpleEvent>();
+        for (scrum.client.calendar.SimpleEvent entity : simpleEvents.values()) {
+            if (entity.isProject(project)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.calendar.SimpleEvent> getSimpleEventsByLabel(java.lang.String label) {
+        List<scrum.client.calendar.SimpleEvent> ret = new ArrayList<scrum.client.calendar.SimpleEvent>();
+        for (scrum.client.calendar.SimpleEvent entity : simpleEvents.values()) {
+            if (entity.isLabel(label)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.calendar.SimpleEvent> getSimpleEventsByDate(ilarkesto.gwt.client.Date date) {
+        List<scrum.client.calendar.SimpleEvent> ret = new ArrayList<scrum.client.calendar.SimpleEvent>();
+        for (scrum.client.calendar.SimpleEvent entity : simpleEvents.values()) {
+            if (entity.isDate(date)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.calendar.SimpleEvent> getSimpleEventsByTime(ilarkesto.gwt.client.Time time) {
+        List<scrum.client.calendar.SimpleEvent> ret = new ArrayList<scrum.client.calendar.SimpleEvent>();
+        for (scrum.client.calendar.SimpleEvent entity : simpleEvents.values()) {
+            if (entity.isTime(time)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.calendar.SimpleEvent> getSimpleEventsByDuration(java.lang.Integer duration) {
+        List<scrum.client.calendar.SimpleEvent> ret = new ArrayList<scrum.client.calendar.SimpleEvent>();
+        for (scrum.client.calendar.SimpleEvent entity : simpleEvents.values()) {
+            if (entity.isDuration(duration)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Sprint ---
 
     private Map<String, scrum.client.sprint.Sprint> sprints = new HashMap<String, scrum.client.sprint.Sprint>();
@@ -1615,6 +1711,7 @@ public abstract class GDao
             clearReleases();
             clearRequirements();
             clearRisks();
+            clearSimpleEvents();
             clearSprints();
             clearTasks();
             clearUsers();
@@ -1638,6 +1735,7 @@ public abstract class GDao
             entityMaps.add(releases);
             entityMaps.add(requirements);
             entityMaps.add(risks);
+            entityMaps.add(simpleEvents);
             entityMaps.add(sprints);
             entityMaps.add(tasks);
             entityMaps.add(users);
@@ -1690,6 +1788,10 @@ public abstract class GDao
         }
         if (type.equals(scrum.client.risks.Risk.ENTITY_TYPE)) {
             updateRisk(data);
+            return;
+        }
+        if (type.equals(scrum.client.calendar.SimpleEvent.ENTITY_TYPE)) {
+            updateSimpleEvent(data);
             return;
         }
         if (type.equals(scrum.client.sprint.Sprint.ENTITY_TYPE)) {
