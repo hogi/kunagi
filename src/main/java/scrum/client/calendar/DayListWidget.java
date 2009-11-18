@@ -44,11 +44,15 @@ public class DayListWidget extends AScrumWidget {
 	}
 
 	private Widget createWeek(int week) {
-		return new Label("" + week);
+		Label l = new Label("" + week);
+		l.setStyleName("DayListWidget-week");
+		return l;
 	}
 
 	private Widget createDate(Date date) {
-		return new Label(date.getWeekdayLabel() + ", " + date.getDay() + ".");
+		Label l = new Label(date.getWeekdayLabel() + ", " + date.getDay() + ".");
+		l.setStyleName("DayListWidget-date");
+		return l;
 	}
 
 	private Widget createEventList(Date date) {

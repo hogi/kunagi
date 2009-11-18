@@ -133,7 +133,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void calendar(CssRenderer css) {
-
+		css.style(".DayListWidget-date").color(cBlockHeaderCellSecondary);
 	}
 
 	private void dashboard(CssRenderer css) {
