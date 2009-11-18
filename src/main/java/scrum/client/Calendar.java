@@ -39,4 +39,16 @@ public class Calendar extends AScrumComponent {
 	// TODO
 	}
 
+	public void showYear(int year) {
+	// Date date = new Date(year, )
+	}
+
+	public void showMonth(int month) {
+
+	}
+
+	public void showDay(int day) {
+
+	}
+
 }
