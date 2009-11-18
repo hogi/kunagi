@@ -44,7 +44,7 @@ public class CalendarWidget extends AScrumWidget {
 	}
 
 	public Date getSelectedDate() {
-		return new Date(yearSelector.getSelectedYear(), 1, 1);
+		return new Date(yearSelector.getSelectedYear(), monthSelector.getSelectedMonth(), daySelector.getSelectedDay());
 	}
 
 	public void showDate(Date date) {
@@ -52,7 +52,8 @@ public class CalendarWidget extends AScrumWidget {
 		yearSelector.setSelectedYear(date.getYear());
 		monthSelector.setYear(date.getYear());
 		monthSelector.setSelectedMonth(date.getMonth());
-		// daySelector.sets
+		daySelector.setMonth(date.getYear(), date.getMonth());
+		daySelector.setSelectedDay(date.getDay());
 	}
 
 	public void showEvent(SimpleEvent event) {

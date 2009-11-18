@@ -35,6 +35,10 @@ public class MonthSelectorListWidget extends AScrumWidget {
 		this.selectedMonth = selectedMonth;
 	}
 
+	public int getSelectedMonth() {
+		return selectedMonth;
+	}
+
 	@Override
 	protected void onUpdate() {
 		replaceContent(TableBuilder.row(10, getMonthWidgets(year, selectedMonth).toArray(new Widget[0])));
