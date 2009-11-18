@@ -12,21 +12,50 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class DaySelectorListWidget extends AScrumWidget {
 
-	@Override
-	protected Widget onInitialization() {
+	private int selectedDay;
+	private int year;
+	private int month;
 
-		TableBuilder tb = new TableBuilder();
-		tb.setCellPadding(2);
+	protected List<DaySelectorWidget> getDayWidgets(int year, int month, int selectedDay) {
 
 		List<Date> days = Date.getDaysInMonth(2009, 11);
 
 		List<DaySelectorWidget> widgets = new ArrayList<DaySelectorWidget>();
 
 		for (Date d : days) {
-			widgets.add(new DaySelectorWidget(d));
+			if (d.getDay() == selectedDay) {
+				widgets.add(new DaySelectorWidget(d, true));
+			} else {
+				widgets.add(new DaySelectorWidget(d));
+			}
 		}
 
-		return TableBuilder.row(10, widgets.toArray(new Widget[0]));
+		return widgets;
 
 	}
+
+	public void setMonth(int year, int month) {
+		this.year = year;
+		this.month = month;
+	}
+
+	public void setSelectedDay(int selectedDay) {
+		this.selectedDay = selectedDay;
+	}
+
+	public int getSelectedDay() {
+		return this.selectedDay;
+	}
+
+	@Override
+	protected void onUpdate() {
+		replaceContent(TableBuilder.row(10, getDayWidgets(year, month, selectedDay).toArray(new Widget[0])));
+		super.onUpdate();
+	}
+
+	@Override
+	protected Widget onInitialization() {
+		return null;
+	}
+
 }

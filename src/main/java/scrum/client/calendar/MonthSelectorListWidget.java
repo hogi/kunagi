@@ -19,9 +19,9 @@ public class MonthSelectorListWidget extends AScrumWidget {
 		List<MonthSelectorWidget> widgets = new ArrayList<MonthSelectorWidget>();
 		for (int i = 1; i < 13; i++) {
 			if (i == selectedMonth) {
-				widgets.add(new MonthSelectorWidget(i, year, true));
+				widgets.add(new MonthSelectorWidget(year, i, true));
 			} else {
-				widgets.add(new MonthSelectorWidget(i, year));
+				widgets.add(new MonthSelectorWidget(year, i));
 			}
 		}
 		return widgets;

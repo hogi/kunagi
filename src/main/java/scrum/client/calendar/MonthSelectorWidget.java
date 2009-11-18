@@ -10,14 +10,14 @@ public class MonthSelectorWidget extends ADateSelectorWidget {
 	private int year;
 	private boolean selected;
 
-	public MonthSelectorWidget(int month, int year, boolean selected) {
+	public MonthSelectorWidget(int year, int month, boolean selected) {
 		this.month = month;
 		this.year = year;
 		this.selected = selected;
 	}
 
-	public MonthSelectorWidget(int month, int year) {
-		this(month, year, false);
+	public MonthSelectorWidget(int year, int month) {
+		this(year, month, false);
 	}
 
 	@Override
