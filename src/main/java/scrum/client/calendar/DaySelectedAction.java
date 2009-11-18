@@ -17,7 +17,7 @@ public class DaySelectedAction extends AScrumAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getCalendar().showSelectedDate();
+		cm.getCalendar().showDay(day);
 	}
 
 }

@@ -18,7 +18,7 @@ public class MonthSelectedAction extends AScrumAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getCalendar().showSelectedDate();
+		cm.getCalendar().showMonth(month);
 	}
 
 }

@@ -17,7 +17,7 @@ public class YearSelectedAction extends AScrumAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getCalendar().showSelectedDate();
+		cm.getCalendar().showYear(year);
 	}
 
 }

@@ -331,6 +331,10 @@ public class ProjectContext extends AScrumComponent {
 		return sprintHistory;
 	}
 
+	public CalendarWidget getCalendar() {
+		return calendar;
+	}
+
 	public JournalWidget getProjectEventList() {
 		return projectEventListWidget;
 	}
