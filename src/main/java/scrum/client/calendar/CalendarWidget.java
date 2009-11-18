@@ -26,4 +26,9 @@ public class CalendarWidget extends AScrumWidget {
 
 		return TableBuilder.row(10, left, right);
 	}
+
+	public Date getSelectedDate() {
+		// TODO hogi
+		return Date.today();
+	}
 }

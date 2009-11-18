@@ -81,6 +81,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		pagePanel(css);
 		whiteboard(css);
 		dashboard(css);
+		calendar(css);
 
 		css.style(".TrashWidget").background(cTrashBackground).border(1, "solid", cTrashBorder).padding(5);
 
@@ -129,6 +130,10 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".SprintBorderIndicatorWidget").background(cPagePanelHeaderBackground).color(cPagePanelHeader)
 				.border(1, "solid", cPagePanelBorder).textAlignCenter().borderRadius(10).fontSize(fontSizeSmall)
 				.margin(3, 100, 3, 100);
+	}
+
+	private void calendar(CssRenderer css) {
+
 	}
 
 	private void dashboard(CssRenderer css) {

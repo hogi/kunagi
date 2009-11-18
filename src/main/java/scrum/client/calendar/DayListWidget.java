@@ -31,7 +31,9 @@ public class DayListWidget extends AScrumWidget {
 			if (w != week) {
 				week = w;
 				table.setWidget(row, 0, createWeek(week));
-				table.getCellFormatter().getElement(row, 0).setAttribute("rowspan", "7");
+				// table.getCellFormatter().getElement(row, 0).setAttribute("rowspan", "7");
+			} else {
+				table.setWidget(row, 0, new Label("."));
 			}
 			table.setWidget(row, 1, createDate(date));
 			table.setWidget(row, 2, createEventList(date));

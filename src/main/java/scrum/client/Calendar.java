@@ -14,4 +14,8 @@ public class Calendar extends AScrumComponent {
 		return ret;
 	}
 
+	public void showSelectedDate() {
+	// TODO
+	}
+
 }
