@@ -2,6 +2,7 @@ package scrum.client.calendar;
 
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Date;
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.common.AScrumWidget;
 import scrum.client.workspace.PagePanel;
@@ -29,7 +30,10 @@ public class CalendarWidget extends AScrumWidget {
 		right.addHeader("Days");
 		right.addSection("[01] [02] [03] [04] ...");
 
-		return TableBuilder.row(10, left, right);
+		TableBuilder tb = new TableBuilder();
+		tb.setColumnWidths("67%", "0%", "33%");
+		tb.addRow(left, Gwt.createSpacer(10, 1), right);
+		return tb.createTable();
 	}
 
 	public Date getSelectedDate() {

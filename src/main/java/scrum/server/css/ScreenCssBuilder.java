@@ -134,6 +134,8 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	private void calendar(CssRenderer css) {
 		css.style(".DayListWidget-date").color(cBlockHeaderCellSecondary);
+		css.style(".DayListWidget-week").color(cBlockHeaderCellSecondary);
+		css.style(".DayListWidget-month").color(cBlockHeaderCellSecondary);
 	}
 
 	private void dashboard(CssRenderer css) {

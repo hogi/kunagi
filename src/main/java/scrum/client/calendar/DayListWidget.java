@@ -11,6 +11,8 @@ import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.common.BlockListWidget;
 
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -45,35 +47,47 @@ public class DayListWidget extends AScrumWidget {
 		FlexTable table = new FlexTable();
 		table.setWidth("100%");
 		table.setCellPadding(2);
-		table.setBorderWidth(1);
+
+		// table.setBorderWidth(1);
 		int row = 0;
 		Date date = dateToShow;
 		Date end = dateToShow.addDays(14);
 		int month = 0;
 		int week = 0;
 		while (date.compareTo(end) <= 0) {
-			int m = date.getMonth();
-			if (m != month) {
-				month = m;
-				table.setWidget(row, 0, Gwt.createDiv("DayListWidget-month", Gwt.getMonthShort(month)));
-			}
 			int w = date.getWeek();
 			if (w != week) {
 				week = w;
-				table.setWidget(row, 1, Gwt.createDiv("DayListWidget-week", String.valueOf(week)));
-			} else {
-				// table.setWidget(row, 0, new Label("."));
-				// table.setWidget(row, 0, Gwt.createDiv("DayListWidget-week", String.valueOf(week)));
+				table.setWidget(row, 0, Gwt.createDiv("DayListWidget-week", String.valueOf(week)));
+			}
+			int m = date.getMonth();
+			if (m != month) {
+				month = m;
+				table.setWidget(row, 1, Gwt.createDiv("DayListWidget-month", Gwt.getMonthShort(month)));
 			}
 			table.setWidget(row, 2, Gwt.createDiv("DayListWidget-date", Gwt.DTF_DAY.format(date.toJavaDate())));
 			table.setWidget(row, 3, Gwt
 					.createDiv("DayListWidget-date", Gwt.DTF_WEEKDAY_SHORT.format(date.toJavaDate())));
 			table.setWidget(row, 4, createEventList(date));
+
+			formatRow(table, row);
 			date = date.nextDay();
 			row++;
 		}
 
 		wrapper.setWidget(table);
+	}
+
+	private void formatRow(FlexTable table, int row) {
+		String border = "1px solid #EEE";
+		for (int i = 0; i <= 4; i++) {
+			Element element = table.getCellFormatter().getElement(row, i);
+			Style style = element.getStyle();
+			style.setProperty("borderBottom", border);
+			if (row == 0) style.setProperty("borderTop", border);
+			if (i < 3 || i == 4) style.setProperty("borderLeft", border);
+			if (i == 4) style.setProperty("borderRight", border);
+		}
 	}
 
 	public void showEvent(SimpleEvent event) {
