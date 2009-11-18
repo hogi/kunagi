@@ -25,7 +25,7 @@ public class LatestEventsWidget extends AScrumWidget {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<ul class='LatestEventsWidget'>");
 
-		List<ProjectEvent> events = project.getLatestEvents(5);
+		List<ProjectEvent> events = project.getLatestProjectEvents(5);
 		if (!events.isEmpty()) {
 			for (ProjectEvent event : events) {
 				sb.append("<li>");

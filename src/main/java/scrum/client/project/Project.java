@@ -15,6 +15,7 @@ import java.util.Set;
 import scrum.client.UsersStatus;
 import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
+import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -74,12 +75,16 @@ public class Project extends GProject {
 		return ret;
 	}
 
-	public List<ProjectEvent> getEvents() {
+	public List<SimpleEvent> getSimpleEvents() {
+		return cm.getDao().getSimpleEvents();
+	}
+
+	public List<ProjectEvent> getProjectEvents() {
 		return cm.getDao().getProjectEvents();
 	}
 
-	public List<ProjectEvent> getLatestEvents(int max) {
-		List<ProjectEvent> ret = getEvents();
+	public List<ProjectEvent> getLatestProjectEvents(int max) {
+		List<ProjectEvent> ret = getProjectEvents();
 		Collections.sort(ret, ProjectEvent.DATE_AND_TIME_COMPARATOR);
 		while (ret.size() > max) {
 			ret.remove(ret.size() - 1);

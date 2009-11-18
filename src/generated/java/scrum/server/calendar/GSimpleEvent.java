@@ -39,8 +39,9 @@ public abstract class GSimpleEvent
         properties.put("projectId", this.projectId);
         properties.put("label", this.label);
         properties.put("date", this.date == null ? null : this.date.toString());
-        properties.put("time", this.time);
+        properties.put("time", this.time == null ? null : this.time.toString());
         properties.put("duration", this.duration);
+        properties.put("note", this.note);
     }
 
     public int compareTo(SimpleEvent other) {
@@ -59,6 +60,7 @@ public abstract class GSimpleEvent
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getNote(), key)) return true;
         return false;
     }
 
@@ -210,6 +212,7 @@ public abstract class GSimpleEvent
     }
 
     protected final void updateTime(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Time((String)value);
         setTime((ilarkesto.base.time.Time)value);
     }
 
@@ -247,6 +250,41 @@ public abstract class GSimpleEvent
         setDuration((java.lang.Integer)value);
     }
 
+    // -----------------------------------------------------------
+    // - note
+    // -----------------------------------------------------------
+
+    private java.lang.String note;
+
+    public final java.lang.String getNote() {
+        return note;
+    }
+
+    public final void setNote(java.lang.String note) {
+        note = prepareNote(note);
+        if (isNote(note)) return;
+        this.note = note;
+        fireModified();
+    }
+
+    protected java.lang.String prepareNote(java.lang.String note) {
+        note = Str.removeUnreadableChars(note);
+        return note;
+    }
+
+    public final boolean isNoteSet() {
+        return this.note != null;
+    }
+
+    public final boolean isNote(java.lang.String note) {
+        if (this.note == null && note == null) return true;
+        return this.note != null && this.note.equals(note);
+    }
+
+    protected final void updateNote(Object value) {
+        setNote((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -257,6 +295,7 @@ public abstract class GSimpleEvent
             if (property.equals("date")) updateDate(value);
             if (property.equals("time")) updateTime(value);
             if (property.equals("duration")) updateDuration(value);
+            if (property.equals("note")) updateNote(value);
         }
     }
 

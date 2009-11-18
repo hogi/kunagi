@@ -346,6 +346,14 @@ public class Project extends GProject {
 		riskDao.createTestRisk(this, 7);
 	}
 
+	public void addTestSimpleEvents(int variant) {
+		if (variant == 0) return;
+
+		simpleEventDao.createTestEvent(this, 1);
+		simpleEventDao.createTestEvent(this, 2);
+		simpleEventDao.createTestEvent(this, 3);
+	}
+
 	public void addTestEvents(int variant) {
 		if (variant == 0) return;
 

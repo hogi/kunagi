@@ -1275,6 +1275,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.calendar.SimpleEvent> getSimpleEventsByNote(java.lang.String note) {
+        List<scrum.client.calendar.SimpleEvent> ret = new ArrayList<scrum.client.calendar.SimpleEvent>();
+        for (scrum.client.calendar.SimpleEvent entity : simpleEvents.values()) {
+            if (entity.isNote(note)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Sprint ---
 
     private Map<String, scrum.client.sprint.Sprint> sprints = new HashMap<String, scrum.client.sprint.Sprint>();

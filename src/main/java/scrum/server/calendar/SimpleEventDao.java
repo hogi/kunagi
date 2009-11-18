@@ -1,13 +1,41 @@
 package scrum.server.calendar;
 
-import java.util.*;
-import ilarkesto.persistence.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.*;
-import ilarkesto.base.time.*;
-import ilarkesto.auth.*;
+import ilarkesto.base.time.Date;
+import ilarkesto.base.time.Time;
+import scrum.server.project.Project;
 
-public class SimpleEventDao
-            extends GSimpleEventDao {
+public class SimpleEventDao extends GSimpleEventDao {
+
+	@Override
+	public SimpleEvent newEntityInstance() {
+		SimpleEvent event = super.newEntityInstance();
+		event.setDate(Date.today());
+		return event;
+	}
+
+	public SimpleEvent postEvent(Project project, String label, Date date, Time time, Integer duration) {
+		SimpleEvent event = newEntityInstance();
+		event.setProject(project);
+		event.setLabel(label);
+		event.setDate(date);
+		event.setTime(time);
+		event.setDuration(duration);
+		saveEntity(event);
+		return event;
+	}
+
+	public void createTestEvent(Project project, int variant) {
+		switch (variant) {
+			case 1:
+				postEvent(project, "Review Meeting", Date.inDays(10), null, null);
+				break;
+			case 2:
+				postEvent(project, "Punishment Execution", Date.inDays(2), new Time(9, 0), 360);
+				break;
+			default:
+				postEvent(project, "Party", Date.inDays(2), new Time(8, 0), 30);
+				break;
+		}
+	}
 
 }

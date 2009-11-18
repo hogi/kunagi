@@ -162,7 +162,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			simpleEventModel.addProperty("date", Date.class);
 			simpleEventModel.addProperty("time", Time.class);
 			simpleEventModel.addProperty("duration", Integer.class); // minutes
-			autowire(simpleEventModel);
+			simpleEventModel.addProperty("note", String.class).setSearchable(true);
+			simpleEventModel.addAction("DeleteSimpleEvent");
 		}
 		return simpleEventModel;
 	}

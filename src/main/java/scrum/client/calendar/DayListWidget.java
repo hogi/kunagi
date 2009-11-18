@@ -1,13 +1,20 @@
 package scrum.client.calendar;
 
 import ilarkesto.gwt.client.Date;
-import scrum.client.common.AScrumWidget;
 
+import java.util.List;
+
+import scrum.client.common.AScrumWidget;
+import scrum.client.common.BlockListWidget;
+
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class DayListWidget extends AScrumWidget {
+
+	private static final DateTimeFormat DTF_DAY = DateTimeFormat.getFormat("EEE, dd.");
 
 	private Date begin;
 	private Date end;
@@ -22,6 +29,7 @@ public class DayListWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		table = new FlexTable();
+		table.setWidth("100%");
 		table.setCellPadding(2);
 		int row = 0;
 		Date date = begin;
@@ -56,7 +64,10 @@ public class DayListWidget extends AScrumWidget {
 	}
 
 	private Widget createEventList(Date date) {
-		return new Label("09:00 Daily Scrum");
+		List<SimpleEvent> events = cm.getCalendar().getEvents(date);
+		BlockListWidget<SimpleEvent> list = new BlockListWidget<SimpleEvent>(SimpleEventBlock.FACTORY);
+		list.setObjects(events);
+		return list;
 	}
 
 }

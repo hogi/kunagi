@@ -274,6 +274,54 @@ public abstract class GSimpleEvent
 
     }
 
+    // --- note ---
+
+    private java.lang.String note ;
+
+    public final java.lang.String getNote() {
+        return this.note ;
+    }
+
+    public final SimpleEvent setNote(java.lang.String note) {
+        if (isNote(note)) return (SimpleEvent)this;
+        this.note = note ;
+        propertyChanged("note", this.note);
+        return (SimpleEvent)this;
+    }
+
+    public final boolean isNote(java.lang.String note) {
+        return equals(this.note, note);
+    }
+
+    private transient NoteModel noteModel;
+
+    public NoteModel getNoteModel() {
+        if (noteModel == null) noteModel = createNoteModel();
+        return noteModel;
+    }
+
+    protected NoteModel createNoteModel() { return new NoteModel(); }
+
+    protected class NoteModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getNote();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setNote(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -284,6 +332,7 @@ public abstract class GSimpleEvent
         String timeAsString = (String) props.get("time");
         time  =  timeAsString == null ? null : new ilarkesto.gwt.client.Time(timeAsString);
         duration  = (java.lang.Integer) props.get("duration");
+        note  = (java.lang.String) props.get("note");
     }
 
     @Override
@@ -294,6 +343,7 @@ public abstract class GSimpleEvent
         properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("time", this.time == null ? null : this.time.toString());
         properties.put("duration", this.duration);
+        properties.put("note", this.note);
     }
 
 }

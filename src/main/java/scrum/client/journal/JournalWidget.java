@@ -27,7 +27,7 @@ public class JournalWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		list.setObjects(getCurrentProject().getEvents());
+		list.setObjects(getCurrentProject().getProjectEvents());
 		super.onUpdate();
 	}
 

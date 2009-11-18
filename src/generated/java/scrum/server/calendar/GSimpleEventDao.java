@@ -52,6 +52,8 @@ public abstract class GSimpleEventDao
         timesCache = null;
         simpleEventsByDurationCache.clear();
         durationsCache = null;
+        simpleEventsByNoteCache.clear();
+        notesCache = null;
     }
 
     @Override
@@ -266,6 +268,46 @@ public abstract class GSimpleEventDao
 
         public boolean test(SimpleEvent e) {
             return e.isDuration(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - note
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SimpleEvent>> simpleEventsByNoteCache = new Cache<java.lang.String,Set<SimpleEvent>>(
+            new Cache.Factory<java.lang.String,Set<SimpleEvent>>() {
+                public Set<SimpleEvent> create(java.lang.String note) {
+                    return getEntities(new IsNote(note));
+                }
+            });
+
+    public final Set<SimpleEvent> getSimpleEventsByNote(java.lang.String note) {
+        return simpleEventsByNoteCache.get(note);
+    }
+    private Set<java.lang.String> notesCache;
+
+    public final Set<java.lang.String> getNotes() {
+        if (notesCache == null) {
+            notesCache = new HashSet<java.lang.String>();
+            for (SimpleEvent e : getEntities()) {
+                if (e.isNoteSet()) notesCache.add(e.getNote());
+            }
+        }
+        return notesCache;
+    }
+
+    private static class IsNote implements Predicate<SimpleEvent> {
+
+        private java.lang.String value;
+
+        public IsNote(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SimpleEvent e) {
+            return e.isNote(value);
         }
 
     }
