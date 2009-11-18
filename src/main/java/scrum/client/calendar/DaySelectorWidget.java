@@ -22,7 +22,7 @@ public class DaySelectorWidget extends ADateSelectorWidget {
 
 	@Override
 	protected AScrumAction getAction() {
-		return new DaySelectedAction(date);
+		return new DaySelectedAction(date.getDay());
 	}
 
 	@Override
