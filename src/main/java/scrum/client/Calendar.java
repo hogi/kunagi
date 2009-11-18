@@ -10,10 +10,27 @@ import scrum.client.common.AScrumComponent;
 
 public class Calendar extends AScrumComponent {
 
-	public List<SimpleEvent> getEvents(Date date) {
+	public List<SimpleEvent> getEventsByDate(Date date) {
 		List<SimpleEvent> ret = new ArrayList<SimpleEvent>();
 		for (SimpleEvent event : getCurrentProject().getSimpleEvents()) {
 			if (event.isDate(date)) ret.add(event);
+		}
+		return ret;
+	}
+
+	public List<SimpleEvent> getEventsByYear(int year) {
+		List<SimpleEvent> ret = new ArrayList<SimpleEvent>();
+		for (SimpleEvent event : getCurrentProject().getSimpleEvents()) {
+			if (event.getDate().getYear() == year) ret.add(event);
+		}
+		return ret;
+	}
+
+	public List<SimpleEvent> getEventsByMonth(int year, int month) {
+		List<SimpleEvent> ret = new ArrayList<SimpleEvent>();
+		for (SimpleEvent event : getCurrentProject().getSimpleEvents()) {
+			Date date = event.getDate();
+			if (date.getYear() == year && date.getMonth() == month) ret.add(event);
 		}
 		return ret;
 	}

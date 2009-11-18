@@ -64,7 +64,7 @@ public class DayListWidget extends AScrumWidget {
 	}
 
 	private Widget createEventList(Date date) {
-		List<SimpleEvent> events = cm.getCalendar().getEvents(date);
+		List<SimpleEvent> events = cm.getCalendar().getEventsByDate(date);
 		BlockListWidget<SimpleEvent> list = new BlockListWidget<SimpleEvent>(SimpleEventBlock.FACTORY);
 		list.setObjects(events);
 		return list;
