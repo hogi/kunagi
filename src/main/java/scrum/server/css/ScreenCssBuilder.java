@@ -133,6 +133,9 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void calendar(CssRenderer css) {
+		css.style(".DateSelectorWidget").background("white");
+		css.style(".DateSelectorWidget-selected").background(cNavigatorHoverItemBackground);
+		css.style(".DateSelectorWidget-events").color("red");
 		css.style(".DayListWidget-date").color(cBlockHeaderCellSecondary);
 		css.style(".DayListWidget-week").color(cBlockHeaderCellSecondary);
 		css.style(".DayListWidget-month").color(cBlockHeaderCellSecondary);
