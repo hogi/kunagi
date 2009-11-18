@@ -18,16 +18,12 @@ public class DaySelectorListWidget extends AScrumWidget {
 
 	protected List<DaySelectorWidget> getDayWidgets(int year, int month, int selectedDay) {
 
-		List<Date> days = Date.getDaysInMonth(2009, 11);
+		List<Date> days = Date.getDaysInMonth(year, month);
 
 		List<DaySelectorWidget> widgets = new ArrayList<DaySelectorWidget>();
 
 		for (Date d : days) {
-			if (d.getDay() == selectedDay) {
-				widgets.add(new DaySelectorWidget(d, true));
-			} else {
-				widgets.add(new DaySelectorWidget(d));
-			}
+			widgets.add(new DaySelectorWidget(d, d.getDay() == selectedDay));
 		}
 
 		return widgets;
