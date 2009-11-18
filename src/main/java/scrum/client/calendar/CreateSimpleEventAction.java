@@ -2,22 +2,19 @@ package scrum.client.calendar;
 
 import scrum.client.common.TooltipBuilder;
 
-public class DeleteSimpleEventAction extends GDeleteSimpleEventAction {
-
-	public DeleteSimpleEventAction(scrum.client.calendar.SimpleEvent simpleEvent) {
-		super(simpleEvent);
-	}
+public class CreateSimpleEventAction extends GCreateSimpleEventAction {
 
 	@Override
 	public String getLabel() {
-		return "Delete";
+		return "Create new Event";
 	}
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Delete this Impediment.");
+		TooltipBuilder tb = new TooltipBuilder("Create new Event.");
 		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_ANYTHING);
+
 		return tb.getTooltip();
 	}
 
@@ -34,22 +31,9 @@ public class DeleteSimpleEventAction extends GDeleteSimpleEventAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getDao().deleteSimpleEvent(simpleEvent);
-		addUndo(new Undo());
-	}
-
-	class Undo extends ALocalUndo {
-
-		@Override
-		public String getLabel() {
-			return "Undo Delete " + simpleEvent.getLabel();
-		}
-
-		@Override
-		protected void onUndo() {
-			cm.getDao().createSimpleEvent(simpleEvent);
-		}
-
+		SimpleEvent event = new SimpleEvent();
+		cm.getDao().createSimpleEvent(event);
+		cm.getProjectContext().showCalendar(event);
 	}
 
 }

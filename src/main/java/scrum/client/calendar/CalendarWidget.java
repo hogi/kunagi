@@ -1,5 +1,6 @@
 package scrum.client.calendar;
 
+import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.common.AScrumWidget;
@@ -9,12 +10,16 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CalendarWidget extends AScrumWidget {
 
+	private DayListWidget dayList;
+
 	@Override
 	protected Widget onInitialization() {
 
+		dayList = new DayListWidget();
+
 		PagePanel left = new PagePanel();
-		left.addHeader("Project Calendar");
-		left.addSection(new DayListWidget(new Date(2009, 11, 1), new Date(2009, 11, 30)));
+		left.addHeader("Project Calendar", new ButtonWidget(new CreateSimpleEventAction()));
+		left.addSection(dayList);
 
 		PagePanel right = new PagePanel();
 		right.addHeader("Years");
@@ -30,5 +35,13 @@ public class CalendarWidget extends AScrumWidget {
 	public Date getSelectedDate() {
 		// TODO hogi
 		return Date.today();
+	}
+
+	public void showDate(Date date) {
+		dayList.showDate(date);
+	}
+
+	public void showEvent(SimpleEvent event) {
+		dayList.showEvent(event);
 	}
 }

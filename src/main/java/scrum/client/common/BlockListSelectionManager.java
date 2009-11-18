@@ -7,6 +7,10 @@ public class BlockListSelectionManager {
 
 	private Set<BlockListWidget> lists = new HashSet<BlockListWidget>();
 
+	public void clear() {
+		lists.clear();
+	}
+
 	public void add(BlockListWidget list) {
 		lists.add(list);
 	}

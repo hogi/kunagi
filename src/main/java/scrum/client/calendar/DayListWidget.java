@@ -1,38 +1,55 @@
 package scrum.client.calendar;
 
 import ilarkesto.gwt.client.Date;
+import ilarkesto.gwt.client.Gwt;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import scrum.client.common.AScrumWidget;
+import scrum.client.common.BlockListSelectionManager;
 import scrum.client.common.BlockListWidget;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class DayListWidget extends AScrumWidget {
 
-	private static final DateTimeFormat DTF_DAY = DateTimeFormat.getFormat("EEE, dd.");
-
-	private Date begin;
-	private Date end;
-	private FlexTable table;
-
-	public DayListWidget(Date begin, Date end) {
-		super();
-		this.begin = begin;
-		this.end = end;
-	}
+	private SimplePanel wrapper;
+	private BlockListSelectionManager selectionManager;
+	private Map<Date, BlockListWidget<SimpleEvent>> lists;
 
 	@Override
 	protected Widget onInitialization() {
-		table = new FlexTable();
+		selectionManager = new BlockListSelectionManager();
+		lists = new HashMap<Date, BlockListWidget<SimpleEvent>>();
+		wrapper = new SimplePanel();
+		showDate(Date.today());
+		return wrapper;
+	}
+
+	@Override
+	protected void onUpdate() {
+		for (Map.Entry<Date, BlockListWidget<SimpleEvent>> entry : lists.entrySet()) {
+			List<SimpleEvent> events = cm.getCalendar().getEventsByDate(entry.getKey());
+			entry.getValue().setObjects(events);
+		}
+	}
+
+	public void showDate(Date dateToShow) {
+		lists.clear();
+		selectionManager.clear();
+
+		FlexTable table = new FlexTable();
 		table.setWidth("100%");
 		table.setCellPadding(2);
+		table.setBorderWidth(1);
 		int row = 0;
-		Date date = begin;
+		Date date = dateToShow;
+		Date end = dateToShow.addDays(14);
 		int week = 0;
 		while (date.compareTo(end) <= 0) {
 			int w = date.getWeek();
@@ -43,12 +60,21 @@ public class DayListWidget extends AScrumWidget {
 			} else {
 				table.setWidget(row, 0, new Label("."));
 			}
-			table.setWidget(row, 1, createDate(date));
-			table.setWidget(row, 2, createEventList(date));
+			table.setWidget(row, 1, Gwt
+					.createDiv("DayListWidget-date", Gwt.DTF_WEEKDAY_SHORT.format(date.toJavaDate())));
+			table.setWidget(row, 2, Gwt.createDiv("DayListWidget-date", Gwt.DTF_DAY.format(date.toJavaDate())));
+			table.setWidget(row, 3, createEventList(date));
 			date = date.nextDay();
 			row++;
 		}
-		return table;
+
+		wrapper.setWidget(table);
+	}
+
+	public void showEvent(SimpleEvent event) {
+		showDate(event.getDate());
+		update();
+		selectionManager.select(event);
 	}
 
 	private Widget createWeek(int week) {
@@ -57,16 +83,11 @@ public class DayListWidget extends AScrumWidget {
 		return l;
 	}
 
-	private Widget createDate(Date date) {
-		Label l = new Label(date.getWeekdayLabel() + ", " + date.getDay() + ".");
-		l.setStyleName("DayListWidget-date");
-		return l;
-	}
-
 	private Widget createEventList(Date date) {
-		List<SimpleEvent> events = cm.getCalendar().getEventsByDate(date);
 		BlockListWidget<SimpleEvent> list = new BlockListWidget<SimpleEvent>(SimpleEventBlock.FACTORY);
-		list.setObjects(events);
+		list.setSelectionManager(selectionManager);
+		list.setAutoSorter(SimpleEvent.TIME_COMPARATOR);
+		lists.put(date, list);
 		return list;
 	}
 

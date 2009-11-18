@@ -13,6 +13,7 @@ import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.PunishmentsWidget;
 import scrum.client.admin.User;
 import scrum.client.calendar.CalendarWidget;
+import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.WikiWidget;
 import scrum.client.common.AScrumComponent;
@@ -311,6 +312,11 @@ public class ProjectContext extends AScrumComponent {
 	public void showRiskList(Risk risk) {
 		select(riskList);
 		riskList.showRisk(risk);
+	}
+
+	public void showCalendar(SimpleEvent event) {
+		select(calendar);
+		calendar.showEvent(event);
 	}
 
 	private void select(AWidget widget) {
