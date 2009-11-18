@@ -12,9 +12,9 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class DaySelectorListWidget extends AScrumWidget {
 
-	private int selectedDay;
-	private int year;
-	private int month;
+	private int selectedDay = Date.today().getDay();
+	private int year = Date.today().getYear();
+	private int month = Date.today().getMonth();
 
 	protected List<DaySelectorWidget> getDayWidgets(int year, int month, int selectedDay) {
 
