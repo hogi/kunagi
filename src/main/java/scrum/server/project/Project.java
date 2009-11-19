@@ -256,7 +256,8 @@ public class Project extends GProject {
 		sprint.setLabel("Next Sprint");
 		if (isCurrentSprintSet()) {
 			sprint.setBegin(getCurrentSprint().getEnd());
-			sprint.setEnd(sprint.getBegin().addDays(getCurrentSprint().getLengthInDays()));
+			Integer length = getCurrentSprint().getLengthInDays();
+			if (length != null) sprint.setEnd(sprint.getBegin().addDays(length));
 		}
 		sprintDao.saveEntity(sprint);
 		setNextSprint(sprint);
