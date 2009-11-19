@@ -96,6 +96,8 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style(".AViewEditWidget-viewer").background(cFieldBackground).border(1, "dotted",
 			cNavigatorSelectedItemBackground);
+		css.style(".AViewEditWidget-error").color(cError).background(cErrorBackground).border(1, "solid", cError)
+				.margin(2).padding(2);
 
 		css.style(".dnd-drop-allowed").background(cHeaderBackground);
 
