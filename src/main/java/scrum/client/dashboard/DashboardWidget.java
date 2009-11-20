@@ -12,10 +12,11 @@ public class DashboardWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		PagePanel sprintBurndown = PagePanel.createSimple("Sprint Burndown", new SprintBurndownWidget());
-		PagePanel tasks = PagePanel.createSimple("Team Member Tasks", new UsersWorkWidget());
+		PagePanel tasks = PagePanel.createSimple("Tasks", TableBuilder.row(10, new TeamTasksWidget(),
+			new UpcomingTasksWidget()));
 		PagePanel sprintComments = PagePanel.createSimple("Sprint Comments", new CommentsWidget(getCurrentSprint()));
 		PagePanel impediments = PagePanel.createSimple("Open Impediments", new OpenImpedimentsWidget());
-		PagePanel risks = PagePanel.createSimple("Hight Priority Risks", new HighestRisksWidget());
+		PagePanel risks = PagePanel.createSimple("High Priority Risks", new HighestRisksWidget());
 		PagePanel events = PagePanel.createSimple("Latest Events", new LatestEventsWidget());
 		PagePanel projectComments = PagePanel.createSimple("Project Comments", new CommentsWidget(getCurrentProject()));
 

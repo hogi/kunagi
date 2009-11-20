@@ -3,6 +3,7 @@ package scrum.client.sprint;
 import ilarkesto.gwt.client.TimePeriod;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,16 @@ public class Sprint extends GSprint {
 
 	public List<Requirement> getRequirements() {
 		return getDao().getRequirementsBySprint(this);
+	}
+
+	public List<Task> getUnclaimedTasks(boolean sorted) {
+		List<Task> ret = new ArrayList<Task>();
+		List<Requirement> requirements = getRequirements();
+		if (sorted) Collections.sort(requirements, getProject().getRequirementsOrderComparator());
+		for (Requirement requirement : requirements) {
+			ret.addAll(requirement.getUnclaimedTasks());
+		}
+		return ret;
 	}
 
 	public List<Task> getTasks(User user) {

@@ -14,7 +14,7 @@ import scrum.client.sprint.Task;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
-public class UsersWorkWidget extends AScrumWidget {
+public class TeamTasksWidget extends AScrumWidget {
 
 	private HTML html;
 
@@ -28,9 +28,9 @@ public class UsersWorkWidget extends AScrumWidget {
 	protected void onUpdate() {
 		Project project = getCurrentProject();
 		StringBuilder sb = new StringBuilder();
-		sb.append("<div class='UsersWorkWidget'>");
+		sb.append("<div class='TeamTasksWidget'>");
 		for (User user : project.getTeamMembers()) {
-			sb.append("<div class='UsersWorkWidget-user'>");
+			sb.append("<div class='TeamTasksWidget-user'>");
 			sb.append("<span style='color: ").append(user.getColor()).append("; font-weight: bold;'>");
 			sb.append(user.getName());
 			sb.append("</span> is working on");
@@ -43,17 +43,21 @@ public class UsersWorkWidget extends AScrumWidget {
 			for (Task task : tasks) {
 				reqs.add(task.getRequirement());
 			}
+			sb.append("<ul>");
 			for (Requirement req : reqs) {
-				sb.append("<br>&nbsp;&nbsp;&nbsp;&nbsp;");
+				sb.append("<li>");
 				sb.append(ScrumJs.createShowEntityByReferenceLink(req.getReference()));
 				sb.append(" ").append(req.getLabel());
+				sb.append("<ul>");
 				for (Task task : req.getClaimedTasks(user)) {
-					sb.append("<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+					sb.append("<li>");
 					sb.append(ScrumJs.createShowEntityByReferenceLink(task.getReference()));
 					sb.append(" ").append(task.getLabel());
+					sb.append("</li>");
 				}
+				sb.append("</ul></li>");
 			}
-			sb.append("</div>");
+			sb.append("</ul></div>");
 		}
 		sb.append("</div>");
 		html.setHTML(sb.toString());

@@ -152,7 +152,7 @@ public class Requirement extends GRequirement {
 	}
 
 	public int getRemainingWorkInUnclaimedTasks() {
-		return Task.sumRemainingWork(getUnlaimedTasks());
+		return Task.sumRemainingWork(getUnclaimedTasks());
 	}
 
 	public int getRemainingWork() {
@@ -183,7 +183,7 @@ public class Requirement extends GRequirement {
 		return ret;
 	}
 
-	public List<Task> getUnlaimedTasks() {
+	public List<Task> getUnclaimedTasks() {
 		List<Task> ret = new ArrayList<Task>();
 		for (Task task : getTasks()) {
 			if (!task.isOwnerSet()) ret.add(task);
