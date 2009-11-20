@@ -26,7 +26,7 @@ public class Highlight extends Paragraph {
 
 	@Override
 	public String toString() {
-		return "Highlight(" + Gwt.toString(getItems()) + ")";
+		return "Highlight(" + Gwt.toString(getElements()) + ")";
 	}
 
 }

@@ -19,6 +19,10 @@ public class WikiModel {
 		return sb.toString();
 	}
 
+	public List<AWikiElement> getElements() {
+		return elements;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

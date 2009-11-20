@@ -21,4 +21,12 @@ public class Header extends AWikiElement {
 		return "Text(\"" + text + "\")";
 	}
 
+	public int getDepth() {
+		return depth;
+	}
+
+	public String getText() {
+		return text;
+	}
+
 }

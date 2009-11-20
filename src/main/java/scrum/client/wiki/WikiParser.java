@@ -291,6 +291,16 @@ public class WikiParser {
 			return;
 		}
 
+		// toc
+		if (input.startsWith("TOC")) {
+			String line = getNextLine();
+			if (line.equals("TOC")) {
+				burn(line.length() + 1);
+				model.add(new Toc(model));
+				return;
+			}
+		}
+
 		// paragraph
 		model.add(appendText(new Paragraph(!oneliner), cutParagraph()));
 	}

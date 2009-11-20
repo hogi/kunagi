@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Paragraph extends AWikiElement {
 
-	private List<AWikiElement> items = new ArrayList<AWikiElement>();
+	private List<AWikiElement> elements = new ArrayList<AWikiElement>();
 	private boolean p;
 
 	public Paragraph(boolean p) {
@@ -15,28 +15,28 @@ public class Paragraph extends AWikiElement {
 		this.p = p;
 	}
 
-	public void add(AWikiElement item) {
-		items.add(item);
+	public void add(AWikiElement element) {
+		elements.add(element);
 	}
 
 	@Override
 	String toHtml() {
 		StringBuilder sb = new StringBuilder();
 		if (p) sb.append("<p>");
-		for (AWikiElement item : items) {
-			sb.append(item.toHtml());
+		for (AWikiElement element : elements) {
+			sb.append(element.toHtml());
 		}
 		if (p) sb.append("</p>");
 		return sb.toString();
 	}
 
-	public List<AWikiElement> getItems() {
-		return items;
+	public List<AWikiElement> getElements() {
+		return elements;
 	}
 
 	@Override
 	public String toString() {
-		return "Paragraph(" + Gwt.toString(items) + ")";
+		return "Paragraph(" + Gwt.toString(elements) + ")";
 	}
 
 }

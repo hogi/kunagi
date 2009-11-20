@@ -6,6 +6,12 @@ import org.testng.annotations.Test;
 public class WikiTest {
 
 	@Test
+	public void testToc() {
+		Assert.assertEquals(toHtml("TOC\n= 1 =\n== 1.1 ==\n= 2 ="),
+			"<ul class=\"toc\"><li>1</li><ul><li>1.1</li></ul><li>2</li></ul><h1>1</h1><h2>1.1</h2><h1>2</h1>");
+	}
+
+	@Test
 	public void testEmphAndStrong() {
 		Assert.assertEquals(toHtml("'''''emph and strong'''''"), "<strong><em>emph and strong</em></strong>");
 		Assert.assertEquals(toHtml("this is '''strong'''"), "this is <strong>strong</strong>");

@@ -135,6 +135,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".SprintBorderIndicatorWidget").background(cPagePanelHeaderBackground).color(cPagePanelHeader)
 				.border(1, "solid", cPagePanelBorder).textAlignCenter().borderRadius(10).fontSize(fontSizeSmall)
 				.margin(3, 100, 3, 100);
+
+		css.style("ul.toc");// .displayInline().floatRight();
 	}
 
 	private void calendar(CssRenderer css) {
