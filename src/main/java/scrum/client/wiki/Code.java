@@ -11,7 +11,10 @@ public class Code extends AWikiElement {
 
 	@Override
 	String toHtml() {
-		return "<code>" + escapeHtml(text) + "</code>";
+		String html = escapeHtml(text);
+		html = html.replace("\n", "<br>");
+		html = html.replace(" ", "&nbsp;");
+		return "<code>" + html + "</code>";
 	}
 
 	@Override

@@ -52,9 +52,29 @@ public class WikiParser {
 	}
 
 	private Paragraph appendText(Paragraph p, String text) {
+		int begin;
+
+		// code
+		begin = text.indexOf("<code>");
+		if (begin >= 0 && begin < text.length() - 7) {
+			int end = text.indexOf("</code>", begin);
+			if (end > begin) {
+				String prefix = text.substring(0, begin);
+				String content = text.substring(begin + 6, end);
+				String suffix = text.substring(end + 7);
+				if (content.trim().length() > 0) {
+					appendText(p, prefix);
+					p.add(new Code(content));
+					appendText(p, suffix);
+					return p;
+				}
+			}
+		}
+
+		text = text.replace('\n', ' ');
 
 		// internal links
-		int begin = text.indexOf("[[");
+		begin = text.indexOf("[[");
 		if (begin >= 0 && begin < text.length() - 4) {
 			int end = text.indexOf("]]", begin);
 			if (end > begin) {
@@ -152,23 +172,6 @@ public class WikiParser {
 							return p;
 						}
 					}
-				}
-			}
-		}
-
-		// code
-		begin = text.indexOf("<code>");
-		if (begin >= 0 && begin < text.length() - 7) {
-			int end = text.indexOf("</code>", begin);
-			if (end > begin) {
-				String prefix = text.substring(0, begin);
-				String content = text.substring(begin + 6, end);
-				String suffix = text.substring(end + 7);
-				if (content.trim().length() > 0) {
-					appendText(p, prefix);
-					p.add(new Code(content));
-					appendText(p, suffix);
-					return p;
 				}
 			}
 		}
@@ -352,7 +355,7 @@ public class WikiParser {
 			if (first) {
 				first = false;
 			} else {
-				sb.append(' ');
+				sb.append('\n');
 			}
 			sb.append(line);
 			burn(line.length() + 1);

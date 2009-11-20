@@ -2,6 +2,6 @@ package scrum.client;
 
 public class ClientConstants {
 
-	public static String[] EFFORT_ROW = new String[] { "", "0", "0,5", "1", "2", "3", "5", "8", "13", "20", "40", "100" };
+	public static String[] EFFORT_ROW = new String[] { "", "1", "2", "3", "5", "8", "13", "20", "40", "100" };
 
 }

@@ -196,7 +196,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.h2().fontSize(fontSize + 2).lineHeight(lineHeight + 2).fontWeightBold().margin(0, 0, 5, 0);
 		css.h3().fontSize(fontSize + 1).lineHeight(lineHeight + 1).fontWeightBold().margin(0, 0, 5, 0);
 		css.h4().fontSize(fontSize).lineHeight(lineHeight).fontWeightBold().margin(0, 0, 5, 0);
-		css.pre().margin(0, 0, 10, 0).color(cHeaderBackground);
+		css.pre().margin(0, 0, 10, 0).color(cHeaderBackground).fontSize(fontSize).lineHeight(lineHeight);
+		css.code().color(cHeaderBackground).fontSize(fontSize).lineHeight(lineHeight);
 		css.ul().margin(0, 0, 10, 0).padding(0, 0, 0, 20);
 		css.ol().margin(0, 0, 10, 0).padding(0, 0, 0, 20);
 	}
