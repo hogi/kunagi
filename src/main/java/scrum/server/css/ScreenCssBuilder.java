@@ -288,6 +288,7 @@ public class ScreenCssBuilder implements CssBuilder {
 				.background(cPagePanelHeaderBackground).color(cPagePanelHeader);
 		css.style(".PagePanel-header .gwt-Button").fontSize(fontSizeSmall);
 		css.style(".PagePanel-header input").fontSize(fontSizeSmall);
+		css.style(".PagePanel-header .HyperlinkWidget").fontSize(fontSizeSmall);
 		css.style(".PagePanel-section").margin(0, 10, 0, 10);
 		css.style(".PagePanel-spacer").height(10);
 	}
