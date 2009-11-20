@@ -68,6 +68,9 @@ public class ScreenCssBuilder implements CssBuilder {
 	String cButtonBorderHover = "#866";
 	String cButtonBorderDisabled = cButtonTextDisabled;
 
+	String cCommentsBackground = "#FAFFFA";
+	String cCommentsBorder = "#EAFFEA";
+
 	public void buildCss(CssRenderer css) {
 		html(css);
 		gwt(css);
@@ -243,7 +246,8 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void comments(CssRenderer css) {
-		css.style(".CommentsWidget");
+		css.style(".CommentsWidget").background(cCommentsBackground).border(1, "solid", cCommentsBorder).padding(7)
+				.borderRadius(10);
 		css.style(".CommentWidget").margin(15, 0, 10, 0).borderTop(1, "solid", cBlockHeaderBackground);
 		css.style(".CommentWidget-header").margin(4, 0, 2, 0);
 		css.style(".CommentWidget-header-author").floatLeft().marginRight(5);
