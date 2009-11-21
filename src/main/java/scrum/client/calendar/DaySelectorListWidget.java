@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.common.AScrumWidget;
 
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class DaySelectorListWidget extends AScrumWidget {
@@ -19,7 +20,16 @@ public class DaySelectorListWidget extends AScrumWidget {
 	protected void onUpdate() {
 		TableBuilder tb = new TableBuilder();
 		int count = 0;
-		for (Date date : Date.getDaysInMonth(selectedDate.getYear(), selectedDate.getMonth())) {
+
+		// Header with weekdays
+		for (int i = 0; i < 7; i++) {
+			// 2009-11-23 is a Monday
+			Date weekday = new Date(2009, 11, 23 + i);
+			tb.add(new Label(weekday.getWeekdayLabel()));
+		}
+		tb.nextRow();
+
+		for (Date date : Date.getDaysOverMonth(selectedDate.getYear(), selectedDate.getMonth())) {
 			tb.add(new DaySelectorWidget(date, date.equals(selectedDate)));
 			count++;
 			if (count == 7) {

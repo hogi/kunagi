@@ -53,4 +53,8 @@ public class Calendar extends AScrumComponent {
 		cm.getProjectContext().getCalendar().showDate(date);
 	}
 
+	public void showDate(Date date) {
+		cm.getProjectContext().getCalendar().showDate(date);
+	}
+
 }

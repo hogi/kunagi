@@ -1,23 +1,24 @@
 package scrum.client.calendar;
 
+import ilarkesto.gwt.client.Date;
 import scrum.client.common.AScrumAction;
 
 public class DaySelectedAction extends AScrumAction {
 
-	private int day;
+	private Date date;
 
-	public DaySelectedAction(int day) {
-		this.day = day;
+	public DaySelectedAction(Date date) {
+		this.date = date;
 	}
 
 	@Override
 	public String getLabel() {
-		return "" + day;
+		return "" + date.getDay();
 	}
 
 	@Override
 	protected void onExecute() {
-		cm.getCalendar().showDay(day);
+		cm.getCalendar().showDate(date);
 	}
 
 }
