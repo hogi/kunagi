@@ -21,15 +21,19 @@ public class DaySelectorListWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		int count = 0;
 
+		tb.add(new Label("Week"));
 		// Header with weekdays
-		for (int i = 0; i < 7; i++) {
+		for (int i = 1; i < 8; i++) {
 			// 2009-11-23 is a Monday
-			Date weekday = new Date(2009, 11, 23 + i);
+			Date weekday = new Date(2009, 11, 22 + i);
 			tb.add(new Label(weekday.getWeekdayLabel()));
 		}
 		tb.nextRow();
 
 		for (Date date : Date.getDaysOverMonth(selectedDate.getYear(), selectedDate.getMonth())) {
+			if (count == 0) {
+				tb.add(new Label("" + date.getWeek()));
+			}
 			tb.add(new DaySelectorWidget(date, date.equals(selectedDate)));
 			count++;
 			if (count == 7) {
