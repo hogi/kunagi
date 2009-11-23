@@ -50,7 +50,7 @@ public class Issue extends GIssue {
 
 	@Override
 	public String toString() {
-		return getReference() + " [" + getType() + "] " + getLabel();
+		return getReference() + " (" + getType() + ") " + getLabel();
 	}
 
 	public static final Comparator<Issue> DATE_COMPARATOR = new Comparator<Issue>() {

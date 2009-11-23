@@ -9,6 +9,10 @@ public class Issue extends GIssue implements Numbered {
 		if (getNumber() == 0) setNumber(getProject().generateIssueNumber());
 	}
 
+	public String getReference() {
+		return scrum.client.issues.Issue.REFERENCE_PREFIX + getNumber();
+	}
+
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
@@ -19,6 +23,6 @@ public class Issue extends GIssue implements Numbered {
 
 	@Override
 	public String toString() {
-		return "[" + getType() + "] " + getLabel();
+		return getReference() + " (" + getType() + ") " + getLabel();
 	}
 }
