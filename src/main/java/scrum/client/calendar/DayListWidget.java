@@ -51,7 +51,7 @@ public class DayListWidget extends AScrumWidget {
 		// table.setBorderWidth(1);
 		int row = 0;
 		Date date = dateToShow;
-		Date end = dateToShow.addDays(14);
+		Date end = dateToShow.addDays(21);
 		int month = 0;
 		int week = 0;
 		while (date.compareTo(end) <= 0) {

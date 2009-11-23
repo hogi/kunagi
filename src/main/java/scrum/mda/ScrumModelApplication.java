@@ -165,6 +165,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			simpleEventModel.addProperty("note", String.class).setSearchable(true);
 			getApplicationModel().addCreateAction(simpleEventModel);
 			simpleEventModel.addAction("DeleteSimpleEvent");
+			simpleEventModel.addAction("PublishSimpleEvent");
 		}
 		return simpleEventModel;
 	}

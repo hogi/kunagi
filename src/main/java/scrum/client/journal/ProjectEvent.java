@@ -1,5 +1,7 @@
 package scrum.client.journal;
 
+import ilarkesto.gwt.client.DateAndTime;
+
 import java.util.Comparator;
 import java.util.Map;
 
@@ -7,6 +9,12 @@ public class ProjectEvent extends GProjectEvent {
 
 	public ProjectEvent(Map data) {
 		super(data);
+	}
+
+	public ProjectEvent(String label) {
+		setDateAndTime(DateAndTime.now());
+		setProject(cm.getProjectContext().getProject());
+		setLabel(label);
 	}
 
 	@Override
