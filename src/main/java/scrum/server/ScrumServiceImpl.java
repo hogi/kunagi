@@ -376,6 +376,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		assertProjectSelected(session);
 		ProjectEvent event = projectEventDao.postEvent(session.getProject(), label);
 		sendToClients(session, event);
+		sendToClients(session, event.createChatMessage());
 	}
 
 	private void sendToClients(WebSession session, Collection<? extends AEntity> entities) {

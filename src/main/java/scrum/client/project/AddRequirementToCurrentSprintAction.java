@@ -46,9 +46,6 @@ public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurren
 	@Override
 	protected void onExecute() {
 		requirement.setSprint(getCurrentProject().getCurrentSprint());
-		cm.getChat().postSystemMessage(
-			getCurrentUser().getName() + " added Requirement " + requirement.getReference() + " to current Sprint.",
-			true);
 		addUndo(new Undo());
 	}
 
@@ -62,9 +59,6 @@ public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurren
 		@Override
 		protected void onUndo() {
 			requirement.setSprint(null);
-			cm.getChat().postSystemMessage(
-				getCurrentUser().getName() + " has undone adding Requirement " + requirement.getReference()
-						+ " to current Sprint.", true);
 		}
 
 	}

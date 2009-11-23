@@ -43,10 +43,6 @@ public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSpr
 	protected void onExecute() {
 		Sprint sprint = requirement.getSprint();
 		requirement.setSprint(null);
-		cm.getChat()
-				.postSystemMessage(
-					getCurrentUser().getName() + " removed Requirement " + requirement.getReference()
-							+ " from current Sprint.", true);
 		addUndo(new Undo(sprint));
 	}
 
@@ -66,9 +62,6 @@ public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSpr
 		@Override
 		protected void onUndo() {
 			requirement.setSprint(s);
-			cm.getChat().postSystemMessage(
-				getCurrentUser().getName() + " has undone the removal of Requirement " + requirement.getReference()
-						+ " from current Sprint.", true);
 		}
 
 	}

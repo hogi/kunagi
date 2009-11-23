@@ -29,8 +29,6 @@ public class Task extends GTask {
 		} else {
 			setOwner(user);
 		}
-		if (ownerchange)
-			cm.getChat().postSystemMessage(user.getName() + " claimed task " + getReference() + ".", true);
 	}
 
 	public String getLongLabel(boolean showOwner, boolean showRequirement) {
@@ -55,7 +53,6 @@ public class Task extends GTask {
 			throw new IllegalArgumentException("a Task cannot be set done without claiming Task ownership");
 		setOwner(user);
 		setRemainingWork(0);
-		cm.getChat().postSystemMessage(cm.getAuth().getUser().getName() + " closed task " + getReference() + ".", true);
 	}
 
 	public void setUnDone(User user) {
@@ -67,8 +64,6 @@ public class Task extends GTask {
 	public void setUnOwned() {
 		setOwner(null);
 		getRequirement().setClosed(false);
-		cm.getChat().postSystemMessage(cm.getAuth().getUser().getName() + " rejected task " + getReference() + ".",
-			true);
 	}
 
 	public boolean isClaimed() {
