@@ -97,7 +97,8 @@ public class DayListWidget extends AScrumWidget {
 	}
 
 	private Widget createEventList(Date date) {
-		BlockListWidget<SimpleEvent> list = new BlockListWidget<SimpleEvent>(SimpleEventBlock.FACTORY);
+		BlockListWidget<SimpleEvent> list = new BlockListWidget<SimpleEvent>(SimpleEventBlock.FACTORY,
+				new ChangeSimpleEventDateDropAction(date));
 		list.setSelectionManager(selectionManager);
 		list.setAutoSorter(SimpleEvent.TIME_COMPARATOR);
 		lists.put(date, list);
