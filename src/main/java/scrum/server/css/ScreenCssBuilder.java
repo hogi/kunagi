@@ -59,8 +59,6 @@ public class ScreenCssBuilder implements CssBuilder {
 	String cWaitBackground = cFieldBackground;
 	String cWait = cLink;
 
-	String cCommentDate = "darkgray";
-
 	String cButtonText = "#444";
 	String cButtonTextHover = "#500";
 	String cButtonTextDisabled = "lightgray";
@@ -68,8 +66,9 @@ public class ScreenCssBuilder implements CssBuilder {
 	String cButtonBorderHover = "#866";
 	String cButtonBorderDisabled = cButtonTextDisabled;
 
-	String cCommentsBackground = "#FAFFFA";
+	String cCommentsBackground = "#F8FFF8";
 	String cCommentsBorder = "#EAFFEA";
+	String cCommentDate = "darkgray";
 
 	public void buildCss(CssRenderer css) {
 		html(css);
