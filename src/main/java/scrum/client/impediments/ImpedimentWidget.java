@@ -2,11 +2,8 @@ package scrum.client.impediments;
 
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DateEditorWidget;
-import ilarkesto.gwt.client.editor.RichtextEditorWidget;
-import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
-import scrum.client.common.FieldsWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -21,13 +18,14 @@ public class ImpedimentWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		FieldsWidget fields = new FieldsWidget();
-		fields.add("Label", new TextEditorWidget(impediment.getLabelModel()).switchToEditModeIfNull());
-		fields.add("Date", new DateEditorWidget(impediment.getDateModel()));
-		fields.add("Description", new RichtextEditorWidget(impediment.getDescriptionModel()));
-		fields.add("Solution", new RichtextEditorWidget(impediment.getSolutionModel()));
+		TableBuilder tb = new TableBuilder();
+		tb.setCellPadding(2);
+		tb.addFieldRow("Label", impediment.getLabelModel());
+		tb.addFieldRow("Date", new DateEditorWidget(impediment.getDateModel()));
+		tb.addFieldRow("Description", impediment.getDescriptionModel());
+		tb.addFieldRow("Solution", impediment.getSolutionModel());
 
-		return TableBuilder.row(20, fields, new CommentsWidget(impediment));
+		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(impediment));
 	}
 
 }

@@ -12,8 +12,6 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import ilarkesto.gwt.client.editor.AIntegerEditorModel;
 import ilarkesto.gwt.client.editor.ATextEditorModel;
 import ilarkesto.gwt.client.editor.IntegerEditorWidget;
-import ilarkesto.gwt.client.editor.RichtextEditorWidget;
-import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.Wiki;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
@@ -153,7 +151,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setCellPadding(2);
 
-		tb.addFieldRow("TextPropertyEditorWidget", new TextEditorWidget(new ATextEditorModel() {
+		tb.addFieldRow("TextPropertyEditorWidget", new ATextEditorModel() {
 
 			@Override
 			public void setValue(String value) {
@@ -164,8 +162,8 @@ public class WidgetsTesterWidget extends AScrumWidget {
 			public String getValue() {
 				return fieldsText;
 			}
-		}));
-		tb.addFieldRow("RichtextEditorWidget", new RichtextEditorWidget(new ATextEditorModel() {
+		});
+		tb.addFieldRow("RichtextEditorWidget", new ATextEditorModel() {
 
 			@Override
 			public void setValue(String value) {
@@ -176,7 +174,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 			public String getValue() {
 				return fieldsRichText;
 			}
-		}));
+		});
 		tb.addFieldRow("IntegerEditorWidget", new IntegerEditorWidget(new AIntegerEditorModel() {
 
 			@Override

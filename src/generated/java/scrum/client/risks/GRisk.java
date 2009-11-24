@@ -173,6 +173,9 @@ public abstract class GRisk
         public boolean isMandatory() { return true; }
 
         @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);
@@ -221,6 +224,9 @@ public abstract class GRisk
         }
 
         @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);
@@ -267,6 +273,9 @@ public abstract class GRisk
         public void setValue(java.lang.String value) {
             setMitigationPlans(value);
         }
+
+        @Override
+        public boolean isRichtext() { return true; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

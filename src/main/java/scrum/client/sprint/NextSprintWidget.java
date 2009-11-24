@@ -4,10 +4,8 @@ import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
-import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
-import scrum.client.common.FieldsWidget;
 import scrum.client.project.Project;
 import scrum.client.workspace.PagePanel;
 
@@ -15,24 +13,23 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class NextSprintWidget extends AScrumWidget {
 
-	private FieldsWidget fieldsWidget;
-
 	@Override
 	protected Widget onInitialization() {
 		Sprint sprint = getSprint();
 
-		fieldsWidget = new FieldsWidget();
-		fieldsWidget.add("Label", new TextEditorWidget(sprint.getLabelModel()));
-		fieldsWidget.add("Goal", new RichtextEditorWidget(sprint.getGoalModel()).setTemplate(cm.getWiki().getTemplate(
+		TableBuilder tb = new TableBuilder();
+		tb.setCellPadding(2);
+		tb.addFieldRow("Label", sprint.getLabelModel());
+		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()).setTemplate(cm.getWiki().getTemplate(
 			"sprint.goal")));
-		fieldsWidget.add("Begin", new DateEditorWidget(sprint.getBeginModel()));
-		fieldsWidget.add("End", new DateEditorWidget(sprint.getEndModel()));
-		fieldsWidget.add("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()).setTemplate(cm
+		tb.addFieldRow("Begin", new DateEditorWidget(sprint.getBeginModel()));
+		tb.addFieldRow("End", new DateEditorWidget(sprint.getEndModel()));
+		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()).setTemplate(cm
 				.getWiki().getTemplate("sprint.planning")));
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Next Sprint", new ButtonWidget(new SwitchToNextSprintAction()));
-		page.addSection(TableBuilder.row(20, fieldsWidget, new CommentsWidget(sprint)));
+		page.addSection(TableBuilder.row(20, tb.createTable(), new CommentsWidget(sprint)));
 		return page;
 	}
 

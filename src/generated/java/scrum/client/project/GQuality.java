@@ -227,6 +227,9 @@ public abstract class GQuality
         public boolean isEditable() { return GQuality.this.isEditable(); }
 
         @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);
@@ -276,6 +279,9 @@ public abstract class GQuality
 
         @Override
         public boolean isEditable() { return GQuality.this.isEditable(); }
+
+        @Override
+        public boolean isRichtext() { return true; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

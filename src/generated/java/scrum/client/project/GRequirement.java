@@ -280,6 +280,9 @@ public abstract class GRequirement
         public boolean isEditable() { return GRequirement.this.isEditable(); }
 
         @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);
@@ -329,6 +332,9 @@ public abstract class GRequirement
 
         @Override
         public boolean isEditable() { return GRequirement.this.isEditable(); }
+
+        @Override
+        public boolean isRichtext() { return true; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

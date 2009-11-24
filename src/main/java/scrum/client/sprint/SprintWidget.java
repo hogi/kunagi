@@ -5,7 +5,6 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
-import ilarkesto.gwt.client.editor.TextEditorWidget;
 import ilarkesto.gwt.client.editor.TextOutputWidget;
 import scrum.client.common.AScrumWidget;
 
@@ -28,7 +27,7 @@ public class SprintWidget extends AScrumWidget {
 		tb.setCellPadding(2);
 		tb.setColumnWidths("100px");
 
-		tb.addFieldRow("Label", new TextEditorWidget(sprint.getLabelModel()), 4);
+		tb.addFieldRow("Label", sprint.getLabelModel(), 4);
 		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()).setTemplate(cm.getWiki().getTemplate(
 			"sprint.goal")), 4);
 

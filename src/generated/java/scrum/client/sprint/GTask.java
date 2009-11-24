@@ -227,6 +227,9 @@ public abstract class GTask
         public boolean isEditable() { return GTask.this.isEditable(); }
 
         @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);

@@ -3,7 +3,6 @@ package scrum.client.journal;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DateAndTimeEditorWidget;
-import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -20,9 +19,8 @@ public class ProjectEventWidget extends AWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setCellPadding(2);
 
-		// TODO use DateAndTimeEditorWidget
 		tb.addFieldRow("Timestamp", new DateAndTimeEditorWidget(projectEvent.getDateAndTimeModel()));
-		tb.addFieldRow("Label", new RichtextEditorWidget(projectEvent.getLabelModel()));
+		tb.addFieldRow("Label", projectEvent.getLabelModel());
 
 		return tb.createTable();
 	}

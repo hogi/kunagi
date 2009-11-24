@@ -1,11 +1,8 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.TableBuilder;
-import ilarkesto.gwt.client.editor.RichtextEditorWidget;
-import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
-import scrum.client.common.FieldsWidget;
 import scrum.client.sprint.Sprint;
 import scrum.client.workspace.PagePanel;
 
@@ -39,11 +36,12 @@ public class ProjectOverviewWidget extends AScrumWidget {
 
 	private Widget createProjectOverview(Project project) {
 
-		FieldsWidget fields = new FieldsWidget();
-		fields.add("Label", new TextEditorWidget(project.getLabelModel()));
-		fields.add("Description", new RichtextEditorWidget(project.getDescriptionModel()));
+		TableBuilder tb = new TableBuilder();
+		tb.setCellPadding(2);
+		tb.addFieldRow("Label", project.getLabelModel());
+		tb.addFieldRow("Description", project.getDescriptionModel());
 
-		return TableBuilder.row(20, fields, new CommentsWidget(project));
+		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(project));
 	}
 
 	@Override

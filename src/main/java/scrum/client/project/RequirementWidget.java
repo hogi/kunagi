@@ -4,10 +4,7 @@ import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.TableBuilder;
-import ilarkesto.gwt.client.editor.RichtextEditorWidget;
-import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
-import scrum.client.common.FieldsWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -31,13 +28,14 @@ public class RequirementWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 
-		FieldsWidget fields = new FieldsWidget();
+		TableBuilder tb = new TableBuilder();
+		tb.setCellPadding(2);
 
-		if (showLabel) fields.add("Label", new TextEditorWidget(requirement.getLabelModel()).switchToEditModeIfNull());
+		if (showLabel) tb.addFieldRow("Label", requirement.getLabelModel());
 
-		fields.add("Description", new RichtextEditorWidget(requirement.getDescriptionModel()));
+		tb.addFieldRow("Description", requirement.getDescriptionModel());
 
-		fields.add("Qualities", new AMultiSelectionViewEditWidget<Quality>() {
+		tb.addFieldRow("Qualities", new AMultiSelectionViewEditWidget<Quality>() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -61,12 +59,12 @@ public class RequirementWidget extends AWidget {
 			}
 		});
 
-		fields.add("Test", new RichtextEditorWidget(requirement.getTestDescriptionModel()));
+		tb.addFieldRow("Test", requirement.getTestDescriptionModel());
 
-		fields.add("Estimated Work", new RequirementEstimatedWorkWidget(requirement));
+		tb.addFieldRow("Estimated Work", new RequirementEstimatedWorkWidget(requirement));
 
 		if (showTaskWork) {
-			fields.add("Remainig Task Work", new AFieldValueWidget() {
+			tb.addFieldRow("Remainig Task Work", new AFieldValueWidget() {
 
 				@Override
 				protected void onUpdate() {
@@ -75,7 +73,7 @@ public class RequirementWidget extends AWidget {
 			});
 		}
 
-		if (showSprint) fields.add("Sprint", new AFieldValueWidget() {
+		if (showSprint) tb.addFieldRow("Sprint", new AFieldValueWidget() {
 
 			@Override
 			protected void onUpdate() {
@@ -83,7 +81,7 @@ public class RequirementWidget extends AWidget {
 			}
 		});
 
-		return showComments ? TableBuilder.row(20, fields, new CommentsWidget(requirement)) : fields;
+		return showComments ? TableBuilder.row(20, tb.createTable(), new CommentsWidget(requirement)) : tb
+				.createTable();
 	}
-
 }

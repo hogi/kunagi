@@ -177,6 +177,9 @@ public abstract class GSprint
         public boolean isEditable() { return GSprint.this.isEditable(); }
 
         @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);
@@ -385,6 +388,9 @@ public abstract class GSprint
         }
 
         @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);
@@ -434,6 +440,9 @@ public abstract class GSprint
 
         @Override
         public boolean isEditable() { return GSprint.this.isPlanningEditable(); }
+
+        @Override
+        public boolean isRichtext() { return true; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -487,6 +496,9 @@ public abstract class GSprint
         public boolean isEditable() { return GSprint.this.isReviewEditable(); }
 
         @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);
@@ -536,6 +548,9 @@ public abstract class GSprint
 
         @Override
         public boolean isEditable() { return GSprint.this.isRetrospectiveEditable(); }
+
+        @Override
+        public boolean isRichtext() { return true; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

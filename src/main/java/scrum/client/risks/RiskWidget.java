@@ -3,11 +3,8 @@ package scrum.client.risks;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DropdownEditorWidget;
-import ilarkesto.gwt.client.editor.RichtextEditorWidget;
-import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
-import scrum.client.common.FieldsWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -22,16 +19,17 @@ public class RiskWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		FieldsWidget fields = new FieldsWidget();
+		TableBuilder tb = new TableBuilder();
+		tb.setCellPadding(2);
 
-		fields.add("Label", new TextEditorWidget(risk.getLabelModel()).switchToEditModeIfNull());
-		fields.add("Description", new RichtextEditorWidget(risk.getDescriptionModel()));
-		fields.add("Mitigation Plans", new RichtextEditorWidget(risk.getMitigationPlansModel()));
-		fields.add("Impact", new DropdownEditorWidget<Integer>(risk.getImpactModel(),
+		tb.addFieldRow("Label", risk.getLabelModel());
+		tb.addFieldRow("Description", risk.getDescriptionModel());
+		tb.addFieldRow("Mitigation Plans", risk.getMitigationPlansModel());
+		tb.addFieldRow("Impact", new DropdownEditorWidget<Integer>(risk.getImpactModel(),
 				RiskComputer.IMPACT_LABEL_PROVIDER));
-		fields.add("Probability", new DropdownEditorWidget<Integer>(risk.getProbabilityModel(),
+		tb.addFieldRow("Probability", new DropdownEditorWidget<Integer>(risk.getProbabilityModel(),
 				RiskComputer.PROBABILITY_LABEL_PROVIDER));
-		fields.add("Priority", new AFieldValueWidget() {
+		tb.addFieldRow("Priority", new AFieldValueWidget() {
 
 			@Override
 			protected void onUpdate() {
@@ -39,7 +37,7 @@ public class RiskWidget extends AScrumWidget {
 			}
 		});
 
-		return TableBuilder.row(20, fields, new CommentsWidget(risk));
+		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(risk));
 	}
 
 }
