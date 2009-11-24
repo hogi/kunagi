@@ -148,9 +148,13 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void dashboard(CssRenderer css) {
-		css.style(
-			".TeamTasksWidget, .UpcomingTasksWidget, .OpenImpedimentsWidget, .HighestRisksWidget, .LatestEventsWidget")
+		css
+				.style(
+					".TeamTasksWidget, .UpcomingTasksWidget, .OpenImpedimentsWidget, .HighestRisksWidget, .LatestEventsWidget td")
 				.lineHeight(lineHeight + 4);
+		css.style(".LatestEventsWidget td").borderTop(1, "solid", cBlockHeaderBackground).padding(3);
+		css.style(".LatestEventsWidget table").borderBottom(1, "solid", cBlockHeaderBackground);
+		css.style(".LatestEventsWidget-time").whiteSpaceNowrap().color(cCommentDate);
 	}
 
 	private void whiteboard(CssRenderer css) {
