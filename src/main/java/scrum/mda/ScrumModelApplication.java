@@ -161,6 +161,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			simpleEventModel.addProperty("label", String.class).setMandatory(true).setSearchable(true);
 			simpleEventModel.addProperty("date", Date.class);
 			simpleEventModel.addProperty("time", Time.class);
+			simpleEventModel.addProperty("location", String.class);
 			simpleEventModel.addProperty("duration", Integer.class); // minutes
 			simpleEventModel.addProperty("note", String.class).setSearchable(true);
 			getApplicationModel().addCreateAction(simpleEventModel);

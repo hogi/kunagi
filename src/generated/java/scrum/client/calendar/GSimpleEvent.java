@@ -216,6 +216,54 @@ public abstract class GSimpleEvent
 
     }
 
+    // --- location ---
+
+    private java.lang.String location ;
+
+    public final java.lang.String getLocation() {
+        return this.location ;
+    }
+
+    public final SimpleEvent setLocation(java.lang.String location) {
+        if (isLocation(location)) return (SimpleEvent)this;
+        this.location = location ;
+        propertyChanged("location", this.location);
+        return (SimpleEvent)this;
+    }
+
+    public final boolean isLocation(java.lang.String location) {
+        return equals(this.location, location);
+    }
+
+    private transient LocationModel locationModel;
+
+    public LocationModel getLocationModel() {
+        if (locationModel == null) locationModel = createLocationModel();
+        return locationModel;
+    }
+
+    protected LocationModel createLocationModel() { return new LocationModel(); }
+
+    protected class LocationModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getLocation();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLocation(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- duration ---
 
     private java.lang.Integer duration ;
@@ -331,6 +379,7 @@ public abstract class GSimpleEvent
         date  =  dateAsString == null ? null : new ilarkesto.gwt.client.Date(dateAsString);
         String timeAsString = (String) props.get("time");
         time  =  timeAsString == null ? null : new ilarkesto.gwt.client.Time(timeAsString);
+        location  = (java.lang.String) props.get("location");
         duration  = (java.lang.Integer) props.get("duration");
         note  = (java.lang.String) props.get("note");
     }
@@ -342,6 +391,7 @@ public abstract class GSimpleEvent
         properties.put("label", this.label);
         properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("time", this.time == null ? null : this.time.toString());
+        properties.put("location", this.location);
         properties.put("duration", this.duration);
         properties.put("note", this.note);
     }

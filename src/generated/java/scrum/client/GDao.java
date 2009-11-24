@@ -1267,6 +1267,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.calendar.SimpleEvent> getSimpleEventsByLocation(java.lang.String location) {
+        List<scrum.client.calendar.SimpleEvent> ret = new ArrayList<scrum.client.calendar.SimpleEvent>();
+        for (scrum.client.calendar.SimpleEvent entity : simpleEvents.values()) {
+            if (entity.isLocation(location)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.calendar.SimpleEvent> getSimpleEventsByDuration(java.lang.Integer duration) {
         List<scrum.client.calendar.SimpleEvent> ret = new ArrayList<scrum.client.calendar.SimpleEvent>();
         for (scrum.client.calendar.SimpleEvent entity : simpleEvents.values()) {

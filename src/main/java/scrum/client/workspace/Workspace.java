@@ -58,7 +58,7 @@ public class Workspace extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		LOG.debug("Updating whole UI");
+		LOG.debug("Updating UI");
 		super.onUpdate();
 	}
 

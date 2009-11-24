@@ -50,6 +50,8 @@ public abstract class GSimpleEventDao
         datesCache = null;
         simpleEventsByTimeCache.clear();
         timesCache = null;
+        simpleEventsByLocationCache.clear();
+        locationsCache = null;
         simpleEventsByDurationCache.clear();
         durationsCache = null;
         simpleEventsByNoteCache.clear();
@@ -228,6 +230,46 @@ public abstract class GSimpleEventDao
 
         public boolean test(SimpleEvent e) {
             return e.isTime(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - location
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SimpleEvent>> simpleEventsByLocationCache = new Cache<java.lang.String,Set<SimpleEvent>>(
+            new Cache.Factory<java.lang.String,Set<SimpleEvent>>() {
+                public Set<SimpleEvent> create(java.lang.String location) {
+                    return getEntities(new IsLocation(location));
+                }
+            });
+
+    public final Set<SimpleEvent> getSimpleEventsByLocation(java.lang.String location) {
+        return simpleEventsByLocationCache.get(location);
+    }
+    private Set<java.lang.String> locationsCache;
+
+    public final Set<java.lang.String> getLocations() {
+        if (locationsCache == null) {
+            locationsCache = new HashSet<java.lang.String>();
+            for (SimpleEvent e : getEntities()) {
+                if (e.isLocationSet()) locationsCache.add(e.getLocation());
+            }
+        }
+        return locationsCache;
+    }
+
+    private static class IsLocation implements Predicate<SimpleEvent> {
+
+        private java.lang.String value;
+
+        public IsLocation(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SimpleEvent e) {
+            return e.isLocation(value);
         }
 
     }

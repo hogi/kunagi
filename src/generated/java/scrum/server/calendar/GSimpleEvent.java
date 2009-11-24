@@ -40,6 +40,7 @@ public abstract class GSimpleEvent
         properties.put("label", this.label);
         properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("time", this.time == null ? null : this.time.toString());
+        properties.put("location", this.location);
         properties.put("duration", this.duration);
         properties.put("note", this.note);
     }
@@ -217,6 +218,41 @@ public abstract class GSimpleEvent
     }
 
     // -----------------------------------------------------------
+    // - location
+    // -----------------------------------------------------------
+
+    private java.lang.String location;
+
+    public final java.lang.String getLocation() {
+        return location;
+    }
+
+    public final void setLocation(java.lang.String location) {
+        location = prepareLocation(location);
+        if (isLocation(location)) return;
+        this.location = location;
+        fireModified();
+    }
+
+    protected java.lang.String prepareLocation(java.lang.String location) {
+        location = Str.removeUnreadableChars(location);
+        return location;
+    }
+
+    public final boolean isLocationSet() {
+        return this.location != null;
+    }
+
+    public final boolean isLocation(java.lang.String location) {
+        if (this.location == null && location == null) return true;
+        return this.location != null && this.location.equals(location);
+    }
+
+    protected final void updateLocation(Object value) {
+        setLocation((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
     // - duration
     // -----------------------------------------------------------
 
@@ -294,6 +330,7 @@ public abstract class GSimpleEvent
             if (property.equals("label")) updateLabel(value);
             if (property.equals("date")) updateDate(value);
             if (property.equals("time")) updateTime(value);
+            if (property.equals("location")) updateLocation(value);
             if (property.equals("duration")) updateDuration(value);
             if (property.equals("note")) updateNote(value);
         }
