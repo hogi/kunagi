@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GImpediment
             extends AEntity
-            implements java.lang.Comparable<Impediment> {
+            implements ilarkesto.search.Searchable, java.lang.Comparable<Impediment> {
 
     // --- AEntity ---
 
@@ -52,6 +52,18 @@ public abstract class GImpediment
     private static final Logger LOG = Logger.get(GImpediment.class);
 
     public static final String TYPE = "impediment";
+
+
+    // -----------------------------------------------------------
+    // - Searchable
+    // -----------------------------------------------------------
+
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getDescription(), key)) return true;
+        if (matchesKey(getSolution(), key)) return true;
+        return false;
+    }
 
     // -----------------------------------------------------------
     // - project
