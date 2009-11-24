@@ -79,46 +79,48 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	// --- ---
 
 	@Override
-	protected void onUpdateSystemMessage(WebSession session, SystemMessage systemMessage) {
-		User user = session.getUser();
+	protected void onUpdateSystemMessage(GwtConversation conversation, SystemMessage systemMessage) {
+		User user = conversation.getSession().getUser();
 		if (user == null || user.isAdmin() == false) throw new PermissionDeniedException();
 		webApplication.updateSystemMessage(systemMessage);
 	}
 
-	private void onStartSession(WebSession session) {
-		session.clearRemoteEntities();
-		session.getNextData().applicationInfo = webApplication.getApplicationInfo();
-		session.getNextData().entityIdBase = UUID.randomUUID().toString();
+	private void onStartSession(GwtConversation conversation) {
+		conversation.clearRemoteEntities();
+		conversation.getNextData().applicationInfo = webApplication.getApplicationInfo();
+		conversation.getNextData().entityIdBase = UUID.randomUUID().toString();
 	}
 
 	@Override
-	protected void onSetSelectedEntitysIds(WebSession session, Set ids) {
-		webApplication.setUsersSelectedEntities(session.getProject(), session, ids);
+	protected void onSetSelectedEntitysIds(GwtConversation conversation, Set ids) {
+		webApplication.setUsersSelectedEntities(conversation.getProject(), conversation.getSession(), ids);
 	}
 
 	@Override
-	protected void onLogout(WebSession session) {
+	protected void onLogout(GwtConversation conversation) {
+		WebSession session = conversation.getSession();
 		session.invalidate();
 		webApplication.destroyWebSession(session, getThreadLocalRequest().getSession());
 	}
 
 	@Override
-	protected void onResetPassword(WebSession session, String userId) {
+	protected void onResetPassword(GwtConversation conversation, String userId) {
 		User user = userDao.getById(userId);
 		user.setPassword("geheim");
 	}
 
 	@Override
-	protected void onChangePassword(WebSession session, String oldPassword, String newPassword) {
-		if (session.getUser().matchesPassword(oldPassword) == false) { throw new RuntimeException("bad password"); }
+	protected void onChangePassword(GwtConversation conversation, String oldPassword, String newPassword) {
+		User user = conversation.getSession().getUser();
+		if (user.matchesPassword(oldPassword) == false) { throw new RuntimeException("Wrong password"); }
 
-		session.getUser().setPassword(newPassword);
+		user.setPassword(newPassword);
 
 		LOG.info("password changed by user");
 	}
 
 	@Override
-	public void onCreateEntity(WebSession session, String type, Map properties) {
+	public void onCreateEntity(GwtConversation conversation, String type, Map properties) {
 		String id = (String) properties.get("id");
 		if (id == null) throw new NullPointerException("id == null");
 
@@ -133,7 +135,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Comment) {
 			Comment comment = (Comment) entity;
 			comment.setDateAndTime(DateAndTime.now());
-			postProjectEvent(session, comment.getAuthor().getName() + " commented on " + comment.getParent());
+			postProjectEvent(conversation, comment.getAuthor().getName() + " commented on " + comment.getParent());
 		}
 
 		if (entity instanceof ChatMessage) {
@@ -148,25 +150,25 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		if (!(entity instanceof Transient)) dao.saveEntity(entity);
 
-		sendToClients(session, entity);
+		sendToClients(conversation, entity);
 	}
 
 	@Override
-	public void onDeleteEntity(WebSession session, String entityId) {
+	public void onDeleteEntity(GwtConversation conversation, String entityId) {
 		AEntity entity = getDaoService().getEntityById(entityId);
-		if (!Auth.isDeletable(entity, session.getUser())) throw new PermissionDeniedException();
+		if (!Auth.isDeletable(entity, conversation.getSession().getUser())) throw new PermissionDeniedException();
 		ADao dao = getDaoService().getDao(entity);
 		dao.deleteEntity(entity);
-		for (WebSession s : webApplication.getOtherSessionsByProject(session)) {
+		for (WebSession s : webApplication.getOtherSessionsByProject(conversation.getSession())) {
 			// TODO do this only if client is tracking this entity
-			s.getNextData().addDeletedEntity(entityId);
+			s.getGwtConversation().getNextData().addDeletedEntity(entityId);
 		}
 	}
 
 	@Override
-	public void onChangeProperties(WebSession session, String entityId, Map properties) {
+	public void onChangeProperties(GwtConversation conversation, String entityId, Map properties) {
 		AEntity entity = getDaoService().getEntityById(entityId);
-		if (!Auth.isEditable(entity, session.getUser())) throw new PermissionDeniedException();
+		if (!Auth.isEditable(entity, conversation.getSession().getUser())) throw new PermissionDeniedException();
 
 		if (entity instanceof Task) {
 			// update sprint day snapshot before change
@@ -186,26 +188,26 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 				if (task.getRequirement().isTasksClosed()) {
 					event += ", all tasks in " + task.getRequirement().getReferenceAndLabel() + " are closed";
 				}
-				postProjectEvent(session, event);
+				postProjectEvent(conversation, event);
 			} else if (task.isOwnerSet() && properties.containsKey("ownerId")) {
-				postProjectEvent(session, task.getReferenceAndLabel() + " claimed by " + task.getOwner().getName());
+				postProjectEvent(conversation, task.getReferenceAndLabel() + " claimed by " + task.getOwner().getName());
 			}
 			if (!task.isOwnerSet() && properties.containsKey("ownerId")) {
-				postProjectEvent(session, task.getReferenceAndLabel() + " unclaimed");
+				postProjectEvent(conversation, task.getReferenceAndLabel() + " unclaimed");
 			}
 		}
 
 		if (entity instanceof Requirement) {
 			Requirement requirement = (Requirement) entity;
 			Sprint sprint = requirement.getSprint();
-			boolean inCurrentSprint = sprint != null && session.getProject().isCurrentSprint(sprint);
+			boolean inCurrentSprint = sprint != null && conversation.getProject().isCurrentSprint(sprint);
 			if (properties.containsKey("description") || properties.containsKey("testDescription")
 					|| properties.containsKey("estimatedWork") || properties.containsKey("qualitysIds")) {
 				requirement.setDirty(true);
-				session.sendToClient(requirement);
+				conversation.sendToClient(requirement);
 			}
 			if (inCurrentSprint && properties.containsKey("sprintId")) {
-				postProjectEvent(session, requirement.getReferenceAndLabel() + " added to current sprint");
+				postProjectEvent(conversation, requirement.getReferenceAndLabel() + " added to current sprint");
 			}
 			requirement.getProject().getCurrentSprintSnapshot().update();
 		}
@@ -217,149 +219,152 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Impediment) {
 			Impediment impediment = (Impediment) entity;
 			if (impediment.isClosed() && properties.containsKey("closed")) {
-				postProjectEvent(session, impediment.getReferenceAndLabel() + " closed");
+				postProjectEvent(conversation, impediment.getReferenceAndLabel() + " closed");
 			}
 		}
 
-		sendToOtherSessionsByProject(session, entity);
+		sendToOtherSessionsByProject(conversation, entity);
 	}
 
 	@Override
-	public void onLogin(WebSession session, String username, String password) {
-		session.clearRemoteEntities();
+	public void onLogin(GwtConversation conversation, String username, String password) {
+		conversation.clearRemoteEntities();
 		User user = userDao.getUserByName(username);
 
 		if (user == null || user.matchesPassword(password) == false) {
-			session.getNextData().errors.add("Login failed.");
+			conversation.getNextData().errors.add("Login failed.");
 			return;
 		}
 
-		session.setUser(user);
-		session.getNextData().entityIdBase = UUID.randomUUID().toString();
-		session.getNextData().setUserId(user.getId());
-		session.getNextData().systemMessage = webApplication.getSystemMessage();
-		session.sendToClient(user);
-		session.sendToClient(projectDao.getEntitiesVisibleForUser(user));
-		session.sendToClient(userDao.getEntitiesVisibleForUser(user));
+		conversation.getSession().setUser(user);
+		conversation.getNextData().entityIdBase = UUID.randomUUID().toString();
+		conversation.getNextData().setUserId(user.getId());
+		conversation.getNextData().systemMessage = webApplication.getSystemMessage();
+		conversation.sendToClient(user);
+		conversation.sendToClient(projectDao.getEntitiesVisibleForUser(user));
+		conversation.sendToClient(userDao.getEntitiesVisibleForUser(user));
 	}
 
 	@Override
-	public void onSelectProject(WebSession session, String projectId) {
+	public void onSelectProject(GwtConversation conversation, String projectId) {
 		Project project = projectDao.getById(projectId);
-		if (!project.isVisibleFor(session.getUser()))
-			throw new RuntimeException("Project '" + project + "' is not visible for user '" + session.getUser() + "'");
-		session.setProject(project);
-		session.getUser().setCurrentProject(project);
-		webApplication.updateOnlineTeamMembers(project, session);
+		User user = conversation.getSession().getUser();
+		if (!project.isVisibleFor(user))
+			throw new RuntimeException("Project '" + project + "' is not visible for user '" + user + "'");
+		conversation.setProject(project);
+		user.setCurrentProject(project);
+		webApplication.updateOnlineTeamMembers(project, conversation.getSession());
 
 		// prepare data for client
-		session.sendToClient(project);
+		conversation.sendToClient(project);
 		// session.sendToClient(project.getCurrentSprint());
 		// session.sendToClient(project.getNextSprint());
-		session.sendToClient(project.getSprints());
-		session.sendToClient(project.getParticipants());
-		session.sendToClient(project.getRequirements());
-		session.sendToClient(project.getQualitys());
-		session.sendToClient(project.getTasks());
-		session.sendToClient(project.getUserConfigs());
-		session.sendToClient(project.getWikipages());
-		session.sendToClient(project.getImpediments());
-		session.sendToClient(project.getRisks());
-		session.sendToClient(project.getProjectEvents());
-		session.sendToClient(project.getCalendarEvents());
+		conversation.sendToClient(project.getSprints());
+		conversation.sendToClient(project.getParticipants());
+		conversation.sendToClient(project.getRequirements());
+		conversation.sendToClient(project.getQualitys());
+		conversation.sendToClient(project.getTasks());
+		conversation.sendToClient(project.getUserConfigs());
+		conversation.sendToClient(project.getWikipages());
+		conversation.sendToClient(project.getImpediments());
+		conversation.sendToClient(project.getRisks());
+		conversation.sendToClient(project.getProjectEvents());
+		conversation.sendToClient(project.getCalendarEvents());
 	}
 
 	@Override
-	protected void onCloseProject(WebSession session) {
-		Project project = session.getProject();
-		if (project != null) webApplication.setUsersSelectedEntities(project, session, new HashSet<String>(0));
-		session.clearRemoteEntities();
-		session.setProject(null);
-		if (project != null) webApplication.updateOnlineTeamMembers(project, session);
+	protected void onCloseProject(GwtConversation conversation) {
+		Project project = conversation.getProject();
+		if (project != null)
+			webApplication.setUsersSelectedEntities(project, conversation.getSession(), new HashSet<String>(0));
+		conversation.clearRemoteEntities();
+		conversation.setProject(null);
+		if (project != null) webApplication.updateOnlineTeamMembers(project, conversation.getSession());
 	}
 
 	@Override
-	protected void onSwitchToNextSprint(WebSession session) {
-		assertProjectSelected(session);
-		Project project = session.getProject();
+	protected void onSwitchToNextSprint(GwtConversation conversation) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
 		Sprint oldSprint = project.getCurrentSprint();
 		for (Requirement requirement : oldSprint.getRequirements()) {
 			if (!requirement.isClosed()) {
 				requirement.setDirty(true);
-				sendToClients(session, requirement);
+				sendToClients(conversation, requirement);
 			}
 		}
 		project.switchToNextSprint();
-		sendToClients(session, project.getSprints());
-		sendToClients(session, project);
+		sendToClients(conversation, project.getSprints());
+		sendToClients(conversation, project);
 	}
 
 	@Override
-	public void onRequestImpediments(WebSession session) {
-		assertProjectSelected(session);
-		Project project = session.getProject();
-		session.sendToClient(project.getImpediments());
+	public void onRequestImpediments(GwtConversation conversation) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		conversation.sendToClient(project.getImpediments());
 	}
 
 	@Override
-	protected void onRequestIssues(WebSession session) {
-		assertProjectSelected(session);
-		Project project = session.getProject();
-		session.sendToClient(project.getIssues());
+	protected void onRequestIssues(GwtConversation conversation) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		conversation.sendToClient(project.getIssues());
 	}
 
 	@Override
-	protected void onRequestRisks(WebSession session) {
-		assertProjectSelected(session);
-		Project project = session.getProject();
-		session.sendToClient(project.getRisks());
+	protected void onRequestRisks(GwtConversation conversation) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		conversation.sendToClient(project.getRisks());
 	}
 
 	@Override
-	protected void onRequestEntityByReference(WebSession session, String reference) {
-		assertProjectSelected(session);
-		Project project = session.getProject();
+	protected void onRequestEntityByReference(GwtConversation conversation, String reference) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
 		int number = Integer.parseInt(reference.substring(scrum.client.project.Requirement.REFERENCE_PREFIX.length()));
 		if (reference.startsWith(scrum.client.project.Requirement.REFERENCE_PREFIX)) {
 			Requirement requirement = project.getRequirementByNumber(number);
-			if (requirement != null) session.sendToClient(requirement);
+			if (requirement != null) conversation.sendToClient(requirement);
 			return;
 		} else if (reference.startsWith(scrum.client.sprint.Task.REFERENCE_PREFIX)) {
 			Task task = project.getTaskByNumber(number);
-			if (task != null) session.sendToClient(task);
+			if (task != null) conversation.sendToClient(task);
 			return;
 		}
 		LOG.info("Requested entity not found:", reference);
 	}
 
 	@Override
-	protected void onRequestComments(WebSession session, String parentId) {
-		session.sendToClient(commentDao.getCommentsByParentId(parentId));
+	protected void onRequestComments(GwtConversation conversation, String parentId) {
+		conversation.sendToClient(commentDao.getCommentsByParentId(parentId));
 	}
 
 	@Override
-	public void onPing(WebSession session) {
+	public void onPing(GwtConversation conversation) {
 	// nop
 	}
 
 	@Override
-	public void onSleep(WebSession session, long millis) {
+	public void onSleep(GwtConversation conversation, long millis) {
 		Utl.sleep(millis);
 	}
 
 	public scrum.client.DataTransferObject startSession() {
 		LOG.debug("startSession");
 		WebSession session = (WebSession) getSession();
+		GwtConversation conversation = session.getGwtConversation();
 		ilarkesto.di.Context context = ilarkesto.di.Context.get();
 		context.setName("gwt-srv:startSession");
 		context.bindCurrentThread();
 		try {
-			onStartSession(session);
+			onStartSession(conversation);
 		} catch (Throwable t) {
 			handleServiceMethodException("startSession", t);
 			throw new RuntimeException(t);
 		}
-		scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) session.popNextData();
+		scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
 		onServiceMethodExecuted(context);
 		return ret;
 	}
@@ -372,32 +377,32 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	// --- helper ---
 
-	private void postProjectEvent(WebSession session, String label) {
-		assertProjectSelected(session);
-		ProjectEvent event = projectEventDao.postEvent(session.getProject(), label);
-		sendToClients(session, event);
-		sendToClients(session, event.createChatMessage());
+	private void postProjectEvent(GwtConversation conversation, String label) {
+		assertProjectSelected(conversation);
+		ProjectEvent event = projectEventDao.postEvent(conversation.getProject(), label);
+		sendToClients(conversation, event);
+		sendToClients(conversation, event.createChatMessage());
 	}
 
-	private void sendToClients(WebSession session, Collection<? extends AEntity> entities) {
+	private void sendToClients(GwtConversation conversation, Collection<? extends AEntity> entities) {
 		for (AEntity entity : entities) {
-			sendToClients(session, entity);
+			sendToClients(conversation, entity);
 		}
 	}
 
-	private void sendToClients(WebSession session, AEntity entity) {
-		session.sendToClient(entity);
-		sendToOtherSessionsByProject(session, entity);
+	private void sendToClients(GwtConversation conversation, AEntity entity) {
+		conversation.sendToClient(entity);
+		sendToOtherSessionsByProject(conversation, entity);
 	}
 
-	private void sendToOtherSessionsByProject(WebSession session, AEntity entity) {
-		for (AWebSession s : webApplication.getOtherSessionsByProject(session)) {
-			s.sendToClient(entity);
+	private void sendToOtherSessionsByProject(GwtConversation conversation, AEntity entity) {
+		for (AWebSession s : webApplication.getOtherSessionsByProject(conversation.getSession())) {
+			s.getGwtConversation().sendToClient(entity);
 		}
 	}
 
-	private void assertProjectSelected(WebSession session) {
-		if (session.getProject() == null) throw new RuntimeException("No project selected.");
+	private void assertProjectSelected(GwtConversation conversation) {
+		if (conversation.getProject() == null) throw new RuntimeException("No project selected.");
 	}
 
 	@Override

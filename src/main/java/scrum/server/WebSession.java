@@ -5,14 +5,10 @@ import ilarkesto.di.Context;
 import ilarkesto.logging.Logger;
 import ilarkesto.webapp.AWebSession;
 
-import java.util.HashSet;
-
 import javax.servlet.http.HttpServletRequest;
 
-import scrum.client.DataTransferObject;
 import scrum.client.Pinger;
 import scrum.server.admin.User;
-import scrum.server.project.Project;
 
 public class WebSession extends AWebSession {
 
@@ -20,14 +16,17 @@ public class WebSession extends AWebSession {
 
 	private TimePeriod TIMEOUT = new TimePeriod(Pinger.MAX_DELAY * 2);
 	private User user;
-	private Project project;
 
 	public WebSession(Context parentContext, HttpServletRequest initialRequest) {
 		super(parentContext, initialRequest);
 	}
 
-	public Project getProject() {
-		return project;
+	@Override
+	public GwtConversation getGwtConversation() {
+		if (gwtConversation == null) {
+			gwtConversation = new GwtConversation(this);
+		}
+		return (GwtConversation) gwtConversation;
 	}
 
 	public void setUser(User user) {
@@ -40,30 +39,11 @@ public class WebSession extends AWebSession {
 		return user;
 	}
 
-	public void setProject(Project project) {
-		LOG.info("Project selected:", project);
-		this.project = project;
-	}
-
 	@Override
 	protected void onInvalidate() {
-		ScrumWebApplication.get().updateOnlineTeamMembers(getProject(), this);
-		if (user != null && project != null)
-			ScrumWebApplication.get().setUsersSelectedEntities(project, this, new HashSet<String>(0));
-
+		if (gwtConversation != null) getGwtConversation().invalidate();
 		setUser(null);
-		setProject(null);
 		super.onInvalidate();
-	}
-
-	@Override
-	public DataTransferObject getNextData() {
-		return (DataTransferObject) super.getNextData();
-	}
-
-	@Override
-	protected DataTransferObject createDataTransferObject() {
-		return new DataTransferObject();
 	}
 
 	@Override

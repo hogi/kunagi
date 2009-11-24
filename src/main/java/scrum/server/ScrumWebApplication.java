@@ -137,7 +137,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public Set<WebSession> getOtherSessionsByProject(WebSession currentSession) {
-		Project project = currentSession.getProject();
+		Project project = currentSession.getGwtConversation().getProject();
 		if (project == null) return Collections.emptySet();
 		Set<WebSession> ret = getSessionsByProject(project);
 		ret.remove(currentSession);
@@ -149,7 +149,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		for (AWebSession webSession : getWebSessions()) {
 			if (webSession.isSessionInvalidated()) continue;
 			WebSession session = (WebSession) webSession;
-			if (Utl.equals(project, session.getProject())) ret.add(session);
+			if (Utl.equals(project, session.getGwtConversation().getProject())) ret.add(session);
 		}
 		return ret;
 	}
@@ -180,7 +180,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		UsersStatusData status = project.getUsersStatus();
 		for (WebSession session : getSessionsByProject(project)) {
 			if (session == excludeSession) continue;
-			session.getNextData().usersStatus = status;
+			session.getGwtConversation().getNextData().usersStatus = status;
 		}
 	}
 
@@ -193,7 +193,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	protected AWebSession createWebSession(HttpServletRequest httpRequest) {
 		WebSession session = new WebSession(context, httpRequest);
 		autowire(session);
-		session.getNextData().systemMessage = systemMessage;
+		session.getGwtConversation().getNextData().systemMessage = systemMessage;
 		return session;
 	}
 
@@ -214,7 +214,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		this.systemMessage = systemMessage;
 		for (AWebSession session : getWebSessions()) {
 			LOG.debug("Sending SystemMessage to:", session);
-			((WebSession) session).getNextData().systemMessage = systemMessage;
+			((WebSession) session).getGwtConversation().getNextData().systemMessage = systemMessage;
 		}
 	}
 

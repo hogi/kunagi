@@ -16,7 +16,7 @@ public class SprintReportServlet extends APdfServlet {
 	protected void buildPdf(APdfBuilder pdf, HttpServletRequest req, WebSession session) {
 		String sprintId = req.getParameter("sprintId");
 		if (sprintId == null) throw new RuntimeException("sprintId==null");
-		Project project = session.getProject();
+		Project project = session.getGwtConversation().getProject();
 		Sprint sprint = ScrumWebApplication.get().getSprintDao().getById(sprintId);
 		if (!sprint.isProject(project)) throw new PermissionDeniedException();
 		sprint.buildReport(pdf);
