@@ -136,6 +136,16 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return userDao;
 	}
 
+	public Set<GwtConversation> getConversationsByProject(Project project, GwtConversation exception) {
+		Set<GwtConversation> ret = new HashSet<GwtConversation>();
+		for (Object element : getGwtConversations()) {
+			if (element == exception) continue;
+			GwtConversation conversation = (GwtConversation) element;
+			if (project.equals(conversation.getProject())) ret.add(conversation);
+		}
+		return ret;
+	}
+
 	public Set<WebSession> getOtherSessionsByProject(WebSession currentSession) {
 		Project project = currentSession.getGwtConversation().getProject();
 		if (project == null) return Collections.emptySet();
@@ -156,16 +166,16 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	public Set<User> getSessionUsersByProject(Project project) {
 		Set<User> ret = new HashSet<User>();
-		for (WebSession session : getSessionsByProject(project)) {
-			ret.add(session.getUser());
+		for (GwtConversation conversation : getConversationsByProject(project, null)) {
+			ret.add(conversation.getSession().getUser());
 		}
 		return ret;
 	}
 
-	public void updateOnlineTeamMembers(Project project, WebSession excludeSession) {
+	public void updateOnlineTeamMembers(Project project, GwtConversation exclude) {
 		if (project == null) return;
 		Set<User> users = getSessionUsersByProject(project);
-		LOG.debug("Uupdate online team members on project:", project, "->", users);
+		LOG.debug("Update online team members on project:", project, "->", users);
 		Set<String> userIds = new HashSet<String>(FP.foreach(users, new Function<User, String>() {
 
 			public String eval(User user) {
@@ -173,20 +183,19 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			}
 		}));
 		project.getUsersStatus().setOnlineUsers(userIds);
-		sendUsersStatusToClients(project, excludeSession);
+		sendUsersStatusToClients(project, exclude);
 	}
 
-	private void sendUsersStatusToClients(Project project, WebSession excludeSession) {
+	private void sendUsersStatusToClients(Project project, GwtConversation exclude) {
 		UsersStatusData status = project.getUsersStatus();
-		for (WebSession session : getSessionsByProject(project)) {
-			if (session == excludeSession) continue;
-			session.getGwtConversation().getNextData().usersStatus = status;
+		for (GwtConversation conversation : getConversationsByProject(project, exclude)) {
+			conversation.getNextData().usersStatus = status;
 		}
 	}
 
-	public void setUsersSelectedEntities(Project project, WebSession usersSession, Set<String> ids) {
-		project.getUsersStatus().setUsersSelectedEntities(usersSession.getUser().getId(), ids);
-		sendUsersStatusToClients(project, usersSession);
+	public void setUsersSelectedEntities(Project project, GwtConversation conversation, Set<String> ids) {
+		project.getUsersStatus().setUsersSelectedEntities(conversation.getSession().getUser().getId(), ids);
+		sendUsersStatusToClients(project, conversation);
 	}
 
 	@Override

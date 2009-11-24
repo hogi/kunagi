@@ -14,14 +14,14 @@ public class GwtConversation extends AGwtConversation {
 
 	private Project project;
 
-	public GwtConversation(WebSession session) {
-		super(session);
+	public GwtConversation(WebSession session, int number) {
+		super(session, number);
 	}
 
 	public void invalidate() {
-		ScrumWebApplication.get().updateOnlineTeamMembers(getProject(), getSession());
+		ScrumWebApplication.get().updateOnlineTeamMembers(getProject(), this);
 		if (getSession().getUser() != null && project != null)
-			ScrumWebApplication.get().setUsersSelectedEntities(project, getSession(), new HashSet<String>(0));
+			ScrumWebApplication.get().setUsersSelectedEntities(project, this, new HashSet<String>(0));
 	}
 
 	@Override

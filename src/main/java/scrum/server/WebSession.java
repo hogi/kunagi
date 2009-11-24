@@ -24,7 +24,7 @@ public class WebSession extends AWebSession {
 	@Override
 	public GwtConversation getGwtConversation() {
 		if (gwtConversation == null) {
-			gwtConversation = new GwtConversation(this);
+			gwtConversation = new GwtConversation(this, nextGwtConversationNumber());
 		}
 		return (GwtConversation) gwtConversation;
 	}

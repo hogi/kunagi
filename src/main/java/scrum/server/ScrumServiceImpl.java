@@ -93,7 +93,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	protected void onSetSelectedEntitysIds(GwtConversation conversation, Set ids) {
-		webApplication.setUsersSelectedEntities(conversation.getProject(), conversation.getSession(), ids);
+		webApplication.setUsersSelectedEntities(conversation.getProject(), conversation, ids);
 	}
 
 	@Override
@@ -253,7 +253,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			throw new RuntimeException("Project '" + project + "' is not visible for user '" + user + "'");
 		conversation.setProject(project);
 		user.setCurrentProject(project);
-		webApplication.updateOnlineTeamMembers(project, conversation.getSession());
+		webApplication.updateOnlineTeamMembers(project, conversation);
 
 		// prepare data for client
 		conversation.sendToClient(project);
@@ -275,11 +275,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	protected void onCloseProject(GwtConversation conversation) {
 		Project project = conversation.getProject();
-		if (project != null)
-			webApplication.setUsersSelectedEntities(project, conversation.getSession(), new HashSet<String>(0));
+		if (project != null) webApplication.setUsersSelectedEntities(project, conversation, new HashSet<String>(0));
 		conversation.clearRemoteEntities();
 		conversation.setProject(null);
-		if (project != null) webApplication.updateOnlineTeamMembers(project, conversation.getSession());
+		if (project != null) webApplication.updateOnlineTeamMembers(project, conversation);
 	}
 
 	@Override
