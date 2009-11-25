@@ -23,6 +23,9 @@ public class DayListWidget extends AScrumWidget {
 	private BlockListSelectionManager selectionManager;
 	private Map<Date, BlockListWidget<SimpleEvent>> lists;
 
+	private Date begin;
+	private Date end;
+
 	@Override
 	protected Widget onInitialization() {
 		selectionManager = new BlockListSelectionManager();
@@ -50,8 +53,9 @@ public class DayListWidget extends AScrumWidget {
 
 		// table.setBorderWidth(1);
 		int row = 0;
-		Date date = dateToShow;
-		Date end = dateToShow.addDays(21);
+		begin = dateToShow;
+		end = begin.addDays(21);
+		Date date = begin;
 		int month = 0;
 		int week = 0;
 		while (date.compareTo(end) <= 0) {
@@ -103,6 +107,14 @@ public class DayListWidget extends AScrumWidget {
 		list.setAutoSorter(SimpleEvent.TIME_COMPARATOR);
 		lists.put(date, list);
 		return list;
+	}
+
+	public Date getBegin() {
+		return begin;
+	}
+
+	public Date getEnd() {
+		return end;
 	}
 
 }
