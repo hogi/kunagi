@@ -1,5 +1,7 @@
 package scrum.client.calendar;
 
+import ilarkesto.gwt.client.Date;
+
 import java.util.List;
 
 import scrum.client.common.AScrumAction;
@@ -9,15 +11,17 @@ public class MonthSelectorWidget extends ADateSelectorWidget {
 	private int month;
 	private int year;
 	private boolean selected;
+	private boolean visible;
 
-	public MonthSelectorWidget(int year, int month, boolean selected) {
+	public MonthSelectorWidget(int year, int month, boolean selected, boolean visible) {
 		this.month = month;
 		this.year = year;
 		this.selected = selected;
+		this.visible = visible;
 	}
 
 	public MonthSelectorWidget(int year, int month) {
-		this(year, month, false);
+		this(year, month, false, false);
 	}
 
 	@Override
@@ -33,5 +37,16 @@ public class MonthSelectorWidget extends ADateSelectorWidget {
 	@Override
 	protected boolean isSelected() {
 		return selected;
+	}
+
+	@Override
+	protected boolean isVisibleInList() {
+		return visible;
+	}
+
+	@Override
+	protected boolean isToday() {
+		Date today = Date.today();
+		return today.getMonth() == month && today.getYear() == year;
 	}
 }

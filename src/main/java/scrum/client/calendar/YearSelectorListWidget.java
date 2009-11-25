@@ -12,6 +12,9 @@ public class YearSelectorListWidget extends AScrumWidget {
 	private int from = selectedYear - 1;
 	private int to = from + 4;
 
+	private Date firstVisibleDate = Date.today();
+	private Date lastVisibleDate = Date.today();
+
 	@Override
 	protected Widget onInitialization() {
 		return null;
@@ -21,7 +24,8 @@ public class YearSelectorListWidget extends AScrumWidget {
 	protected void onUpdate() {
 		TableBuilder tb = new TableBuilder();
 		for (int year = from; year <= to; year++) {
-			tb.add(new YearSelectorWidget(year, year == selectedYear));
+			tb.add(new YearSelectorWidget(year, year == selectedYear, (new Date(year, 1, 1).isBetween(firstVisibleDate,
+				lastVisibleDate, true))));
 		}
 		replaceContent(tb.createTable());
 		super.onUpdate();
@@ -35,6 +39,11 @@ public class YearSelectorListWidget extends AScrumWidget {
 		this.selectedYear = selectedYear;
 		this.from = selectedYear - 1;
 		this.to = from + 4;
+	}
+
+	public void setVisibleRange(Date firstDate, Date lastDate) {
+		this.firstVisibleDate = firstDate;
+		this.lastVisibleDate = lastDate;
 	}
 
 }

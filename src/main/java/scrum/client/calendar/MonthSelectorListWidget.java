@@ -11,6 +11,9 @@ public class MonthSelectorListWidget extends AScrumWidget {
 	private int selectedMonth = Date.today().getMonth();
 	private int year = Date.today().getYear();
 
+	private Date firstVisibleDate = Date.today();
+	private Date lastVisibleDate = Date.today();
+
 	@Override
 	protected Widget onInitialization() {
 		return null;
@@ -20,7 +23,8 @@ public class MonthSelectorListWidget extends AScrumWidget {
 	protected void onUpdate() {
 		TableBuilder tb = new TableBuilder();
 		for (int month = 1; month <= 12; month++) {
-			tb.add(new MonthSelectorWidget(year, month, month == selectedMonth));
+			tb.add(new MonthSelectorWidget(year, month, month == selectedMonth, (new Date(year, month, 1)).isBetween(
+				firstVisibleDate, lastVisibleDate, true)));
 			if (month == 6) tb.nextRow();
 		}
 		replaceContent(tb.createTable());
@@ -37,6 +41,11 @@ public class MonthSelectorListWidget extends AScrumWidget {
 
 	public int getSelectedMonth() {
 		return selectedMonth;
+	}
+
+	public void setVisibleRange(Date firstDate, Date lastDate) {
+		this.firstVisibleDate = firstDate;
+		this.lastVisibleDate = lastDate;
 	}
 
 }

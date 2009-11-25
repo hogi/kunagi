@@ -139,9 +139,20 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void calendar(CssRenderer css) {
-		css.style(".DateSelectorWidget").background("white");
-		css.style(".DateSelectorWidget-selected").background(cNavigatorHoverItemBackground);
-		css.style(".DateSelectorWidget-events").color("red").fontSize(fontSizeSmall).lineHeight(lineHeightSmall);
+		css.style(".DateSelectorWidget").background("white").textAlignCenter().border(1, "solid", "white");
+		css.style(".DateSelectorWidget-weekday").background("white").textAlignCenter().color(cBlockHeaderCellSecondary)
+				.border(1, "solid", "white");
+		css.style(".DateSelectorWidget-weeknumber").background("white").color(cBlockHeaderCellSecondary).width(20)
+				.border(1, "solid", "white");
+		css.style(".DateSelectorWidget-spacer").background("white").textAlignCenter().height(20).border(1, "solid",
+			"white");
+		css.style(".DateSelectorWidget-selected").background(cNavigatorHoverItemBackground).textAlignCenter().border(1,
+			"solid", cNavigatorHoverItemBackground);
+		css.style(".DateSelectorWidget-visible").background(cBackground).textAlignCenter().border(1, "solid",
+			cBackground);
+		css.style(".DateSelectorWidget-today").border(1, "solid", cNavigatorSelectedItemBackground);
+		css.style(".DateSelectorWidget-events").color("red").fontSize(fontSizeSmall).lineHeight(lineHeightSmall)
+				.textAlignCenter();
 		css.style(".DayListWidget-date").color(cBlockHeaderCellSecondary);
 		css.style(".DayListWidget-date-info").padding(2);
 		css.style(".DayListWidget-week").color(cBlockHeaderCellSecondary);

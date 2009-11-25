@@ -37,9 +37,18 @@ public class CalendarWidget extends AScrumWidget {
 		right.addHeader("Days");
 		right.addSection(daySelector);
 
+		yearSelector.setSelectedYear(dayList.getDate().getYear());
+		yearSelector.setVisibleRange(dayList.getBegin(), dayList.getEnd());
+		monthSelector.setYear(dayList.getDate().getYear());
+		monthSelector.setSelectedMonth(dayList.getDate().getMonth());
+		monthSelector.setVisibleRange(dayList.getBegin(), dayList.getEnd());
+		daySelector.setSelectedDate(dayList.getDate());
+		daySelector.setVisibleRange(dayList.getBegin(), dayList.getEnd());
+
 		TableBuilder tb = new TableBuilder();
-		tb.setColumnWidths("67%", "1%", "32%");
+		tb.setColumnWidths("", "10px", "270px");
 		tb.addRow(left, Gwt.createSpacer(10, 1), right);
+
 		return tb.createTable();
 	}
 
@@ -50,9 +59,12 @@ public class CalendarWidget extends AScrumWidget {
 	public void showDate(Date date) {
 		dayList.showDate(date);
 		yearSelector.setSelectedYear(date.getYear());
+		yearSelector.setVisibleRange(dayList.getBegin(), dayList.getEnd());
 		monthSelector.setYear(date.getYear());
 		monthSelector.setSelectedMonth(date.getMonth());
+		monthSelector.setVisibleRange(dayList.getBegin(), dayList.getEnd());
 		daySelector.setSelectedDate(date);
+		daySelector.setVisibleRange(dayList.getBegin(), dayList.getEnd());
 	}
 
 	public void showEvent(SimpleEvent event) {

@@ -15,6 +15,10 @@ public abstract class ADateSelectorWidget extends AScrumWidget {
 
 	protected abstract boolean isSelected();
 
+	protected abstract boolean isVisibleInList();
+
+	protected abstract boolean isToday();
+
 	protected abstract AScrumAction getAction();
 
 	protected abstract List<SimpleEvent> getEvents();
@@ -45,8 +49,14 @@ public abstract class ADateSelectorWidget extends AScrumWidget {
 
 		if (isSelected()) {
 			panel.setStyleName("DateSelectorWidget-selected");
+		} else if (isVisibleInList()) {
+			panel.setStyleName("DateSelectorWidget-visible");
 		} else {
 			panel.setStyleName("DateSelectorWidget");
+		}
+
+		if (isToday()) {
+			panel.addStyleName("DateSelectorWidget-today");
 		}
 		return panel;
 	}

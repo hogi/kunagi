@@ -10,14 +10,16 @@ public class DaySelectorWidget extends ADateSelectorWidget {
 
 	private Date date;
 	private boolean selected;
+	private boolean visible;
 
-	public DaySelectorWidget(Date date, boolean selected) {
+	public DaySelectorWidget(Date date, boolean selected, boolean visible) {
 		this.date = date;
 		this.selected = selected;
+		this.visible = visible;
 	}
 
 	public DaySelectorWidget(Date date) {
-		this(date, false);
+		this(date, false, false);
 	}
 
 	@Override
@@ -33,5 +35,15 @@ public class DaySelectorWidget extends ADateSelectorWidget {
 	@Override
 	protected boolean isSelected() {
 		return selected;
+	}
+
+	@Override
+	protected boolean isVisibleInList() {
+		return visible;
+	}
+
+	@Override
+	protected boolean isToday() {
+		return Date.today().equals(date);
 	}
 }
