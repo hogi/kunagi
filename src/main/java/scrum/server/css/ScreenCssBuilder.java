@@ -143,6 +143,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".DateSelectorWidget-selected").background(cNavigatorHoverItemBackground);
 		css.style(".DateSelectorWidget-events").color("red").fontSize(fontSizeSmall).lineHeight(lineHeightSmall);
 		css.style(".DayListWidget-date").color(cBlockHeaderCellSecondary);
+		css.style(".DayListWidget-date-info").padding(2);
 		css.style(".DayListWidget-week").color(cBlockHeaderCellSecondary);
 		css.style(".DayListWidget-month").color(cBlockHeaderCellSecondary);
 	}

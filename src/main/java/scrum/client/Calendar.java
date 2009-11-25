@@ -7,6 +7,7 @@ import java.util.List;
 
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.common.AScrumComponent;
+import scrum.client.sprint.Sprint;
 
 public class Calendar extends AScrumComponent {
 
@@ -55,6 +56,15 @@ public class Calendar extends AScrumComponent {
 
 	public void showDate(Date date) {
 		cm.getProjectContext().getCalendar().showDate(date);
+	}
+
+	public List<String> getInfos(Date date) {
+		List<String> ret = new ArrayList<String>();
+		for (Sprint sprint : getCurrentProject().getSprints()) {
+			if (sprint.isEnd(date)) ret.add(0, "End of Sprint: " + sprint.getLabel());
+			if (sprint.isBegin(date)) ret.add("Begin of Sprint: " + sprint.getLabel());
+		}
+		return ret;
 	}
 
 }
