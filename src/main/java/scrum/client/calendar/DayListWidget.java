@@ -66,6 +66,10 @@ public class DayListWidget extends AScrumWidget {
 		FlexTable table = new FlexTable();
 		table.setWidth("100%");
 		table.setCellPadding(2);
+		table.getColumnFormatter().setWidth(0, "25px");
+		table.getColumnFormatter().setWidth(1, "40px");
+		table.getColumnFormatter().setWidth(2, "30px");
+		table.getColumnFormatter().setWidth(3, "40px");
 
 		// table.setBorderWidth(1);
 		int row = 0;
@@ -76,12 +80,14 @@ public class DayListWidget extends AScrumWidget {
 			int w = d.getWeek();
 			if (w != week) {
 				week = w;
-				table.setWidget(row, 0, Gwt.createDiv("DayListWidget-week", String.valueOf(week)));
+				Widget weekWidget = Gwt.createDiv("DayListWidget-week", String.valueOf(week));
+				table.setWidget(row, 0, weekWidget);
 			}
 			int m = d.getMonth();
 			if (m != month) {
 				month = m;
-				table.setWidget(row, 1, Gwt.createDiv("DayListWidget-month", Gwt.getMonthShort(month)));
+				Widget monthWidget = Gwt.createDiv("DayListWidget-month", Gwt.getMonthShort(month));
+				table.setWidget(row, 1, monthWidget);
 			}
 			table.setWidget(row, 2, Gwt.createDiv("DayListWidget-date", Gwt.DTF_DAY.format(d.toJavaDate())));
 			table.setWidget(row, 3, Gwt.createDiv("DayListWidget-date", Gwt.DTF_WEEKDAY_SHORT.format(d.toJavaDate())));
