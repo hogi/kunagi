@@ -38,7 +38,7 @@ public class WikiWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		if (editor.isEditMode()) return;
+		if (editor != null && editor.isEditMode()) return;
 
 		if (pageName == null || pageName.trim().length() == 0) pageName = "Start";
 
