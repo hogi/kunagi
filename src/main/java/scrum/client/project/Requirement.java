@@ -36,7 +36,7 @@ public class Requirement extends GRequirement {
 	public String getTaskStatusLabel() {
 		int burned = Task.sumBurnedWork(getTasks());
 		int remaining = Task.sumRemainingWork(getTasks());
-		if (remaining == 0) return "100% completed";
+		if (remaining == 0) return "100% completed, " + burned + " hrs burned";
 		int burnedPercent = Gwt.percent(burned + remaining, burned);
 		return burnedPercent + "% completed, " + remaining + " hrs left";
 	}
