@@ -42,6 +42,7 @@ public abstract class GSimpleEvent
         properties.put("time", this.time == null ? null : this.time.toString());
         properties.put("location", this.location);
         properties.put("duration", this.duration);
+        properties.put("agenda", this.agenda);
         properties.put("note", this.note);
     }
 
@@ -61,6 +62,7 @@ public abstract class GSimpleEvent
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getAgenda(), key)) return true;
         if (matchesKey(getNote(), key)) return true;
         return false;
     }
@@ -287,6 +289,41 @@ public abstract class GSimpleEvent
     }
 
     // -----------------------------------------------------------
+    // - agenda
+    // -----------------------------------------------------------
+
+    private java.lang.String agenda;
+
+    public final java.lang.String getAgenda() {
+        return agenda;
+    }
+
+    public final void setAgenda(java.lang.String agenda) {
+        agenda = prepareAgenda(agenda);
+        if (isAgenda(agenda)) return;
+        this.agenda = agenda;
+        fireModified();
+    }
+
+    protected java.lang.String prepareAgenda(java.lang.String agenda) {
+        agenda = Str.removeUnreadableChars(agenda);
+        return agenda;
+    }
+
+    public final boolean isAgendaSet() {
+        return this.agenda != null;
+    }
+
+    public final boolean isAgenda(java.lang.String agenda) {
+        if (this.agenda == null && agenda == null) return true;
+        return this.agenda != null && this.agenda.equals(agenda);
+    }
+
+    protected final void updateAgenda(Object value) {
+        setAgenda((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
     // - note
     // -----------------------------------------------------------
 
@@ -332,6 +369,7 @@ public abstract class GSimpleEvent
             if (property.equals("time")) updateTime(value);
             if (property.equals("location")) updateLocation(value);
             if (property.equals("duration")) updateDuration(value);
+            if (property.equals("agenda")) updateAgenda(value);
             if (property.equals("note")) updateNote(value);
         }
     }

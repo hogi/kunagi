@@ -27,6 +27,7 @@ public class SimpleEventWidget extends AScrumWidget {
 		tb.addFieldRow("Date", new DateEditorWidget(event.getDateModel()));
 		tb.addFieldRow("Time", new TimeEditorWidget(event.getTimeModel()));
 		tb.addFieldRow("Location", new TextEditorWidget(event.getLocationModel()));
+		tb.addFieldRow("Agenda", event.getAgendaModel());
 		tb.addFieldRow("Note", event.getNoteModel());
 		tb.addRow(new CommentsWidget(event), 2);
 

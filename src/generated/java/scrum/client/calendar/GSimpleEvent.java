@@ -322,6 +322,57 @@ public abstract class GSimpleEvent
 
     }
 
+    // --- agenda ---
+
+    private java.lang.String agenda ;
+
+    public final java.lang.String getAgenda() {
+        return this.agenda ;
+    }
+
+    public final SimpleEvent setAgenda(java.lang.String agenda) {
+        if (isAgenda(agenda)) return (SimpleEvent)this;
+        this.agenda = agenda ;
+        propertyChanged("agenda", this.agenda);
+        return (SimpleEvent)this;
+    }
+
+    public final boolean isAgenda(java.lang.String agenda) {
+        return equals(this.agenda, agenda);
+    }
+
+    private transient AgendaModel agendaModel;
+
+    public AgendaModel getAgendaModel() {
+        if (agendaModel == null) agendaModel = createAgendaModel();
+        return agendaModel;
+    }
+
+    protected AgendaModel createAgendaModel() { return new AgendaModel(); }
+
+    protected class AgendaModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getAgenda();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setAgenda(value);
+        }
+
+        @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- note ---
 
     private java.lang.String note ;
@@ -384,6 +435,7 @@ public abstract class GSimpleEvent
         time  =  timeAsString == null ? null : new ilarkesto.gwt.client.Time(timeAsString);
         location  = (java.lang.String) props.get("location");
         duration  = (java.lang.Integer) props.get("duration");
+        agenda  = (java.lang.String) props.get("agenda");
         note  = (java.lang.String) props.get("note");
     }
 
@@ -396,6 +448,7 @@ public abstract class GSimpleEvent
         properties.put("time", this.time == null ? null : this.time.toString());
         properties.put("location", this.location);
         properties.put("duration", this.duration);
+        properties.put("agenda", this.agenda);
         properties.put("note", this.note);
     }
 

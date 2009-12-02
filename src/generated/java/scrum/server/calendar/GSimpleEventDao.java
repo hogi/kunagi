@@ -54,6 +54,8 @@ public abstract class GSimpleEventDao
         locationsCache = null;
         simpleEventsByDurationCache.clear();
         durationsCache = null;
+        simpleEventsByAgendaCache.clear();
+        agendasCache = null;
         simpleEventsByNoteCache.clear();
         notesCache = null;
     }
@@ -310,6 +312,46 @@ public abstract class GSimpleEventDao
 
         public boolean test(SimpleEvent e) {
             return e.isDuration(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - agenda
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SimpleEvent>> simpleEventsByAgendaCache = new Cache<java.lang.String,Set<SimpleEvent>>(
+            new Cache.Factory<java.lang.String,Set<SimpleEvent>>() {
+                public Set<SimpleEvent> create(java.lang.String agenda) {
+                    return getEntities(new IsAgenda(agenda));
+                }
+            });
+
+    public final Set<SimpleEvent> getSimpleEventsByAgenda(java.lang.String agenda) {
+        return simpleEventsByAgendaCache.get(agenda);
+    }
+    private Set<java.lang.String> agendasCache;
+
+    public final Set<java.lang.String> getAgendas() {
+        if (agendasCache == null) {
+            agendasCache = new HashSet<java.lang.String>();
+            for (SimpleEvent e : getEntities()) {
+                if (e.isAgendaSet()) agendasCache.add(e.getAgenda());
+            }
+        }
+        return agendasCache;
+    }
+
+    private static class IsAgenda implements Predicate<SimpleEvent> {
+
+        private java.lang.String value;
+
+        public IsAgenda(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SimpleEvent e) {
+            return e.isAgenda(value);
         }
 
     }
