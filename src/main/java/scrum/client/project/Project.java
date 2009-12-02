@@ -26,7 +26,7 @@ import scrum.client.sprint.Task;
 
 public class Project extends GProject {
 
-	private static final String effortUnit = "StoryPoints";
+	private static final String effortUnit = "pts";
 	public static final String INIT_LABEL = "New Project";
 
 	private transient Comparator<Requirement> requirementsOrderComparator;
