@@ -16,7 +16,7 @@ public class DeleteIssueAction extends GDeleteIssueAction {
 	@Override
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Delete this issue.");
-		if (getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
+		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_ANYTHING);
 		return tb.getTooltip();
 	}
@@ -28,7 +28,7 @@ public class DeleteIssueAction extends GDeleteIssueAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
+		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 
