@@ -295,15 +295,18 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			sprintModel.addPredicate("datesEditable");
 			sprintModel.addReference("project", getProjectModel()).setMaster(true);
 			sprintModel.addStringProperty("label").setMandatory(true).setEditablePredicate("editable");
-			sprintModel.addStringProperty("goal").setRichtext(true).setEditablePredicate("editable");
+			sprintModel.addStringProperty("goal").setRichtext(true).setTemplateAvailable(true).setEditablePredicate(
+				"editable");
 			sprintModel.addProperty("begin", Date.class).setEditablePredicate("datesEditable");
 			sprintModel.addProperty("end", Date.class).setEditablePredicate("datesEditable");
 			sprintModel.addProperty("velocity", Integer.class);
 			sprintModel.addStringProperty("completedRequirementLabels").setRichtext(true);
-			sprintModel.addStringProperty("planningNote").setRichtext(true).setEditablePredicate("planningEditable");
-			sprintModel.addStringProperty("reviewNote").setRichtext(true).setEditablePredicate("reviewEditable");
-			sprintModel.addStringProperty("retrospectiveNote").setRichtext(true).setEditablePredicate(
-				"retrospectiveEditable");
+			sprintModel.addStringProperty("planningNote").setRichtext(true).setTemplateAvailable(true)
+					.setEditablePredicate("planningEditable");
+			sprintModel.addStringProperty("reviewNote").setRichtext(true).setTemplateAvailable(true)
+					.setEditablePredicate("reviewEditable");
+			sprintModel.addStringProperty("retrospectiveNote").setRichtext(true).setTemplateAvailable(true)
+					.setEditablePredicate("retrospectiveEditable");
 		}
 		return sprintModel;
 	}

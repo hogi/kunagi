@@ -148,6 +148,8 @@ public abstract class GSprint
         return (Sprint)this;
     }
 
+    public abstract String getGoalTemplate();
+
     public final boolean isGoal(java.lang.String goal) {
         return equals(this.goal, goal);
     }
@@ -178,6 +180,9 @@ public abstract class GSprint
 
         @Override
         public boolean isRichtext() { return true; }
+
+        @Override
+        public String getTemplate() { return getGoalTemplate(); }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -413,6 +418,8 @@ public abstract class GSprint
         return (Sprint)this;
     }
 
+    public abstract String getPlanningNoteTemplate();
+
     public final boolean isPlanningNote(java.lang.String planningNote) {
         return equals(this.planningNote, planningNote);
     }
@@ -445,6 +452,9 @@ public abstract class GSprint
         public boolean isRichtext() { return true; }
 
         @Override
+        public String getTemplate() { return getPlanningNoteTemplate(); }
+
+        @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);
@@ -466,6 +476,8 @@ public abstract class GSprint
         propertyChanged("reviewNote", this.reviewNote);
         return (Sprint)this;
     }
+
+    public abstract String getReviewNoteTemplate();
 
     public final boolean isReviewNote(java.lang.String reviewNote) {
         return equals(this.reviewNote, reviewNote);
@@ -499,6 +511,9 @@ public abstract class GSprint
         public boolean isRichtext() { return true; }
 
         @Override
+        public String getTemplate() { return getReviewNoteTemplate(); }
+
+        @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);
@@ -520,6 +535,8 @@ public abstract class GSprint
         propertyChanged("retrospectiveNote", this.retrospectiveNote);
         return (Sprint)this;
     }
+
+    public abstract String getRetrospectiveNoteTemplate();
 
     public final boolean isRetrospectiveNote(java.lang.String retrospectiveNote) {
         return equals(this.retrospectiveNote, retrospectiveNote);
@@ -551,6 +568,9 @@ public abstract class GSprint
 
         @Override
         public boolean isRichtext() { return true; }
+
+        @Override
+        public String getTemplate() { return getRetrospectiveNoteTemplate(); }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

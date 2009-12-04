@@ -170,6 +170,26 @@ public class Sprint extends GSprint {
 		return true;
 	}
 
+	@Override
+	public String getGoalTemplate() {
+		return cm.getWiki().getTemplate("sprint.goal");
+	}
+
+	@Override
+	public String getPlanningNoteTemplate() {
+		return cm.getWiki().getTemplate("sprint.planning");
+	}
+
+	@Override
+	public String getRetrospectiveNoteTemplate() {
+		return cm.getWiki().getTemplate("sprint.retrospective");
+	}
+
+	@Override
+	public String getReviewNoteTemplate() {
+		return cm.getWiki().getTemplate("sprint.review");
+	}
+
 	public static final Comparator<Sprint> END_DATE_COMPARATOR = new Comparator<Sprint>() {
 
 		public int compare(Sprint a, Sprint b) {

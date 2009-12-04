@@ -20,12 +20,10 @@ public class NextSprintWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setCellPadding(2);
 		tb.addFieldRow("Label", sprint.getLabelModel());
-		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()).setTemplate(cm.getWiki().getTemplate(
-			"sprint.goal")));
+		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()));
 		tb.addFieldRow("Begin", new DateEditorWidget(sprint.getBeginModel()));
 		tb.addFieldRow("End", new DateEditorWidget(sprint.getEndModel()));
-		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()).setTemplate(cm
-				.getWiki().getTemplate("sprint.planning")));
+		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()));
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Next Sprint", new ButtonWidget(new SwitchToNextSprintAction()));

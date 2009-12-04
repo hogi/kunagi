@@ -28,8 +28,7 @@ public class SprintWidget extends AScrumWidget {
 		tb.setColumnWidths("100px");
 
 		tb.addFieldRow("Label", sprint.getLabelModel(), 4);
-		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()).setTemplate(cm.getWiki().getTemplate(
-			"sprint.goal")), 4);
+		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()), 4);
 
 		if (completed) {
 			tb.addFieldRow("Velocity", new TextOutputWidget(sprint.getVelocityModel()), 4);
@@ -83,12 +82,9 @@ public class SprintWidget extends AScrumWidget {
 					.getCompletedRequirementLabelsModel()), 4);
 		}
 
-		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()).setTemplate(cm
-				.getWiki().getTemplate("sprint.planning")), 4);
-		tb.addFieldRow("Review Note", new RichtextEditorWidget(sprint.getReviewNoteModel()).setTemplate(cm.getWiki()
-				.getTemplate("sprint.review")), 4);
-		tb.addFieldRow("Retrospecitve Note", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel())
-				.setTemplate(cm.getWiki().getTemplate("sprint.retrospective")), 4);
+		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()), 4);
+		tb.addFieldRow("Review Note", new RichtextEditorWidget(sprint.getReviewNoteModel()), 4);
+		tb.addFieldRow("Retrospecitve Note", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel()), 4);
 
 		if (completed)
 			tb.add(Gwt
