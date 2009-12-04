@@ -36,10 +36,8 @@ public class SprintWidget extends AScrumWidget {
 
 		tb.addFieldLabel("Dates");
 		tb.addField("Begin", new DateEditorWidget(sprint.getBeginModel()));
-		// TODO restrict editing
 
 		tb.addFieldRow("End", new DateEditorWidget(sprint.getEndModel()));
-		// TODO restrict editing
 
 		if (completed == false) {
 			// not completed
