@@ -10,9 +10,10 @@ import scrum.client.common.AScrumComponent;
 import scrum.client.common.AScrumGwtEntity;
 import scrum.client.project.Project;
 
-public class Search extends AScrumComponent {
+public class Search extends AScrumComponent implements SearchResultsChangedListener {
 
 	private SearchResults results = new SearchResults();
+	private SearchResultsWidget resultsWidget;
 
 	public void search(String text) {
 		log.info("Searching:", text);
@@ -49,6 +50,19 @@ public class Search extends AScrumComponent {
 
 	private String[] parseKeys(String text) {
 		return new String[] { text }; // TODO tokenize
+	}
+
+	public SearchResults getResults() {
+		return results;
+	}
+
+	public void onSearchResultsChanged() {
+		getResultsWidget().update();
+	}
+
+	public SearchResultsWidget getResultsWidget() {
+		if (resultsWidget == null) resultsWidget = new SearchResultsWidget();
+		return resultsWidget;
 	}
 
 }
