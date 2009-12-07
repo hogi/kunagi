@@ -56,4 +56,6 @@ public interface GScrumServiceAsync {
 
     void updateSystemMessage(scrum.client.admin.SystemMessage systemMessage, AsyncCallback<DataTransferObject> callback);
 
+    void search(java.lang.String text, AsyncCallback<DataTransferObject> callback);
+
 }

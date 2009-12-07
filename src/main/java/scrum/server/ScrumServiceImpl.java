@@ -79,6 +79,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	// --- ---
 
 	@Override
+	protected void onSearch(GwtConversation conversation, String text) {
+		Project project = conversation.getProject();
+		if (project == null) return;
+		conversation.sendToClient(project.search(text));
+	}
+
+	@Override
 	protected void onUpdateSystemMessage(GwtConversation conversation, SystemMessage systemMessage) {
 		User user = conversation.getSession().getUser();
 		if (user == null || user.isAdmin() == false) throw new PermissionDeniedException();

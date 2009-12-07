@@ -190,4 +190,12 @@ public abstract class GScrumGwtApplication
         callUpdateSystemMessage(systemMessage,  null);
     }
 
+    public final void callSearch(java.lang.String text,  Runnable callback) {
+        getScrumService().search(text,  new DefaultCallback<DataTransferObject>(callback));
+    }
+
+    public final void callSearch(java.lang.String text) {
+        callSearch(text,  null);
+    }
+
 }

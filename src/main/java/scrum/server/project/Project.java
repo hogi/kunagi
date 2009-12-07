@@ -2,9 +2,11 @@ package scrum.server.project;
 
 import ilarkesto.base.Money;
 import ilarkesto.base.time.Date;
+import ilarkesto.persistence.AEntity;
 import ilarkesto.rss.Rss20Builder;
 
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -92,6 +94,12 @@ public class Project extends GProject {
 	}
 
 	// --- ---
+
+	public ArrayList<AEntity> search(String text) {
+		ArrayList<AEntity> ret = new ArrayList<AEntity>();
+		// TODO search
+		return ret;
+	}
 
 	public void writeJournalAsRss(OutputStream out, String encoding, String baseUrl) {
 		Rss20Builder rss = new Rss20Builder();

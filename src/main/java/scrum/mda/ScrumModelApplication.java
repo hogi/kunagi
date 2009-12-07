@@ -63,6 +63,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtComponentsModel.addComposite("Wiki");
 			gwtComponentsModel.addComposite("Undo");
 			gwtComponentsModel.addComposite("Calendar");
+			gwtComponentsModel.addComposite("Search");
 		}
 		return gwtComponentsModel;
 	}
@@ -121,6 +122,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("sleep").addParameter("millis", long.class);
 			gwtServiceModel.addMethod("updateSystemMessage").addParameter("systemMessage",
 				"scrum.client.admin.SystemMessage");
+			gwtServiceModel.addMethod("search").addParameter("text", String.class);
 
 		}
 		return gwtServiceModel;

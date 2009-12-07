@@ -9,6 +9,7 @@ import scrum.client.ApplicationInfo;
 import scrum.client.admin.LogoutAction;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.ChangeProjectAction;
+import scrum.client.search.SearchInputWidget;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -18,6 +19,7 @@ public class HeaderWidget extends AScrumWidget {
 	private Label title;
 	private Label currentUserLabel;
 	private UndoButtonWidget undoButton;
+	private SearchInputWidget search;
 
 	@Override
 	protected Widget onInitialization() {
@@ -31,7 +33,10 @@ public class HeaderWidget extends AScrumWidget {
 
 		undoButton = new UndoButtonWidget();
 
+		search = new SearchInputWidget();
+
 		ToolbarWidget toolbar = new ToolbarWidget();
+		toolbar.add(search);
 		toolbar.add(undoButton);
 		toolbar.add(new HyperlinkWidget(new ChangeProjectAction()));
 		toolbar.add(new HyperlinkWidget(new LogoutAction()));

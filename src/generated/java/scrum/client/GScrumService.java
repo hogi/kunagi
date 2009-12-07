@@ -56,4 +56,6 @@ public interface GScrumService
 
     DataTransferObject updateSystemMessage(scrum.client.admin.SystemMessage systemMessage);
 
+    DataTransferObject search(java.lang.String text);
+
 }

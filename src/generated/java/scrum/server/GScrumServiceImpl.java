@@ -41,6 +41,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onSetSelectedEntitysIds(GwtConversation conversation, java.util.Set ids);
     protected abstract void onSleep(GwtConversation conversation, long millis);
     protected abstract void onUpdateSystemMessage(GwtConversation conversation, scrum.client.admin.SystemMessage systemMessage);
+    protected abstract void onSearch(GwtConversation conversation, java.lang.String text);
 
 
     public scrum.client.DataTransferObject ping() {
@@ -395,6 +396,25 @@ public abstract class GScrumServiceImpl
             onUpdateSystemMessage(conversation, systemMessage);
         } catch (Throwable t) {
             handleServiceMethodException("updateSystemMessage",t);
+            throw new RuntimeException(t);
+        }
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public scrum.client.DataTransferObject search(java.lang.String text) {
+        LOG.debug("search");
+        WebSession session = (WebSession) getSession();
+        GwtConversation conversation = session.getGwtConversation();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:search");
+        context.bindCurrentThread();
+        try {
+            onSearch(conversation, text);
+        } catch (Throwable t) {
+            handleServiceMethodException("search",t);
             throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
