@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.ScrumJs;
 import scrum.client.admin.User;
 import scrum.client.issues.Issue;
 import scrum.client.sprint.Sprint;
@@ -218,6 +219,11 @@ public class Requirement extends GRequirement {
 		if (isInCurrentSprint()) return false;
 		if (!cm.getProjectContext().getProject().isProductOwner(cm.getAuth().getUser())) return false;
 		return true;
+	}
+
+	@Override
+	public String toHtml() {
+		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + Gwt.escapeHtml(getLabel());
 	}
 
 	@Override

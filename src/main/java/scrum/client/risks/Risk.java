@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.ScrumJs;
 import scrum.client.admin.User;
 import scrum.client.project.Project;
 
@@ -66,6 +67,11 @@ public class Risk extends GRisk implements Comparable<Risk> {
 		Project project = cm.getProjectContext().getProject();
 		User user = cm.getAuth().getUser();
 		return project.isProductOwner(user) || project.isTeamMember(user);
+	}
+
+	@Override
+	public String toHtml() {
+		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + Gwt.escapeHtml(getLabel());
 	}
 
 	@Override

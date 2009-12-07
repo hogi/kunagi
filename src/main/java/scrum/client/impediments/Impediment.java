@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.Date;
 import java.util.Comparator;
 import java.util.Map;
 
+import scrum.client.ScrumJs;
 import scrum.client.project.Project;
 
 public class Impediment extends GImpediment {
@@ -26,6 +27,11 @@ public class Impediment extends GImpediment {
 
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
+	}
+
+	@Override
+	public String toHtml() {
+		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + getLabel();
 	}
 
 	@Override

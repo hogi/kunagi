@@ -2,7 +2,6 @@ package scrum.client.dashboard;
 
 import java.util.List;
 
-import scrum.client.ScrumJs;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.Project;
 import scrum.client.risks.Risk;
@@ -30,8 +29,7 @@ public class HighestRisksWidget extends AScrumWidget {
 		if (!risks.isEmpty()) {
 			for (Risk risk : risks) {
 				sb.append("<li>");
-				sb.append(ScrumJs.createShowEntityByReferenceLink(risk.getReference()));
-				sb.append(" ").append(risk.getLabel());
+				sb.append(risk.toHtml());
 				sb.append("</li>");
 			}
 		}

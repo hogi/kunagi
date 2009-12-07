@@ -2,7 +2,6 @@ package scrum.client.dashboard;
 
 import java.util.List;
 
-import scrum.client.ScrumJs;
 import scrum.client.common.AScrumWidget;
 import scrum.client.impediments.Impediment;
 import scrum.client.project.Project;
@@ -30,8 +29,7 @@ public class OpenImpedimentsWidget extends AScrumWidget {
 		if (!impediments.isEmpty()) {
 			for (Impediment impediment : impediments) {
 				sb.append("<li>");
-				sb.append(ScrumJs.createShowEntityByReferenceLink(impediment.getReference()));
-				sb.append(" ").append(impediment.getLabel());
+				sb.append(impediment.toHtml());
 				sb.append("</li>");
 			}
 		}

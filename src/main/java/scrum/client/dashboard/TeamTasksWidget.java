@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import scrum.client.ScrumJs;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.Project;
@@ -46,13 +45,11 @@ public class TeamTasksWidget extends AScrumWidget {
 			sb.append("<ul>");
 			for (Requirement req : reqs) {
 				sb.append("<li>");
-				sb.append(ScrumJs.createShowEntityByReferenceLink(req.getReference()));
-				sb.append(" ").append(req.getLabel());
+				sb.append(req.toHtml());
 				sb.append("<ul>");
 				for (Task task : req.getClaimedTasks(user)) {
 					sb.append("<li>");
-					sb.append(ScrumJs.createShowEntityByReferenceLink(task.getReference()));
-					sb.append(" ").append(task.getLabel());
+					sb.append(task.toHtml());
 					sb.append("</li>");
 				}
 				sb.append("</ul></li>");

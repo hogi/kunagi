@@ -23,6 +23,11 @@ public class ProjectEvent extends GProjectEvent {
 	}
 
 	@Override
+	public String toHtml() {
+		return cm.getWiki().richtextToHtml(getLabel());
+	}
+
+	@Override
 	public String toString() {
 		return getLabel();
 	}

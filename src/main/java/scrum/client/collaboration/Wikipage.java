@@ -17,6 +17,11 @@ public class Wikipage extends GWikipage {
 	}
 
 	@Override
+	public String toHtml() {
+		return cm.getWiki().richtextToHtml("[[" + getName() + "]]");
+	}
+
+	@Override
 	public String toString() {
 		return getName();
 	}

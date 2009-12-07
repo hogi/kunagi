@@ -3,6 +3,7 @@ package scrum.client.sprint;
 import java.util.Comparator;
 import java.util.Map;
 
+import scrum.client.ScrumJs;
 import scrum.client.admin.User;
 import scrum.client.project.Requirement;
 
@@ -84,6 +85,11 @@ public class Task extends GTask {
 			s += " No owner.";
 		}
 		return s;
+	}
+
+	@Override
+	public String toHtml() {
+		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + getLabel();
 	}
 
 	@Override

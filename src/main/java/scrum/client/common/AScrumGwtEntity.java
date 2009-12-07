@@ -1,6 +1,7 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AGwtEntity;
+import ilarkesto.gwt.client.Gwt;
 
 import java.util.Map;
 
@@ -14,6 +15,10 @@ public abstract class AScrumGwtEntity extends AGwtEntity {
 
 	public AScrumGwtEntity(Map data) {
 		super(data);
+	}
+
+	public String toHtml() {
+		return Gwt.escapeHtml(toString());
 	}
 
 }

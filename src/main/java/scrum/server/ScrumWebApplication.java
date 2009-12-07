@@ -46,7 +46,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public BurndownChart getBurndownChart() {
 		if (burndownChart == null) {
 			burndownChart = new BurndownChart();
-			autowire(burndownChart);
+			burndownChart.setSprintDao(getSprintDao());
+			burndownChart.setProjectDao(getProjectDao());
 		}
 		return burndownChart;
 	}

@@ -33,11 +33,21 @@ public class Search extends AScrumComponent implements SearchResultsChangedListe
 
 	private void searchClient(String text) {
 		String[] keys = parseKeys(text);
-		Project project = getCurrentProject();
 
-		results.addEntities(getMatching(project.getRequirements(), keys));
-		results.addEntities(getMatching(project.getTasks(), keys));
-		results.addEntities(getMatching(project.getWikipages(), keys));
+		if (cm.getProjectContext().isProjectOpen()) {
+			Project project = getCurrentProject();
+
+			results.addEntities(getMatching(project.getRequirements(), keys));
+			results.addEntities(getMatching(project.getQualitys(), keys));
+			results.addEntities(getMatching(project.getTasks(), keys));
+			results.addEntities(getMatching(project.getWikipages(), keys));
+			results.addEntities(getMatching(project.getIssues(), keys));
+			results.addEntities(getMatching(project.getImpediments(), keys));
+			results.addEntities(getMatching(project.getRisks(), keys));
+		} else {
+			// TODO
+		}
+
 	}
 
 	private <T extends AScrumGwtEntity> List<T> getMatching(Collection<T> entities, String[] keys) {

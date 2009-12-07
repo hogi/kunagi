@@ -36,7 +36,7 @@ public class LatestEventsWidget extends AScrumWidget {
 				Widget timeWidget = Gwt.createDiv("LatestEventsWidget-time", event.getDateAndTime().getPeriodToNow()
 						.toShortestString()
 						+ " ago");
-				Widget textWidget = new HTML(cm.getWiki().richtextToHtml(event.getLabel()));
+				Widget textWidget = new HTML(event.toHtml());
 				tb.addRow(timeWidget, textWidget);
 			}
 		}

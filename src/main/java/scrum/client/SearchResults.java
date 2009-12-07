@@ -3,7 +3,7 @@ package scrum.client;
 import ilarkesto.gwt.client.GwtLogger;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +35,7 @@ public class SearchResults {
 	}
 
 	public Map<String, List<AScrumGwtEntity>> getEntitiesGrouped() {
-		Map<String, List<AScrumGwtEntity>> ret = new HashMap<String, List<AScrumGwtEntity>>();
+		Map<String, List<AScrumGwtEntity>> ret = new LinkedHashMap<String, List<AScrumGwtEntity>>();
 		for (AScrumGwtEntity entity : entities) {
 			String key = entity.getClass().getName();
 			List<AScrumGwtEntity> list = ret.get(key);
