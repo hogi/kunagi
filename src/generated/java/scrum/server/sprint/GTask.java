@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GTask
             extends AEntity
-            implements java.lang.Comparable<Task> {
+            implements ilarkesto.search.Searchable, java.lang.Comparable<Task> {
 
     // --- AEntity ---
 
@@ -52,6 +52,18 @@ public abstract class GTask
     private static final Logger LOG = Logger.get(GTask.class);
 
     public static final String TYPE = "task";
+
+
+    // -----------------------------------------------------------
+    // - Searchable
+    // -----------------------------------------------------------
+
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getDescription(), key)) return true;
+        return false;
+    }
 
     // -----------------------------------------------------------
     // - requirement

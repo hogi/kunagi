@@ -62,6 +62,7 @@ public abstract class GSimpleEvent
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getLocation(), key)) return true;
         if (matchesKey(getAgenda(), key)) return true;
         if (matchesKey(getNote(), key)) return true;
         return false;

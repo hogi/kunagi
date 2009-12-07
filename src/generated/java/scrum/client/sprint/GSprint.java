@@ -612,4 +612,16 @@ public abstract class GSprint
         properties.put("retrospectiveNote", this.retrospectiveNote);
     }
 
+    @Override
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getGoal(), key)) return true;
+        if (matchesKey(getCompletedRequirementLabels(), key)) return true;
+        if (matchesKey(getPlanningNote(), key)) return true;
+        if (matchesKey(getReviewNote(), key)) return true;
+        if (matchesKey(getRetrospectiveNote(), key)) return true;
+        return false;
+    }
+
 }

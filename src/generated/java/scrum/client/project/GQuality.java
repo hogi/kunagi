@@ -311,4 +311,13 @@ public abstract class GQuality
         properties.put("testDescription", this.testDescription);
     }
 
+    @Override
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getDescription(), key)) return true;
+        if (matchesKey(getTestDescription(), key)) return true;
+        return false;
+    }
+
 }

@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GComment
             extends AEntity
-            implements java.lang.Comparable<Comment> {
+            implements ilarkesto.search.Searchable, java.lang.Comparable<Comment> {
 
     // --- AEntity ---
 
@@ -49,6 +49,17 @@ public abstract class GComment
     private static final Logger LOG = Logger.get(GComment.class);
 
     public static final String TYPE = "comment";
+
+
+    // -----------------------------------------------------------
+    // - Searchable
+    // -----------------------------------------------------------
+
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getText(), key)) return true;
+        return false;
+    }
 
     // -----------------------------------------------------------
     // - parent

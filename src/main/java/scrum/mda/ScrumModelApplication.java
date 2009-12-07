@@ -164,7 +164,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			simpleEventModel.addStringProperty("label").setMandatory(true).setSearchable(true);
 			simpleEventModel.addProperty("date", Date.class);
 			simpleEventModel.addProperty("time", Time.class);
-			simpleEventModel.addStringProperty("location");
+			simpleEventModel.addStringProperty("location").setSearchable(true);
 			simpleEventModel.addProperty("duration", Integer.class); // minutes
 			simpleEventModel.addStringProperty("agenda").setRichtext(true).setSearchable(true);
 			simpleEventModel.addStringProperty("note").setRichtext(true).setSearchable(true);
@@ -185,7 +185,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.setGwtSupport(true);
 			projectModel.addPredicate("editable");
 			projectModel.addStringProperty("label").setMandatory(true).setSearchable(true);
-			projectModel.addStringProperty("description").setRichtext(true);
+			projectModel.addStringProperty("description").setRichtext(true).setSearchable(true);
 			projectModel.addProperty("begin", Date.class);
 			projectModel.addProperty("end", Date.class);
 			projectModel.addSetReference("participants", getUserModel());
@@ -279,9 +279,12 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			qualityModel.addPredicate("editable");
 			qualityModel.addReference("project", getProjectModel()).setMaster(true);
 			qualityModel.addProperty("number", int.class);
-			qualityModel.addStringProperty("label").setMandatory(true).setEditablePredicate("editable");
-			qualityModel.addStringProperty("description").setRichtext(true).setEditablePredicate("editable");
-			qualityModel.addStringProperty("testDescription").setRichtext(true).setEditablePredicate("editable");
+			qualityModel.addStringProperty("label").setMandatory(true).setSearchable(true).setEditablePredicate(
+				"editable");
+			qualityModel.addStringProperty("description").setRichtext(true).setSearchable(true).setEditablePredicate(
+				"editable");
+			qualityModel.addStringProperty("testDescription").setRichtext(true).setSearchable(true)
+					.setEditablePredicate("editable");
 			getApplicationModel().addCreateAction(qualityModel);
 			qualityModel.addAction("DeleteQuality");
 		}
@@ -300,19 +303,20 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			sprintModel.addPredicate("retrospectiveEditable");
 			sprintModel.addPredicate("datesEditable");
 			sprintModel.addReference("project", getProjectModel()).setMaster(true);
-			sprintModel.addStringProperty("label").setMandatory(true).setEditablePredicate("editable");
-			sprintModel.addStringProperty("goal").setRichtext(true).setTemplateAvailable(true).setEditablePredicate(
+			sprintModel.addStringProperty("label").setMandatory(true).setSearchable(true).setEditablePredicate(
 				"editable");
+			sprintModel.addStringProperty("goal").setRichtext(true).setTemplateAvailable(true).setEditablePredicate(
+				"editable").setSearchable(true);
 			sprintModel.addProperty("begin", Date.class).setEditablePredicate("datesEditable");
 			sprintModel.addProperty("end", Date.class).setEditablePredicate("datesEditable");
 			sprintModel.addProperty("velocity", Integer.class);
-			sprintModel.addStringProperty("completedRequirementLabels").setRichtext(true);
+			sprintModel.addStringProperty("completedRequirementLabels").setRichtext(true).setSearchable(true);
 			sprintModel.addStringProperty("planningNote").setRichtext(true).setTemplateAvailable(true)
-					.setEditablePredicate("planningEditable");
+					.setEditablePredicate("planningEditable").setSearchable(true);
 			sprintModel.addStringProperty("reviewNote").setRichtext(true).setTemplateAvailable(true)
-					.setEditablePredicate("reviewEditable");
+					.setEditablePredicate("reviewEditable").setSearchable(true);
 			sprintModel.addStringProperty("retrospectiveNote").setRichtext(true).setTemplateAvailable(true)
-					.setEditablePredicate("retrospectiveEditable");
+					.setEditablePredicate("retrospectiveEditable").setSearchable(true);
 		}
 		return sprintModel;
 	}
@@ -339,8 +343,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			taskModel.addPredicate("editable");
 			taskModel.addReference("requirement", getRequirementModel()).setMaster(true);
 			taskModel.addProperty("number", int.class);
-			taskModel.addStringProperty("label").setMandatory(true).setEditablePredicate("editable");
-			taskModel.addStringProperty("description").setRichtext(true).setEditablePredicate("editable");
+			taskModel.addStringProperty("label").setMandatory(true).setEditablePredicate("editable")
+					.setSearchable(true);
+			taskModel.addStringProperty("description").setRichtext(true).setEditablePredicate("editable")
+					.setSearchable(true);
 			taskModel.addProperty("remainingWork", int.class).setEditablePredicate("editable");
 			taskModel.addProperty("burnedWork", int.class).setEditablePredicate("editable");
 			taskModel.addReference("owner", getUserModel()).setEditablePredicate("editable");
@@ -362,7 +368,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			impedimentModel.setGwtSupport(true);
 			impedimentModel.addReference("project", getProjectModel()).setMaster(true);
 			impedimentModel.addProperty("number", int.class);
-			impedimentModel.addStringProperty("label").setMandatory(true);
+			impedimentModel.addStringProperty("label").setMandatory(true).setSearchable(true);
 			impedimentModel.addProperty("date", Date.class).setMandatory(true);
 			impedimentModel.addStringProperty("description").setRichtext(true).setSearchable(true);
 			impedimentModel.addStringProperty("solution").setRichtext(true).setSearchable(true);
@@ -472,7 +478,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			commentModel.setGwtSupport(true);
 			commentModel.addReference("parent", getEntityModel()).setMaster(true);
 			commentModel.addReference("author", getUserModel());
-			commentModel.addStringProperty("text").setRichtext(true).setMandatory(true);
+			commentModel.addStringProperty("text").setRichtext(true).setMandatory(true).setSearchable(true);
 			commentModel.addProperty("dateAndTime", DateAndTime.class);
 		}
 		return commentModel;
@@ -502,7 +508,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectEventModel.addPredicate("editable");
 			projectEventModel.addReference("project", getProjectModel()).setMaster(true);
 			projectEventModel.addStringProperty("label").setMandatory(true).setSearchable(true).setEditablePredicate(
-				"editable");
+				"editable").setSearchable(true);
 			projectEventModel.addProperty("dateAndTime", DateAndTime.class).setMandatory(true).setEditablePredicate(
 				"editable");
 		}

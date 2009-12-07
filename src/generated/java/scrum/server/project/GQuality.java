@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GQuality
             extends AEntity
-            implements java.lang.Comparable<Quality> {
+            implements ilarkesto.search.Searchable, java.lang.Comparable<Quality> {
 
     // --- AEntity ---
 
@@ -50,6 +50,19 @@ public abstract class GQuality
     private static final Logger LOG = Logger.get(GQuality.class);
 
     public static final String TYPE = "quality";
+
+
+    // -----------------------------------------------------------
+    // - Searchable
+    // -----------------------------------------------------------
+
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getDescription(), key)) return true;
+        if (matchesKey(getTestDescription(), key)) return true;
+        return false;
+    }
 
     // -----------------------------------------------------------
     // - project

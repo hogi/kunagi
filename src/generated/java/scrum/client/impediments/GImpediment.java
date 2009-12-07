@@ -378,6 +378,7 @@ public abstract class GImpediment
     @Override
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;
+        if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
         if (matchesKey(getSolution(), key)) return true;
         return false;

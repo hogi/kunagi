@@ -215,4 +215,11 @@ public abstract class GComment
         properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
     }
 
+    @Override
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getText(), key)) return true;
+        return false;
+    }
+
 }

@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GSprint
             extends AEntity
-            implements java.lang.Comparable<Sprint> {
+            implements ilarkesto.search.Searchable, java.lang.Comparable<Sprint> {
 
     // --- AEntity ---
 
@@ -55,6 +55,22 @@ public abstract class GSprint
     private static final Logger LOG = Logger.get(GSprint.class);
 
     public static final String TYPE = "sprint";
+
+
+    // -----------------------------------------------------------
+    // - Searchable
+    // -----------------------------------------------------------
+
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getGoal(), key)) return true;
+        if (matchesKey(getCompletedRequirementLabels(), key)) return true;
+        if (matchesKey(getPlanningNote(), key)) return true;
+        if (matchesKey(getReviewNote(), key)) return true;
+        if (matchesKey(getRetrospectiveNote(), key)) return true;
+        return false;
+    }
 
     // -----------------------------------------------------------
     // - project

@@ -408,4 +408,12 @@ public abstract class GTask
         properties.put("ownerId", this.ownerId);
     }
 
+    @Override
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getDescription(), key)) return true;
+        return false;
+    }
+
 }
