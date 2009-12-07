@@ -237,7 +237,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".HeaderWidget .gwt-Hyperlink a").color(cHeaderLink);
 		css.style(".HeaderWidget .UndoButtonWidget .gwt-MenuItem").fontSize(fontSizeSmall).padding(0, 3, 0, 3);
 
-		css.style(".SearchInputWidget input").fontSize(fontSizeSmall).lineHeight(lineHeightSmall).margin(3, 10, 0, 10);
+		css.style(".SearchInputWidget input").fontSize(fontSizeSmall).lineHeight(lineHeightSmall).margin(0, 10, 0, 10)
+				.padding(1);
 	}
 
 	private void systemMessage(CssRenderer css) {

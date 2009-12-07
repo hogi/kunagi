@@ -1,5 +1,7 @@
 package scrum.client;
 
+import ilarkesto.gwt.client.GwtLogger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +11,7 @@ import scrum.client.common.AScrumGwtEntity;
 
 public class SearchResults {
 
+	private static final GwtLogger LOG = GwtLogger.createLogger(SearchResults.class);
 	private static ComponentManager cm = ComponentManager.get();
 
 	private List<AScrumGwtEntity> entities = new ArrayList<AScrumGwtEntity>();
@@ -23,9 +26,12 @@ public class SearchResults {
 		cm.getEventBus().fireSearchResultsChanged();
 	}
 
-	public void addEntities(List<AScrumGwtEntity> entities) {
+	public void addEntities(List<? extends AScrumGwtEntity> entities) {
 		boolean changed = this.entities.addAll(entities);
-		if (changed) cm.getEventBus().fireSearchResultsChanged();
+		if (changed) {
+			LOG.info("SearchResults:", this.entities.size());
+			cm.getEventBus().fireSearchResultsChanged();
+		}
 	}
 
 	public Map<String, List<AScrumGwtEntity>> getEntitiesGrouped() {

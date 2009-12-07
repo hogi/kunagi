@@ -22,7 +22,11 @@ public class Search extends AScrumComponent implements SearchResultsChangedListe
 
 		cm.getApp().callSearch(text);
 
-		// TODO show result view
+		if (cm.getProjectContext().isProjectOpen()) {
+			cm.getProjectContext().showSearchResults();
+		} else {
+			// TODO
+		}
 
 		searchClient(text);
 	}
@@ -31,6 +35,9 @@ public class Search extends AScrumComponent implements SearchResultsChangedListe
 		String[] keys = parseKeys(text);
 		Project project = getCurrentProject();
 
+		results.addEntities(getMatching(project.getRequirements(), keys));
+		results.addEntities(getMatching(project.getTasks(), keys));
+		results.addEntities(getMatching(project.getWikipages(), keys));
 	}
 
 	private <T extends AScrumGwtEntity> List<T> getMatching(Collection<T> entities, String[] keys) {

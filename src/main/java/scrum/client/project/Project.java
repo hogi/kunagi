@@ -276,6 +276,10 @@ public class Project extends GProject {
 		return getDao().getRequirementsByProject(this);
 	}
 
+	public List<Task> getTasks() {
+		return getDao().getTasks();
+	}
+
 	public List<Requirement> getRequirementsOrdered() {
 		List<Requirement> requirements = getRequirements();
 		Collections.sort(requirements, getRequirementsOrderComparator());

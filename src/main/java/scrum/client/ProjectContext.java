@@ -67,6 +67,8 @@ public class ProjectContext extends AScrumComponent {
 	private PunishmentsWidget punishments;
 	private JournalWidget projectEventListWidget;
 
+	private boolean searchResultsAdded;
+
 	private User highlightedUser;
 
 	ProjectContext() {
@@ -165,6 +167,16 @@ public class ProjectContext extends AScrumComponent {
 
 	public ProjectUserConfigWidget getProjectUserConfig() {
 		return projectUserConfig;
+	}
+
+	public void showSearchResults() {
+		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
+		SearchResultsWidget results = cm.getSearch().getResultsWidget();
+		if (!searchResultsAdded) {
+			navigator.addItem("Search Results", results);
+			searchResultsAdded = true;
+		}
+		navigator.select(results);
 	}
 
 	public void showEntityByReference(final String reference) {
