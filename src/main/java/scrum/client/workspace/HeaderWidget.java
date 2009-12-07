@@ -1,9 +1,8 @@
 package scrum.client.workspace;
 
-import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
-import ilarkesto.gwt.client.ToolbarWidget;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.undo.UndoButtonWidget;
 import scrum.client.ApplicationInfo;
 import scrum.client.admin.LogoutAction;
@@ -35,18 +34,13 @@ public class HeaderWidget extends AScrumWidget {
 
 		search = new SearchInputWidget();
 
-		ToolbarWidget toolbar = new ToolbarWidget();
-		toolbar.add(search);
-		toolbar.add(undoButton);
-		toolbar.add(new HyperlinkWidget(new ChangeProjectAction()));
-		toolbar.add(new HyperlinkWidget(new LogoutAction()));
+		TableBuilder tb = new TableBuilder();
+		tb.setCellPadding(2);
+		tb.setColumnWidths("", "", "", "50px", "100px", "50px");
+		tb.add(title, currentUserLabel, search, undoButton, new HyperlinkWidget(new ChangeProjectAction()),
+			new HyperlinkWidget(new LogoutAction()));
 
-		FloatingFlowPanel panel = new FloatingFlowPanel();
-		panel.add(title);
-		panel.add(toolbar, true);
-		panel.add(currentUserLabel, true);
-
-		return Gwt.createDiv("HeaderWidget", panel);
+		return Gwt.createDiv("HeaderWidget", tb.createTable());
 	}
 
 	@Override
