@@ -169,6 +169,25 @@ public abstract class GEventBus
         }
     }
 
+    // --- SearchResultsChanged ---
+
+    private Set<SearchResultsChangedListener> searchResultsChangedListeners = new HashSet<SearchResultsChangedListener>();
+
+    public void addSearchResultsChangedListener(SearchResultsChangedListener listener) {
+        searchResultsChangedListeners.add(listener);
+    }
+
+    public void removeSearchResultsChangedListener(SearchResultsChangedListener listener) {
+        searchResultsChangedListeners.remove(listener);
+    }
+
+    public void fireSearchResultsChanged() {
+        log.debug("Event fired: SearchResultsChanged");
+        for (SearchResultsChangedListener listener : searchResultsChangedListeners) {
+            listener.onSearchResultsChanged();
+        }
+    }
+
     // --- automatic adding / removing ---
 
     public void addListener(Object listener) {
@@ -180,6 +199,7 @@ public abstract class GEventBus
         if (listener instanceof VisibleDataChangedListener) addVisibleDataChangedListener((VisibleDataChangedListener)listener);
         if (listener instanceof BlockExpandedListener) addBlockExpandedListener((BlockExpandedListener)listener);
         if (listener instanceof BlockCollapsedListener) addBlockCollapsedListener((BlockCollapsedListener)listener);
+        if (listener instanceof SearchResultsChangedListener) addSearchResultsChangedListener((SearchResultsChangedListener)listener);
     }
 
     public void removeListener(Object listener) {
@@ -191,6 +211,7 @@ public abstract class GEventBus
         if (listener instanceof VisibleDataChangedListener) removeVisibleDataChangedListener((VisibleDataChangedListener)listener);
         if (listener instanceof BlockExpandedListener) removeBlockExpandedListener((BlockExpandedListener)listener);
         if (listener instanceof BlockCollapsedListener) removeBlockCollapsedListener((BlockCollapsedListener)listener);
+        if (listener instanceof SearchResultsChangedListener) removeSearchResultsChangedListener((SearchResultsChangedListener)listener);
     }
 
 }

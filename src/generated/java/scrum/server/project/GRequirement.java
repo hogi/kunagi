@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GRequirement
             extends AEntity
-            implements java.lang.Comparable<Requirement> {
+            implements ilarkesto.search.Searchable, java.lang.Comparable<Requirement> {
 
     // --- AEntity ---
 
@@ -55,6 +55,19 @@ public abstract class GRequirement
     private static final Logger LOG = Logger.get(GRequirement.class);
 
     public static final String TYPE = "requirement";
+
+
+    // -----------------------------------------------------------
+    // - Searchable
+    // -----------------------------------------------------------
+
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getDescription(), key)) return true;
+        if (matchesKey(getTestDescription(), key)) return true;
+        return false;
+    }
 
     // -----------------------------------------------------------
     // - project

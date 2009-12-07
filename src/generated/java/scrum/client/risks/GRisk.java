@@ -425,4 +425,13 @@ public abstract class GRisk
         properties.put("impact", this.impact);
     }
 
+    @Override
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getDescription(), key)) return true;
+        if (matchesKey(getMitigationPlans(), key)) return true;
+        return false;
+    }
+
 }

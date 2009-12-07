@@ -182,4 +182,11 @@ public abstract class GRelease
         properties.put("publicationDate", this.publicationDate == null ? null : this.publicationDate.toString());
     }
 
+    @Override
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getLabel(), key)) return true;
+        return false;
+    }
+
 }

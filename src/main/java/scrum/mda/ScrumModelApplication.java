@@ -85,6 +85,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtEventBusModel.addEvent("VisibleDataChanged");
 			gwtEventBusModel.addEvent("BlockExpanded").addParameter("object", Object.class);
 			gwtEventBusModel.addEvent("BlockCollapsed").addParameter("object", Object.class);
+			gwtEventBusModel.addEvent("SearchResultsChanged");
 		}
 		return gwtEventBusModel;
 	}
@@ -248,9 +249,12 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addReference("sprint", getSprintModel());
 			requirementModel.addProperty("number", int.class);
 			requirementModel.addSetReference("qualitys", getQualityModel());
-			requirementModel.addStringProperty("label").setMandatory(true).setEditablePredicate("editable");
-			requirementModel.addStringProperty("description").setRichtext(true).setEditablePredicate("editable");
-			requirementModel.addStringProperty("testDescription").setRichtext(true).setEditablePredicate("editable");
+			requirementModel.addStringProperty("label").setMandatory(true).setEditablePredicate("editable")
+					.setSearchable(true);
+			requirementModel.addStringProperty("description").setRichtext(true).setEditablePredicate("editable")
+					.setSearchable(true);
+			requirementModel.addStringProperty("testDescription").setRichtext(true).setEditablePredicate("editable")
+					.setSearchable(true);
 			requirementModel.addProperty("estimatedWork", Integer.class);
 			requirementModel.addProperty("closed", boolean.class);
 			requirementModel.addProperty("dirty", boolean.class);

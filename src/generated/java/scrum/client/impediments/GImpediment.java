@@ -375,4 +375,12 @@ public abstract class GImpediment
         properties.put("closed", this.closed);
     }
 
+    @Override
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getDescription(), key)) return true;
+        if (matchesKey(getSolution(), key)) return true;
+        return false;
+    }
+
 }

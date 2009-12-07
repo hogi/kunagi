@@ -1015,4 +1015,11 @@ public abstract class GProject
         properties.put("punishmentUnit", this.punishmentUnit);
     }
 
+    @Override
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getLabel(), key)) return true;
+        return false;
+    }
+
 }

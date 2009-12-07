@@ -255,4 +255,12 @@ public abstract class GUser
         properties.put("color", this.color);
     }
 
+    @Override
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getName(), key)) return true;
+        if (matchesKey(getEmail(), key)) return true;
+        return false;
+    }
+
 }

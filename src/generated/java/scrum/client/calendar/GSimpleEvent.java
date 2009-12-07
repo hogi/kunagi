@@ -452,4 +452,13 @@ public abstract class GSimpleEvent
         properties.put("note", this.note);
     }
 
+    @Override
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getAgenda(), key)) return true;
+        if (matchesKey(getNote(), key)) return true;
+        return false;
+    }
+
 }

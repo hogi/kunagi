@@ -187,4 +187,12 @@ public abstract class GWikipage
         properties.put("text", this.text);
     }
 
+    @Override
+    public boolean matchesKey(String key) {
+        if (super.matchesKey(key)) return true;
+        if (matchesKey(getName(), key)) return true;
+        if (matchesKey(getText(), key)) return true;
+        return false;
+    }
+
 }
