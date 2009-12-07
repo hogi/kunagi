@@ -238,12 +238,12 @@ public class ProjectContext extends AScrumComponent {
 	}
 
 	public void showTask(Task task) {
-		if (getWorkarea().isShowing(sprintBacklog)) {
-			showSprintBacklog(task);
+		if (getWorkarea().isShowing(whiteboard)) {
+			showWhiteboard(task);
 		} else if (getWorkarea().isShowing(taskOverview)) {
 			showTaskOverview(task);
 		} else {
-			showWhiteboard(task);
+			showSprintBacklog(task);
 		}
 	}
 
