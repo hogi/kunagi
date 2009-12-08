@@ -1,7 +1,7 @@
 package scrum.client;
 
 import ilarkesto.gwt.client.GwtLogger;
-import scrum.client.workspace.Workspace;
+import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -16,7 +16,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		System.out.println("ScrumGwtApplication.onModuleLoad()");
 		cm = new ComponentManager();
 
-		final Workspace workspace = cm.getUi().getWorkspace();
+		final WorkspaceWidget workspace = cm.getUi().getWorkspace();
 		workspace.lock("Loading...");
 
 		RootPanel rootPanel = RootPanel.get();

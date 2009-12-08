@@ -16,9 +16,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class Workspace extends AScrumWidget {
+public class WorkspaceWidget extends AScrumWidget {
 
-	private static final GwtLogger LOG = GwtLogger.createLogger(Workspace.class);
+	private static final GwtLogger LOG = GwtLogger.createLogger(WorkspaceWidget.class);
 
 	public static final int HEADER_HEIGHT = 25;
 
