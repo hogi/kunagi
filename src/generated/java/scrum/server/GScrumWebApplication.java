@@ -78,6 +78,31 @@ public abstract class GScrumWebApplication
         commentDao = null;
     }
 
+    // --- fileDao ---
+
+    private scrum.server.files.FileDao fileDao;
+
+    public final scrum.server.files.FileDao getFileDao() {
+        if (fileDao == null) {
+            fileDao = createFileDao();
+            initializeFileDao(fileDao);
+        }
+        return fileDao;
+    }
+
+    protected scrum.server.files.FileDao createFileDao() {
+        return fileDao = ilarkesto.base.Reflect.newInstance(scrum.server.files.FileDao.class);
+    }
+
+    protected void initializeFileDao(scrum.server.files.FileDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetFileDao() {
+        fileDao = null;
+    }
+
     // --- impedimentDao ---
 
     private scrum.server.impediments.ImpedimentDao impedimentDao;

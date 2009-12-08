@@ -17,6 +17,7 @@ import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Wikipage;
+import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
 import scrum.client.journal.ProjectEvent;
@@ -93,7 +94,11 @@ public class Project extends GProject {
 	}
 
 	public List<Wikipage> getWikipages() {
-		return cm.getDao().getWikipages(); // TODO filter
+		return cm.getDao().getWikipagesByProject(this);
+	}
+
+	public List<File> getFiles() {
+		return cm.getDao().getFilesByProject(this);
 	}
 
 	public Wikipage getWikipage(String name) {

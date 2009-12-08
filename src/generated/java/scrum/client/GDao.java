@@ -196,6 +196,102 @@ public abstract class GDao
         return ret;
     }
 
+    // --- File ---
+
+    private Map<String, scrum.client.files.File> files = new HashMap<String, scrum.client.files.File>();
+
+    public final void clearFiles() {
+        files.clear();
+    }
+
+    public final boolean containsFile(scrum.client.files.File file) {
+        return files.containsKey(file.getId());
+    }
+
+    public final void deleteFile(scrum.client.files.File file) {
+        files.remove(file.getId());
+        entityDeleted(file);
+    }
+
+    public final void createFile(scrum.client.files.File file) {
+        files.put(file.getId(), file);
+        entityCreated(file);
+    }
+
+    private final void updateFile(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.files.File entity = files.get(id);
+        if (entity == null) {
+            entity = new scrum.client.files.File(data);
+            files.put(id, entity);
+            ilarkesto.gwt.client.GwtLogger.DEBUG("File received: " + entity.getId() + " ("+entity+")");
+        } else {
+            entity.updateProperties(data);
+            ilarkesto.gwt.client.GwtLogger.DEBUG("File updated: " + entity);
+        }
+        onEntityModifiedRemotely(entity);
+    }
+
+    public final scrum.client.files.File getFile(String id) {
+        scrum.client.files.File ret = files.get(id);
+        if (ret == null) throw new RuntimeException("File does not exist: " + id);
+        return ret;
+    }
+
+    public final Set<scrum.client.files.File> getFiles(Collection<String> ids) {
+        Set<scrum.client.files.File> ret = new HashSet<scrum.client.files.File>();
+        for (String id : ids) {
+            scrum.client.files.File entity = files.get(id);
+            if (entity == null) throw new RuntimeException("File does not exist: " + id);
+            ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.files.File> getFiles() {
+        return new ArrayList<scrum.client.files.File>(files.values());
+    }
+
+    public final List<scrum.client.files.File> getFilesByProject(scrum.client.project.Project project) {
+        List<scrum.client.files.File> ret = new ArrayList<scrum.client.files.File>();
+        for (scrum.client.files.File entity : files.values()) {
+            if (entity.isProject(project)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.files.File> getFilesByFilename(java.lang.String filename) {
+        List<scrum.client.files.File> ret = new ArrayList<scrum.client.files.File>();
+        for (scrum.client.files.File entity : files.values()) {
+            if (entity.isFilename(filename)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.files.File> getFilesByUploadTime(ilarkesto.gwt.client.DateAndTime uploadTime) {
+        List<scrum.client.files.File> ret = new ArrayList<scrum.client.files.File>();
+        for (scrum.client.files.File entity : files.values()) {
+            if (entity.isUploadTime(uploadTime)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.files.File> getFilesByLabel(java.lang.String label) {
+        List<scrum.client.files.File> ret = new ArrayList<scrum.client.files.File>();
+        for (scrum.client.files.File entity : files.values()) {
+            if (entity.isLabel(label)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.files.File> getFilesByNumber(int number) {
+        List<scrum.client.files.File> ret = new ArrayList<scrum.client.files.File>();
+        for (scrum.client.files.File entity : files.values()) {
+            if (entity.isNumber(number)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Impediment ---
 
     private Map<String, scrum.client.impediments.Impediment> impediments = new HashMap<String, scrum.client.impediments.Impediment>();
@@ -574,6 +670,14 @@ public abstract class GDao
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
             if (entity.isLastImpedimentNumber(lastImpedimentNumber)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Project> getProjectsByLastFileNumber(int lastFileNumber) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isLastFileNumber(lastFileNumber)) ret.add(entity);
         }
         return ret;
     }
@@ -1726,6 +1830,7 @@ public abstract class GDao
     public final void clearAllEntities() {
             clearChatMessages();
             clearComments();
+            clearFiles();
             clearImpediments();
             clearIssues();
             clearProjects();
@@ -1750,6 +1855,7 @@ public abstract class GDao
             entityMaps = new ArrayList<Map<String, ? extends AGwtEntity>>();
             entityMaps.add(chatMessages);
             entityMaps.add(comments);
+            entityMaps.add(files);
             entityMaps.add(impediments);
             entityMaps.add(issues);
             entityMaps.add(projects);
@@ -1776,6 +1882,10 @@ public abstract class GDao
         }
         if (type.equals(scrum.client.collaboration.Comment.ENTITY_TYPE)) {
             updateComment(data);
+            return;
+        }
+        if (type.equals(scrum.client.files.File.ENTITY_TYPE)) {
+            updateFile(data);
             return;
         }
         if (type.equals(scrum.client.impediments.Impediment.ENTITY_TYPE)) {

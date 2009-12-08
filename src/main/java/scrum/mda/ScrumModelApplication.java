@@ -203,6 +203,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addProperty("lastRiskNumber", int.class);
 			projectModel.addProperty("lastIssueNumber", int.class);
 			projectModel.addProperty("lastImpedimentNumber", int.class);
+			projectModel.addProperty("lastFileNumber", int.class);
 			projectModel.addProperty("punishmentFactor", int.class);
 			projectModel.addStringProperty("punishmentUnit");
 			getApplicationModel().addCreateAction(projectModel);
@@ -210,6 +211,22 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addAction("OpenProject");
 		}
 		return projectModel;
+	}
+
+	private EntityModel fileModel;
+
+	public EntityModel getFileModel() {
+		if (fileModel == null) {
+			fileModel = createEntityModel("File", "files");
+			fileModel.setGwtSupport(true);
+			fileModel.setViewProtected(true);
+			fileModel.addReference("project", getProjectModel()).setMaster(true);
+			fileModel.addStringProperty("filename").setMandatory(true).setSearchable(true);
+			fileModel.addProperty("uploadTime", DateAndTime.class).setMandatory(true);
+			fileModel.addStringProperty("label").setMandatory(true).setSearchable(true);
+			fileModel.addProperty("number", int.class).setMandatory(true);
+		}
+		return fileModel;
 	}
 
 	private EntityModel releaseModel;
@@ -220,7 +237,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			releaseModel.setGwtSupport(true);
 			releaseModel.setViewProtected(true);
 			releaseModel.addReference("project", getProjectModel()).setMaster(true);
-			releaseModel.addStringProperty("label").setSearchable(true);
+			releaseModel.addStringProperty("label").setMandatory(true).setSearchable(true);
 			releaseModel.addProperty("publicationDate", Date.class);
 		}
 		return releaseModel;

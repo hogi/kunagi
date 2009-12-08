@@ -280,6 +280,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		conversation.sendToClient(project.getRisks());
 		conversation.sendToClient(project.getProjectEvents());
 		conversation.sendToClient(project.getCalendarEvents());
+		conversation.sendToClient(project.getFiles());
 	}
 
 	@Override
@@ -334,12 +335,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Project project = conversation.getProject();
 		int number = Integer.parseInt(reference.substring(scrum.client.project.Requirement.REFERENCE_PREFIX.length()));
 		if (reference.startsWith(scrum.client.project.Requirement.REFERENCE_PREFIX)) {
-			Requirement requirement = project.getRequirementByNumber(number);
-			if (requirement != null) conversation.sendToClient(requirement);
+			conversation.sendToClient(project.getRequirementByNumber(number));
 			return;
 		} else if (reference.startsWith(scrum.client.sprint.Task.REFERENCE_PREFIX)) {
-			Task task = project.getTaskByNumber(number);
-			if (task != null) conversation.sendToClient(task);
+			conversation.sendToClient(project.getTaskByNumber(number));
 			return;
 		}
 		LOG.info("Requested entity not found:", reference);

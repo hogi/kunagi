@@ -49,6 +49,7 @@ public class Search extends AScrumComponent implements SearchResultsChangedListe
 			results.addEntities(getMatching(project.getQualitys(), keys));
 			results.addEntities(getMatching(project.getTasks(), keys));
 			results.addEntities(getMatching(project.getWikipages(), keys));
+			results.addEntities(getMatching(project.getFiles(), keys));
 			results.addEntities(getMatching(project.getIssues(), keys));
 			results.addEntities(getMatching(project.getImpediments(), keys));
 			results.addEntities(getMatching(project.getRisks(), keys));

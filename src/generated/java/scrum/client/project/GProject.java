@@ -855,6 +855,64 @@ public abstract class GProject
 
     }
 
+    // --- lastFileNumber ---
+
+    private int lastFileNumber ;
+
+    public final int getLastFileNumber() {
+        return this.lastFileNumber ;
+    }
+
+    public final Project setLastFileNumber(int lastFileNumber) {
+        if (isLastFileNumber(lastFileNumber)) return (Project)this;
+        this.lastFileNumber = lastFileNumber ;
+        propertyChanged("lastFileNumber", this.lastFileNumber);
+        return (Project)this;
+    }
+
+    public final boolean isLastFileNumber(int lastFileNumber) {
+        return equals(this.lastFileNumber, lastFileNumber);
+    }
+
+    private transient LastFileNumberModel lastFileNumberModel;
+
+    public LastFileNumberModel getLastFileNumberModel() {
+        if (lastFileNumberModel == null) lastFileNumberModel = createLastFileNumberModel();
+        return lastFileNumberModel;
+    }
+
+    protected LastFileNumberModel createLastFileNumberModel() { return new LastFileNumberModel(); }
+
+    protected class LastFileNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getLastFileNumber();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setLastFileNumber(value);
+        }
+
+            @Override
+            public void increment() {
+                setLastFileNumber(getLastFileNumber() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setLastFileNumber(getLastFileNumber() - 1);
+            }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- punishmentFactor ---
 
     private int punishmentFactor ;
@@ -985,6 +1043,7 @@ public abstract class GProject
         lastRiskNumber  = (Integer) props.get("lastRiskNumber");
         lastIssueNumber  = (Integer) props.get("lastIssueNumber");
         lastImpedimentNumber  = (Integer) props.get("lastImpedimentNumber");
+        lastFileNumber  = (Integer) props.get("lastFileNumber");
         punishmentFactor  = (Integer) props.get("punishmentFactor");
         punishmentUnit  = (java.lang.String) props.get("punishmentUnit");
     }
@@ -1011,6 +1070,7 @@ public abstract class GProject
         properties.put("lastRiskNumber", this.lastRiskNumber);
         properties.put("lastIssueNumber", this.lastIssueNumber);
         properties.put("lastImpedimentNumber", this.lastImpedimentNumber);
+        properties.put("lastFileNumber", this.lastFileNumber);
         properties.put("punishmentFactor", this.punishmentFactor);
         properties.put("punishmentUnit", this.punishmentUnit);
     }

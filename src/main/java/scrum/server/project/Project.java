@@ -22,6 +22,8 @@ import scrum.server.calendar.SimpleEvent;
 import scrum.server.calendar.SimpleEventDao;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.collaboration.WikipageDao;
+import scrum.server.files.File;
+import scrum.server.files.FileDao;
 import scrum.server.impediments.Impediment;
 import scrum.server.impediments.ImpedimentDao;
 import scrum.server.issues.Issue;
@@ -51,6 +53,11 @@ public class Project extends GProject {
 	private static WikipageDao wikipageDao;
 	private static ProjectEventDao projectEventDao;
 	private static SimpleEventDao simpleEventDao;
+	private static FileDao fileDao;
+
+	public static void setFileDao(FileDao fileDao) {
+		Project.fileDao = fileDao;
+	}
 
 	public static void setSimpleEventDao(SimpleEventDao simpleEventDao) {
 		Project.simpleEventDao = simpleEventDao;
@@ -109,6 +116,7 @@ public class Project extends GProject {
 		ret.addAll(getMatching(getIssues(), keys));
 		ret.addAll(getMatching(getImpediments(), keys));
 		ret.addAll(getMatching(getRisks(), keys));
+		ret.addAll(getMatching(getFiles(), keys));
 		return ret;
 	}
 
@@ -188,6 +196,12 @@ public class Project extends GProject {
 	public synchronized int generateTaskNumber() {
 		int number = getLastTaskNumber() + 1;
 		setLastTaskNumber(number);
+		return number;
+	}
+
+	public synchronized int generateFileNumber() {
+		int number = getLastFileNumber() + 1;
+		setLastFileNumber(number);
 		return number;
 	}
 
@@ -316,6 +330,10 @@ public class Project extends GProject {
 
 	public Set<Requirement> getRequirements() {
 		return requirementDao.getRequirementsByProject(this);
+	}
+
+	public Set<File> getFiles() {
+		return fileDao.getFilesByProject(this);
 	}
 
 	public Set<Quality> getQualitys() {
