@@ -193,6 +193,22 @@ public class Project extends GProject {
 		return taskDao.getTaskByNumber(number, this);
 	}
 
+	public Quality getQualityByNumber(int number) {
+		return qualityDao.getQualityByNumber(number, this);
+	}
+
+	public Issue getIssueByNumber(int number) {
+		return issueDao.getIssueByNumber(number, this);
+	}
+
+	public Impediment getImpedimentByNumber(int number) {
+		return impedimentDao.getImpedimentByNumber(number, this);
+	}
+
+	public File getFileByNumber(int number) {
+		return fileDao.getFileByNumber(number, this);
+	}
+
 	public synchronized int generateTaskNumber() {
 		int number = getLastTaskNumber() + 1;
 		setLastTaskNumber(number);

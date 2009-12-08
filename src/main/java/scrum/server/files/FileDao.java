@@ -1,13 +1,17 @@
 package scrum.server.files;
 
-import java.util.*;
-import ilarkesto.persistence.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.*;
-import ilarkesto.base.time.*;
-import ilarkesto.auth.*;
+import ilarkesto.fp.Predicate;
+import scrum.server.project.Project;
 
-public class FileDao
-            extends GFileDao {
+public class FileDao extends GFileDao {
+
+	public File getFileByNumber(final int number, final Project project) {
+		return getEntity(new Predicate<File>() {
+
+			public boolean test(File t) {
+				return t.isNumber(number) && t.isProject(project);
+			}
+		});
+	}
 
 }

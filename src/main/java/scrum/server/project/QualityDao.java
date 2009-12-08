@@ -1,6 +1,17 @@
 package scrum.server.project;
 
+import ilarkesto.fp.Predicate;
+
 public class QualityDao extends GQualityDao {
+
+	public Quality getQualityByNumber(final int number, final Project project) {
+		return getEntity(new Predicate<Quality>() {
+
+			public boolean test(Quality t) {
+				return t.isNumber(number) && t.isProject(project);
+			}
+		});
+	}
 
 	@Override
 	public Quality newEntityInstance() {

@@ -337,8 +337,20 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (reference.startsWith(scrum.client.project.Requirement.REFERENCE_PREFIX)) {
 			conversation.sendToClient(project.getRequirementByNumber(number));
 			return;
+		} else if (reference.startsWith(scrum.client.project.Quality.REFERENCE_PREFIX)) {
+			conversation.sendToClient(project.getQualityByNumber(number));
+			return;
 		} else if (reference.startsWith(scrum.client.sprint.Task.REFERENCE_PREFIX)) {
 			conversation.sendToClient(project.getTaskByNumber(number));
+			return;
+		} else if (reference.startsWith(scrum.client.impediments.Impediment.REFERENCE_PREFIX)) {
+			conversation.sendToClient(project.getImpedimentByNumber(number));
+			return;
+		} else if (reference.startsWith(scrum.client.issues.Issue.REFERENCE_PREFIX)) {
+			conversation.sendToClient(project.getIssueByNumber(number));
+			return;
+		} else if (reference.startsWith(scrum.client.files.File.REFERENCE_PREFIX)) {
+			conversation.sendToClient(project.getFileByNumber(number));
 			return;
 		}
 		LOG.info("Requested entity not found:", reference);
