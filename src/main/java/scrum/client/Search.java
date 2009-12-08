@@ -66,7 +66,15 @@ public class Search extends AScrumComponent implements SearchResultsChangedListe
 	}
 
 	private String[] parseKeys(String text) {
-		return new String[] { text }; // TODO tokenize
+		List<String> ret = new ArrayList<String>();
+		char sep = ' ';
+		int idx = text.indexOf(sep);
+		while (idx > 0) {
+			ret.add(text.substring(0, idx));
+			text = text.substring(idx + 1);
+			idx = text.indexOf(sep);
+		}
+		return ret.toArray(new String[ret.size()]);
 	}
 
 	public SearchResults getResults() {
