@@ -74,6 +74,7 @@ public class Search extends AScrumComponent implements SearchResultsChangedListe
 			text = text.substring(idx + 1);
 			idx = text.indexOf(sep);
 		}
+		ret.add(text);
 		return ret.toArray(new String[ret.size()]);
 	}
 
