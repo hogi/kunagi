@@ -14,13 +14,21 @@ public class Search extends AScrumComponent implements SearchResultsChangedListe
 
 	private SearchResults results = new SearchResults();
 	private SearchResultsWidget resultsWidget;
+	private String searchText;
 
 	public void search(String text) {
-		log.info("Searching:", text);
+		this.searchText = text;
+		log.info("Searching:", searchText);
 		results.clear();
-		if (Gwt.isEmpty(text)) return;
+		if (Gwt.isEmpty(searchText)) return;
 
-		cm.getApp().callSearch(text);
+		cm.getApp().callSearch(searchText, new Runnable() {
+
+			public void run() {
+				searchClient(searchText);
+				getResultsWidget().update();
+			}
+		});
 
 		if (cm.getProjectContext().isProjectOpen()) {
 			cm.getProjectContext().showSearchResults();
@@ -28,7 +36,7 @@ public class Search extends AScrumComponent implements SearchResultsChangedListe
 			// TODO
 		}
 
-		searchClient(text);
+		searchClient(searchText);
 	}
 
 	private void searchClient(String text) {

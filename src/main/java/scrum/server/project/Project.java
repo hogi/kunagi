@@ -1,12 +1,15 @@
 package scrum.server.project;
 
 import ilarkesto.base.Money;
+import ilarkesto.base.Str;
 import ilarkesto.base.time.Date;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.rss.Rss20Builder;
+import ilarkesto.search.Searchable;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -95,10 +98,33 @@ public class Project extends GProject {
 
 	// --- ---
 
+	@SuppressWarnings("unchecked")
 	public ArrayList<AEntity> search(String text) {
-		ArrayList<AEntity> ret = new ArrayList<AEntity>();
-		// TODO search
+		String[] keys = Str.tokenize(text, " ");
+		ArrayList ret = new ArrayList();
+		ret.addAll(getMatching(getRequirements(), keys));
+		ret.addAll(getMatching(getQualitys(), keys));
+		ret.addAll(getMatching(getTasks(), keys));
+		ret.addAll(getMatching(getWikipages(), keys));
+		ret.addAll(getMatching(getIssues(), keys));
+		ret.addAll(getMatching(getImpediments(), keys));
+		ret.addAll(getMatching(getRisks(), keys));
 		return ret;
+	}
+
+	private <T extends Searchable> List<T> getMatching(Collection<T> entities, String[] keys) {
+		List<T> ret = new ArrayList<T>();
+		for (T entity : entities) {
+			if (matchesKeys(entity, keys)) ret.add(entity);
+		}
+		return ret;
+	}
+
+	private boolean matchesKeys(Searchable entity, String[] keys) {
+		for (String key : keys) {
+			if (!entity.matchesKey(key)) return false;
+		}
+		return true;
 	}
 
 	public void writeJournalAsRss(OutputStream out, String encoding, String baseUrl) {
