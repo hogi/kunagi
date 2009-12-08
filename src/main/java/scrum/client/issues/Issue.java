@@ -1,12 +1,14 @@
 package scrum.client.issues;
 
 import ilarkesto.gwt.client.Date;
+import ilarkesto.gwt.client.Gwt;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.ScrumJs;
 import scrum.client.project.Project;
 
 public class Issue extends GIssue {
@@ -46,6 +48,11 @@ public class Issue extends GIssue {
 
 	public boolean isTypeQuality() {
 		return Types.QUALITY.equals(getType());
+	}
+
+	@Override
+	public String toHtml() {
+		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + Gwt.escapeHtml(getLabel());
 	}
 
 	@Override
