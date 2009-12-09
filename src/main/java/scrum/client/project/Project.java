@@ -54,6 +54,24 @@ public class Project extends GProject {
 		return tasks;
 	}
 
+	public String getVelocitiesFromLastSprints() {
+		StringBuilder sb = new StringBuilder();
+		List<Sprint> sprints = getCompletedSprints();
+		Collections.sort(sprints, Sprint.END_DATE_COMPARATOR);
+		int sum = 0;
+		int count = 0;
+		for (Sprint sprint : sprints) {
+			int velocity = sprint.getVelocity();
+			sb.insert(0, velocity + ", ");
+			sum += velocity;
+			count++;
+			if (count >= 12) break;
+		}
+		int avarage = sum / count;
+		sb.append("[ ").append(avarage).append(" avg. ]");
+		return sb.toString();
+	}
+
 	public Integer getVelocityFromLastSprint() {
 		Sprint latest = getLatestCompletedSprint();
 		return latest == null ? null : latest.getVelocity();

@@ -90,11 +90,11 @@ public class ProductBacklogWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setCellPadding(2);
 		tb.addField("Assumed Velocity", new IntegerEditorWidget(getCurrentProject().getVelocityModel()));
-		tb.addField("Velocity in last Sprint", new AFieldValueWidget() {
+		tb.addField("Velocity History", new AFieldValueWidget() {
 
 			@Override
 			protected void onUpdate() {
-				setText(getCurrentProject().getVelocityFromLastSprint());
+				setText(getCurrentProject().getVelocitiesFromLastSprints());
 				super.onUpdate();
 			}
 		});
