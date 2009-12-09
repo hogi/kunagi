@@ -216,9 +216,16 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 				requirement.setDirty(true);
 				conversation.sendToClient(requirement);
 			}
-			if (inCurrentSprint && properties.containsKey("sprintId")) {
-				postProjectEvent(conversation, requirement.getReferenceAndLabel() + " added to current sprint");
+			if (properties.containsKey("sprintId")) {
+				if (inCurrentSprint) {
+					postProjectEvent(conversation, conversation.getSession().getUser().getName() + " pulled "
+							+ requirement.getReferenceAndLabel() + " to current sprint");
+				} else {
+					postProjectEvent(conversation, conversation.getSession().getUser().getName() + " kicked "
+							+ requirement.getReferenceAndLabel() + " from current sprint");
+				}
 			}
+
 			requirement.getProject().getCurrentSprintSnapshot().update();
 		}
 

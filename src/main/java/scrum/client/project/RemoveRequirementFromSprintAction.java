@@ -5,13 +5,13 @@ import scrum.client.sprint.Sprint;
 
 public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSprintAction {
 
-	protected RemoveRequirementFromSprintAction(Requirement requirement) {
+	public RemoveRequirementFromSprintAction(Requirement requirement) {
 		super(requirement);
 	}
 
 	@Override
 	public String getLabel() {
-		return "Remove from Sprint";
+		return "Kick from Sprint";
 	}
 
 	@Override

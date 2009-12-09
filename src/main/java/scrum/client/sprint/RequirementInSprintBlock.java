@@ -8,6 +8,7 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.img.Img;
 import scrum.client.project.CloseRequirementAction;
+import scrum.client.project.RemoveRequirementFromSprintAction;
 import scrum.client.project.ReopenRequirementAction;
 import scrum.client.project.Requirement;
 import scrum.client.project.RequirementWidget;
@@ -36,6 +37,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 		statusLabel = header.appendCenterSuffix("");
 		header.addMenuAction(new CloseRequirementAction(requirement));
 		header.addMenuAction(new ReopenRequirementAction(requirement));
+		header.addMenuAction(new RemoveRequirementFromSprintAction(requirement));
 		header.addMenuAction(new CreateTaskAction(requirement));
 	}
 

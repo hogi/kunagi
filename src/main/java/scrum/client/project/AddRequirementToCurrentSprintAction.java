@@ -10,7 +10,7 @@ public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurren
 
 	@Override
 	public String getLabel() {
-		return "Add to current Sprint";
+		return "Pull to current Sprint";
 	}
 
 	@Override
