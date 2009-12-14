@@ -225,6 +225,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			fileModel.addProperty("uploadTime", DateAndTime.class).setMandatory(true);
 			fileModel.addStringProperty("label").setMandatory(true).setSearchable(true);
 			fileModel.addProperty("number", int.class).setMandatory(true);
+			fileModel.addAction("DeleteFile");
 		}
 		return fileModel;
 	}

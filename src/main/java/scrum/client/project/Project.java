@@ -230,6 +230,10 @@ public class Project extends GProject {
 		getDao().deleteImpediment(impediment);
 	}
 
+	public void deleteFile(File file) {
+		getDao().deleteFile(file);
+	}
+
 	public void deleteIssue(Issue issue) {
 		getDao().deleteIssue(issue);
 	}

@@ -19,6 +19,7 @@ import scrum.client.collaboration.WikiWidget;
 import scrum.client.common.AScrumComponent;
 import scrum.client.context.UserHighlightSupport;
 import scrum.client.dashboard.DashboardWidget;
+import scrum.client.files.FileRepositoryWidget;
 import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.issues.Issue;
@@ -65,7 +66,8 @@ public class ProjectContext extends AScrumComponent {
 	private ProjectUserConfigWidget projectUserConfig;
 	private WidgetsTesterWidget widgetsTester;
 	private PunishmentsWidget punishments;
-	private JournalWidget projectEventListWidget;
+	private JournalWidget projectEventList;
+	private FileRepositoryWidget fileRepository;
 
 	private boolean searchResultsAdded;
 
@@ -89,7 +91,8 @@ public class ProjectContext extends AScrumComponent {
 		wiki = new WikiWidget();
 		widgetsTester = new WidgetsTesterWidget();
 		punishments = new PunishmentsWidget();
-		projectEventListWidget = new JournalWidget();
+		projectEventList = new JournalWidget();
+		fileRepository = new FileRepositoryWidget();
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
 		// navigator.addItem("Project Overview", getProjectOverview());
@@ -104,6 +107,7 @@ public class ProjectContext extends AScrumComponent {
 		navigator.addItem("Issue List", getIssueList());
 		navigator.addItem("Risk Management", getRiskList());
 		navigator.addItem("Wiki", getWiki());
+		navigator.addItem("File Repository", fileRepository);
 		navigator.addItem("Project Journal", getProjectEventList());
 		navigator.addItem("Next Sprint", getNextSprint());
 		navigator.addItem("Sprint History", getSprintHistory());
@@ -348,11 +352,15 @@ public class ProjectContext extends AScrumComponent {
 	}
 
 	public JournalWidget getProjectEventList() {
-		return projectEventListWidget;
+		return projectEventList;
 	}
 
 	public ImpedimentListWidget getImpedimentList() {
 		return impedimentList;
+	}
+
+	public FileRepositoryWidget getFileRepository() {
+		return fileRepository;
 	}
 
 	public IssueListWidget getIssueList() {
