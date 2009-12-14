@@ -3,6 +3,8 @@ package scrum.client;
 import ilarkesto.gwt.client.GwtLogger;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +16,7 @@ public class SearchResults {
 	private static final GwtLogger LOG = GwtLogger.createLogger(SearchResults.class);
 	private static ComponentManager cm = ComponentManager.get();
 
-	private List<AScrumGwtEntity> entities = new ArrayList<AScrumGwtEntity>();
+	private Collection<AScrumGwtEntity> entities = new HashSet<AScrumGwtEntity>();
 
 	public boolean isEmpty() {
 		return entities.isEmpty();
