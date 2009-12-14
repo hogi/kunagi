@@ -24,10 +24,31 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 
 		try {
 			if ("_template_".equalsIgnoreCase(alias)) prepare_template_(file);
-			if ("projectUserConfig".equalsIgnoreCase(alias)) prepareProjectUserConfig(file);
+			// if ("projectUserConfig".equalsIgnoreCase(alias)) prepareProjectUserConfig(file);
+			if ("risk".equalsIgnoreCase(alias)) prepareRisk(file);
 		} catch (Throwable ex) {
 			throw new RuntimeException(ex);
 		}
+	}
+
+	private void prepareRisk(File file) throws IOException {
+		boolean modified = false;
+
+		Document doc;
+		try {
+			doc = new SAXBuilder().build(file);
+		} catch (JDOMException ex) {
+			throw new RuntimeException(ex);
+		}
+		Element root = doc.getRootElement();
+
+		Element plans = root.getChild("mitigationPlans");
+		if (plans != null) {
+			plans.setName("impactMitigation");
+			modified = true;
+		}
+
+		if (modified) save(doc, file);
 	}
 
 	private void prepareProjectUserConfig(File file) throws IOException {

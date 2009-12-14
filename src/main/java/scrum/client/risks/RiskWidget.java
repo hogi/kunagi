@@ -24,7 +24,6 @@ public class RiskWidget extends AScrumWidget {
 
 		tb.addFieldRow("Label", risk.getLabelModel());
 		tb.addFieldRow("Description", risk.getDescriptionModel());
-		tb.addFieldRow("Mitigation Plans", risk.getMitigationPlansModel());
 		tb.addFieldRow("Impact", new DropdownEditorWidget<Integer>(risk.getImpactModel(),
 				RiskComputer.IMPACT_LABEL_PROVIDER));
 		tb.addFieldRow("Probability", new DropdownEditorWidget<Integer>(risk.getProbabilityModel(),
@@ -36,6 +35,8 @@ public class RiskWidget extends AScrumWidget {
 				setText(risk.getPriorityLabel());
 			}
 		});
+		tb.addFieldRow("Impact Mitigation", risk.getImpactMitigationModel());
+		tb.addFieldRow("Probability Mitigation", risk.getProbabilityMitigationModel());
 
 		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(risk));
 	}

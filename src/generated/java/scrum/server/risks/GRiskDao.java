@@ -42,8 +42,10 @@ public abstract class GRiskDao
         labelsCache = null;
         risksByDescriptionCache.clear();
         descriptionsCache = null;
-        risksByMitigationPlansCache.clear();
-        mitigationPlanssCache = null;
+        risksByProbabilityMitigationCache.clear();
+        probabilityMitigationsCache = null;
+        risksByImpactMitigationCache.clear();
+        impactMitigationsCache = null;
         risksByProbabilityCache.clear();
         probabilitysCache = null;
         risksByImpactCache.clear();
@@ -227,41 +229,81 @@ public abstract class GRiskDao
     }
 
     // -----------------------------------------------------------
-    // - mitigationPlans
+    // - probabilityMitigation
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Risk>> risksByMitigationPlansCache = new Cache<java.lang.String,Set<Risk>>(
+    private final Cache<java.lang.String,Set<Risk>> risksByProbabilityMitigationCache = new Cache<java.lang.String,Set<Risk>>(
             new Cache.Factory<java.lang.String,Set<Risk>>() {
-                public Set<Risk> create(java.lang.String mitigationPlans) {
-                    return getEntities(new IsMitigationPlans(mitigationPlans));
+                public Set<Risk> create(java.lang.String probabilityMitigation) {
+                    return getEntities(new IsProbabilityMitigation(probabilityMitigation));
                 }
             });
 
-    public final Set<Risk> getRisksByMitigationPlans(java.lang.String mitigationPlans) {
-        return risksByMitigationPlansCache.get(mitigationPlans);
+    public final Set<Risk> getRisksByProbabilityMitigation(java.lang.String probabilityMitigation) {
+        return risksByProbabilityMitigationCache.get(probabilityMitigation);
     }
-    private Set<java.lang.String> mitigationPlanssCache;
+    private Set<java.lang.String> probabilityMitigationsCache;
 
-    public final Set<java.lang.String> getMitigationPlanss() {
-        if (mitigationPlanssCache == null) {
-            mitigationPlanssCache = new HashSet<java.lang.String>();
+    public final Set<java.lang.String> getProbabilityMitigations() {
+        if (probabilityMitigationsCache == null) {
+            probabilityMitigationsCache = new HashSet<java.lang.String>();
             for (Risk e : getEntities()) {
-                if (e.isMitigationPlansSet()) mitigationPlanssCache.add(e.getMitigationPlans());
+                if (e.isProbabilityMitigationSet()) probabilityMitigationsCache.add(e.getProbabilityMitigation());
             }
         }
-        return mitigationPlanssCache;
+        return probabilityMitigationsCache;
     }
 
-    private static class IsMitigationPlans implements Predicate<Risk> {
+    private static class IsProbabilityMitigation implements Predicate<Risk> {
 
         private java.lang.String value;
 
-        public IsMitigationPlans(java.lang.String value) {
+        public IsProbabilityMitigation(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(Risk e) {
-            return e.isMitigationPlans(value);
+            return e.isProbabilityMitigation(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - impactMitigation
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Risk>> risksByImpactMitigationCache = new Cache<java.lang.String,Set<Risk>>(
+            new Cache.Factory<java.lang.String,Set<Risk>>() {
+                public Set<Risk> create(java.lang.String impactMitigation) {
+                    return getEntities(new IsImpactMitigation(impactMitigation));
+                }
+            });
+
+    public final Set<Risk> getRisksByImpactMitigation(java.lang.String impactMitigation) {
+        return risksByImpactMitigationCache.get(impactMitigation);
+    }
+    private Set<java.lang.String> impactMitigationsCache;
+
+    public final Set<java.lang.String> getImpactMitigations() {
+        if (impactMitigationsCache == null) {
+            impactMitigationsCache = new HashSet<java.lang.String>();
+            for (Risk e : getEntities()) {
+                if (e.isImpactMitigationSet()) impactMitigationsCache.add(e.getImpactMitigation());
+            }
+        }
+        return impactMitigationsCache;
+    }
+
+    private static class IsImpactMitigation implements Predicate<Risk> {
+
+        private java.lang.String value;
+
+        public IsImpactMitigation(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Risk e) {
+            return e.isImpactMitigation(value);
         }
 
     }

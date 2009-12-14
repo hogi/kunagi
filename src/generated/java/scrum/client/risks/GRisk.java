@@ -234,44 +234,95 @@ public abstract class GRisk
 
     }
 
-    // --- mitigationPlans ---
+    // --- probabilityMitigation ---
 
-    private java.lang.String mitigationPlans ;
+    private java.lang.String probabilityMitigation ;
 
-    public final java.lang.String getMitigationPlans() {
-        return this.mitigationPlans ;
+    public final java.lang.String getProbabilityMitigation() {
+        return this.probabilityMitigation ;
     }
 
-    public final Risk setMitigationPlans(java.lang.String mitigationPlans) {
-        if (isMitigationPlans(mitigationPlans)) return (Risk)this;
-        this.mitigationPlans = mitigationPlans ;
-        propertyChanged("mitigationPlans", this.mitigationPlans);
+    public final Risk setProbabilityMitigation(java.lang.String probabilityMitigation) {
+        if (isProbabilityMitigation(probabilityMitigation)) return (Risk)this;
+        this.probabilityMitigation = probabilityMitigation ;
+        propertyChanged("probabilityMitigation", this.probabilityMitigation);
         return (Risk)this;
     }
 
-    public final boolean isMitigationPlans(java.lang.String mitigationPlans) {
-        return equals(this.mitigationPlans, mitigationPlans);
+    public final boolean isProbabilityMitigation(java.lang.String probabilityMitigation) {
+        return equals(this.probabilityMitigation, probabilityMitigation);
     }
 
-    private transient MitigationPlansModel mitigationPlansModel;
+    private transient ProbabilityMitigationModel probabilityMitigationModel;
 
-    public MitigationPlansModel getMitigationPlansModel() {
-        if (mitigationPlansModel == null) mitigationPlansModel = createMitigationPlansModel();
-        return mitigationPlansModel;
+    public ProbabilityMitigationModel getProbabilityMitigationModel() {
+        if (probabilityMitigationModel == null) probabilityMitigationModel = createProbabilityMitigationModel();
+        return probabilityMitigationModel;
     }
 
-    protected MitigationPlansModel createMitigationPlansModel() { return new MitigationPlansModel(); }
+    protected ProbabilityMitigationModel createProbabilityMitigationModel() { return new ProbabilityMitigationModel(); }
 
-    protected class MitigationPlansModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+    protected class ProbabilityMitigationModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
         public java.lang.String getValue() {
-            return getMitigationPlans();
+            return getProbabilityMitigation();
         }
 
         @Override
         public void setValue(java.lang.String value) {
-            setMitigationPlans(value);
+            setProbabilityMitigation(value);
+        }
+
+        @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- impactMitigation ---
+
+    private java.lang.String impactMitigation ;
+
+    public final java.lang.String getImpactMitigation() {
+        return this.impactMitigation ;
+    }
+
+    public final Risk setImpactMitigation(java.lang.String impactMitigation) {
+        if (isImpactMitigation(impactMitigation)) return (Risk)this;
+        this.impactMitigation = impactMitigation ;
+        propertyChanged("impactMitigation", this.impactMitigation);
+        return (Risk)this;
+    }
+
+    public final boolean isImpactMitigation(java.lang.String impactMitigation) {
+        return equals(this.impactMitigation, impactMitigation);
+    }
+
+    private transient ImpactMitigationModel impactMitigationModel;
+
+    public ImpactMitigationModel getImpactMitigationModel() {
+        if (impactMitigationModel == null) impactMitigationModel = createImpactMitigationModel();
+        return impactMitigationModel;
+    }
+
+    protected ImpactMitigationModel createImpactMitigationModel() { return new ImpactMitigationModel(); }
+
+    protected class ImpactMitigationModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getImpactMitigation();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setImpactMitigation(value);
         }
 
         @Override
@@ -408,7 +459,8 @@ public abstract class GRisk
         number  = (Integer) props.get("number");
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
-        mitigationPlans  = (java.lang.String) props.get("mitigationPlans");
+        probabilityMitigation  = (java.lang.String) props.get("probabilityMitigation");
+        impactMitigation  = (java.lang.String) props.get("impactMitigation");
         probability  = (Integer) props.get("probability");
         impact  = (Integer) props.get("impact");
     }
@@ -420,7 +472,8 @@ public abstract class GRisk
         properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("description", this.description);
-        properties.put("mitigationPlans", this.mitigationPlans);
+        properties.put("probabilityMitigation", this.probabilityMitigation);
+        properties.put("impactMitigation", this.impactMitigation);
         properties.put("probability", this.probability);
         properties.put("impact", this.impact);
     }
@@ -430,7 +483,8 @@ public abstract class GRisk
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
-        if (matchesKey(getMitigationPlans(), key)) return true;
+        if (matchesKey(getProbabilityMitigation(), key)) return true;
+        if (matchesKey(getImpactMitigation(), key)) return true;
         return false;
     }
 

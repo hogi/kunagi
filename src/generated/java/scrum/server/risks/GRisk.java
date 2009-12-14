@@ -40,7 +40,8 @@ public abstract class GRisk
         properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("description", this.description);
-        properties.put("mitigationPlans", this.mitigationPlans);
+        properties.put("probabilityMitigation", this.probabilityMitigation);
+        properties.put("impactMitigation", this.impactMitigation);
         properties.put("probability", this.probability);
         properties.put("impact", this.impact);
     }
@@ -62,7 +63,8 @@ public abstract class GRisk
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
-        if (matchesKey(getMitigationPlans(), key)) return true;
+        if (matchesKey(getProbabilityMitigation(), key)) return true;
+        if (matchesKey(getImpactMitigation(), key)) return true;
         return false;
     }
 
@@ -213,38 +215,73 @@ public abstract class GRisk
     }
 
     // -----------------------------------------------------------
-    // - mitigationPlans
+    // - probabilityMitigation
     // -----------------------------------------------------------
 
-    private java.lang.String mitigationPlans;
+    private java.lang.String probabilityMitigation;
 
-    public final java.lang.String getMitigationPlans() {
-        return mitigationPlans;
+    public final java.lang.String getProbabilityMitigation() {
+        return probabilityMitigation;
     }
 
-    public final void setMitigationPlans(java.lang.String mitigationPlans) {
-        mitigationPlans = prepareMitigationPlans(mitigationPlans);
-        if (isMitigationPlans(mitigationPlans)) return;
-        this.mitigationPlans = mitigationPlans;
+    public final void setProbabilityMitigation(java.lang.String probabilityMitigation) {
+        probabilityMitigation = prepareProbabilityMitigation(probabilityMitigation);
+        if (isProbabilityMitigation(probabilityMitigation)) return;
+        this.probabilityMitigation = probabilityMitigation;
         fireModified();
     }
 
-    protected java.lang.String prepareMitigationPlans(java.lang.String mitigationPlans) {
-        mitigationPlans = Str.removeUnreadableChars(mitigationPlans);
-        return mitigationPlans;
+    protected java.lang.String prepareProbabilityMitigation(java.lang.String probabilityMitigation) {
+        probabilityMitigation = Str.removeUnreadableChars(probabilityMitigation);
+        return probabilityMitigation;
     }
 
-    public final boolean isMitigationPlansSet() {
-        return this.mitigationPlans != null;
+    public final boolean isProbabilityMitigationSet() {
+        return this.probabilityMitigation != null;
     }
 
-    public final boolean isMitigationPlans(java.lang.String mitigationPlans) {
-        if (this.mitigationPlans == null && mitigationPlans == null) return true;
-        return this.mitigationPlans != null && this.mitigationPlans.equals(mitigationPlans);
+    public final boolean isProbabilityMitigation(java.lang.String probabilityMitigation) {
+        if (this.probabilityMitigation == null && probabilityMitigation == null) return true;
+        return this.probabilityMitigation != null && this.probabilityMitigation.equals(probabilityMitigation);
     }
 
-    protected final void updateMitigationPlans(Object value) {
-        setMitigationPlans((java.lang.String)value);
+    protected final void updateProbabilityMitigation(Object value) {
+        setProbabilityMitigation((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - impactMitigation
+    // -----------------------------------------------------------
+
+    private java.lang.String impactMitigation;
+
+    public final java.lang.String getImpactMitigation() {
+        return impactMitigation;
+    }
+
+    public final void setImpactMitigation(java.lang.String impactMitigation) {
+        impactMitigation = prepareImpactMitigation(impactMitigation);
+        if (isImpactMitigation(impactMitigation)) return;
+        this.impactMitigation = impactMitigation;
+        fireModified();
+    }
+
+    protected java.lang.String prepareImpactMitigation(java.lang.String impactMitigation) {
+        impactMitigation = Str.removeUnreadableChars(impactMitigation);
+        return impactMitigation;
+    }
+
+    public final boolean isImpactMitigationSet() {
+        return this.impactMitigation != null;
+    }
+
+    public final boolean isImpactMitigation(java.lang.String impactMitigation) {
+        if (this.impactMitigation == null && impactMitigation == null) return true;
+        return this.impactMitigation != null && this.impactMitigation.equals(impactMitigation);
+    }
+
+    protected final void updateImpactMitigation(Object value) {
+        setImpactMitigation((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -314,7 +351,8 @@ public abstract class GRisk
             if (property.equals("number")) updateNumber(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("description")) updateDescription(value);
-            if (property.equals("mitigationPlans")) updateMitigationPlans(value);
+            if (property.equals("probabilityMitigation")) updateProbabilityMitigation(value);
+            if (property.equals("impactMitigation")) updateImpactMitigation(value);
             if (property.equals("probability")) updateProbability(value);
             if (property.equals("impact")) updateImpact(value);
         }

@@ -1259,10 +1259,18 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.risks.Risk> getRisksByMitigationPlans(java.lang.String mitigationPlans) {
+    public final List<scrum.client.risks.Risk> getRisksByProbabilityMitigation(java.lang.String probabilityMitigation) {
         List<scrum.client.risks.Risk> ret = new ArrayList<scrum.client.risks.Risk>();
         for (scrum.client.risks.Risk entity : risks.values()) {
-            if (entity.isMitigationPlans(mitigationPlans)) ret.add(entity);
+            if (entity.isProbabilityMitigation(probabilityMitigation)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.risks.Risk> getRisksByImpactMitigation(java.lang.String impactMitigation) {
+        List<scrum.client.risks.Risk> ret = new ArrayList<scrum.client.risks.Risk>();
+        for (scrum.client.risks.Risk entity : risks.values()) {
+            if (entity.isImpactMitigation(impactMitigation)) ret.add(entity);
         }
         return ret;
     }
