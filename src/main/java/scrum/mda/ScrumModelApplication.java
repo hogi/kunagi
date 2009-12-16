@@ -221,10 +221,12 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			fileModel.setGwtSupport(true);
 			fileModel.setViewProtected(true);
 			fileModel.addReference("project", getProjectModel()).setMaster(true);
-			fileModel.addStringProperty("filename").setMandatory(true).setSearchable(true);
-			fileModel.addProperty("uploadTime", DateAndTime.class).setMandatory(true);
+			fileModel.addStringProperty("filename").setEditablePredicate("false").setMandatory(true)
+					.setSearchable(true);
+			fileModel.addProperty("uploadTime", DateAndTime.class).setEditablePredicate("false").setMandatory(true);
 			fileModel.addStringProperty("label").setMandatory(true).setSearchable(true);
 			fileModel.addProperty("number", int.class).setMandatory(true);
+			fileModel.addStringProperty("note").setRichtext(true).setSearchable(true);
 			fileModel.addAction("DeleteFile");
 		}
 		return fileModel;

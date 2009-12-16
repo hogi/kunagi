@@ -113,6 +113,9 @@ public abstract class GFile
         public boolean isMandatory() { return true; }
 
         @Override
+        public boolean isEditable() { return false; }
+
+        @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);
@@ -162,6 +165,9 @@ public abstract class GFile
 
         @Override
         public boolean isMandatory() { return true; }
+
+        @Override
+        public boolean isEditable() { return false; }
 
         @Override
         protected void onChangeValue(ilarkesto.gwt.client.DateAndTime oldValue, ilarkesto.gwt.client.DateAndTime newValue) {

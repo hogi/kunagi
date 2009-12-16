@@ -1,5 +1,6 @@
 package scrum.client.files;
 
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
@@ -20,6 +21,9 @@ public class FileWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setCellPadding(2);
 		tb.addFieldRow("Label", file.getLabelModel());
+		tb.addFieldRow("Filename", file.getFilenameModel());
+		tb.addFieldRow("Uploaded", file.getUploadTimeModel());
+		tb.add(Gwt.createServletDownloadLink("fileDownload?fileId=" + file.getId(), "Downlad " + file.getFilename()));
 		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(file));
 	}
 

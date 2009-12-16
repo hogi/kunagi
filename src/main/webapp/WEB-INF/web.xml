@@ -31,6 +31,16 @@
         <url-pattern>/scrum.ScrumGwtApplication/screen.css</url-pattern>
     </servlet-mapping>
 
+    <!-- sprint burndown chart -->
+    <servlet>
+        <servlet-name>fileDownload</servlet-name>
+        <servlet-class>scrum.server.files.FileDownloadServlet</servlet-class>
+    </servlet>      
+    <servlet-mapping>
+        <servlet-name>fileDownload</servlet-name>
+        <url-pattern>/scrum.ScrumGwtApplication/fileDownload</url-pattern>
+    </servlet-mapping>
+
 	<!-- sprint burndown chart -->
 	<servlet>
 		<servlet-name>sprintBurndownChart</servlet-name>
