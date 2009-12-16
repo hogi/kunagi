@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class FileRepositoryWidget extends AScrumWidget {
 
 	public BlockListWidget<File> list;
+	private UploadWidget upload;
 
 	@Override
 	protected Widget onInitialization() {
@@ -16,7 +17,11 @@ public class FileRepositoryWidget extends AScrumWidget {
 
 		list = new BlockListWidget<File>(FileBlock.FACTORY);
 
+		upload = new UploadWidget();
+
 		PagePanel page = new PagePanel();
+		page.addHeader("Upload Files");
+		page.addSection(upload);
 		page.addHeader("File Repository");
 		page.addSection(list);
 		return page;

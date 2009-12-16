@@ -1,15 +1,17 @@
 <module>
 
-	<!-- libraries -->
 	<inherits name="com.google.gwt.user.User" />
-	<inherits name="ilarkesto.gwt.ilarkesto" />
-	<inherits name="com.allen_sauer.gwt.dnd.gwt-dnd" />
-
-	<!-- style/theme -->
 	<inherits name="com.google.gwt.user.theme.standard.Standard" />
-	<stylesheet src="screen.css" />
 
-	<!-- entry points -->
+	<inherits name="com.allen_sauer.gwt.dnd.gwt-dnd" />
+    
+    <inherits name="gwtupload.GWTUpload"/>
+    <stylesheet src="Upload.css"/>
+	
+	<inherits name="ilarkesto.gwt.ilarkesto" />
+	
+    <stylesheet src="screen.css" />
+
 	<entry-point class="scrum.client.ScrumGwtApplication" />
 
 </module>
