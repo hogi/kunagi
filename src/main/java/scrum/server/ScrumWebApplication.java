@@ -97,6 +97,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			getTransactionService().commit();
 		}
 
+		getProjectDao().scanFiles();
+		getTransactionService().commit();
+
 		// test data
 		if (getProjectDao().getEntities().isEmpty()) createTestData();
 	}

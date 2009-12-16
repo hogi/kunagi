@@ -4,6 +4,10 @@ import scrum.server.admin.User;
 
 public class File extends GFile {
 
+	// --- dependencies ---
+
+	// --- ---
+
 	public void updateNumber() {
 		if (isNumber(0)) setNumber(getProject().generateFileNumber());
 	}

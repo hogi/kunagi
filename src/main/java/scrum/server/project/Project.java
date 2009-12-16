@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 import scrum.client.UsersStatusData;
+import scrum.server.ScrumConfig;
 import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.ProjectUserConfigDao;
 import scrum.server.admin.User;
@@ -54,6 +55,11 @@ public class Project extends GProject {
 	private static ProjectEventDao projectEventDao;
 	private static SimpleEventDao simpleEventDao;
 	private static FileDao fileDao;
+	private static ScrumConfig config;
+
+	public static void setConfig(ScrumConfig config) {
+		Project.config = config;
+	}
 
 	public static void setFileDao(FileDao fileDao) {
 		Project.fileDao = fileDao;
@@ -105,6 +111,20 @@ public class Project extends GProject {
 
 	// --- ---
 
+	public void scanFiles() {
+		java.io.File dir = new java.io.File(getFileRepositoryPath());
+		java.io.File[] files = dir.listFiles();
+		if (files != null) {
+
+			for (java.io.File f : files) {
+				File file = fileDao.getFilesByName(f.getName(), this);
+				if (file == null) {
+					file = fileDao.postFile(f, this);
+				}
+			}
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	public ArrayList<AEntity> search(String text) {
 		String[] keys = Str.tokenize(text, " ");
@@ -150,6 +170,10 @@ public class Project extends GProject {
 		}
 		rss.sortItems();
 		rss.write(out, encoding);
+	}
+
+	public String getFileRepositoryPath() {
+		return config.getFileRepositoryPath() + "/" + getId();
 	}
 
 	public Set<SimpleEvent> getCalendarEvents() {

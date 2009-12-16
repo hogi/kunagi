@@ -1,6 +1,7 @@
 package scrum.server.project;
 
 import ilarkesto.base.time.Date;
+import ilarkesto.logging.Logger;
 
 import java.util.Collection;
 
@@ -8,6 +9,8 @@ import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 
 public class ProjectDao extends GProjectDao {
+
+	private static final Logger LOG = Logger.get(ProjectDao.class);
 
 	// --- dependencies ---
 
@@ -25,6 +28,13 @@ public class ProjectDao extends GProjectDao {
 		project.addAdmin(admin);
 		saveEntity(project);
 		return project;
+	}
+
+	public void scanFiles() {
+		LOG.info("Scanning file repositories of all projects");
+		for (Project project : getEntities()) {
+			project.scanFiles();
+		}
 	}
 
 	// --- test data ---

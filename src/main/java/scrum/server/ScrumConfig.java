@@ -8,12 +8,18 @@ public class ScrumConfig {
 	// --- dependencies ---
 
 	private APropertiesStore p;
+	private String applicationDataDir;
 
 	public ScrumConfig(String applicationDataDir) {
+		this.applicationDataDir = applicationDataDir;
 		p = new FilePropertiesStore(applicationDataDir + "/config.properties", true);
 	}
 
 	// --- ---
+
+	public String getFileRepositoryPath() {
+		return p.get("fileRepository.path", applicationDataDir + "/files");
+	}
 
 	public boolean isStartupDelete() {
 		// TODO set default to 'false', when going productive
