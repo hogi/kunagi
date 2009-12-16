@@ -29,6 +29,7 @@ import scrum.server.collaboration.Comment;
 import scrum.server.collaboration.CommentDao;
 import scrum.server.common.Numbered;
 import scrum.server.common.Transient;
+import scrum.server.files.File;
 import scrum.server.impediments.Impediment;
 import scrum.server.journal.ProjectEvent;
 import scrum.server.journal.ProjectEventDao;
@@ -167,6 +168,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	public void onDeleteEntity(GwtConversation conversation, String entityId) {
 		AEntity entity = getDaoService().getEntityById(entityId);
 		if (!Auth.isDeletable(entity, conversation.getSession().getUser())) throw new PermissionDeniedException();
+
+		if (entity instanceof File) {
+			File file = (File) entity;
+			file.deleteFile();
+		}
+
 		ADao dao = getDaoService().getDao(entity);
 		dao.deleteEntity(entity);
 		for (WebSession s : webApplication.getOtherSessionsByProject(conversation.getSession())) {

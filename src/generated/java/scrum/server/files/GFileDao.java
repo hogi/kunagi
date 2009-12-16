@@ -52,6 +52,8 @@ public abstract class GFileDao
         labelsCache = null;
         filesByNumberCache.clear();
         numbersCache = null;
+        filesByNoteCache.clear();
+        notesCache = null;
     }
 
     @Override
@@ -266,6 +268,46 @@ public abstract class GFileDao
 
         public boolean test(File e) {
             return e.isNumber(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - note
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<File>> filesByNoteCache = new Cache<java.lang.String,Set<File>>(
+            new Cache.Factory<java.lang.String,Set<File>>() {
+                public Set<File> create(java.lang.String note) {
+                    return getEntities(new IsNote(note));
+                }
+            });
+
+    public final Set<File> getFilesByNote(java.lang.String note) {
+        return filesByNoteCache.get(note);
+    }
+    private Set<java.lang.String> notesCache;
+
+    public final Set<java.lang.String> getNotes() {
+        if (notesCache == null) {
+            notesCache = new HashSet<java.lang.String>();
+            for (File e : getEntities()) {
+                if (e.isNoteSet()) notesCache.add(e.getNote());
+            }
+        }
+        return notesCache;
+    }
+
+    private static class IsNote implements Predicate<File> {
+
+        private java.lang.String value;
+
+        public IsNote(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(File e) {
+            return e.isNote(value);
         }
 
     }

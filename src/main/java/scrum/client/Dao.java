@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import scrum.client.collaboration.ChatMessage;
+import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
 import scrum.client.project.Quality;
@@ -84,6 +85,11 @@ public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
 			return null;
 		} else if (reference.startsWith(Impediment.REFERENCE_PREFIX)) {
 			for (Impediment e : getImpediments()) {
+				if (e.isNumber(number)) return e;
+			}
+			return null;
+		} else if (reference.startsWith(File.REFERENCE_PREFIX)) {
+			for (File e : getFiles()) {
 				if (e.isNumber(number)) return e;
 			}
 			return null;

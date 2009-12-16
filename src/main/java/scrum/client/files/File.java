@@ -2,6 +2,7 @@ package scrum.client.files;
 
 import ilarkesto.gwt.client.Gwt;
 
+import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.ScrumJs;
@@ -27,5 +28,19 @@ public class File extends GFile {
 	public String toString() {
 		return getFilename();
 	}
+
+	public static final Comparator<File> UPLOAD_TIME_COMPARATOR = new Comparator<File>() {
+
+		public int compare(File a, File b) {
+			return a.getUploadTime().compareTo(b.getUploadTime());
+		}
+	};
+
+	public static final Comparator<File> REVERSE_UPLOAD_TIME_COMPARATOR = new Comparator<File>() {
+
+		public int compare(File a, File b) {
+			return UPLOAD_TIME_COMPARATOR.compare(b, a);
+		}
+	};
 
 }

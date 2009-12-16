@@ -1,11 +1,22 @@
 package scrum.client;
 
 import ilarkesto.gwt.client.GwtLogger;
+import scrum.client.files.File;
+import scrum.client.impediments.Impediment;
+import scrum.client.issues.Issue;
+import scrum.client.project.Quality;
+import scrum.client.project.Requirement;
+import scrum.client.risks.Risk;
+import scrum.client.sprint.Task;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class ScrumGwtApplication extends GScrumGwtApplication {
+
+	public static final String[] REFERENCE_PREFIXES = new String[] { Requirement.REFERENCE_PREFIX,
+			Task.REFERENCE_PREFIX, Quality.REFERENCE_PREFIX, Issue.REFERENCE_PREFIX, Impediment.REFERENCE_PREFIX,
+			Risk.REFERENCE_PREFIX, File.REFERENCE_PREFIX };
 
 	private final GwtLogger log = GwtLogger.createLogger(getClass());
 

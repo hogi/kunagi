@@ -41,6 +41,7 @@ public abstract class GFile
         properties.put("uploadTime", this.uploadTime == null ? null : this.uploadTime.toString());
         properties.put("label", this.label);
         properties.put("number", this.number);
+        properties.put("note", this.note);
     }
 
     public int compareTo(File other) {
@@ -60,6 +61,7 @@ public abstract class GFile
         if (super.matchesKey(key)) return true;
         if (matchesKey(getFilename(), key)) return true;
         if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getNote(), key)) return true;
         return false;
     }
 
@@ -244,6 +246,41 @@ public abstract class GFile
         setNumber((Integer)value);
     }
 
+    // -----------------------------------------------------------
+    // - note
+    // -----------------------------------------------------------
+
+    private java.lang.String note;
+
+    public final java.lang.String getNote() {
+        return note;
+    }
+
+    public final void setNote(java.lang.String note) {
+        note = prepareNote(note);
+        if (isNote(note)) return;
+        this.note = note;
+        fireModified();
+    }
+
+    protected java.lang.String prepareNote(java.lang.String note) {
+        note = Str.removeUnreadableChars(note);
+        return note;
+    }
+
+    public final boolean isNoteSet() {
+        return this.note != null;
+    }
+
+    public final boolean isNote(java.lang.String note) {
+        if (this.note == null && note == null) return true;
+        return this.note != null && this.note.equals(note);
+    }
+
+    protected final void updateNote(Object value) {
+        setNote((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -254,6 +291,7 @@ public abstract class GFile
             if (property.equals("uploadTime")) updateUploadTime(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("number")) updateNumber(value);
+            if (property.equals("note")) updateNote(value);
         }
     }
 

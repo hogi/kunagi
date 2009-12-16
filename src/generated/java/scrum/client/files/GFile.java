@@ -289,6 +289,57 @@ public abstract class GFile
 
     }
 
+    // --- note ---
+
+    private java.lang.String note ;
+
+    public final java.lang.String getNote() {
+        return this.note ;
+    }
+
+    public final File setNote(java.lang.String note) {
+        if (isNote(note)) return (File)this;
+        this.note = note ;
+        propertyChanged("note", this.note);
+        return (File)this;
+    }
+
+    public final boolean isNote(java.lang.String note) {
+        return equals(this.note, note);
+    }
+
+    private transient NoteModel noteModel;
+
+    public NoteModel getNoteModel() {
+        if (noteModel == null) noteModel = createNoteModel();
+        return noteModel;
+    }
+
+    protected NoteModel createNoteModel() { return new NoteModel(); }
+
+    protected class NoteModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getNote();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setNote(value);
+        }
+
+        @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -298,6 +349,7 @@ public abstract class GFile
         uploadTime  =  uploadTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(uploadTimeAsString);
         label  = (java.lang.String) props.get("label");
         number  = (Integer) props.get("number");
+        note  = (java.lang.String) props.get("note");
     }
 
     @Override
@@ -308,6 +360,7 @@ public abstract class GFile
         properties.put("uploadTime", this.uploadTime == null ? null : this.uploadTime.toString());
         properties.put("label", this.label);
         properties.put("number", this.number);
+        properties.put("note", this.note);
     }
 
     @Override
@@ -315,6 +368,7 @@ public abstract class GFile
         if (super.matchesKey(key)) return true;
         if (matchesKey(getFilename(), key)) return true;
         if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getNote(), key)) return true;
         return false;
     }
 

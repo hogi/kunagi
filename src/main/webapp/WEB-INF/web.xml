@@ -10,6 +10,16 @@
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 
+    <context-param>
+        <param-name>maxSize</param-name>
+        <param-value>10000000</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>slowUploads</param-name>
+        <param-value>0</param-value>
+    </context-param>
+
 	<!-- main communication service -->
 	<servlet>
 		<servlet-name>scrum</servlet-name>
@@ -31,7 +41,7 @@
         <url-pattern>/scrum.ScrumGwtApplication/screen.css</url-pattern>
     </servlet-mapping>
 
-    <!-- sprint burndown chart -->
+    <!-- file download -->
     <servlet>
         <servlet-name>fileDownload</servlet-name>
         <servlet-class>scrum.server.files.FileDownloadServlet</servlet-class>
@@ -39,6 +49,17 @@
     <servlet-mapping>
         <servlet-name>fileDownload</servlet-name>
         <url-pattern>/scrum.ScrumGwtApplication/fileDownload</url-pattern>
+    </servlet-mapping>
+
+    <!-- file upload -->
+    <servlet>
+        <servlet-name>fileUpload</servlet-name>
+        <servlet-class>scrum.server.files.FileUploadServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>      
+    <servlet-mapping>
+        <servlet-name>fileUpload</servlet-name>
+        <url-pattern>*.gupld</url-pattern>
     </servlet-mapping>
 
 	<!-- sprint burndown chart -->

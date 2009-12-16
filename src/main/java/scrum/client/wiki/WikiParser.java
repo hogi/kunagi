@@ -1,5 +1,7 @@
 package scrum.client.wiki;
 
+import scrum.client.ScrumGwtApplication;
+
 /**
  * http://en.wikipedia.org/wiki/Wikipedia:Cheatsheet
  */
@@ -339,8 +341,16 @@ public class WikiParser {
 	private boolean isEntityReference(String s) {
 		if (s.length() < 4) return false;
 		if (!Character.isDigit(s.charAt(3))) return false;
-		if (!s.startsWith("req") && !s.startsWith("tsk") && !s.startsWith("qlt") && !s.startsWith("iss")
-				&& !s.startsWith("imp") && !s.startsWith("rsk")) return false;
+
+		boolean prefixOk = false;
+		for (String prefix : ScrumGwtApplication.REFERENCE_PREFIXES) {
+			if (s.startsWith(prefix)) {
+				prefixOk = true;
+				break;
+			}
+		}
+		if (!prefixOk) return false;
+
 		int len = s.length();
 		for (int i = 3; i < len; i++) {
 			if (!Character.isDigit(s.charAt(i))) return false;

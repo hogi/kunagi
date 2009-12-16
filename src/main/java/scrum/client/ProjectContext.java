@@ -19,6 +19,7 @@ import scrum.client.collaboration.WikiWidget;
 import scrum.client.common.AScrumComponent;
 import scrum.client.context.UserHighlightSupport;
 import scrum.client.dashboard.DashboardWidget;
+import scrum.client.files.File;
 import scrum.client.files.FileRepositoryWidget;
 import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
@@ -228,6 +229,8 @@ public class ProjectContext extends AScrumComponent {
 			showQuality((Quality) entity);
 		} else if (entity instanceof Impediment) {
 			showImpediment((Impediment) entity);
+		} else if (entity instanceof File) {
+			showFile((File) entity);
 		} else {
 			throw new RuntimeException("Showing entity not supported: " + entity.getClass().getName());
 		}
@@ -246,6 +249,11 @@ public class ProjectContext extends AScrumComponent {
 	public void showImpediment(Impediment impediment) {
 		select(impedimentList);
 		impedimentList.select(impediment);
+	}
+
+	public void showFile(File file) {
+		select(fileRepository);
+		fileRepository.select(file);
 	}
 
 	public void showRisk(Risk risk) {

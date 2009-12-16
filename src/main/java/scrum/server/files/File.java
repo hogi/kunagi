@@ -1,5 +1,6 @@
 package scrum.server.files;
 
+import ilarkesto.io.IO;
 import scrum.server.admin.User;
 
 public class File extends GFile {
@@ -7,6 +8,10 @@ public class File extends GFile {
 	// --- dependencies ---
 
 	// --- ---
+
+	public void deleteFile() {
+		IO.delete(getJavaFile());
+	}
 
 	public java.io.File getJavaFile() {
 		return new java.io.File(getProject().getFileRepositoryPath() + "/" + getFilename());

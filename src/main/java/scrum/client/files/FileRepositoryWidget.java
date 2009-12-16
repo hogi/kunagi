@@ -16,6 +16,7 @@ public class FileRepositoryWidget extends AScrumWidget {
 		cm.getApp().callRequestImpediments();
 
 		list = new BlockListWidget<File>(FileBlock.FACTORY);
+		list.setAutoSorter(File.REVERSE_UPLOAD_TIME_COMPARATOR);
 
 		upload = new UploadWidget();
 

@@ -292,6 +292,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.files.File> getFilesByNote(java.lang.String note) {
+        List<scrum.client.files.File> ret = new ArrayList<scrum.client.files.File>();
+        for (scrum.client.files.File entity : files.values()) {
+            if (entity.isNote(note)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Impediment ---
 
     private Map<String, scrum.client.impediments.Impediment> impediments = new HashMap<String, scrum.client.impediments.Impediment>();

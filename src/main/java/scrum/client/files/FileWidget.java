@@ -21,9 +21,10 @@ public class FileWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setCellPadding(2);
 		tb.addFieldRow("Label", file.getLabelModel());
-		tb.addFieldRow("Filename", file.getFilenameModel());
+		tb.addFieldRow("Download", Gwt.createServletDownloadLink("fileDownload?fileId=" + file.getId(), file
+				.getFilename()));
+		tb.addFieldRow("Notes", file.getNoteModel());
 		tb.addFieldRow("Uploaded", file.getUploadTimeModel());
-		tb.add(Gwt.createServletDownloadLink("fileDownload?fileId=" + file.getId(), "Downlad " + file.getFilename()));
 		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(file));
 	}
 
