@@ -3,6 +3,7 @@ package scrum.server.files;
 import gwtupload.server.UploadAction;
 import gwtupload.server.exceptions.UploadActionException;
 import ilarkesto.base.PermissionDeniedException;
+import ilarkesto.io.IO;
 import ilarkesto.logging.Logger;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class FileUploadServlet extends UploadAction {
 						count++;
 						f = new java.io.File(project.getFileRepositoryPath() + "/" + insertSuffix(filename, count));
 					}
+					IO.createDirectory(f.getParentFile());
 					item.write(f);
 
 					File file = webApp.getFileDao().postFile(f, project);
