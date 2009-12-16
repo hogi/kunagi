@@ -29,8 +29,8 @@
             <classpath location="src/main/java" />
             <classpath location="src/generated/java" />
             <classpath location="../ilarkesto/src/main/java" />
+        	<classpath location="../ilarkesto/lib/gwtupload-0.5.5.jar" />
             <classpath location="lib/gwt-dnd.jar" />
-        	<classpath location="lib/gwtupload-0.5.5.jar" />
             <classpath location="/opt/gwt/gwt-user.jar" />
             <classpath location="/opt/gwt/gwt-dev-linux.jar" />
         </java>
