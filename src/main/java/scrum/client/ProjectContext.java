@@ -98,7 +98,7 @@ public class ProjectContext extends AScrumComponent {
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
 		// navigator.addItem("Project Overview", getProjectOverview());
 		navigator.addItem("Dashboard", dashboard);
-		navigator.addItem("Task Overview", getTaskOverview());
+		// navigator.addItem("Task Overview", getTaskOverview());
 		navigator.addItem("Whiteboard", getWhiteboard());
 		navigator.addItem("Sprint Backlog", getSprintBacklog());
 		navigator.addItem("Product Backlog", getProductBacklog());
