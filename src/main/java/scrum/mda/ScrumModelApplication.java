@@ -112,6 +112,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("requestImpediments");
 			gwtServiceModel.addMethod("requestIssues");
 			gwtServiceModel.addMethod("requestRisks");
+			gwtServiceModel.addMethod("requestRequirementEstimationVotes").addParameter("requirementId", String.class);
 			gwtServiceModel.addMethod("requestComments").addParameter("parentId", String.class);
 			gwtServiceModel.addMethod("changeProperties").addParameter("entityId", String.class).addParameter(
 				"properties", Map.class);
@@ -278,6 +279,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addProperty("estimatedWork", Integer.class);
 			requirementModel.addProperty("closed", boolean.class);
 			requirementModel.addProperty("dirty", boolean.class);
+			requirementModel.addProperty("workEstimationVotingActive", boolean.class);
+			requirementModel.addProperty("workEstimationVotingShowoff", boolean.class);
 			getApplicationModel().addCreateAction(requirementModel);
 			requirementModel.addAction("DeleteRequirement");
 			requirementModel.addAction("AddRequirementToCurrentSprint");
@@ -286,8 +289,25 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addAction("SetRequirementClean");
 			requirementModel.addAction("CloseRequirement");
 			requirementModel.addAction("ReopenRequirement");
+			requirementModel.addAction("StartRequirementEstimationVoting");
+			requirementModel.addAction("CloseRequirementEstimationVoting");
+			requirementModel.addAction("RequirementEstimationVotingShowoff");
+			requirementModel.addAction("ResetRequirementEstimationVoting");
 		}
 		return requirementModel;
+	}
+
+	private EntityModel requirementEstimationVoteModel;
+
+	public EntityModel getRequirementEstimationVoteModel() {
+		if (requirementEstimationVoteModel == null) {
+			requirementEstimationVoteModel = createEntityModel("RequirementEstimationVote", "estimation");
+			requirementEstimationVoteModel.setGwtSupport(true);
+			requirementEstimationVoteModel.addReference("requirement", getRequirementModel()).setMaster(true);
+			requirementEstimationVoteModel.addReference("user", getUserModel()).setMaster(true);
+			requirementEstimationVoteModel.addProperty("estimatedWork", Integer.class);
+		}
+		return requirementEstimationVoteModel;
 	}
 
 	private EntityModel qualityModel;

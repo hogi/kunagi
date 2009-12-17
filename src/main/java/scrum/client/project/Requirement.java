@@ -9,6 +9,7 @@ import java.util.Map;
 
 import scrum.client.ScrumJs;
 import scrum.client.admin.User;
+import scrum.client.estimation.RequirementEstimationVote;
 import scrum.client.issues.Issue;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
@@ -32,6 +33,44 @@ public class Requirement extends GRequirement {
 
 	public Requirement(Map data) {
 		super(data);
+	}
+
+	public List<RequirementEstimationVote> getEstimationVotes() {
+		return getDao().getRequirementEstimationVotesByRequirement(this);
+	}
+
+	public RequirementEstimationVote getEstimationVote(User user) {
+		for (RequirementEstimationVote vote : getEstimationVotes()) {
+			if (vote.isUser(user)) return vote;
+		}
+		RequirementEstimationVote vote = new RequirementEstimationVote(this, user);
+		getDao().createRequirementEstimationVote(vote);
+		return vote;
+	}
+
+	public void setVote(Integer estimatedWork) {
+		RequirementEstimationVote vote = getEstimationVote(cm.getAuth().getUser());
+		vote.setEstimatedWork(estimatedWork);
+	}
+
+	public void activateWorkEstimationVoting() {
+		setWorkEstimationVotingActive(true);
+	}
+
+	public void deactivateWorkEstimationVoting() {
+		setWorkEstimationVotingActive(false);
+	}
+
+	public void activateWorkEstimationVotingShowoff() {
+		setWorkEstimationVotingShowoff(true);
+		// TODO autoset estimated work?
+	}
+
+	public void resetWorkEstimationVoting() {
+		setWorkEstimationVotingShowoff(false);
+		for (RequirementEstimationVote vote : getEstimationVotes()) {
+			vote.setEstimatedWork(null);
+		}
 	}
 
 	public String getTaskStatusLabel() {

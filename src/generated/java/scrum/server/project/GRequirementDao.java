@@ -52,6 +52,8 @@ public abstract class GRequirementDao
         estimatedWorksCache = null;
         requirementsByClosedCache.clear();
         requirementsByDirtyCache.clear();
+        requirementsByWorkEstimationVotingActiveCache.clear();
+        requirementsByWorkEstimationVotingShowoffCache.clear();
     }
 
     @Override
@@ -444,6 +446,64 @@ public abstract class GRequirementDao
 
         public boolean test(Requirement e) {
             return value == e.isDirty();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - workEstimationVotingActive
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<Requirement>> requirementsByWorkEstimationVotingActiveCache = new Cache<Boolean,Set<Requirement>>(
+            new Cache.Factory<Boolean,Set<Requirement>>() {
+                public Set<Requirement> create(Boolean workEstimationVotingActive) {
+                    return getEntities(new IsWorkEstimationVotingActive(workEstimationVotingActive));
+                }
+            });
+
+    public final Set<Requirement> getRequirementsByWorkEstimationVotingActive(boolean workEstimationVotingActive) {
+        return requirementsByWorkEstimationVotingActiveCache.get(workEstimationVotingActive);
+    }
+
+    private static class IsWorkEstimationVotingActive implements Predicate<Requirement> {
+
+        private boolean value;
+
+        public IsWorkEstimationVotingActive(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(Requirement e) {
+            return value == e.isWorkEstimationVotingActive();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - workEstimationVotingShowoff
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<Requirement>> requirementsByWorkEstimationVotingShowoffCache = new Cache<Boolean,Set<Requirement>>(
+            new Cache.Factory<Boolean,Set<Requirement>>() {
+                public Set<Requirement> create(Boolean workEstimationVotingShowoff) {
+                    return getEntities(new IsWorkEstimationVotingShowoff(workEstimationVotingShowoff));
+                }
+            });
+
+    public final Set<Requirement> getRequirementsByWorkEstimationVotingShowoff(boolean workEstimationVotingShowoff) {
+        return requirementsByWorkEstimationVotingShowoffCache.get(workEstimationVotingShowoff);
+    }
+
+    private static class IsWorkEstimationVotingShowoff implements Predicate<Requirement> {
+
+        private boolean value;
+
+        public IsWorkEstimationVotingShowoff(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(Requirement e) {
+            return value == e.isWorkEstimationVotingShowoff();
         }
 
     }

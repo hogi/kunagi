@@ -46,6 +46,8 @@ public abstract class GRequirement
         properties.put("estimatedWork", this.estimatedWork);
         properties.put("closed", this.closed);
         properties.put("dirty", this.dirty);
+        properties.put("workEstimationVotingActive", this.workEstimationVotingActive);
+        properties.put("workEstimationVotingShowoff", this.workEstimationVotingShowoff);
     }
 
     public int compareTo(Requirement other) {
@@ -477,6 +479,64 @@ public abstract class GRequirement
         setDirty((Boolean)value);
     }
 
+    // -----------------------------------------------------------
+    // - workEstimationVotingActive
+    // -----------------------------------------------------------
+
+    private boolean workEstimationVotingActive;
+
+    public final boolean isWorkEstimationVotingActive() {
+        return workEstimationVotingActive;
+    }
+
+    public final void setWorkEstimationVotingActive(boolean workEstimationVotingActive) {
+        workEstimationVotingActive = prepareWorkEstimationVotingActive(workEstimationVotingActive);
+        if (isWorkEstimationVotingActive(workEstimationVotingActive)) return;
+        this.workEstimationVotingActive = workEstimationVotingActive;
+        fireModified();
+    }
+
+    protected boolean prepareWorkEstimationVotingActive(boolean workEstimationVotingActive) {
+        return workEstimationVotingActive;
+    }
+
+    public final boolean isWorkEstimationVotingActive(boolean workEstimationVotingActive) {
+        return this.workEstimationVotingActive == workEstimationVotingActive;
+    }
+
+    protected final void updateWorkEstimationVotingActive(Object value) {
+        setWorkEstimationVotingActive((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - workEstimationVotingShowoff
+    // -----------------------------------------------------------
+
+    private boolean workEstimationVotingShowoff;
+
+    public final boolean isWorkEstimationVotingShowoff() {
+        return workEstimationVotingShowoff;
+    }
+
+    public final void setWorkEstimationVotingShowoff(boolean workEstimationVotingShowoff) {
+        workEstimationVotingShowoff = prepareWorkEstimationVotingShowoff(workEstimationVotingShowoff);
+        if (isWorkEstimationVotingShowoff(workEstimationVotingShowoff)) return;
+        this.workEstimationVotingShowoff = workEstimationVotingShowoff;
+        fireModified();
+    }
+
+    protected boolean prepareWorkEstimationVotingShowoff(boolean workEstimationVotingShowoff) {
+        return workEstimationVotingShowoff;
+    }
+
+    public final boolean isWorkEstimationVotingShowoff(boolean workEstimationVotingShowoff) {
+        return this.workEstimationVotingShowoff == workEstimationVotingShowoff;
+    }
+
+    protected final void updateWorkEstimationVotingShowoff(Object value) {
+        setWorkEstimationVotingShowoff((Boolean)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -492,6 +552,8 @@ public abstract class GRequirement
             if (property.equals("estimatedWork")) updateEstimatedWork(value);
             if (property.equals("closed")) updateClosed(value);
             if (property.equals("dirty")) updateDirty(value);
+            if (property.equals("workEstimationVotingActive")) updateWorkEstimationVotingActive(value);
+            if (property.equals("workEstimationVotingShowoff")) updateWorkEstimationVotingShowoff(value);
         }
     }
 

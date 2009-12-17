@@ -33,6 +33,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestImpediments(GwtConversation conversation);
     protected abstract void onRequestIssues(GwtConversation conversation);
     protected abstract void onRequestRisks(GwtConversation conversation);
+    protected abstract void onRequestRequirementEstimationVotes(GwtConversation conversation, java.lang.String requirementId);
     protected abstract void onRequestComments(GwtConversation conversation, java.lang.String parentId);
     protected abstract void onChangeProperties(GwtConversation conversation, java.lang.String entityId, java.util.Map properties);
     protected abstract void onCreateEntity(GwtConversation conversation, java.lang.String type, java.util.Map properties);
@@ -244,6 +245,25 @@ public abstract class GScrumServiceImpl
             onRequestRisks(conversation);
         } catch (Throwable t) {
             handleServiceMethodException("requestRisks",t);
+            throw new RuntimeException(t);
+        }
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public scrum.client.DataTransferObject requestRequirementEstimationVotes(java.lang.String requirementId) {
+        LOG.debug("requestRequirementEstimationVotes");
+        WebSession session = (WebSession) getSession();
+        GwtConversation conversation = session.getGwtConversation();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:requestRequirementEstimationVotes");
+        context.bindCurrentThread();
+        try {
+            onRequestRequirementEstimationVotes(conversation, requirementId);
+        } catch (Throwable t) {
+            handleServiceMethodException("requestRequirementEstimationVotes",t);
             throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

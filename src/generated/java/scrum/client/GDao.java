@@ -1179,6 +1179,102 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Requirement> getRequirementsByWorkEstimationVotingActive(boolean workEstimationVotingActive) {
+        List<scrum.client.project.Requirement> ret = new ArrayList<scrum.client.project.Requirement>();
+        for (scrum.client.project.Requirement entity : requirements.values()) {
+            if (entity.isWorkEstimationVotingActive(workEstimationVotingActive)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Requirement> getRequirementsByWorkEstimationVotingShowoff(boolean workEstimationVotingShowoff) {
+        List<scrum.client.project.Requirement> ret = new ArrayList<scrum.client.project.Requirement>();
+        for (scrum.client.project.Requirement entity : requirements.values()) {
+            if (entity.isWorkEstimationVotingShowoff(workEstimationVotingShowoff)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    // --- RequirementEstimationVote ---
+
+    private Map<String, scrum.client.estimation.RequirementEstimationVote> requirementEstimationVotes = new HashMap<String, scrum.client.estimation.RequirementEstimationVote>();
+
+    public final void clearRequirementEstimationVotes() {
+        requirementEstimationVotes.clear();
+    }
+
+    public final boolean containsRequirementEstimationVote(scrum.client.estimation.RequirementEstimationVote requirementEstimationVote) {
+        return requirementEstimationVotes.containsKey(requirementEstimationVote.getId());
+    }
+
+    public final void deleteRequirementEstimationVote(scrum.client.estimation.RequirementEstimationVote requirementEstimationVote) {
+        requirementEstimationVotes.remove(requirementEstimationVote.getId());
+        entityDeleted(requirementEstimationVote);
+    }
+
+    public final void createRequirementEstimationVote(scrum.client.estimation.RequirementEstimationVote requirementEstimationVote) {
+        requirementEstimationVotes.put(requirementEstimationVote.getId(), requirementEstimationVote);
+        entityCreated(requirementEstimationVote);
+    }
+
+    private final void updateRequirementEstimationVote(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.estimation.RequirementEstimationVote entity = requirementEstimationVotes.get(id);
+        if (entity == null) {
+            entity = new scrum.client.estimation.RequirementEstimationVote(data);
+            requirementEstimationVotes.put(id, entity);
+            ilarkesto.gwt.client.GwtLogger.DEBUG("RequirementEstimationVote received: " + entity.getId() + " ("+entity+")");
+        } else {
+            entity.updateProperties(data);
+            ilarkesto.gwt.client.GwtLogger.DEBUG("RequirementEstimationVote updated: " + entity);
+        }
+        onEntityModifiedRemotely(entity);
+    }
+
+    public final scrum.client.estimation.RequirementEstimationVote getRequirementEstimationVote(String id) {
+        scrum.client.estimation.RequirementEstimationVote ret = requirementEstimationVotes.get(id);
+        if (ret == null) throw new RuntimeException("RequirementEstimationVote does not exist: " + id);
+        return ret;
+    }
+
+    public final Set<scrum.client.estimation.RequirementEstimationVote> getRequirementEstimationVotes(Collection<String> ids) {
+        Set<scrum.client.estimation.RequirementEstimationVote> ret = new HashSet<scrum.client.estimation.RequirementEstimationVote>();
+        for (String id : ids) {
+            scrum.client.estimation.RequirementEstimationVote entity = requirementEstimationVotes.get(id);
+            if (entity == null) throw new RuntimeException("RequirementEstimationVote does not exist: " + id);
+            ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.estimation.RequirementEstimationVote> getRequirementEstimationVotes() {
+        return new ArrayList<scrum.client.estimation.RequirementEstimationVote>(requirementEstimationVotes.values());
+    }
+
+    public final List<scrum.client.estimation.RequirementEstimationVote> getRequirementEstimationVotesByRequirement(scrum.client.project.Requirement requirement) {
+        List<scrum.client.estimation.RequirementEstimationVote> ret = new ArrayList<scrum.client.estimation.RequirementEstimationVote>();
+        for (scrum.client.estimation.RequirementEstimationVote entity : requirementEstimationVotes.values()) {
+            if (entity.isRequirement(requirement)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.estimation.RequirementEstimationVote> getRequirementEstimationVotesByUser(scrum.client.admin.User user) {
+        List<scrum.client.estimation.RequirementEstimationVote> ret = new ArrayList<scrum.client.estimation.RequirementEstimationVote>();
+        for (scrum.client.estimation.RequirementEstimationVote entity : requirementEstimationVotes.values()) {
+            if (entity.isUser(user)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.estimation.RequirementEstimationVote> getRequirementEstimationVotesByEstimatedWork(java.lang.Integer estimatedWork) {
+        List<scrum.client.estimation.RequirementEstimationVote> ret = new ArrayList<scrum.client.estimation.RequirementEstimationVote>();
+        for (scrum.client.estimation.RequirementEstimationVote entity : requirementEstimationVotes.values()) {
+            if (entity.isEstimatedWork(estimatedWork)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Risk ---
 
     private Map<String, scrum.client.risks.Risk> risks = new HashMap<String, scrum.client.risks.Risk>();
@@ -1855,6 +1951,7 @@ public abstract class GDao
             clearQualitys();
             clearReleases();
             clearRequirements();
+            clearRequirementEstimationVotes();
             clearRisks();
             clearSimpleEvents();
             clearSprints();
@@ -1880,6 +1977,7 @@ public abstract class GDao
             entityMaps.add(qualitys);
             entityMaps.add(releases);
             entityMaps.add(requirements);
+            entityMaps.add(requirementEstimationVotes);
             entityMaps.add(risks);
             entityMaps.add(simpleEvents);
             entityMaps.add(sprints);
@@ -1934,6 +2032,10 @@ public abstract class GDao
         }
         if (type.equals(scrum.client.project.Requirement.ENTITY_TYPE)) {
             updateRequirement(data);
+            return;
+        }
+        if (type.equals(scrum.client.estimation.RequirementEstimationVote.ENTITY_TYPE)) {
+            updateRequirementEstimationVote(data);
             return;
         }
         if (type.equals(scrum.client.risks.Risk.ENTITY_TYPE)) {

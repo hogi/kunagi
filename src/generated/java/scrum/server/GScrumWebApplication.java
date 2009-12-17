@@ -328,6 +328,31 @@ public abstract class GScrumWebApplication
         requirementDao = null;
     }
 
+    // --- requirementEstimationVoteDao ---
+
+    private scrum.server.estimation.RequirementEstimationVoteDao requirementEstimationVoteDao;
+
+    public final scrum.server.estimation.RequirementEstimationVoteDao getRequirementEstimationVoteDao() {
+        if (requirementEstimationVoteDao == null) {
+            requirementEstimationVoteDao = createRequirementEstimationVoteDao();
+            initializeRequirementEstimationVoteDao(requirementEstimationVoteDao);
+        }
+        return requirementEstimationVoteDao;
+    }
+
+    protected scrum.server.estimation.RequirementEstimationVoteDao createRequirementEstimationVoteDao() {
+        return requirementEstimationVoteDao = ilarkesto.base.Reflect.newInstance(scrum.server.estimation.RequirementEstimationVoteDao.class);
+    }
+
+    protected void initializeRequirementEstimationVoteDao(scrum.server.estimation.RequirementEstimationVoteDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetRequirementEstimationVoteDao() {
+        requirementEstimationVoteDao = null;
+    }
+
     // --- riskDao ---
 
     private scrum.server.risks.RiskDao riskDao;

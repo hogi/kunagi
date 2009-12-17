@@ -440,6 +440,44 @@ public abstract class GRequirement
         return equals(this.dirty, dirty);
     }
 
+    // --- workEstimationVotingActive ---
+
+    private boolean workEstimationVotingActive ;
+
+    public final boolean isWorkEstimationVotingActive() {
+        return this.workEstimationVotingActive ;
+    }
+
+    public final Requirement setWorkEstimationVotingActive(boolean workEstimationVotingActive) {
+        if (isWorkEstimationVotingActive(workEstimationVotingActive)) return (Requirement)this;
+        this.workEstimationVotingActive = workEstimationVotingActive ;
+        propertyChanged("workEstimationVotingActive", this.workEstimationVotingActive);
+        return (Requirement)this;
+    }
+
+    public final boolean isWorkEstimationVotingActive(boolean workEstimationVotingActive) {
+        return equals(this.workEstimationVotingActive, workEstimationVotingActive);
+    }
+
+    // --- workEstimationVotingShowoff ---
+
+    private boolean workEstimationVotingShowoff ;
+
+    public final boolean isWorkEstimationVotingShowoff() {
+        return this.workEstimationVotingShowoff ;
+    }
+
+    public final Requirement setWorkEstimationVotingShowoff(boolean workEstimationVotingShowoff) {
+        if (isWorkEstimationVotingShowoff(workEstimationVotingShowoff)) return (Requirement)this;
+        this.workEstimationVotingShowoff = workEstimationVotingShowoff ;
+        propertyChanged("workEstimationVotingShowoff", this.workEstimationVotingShowoff);
+        return (Requirement)this;
+    }
+
+    public final boolean isWorkEstimationVotingShowoff(boolean workEstimationVotingShowoff) {
+        return equals(this.workEstimationVotingShowoff, workEstimationVotingShowoff);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -453,6 +491,8 @@ public abstract class GRequirement
         estimatedWork  = (java.lang.Integer) props.get("estimatedWork");
         closed  = (Boolean) props.get("closed");
         dirty  = (Boolean) props.get("dirty");
+        workEstimationVotingActive  = (Boolean) props.get("workEstimationVotingActive");
+        workEstimationVotingShowoff  = (Boolean) props.get("workEstimationVotingShowoff");
     }
 
     @Override
@@ -468,6 +508,8 @@ public abstract class GRequirement
         properties.put("estimatedWork", this.estimatedWork);
         properties.put("closed", this.closed);
         properties.put("dirty", this.dirty);
+        properties.put("workEstimationVotingActive", this.workEstimationVotingActive);
+        properties.put("workEstimationVotingShowoff", this.workEstimationVotingShowoff);
     }
 
     @Override

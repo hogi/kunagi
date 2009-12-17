@@ -285,7 +285,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		// session.sendToClient(project.getNextSprint());
 		conversation.sendToClient(project.getSprints());
 		conversation.sendToClient(project.getParticipants());
-		conversation.sendToClient(project.getRequirements());
+		Set<Requirement> requirements = project.getRequirements();
+		conversation.sendToClient(requirements);
+		for (Requirement requirement : requirements) {
+			conversation.sendToClient(requirement.getEstimationVotes());
+		}
 		conversation.sendToClient(project.getQualitys());
 		conversation.sendToClient(project.getTasks());
 		conversation.sendToClient(project.getUserConfigs());
@@ -320,6 +324,15 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		project.switchToNextSprint();
 		sendToClients(conversation, project.getSprints());
 		sendToClients(conversation, project);
+	}
+
+	@Override
+	protected void onRequestRequirementEstimationVotes(GwtConversation conversation, String requirementId) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		Requirement requirement = requirementDao.getById(requirementId);
+		if (!requirement.isProject(project)) throw new PermissionDeniedException();
+		conversation.sendToClient(requirement.getEstimationVotes());
 	}
 
 	@Override

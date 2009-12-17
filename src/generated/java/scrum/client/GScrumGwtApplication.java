@@ -126,6 +126,14 @@ public abstract class GScrumGwtApplication
         callRequestRisks( null);
     }
 
+    public final void callRequestRequirementEstimationVotes(java.lang.String requirementId,  Runnable callback) {
+        getScrumService().requestRequirementEstimationVotes(requirementId,  new DefaultCallback<DataTransferObject>(callback));
+    }
+
+    public final void callRequestRequirementEstimationVotes(java.lang.String requirementId) {
+        callRequestRequirementEstimationVotes(requirementId,  null);
+    }
+
     public final void callRequestComments(java.lang.String parentId,  Runnable callback) {
         getScrumService().requestComments(parentId,  new DefaultCallback<DataTransferObject>(callback));
     }

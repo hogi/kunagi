@@ -3,6 +3,8 @@ package scrum.server.project;
 import java.util.Set;
 
 import scrum.server.common.Numbered;
+import scrum.server.estimation.RequirementEstimationVote;
+import scrum.server.estimation.RequirementEstimationVoteDao;
 import scrum.server.sprint.Task;
 import scrum.server.sprint.TaskDao;
 
@@ -11,12 +13,21 @@ public class Requirement extends GRequirement implements Numbered {
 	// --- dependencies ---
 
 	private static TaskDao taskDao;
+	private static RequirementEstimationVoteDao requirementEstimationVoteDao;
+
+	public static void setRequirementEstimationVoteDao(RequirementEstimationVoteDao requirementEstimationVoteDao) {
+		Requirement.requirementEstimationVoteDao = requirementEstimationVoteDao;
+	}
 
 	public static void setTaskDao(TaskDao taskDao) {
 		Requirement.taskDao = taskDao;
 	}
 
 	// --- ---
+
+	public Set<RequirementEstimationVote> getEstimationVotes() {
+		return requirementEstimationVoteDao.getRequirementEstimationVotesByRequirement(this);
+	}
 
 	public boolean isTasksClosed() {
 		for (Task task : getTasks()) {
