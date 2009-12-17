@@ -11,10 +11,12 @@ import scrum.client.project.ChangeProjectAction;
 import scrum.client.search.SearchInputWidget;
 
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class HeaderWidget extends AScrumWidget {
 
+	private SimplePanel wrapper;
 	private Label title;
 	private Label currentUserLabel;
 	private UndoButtonWidget undoButton;
@@ -34,20 +36,15 @@ public class HeaderWidget extends AScrumWidget {
 
 		search = new SearchInputWidget();
 
-		TableBuilder tb = new TableBuilder();
-		tb.setCellPadding(2);
-		tb.setColumnWidths("", "", "", "50px", "100px", "50px");
-		tb.add(title, currentUserLabel, search, undoButton, new HyperlinkWidget(new ChangeProjectAction()),
-			new HyperlinkWidget(new LogoutAction()));
-
-		return Gwt.createDiv("HeaderWidget", tb.createTable());
+		wrapper = Gwt.createDiv("HeaderWidget", title);
+		return wrapper;
 	}
 
 	@Override
 	protected void onUpdate() {
-		undoButton.setUndoManager(null);
+		boolean projectOpen = cm.getProjectContext().isProjectOpen();
 
-		boolean loggedIn = cm.getAuth().isUserLoggedIn();
+		undoButton.setUndoManager(null);
 
 		ApplicationInfo applicationInfo = cm.getApp().getApplicationInfo();
 		if (applicationInfo != null) {
@@ -55,6 +52,21 @@ public class HeaderWidget extends AScrumWidget {
 			title.setTitle(applicationInfo.getVersionDescription());
 		}
 
+		currentUserLabel.setText(createCurrentUserText());
+
+		TableBuilder tb = new TableBuilder();
+		tb.setCellPadding(2);
+		tb.setColumnWidths("", "", "", "50px", "100px", "50px");
+		tb.add(title, currentUserLabel, projectOpen ? search : Gwt.createEmptyDiv(), projectOpen ? undoButton : Gwt
+				.createEmptyDiv(), new HyperlinkWidget(new ChangeProjectAction()), new HyperlinkWidget(
+				new LogoutAction()));
+		wrapper.setWidget(tb.createTable());
+
+		super.onUpdate();
+	}
+
+	private String createCurrentUserText() {
+		boolean loggedIn = cm.getAuth().isUserLoggedIn();
 		StringBuilder text = new StringBuilder();
 		if (loggedIn) {
 			text.append(getCurrentUser().getName());
@@ -64,9 +76,7 @@ public class HeaderWidget extends AScrumWidget {
 				undoButton.setUndoManager(cm.getUndo().getManager());
 			}
 		}
-		currentUserLabel.setText(text.toString());
-
-		super.onUpdate();
+		return text.toString();
 	}
 
 }
