@@ -25,9 +25,17 @@ public class File extends GFile {
 		return getProject().isVisibleFor(user);
 	}
 
+	public String getReferenceAndLabel() {
+		return getReference() + " (" + getLabel() + ")";
+	}
+
+	public String getReference() {
+		return scrum.client.files.File.REFERENCE_PREFIX + getNumber();
+	}
+
 	@Override
 	public String toString() {
-		return getFilename();
+		return getReferenceAndLabel();
 	}
 
 	@Override
