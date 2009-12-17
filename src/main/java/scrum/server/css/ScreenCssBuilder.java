@@ -84,6 +84,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		whiteboard(css);
 		dashboard(css);
 		calendar(css);
+		planningPoker(css);
 
 		css.style(".TrashWidget").background(cTrashBackground).border(1, "solid", cTrashBorder).padding(5);
 
@@ -136,6 +137,10 @@ public class ScreenCssBuilder implements CssBuilder {
 				.margin(3, 100, 3, 100);
 
 		css.style("ul.toc");// .displayInline().floatRight();
+	}
+
+	private void planningPoker(CssRenderer css) {
+		css.style(".PlanningPokerWidget").border(5, "solid", "black").borderRadius(10).background("#090").padding(30);
 	}
 
 	private void calendar(CssRenderer css) {

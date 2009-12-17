@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.collaboration.CommentsWidget;
+import scrum.client.estimation.PlanningPokerWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -15,27 +16,29 @@ public class RequirementWidget extends AWidget {
 	private boolean showSprint;
 	private boolean showTaskWork;
 	private boolean showComments;
+	private boolean planningPoker;
 
 	public RequirementWidget(Requirement requirement, boolean showLabel, boolean showSprint, boolean showTaskWork,
-			boolean showComments) {
+			boolean showComments, boolean planningPoker) {
 		this.requirement = requirement;
 		this.showLabel = showLabel;
 		this.showSprint = showSprint;
 		this.showTaskWork = showTaskWork;
 		this.showComments = showComments;
+		this.planningPoker = planningPoker;
 	}
 
 	@Override
 	protected Widget onInitialization() {
 
-		TableBuilder tb = new TableBuilder();
-		tb.setCellPadding(2);
+		TableBuilder left = new TableBuilder();
+		left.setCellPadding(2);
 
-		if (showLabel) tb.addFieldRow("Label", requirement.getLabelModel());
+		if (showLabel) left.addFieldRow("Label", requirement.getLabelModel());
 
-		tb.addFieldRow("Description", requirement.getDescriptionModel());
+		left.addFieldRow("Description", requirement.getDescriptionModel());
 
-		tb.addFieldRow("Qualities", new AMultiSelectionViewEditWidget<Quality>() {
+		left.addFieldRow("Qualities", new AMultiSelectionViewEditWidget<Quality>() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -59,12 +62,12 @@ public class RequirementWidget extends AWidget {
 			}
 		});
 
-		tb.addFieldRow("Test", requirement.getTestDescriptionModel());
+		left.addFieldRow("Test", requirement.getTestDescriptionModel());
 
-		tb.addFieldRow("Estimated Work", new RequirementEstimatedWorkWidget(requirement));
+		left.addFieldRow("Estimated Work", new RequirementEstimatedWorkWidget(requirement));
 
 		if (showTaskWork) {
-			tb.addFieldRow("Remainig Task Work", new AFieldValueWidget() {
+			left.addFieldRow("Remainig Task Work", new AFieldValueWidget() {
 
 				@Override
 				protected void onUpdate() {
@@ -73,7 +76,7 @@ public class RequirementWidget extends AWidget {
 			});
 		}
 
-		if (showSprint) tb.addFieldRow("Sprint", new AFieldValueWidget() {
+		if (showSprint) left.addFieldRow("Sprint", new AFieldValueWidget() {
 
 			@Override
 			protected void onUpdate() {
@@ -81,7 +84,15 @@ public class RequirementWidget extends AWidget {
 			}
 		});
 
-		return showComments ? TableBuilder.row(20, tb.createTable(), new CommentsWidget(requirement)) : tb
+		TableBuilder right = new TableBuilder();
+		if (planningPoker) {
+			right.addRow(new PlanningPokerWidget(requirement));
+		}
+		if (showComments) {
+			right.addRow(new CommentsWidget(requirement));
+		}
+
+		return showComments || planningPoker ? TableBuilder.row(20, left.createTable(), right.createTable()) : left
 				.createTable();
 	}
 }

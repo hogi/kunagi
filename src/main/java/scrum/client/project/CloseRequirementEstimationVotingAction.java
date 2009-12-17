@@ -12,6 +12,12 @@ public class CloseRequirementEstimationVotingAction extends GCloseRequirementEst
 	}
 
 	@Override
+	public boolean isExecutable() {
+		if (!requirement.isWorkEstimationVotingActive()) return false;
+		return true;
+	}
+
+	@Override
 	protected void onExecute() {
 		requirement.deactivateWorkEstimationVoting();
 	}

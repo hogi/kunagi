@@ -62,7 +62,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 	protected Widget onExtendedInitialization() {
 		Requirement requirement = getObject();
 
-		requirementWidget = new RequirementWidget(requirement, false, false, true, false);
+		requirementWidget = new RequirementWidget(requirement, false, false, true, false, false);
 		taskList = new BlockListWidget<Task>(TaskInRequirementBlock.FACTORY);
 		commentsWidget = new CommentsWidget(requirement);
 

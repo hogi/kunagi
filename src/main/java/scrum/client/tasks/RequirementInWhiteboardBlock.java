@@ -26,7 +26,7 @@ public class RequirementInWhiteboardBlock extends ABlockWidget<Requirement> {
 
 	@Override
 	protected Widget onExtendedInitialization() {
-		return new RequirementWidget(getObject(), true, false, true, true);
+		return new RequirementWidget(getObject(), true, false, true, true, false);
 	}
 
 	public static final BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {

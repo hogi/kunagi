@@ -12,6 +12,13 @@ public class RequirementEstimationVotingShowoffAction extends GRequirementEstima
 	}
 
 	@Override
+	public boolean isExecutable() {
+		if (!requirement.isWorkEstimationVotingActive()) return false;
+		if (requirement.isWorkEstimationVotingShowoff()) return false;
+		return true;
+	}
+
+	@Override
 	protected void onExecute() {
 		requirement.activateWorkEstimationVotingShowoff();
 	}

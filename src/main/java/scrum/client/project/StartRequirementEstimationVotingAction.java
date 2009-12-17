@@ -12,6 +12,15 @@ public class StartRequirementEstimationVotingAction extends GStartRequirementEst
 	}
 
 	@Override
+	public boolean isExecutable() {
+		if (requirement.isWorkEstimationVotingActive()) return false;
+		if (requirement.isClosed()) return false;
+		if (!requirement.isDirty()) return false;
+		if (requirement.isInCurrentSprint()) return false;
+		return true;
+	}
+
+	@Override
 	protected void onExecute() {
 		requirement.activateWorkEstimationVoting();
 	}

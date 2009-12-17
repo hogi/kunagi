@@ -12,6 +12,12 @@ public class ResetRequirementEstimationVotingAction extends GResetRequirementEst
 	}
 
 	@Override
+	public boolean isExecutable() {
+		if (!requirement.isWorkEstimationVotingActive()) return false;
+		return true;
+	}
+
+	@Override
 	protected void onExecute() {
 		requirement.resetWorkEstimationVoting();
 	}

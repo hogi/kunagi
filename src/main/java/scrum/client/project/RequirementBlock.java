@@ -34,6 +34,10 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 		header.addMenuAction(new ReopenRequirementAction(requirement));
 		header.addMenuAction(new SetRequirementDirtyAction(requirement));
 		header.addMenuAction(new SetRequirementCleanAction(requirement));
+		header.addMenuAction(new StartRequirementEstimationVotingAction(requirement));
+		header.addMenuAction(new CloseRequirementEstimationVotingAction(requirement));
+		header.addMenuAction(new RequirementEstimationVotingShowoffAction(requirement));
+		header.addMenuAction(new ResetRequirementEstimationVotingAction(requirement));
 		header.addMenuAction(new DeleteRequirementAction(requirement));
 	}
 
@@ -84,7 +88,7 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 
 	@Override
 	protected Widget onExtendedInitialization() {
-		return new RequirementWidget(getObject(), true, true, false, true);
+		return new RequirementWidget(getObject(), true, true, false, true, true);
 	}
 
 	public AScrumAction getTrashAction() {
