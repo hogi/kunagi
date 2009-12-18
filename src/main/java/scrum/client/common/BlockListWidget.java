@@ -206,7 +206,10 @@ public final class BlockListWidget<O> extends AScrumWidget {
 
 	public final void extendObject(O object, boolean exclusive) {
 		int idx = indexOfObject(object);
-		if (idx < 0) return;
+		if (idx < 0) {
+			GwtLogger.DEBUG("Extending block failed. Object does not exist:", object);
+			return;
+		}
 		extendRow(idx, exclusive);
 		assert isExtended(object);
 	}

@@ -1,8 +1,6 @@
 package scrum.client.impediments;
 
 import ilarkesto.gwt.client.ButtonWidget;
-import scrum.client.ComponentManager;
-import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.PagePanel;
