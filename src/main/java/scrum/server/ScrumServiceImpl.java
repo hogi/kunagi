@@ -31,6 +31,7 @@ import scrum.server.common.Numbered;
 import scrum.server.common.Transient;
 import scrum.server.files.File;
 import scrum.server.impediments.Impediment;
+import scrum.server.issues.Issue;
 import scrum.server.journal.ProjectEvent;
 import scrum.server.journal.ProjectEventDao;
 import scrum.server.project.Project;
@@ -157,6 +158,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Impediment) {
 			Impediment impediment = (Impediment) entity;
 			impediment.setDate(Date.today());
+		}
+
+		if (entity instanceof Issue) {
+			Issue issue = (Issue) entity;
+			issue.setDate(DateAndTime.now());
+			issue.setCreator(conversation.getSession().getUser());
 		}
 
 		if (!(entity instanceof Transient)) dao.saveEntity(entity);

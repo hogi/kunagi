@@ -40,6 +40,7 @@ public abstract class GIssue
         properties.put("number", this.number);
         properties.put("type", this.type);
         properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("creatorId", this.creatorId);
         properties.put("label", this.label);
         properties.put("description", this.description);
     }
@@ -179,20 +180,20 @@ public abstract class GIssue
     // - date
     // -----------------------------------------------------------
 
-    private ilarkesto.base.time.Date date;
+    private ilarkesto.base.time.DateAndTime date;
 
-    public final ilarkesto.base.time.Date getDate() {
+    public final ilarkesto.base.time.DateAndTime getDate() {
         return date;
     }
 
-    public final void setDate(ilarkesto.base.time.Date date) {
+    public final void setDate(ilarkesto.base.time.DateAndTime date) {
         date = prepareDate(date);
         if (isDate(date)) return;
         this.date = date;
         fireModified();
     }
 
-    protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
+    protected ilarkesto.base.time.DateAndTime prepareDate(ilarkesto.base.time.DateAndTime date) {
         return date;
     }
 
@@ -200,14 +201,62 @@ public abstract class GIssue
         return this.date != null;
     }
 
-    public final boolean isDate(ilarkesto.base.time.Date date) {
+    public final boolean isDate(ilarkesto.base.time.DateAndTime date) {
         if (this.date == null && date == null) return true;
         return this.date != null && this.date.equals(date);
     }
 
     protected final void updateDate(Object value) {
-        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
-        setDate((ilarkesto.base.time.Date)value);
+        value = value == null ? null : new ilarkesto.base.time.DateAndTime((String)value);
+        setDate((ilarkesto.base.time.DateAndTime)value);
+    }
+
+    // -----------------------------------------------------------
+    // - creator
+    // -----------------------------------------------------------
+
+    private String creatorId;
+    private transient scrum.server.admin.User creatorCache;
+
+    private void updateCreatorCache() {
+        creatorCache = this.creatorId == null ? null : (scrum.server.admin.User)userDao.getById(this.creatorId);
+    }
+
+    public final scrum.server.admin.User getCreator() {
+        if (creatorCache == null) updateCreatorCache();
+        return creatorCache;
+    }
+
+    public final void setCreator(scrum.server.admin.User creator) {
+        creator = prepareCreator(creator);
+        if (isCreator(creator)) return;
+        this.creatorId = creator == null ? null : creator.getId();
+        creatorCache = creator;
+        fireModified();
+    }
+
+    protected scrum.server.admin.User prepareCreator(scrum.server.admin.User creator) {
+        return creator;
+    }
+
+    protected void repairDeadCreatorReference(String entityId) {
+        if (entityId.equals(this.creatorId)) {
+            this.creatorId = null;
+            fireModified();
+        }
+    }
+
+    public final boolean isCreatorSet() {
+        return this.creatorId != null;
+    }
+
+    public final boolean isCreator(scrum.server.admin.User creator) {
+        if (this.creatorId == null && creator == null) return true;
+        return creator != null && creator.getId().equals(this.creatorId);
+    }
+
+    protected final void updateCreator(Object value) {
+        setCreator(value == null ? null : (scrum.server.admin.User)userDao.getById((String)value));
     }
 
     // -----------------------------------------------------------
@@ -289,6 +338,7 @@ public abstract class GIssue
             if (property.equals("number")) updateNumber(value);
             if (property.equals("type")) updateType(value);
             if (property.equals("date")) updateDate(value);
+            if (property.equals("creatorId")) updateCreator(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("description")) updateDescription(value);
         }
@@ -297,6 +347,7 @@ public abstract class GIssue
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
+        repairDeadCreatorReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -312,6 +363,12 @@ public abstract class GIssue
         } catch (EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
+        }
+        try {
+            getCreator();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead creator reference");
+            repairDeadCreatorReference(this.creatorId);
         }
     }
 

@@ -1,6 +1,6 @@
 package scrum.client.issues;
 
-import ilarkesto.gwt.client.Date;
+import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
 
 import java.util.Arrays;
@@ -22,7 +22,7 @@ public class Issue extends GIssue {
 	public Issue(Project project) {
 		setType(INIT_TYPE);
 		setProject(project);
-		setDate(Date.today());
+		setDate(DateAndTime.now());
 	}
 
 	public Issue(Map data) {

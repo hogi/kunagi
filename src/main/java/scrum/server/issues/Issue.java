@@ -1,6 +1,6 @@
 package scrum.server.issues;
 
-import ilarkesto.base.time.Date;
+import ilarkesto.base.time.DateAndTime;
 import scrum.server.common.Numbered;
 
 public class Issue extends GIssue implements Numbered {
@@ -18,7 +18,7 @@ public class Issue extends GIssue implements Numbered {
 		super.ensureIntegrity();
 		updateNumber();
 		if (!isTypeSet()) setType(scrum.client.issues.Issue.INIT_TYPE);
-		if (!isDateSet()) setDate(Date.today());
+		if (!isDateSet()) setDate(DateAndTime.now());
 	}
 
 	@Override

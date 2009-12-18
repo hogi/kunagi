@@ -42,6 +42,8 @@ public abstract class GIssueDao
         typesCache = null;
         issuesByDateCache.clear();
         datesCache = null;
+        issuesByCreatorCache.clear();
+        creatorsCache = null;
         issuesByLabelCache.clear();
         labelsCache = null;
         issuesByDescriptionCache.clear();
@@ -188,21 +190,21 @@ public abstract class GIssueDao
     // - date
     // -----------------------------------------------------------
 
-    private final Cache<ilarkesto.base.time.Date,Set<Issue>> issuesByDateCache = new Cache<ilarkesto.base.time.Date,Set<Issue>>(
-            new Cache.Factory<ilarkesto.base.time.Date,Set<Issue>>() {
-                public Set<Issue> create(ilarkesto.base.time.Date date) {
+    private final Cache<ilarkesto.base.time.DateAndTime,Set<Issue>> issuesByDateCache = new Cache<ilarkesto.base.time.DateAndTime,Set<Issue>>(
+            new Cache.Factory<ilarkesto.base.time.DateAndTime,Set<Issue>>() {
+                public Set<Issue> create(ilarkesto.base.time.DateAndTime date) {
                     return getEntities(new IsDate(date));
                 }
             });
 
-    public final Set<Issue> getIssuesByDate(ilarkesto.base.time.Date date) {
+    public final Set<Issue> getIssuesByDate(ilarkesto.base.time.DateAndTime date) {
         return issuesByDateCache.get(date);
     }
-    private Set<ilarkesto.base.time.Date> datesCache;
+    private Set<ilarkesto.base.time.DateAndTime> datesCache;
 
-    public final Set<ilarkesto.base.time.Date> getDates() {
+    public final Set<ilarkesto.base.time.DateAndTime> getDates() {
         if (datesCache == null) {
-            datesCache = new HashSet<ilarkesto.base.time.Date>();
+            datesCache = new HashSet<ilarkesto.base.time.DateAndTime>();
             for (Issue e : getEntities()) {
                 if (e.isDateSet()) datesCache.add(e.getDate());
             }
@@ -212,14 +214,54 @@ public abstract class GIssueDao
 
     private static class IsDate implements Predicate<Issue> {
 
-        private ilarkesto.base.time.Date value;
+        private ilarkesto.base.time.DateAndTime value;
 
-        public IsDate(ilarkesto.base.time.Date value) {
+        public IsDate(ilarkesto.base.time.DateAndTime value) {
             this.value = value;
         }
 
         public boolean test(Issue e) {
             return e.isDate(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - creator
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.admin.User,Set<Issue>> issuesByCreatorCache = new Cache<scrum.server.admin.User,Set<Issue>>(
+            new Cache.Factory<scrum.server.admin.User,Set<Issue>>() {
+                public Set<Issue> create(scrum.server.admin.User creator) {
+                    return getEntities(new IsCreator(creator));
+                }
+            });
+
+    public final Set<Issue> getIssuesByCreator(scrum.server.admin.User creator) {
+        return issuesByCreatorCache.get(creator);
+    }
+    private Set<scrum.server.admin.User> creatorsCache;
+
+    public final Set<scrum.server.admin.User> getCreators() {
+        if (creatorsCache == null) {
+            creatorsCache = new HashSet<scrum.server.admin.User>();
+            for (Issue e : getEntities()) {
+                if (e.isCreatorSet()) creatorsCache.add(e.getCreator());
+            }
+        }
+        return creatorsCache;
+    }
+
+    private static class IsCreator implements Predicate<Issue> {
+
+        private scrum.server.admin.User value;
+
+        public IsCreator(scrum.server.admin.User value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isCreator(value);
         }
 
     }

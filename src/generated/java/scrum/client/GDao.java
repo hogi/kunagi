@@ -492,10 +492,18 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.issues.Issue> getIssuesByDate(ilarkesto.gwt.client.Date date) {
+    public final List<scrum.client.issues.Issue> getIssuesByDate(ilarkesto.gwt.client.DateAndTime date) {
         List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
         for (scrum.client.issues.Issue entity : issues.values()) {
             if (entity.isDate(date)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.issues.Issue> getIssuesByCreator(scrum.client.admin.User creator) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isCreator(creator)) ret.add(entity);
         }
         return ret;
     }

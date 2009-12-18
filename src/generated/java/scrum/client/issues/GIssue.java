@@ -187,20 +187,20 @@ public abstract class GIssue
 
     // --- date ---
 
-    private ilarkesto.gwt.client.Date date ;
+    private ilarkesto.gwt.client.DateAndTime date ;
 
-    public final ilarkesto.gwt.client.Date getDate() {
+    public final ilarkesto.gwt.client.DateAndTime getDate() {
         return this.date ;
     }
 
-    public final Issue setDate(ilarkesto.gwt.client.Date date) {
+    public final Issue setDate(ilarkesto.gwt.client.DateAndTime date) {
         if (isDate(date)) return (Issue)this;
         this.date = date ;
         propertyChanged("date", this.date);
         return (Issue)this;
     }
 
-    public final boolean isDate(ilarkesto.gwt.client.Date date) {
+    public final boolean isDate(ilarkesto.gwt.client.DateAndTime date) {
         return equals(this.date, date);
     }
 
@@ -213,15 +213,15 @@ public abstract class GIssue
 
     protected DateModel createDateModel() { return new DateModel(); }
 
-    protected class DateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+    protected class DateModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
 
         @Override
-        public ilarkesto.gwt.client.Date getValue() {
+        public ilarkesto.gwt.client.DateAndTime getValue() {
             return getDate();
         }
 
         @Override
-        public void setValue(ilarkesto.gwt.client.Date value) {
+        public void setValue(ilarkesto.gwt.client.DateAndTime value) {
             setDate(value);
         }
 
@@ -229,11 +229,36 @@ public abstract class GIssue
         public boolean isMandatory() { return true; }
 
         @Override
-        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
+        protected void onChangeValue(ilarkesto.gwt.client.DateAndTime oldValue, ilarkesto.gwt.client.DateAndTime newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);
         }
 
+    }
+
+    // --- creator ---
+
+    private String creatorId;
+
+    public final scrum.client.admin.User getCreator() {
+        if (creatorId == null) return null;
+        return getDao().getUser(this.creatorId);
+    }
+
+    public final boolean isCreatorSet() {
+        return creatorId != null;
+    }
+
+    public final Issue setCreator(scrum.client.admin.User creator) {
+        String id = creator == null ? null : creator.getId();
+        if (equals(this.creatorId, id)) return (Issue) this;
+        this.creatorId = id;
+        propertyChanged("creatorId", this.creatorId);
+        return (Issue)this;
+    }
+
+    public final boolean isCreator(scrum.client.admin.User creator) {
+        return equals(this.creatorId, creator);
     }
 
     // --- label ---
@@ -345,7 +370,8 @@ public abstract class GIssue
         number  = (Integer) props.get("number");
         type  = (java.lang.String) props.get("type");
         String dateAsString = (String) props.get("date");
-        date  =  dateAsString == null ? null : new ilarkesto.gwt.client.Date(dateAsString);
+        date  =  dateAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(dateAsString);
+        creatorId = (String) props.get("creatorId");
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
     }
@@ -357,6 +383,7 @@ public abstract class GIssue
         properties.put("number", this.number);
         properties.put("type", this.type);
         properties.put("date", this.date == null ? null : this.date.toString());
+        properties.put("creatorId", this.creatorId);
         properties.put("label", this.label);
         properties.put("description", this.description);
     }
