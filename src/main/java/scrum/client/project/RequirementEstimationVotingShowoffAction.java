@@ -8,7 +8,7 @@ public class RequirementEstimationVotingShowoffAction extends GRequirementEstima
 
 	@Override
 	public String getLabel() {
-		return "Showoff";
+		return "Planning Poker Showoff";
 	}
 
 	@Override

@@ -5,12 +5,14 @@ import scrum.client.project.Requirement;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class PlanningPokerWidget extends AScrumWidget {
 
 	private Requirement requirement;
-	private FlowPanel wrapper;
+	private FlowPanel pokerTable;
+	private SimplePanel wrapper;
 
 	public PlanningPokerWidget(Requirement requirement) {
 		super();
@@ -19,12 +21,23 @@ public class PlanningPokerWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		wrapper = new FlowPanel();
-		wrapper.setStyleName("PlanningPokerWidget");
+		pokerTable = new FlowPanel();
+		pokerTable.setStyleName("PlanningPokerWidget");
 
-		wrapper.add(new Label("Planning Poker"));
+		pokerTable.add(new Label("Planning Poker"));
 
+		wrapper = new SimplePanel();
 		return wrapper;
+	}
+
+	@Override
+	protected void onUpdate() {
+		if (requirement.isWorkEstimationVotingActive()) {
+			wrapper.setWidget(pokerTable);
+		} else {
+			wrapper.setWidget(null);
+		}
+		super.onUpdate();
 	}
 
 }
