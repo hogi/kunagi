@@ -15,12 +15,23 @@ public class Image extends AWikiElement {
 
 	@Override
 	String toHtml(HtmlContext context) {
+		boolean external = reference.startsWith("http://");
 		StringBuilder sb = new StringBuilder();
-		sb.append("<a onclick='window.scrum.showEntityByReference(\"");
-		sb.append(reference);
-		sb.append("\")'>");
+		if (external) {
+			sb.append("<a href=\"");
+			sb.append(reference);
+			sb.append("\" target=\"_blank\">");
+		} else {
+			sb.append("<a onclick='window.scrum.showEntityByReference(\"");
+			sb.append(reference);
+			sb.append("\")'>");
+		}
 		sb.append("<img src=\"");
-		sb.append(context.getDownloadUrlByReference(reference));
+		if (external) {
+			sb.append(reference);
+		} else {
+			sb.append(context.getDownloadUrlByReference(reference));
+		}
 		if (thumb) {
 			sb.append("\" width=\"100px\" align=\"");
 			sb.append(left ? "left" : "right");

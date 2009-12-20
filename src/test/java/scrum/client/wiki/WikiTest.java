@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class WikiTest {
 
 	@Test
-	public void testImg() {
+	public void testLocalImg() {
 		Assert.assertEquals(toHtml("[[Image:fle1]]"),
 			"<a onclick='window.scrum.showEntityByReference(\"fle1\")'><img src=\"fle1\"></a>");
 		Assert
@@ -15,6 +15,14 @@ public class WikiTest {
 		Assert
 				.assertEquals(toHtml("[[Image:fle1|thumb|left]]"),
 					"<a onclick='window.scrum.showEntityByReference(\"fle1\")'><img src=\"fle1\" width=\"100px\" align=\"left\"></a>");
+	}
+
+	@Test
+	public void testExternalImg() {
+		Assert
+				.assertEquals(toHtml("[[Image:http://servisto.de/image.png]]"),
+					"<a href=\"http://servisto.de/image.png\" target=\"_blank\"><img src=\"http://servisto.de/image.png\"></a>");
+
 	}
 
 	@Test

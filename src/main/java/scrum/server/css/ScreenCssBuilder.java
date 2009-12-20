@@ -223,6 +223,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.code().color(cHeaderBackground).fontSize(fontSize).lineHeight(lineHeight);
 		css.ul().margin(0, 0, 10, 0).padding(0, 0, 0, 20);
 		css.ol().margin(0, 0, 10, 0).padding(0, 0, 0, 20);
+		css.img().border("0");
 	}
 
 	private void workspace(CssRenderer css) {
