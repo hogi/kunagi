@@ -1,6 +1,7 @@
 package scrum.server.common;
 
 import ilarkesto.logging.Logger;
+import ilarkesto.webapp.Servlet;
 
 import java.io.IOException;
 
@@ -24,6 +25,7 @@ public abstract class AHttpServlet extends HttpServlet {
 
 	@Override
 	protected final void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Servlet.preventCaching(resp);
 		try {
 			onRequest(req, resp, (WebSession) ScrumWebApplication.get().getWebSession(req));
 		} catch (Throwable ex) {
@@ -33,6 +35,7 @@ public abstract class AHttpServlet extends HttpServlet {
 
 	@Override
 	protected final void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Servlet.preventCaching(resp);
 		try {
 			onRequest(req, resp, (WebSession) ScrumWebApplication.get().getWebSession(req));
 		} catch (Throwable ex) {
