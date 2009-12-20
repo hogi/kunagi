@@ -85,13 +85,10 @@ public class WikiParser {
 				String suffix = text.substring(end + 2);
 				if (content.trim().length() > 0) {
 					appendText(p, prefix);
-					int spaceIdx = content.indexOf('|');
-					if (spaceIdx > 0) {
-						String name = content.substring(0, spaceIdx);
-						String label = content.substring(spaceIdx + 1);
-						p.add(new EntityReference("[[" + name + "]]", label));
+					if (content.startsWith("Image:")) {
+						createImage(p, content.substring(6));
 					} else {
-						p.add(new EntityReference("[[" + content + "]]", content));
+						createEntityReference(p, content);
 					}
 					appendText(p, suffix);
 					return p;
@@ -191,6 +188,29 @@ public class WikiParser {
 		}
 		p.add(new Text(text));
 		return p;
+	}
+
+	private void createImage(Paragraph p, String code) {
+		boolean thumb = code.contains("|thumb");
+		if (thumb) {
+			code = code.replace("|thumb", "");
+		}
+		boolean left = code.contains("|left");
+		if (left) {
+			code = code.replace("|left", "");
+		}
+		p.add(new Image(code, thumb, left));
+	}
+
+	private void createEntityReference(Paragraph p, String code) {
+		int sepIdx = code.indexOf('|');
+		if (sepIdx > 0) {
+			String name = code.substring(0, sepIdx);
+			String label = code.substring(sepIdx + 1);
+			p.add(new EntityReference("[[" + name + "]]", label));
+		} else {
+			p.add(new EntityReference("[[" + code + "]]", code));
+		}
 	}
 
 	private void nextPart() {

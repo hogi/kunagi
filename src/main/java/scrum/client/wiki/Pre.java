@@ -10,7 +10,7 @@ public class Pre extends AWikiElement {
 	}
 
 	@Override
-	String toHtml() {
+	String toHtml(HtmlContext context) {
 		return "<pre>" + escapeHtml(text) + "</pre>";
 	}
 

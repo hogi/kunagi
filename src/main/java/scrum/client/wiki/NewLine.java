@@ -3,7 +3,7 @@ package scrum.client.wiki;
 public class NewLine extends AWikiElement {
 
 	@Override
-	String toHtml() {
+	String toHtml(HtmlContext context) {
 		return "<br>";
 	}
 

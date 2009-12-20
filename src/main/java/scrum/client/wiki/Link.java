@@ -16,7 +16,7 @@ public class Link extends AWikiElement {
 	}
 
 	@Override
-	String toHtml() {
+	String toHtml(HtmlContext context) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<a href=\"");
 		sb.append(enhance(href));

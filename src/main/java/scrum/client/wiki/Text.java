@@ -10,7 +10,7 @@ public class Text extends AWikiElement {
 	}
 
 	@Override
-	String toHtml() {
+	String toHtml(HtmlContext context) {
 		return escapeHtml(text);
 	}
 

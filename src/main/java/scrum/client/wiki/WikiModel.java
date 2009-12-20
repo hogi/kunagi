@@ -11,10 +11,10 @@ public class WikiModel {
 		elements.add(element);
 	}
 
-	public String toHtml() {
+	public String toHtml(HtmlContext context) {
 		StringBuilder sb = new StringBuilder();
 		for (AWikiElement element : elements) {
-			sb.append(element.toHtml());
+			sb.append(element.toHtml(context));
 		}
 		return sb.toString();
 	}

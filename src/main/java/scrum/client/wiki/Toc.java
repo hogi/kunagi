@@ -13,7 +13,7 @@ public class Toc extends AWikiElement {
 	}
 
 	@Override
-	String toHtml() {
+	String toHtml(HtmlContext context) {
 		List<Header> headers = new ArrayList<Header>();
 		for (AWikiElement element : model.getElements()) {
 			appendHeaders(headers, element);

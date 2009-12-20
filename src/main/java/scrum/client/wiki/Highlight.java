@@ -14,11 +14,11 @@ public class Highlight extends Paragraph {
 	}
 
 	@Override
-	String toHtml() {
+	String toHtml(HtmlContext context) {
 		StringBuilder sb = new StringBuilder();
 		if (strong) sb.append("<strong>");
 		if (em) sb.append("<em>");
-		sb.append(super.toHtml());
+		sb.append(super.toHtml(context));
 		if (em) sb.append("</em>");
 		if (strong) sb.append("</strong>");
 		return sb.toString();

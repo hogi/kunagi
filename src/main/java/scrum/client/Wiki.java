@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.RichtextFormater;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.common.AScrumComponent;
+import scrum.client.wiki.ScrumHtmlContext;
 import scrum.client.wiki.WikiModel;
 import scrum.client.wiki.WikiParser;
 
@@ -31,7 +32,7 @@ public class Wiki extends AScrumComponent implements RichtextFormater {
 	public static String toHtml(String wiki) {
 		WikiParser parser = new WikiParser(wiki);
 		WikiModel model = parser.parse();
-		return model.toHtml();
+		return model.toHtml(new ScrumHtmlContext());
 	}
 
 	public SuggestOracle createPagesSuggestOracle() {

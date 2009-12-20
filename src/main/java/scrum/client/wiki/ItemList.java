@@ -20,12 +20,12 @@ public class ItemList extends AWikiElement {
 	}
 
 	@Override
-	String toHtml() {
+	String toHtml(HtmlContext context) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(ordered ? "<ol>" : "<ul>");
 		for (Paragraph item : items) {
 			sb.append("<li>");
-			sb.append(item.toHtml());
+			sb.append(item.toHtml(context));
 			sb.append("</li>");
 		}
 		sb.append(ordered ? "</ol>" : "</ul>");

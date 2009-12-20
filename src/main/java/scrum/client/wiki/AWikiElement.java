@@ -2,7 +2,7 @@ package scrum.client.wiki;
 
 public abstract class AWikiElement {
 
-	abstract String toHtml();
+	abstract String toHtml(HtmlContext context);
 
 	protected final String escapeHtml(String s) {
 		s = s.replace("&", "&amp;");

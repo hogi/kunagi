@@ -10,7 +10,7 @@ public class Code extends AWikiElement {
 	}
 
 	@Override
-	String toHtml() {
+	String toHtml(HtmlContext context) {
 		String html = escapeHtml(text);
 		html = html.replace("\n", "<br>");
 		html = html.replace(" ", "&nbsp;");

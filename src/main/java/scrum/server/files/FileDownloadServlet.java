@@ -18,10 +18,21 @@ public class FileDownloadServlet extends AHttpServlet {
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
 		String fileId = req.getParameter("fileId");
-		if (fileId == null) throw new RuntimeException("fileId==null");
+		String reference = req.getParameter("reference");
+		if (fileId == null && reference == null) throw new RuntimeException("fileId==null && reference==null");
+
 		Project project = session.getGwtConversation().getProject();
-		File file = ScrumWebApplication.get().getFileDao().getById(fileId);
-		if (!file.isProject(project)) throw new PermissionDeniedException();
+		File file;
+
+		if (fileId != null) {
+			file = ScrumWebApplication.get().getFileDao().getById(fileId);
+			if (file == null) throw new RuntimeException("File does not exist: " + fileId);
+			if (!file.isProject(project)) throw new PermissionDeniedException();
+		} else {
+			int number = Integer.parseInt(reference.substring(3));
+			file = project.getFileByNumber(number);
+			if (file == null) throw new RuntimeException("File does not exist: " + reference);
+		}
 
 		Servlet.serveFile(file.getJavaFile(), resp);
 	}

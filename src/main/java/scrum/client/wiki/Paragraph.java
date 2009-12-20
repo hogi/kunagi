@@ -20,11 +20,11 @@ public class Paragraph extends AWikiElement {
 	}
 
 	@Override
-	String toHtml() {
+	String toHtml(HtmlContext context) {
 		StringBuilder sb = new StringBuilder();
 		if (p) sb.append("<p>");
 		for (AWikiElement element : elements) {
-			sb.append(element.toHtml());
+			sb.append(element.toHtml(context));
 		}
 		if (p) sb.append("</p>");
 		return sb.toString();

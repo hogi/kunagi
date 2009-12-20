@@ -12,7 +12,7 @@ public class Header extends AWikiElement {
 	}
 
 	@Override
-	String toHtml() {
+	String toHtml(HtmlContext context) {
 		return "<h" + depth + ">" + escapeHtml(text) + "</h" + depth + ">";
 	}
 

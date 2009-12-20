@@ -6,6 +6,18 @@ import org.testng.annotations.Test;
 public class WikiTest {
 
 	@Test
+	public void testImg() {
+		Assert.assertEquals(toHtml("[[Image:fle1]]"),
+			"<a onclick='window.scrum.showEntityByReference(\"fle1\")'><img src=\"fle1\"></a>");
+		Assert
+				.assertEquals(toHtml("[[Image:fle1|thumb]]"),
+					"<a onclick='window.scrum.showEntityByReference(\"fle1\")'><img src=\"fle1\" width=\"100px\" align=\"right\"></a>");
+		Assert
+				.assertEquals(toHtml("[[Image:fle1|thumb|left]]"),
+					"<a onclick='window.scrum.showEntityByReference(\"fle1\")'><img src=\"fle1\" width=\"100px\" align=\"left\"></a>");
+	}
+
+	@Test
 	public void testToc() {
 		Assert.assertEquals(toHtml("TOC\n= 1 =\n== 1.1 ==\n= 2 ="),
 			"<ul class=\"toc\"><li>1</li><ul><li>1.1</li></ul><li>2</li></ul><h1>1</h1><h2>1.1</h2><h1>2</h1>");
@@ -105,7 +117,15 @@ public class WikiTest {
 	private static String toHtml(String wiki) {
 		WikiParser parser = new WikiParser(wiki);
 		WikiModel model = parser.parse();
-		return model.toHtml();
+		return model.toHtml(new TestHtmlContext());
+	}
+
+	static class TestHtmlContext implements HtmlContext {
+
+		public String getDownloadUrlByReference(String reference) {
+			return reference;
+		}
+
 	}
 
 }
