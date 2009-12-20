@@ -12,7 +12,7 @@ public class ProjectSprintSnapshot extends GProjectSprintSnapshot implements Com
 	}
 
 	public boolean isProject(Project project) {
-		return getSprint().isProject(project);
+		return isSprintSet() && getSprint().isProject(project);
 	}
 
 	public Project getProject() {

@@ -79,8 +79,7 @@ public abstract class GProjectSprintSnapshot
 
     protected void repairDeadSprintReference(String entityId) {
         if (entityId.equals(this.sprintId)) {
-            this.sprintId = null;
-            fireModified();
+            repairMissingMaster();
         }
     }
 
@@ -175,6 +174,10 @@ public abstract class GProjectSprintSnapshot
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
+        if (!isSprintSet()) {
+            repairMissingMaster();
+            return;
+        }
         try {
             getSprint();
         } catch (EntityDoesNotExistException ex) {

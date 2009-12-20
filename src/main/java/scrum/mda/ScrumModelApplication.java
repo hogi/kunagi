@@ -252,7 +252,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getProjectSprintSnapshotModel() {
 		if (projectSprintSnapshotModel == null) {
 			projectSprintSnapshotModel = createEntityModel("ProjectSprintSnapshot", "project");
-			projectSprintSnapshotModel.addReference("sprint", getSprintModel()).setUnique(true);
+			projectSprintSnapshotModel.addReference("sprint", getSprintModel()).setMaster(true);
 			projectSprintSnapshotModel.addProperty("remainingWork", int.class);
 			projectSprintSnapshotModel.addProperty("burnedWork", int.class);
 		}
