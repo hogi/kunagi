@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="scrum by packages">
+  <test verbose="2" name="scrum.server.project" annotations="JDK">
+    <packages>
+      <package name="scrum.client.wiki"/>
+      <package name="scrum.server.project"/>
+    </packages>
+  </test>
+</suite>

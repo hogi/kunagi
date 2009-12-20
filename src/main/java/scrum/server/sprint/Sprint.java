@@ -89,6 +89,10 @@ public class Sprint extends GSprint {
 		return sprintDaySnapshotDao.getSprintDaySnapshots(this);
 	}
 
+	public Set<SprintDaySnapshot> getExistingDaySnapshots() {
+		return sprintDaySnapshotDao.getSprintDaySnapshotsBySprint(this);
+	}
+
 	public Integer getLengthInDays() {
 		if (!isBeginSet() || !isEndSet()) return null;
 		return getBegin().getPeriodTo(getEnd()).toDays();

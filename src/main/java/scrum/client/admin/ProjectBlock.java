@@ -1,6 +1,7 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.Dao;
@@ -157,6 +158,11 @@ public class ProjectBlock extends ABlockWidget<Project> {
 				return project.isEditable();
 			}
 		});
+
+		if (project.isAdmin(getCurrentUser())) {
+			fields.add("", Gwt.createServletDownloadLink("backupDownload.zip?projectId=" + project.getId(),
+				"Download Backup ZIP"));
+		}
 
 		return fields;
 	}

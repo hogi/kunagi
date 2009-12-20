@@ -62,6 +62,16 @@
         <url-pattern>*.gupld</url-pattern>
     </servlet-mapping>
 
+    <!-- backup download -->
+    <servlet>
+        <servlet-name>backupDownload</servlet-name>
+        <servlet-class>scrum.server.project.BackupDownloadServlet</servlet-class>
+    </servlet>      
+    <servlet-mapping>
+        <servlet-name>backupDownload</servlet-name>
+        <url-pattern>/scrum.ScrumGwtApplication/backupDownload.zip</url-pattern>
+    </servlet-mapping>
+
 	<!-- sprint burndown chart -->
 	<servlet>
 		<servlet-name>sprintBurndownChart</servlet-name>

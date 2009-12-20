@@ -21,8 +21,12 @@ import scrum.server.admin.ProjectUserConfigDao;
 import scrum.server.admin.User;
 import scrum.server.calendar.SimpleEvent;
 import scrum.server.calendar.SimpleEventDao;
+import scrum.server.collaboration.Comment;
+import scrum.server.collaboration.CommentDao;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.collaboration.WikipageDao;
+import scrum.server.estimation.RequirementEstimationVote;
+import scrum.server.estimation.RequirementEstimationVoteDao;
 import scrum.server.files.File;
 import scrum.server.files.FileDao;
 import scrum.server.impediments.Impediment;
@@ -31,9 +35,13 @@ import scrum.server.issues.Issue;
 import scrum.server.issues.IssueDao;
 import scrum.server.journal.ProjectEvent;
 import scrum.server.journal.ProjectEventDao;
+import scrum.server.release.Release;
+import scrum.server.release.ReleaseDao;
 import scrum.server.risks.Risk;
 import scrum.server.risks.RiskDao;
 import scrum.server.sprint.Sprint;
+import scrum.server.sprint.SprintDaySnapshot;
+import scrum.server.sprint.SprintDaySnapshotDao;
 import scrum.server.sprint.Task;
 import scrum.server.sprint.TaskDao;
 
@@ -56,6 +64,26 @@ public class Project extends GProject {
 	private static SimpleEventDao simpleEventDao;
 	private static FileDao fileDao;
 	private static ScrumConfig config;
+	private static CommentDao commentDao;
+	private static ReleaseDao releaseDao;
+	private static RequirementEstimationVoteDao requirementEstimationVoteDao;
+	private static SprintDaySnapshotDao sprintDaySnapshotDao;
+
+	public static void setCommentDao(CommentDao commentDao) {
+		Project.commentDao = commentDao;
+	}
+
+	public static void setSprintDaySnapshotDao(SprintDaySnapshotDao sprintDaySnapshotDao) {
+		Project.sprintDaySnapshotDao = sprintDaySnapshotDao;
+	}
+
+	public static void setRequirementEstimationVoteDao(RequirementEstimationVoteDao requirementEstimationVoteDao) {
+		Project.requirementEstimationVoteDao = requirementEstimationVoteDao;
+	}
+
+	public static void setReleaseDao(ReleaseDao releaseDao) {
+		Project.releaseDao = releaseDao;
+	}
 
 	public static void setConfig(ScrumConfig config) {
 		Project.config = config;
@@ -374,6 +402,68 @@ public class Project extends GProject {
 
 	public Set<File> getFiles() {
 		return fileDao.getFilesByProject(this);
+	}
+
+	public Set<Release> getReleases() {
+		return releaseDao.getReleasesByProject(this);
+	}
+
+	public Set<RequirementEstimationVote> getRequirementEstimationVotes() {
+		Set<RequirementEstimationVote> ret = new HashSet<RequirementEstimationVote>();
+		for (Requirement requirement : getRequirements()) {
+			ret.addAll(requirement.getEstimationVotes());
+		}
+		return ret;
+	}
+
+	public Set<SprintDaySnapshot> getSprintDaySnapshots() {
+		Set<SprintDaySnapshot> ret = new HashSet<SprintDaySnapshot>();
+		for (Sprint sprint : getSprints()) {
+			ret.addAll(sprint.getDaySnapshots());
+		}
+		return ret;
+	}
+
+	public Set<SprintDaySnapshot> getExistingSprintDaySnapshots() {
+		Set<SprintDaySnapshot> ret = new HashSet<SprintDaySnapshot>();
+		for (Sprint sprint : getSprints()) {
+			ret.addAll(sprint.getExistingDaySnapshots());
+		}
+		return ret;
+	}
+
+	public Set<SimpleEvent> getSimpleEvents() {
+		return simpleEventDao.getSimpleEventsByProject(this);
+	}
+
+	public Set<Comment> getComments() {
+		Set<Comment> ret = new HashSet<Comment>();
+		ret.addAll(commentDao.getCommentsByParent(this));
+		ret.addAll(getComments(getSprints()));
+		ret.addAll(getComments(getParticipants()));
+		ret.addAll(getComments(getRequirements()));
+		ret.addAll(getComments(getQualitys()));
+		ret.addAll(getComments(getTasks()));
+		ret.addAll(getComments(getImpediments()));
+		ret.addAll(getComments(getIssues()));
+		ret.addAll(getComments(getRisks()));
+		ret.addAll(getComments(getWikipages()));
+		ret.addAll(getComments(getSimpleEvents()));
+		ret.addAll(getComments(getFiles()));
+		ret.addAll(getComments(getReleases()));
+		ret.addAll(getComments(getSprintSnapshots()));
+		ret.addAll(getComments(getRequirementEstimationVotes()));
+		ret.addAll(getComments(getUserConfigs()));
+		ret.addAll(getComments(getProjectEvents()));
+		return ret;
+	}
+
+	private Set<Comment> getComments(Collection<? extends AEntity> entities) {
+		Set<Comment> ret = new HashSet<Comment>();
+		for (AEntity entity : entities) {
+			ret.addAll(commentDao.getCommentsByParent(entity));
+		}
+		return ret;
 	}
 
 	public Set<Quality> getQualitys() {
