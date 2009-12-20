@@ -28,11 +28,20 @@ public class FileDao extends GFileDao {
 		File file = newEntityInstance();
 		file.setProject(project);
 		file.setFilename(f.getName());
-		file.setLabel(f.getName());
+		file.setLabel(createLabel(f));
 		file.setUploadTime(DateAndTime.now());
 		file.updateNumber();
 		saveEntity(file);
 		return file;
+	}
+
+	private String createLabel(java.io.File file) {
+		String label = file.getName();
+		int idx = label.lastIndexOf('.');
+		if (idx > 0) {
+			label = label.substring(0, idx);
+		}
+		return label;
 	}
 
 }
