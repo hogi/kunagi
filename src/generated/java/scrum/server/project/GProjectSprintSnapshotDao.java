@@ -34,7 +34,6 @@ public abstract class GProjectSprintSnapshotDao
 
     // --- clear caches ---
     public void clearCaches() {
-        projectSprintSnapshotsBySprintCache.clear();
         sprintsCache = null;
         projectSprintSnapshotsByRemainingWorkCache.clear();
         remainingWorksCache = null;
@@ -62,15 +61,8 @@ public abstract class GProjectSprintSnapshotDao
     // - sprint
     // -----------------------------------------------------------
 
-    private final Cache<scrum.server.sprint.Sprint,Set<ProjectSprintSnapshot>> projectSprintSnapshotsBySprintCache = new Cache<scrum.server.sprint.Sprint,Set<ProjectSprintSnapshot>>(
-            new Cache.Factory<scrum.server.sprint.Sprint,Set<ProjectSprintSnapshot>>() {
-                public Set<ProjectSprintSnapshot> create(scrum.server.sprint.Sprint sprint) {
-                    return getEntities(new IsSprint(sprint));
-                }
-            });
-
-    public final Set<ProjectSprintSnapshot> getProjectSprintSnapshotsBySprint(scrum.server.sprint.Sprint sprint) {
-        return projectSprintSnapshotsBySprintCache.get(sprint);
+    public final ProjectSprintSnapshot getProjectSprintSnapshotBySprint(scrum.server.sprint.Sprint sprint) {
+        return getEntity(new IsSprint(sprint));
     }
     private Set<scrum.server.sprint.Sprint> sprintsCache;
 
