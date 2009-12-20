@@ -15,6 +15,11 @@ public class File extends GFile {
 		super(data);
 	}
 
+	public boolean isImage() {
+		String name = getFilename().toLowerCase();
+		return name.endsWith(".png") || name.endsWith(".gif") || name.endsWith(".jpg");
+	}
+
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
 	}
