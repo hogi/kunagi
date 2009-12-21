@@ -52,7 +52,9 @@ public class PlanningPokerWidget extends AScrumWidget {
 			}
 
 			col.add(pokerTable);
-			col.add(hand);
+			if (requirement.isWorkEstimationVotingShowoff() == false) {
+				col.add(hand);
+			}
 
 			wrapper.setWidget(col);
 		} else {
