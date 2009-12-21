@@ -424,16 +424,17 @@ public class WikiParser {
 	}
 
 	public static final String SYNTAX_INFO_HTML = "<table class='WikiParser-syntax-table' cellpadding='5px'>"
-			+ "<tr><td><i>Italic text</i></td><td>''italic text''</td></tr>"
-			+ "<tr><td><b>Bold text</b></td><td>'''bold text'''</td></tr>"
-			+ "<tr><td><b><i>Bold and italic</i></b></td><td>'''''bold and italic'''''</td></tr>"
-			+ "<tr><td>Internal link</td><td>[[Name of page]]<br>[[Name of page|Text to display]]</td></tr>"
-			+ "<tr><td>External link</td><td>[http://servisto.de]<br>[http://servisto.de Text to display]<br>http://servisto.de</td></tr>"
-			+ "<tr><td><h2>Section headings</h2></td><td>= heading 1 =<br>== heading 2 ==<br>=== heading 3 ===<br>==== heading 4 ====</td></tr>"
-			+ "<tr><td>Bulleted list</td><td>* Item 1<br>* Item 2<br>* Item 3</td></tr>"
-			+ "<tr><td>Numbered list</td><td># Item<br># Item 2<br># Item 3</td></tr>"
-			+ "<tr><td>Internal image<br>thumb</td><td>[[Image:fle3]]<br>[[Image:fle3|thumb]]</td></tr>"
-			+ "<tr><td>External image<br>thumb</td><td>[[Image:http://servisto.de/image.jpg]]<br>[[Image:http://servisto.de/image.jpg|thumb|left]]</td></tr>"
+			+ "<tr><td><i>Italic text</i></td>            <td><code>''italic text''</code></td></tr>"
+			+ "<tr><td><b>Bold text</b></td>              <td><code>'''bold text'''</code></td></tr>"
+			+ "<tr><td><b><i>Bold and italic</i></b></td> <td><code>'''''bold and italic'''''</td></tr>"
+			+ "<tr><td>Internal link</td>                 <td><code>[[Name of page]]<br>[[Name of page|Text to display]]</code></td></tr>"
+			+ "<tr><td>External link</td>                 <td><code>[http://servisto.de]<br>[http://servisto.de Text to display]<br>http://servisto.de</code></td></tr>"
+			+ "<tr><td><h2>Section headings</h2></td>     <td><code>= heading 1 =<br>== heading 2 ==<br>=== heading 3 ===<br>==== heading 4 ====</code></td></tr>"
+			+ "<tr><td>Bulleted list</td>                 <td><code>* Item 1<br>* Item 2<br>* Item 3</code></td></tr>"
+			+ "<tr><td>Numbered list</td>                 <td><code># Item<br># Item 2<br># Item 3</code></td></tr>"
+			+ "<tr><td>Internal image<br>thumb</td>       <td><code>[[Image:fle3]]<br>[[Image:fle3|thumb]]</code></td></tr>"
+			+ "<tr><td>External image<br>thumb</td>       <td><code>[[Image:http://servisto.de/image.jpg]]<br>[[Image:http://servisto.de/image.jpg|thumb|left]]</code></td></tr>"
+			+ "<tr><td><code>Code</code></td>             <td><code>&lt;code&gt;Code&lt;/code&gt;</code></td></tr>"
 			+ "</table>";
 
 }
