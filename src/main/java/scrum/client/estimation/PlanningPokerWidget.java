@@ -4,14 +4,16 @@ import scrum.client.common.AScrumWidget;
 import scrum.client.project.Requirement;
 
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class PlanningPokerWidget extends AScrumWidget {
 
 	private Requirement requirement;
 	private FlowPanel pokerTable;
+	private HorizontalPanel hand;
 	private SimplePanel wrapper;
 
 	public PlanningPokerWidget(Requirement requirement) {
@@ -21,10 +23,18 @@ public class PlanningPokerWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		pokerTable = new FlowPanel();
-		pokerTable.setStyleName("PlanningPokerWidget");
+		hand = new HorizontalPanel();
+		hand.setStyleName("PokerHand");
 
-		pokerTable.add(new Label("Planning Poker"));
+		hand.add(new PokerHandcardWidget(requirement, 1));
+		hand.add(new PokerHandcardWidget(requirement, 2));
+		hand.add(new PokerHandcardWidget(requirement, 3));
+		hand.add(new PokerHandcardWidget(requirement, 5));
+		hand.add(new PokerHandcardWidget(requirement, 8));
+		hand.add(new PokerHandcardWidget(requirement, 13));
+		hand.add(new PokerHandcardWidget(requirement, 20));
+		hand.add(new PokerHandcardWidget(requirement, 40));
+		hand.add(new PokerHandcardWidget(requirement, 100));
 
 		wrapper = new SimplePanel();
 		return wrapper;
@@ -33,11 +43,21 @@ public class PlanningPokerWidget extends AScrumWidget {
 	@Override
 	protected void onUpdate() {
 		if (requirement.isWorkEstimationVotingActive()) {
-			wrapper.setWidget(pokerTable);
+			pokerTable = new FlowPanel();
+			pokerTable.setStyleName("PlanningPokerWidget");
+
+			VerticalPanel col = new VerticalPanel();
+			for (RequirementEstimationVote vote : requirement.getEstimationVotes()) {
+				pokerTable.add(new PokerCardWidget(vote));
+			}
+
+			col.add(pokerTable);
+			col.add(hand);
+
+			wrapper.setWidget(col);
 		} else {
 			wrapper.setWidget(null);
 		}
 		super.onUpdate();
 	}
-
 }

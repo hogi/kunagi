@@ -293,6 +293,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addAction("CloseRequirementEstimationVoting");
 			requirementModel.addAction("RequirementEstimationVotingShowoff");
 			requirementModel.addAction("ResetRequirementEstimationVoting");
+			requirementModel.addAction("RequirementEstimationVote").addParameter("estimatedWork", Integer.class);
 		}
 		return requirementModel;
 	}
