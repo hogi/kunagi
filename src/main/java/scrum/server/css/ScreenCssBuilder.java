@@ -195,6 +195,8 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style(".BugMarker").borderSolid(1, cError).background(cErrorBackground).color(cError).displayBlock()
 				.margin(3).padding(3).fontWeightBold().fontSize(fontSizeSmall);
+
+		css.style(".Tooltip").background(cBackground).padding(10).border(1, "solid", cPagePanelBorder);
 	}
 
 	private void gwt(CssRenderer css) {

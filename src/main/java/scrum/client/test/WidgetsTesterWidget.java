@@ -174,6 +174,11 @@ public class WidgetsTesterWidget extends AScrumWidget {
 			public String getValue() {
 				return fieldsRichText;
 			}
+
+			@Override
+			public boolean isRichtext() {
+				return true;
+			}
 		});
 		tb.addFieldRow("IntegerEditorWidget", new IntegerEditorWidget(new AIntegerEditorModel() {
 

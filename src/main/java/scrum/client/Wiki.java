@@ -17,6 +17,7 @@ public class Wiki extends AScrumComponent implements RichtextFormater {
 	protected void onInitialization() {
 		super.onInitialization();
 		Gwt.setDefaultRichtextFormater(this);
+		Gwt.setDefaultRichtextSyntaxInfo(WikiParser.SYNTAX_INFO_HTML);
 	}
 
 	public String getTemplate(String name) {
