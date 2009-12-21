@@ -15,11 +15,6 @@ public class RequirementEstimationVoteAction extends GRequirementEstimationVoteA
 	}
 
 	@Override
-	public String getDisabledLabel() {
-		return String.valueOf(estimatedWork.intValue());
-	}
-
-	@Override
 	protected void onExecute() {
 		requirement.setVote(estimatedWork);
 	}
