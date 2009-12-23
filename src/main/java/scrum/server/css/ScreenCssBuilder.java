@@ -140,7 +140,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void planningPoker(CssRenderer css) {
-		css.style(".PlanningPokerWidget").border(20, "solid", "#333").borderRadius(10).background("#060").padding(30)
+		css.style(".PlanningPokerWidget").border(20, "solid", "#333").borderRadius(10).background("#060").padding(20)
 				.marginBottom(10);
 
 		css.style(".PokerCard-hand").background("#FFF").border(1, "solid", "#000").padding(7).borderRadius(10)

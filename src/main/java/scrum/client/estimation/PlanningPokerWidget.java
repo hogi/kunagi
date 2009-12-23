@@ -1,5 +1,6 @@
 package scrum.client.estimation;
 
+import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.Requirement;
 
@@ -46,17 +47,23 @@ public class PlanningPokerWidget extends AScrumWidget {
 			pokerTable = new FlowPanel();
 			pokerTable.setStyleName("PlanningPokerWidget");
 
-			VerticalPanel col = new VerticalPanel();
+			TableBuilder tb = new TableBuilder();
+			tb.setWidth("");
+			int i = 0;
 			for (RequirementEstimationVote vote : requirement.getEstimationVotes()) {
-				pokerTable.add(new PokerCardWidget(vote));
+				tb.add(new PokerCardWidget(vote));
+				if (++i % 5 == 0) tb.nextRow();
 			}
+			pokerTable.add(tb.createTable());
 
-			col.add(pokerTable);
 			if (requirement.isWorkEstimationVotingShowoff() == false) {
+				VerticalPanel col = new VerticalPanel();
+				col.add(pokerTable);
 				col.add(hand);
+				wrapper.setWidget(col);
+			} else {
+				wrapper.setWidget(pokerTable);
 			}
-
-			wrapper.setWidget(col);
 		} else {
 			wrapper.setWidget(null);
 		}

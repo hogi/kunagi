@@ -34,7 +34,9 @@ public class PokerCardWidget extends AScrumWidget {
 		cardtext.add(new Label(vote.getUser().getName()));
 		if (vote.getRequirement().isWorkEstimationVotingShowoff()) {
 			card.setStyleName("PokerCard-revealed");
-			cardtext.add(new Label(String.valueOf(vote.getEstimatedWork().intValue())));
+			String labeltext = "N/A";
+			if (vote.getEstimatedWork() != null) labeltext = String.valueOf(vote.getEstimatedWork().intValue());
+			cardtext.add(new Label(labeltext));
 		} else {
 			card.setStyleName("PokerCard-unrevealed");
 			if (vote.getUser().equals(getCurrentUser()) && vote.getEstimatedWork() != null) {
