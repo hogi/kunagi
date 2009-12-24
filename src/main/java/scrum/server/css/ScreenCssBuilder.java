@@ -140,8 +140,12 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void planningPoker(CssRenderer css) {
-		css.style(".PlanningPokerWidget").border(20, "solid", "#333").borderRadius(10).background("#060").padding(20)
-				.marginBottom(10);
+		css.style(".PlanningPokerWidget-table-border").background("#333").border(2, "solid", "#2A2A2A").padding(12)
+				.borderRadius(60).marginBottom(10);
+		css.style(".PlanningPokerWidget-table").border(2, "solid", "#2A2A2A").borderRadius(45).background("#5A5")
+				.padding(40);
+		css.style(".PlanningPokerWidget-table-branding").color("#EEE").fontFamily("Times New Roman").fontWeightBold()
+				.fontSize(30).textAlignCenter().marginBottom(30);
 
 		css.style(".PokerCard-hand").background("#FFF").border(1, "solid", "#000").padding(7).borderRadius(10)
 				.width(35).height(60).margin(1);

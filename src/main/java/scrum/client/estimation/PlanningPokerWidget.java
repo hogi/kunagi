@@ -1,5 +1,6 @@
 package scrum.client.estimation;
 
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.Requirement;
@@ -44,29 +45,37 @@ public class PlanningPokerWidget extends AScrumWidget {
 	@Override
 	protected void onUpdate() {
 		if (requirement.isWorkEstimationVotingActive()) {
-			pokerTable = new FlowPanel();
-			pokerTable.setStyleName("PlanningPokerWidget");
 
-			TableBuilder tb = new TableBuilder();
-			tb.setWidth("");
+			TableBuilder cardTable = new TableBuilder();
+			cardTable.setWidth("");
 			int i = 0;
 			for (RequirementEstimationVote vote : requirement.getEstimationVotes()) {
-				tb.add(new PokerCardWidget(vote));
-				if (++i % 5 == 0) tb.nextRow();
+				cardTable.add(new PokerCardWidget(vote));
+				if (++i % 5 == 0) cardTable.nextRow();
 			}
-			pokerTable.add(tb.createTable());
+
+			pokerTable = new FlowPanel();
+			pokerTable.setStyleName("PlanningPokerWidget-table");
+			pokerTable.add(createTableBranding());
+			pokerTable.add(cardTable.createTable());
+
+			SimplePanel pokerTableBorder = Gwt.createDiv("PlanningPokerWidget-table-border", pokerTable);
 
 			if (requirement.isWorkEstimationVotingShowoff() == false) {
 				VerticalPanel col = new VerticalPanel();
-				col.add(pokerTable);
+				col.add(pokerTableBorder);
 				col.add(hand);
 				wrapper.setWidget(col);
 			} else {
-				wrapper.setWidget(pokerTable);
+				wrapper.setWidget(pokerTableBorder);
 			}
 		} else {
 			wrapper.setWidget(null);
 		}
 		super.onUpdate();
+	}
+
+	private Widget createTableBranding() {
+		return Gwt.createDiv("PlanningPokerWidget-table-branding", "Planning Poker");
 	}
 }
