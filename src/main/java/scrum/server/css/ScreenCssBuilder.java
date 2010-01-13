@@ -159,8 +159,9 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".PlanningPokerCardWidget").borderRadius(5).width(cardWidth).height(cardHeight).background("#FFF")
 				.border(1, "solid", "#333");
 		css.style(".PlanningPokerCardWidget-clickable").cursorPointer();
-		css.style(".PlanningPokerCardWidget-text").fontSize(23).lineHeight(58).fontFamily("Times New Roman")
+		css.style(".PlanningPokerCardWidget-text").fontSize(23).lineHeight(60).fontFamily("Times New Roman")
 				.textAlignCenter();
+		css.style(".PlanningPokerCardWidget-back").height100().background(cHeaderBackground).margin(5).borderRadius(8);
 
 	}
 

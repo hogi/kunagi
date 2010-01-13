@@ -66,7 +66,7 @@ public class PlanningPokerWidget extends AScrumWidget {
 			int estimation = Integer.parseInt(value);
 			PlanningPokerCardWidget card = null;
 			if (voteValue == null || estimation != voteValue) {
-				card = new PlanningPokerCardWidget(estimation, new SetEstimationClickHandler(estimation));
+				card = new PlanningPokerCardWidget(estimation, true, new SetEstimationClickHandler(estimation));
 			}
 			tb.add(new PlanningPokerCardSlotWidget(null, card));
 			tb.add(Gwt.createSpacer(5, 1));
@@ -78,6 +78,7 @@ public class PlanningPokerWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setWidth(null);
 		for (User user : getCurrentProject().getTeamMembers()) {
+			boolean currentUser = user == getCurrentUser();
 			RequirementEstimationVote vote = requirement.getEstimationVote(user);
 			Integer estimation = vote == null ? null : vote.getEstimatedWork();
 			LOG.debug("Estimation:", user.getName(), "->", estimation);
@@ -86,8 +87,9 @@ public class PlanningPokerWidget extends AScrumWidget {
 			if (estimation == null) {
 				card = null;
 			} else {
-				ClickHandler clickHandler = user == getCurrentUser() ? new RemoveEstimationClickHandler() : null;
-				card = new PlanningPokerCardWidget(estimation, clickHandler);
+				ClickHandler clickHandler = currentUser ? new RemoveEstimationClickHandler() : null;
+				boolean visible = currentUser || requirement.isWorkEstimationVotingShowoff();
+				card = new PlanningPokerCardWidget(estimation, visible, clickHandler);
 			}
 
 			tb.add(new PlanningPokerCardSlotWidget(user, card));

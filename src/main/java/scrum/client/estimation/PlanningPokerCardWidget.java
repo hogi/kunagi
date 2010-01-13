@@ -11,10 +11,12 @@ public class PlanningPokerCardWidget extends AScrumWidget {
 
 	private int value;
 	private ClickHandler clickHandler;
+	private boolean visible;
 
-	public PlanningPokerCardWidget(int value, ClickHandler clickHandler) {
+	public PlanningPokerCardWidget(int value, boolean visible, ClickHandler clickHandler) {
 		super();
 		this.value = value;
+		this.visible = visible;
 		this.clickHandler = clickHandler;
 	}
 
@@ -22,7 +24,11 @@ public class PlanningPokerCardWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		FocusPanel card = new FocusPanel();
 		card.setStyleName("PlanningPokerCardWidget");
-		card.setWidget(Gwt.createDiv("PlanningPokerCardWidget-text", String.valueOf(value)));
+		if (visible) {
+			card.setWidget(Gwt.createDiv("PlanningPokerCardWidget-text", String.valueOf(value)));
+		} else {
+			card.setWidget(Gwt.createEmptyDiv("PlanningPokerCardWidget-back"));
+		}
 		if (clickHandler != null) {
 			card.addClickHandler(clickHandler);
 			card.addStyleName("PlanningPokerCardWidget-clickable");
