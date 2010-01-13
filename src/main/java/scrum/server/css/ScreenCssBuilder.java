@@ -70,6 +70,8 @@ public class ScreenCssBuilder implements CssBuilder {
 	String cCommentsBorder = "#EAFFEA";
 	String cCommentDate = "darkgray";
 
+	String cPlanningPokerTableLines = "#EEE";
+
 	public void buildCss(CssRenderer css) {
 		html(css);
 		gwt(css);
@@ -144,21 +146,22 @@ public class ScreenCssBuilder implements CssBuilder {
 				.borderRadius(60).marginBottom(10);
 		css.style(".PlanningPokerWidget-table").border(2, "solid", "#2A2A2A").borderRadius(45).background("#5A5")
 				.padding(40);
-		css.style(".PlanningPokerWidget-table-branding").color("#EEE").fontFamily("Times New Roman").fontWeightBold()
-				.fontSize(30).textAlignCenter().marginBottom(30);
+		css.style(".PlanningPokerWidget-table-branding").color(cPlanningPokerTableLines).fontFamily("Times New Roman")
+				.fontWeightBold().fontSize(30).textAlignCenter().marginBottom(30);
 
-		css.style(".PokerCard-hand").background("#FFF").border(1, "solid", "#000").padding(7).borderRadius(10)
-				.width(35).height(60).margin(1);
-		css.style(".PokerCard-unrevealed").background("#FFF").border(1, "solid", "#000").padding(7).borderRadius(10)
-				.width(30).height(50).margin(1);
-		css.style(".PokerCard-revealed").background("#FFF").border(1, "solid", "#000").padding(7).borderRadius(10)
-				.width(30).height(50).margin(1);
+		int cardWidth = 40;
+		int cardHeight = 60;
+		css.style(".PlanningPokerCardSlotWidget-slot").width(cardWidth - 8).height(cardHeight - 8).border(5, "solid",
+			cPlanningPokerTableLines).borderRadius(5);
+		css.style(".PlanningPokerCardSlotWidget-name").color(cPlanningPokerTableLines).fontSize(fontSizeSmall)
+				.textAlignCenter();
 
-		// css.style(".CommentWidget").margin(15, 0, 10, 0).borderTop(1, "solid", cBlockHeaderBackground);
-		// css.style(".CommentWidget-header").margin(4, 0, 2, 0);
-		// css.style(".CommentWidget-header-author").floatLeft().marginRight(5);
-		// css.style(".CommentWidget-header-date").color(cCommentDate);
-		// css.style(".CommentWidget-editor");
+		css.style(".PlanningPokerCardWidget").borderRadius(5).width(cardWidth).height(cardHeight).background("#FFF")
+				.border(1, "solid", "#333");
+		css.style(".PlanningPokerCardWidget-clickable").cursorPointer();
+		css.style(".PlanningPokerCardWidget-text").fontSize(23).lineHeight(58).fontFamily("Times New Roman")
+				.textAlignCenter();
+
 	}
 
 	private void calendar(CssRenderer css) {
