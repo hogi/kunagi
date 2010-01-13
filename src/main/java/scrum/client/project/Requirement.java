@@ -39,6 +39,13 @@ public class Requirement extends GRequirement {
 		return getDao().getRequirementEstimationVotesByRequirement(this);
 	}
 
+	public boolean containsWorkEstimationVotes() {
+		for (RequirementEstimationVote vote : getEstimationVotes()) {
+			if (vote.getEstimatedWork() != null) return true;
+		}
+		return false;
+	}
+
 	public RequirementEstimationVote getEstimationVote(User user) {
 		for (RequirementEstimationVote vote : getEstimationVotes()) {
 			if (vote.isUser(user)) return vote;

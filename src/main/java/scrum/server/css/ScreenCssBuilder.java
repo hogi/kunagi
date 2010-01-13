@@ -148,12 +148,14 @@ public class ScreenCssBuilder implements CssBuilder {
 				.padding(40);
 		css.style(".PlanningPokerWidget-table-branding").color(cPlanningPokerTableLines).fontFamily("Times New Roman")
 				.fontWeightBold().fontSize(30).textAlignCenter().marginBottom(30);
+		css.style(".PlanningPokerWidget-table .HyperlinkWidget, .PlanningPokerWidget-table a").color(
+			cPlanningPokerTableLines);
 
 		int cardWidth = 40;
 		int cardHeight = 60;
 		css.style(".PlanningPokerCardSlotWidget-slot").width(cardWidth - 8).height(cardHeight - 8).border(5, "solid",
 			cPlanningPokerTableLines).borderRadius(5);
-		css.style(".PlanningPokerCardSlotWidget-name").color(cPlanningPokerTableLines).fontSize(fontSizeSmall)
+		css.style(".PlanningPokerCardSlotWidget-text").color(cPlanningPokerTableLines).fontSize(fontSizeSmall)
 				.textAlignCenter();
 
 		css.style(".PlanningPokerCardWidget").borderRadius(5).width(cardWidth).height(cardHeight).background("#FFF")
@@ -161,7 +163,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".PlanningPokerCardWidget-clickable").cursorPointer();
 		css.style(".PlanningPokerCardWidget-text").fontSize(23).lineHeight(60).fontFamily("Times New Roman")
 				.textAlignCenter();
-		css.style(".PlanningPokerCardWidget-back").height100().background(cHeaderBackground).margin(5).borderRadius(8);
+		css.style(".PlanningPokerCardWidget-back").height100().background(cHeaderBackground);
 
 	}
 

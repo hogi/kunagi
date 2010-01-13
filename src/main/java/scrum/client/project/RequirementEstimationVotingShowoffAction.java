@@ -8,13 +8,14 @@ public class RequirementEstimationVotingShowoffAction extends GRequirementEstima
 
 	@Override
 	public String getLabel() {
-		return "Planning Poker Showoff";
+		return "Show votes";
 	}
 
 	@Override
 	public boolean isExecutable() {
 		if (!requirement.isWorkEstimationVotingActive()) return false;
 		if (requirement.isWorkEstimationVotingShowoff()) return false;
+		if (!requirement.containsWorkEstimationVotes()) return false;
 		return true;
 	}
 

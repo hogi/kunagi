@@ -8,12 +8,13 @@ public class ResetRequirementEstimationVotingAction extends GResetRequirementEst
 
 	@Override
 	public String getLabel() {
-		return "Reset Planning Poker";
+		return "Reset";
 	}
 
 	@Override
 	public boolean isExecutable() {
 		if (!requirement.isWorkEstimationVotingActive()) return false;
+		if (!requirement.containsWorkEstimationVotes()) return false;
 		return true;
 	}
 
