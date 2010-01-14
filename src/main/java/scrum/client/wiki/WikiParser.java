@@ -3,7 +3,7 @@ package scrum.client.wiki;
 import scrum.client.ScrumGwtApplication;
 
 /**
- * http://en.wikipedia.org/wiki/Wikipedia:Cheatsheet
+ * http://en.wikipedia.org/wiki/Wikipedia:Cheatsheet http://en.wikipedia.org/wiki/Help:Table
  */
 public class WikiParser {
 
