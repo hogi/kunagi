@@ -254,6 +254,18 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 		}
 
+		if (entity instanceof Issue) {
+			Issue issue = (Issue) entity;
+			if (properties.containsKey("closeDate")) {
+				if (issue.isClosed()) {
+					issue.setCloseDate(Date.today());
+					postProjectEvent(conversation, issue.getTypeAndReferenceAndLabel() + " closed");
+				} else {
+					postProjectEvent(conversation, issue.getTypeAndReferenceAndLabel() + " reopened");
+				}
+			}
+		}
+
 		sendToOtherSessionsByProject(conversation, entity);
 	}
 

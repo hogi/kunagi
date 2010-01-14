@@ -10,7 +10,7 @@ public class Impediment extends GImpediment implements Numbered {
 	}
 
 	public String getReferenceAndLabel() {
-		return getReference() + " (" + getLabel() + ")";
+		return getReference() + " " + getLabel();
 	}
 
 	public String getReference() {

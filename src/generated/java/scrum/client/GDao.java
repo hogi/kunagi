@@ -524,6 +524,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.issues.Issue> getIssuesByCloseDate(ilarkesto.gwt.client.Date closeDate) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isCloseDate(closeDate)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Project ---
 
     private Map<String, scrum.client.project.Project> projects = new HashMap<String, scrum.client.project.Project>();

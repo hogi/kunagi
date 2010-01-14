@@ -48,6 +48,8 @@ public abstract class GIssueDao
         labelsCache = null;
         issuesByDescriptionCache.clear();
         descriptionsCache = null;
+        issuesByCloseDateCache.clear();
+        closeDatesCache = null;
     }
 
     @Override
@@ -342,6 +344,46 @@ public abstract class GIssueDao
 
         public boolean test(Issue e) {
             return e.isDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - closeDate
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.Date,Set<Issue>> issuesByCloseDateCache = new Cache<ilarkesto.base.time.Date,Set<Issue>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<Issue>>() {
+                public Set<Issue> create(ilarkesto.base.time.Date closeDate) {
+                    return getEntities(new IsCloseDate(closeDate));
+                }
+            });
+
+    public final Set<Issue> getIssuesByCloseDate(ilarkesto.base.time.Date closeDate) {
+        return issuesByCloseDateCache.get(closeDate);
+    }
+    private Set<ilarkesto.base.time.Date> closeDatesCache;
+
+    public final Set<ilarkesto.base.time.Date> getCloseDates() {
+        if (closeDatesCache == null) {
+            closeDatesCache = new HashSet<ilarkesto.base.time.Date>();
+            for (Issue e : getEntities()) {
+                if (e.isCloseDateSet()) closeDatesCache.add(e.getCloseDate());
+            }
+        }
+        return closeDatesCache;
+    }
+
+    private static class IsCloseDate implements Predicate<Issue> {
+
+        private ilarkesto.base.time.Date value;
+
+        public IsCloseDate(ilarkesto.base.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isCloseDate(value);
         }
 
     }

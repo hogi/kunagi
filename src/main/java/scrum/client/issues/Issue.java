@@ -1,5 +1,6 @@
 package scrum.client.issues;
 
+import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
 
@@ -28,6 +29,19 @@ public class Issue extends GIssue implements ReferenceSupport {
 
 	public Issue(Map data) {
 		super(data);
+	}
+
+	public boolean isClosed() {
+		return getCloseDate() != null;
+	}
+
+	public String getStatusLabel() {
+		if (isClosed()) return "closed on " + getCloseDate();
+		return "issued on " + getDate().getDate();
+	}
+
+	public void close() {
+		setCloseDate(Date.today());
 	}
 
 	public String getReference() {

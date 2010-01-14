@@ -363,6 +363,54 @@ public abstract class GIssue
 
     }
 
+    // --- closeDate ---
+
+    private ilarkesto.gwt.client.Date closeDate ;
+
+    public final ilarkesto.gwt.client.Date getCloseDate() {
+        return this.closeDate ;
+    }
+
+    public final Issue setCloseDate(ilarkesto.gwt.client.Date closeDate) {
+        if (isCloseDate(closeDate)) return (Issue)this;
+        this.closeDate = closeDate ;
+        propertyChanged("closeDate", this.closeDate);
+        return (Issue)this;
+    }
+
+    public final boolean isCloseDate(ilarkesto.gwt.client.Date closeDate) {
+        return equals(this.closeDate, closeDate);
+    }
+
+    private transient CloseDateModel closeDateModel;
+
+    public CloseDateModel getCloseDateModel() {
+        if (closeDateModel == null) closeDateModel = createCloseDateModel();
+        return closeDateModel;
+    }
+
+    protected CloseDateModel createCloseDateModel() { return new CloseDateModel(); }
+
+    protected class CloseDateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public ilarkesto.gwt.client.Date getValue() {
+            return getCloseDate();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.Date value) {
+            setCloseDate(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -374,6 +422,8 @@ public abstract class GIssue
         creatorId = (String) props.get("creatorId");
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
+        String closeDateAsString = (String) props.get("closeDate");
+        closeDate  =  closeDateAsString == null ? null : new ilarkesto.gwt.client.Date(closeDateAsString);
     }
 
     @Override
@@ -386,6 +436,7 @@ public abstract class GIssue
         properties.put("creatorId", this.creatorId);
         properties.put("label", this.label);
         properties.put("description", this.description);
+        properties.put("closeDate", this.closeDate == null ? null : this.closeDate.toString());
     }
 
     @Override

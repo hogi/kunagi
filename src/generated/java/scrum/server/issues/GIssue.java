@@ -43,6 +43,7 @@ public abstract class GIssue
         properties.put("creatorId", this.creatorId);
         properties.put("label", this.label);
         properties.put("description", this.description);
+        properties.put("closeDate", this.closeDate == null ? null : this.closeDate.toString());
     }
 
     public int compareTo(Issue other) {
@@ -329,6 +330,41 @@ public abstract class GIssue
         setDescription((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - closeDate
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date closeDate;
+
+    public final ilarkesto.base.time.Date getCloseDate() {
+        return closeDate;
+    }
+
+    public final void setCloseDate(ilarkesto.base.time.Date closeDate) {
+        closeDate = prepareCloseDate(closeDate);
+        if (isCloseDate(closeDate)) return;
+        this.closeDate = closeDate;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.Date prepareCloseDate(ilarkesto.base.time.Date closeDate) {
+        return closeDate;
+    }
+
+    public final boolean isCloseDateSet() {
+        return this.closeDate != null;
+    }
+
+    public final boolean isCloseDate(ilarkesto.base.time.Date closeDate) {
+        if (this.closeDate == null && closeDate == null) return true;
+        return this.closeDate != null && this.closeDate.equals(closeDate);
+    }
+
+    protected final void updateCloseDate(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setCloseDate((ilarkesto.base.time.Date)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -341,6 +377,7 @@ public abstract class GIssue
             if (property.equals("creatorId")) updateCreator(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("description")) updateDescription(value);
+            if (property.equals("closeDate")) updateCloseDate(value);
         }
     }
 
