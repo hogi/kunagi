@@ -1,7 +1,10 @@
 package scrum.client.project;
 
+import ilarkesto.gwt.client.Gwt;
+
 import java.util.Map;
 
+import scrum.client.ScrumJs;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.issues.Issue;
 
@@ -25,6 +28,11 @@ public class Quality extends GQuality implements ReferenceSupport {
 
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
+	}
+
+	@Override
+	public String toHtml() {
+		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + Gwt.escapeHtml(getLabel());
 	}
 
 	@Override

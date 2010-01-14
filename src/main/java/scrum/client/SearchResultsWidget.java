@@ -6,6 +6,7 @@ import java.util.Map;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.common.AScrumGwtEntity;
 import scrum.client.common.AScrumWidget;
+import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
 import scrum.client.project.Quality;
@@ -70,6 +71,8 @@ public class SearchResultsWidget extends AScrumWidget {
 			return "Issues";
 		} else if (key.equals(Impediment.class.getName())) {
 			return "Impediments";
+		} else if (key.equals(File.class.getName())) {
+			return "Files";
 		} else if (key.equals(Risk.class.getName())) { return "Risks"; }
 		return key;
 	}
