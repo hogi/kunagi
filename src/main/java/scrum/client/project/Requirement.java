@@ -80,6 +80,13 @@ public class Requirement extends GRequirement {
 		}
 	}
 
+	public void applyEstimationVoting(Integer estimation) {
+		setEstimatedWork(estimation);
+		resetWorkEstimationVoting();
+		deactivateWorkEstimationVoting();
+		setDirty(false);
+	}
+
 	public String getTaskStatusLabel() {
 		int burned = Task.sumBurnedWork(getTasks());
 		int remaining = Task.sumRemainingWork(getTasks());
