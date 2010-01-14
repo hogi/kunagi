@@ -166,7 +166,7 @@ public class Sprint extends GSprint {
 	@Override
 	public boolean isDatesEditable() {
 		if (isCompleted()) return false;
-		if (!cm.getProjectContext().getProject().isScrumMaster(cm.getAuth().getUser())) return false;
+		if (!cm.getProjectContext().getProject().isProductOwner(cm.getAuth().getUser())) return false;
 		return true;
 	}
 
