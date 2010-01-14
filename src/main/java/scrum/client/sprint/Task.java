@@ -5,9 +5,10 @@ import java.util.Map;
 
 import scrum.client.ScrumJs;
 import scrum.client.admin.User;
+import scrum.client.common.ReferenceSupport;
 import scrum.client.project.Requirement;
 
-public class Task extends GTask {
+public class Task extends GTask implements ReferenceSupport {
 
 	public static final int INIT_EFFORT = 1;
 	public static final String REFERENCE_PREFIX = "tsk";

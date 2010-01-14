@@ -9,12 +9,13 @@ import java.util.Map;
 
 import scrum.client.ScrumJs;
 import scrum.client.admin.User;
+import scrum.client.common.ReferenceSupport;
 import scrum.client.estimation.RequirementEstimationVote;
 import scrum.client.issues.Issue;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
 
-public class Requirement extends GRequirement {
+public class Requirement extends GRequirement implements ReferenceSupport {
 
 	public static final String REFERENCE_PREFIX = "req";
 

@@ -2,9 +2,10 @@ package scrum.client.project;
 
 import java.util.Map;
 
+import scrum.client.common.ReferenceSupport;
 import scrum.client.issues.Issue;
 
-public class Quality extends GQuality {
+public class Quality extends GQuality implements ReferenceSupport {
 
 	public static final String REFERENCE_PREFIX = "qlt";
 

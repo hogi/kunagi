@@ -6,9 +6,10 @@ import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.ScrumJs;
+import scrum.client.common.ReferenceSupport;
 import scrum.client.project.Project;
 
-public class Impediment extends GImpediment {
+public class Impediment extends GImpediment implements ReferenceSupport {
 
 	public static final String REFERENCE_PREFIX = "imp";
 

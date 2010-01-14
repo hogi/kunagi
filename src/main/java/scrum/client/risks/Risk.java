@@ -8,9 +8,10 @@ import java.util.Map;
 
 import scrum.client.ScrumJs;
 import scrum.client.admin.User;
+import scrum.client.common.ReferenceSupport;
 import scrum.client.project.Project;
 
-public class Risk extends GRisk implements Comparable<Risk> {
+public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport {
 
 	public static final String REFERENCE_PREFIX = "rsk";
 	public static final List<Integer> IMPACTS = Gwt.toList(20, 40, 60, 80, 100);

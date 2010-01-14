@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumJs;
+import scrum.client.common.ReferenceSupport;
 import scrum.client.project.Project;
 
-public class Issue extends GIssue {
+public class Issue extends GIssue implements ReferenceSupport {
 
 	public static final String INIT_TYPE = Types.ISSUE;
 

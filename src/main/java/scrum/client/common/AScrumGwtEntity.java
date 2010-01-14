@@ -13,6 +13,14 @@ public abstract class AScrumGwtEntity extends AGwtEntity {
 
 	public AScrumGwtEntity() {}
 
+	@Override
+	public boolean matchesKey(String key) {
+		if (this instanceof ReferenceSupport) {
+			if (matchesKey(((ReferenceSupport) this).getReference(), key)) return true;
+		}
+		return super.matchesKey(key);
+	}
+
 	public AScrumGwtEntity(Map data) {
 		super(data);
 	}
