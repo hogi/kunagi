@@ -140,6 +140,10 @@ public class Project extends GProject {
 		return isProductOwner(user) || isScrumMaster(user) || isTeamMember(user);
 	}
 
+	public boolean isProductOwnerOrScrumMaster(User user) {
+		return isProductOwner(user) || isScrumMaster(user);
+	}
+
 	public boolean isProductOwnerOrTeamMember(User user) {
 		return isProductOwner(user) || isTeamMember(user);
 	}

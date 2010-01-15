@@ -14,7 +14,7 @@ public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 	@Override
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Switch to this Sprint");
-		if (!getCurrentProject().isScrumMaster(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_A_SCRUM_MASTER);
+		if (!getCurrentProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_A_PRODUCT_OWNER);
 		return tb.getTooltip();
 	}
 
@@ -25,7 +25,7 @@ public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (!getCurrentProject().isScrumMaster(getCurrentUser())) return false;
+		if (!getCurrentProject().isProductOwner(getCurrentUser())) return false;
 		return true;
 	}
 
@@ -36,10 +36,11 @@ public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 		cm.getApp().callSwitchToNextSprint(new Runnable() {
 
 			public void run() {
-				cm.getProjectContext().showSprintBacklog((Requirement) null);
+				cm.getProjectContext().getSprintBacklog().reset();
+				cm.getProjectContext().getNextSprint().reset();
 				cm.getUi().unlock();
+				cm.getProjectContext().showSprintBacklog((Requirement) null);
 			}
 		});
 	}
-
 }
