@@ -1,19 +1,20 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.TableBuilder;
 
 import java.util.Set;
 
 import scrum.client.admin.User;
 
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class UsersOnBlockWidget extends AScrumWidget {
 
 	private AScrumGwtEntity entity;
-	private FlowPanel panel;
+	private SimplePanel wrapper;
 
 	public UsersOnBlockWidget(AScrumGwtEntity entity) {
 		super();
@@ -22,14 +23,15 @@ public class UsersOnBlockWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		panel = new FlowPanel();
-		panel.setStyleName("UsersOnBlockWidget");
-		return panel;
+		wrapper = new SimplePanel();
+		wrapper.setStyleName("UsersOnBlockWidget");
+		return wrapper;
 	}
 
 	@Override
 	protected void onUpdate() {
-		panel.clear();
+		TableBuilder tb = new TableBuilder();
+		tb.setWidth(null);
 		Set<User> users = getCurrentProject().getUsersSelecting(entity);
 		boolean first = true;
 		for (User user : users) {
@@ -37,13 +39,15 @@ public class UsersOnBlockWidget extends AScrumWidget {
 			if (first) {
 				first = false;
 			} else {
-				panel.add(new Label(", "));
+				tb.add(new Label(","));
+				tb.add(Gwt.createSpacer(3, 1));
 			}
 
 			Label label = Gwt.createInline(user.getName());
 			label.getElement().getStyle().setProperty("color", user.getProjectConfig().getColor());
-			panel.add(label);
+			tb.add(label);
 		}
+		wrapper.setWidget(tb.createTable());
 	}
 
 }
