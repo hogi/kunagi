@@ -144,8 +144,8 @@ public class ScreenCssBuilder implements CssBuilder {
 	private void planningPoker(CssRenderer css) {
 		css.style(".PlanningPokerWidget-table-border").background("#333").border(2, "solid", "#2A2A2A").padding(12)
 				.borderRadius(60).marginBottom(10);
-		css.style(".PlanningPokerWidget-table").border(2, "solid", "#2A2A2A").borderRadius(45).background("#5A5")
-				.padding(40);
+		css.style(".PlanningPokerWidget-table").border(2, "solid", "#2A2A2A").borderRadius(45).background(
+			"#5A5 url(pokertable_bg.jpg)").padding(40);
 		css.style(".PlanningPokerWidget-table-branding").color(cPlanningPokerTableLines).fontFamily("Times New Roman")
 				.fontWeightBold().fontSize(30).textAlignCenter().marginBottom(30);
 		css.style(".PlanningPokerWidget-table .HyperlinkWidget, .PlanningPokerWidget-table a").color(
@@ -163,7 +163,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".PlanningPokerCardWidget-clickable").cursorPointer();
 		css.style(".PlanningPokerCardWidget-text").fontSize(23).lineHeight(60).fontFamily("Times New Roman")
 				.textAlignCenter();
-		css.style(".PlanningPokerCardWidget-back").height100().background(cHeaderBackground);
+		css.style(".PlanningPokerCardWidget-back").height100().background(cHeaderBackground + " url(pokercard_bg.jpg)");
 
 	}
 

@@ -36,7 +36,10 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 		Issue issue = getObject();
 		typeLabel.setText(issue.getTypeLabel());
 		Image statusImage = null;
-		if (issue.isClosed()) statusImage = Img.bundle.tskClosed().createImage();
+		if (issue.isClosed()) {
+			statusImage = Img.bundle.issClosed().createImage();
+			statusImage.setTitle("Closed.");
+		}
 		statusIcon.setWidget(statusImage);
 		statusSuffix.setText(issue.getStatusLabel());
 		header.setDragHandle(issue.getReference());

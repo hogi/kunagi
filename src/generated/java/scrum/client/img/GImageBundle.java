@@ -25,6 +25,9 @@ public interface GImageBundle
     @Resource(value="impOpen.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype impOpen();
 
+    @Resource(value="issClosed.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype issClosed();
+
     @Resource(value="reqClosed.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype reqClosed();
 
@@ -33,6 +36,9 @@ public interface GImageBundle
 
     @Resource(value="reqInSprint.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype reqInSprint();
+
+    @Resource(value="reqPoker.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype reqPoker();
 
     @Resource(value="reqTasksClosed.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype reqTasksClosed();

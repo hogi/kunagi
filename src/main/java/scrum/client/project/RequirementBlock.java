@@ -46,7 +46,10 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 		Requirement requirement = getObject();
 		header.setDragHandle(requirement.getReference());
 		Image statusImage = null;
-		if (requirement.isInCurrentSprint()) {
+		if (requirement.isWorkEstimationVotingActive()) {
+			statusImage = Img.bundle.reqPoker().createImage();
+			statusImage.setTitle("Estimation geame \"Planning Poker\" active.");
+		} else if (requirement.isInCurrentSprint()) {
 			statusImage = Img.bundle.reqInSprint().createImage();
 			statusImage.setTitle("In current sprint.");
 		} else if (requirement.isClosed()) {
