@@ -1,6 +1,7 @@
 package scrum.client.project;
 
 import scrum.client.common.TooltipBuilder;
+import scrum.client.sprint.Task;
 
 public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurrentSprintAction {
 
@@ -45,6 +46,9 @@ public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurren
 
 	@Override
 	protected void onExecute() {
+		for (Task task : requirement.getTasks()) {
+			task.setBurnedWork(0);
+		}
 		requirement.setSprint(getCurrentProject().getCurrentSprint());
 		addUndo(new Undo());
 	}
