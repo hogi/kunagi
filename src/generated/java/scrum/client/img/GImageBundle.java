@@ -22,6 +22,12 @@ public interface GImageBundle
     @Resource(value="action16.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype action16();
 
+    @Resource(value="formatTextBold.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype formatTextBold();
+
+    @Resource(value="formatTextItalic.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype formatTextItalic();
+
     @Resource(value="impOpen.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype impOpen();
 
@@ -51,5 +57,8 @@ public interface GImageBundle
 
     @Resource(value="tskClosed.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype tskClosed();
+
+    @Resource(value="upload.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype upload();
 
 }
