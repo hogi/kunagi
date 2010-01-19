@@ -1,5 +1,7 @@
 package scrum.client;
 
+import gwtupload.client.IUploader;
+import gwtupload.client.IUploadStatus.Status;
 import ilarkesto.gwt.client.BetterTextArea;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.Initializer;
@@ -8,6 +10,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.common.AScrumComponent;
+import scrum.client.files.UploadWidget;
 import scrum.client.img.Img;
 import scrum.client.wiki.ScrumHtmlContext;
 import scrum.client.wiki.WikiModel;
@@ -86,6 +89,23 @@ public class Wiki extends AScrumComponent implements RichtextFormater {
 					textArea.setFocus(true);
 				}
 			}));
+
+			toolbar.add(createToolbarButton(Img.bundle.upload().createImage(), "Upload file", new ClickHandler() {
+
+				public void onClick(ClickEvent event) {
+					final BetterTextArea textArea = editor.getEditor();
+					UploadWidget.showDialog(new IUploader.OnFinishUploaderHandler() {
+
+						public void onFinish(IUploader uploader) {
+							if (uploader.getStatus() == Status.SUCCESS) {
+								textArea.wrapSelection("fle???", "");
+								textArea.setFocus(true);
+							}
+						}
+					});
+				}
+			}));
+
 		}
 	}
 
