@@ -15,6 +15,12 @@ public class SimpleEvent extends GSimpleEvent {
 		setProject(cm.getProjectContext().getProject());
 	}
 
+	public SimpleEvent(Date date) {
+		super();
+		setDate(date);
+		setProject(cm.getProjectContext().getProject());
+	}
+
 	public SimpleEvent(Map data) {
 		super(data);
 	}

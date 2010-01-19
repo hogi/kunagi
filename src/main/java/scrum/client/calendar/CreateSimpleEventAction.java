@@ -31,7 +31,7 @@ public class CreateSimpleEventAction extends GCreateSimpleEventAction {
 
 	@Override
 	protected void onExecute() {
-		SimpleEvent event = new SimpleEvent();
+		SimpleEvent event = new SimpleEvent(cm.getProjectContext().getCalendar().getSelectedDate());
 		cm.getDao().createSimpleEvent(event);
 		cm.getProjectContext().showCalendar(event);
 	}
