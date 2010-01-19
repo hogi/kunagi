@@ -21,8 +21,13 @@ ROW TEMPLATES
 			
 			<tr>
 				<td class="compcol headcol"></td>
+				<!-- NSP -/->
 				<td class="compcol"></td>
+				
+				<!-- Agilo -/->
 				<td class="compcol"></td>
+				
+				<!-- Fazit -/->
 				<td class="compcol rescol"></td>
 			</tr>
 
@@ -36,6 +41,50 @@ ROW TEMPLATES
 				<th class="compcol headcol">Agilo for Scrum</th>
 				<th class="compcol headcol rescol">Fazit</th>
 			</tr>
+<!-- = ALLGEMEIN = -->
+			<tr>
+				<td colspan="4" class="section">Allgemein</td>
+			</tr>
+
+<!-- Positive Dinge -->
+			<tr>
+				<td class="compcol headcol">Positive Dinge (sollten wir vielleicht nachmachen)</td>
+				<!-- NSP -->
+				<td>&nbsp;</td>
+				
+				<!-- Agilo -->
+				<td class="compcol">
+					<ul>
+						<li>Online-Testserver (man kann sich einloggen und mit Dummy-Daten rumspielen)</li>
+					</ul>
+				</td>
+				
+				<!-- Fazit -->
+				<td>&nbsp;</td>
+			</tr>
+			
+<!-- Negative Dinge -->
+			<tr>
+				<td class="compcol headcol">Negative Dinge (sollten wir dringend anders machen)</td>
+				<!-- NSP -->
+				<td>&nbsp;</td>
+				
+				<!-- Agilo -->
+				<td class="compcol">
+					<ul>
+						<li>verwirrende Mischung aus Trac- und Scrum-Vokabular</li>
+						<li>verwendet generische (Trac-)Tickets für alle möglichen Entitys; das führt zu mäßig sinnvollen Dingen wie Markieren von Tasks als Duplikate (man könnte das genausogut einfach in Absprache mit anderen Teammitgliedern löschen, da Tasks keinerlei persistente Relevanz für Leute außerhalb des zuständigen Teams haben)</li>
+						<li>teilweise synchrone, teilweise asynchrone Arbeitsweise -> Man weiß nie, ob noch was passiert</li>
+						<li>der Scrum Master ist für den Sprint Backlog zuständig; das ist komisch, denn das Team sollte seine Arbeit selbst regeln</li>
+					</ul>
+				</td>
+				
+				<!-- Fazit -->
+				<td>&nbsp;</td>
+			</tr>
+
+
+
 
 <!-- = SCRUM WORKFLOW = -->
 <!-- == PRODUCT OWNER == -->
@@ -245,17 +294,20 @@ ROW TEMPLATES
 				<td class="compcol headcol">Durchführung des Sprint Plannings</td>
 				<!-- NSP -->
 				<td class="compcol">
-				Der Product Owner
+					Der Product Owner
 					<ul>
 						<li>wählt <em>Next Sprint</em> aus der Navigation (es öffnet sich eine Ansicht, in der ein Sprint vorerzeugt ist),</li>
 						<li>trägt <strong>Label</strong>, <strong>Ziel</strong>, <strong>Beginn-</strong> und <strong>Enddatum</strong> und eine <strong>Notiz</strong> für das Sprint Planning ein,</li>
-						<li>nach dem Ende des vorhergehenden Sprints klickt er auf <em>Switch to this Sprint</em> (der alte Sprint wird archiviert und der neue Sprint wird der aktuelle; die Ansicht wechselt zur <span class="red">[ab hier kann nicht nicht testen, da sich kein neuer Sprint aktivieren lässt]</span></li>
+						<li>nach dem Ende des vorhergehenden Sprints klickt er auf <em>Switch to this Sprint</em> (der alte Sprint wird archiviert und der neue Sprint wird der aktuelle; die Ansicht wechselt zur Sprint-Ansicht).</li>
 					</ul>
+				
+					<a href="#team-pullrequirements">Team wählt Requirements</a><br />
+					<a href="#team-createtasks">Team erzeugt Tasks</a>
 				</td>
 				
 				<!-- Agilo -->
 				<td class="compcol">
-				Der Product Owner
+					Der Product Owner
 					<ul>
 						<li>wählt Roadmap aus der Navigation (er öffnet sich die Roadmap-Ansicht),</li>
 						<li>erzeugt ggf. einen neuen Meilenstein,</li>
@@ -263,13 +315,18 @@ ROW TEMPLATES
 						<li>trägt <strong>Namen</strong>, <strong>Beschreibung</strong>, <strong>Anfangs-</strong> und <strong>Endatum</strong> oder eine Länge des Sprints ein und wählt das <strong>zuständige Team</strong> aus,</li>
 						<li>klickt auf <em>Add Spring</em> oder <em>Cancel</em> (es öffnet sich eine Sprint-wurde-erstellt-Ansicht [Cancel funktioniert nicht]),</li>
 						<li>klickt in der Sprint-wurde-erstellt-Ansicht auf einen Link zur Sprint-Ansicht (es öffnet sich die Sprint-Ansicht),</li>
-						<li><span class="red">[ab hier reagiert Agilo nicht mehr korrekt auf Eingaben und ich wüsste auch nicht, was ich weiter machen soll]</span></li>
 					</ul>
+
+					<a href="#team-pullrequirements">Team wählt Requirements</a><br />
+					<a href="#team-createtasks">Team erzeugt Tasks</a>
 				</td>
 				
 				<!-- Fazit -->
 				<td class="compcol rescol">
-				
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Fie Ansicht des Product Owners sollte vielleicht in den Product Backlog oder eine extra Planungsansicht wechseln.</li>
+					</ul>
 				</td>
 			</tr>
 
@@ -281,8 +338,9 @@ ROW TEMPLATES
 					Der Product Owner kann
 					<ul>
 						<li>jederzeit Requirements aus dem Sprint Backlog als erledigt markieren, indem er aus dem Entity-Menü <em>Close</em> wählt (das Requirement wird als erledigt markiert),</li>
-						<li><span class="red">[was sonst noch passiert, kann nicht nicht testen, da sich kein neuer Sprint aktivieren lässt]</span></li>
 					</ul>
+					Requirements, die <em>closed</em> sind, werden nach Abschluss des Sprints im Product Backlog ausgeblendet (einblendbar).<br />
+					Requirements, die nicht <em>closed</em> sind, werden nach dem Abschluss des Sprints in ihrem aktuellen Zustand (inkl. Tasks) im Product Backlog beibehalten werden und können im nächsten Sprint gewählt werden.
 				</td>
 				
 				<!-- Agilo -->
@@ -292,7 +350,15 @@ ROW TEMPLATES
 				
 				<!--Fazit -->
 				<td class="compcol rescol">
-					Für das Rechte-Management sollte der Product Owner nur Requirements abnehmen können, die das Team auch als fertig einstuft.
+					Rechte-Management:
+					<ul>
+						<li>Für das Rechte-Management sollte der Product Owner nur Requirements abnehmen können, die das Team auch als fertig einstuft.</li>
+					</ul>
+					
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Irgendeine Art von Unterstützung, nicht erledigte Requirements zu splitten.</li>
+					</ul>
 				</td>
 			</tr>
 
@@ -305,91 +371,200 @@ ROW TEMPLATES
 			<tr>
 				<td class="compcol headcol">Überwacht aktive und erledigte Tasks und ihre Schätzungen</td>
 				<!-- NSP -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Der Scrum Master kann
+					<ul>
+						<li>im Dashboard den Sprint Burndown sehen,</li>
+						<li>im Dashboard sehen, wer gerade an was arbeitet,</li>
+						<li>im Dashboard sehen, welche Tasks als nächstes an der Reihe sind (anhand der Priorität),</li>
+						<li>im Whiteboard anhand der Verteilung der Tasks (grafisch) erkennen, wieviel gerade von wem bearbeit wird und wieviel bereits bearbeitet wurde,</li>
+						<li>im Sprint Backlog auf einen Blick erkennen, wieviel Prozent von Requirements bereits erledigt sind und wieviele Stunden noch ausstehen,</li>
+						<li>im Sprint Backlog nach dem Öffnen dem expandieren der Requirements, ob Tasks bereits erledigt sind bzw. ob jemand oder wer sie gerade berarbeitet,</li>
+						<li>im Product Backlog auf einen Blick erkennen, wieviele Requirements bereits vom Team geschätzt wurden.</li>
+					</ul>
+				</td>
 				
 				<!-- Agilo -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Der Scrum Master kann
+					<ul>
+						<li>im Dashboard anhand eines Balkendiagramms sehen, wieviele Tickets existieren, wieviele noch zu tun und wieviele erledigt sind,</li>
+						<li>im Dashboard anhand eines Tortendiagramms sehen, wie die Arbeitsverteilung auf die Teammitglieder ist (<em>Commitment</em>),</li>
+						<li>im Whiteboard anhand der Verteilung der Tasks (grafisch) erkennen, wieviel gerade von wem bearbeit wird und wieviel bereits bearbeitet wurde,</li>
+						<li>im Sprint Backlog als Attribut von Tasks sehen, wer dafür zuständig ist,</li>
+						<li>im Sprint Backlog auf einen Blick geschätzte Restdauer erkennen (falls Schätzung abgegeben),</li>
+						<li>in Trac-Manier Tickets nach verschiedenen Kriterien sortiert und gefiltert anzeigen lassen.</li>
+					</ul>
+				</td>
 				
 				<!--Fazit -->
-				<td class="compcol rescol"></td>
+				<td class="compcol rescol">
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Burnup statt Burndown.</li>
+						<li>Hinweise darauf, wieviel der Requirements tatsächlich schon komplett erledigt sind (statt nur Tasks).</li>
+						<li>Verteilung getaner Arbeit auf Teammitglieder. [Agilo]</li>
+					</ul>
+				</td>
 			</tr>
 			
 <!-- Verwaltet eine Liste von Impediments -->
 			<tr>
 				<td class="compcol headcol">Verwaltet eine Liste von Impediments</td>
 				<!-- NSP -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Der Scrum Master
+					<ul>
+						<li>wählt <em>Impediment List</em> aus der Navigation (es öffnet sich die Impediment List)</li>
+						<li>klickt auf <em>Create new Impediment</em> ganz oben in der Ansicht (es erscheint ein Impediment oben in der Liste),</li>
+						<li>kann <strong>Label</strong>, <strong>Datum</strong> (aktuelles voreingetragen), <strong>Beschreibung</strong> und <strong>Lösung</strong> eintragen,</li>
+						<li>kann ein Impediment schließen, indem er <em>Close</em> aus dem Aktionsmenü wählt (das Impediment wird als gelöst markiert).</li>
+					</ul>
+				</td>
 				
 				<!-- Agilo -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Der Admin muss
+					<ul>
+						<li>in den Konfigurationen einen benutzerdefinierten Backlog anlegen und diesen z. B. Impediment List nennen.</li>
+					</ul>
+					
+					Der Scrum Master
+					<ul>
+						<li>[kann keine Funktion zum Erzeugen von Impediments finden]</li>
+					</ul>
+				</td>
 				
 				<!--Fazit -->
-				<td class="compcol rescol"></td>
+				<td class="compcol rescol">
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Man sollte Impediments wieder öffnen können.</li>
+						<li>Filter für geschlossene Impediments.</li>
+					</ul>
+				</td>
 			</tr>
 			
 <!-- Priorisiert Impediments -->
 			<tr>
 				<td class="compcol headcol">Priorisiert Impediments</td>
 				<!-- NSP -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Nicht möglich.
+				</td>
 				
 				<!-- Agilo -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					[kann ich nicht testen, weil ich nicht weiß, wie man Impediments anlegt, aber vermutlich wie alle anderen Backlogs in Agilo per Drag & Drop]
+				</td>
 				
 				<!--Fazit -->
-				<td class="compcol rescol"></td>
+				<td class="compcol rescol">
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Impediments sollten priorisierbar sein (eventuell in drei Stufen oder so, da eine Feinpriorisierung wie im Product Backlog eigentlich nicht nötig ist).</li>
+					</ul>
+				</td>
 			</tr>
 			
 <!-- Entwirft Gegenmaßnahmen für Impediments -->
 			<tr>
 				<td class="compcol headcol">Entwirft Gegenmaßnahmen für Impediments</td>
 				<!-- NSP -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Der Scrum Master
+					<ul>
+						<li>wählt <em>Impediment List</em> aus der Navigation (es öffnet sich die Impediment List),</li>
+						<li>expandiert ein Impediment (es werden die Eigenschaften des Impediments angezeigt),</li>
+						<li>trägt die Gegenmaßnahme als Text ins Feld <em>Solution</em> ein.</li>
+					</ul>
+				</td>
 				
 				<!-- Agilo -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					[kann ich nicht testen, weil ich nicht weiß, wie man Impediments anlegt]
+				</td>
 				
 				<!--Fazit -->
-				<td class="compcol rescol"></td>
+				<td class="compcol rescol">
+					&nbsp;
+				</td>
 			</tr>
 			
 <!-- Läd zu Meetings ein -->
 			<tr>
 				<td class="compcol headcol">Läd zu Meetings ein</td>
 				<!-- NSP -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Der Scrum Master
+					<ul>
+						<li>wählt <em>Calendar</em> aus der Navigation (es öffnet sich der Kalender),</li>
+						<li>navigiert zum gewünschten Tag, indem er aus einer Übersicht rechts Jahr, Monat und Tag selektiert (der angezeigte Kalenderausschnitt wird angepasst),</li>
+						<li>kann ein <strong>Label</strong>, <strong>Datum</strong> (selektierter Tag voreingestellt), <strong>Zeit</strong>, <strong>Ort</strong>, <strong>Agenda</strong> und eine <strong>Notiz</strong> eintragen.</li>
+					</ul>
+				</td>
 				
 				<!-- Agilo -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Nicht möglich.
+				</td>
 				
 				<!--Fazit -->
-				<td class="compcol rescol"></td>
+				<td class="compcol rescol">
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Anzeige bald aufkommender Termine im Dashboard.</li>
+						<li>Anzeige neu angelegter Termine.</li>
+						<li>Einladung von Teilnehmer und Ab- und Zusage der Gäste.</li>
+					</ul>
+				</td>
 			</tr>
 			
 <!-- Durchführung von Daily Scrums -->
 			<tr>
 				<td class="compcol headcol">Durchführung von Daily Scrums</td>
 				<!-- NSP -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Nicht möglich.
+				</td>
 				
 				<!-- Agilo -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Nicht möglich.
+				</td>
 				
 				<!--Fazit -->
-				<td class="compcol rescol"></td>
+				<td class="compcol rescol">
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Virtueller Konferenzraum.</li>
+					</ul>
+				</td>
 			</tr>
 			
 <!-- Durchführung von Sprint Retrospectives -->
 			<tr>
 				<td class="compcol headcol">Durchführung von Sprint Retrospectives</td>
 				<!-- NSP -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Der Scrum Master kann
+					<ul>
+						<li>Ergebnisse einer Retrospektive in einem dafür vorgesehenen Feld im Sprint vermerken.</li>
+					</ul>
+				</td>
 				
 				<!-- Agilo -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Nicht möglich.
+				</td>
 				
 				<!--Fazit -->
-				<td class="compcol rescol"></td>
+				<td class="compcol rescol">
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Virtueller Konferenzraum.</li>
+					</ul>
+				</td>
 			</tr>
 
 <!-- == TEAM == -->
@@ -399,67 +574,170 @@ ROW TEMPLATES
 
 <!-- Übernimmt während des Sprint Planning Requirements in den Sprint Backlog -->
 			<tr>
-				<td class="compcol headcol">Übernimmt während des Sprint Planning Requirements in den Sprint Backlog</td>
+			
+				<td class="compcol headcol"><a name="team-pullrequirements" />Übernimmt während des Sprint Planning Requirements in den Sprint Backlog</td>
 				<!-- NSP -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Das Team
+					<ul>
+						<li>wählt <em>Product Backlog</em> in der Navigation (es öffnet sich der Product Backlog),</li>
+						<li>kann jederzeit aus dem Aktionsmenü eines Requirements <em>Pull to current Sprint</em> (nur verfügbar, wenn das Item schon geschätzt ist) (das Requirement wird in den aktuellen Sprint übernommen).</li>
+					</ul>
+				</td>
 				
 				<!-- Agilo -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					<p>[mir ist unklar, wie genau das funktionieren soll; das folgende ist die einzige Variante, die ich gefunden habe]</p>
+					
+					Das Team
+					<ul>
+						<li>wählt <em>Product Backlog</em> in der Navigation (es öffnet sich der Product Backlog),</li>
+						<li>klickt auf die Sprint-Spalte von User Storys (es erscheint ein Drop-Down mit einer langen Liste aller Sprints),</li>
+						<li>wählt den neuen Sprint aus der Liste (die User Story wird dem Sprint zugewiesen und erscheint fortan im entsprechenden Backlog).</li>
+					</ul>
+				</td>
 				
 				<!--Fazit -->
-				<td class="compcol rescol"></td>
+				<td class="compcol rescol">
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Nur das jeweils erste Requirement sollte in den aktuellen Sprint übernommen werden können.</li>
+						<li>Nach dem Sprint Planning sollte das Übernehmen neuer Requirements die Zustimmung des Product Owners erfordern.</li>
+						<li>Ggf. die Beteiligung aller Teammitglieder erfordern (stellt Commitment sicher und bezieht alle Teammiglieder mit ins Planning ein).</li>
+					</ul>
+				</td>
 			</tr>
 			
 <!-- Erzeugt Tasks, die zur Bearbeitung von Requirements nötig sind -->
 			<tr>
-				<td class="compcol headcol">Erzeugt Tasks, die zur Bearbeitung von Requirements nötig sind</td>
+				<td class="compcol headcol"><a name="team-createtasks" />Erzeugt Tasks, die zur Bearbeitung von Requirements nötig sind</td>
 				<!-- NSP -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Das Team
+					<ul>
+						<li>wählt <em>Whiteboard</em> oder <em>Sprint Backlog</em> aus der Navigation (es öffnet sich das Whiteboard bzw. der Sprint Backlog),</li>
+						<li>wählt aus dem Aktionsmenü eines Requirements <em>Create new Task</em> (es erscheint ein neuer Task im Requirement),</li>
+						<li>kann <strong>Label</strong>, <strong>Beschreibung</strong>, <strong>bereits aufgewendete Zeit</strong> (Input mit +/--Buttons) und <strong>noch benötigte Zeit</strong> (Input mit +/--Buttons; Vorteinstellung 1 Stunde) einstellen.</li>
+					</ul>
+				</td>
 				
 				<!-- Agilo -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Das Team
+					<ul>
+						<li>wählt einen Sprint Backlog aus einem Drop Down in der Navigation und klickt auf <em>View</em> (es öffnet sich der Sprint Backlog),</li>
+						<li>klickt in einer Story im Backlog auf <em>+</em> (es öffnet sich ein modaler Dialog, der einem Ticket-Formular entspricht; es ist unklar, was das Sprint-Feld da macht),</li>
+						<li>klickt im Dialog auf <em>Create Ticket</em> oder <em>Cancel</em> (der neue Task wird angelegt bzw. verworfen und der Dialog verschwindet).</li>
+					</ul>
+					ODER
+					<ul>
+						<li>wählt <em>New Task</em> aus der Navigation (es öffnet sich ein Entity-Formular, in dem der Entity-Typ <em>Task</em> vorselektiert ist),</li>
+						<li>gibt <strong>Zusammenfassung</strong>, <strong>verbliebene Zeit</strong>, den <strong>Sprint</strong> (Dropdown), <strong>Ressourcen</strong> und einen <strong>Zuständigen</strong> aus und klickt auf <em>Preview</em> oder <em>Create Ticket</em> (es öffnet sich eine Vorschau-Ansicht bzw. die View-Ansicht des neu kreierten Tickets).</li>
+						<li>[das Ticket wird in einer virtuellen Story <em>Tasks without Storys</em> erzeugt; offenbar kann man die Story-Zuweisung nicht mehr ändern]
+					</ul>
+				</td>
 				
 				<!--Fazit -->
-				<td class="compcol rescol"></td>
+				<td class="compcol rescol">
+					&nbsp;
+				</td>
 			</tr>
 			
 <!-- Übernimmt und schließt Tasks -->
 			<tr>
 				<td class="compcol headcol">Übernimmt und schließt Tasks</td>
 				<!-- NSP -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Das Team
+					<ul>
+						<li>wählt <em>Whiteboard</em> oder <em>Sprint Backlog</em> aus der Navigation (es öffnet sich das Whiteboard bzw. der Sprint Backlog),</li>
+						<li>(im Sprint Backlog) klickt auf ein Requirement, um es zu expandieren (es werden die Eigenschaften und alle Tasks des Requirements angezeigt),</li>
+						<li>wählt aus dem Aktionsmenü eines Tasks <em>Claim</em> bzw. <em>Close</em> (der Task wird als von dem Benutzer bearbeitet oder als gelöst markiert).</li>
+					</ul>
+					ODER (mit Whiteboard)
+					<ul>
+						<li>wählt <em>Whiteboard</em> aus der Navigation (es öffnet sich das Whiteboard),</li>
+						<li>Zieht einen Task aus der Spalte <em>Free Tasks</em> in die Spalte <em>Claimed Tasks</em> oder <em>Closed Tasks</em> (der Position des Task-Blocks ändert sich und der Task wird als von dem Benutzer bearbeitet oder als gelöst markiert).</li>
+					</ul>
+				</td>
 				
 				<!-- Agilo -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					(Tasks übernehmen) Das Team
+					<ul>
+						<li>wählt einen Sprint Backlog aus einem Drop Down in der Navigation und klickt auf <em>View</em> (es öffnet sich der Sprint Backlog),</li>
+						<li>klickt auf die Owner-Spalte eines Tasks und tippt den Namen des zuständigen (ggf. seinen eigenen) ein (es wird der zuständige für den Task eingetragen; der Task ist damit noch nicht in progress).</li>
+					</ul>
+					
+					(Tasks übernehmen oder schließen) Das Team
+					<ul>
+						<li>wählt einen Sprint Backlog aus einem Drop Down in der Navigation und klickt auf <em>View</em> (es öffnet sich der Sprint Backlog),</li>
+						<li>klickt auf die ID eines Tasks (es öffnet sich die View-Ansicht des Tasks),</li>
+						<li>klickt auf die Registerkarte <em>Edit</em> (es öffnet sich eine Edit-Ansicht),</li>
+						<li>kann in Trac-Manier in einer Radiobox-Gruppe den <strong>neuen Status</strong> zwischen <em>leave as new</em>, <em>resolve as</em> {fixed, invalid, wontfix, duplicate, worksforme}, <em>reassign to</em> [Textfeld] und <em>accept</em> und gibt ggf. einen <strong>Change-Kommentar</strong> an,</li>
+						<li>klickt auf <em>Preview</em> oder <em>Submit Changes</em> (es wird eine Vorschau des geänderten Tickets angezeigt oder das Ticket geändert (sofern sich das Teammitglied im zuständigen Team befindet, sonst kommt ein Fehler); der Task ist damit noch nicht in progress).</li>
+					</ul>
+					(mit Whiteboard)
+					<ul>
+						<li>wählt <em>Whiteboard</em> aus der Navigation (es öffnet sich das Whiteboard; zu welchem Sprint genau, ist mir unklar),</li>
+						<li>zieht an Tasks zwischen den Spalten <em>Backlog</em>, <em>In Progress</em> und <em>Done</em> (der Task wird visuell verschoben und der Status des Tasks wird geändert),</li>
+						<li>falls beim Verschieben in <em>In Progress</em> noch kein Zuständiger eingetragen ist, kommt ein modaler Dialog mit einer Dropdown aller in Frage kommender Teammitglieder.</li>
+					</ul>
+				</td>
 				
 				<!--Fazit -->
-				<td class="compcol rescol"></td>
+				<td class="compcol rescol">
+					&nbsp;
+				</td>
 			</tr>
 			
 <!-- Verhandelt Sprintumfang mit dem Product Owner neu (Erweiterung oder Streichung von Requirements) -->
 			<tr>
 				<td class="compcol headcol">Verhandelt Sprintumfang mit dem Product Owner neu (Erweiterung oder Streichung von Requirements)</td>
 				<!-- NSP -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Nicht möglich. Der Umfang kann geändert werden, indem:
+					<ul>
+						<li>Das Team neue Requirements in den Sprint übernimmt oder</li>
+						<li>Der Product Owner Requirements aus dem Sprint entfernt.</li>
+					</ul>
+				</td>
 				
 				<!-- Agilo -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					?
+				</td>
 				
 				<!--Fazit -->
-				<td class="compcol rescol"></td>
+				<td class="compcol rescol">
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Beide vorhandenen Funktionen sollten einseitig nicht möglich sein.</li>
+						<lI>Stattdessen sollte das Team tatsächlich die Änderungen mit dem Product Owner vehandeln.</li>
+					</ul>
+				</td>
 			</tr>
 			
 <!-- Verhandelt den Umfang von Requirements neu (Änderung von Beschreibung und Abnahmekriterien) -->
 			<tr>
 				<td class="compcol headcol">Verhandelt den Umfang von Requirements neu (Änderung von Beschreibung und Abnahmekriterien)</td>
 				<!-- NSP -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Nicht möglich.
+				</td>
 				
 				<!-- Agilo -->
-				<td class="compcol"></td>
+				<td class="compcol">
+					Nicht möglich.
+				</td>
 				
 				<!--Fazit -->
-				<td class="compcol rescol"></td>
+				<td class="compcol rescol">
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Change Request, die mit Zustimmung aller beteiligten umgesetzt werden.</li>
+					</ul>
+				</td>
 			</tr>
 		</table>
 	</body>
