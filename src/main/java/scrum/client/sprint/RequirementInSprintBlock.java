@@ -68,9 +68,9 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 
 		FlowPanel left = new FlowPanel();
 		left.add(requirementWidget);
-		left.add(commentsWidget);
+		left.add(taskList);
 
-		bodyWidget = TableBuilder.row(20, left, taskList);
+		bodyWidget = TableBuilder.row(20, left, commentsWidget);
 		return bodyWidget;
 	}
 
