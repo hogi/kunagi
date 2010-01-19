@@ -1,0 +1,466 @@
+<html>
+	<head>
+		<title>Vergleich von Scrum-Tools auf dem Markt</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<style>
+			.comptable { border:0; margin:0; padding:0; spacing:2px; }
+			.compcol { background-color:#eeeeff; width:400px; vertical-align:top; padding:4px; }
+			.headcol {font-weight:bold; background-color:#ddddff; width:300px; }
+			.section { background-color:#ff9900; font-weight:bold; }
+			.subsection { background-color:#99ff99; font-weight:bold; }
+			.red { color:#ff3333; font-weight:bold; }
+		</style>
+	</head>
+	
+<!--
+
+ROW TEMPLATES
+			<tr>
+				<td colspan="4" class="section"></td>
+			</tr>
+			
+			<tr>
+				<td class="compcol headcol"></td>
+				<td class="compcol"></td>
+				<td class="compcol"></td>
+				<td class="compcol rescol"></td>
+			</tr>
+
+-->
+
+	<body>
+		<table class="comptable">
+			<tr>
+				<th>&nbsp</th>
+				<th class="compcol headcol">Nameless Scrum-Project</th>
+				<th class="compcol headcol">Agilo for Scrum</th>
+				<th class="compcol headcol rescol">Fazit</th>
+			</tr>
+
+<!-- = SCRUM WORKFLOW = -->
+<!-- == PRODUCT OWNER == -->
+			<tr>
+				<td colspan="4" class="section">Scrum-Workflow</td>
+			</tr>
+			<tr>
+				<td colspan="4" class="subsection">Product Owner</td>
+			</tr>
+
+<!-- Definition einer Produktvision -->
+			<tr>
+				<td class="compcol headcol">Definition einer Produktvision</td>
+				<!-- NSP -->
+				<td class="compcol">
+					Der Product Owner hat zwei Möglichkeiten, eine Produktvision zu hinterlegen:
+					<ol>
+						<li>Er nutzt das Feld <strong><em>Description</em></strong> des Projektes (wird bei der Projektauswahl angezeigt).</li>
+						<li>Er schreibt eine <strong>Wiki-Seite</strong> (muss über das Wiki ausgewählt werden).</li>
+					</ol>
+				</td>
+				
+				<!-- Agilo -->
+				<td class="compcol">
+					Der Product Owner kann eine <strong>Wiki-Seite</strong> verfassen und diese <strong>in der Navigation</strong> anzeigen lassen (ist mir allerdings unklar, wie das funktioniert).
+				</td>
+				
+				<!-- Fazit -->
+				<td class="compcol rescol">
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Anzeige von ausgewählten Wiki-Seiten in der Navigation. [Agilo]</li>
+						<li>Umbenennung von <em>Description</em> von Projekten in <em>Vision</em>, Anzeige der Vision im Projekt (nicht nur bei der Auswahl).</li>
+					</ul>
+				</td>
+			</tr>
+
+<!-- Definition der Produktfeatures -->
+			<tr>
+				<td class="compcol headcol">Definition der Produktfeatures</td>
+				<!-- NSP -->
+				<td class="compcol">
+					Der Product Owner
+					<ul>
+						<li>wählt das Projekt aus</li>
+						<li>wählt <em>Product Backlog</em> in der Navigation (es öffnet sich der Product Backlog),</li>
+						<li>klickt auf <em>Create New Requirement</em> oben rechts im Product Backlog (es erscheint ein neues Requirement mit Default-Werten),</li>
+						<li>gibt <strong>Namen</strong>, <strong>Beschreibung</strong>, <strong>Qualitys</strong> und <strong>Abnahmekriterien</strong> an.</li>
+					</ul>
+				</td>
+				
+				<!-- Agilo -->
+				<td class="compcol">
+					Der Product Owner
+					<ul>
+						<li>wählt aus der Liste verfügbarer Aktionen in der Navigation oder im Dashboard <em>New User Story</em> oder <em>New Requirement</em> (es öffnet sich ein Entity-Formular, bei dem der Typ entsprechend voreingestellt ist),</li>
+						<li>gibt <strong>Zusammenfassung</strong>, ausführliche </strong>Beschreibung</strong>, <strong>Priorität</strong> (Mandatory, Linear, Exciter), Umfang in <string>Story Points</strong>, den <strong>Sprint</strong>, die <strong>zuständige Person</strong> und <strong>Keywords</strong> an,</li>
+						<li>klickt auf <em>Preview</em> oder <em>Create Ticket</em> (zeigt eine Vorschau bzw. erzeugt das Ticket; es öffnet sich die View-Ansicht des Tickets).</li>
+					</ul>
+				</td>
+				
+				<!-- Fazit -->
+				<td class="compcol rescol">
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Standardaktionen für Rollen zusätzlich in der Navigation anzeigen (nicht nur in den Unteransichten). [Agilo]</li>
+					</ul>
+				</td>
+			</tr>
+
+<!-- Festlegen von Releasedaten und -umfang -->
+			<tr>
+				<td class="compcol headcol">Festlegen von Releasedaten und -umfang</td>
+				<!-- NSP -->
+				<td class="compcol">
+					<strong>Releses lassen sich nicht manuell planen</strong>.
+					Der Product Owner kann sich zukünftige Sprint projezieren lassen. Dazu führt er folgende Aktionen durch:
+					<ul>
+						<li>wählt <em>Product Backlog</em> aus der Navigation (es öffnet sich der Product Backlog),</li>
+						<li>trägt eine <em>Assumed Velocity</em> oben auf der Seite ein (im Product Backlog erscheinen Balken, die anzeigen, wieviele Features innerhalb vievieler Sprints fertiggestellt werden).</li>
+					</ul>
+					
+				</td>
+				
+				<!-- Agilo -->
+				<td class="compcol">
+					Der Product Owner kann Milestones eintragen, denen dann Sprints zugeordnet werden. Dazu führt er folgende Aktionen durch:
+					<ul>
+						<li>wählt <em>Roadmap</em> in der Navigation (es öffnet sich die Roadmap-Ansicht mit einer Liste von Milestones),</li>
+						<li>wählt <em>Add New Milestone</em> ganz unten auf der Seite (es öffnet sich ein Formular),</li>
+						<li>gibt <strong>Namen</strong>, <strong>Beschreibung</strong>, <strong>geplantes</strong> und <strong>tatsächliches Fertigstellungsdatum</strong> an,</li>
+						<li>klickt auf <em>Add Milestone</em> oder <em>Cancel</em> (erstellt den Milestone und öffnet eine entsprechende View-Ansicht bzw. kehrt zur Roadmap zurück).
+					</ul>
+				</td>
+				
+				<!-- Fazit -->
+				<td class="compcol rescol">
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Der Product Owner sollte Releases planen können. [Agilo]</li>
+					</ul>
+				</td>
+			</tr>
+
+<!-- Überwachung der Proditabilität -->
+			<tr>
+				<td class="compcol headcol">Überwachung der Profitabilität</td>
+				<!-- NSP -->
+				<td class="compcol">
+					<ul>
+						<li>Der Product Owner kann sich im Product Backlog anhand von <strong>voraussichtlicher Velocity</strong> die <strong>Fertigstellung von Requirements projezieren</strong> zu lassen und kann so Vergleichen, ob sich die geplante Fertigstellung mit der errechneten deckt.</li>
+					</ul>
+				</td>
+				
+				<!-- Agilo -->
+				<td class="compcol">
+					<ul>
+						<li>Im Product Backlog wird anhand von <strong>Business Value</strong> und Schätzung ein <strong>ROI-Wert</strong> berechnet und angezeigt.</li>
+					</ul>	
+				</td>
+				
+				<!-- Fazit -->
+				<td class="compcol rescol">
+					Wir sollten hier schauen, welche Konzepte für den Product Owner nützlich sind.
+					
+					Folgende Dinge sollten auf jeden Fall Einzug finden:
+					<ul>
+						<li>Project Burndown (in irgendeiner Angemessenen Form),</li>
+						<li>Entwicklung der Team-Velocity (damit man etwas mit der Projektion spielen kann).</li>
+					</ul>
+				</td>
+			</tr>
+
+<!-- Priorisierung von Features nach Marktwert -->
+			<tr>
+				<td class="compcol headcol">Priorisierung von Features nach Marktwert</td>
+				<!-- NSP -->
+				<td class="compcol">
+					Der Product Owner kann Storys im <strong>Product Backlog sortieren</strong>. Dazu führt er folgende Aktionen durch:
+					<ul>
+						<li>wählt <em>Product Backlog</em> aus der Navigation (es öffnet sich der Product Backlog),</li>
+						<li>zieht am Icon von Storys, um sie per Drag and Drop zu sortieren (es ändert sich die Sortierung).</li>
+					</ul>
+				</td>
+				
+				<!-- Agilo -->
+				<td class="compcol">
+					Der Product Owner kann Storys und Requirements im <strong>Product Backlog sortieren</strong>. Dazu führt er folgende Aktionen durch:
+					<ul>
+						<li>wählt <em>Product Backlog</em> aus der Navigation (es öffnet sich der Product Backlog),</li>
+						<li>zieht an Einträgen, um sie per Drag and Drop zu sortieren (es ändert sich die Sortierung).</li>
+					</ul>
+					Dabei stehen folgende <strong>Hilfen</strong> zur Verfügung:
+					<ul>
+						<li>es wird die Priorität (Mandatory, Linear, Exciter) angezeigt,</li>
+						<li>es wird ein Wert für Business Value angezeigt,</li>
+						<li>es wird ein Wert für ROI berechnet und angezeigt,</li>
+						<li>Storys lassen sich zu Requirements gruppieren und so in Gruppen sortieren (entspricht am ehesten Themes in Scrum).</li>
+					</ul>
+				</td>
+				
+				<!-- Fazit -->
+				<td class="compcol rescol">
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>Gruppierung von Requirements in Themes,</li>
+						<li>Unterstützung des Product Owners durch Verfahren zur Priorisierung.</li>
+					</ul>
+				</td>
+			</tr>
+
+<!-- Beantwortung von Feagen des Teams -->
+			<tr>
+				<td class="compcol headcol">Beantwortung von Fragen des Teams</td>
+				<!-- NSP -->
+				<td class="compcol">
+					Das Team kann Fragen zu <strong>beliebigen Entitys</strong> stellen, indem ein Teammitglied
+					<ul>
+						<li>zur Entity navigiert, zu der er eine Frage hat (ist z. B. der Sprint oder das Projekt im Dashboard oder Items aus den Backlogs),</li>
+						<li>auf <em>Create Comment</em> klickt (es erscheint ein Textfeld und Button zum Absenden)</li>
+						<li>den Kommentar schreibt und auf <em>Post this Comment</em> oder <em>Cancel this Comment</em> klickt (das Eintrag wird übernommen bzw. verworfen).</li>
+					</ul>
+					Der Product Owner sieht die Frage als neuen Kommentar im Dashboard und antwortet analog.
+				</td>
+				
+				<!-- Agilo -->
+				<td class="compcol">
+					Das Team kann Fragen zu <strong>Tickets</strong> stellen, indem ein Teammitglied
+					</ul>
+						<li>zur Ticket-Ansicht des Tickets navigiert, zu dem er eine Frage hat (geschieht über diverse Ticket-Ansichten oder ein Backlog),</li>
+						<li>die Change-History benutzt, um einen Kommentar zu hinterlassen (ohne dabei Änderungen vorzunehmen).</li>
+					</ul>
+					Der Product Owner sieht die Frage (vermutlich kann man sich von Trac auch irgendwie informieren lassen, jedoch ist eine Änderung von einer Frage nicht eher nicht zu unterscheiden) und antwortet analog.
+				</td>
+				
+				<!-- Fazit -->
+				<td class="compcol rescol">
+					Denkbare Verbesserungen unseres Tools:
+					<ul>
+						<li>ein Forum für allgemeine Diskussionen</li>
+					</ul>
+				</td>
+			</tr>
+
+<!-- Durchführung des Sprint Planning -->
+			<tr>
+				<td class="compcol headcol">Durchführung des Sprint Plannings</td>
+				<!-- NSP -->
+				<td class="compcol">
+				Der Product Owner
+					<ul>
+						<li>wählt <em>Next Sprint</em> aus der Navigation (es öffnet sich eine Ansicht, in der ein Sprint vorerzeugt ist),</li>
+						<li>trägt <strong>Label</strong>, <strong>Ziel</strong>, <strong>Beginn-</strong> und <strong>Enddatum</strong> und eine <strong>Notiz</strong> für das Sprint Planning ein,</li>
+						<li>nach dem Ende des vorhergehenden Sprints klickt er auf <em>Switch to this Sprint</em> (der alte Sprint wird archiviert und der neue Sprint wird der aktuelle; die Ansicht wechselt zur <span class="red">[ab hier kann nicht nicht testen, da sich kein neuer Sprint aktivieren lässt]</span></li>
+					</ul>
+				</td>
+				
+				<!-- Agilo -->
+				<td class="compcol">
+				Der Product Owner
+					<ul>
+						<li>wählt Roadmap aus der Navigation (er öffnet sich die Roadmap-Ansicht),</li>
+						<li>erzeugt ggf. einen neuen Meilenstein,</li>
+						<li>wählt <em>Add New Sprint</em> beim gewünschten Meilenstein (es öffnet sich ein Formular für einen Sprint),</li>
+						<li>trägt <strong>Namen</strong>, <strong>Beschreibung</strong>, <strong>Anfangs-</strong> und <strong>Endatum</strong> oder eine Länge des Sprints ein und wählt das <strong>zuständige Team</strong> aus,</li>
+						<li>klickt auf <em>Add Spring</em> oder <em>Cancel</em> (es öffnet sich eine Sprint-wurde-erstellt-Ansicht [Cancel funktioniert nicht]),</li>
+						<li>klickt in der Sprint-wurde-erstellt-Ansicht auf einen Link zur Sprint-Ansicht (es öffnet sich die Sprint-Ansicht),</li>
+						<li><span class="red">[ab hier reagiert Agilo nicht mehr korrekt auf Eingaben und ich wüsste auch nicht, was ich weiter machen soll]</span></li>
+					</ul>
+				</td>
+				
+				<!-- Fazit -->
+				<td class="compcol rescol">
+				
+				</td>
+			</tr>
+
+<!-- Durchführung des Sprint Reviews (Abnahme von Requirements) -->
+			<tr>
+				<td class="compcol headcol">Durchführung des Sprint Reviews (Abnahme von Requirements)</td>
+				<!-- NSP -->
+				<td class="compcol">
+					Der Product Owner kann
+					<ul>
+						<li>jederzeit Requirements aus dem Sprint Backlog als erledigt markieren, indem er aus dem Entity-Menü <em>Close</em> wählt (das Requirement wird als erledigt markiert),</li>
+						<li><span class="red">[was sonst noch passiert, kann nicht nicht testen, da sich kein neuer Sprint aktivieren lässt]</span></li>
+					</ul>
+				</td>
+				
+				<!-- Agilo -->
+				<td class="compcol">
+					?
+				</td>
+				
+				<!--Fazit -->
+				<td class="compcol rescol">
+					Für das Rechte-Management sollte der Product Owner nur Requirements abnehmen können, die das Team auch als fertig einstuft.
+				</td>
+			</tr>
+
+<!-- == SCRUM MASTER == -->
+			<tr>
+				<td colspan="4" class="subsection">Scrum Master</td>
+			</tr>
+			
+<!-- Überwacht aktive und erledigte Tasks und ihre Schätzungen -->
+			<tr>
+				<td class="compcol headcol">Überwacht aktive und erledigte Tasks und ihre Schätzungen</td>
+				<!-- NSP -->
+				<td class="compcol"></td>
+				
+				<!-- Agilo -->
+				<td class="compcol"></td>
+				
+				<!--Fazit -->
+				<td class="compcol rescol"></td>
+			</tr>
+			
+<!-- Verwaltet eine Liste von Impediments -->
+			<tr>
+				<td class="compcol headcol">Verwaltet eine Liste von Impediments</td>
+				<!-- NSP -->
+				<td class="compcol"></td>
+				
+				<!-- Agilo -->
+				<td class="compcol"></td>
+				
+				<!--Fazit -->
+				<td class="compcol rescol"></td>
+			</tr>
+			
+<!-- Priorisiert Impediments -->
+			<tr>
+				<td class="compcol headcol">Priorisiert Impediments</td>
+				<!-- NSP -->
+				<td class="compcol"></td>
+				
+				<!-- Agilo -->
+				<td class="compcol"></td>
+				
+				<!--Fazit -->
+				<td class="compcol rescol"></td>
+			</tr>
+			
+<!-- Entwirft Gegenmaßnahmen für Impediments -->
+			<tr>
+				<td class="compcol headcol">Entwirft Gegenmaßnahmen für Impediments</td>
+				<!-- NSP -->
+				<td class="compcol"></td>
+				
+				<!-- Agilo -->
+				<td class="compcol"></td>
+				
+				<!--Fazit -->
+				<td class="compcol rescol"></td>
+			</tr>
+			
+<!-- Läd zu Meetings ein -->
+			<tr>
+				<td class="compcol headcol">Läd zu Meetings ein</td>
+				<!-- NSP -->
+				<td class="compcol"></td>
+				
+				<!-- Agilo -->
+				<td class="compcol"></td>
+				
+				<!--Fazit -->
+				<td class="compcol rescol"></td>
+			</tr>
+			
+<!-- Durchführung von Daily Scrums -->
+			<tr>
+				<td class="compcol headcol">Durchführung von Daily Scrums</td>
+				<!-- NSP -->
+				<td class="compcol"></td>
+				
+				<!-- Agilo -->
+				<td class="compcol"></td>
+				
+				<!--Fazit -->
+				<td class="compcol rescol"></td>
+			</tr>
+			
+<!-- Durchführung von Sprint Retrospectives -->
+			<tr>
+				<td class="compcol headcol">Durchführung von Sprint Retrospectives</td>
+				<!-- NSP -->
+				<td class="compcol"></td>
+				
+				<!-- Agilo -->
+				<td class="compcol"></td>
+				
+				<!--Fazit -->
+				<td class="compcol rescol"></td>
+			</tr>
+
+<!-- == TEAM == -->
+			<tr>
+				<td colspan="4" class="subsection">Team</td>
+			</tr>
+
+<!-- Übernimmt während des Sprint Planning Requirements in den Sprint Backlog -->
+			<tr>
+				<td class="compcol headcol">Übernimmt während des Sprint Planning Requirements in den Sprint Backlog</td>
+				<!-- NSP -->
+				<td class="compcol"></td>
+				
+				<!-- Agilo -->
+				<td class="compcol"></td>
+				
+				<!--Fazit -->
+				<td class="compcol rescol"></td>
+			</tr>
+			
+<!-- Erzeugt Tasks, die zur Bearbeitung von Requirements nötig sind -->
+			<tr>
+				<td class="compcol headcol">Erzeugt Tasks, die zur Bearbeitung von Requirements nötig sind</td>
+				<!-- NSP -->
+				<td class="compcol"></td>
+				
+				<!-- Agilo -->
+				<td class="compcol"></td>
+				
+				<!--Fazit -->
+				<td class="compcol rescol"></td>
+			</tr>
+			
+<!-- Übernimmt und schließt Tasks -->
+			<tr>
+				<td class="compcol headcol">Übernimmt und schließt Tasks</td>
+				<!-- NSP -->
+				<td class="compcol"></td>
+				
+				<!-- Agilo -->
+				<td class="compcol"></td>
+				
+				<!--Fazit -->
+				<td class="compcol rescol"></td>
+			</tr>
+			
+<!-- Verhandelt Sprintumfang mit dem Product Owner neu (Erweiterung oder Streichung von Requirements) -->
+			<tr>
+				<td class="compcol headcol">Verhandelt Sprintumfang mit dem Product Owner neu (Erweiterung oder Streichung von Requirements)</td>
+				<!-- NSP -->
+				<td class="compcol"></td>
+				
+				<!-- Agilo -->
+				<td class="compcol"></td>
+				
+				<!--Fazit -->
+				<td class="compcol rescol"></td>
+			</tr>
+			
+<!-- Verhandelt den Umfang von Requirements neu (Änderung von Beschreibung und Abnahmekriterien) -->
+			<tr>
+				<td class="compcol headcol">Verhandelt den Umfang von Requirements neu (Änderung von Beschreibung und Abnahmekriterien)</td>
+				<!-- NSP -->
+				<td class="compcol"></td>
+				
+				<!-- Agilo -->
+				<td class="compcol"></td>
+				
+				<!--Fazit -->
+				<td class="compcol rescol"></td>
+			</tr>
+		</table>
+	</body>
+</html>
