@@ -1,5 +1,6 @@
 package scrum.client;
 
+import ilarkesto.gwt.client.BetterTextArea;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.Initializer;
 import ilarkesto.gwt.client.RichtextFormater;
@@ -62,14 +63,18 @@ public class Wiki extends AScrumComponent implements RichtextFormater {
 			toolbar.add(createToolbarButton(Img.bundle.formatTextItalic().createImage(), "Italic", new ClickHandler() {
 
 				public void onClick(ClickEvent event) {
-					Gwt.wrapSelection(editor.getEditor(), "''", "''");
+					BetterTextArea textArea = editor.getEditor();
+					textArea.wrapSelection("''", "''");
+					textArea.setFocus(true);
 				}
 			}));
 
 			toolbar.add(createToolbarButton(Img.bundle.formatTextBold().createImage(), "Bold", new ClickHandler() {
 
 				public void onClick(ClickEvent event) {
-					Gwt.wrapSelection(editor.getEditor(), "'''", "'''");
+					BetterTextArea textArea = editor.getEditor();
+					textArea.wrapSelection("'''", "'''");
+					textArea.setFocus(true);
 				}
 			}));
 		}
