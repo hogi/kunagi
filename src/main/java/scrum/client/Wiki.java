@@ -77,6 +77,15 @@ public class Wiki extends AScrumComponent implements RichtextFormater {
 					textArea.setFocus(true);
 				}
 			}));
+
+			toolbar.add(createToolbarButton(Img.bundle.formatTextCode().createImage(), "Code", new ClickHandler() {
+
+				public void onClick(ClickEvent event) {
+					BetterTextArea textArea = editor.getEditor();
+					textArea.wrapSelection("<code>", "</code>");
+					textArea.setFocus(true);
+				}
+			}));
 		}
 	}
 

@@ -25,6 +25,9 @@ public interface GImageBundle
     @Resource(value="formatTextBold.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype formatTextBold();
 
+    @Resource(value="formatTextCode.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype formatTextCode();
+
     @Resource(value="formatTextItalic.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype formatTextItalic();
 
