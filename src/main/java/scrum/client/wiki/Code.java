@@ -17,6 +17,10 @@ public class Code extends AWikiElement {
 		return "<code>" + html + "</code>";
 	}
 
+	public String getText() {
+		return text;
+	}
+
 	@Override
 	public String toString() {
 		return "Code(\"" + text + "\")";

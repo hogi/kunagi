@@ -24,6 +24,14 @@ public class Highlight extends Paragraph {
 		return sb.toString();
 	}
 
+	public boolean isEm() {
+		return em;
+	}
+
+	public boolean isStrong() {
+		return strong;
+	}
+
 	@Override
 	public String toString() {
 		return "Highlight(" + Gwt.toString(getElements()) + ")";

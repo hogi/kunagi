@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+  
+<suite name="Scrum42" verbose="1" >
+  <test name="All" >
+     <packages>
+      <package name="scrum.client" />
+      <package name="scrum.client.wiki" />
+      <package name="scrum.server" />
+      <package name="scrum.server.common" />
+      <package name="scrum.server.project" />
+   </packages>
+  </test>
+</suite>
