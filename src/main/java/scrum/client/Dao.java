@@ -113,6 +113,9 @@ public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
 		if (entity instanceof ChatMessage) {
 			cm.getChat().addChatMessage((ChatMessage) entity);
 		}
+		if (entity instanceof File) {
+			cm.getEventBus().fireFileUploaded((File) entity);
+		}
 	}
 
 	@Override

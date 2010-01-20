@@ -188,6 +188,25 @@ public abstract class GEventBus
         }
     }
 
+    // --- FileUploaded ---
+
+    private Set<FileUploadedListener> fileUploadedListeners = new HashSet<FileUploadedListener>();
+
+    public void addFileUploadedListener(FileUploadedListener listener) {
+        fileUploadedListeners.add(listener);
+    }
+
+    public void removeFileUploadedListener(FileUploadedListener listener) {
+        fileUploadedListeners.remove(listener);
+    }
+
+    public void fireFileUploaded(scrum.client.files.File file) {
+        log.debug("Event fired: FileUploaded");
+        for (FileUploadedListener listener : fileUploadedListeners) {
+            listener.onFileUploaded(file);
+        }
+    }
+
     // --- automatic adding / removing ---
 
     public void addListener(Object listener) {
@@ -200,6 +219,7 @@ public abstract class GEventBus
         if (listener instanceof BlockExpandedListener) addBlockExpandedListener((BlockExpandedListener)listener);
         if (listener instanceof BlockCollapsedListener) addBlockCollapsedListener((BlockCollapsedListener)listener);
         if (listener instanceof SearchResultsChangedListener) addSearchResultsChangedListener((SearchResultsChangedListener)listener);
+        if (listener instanceof FileUploadedListener) addFileUploadedListener((FileUploadedListener)listener);
     }
 
     public void removeListener(Object listener) {
@@ -212,6 +232,7 @@ public abstract class GEventBus
         if (listener instanceof BlockExpandedListener) removeBlockExpandedListener((BlockExpandedListener)listener);
         if (listener instanceof BlockCollapsedListener) removeBlockCollapsedListener((BlockCollapsedListener)listener);
         if (listener instanceof SearchResultsChangedListener) removeSearchResultsChangedListener((SearchResultsChangedListener)listener);
+        if (listener instanceof FileUploadedListener) removeFileUploadedListener((FileUploadedListener)listener);
     }
 
 }

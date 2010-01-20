@@ -86,6 +86,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtEventBusModel.addEvent("BlockExpanded").addParameter("object", Object.class);
 			gwtEventBusModel.addEvent("BlockCollapsed").addParameter("object", Object.class);
 			gwtEventBusModel.addEvent("SearchResultsChanged");
+			gwtEventBusModel.addEvent("FileUploaded").addParameter("file", "scrum.client.files.File");
 		}
 		return gwtEventBusModel;
 	}

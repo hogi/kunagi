@@ -10,6 +10,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.common.AScrumComponent;
+import scrum.client.files.File;
 import scrum.client.files.UploadWidget;
 import scrum.client.img.Img;
 import scrum.client.wiki.ScrumHtmlContext;
@@ -24,7 +25,9 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.Widget;
 
-public class Wiki extends AScrumComponent implements RichtextFormater {
+public class Wiki extends AScrumComponent implements RichtextFormater, FileUploadedListener {
+
+	private FileReferenceInserter fileReferenceInserter;
 
 	@Override
 	protected void onInitialization() {
@@ -32,6 +35,12 @@ public class Wiki extends AScrumComponent implements RichtextFormater {
 		Gwt.setDefaultRichtextFormater(this);
 		Gwt.setRichtextEditorEditInitializer(new RichtextEditorEditInitializer());
 		Gwt.setDefaultRichtextSyntaxInfo(WikiParser.SYNTAX_INFO_HTML);
+	}
+
+	public void onFileUploaded(File file) {
+		if (fileReferenceInserter == null) return;
+		fileReferenceInserter.insertFile(file);
+		fileReferenceInserter = null;
 	}
 
 	public String getTemplate(String name) {
@@ -94,12 +103,12 @@ public class Wiki extends AScrumComponent implements RichtextFormater {
 
 				public void onClick(ClickEvent event) {
 					final BetterTextArea textArea = editor.getEditor();
-					UploadWidget.showDialog(new IUploader.OnFinishUploaderHandler() {
+					UploadWidget.showDialog(textArea.getAbsoluteTop() + 20, new IUploader.OnFinishUploaderHandler() {
 
 						public void onFinish(IUploader uploader) {
 							if (uploader.getStatus() == Status.SUCCESS) {
-								textArea.wrapSelection("fle???", "");
-								textArea.setFocus(true);
+								fileReferenceInserter = new FileReferenceInserter(textArea);
+								cm.getApp().callPing();
 							}
 						}
 					});
@@ -113,6 +122,22 @@ public class Wiki extends AScrumComponent implements RichtextFormater {
 		PushButton button = new PushButton(icon, clickHandler);
 		button.setTitle(tooltip);
 		return button;
+	}
+
+	private class FileReferenceInserter {
+
+		private BetterTextArea textArea;
+
+		public FileReferenceInserter(BetterTextArea textArea) {
+			super();
+			this.textArea = textArea;
+		}
+
+		public void insertFile(File file) {
+			textArea.wrapSelection(file.getReference(), "");
+			textArea.setFocus(true);
+		}
+
 	}
 
 }
