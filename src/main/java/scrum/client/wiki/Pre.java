@@ -14,6 +14,10 @@ public class Pre extends AWikiElement {
 		return "<pre>" + escapeHtml(text) + "</pre>";
 	}
 
+	public String getText() {
+		return text;
+	}
+
 	@Override
 	public String toString() {
 		return "Pre(\"" + text + "\")";

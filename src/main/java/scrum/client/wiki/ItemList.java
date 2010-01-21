@@ -32,6 +32,14 @@ public class ItemList extends AWikiElement {
 		return sb.toString();
 	}
 
+	public List<Paragraph> getItems() {
+		return items;
+	}
+
+	public boolean isOrdered() {
+		return ordered;
+	}
+
 	@Override
 	public String toString() {
 		return "ItemList(" + Gwt.toString(items) + ")";

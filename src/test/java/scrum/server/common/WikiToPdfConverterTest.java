@@ -16,16 +16,29 @@ public class WikiToPdfConverterTest {
 	@Test
 	public void test() throws IOException {
 		StringBuilder sb = new StringBuilder();
-		sb.append("= Header 1 =\n");
+		sb.append("= Section 1 =\n");
 		sb
 				.append("Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. \n\n");
 		sb
 				.append("Some other text in second paragraph. Some other text in second paragraph. Some other text in second paragraph. Some other text in second paragraph. Some other text in second paragraph. Some other text in second paragraph. Some other text in second paragraph. Some other text in second paragraph. Some other text in second paragraph. Some other text in second paragraph. Some other text in second paragraph. Some other text in second paragraph. Some other text in second paragraph. \n\n");
-		sb.append("== Header 2 ==\n");
+		sb.append("== Section 1.1 ==\n");
 		sb.append("Some Text.\n\n");
-		sb.append("=== Header 3 ===\n");
+		sb.append("=== Section 1.1.1 ===\n");
 		sb
 				.append("Some text with ''italic'', '''bold''' and '''''both'''''. And then comes <code>crazy code</code>.\n\n");
+		sb.append("Some reference to req23 and a link to [http://servisto.de/ servisto.de].\n\n");
+		sb.append("==== Section 1.1.1.1 ====\n");
+		sb.append(" preformated\n");
+		sb.append("  code\n\n");
+		sb.append("= Section 2 =\n");
+		sb.append("== Section 2.1 ==\n");
+		sb.append("* item 1\n");
+		sb.append("* item 2\n");
+		sb.append("* item 3\n\n");
+		sb.append("== Section 2.2 ==\n");
+		sb.append("# item 1\n");
+		sb.append("# item 2\n");
+		sb.append("# item 3\n\n");
 		WikiParser parser = new WikiParser(sb.toString());
 		WikiModel model = parser.parse();
 

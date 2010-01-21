@@ -26,6 +26,14 @@ public class EntityReference extends AWikiElement {
 		return sb.toString();
 	}
 
+	public String getLabel() {
+		return label;
+	}
+
+	public String getReference() {
+		return reference;
+	}
+
 	@Override
 	public String toString() {
 		return "EntityReference(" + reference + "," + label + ")";

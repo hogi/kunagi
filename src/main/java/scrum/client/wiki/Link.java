@@ -7,7 +7,7 @@ public class Link extends AWikiElement {
 
 	public Link(String href, String label) {
 		super();
-		this.href = href;
+		this.href = enhance(href);
 		this.label = label;
 	}
 
@@ -48,6 +48,14 @@ public class Link extends AWikiElement {
 			s = s.substring(0, 20) + "...";
 		}
 		return s;
+	}
+
+	public String getHref() {
+		return href;
+	}
+
+	public String getLabel() {
+		return label;
 	}
 
 	@Override
