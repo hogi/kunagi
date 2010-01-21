@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import scrum.server.common.BurndownChart;
+import scrum.server.common.WikiToPdfConverter;
 import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
 
@@ -76,13 +77,20 @@ public class Sprint extends GSprint {
 
 		if (isGoalSet()) pdf.paragraph().nl().text("Goal", labelStyle).nl().text(getGoal());
 
-		if (isCompletedRequirementLabelsSet())
-			pdf.paragraph().nl().text("Completed Requirements", labelStyle).nl().text(getCompletedRequirementLabels());
+		if (isCompletedRequirementLabelsSet()) {
+			pdf.paragraph().nl().text("Completed Requirements", labelStyle).nl();
+			WikiToPdfConverter.buildPdf(pdf, getCompletedRequirementLabels());
+		}
 
-		if (isRetrospectiveNoteSet()) pdf.paragraph().nl().text("Review notes", labelStyle).nl().text(getReviewNote());
+		if (isReviewNoteSet()) {
+			pdf.paragraph().nl().text("Review notes", labelStyle).nl();
+			WikiToPdfConverter.buildPdf(pdf, getReviewNote());
+		}
 
-		if (isRetrospectiveNoteSet())
-			pdf.paragraph().nl().text("Retrospective notes", labelStyle).nl().text(getRetrospectiveNote());
+		if (isRetrospectiveNoteSet()) {
+			pdf.paragraph().nl().text("Retrospective notes", labelStyle).nl();
+			WikiToPdfConverter.buildPdf(pdf, getRetrospectiveNote());
+		}
 	}
 
 	public List<SprintDaySnapshot> getDaySnapshots() {

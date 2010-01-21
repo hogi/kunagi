@@ -61,7 +61,13 @@ public class WikiWidget extends AScrumWidget {
 					wikipage)));
 			editor = new RichtextEditorWidget(wikipage.getTextModel());
 			editor.setEditorHeight(500);
-			page.addSection(TableBuilder.row(20, editor, new CommentsWidget(wikipage)));
+
+			FlowPanel right = new FlowPanel();
+			right.add(Gwt.createServletDownloadLink("wikipage.pdf?wikipageId=" + wikipage.getId(), "Downlad as PDF"));
+			right.add(Gwt.createSpacer(1, 10));
+			right.add(new CommentsWidget(wikipage));
+
+			page.addSection(TableBuilder.row(20, editor, right));
 		}
 
 		panel.clear();

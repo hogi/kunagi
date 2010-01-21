@@ -16,6 +16,7 @@ import scrum.client.wiki.Paragraph;
 import scrum.client.wiki.Pre;
 import scrum.client.wiki.Text;
 import scrum.client.wiki.WikiModel;
+import scrum.client.wiki.WikiParser;
 
 public class WikiToPdfConverter {
 
@@ -141,6 +142,13 @@ public class WikiToPdfConverter {
 
 	private void processText(Text text, AParagraph parent, FontStyle fontStyle) {
 		parent.text(text.getText(), fontStyle);
+	}
+
+	public static void buildPdf(APdfContainerElement parent, String code) {
+		WikiParser parser = new WikiParser(code);
+		WikiModel model = parser.parse();
+		WikiToPdfConverter converter = new WikiToPdfConverter(model);
+		converter.build(parent);
 	}
 
 }

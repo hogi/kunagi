@@ -92,6 +92,16 @@
         <url-pattern>/scrum.ScrumGwtApplication/sprintReport.pdf</url-pattern>
     </servlet-mapping>
 
+    <!-- wiki page pdf -->
+    <servlet>
+        <servlet-name>wikipagePdf</servlet-name>
+        <servlet-class>scrum.server.collaboration.WikipagePdfServlet</servlet-class>
+    </servlet>      
+    <servlet-mapping>
+        <servlet-name>wikipagePdf</servlet-name>
+        <url-pattern>/scrum.ScrumGwtApplication/wikipage.pdf</url-pattern>
+    </servlet-mapping>
+
     <!-- journal rss -->
     <servlet>
         <servlet-name>journalRss</servlet-name>

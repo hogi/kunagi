@@ -2,6 +2,7 @@ package scrum.server.common;
 
 import ilarkesto.pdf.APdfBuilder;
 import ilarkesto.pdf.itext.PdfBuilder;
+import ilarkesto.webapp.Servlet;
 
 import java.io.IOException;
 
@@ -17,9 +18,15 @@ public abstract class APdfServlet extends AHttpServlet {
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
 		resp.setContentType("application/pdf");
+		String filename = getFilename();
+		if (filename != null) Servlet.setFilename(filename, resp);
 		PdfBuilder pdf = new PdfBuilder(resp.getOutputStream());
 		buildPdf(pdf, req, session);
 		pdf.close();
+	}
+
+	protected String getFilename() {
+		return null;
 	}
 
 }
