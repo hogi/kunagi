@@ -15,7 +15,7 @@ public class Image extends AWikiElement {
 
 	@Override
 	String toHtml(HtmlContext context) {
-		boolean external = reference.startsWith("http://");
+		boolean external = reference.startsWith("http://") || reference.startsWith("https://");
 		StringBuilder sb = new StringBuilder();
 		if (external) {
 			sb.append("<a href=\"");
@@ -40,6 +40,18 @@ public class Image extends AWikiElement {
 		sb.append("\">");
 		sb.append("</a>");
 		return sb.toString();
+	}
+
+	public String getReference() {
+		return reference;
+	}
+
+	public boolean isThumb() {
+		return thumb;
+	}
+
+	public boolean isLeft() {
+		return left;
 	}
 
 	@Override

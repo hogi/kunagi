@@ -17,6 +17,7 @@ public class WikiToPdfConverterTest {
 	public void test() throws IOException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("= Section 1 =\n");
+		sb.append("[[Image:http://www.google.com/intl/en_ALL/images/logo.gif|thumb]]\n");
 		sb
 				.append("Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. Some Text in first paragraph. \n\n");
 		sb

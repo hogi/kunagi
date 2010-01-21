@@ -10,6 +10,7 @@ import scrum.client.wiki.Code;
 import scrum.client.wiki.EntityReference;
 import scrum.client.wiki.Header;
 import scrum.client.wiki.Highlight;
+import scrum.client.wiki.Image;
 import scrum.client.wiki.ItemList;
 import scrum.client.wiki.Link;
 import scrum.client.wiki.Paragraph;
@@ -116,7 +117,16 @@ public class WikiToPdfConverter {
 			processLink((Link) element, parent);
 			return;
 		}
+		if (element instanceof Image) {
+			processImage((Image) element, parent);
+			return;
+		}
 		throw new RuntimeException("Unsupported Wiki-Paragraph-Element: " + element.getClass().getName());
+	}
+
+	private void processImage(Image image, AParagraph parent) {
+
+	// TODO
 	}
 
 	private void processLink(Link link, AParagraph parent) {
