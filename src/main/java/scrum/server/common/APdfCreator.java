@@ -9,6 +9,7 @@ public abstract class APdfCreator {
 	protected FontStyle defaultFont;
 	protected FontStyle codeFont;
 	protected FontStyle referenceFont;
+	protected FontStyle fieldLabelFont;
 	protected FontStyle[] headerFonts = new FontStyle[4];
 
 	protected abstract void build(APdfContainerElement pdf);
@@ -19,6 +20,7 @@ public abstract class APdfCreator {
 		defaultFont = new FontStyle().setSize(4);
 		codeFont = new FontStyle(defaultFont).setFont("Courier");
 		referenceFont = new FontStyle(defaultFont).setFont("Courier").setItalic(true);
+		fieldLabelFont = new FontStyle(defaultFont).setItalic(true);
 		headerFonts[3] = new FontStyle(defaultFont).setSize(defaultFont.getSize() + 0.2f).setBold(true);
 		headerFonts[2] = new FontStyle(defaultFont).setSize(headerFonts[3].getSize() + 0.7f).setBold(true);
 		headerFonts[1] = new FontStyle(defaultFont).setSize(headerFonts[2].getSize() + 0.7f).setBold(true);
