@@ -20,8 +20,8 @@ public abstract class APdfCreator {
 		codeFont = new FontStyle(defaultFont).setFont("Courier");
 		referenceFont = new FontStyle(defaultFont).setFont("Courier").setItalic(true);
 		headerFonts[3] = new FontStyle(defaultFont).setSize(defaultFont.getSize() + 0.2f).setBold(true);
-		headerFonts[2] = new FontStyle(defaultFont).setSize(headerFonts[3].getSize() + 0.8f).setBold(true);
-		headerFonts[1] = new FontStyle(defaultFont).setSize(headerFonts[2].getSize() + 1.0f).setBold(true);
+		headerFonts[2] = new FontStyle(defaultFont).setSize(headerFonts[3].getSize() + 0.7f).setBold(true);
+		headerFonts[1] = new FontStyle(defaultFont).setSize(headerFonts[2].getSize() + 0.7f).setBold(true);
 		headerFonts[0] = new FontStyle(defaultFont).setSize(headerFonts[1].getSize() + 1.5f).setBold(true);
 	}
 

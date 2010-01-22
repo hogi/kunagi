@@ -44,11 +44,11 @@ public class WikiToPdfConverterTest {
 		WikiModel model = parser.parse();
 
 		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream("test-output/wiki.pdf"));
-		PdfBuilder pdfBuilder = new PdfBuilder(out);
+		PdfBuilder pdfBuilder = new PdfBuilder();
 
 		WikiToPdfConverter converter = new WikiToPdfConverter(model);
 		converter.build(pdfBuilder);
-		pdfBuilder.close();
+		pdfBuilder.write(out);
 
 		out.close();
 	}

@@ -53,9 +53,9 @@ public class PdfServlet extends AHttpServlet {
 		resp.setContentType("application/pdf");
 		Servlet.setFilename(creator.getFilename(), resp);
 
-		PdfBuilder pdf = new PdfBuilder(resp.getOutputStream());
+		PdfBuilder pdf = new PdfBuilder();
 		creator.build(pdf);
-		pdf.close();
+		pdf.write(resp.getOutputStream());
 	}
 
 	protected String getFilename() {
