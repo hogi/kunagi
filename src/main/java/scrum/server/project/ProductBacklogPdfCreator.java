@@ -23,6 +23,7 @@ public class ProductBacklogPdfCreator extends APdfCreator {
 
 		List<Requirement> requirements = new ArrayList<Requirement>(project.getRequirements());
 		for (Requirement req : requirements) {
+			if (req.isClosed()) continue;
 			pdf.nl();
 			pdf.paragraph().text(req.getReferenceAndLabel(), headerFonts[1]);
 			wiki(pdf, req.getDescription());
