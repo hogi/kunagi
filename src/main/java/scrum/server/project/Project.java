@@ -3,6 +3,7 @@ package scrum.server.project;
 import ilarkesto.base.Money;
 import ilarkesto.base.Str;
 import ilarkesto.base.time.Date;
+import ilarkesto.pdf.APdfBuilder;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.rss.Rss20Builder;
 import ilarkesto.search.Searchable;
@@ -138,6 +139,8 @@ public class Project extends GProject {
 	}
 
 	// --- ---
+
+	public void buildProductBacklogReport(APdfBuilder pdf) {}
 
 	public void scanFiles() {
 		java.io.File dir = new java.io.File(getFileRepositoryPath());

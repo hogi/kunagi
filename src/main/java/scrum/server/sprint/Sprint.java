@@ -2,16 +2,10 @@ package scrum.server.sprint;
 
 import ilarkesto.base.time.Date;
 import ilarkesto.logging.Logger;
-import ilarkesto.pdf.AParagraph;
-import ilarkesto.pdf.APdfBuilder;
-import ilarkesto.pdf.FontStyle;
 
-import java.awt.Color;
 import java.util.List;
 import java.util.Set;
 
-import scrum.server.common.BurndownChart;
-import scrum.server.common.WikiToPdfConverter;
 import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
 
@@ -54,43 +48,6 @@ public class Sprint extends GSprint {
 		setVelocity(velocity);
 		getProject().setVelocity(velocity);
 		setCompletedRequirementLabels(sb.toString());
-	}
-
-	public void buildReport(APdfBuilder pdf) {
-		FontStyle defaultStyle = new FontStyle().setSize(4);
-		FontStyle labelStyle = new FontStyle().setSize(4).setItalic(true).setColor(Color.DARK_GRAY);
-		FontStyle headerStyle = new FontStyle().setSize(5).setBold(true);
-
-		pdf.setDefaultFontStyle(defaultStyle);
-
-		pdf.paragraph().text("Scrum Sprint Report", headerStyle);
-
-		AParagraph pProps = pdf.paragraph();
-		pProps.nl().text("Project: ", labelStyle).text(getProject().getLabel()).nl();
-		pProps.text("Sprint: ", labelStyle).text(getLabel()).nl();
-		pProps.text("Period: ", labelStyle).text(getBegin() + " - " + getEnd() + " / " + getLengthInDays() + " days");
-
-		pdf.nl();
-		pdf.image(BurndownChart.createBurndownChartAsByteArray(this, 1000, 500)).setScaleByWidth(150f);
-
-		pdf.paragraph().nl().text("Velocity: ", labelStyle).text(getVelocity() + " StoryPoints");
-
-		if (isGoalSet()) pdf.paragraph().nl().text("Goal", labelStyle).nl().text(getGoal());
-
-		if (isCompletedRequirementLabelsSet()) {
-			pdf.paragraph().nl().text("Completed Requirements", labelStyle).nl();
-			WikiToPdfConverter.buildPdf(pdf, getCompletedRequirementLabels());
-		}
-
-		if (isReviewNoteSet()) {
-			pdf.paragraph().nl().text("Review notes", labelStyle).nl();
-			WikiToPdfConverter.buildPdf(pdf, getReviewNote());
-		}
-
-		if (isRetrospectiveNoteSet()) {
-			pdf.paragraph().nl().text("Retrospective notes", labelStyle).nl();
-			WikiToPdfConverter.buildPdf(pdf, getRetrospectiveNote());
-		}
 	}
 
 	public List<SprintDaySnapshot> getDaySnapshots() {

@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
+import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
 import scrum.client.workspace.PagePanel;
@@ -63,7 +64,7 @@ public class WikiWidget extends AScrumWidget {
 			editor.setEditorHeight(500);
 
 			FlowPanel right = new FlowPanel();
-			right.add(Gwt.createServletDownloadLink("wikipage.pdf?wikipageId=" + wikipage.getId(), "Downlad as PDF"));
+			right.add(ScrumGwt.createPdfLink("Downlad as PDF", "wikipage", wikipage));
 			right.add(Gwt.createSpacer(1, 10));
 			right.add(new CommentsWidget(wikipage));
 

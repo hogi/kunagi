@@ -1,11 +1,11 @@
 package scrum.client.sprint;
 
 import ilarkesto.gwt.client.AFieldValueWidget;
-import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextOutputWidget;
+import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -84,10 +84,7 @@ public class SprintWidget extends AScrumWidget {
 		tb.addFieldRow("Review Note", new RichtextEditorWidget(sprint.getReviewNoteModel()), 4);
 		tb.addFieldRow("Retrospecitve Note", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel()), 4);
 
-		if (completed)
-			tb.add(Gwt
-					.createServletDownloadLink("sprintReport.pdf?sprintId=" + sprint.getId(), "Downlad Report as PDF"),
-				5);
+		if (completed) tb.add(ScrumGwt.createPdfLink("Download Report as PDF", "sprintReport", sprint), 5);
 
 		return tb.createTable();
 	}

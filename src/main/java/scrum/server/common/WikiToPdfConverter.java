@@ -19,28 +19,16 @@ import scrum.client.wiki.Text;
 import scrum.client.wiki.WikiModel;
 import scrum.client.wiki.WikiParser;
 
-public class WikiToPdfConverter {
+public class WikiToPdfConverter extends APdfCreator {
 
 	private WikiModel model;
 
-	private FontStyle defaultFont;
-	private FontStyle codeFont;
-	private FontStyle referenceFont;
-	private FontStyle[] headerFonts = new FontStyle[4];
-
 	public WikiToPdfConverter(WikiModel model) {
 		this.model = model;
-
-		defaultFont = new FontStyle().setSize(4);
-		codeFont = new FontStyle(defaultFont).setFont("Courier");
-		referenceFont = new FontStyle(defaultFont).setFont("Courier").setItalic(true);
-		headerFonts[3] = new FontStyle(defaultFont).setSize(defaultFont.getSize() + 0.2f).setBold(true);
-		headerFonts[2] = new FontStyle(defaultFont).setSize(headerFonts[3].getSize() + 0.8f).setBold(true);
-		headerFonts[1] = new FontStyle(defaultFont).setSize(headerFonts[2].getSize() + 1.0f).setBold(true);
-		headerFonts[0] = new FontStyle(defaultFont).setSize(headerFonts[1].getSize() + 1.5f).setBold(true);
 	}
 
-	public void build(APdfContainerElement parent) {
+	@Override
+	protected void build(APdfContainerElement parent) {
 		for (AWikiElement element : model.getElements())
 			processElement(element, parent);
 	}
@@ -159,6 +147,11 @@ public class WikiToPdfConverter {
 		WikiModel model = parser.parse();
 		WikiToPdfConverter converter = new WikiToPdfConverter(model);
 		converter.build(parent);
+	}
+
+	@Override
+	protected String getFilename() {
+		return "wiki";
 	}
 
 }
