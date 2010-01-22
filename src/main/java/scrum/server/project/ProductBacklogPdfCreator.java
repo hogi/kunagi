@@ -1,6 +1,7 @@
 package scrum.server.project;
 
 import ilarkesto.pdf.APdfContainerElement;
+import ilarkesto.pdf.FieldList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,11 @@ public class ProductBacklogPdfCreator extends APdfCreator {
 		List<Requirement> requirements = new ArrayList<Requirement>(project.getRequirements());
 		for (Requirement req : requirements) {
 			pdf.nl();
-			pdf.paragraph().text(req.getReference() + " " + req.getLabel(), headerFonts[1]);
+			pdf.paragraph().text(req.getReferenceAndLabel(), headerFonts[1]);
 			wiki(pdf, req.getDescription());
+			FieldList fields = pdf.fieldList().setLabelFontStyle(fieldLabelFont);
+			wiki(fields.field("Test"), req.getTestDescription());
+			fields.field("Estimated work").text(req.getEstimatedWork());
 		}
 	}
 
