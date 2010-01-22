@@ -30,4 +30,10 @@ public abstract class APdfCreator {
 		build(pdf);
 	}
 
+	// --- helper ---
+
+	protected void wiki(APdfContainerElement parent, String wikiCode) {
+		WikiToPdfConverter.buildPdf(parent, wikiCode);
+	}
+
 }

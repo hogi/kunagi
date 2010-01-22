@@ -18,6 +18,7 @@ public class WikiParser {
 	private boolean oneliner;
 
 	public WikiParser(String input) {
+		assert input != null;
 		this.input = input;
 	}
 

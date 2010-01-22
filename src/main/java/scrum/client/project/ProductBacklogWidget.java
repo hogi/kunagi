@@ -3,6 +3,7 @@ package scrum.client.project;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.ToolbarWidget;
 import ilarkesto.gwt.client.editor.IntegerEditorWidget;
@@ -12,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 import scrum.client.ListPredicate;
+import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.PagePanel;
@@ -103,7 +105,8 @@ public class ProductBacklogWidget extends AScrumWidget {
 		page.addHeader("Product Backlog", new ButtonWidget(new CreateRequirementAction()));
 		page.addSection(tb.createTable());
 		page.addSection(filterPanel);
-		page.addSection(list);
+		page.addSection(Gwt.createFlowPanel(list, Gwt.createSpacer(1, 10), ScrumGwt.createPdfLink("Download as PDF",
+			"productBacklog", getCurrentProject())));
 
 		return page;
 	}
