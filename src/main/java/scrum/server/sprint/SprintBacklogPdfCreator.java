@@ -1,4 +1,4 @@
-package scrum.server.project;
+package scrum.server.sprint;
 
 import ilarkesto.pdf.APdfContainerElement;
 import ilarkesto.pdf.FieldList;
@@ -7,24 +7,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import scrum.server.common.APdfCreator;
-import scrum.server.risks.Risk;
+import scrum.server.impediments.Impediment;
+import scrum.server.project.Project;
+import scrum.server.project.Requirement;
 
-public class ProductBacklogPdfCreator extends APdfCreator {
+public class SprintBacklogPdfCreator extends APdfCreator {
 
 	private Project project;
 
-	public ProductBacklogPdfCreator(Project project) {
+	public SprintBacklogPdfCreator(Project project) {
 		super();
 		this.project = project;
 	}
 
 	@Override
 	protected void build(APdfContainerElement pdf) {
-		pdf.paragraph().text("Product Backlog", headerFonts[0]);
+		pdf.paragraph().text("Sprint Backlog", headerFonts[0]);
 
 		pdf.nl();
 		pdf.paragraph().text("Requirements", headerFonts[1]);
-		List<Requirement> requirements = new ArrayList<Requirement>(project.getRequirements());
+		List<Requirement> requirements = new ArrayList<Requirement>(project.getCurrentSprint().getRequirements());
 		for (Requirement req : requirements) {
 			if (req.isClosed()) continue;
 			pdf.nl();
@@ -36,24 +38,21 @@ public class ProductBacklogPdfCreator extends APdfCreator {
 		}
 
 		pdf.nl();
-		pdf.paragraph().text("Risks", headerFonts[1]);
-		for (Risk rsk : project.getRisks()) {
+		pdf.paragraph().text("Impediments", headerFonts[1]);
+		for (Impediment imp : project.getImpediments()) {
+			if (imp.isClosed()) continue;
 			pdf.nl();
-			pdf.paragraph().text(rsk.getReferenceAndLabel(), headerFonts[2]);
-			wiki(pdf, rsk.getDescription());
+			pdf.paragraph().text(imp.getReferenceAndLabel(), headerFonts[2]);
+			wiki(pdf, imp.getDescription());
 			FieldList fields = pdf.fieldList().setLabelFontStyle(fieldLabelFont);
-			fields.field("Priority").text(rsk.getPriorityLabel());
-			fields.field("Probability").text(rsk.getProbabilityLabel());
-			if (rsk.isProbabilityMitigationSet())
-				wiki(fields.field("Probability mitigation"), rsk.getProbabilityMitigation());
-			fields.field("Impact").text(rsk.getImpactLabel());
-			if (rsk.isImpactMitigationSet()) wiki(fields.field("Impact mitigation"), rsk.getImpactMitigation());
+			fields.field("Date").text(imp.getDate());
+			if (imp.isSolutionSet()) wiki(fields.field("Solution"), imp.getSolution());
 		}
 	}
 
 	@Override
 	protected String getFilename() {
-		return "productbacklog";
+		return "sprintbacklog";
 	}
 
 }

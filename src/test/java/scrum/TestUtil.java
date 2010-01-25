@@ -1,14 +1,18 @@
 package scrum;
 
+import ilarkesto.base.time.Date;
 import ilarkesto.logging.Logger;
 import ilarkesto.persistence.EntityStore;
 import ilarkesto.persistence.FileEntityStore;
 import ilarkesto.persistence.TransactionService;
+import scrum.server.impediments.ImpedimentDao;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
+import scrum.server.risks.RiskDao;
 import scrum.server.sprint.Sprint;
+import scrum.server.sprint.SprintDao;
 import scrum.server.sprint.SprintDaySnapshotDao;
 
 public class TestUtil {
@@ -19,6 +23,9 @@ public class TestUtil {
 	private static SprintDaySnapshotDao sprintDaySnapshotDao;
 	private static RequirementDao requirementDao;
 	private static ProjectDao projectDao;
+	private static SprintDao sprintDao;
+	private static ImpedimentDao impedimentDao;
+	private static RiskDao riskDao;
 
 	private static void initialize() {
 		if (initialized) return;
@@ -31,18 +38,31 @@ public class TestUtil {
 		transactionService = new TransactionService();
 		transactionService.setEntityStore(entityStore);
 
+		riskDao = new RiskDao();
+		riskDao.setTransactionService(transactionService);
+
+		impedimentDao = new ImpedimentDao();
+		impedimentDao.setTransactionService(transactionService);
+
 		requirementDao = new RequirementDao();
 		requirementDao.setTransactionService(transactionService);
 
 		sprintDaySnapshotDao = new SprintDaySnapshotDao();
 		sprintDaySnapshotDao.setTransactionService(transactionService);
 
+		sprintDao = new SprintDao();
+		sprintDao.setTransactionService(transactionService);
+		Sprint.setSprintDaySnapshotDao(sprintDaySnapshotDao);
+		Sprint.setRequirementDao(requirementDao);
+
 		projectDao = new ProjectDao();
 		projectDao.setTransactionService(transactionService);
 		Project.setSprintDaySnapshotDao(sprintDaySnapshotDao);
 		Project.setRequirementDao(requirementDao);
+		Project.setSprintDao(sprintDao);
+		Project.setImpedimentDao(impedimentDao);
+		Project.setRiskDao(riskDao);
 
-		Sprint.setSprintDaySnapshotDao(sprintDaySnapshotDao);
 	}
 
 	public static Requirement createRequirement(Project project, int number) {
@@ -58,6 +78,21 @@ public class TestUtil {
 		requirement.setLabel(label);
 		requirement.setDescription(description);
 		return requirement;
+	}
+
+	public static Sprint createSprint(Project project, Date end) {
+		return createSprint(project, end.beforeDays(30), end);
+	}
+
+	public static Sprint createSprint(Project project, Date begin, Date end) {
+		initialize();
+		Sprint sprint = sprintDao.newEntityInstance();
+		sprint.setProject(project);
+		sprint.setBegin(begin);
+		sprint.setEnd(end);
+		sprint.setLabel("Sprint from " + begin + " to " + end);
+		sprint.setGoal("Sprint from " + begin + " to " + end);
+		return sprint;
 	}
 
 	public static Project createProject() {

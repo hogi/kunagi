@@ -14,9 +14,26 @@ import scrum.server.project.ProductBacklogPdfCreator;
 import scrum.server.project.Project;
 import scrum.server.project.Requirement;
 import scrum.server.sprint.Sprint;
+import scrum.server.sprint.SprintBacklogPdfCreator;
 import scrum.server.sprint.SprintReportPdfCreator;
 
 public class PdfTest {
+
+	@Test
+	public void sprintBacklog() {
+		Project project = TestUtil.createProject();
+
+		Sprint sprint = TestUtil.createSprint(project, Date.today());
+		project.setCurrentSprint(sprint);
+
+		Requirement req1 = TestUtil.createRequirement(project, 1);
+		req1.setSprint(sprint);
+
+		Requirement req2 = TestUtil.createRequirement(project, 2);
+		req2.setSprint(sprint);
+
+		createPdf(new SprintBacklogPdfCreator(project));
+	}
 
 	@Test
 	public void productBacklog() {

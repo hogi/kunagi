@@ -17,6 +17,7 @@ import scrum.server.collaboration.WikipagePdfCreator;
 import scrum.server.project.ProductBacklogPdfCreator;
 import scrum.server.project.Project;
 import scrum.server.sprint.Sprint;
+import scrum.server.sprint.SprintBacklogPdfCreator;
 import scrum.server.sprint.SprintReportPdfCreator;
 
 public class PdfServlet extends AHttpServlet {
@@ -25,7 +26,12 @@ public class PdfServlet extends AHttpServlet {
 		if (pdfId.equals("sprintReport")) return createSprintReport(req, session);
 		if (pdfId.equals("wikipage")) return createWikipage(req, session);
 		if (pdfId.equals("productBacklog")) return createProductBacklog(req, session);
+		if (pdfId.equals("sprintBacklog")) return createSprintBacklog(req, session);
 		throw new RuntimeException("Unknown pdfId: " + pdfId);
+	}
+
+	private APdfCreator createSprintBacklog(HttpServletRequest req, WebSession session) {
+		return new SprintBacklogPdfCreator(getProject(session));
 	}
 
 	private APdfCreator createProductBacklog(HttpServletRequest req, WebSession session) {
