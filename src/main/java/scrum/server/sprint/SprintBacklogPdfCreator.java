@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import scrum.server.common.APdfCreator;
+import scrum.server.common.BurndownChart;
 import scrum.server.impediments.Impediment;
 import scrum.server.project.Project;
 import scrum.server.project.Requirement;
@@ -22,11 +23,17 @@ public class SprintBacklogPdfCreator extends APdfCreator {
 
 	@Override
 	protected void build(APdfContainerElement pdf) {
+		Sprint sprint = project.getCurrentSprint();
+
 		pdf.paragraph().text("Sprint Backlog", headerFonts[0]);
 
 		pdf.nl();
+		pdf.paragraph().text("Burndown", headerFonts[1]);
+		pdf.image(BurndownChart.createBurndownChartAsByteArray(sprint, 1000, 500)).setScaleByWidth(150f);
+
+		pdf.nl();
 		pdf.paragraph().text("Requirements", headerFonts[1]);
-		List<Requirement> requirements = new ArrayList<Requirement>(project.getCurrentSprint().getRequirements());
+		List<Requirement> requirements = new ArrayList<Requirement>(sprint.getRequirements());
 		for (Requirement req : requirements) {
 			if (req.isClosed()) continue;
 			pdf.nl();

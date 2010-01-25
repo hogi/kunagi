@@ -84,7 +84,11 @@ public class SprintWidget extends AScrumWidget {
 		tb.addFieldRow("Review Note", new RichtextEditorWidget(sprint.getReviewNoteModel()), 4);
 		tb.addFieldRow("Retrospecitve Note", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel()), 4);
 
-		if (completed) tb.add(ScrumGwt.createPdfLink("Download Report as PDF", "sprintReport", sprint), 5);
+		if (completed) {
+			tb.add(ScrumGwt.createPdfLink("Download Report as PDF", "sprintReport", sprint), 5);
+		} else {
+			tb.add(ScrumGwt.createPdfLink("Download as PDF", "sprintBacklog", sprint), 5);
+		}
 
 		return tb.createTable();
 	}
