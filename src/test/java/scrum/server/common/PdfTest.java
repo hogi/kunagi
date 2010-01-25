@@ -8,6 +8,7 @@ import java.io.File;
 import org.testng.annotations.Test;
 
 import scrum.TestUtil;
+import scrum.server.calendar.CalendarPdfCreator;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.collaboration.WikipagePdfCreator;
 import scrum.server.impediments.ImpedimentListPdfCreator;
@@ -20,6 +21,17 @@ import scrum.server.sprint.SprintBacklogPdfCreator;
 import scrum.server.sprint.SprintReportPdfCreator;
 
 public class PdfTest {
+
+	@Test
+	public void calendar() {
+		Project project = TestUtil.createProject();
+
+		TestUtil.createSimpleEvent(project, 0);
+		TestUtil.createSimpleEvent(project, 10);
+		TestUtil.createSimpleEvent(project, 20);
+
+		createPdf(new CalendarPdfCreator(project, Date.today(), Date.inDays(30)));
+	}
 
 	@Test
 	public void riskList() {

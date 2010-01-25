@@ -11,6 +11,12 @@ public class ScrumGwt extends Gwt {
 		return createPdfLink(text, pdfId, "entityId", entity.getId());
 	}
 
+	public static HTML createPdfLink(String text, String pdfId, String parameterKey, String parameterValue,
+			String parameter2Key, String parameter2Value) {
+		return createPdfLink(text, pdfId, parameterKey + "=" + parameterValue + "&" + parameter2Key + "="
+				+ parameter2Value);
+	}
+
 	public static HTML createPdfLink(String text, String pdfId, String parameterKey, String parameterValue) {
 		return createPdfLink(text, pdfId, parameterKey + "=" + parameterValue);
 	}

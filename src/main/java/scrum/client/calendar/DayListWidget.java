@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.common.BlockListWidget;
@@ -38,6 +39,7 @@ public class DayListWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		selectionManager = new BlockListSelectionManager();
 		lists = new HashMap<Date, BlockListWidget<SimpleEvent>>();
+
 		wrapper = new SimplePanel();
 		showDate(Date.today());
 		return wrapper;
@@ -98,7 +100,9 @@ public class DayListWidget extends AScrumWidget {
 			row++;
 		}
 
-		wrapper.setWidget(table);
+		Widget downloadLink = ScrumGwt.createPdfLink("Download as PDF", "calendar", "from", begin.toString(), "to", end
+				.toString());
+		wrapper.setWidget(Gwt.createFlowPanel(table, Gwt.createSpacer(1, 10), downloadLink));
 	}
 
 	private void formatRow(FlexTable table, int row) {

@@ -5,6 +5,8 @@ import ilarkesto.logging.Logger;
 import ilarkesto.persistence.EntityStore;
 import ilarkesto.persistence.FileEntityStore;
 import ilarkesto.persistence.TransactionService;
+import scrum.server.calendar.SimpleEvent;
+import scrum.server.calendar.SimpleEventDao;
 import scrum.server.impediments.Impediment;
 import scrum.server.impediments.ImpedimentDao;
 import scrum.server.project.Project;
@@ -28,6 +30,7 @@ public class TestUtil {
 	private static SprintDao sprintDao;
 	private static ImpedimentDao impedimentDao;
 	private static RiskDao riskDao;
+	private static SimpleEventDao simpleEventDao;
 
 	private static void initialize() {
 		if (initialized) return;
@@ -39,6 +42,9 @@ public class TestUtil {
 
 		transactionService = new TransactionService();
 		transactionService.setEntityStore(entityStore);
+
+		simpleEventDao = new SimpleEventDao();
+		simpleEventDao.setTransactionService(transactionService);
 
 		riskDao = new RiskDao();
 		riskDao.setTransactionService(transactionService);
@@ -64,7 +70,23 @@ public class TestUtil {
 		Project.setSprintDao(sprintDao);
 		Project.setImpedimentDao(impedimentDao);
 		Project.setRiskDao(riskDao);
+		Project.setSimpleEventDao(simpleEventDao);
 
+	}
+
+	public static SimpleEvent createSimpleEvent(Project project, int number) {
+		return createSimpleEvent(project, Date.inDays(number), "Event #" + number, "Location #" + number,
+			"Note for Event #" + number);
+	}
+
+	public static SimpleEvent createSimpleEvent(Project project, Date date, String label, String location, String note) {
+		SimpleEvent event = simpleEventDao.newEntityInstance();
+		event.setProject(project);
+		event.setDate(date);
+		event.setLabel(label);
+		event.setLocation(location);
+		event.setNote(note);
+		return event;
 	}
 
 	public static Risk createRisk(Project project, int number) {

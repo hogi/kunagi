@@ -1,6 +1,7 @@
 package scrum.server.common;
 
 import ilarkesto.base.PermissionDeniedException;
+import ilarkesto.base.time.Date;
 import ilarkesto.pdf.itext.PdfBuilder;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.webapp.Servlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
+import scrum.server.calendar.CalendarPdfCreator;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.collaboration.WikipagePdfCreator;
 import scrum.server.impediments.ImpedimentListPdfCreator;
@@ -31,7 +33,14 @@ public class PdfServlet extends AHttpServlet {
 		if (pdfId.equals("sprintBacklog")) return createSprintBacklog(req, session);
 		if (pdfId.equals("impedimentList")) return createImpedimentList(req, session);
 		if (pdfId.equals("riskList")) return createRiskList(req, session);
+		if (pdfId.equals("calendar")) return createCalendar(req, session);
 		throw new RuntimeException("Unknown pdfId: " + pdfId);
+	}
+
+	private APdfCreator createCalendar(HttpServletRequest req, WebSession session) {
+		Date from = new Date(req.getParameter("from"));
+		Date to = new Date(req.getParameter("to"));
+		return new CalendarPdfCreator(getProject(session), from, to);
 	}
 
 	private APdfCreator createRiskList(HttpServletRequest req, WebSession session) {
