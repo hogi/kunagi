@@ -8,7 +8,6 @@ import java.util.List;
 
 import scrum.server.common.APdfCreator;
 import scrum.server.common.BurndownChart;
-import scrum.server.impediments.Impediment;
 import scrum.server.project.Project;
 import scrum.server.project.Requirement;
 
@@ -44,17 +43,6 @@ public class SprintBacklogPdfCreator extends APdfCreator {
 			if (req.isEstimatedWorkSet()) fields.field("Estimated work").text(req.getEstimatedWork());
 		}
 
-		pdf.nl();
-		pdf.paragraph().text("Impediments", headerFonts[1]);
-		for (Impediment imp : project.getImpediments()) {
-			if (imp.isClosed()) continue;
-			pdf.nl();
-			pdf.paragraph().text(imp.getReferenceAndLabel(), headerFonts[2]);
-			wiki(pdf, imp.getDescription());
-			FieldList fields = pdf.fieldList().setLabelFontStyle(fieldLabelFont);
-			fields.field("Date").text(imp.getDate());
-			if (imp.isSolutionSet()) wiki(fields.field("Solution"), imp.getSolution());
-		}
 	}
 
 	@Override

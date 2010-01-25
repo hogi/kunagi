@@ -5,6 +5,7 @@ import ilarkesto.logging.Logger;
 import ilarkesto.persistence.EntityStore;
 import ilarkesto.persistence.FileEntityStore;
 import ilarkesto.persistence.TransactionService;
+import scrum.server.impediments.Impediment;
 import scrum.server.impediments.ImpedimentDao;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
@@ -63,6 +64,22 @@ public class TestUtil {
 		Project.setImpedimentDao(impedimentDao);
 		Project.setRiskDao(riskDao);
 
+	}
+
+	public static Impediment createImpediment(Project project, int number) {
+		return createImpediment(project, Date.beforeDays(number), number, "Impediment #" + number, "Impediment #"
+				+ number + " description.");
+	}
+
+	public static Impediment createImpediment(Project project, Date date, int number, String label, String description) {
+		initialize();
+		Impediment impediment = impedimentDao.newEntityInstance();
+		impediment.setProject(project);
+		impediment.setDate(date);
+		impediment.setNumber(number);
+		impediment.setLabel(label);
+		impediment.setDescription(description);
+		return impediment;
 	}
 
 	public static Requirement createRequirement(Project project, int number) {

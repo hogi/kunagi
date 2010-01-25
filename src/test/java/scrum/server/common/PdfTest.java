@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import scrum.TestUtil;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.collaboration.WikipagePdfCreator;
+import scrum.server.impediments.ImpedimentListPdfCreator;
 import scrum.server.project.ProductBacklogPdfCreator;
 import scrum.server.project.Project;
 import scrum.server.project.Requirement;
@@ -18,6 +19,19 @@ import scrum.server.sprint.SprintBacklogPdfCreator;
 import scrum.server.sprint.SprintReportPdfCreator;
 
 public class PdfTest {
+
+	@Test
+	public void impedimentList() {
+		Project project = TestUtil.createProject();
+
+		TestUtil.createImpediment(project, 1);
+		TestUtil.createImpediment(project, 2);
+		TestUtil.createImpediment(project, 3);
+		TestUtil.createImpediment(project, 4);
+		TestUtil.createImpediment(project, 5);
+
+		createPdf(new ImpedimentListPdfCreator(project));
+	}
 
 	@Test
 	public void sprintBacklog() {

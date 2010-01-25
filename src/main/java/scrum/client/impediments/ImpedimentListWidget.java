@@ -1,6 +1,8 @@
 package scrum.client.impediments;
 
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.Gwt;
+import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.PagePanel;
@@ -20,7 +22,8 @@ public class ImpedimentListWidget extends AScrumWidget {
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Impediment List", new ButtonWidget(new CreateImpedimentAction()));
-		page.addSection(list);
+		page.addSection(Gwt.createFlowPanel(list, Gwt.createSpacer(1, 10), ScrumGwt.createPdfLink("Downlad as PDF",
+			"impedimentList", "")));
 		return page;
 	}
 

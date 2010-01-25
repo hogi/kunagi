@@ -1,6 +1,8 @@
 package scrum.client.risks;
 
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.Gwt;
+import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.PagePanel;
@@ -20,7 +22,8 @@ public class RiskListWidget extends AScrumWidget {
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Risk List", new ButtonWidget(new CreateRiskAction()));
-		page.addSection(list);
+		page.addSection(Gwt.createFlowPanel(list, Gwt.createSpacer(1, 10), ScrumGwt.createPdfLink("Downlad as PDF",
+			"riskList", "")));
 		return page;
 	}
 
