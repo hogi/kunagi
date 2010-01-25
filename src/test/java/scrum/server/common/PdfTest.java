@@ -14,11 +14,25 @@ import scrum.server.impediments.ImpedimentListPdfCreator;
 import scrum.server.project.ProductBacklogPdfCreator;
 import scrum.server.project.Project;
 import scrum.server.project.Requirement;
+import scrum.server.risks.RiskListPdfCreator;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintBacklogPdfCreator;
 import scrum.server.sprint.SprintReportPdfCreator;
 
 public class PdfTest {
+
+	@Test
+	public void riskList() {
+		Project project = TestUtil.createProject();
+
+		TestUtil.createRisk(project, 1);
+		TestUtil.createRisk(project, 2);
+		TestUtil.createRisk(project, 3);
+		TestUtil.createRisk(project, 4);
+		TestUtil.createRisk(project, 5);
+
+		createPdf(new RiskListPdfCreator(project));
+	}
 
 	@Test
 	public void impedimentList() {

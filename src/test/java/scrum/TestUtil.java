@@ -11,6 +11,7 @@ import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
+import scrum.server.risks.Risk;
 import scrum.server.risks.RiskDao;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintDao;
@@ -64,6 +65,21 @@ public class TestUtil {
 		Project.setImpedimentDao(impedimentDao);
 		Project.setRiskDao(riskDao);
 
+	}
+
+	public static Risk createRisk(Project project, int number) {
+		return createRisk(project, number, "Risk #" + number, "Risk #" + number + " description");
+	}
+
+	public static Risk createRisk(Project project, int number, String label, String description) {
+		Risk risk = riskDao.newEntityInstance();
+		risk.setProject(project);
+		risk.setNumber(number);
+		risk.setLabel(label);
+		risk.setDescription(description);
+		risk.setImpact(number);
+		risk.setProbability(number);
+		return risk;
 	}
 
 	public static Impediment createImpediment(Project project, int number) {

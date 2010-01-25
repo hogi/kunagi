@@ -17,6 +17,7 @@ import scrum.server.collaboration.WikipagePdfCreator;
 import scrum.server.impediments.ImpedimentListPdfCreator;
 import scrum.server.project.ProductBacklogPdfCreator;
 import scrum.server.project.Project;
+import scrum.server.risks.RiskListPdfCreator;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintBacklogPdfCreator;
 import scrum.server.sprint.SprintReportPdfCreator;
@@ -29,7 +30,12 @@ public class PdfServlet extends AHttpServlet {
 		if (pdfId.equals("productBacklog")) return createProductBacklog(req, session);
 		if (pdfId.equals("sprintBacklog")) return createSprintBacklog(req, session);
 		if (pdfId.equals("impedimentList")) return createImpedimentList(req, session);
+		if (pdfId.equals("riskList")) return createRiskList(req, session);
 		throw new RuntimeException("Unknown pdfId: " + pdfId);
+	}
+
+	private APdfCreator createRiskList(HttpServletRequest req, WebSession session) {
+		return new RiskListPdfCreator(getProject(session));
 	}
 
 	private APdfCreator createImpedimentList(HttpServletRequest req, WebSession session) {
