@@ -7,9 +7,9 @@ import java.util.List;
 public class EstimationBar {
 
 	private int sprintOffset;
-	private List<Integer> workPerSprint;
+	private List<Float> workPerSprint;
 
-	public EstimationBar(int sprintOffset, List<Integer> workPerSprint) {
+	public EstimationBar(int sprintOffset, List<Float> workPerSprint) {
 		super();
 		this.sprintOffset = sprintOffset;
 		this.workPerSprint = workPerSprint;
@@ -23,7 +23,7 @@ public class EstimationBar {
 		return sprintOffset + workPerSprint.size() - 1;
 	}
 
-	public List<Integer> getWorkPerSprint() {
+	public List<Float> getWorkPerSprint() {
 		return workPerSprint;
 	}
 

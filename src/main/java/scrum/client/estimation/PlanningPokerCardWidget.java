@@ -9,11 +9,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class PlanningPokerCardWidget extends AScrumWidget {
 
-	private int value;
+	private float value;
 	private ClickHandler clickHandler;
 	private boolean visible;
 
-	public PlanningPokerCardWidget(int value, boolean visible, ClickHandler clickHandler) {
+	public PlanningPokerCardWidget(float value, boolean visible, ClickHandler clickHandler) {
 		super();
 		this.value = value;
 		this.visible = visible;

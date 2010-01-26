@@ -38,20 +38,20 @@ public class Sprint extends GSprint {
 		return getVelocity() != null;
 	}
 
-	public int getEstimatedRequirementWork() {
-		int sum = 0;
+	public float getEstimatedRequirementWork() {
+		float sum = 0;
 		for (Requirement requirement : getRequirements()) {
-			Integer work = requirement.getEstimatedWork();
+			Float work = requirement.getEstimatedWork();
 			if (work != null) sum += work;
 		}
 		return sum;
 	}
 
-	public int getCompletedRequirementWork() {
-		int sum = 0;
+	public float getCompletedRequirementWork() {
+		float sum = 0;
 		for (Requirement requirement : getRequirements()) {
 			if (!requirement.isClosed()) continue;
-			Integer work = requirement.getEstimatedWork();
+			Float work = requirement.getEstimatedWork();
 			if (work != null) sum += work;
 		}
 		return sum;

@@ -59,7 +59,7 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 			statusImage = Img.bundle.reqDirty().createImage();
 			statusImage.setTitle("Needs estimation.");
 		}
-		estimationLabel.setText(requirement.getEstimatedWorkAsString());
+		estimationLabel.setText(requirement.getEstimatedWorkWithUnit());
 		statusIcon.setWidget(statusImage);
 		header.setCenter(requirement.getLabel());
 

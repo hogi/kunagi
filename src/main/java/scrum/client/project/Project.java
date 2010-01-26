@@ -366,7 +366,7 @@ public class Project extends GProject {
 		return requirementsOrderComparator;
 	}
 
-	public String formatEfford(Integer i) {
+	public String formatEfford(Float i) {
 		if (i == null || i == 0) return "nothing";
 		String unit = getEffortUnit();
 		if (i == 1) {

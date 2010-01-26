@@ -346,60 +346,21 @@ public abstract class GRequirement
 
     // --- estimatedWork ---
 
-    private java.lang.Integer estimatedWork ;
+    private java.lang.Float estimatedWork ;
 
-    public final java.lang.Integer getEstimatedWork() {
+    public final java.lang.Float getEstimatedWork() {
         return this.estimatedWork ;
     }
 
-    public final Requirement setEstimatedWork(java.lang.Integer estimatedWork) {
+    public final Requirement setEstimatedWork(java.lang.Float estimatedWork) {
         if (isEstimatedWork(estimatedWork)) return (Requirement)this;
         this.estimatedWork = estimatedWork ;
         propertyChanged("estimatedWork", this.estimatedWork);
         return (Requirement)this;
     }
 
-    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
+    public final boolean isEstimatedWork(java.lang.Float estimatedWork) {
         return equals(this.estimatedWork, estimatedWork);
-    }
-
-    private transient EstimatedWorkModel estimatedWorkModel;
-
-    public EstimatedWorkModel getEstimatedWorkModel() {
-        if (estimatedWorkModel == null) estimatedWorkModel = createEstimatedWorkModel();
-        return estimatedWorkModel;
-    }
-
-    protected EstimatedWorkModel createEstimatedWorkModel() { return new EstimatedWorkModel(); }
-
-    protected class EstimatedWorkModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
-
-        @Override
-        public java.lang.Integer getValue() {
-            return getEstimatedWork();
-        }
-
-        @Override
-        public void setValue(java.lang.Integer value) {
-            setEstimatedWork(value);
-        }
-
-            @Override
-            public void increment() {
-                setEstimatedWork(getEstimatedWork() + 1);
-            }
-
-            @Override
-            public void decrement() {
-                setEstimatedWork(getEstimatedWork() - 1);
-            }
-
-        @Override
-        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
-            super.onChangeValue(oldValue, newValue);
-            addUndo(this, oldValue);
-        }
-
     }
 
     // --- closed ---
@@ -488,7 +449,7 @@ public abstract class GRequirement
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
         testDescription  = (java.lang.String) props.get("testDescription");
-        estimatedWork  = (java.lang.Integer) props.get("estimatedWork");
+        estimatedWork  = (java.lang.Float) props.get("estimatedWork");
         closed  = (Boolean) props.get("closed");
         dirty  = (Boolean) props.get("dirty");
         workEstimationVotingActive  = (Boolean) props.get("workEstimationVotingActive");

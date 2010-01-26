@@ -277,7 +277,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setSearchable(true);
 			requirementModel.addStringProperty("testDescription").setRichtext(true).setEditablePredicate("editable")
 					.setSearchable(true);
-			requirementModel.addProperty("estimatedWork", Integer.class);
+			requirementModel.addProperty("estimatedWork", Float.class);
 			requirementModel.addProperty("closed", boolean.class);
 			requirementModel.addProperty("dirty", boolean.class);
 			requirementModel.addProperty("workEstimationVotingActive", boolean.class);
@@ -294,7 +294,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addAction("CloseRequirementEstimationVoting");
 			requirementModel.addAction("RequirementEstimationVotingShowoff");
 			requirementModel.addAction("ResetRequirementEstimationVoting");
-			requirementModel.addAction("RequirementEstimationVote").addParameter("estimatedWork", Integer.class);
+			requirementModel.addAction("RequirementEstimationVote").addParameter("estimatedWork", Float.class);
 		}
 		return requirementModel;
 	}
@@ -307,7 +307,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementEstimationVoteModel.setGwtSupport(true);
 			requirementEstimationVoteModel.addReference("requirement", getRequirementModel()).setMaster(true);
 			requirementEstimationVoteModel.addReference("user", getUserModel()).setMaster(true);
-			requirementEstimationVoteModel.addProperty("estimatedWork", Integer.class);
+			requirementEstimationVoteModel.addProperty("estimatedWork", Float.class);
 		}
 		return requirementEstimationVoteModel;
 	}

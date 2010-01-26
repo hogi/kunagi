@@ -23,7 +23,7 @@ public class RequirementDao extends GRequirementDao {
 	// --- test data ---
 
 	public void createTestRequirement(Project project, int variant) {
-		Integer estimatedWork = 5;
+		Float estimatedWork = 5f;
 
 		if (variant == 0) estimatedWork = null;
 

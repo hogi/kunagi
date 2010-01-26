@@ -34,19 +34,20 @@ public class Sprint extends GSprint {
 	// --- ---
 
 	public void close() {
-		int velocity = 0;
+		float velocity = 0;
 		StringBuilder sb = new StringBuilder();
 		for (Requirement requirement : getRequirements()) {
 			if (requirement.isClosed()) {
-				Integer work = requirement.getEstimatedWork();
+				Float work = requirement.getEstimatedWork();
 				if (work != null) velocity += work;
 				sb.append("* ");
 				sb.append(requirement.getLabel());
 				sb.append("\n");
 			}
 		}
-		setVelocity(velocity);
-		getProject().setVelocity(velocity);
+		int velocityInt = Math.round(velocity);
+		setVelocity(velocityInt);
+		getProject().setVelocity(velocityInt);
 		setCompletedRequirementLabels(sb.toString());
 	}
 

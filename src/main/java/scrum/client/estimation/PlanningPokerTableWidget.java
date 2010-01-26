@@ -4,7 +4,6 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.TableBuilder;
-import scrum.client.ClientConstants;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.CloseRequirementEstimationVotingAction;
@@ -90,12 +89,12 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 	private Widget createHandCards() {
 		Project project = getCurrentProject();
 		RequirementEstimationVote vote = requirement.getEstimationVote(getCurrentUser());
-		Integer voteValue = vote == null ? null : vote.getEstimatedWork();
+		Float voteValue = vote == null ? null : vote.getEstimatedWork();
 		boolean showoff = requirement.isWorkEstimationVotingShowoff();
 
 		TableBuilder tb = new TableBuilder();
 		tb.setWidth(null);
-		for (String value : ClientConstants.EFFORT_ROW) {
+		for (String value : Requirement.WORK_ESTIMATION_VALUES) {
 			if (value.length() == 0) continue;
 			int estimation = Integer.parseInt(value);
 			PlanningPokerCardWidget card = null;
@@ -114,7 +113,7 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 		for (User user : getCurrentProject().getTeamMembers()) {
 			boolean currentUser = user == getCurrentUser();
 			RequirementEstimationVote vote = requirement.getEstimationVote(user);
-			Integer estimation = vote == null ? null : vote.getEstimatedWork();
+			Float estimation = vote == null ? null : vote.getEstimatedWork();
 			LOG.debug("Estimation:", user.getName(), "->", estimation);
 
 			Widget card;
@@ -143,9 +142,9 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 
 	private class SelectEstimationClickHandler implements ClickHandler {
 
-		private int estimation;
+		private float estimation;
 
-		public SelectEstimationClickHandler(int estimation) {
+		public SelectEstimationClickHandler(float estimation) {
 			super();
 			this.estimation = estimation;
 		}
@@ -158,9 +157,9 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 
 	private class SetEstimationClickHandler implements ClickHandler {
 
-		private int estimation;
+		private float estimation;
 
-		public SetEstimationClickHandler(int estimation) {
+		public SetEstimationClickHandler(float estimation) {
 			super();
 			this.estimation = estimation;
 		}

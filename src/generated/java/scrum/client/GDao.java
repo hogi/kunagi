@@ -1171,7 +1171,7 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.project.Requirement> getRequirementsByEstimatedWork(java.lang.Integer estimatedWork) {
+    public final List<scrum.client.project.Requirement> getRequirementsByEstimatedWork(java.lang.Float estimatedWork) {
         List<scrum.client.project.Requirement> ret = new ArrayList<scrum.client.project.Requirement>();
         for (scrum.client.project.Requirement entity : requirements.values()) {
             if (entity.isEstimatedWork(estimatedWork)) ret.add(entity);
@@ -1283,7 +1283,7 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.estimation.RequirementEstimationVote> getRequirementEstimationVotesByEstimatedWork(java.lang.Integer estimatedWork) {
+    public final List<scrum.client.estimation.RequirementEstimationVote> getRequirementEstimationVotesByEstimatedWork(java.lang.Float estimatedWork) {
         List<scrum.client.estimation.RequirementEstimationVote> ret = new ArrayList<scrum.client.estimation.RequirementEstimationVote>();
         for (scrum.client.estimation.RequirementEstimationVote entity : requirementEstimationVotes.values()) {
             if (entity.isEstimatedWork(estimatedWork)) ret.add(entity);

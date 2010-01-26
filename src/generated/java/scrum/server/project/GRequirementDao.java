@@ -356,21 +356,21 @@ public abstract class GRequirementDao
     // - estimatedWork
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.Integer,Set<Requirement>> requirementsByEstimatedWorkCache = new Cache<java.lang.Integer,Set<Requirement>>(
-            new Cache.Factory<java.lang.Integer,Set<Requirement>>() {
-                public Set<Requirement> create(java.lang.Integer estimatedWork) {
+    private final Cache<java.lang.Float,Set<Requirement>> requirementsByEstimatedWorkCache = new Cache<java.lang.Float,Set<Requirement>>(
+            new Cache.Factory<java.lang.Float,Set<Requirement>>() {
+                public Set<Requirement> create(java.lang.Float estimatedWork) {
                     return getEntities(new IsEstimatedWork(estimatedWork));
                 }
             });
 
-    public final Set<Requirement> getRequirementsByEstimatedWork(java.lang.Integer estimatedWork) {
+    public final Set<Requirement> getRequirementsByEstimatedWork(java.lang.Float estimatedWork) {
         return requirementsByEstimatedWorkCache.get(estimatedWork);
     }
-    private Set<java.lang.Integer> estimatedWorksCache;
+    private Set<java.lang.Float> estimatedWorksCache;
 
-    public final Set<java.lang.Integer> getEstimatedWorks() {
+    public final Set<java.lang.Float> getEstimatedWorks() {
         if (estimatedWorksCache == null) {
-            estimatedWorksCache = new HashSet<java.lang.Integer>();
+            estimatedWorksCache = new HashSet<java.lang.Float>();
             for (Requirement e : getEntities()) {
                 if (e.isEstimatedWorkSet()) estimatedWorksCache.add(e.getEstimatedWork());
             }
@@ -380,9 +380,9 @@ public abstract class GRequirementDao
 
     private static class IsEstimatedWork implements Predicate<Requirement> {
 
-        private java.lang.Integer value;
+        private java.lang.Float value;
 
-        public IsEstimatedWork(java.lang.Integer value) {
+        public IsEstimatedWork(java.lang.Float value) {
             this.value = value;
         }
 

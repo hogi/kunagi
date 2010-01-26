@@ -147,20 +147,20 @@ public abstract class GRequirementEstimationVote
     // - estimatedWork
     // -----------------------------------------------------------
 
-    private java.lang.Integer estimatedWork;
+    private java.lang.Float estimatedWork;
 
-    public final java.lang.Integer getEstimatedWork() {
+    public final java.lang.Float getEstimatedWork() {
         return estimatedWork;
     }
 
-    public final void setEstimatedWork(java.lang.Integer estimatedWork) {
+    public final void setEstimatedWork(java.lang.Float estimatedWork) {
         estimatedWork = prepareEstimatedWork(estimatedWork);
         if (isEstimatedWork(estimatedWork)) return;
         this.estimatedWork = estimatedWork;
         fireModified();
     }
 
-    protected java.lang.Integer prepareEstimatedWork(java.lang.Integer estimatedWork) {
+    protected java.lang.Float prepareEstimatedWork(java.lang.Float estimatedWork) {
         return estimatedWork;
     }
 
@@ -168,13 +168,13 @@ public abstract class GRequirementEstimationVote
         return this.estimatedWork != null;
     }
 
-    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
+    public final boolean isEstimatedWork(java.lang.Float estimatedWork) {
         if (this.estimatedWork == null && estimatedWork == null) return true;
         return this.estimatedWork != null && this.estimatedWork.equals(estimatedWork);
     }
 
     protected final void updateEstimatedWork(Object value) {
-        setEstimatedWork((java.lang.Integer)value);
+        setEstimatedWork((java.lang.Float)value);
     }
 
     public void updateProperties(Map<?, ?> properties) {

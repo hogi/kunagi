@@ -312,25 +312,25 @@ public class Project extends GProject {
 		return snapshot;
 	}
 
-	public int getRemainingWork() {
-		int sum = 0;
-		for (Requirement requirement : getRequirements()) {
-			if (requirement.isClosed()) continue;
-			Integer work = requirement.getEstimatedWork();
-			if (work != null) sum += work;
-		}
-		return sum;
-	}
-
-	public int getBurnedWork() {
-		int sum = 0;
-		for (Requirement requirement : getRequirements()) {
-			if (!requirement.isClosed()) continue;
-			Integer work = requirement.getEstimatedWork();
-			if (work != null) sum += work;
-		}
-		return sum;
-	}
+	// public int getRemainingWork() {
+	// int sum = 0;
+	// for (Requirement requirement : getRequirements()) {
+	// if (requirement.isClosed()) continue;
+	// Integer work = requirement.getEstimatedWork();
+	// if (work != null) sum += work;
+	// }
+	// return sum;
+	// }
+	//
+	// public int getBurnedWork() {
+	// int sum = 0;
+	// for (Requirement requirement : getRequirements()) {
+	// if (!requirement.isClosed()) continue;
+	// Integer work = requirement.getEstimatedWork();
+	// if (work != null) sum += work;
+	// }
+	// return sum;
+	// }
 
 	public List<ProjectSprintSnapshot> getSprintSnapshots() {
 		return projectSprintSnapshotDao.getProjectSprintSnapshotsByProject(this);

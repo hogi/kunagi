@@ -142,21 +142,21 @@ public abstract class GRequirementEstimationVoteDao
     // - estimatedWork
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.Integer,Set<RequirementEstimationVote>> requirementEstimationVotesByEstimatedWorkCache = new Cache<java.lang.Integer,Set<RequirementEstimationVote>>(
-            new Cache.Factory<java.lang.Integer,Set<RequirementEstimationVote>>() {
-                public Set<RequirementEstimationVote> create(java.lang.Integer estimatedWork) {
+    private final Cache<java.lang.Float,Set<RequirementEstimationVote>> requirementEstimationVotesByEstimatedWorkCache = new Cache<java.lang.Float,Set<RequirementEstimationVote>>(
+            new Cache.Factory<java.lang.Float,Set<RequirementEstimationVote>>() {
+                public Set<RequirementEstimationVote> create(java.lang.Float estimatedWork) {
                     return getEntities(new IsEstimatedWork(estimatedWork));
                 }
             });
 
-    public final Set<RequirementEstimationVote> getRequirementEstimationVotesByEstimatedWork(java.lang.Integer estimatedWork) {
+    public final Set<RequirementEstimationVote> getRequirementEstimationVotesByEstimatedWork(java.lang.Float estimatedWork) {
         return requirementEstimationVotesByEstimatedWorkCache.get(estimatedWork);
     }
-    private Set<java.lang.Integer> estimatedWorksCache;
+    private Set<java.lang.Float> estimatedWorksCache;
 
-    public final Set<java.lang.Integer> getEstimatedWorks() {
+    public final Set<java.lang.Float> getEstimatedWorks() {
         if (estimatedWorksCache == null) {
-            estimatedWorksCache = new HashSet<java.lang.Integer>();
+            estimatedWorksCache = new HashSet<java.lang.Float>();
             for (RequirementEstimationVote e : getEntities()) {
                 if (e.isEstimatedWorkSet()) estimatedWorksCache.add(e.getEstimatedWork());
             }
@@ -166,9 +166,9 @@ public abstract class GRequirementEstimationVoteDao
 
     private static class IsEstimatedWork implements Predicate<RequirementEstimationVote> {
 
-        private java.lang.Integer value;
+        private java.lang.Float value;
 
-        public IsEstimatedWork(java.lang.Integer value) {
+        public IsEstimatedWork(java.lang.Float value) {
             this.value = value;
         }
 

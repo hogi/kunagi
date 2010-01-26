@@ -96,60 +96,21 @@ public abstract class GRequirementEstimationVote
 
     // --- estimatedWork ---
 
-    private java.lang.Integer estimatedWork ;
+    private java.lang.Float estimatedWork ;
 
-    public final java.lang.Integer getEstimatedWork() {
+    public final java.lang.Float getEstimatedWork() {
         return this.estimatedWork ;
     }
 
-    public final RequirementEstimationVote setEstimatedWork(java.lang.Integer estimatedWork) {
+    public final RequirementEstimationVote setEstimatedWork(java.lang.Float estimatedWork) {
         if (isEstimatedWork(estimatedWork)) return (RequirementEstimationVote)this;
         this.estimatedWork = estimatedWork ;
         propertyChanged("estimatedWork", this.estimatedWork);
         return (RequirementEstimationVote)this;
     }
 
-    public final boolean isEstimatedWork(java.lang.Integer estimatedWork) {
+    public final boolean isEstimatedWork(java.lang.Float estimatedWork) {
         return equals(this.estimatedWork, estimatedWork);
-    }
-
-    private transient EstimatedWorkModel estimatedWorkModel;
-
-    public EstimatedWorkModel getEstimatedWorkModel() {
-        if (estimatedWorkModel == null) estimatedWorkModel = createEstimatedWorkModel();
-        return estimatedWorkModel;
-    }
-
-    protected EstimatedWorkModel createEstimatedWorkModel() { return new EstimatedWorkModel(); }
-
-    protected class EstimatedWorkModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
-
-        @Override
-        public java.lang.Integer getValue() {
-            return getEstimatedWork();
-        }
-
-        @Override
-        public void setValue(java.lang.Integer value) {
-            setEstimatedWork(value);
-        }
-
-            @Override
-            public void increment() {
-                setEstimatedWork(getEstimatedWork() + 1);
-            }
-
-            @Override
-            public void decrement() {
-                setEstimatedWork(getEstimatedWork() - 1);
-            }
-
-        @Override
-        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
-            super.onChangeValue(oldValue, newValue);
-            addUndo(this, oldValue);
-        }
-
     }
 
     // --- update properties by map ---
@@ -157,7 +118,7 @@ public abstract class GRequirementEstimationVote
     public void updateProperties(Map props) {
         requirementId = (String) props.get("requirementId");
         userId = (String) props.get("userId");
-        estimatedWork  = (java.lang.Integer) props.get("estimatedWork");
+        estimatedWork  = (java.lang.Float) props.get("estimatedWork");
     }
 
     @Override

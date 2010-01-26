@@ -18,6 +18,8 @@ import scrum.client.sprint.Task;
 public class Requirement extends GRequirement implements ReferenceSupport {
 
 	public static final String REFERENCE_PREFIX = "req";
+	public static String[] WORK_ESTIMATION_VALUES = new String[] { "", "0.5", "1", "2", "3", "5", "8", "13", "20",
+			"40", "100" };
 
 	private transient EstimationBar estimationBar;
 
@@ -34,6 +36,17 @@ public class Requirement extends GRequirement implements ReferenceSupport {
 
 	public Requirement(Map data) {
 		super(data);
+	}
+
+	public String getEstimatedWorkAsString() {
+		Float work = getEstimatedWork();
+		if (work == null) return null;
+		if (work <= 0.5f) return work.toString();
+		return String.valueOf(work.intValue());
+	}
+
+	public String getEstimatedWorkWithUnit() {
+		return getEstimatedWorkAsString() + " " + getProject().getEffortUnit();
 	}
 
 	public List<RequirementEstimationVote> getEstimationVotes() {
@@ -56,7 +69,7 @@ public class Requirement extends GRequirement implements ReferenceSupport {
 		return vote;
 	}
 
-	public void setVote(Integer estimatedWork) {
+	public void setVote(Float estimatedWork) {
 		RequirementEstimationVote vote = getEstimationVote(cm.getAuth().getUser());
 		vote.setEstimatedWork(estimatedWork);
 	}
@@ -81,7 +94,7 @@ public class Requirement extends GRequirement implements ReferenceSupport {
 		}
 	}
 
-	public void applyEstimationVoting(Integer estimation) {
+	public void applyEstimationVoting(Float estimation) {
 		setEstimatedWork(estimation);
 		resetWorkEstimationVoting();
 		deactivateWorkEstimationVoting();
@@ -160,9 +173,9 @@ public class Requirement extends GRequirement implements ReferenceSupport {
 		if (isClosed()) return summary += "Closed.";
 		if (isTasksClosed()) return summary += "Done. Test required.";
 		if (getEstimatedWork() == null) return summary += "No effort estimated.";
-		if (!isSprintSet()) return summary += getEstimatedWorkAsString() + " to do. No sprint assigned.";
+		if (!isSprintSet()) return summary += getEstimatedWorkWithUnit() + " to do. No sprint assigned.";
 		Sprint sprint = getSprint();
-		return summary += getEstimatedWorkAsString() + " to do in sprint " + sprint.getLabel() + ".";
+		return summary += getEstimatedWorkWithUnit() + " to do in sprint " + sprint.getLabel() + ".";
 	}
 
 	/**
@@ -183,11 +196,6 @@ public class Requirement extends GRequirement implements ReferenceSupport {
 			}
 		}
 		return openTaskCount + " of " + taskCount + " Tasks open. About " + effort + " hours to do.";
-	}
-
-	public String getEstimatedWorkAsString() {
-		if (getEstimatedWork() == null) return null;
-		return getEstimatedWork() + " " + getProject().getEffortUnit();
 	}
 
 	public int getBurnedWorkInClosedTasks() {

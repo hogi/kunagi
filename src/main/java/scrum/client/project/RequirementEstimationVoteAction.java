@@ -2,9 +2,9 @@ package scrum.client.project;
 
 public class RequirementEstimationVoteAction extends GRequirementEstimationVoteAction {
 
-	private Integer estimatedWork;
+	private Float estimatedWork;
 
-	public RequirementEstimationVoteAction(scrum.client.project.Requirement requirement, java.lang.Integer estimatedWork) {
+	public RequirementEstimationVoteAction(scrum.client.project.Requirement requirement, java.lang.Float estimatedWork) {
 		super(requirement, estimatedWork);
 		this.estimatedWork = estimatedWork;
 	}

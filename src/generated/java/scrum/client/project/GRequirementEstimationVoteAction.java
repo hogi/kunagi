@@ -19,9 +19,9 @@ public abstract class GRequirementEstimationVoteAction
             extends scrum.client.common.AScrumAction {
 
     protected scrum.client.project.Requirement requirement;
-    protected java.lang.Integer estimatedWork;
+    protected java.lang.Float estimatedWork;
 
-    public GRequirementEstimationVoteAction(scrum.client.project.Requirement requirement, java.lang.Integer estimatedWork) {
+    public GRequirementEstimationVoteAction(scrum.client.project.Requirement requirement, java.lang.Float estimatedWork) {
         this.requirement = requirement;
         this.estimatedWork = estimatedWork;
     }

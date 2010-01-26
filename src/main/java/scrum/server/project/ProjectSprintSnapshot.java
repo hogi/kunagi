@@ -7,8 +7,8 @@ public class ProjectSprintSnapshot extends GProjectSprintSnapshot implements Com
 		BurndownSnapshot {
 
 	public void update() {
-		setRemainingWork(getProject().getRemainingWork());
-		setBurnedWork(getProject().getBurnedWork());
+	// setRemainingWork(getProject().getRemainingWork());
+	// setBurnedWork(getProject().getBurnedWork());
 	}
 
 	public boolean isProject(Project project) {

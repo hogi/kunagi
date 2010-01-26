@@ -24,9 +24,9 @@ public class EstimationBarWidget extends AScrumWidget {
 	@Override
 	protected void onUpdate() {
 		EstimationBar bar = requirement == null ? null : requirement.getEstimationBar();
-		if (bar == null) bar = new EstimationBar(0, new ArrayList<Integer>());
+		if (bar == null) bar = new EstimationBar(0, new ArrayList<Float>());
 		flowPanel.clear();
-		List<Integer> estimations = bar.getWorkPerSprint();
+		List<Float> estimations = bar.getWorkPerSprint();
 		int sprintOffset = bar.getSprintOffset();
 
 		for (int i = 0; i < estimations.size(); i++) {

@@ -3,7 +3,6 @@ package scrum.client.project;
 import ilarkesto.gwt.client.ADropdownViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
-import scrum.client.ClientConstants;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
 
@@ -51,7 +50,7 @@ public class RequirementEstimatedWorkWidget extends AScrumWidget {
 
 		@Override
 		protected void onViewerUpdate() {
-			setViewerText(requirement.getEstimatedWorkAsString());
+			setViewerText(requirement.getEstimatedWorkWithUnit());
 		}
 
 		@Override
@@ -63,15 +62,15 @@ public class RequirementEstimatedWorkWidget extends AScrumWidget {
 
 		@Override
 		protected void onEditorUpdate() {
-			setOptions(ClientConstants.EFFORT_ROW);
-			Integer work = requirement.getEstimatedWork();
+			setOptions(Requirement.WORK_ESTIMATION_VALUES);
+			String work = requirement.getEstimatedWorkAsString();
 			setSelectedOption(work == null ? "" : work.toString());
 		}
 
 		@Override
 		protected void onEditorSubmit() {
 			String value = getSelectedOption();
-			requirement.setEstimatedWork(value.length() == 0 ? null : Integer.parseInt(value));
+			requirement.setEstimatedWork(value.length() == 0 ? null : Float.parseFloat(value));
 		}
 	}
 
