@@ -296,20 +296,20 @@ public abstract class GSprint
 
     // --- velocity ---
 
-    private java.lang.Integer velocity ;
+    private java.lang.Float velocity ;
 
-    public final java.lang.Integer getVelocity() {
+    public final java.lang.Float getVelocity() {
         return this.velocity ;
     }
 
-    public final Sprint setVelocity(java.lang.Integer velocity) {
+    public final Sprint setVelocity(java.lang.Float velocity) {
         if (isVelocity(velocity)) return (Sprint)this;
         this.velocity = velocity ;
         propertyChanged("velocity", this.velocity);
         return (Sprint)this;
     }
 
-    public final boolean isVelocity(java.lang.Integer velocity) {
+    public final boolean isVelocity(java.lang.Float velocity) {
         return equals(this.velocity, velocity);
     }
 
@@ -322,30 +322,20 @@ public abstract class GSprint
 
     protected VelocityModel createVelocityModel() { return new VelocityModel(); }
 
-    protected class VelocityModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+    protected class VelocityModel extends ilarkesto.gwt.client.editor.AFloatEditorModel {
 
         @Override
-        public java.lang.Integer getValue() {
+        public java.lang.Float getValue() {
             return getVelocity();
         }
 
         @Override
-        public void setValue(java.lang.Integer value) {
+        public void setValue(java.lang.Float value) {
             setVelocity(value);
         }
 
-            @Override
-            public void increment() {
-                setVelocity(getVelocity() + 1);
-            }
-
-            @Override
-            public void decrement() {
-                setVelocity(getVelocity() - 1);
-            }
-
         @Override
-        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+        protected void onChangeValue(java.lang.Float oldValue, java.lang.Float newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);
         }
@@ -590,7 +580,7 @@ public abstract class GSprint
         begin  =  beginAsString == null ? null : new ilarkesto.gwt.client.Date(beginAsString);
         String endAsString = (String) props.get("end");
         end  =  endAsString == null ? null : new ilarkesto.gwt.client.Date(endAsString);
-        velocity  = (java.lang.Integer) props.get("velocity");
+        velocity  = (java.lang.Float) props.get("velocity");
         completedRequirementLabels  = (java.lang.String) props.get("completedRequirementLabels");
         planningNote  = (java.lang.String) props.get("planningNote");
         reviewNote  = (java.lang.String) props.get("reviewNote");

@@ -58,21 +58,28 @@ public class Project extends GProject {
 		StringBuilder sb = new StringBuilder();
 		List<Sprint> sprints = getCompletedSprints();
 		Collections.sort(sprints, Sprint.END_DATE_COMPARATOR);
-		int sum = 0;
+		float sum = 0;
 		int count = 0;
 		for (Sprint sprint : sprints) {
-			int velocity = sprint.getVelocity();
-			sb.insert(0, velocity + ", ");
+			Float velocity = sprint.getVelocity();
+			if (velocity == null) continue;
+			String velocityString = velocity < 1 ? velocity.toString() : String.valueOf(velocity.intValue());
+			sb.insert(0, velocityString + ", ");
 			sum += velocity;
 			count++;
 			if (count >= 12) break;
 		}
-		int avarage = sum / count;
-		sb.append("[ ").append(avarage).append(" avg. ]");
+		float avarage = sum / count;
+		String avarageString = String.valueOf(avarage);
+		int idx = avarageString.lastIndexOf('.');
+		if (idx > 0 && avarageString.length() > idx + 1) {
+			avarageString = avarageString.substring(0, idx + 2);
+		}
+		sb.append("[ ").append(avarageString).append(" avg. ]");
 		return sb.toString();
 	}
 
-	public Integer getVelocityFromLastSprint() {
+	public Float getVelocityFromLastSprint() {
 		Sprint latest = getLatestCompletedSprint();
 		return latest == null ? null : latest.getVelocity();
 	}

@@ -97,7 +97,7 @@ public class PdfTest {
 		sprint.setPlanningNote("Planning was fun.");
 		sprint.setReviewNote("PO accepted everything.");
 		sprint.setRetrospectiveNote("Perfect sprint.");
-		sprint.setVelocity(666);
+		sprint.setVelocity(666f);
 		createPdf(new SprintReportPdfCreator(sprint));
 	}
 

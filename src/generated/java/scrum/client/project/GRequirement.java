@@ -363,6 +363,35 @@ public abstract class GRequirement
         return equals(this.estimatedWork, estimatedWork);
     }
 
+    private transient EstimatedWorkModel estimatedWorkModel;
+
+    public EstimatedWorkModel getEstimatedWorkModel() {
+        if (estimatedWorkModel == null) estimatedWorkModel = createEstimatedWorkModel();
+        return estimatedWorkModel;
+    }
+
+    protected EstimatedWorkModel createEstimatedWorkModel() { return new EstimatedWorkModel(); }
+
+    protected class EstimatedWorkModel extends ilarkesto.gwt.client.editor.AFloatEditorModel {
+
+        @Override
+        public java.lang.Float getValue() {
+            return getEstimatedWork();
+        }
+
+        @Override
+        public void setValue(java.lang.Float value) {
+            setEstimatedWork(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Float oldValue, java.lang.Float newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- closed ---
 
     private boolean closed ;

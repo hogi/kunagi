@@ -30,7 +30,7 @@ public class SprintDao extends GSprintDao {
 		sprint.setLabel("Sprint -" + variant);
 		sprint.setBegin(begin);
 		sprint.setEnd(end);
-		if (variant > 0) sprint.setVelocity(20 + variant);
+		if (variant > 0) sprint.setVelocity(new Float(20 + variant));
 		saveEntity(sprint);
 
 		if (variant == 0) {

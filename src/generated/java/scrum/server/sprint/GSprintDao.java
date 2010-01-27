@@ -276,21 +276,21 @@ public abstract class GSprintDao
     // - velocity
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.Integer,Set<Sprint>> sprintsByVelocityCache = new Cache<java.lang.Integer,Set<Sprint>>(
-            new Cache.Factory<java.lang.Integer,Set<Sprint>>() {
-                public Set<Sprint> create(java.lang.Integer velocity) {
+    private final Cache<java.lang.Float,Set<Sprint>> sprintsByVelocityCache = new Cache<java.lang.Float,Set<Sprint>>(
+            new Cache.Factory<java.lang.Float,Set<Sprint>>() {
+                public Set<Sprint> create(java.lang.Float velocity) {
                     return getEntities(new IsVelocity(velocity));
                 }
             });
 
-    public final Set<Sprint> getSprintsByVelocity(java.lang.Integer velocity) {
+    public final Set<Sprint> getSprintsByVelocity(java.lang.Float velocity) {
         return sprintsByVelocityCache.get(velocity);
     }
-    private Set<java.lang.Integer> velocitysCache;
+    private Set<java.lang.Float> velocitysCache;
 
-    public final Set<java.lang.Integer> getVelocitys() {
+    public final Set<java.lang.Float> getVelocitys() {
         if (velocitysCache == null) {
-            velocitysCache = new HashSet<java.lang.Integer>();
+            velocitysCache = new HashSet<java.lang.Float>();
             for (Sprint e : getEntities()) {
                 if (e.isVelocitySet()) velocitysCache.add(e.getVelocity());
             }
@@ -300,9 +300,9 @@ public abstract class GSprintDao
 
     private static class IsVelocity implements Predicate<Sprint> {
 
-        private java.lang.Integer value;
+        private java.lang.Float value;
 
-        public IsVelocity(java.lang.Integer value) {
+        public IsVelocity(java.lang.Float value) {
             this.value = value;
         }
 

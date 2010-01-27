@@ -351,7 +351,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				"editable").setSearchable(true);
 			sprintModel.addProperty("begin", Date.class).setEditablePredicate("datesEditable");
 			sprintModel.addProperty("end", Date.class).setEditablePredicate("datesEditable");
-			sprintModel.addProperty("velocity", Integer.class);
+			sprintModel.addProperty("velocity", Float.class);
 			sprintModel.addStringProperty("completedRequirementLabels").setRichtext(true).setSearchable(true);
 			sprintModel.addStringProperty("planningNote").setRichtext(true).setTemplateAvailable(true)
 					.setEditablePredicate("planningEditable").setSearchable(true);

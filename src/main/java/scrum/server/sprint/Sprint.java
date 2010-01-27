@@ -45,9 +45,8 @@ public class Sprint extends GSprint {
 				sb.append("\n");
 			}
 		}
-		int velocityInt = Math.round(velocity);
-		setVelocity(velocityInt);
-		getProject().setVelocity(velocityInt);
+		setVelocity(velocity);
+		getProject().setVelocity(Math.round(velocity));
 		setCompletedRequirementLabels(sb.toString());
 	}
 

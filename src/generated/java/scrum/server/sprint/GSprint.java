@@ -263,20 +263,20 @@ public abstract class GSprint
     // - velocity
     // -----------------------------------------------------------
 
-    private java.lang.Integer velocity;
+    private java.lang.Float velocity;
 
-    public final java.lang.Integer getVelocity() {
+    public final java.lang.Float getVelocity() {
         return velocity;
     }
 
-    public final void setVelocity(java.lang.Integer velocity) {
+    public final void setVelocity(java.lang.Float velocity) {
         velocity = prepareVelocity(velocity);
         if (isVelocity(velocity)) return;
         this.velocity = velocity;
         fireModified();
     }
 
-    protected java.lang.Integer prepareVelocity(java.lang.Integer velocity) {
+    protected java.lang.Float prepareVelocity(java.lang.Float velocity) {
         return velocity;
     }
 
@@ -284,13 +284,13 @@ public abstract class GSprint
         return this.velocity != null;
     }
 
-    public final boolean isVelocity(java.lang.Integer velocity) {
+    public final boolean isVelocity(java.lang.Float velocity) {
         if (this.velocity == null && velocity == null) return true;
         return this.velocity != null && this.velocity.equals(velocity);
     }
 
     protected final void updateVelocity(Object value) {
-        setVelocity((java.lang.Integer)value);
+        setVelocity((java.lang.Float)value);
     }
 
     // -----------------------------------------------------------
