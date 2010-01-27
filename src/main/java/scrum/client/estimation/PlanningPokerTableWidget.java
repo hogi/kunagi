@@ -96,7 +96,7 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 		tb.setWidth(null);
 		for (String value : Requirement.WORK_ESTIMATION_VALUES) {
 			if (value.length() == 0) continue;
-			int estimation = Integer.parseInt(value);
+			float estimation = Float.parseFloat(value);
 			PlanningPokerCardWidget card = null;
 			if (!showoff && (voteValue == null || estimation != voteValue)) {
 				card = new PlanningPokerCardWidget(estimation, true, new SetEstimationClickHandler(estimation));
