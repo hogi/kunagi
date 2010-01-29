@@ -64,13 +64,15 @@ public class Requirement extends GRequirement implements ReferenceSupport {
 		for (RequirementEstimationVote vote : getEstimationVotes()) {
 			if (vote.isUser(user)) return vote;
 		}
-		RequirementEstimationVote vote = new RequirementEstimationVote(this, user);
-		getDao().createRequirementEstimationVote(vote);
-		return vote;
+		return null;
 	}
 
 	public void setVote(Float estimatedWork) {
 		RequirementEstimationVote vote = getEstimationVote(cm.getAuth().getUser());
+		if (vote == null) {
+			vote = new RequirementEstimationVote(this, cm.getAuth().getUser());
+			getDao().createRequirementEstimationVote(vote);
+		}
 		vote.setEstimatedWork(estimatedWork);
 	}
 
