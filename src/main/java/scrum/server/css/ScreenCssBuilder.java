@@ -262,6 +262,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".Workspace-body-west .PagePanel-header").background(cBackground).color(cHeaderText);
 		css.style(".Workspace-body-west .PagePanel-content").background(cBackground).border("0");
 
+		css.style(".HeaderWidget-logo").marginLeft(5).marginRight(10); // .positionFixed().top(0).left(40).zIndex(100);
 		css.style(".HeaderWidget-title").color(cHeaderText).fontSize(12).fontWeightBold().paddingLeft(5).paddingTop(3);
 		css.style(".HeaderWidget-user").color(cHeaderText).fontSize(12).textAlignCenter().marginTop(3).marginRight(5);
 		css.style(".HeaderWidget .ToolbarWidget").background("none").margin(0).textAlignRight();

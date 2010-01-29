@@ -37,6 +37,9 @@ public interface GImageBundle
     @Resource(value="issClosed.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype issClosed();
 
+    @Resource(value="logo25.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype logo25();
+
     @Resource(value="reqClosed.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype reqClosed();
 

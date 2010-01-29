@@ -7,6 +7,7 @@ import ilarkesto.gwt.client.undo.UndoButtonWidget;
 import scrum.client.ApplicationInfo;
 import scrum.client.admin.LogoutAction;
 import scrum.client.common.AScrumWidget;
+import scrum.client.img.Img;
 import scrum.client.project.ChangeProjectAction;
 import scrum.client.search.SearchInputWidget;
 
@@ -57,9 +58,9 @@ public class HeaderWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setCellPadding(2);
 		tb.setColumnWidths("", "", "", "50px", "100px", "50px");
-		tb.add(title, currentUserLabel, projectOpen ? search : Gwt.createEmptyDiv(), projectOpen ? undoButton : Gwt
-				.createEmptyDiv(), new HyperlinkWidget(new ChangeProjectAction()), new HyperlinkWidget(
-				new LogoutAction()));
+		tb.add(createLogo(), /* title, */currentUserLabel, projectOpen ? search : Gwt.createEmptyDiv(),
+			projectOpen ? undoButton : Gwt.createEmptyDiv(), new HyperlinkWidget(new ChangeProjectAction()),
+			new HyperlinkWidget(new LogoutAction()));
 		wrapper.setWidget(tb.createTable());
 
 		super.onUpdate();
@@ -77,6 +78,10 @@ public class HeaderWidget extends AScrumWidget {
 			}
 		}
 		return text.toString();
+	}
+
+	private Widget createLogo() {
+		return Gwt.createDiv("HeaderWidget-logo", Img.bundle.logo25().createImage());
 	}
 
 }
