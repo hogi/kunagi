@@ -42,8 +42,7 @@ public class PublicContext extends AScrumComponent {
 	private Widget createRegisterWidget() {
 		PagePanel page = new PagePanel();
 		page.addHeader("Free Account Registration");
-		page
-				.addSection("Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. Create a free Scrum42 account. ");
+		page.addSection("Create an account.");
 		return page;
 	}
 

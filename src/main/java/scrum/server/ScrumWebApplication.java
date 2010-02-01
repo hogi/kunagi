@@ -69,7 +69,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	public ApplicationInfo getApplicationInfo() {
 		if (applicationInfo == null) {
-			applicationInfo = new ApplicationInfo("Scrum42", getBuild(), getDeploymentStage());
+			applicationInfo = new ApplicationInfo("kunagi", getBuild(), getDeploymentStage());
 		}
 		return applicationInfo;
 	}
