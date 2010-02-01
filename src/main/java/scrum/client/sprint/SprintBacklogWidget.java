@@ -11,10 +11,11 @@ import com.google.gwt.user.client.ui.Widget;
 public class SprintBacklogWidget extends AScrumWidget {
 
 	private BlockListWidget<Requirement> requirementList;
+	private Sprint sprint;
 
 	@Override
 	protected Widget onInitialization() {
-		Sprint sprint = getSprint();
+		sprint = getSprint();
 
 		requirementList = new BlockListWidget<Requirement>(RequirementInSprintBlock.FACTORY);
 		requirementList.setAutoSorter(getCurrentProject().getRequirementsOrderComparator());
@@ -32,8 +33,14 @@ public class SprintBacklogWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
+		if (sprint != getSprint()) reset();
 		requirementList.setObjects(getSprint().getRequirements());
 		super.onUpdate();
+	}
+
+	@Override
+	protected boolean isResetRequired() {
+		return sprint != getSprint();
 	}
 
 	public void selectRequirement(Requirement r) {

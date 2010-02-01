@@ -36,10 +36,8 @@ public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 		cm.getApp().callSwitchToNextSprint(new Runnable() {
 
 			public void run() {
-				cm.getProjectContext().getSprintBacklog().reset();
-				cm.getProjectContext().getNextSprint().reset();
-				cm.getUi().unlock();
 				cm.getProjectContext().showSprintBacklog((Requirement) null);
+				cm.getUi().unlock();
 			}
 		});
 	}

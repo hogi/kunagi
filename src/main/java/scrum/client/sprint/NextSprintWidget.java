@@ -13,9 +13,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class NextSprintWidget extends AScrumWidget {
 
+	private Sprint sprint;
+
 	@Override
 	protected Widget onInitialization() {
-		Sprint sprint = getSprint();
+		sprint = getSprint();
 
 		TableBuilder tb = new TableBuilder();
 		tb.setCellPadding(2);
@@ -29,6 +31,11 @@ public class NextSprintWidget extends AScrumWidget {
 		page.addHeader("Next Sprint", new ButtonWidget(new SwitchToNextSprintAction()));
 		page.addSection(TableBuilder.row(20, tb.createTable(), new CommentsWidget(sprint)));
 		return page;
+	}
+
+	@Override
+	protected boolean isResetRequired() {
+		return sprint != getSprint();
 	}
 
 	private Sprint getSprint() {
