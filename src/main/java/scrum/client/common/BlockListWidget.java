@@ -142,13 +142,13 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		setObjects(new ArrayList<O>(newObjects));
 	}
 
-	private final void move(O object, int toRow, boolean animate) {}
-
 	public final void drop(ABlockWidget<O> block, int toIndex) {
 		GwtLogger.DEBUG("Dropping to index", toIndex, "->", block);
 		assert block != null;
 		if (block.getList() == this) {
-			list.move(toIndex, block.getObject(), true, moveObserver);
+			boolean extended = block.isExtended();
+			block = list.move(toIndex, block.getObject(), true, moveObserver);
+			block.setExtended(extended);
 			return;
 		}
 		dropAction.onDrop(block.getObject());
