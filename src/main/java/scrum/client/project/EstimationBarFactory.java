@@ -12,7 +12,7 @@ public class EstimationBarFactory {
 		for (Requirement requirement : requirements) {
 			workPerSprint = new ArrayList<Float>();
 			Float estimatedWork = requirement.getEstimatedWork();
-			if (velocity == null || estimatedWork == null) {
+			if (velocity == null || velocity == 0 || estimatedWork == null) {
 				if (estimatedWork != null) workPerSprint.add(estimatedWork);
 				requirement.setEstimationBar(new EstimationBar(sprintOffset, workPerSprint));
 				continue;

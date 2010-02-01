@@ -46,7 +46,8 @@ public class Requirement extends GRequirement implements ReferenceSupport {
 	}
 
 	public String getEstimatedWorkWithUnit() {
-		return getEstimatedWorkAsString() + " " + getProject().getEffortUnit();
+		String work = getEstimatedWorkAsString();
+		return work == null ? null : work + " " + getProject().getEffortUnit();
 	}
 
 	public List<RequirementEstimationVote> getEstimationVotes() {

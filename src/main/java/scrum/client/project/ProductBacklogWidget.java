@@ -5,7 +5,6 @@ import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
-import ilarkesto.gwt.client.ToolbarWidget;
 import ilarkesto.gwt.client.editor.IntegerEditorWidget;
 
 import java.util.ArrayList;
@@ -26,7 +25,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class ProductBacklogWidget extends AScrumWidget {
 
 	private BlockListWidget<Requirement> list;
-	private ToolbarWidget toolbar;
 	private AMultiSelectionViewEditWidget<ListPredicate<Requirement>> predicateSelect;
 	private List<ListPredicate<Requirement>> predicates;
 
