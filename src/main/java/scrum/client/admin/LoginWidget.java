@@ -26,9 +26,11 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 	protected Widget onInitialization() {
 		errorMessage = new Label();
 		username = new TextBox();
+		username.setName("username");
 		username.setWidth("150px");
 		username.addKeyPressHandler(new InputKeyHandler());
 		password = new PasswordTextBox();
+		password.setName("password");
 		password.setWidth("150px");
 		password.addKeyPressHandler(new InputKeyHandler());
 
@@ -46,7 +48,7 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Login");
-		page.addSection(tb.createTable());
+		page.addSection(Gwt.createCenterer(tb.createTable()));
 
 		return page;
 	}
