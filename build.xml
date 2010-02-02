@@ -32,7 +32,7 @@
         	<classpath location="../ilarkesto/lib/gwtupload-0.5.5.jar" />
             <classpath location="lib/gwt-dnd.jar" />
             <classpath location="/opt/gwt/gwt-user.jar" />
-            <classpath location="/opt/gwt/gwt-dev-linux.jar" />
+            <classpath location="/opt/gwt/gwt-dev.jar" />
         </java>
 		<mkdir dir="build/webapp/WEB-INF/classes" />
 		<copy todir="build/webapp/WEB-INF/classes">
