@@ -12,9 +12,14 @@ public class ResetRequirementEstimationVotingAction extends GResetRequirementEst
 	}
 
 	@Override
+	public String getTooltip() {
+		return "Remove all cards from the table to start a new round.";
+	}
+
+	@Override
 	public boolean isExecutable() {
 		if (!requirement.isWorkEstimationVotingActive()) return false;
-		if (!requirement.containsWorkEstimationVotes()) return false;
+		// if (!requirement.containsWorkEstimationVotes()) return false;
 		return true;
 	}
 

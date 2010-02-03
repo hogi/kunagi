@@ -13,7 +13,7 @@ public class CreateSimpleEventAction extends GCreateSimpleEventAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Create new Event.");
 		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
-			tb.addRemark(TooltipBuilder.NOT_ANYTHING);
+			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 
 		return tb.getTooltip();
 	}

@@ -18,7 +18,7 @@ public class DeleteTaskAction extends GDeleteTaskAction {
 		TooltipBuilder tb = new TooltipBuilder("Delete this Task.");
 
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
-			tb.addRemark(TooltipBuilder.NOT_A_TEAM_MEMBER);
+			tb.addRemark(TooltipBuilder.NOT_TEAM);
 		} else {
 			if (task.isOwnerSet() && !task.isOwner(getCurrentUser())) tb.addRemark("Another user owns this Task.");
 		}

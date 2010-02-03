@@ -179,7 +179,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public void updateOnlineTeamMembers(Project project, GwtConversation exclude) {
 		if (project == null) return;
 		Set<User> users = getSessionUsersByProject(project);
-		LOG.debug("Update online team members on project:", project, "->", users);
 		Set<String> userIds = new HashSet<String>(FP.foreach(users, new Function<User, String>() {
 
 			public String eval(User user) {
@@ -187,6 +186,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			}
 		}));
 		project.getUsersStatus().setOnlineUsers(userIds);
+		LOG.debug("Updated online team members on project:", project, "->", project.getUsersStatus());
 		sendUsersStatusToClients(project, exclude);
 	}
 

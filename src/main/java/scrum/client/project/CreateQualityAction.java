@@ -14,7 +14,7 @@ public class CreateQualityAction extends GCreateQualityAction {
 		TooltipBuilder tb = new TooltipBuilder("Create a new Quality.");
 
 		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
-			tb.addRemark(TooltipBuilder.NOT_ANYTHING);
+			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 
 		return tb.getTooltip();
 	}

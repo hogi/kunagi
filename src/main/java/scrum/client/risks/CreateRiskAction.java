@@ -14,7 +14,7 @@ public class CreateRiskAction extends GCreateRiskAction {
 		TooltipBuilder tb = new TooltipBuilder("Create new Risk");
 
 		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
-			tb.addRemark(TooltipBuilder.NOT_ANYTHING);
+			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 
 		return tb.getTooltip();
 	}

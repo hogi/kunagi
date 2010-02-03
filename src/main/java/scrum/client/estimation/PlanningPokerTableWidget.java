@@ -99,7 +99,8 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 			float estimation = Float.parseFloat(value);
 			PlanningPokerCardWidget card = null;
 			if (!showoff && (voteValue == null || estimation != voteValue)) {
-				card = new PlanningPokerCardWidget(estimation, true, new SetEstimationClickHandler(estimation));
+				card = new PlanningPokerCardWidget(estimation, true, new SetEstimationClickHandler(estimation),
+						"Put this card on the table.");
 			}
 			tb.add(new PlanningPokerCardSlotWidget(value + " " + project.getEffortUnit(), card));
 			tb.add(Gwt.createSpacer(5, 1));
@@ -121,13 +122,16 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 				card = null;
 			} else {
 				ClickHandler clickHandler = null;
+				String clickTooltip = null;
 				if (requirement.isWorkEstimationVotingShowoff()) {
 					clickHandler = new SelectEstimationClickHandler(estimation);
+					clickTooltip = "Use this card as the estimation for this requirement. Planning Poker will be closed.";
 				} else if (currentUser) {
 					clickHandler = new RemoveEstimationClickHandler();
+					clickTooltip = "Remove this card from table.";
 				}
 				boolean visible = requirement.isWorkEstimationVotingShowoff();
-				card = new PlanningPokerCardWidget(estimation, visible, clickHandler);
+				card = new PlanningPokerCardWidget(estimation, visible, clickHandler, clickTooltip);
 			}
 
 			tb.add(new PlanningPokerCardSlotWidget(user.getName(), card));

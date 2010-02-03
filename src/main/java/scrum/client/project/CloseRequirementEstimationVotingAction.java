@@ -1,5 +1,7 @@
 package scrum.client.project;
 
+import scrum.client.common.TooltipBuilder;
+
 public class CloseRequirementEstimationVotingAction extends GCloseRequirementEstimationVotingAction {
 
 	public CloseRequirementEstimationVotingAction(scrum.client.project.Requirement requirement) {
@@ -9,6 +11,21 @@ public class CloseRequirementEstimationVotingAction extends GCloseRequirementEst
 	@Override
 	public String getLabel() {
 		return "Close Planning Poker";
+	}
+
+	@Override
+	public String getTooltip() {
+		TooltipBuilder tb = new TooltipBuilder("Disable the Planning Poker table for this requirement.");
+
+		if (!requirement.getProject().isTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_TEAM);
+
+		return tb.getTooltip();
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!requirement.getProject().isTeamMember(getCurrentUser())) return false;
+		return true;
 	}
 
 	@Override

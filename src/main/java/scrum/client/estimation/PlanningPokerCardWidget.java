@@ -11,13 +11,15 @@ public class PlanningPokerCardWidget extends AScrumWidget {
 
 	private float value;
 	private ClickHandler clickHandler;
+	private String clickTooltip;
 	private boolean visible;
 
-	public PlanningPokerCardWidget(float value, boolean visible, ClickHandler clickHandler) {
+	public PlanningPokerCardWidget(float value, boolean visible, ClickHandler clickHandler, String clickTooltip) {
 		super();
 		this.value = value;
 		this.visible = visible;
 		this.clickHandler = clickHandler;
+		this.clickTooltip = clickTooltip;
 	}
 
 	@Override
@@ -33,6 +35,7 @@ public class PlanningPokerCardWidget extends AScrumWidget {
 		if (clickHandler != null) {
 			card.addClickHandler(clickHandler);
 			card.addStyleName("PlanningPokerCardWidget-clickable");
+			card.setTitle(clickTooltip);
 		}
 
 		return card;

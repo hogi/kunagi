@@ -20,7 +20,7 @@ public class SetRequirementCleanAction extends GSetRequirementCleanAction {
 				"Mark this requirement as clean. This means, the estimated work is accurate.");
 
 		if (!requirement.getProject().isTeamMember(getCurrentUser())) {
-			tb.addRemark(TooltipBuilder.NOT_A_TEAM_MEMBER);
+			tb.addRemark(TooltipBuilder.NOT_TEAM);
 		} else {
 			if (requirement.isClosed()) tb.addRemark("Requirement is already closed.");
 			if (!requirement.isDirty()) tb.addRemark("Requirement is already clean.");
@@ -32,17 +32,17 @@ public class SetRequirementCleanAction extends GSetRequirementCleanAction {
 	}
 
 	@Override
+	public boolean isPermitted() {
+		if (!requirement.getProject().isTeamMember(getCurrentUser())) return false;
+		return true;
+	}
+
+	@Override
 	public boolean isExecutable() {
 		if (requirement.isClosed()) return false;
 		if (!requirement.isDirty()) return false;
 		if (requirement.getEstimatedWork() == null) return false;
 		if (requirement.isInCurrentSprint()) return false;
-		return true;
-	}
-
-	@Override
-	public boolean isPermitted() {
-		if (!requirement.getProject().isTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

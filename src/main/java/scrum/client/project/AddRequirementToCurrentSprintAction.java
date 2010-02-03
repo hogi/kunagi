@@ -20,7 +20,7 @@ public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurren
 		TooltipBuilder tb = new TooltipBuilder("Add this Requirement the the current Sprint.");
 
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
-			tb.addRemark(TooltipBuilder.NOT_A_TEAM_MEMBER);
+			tb.addRemark(TooltipBuilder.NOT_TEAM);
 		} else {
 			if (requirement.isClosed()) tb.addRemark("Requirement is already closed.");
 			if (!requirement.isEstimatedWorkValid()) tb.addRemark("Requirement has no confirmed estimation yet.");

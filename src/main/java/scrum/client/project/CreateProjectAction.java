@@ -13,7 +13,7 @@ public class CreateProjectAction extends GCreateProjectAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Create a new Project.");
 
-		if (!getCurrentUser().isAdmin()) tb.addRemark(TooltipBuilder.NOT_AN_ADMIN);
+		if (!getCurrentUser().isAdmin()) tb.addRemark(TooltipBuilder.NOT_ADMIN);
 
 		return tb.getTooltip();
 	}

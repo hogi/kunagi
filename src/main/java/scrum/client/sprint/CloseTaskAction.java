@@ -19,7 +19,7 @@ public class CloseTaskAction extends GCloseTaskAction {
 		TooltipBuilder tb = new TooltipBuilder("Mark Task as done.");
 
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
-			tb.addRemark(TooltipBuilder.NOT_A_TEAM_MEMBER);
+			tb.addRemark(TooltipBuilder.NOT_TEAM);
 		} else {
 			if (task.isClosed()) tb.addRemark("Task is already closed.");
 			if (task.isOwnerSet() && !task.isOwner(getCurrentUser())) tb.addRemark("Another user owns this Task.");

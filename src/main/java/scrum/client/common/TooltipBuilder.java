@@ -8,12 +8,12 @@ public class TooltipBuilder {
 	private String mainTooltip;
 	private List<String> remarks = new ArrayList<String>();
 
-	public static String NOT_A_TEAM_MEMBER = "You are not a Team Member.";
-	public static String NOT_A_SCRUM_MASTER = "You are not a Scrum Master.";
-	public static String NOT_A_PRODUCT_OWNER = "You are not a Product Owner.";
-	public static String NOT_ANYTHING = "You are neither a Product Owner nor a Scrum Master nor a Team Member.";
-	public static String NOT_TEAM_MEMBER_NOR_PRODUCT_OWNER = "You are neither Team Member nor Product Owner.";
-	public static String NOT_AN_ADMIN = "You are not an Admin.";
+	public static String NOT_TEAM = "You are not Team Member.";
+	public static String NOT_SCRUMMASTER = "You are not ScrumMaster.";
+	public static String NOT_PRODUCT_OWNER = "You are not Product Owner.";
+	public static String NOT_SCRUMTEAM = "You are neither Product Owner nor ScrumMaster nor Team Member.";
+	public static String NOT_TEAM_NOR_PRODUCT_OWNER = "You are neither Team Member nor Product Owner.";
+	public static String NOT_ADMIN = "You are not Admin.";
 
 	public TooltipBuilder(String mainTooltip) {
 		this.mainTooltip = mainTooltip;
@@ -30,14 +30,13 @@ public class TooltipBuilder {
 		if (remarks.size() > 0) {
 
 			if (remarks.size() == 1) {
-				sb.append("\n\nDisabled for the following reason:");
+				sb.append(" Disabled for the following reason:");
 			} else {
-				sb.append("\n\nDisabled for the following reasons:");
+				sb.append(" Disabled for the following reasons:");
 			}
 
 			for (String element : remarks) {
-				sb.append("\n    - ");
-				sb.append(element);
+				sb.append(" ").append(element);
 			}
 
 		}

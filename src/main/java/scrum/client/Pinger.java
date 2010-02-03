@@ -48,7 +48,7 @@ public class Pinger extends AScrumComponent implements ServerDataReceivedListene
 	public void reschedule() {
 		if (timer == null) return;
 		long idle = System.currentTimeMillis() - lastDataReceiveTime;
-		idle = (int) (idle * 0.2);
+		idle = (int) (idle * 0.15);
 		if (idle < MIN_DELAY) idle = MIN_DELAY;
 		if (idle > maxDelay) idle = maxDelay;
 		timer.scheduleRepeating((int) idle);

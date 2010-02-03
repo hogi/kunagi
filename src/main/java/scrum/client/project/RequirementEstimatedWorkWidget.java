@@ -36,14 +36,15 @@ public class RequirementEstimatedWorkWidget extends AScrumWidget {
 	protected void onUpdate() {
 		estimatedWork.update();
 		toolbar.clear();
-		AScrumAction action = requirement.isDirty() ? new SetRequirementCleanAction(requirement)
+
+		AScrumAction dirtAction = requirement.isDirty() ? new SetRequirementCleanAction(requirement)
 				: new SetRequirementDirtyAction(requirement);
-		ButtonWidget newButton = action.isExecutable() ? new ButtonWidget(action) : null;
-		if (newButton != null) {
-			toolbar.add(newButton);
-		} else {
-			toolbar.update();
-		}
+		if (dirtAction.isExecutable()) toolbar.add(new ButtonWidget(dirtAction));
+
+		StartRequirementEstimationVotingAction pokerAction = new StartRequirementEstimationVotingAction(requirement);
+		if (pokerAction.isExecutable()) toolbar.add(new ButtonWidget(pokerAction));
+
+		toolbar.update();
 	}
 
 	class EstimatedWorkWidget extends ADropdownViewEditWidget {

@@ -18,7 +18,7 @@ public class ConvertIssueToQualityAction extends GConvertIssueToQualityAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Convert this issue to a real Quality on the Quality Backlog.");
 		if (!issue.getProject().isProductOwner(getCurrentUser())) {
-			tb.addRemark(TooltipBuilder.NOT_A_PRODUCT_OWNER);
+			tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 		} else {
 			if (!issue.isTypeQuality()) tb.addRemark("Issue is not of type Quality.");
 		}

@@ -17,7 +17,7 @@ public class DeleteIssueAction extends GDeleteIssueAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Delete this issue.");
 		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
-			tb.addRemark(TooltipBuilder.NOT_ANYTHING);
+			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 		return tb.getTooltip();
 	}
 

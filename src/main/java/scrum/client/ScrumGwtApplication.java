@@ -47,7 +47,10 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	@Override
 	protected void onServerData(DataTransferObject data) {
-		cm.getEventBus().fireServerDataReceived(data);
+		if (data.usersStatus != null) {
+			log.debug("************************* users status received:", data.usersStatus);
+			cm.getUsersStatus();
+		}
 
 		if (data.applicationInfo != null) {
 			this.applicationInfo = data.applicationInfo;
@@ -56,6 +59,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			assert this.applicationInfo != null;
 		}
 
+		cm.getEventBus().fireServerDataReceived(data);
 	}
 
 	public ApplicationInfo getApplicationInfo() {

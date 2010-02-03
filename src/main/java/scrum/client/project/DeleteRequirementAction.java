@@ -18,7 +18,7 @@ public class DeleteRequirementAction extends GDeleteRequirementAction {
 		TooltipBuilder tb = new TooltipBuilder("Delete this requirement.");
 
 		if (!requirement.getProject().isProductOwner(getCurrentUser()))
-			tb.addRemark(TooltipBuilder.NOT_A_PRODUCT_OWNER);
+			tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 
 		return tb.getTooltip();
 	}

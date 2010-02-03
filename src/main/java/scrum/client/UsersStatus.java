@@ -2,6 +2,8 @@ package scrum.client;
 
 import ilarkesto.gwt.client.AGwtEntity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import scrum.client.admin.User;
@@ -33,8 +35,17 @@ public class UsersStatus extends AScrumComponent implements ServerDataReceivedLi
 	public void onServerDataReceived(DataTransferObject data) {
 		if (data.usersStatus != null) {
 			usersStatus = data.usersStatus;
-			cm.getUi().getWorkspace().update();
+			log.debug("usersStatus updated:", usersStatus);
+			cm.getEventBus().fireVisibleDataChanged();
 		}
+	}
+
+	public List<User> getOnlineUsers() {
+		List<User> ret = new ArrayList<User>();
+		for (User user : cm.getProjectContext().getProject().getParticipants()) {
+			if (isOnline(user)) ret.add(user);
+		}
+		return ret;
 	}
 
 	public boolean isOnline(User user) {

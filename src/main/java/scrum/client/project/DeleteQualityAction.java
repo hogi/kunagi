@@ -17,7 +17,7 @@ public class DeleteQualityAction extends GDeleteQualityAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Delete this quality.");
 
-		if (!quality.getProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_A_PRODUCT_OWNER);
+		if (!quality.getProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 
 		return tb.getTooltip();
 	}

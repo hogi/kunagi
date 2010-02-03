@@ -12,6 +12,11 @@ public class RequirementEstimationVotingShowoffAction extends GRequirementEstima
 	}
 
 	@Override
+	public String getTooltip() {
+		return "Expose all cards on the table.";
+	}
+
+	@Override
 	public boolean isExecutable() {
 		if (!requirement.isWorkEstimationVotingActive()) return false;
 		if (requirement.isWorkEstimationVotingShowoff()) return false;

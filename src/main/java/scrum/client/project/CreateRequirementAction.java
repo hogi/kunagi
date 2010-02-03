@@ -18,7 +18,7 @@ public class CreateRequirementAction extends GCreateRequirementAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Create a new Requirement.");
 
-		if (!getCurrentProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_A_PRODUCT_OWNER);
+		if (!getCurrentProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 
 		return tb.getTooltip();
 	}

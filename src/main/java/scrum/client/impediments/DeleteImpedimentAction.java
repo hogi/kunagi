@@ -17,7 +17,7 @@ public class DeleteImpedimentAction extends GDeleteImpedimentAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Delete this Impediment.");
 		if (!impediment.getProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
-			tb.addRemark(TooltipBuilder.NOT_ANYTHING);
+			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 
 		return tb.getTooltip();
 	}

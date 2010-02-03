@@ -18,7 +18,7 @@ public class SetRequirementDirtyAction extends GSetRequirementDirtyAction {
 		TooltipBuilder tb = new TooltipBuilder(
 				"Mark this requirement as dirty. This means, the estimated work needs to be reestimated.");
 		if (!requirement.getProject().isProductOwnerOrTeamMember(getCurrentUser())) {
-			tb.addRemark(TooltipBuilder.NOT_TEAM_MEMBER_NOR_PRODUCT_OWNER);
+			tb.addRemark(TooltipBuilder.NOT_TEAM_NOR_PRODUCT_OWNER);
 		} else {
 			if (requirement.isClosed()) tb.addRemark("Requirement is already closed.");
 			if (requirement.isDirty()) tb.addRemark("Requirement is already dirty.");

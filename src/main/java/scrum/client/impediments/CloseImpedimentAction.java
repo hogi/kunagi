@@ -17,7 +17,7 @@ public class CloseImpedimentAction extends GCloseImpedimentAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Close this Impediment.");
 		if (!impediment.getProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) {
-			tb.addRemark(TooltipBuilder.NOT_ANYTHING);
+			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 		} else {
 			if (impediment.isClosed()) tb.addRemark("Impediment is already closed.");
 		}

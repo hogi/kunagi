@@ -13,8 +13,6 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class UserStatusWidget extends AScrumWidget {
 
-	private UsersStatus usersStatus = cm.getUsersStatus();
-
 	private Label label;
 	private User user;
 
@@ -31,6 +29,7 @@ public class UserStatusWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
+		UsersStatus usersStatus = cm.getUsersStatus();
 		String color = getCurrentProject().getUserConfig(user).getColor();
 		label.getElement().getStyle().setProperty("color", color);
 		Highlighter highlighter = new Highlighter();

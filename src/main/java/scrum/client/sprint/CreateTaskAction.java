@@ -21,7 +21,7 @@ public class CreateTaskAction extends GCreateTaskAction {
 
 		TooltipBuilder tb = new TooltipBuilder("Create a new Task for this Requirement.");
 
-		if (!getCurrentProject().isTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_A_TEAM_MEMBER);
+		if (!getCurrentProject().isTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_TEAM);
 
 		return tb.getTooltip();
 	}

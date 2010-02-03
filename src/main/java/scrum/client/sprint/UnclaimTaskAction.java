@@ -19,7 +19,7 @@ public class UnclaimTaskAction extends GReopenTaskAction {
 		TooltipBuilder tb = new TooltipBuilder("Remove ownership for this Task.");
 
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
-			tb.addRemark(TooltipBuilder.NOT_A_TEAM_MEMBER);
+			tb.addRemark(TooltipBuilder.NOT_TEAM);
 		} else {
 			if (task.isClosed()) tb.addRemark("Task is already closed.");
 			if (!task.isOwner(getCurrentUser())) tb.addRemark("You are not the owner of this Task.");

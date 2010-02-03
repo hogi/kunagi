@@ -226,7 +226,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			Sprint sprint = requirement.getSprint();
 			boolean inCurrentSprint = sprint != null && conversation.getProject().isCurrentSprint(sprint);
 			if (properties.containsKey("description") || properties.containsKey("testDescription")
-					|| properties.containsKey("estimatedWork") || properties.containsKey("qualitysIds")) {
+					|| properties.containsKey("qualitysIds")) {
 				requirement.setDirty(true);
 				conversation.sendToClient(requirement);
 			}
@@ -296,12 +296,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			throw new RuntimeException("Project '" + project + "' is not visible for user '" + user + "'");
 		conversation.setProject(project);
 		user.setCurrentProject(project);
-		webApplication.updateOnlineTeamMembers(project, conversation);
 
-		// prepare data for client
 		conversation.sendToClient(project);
-		// session.sendToClient(project.getCurrentSprint());
-		// session.sendToClient(project.getNextSprint());
 		conversation.sendToClient(project.getSprints());
 		conversation.sendToClient(project.getParticipants());
 		Set<Requirement> requirements = project.getRequirements();
@@ -318,6 +314,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		conversation.sendToClient(project.getProjectEvents());
 		conversation.sendToClient(project.getCalendarEvents());
 		conversation.sendToClient(project.getFiles());
+		webApplication.updateOnlineTeamMembers(project, null);
 	}
 
 	@Override
@@ -342,6 +339,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 		project.switchToNextSprint();
 		sendToClients(conversation, project.getSprints());
+		sendToClients(conversation, project.getRequirements());
+		sendToClients(conversation, project.getTasks());
 		sendToClients(conversation, project);
 	}
 

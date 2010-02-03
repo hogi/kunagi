@@ -18,7 +18,7 @@ public class ReopenTaskAction extends GReopenTaskAction {
 		TooltipBuilder tb = new TooltipBuilder("Reactivate this Task.");
 
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
-			tb.addRemark(TooltipBuilder.NOT_A_TEAM_MEMBER);
+			tb.addRemark(TooltipBuilder.NOT_TEAM);
 		} else {
 			if (!task.isClosed()) tb.addRemark("Task is not closed.");
 		}

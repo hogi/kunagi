@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumJs;
+import scrum.client.UsersStatus;
 import scrum.client.admin.User;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.estimation.RequirementEstimationVote;
@@ -74,7 +75,21 @@ public class Requirement extends GRequirement implements ReferenceSupport {
 			vote = new RequirementEstimationVote(this, cm.getAuth().getUser());
 			getDao().createRequirementEstimationVote(vote);
 		}
+
 		vote.setEstimatedWork(estimatedWork);
+
+		if (estimatedWork != null && isWorkEstimationVotingComplete()) activateWorkEstimationVotingShowoff();
+	}
+
+	public boolean isWorkEstimationVotingComplete() {
+		UsersStatus usersStatus = cm.getUsersStatus();
+		for (User user : cm.getProjectContext().getProject().getTeamMembers()) {
+			if (usersStatus.isOnline(user)) {
+				RequirementEstimationVote vote = getEstimationVote(user);
+				if (vote == null || vote.getEstimatedWork() == null) return false;
+			}
+		}
+		return true;
 	}
 
 	public void activateWorkEstimationVoting() {
@@ -87,14 +102,13 @@ public class Requirement extends GRequirement implements ReferenceSupport {
 
 	public void activateWorkEstimationVotingShowoff() {
 		setWorkEstimationVotingShowoff(true);
-		// TODO autoset estimated work?
 	}
 
 	public void resetWorkEstimationVoting() {
-		setWorkEstimationVotingShowoff(false);
 		for (RequirementEstimationVote vote : getEstimationVotes()) {
 			vote.setEstimatedWork(null);
 		}
+		setWorkEstimationVotingShowoff(false);
 	}
 
 	public void applyEstimationVoting(Float estimation) {

@@ -40,7 +40,7 @@ public class UsersStatusData implements Serializable, IsSerializable {
 			}
 			for (String userId : userIds) {
 				if (updated.contains(userId)) continue;
-				get(userId).online = false;
+				get(userId).online = true;
 			}
 		}
 	}
@@ -54,6 +54,25 @@ public class UsersStatusData implements Serializable, IsSerializable {
 			}
 			return status;
 		}
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("UsersStatusData(");
+		boolean first = true;
+		for (Map.Entry<String, UserStatus> entry : statuses.entrySet()) {
+			if (first) {
+				first = false;
+			} else {
+				sb.append(", ");
+			}
+			sb.append(entry.getKey());
+			sb.append("->");
+			sb.append(entry.getValue().isOnline() ? "online" : "offline");
+		}
+		sb.append(")");
+		return sb.toString();
 	}
 
 	public static class UserStatus implements Serializable, IsSerializable {

@@ -13,7 +13,7 @@ public class CreateImpedimentAction extends GCreateImpedimentAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Create new Impediment.");
 		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
-			tb.addRemark(TooltipBuilder.NOT_ANYTHING);
+			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 
 		return tb.getTooltip();
 	}
