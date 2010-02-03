@@ -88,7 +88,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		calendar(css);
 		planningPoker(css);
 
-		css.style(".TrashWidget").background(cTrashBackground).border(1, "solid", cTrashBorder).padding(5);
+		css.style(".TrashWidget").background(cTrashBackground).border(1, cTrashBorder).padding(5);
 
 		css.style(".ToolbarWidget").background(cToolbarBackground).padding(3, 0, 3, 3);
 		css.style(".ToolbarWidget .FloatingFlowPanel-element-left").marginRight(3);
@@ -101,19 +101,19 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style(".AViewEditWidget-viewer").background(cFieldBackground).border(1, "dotted",
 			cNavigatorSelectedItemBackground);
-		css.style(".AViewEditWidget-error").color(cError).background(cErrorBackground).border(1, "solid", cError)
-				.margin(2).padding(2);
+		css.style(".AViewEditWidget-error").color(cError).background(cErrorBackground).border(1, cError).margin(2)
+				.padding(2);
 
 		css.style(".dnd-drop-allowed").background(cHeaderBackground);
 
-		css.style(".WidgetsTesterWidget .test-content").background("white").color("black").border(1, "solid", "#AAA");
+		css.style(".WidgetsTesterWidget .test-content").background("white").color("black").border(1, "#AAA");
 
-		css.style(".highlighted .ABlockWidget-title").border(1, "solid", cError);
+		css.style(".highlighted .ABlockWidget-title").border(1, cError);
 
-		css.style(".WaitWidget").background(cWaitBackground).borderTop(1, "solid", cPagePanelBorder).borderBottom(1,
-			"solid", cPagePanelBorder).margin(200, 0, 200, 0).fontSize(fontSize + 2);
-		css.style(".LoginWidget-errorMessage").background(cErrorBackground).color(cError).border(1, "solid", cError)
-				.fontSize(fontSize + 2).padding(5);
+		css.style(".WaitWidget").background(cWaitBackground).borderTop(1, cPagePanelBorder).borderBottom(1,
+			cPagePanelBorder).margin(200, 0, 200, 0).fontSize(fontSize + 2);
+		css.style(".LoginWidget-errorMessage").background(cErrorBackground).color(cError).border(1, cError).fontSize(
+			fontSize + 2).padding(5);
 
 		css.style(".PunishmentsWidget-tableHeader").padding(10).fontSize(fontSizeTitle).lineHeight(lineHeightTitle);
 
@@ -130,21 +130,21 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".RequirementEstimatedWorkWidget").marginLeft(3);
 		css.style(".RequirementEstimatedWorkWidget .gwt-Button").fontSize(fontSizeSmall);
 
-		css.style(".EstimationBarWidget").marginTop(7).border(1, "solid", cNavigatorSelectedItemBackground);
+		css.style(".EstimationBarWidget").marginTop(7).border(1, cNavigatorSelectedItemBackground);
 		css.style(".EstimationBarWidget-bar0").background(cEstimationBar0).lineHeight(1).fontSize(1);
 		css.style(".EstimationBarWidget-bar1").background(cEstimationBar1).lineHeight(1).fontSize(1);
 
 		css.style(".SprintBorderIndicatorWidget").background(cPagePanelHeaderBackground).color(cPagePanelHeader)
-				.border(1, "solid", cPagePanelBorder).textAlignCenter().borderRadius(10).fontSize(fontSizeSmall)
-				.margin(3, 100, 3, 100);
+				.border(1, cPagePanelBorder).textAlignCenter().borderRadius(10).fontSize(fontSizeSmall).margin(3, 100,
+					3, 100);
 
 		css.style("ul.toc");// .displayInline().floatRight();
 	}
 
 	private void planningPoker(CssRenderer css) {
-		css.style(".PlanningPokerWidget-table-border").background("#333").border(2, "solid", "#2A2A2A").padding(12)
+		css.style(".PlanningPokerWidget-table-border").background("#333").border(2, "#2A2A2A").padding(12)
 				.borderRadius(60).marginBottom(10);
-		css.style(".PlanningPokerWidget-table").border(2, "solid", "#2A2A2A").borderRadius(45).background(
+		css.style(".PlanningPokerWidget-table").border(2, "#2A2A2A").borderRadius(45).background(
 			"#5A5 url(pokertable_bg.jpg)").padding(40);
 		css.style(".PlanningPokerWidget-table-branding").color(cPlanningPokerTableLines).fontFamily("Times New Roman")
 				.fontWeightBold().fontSize(30).textAlignCenter().marginBottom(30);
@@ -159,7 +159,7 @@ public class ScreenCssBuilder implements CssBuilder {
 				.textAlignCenter();
 
 		css.style(".PlanningPokerCardWidget").borderRadius(5).width(cardWidth).height(cardHeight).background("#FFF")
-				.border(1, "solid", "#333");
+				.border(1, "#333");
 		css.style(".PlanningPokerCardWidget-clickable").cursorPointer();
 		css.style(".PlanningPokerCardWidget-text").fontSize(23).lineHeight(60).fontFamily("Times New Roman")
 				.textAlignCenter();
@@ -168,18 +168,18 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void calendar(CssRenderer css) {
-		css.style(".DateSelectorWidget").background("white").textAlignCenter().border(1, "solid", "white");
+		css.style(".DateSelectorWidget").background("white").textAlignCenter().border(1, "white");
 		css.style(".DateSelectorWidget-weekday").background("white").textAlignCenter().color(cBlockHeaderCellSecondary)
-				.border(1, "solid", "white");
+				.border(1, "white");
 		css.style(".DateSelectorWidget-weeknumber").background("white").color(cBlockHeaderCellSecondary).width(20)
-				.border(1, "solid", "white");
+				.border(1, "white");
 		css.style(".DateSelectorWidget-spacer").background("white").textAlignCenter().height(20).border(1, "solid",
 			"white");
 		css.style(".DateSelectorWidget-selected").background(cNavigatorHoverItemBackground).textAlignCenter().border(1,
-			"solid", cNavigatorHoverItemBackground);
+			cNavigatorHoverItemBackground);
 		css.style(".DateSelectorWidget-visible").background(cBackground).textAlignCenter().border(1, "solid",
 			cBackground);
-		css.style(".DateSelectorWidget-today").border(1, "solid", cNavigatorSelectedItemBackground);
+		css.style(".DateSelectorWidget-today").border(1, cNavigatorSelectedItemBackground);
 		css.style(".DateSelectorWidget-events").color("red").fontSize(fontSizeSmall).lineHeight(lineHeightSmall)
 				.textAlignCenter();
 		css.style(".DayListWidget-date").color(cBlockHeaderCellSecondary);
@@ -193,8 +193,8 @@ public class ScreenCssBuilder implements CssBuilder {
 				.style(
 					".TeamTasksWidget, .UpcomingTasksWidget, .OpenImpedimentsWidget, .HighestRisksWidget, .LatestEventsWidget td")
 				.lineHeight(lineHeight + 4);
-		css.style(".LatestEventsWidget td").borderTop(1, "solid", cBlockHeaderBackground).padding(3);
-		css.style(".LatestEventsWidget table").borderBottom(1, "solid", cBlockHeaderBackground);
+		css.style(".LatestEventsWidget td").borderTop(1, cBlockHeaderBackground).padding(3);
+		css.style(".LatestEventsWidget table").borderBottom(1, cBlockHeaderBackground);
 		css.style(".LatestEventsWidget-time").whiteSpaceNowrap().color(cCommentDate);
 	}
 
@@ -216,17 +216,17 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".FloatingFlowPanel-element-right").floatRight();
 		css.style(".floatClear").clearBoth();
 
-		css.style(".BugMarker").borderSolid(1, cError).background(cErrorBackground).color(cError).displayBlock()
-				.margin(3).padding(3).fontWeightBold().fontSize(fontSizeSmall);
+		css.style(".BugMarker").border(1, cError).background(cErrorBackground).color(cError).displayBlock().margin(3)
+				.padding(3).fontWeightBold().fontSize(fontSizeSmall);
 
-		css.style(".Tooltip").background(cBackground).padding(10).border(1, "solid", cPagePanelBorder);
+		css.style(".Tooltip").background(cBackground).padding(10).border(1, cPagePanelBorder);
 	}
 
 	private void gwt(CssRenderer css) {
 		css.style(".gwt-Hyperlink a").whiteSpaceNowrap();
 		css.style(".gwt-Button").fontFamily(fontFamily).fontSize(fontSize).fontWeightBold().color(cButtonText).padding(
-			2).margin(0).whiteSpaceNowrap().border(1, "solid", cButtonBorder);
-		css.style(".gwt-Button:hover").color(cButtonTextHover).border(1, "solid", cButtonBorderHover);
+			2).margin(0).whiteSpaceNowrap().border(1, cButtonBorder);
+		css.style(".gwt-Button:hover").color(cButtonTextHover).border(1, cButtonBorderHover);
 		css.style(".gwt-Button[disabled], .gwt-Button[disabled]:hover").color(cButtonTextDisabled).border(1, "solid",
 			cButtonBorderDisabled);
 		css.style(".MenuItem-disabled").color(cButtonTextDisabled);
@@ -275,14 +275,14 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void systemMessage(CssRenderer css) {
-		css.style(".SystemMessageWidget-box").background(cErrorBackground).color(cError).border(1, "solid", cError)
-				.padding(10).margin("10px 10px 0px 10px");
+		css.style(".SystemMessageWidget-box").background(cErrorBackground).color(cError).border(1, cError).padding(10)
+				.margin("10px 10px 0px 10px");
 		css.style(".SystemMessageWidget-box-title").fontWeightBold().marginBottom(5);
 		css.style(".SystemMessageWidget-box-time").fontStyleItalic().marginTop(5).textAlignRight();
 	}
 
 	private void chat(CssRenderer css) {
-		css.style(".ChatWidget-outputScroller").background(cChatBackground).border(1, "solid", cChatBorder).padding(5);
+		css.style(".ChatWidget-outputScroller").background(cChatBackground).border(1, cChatBorder).padding(5);
 		css.style(".ChatWidget-output .author").color("green").fontStyleItalic();
 		css.style(".ChatWidget-output .author-system").color("red").fontStyleItalic();
 		css.style(".ChatWidget-output .author-me").color("gray").fontStyleItalic();
@@ -292,17 +292,17 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void navigator(CssRenderer css) {
-		css.style(".NavigatorWidget-head").borderBottom(1, "solid", cNavigatorSeparator);
-		css.style(".NavigatorWidget .item a").borderBottom(1, "solid", cNavigatorSeparator).color(cNavigatorLink)
-				.displayBlock().padding(5, 3, 5, 3).textDecorationNone();
+		css.style(".NavigatorWidget-head").borderBottom(1, cNavigatorSeparator);
+		css.style(".NavigatorWidget .item a").borderBottom(1, cNavigatorSeparator).color(cNavigatorLink).displayBlock()
+				.padding(5, 3, 5, 3).textDecorationNone();
 		css.style(".NavigatorWidget .item a:hover").background(cNavigatorHoverItemBackground);
 		css.style(".NavigatorWidget .selected .item a").background(cNavigatorSelectedItemBackground);
 	}
 
 	private void comments(CssRenderer css) {
-		css.style(".CommentsWidget").background(cCommentsBackground).border(1, "solid", cCommentsBorder).padding(7)
+		css.style(".CommentsWidget").background(cCommentsBackground).border(1, cCommentsBorder).padding(7)
 				.borderRadius(10);
-		css.style(".CommentWidget").margin(15, 0, 10, 0).borderTop(1, "solid", cBlockHeaderBackground);
+		css.style(".CommentWidget").margin(15, 0, 10, 0).borderTop(1, cBlockHeaderBackground);
 		css.style(".CommentWidget-header").margin(4, 0, 2, 0);
 		css.style(".CommentWidget-header-author").floatLeft().marginRight(5);
 		css.style(".CommentWidget-header-date").color(cCommentDate);
@@ -310,22 +310,25 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void blockList(CssRenderer css) {
-		css.style(".ABlockWidget-extended").border(2, "solid", cHeaderBackground).padding(3);
-		css.style(".ABlockWidget-body").padding(10).border(1, "solid", cBlockHeaderBackground);
+		css.style(".ABlockWidget-extended").border(2, cHeaderBackground).padding(3);
+		css.style(".ABlockWidget-body").padding(10).border(1, cBlockHeaderBackground);
 
 		css.style(".BlockHeaderWidget").background(cBlockHeaderBackground).minHeight(50, "px");
 		css.style(".BlockHeaderWidget:hover").background(cBlockHeaderHoverBackground);
 		css.style(".BlockHeaderWidget-dragHandle").margin(2).padding(2).fontSize(fontSize - 1).lineHeight(
 			lineHeight - 2).textAlignCenter().cursorMove().background(cBlockHeaderDragHandleBackground).border(1,
-			"solid", cNavigatorSeparator).borderRadius(5);
+			cNavigatorSeparator).borderRadius(5);
 		css.style(".BlockHeaderWidget-center").padding(2).cursorPointer();
 		css.style(".BlockHeaderWidget-center-text").fontWeightBold().color(cHeaderBackground);
 		css.style(".BlockHeaderWidget-centerSuffix").marginLeft(5).color(cBlockHeaderCellSecondary).fontSize(
 			fontSizeSmall);
 		css.style(".BlockHeaderWidget-cell").padding(2);
 		css.style(".BlockHeaderWidget-cell-secondary").color(cBlockHeaderCellSecondary);
+		css.style(".BlockHeaderWidget-cell .gwt-MenuBar-horizontal").paddingLeft(1).border(1, cPagePanelBorder);
+		css.style(".BlockHeaderWidget-cell .gwt-MenuBar-horizontal td").lineHeight(lineHeightSmall);
 		css.style(".BlockHeaderWidget-cell .gwt-MenuItem").fontSize(fontSizeSmall).padding(0, 3, 0, 3)
-				.whiteSpaceNowrap();
+				.whiteSpaceNowrap().cursorPointer();
+		css.style(".BlockHeaderWidget-cell .gwt-MenuItem-selected").backgroundNone();
 		css.style(".BlockHeaderWidget-prefixLabel"); // .cursorPointer();
 		css.style(".BlockHeaderWidget-cell .gwt-Button").fontSize(fontSizeSmall).padding(2, 3, 2, 3).margin(0);
 
@@ -341,7 +344,7 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	private void pagePanel(CssRenderer css) {
 		css.style(".PagePanel");// .padding(10);
-		css.style(".PagePanel-content").background("white").border(1, "solid", cPagePanelBorder);
+		css.style(".PagePanel-content").background("white").border(1, cPagePanelBorder);
 		css.style(".PagePanel-header").padding(6, 10, 6, 10).fontSize(fontSizeTitle).lineHeight(lineHeightTitle)
 				.background(cPagePanelHeaderBackground).color(cPagePanelHeader);
 		css.style(".PagePanel-header .gwt-Button").fontSize(fontSizeSmall);
