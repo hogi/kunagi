@@ -34,7 +34,7 @@ public class CloseTaskDropAction implements BlockListDropAction<Task> {
 
 		@Override
 		public String getLabel() {
-			return "Undo Close/Change Requirement for " + task.getReference() + " " + task.getLabel();
+			return "Undo Close/Change Story for " + task.getReference() + " " + task.getLabel();
 		}
 
 		@Override

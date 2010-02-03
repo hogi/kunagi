@@ -34,7 +34,7 @@ public class SprintReportPdfCreator extends APdfCreator {
 		if (sprint.isGoalSet()) pdf.paragraph().nl().text("Goal", headerFonts[1]).nl().text(sprint.getGoal());
 
 		if (sprint.isCompletedRequirementLabelsSet()) {
-			pdf.paragraph().nl().text("Completed Requirements", headerFonts[1]).nl();
+			pdf.paragraph().nl().text("Completed Stories", headerFonts[1]).nl();
 			WikiToPdfConverter.buildPdf(pdf, sprint.getCompletedRequirementLabels());
 		}
 

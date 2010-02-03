@@ -17,14 +17,14 @@ public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurren
 	@Override
 	public String getTooltip() {
 
-		TooltipBuilder tb = new TooltipBuilder("Add this Requirement the the current Sprint.");
+		TooltipBuilder tb = new TooltipBuilder("Add this Story the the current Sprint.");
 
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM);
 		} else {
-			if (requirement.isClosed()) tb.addRemark("Requirement is already closed.");
-			if (!requirement.isEstimatedWorkValid()) tb.addRemark("Requirement has no confirmed estimation yet.");
-			if (isCurrentSprint(requirement.getSprint())) tb.addRemark("Requirement is already in current sprint.");
+			if (requirement.isClosed()) tb.addRemark("Story is already closed.");
+			if (!requirement.isEstimatedWorkValid()) tb.addRemark("Story has no confirmed estimation yet.");
+			if (isCurrentSprint(requirement.getSprint())) tb.addRemark("Story is already in current sprint.");
 		}
 
 		return tb.getTooltip();

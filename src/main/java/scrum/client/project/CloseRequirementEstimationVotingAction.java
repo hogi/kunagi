@@ -15,7 +15,7 @@ public class CloseRequirementEstimationVotingAction extends GCloseRequirementEst
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Disable the Planning Poker table for this requirement.");
+		TooltipBuilder tb = new TooltipBuilder("Disable the Planning Poker table for this Story.");
 
 		if (!requirement.getProject().isTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_TEAM);
 

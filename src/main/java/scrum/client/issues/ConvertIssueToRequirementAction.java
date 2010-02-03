@@ -11,16 +11,16 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 
 	@Override
 	public String getLabel() {
-		return "Convert to Requirement";
+		return "Convert to Story";
 	}
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Convert this issue to a real Requirement on the Product Backlog.");
+		TooltipBuilder tb = new TooltipBuilder("Convert this Issue to a real Story on the Product Backlog.");
 		if (!issue.getProject().isProductOwner(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 		} else {
-			if (!issue.isTypeRequirement()) tb.addRemark("Issue is not of type Requirement.");
+			if (!issue.isTypeRequirement()) tb.addRemark("Issue is not of type Story.");
 		}
 
 		return tb.getTooltip();
@@ -57,7 +57,7 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 
 		@Override
 		public String getLabel() {
-			return "Undo Convert " + issue.getReference() + " " + issue.getLabel() + " to Requirement";
+			return "Undo Convert " + issue.getReference() + " " + issue.getLabel() + " to Story";
 		}
 
 		@Override

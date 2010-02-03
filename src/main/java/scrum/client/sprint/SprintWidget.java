@@ -41,7 +41,7 @@ public class SprintWidget extends AScrumWidget {
 
 		if (completed == false) {
 			// not completed
-			tb.addFieldLabel("Requirements");
+			tb.addFieldLabel("Stories");
 			tb.addField("Completed", new AFieldValueWidget() {
 
 				@Override
@@ -76,7 +76,7 @@ public class SprintWidget extends AScrumWidget {
 			tb.nextRow();
 		} else {
 			// completed
-			tb.addFieldRow("Completed Requirements", new RichtextEditorWidget(getSprint()
+			tb.addFieldRow("Completed Stories", new RichtextEditorWidget(getSprint()
 					.getCompletedRequirementLabelsModel()), 4);
 		}
 

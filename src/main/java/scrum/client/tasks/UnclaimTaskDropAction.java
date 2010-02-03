@@ -35,7 +35,7 @@ public class UnclaimTaskDropAction implements BlockListDropAction<Task> {
 
 		@Override
 		public String getLabel() {
-			return "Undo Unclaim/Change Requirement for " + task.getReference() + " " + task.getLabel();
+			return "Undo Unclaim/Change Story for " + task.getReference() + " " + task.getLabel();
 		}
 
 		@Override

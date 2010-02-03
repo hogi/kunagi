@@ -31,7 +31,7 @@ public class SprintBacklogPdfCreator extends APdfCreator {
 		pdf.image(BurndownChart.createBurndownChartAsByteArray(sprint, 1000, 500)).setScaleByWidth(150f);
 
 		pdf.nl();
-		pdf.paragraph().text("Requirements", headerFonts[1]);
+		pdf.paragraph().text("Stories", headerFonts[1]);
 		List<Requirement> requirements = new ArrayList<Requirement>(sprint.getRequirements());
 		for (Requirement req : requirements) {
 			if (req.isClosed()) continue;

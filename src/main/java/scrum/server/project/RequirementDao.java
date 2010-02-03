@@ -7,7 +7,7 @@ public class RequirementDao extends GRequirementDao {
 	@Override
 	public Requirement newEntityInstance() {
 		Requirement requirement = super.newEntityInstance();
-		requirement.setLabel("New Requirement");
+		requirement.setLabel("New Story");
 		return requirement;
 	}
 
@@ -29,7 +29,7 @@ public class RequirementDao extends GRequirementDao {
 
 		Requirement requirement = newEntityInstance();
 		requirement.setProject(project);
-		requirement.setLabel("Requirement " + (('A') + variant - 1));
+		requirement.setLabel("Story " + (('A') + variant - 1));
 		requirement.setEstimatedWork(estimatedWork);
 		saveEntity(requirement);
 

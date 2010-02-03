@@ -19,7 +19,7 @@ public class CreateTaskAction extends GCreateTaskAction {
 	@Override
 	public String getTooltip() {
 
-		TooltipBuilder tb = new TooltipBuilder("Create a new Task for this Requirement.");
+		TooltipBuilder tb = new TooltipBuilder("Create a new Task for this Story.");
 
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_TEAM);
 

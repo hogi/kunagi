@@ -6,7 +6,7 @@ public class CreateRequirementAction extends GCreateRequirementAction {
 
 	@Override
 	public String getLabel() {
-		return "Create new Requirement";
+		return "Create new Story";
 	}
 
 	@Override
@@ -16,7 +16,7 @@ public class CreateRequirementAction extends GCreateRequirementAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Create a new Requirement.");
+		TooltipBuilder tb = new TooltipBuilder("Create a new Story.");
 
 		if (!getCurrentProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 

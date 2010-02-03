@@ -16,13 +16,13 @@ public class SetRequirementDirtyAction extends GSetRequirementDirtyAction {
 	@Override
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder(
-				"Mark this requirement as dirty. This means, the estimated work needs to be reestimated.");
+				"Mark this Story as dirty. This means, the estimated work needs to be reestimated.");
 		if (!requirement.getProject().isProductOwnerOrTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM_NOR_PRODUCT_OWNER);
 		} else {
-			if (requirement.isClosed()) tb.addRemark("Requirement is already closed.");
-			if (requirement.isDirty()) tb.addRemark("Requirement is already dirty.");
-			if (requirement.isInCurrentSprint()) tb.addRemark("Requirement is in Sprint.");
+			if (requirement.isClosed()) tb.addRemark("Story is already closed.");
+			if (requirement.isDirty()) tb.addRemark("Story is already dirty.");
+			if (requirement.isInCurrentSprint()) tb.addRemark("Story is in Sprint.");
 		}
 
 		return tb.getTooltip();

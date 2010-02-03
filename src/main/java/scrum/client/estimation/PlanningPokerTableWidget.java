@@ -125,7 +125,7 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 				String clickTooltip = null;
 				if (requirement.isWorkEstimationVotingShowoff()) {
 					clickHandler = new SelectEstimationClickHandler(estimation);
-					clickTooltip = "Use this card as the estimation for this requirement. Planning Poker will be closed.";
+					clickTooltip = "Use this card as the estimation for this Story. Planning Poker will be closed.";
 				} else if (currentUser) {
 					clickHandler = new RemoveEstimationClickHandler();
 					clickTooltip = "Remove this card from table.";

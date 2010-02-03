@@ -15,12 +15,12 @@ public class ReopenRequirementAction extends GReopenRequirementAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Reopen this Requirement.");
+		TooltipBuilder tb = new TooltipBuilder("Reopen this Story.");
 
 		if (!requirement.getProject().isProductOwnerOrTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM_NOR_PRODUCT_OWNER);
 		} else {
-			if (!requirement.isClosed()) tb.addRemark("Requirement is not yet closed.");
+			if (!requirement.isClosed()) tb.addRemark("Story is not yet closed.");
 		}
 
 		return tb.getTooltip();

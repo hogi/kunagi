@@ -60,7 +60,7 @@ public class SearchResultsWidget extends AScrumWidget {
 
 	private String getTitle(String key) {
 		if (key.equals(Requirement.class.getName())) {
-			return "Requirements";
+			return "Stories";
 		} else if (key.equals(Quality.class.getName())) {
 			return "Qualities";
 		} else if (key.equals(Task.class.getName())) {

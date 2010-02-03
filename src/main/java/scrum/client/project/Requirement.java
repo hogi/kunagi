@@ -18,7 +18,7 @@ import scrum.client.sprint.Task;
 
 public class Requirement extends GRequirement implements ReferenceSupport {
 
-	public static final String REFERENCE_PREFIX = "req";
+	public static final String REFERENCE_PREFIX = "sto";
 	public static String[] WORK_ESTIMATION_VALUES = new String[] { "", "0.5", "1", "2", "3", "5", "8", "13", "20",
 			"40", "100" };
 
