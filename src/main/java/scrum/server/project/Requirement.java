@@ -2,6 +2,7 @@ package scrum.server.project;
 
 import java.util.Set;
 
+import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.estimation.RequirementEstimationVote;
 import scrum.server.estimation.RequirementEstimationVoteDao;
@@ -25,8 +26,26 @@ public class Requirement extends GRequirement implements Numbered {
 
 	// --- ---
 
+	public void initializeEstimationVotes() {
+		for (User user : getProject().getTeamMembers()) {
+			RequirementEstimationVote vote = getEstimationVote(user);
+			if (vote == null) vote = requirementEstimationVoteDao.postVote(this, user);
+			vote.setEstimatedWork(null);
+		}
+	}
+
+	private RequirementEstimationVote getEstimationVote(User user) {
+		return requirementEstimationVoteDao.getRequirementEstimationVoteByUser(this, user);
+	}
+
 	public Set<RequirementEstimationVote> getEstimationVotes() {
 		return requirementEstimationVoteDao.getRequirementEstimationVotesByRequirement(this);
+	}
+
+	public void clearEstimationVotes() {
+		for (RequirementEstimationVote vote : getEstimationVotes()) {
+			requirementEstimationVoteDao.deleteEntity(vote);
+		}
 	}
 
 	public boolean isTasksClosed() {
@@ -53,6 +72,9 @@ public class Requirement extends GRequirement implements Numbered {
 		super.ensureIntegrity();
 		updateNumber();
 
+		// delete estimation votes when closed or in sprint
+		if (isClosed() || isSprintSet()) clearEstimationVotes();
+
 		// delete when closed and older than 4 weeks
 		if (isClosed() && getLastModified().getPeriodToNow().toWeeks() > 4) getDao().deleteEntity(this);
 	}
@@ -76,4 +98,5 @@ public class Requirement extends GRequirement implements Numbered {
 		taskDao.createTestTask(this, 3);
 		taskDao.createTestTask(this, 4);
 	}
+
 }

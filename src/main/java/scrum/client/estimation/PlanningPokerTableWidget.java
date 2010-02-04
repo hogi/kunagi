@@ -154,7 +154,7 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 		}
 
 		public void onClick(ClickEvent event) {
-			requirement.applyEstimationVoting(estimation);
+			requirement.setEstimatedWork(estimation);
 			cm.getEventBus().fireVisibleDataChanged();
 		}
 	}

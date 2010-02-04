@@ -239,6 +239,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 							+ requirement.getReferenceAndLabel() + " from current sprint");
 				}
 			}
+			if (properties.containsKey("estimatedWork")) {
+				requirement.initializeEstimationVotes();
+				requirement.setDirty(false);
+				requirement.setWorkEstimationVotingShowoff(false);
+				requirement.setWorkEstimationVotingActive(false);
+				conversation.sendToClient(requirement);
+			}
 
 			requirement.getProject().getCurrentSprintSnapshot().update();
 		}
@@ -324,6 +331,18 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		conversation.clearRemoteEntities();
 		conversation.setProject(null);
 		if (project != null) webApplication.updateOnlineTeamMembers(project, conversation);
+	}
+
+	@Override
+	protected void onActivateRequirementEstimationVoting(GwtConversation conversation, String requirementId) {
+		Requirement requirement = requirementDao.getById(requirementId);
+		if (requirement == null || !requirement.isProject(conversation.getProject()))
+			throw new PermissionDeniedException();
+		requirement.initializeEstimationVotes();
+		requirement.setWorkEstimationVotingActive(true);
+		requirement.setWorkEstimationVotingShowoff(false);
+		sendToClients(conversation, requirement);
+		sendToClients(conversation, requirement.getEstimationVotes());
 	}
 
 	@Override

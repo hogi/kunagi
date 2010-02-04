@@ -42,6 +42,7 @@ public class SetRequirementCleanAction extends GSetRequirementCleanAction {
 		if (!requirement.isDirty()) return false;
 		if (requirement.getEstimatedWork() == null) return false;
 		if (requirement.isInCurrentSprint()) return false;
+		if (requirement.isWorkEstimationVotingActive()) return false;
 		return true;
 	}
 

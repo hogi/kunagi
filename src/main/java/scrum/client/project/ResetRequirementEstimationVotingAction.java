@@ -25,7 +25,7 @@ public class ResetRequirementEstimationVotingAction extends GResetRequirementEst
 
 	@Override
 	protected void onExecute() {
-		requirement.resetWorkEstimationVoting();
+		cm.getApp().callActivateRequirementEstimationVoting(requirement.getId());
 	}
 
 }

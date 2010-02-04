@@ -60,4 +60,6 @@ public interface GScrumServiceAsync {
 
     void search(java.lang.String text, AsyncCallback<DataTransferObject> callback);
 
+    void activateRequirementEstimationVoting(java.lang.String requirementId, AsyncCallback<DataTransferObject> callback);
+
 }

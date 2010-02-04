@@ -33,6 +33,7 @@ public class SetRequirementDirtyAction extends GSetRequirementDirtyAction {
 		if (requirement.isClosed()) return false;
 		if (requirement.isDirty()) return false;
 		if (requirement.isInCurrentSprint()) return false;
+		if (requirement.isWorkEstimationVotingActive()) return false;
 		return true;
 	}
 

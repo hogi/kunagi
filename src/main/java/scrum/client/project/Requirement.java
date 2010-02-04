@@ -71,13 +71,8 @@ public class Requirement extends GRequirement implements ReferenceSupport {
 
 	public void setVote(Float estimatedWork) {
 		RequirementEstimationVote vote = getEstimationVote(cm.getAuth().getUser());
-		if (vote == null) {
-			vote = new RequirementEstimationVote(this, cm.getAuth().getUser());
-			getDao().createRequirementEstimationVote(vote);
-		}
-
+		if (vote == null) throw new IllegalStateException("vote == null");
 		vote.setEstimatedWork(estimatedWork);
-
 		if (estimatedWork != null && isWorkEstimationVotingComplete()) activateWorkEstimationVotingShowoff();
 	}
 
@@ -92,30 +87,12 @@ public class Requirement extends GRequirement implements ReferenceSupport {
 		return true;
 	}
 
-	public void activateWorkEstimationVoting() {
-		setWorkEstimationVotingActive(true);
-	}
-
 	public void deactivateWorkEstimationVoting() {
 		setWorkEstimationVotingActive(false);
 	}
 
 	public void activateWorkEstimationVotingShowoff() {
 		setWorkEstimationVotingShowoff(true);
-	}
-
-	public void resetWorkEstimationVoting() {
-		for (RequirementEstimationVote vote : getEstimationVotes()) {
-			vote.setEstimatedWork(null);
-		}
-		setWorkEstimationVotingShowoff(false);
-	}
-
-	public void applyEstimationVoting(Float estimation) {
-		setEstimatedWork(estimation);
-		resetWorkEstimationVoting();
-		deactivateWorkEstimationVoting();
-		setDirty(false);
 	}
 
 	public String getTaskStatusLabel() {

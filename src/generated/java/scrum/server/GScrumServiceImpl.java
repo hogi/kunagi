@@ -43,6 +43,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onSleep(GwtConversation conversation, long millis);
     protected abstract void onUpdateSystemMessage(GwtConversation conversation, scrum.client.admin.SystemMessage systemMessage);
     protected abstract void onSearch(GwtConversation conversation, java.lang.String text);
+    protected abstract void onActivateRequirementEstimationVoting(GwtConversation conversation, java.lang.String requirementId);
 
 
     public scrum.client.DataTransferObject ping() {
@@ -435,6 +436,25 @@ public abstract class GScrumServiceImpl
             onSearch(conversation, text);
         } catch (Throwable t) {
             handleServiceMethodException("search",t);
+            throw new RuntimeException(t);
+        }
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public scrum.client.DataTransferObject activateRequirementEstimationVoting(java.lang.String requirementId) {
+        LOG.debug("activateRequirementEstimationVoting");
+        WebSession session = (WebSession) getSession();
+        GwtConversation conversation = session.getGwtConversation();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:activateRequirementEstimationVoting");
+        context.bindCurrentThread();
+        try {
+            onActivateRequirementEstimationVoting(conversation, requirementId);
+        } catch (Throwable t) {
+            handleServiceMethodException("activateRequirementEstimationVoting",t);
             throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

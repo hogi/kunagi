@@ -60,4 +60,6 @@ public interface GScrumService
 
     DataTransferObject search(java.lang.String text);
 
+    DataTransferObject activateRequirementEstimationVoting(java.lang.String requirementId);
+
 }

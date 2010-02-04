@@ -206,4 +206,12 @@ public abstract class GScrumGwtApplication
         callSearch(text,  null);
     }
 
+    public final void callActivateRequirementEstimationVoting(java.lang.String requirementId,  Runnable callback) {
+        getScrumService().activateRequirementEstimationVoting(requirementId,  new DefaultCallback<DataTransferObject>(callback));
+    }
+
+    public final void callActivateRequirementEstimationVoting(java.lang.String requirementId) {
+        callActivateRequirementEstimationVoting(requirementId,  null);
+    }
+
 }
