@@ -11,12 +11,12 @@
 
 * {margin: 0; padding: 0;}
 body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",sans-serif; color: #192666;}
-    #main {width: 600px; margin-left: auto; margin-right: auto; margin-top: 50px; border: 1px solid #555;}
+    #main {width: 600px; margin: 50px auto; border: 1px solid #555;}
 
     #header {height: 80px; background: #233C9B url("header.jpg") 0 0 no-repeat; color:#FFF;}
         h1 {font: 30pt/55pt "georgia",serif; color: white; margin: 0px 20px;}
             h1 .orange {color: orange;}
-    #header img {margin: 0px 10px;}
+    #header img {margin: 0px 10px; border: none;}
     
     #content {background: white; padding: 25px;}
 		#content a {color: #B37400;}
@@ -26,13 +26,16 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
 			.sidebar {float: right;}
 		        #content .starter {background: orange url("button_bg.png") 0 0 repeat-x; border: 1px solid orange; width: 150px; padding: 5px; text-align: center; -moz-border-radius: 5px; margin-bottom: 5px;}
 		            #content .starter a {color: #B37400; font-size: 16px; font-weight: bold; text-decoration: none;}
+            h3 {font: 12pt/16pt "georgia",serif; font-weight: bold; margin-bottom: 10px;}
+            img.screenshotthumb {margin: 5px 10px 10px 0px; border: 1px solid #DDD;}
+            .featureseparator {clear: both; height: 10px;}
         #content .separator {height: 25px; margin-bottom: 25px; border-bottom: 1px solid #CCC;}
     #footer {background:#192666; color: #CCC; padding: 0px 10px; font-size: 8px; text-align: right;}
     
 	.clear {clear: both;}
 	</style>
 	
-	<title>kunagi project</title>
+	<title>kunagi - Agile project management based on Scrum</title>
 	
 </head>
 
@@ -41,24 +44,72 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
 <div id="main">
 
     <div id="header">
-	<img src="logo.png" alt="kunagi">
+	   <a href="http://kunagi.org/"><img src="logo.png" alt="kunagi"></a>
     </div>
     
     <div id="content">
+    
+        <div class="section">
+            <p>
+                Kunagi is a software project management tool based on the agile framework <a href="http://en.wikipedia.org/wiki/Scrum_%28development%29" target="_blank">Scrum</a>.
+                It is designed for distributed teams of pragmatic ploeple, which need tight collaboration to build a complex product the agile way. 
+                kunagi is <a href="http://en.wikipedia.org/wiki/Free_software" target="_blank">free</a>.
+            </p>
+        </div>
 
-		<div class="section">
-			<h2>Visitor Information</h2>
-			<div class="middle">
-				<p>kunagi is for managing agile software development projects.
-				For now, it is in early alpha stage. There is no date for a stable release.</p>
-			</div>
-			<div class="sidebar">
-		        <div class="starter">
-		            <a target="_blank" href="https://servisto.de/scrum-latest/scrum.ScrumGwtApplication/ScrumGwtApplication.html">Start Demo</a>
-		        </div>
-			</div>
-			<div class="clear"></div>
-		</div>
+        <div class="separator"></div>
+        
+        <div class="section">
+            <h2>Online demo</h2>
+            <div class="middle">
+                <p>
+                    Take a closer look at kunagi by trying the online demo.
+                    It is preconfigured with example projects.
+                </p>
+            </div>
+            <div class="sidebar">
+                <div class="starter">
+                    <a target="_blank" href="https://servisto.de/scrum-latest/scrum.ScrumGwtApplication/ScrumGwtApplication.html">Start Demo</a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="separator"></div>
+        
+        <div class="section">
+            <h2>Download</h2>
+            <div class="middle">
+                <p>
+                    comming soon...
+                </p>
+            </div>
+            <div class="sidebar">
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="separator"></div>
+        
+        <div class="section">
+            <h2>Features</h2>
+            
+            <p>
+                <img src="screenshots/productbacklog-thumb.png" alt="Product Backlog" align="left" class="screenshotthumb">
+                The <strong>Product Backlog</strong> is optimized for the Product Owner.
+                Stories are edited inline and priorized by Drag'n'Drop.
+                Based on adjustable velocity, a sprint projection visualizes volume of future releases.  
+            </p>
+            
+            <div class="featureseparator"></div>
+            <p>
+                <img src="screenshots/wiki-thumb.png" alt="Wiki" align="left" class="screenshotthumb">
+                The integrated <strong>Wiki</strong> provides space for custom documents.
+                Pages can by downloaded as PDF.
+                All description fields (Stories, Tasks, Impediments,...) are based on the Wiki-Syntax which is similar to the MediaWiki-Syntax.
+            </p>
+            
+        </div>
 
 		<div class="separator"></div>
 		
@@ -89,6 +140,15 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
     
 </div>
 
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-12836945-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
 
 </body>
 </html>
