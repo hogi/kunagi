@@ -3,6 +3,8 @@
 		<title>Vergleich von Scrum-Tools auf dem Markt</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<style>
+            body, td {font-family: Arial Unicode MS, Arial, sans-serif; font-size: 12px; line-height: 18px;}
+            ul {margin-top: 0px; padding-left: 20px;}
 			.comptable { border:0; margin:0; padding:0; spacing:2px; }
 			.compcol { background-color:#eeeeff; width:400px; vertical-align:top; padding:4px; }
 			.headcol {font-weight:bold; background-color:#ddddff; width:300px; }
@@ -16,7 +18,7 @@
 
 ROW TEMPLATES
 			<tr>
-				<td colspan="5" class="section"></td>
+				<td colspan="6" class="section"></td>
 			</tr>
 			
 			<tr>
@@ -36,22 +38,23 @@ ROW TEMPLATES
 	<body>
 		<table class="comptable">
 			<tr>
-				<th>&nbsp</th>
-				<th class="compcol headcol">Nameless Scrum-Project</th>
+				<th>&nbsp;</th>
+				<th class="compcol headcol">kunagi</th>
 				<th class="compcol headcol">Agilo for Scrum</th>
                 <th class="compcol headcol">IceScrum</th>
+                <th class="compcol headcol">ScrumPad</th>
 				<th class="compcol headcol rescol">Fazit</th>
 			</tr>
 <!-- = ALLGEMEIN = -->
 			<tr>
-				<td colspan="5" class="section">Allgemein</td>
+				<td colspan="6" class="section">Allgemein</td>
 			</tr>
 
 <!-- Positive Dinge -->
 			<tr>
 				<td class="compcol headcol">Positive Dinge (sollten wir vielleicht nachmachen)</td>
-				<!-- NSP -->
-				<td>&nbsp;</td>
+				<!-- kunagi -->
+				<td class="compcol">&nbsp;</td>
 				
 				<!-- Agilo -->
 				<td class="compcol">
@@ -69,19 +72,25 @@ ROW TEMPLATES
                     </ul>
                 </td>
                 
-				<!-- Fazit -->
-				<td>
+                <!-- ScrumPad -->
+                <td class="compcol">
                     <ul>
-                        <li>Online-Testserver mit Instant-Registrierung</li>
+                        <li>Import/Export von Stories und Bugs als CSV</li>
+                        <li>Feedback, Fragen und Bugs können direkt aus dem Tool an den Hersteller gesendet werden.</li>
+                        <li>Benutzer können sich ein Beispiel-Projekt generieren lassen.</li>
                     </ul>
+                </td>
+                
+				<!-- Fazit -->
+				<td class="compcol">
                 </td>
 			</tr>
 			
 <!-- Negative Dinge -->
 			<tr>
 				<td class="compcol headcol">Negative Dinge (sollten wir dringend anders machen)</td>
-				<!-- NSP -->
-				<td>&nbsp;</td>
+				<!-- kunagi -->
+				<td class="compcol">&nbsp;</td>
 				
 				<!-- Agilo -->
 				<td class="compcol">
@@ -102,8 +111,17 @@ ROW TEMPLATES
                     </ul>
                 </td>
 				
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    <ul>
+                        <li>Registrierung erfordert das Warten auf Email, bevor man testen kann</li>
+                        <li>Langsam, durch ständiges Neuladen ganzer Seiten.</li>
+                        <li>Es öffnen sich ständig Dialog. Sogar für Listen (Tasks in einer Story oder Messages)</li>
+                    </ul>
+                </td>
+                
 				<!-- Fazit -->
-				<td>&nbsp;</td>
+				<td class="compcol"></td>
 			</tr>
 
 
@@ -112,16 +130,16 @@ ROW TEMPLATES
 <!-- = SCRUM WORKFLOW = -->
 <!-- == PRODUCT OWNER == -->
 			<tr>
-				<td colspan="5" class="section">Scrum-Workflow</td>
+				<td colspan="6" class="section">Scrum-Workflow</td>
 			</tr>
 			<tr>
-				<td colspan="5" class="subsection">Product Owner</td>
+				<td colspan="6" class="subsection">Product Owner</td>
 			</tr>
 
 <!-- Definition einer Produktvision -->
 			<tr>
 				<td class="compcol headcol">Definition einer Produktvision</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Der Product Owner hat zwei Möglichkeiten, eine Produktvision zu hinterlegen:
 					<ol>
@@ -140,6 +158,11 @@ ROW TEMPLATES
                     Es gibt keinen Platz für eine Produktvision. Es gibt nur ein winziges Feld für eine Projektbeschreibung, über <strong>Projektauswahl</strong>, <strong>Project-Actions</strong>, <strong>Update project caracteristics</strong> erreichbar.
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    Es gibt keinen Platz für eine Produktvision.
+                </td>
+                
 				<!-- Fazit -->
 				<td class="compcol rescol">
 					Denkbare Verbesserungen unseres Tools:
@@ -153,7 +176,7 @@ ROW TEMPLATES
 <!-- Definition der Produktfeatures -->
 			<tr>
 				<td class="compcol headcol">Definition der Produktfeatures</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Der Product Owner
 					<ul>
@@ -185,13 +208,23 @@ ROW TEMPLATES
                     </ul>
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    <ul>
+                        <li>Requirements werden als User Stories eingegeben</li>
+                        <li>Release und Sprint können sofort zugeordnet werden</li>
+                        <li>Eingabe von <strong>Business value</strong> und <strong>Complexity</strong> möglich</li>
+                        <li>Upload von Attachments möglich</li>             
+                </td>
+                
 				<!-- Fazit -->
 				<td class="compcol rescol">
 					Denkbare Verbesserungen unseres Tools:
 					<ul>
 						<li>Standardaktionen für Rollen zusätzlich in der Navigation anzeigen (nicht nur in den Unteransichten). [Agilo]</li>
-                        <li>Eingabe der Requirement-Beschreibung als User-Story (As ROLE, I can ACTION, To MOTIVATION)</li>
-                        <li>Custom Roles / Personas</li>
+                        <li>Eingabe der Requirement-Beschreibung als User-Story (As <em>ROLE</em>, I can <em>ACTION</em>, To <em>MOTIVATION</em>)</li>
+                        <li>Custom roles / Personas</li>
+                        <li>Business value und Complexity für Requirements</li>
 					</ul>
 				</td>
 			</tr>
@@ -199,7 +232,7 @@ ROW TEMPLATES
 <!-- Festlegen von Releasedaten und -umfang -->
 			<tr>
 				<td class="compcol headcol">Festlegen von Releasedaten und -umfang</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					<strong>Releses lassen sich nicht manuell planen</strong>.
 					Der Product Owner kann sich zukünftige Sprint projezieren lassen. Dazu führt er folgende Aktionen durch:
@@ -232,6 +265,11 @@ ROW TEMPLATES
                     </ul>
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    Simple Liste von Releases, bestehend aus Bezeichnung und Datum.
+                </td>
+                
 				<!-- Fazit -->
 				<td class="compcol rescol">
 					Denkbare Verbesserungen unseres Tools:
@@ -245,7 +283,7 @@ ROW TEMPLATES
 <!-- Überwachung der Proditabilität -->
 			<tr>
 				<td class="compcol headcol">Überwachung der Profitabilität</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					<ul>
 						<li>Der Product Owner kann sich im Product Backlog anhand von <strong>voraussichtlicher Velocity</strong> die <strong>Fertigstellung von Requirements projezieren</strong> zu lassen und kann so Vergleichen, ob sich die geplante Fertigstellung mit der errechneten deckt.</li>
@@ -264,6 +302,10 @@ ROW TEMPLATES
                     Nichts zu finden.
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                </td>
+                
 				<!-- Fazit -->
 				<td class="compcol rescol">
 					Wir sollten hier schauen, welche Konzepte für den Product Owner nützlich sind.
@@ -279,7 +321,7 @@ ROW TEMPLATES
 <!-- Priorisierung von Features nach Marktwert -->
 			<tr>
 				<td class="compcol headcol">Priorisierung von Features nach Marktwert</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Der Product Owner kann Storys im <strong>Product Backlog sortieren</strong>. Dazu führt er folgende Aktionen durch:
 					<ul>
@@ -313,6 +355,10 @@ ROW TEMPLATES
                     </ul>
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                </td>
+                
 				<!-- Fazit -->
 				<td class="compcol rescol">
 					Denkbare Verbesserungen unseres Tools:
@@ -326,7 +372,7 @@ ROW TEMPLATES
 <!-- Beantwortung von Feagen des Teams -->
 			<tr>
 				<td class="compcol headcol">Beantwortung von Fragen des Teams</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Das Team kann Fragen zu <strong>beliebigen Entitys</strong> stellen, indem ein Teammitglied
 					<ul>
@@ -352,6 +398,12 @@ ROW TEMPLATES
                     Nichts zu finden.
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    Es lassen sich Messages an Entities anhängen. Durch Klick auf Messages-Icon öffnet sich ein Dialog mit einer
+                    Liste der Messages. Diese Messages lassen sich wiederum öffnen und wieder kommentieren.
+                </td>
+                
 				<!-- Fazit -->
 				<td class="compcol rescol">
 					Denkbare Verbesserungen unseres Tools:
@@ -364,7 +416,7 @@ ROW TEMPLATES
 <!-- Durchführung des Sprint Planning -->
 			<tr>
 				<td class="compcol headcol">Durchführung des Sprint Plannings</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Der Product Owner
 					<ul>
@@ -406,6 +458,11 @@ ROW TEMPLATES
                     <a href="#team-createtasks">Team erzeugt Tasks</a>
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    In einer simplen Liste lassen sich Sprints erstellen. Diese Bestehen aus Name, Beschreibung, Anfangs- und Enddatum und Release.<br>
+                </td>
+                
 				<!-- Fazit -->
 				<td class="compcol rescol">
 					Denkbare Verbesserungen unseres Tools:
@@ -419,7 +476,7 @@ ROW TEMPLATES
 <!-- Durchführung des Sprint Reviews (Abnahme von Requirements) -->
 			<tr>
 				<td class="compcol headcol">Durchführung des Sprint Reviews (Abnahme von Requirements)</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Der Product Owner kann
 					<ul>
@@ -442,6 +499,11 @@ ROW TEMPLATES
                     </ul>
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    Nach 30min. Suche nach einer Möglichkeit erledigte Storys als "erledigt" zu markieren habe ich aufgegeben.
+                </td>
+                
 				<!--Fazit -->
 				<td class="compcol rescol">
 					Rechte-Management:
@@ -458,13 +520,13 @@ ROW TEMPLATES
 
 <!-- == SCRUM MASTER == -->
 			<tr>
-				<td colspan="5" class="subsection">Scrum Master</td>
+				<td colspan="6" class="subsection">Scrum Master</td>
 			</tr>
 			
 <!-- Überwacht aktive und erledigte Tasks und ihre Schätzungen -->
 			<tr>
 				<td class="compcol headcol">Überwacht aktive und erledigte Tasks und ihre Schätzungen</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Der Scrum Master kann
 					<ul>
@@ -505,6 +567,15 @@ ROW TEMPLATES
                     Für Storys können Tests definiert werden.
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    <ul>
+                        <li>Storyboard mit Stories im Sprint</li>
+                        <li>Taskboard (Whiteboard)</li>
+                        <li>Burndown-Chart und Burnup-Chart</li>
+                    </ul>
+                </td>
+                
 				<!--Fazit -->
 				<td class="compcol rescol">
 					Denkbare Verbesserungen unseres Tools:
@@ -520,7 +591,7 @@ ROW TEMPLATES
 <!-- Verwaltet eine Liste von Impediments -->
 			<tr>
 				<td class="compcol headcol">Verwaltet eine Liste von Impediments</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Der Scrum Master
 					<ul>
@@ -556,13 +627,18 @@ ROW TEMPLATES
                     </ul>
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    Simple Liste von Impediments, bestehend aus Beschreibung und Status.
+                </td>
+                
 				<!--Fazit -->
 				<td class="compcol rescol">
 					Denkbare Verbesserungen unseres Tools:
 					<ul>
 						<li>Man sollte Impediments wieder öffnen können.</li>
 						<li>Filter für geschlossene Impediments.</li>
-                        <li>Zwischenstatus <em>solving</em> [IceScrum]</li>
+                        <li>Zwischenstatus <em>solving</em> [IceScrum] [ScrumPad]</li>
 					</ul>
 				</td>
 			</tr>
@@ -570,7 +646,7 @@ ROW TEMPLATES
 <!-- Priorisiert Impediments -->
 			<tr>
 				<td class="compcol headcol">Priorisiert Impediments</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Nicht möglich.
 				</td>
@@ -581,6 +657,11 @@ ROW TEMPLATES
 				</td>
 				
                 <!-- IceScrum -->
+                <td class="compcol">
+                    Nicht möglich.
+                </td>
+                
+                <!-- ScrumPad -->
                 <td class="compcol">
                     Nicht möglich.
                 </td>
@@ -597,7 +678,7 @@ ROW TEMPLATES
 <!-- Entwirft Gegenmaßnahmen für Impediments -->
 			<tr>
 				<td class="compcol headcol">Entwirft Gegenmaßnahmen für Impediments</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Der Scrum Master
 					<ul>
@@ -622,6 +703,11 @@ ROW TEMPLATES
                     </ul>
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    Beschreibung editieren.
+                </td>
+                
 				<!--Fazit -->
 				<td class="compcol rescol">
 					&nbsp;
@@ -631,7 +717,7 @@ ROW TEMPLATES
 <!-- Läd zu Meetings ein -->
 			<tr>
 				<td class="compcol headcol">Läd zu Meetings ein</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Der Scrum Master
 					<ul>
@@ -651,6 +737,11 @@ ROW TEMPLATES
                     Nicht möglich.
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    Nicht möglich.
+                </td>
+                
 				<!--Fazit -->
 				<td class="compcol rescol">
 					Denkbare Verbesserungen unseres Tools:
@@ -665,7 +756,7 @@ ROW TEMPLATES
 <!-- Durchführung von Daily Scrums -->
 			<tr>
 				<td class="compcol headcol">Durchführung von Daily Scrums</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Nicht möglich.
 				</td>
@@ -676,6 +767,11 @@ ROW TEMPLATES
 				</td>
 				
                 <!-- IceScrum -->
+                <td class="compcol">
+                    Nicht möglich.
+                </td>
+                
+                <!-- ScrumPad -->
                 <td class="compcol">
                     Nicht möglich.
                 </td>
@@ -692,7 +788,7 @@ ROW TEMPLATES
 <!-- Durchführung von Sprint Retrospectives -->
 			<tr>
 				<td class="compcol headcol">Durchführung von Sprint Retrospectives</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Der Scrum Master kann
 					<ul>
@@ -710,6 +806,11 @@ ROW TEMPLATES
                     Nicht möglich.
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    Nicht möglich.
+                </td>
+                
 				<!--Fazit -->
 				<td class="compcol rescol">
 					Denkbare Verbesserungen unseres Tools:
@@ -721,14 +822,14 @@ ROW TEMPLATES
 
 <!-- == TEAM == -->
 			<tr>
-				<td colspan="5" class="subsection">Team</td>
+				<td colspan="6" class="subsection">Team</td>
 			</tr>
 
 <!-- Übernimmt während des Sprint Planning Requirements in den Sprint Backlog -->
 			<tr>
 			
 				<td class="compcol headcol"><a name="team-pullrequirements" />Übernimmt während des Sprint Planning Requirements in den Sprint Backlog</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Das Team
 					<ul>
@@ -761,6 +862,11 @@ ROW TEMPLATES
                     </ul>
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    Den Stories im Product Backlog können Sprints zugeordnet werden.
+                </td>
+                
 				<!--Fazit -->
 				<td class="compcol rescol">
 					Denkbare Verbesserungen unseres Tools:
@@ -775,7 +881,7 @@ ROW TEMPLATES
 <!-- Erzeugt Tasks, die zur Bearbeitung von Requirements nötig sind -->
 			<tr>
 				<td class="compcol headcol"><a name="team-createtasks" />Erzeugt Tasks, die zur Bearbeitung von Requirements nötig sind</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Das Team
 					<ul>
@@ -812,6 +918,15 @@ ROW TEMPLATES
                     </ul>
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    <ul>
+                        <li>Durch Klicken auf das Task-Icon in einer Story im Product Backlog öffnet sich ein Dialog mit Tasks</li>
+                        <li>Task besteht aus Title, Content, Estimate (hours) und Owners.</li>
+                    </ul>
+                    
+                </td>
+                
 				<!--Fazit -->
 				<td class="compcol rescol">
 					&nbsp;
@@ -821,7 +936,7 @@ ROW TEMPLATES
 <!-- Übernimmt und schließt Tasks -->
 			<tr>
 				<td class="compcol headcol">Übernimmt und schließt Tasks</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Das Team
 					<ul>
@@ -875,6 +990,11 @@ ROW TEMPLATES
                     </ul>
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    Drag-n-drop im Whiteboard oder Bearbeitungsdialog des Tasks.
+                </td>
+                
 				<!--Fazit -->
 				<td class="compcol rescol">
 					
@@ -884,7 +1004,7 @@ ROW TEMPLATES
 <!-- Verhandelt Sprintumfang mit dem Product Owner neu (Erweiterung oder Streichung von Requirements) -->
 			<tr>
 				<td class="compcol headcol">Verhandelt Sprintumfang mit dem Product Owner neu (Erweiterung oder Streichung von Requirements)</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Nicht möglich. Der Umfang kann geändert werden, indem:
 					<ul>
@@ -900,7 +1020,12 @@ ROW TEMPLATES
 				
                 <!-- IceScrum -->
                 <td class="compcol">
-                    Nicht möglich. Storys können jederzeit in ein Sprint aufgenommen, bzw. aus dem Sprint entfernt werden.
+                    Nicht möglich. Stories können jederzeit in ein Sprint aufgenommen, bzw. aus dem Sprint entfernt werden.
+                </td>
+                
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    Nicht möglich.  Stories können jederzeit in ein Sprint aufgenommen, bzw. aus dem Sprint entfernt werden.
                 </td>
                 
 				<!--Fazit -->
@@ -916,7 +1041,7 @@ ROW TEMPLATES
 <!-- Verhandelt den Umfang von Requirements neu (Änderung von Beschreibung und Abnahmekriterien) -->
 			<tr>
 				<td class="compcol headcol">Verhandelt den Umfang von Requirements neu (Änderung von Beschreibung und Abnahmekriterien)</td>
-				<!-- NSP -->
+				<!-- kunagi -->
 				<td class="compcol">
 					Nicht möglich. Requirements innerhalb eines Sprints werden eingefroren.
 				</td>
@@ -927,6 +1052,11 @@ ROW TEMPLATES
 				</td>
 				
                 <!-- IceScrum -->
+                <td class="compcol">
+                    Nicht möglich. Alles kann einfach geändert werden.
+                </td>
+                
+                <!-- ScrumPad -->
                 <td class="compcol">
                     Nicht möglich. Alles kann einfach geändert werden.
                 </td>
