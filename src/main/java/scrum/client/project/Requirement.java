@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumJs;
-import scrum.client.UsersStatus;
 import scrum.client.admin.User;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.estimation.RequirementEstimationVote;
@@ -77,12 +76,9 @@ public class Requirement extends GRequirement implements ReferenceSupport {
 	}
 
 	public boolean isWorkEstimationVotingComplete() {
-		UsersStatus usersStatus = cm.getUsersStatus();
 		for (User user : cm.getProjectContext().getProject().getTeamMembers()) {
-			if (usersStatus.isOnline(user)) {
-				RequirementEstimationVote vote = getEstimationVote(user);
-				if (vote == null || vote.getEstimatedWork() == null) return false;
-			}
+			RequirementEstimationVote vote = getEstimationVote(user);
+			if (vote == null || vote.getEstimatedWork() == null) return false;
 		}
 		return true;
 	}
