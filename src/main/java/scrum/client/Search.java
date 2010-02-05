@@ -17,6 +17,7 @@ public class Search extends AScrumComponent implements SearchResultsChangedListe
 	private String searchText;
 
 	public void search(String text) {
+		if (text != null) text = text.toLowerCase();
 		this.searchText = text;
 		log.info("Searching:", searchText);
 		results.clear();
