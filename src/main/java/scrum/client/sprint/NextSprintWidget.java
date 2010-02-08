@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
+import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.Project;
@@ -19,8 +20,7 @@ public class NextSprintWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		sprint = getSprint();
 
-		TableBuilder tb = new TableBuilder();
-		tb.setCellPadding(2);
+		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.addFieldRow("Label", sprint.getLabelModel());
 		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()));
 		tb.addFieldRow("Begin", new DateEditorWidget(sprint.getBeginModel()));

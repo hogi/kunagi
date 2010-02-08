@@ -1,6 +1,7 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.TableBuilder;
+import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 
@@ -17,8 +18,8 @@ public class QualityWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		TableBuilder tb = new TableBuilder();
-		tb.setCellPadding(2);
+		TableBuilder tb = ScrumGwt.createFieldTable();
+
 		tb.addFieldRow("Label", quality.getLabelModel());
 		tb.addFieldRow("Description", quality.getDescriptionModel());
 		tb.addFieldRow("Test", quality.getTestDescriptionModel());

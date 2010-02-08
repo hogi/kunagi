@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.TableBuilder;
 
 import java.util.List;
 
+import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
 
@@ -26,8 +27,7 @@ public abstract class ADateSelectorWidget extends AScrumWidget {
 	@Override
 	protected final Widget onInitialization() {
 
-		TableBuilder tb = new TableBuilder();
-		tb.setCellPadding(2);
+		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.add(new HyperlinkWidget(getAction()));
 
 		List<SimpleEvent> events = getEvents();

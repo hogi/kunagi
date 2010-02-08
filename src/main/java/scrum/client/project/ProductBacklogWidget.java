@@ -87,8 +87,7 @@ public class ProductBacklogWidget extends AScrumWidget {
 		};
 		filterPanel.add(predicateSelect);
 
-		TableBuilder tb = new TableBuilder();
-		tb.setCellPadding(2);
+		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.addField("Assumed Velocity", new IntegerEditorWidget(getCurrentProject().getVelocityModel()));
 		tb.addField("Velocity History", new AFieldValueWidget() {
 

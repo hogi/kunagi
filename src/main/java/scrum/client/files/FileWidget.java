@@ -2,6 +2,7 @@ package scrum.client.files;
 
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
+import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 
@@ -20,8 +21,7 @@ public class FileWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		TableBuilder left = new TableBuilder();
-		left.setCellPadding(2);
+		TableBuilder left = ScrumGwt.createFieldTable();
 		left.addFieldRow("Label", file.getLabelModel());
 		left.addFieldRow("Download", Gwt.createServletDownloadLink("fileDownload?fileId=" + file.getId(), file
 				.getFilename()));

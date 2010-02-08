@@ -1,11 +1,19 @@
 package scrum.client;
 
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.common.AScrumGwtEntity;
 
 import com.google.gwt.user.client.ui.HTML;
 
 public class ScrumGwt extends Gwt {
+
+	public static TableBuilder createFieldTable() {
+		TableBuilder tb = new TableBuilder();
+		tb.setCellPadding(2);
+		tb.setColumnWidths("100px");
+		return tb;
+	}
 
 	public static HTML createPdfLink(String text, String pdfId, AScrumGwtEntity entity) {
 		return createPdfLink(text, pdfId, "entityId", entity.getId());

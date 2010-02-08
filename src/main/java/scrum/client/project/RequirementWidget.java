@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.TableBuilder;
+import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.estimation.PlanningPokerWidget;
 
@@ -31,8 +32,7 @@ public class RequirementWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 
-		TableBuilder left = new TableBuilder();
-		left.setCellPadding(2);
+		TableBuilder left = ScrumGwt.createFieldTable();
 
 		if (showLabel) left.addFieldRow("Label", requirement.getLabelModel());
 

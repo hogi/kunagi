@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.AIntegerViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
+import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.sprint.Task;
 
@@ -23,8 +24,7 @@ public class TaskWidget extends AWidget {
 	@Override
 	protected Widget onInitialization() {
 
-		TableBuilder tb = new TableBuilder();
-		tb.setCellPadding(2);
+		TableBuilder tb = ScrumGwt.createFieldTable();
 
 		tb.addFieldRow("Label", task.getLabelModel(), 3);
 

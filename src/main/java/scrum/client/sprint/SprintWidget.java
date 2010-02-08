@@ -23,9 +23,7 @@ public class SprintWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		boolean completed = sprint.isCompleted();
 
-		TableBuilder tb = new TableBuilder();
-		tb.setCellPadding(2);
-		tb.setColumnWidths("100px");
+		TableBuilder tb = ScrumGwt.createFieldTable();
 
 		tb.addFieldRow("Label", sprint.getLabelModel(), 4);
 		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()), 4);

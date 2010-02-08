@@ -12,6 +12,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import ilarkesto.gwt.client.editor.AIntegerEditorModel;
 import ilarkesto.gwt.client.editor.ATextEditorModel;
 import ilarkesto.gwt.client.editor.IntegerEditorWidget;
+import scrum.client.ScrumGwt;
 import scrum.client.Wiki;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
@@ -148,9 +149,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 	private Integer fieldsInt = 5;
 
 	private void testFields() {
-		TableBuilder tb = new TableBuilder();
-		tb.setCellPadding(2);
-
+		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.addFieldRow("TextPropertyEditorWidget", new ATextEditorModel() {
 
 			@Override

@@ -1,6 +1,7 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.TableBuilder;
+import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.sprint.Sprint;
@@ -36,8 +37,7 @@ public class ProjectOverviewWidget extends AScrumWidget {
 
 	private Widget createProjectOverview(Project project) {
 
-		TableBuilder tb = new TableBuilder();
-		tb.setCellPadding(2);
+		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.addFieldRow("Label", project.getLabelModel());
 		tb.addFieldRow("Description", project.getDescriptionModel());
 

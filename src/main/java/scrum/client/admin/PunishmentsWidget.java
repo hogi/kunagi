@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.IntegerEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
+import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.Project;
 import scrum.client.workspace.PagePanel;
@@ -20,8 +21,7 @@ public class PunishmentsWidget extends AScrumWidget {
 		PagePanel page = new PagePanel();
 		Project project = cm.getProjectContext().getProject();
 
-		TableBuilder main = new TableBuilder();
-		main.setCellPadding(2);
+		TableBuilder main = ScrumGwt.createFieldTable();
 
 		main.add(Gwt.createDiv("PunishmentsWidget-tableHeader", "User"));
 		main.add(Gwt.createDiv("PunishmentsWidget-tableHeader", "Misconducts"));
@@ -41,8 +41,7 @@ public class PunishmentsWidget extends AScrumWidget {
 		page.addSection(main.createTable());
 
 		if (project.isScrumMaster(getCurrentUser())) {
-			TableBuilder settings = new TableBuilder();
-			settings.setCellPadding(2);
+			TableBuilder settings = ScrumGwt.createFieldTable();
 			settings.addFieldRow("Factor", new IntegerEditorWidget(project.getPunishmentFactorModel()));
 			settings.addFieldRow("Unit", new TextEditorWidget(project.getPunishmentUnitModel()));
 			page.addHeader("Punishment Configuration");

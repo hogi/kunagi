@@ -3,6 +3,7 @@ package scrum.client.risks;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DropdownEditorWidget;
+import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 
@@ -19,8 +20,7 @@ public class RiskWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		TableBuilder tb = new TableBuilder();
-		tb.setCellPadding(2);
+		TableBuilder tb = ScrumGwt.createFieldTable();
 
 		tb.addFieldRow("Label", risk.getLabelModel());
 		tb.addFieldRow("Description", risk.getDescriptionModel());

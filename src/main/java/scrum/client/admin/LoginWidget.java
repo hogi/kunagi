@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ApplicationInfo;
+import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.workspace.PagePanel;
 
@@ -37,8 +38,7 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton(new LoginAction(this));
 
-		TableBuilder tb = new TableBuilder();
-		tb.setCellPadding(2);
+		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.setWidth(null);
 
 		tb.addRow(errorMessage, 2);

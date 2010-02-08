@@ -2,6 +2,7 @@ package scrum.client.issues;
 
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DropdownEditorWidget;
+import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 
@@ -18,8 +19,7 @@ public class IssueWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		TableBuilder tb = new TableBuilder();
-		tb.setCellPadding(2);
+		TableBuilder tb = ScrumGwt.createFieldTable();
 
 		tb.addFieldRow("Label", issue.getLabelModel());
 		tb.addFieldRow("Description", issue.getDescriptionModel());
