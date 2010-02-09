@@ -1,6 +1,7 @@
 package scrum.server.risks;
 
 import scrum.client.risks.RiskComputer;
+import scrum.server.ScrumWebApplication;
 import scrum.server.common.Numbered;
 
 public class Risk extends GRisk implements Numbered {
@@ -37,6 +38,11 @@ public class Risk extends GRisk implements Numbered {
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
 		updateNumber();
+
+		// renaming: req -> sto
+		if (ScrumWebApplication.REQ_RENAMING_DATE.isAfter(getLastModified())) {
+			setDescription(ScrumWebApplication.convertReqToSto(getDescription()));
+		}
 	}
 
 	@Override

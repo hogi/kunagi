@@ -6,6 +6,7 @@ import ilarkesto.logging.Logger;
 import java.util.List;
 import java.util.Set;
 
+import scrum.server.ScrumWebApplication;
 import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
 
@@ -108,6 +109,11 @@ public class Sprint extends GSprint {
 		// LOG.info("Deleting sprint, which ended on", getEnd(), "->", toString());
 		// getDao().deleteEntity(this);
 		// }
+
+		// renaming: req -> sto
+		if (ScrumWebApplication.REQ_RENAMING_DATE.isAfter(getLastModified())) {
+			setCompletedRequirementLabels(ScrumWebApplication.convertReqToSto(getCompletedRequirementLabels()));
+		}
 	}
 
 	@Override

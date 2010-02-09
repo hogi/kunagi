@@ -3,6 +3,7 @@ package scrum.server;
 import ilarkesto.base.Tm;
 import ilarkesto.base.Url;
 import ilarkesto.base.Utl;
+import ilarkesto.base.time.DateAndTime;
 import ilarkesto.base.time.Time;
 import ilarkesto.concurrent.TaskManager;
 import ilarkesto.di.app.WebApplicationStarter;
@@ -35,11 +36,20 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	private static final Logger LOG = Logger.get(ScrumWebApplication.class);
 
+	public static final DateAndTime REQ_RENAMING_DATE = new DateAndTime(2010, 5, 9, 0, 0, 0);
+
 	private BurndownChart burndownChart;
 	private ScrumConfig config;
 	private ScrumEntityfilePreparator entityfilePreparator;
 	private ApplicationInfo applicationInfo;
 	private SystemMessage systemMessage;
+
+	// --- temporary migration ---
+
+	public static String convertReqToSto(String s) {
+		if (s == null) return null;
+		return s.replace("req", "sto");
+	}
 
 	// --- composites ---
 

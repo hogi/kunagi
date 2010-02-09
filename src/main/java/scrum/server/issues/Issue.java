@@ -2,6 +2,7 @@ package scrum.server.issues;
 
 import ilarkesto.base.time.DateAndTime;
 import scrum.client.issues.IssueTypeLabelProvider;
+import scrum.server.ScrumWebApplication;
 import scrum.server.common.Numbered;
 
 public class Issue extends GIssue implements Numbered {
@@ -34,6 +35,11 @@ public class Issue extends GIssue implements Numbered {
 		updateNumber();
 		if (!isTypeSet()) setType(scrum.client.issues.Issue.INIT_TYPE);
 		if (!isDateSet()) setDate(DateAndTime.now());
+
+		// renaming: req -> sto
+		if (ScrumWebApplication.REQ_RENAMING_DATE.isAfter(getLastModified())) {
+			setDescription(ScrumWebApplication.convertReqToSto(getDescription()));
+		}
 	}
 
 	@Override
