@@ -8,31 +8,35 @@ import scrum.client.dnd.TrashSupport;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class SubjectBlock extends ABlockWidget<Subject> implements TrashSupport {
+public class SubjectBlock extends ABlockWidget<ForumSupport> implements TrashSupport {
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
-		Subject subject = getObject();
-		header.addMenuAction(new DeleteSubjectAction(subject));
+		ForumSupport entity = getObject();
+		if (entity instanceof Subject) {
+			header.addMenuAction(new DeleteSubjectAction((Subject) entity));
+		}
 	}
 
 	@Override
 	protected void onUpdateHeader(BlockHeaderWidget header) {
-		Subject subject = getObject();
-		header.setDragHandle(subject.getReference());
-		header.setCenter(subject.getLabel());
+		ForumSupport entity = getObject();
+		header.setDragHandle(entity.getReference());
+		header.setCenter(entity.getLabel());
 	}
 
 	@Override
 	protected Widget onExtendedInitialization() {
-		return new SubjectWidget(getObject());
+		return new ForumItemWidget(getObject());
 	}
 
 	public AScrumAction getTrashAction() {
-		return new DeleteSubjectAction(getObject());
+		ForumSupport entity = getObject();
+		if (entity instanceof Subject) return new DeleteSubjectAction((Subject) entity);
+		return null;
 	}
 
-	public static final BlockWidgetFactory<Subject> FACTORY = new BlockWidgetFactory<Subject>() {
+	public static final BlockWidgetFactory<ForumSupport> FACTORY = new BlockWidgetFactory<ForumSupport>() {
 
 		public SubjectBlock createBlock() {
 			return new SubjectBlock();

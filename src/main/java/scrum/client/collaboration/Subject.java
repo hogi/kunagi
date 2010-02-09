@@ -1,12 +1,16 @@
 package scrum.client.collaboration;
 
-import java.util.Comparator;
+import ilarkesto.gwt.client.TableBuilder;
+
 import java.util.Map;
 
+import scrum.client.ScrumGwt;
 import scrum.client.ScrumJs;
 import scrum.client.project.Project;
 
-public class Subject extends GSubject {
+import com.google.gwt.user.client.ui.Widget;
+
+public class Subject extends GSubject implements ForumSupport {
 
 	public static final String REFERENCE_PREFIX = "sbj";
 
@@ -27,15 +31,16 @@ public class Subject extends GSubject {
 		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + getLabel();
 	}
 
+	public Widget createForumItemWidget() {
+		TableBuilder tb = ScrumGwt.createFieldTable();
+		tb.addFieldRow("Label", getLabelModel());
+		tb.addFieldRow("Text", getTextModel());
+		return tb.createTable();
+	}
+
 	@Override
 	public String toString() {
 		return getReference() + " " + getLabel();
 	}
 
-	public static final Comparator<Subject> COMPARATOR = new Comparator<Subject>() {
-
-		public int compare(Subject a, Subject b) {
-			return a.toString().compareTo(b.toString());
-		}
-	};
 }

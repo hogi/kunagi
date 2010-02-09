@@ -9,14 +9,14 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SubjectListWidget extends AScrumWidget {
 
-	public BlockListWidget<Subject> list;
+	public BlockListWidget<ForumSupport> list;
 
 	@Override
 	protected Widget onInitialization() {
 		cm.getApp().callRequestImpediments();
 
-		list = new BlockListWidget<Subject>(SubjectBlock.FACTORY);
-		list.setAutoSorter(Subject.COMPARATOR);
+		list = new BlockListWidget<ForumSupport>(SubjectBlock.FACTORY);
+		list.setAutoSorter(ForumSupport.COMPARATOR);
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Forum", new ButtonWidget(new CreateSubjectAction()));
@@ -27,7 +27,7 @@ public class SubjectListWidget extends AScrumWidget {
 	@Override
 	protected void onUpdate() {
 		super.onUpdate();
-		list.setObjects(getCurrentProject().getSubjects());
+		list.setObjects(getCurrentProject().getForumEntities());
 	}
 
 	public void select(Subject subject) {

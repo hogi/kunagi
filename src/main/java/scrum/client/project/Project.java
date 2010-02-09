@@ -16,6 +16,7 @@ import scrum.client.UsersStatus;
 import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
 import scrum.client.calendar.SimpleEvent;
+import scrum.client.collaboration.ForumSupport;
 import scrum.client.collaboration.Subject;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.files.File;
@@ -258,6 +259,12 @@ public class Project extends GProject {
 
 	public void deleteRisk(Risk risk) {
 		getDao().deleteRisk(risk);
+	}
+
+	public List<ForumSupport> getForumEntities() {
+		List<ForumSupport> ret = new ArrayList<ForumSupport>();
+		ret.addAll(getSubjects());
+		return ret;
 	}
 
 	public List<Impediment> getOpenImpediments() {
