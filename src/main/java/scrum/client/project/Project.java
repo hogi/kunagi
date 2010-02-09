@@ -16,6 +16,7 @@ import scrum.client.UsersStatus;
 import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
 import scrum.client.calendar.SimpleEvent;
+import scrum.client.collaboration.Subject;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
@@ -225,6 +226,12 @@ public class Project extends GProject {
 		return page;
 	}
 
+	public Subject createNewSubject() {
+		Subject subject = new Subject(this);
+		getDao().createSubject(subject);
+		return subject;
+	}
+
 	public Issue createNewIssue() {
 		Issue issue = new Issue(this);
 		getDao().createIssue(issue);
@@ -264,6 +271,10 @@ public class Project extends GProject {
 
 	public List<Impediment> getImpediments() {
 		return getDao().getImpedimentsByProject(this);
+	}
+
+	public List<Subject> getSubjects() {
+		return getDao().getSubjectsByProject(this);
 	}
 
 	public List<Issue> getOpenIssues() {

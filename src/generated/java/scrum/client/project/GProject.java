@@ -913,6 +913,64 @@ public abstract class GProject
 
     }
 
+    // --- lastSubjectNumber ---
+
+    private int lastSubjectNumber ;
+
+    public final int getLastSubjectNumber() {
+        return this.lastSubjectNumber ;
+    }
+
+    public final Project setLastSubjectNumber(int lastSubjectNumber) {
+        if (isLastSubjectNumber(lastSubjectNumber)) return (Project)this;
+        this.lastSubjectNumber = lastSubjectNumber ;
+        propertyChanged("lastSubjectNumber", this.lastSubjectNumber);
+        return (Project)this;
+    }
+
+    public final boolean isLastSubjectNumber(int lastSubjectNumber) {
+        return equals(this.lastSubjectNumber, lastSubjectNumber);
+    }
+
+    private transient LastSubjectNumberModel lastSubjectNumberModel;
+
+    public LastSubjectNumberModel getLastSubjectNumberModel() {
+        if (lastSubjectNumberModel == null) lastSubjectNumberModel = createLastSubjectNumberModel();
+        return lastSubjectNumberModel;
+    }
+
+    protected LastSubjectNumberModel createLastSubjectNumberModel() { return new LastSubjectNumberModel(); }
+
+    protected class LastSubjectNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getLastSubjectNumber();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setLastSubjectNumber(value);
+        }
+
+            @Override
+            public void increment() {
+                setLastSubjectNumber(getLastSubjectNumber() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setLastSubjectNumber(getLastSubjectNumber() - 1);
+            }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- punishmentFactor ---
 
     private int punishmentFactor ;
@@ -1044,6 +1102,7 @@ public abstract class GProject
         lastIssueNumber  = (Integer) props.get("lastIssueNumber");
         lastImpedimentNumber  = (Integer) props.get("lastImpedimentNumber");
         lastFileNumber  = (Integer) props.get("lastFileNumber");
+        lastSubjectNumber  = (Integer) props.get("lastSubjectNumber");
         punishmentFactor  = (Integer) props.get("punishmentFactor");
         punishmentUnit  = (java.lang.String) props.get("punishmentUnit");
     }
@@ -1071,6 +1130,7 @@ public abstract class GProject
         properties.put("lastIssueNumber", this.lastIssueNumber);
         properties.put("lastImpedimentNumber", this.lastImpedimentNumber);
         properties.put("lastFileNumber", this.lastFileNumber);
+        properties.put("lastSubjectNumber", this.lastSubjectNumber);
         properties.put("punishmentFactor", this.punishmentFactor);
         properties.put("punishmentUnit", this.punishmentUnit);
     }

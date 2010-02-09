@@ -722,6 +722,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByLastSubjectNumber(int lastSubjectNumber) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isLastSubjectNumber(lastSubjectNumber)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.project.Project> getProjectsByPunishmentFactor(int punishmentFactor) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
@@ -1683,6 +1691,94 @@ public abstract class GDao
         return ret;
     }
 
+    // --- Subject ---
+
+    private Map<String, scrum.client.collaboration.Subject> subjects = new HashMap<String, scrum.client.collaboration.Subject>();
+
+    public final void clearSubjects() {
+        subjects.clear();
+    }
+
+    public final boolean containsSubject(scrum.client.collaboration.Subject subject) {
+        return subjects.containsKey(subject.getId());
+    }
+
+    public final void deleteSubject(scrum.client.collaboration.Subject subject) {
+        subjects.remove(subject.getId());
+        entityDeleted(subject);
+    }
+
+    public final void createSubject(scrum.client.collaboration.Subject subject) {
+        subjects.put(subject.getId(), subject);
+        entityCreated(subject);
+    }
+
+    private final void updateSubject(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.collaboration.Subject entity = subjects.get(id);
+        if (entity == null) {
+            entity = new scrum.client.collaboration.Subject(data);
+            subjects.put(id, entity);
+            ilarkesto.gwt.client.GwtLogger.DEBUG("Subject received: " + entity.getId() + " ("+entity+")");
+        } else {
+            entity.updateProperties(data);
+            ilarkesto.gwt.client.GwtLogger.DEBUG("Subject updated: " + entity);
+        }
+        onEntityModifiedRemotely(entity);
+    }
+
+    public final scrum.client.collaboration.Subject getSubject(String id) {
+        scrum.client.collaboration.Subject ret = subjects.get(id);
+        if (ret == null) throw new RuntimeException("Subject does not exist: " + id);
+        return ret;
+    }
+
+    public final Set<scrum.client.collaboration.Subject> getSubjects(Collection<String> ids) {
+        Set<scrum.client.collaboration.Subject> ret = new HashSet<scrum.client.collaboration.Subject>();
+        for (String id : ids) {
+            scrum.client.collaboration.Subject entity = subjects.get(id);
+            if (entity == null) throw new RuntimeException("Subject does not exist: " + id);
+            ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.collaboration.Subject> getSubjects() {
+        return new ArrayList<scrum.client.collaboration.Subject>(subjects.values());
+    }
+
+    public final List<scrum.client.collaboration.Subject> getSubjectsByProject(scrum.client.project.Project project) {
+        List<scrum.client.collaboration.Subject> ret = new ArrayList<scrum.client.collaboration.Subject>();
+        for (scrum.client.collaboration.Subject entity : subjects.values()) {
+            if (entity.isProject(project)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.collaboration.Subject> getSubjectsByLabel(java.lang.String label) {
+        List<scrum.client.collaboration.Subject> ret = new ArrayList<scrum.client.collaboration.Subject>();
+        for (scrum.client.collaboration.Subject entity : subjects.values()) {
+            if (entity.isLabel(label)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.collaboration.Subject> getSubjectsByText(java.lang.String text) {
+        List<scrum.client.collaboration.Subject> ret = new ArrayList<scrum.client.collaboration.Subject>();
+        for (scrum.client.collaboration.Subject entity : subjects.values()) {
+            if (entity.isText(text)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.collaboration.Subject> getSubjectsByNumber(int number) {
+        List<scrum.client.collaboration.Subject> ret = new ArrayList<scrum.client.collaboration.Subject>();
+        for (scrum.client.collaboration.Subject entity : subjects.values()) {
+            if (entity.isNumber(number)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Task ---
 
     private Map<String, scrum.client.sprint.Task> tasks = new HashMap<String, scrum.client.sprint.Task>();
@@ -1987,6 +2083,7 @@ public abstract class GDao
             clearRisks();
             clearSimpleEvents();
             clearSprints();
+            clearSubjects();
             clearTasks();
             clearUsers();
             clearWikipages();
@@ -2013,6 +2110,7 @@ public abstract class GDao
             entityMaps.add(risks);
             entityMaps.add(simpleEvents);
             entityMaps.add(sprints);
+            entityMaps.add(subjects);
             entityMaps.add(tasks);
             entityMaps.add(users);
             entityMaps.add(wikipages);
@@ -2080,6 +2178,10 @@ public abstract class GDao
         }
         if (type.equals(scrum.client.sprint.Sprint.ENTITY_TYPE)) {
             updateSprint(data);
+            return;
+        }
+        if (type.equals(scrum.client.collaboration.Subject.ENTITY_TYPE)) {
+            updateSubject(data);
             return;
         }
         if (type.equals(scrum.client.sprint.Task.ENTITY_TYPE)) {

@@ -56,6 +56,7 @@ public abstract class GProject
         properties.put("lastIssueNumber", this.lastIssueNumber);
         properties.put("lastImpedimentNumber", this.lastImpedimentNumber);
         properties.put("lastFileNumber", this.lastFileNumber);
+        properties.put("lastSubjectNumber", this.lastSubjectNumber);
         properties.put("punishmentFactor", this.punishmentFactor);
         properties.put("punishmentUnit", this.punishmentUnit);
     }
@@ -1079,6 +1080,35 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
+    // - lastSubjectNumber
+    // -----------------------------------------------------------
+
+    private int lastSubjectNumber;
+
+    public final int getLastSubjectNumber() {
+        return lastSubjectNumber;
+    }
+
+    public final void setLastSubjectNumber(int lastSubjectNumber) {
+        lastSubjectNumber = prepareLastSubjectNumber(lastSubjectNumber);
+        if (isLastSubjectNumber(lastSubjectNumber)) return;
+        this.lastSubjectNumber = lastSubjectNumber;
+        fireModified();
+    }
+
+    protected int prepareLastSubjectNumber(int lastSubjectNumber) {
+        return lastSubjectNumber;
+    }
+
+    public final boolean isLastSubjectNumber(int lastSubjectNumber) {
+        return this.lastSubjectNumber == lastSubjectNumber;
+    }
+
+    protected final void updateLastSubjectNumber(Object value) {
+        setLastSubjectNumber((Integer)value);
+    }
+
+    // -----------------------------------------------------------
     // - punishmentFactor
     // -----------------------------------------------------------
 
@@ -1167,6 +1197,7 @@ public abstract class GProject
             if (property.equals("lastIssueNumber")) updateLastIssueNumber(value);
             if (property.equals("lastImpedimentNumber")) updateLastImpedimentNumber(value);
             if (property.equals("lastFileNumber")) updateLastFileNumber(value);
+            if (property.equals("lastSubjectNumber")) updateLastSubjectNumber(value);
             if (property.equals("punishmentFactor")) updatePunishmentFactor(value);
             if (property.equals("punishmentUnit")) updatePunishmentUnit(value);
         }

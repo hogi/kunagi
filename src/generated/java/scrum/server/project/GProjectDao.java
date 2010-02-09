@@ -82,6 +82,8 @@ public abstract class GProjectDao
         lastImpedimentNumbersCache = null;
         projectsByLastFileNumberCache.clear();
         lastFileNumbersCache = null;
+        projectsByLastSubjectNumberCache.clear();
+        lastSubjectNumbersCache = null;
         projectsByPunishmentFactorCache.clear();
         punishmentFactorsCache = null;
         projectsByPunishmentUnitCache.clear();
@@ -900,6 +902,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isLastFileNumber(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - lastSubjectNumber
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Project>> projectsByLastSubjectNumberCache = new Cache<Integer,Set<Project>>(
+            new Cache.Factory<Integer,Set<Project>>() {
+                public Set<Project> create(Integer lastSubjectNumber) {
+                    return getEntities(new IsLastSubjectNumber(lastSubjectNumber));
+                }
+            });
+
+    public final Set<Project> getProjectsByLastSubjectNumber(int lastSubjectNumber) {
+        return projectsByLastSubjectNumberCache.get(lastSubjectNumber);
+    }
+    private Set<Integer> lastSubjectNumbersCache;
+
+    public final Set<Integer> getLastSubjectNumbers() {
+        if (lastSubjectNumbersCache == null) {
+            lastSubjectNumbersCache = new HashSet<Integer>();
+            for (Project e : getEntities()) {
+                lastSubjectNumbersCache.add(e.getLastSubjectNumber());
+            }
+        }
+        return lastSubjectNumbersCache;
+    }
+
+    private static class IsLastSubjectNumber implements Predicate<Project> {
+
+        private int value;
+
+        public IsLastSubjectNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isLastSubjectNumber(value);
         }
 
     }

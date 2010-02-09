@@ -15,6 +15,8 @@ import scrum.client.admin.User;
 import scrum.client.calendar.CalendarWidget;
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Comment;
+import scrum.client.collaboration.Subject;
+import scrum.client.collaboration.SubjectListWidget;
 import scrum.client.collaboration.WikiWidget;
 import scrum.client.common.AScrumComponent;
 import scrum.client.context.UserHighlightSupport;
@@ -57,6 +59,7 @@ public class ProjectContext extends AScrumComponent {
 	private SprintBacklogWidget sprintBacklog;
 	private ProductBacklogWidget productBacklog;
 	private QualityBacklogWidget qualityBacklog;
+	private SubjectListWidget subjectList;
 	private CalendarWidget calendar;
 	private NextSprintWidget nextSprint;
 	private ImpedimentListWidget impedimentList;
@@ -82,6 +85,7 @@ public class ProjectContext extends AScrumComponent {
 		sprintBacklog = new SprintBacklogWidget();
 		productBacklog = new ProductBacklogWidget();
 		qualityBacklog = new QualityBacklogWidget();
+		subjectList = new SubjectListWidget();
 		calendar = new CalendarWidget();
 		nextSprint = new NextSprintWidget();
 		impedimentList = new ImpedimentListWidget();
@@ -103,6 +107,7 @@ public class ProjectContext extends AScrumComponent {
 		navigator.addItem("Sprint Backlog", getSprintBacklog());
 		navigator.addItem("Product Backlog", getProductBacklog());
 		navigator.addItem("Quality Backlog", getQualityBacklog());
+		navigator.addItem("Forum", getSubjectList());
 		navigator.addItem("Calendar", calendar);
 		navigator.addItem("Impediment List", getImpedimentList());
 		navigator.addItem("Issue List", getIssueList());
@@ -226,7 +231,9 @@ public class ProjectContext extends AScrumComponent {
 		} else if (entity instanceof Risk) {
 			showRisk((Risk) entity);
 		} else if (entity instanceof Quality) {
-			showQuality((Quality) entity);
+			showQualityBacklog((Quality) entity);
+		} else if (entity instanceof Subject) {
+			showSubjectList((Subject) entity);
 		} else if (entity instanceof Impediment) {
 			showImpediment((Impediment) entity);
 		} else if (entity instanceof File) {
@@ -239,11 +246,6 @@ public class ProjectContext extends AScrumComponent {
 	public void showIssue(Issue issue) {
 		select(issueList);
 		issueList.select(issue);
-	}
-
-	public void showQuality(Quality quality) {
-		select(qualityBacklog);
-		qualityBacklog.select(quality);
 	}
 
 	public void showImpediment(Impediment impediment) {
@@ -323,6 +325,11 @@ public class ProjectContext extends AScrumComponent {
 		impedimentList.showImpediment(impediment);
 	}
 
+	public void showSubjectList(Subject subject) {
+		select(subjectList);
+		subjectList.select(subject);
+	}
+
 	public void showIssueList(Issue issue) {
 		select(issueList);
 		issueList.showIssue(issue);
@@ -389,6 +396,10 @@ public class ProjectContext extends AScrumComponent {
 
 	public QualityBacklogWidget getQualityBacklog() {
 		return qualityBacklog;
+	}
+
+	public SubjectListWidget getSubjectList() {
+		return subjectList;
 	}
 
 	public RiskListWidget getRiskList() {

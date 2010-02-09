@@ -322,6 +322,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		conversation.sendToClient(project.getCalendarEvents());
 		conversation.sendToClient(project.getFiles());
 		conversation.sendToClient(project.getAcceptedIssues());
+		conversation.sendToClient(project.getSubjects());
 		webApplication.updateOnlineTeamMembers(project, null);
 	}
 
@@ -413,6 +414,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			return;
 		} else if (reference.startsWith(scrum.client.issues.Issue.REFERENCE_PREFIX)) {
 			conversation.sendToClient(project.getIssueByNumber(number));
+			return;
+		} else if (reference.startsWith(scrum.client.collaboration.Subject.REFERENCE_PREFIX)) {
+			conversation.sendToClient(project.getSubjectByNumber(number));
 			return;
 		} else if (reference.startsWith(scrum.client.files.File.REFERENCE_PREFIX)) {
 			conversation.sendToClient(project.getFileByNumber(number));

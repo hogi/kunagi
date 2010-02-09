@@ -208,6 +208,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addProperty("lastIssueNumber", int.class);
 			projectModel.addProperty("lastImpedimentNumber", int.class);
 			projectModel.addProperty("lastFileNumber", int.class);
+			projectModel.addProperty("lastSubjectNumber", int.class);
 			projectModel.addProperty("punishmentFactor", int.class);
 			projectModel.addStringProperty("punishmentUnit");
 			getApplicationModel().addCreateAction(projectModel);
@@ -521,6 +522,22 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			chatMessageModel.addProperty("dateAndTime", DateAndTime.class);
 		}
 		return chatMessageModel;
+	}
+
+	private EntityModel subjectModel;
+
+	public EntityModel getSubjectModel() {
+		if (subjectModel == null) {
+			subjectModel = createEntityModel("Subject", "collaboration");
+			subjectModel.setGwtSupport(true);
+			subjectModel.addReference("project", getProjectModel()).setMaster(true);
+			subjectModel.addStringProperty("label").setMandatory(true).setSearchable(true);
+			subjectModel.addStringProperty("text").setRichtext(true).setSearchable(true);
+			subjectModel.addProperty("number", int.class).setMandatory(true);
+			getApplicationModel().addCreateAction(subjectModel);
+			subjectModel.addAction("DeleteSubject");
+		}
+		return subjectModel;
 	}
 
 	private EntityModel commentModel;

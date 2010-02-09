@@ -24,6 +24,8 @@ import scrum.server.calendar.SimpleEvent;
 import scrum.server.calendar.SimpleEventDao;
 import scrum.server.collaboration.Comment;
 import scrum.server.collaboration.CommentDao;
+import scrum.server.collaboration.Subject;
+import scrum.server.collaboration.SubjectDao;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.collaboration.WikipageDao;
 import scrum.server.estimation.RequirementEstimationVote;
@@ -69,6 +71,11 @@ public class Project extends GProject {
 	private static ReleaseDao releaseDao;
 	private static RequirementEstimationVoteDao requirementEstimationVoteDao;
 	private static SprintDaySnapshotDao sprintDaySnapshotDao;
+	private static SubjectDao subjectDao;
+
+	public static void setSubjectDao(SubjectDao subjectDao) {
+		Project.subjectDao = subjectDao;
+	}
 
 	public static void setCommentDao(CommentDao commentDao) {
 		Project.commentDao = commentDao;
@@ -260,6 +267,10 @@ public class Project extends GProject {
 		return impedimentDao.getImpedimentByNumber(number, this);
 	}
 
+	public Subject getSubjectByNumber(int number) {
+		return subjectDao.getSubjectsByNumber(number, this);
+	}
+
 	public File getFileByNumber(int number) {
 		return fileDao.getFileByNumber(number, this);
 	}
@@ -285,6 +296,12 @@ public class Project extends GProject {
 	public synchronized int generateImpedimentNumber() {
 		int number = getLastImpedimentNumber() + 1;
 		setLastImpedimentNumber(number);
+		return number;
+	}
+
+	public synchronized int generateSubjectNumber() {
+		int number = getLastSubjectNumber() + 1;
+		setLastSubjectNumber(number);
 		return number;
 	}
 
@@ -409,6 +426,10 @@ public class Project extends GProject {
 
 	public Set<File> getFiles() {
 		return fileDao.getFilesByProject(this);
+	}
+
+	public Set<Subject> getSubjects() {
+		return subjectDao.getSubjectsByProject(this);
 	}
 
 	public Set<Release> getReleases() {
