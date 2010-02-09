@@ -1,25 +1,27 @@
 package scrum.client.issues;
 
-public class CloseIssueAction extends GCloseIssueAction {
+public class AcceptIssueAction extends GAcceptIssueAction {
 
-	public CloseIssueAction(scrum.client.issues.Issue issue) {
+	public AcceptIssueAction(scrum.client.issues.Issue issue) {
 		super(issue);
 	}
 
 	@Override
 	public boolean isExecutable() {
 		if (issue.isClosed()) return false;
+		if (issue.isSuspended()) return false;
+		if (issue.isAccepted()) return false;
 		return true;
 	}
 
 	@Override
 	public String getLabel() {
-		return "Close";
+		return "Accept";
 	}
 
 	@Override
 	protected void onExecute() {
-		issue.close();
+		issue.accept();
 		addUndo(new Undo());
 	}
 
@@ -27,7 +29,7 @@ public class CloseIssueAction extends GCloseIssueAction {
 
 		@Override
 		public String getLabel() {
-			return "Undo Close " + issue.getReference() + " " + issue.getLabel();
+			return "Undo Accept " + issue.getReference() + " " + issue.getLabel();
 		}
 
 		@Override

@@ -43,6 +43,8 @@ public abstract class GIssue
         properties.put("creatorId", this.creatorId);
         properties.put("label", this.label);
         properties.put("description", this.description);
+        properties.put("acceptDate", this.acceptDate == null ? null : this.acceptDate.toString());
+        properties.put("suspendDate", this.suspendDate == null ? null : this.suspendDate.toString());
         properties.put("closeDate", this.closeDate == null ? null : this.closeDate.toString());
     }
 
@@ -331,6 +333,76 @@ public abstract class GIssue
     }
 
     // -----------------------------------------------------------
+    // - acceptDate
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date acceptDate;
+
+    public final ilarkesto.base.time.Date getAcceptDate() {
+        return acceptDate;
+    }
+
+    public final void setAcceptDate(ilarkesto.base.time.Date acceptDate) {
+        acceptDate = prepareAcceptDate(acceptDate);
+        if (isAcceptDate(acceptDate)) return;
+        this.acceptDate = acceptDate;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.Date prepareAcceptDate(ilarkesto.base.time.Date acceptDate) {
+        return acceptDate;
+    }
+
+    public final boolean isAcceptDateSet() {
+        return this.acceptDate != null;
+    }
+
+    public final boolean isAcceptDate(ilarkesto.base.time.Date acceptDate) {
+        if (this.acceptDate == null && acceptDate == null) return true;
+        return this.acceptDate != null && this.acceptDate.equals(acceptDate);
+    }
+
+    protected final void updateAcceptDate(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setAcceptDate((ilarkesto.base.time.Date)value);
+    }
+
+    // -----------------------------------------------------------
+    // - suspendDate
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date suspendDate;
+
+    public final ilarkesto.base.time.Date getSuspendDate() {
+        return suspendDate;
+    }
+
+    public final void setSuspendDate(ilarkesto.base.time.Date suspendDate) {
+        suspendDate = prepareSuspendDate(suspendDate);
+        if (isSuspendDate(suspendDate)) return;
+        this.suspendDate = suspendDate;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.Date prepareSuspendDate(ilarkesto.base.time.Date suspendDate) {
+        return suspendDate;
+    }
+
+    public final boolean isSuspendDateSet() {
+        return this.suspendDate != null;
+    }
+
+    public final boolean isSuspendDate(ilarkesto.base.time.Date suspendDate) {
+        if (this.suspendDate == null && suspendDate == null) return true;
+        return this.suspendDate != null && this.suspendDate.equals(suspendDate);
+    }
+
+    protected final void updateSuspendDate(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setSuspendDate((ilarkesto.base.time.Date)value);
+    }
+
+    // -----------------------------------------------------------
     // - closeDate
     // -----------------------------------------------------------
 
@@ -377,6 +449,8 @@ public abstract class GIssue
             if (property.equals("creatorId")) updateCreator(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("description")) updateDescription(value);
+            if (property.equals("acceptDate")) updateAcceptDate(value);
+            if (property.equals("suspendDate")) updateSuspendDate(value);
             if (property.equals("closeDate")) updateCloseDate(value);
         }
     }

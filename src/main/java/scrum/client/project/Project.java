@@ -274,6 +274,22 @@ public class Project extends GProject {
 		return ret;
 	}
 
+	public List<Issue> getSusendedIssues() {
+		List<Issue> ret = new ArrayList<Issue>();
+		for (Issue issue : getIssues()) {
+			if (issue.isSuspended()) ret.add(issue);
+		}
+		return ret;
+	}
+
+	public List<Issue> getAcceptedIssues() {
+		List<Issue> ret = new ArrayList<Issue>();
+		for (Issue issue : getIssues()) {
+			if (issue.isAccepted()) ret.add(issue);
+		}
+		return ret;
+	}
+
 	public List<Issue> getClosedIssues() {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getIssues()) {

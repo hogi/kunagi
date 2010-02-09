@@ -31,8 +31,16 @@ public class Issue extends GIssue implements ReferenceSupport {
 		super(data);
 	}
 
+	public boolean isSuspended() {
+		return getSuspendDate() != null;
+	}
+
+	public boolean isAccepted() {
+		return getAcceptDate() != null;
+	}
+
 	public boolean isOpen() {
-		return !isClosed();
+		return !isClosed() && !isSuspended() && !isAccepted();
 	}
 
 	public boolean isClosed() {
@@ -41,11 +49,27 @@ public class Issue extends GIssue implements ReferenceSupport {
 
 	public String getStatusLabel() {
 		if (isClosed()) return "closed on " + getCloseDate();
+		if (isAccepted()) return "accepted on " + getAcceptDate();
+		if (isSuspended()) return "suspended on" + getSuspendDate();
 		return "issued on " + getDate().getDate();
 	}
 
 	public void close() {
 		setCloseDate(Date.today());
+	}
+
+	public void suspend() {
+		setSuspendDate(Date.today());
+	}
+
+	public void accept() {
+		setAcceptDate(Date.today());
+	}
+
+	public void reopen() {
+		setAcceptDate(null);
+		setSuspendDate(null);
+		setCloseDate(null);
 	}
 
 	public String getReference() {
@@ -79,17 +103,31 @@ public class Issue extends GIssue implements ReferenceSupport {
 		return getReference() + " (" + getType() + ") " + getLabel();
 	}
 
-	public static final Comparator<Issue> DATE_COMPARATOR = new Comparator<Issue>() {
+	public static final Comparator<Issue> ISSUE_DATE_COMPARATOR = new Comparator<Issue>() {
 
 		public int compare(Issue a, Issue b) {
-			return a.getDate().compareTo(b.getDate());
+			return b.getDate().compareTo(a.getDate());
 		}
 	};
 
-	public static final Comparator<Issue> REVERSE_DATE_COMPARATOR = new Comparator<Issue>() {
+	public static final Comparator<Issue> CLOSE_DATE_COMPARATOR = new Comparator<Issue>() {
 
 		public int compare(Issue a, Issue b) {
-			return DATE_COMPARATOR.compare(b, a);
+			return b.getCloseDate().compareTo(a.getCloseDate());
+		}
+	};
+
+	public static final Comparator<Issue> SUSPEND_DATE_COMPARATOR = new Comparator<Issue>() {
+
+		public int compare(Issue a, Issue b) {
+			return b.getSuspendDate().compareTo(a.getSuspendDate());
+		}
+	};
+
+	public static final Comparator<Issue> ACCEPT_DATE_COMPARATOR = new Comparator<Issue>() {
+
+		public int compare(Issue a, Issue b) {
+			return b.getAcceptDate().compareTo(a.getAcceptDate());
 		}
 	};
 

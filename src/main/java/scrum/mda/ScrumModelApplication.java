@@ -494,10 +494,15 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addReference("creator", getUserModel());
 			issueModel.addStringProperty("label").setMandatory(true).setSearchable(true);
 			issueModel.addStringProperty("description").setRichtext(true).setSearchable(true);
+			issueModel.addProperty("acceptDate", Date.class);
+			issueModel.addProperty("suspendDate", Date.class);
 			issueModel.addProperty("closeDate", Date.class);
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("DeleteIssue");
 			issueModel.addAction("CloseIssue");
+			issueModel.addAction("SuspendIssue");
+			issueModel.addAction("AcceptIssue");
+			issueModel.addAction("ReopenIssue");
 			issueModel.addAction("ConvertIssueToRequirement");
 			issueModel.addAction("ConvertIssueToQuality");
 		}
