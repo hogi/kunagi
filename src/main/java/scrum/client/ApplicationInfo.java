@@ -34,6 +34,10 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 		return deploymentStage;
 	}
 
+	public boolean isProductionStage() {
+		return deploymentStage.equals(DEPLOYMENT_STAGE_PRODUCTION);
+	}
+
 	public boolean isDevelopmentStage() {
 		return deploymentStage.equals(DEPLOYMENT_STAGE_DEVELOPMENT);
 	}

@@ -12,6 +12,7 @@ import scrum.client.workspace.PagePanel;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -38,17 +39,37 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 		ToolbarWidget toolbar = new ToolbarWidget();
 		toolbar.addButton(new LoginAction(this));
 
-		TableBuilder tb = ScrumGwt.createFieldTable();
-		tb.setWidth(null);
+		TableBuilder fields = ScrumGwt.createFieldTable();
+		fields.setWidth(null);
 
-		tb.addRow(errorMessage, 2);
-		tb.addFieldRow("Username", username);
-		tb.addFieldRow("Password", password);
-		tb.addFieldRow("", new ButtonWidget(new LoginAction(this)), 2);
+		fields.addRow(errorMessage, 2);
+		fields.addFieldRow("Username", username);
+		fields.addFieldRow("Password", password);
+		fields.addFieldRow("", new ButtonWidget(new LoginAction(this)), 2);
+
+		Widget content = fields.createTable();
+
+		ApplicationInfo appInfo = cm.getApp().getApplicationInfo();
+		if (!appInfo.isProductionStage()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("<div class='LoginWidget-errorMessage'>");
+			sb
+					.append("This is a demo system with preconfigured projects.<br>All your data will be deleted by next day.");
+			sb.append("</div>");
+			sb.append("<div style='color: gray;'>");
+			sb.append("<br>Test&nbsp;users:&nbsp;");
+			sb.append("<strong>duke</strong>&nbsp;(PO),&nbsp;");
+			sb.append("<strong>spinne</strong>&nbsp;(SM),&nbsp;");
+			sb.append("<strong>cartman</strong>&nbsp;(T),&nbsp;");
+			sb.append("<strong>homer</strong>&nbsp;(T)<br>");
+			sb.append("Password: <strong>geheim</strong>");
+			sb.append("</div>");
+			content = TableBuilder.row(40, content, new HTML(sb.toString()));
+		}
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Login");
-		page.addSection(Gwt.createCenterer(tb.createTable()));
+		page.addSection(Gwt.createCenterer(content));
 
 		return page;
 	}
