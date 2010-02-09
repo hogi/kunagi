@@ -31,6 +31,10 @@ public class Issue extends GIssue implements ReferenceSupport {
 		super(data);
 	}
 
+	public boolean isOpen() {
+		return !isClosed();
+	}
+
 	public boolean isClosed() {
 		return getCloseDate() != null;
 	}

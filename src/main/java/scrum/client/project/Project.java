@@ -266,6 +266,22 @@ public class Project extends GProject {
 		return getDao().getImpedimentsByProject(this);
 	}
 
+	public List<Issue> getOpenIssues() {
+		List<Issue> ret = new ArrayList<Issue>();
+		for (Issue issue : getIssues()) {
+			if (issue.isOpen()) ret.add(issue);
+		}
+		return ret;
+	}
+
+	public List<Issue> getClosedIssues() {
+		List<Issue> ret = new ArrayList<Issue>();
+		for (Issue issue : getIssues()) {
+			if (issue.isClosed()) ret.add(issue);
+		}
+		return ret;
+	}
+
 	public List<Issue> getIssues() {
 		return getDao().getIssuesByProject(this);
 	}
