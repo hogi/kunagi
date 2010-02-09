@@ -25,6 +25,10 @@ public class DashboardWidget extends AScrumWidget {
 		tasks.addHeader("Tasks", new HyperlinkWidget(nav.createSwitchAction(pc.getWhiteboard())));
 		tasks.addSection(TableBuilder.row(10, new TeamTasksWidget(), new UpcomingTasksWidget()));
 
+		PagePanel issues = new PagePanel();
+		issues.addHeader("Accepted Issues", new HyperlinkWidget(nav.createSwitchAction(pc.getIssueList())));
+		issues.addSection(new AcceptedIssuesWidget());
+
 		PagePanel sprintComments = PagePanel.createSimple("Sprint Comments", new CommentsWidget(getCurrentSprint()));
 
 		PagePanel impediments = new PagePanel();
@@ -41,7 +45,7 @@ public class DashboardWidget extends AScrumWidget {
 
 		PagePanel projectComments = PagePanel.createSimple("Project Comments", new CommentsWidget(getCurrentProject()));
 
-		Widget left = TableBuilder.column(5, sprintBurndown, tasks, sprintComments);
+		Widget left = TableBuilder.column(5, sprintBurndown, tasks, issues, sprintComments);
 		Widget right = TableBuilder.column(5, impediments, risks, events, projectComments);
 
 		return TableBuilder.row(5, left, right);

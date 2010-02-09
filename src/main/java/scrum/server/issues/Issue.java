@@ -9,6 +9,10 @@ public class Issue extends GIssue implements Numbered {
 
 	public static final IssueTypeLabelProvider TYPE_LABEL_PROVIDER = new IssueTypeLabelProvider();
 
+	public boolean isAccepted() {
+		return getAcceptDate() != null;
+	}
+
 	public void updateNumber() {
 		if (getNumber() == 0) setNumber(getProject().generateIssueNumber());
 	}
@@ -46,4 +50,5 @@ public class Issue extends GIssue implements Numbered {
 	public String toString() {
 		return getReference() + " (" + getType() + ") " + getLabel();
 	}
+
 }

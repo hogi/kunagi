@@ -166,7 +166,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		return list.indexOfObject(object);
 	}
 
-	public final void extendRow(int row, boolean exclusive) {
+	public final boolean extendRow(int row, boolean exclusive) {
 		if (exclusive) {
 			if (selectionManager == null) {
 				collapseAll();
@@ -175,11 +175,12 @@ public final class BlockListWidget<O> extends AScrumWidget {
 			}
 		}
 
-		if (row < 0) return;
+		if (row < 0) return false;
 
 		ABlockWidget<O> block = getBlock(row);
 		block.setExtended(true);
 		block.activate();
+		return true;
 	}
 
 	public final void collapseRow(int row) {
@@ -200,18 +201,19 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		assert isExtended(block.getObject());
 	}
 
-	public final void extendObject(O object) {
-		extendObject(object, true);
+	public final boolean extendObject(O object) {
+		return extendObject(object, true);
 	}
 
-	public final void extendObject(O object, boolean exclusive) {
+	public final boolean extendObject(O object, boolean exclusive) {
 		int idx = indexOfObject(object);
 		if (idx < 0) {
 			GwtLogger.DEBUG("Extending block failed. Object does not exist:", object);
-			return;
+			return false;
 		}
 		extendRow(idx, exclusive);
 		assert isExtended(object);
+		return true;
 	}
 
 	public final void toggleExtension(O object, boolean exclusive) {

@@ -1,9 +1,21 @@
 package scrum.server.issues;
 
 import ilarkesto.fp.Predicate;
+
+import java.util.Set;
+
 import scrum.server.project.Project;
 
 public class IssueDao extends GIssueDao {
+
+	public Set<Issue> getAcceptedIssues(final Project project) {
+		return getEntities(new Predicate<Issue>() {
+
+			public boolean test(Issue issue) {
+				return issue.isProject(project) && issue.isAccepted();
+			}
+		});
+	}
 
 	public Issue getIssueByNumber(final int number, final Project project) {
 		return getEntity(new Predicate<Issue>() {
