@@ -191,7 +191,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	private void dashboard(CssRenderer css) {
 		css
 				.style(
-					".TeamTasksWidget, .UpcomingTasksWidget, .OpenImpedimentsWidget, .HighestRisksWidget, .LatestEventsWidget td")
+					".TeamTasksWidget, .UpcomingTasksWidget, .AcceptedIssuesWidget, .OpenImpedimentsWidget, .HighestRisksWidget, .LatestEventsWidget td")
 				.lineHeight(lineHeight + 4);
 		css.style(".LatestEventsWidget td").borderTop(1, cBlockHeaderBackground).padding(3);
 		css.style(".LatestEventsWidget table").borderBottom(1, cBlockHeaderBackground);
