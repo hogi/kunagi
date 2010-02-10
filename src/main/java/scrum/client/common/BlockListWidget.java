@@ -66,6 +66,12 @@ public final class BlockListWidget<O> extends AScrumWidget {
 						return block;
 					}
 				});
+		list.setMoveObserver(new ObjectMappedFlowPanel.MoveObserver<O, ABlockWidget<O>>() {
+
+			public void moved(O object, ABlockWidget<O> oldWidget, ABlockWidget<O> newWidget) {
+				newWidget.setExtended(oldWidget.isExtended());
+			}
+		});
 
 		panel = new FlowPanel();
 		panel.setStyleName("BlockListWidget");
@@ -146,9 +152,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		GwtLogger.DEBUG("Dropping to index", toIndex, "->", block);
 		assert block != null;
 		if (block.getList() == this) {
-			boolean extended = block.isExtended();
-			block = list.move(toIndex, block.getObject(), true, moveObserver);
-			block.setExtended(extended);
+			list.move(toIndex, block.getObject(), true, moveObserver);
 			return;
 		}
 		dropAction.onDrop(block.getObject());

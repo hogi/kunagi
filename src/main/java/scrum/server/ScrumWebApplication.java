@@ -208,7 +208,11 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public void setUsersSelectedEntities(Project project, GwtConversation conversation, Set<String> ids) {
-		project.getUsersStatus().setUsersSelectedEntities(conversation.getSession().getUser().getId(), ids);
+		UsersStatusData usersStatus = project.getUsersStatus();
+		WebSession session = conversation.getSession();
+		User user = session.getUser();
+		String userId = user.getId();
+		usersStatus.setUsersSelectedEntities(userId, ids);
 		sendUsersStatusToClients(project, conversation);
 	}
 

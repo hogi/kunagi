@@ -1,7 +1,6 @@
 package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.AAction;
-import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
@@ -13,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.common.AScrumGwtEntity;
 import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -21,13 +21,13 @@ import com.google.gwt.user.client.ui.Widget;
 public class CommentsWidget extends AScrumWidget {
 
 	private FlowPanel containerPanel;
-	private AGwtEntity parent;
+	private AScrumGwtEntity parent;
 	private Map<Comment, CommentWidget> widgets;
 
 	private HyperlinkWidget activateCommentLink;
 	private RichtextEditorWidget editor;
 
-	public CommentsWidget(AGwtEntity parent) {
+	public CommentsWidget(AScrumGwtEntity parent) {
 		this.parent = parent;
 	}
 
@@ -56,7 +56,7 @@ public class CommentsWidget extends AScrumWidget {
 			containerPanel.add(activateCommentLink);
 		}
 
-		List<Comment> comments = cm.getProjectContext().getComments(parent);
+		List<Comment> comments = parent.getComments();
 		Collections.sort(comments, Comment.REVERSE_DATEANDTIME_COMPARATOR);
 		for (Comment comment : comments) {
 			CommentWidget widget = getWidget(comment);

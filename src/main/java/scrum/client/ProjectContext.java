@@ -6,15 +6,11 @@ import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.ObjectMappedFlowPanel;
 import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
-
-import java.util.List;
-
 import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.PunishmentsWidget;
 import scrum.client.admin.User;
 import scrum.client.calendar.CalendarWidget;
 import scrum.client.calendar.SimpleEvent;
-import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.collaboration.ForumWidget;
 import scrum.client.collaboration.Subject;
@@ -162,10 +158,6 @@ public class ProjectContext extends AScrumComponent {
 
 	public boolean isProjectOpen() {
 		return project != null;
-	}
-
-	public List<Comment> getComments(AGwtEntity entity) {
-		return cm.getDao().getCommentsByParent(entity);
 	}
 
 	public void highlightUser(User user) {

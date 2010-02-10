@@ -483,6 +483,7 @@ public class Project extends GProject {
 		ret.addAll(getComments(getRequirementEstimationVotes()));
 		ret.addAll(getComments(getUserConfigs()));
 		ret.addAll(getComments(getProjectEvents()));
+		ret.addAll(getComments(getSubjects()));
 		return ret;
 	}
 
