@@ -50,7 +50,7 @@ public class Issue extends GIssue implements ReferenceSupport {
 	public String getStatusLabel() {
 		if (isClosed()) return "closed on " + getCloseDate();
 		if (isAccepted()) return "accepted on " + getAcceptDate();
-		if (isSuspended()) return "suspended on" + getSuspendDate();
+		if (isSuspended()) return "suspended on " + getSuspendDate();
 		return "issued on " + getDate().getDate();
 	}
 
