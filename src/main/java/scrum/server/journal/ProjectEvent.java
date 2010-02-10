@@ -1,6 +1,5 @@
 package scrum.server.journal;
 
-import scrum.server.ScrumWebApplication;
 import scrum.server.collaboration.ChatMessage;
 import scrum.server.collaboration.ChatMessageDao;
 
@@ -28,10 +27,6 @@ public class ProjectEvent extends GProjectEvent {
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
 
-		// renaming: req -> sto
-		if (ScrumWebApplication.REQ_RENAMING_DATE.isAfter(getLastModified())) {
-			setLabel(ScrumWebApplication.convertReqToSto(getLabel()));
-		}
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package scrum.server.impediments;
 
 import ilarkesto.base.time.Date;
-import scrum.server.ScrumWebApplication;
 import scrum.server.common.Numbered;
 
 public class Impediment extends GImpediment implements Numbered {
@@ -26,11 +25,6 @@ public class Impediment extends GImpediment implements Numbered {
 
 		// delete when closed and older than 4 weeks
 		if (isClosed() && getDate().getPeriodToNow().toWeeks() > 4) getDao().deleteEntity(this);
-
-		// renaming: req -> sto
-		if (ScrumWebApplication.REQ_RENAMING_DATE.isAfter(getLastModified())) {
-			setDescription(ScrumWebApplication.convertReqToSto(getDescription()));
-		}
 
 	}
 

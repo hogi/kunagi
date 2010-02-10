@@ -1,6 +1,5 @@
 package scrum.server.sprint;
 
-import scrum.server.ScrumWebApplication;
 import scrum.server.common.Numbered;
 import scrum.server.project.Project;
 
@@ -35,10 +34,6 @@ public class Task extends GTask implements Numbered {
 		super.ensureIntegrity();
 		updateNumber();
 
-		// renaming: req -> sto
-		if (ScrumWebApplication.REQ_RENAMING_DATE.isAfter(getLastModified())) {
-			setDescription(ScrumWebApplication.convertReqToSto(getDescription()));
-		}
 	}
 
 	@Override

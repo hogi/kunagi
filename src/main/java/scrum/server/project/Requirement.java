@@ -2,7 +2,6 @@ package scrum.server.project;
 
 import java.util.Set;
 
-import scrum.server.ScrumWebApplication;
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.estimation.RequirementEstimationVote;
@@ -79,11 +78,6 @@ public class Requirement extends GRequirement implements Numbered {
 		// delete when closed and older than 4 weeks
 		if (isClosed() && getLastModified().getPeriodToNow().toWeeks() > 4) getDao().deleteEntity(this);
 
-		// renaming: req -> sto
-		if (ScrumWebApplication.REQ_RENAMING_DATE.isAfter(getLastModified())) {
-			setDescription(ScrumWebApplication.convertReqToSto(getDescription()));
-			setTestDescription(ScrumWebApplication.convertReqToSto(getTestDescription()));
-		}
 	}
 
 	public Set<Task> getTasks() {

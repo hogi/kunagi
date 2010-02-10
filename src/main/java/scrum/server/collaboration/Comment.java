@@ -1,7 +1,6 @@
 package scrum.server.collaboration;
 
 import ilarkesto.base.Utl;
-import scrum.server.ScrumWebApplication;
 
 public class Comment extends GComment {
 
@@ -12,10 +11,6 @@ public class Comment extends GComment {
 			getDao().deleteEntity(this);
 		}
 
-		// renaming: req -> sto
-		if (ScrumWebApplication.REQ_RENAMING_DATE.isAfter(getLastModified())) {
-			setText(ScrumWebApplication.convertReqToSto(getText()));
-		}
 	}
 
 	@Override
