@@ -1,7 +1,10 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.AGwtEntity;
+import ilarkesto.gwt.client.Date;
+import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.Time;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -111,11 +114,18 @@ public class Project extends GProject {
 		return cm.getDao().getProjectEvents();
 	}
 
-	public List<ProjectEvent> getLatestProjectEvents(int max) {
-		List<ProjectEvent> ret = getProjectEvents();
-		Collections.sort(ret, ProjectEvent.DATE_AND_TIME_COMPARATOR);
-		while (ret.size() > max) {
-			ret.remove(ret.size() - 1);
+	public List<ProjectEvent> getLatestProjectEvents(int min) {
+		List<ProjectEvent> events = getProjectEvents();
+		Collections.sort(events, ProjectEvent.DATE_AND_TIME_COMPARATOR);
+
+		DateAndTime deadline = new DateAndTime(Date.today().prevDay(), Time.now());
+		List<ProjectEvent> ret = new ArrayList<ProjectEvent>();
+		int count = 0;
+		for (ProjectEvent event : events) {
+			ret.add(event);
+			count++;
+			DateAndTime dateAndTime = event.getDateAndTime();
+			if (count > min && dateAndTime.isBefore(deadline)) break;
 		}
 		return ret;
 	}
