@@ -1,13 +1,19 @@
 package scrum.client.calendar;
 
 import ilarkesto.gwt.client.Date;
+import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.Time;
 import ilarkesto.gwt.client.TimePeriod;
 
 import java.util.Comparator;
 import java.util.Map;
 
-public class SimpleEvent extends GSimpleEvent {
+import scrum.client.collaboration.ForumSupport;
+import scrum.client.common.ShowEntityAction;
+
+import com.google.gwt.user.client.ui.Widget;
+
+public class SimpleEvent extends GSimpleEvent implements ForumSupport {
 
 	public SimpleEvent() {
 		super();
@@ -49,6 +55,14 @@ public class SimpleEvent extends GSimpleEvent {
 		}
 		sb.append(getLabel());
 		return sb.toString();
+	}
+
+	public Widget createForumItemWidget() {
+		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
+	}
+
+	public String getReference() {
+		return "evt";
 	}
 
 	public static Comparator<SimpleEvent> TIME_COMPARATOR = new Comparator<SimpleEvent>() {

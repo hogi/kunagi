@@ -1,6 +1,7 @@
 package scrum.client.risks;
 
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.HyperlinkWidget;
 
 import java.util.Comparator;
 import java.util.List;
@@ -8,10 +9,14 @@ import java.util.Map;
 
 import scrum.client.ScrumJs;
 import scrum.client.admin.User;
+import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.ReferenceSupport;
+import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
 
-public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport {
+import com.google.gwt.user.client.ui.Widget;
+
+public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport, ForumSupport {
 
 	public static final String REFERENCE_PREFIX = "rsk";
 	public static final List<Integer> IMPACTS = Gwt.toList(20, 40, 60, 80, 100);
@@ -78,6 +83,10 @@ public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport {
 	@Override
 	public String toString() {
 		return getReference() + " " + getLabel();
+	}
+
+	public Widget createForumItemWidget() {
+		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
 
 	public static final Comparator<Risk> PRIORITY_COMPARATOR = new Comparator<Risk>() {

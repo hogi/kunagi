@@ -3,6 +3,7 @@ package scrum.client.issues;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.HyperlinkWidget;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -10,10 +11,14 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumJs;
+import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.ReferenceSupport;
+import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
 
-public class Issue extends GIssue implements ReferenceSupport {
+import com.google.gwt.user.client.ui.Widget;
+
+public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public static final String INIT_TYPE = Types.ISSUE;
 
@@ -101,6 +106,10 @@ public class Issue extends GIssue implements ReferenceSupport {
 	@Override
 	public String toString() {
 		return getReference() + " (" + getType() + ") " + getLabel();
+	}
+
+	public Widget createForumItemWidget() {
+		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
 
 	public static final Comparator<Issue> ISSUE_DATE_COMPARATOR = new Comparator<Issue>() {

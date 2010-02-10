@@ -7,13 +7,13 @@ import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class SubjectListWidget extends AScrumWidget {
+public class ForumWidget extends AScrumWidget {
 
 	public BlockListWidget<ForumSupport> list;
 
 	@Override
 	protected Widget onInitialization() {
-		cm.getApp().callRequestImpediments();
+		cm.getApp().callRequestForum();
 
 		list = new BlockListWidget<ForumSupport>(SubjectBlock.FACTORY);
 		list.setAutoSorter(ForumSupport.COMPARATOR);
@@ -27,10 +27,10 @@ public class SubjectListWidget extends AScrumWidget {
 	@Override
 	protected void onUpdate() {
 		super.onUpdate();
-		list.setObjects(getCurrentProject().getForumEntities());
+		list.setObjects(getCurrentProject().getEntitiesWithComments());
 	}
 
-	public void select(Subject subject) {
-		list.extendObject(subject);
+	public void select(ForumSupport entity) {
+		list.extendObject(entity);
 	}
 }

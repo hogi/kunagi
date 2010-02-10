@@ -28,4 +28,7 @@ public class SprintHistoryWidget extends AScrumWidget {
 		super.onUpdate();
 	}
 
+	public boolean select(Sprint sprint) {
+		return sprintList.extendObject(sprint);
+	}
 }

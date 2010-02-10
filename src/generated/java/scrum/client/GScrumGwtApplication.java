@@ -214,4 +214,12 @@ public abstract class GScrumGwtApplication
         callActivateRequirementEstimationVoting(requirementId,  null);
     }
 
+    public final void callRequestForum( Runnable callback) {
+        getScrumService().requestForum( new DefaultCallback<DataTransferObject>(callback));
+    }
+
+    public final void callRequestForum() {
+        callRequestForum( null);
+    }
+
 }

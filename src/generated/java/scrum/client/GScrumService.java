@@ -62,4 +62,6 @@ public interface GScrumService
 
     DataTransferObject activateRequirementEstimationVoting(java.lang.String requirementId);
 
+    DataTransferObject requestForum();
+
 }

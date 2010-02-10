@@ -62,4 +62,6 @@ public interface GScrumServiceAsync {
 
     void activateRequirementEstimationVoting(java.lang.String requirementId, AsyncCallback<DataTransferObject> callback);
 
+    void requestForum(AsyncCallback<DataTransferObject> callback);
+
 }

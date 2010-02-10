@@ -1,6 +1,7 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.HyperlinkWidget;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,13 +10,17 @@ import java.util.Map;
 
 import scrum.client.ScrumJs;
 import scrum.client.admin.User;
+import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.ReferenceSupport;
+import scrum.client.common.ShowEntityAction;
 import scrum.client.estimation.RequirementEstimationVote;
 import scrum.client.issues.Issue;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
 
-public class Requirement extends GRequirement implements ReferenceSupport {
+import com.google.gwt.user.client.ui.Widget;
+
+public class Requirement extends GRequirement implements ReferenceSupport, ForumSupport {
 
 	public static final String REFERENCE_PREFIX = "sto";
 	public static String[] WORK_ESTIMATION_VALUES = new String[] { "", "0.5", "1", "2", "3", "5", "8", "13", "20",
@@ -281,6 +286,10 @@ public class Requirement extends GRequirement implements ReferenceSupport {
 	@Override
 	public String toString() {
 		return getReferenceAndLabel();
+	}
+
+	public Widget createForumItemWidget() {
+		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
 
 }

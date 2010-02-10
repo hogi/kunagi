@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.Time;
 
 import java.util.ArrayList;
@@ -19,9 +20,11 @@ import scrum.client.UsersStatus;
 import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
 import scrum.client.calendar.SimpleEvent;
+import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.collaboration.Subject;
 import scrum.client.collaboration.Wikipage;
+import scrum.client.common.ShowEntityAction;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -30,7 +33,9 @@ import scrum.client.risks.Risk;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
 
-public class Project extends GProject {
+import com.google.gwt.user.client.ui.Widget;
+
+public class Project extends GProject implements ForumSupport {
 
 	private static final String effortUnit = "pts";
 	public static final String INIT_LABEL = "New Project";
@@ -271,9 +276,14 @@ public class Project extends GProject {
 		getDao().deleteRisk(risk);
 	}
 
-	public List<ForumSupport> getForumEntities() {
-		List<ForumSupport> ret = new ArrayList<ForumSupport>();
+	public Set<ForumSupport> getEntitiesWithComments() {
+		Set<ForumSupport> ret = new HashSet<ForumSupport>();
 		ret.addAll(getSubjects());
+		for (Comment comment : getDao().getComments()) {
+			AGwtEntity entity = comment.getParent();
+			assert entity instanceof ForumSupport : entity.getClass().getName() + " needs to implement ForumSupport";
+			ret.add((ForumSupport) comment.getParent());
+		}
 		return ret;
 	}
 
@@ -461,8 +471,12 @@ public class Project extends GProject {
 		return users;
 	}
 
-	private List<ProjectUserConfig> getUserConfigs() {
-		return getDao().getProjectUserConfigsByProject(this);
+	public Widget createForumItemWidget() {
+		return new HyperlinkWidget(new ShowEntityAction(this, "Project Dashboard"));
+	}
+
+	public String getReference() {
+		return "prj";
 	}
 
 }

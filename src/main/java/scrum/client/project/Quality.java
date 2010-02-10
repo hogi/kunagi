@@ -1,14 +1,19 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.HyperlinkWidget;
 
 import java.util.Map;
 
 import scrum.client.ScrumJs;
+import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.ReferenceSupport;
+import scrum.client.common.ShowEntityAction;
 import scrum.client.issues.Issue;
 
-public class Quality extends GQuality implements ReferenceSupport {
+import com.google.gwt.user.client.ui.Widget;
+
+public class Quality extends GQuality implements ReferenceSupport, ForumSupport {
 
 	public static final String REFERENCE_PREFIX = "qlt";
 
@@ -44,6 +49,10 @@ public class Quality extends GQuality implements ReferenceSupport {
 	public boolean isEditable() {
 		if (!cm.getProjectContext().getProject().isProductOwner(cm.getAuth().getUser())) return false;
 		return true;
+	}
+
+	public Widget createForumItemWidget() {
+		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
 
 }

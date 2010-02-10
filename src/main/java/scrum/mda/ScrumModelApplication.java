@@ -128,6 +128,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("search").addParameter("text", String.class);
 			gwtServiceModel.addMethod("activateRequirementEstimationVoting")
 					.addParameter("requirementId", String.class);
+			gwtServiceModel.addMethod("requestForum");
 
 		}
 		return gwtServiceModel;

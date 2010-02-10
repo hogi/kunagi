@@ -32,7 +32,7 @@ public class CreateSubjectAction extends GCreateSubjectAction {
 	@Override
 	protected void onExecute() {
 		Subject subject = getCurrentProject().createNewSubject();
-		cm.getProjectContext().showSubjectList(subject);
+		cm.getProjectContext().showForum(subject);
 	}
 
 }

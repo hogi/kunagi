@@ -1,5 +1,6 @@
 package scrum.client.sprint;
 
+import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.TimePeriod;
 
 import java.util.ArrayList;
@@ -9,12 +10,15 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.admin.User;
+import scrum.client.collaboration.ForumSupport;
+import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.ui.Widget;
 
-public class Sprint extends GSprint {
+public class Sprint extends GSprint implements ForumSupport {
 
 	public Sprint(Project project, String label) {
 		setProject(project);
@@ -190,6 +194,10 @@ public class Sprint extends GSprint {
 		return cm.getWiki().getTemplate("sprint.review");
 	}
 
+	public boolean isCurrent() {
+		return getProject().isCurrentSprint(this);
+	}
+
 	public static final Comparator<Sprint> END_DATE_COMPARATOR = new Comparator<Sprint>() {
 
 		public int compare(Sprint a, Sprint b) {
@@ -197,5 +205,14 @@ public class Sprint extends GSprint {
 		}
 
 	};
+
+	public Widget createForumItemWidget() {
+		String label = isCurrent() ? "Sprint Backlog" : "Sprint";
+		return new HyperlinkWidget(new ShowEntityAction(this, label));
+	}
+
+	public String getReference() {
+		return "spr";
+	}
 
 }

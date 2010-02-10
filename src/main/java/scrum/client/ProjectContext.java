@@ -15,8 +15,9 @@ import scrum.client.admin.User;
 import scrum.client.calendar.CalendarWidget;
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Comment;
+import scrum.client.collaboration.ForumSupport;
+import scrum.client.collaboration.ForumWidget;
 import scrum.client.collaboration.Subject;
-import scrum.client.collaboration.SubjectListWidget;
 import scrum.client.collaboration.WikiWidget;
 import scrum.client.common.AScrumComponent;
 import scrum.client.context.UserHighlightSupport;
@@ -37,6 +38,7 @@ import scrum.client.project.Requirement;
 import scrum.client.risks.Risk;
 import scrum.client.risks.RiskListWidget;
 import scrum.client.sprint.NextSprintWidget;
+import scrum.client.sprint.Sprint;
 import scrum.client.sprint.SprintBacklogWidget;
 import scrum.client.sprint.SprintHistoryWidget;
 import scrum.client.sprint.Task;
@@ -59,7 +61,7 @@ public class ProjectContext extends AScrumComponent {
 	private SprintBacklogWidget sprintBacklog;
 	private ProductBacklogWidget productBacklog;
 	private QualityBacklogWidget qualityBacklog;
-	private SubjectListWidget subjectList;
+	private ForumWidget forum;
 	private CalendarWidget calendar;
 	private NextSprintWidget nextSprint;
 	private ImpedimentListWidget impedimentList;
@@ -85,7 +87,7 @@ public class ProjectContext extends AScrumComponent {
 		sprintBacklog = new SprintBacklogWidget();
 		productBacklog = new ProductBacklogWidget();
 		qualityBacklog = new QualityBacklogWidget();
-		subjectList = new SubjectListWidget();
+		forum = new ForumWidget();
 		calendar = new CalendarWidget();
 		nextSprint = new NextSprintWidget();
 		impedimentList = new ImpedimentListWidget();
@@ -107,7 +109,7 @@ public class ProjectContext extends AScrumComponent {
 		navigator.addItem("Sprint Backlog", getSprintBacklog());
 		navigator.addItem("Product Backlog", getProductBacklog());
 		navigator.addItem("Quality Backlog", getQualityBacklog());
-		navigator.addItem("Forum", getSubjectList());
+		navigator.addItem("Forum", getForum());
 		navigator.addItem("Calendar", calendar);
 		navigator.addItem("Impediment List", getImpedimentList());
 		navigator.addItem("Issue List", getIssueList());
@@ -233,14 +235,35 @@ public class ProjectContext extends AScrumComponent {
 		} else if (entity instanceof Quality) {
 			showQualityBacklog((Quality) entity);
 		} else if (entity instanceof Subject) {
-			showSubjectList((Subject) entity);
+			showForum((Subject) entity);
 		} else if (entity instanceof Impediment) {
 			showImpediment((Impediment) entity);
 		} else if (entity instanceof File) {
 			showFile((File) entity);
+		} else if (entity instanceof Sprint) {
+			showSprint((Sprint) entity);
+		} else if (entity instanceof Project) {
+			showDashboard();
 		} else {
 			throw new RuntimeException("Showing entity not supported: " + entity.getClass().getName());
 		}
+	}
+
+	public void showDashboard() {
+		select(dashboard);
+	}
+
+	public void showSprint(Sprint sprint) {
+		if (sprint.isCurrent()) {
+			showSprintBacklog((Requirement) null);
+		} else {
+			showSprintHistory(sprint);
+		}
+	}
+
+	public void showSprintHistory(Sprint sprint) {
+		select(sprintHistory);
+		sprintHistory.select(sprint);
 	}
 
 	public void showIssue(Issue issue) {
@@ -325,9 +348,9 @@ public class ProjectContext extends AScrumComponent {
 		impedimentList.showImpediment(impediment);
 	}
 
-	public void showSubjectList(Subject subject) {
-		select(subjectList);
-		subjectList.select(subject);
+	public void showForum(ForumSupport entity) {
+		select(forum);
+		forum.select(entity);
 	}
 
 	public void showIssueList(Issue issue) {
@@ -398,8 +421,8 @@ public class ProjectContext extends AScrumComponent {
 		return qualityBacklog;
 	}
 
-	public SubjectListWidget getSubjectList() {
-		return subjectList;
+	public ForumWidget getForum() {
+		return forum;
 	}
 
 	public RiskListWidget getRiskList() {

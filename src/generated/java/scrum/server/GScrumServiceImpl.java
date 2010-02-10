@@ -44,6 +44,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onUpdateSystemMessage(GwtConversation conversation, scrum.client.admin.SystemMessage systemMessage);
     protected abstract void onSearch(GwtConversation conversation, java.lang.String text);
     protected abstract void onActivateRequirementEstimationVoting(GwtConversation conversation, java.lang.String requirementId);
+    protected abstract void onRequestForum(GwtConversation conversation);
 
 
     public scrum.client.DataTransferObject ping() {
@@ -455,6 +456,25 @@ public abstract class GScrumServiceImpl
             onActivateRequirementEstimationVoting(conversation, requirementId);
         } catch (Throwable t) {
             handleServiceMethodException("activateRequirementEstimationVoting",t);
+            throw new RuntimeException(t);
+        }
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public scrum.client.DataTransferObject requestForum() {
+        LOG.debug("requestForum");
+        WebSession session = (WebSession) getSession();
+        GwtConversation conversation = session.getGwtConversation();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:requestForum");
+        context.bindCurrentThread();
+        try {
+            onRequestForum(conversation);
+        } catch (Throwable t) {
+            handleServiceMethodException("requestForum",t);
             throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

@@ -322,8 +322,19 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		conversation.sendToClient(project.getCalendarEvents());
 		conversation.sendToClient(project.getFiles());
 		conversation.sendToClient(project.getAcceptedIssues());
-		conversation.sendToClient(project.getSubjects());
 		webApplication.updateOnlineTeamMembers(project, null);
+	}
+
+	@Override
+	protected void onRequestForum(GwtConversation conversation) {
+		Project project = conversation.getProject();
+		Set<AEntity> parents = new HashSet<AEntity>();
+		parents.addAll(project.getSubjects());
+		for (Comment comment : project.getComments()) {
+			conversation.sendToClient(comment);
+			parents.add(comment.getParent());
+		}
+		conversation.sendToClient(parents);
 	}
 
 	@Override
