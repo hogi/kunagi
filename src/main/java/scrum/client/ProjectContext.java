@@ -108,7 +108,7 @@ public class ProjectContext extends AScrumComponent {
 		navigator.addItem("Forum", getForum());
 		navigator.addItem("Calendar", calendar);
 		navigator.addItem("Impediment List", getImpedimentList());
-		navigator.addItem("Issue List", getIssueList());
+		navigator.addItem("Issue Management", getIssueList());
 		navigator.addItem("Risk Management", getRiskList());
 		navigator.addItem("Wiki", getWiki());
 		navigator.addItem("File Repository", fileRepository);
