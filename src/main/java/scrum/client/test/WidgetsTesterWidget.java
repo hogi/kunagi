@@ -111,7 +111,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 
 		@Override
 		protected void onInitializationHeader(BlockHeaderWidget header) {
-			header.insertPrefixIcon().setWidget(Img.bundle.action16().createImage());
+			header.insertPrefixIcon().setWidget(Img.bundle.hyperlink().createImage());
 			header.setDragHandle("dmy666");
 			header.setCenter(getObject());
 			header.appendCenterSuffix("Suffix");
@@ -216,26 +216,26 @@ public class WidgetsTesterWidget extends AScrumWidget {
 
 	private void testNavigator() {
 		NavigatorWidget navigator = new NavigatorWidget();
-		navigator.addItem(Img.bundle.action16(), "Item 1", "1", null);
-		navigator.addItem(Img.bundle.action16(), "Item 2", "2", null);
-		navigator.addItem(Img.bundle.action16(), "Item 3", "3", null);
+		navigator.addItem(Img.bundle.hyperlink(), "Item 1", "1", null);
+		navigator.addItem(Img.bundle.hyperlink(), "Item 2", "2", null);
+		navigator.addItem(Img.bundle.hyperlink(), "Item 3", "3", null);
 		addTest("NavigatorWidget", navigator);
 	}
 
 	private void testToolbar() {
 		ToolbarWidget toolbar = new ToolbarWidget();
-		toolbar.add(new ButtonWidget(createAction(Img.bundle.action16().createImage(), "icon and text")));
+		toolbar.add(new ButtonWidget(createAction(Img.bundle.hyperlink().createImage(), "icon and text")));
 		toolbar.add(new ButtonWidget(createAction("text only")));
-		toolbar.add(new ButtonWidget(createAction(Img.bundle.action16().createImage(), null)));
+		toolbar.add(new ButtonWidget(createAction(Img.bundle.hyperlink().createImage(), null)));
 		addTest("ToolbarWidget", toolbar);
 	}
 
 	private void testButtons() {
 		addTest("ButtonWidget:text-only", new ButtonWidget(createAction("text only")));
-		addTest("ButtonWidget:icon-only", new ButtonWidget(createAction(Img.bundle.action16().createImage(), null)));
-		addTest("ButtonWidget:icon-text", new ButtonWidget(createAction(Img.bundle.action16().createImage(),
+		addTest("ButtonWidget:icon-only", new ButtonWidget(createAction(Img.bundle.hyperlink().createImage(), null)));
+		addTest("ButtonWidget:icon-text", new ButtonWidget(createAction(Img.bundle.hyperlink().createImage(),
 			"icon and text")));
-		addTest("ButtonWidget:nonexecutable", new ButtonWidget(createAction(Img.bundle.action16().createImage(),
+		addTest("ButtonWidget:nonexecutable", new ButtonWidget(createAction(Img.bundle.hyperlink().createImage(),
 			"icon and text", false)));
 
 		FlowPanel multipleButtons = new FlowPanel();
@@ -246,7 +246,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 	}
 
 	private void testImageAnchor() {
-		ImageAnchor a = new ImageAnchor(Img.bundle.action16().createImage(), "click");
+		ImageAnchor a = new ImageAnchor(Img.bundle.hyperlink().createImage(), "click");
 		addTest("ImageAnchor", a);
 	}
 

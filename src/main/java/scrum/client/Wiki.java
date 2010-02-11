@@ -72,34 +72,7 @@ public class Wiki extends AScrumComponent implements RichtextFormater, FileUploa
 		public void initialize(final RichtextEditorWidget editor) {
 			final ToolbarWidget toolbar = editor.getEditorToolbar();
 
-			toolbar.add(createToolbarButton(Img.bundle.formatTextItalic().createImage(), "Italic", new ClickHandler() {
-
-				public void onClick(ClickEvent event) {
-					BetterTextArea textArea = editor.getEditor();
-					textArea.wrapSelection("''", "''");
-					textArea.setFocus(true);
-				}
-			}));
-
-			toolbar.add(createToolbarButton(Img.bundle.formatTextBold().createImage(), "Bold", new ClickHandler() {
-
-				public void onClick(ClickEvent event) {
-					BetterTextArea textArea = editor.getEditor();
-					textArea.wrapSelection("'''", "'''");
-					textArea.setFocus(true);
-				}
-			}));
-
-			toolbar.add(createToolbarButton(Img.bundle.formatTextCode().createImage(), "Code", new ClickHandler() {
-
-				public void onClick(ClickEvent event) {
-					BetterTextArea textArea = editor.getEditor();
-					textArea.wrapSelection("<code>", "</code>");
-					textArea.setFocus(true);
-				}
-			}));
-
-			toolbar.add(createToolbarButton(Img.bundle.upload().createImage(), "Upload file", new ClickHandler() {
+			toolbar.insert(createToolbarButton(Img.bundle.upload().createImage(), "Upload file", new ClickHandler() {
 
 				public void onClick(ClickEvent event) {
 					final BetterTextArea textArea = editor.getEditor();
@@ -113,7 +86,83 @@ public class Wiki extends AScrumComponent implements RichtextFormater, FileUploa
 						}
 					});
 				}
-			}));
+			}), 0);
+
+			toolbar.insert(createToolbarButton(Img.bundle.formatTextCode().createImage(), "Code", new ClickHandler() {
+
+				public void onClick(ClickEvent event) {
+					BetterTextArea textArea = editor.getEditor();
+					textArea.wrapSelection("<code>", "</code>");
+					textArea.setFocus(true);
+				}
+			}), 0);
+
+			toolbar.insert(createToolbarButton(Img.bundle.image().createImage(), "Image", new ClickHandler() {
+
+				public void onClick(ClickEvent event) {
+					BetterTextArea textArea = editor.getEditor();
+					String selected = textArea.getSelectedText();
+					if (selected != null && (selected.startsWith("http") || selected.startsWith("www."))) {
+						textArea.wrapSelection("[Image:", "|thumb]");
+					} else {
+						textArea.wrapSelection("[Image:http://", "|thumb]");
+					}
+					textArea.setFocus(true);
+				}
+			}), 0);
+
+			toolbar.insert(createToolbarButton(Img.bundle.hyperlink().createImage(), "Hyperlink", new ClickHandler() {
+
+				public void onClick(ClickEvent event) {
+					BetterTextArea textArea = editor.getEditor();
+					String selected = textArea.getSelectedText();
+					if (selected != null && (selected.startsWith("http") || selected.startsWith("www."))) {
+						textArea.wrapSelection("[", "]");
+					} else {
+						textArea.wrapSelection("[http:// ", "]");
+					}
+					textArea.setFocus(true);
+				}
+			}), 0);
+
+			toolbar.insert(createToolbarButton(Img.bundle.enumlist().createImage(), "Numbered list",
+				new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+						BetterTextArea textArea = editor.getEditor();
+						textArea.wrapSelection("\n# ", "\n# ");
+						textArea.setFocus(true);
+					}
+				}), 0);
+
+			toolbar.insert(createToolbarButton(Img.bundle.itemlist().createImage(), "Bulleted list",
+				new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+						BetterTextArea textArea = editor.getEditor();
+						textArea.wrapSelection("\n* ", "\n* ");
+						textArea.setFocus(true);
+					}
+				}), 0);
+
+			toolbar.insert(createToolbarButton(Img.bundle.formatTextBold().createImage(), "Bold", new ClickHandler() {
+
+				public void onClick(ClickEvent event) {
+					BetterTextArea textArea = editor.getEditor();
+					textArea.wrapSelection("'''", "'''");
+					textArea.setFocus(true);
+				}
+			}), 0);
+
+			toolbar.insert(createToolbarButton(Img.bundle.formatTextItalic().createImage(), "Italic",
+				new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+						BetterTextArea textArea = editor.getEditor();
+						textArea.wrapSelection("''", "''");
+						textArea.setFocus(true);
+					}
+				}), 0);
 
 		}
 	}

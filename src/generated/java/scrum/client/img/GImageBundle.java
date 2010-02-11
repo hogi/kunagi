@@ -19,8 +19,8 @@ import com.google.gwt.user.client.ui.ImageBundle;
 public interface GImageBundle
             extends com.google.gwt.user.client.ui.ImageBundle {
 
-    @Resource(value="action16.png")
-    com.google.gwt.user.client.ui.AbstractImagePrototype action16();
+    @Resource(value="enumlist.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype enumlist();
 
     @Resource(value="formatTextBold.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype formatTextBold();
@@ -31,11 +31,20 @@ public interface GImageBundle
     @Resource(value="formatTextItalic.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype formatTextItalic();
 
+    @Resource(value="hyperlink.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype hyperlink();
+
+    @Resource(value="image.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype image();
+
     @Resource(value="impOpen.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype impOpen();
 
     @Resource(value="issClosed.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype issClosed();
+
+    @Resource(value="itemlist.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype itemlist();
 
     @Resource(value="logo25.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype logo25();
