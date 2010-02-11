@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.Time;
 
@@ -36,6 +37,8 @@ import scrum.client.sprint.Task;
 import com.google.gwt.user.client.ui.Widget;
 
 public class Project extends GProject implements ForumSupport {
+
+	private static transient final GwtLogger LOG = GwtLogger.createLogger(Project.class);
 
 	private static final String effortUnit = "pts";
 	public static final String INIT_LABEL = "New Project";
@@ -281,7 +284,10 @@ public class Project extends GProject implements ForumSupport {
 		ret.addAll(getSubjects());
 		for (Comment comment : getDao().getComments()) {
 			AGwtEntity entity = comment.getParent();
-			assert entity instanceof ForumSupport : entity.getClass().getName() + " needs to implement ForumSupport";
+			if (!(entity instanceof ForumSupport)) {
+				LOG.error(entity.getClass().getName() + " needs to implement ForumSupport");
+				continue;
+			}
 			ret.add((ForumSupport) comment.getParent());
 		}
 		return ret;
