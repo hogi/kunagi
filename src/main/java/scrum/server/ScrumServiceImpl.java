@@ -27,6 +27,7 @@ import scrum.server.admin.UserDao;
 import scrum.server.collaboration.ChatMessage;
 import scrum.server.collaboration.Comment;
 import scrum.server.collaboration.CommentDao;
+import scrum.server.collaboration.EmoticonDao;
 import scrum.server.common.Numbered;
 import scrum.server.common.Transient;
 import scrum.server.files.File;
@@ -54,6 +55,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private transient CommentDao commentDao;
 	private transient ScrumWebApplication webApplication;
 	private transient ProjectEventDao projectEventDao;
+	private transient EmoticonDao emoticonDao;
+
+	public void setEmoticonDao(EmoticonDao emoticonDao) {
+		this.emoticonDao = emoticonDao;
+	}
 
 	public void setProjectEventDao(ProjectEventDao projectEventDao) {
 		this.projectEventDao = projectEventDao;

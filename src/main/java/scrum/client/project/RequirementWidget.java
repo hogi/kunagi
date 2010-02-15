@@ -4,8 +4,10 @@ import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.TableBuilder;
+import ilarkesto.gwt.client.editor.DropdownEditorWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
+import scrum.client.collaboration.Emoticon;
 import scrum.client.estimation.PlanningPokerWidget;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -64,7 +66,10 @@ public class RequirementWidget extends AWidget {
 
 		left.addFieldRow("Test", requirement.getTestDescriptionModel());
 
-		left.addFieldRow("Estimated Work", new RequirementEstimatedWorkWidget(requirement));
+		left.addFieldRow("Estimated work", new RequirementEstimatedWorkWidget(requirement));
+
+		left.addFieldRow("Personal emoticon", new DropdownEditorWidget<String>(
+				requirement.getCurrentUserEmotionModel(), Emoticon.EMOTION_LABEL_PROVIDER));
 
 		if (showTaskWork) {
 			left.addFieldRow("Remainig Task Work", new AFieldValueWidget() {

@@ -78,6 +78,31 @@ public abstract class GScrumWebApplication
         commentDao = null;
     }
 
+    // --- emoticonDao ---
+
+    private scrum.server.collaboration.EmoticonDao emoticonDao;
+
+    public final scrum.server.collaboration.EmoticonDao getEmoticonDao() {
+        if (emoticonDao == null) {
+            emoticonDao = createEmoticonDao();
+            initializeEmoticonDao(emoticonDao);
+        }
+        return emoticonDao;
+    }
+
+    protected scrum.server.collaboration.EmoticonDao createEmoticonDao() {
+        return emoticonDao = ilarkesto.base.Reflect.newInstance(scrum.server.collaboration.EmoticonDao.class);
+    }
+
+    protected void initializeEmoticonDao(scrum.server.collaboration.EmoticonDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetEmoticonDao() {
+        emoticonDao = null;
+    }
+
     // --- fileDao ---
 
     private scrum.server.files.FileDao fileDao;

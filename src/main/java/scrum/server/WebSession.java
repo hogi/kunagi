@@ -25,6 +25,7 @@ public class WebSession extends AWebSession {
 	public GwtConversation getGwtConversation() {
 		if (gwtConversation == null) {
 			gwtConversation = new GwtConversation(this, nextGwtConversationNumber());
+			((GwtConversation) gwtConversation).setEmoticonDao(ScrumWebApplication.get().getEmoticonDao());
 		}
 		return (GwtConversation) gwtConversation;
 	}

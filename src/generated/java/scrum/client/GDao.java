@@ -196,6 +196,86 @@ public abstract class GDao
         return ret;
     }
 
+    // --- Emoticon ---
+
+    private Map<String, scrum.client.collaboration.Emoticon> emoticons = new HashMap<String, scrum.client.collaboration.Emoticon>();
+
+    public final void clearEmoticons() {
+        emoticons.clear();
+    }
+
+    public final boolean containsEmoticon(scrum.client.collaboration.Emoticon emoticon) {
+        return emoticons.containsKey(emoticon.getId());
+    }
+
+    public final void deleteEmoticon(scrum.client.collaboration.Emoticon emoticon) {
+        emoticons.remove(emoticon.getId());
+        entityDeleted(emoticon);
+    }
+
+    public final void createEmoticon(scrum.client.collaboration.Emoticon emoticon) {
+        emoticons.put(emoticon.getId(), emoticon);
+        entityCreated(emoticon);
+    }
+
+    private final void updateEmoticon(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.collaboration.Emoticon entity = emoticons.get(id);
+        if (entity == null) {
+            entity = new scrum.client.collaboration.Emoticon(data);
+            emoticons.put(id, entity);
+            ilarkesto.gwt.client.GwtLogger.DEBUG("Emoticon received: " + entity.getId() + " ("+entity+")");
+        } else {
+            entity.updateProperties(data);
+            ilarkesto.gwt.client.GwtLogger.DEBUG("Emoticon updated: " + entity);
+        }
+        onEntityModifiedRemotely(entity);
+    }
+
+    public final scrum.client.collaboration.Emoticon getEmoticon(String id) {
+        scrum.client.collaboration.Emoticon ret = emoticons.get(id);
+        if (ret == null) throw new RuntimeException("Emoticon does not exist: " + id);
+        return ret;
+    }
+
+    public final Set<scrum.client.collaboration.Emoticon> getEmoticons(Collection<String> ids) {
+        Set<scrum.client.collaboration.Emoticon> ret = new HashSet<scrum.client.collaboration.Emoticon>();
+        for (String id : ids) {
+            scrum.client.collaboration.Emoticon entity = emoticons.get(id);
+            if (entity == null) throw new RuntimeException("Emoticon does not exist: " + id);
+            ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.collaboration.Emoticon> getEmoticons() {
+        return new ArrayList<scrum.client.collaboration.Emoticon>(emoticons.values());
+    }
+
+    public final List<scrum.client.collaboration.Emoticon> getEmoticonsByParent(ilarkesto.gwt.client.AGwtEntity parent) {
+        List<scrum.client.collaboration.Emoticon> ret = new ArrayList<scrum.client.collaboration.Emoticon>();
+        for (scrum.client.collaboration.Emoticon entity : emoticons.values()) {
+            if (entity.isParent(parent)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.collaboration.Emoticon> getEmoticonsByOwner(scrum.client.admin.User owner) {
+        List<scrum.client.collaboration.Emoticon> ret = new ArrayList<scrum.client.collaboration.Emoticon>();
+        for (scrum.client.collaboration.Emoticon entity : emoticons.values()) {
+            if (entity.isOwner(owner)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.collaboration.Emoticon> getEmoticonsByEmotion(java.lang.String emotion) {
+        List<scrum.client.collaboration.Emoticon> ret = new ArrayList<scrum.client.collaboration.Emoticon>();
+        for (scrum.client.collaboration.Emoticon entity : emoticons.values()) {
+            if (entity.isEmotion(emotion)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- File ---
 
     private Map<String, scrum.client.files.File> files = new HashMap<String, scrum.client.files.File>();
@@ -2070,6 +2150,7 @@ public abstract class GDao
     public final void clearAllEntities() {
             clearChatMessages();
             clearComments();
+            clearEmoticons();
             clearFiles();
             clearImpediments();
             clearIssues();
@@ -2097,6 +2178,7 @@ public abstract class GDao
             entityMaps = new ArrayList<Map<String, ? extends AGwtEntity>>();
             entityMaps.add(chatMessages);
             entityMaps.add(comments);
+            entityMaps.add(emoticons);
             entityMaps.add(files);
             entityMaps.add(impediments);
             entityMaps.add(issues);
@@ -2126,6 +2208,10 @@ public abstract class GDao
         }
         if (type.equals(scrum.client.collaboration.Comment.ENTITY_TYPE)) {
             updateComment(data);
+            return;
+        }
+        if (type.equals(scrum.client.collaboration.Emoticon.ENTITY_TYPE)) {
+            updateEmoticon(data);
             return;
         }
         if (type.equals(scrum.client.files.File.ENTITY_TYPE)) {

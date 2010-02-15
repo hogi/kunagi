@@ -541,6 +541,19 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return subjectModel;
 	}
 
+	private EntityModel emoticonModel;
+
+	public EntityModel getEmoticonModel() {
+		if (emoticonModel == null) {
+			emoticonModel = createEntityModel("Emoticon", "collaboration");
+			emoticonModel.setGwtSupport(true);
+			emoticonModel.addReference("parent", getEntityModel()).setMaster(true);
+			emoticonModel.addReference("owner", getUserModel());
+			emoticonModel.addStringProperty("emotion");
+		}
+		return emoticonModel;
+	}
+
 	private EntityModel commentModel;
 
 	public EntityModel getCommentModel() {
