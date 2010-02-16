@@ -1,5 +1,6 @@
 package scrum.client.project;
 
+import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockHeaderWidget;
@@ -13,6 +14,7 @@ public class QualityBlock extends ABlockWidget<Quality> implements TrashSupport 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Quality quality = getObject();
+		header.appendCell(new EmoticonsWidget(quality), null, true, true, null);
 		header.addMenuAction(new DeleteQualityAction(quality));
 	}
 

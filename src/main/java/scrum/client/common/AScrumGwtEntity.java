@@ -34,6 +34,24 @@ public abstract class AScrumGwtEntity extends AGwtEntity {
 		return cm.getDao().getEmoticonsByParent(this);
 	}
 
+	public void setCurrentUserEmoticon(String emotion) {
+		boolean delete = Gwt.isEmpty(emotion);
+		Emoticon emoticon = getCurrentUserEmoticon();
+		if (emoticon == null) {
+			if (!delete) {
+				emoticon = new Emoticon(this, emotion);
+				cm.getDao().createEmoticon(emoticon);
+				return;
+			}
+		} else {
+			if (delete) {
+				cm.getDao().deleteEmoticon(emoticon);
+			} else {
+				emoticon.setEmotion(emotion);
+			}
+		}
+	}
+
 	public Emoticon getCurrentUserEmoticon() {
 		User currentUser = cm.getAuth().getUser();
 		for (Emoticon emoticon : getEmoticons()) {
@@ -52,21 +70,7 @@ public abstract class AScrumGwtEntity extends AGwtEntity {
 
 			@Override
 			public void setValue(String value) {
-				boolean delete = Gwt.isEmpty(value);
-				Emoticon emoticon = getCurrentUserEmoticon();
-				if (emoticon == null) {
-					if (!delete) {
-						emoticon = new Emoticon(AScrumGwtEntity.this, value);
-						cm.getDao().createEmoticon(emoticon);
-						return;
-					}
-				} else {
-					if (delete) {
-						cm.getDao().deleteEmoticon(emoticon);
-					} else {
-						emoticon.setEmotion(value);
-					}
-				}
+				setCurrentUserEmoticon(value);
 			}
 
 			@Override

@@ -1,5 +1,6 @@
 package scrum.client.tasks;
 
+import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockHeaderWidget;
@@ -37,6 +38,7 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 		statusIcon = header.insertPrefixIcon();
 		if (container.isShowRequirement()) requirementLabel = header.appendCenterSuffix(null);
 		if (container.isShowOwner()) ownerLabel = header.appendCenterSuffix(null);
+		header.appendCell(new EmoticonsWidget(task), null, true, true, null);
 		header.addMenuAction(new ClaimTaskAction(task));
 		header.addMenuAction(new CloseTaskAction(task));
 		header.addMenuAction(new ReopenTaskAction(task));

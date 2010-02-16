@@ -57,7 +57,7 @@ public class HeaderWidget extends AScrumWidget {
 
 		TableBuilder tb = new TableBuilder();
 		tb.setCellPadding(2);
-		tb.setColumnWidths("", "", "", "50px", "100px", "50px");
+		tb.setColumnWidths("", "", "", "60px", "100px", "50px");
 		tb.add(createLogo(), /* title, */currentUserLabel, projectOpen ? search : Gwt.createEmptyDiv(),
 			projectOpen ? undoButton : Gwt.createEmptyDiv(), new HyperlinkWidget(new ChangeProjectAction()),
 			new HyperlinkWidget(new LogoutAction()));

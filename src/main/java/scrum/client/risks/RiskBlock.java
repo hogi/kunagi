@@ -1,5 +1,6 @@
 package scrum.client.risks;
 
+import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockHeaderWidget;
@@ -17,6 +18,7 @@ public class RiskBlock extends ABlockWidget<Risk> implements TrashSupport {
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Risk risk = getObject();
 		priorityLabel = header.insertPrefixLabel("100px", true);
+		header.appendCell(new EmoticonsWidget(risk), null, true, true, null);
 		header.addMenuAction(new DeleteRiskAction(risk));
 	}
 

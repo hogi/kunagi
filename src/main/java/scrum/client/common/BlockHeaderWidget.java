@@ -6,6 +6,7 @@ import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.DropdownMenuButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -13,6 +14,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
 
 public class BlockHeaderWidget extends AWidget {
 
@@ -70,6 +72,7 @@ public class BlockHeaderWidget extends AWidget {
 	public SimplePanel insertPrefixIcon() {
 		SimplePanel cell = insertPrefixCell(null, "16px", false, "BlockHeaderWidget-prefixIcon", false);
 		cell.setHeight("16px");
+		cell.getElement().getStyle().setMarginTop(2, Unit.PX);
 		return cell;
 	}
 
@@ -98,9 +101,10 @@ public class BlockHeaderWidget extends AWidget {
 		return cell;
 	}
 
-	public void appendCell(Widget widget, String width, boolean nowrap, String additionalStyleName) {
+	public void appendCell(Widget widget, String width, boolean nowrap, boolean alignRight, String additionalStyleName) {
 		SimplePanel cell = createCell(widget, nowrap, additionalStyleName);
 		table.add(cell);
+		if (alignRight) table.setCellHorizontalAlignment(cell, HorizontalPanel.ALIGN_RIGHT);
 		if (width != null) table.setCellWidth(cell, width);
 	}
 
@@ -117,13 +121,13 @@ public class BlockHeaderWidget extends AWidget {
 	public void addMenuAction(AScrumAction action) {
 		if (menu == null) {
 			menu = new DropdownMenuButtonWidget();
-			appendCell(menu, "30px", true, null);
+			appendCell(menu, "30px", true, false, null);
 		}
 		menu.addAction(action);
 	}
 
 	public void addToolbarAction(AAction action) {
-		appendCell(new ButtonWidget(action), "5px", true, null);
+		appendCell(new ButtonWidget(action), "5px", true, false, null);
 	}
 
 	public void setDragHandle(String text) {

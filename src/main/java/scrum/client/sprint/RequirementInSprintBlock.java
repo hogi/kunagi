@@ -2,6 +2,7 @@ package scrum.client.sprint;
 
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.collaboration.CommentsWidget;
+import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockListWidget;
@@ -35,6 +36,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 		Requirement requirement = getObject();
 		statusIcon = header.insertPrefixIcon();
 		statusLabel = header.appendCenterSuffix("");
+		header.appendCell(new EmoticonsWidget(requirement), null, true, true, null);
 		header.addMenuAction(new CloseRequirementAction(requirement));
 		header.addMenuAction(new ReopenRequirementAction(requirement));
 		header.addMenuAction(new RemoveRequirementFromSprintAction(requirement));

@@ -268,7 +268,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".HeaderWidget .ToolbarWidget").background("none").margin(0).textAlignRight();
 		css.style(".HeaderWidget .ToolbarWidget .FloatingFlowPanel-element").floatRight();
 		css.style(".HeaderWidget .gwt-Hyperlink a").color(cHeaderLink);
-		css.style(".HeaderWidget .UndoButtonWidget .gwt-MenuItem").fontSize(fontSizeSmall).padding(0, 3, 0, 3);
+		css.style(".HeaderWidget .UndoButtonWidget .gwt-MenuItem").fontSize(fontSizeSmall).lineHeight(
+			lineHeightSmall + 6).padding(0, 3, 0, 3);
 
 		css.style(".SearchInputWidget input").fontSize(fontSizeSmall).lineHeight(lineHeightSmall).margin(0, 10, 0, 10)
 				.padding(1);
@@ -319,18 +320,20 @@ public class ScreenCssBuilder implements CssBuilder {
 			lineHeight - 2).textAlignCenter().cursorMove().background(cBlockHeaderDragHandleBackground).border(1,
 			cNavigatorSeparator).borderRadius(5);
 		css.style(".BlockHeaderWidget-center").padding(2).cursorPointer();
-		css.style(".BlockHeaderWidget-center-text").fontWeightBold().color(cHeaderBackground);
+		css.style(".BlockHeaderWidget-center-text").fontWeightBold().color(cHeaderBackground)
+				.lineHeight(lineHeight + 4);
 		css.style(".BlockHeaderWidget-centerSuffix").marginLeft(5).color(cBlockHeaderCellSecondary).fontSize(
 			fontSizeSmall);
 		css.style(".BlockHeaderWidget-cell").padding(2);
 		css.style(".BlockHeaderWidget-cell-secondary").color(cBlockHeaderCellSecondary);
 		css.style(".BlockHeaderWidget-cell .gwt-MenuBar-horizontal").paddingLeft(1).border(1, cPagePanelBorder);
 		css.style(".BlockHeaderWidget-cell .gwt-MenuBar-horizontal td").lineHeight(lineHeightSmall);
-		css.style(".BlockHeaderWidget-cell .gwt-MenuItem").fontSize(fontSizeSmall).padding(0, 3, 0, 3)
-				.whiteSpaceNowrap().cursorPointer();
+		css.style(".BlockHeaderWidget-cell .gwt-MenuItem").fontSize(fontSizeSmall).lineHeight(lineHeightSmall).padding(
+			0, 3, 0, 3).whiteSpaceNowrap().cursorPointer();
 		css.style(".BlockHeaderWidget-cell .gwt-MenuItem-selected").backgroundNone();
 		css.style(".BlockHeaderWidget-prefixLabel"); // .cursorPointer();
 		css.style(".BlockHeaderWidget-cell .gwt-Button").fontSize(fontSizeSmall).padding(2, 3, 2, 3).margin(0);
+		css.style(".BlockHeaderWidget-cell .EmoticonsWidget");
 
 		css.style(".BlockDndMarkerWidget").background("none");
 		css.style(".BlockDndMarkerWidget-active").background(cError);

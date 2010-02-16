@@ -1,5 +1,6 @@
 package scrum.client.issues;
 
+import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockHeaderWidget;
@@ -24,6 +25,7 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 		statusSuffix = header.appendCenterSuffix("");
 		// header.addMenuAction(new ConvertIssueToRequirementAction(issue));
 		// header.addMenuAction(new ConvertIssueToQualityAction(issue));
+		header.appendCell(new EmoticonsWidget(issue), null, true, true, null);
 		header.addMenuAction(new CloseIssueAction(issue));
 		header.addMenuAction(new AcceptIssueAction(issue));
 		header.addMenuAction(new SuspendIssueAction(issue));

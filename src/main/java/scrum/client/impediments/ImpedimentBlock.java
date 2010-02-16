@@ -1,5 +1,6 @@
 package scrum.client.impediments;
 
+import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockHeaderWidget;
@@ -22,6 +23,7 @@ public class ImpedimentBlock extends ABlockWidget<Impediment> implements TrashSu
 		Impediment impediment = getObject();
 		dateLabel = header.insertPrefixLabel("70px", true);
 		statusIcon = header.insertPrefixIcon();
+		header.appendCell(new EmoticonsWidget(impediment), null, true, true, null);
 		header.addMenuAction(new CloseImpedimentAction(impediment));
 		header.addMenuAction(new DeleteImpedimentAction(impediment));
 	}

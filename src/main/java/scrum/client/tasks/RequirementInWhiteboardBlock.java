@@ -1,5 +1,6 @@
 package scrum.client.tasks;
 
+import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -14,6 +15,7 @@ public class RequirementInWhiteboardBlock extends ABlockWidget<Requirement> {
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Requirement requirement = getObject();
+		header.appendCell(new EmoticonsWidget(requirement), null, true, true, null);
 		header.addMenuAction(new CreateTaskAction(requirement));
 	}
 

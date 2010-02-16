@@ -1,5 +1,6 @@
 package scrum.client.sprint;
 
+import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockHeaderWidget;
@@ -23,6 +24,7 @@ public class TaskInRequirementBlock extends ABlockWidget<Task> implements TrashS
 		Task task = getObject();
 		statusIcon = header.insertPrefixIcon();
 		ownerLabel = header.appendCenterSuffix("");
+		header.appendCell(new EmoticonsWidget(task), null, true, true, null);
 		header.addMenuAction(new ClaimTaskAction(task));
 		header.addMenuAction(new CloseTaskAction(task));
 		header.addMenuAction(new ReopenTaskAction(task));

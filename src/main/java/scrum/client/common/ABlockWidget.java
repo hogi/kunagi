@@ -47,7 +47,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		header = new BlockHeaderWidget();
 		header.initialize();
 		if (cm.getProjectContext().isProjectOpen() && getObject() instanceof AScrumGwtEntity) {
-			header.appendCell(new UsersOnBlockWidget((AScrumGwtEntity) getObject()), null, false, null);
+			header.appendCell(new UsersOnBlockWidget((AScrumGwtEntity) getObject()), null, false, false, null);
 		}
 
 		cm.getDndManager().makeDraggable(this, header.getDragHandle());
