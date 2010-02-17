@@ -1,6 +1,5 @@
 package scrum.client.sprint;
 
-import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.project.Requirement;
@@ -25,8 +24,6 @@ public class SprintBacklogWidget extends AScrumWidget {
 		page.addSection(requirementList);
 		page.addHeader("Sprint Properties");
 		page.addSection(new SprintWidget(sprint));
-		page.addHeader("Sprint Comments");
-		page.addSection(new CommentsWidget(sprint));
 
 		return page;
 	}

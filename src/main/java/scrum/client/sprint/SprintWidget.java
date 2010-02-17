@@ -1,11 +1,13 @@
 package scrum.client.sprint;
 
 import ilarkesto.gwt.client.AFieldValueWidget;
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextOutputWidget;
 import scrum.client.ScrumGwt;
+import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -24,18 +26,21 @@ public class SprintWidget extends AScrumWidget {
 		boolean completed = sprint.isCompleted();
 
 		TableBuilder tb = ScrumGwt.createFieldTable();
+		tb.setColumnWidths("100px", "80px", "100px", "80px", "100px");
 
-		tb.addFieldRow("Label", sprint.getLabelModel(), 4);
-		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()), 4);
+		int cols = 6;
+		tb.addFieldRow("Label", sprint.getLabelModel(), cols - 1);
+		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()), cols - 1);
 
 		if (completed) {
-			tb.addFieldRow("Velocity", new TextOutputWidget(sprint.getVelocityModel()), 4);
+			tb.addFieldRow("Velocity", new TextOutputWidget(sprint.getVelocityModel()), cols - 1);
 		}
 
 		tb.addFieldLabel("Dates");
 		tb.addField("Begin", new DateEditorWidget(sprint.getBeginModel()));
 
-		tb.addFieldRow("End", new DateEditorWidget(sprint.getEndModel()));
+		tb.addField("End", new DateEditorWidget(sprint.getEndModel()));
+		tb.addRow(Gwt.createSpacer(1, 1));
 
 		if (completed == false) {
 			// not completed
@@ -75,20 +80,20 @@ public class SprintWidget extends AScrumWidget {
 		} else {
 			// completed
 			tb.addFieldRow("Completed Stories", new RichtextEditorWidget(getSprint()
-					.getCompletedRequirementLabelsModel()), 4);
+					.getCompletedRequirementLabelsModel()), cols - 1);
 		}
 
-		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()), 4);
-		tb.addFieldRow("Review Note", new RichtextEditorWidget(sprint.getReviewNoteModel()), 4);
-		tb.addFieldRow("Retrospecitve Note", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel()), 4);
+		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()), cols - 1);
+		tb.addFieldRow("Review Note", new RichtextEditorWidget(sprint.getReviewNoteModel()), cols - 1);
+		tb.addFieldRow("Retrospecitve Note", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel()), cols - 1);
 
 		if (completed) {
-			tb.add(ScrumGwt.createPdfLink("Download Report as PDF", "sprintReport", sprint), 5);
+			tb.add(ScrumGwt.createPdfLink("Download Report as PDF", "sprintReport", sprint), cols);
 		} else {
-			tb.add(ScrumGwt.createPdfLink("Download as PDF", "sprintBacklog", sprint), 5);
+			tb.add(ScrumGwt.createPdfLink("Download as PDF", "sprintBacklog", sprint), cols);
 		}
 
-		return tb.createTable();
+		return TableBuilder.row(10, tb.createTable(), new CommentsWidget(sprint));
 	}
 
 	public Sprint getSprint() {
