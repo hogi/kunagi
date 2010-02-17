@@ -37,10 +37,12 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 	}
 
 	public boolean isSuspended() {
+		if (isClosed()) return false;
 		return getSuspendDate() != null;
 	}
 
 	public boolean isAccepted() {
+		if (isClosed()) return false;
 		return getAcceptDate() != null;
 	}
 
