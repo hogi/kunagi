@@ -40,7 +40,6 @@ import scrum.client.sprint.SprintHistoryWidget;
 import scrum.client.sprint.Task;
 import scrum.client.tasks.TaskOverviewWidget;
 import scrum.client.tasks.WhiteboardWidget;
-import scrum.client.test.WidgetsTesterWidget;
 import scrum.client.workspace.ProjectSidebarWidget;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -66,7 +65,6 @@ public class ProjectContext extends AScrumComponent {
 	private WikiWidget wiki;
 	private SprintHistoryWidget sprintHistory;
 	private ProjectUserConfigWidget projectUserConfig;
-	private WidgetsTesterWidget widgetsTester;
 	private PunishmentsWidget punishments;
 	private JournalWidget projectEventList;
 	private FileRepositoryWidget fileRepository;
@@ -92,7 +90,6 @@ public class ProjectContext extends AScrumComponent {
 		projectUserConfig = new ProjectUserConfigWidget();
 		sprintHistory = new SprintHistoryWidget();
 		wiki = new WikiWidget();
-		widgetsTester = new WidgetsTesterWidget();
 		punishments = new PunishmentsWidget();
 		projectEventList = new JournalWidget();
 		fileRepository = new FileRepositoryWidget();
@@ -117,8 +114,6 @@ public class ProjectContext extends AScrumComponent {
 		navigator.addItem("Sprint History", getSprintHistory());
 		navigator.addItem("Courtroom", punishments);
 		navigator.addItem("Personal Preferences", getProjectUserConfig());
-		if (!cm.getApp().getApplicationInfo().isProductionStage())
-			navigator.addItem("WidgetsTester", getWidgetsTester());
 	}
 
 	@Override
@@ -436,10 +431,6 @@ public class ProjectContext extends AScrumComponent {
 
 	public WhiteboardWidget getWhiteboard() {
 		return whiteboard;
-	}
-
-	public WidgetsTesterWidget getWidgetsTester() {
-		return widgetsTester;
 	}
 
 }

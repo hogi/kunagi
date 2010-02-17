@@ -2,6 +2,7 @@ package scrum.client.test;
 
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.DropdownMenuButtonWidget;
 import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.ImageAnchor;
@@ -40,8 +41,8 @@ public class WidgetsTesterWidget extends AScrumWidget {
 		page = new PagePanel();
 		page.setStyleName("WidgetsTesterWidget");
 
+		testDropdown();
 		testActions();
-
 		testPagePanel();
 		testFloatingFlowPanel();
 		testTextConverter();
@@ -54,6 +55,29 @@ public class WidgetsTesterWidget extends AScrumWidget {
 		// testImageAnchor();
 
 		return page;
+	}
+
+	private void testDropdown() {
+		DropdownMenuButtonWidget empty = new DropdownMenuButtonWidget();
+		addActions(empty);
+
+		DropdownMenuButtonWidget label = new DropdownMenuButtonWidget();
+		label.setLabel("My Dropdown");
+		addActions(label);
+
+		DropdownMenuButtonWidget icon = new DropdownMenuButtonWidget();
+		icon.setIcon("emoticons/smile.png");
+		addActions(icon);
+
+		addTest("Dropdown", TableBuilder.row(false, 10, empty, label, icon));
+	}
+
+	private void addActions(DropdownMenuButtonWidget dropdown) {
+		dropdown.addAction(new DummyAction("Item 1"));
+		dropdown.addAction(new DummyAction("Item 2"));
+		dropdown.addAction(new DummyAction("Item 3"));
+		dropdown.addAction(new DummyAction("Item 4"));
+		dropdown.addAction(new DummyAction("Item 5"));
 	}
 
 	private void testPagePanel() {

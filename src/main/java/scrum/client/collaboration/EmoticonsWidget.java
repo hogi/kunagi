@@ -52,8 +52,7 @@ public class EmoticonsWidget extends AScrumWidget {
 	private Widget createEmoticonEditor() {
 		Emoticon emoticon = entity.getCurrentUserEmoticon();
 		DropdownMenuButtonWidget dropdown = new DropdownMenuButtonWidget();
-		dropdown.setLabel("<img src='" + getEmotionImage(emoticon == null ? null : emoticon.getEmotion())
-				+ "' style='margin: 1px 0px 0px 0px;'>");
+		dropdown.setIcon(getEmotionImage(emoticon == null ? null : emoticon.getEmotion()));
 		dropdown.getElement().getStyle().setMarginLeft(2, Unit.PX);
 		if (emoticon != null) dropdown.setTitle(emoticon.getEmotionLabel());
 		dropdown.addAction(new SetEmoticonAction(entity, null));
