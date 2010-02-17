@@ -21,15 +21,15 @@ import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer, UserHighlightSupport {
 
 	private Grid grid;
-	private Label openLabel;
-	private Label ownedLabel;
-	private Label doneLabel;
+	private HTML openLabel;
+	private HTML ownedLabel;
+	private HTML doneLabel;
 
 	private Map<Requirement, TaskListWidget> openTasks;
 	private Map<Requirement, TaskListWidget> ownedTasks;
@@ -44,15 +44,19 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 	protected Widget onInitialization() {
 		predicate = null;
 
-		openLabel = new Label();
+		openLabel = new HTML();
 		openLabel.setStyleName("WhiteboardWidget-columnLabel");
-		ownedLabel = new Label();
-		ownedLabel.setStyleName("WhiteboardWidget-columnLabel");
-		doneLabel = new Label();
-		doneLabel.setStyleName("WhiteboardWidget-columnLabel");
-
+		openLabel.addStyleName("WhiteboardWidget-columnLabel-open");
 		openTasks = new HashMap<Requirement, TaskListWidget>();
+
+		ownedLabel = new HTML();
+		ownedLabel.setStyleName("WhiteboardWidget-columnLabel");
+		ownedLabel.addStyleName("WhiteboardWidget-columnLabel-owned");
 		ownedTasks = new HashMap<Requirement, TaskListWidget>();
+
+		doneLabel = new HTML();
+		doneLabel.setStyleName("WhiteboardWidget-columnLabel");
+		doneLabel.addStyleName("WhiteboardWidget-columnLabel-done");
 		closedTasks = new HashMap<Requirement, TaskListWidget>();
 
 		grid = new Grid();
@@ -70,10 +74,11 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 	protected void onUpdate() {
 		Sprint sprint = getCurrentProject().getCurrentSprint();
 
-		openLabel.setText("Free Tasks (" + hours(sprint.getRemainingWorkInUnclaimedTasks()) + " to do)");
-		ownedLabel.setText("Claimed Tasks (" + hours(sprint.getRemainingWorkInClaimedTasks()) + " to do, "
-				+ hours(sprint.getBurnedWorkInClaimedTasks()) + " done)");
-		doneLabel.setText("Completed Tasks (" + hours(sprint.getBurnedWorkInClosedTasks()) + " done)");
+		openLabel.setHTML("<strong>Free Tasks</strong> (" + hours(sprint.getRemainingWorkInUnclaimedTasks())
+				+ " to do)");
+		ownedLabel.setHTML("<strong>Claimed Tasks</strong> (" + hours(sprint.getRemainingWorkInClaimedTasks())
+				+ " to do, " + hours(sprint.getBurnedWorkInClaimedTasks()) + " done)");
+		doneLabel.setHTML("<strong>Completed Tasks</strong> (" + hours(sprint.getBurnedWorkInClosedTasks()) + " done)");
 
 		List<Requirement> requirements = sprint.getRequirements();
 		Collections.sort(requirements, sprint.getProject().getRequirementsOrderComparator());

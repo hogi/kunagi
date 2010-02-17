@@ -199,12 +199,21 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void whiteboard(CssRenderer css) {
-		css.style(".WhiteboardWidget-columnLabel").padding(10).fontSize(14);
-		css.style(".WhiteboardWidget-open").padding(5);
-		css.style(".WhiteboardWidget-owned").padding(5);
-		css.style(".WhiteboardWidget-done").padding(5);
-		css.style(".WhiteboardWidget-columnLabel").background(cPagePanelHeaderBackground).color(cPagePanelHeader);
-		css.style(".WhiteboardWidget-requirement-list").padding(0).minHeight(5, "px");
+		String cOpen = "#f99";
+		css.style(".WhiteboardWidget-open").borderTop(3, cOpen);
+		String cOwned = "#ff9";
+		css.style(".WhiteboardWidget-owned").borderTop(3, cOwned).padding(0, 1, 0, 1);
+		String cDone = "#9e9";
+		css.style(".WhiteboardWidget-done").borderTop(3, cDone);
+		// int pad = 3;
+		// css.style(".WhiteboardWidget-open").padding(pad, pad, pad, pad).background("#fff5f5");
+		// css.style(".WhiteboardWidget-owned").padding(pad, pad, pad, pad).background("#fffff5");
+		// css.style(".WhiteboardWidget-done").padding(pad, pad, pad, pad).background("#f5fff5");
+		css.style(".WhiteboardWidget-columnLabel").fontSize(fontSizeTitle).lineHeight(lineHeightTitle);
+		css.style(".WhiteboardWidget-columnLabel-open").borderTop(3, cOpen);
+		css.style(".WhiteboardWidget-columnLabel-owned").borderTop(3, cOwned);
+		css.style(".WhiteboardWidget-columnLabel-done").borderTop(3, cDone);
+		css.style(".WhiteboardWidget-requirement-list").padding(0).paddingTop(10);
 	}
 
 	private void ilarkesto(CssRenderer css) {
@@ -314,10 +323,11 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void blockList(CssRenderer css) {
-		css.style(".ABlockWidget-extended").border(2, cHeaderBackground).padding(3);
+		css.style(".ABlockWidget-extended").border(2, cHeaderBackground).padding(3).backgroundWhite();
 		css.style(".ABlockWidget-body").padding(10).border(1, cBlockHeaderBackground);
 
-		css.style(".BlockHeaderWidget").background(cBlockHeaderBackground).minHeight(50, "px");
+		// css.style(".BlockListWidget").border(1, "yellow").minHeight(50, "px");
+		css.style(".BlockHeaderWidget").background(cBlockHeaderBackground);
 		css.style(".BlockHeaderWidget:hover").background(cBlockHeaderHoverBackground);
 		css.style(".BlockHeaderWidget-dragHandle").margin(2).padding(2).fontSize(fontSize - 1).lineHeight(
 			lineHeight - 2).textAlignCenter().cursorMove().background(cBlockHeaderDragHandleBackground).border(1,

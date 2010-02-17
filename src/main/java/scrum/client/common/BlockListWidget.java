@@ -44,6 +44,11 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		dndMarkerBottom = new BlockDndMarkerWidget();
 	}
 
+	public void setMinHeight(int height) {
+		initialize();
+		panel.getElement().getStyle().setProperty("minHeight", height + "px");
+	}
+
 	public BlockListWidget(BlockWidgetFactory<O> blockWidgetFactory) {
 		this(blockWidgetFactory, null);
 	}

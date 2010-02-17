@@ -32,6 +32,7 @@ public class TaskListWidget extends AWidget {
 		list = new BlockListWidget<Task>(new TaskBlock.TaskBlockFactory(container), this.dropAction);
 		list.setSelectionManager(container.getSelectionManager());
 		list.setAutoSorter(Task.NUMBER_COMPARATOR);
+		list.setMinHeight(100);
 		return list;
 	}
 
