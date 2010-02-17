@@ -36,9 +36,8 @@ public class DeleteProjectAction extends GDeleteProjectAction {
 
 	@Override
 	protected void onExecute() {
-		if (Gwt.confirm("Delete project " + project.getLabel() + "?")) {
-			cm.getDao().deleteProject(project);
-		}
+		if (!Gwt.confirm("Delete project " + project.getLabel() + "?")) return;
+		cm.getDao().deleteProject(project);
 		addUndo(new Undo());
 	}
 

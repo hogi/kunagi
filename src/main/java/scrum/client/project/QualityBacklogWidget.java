@@ -1,8 +1,6 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.ButtonWidget;
-import scrum.client.ComponentManager;
-import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.PagePanel;
@@ -30,10 +28,10 @@ public class QualityBacklogWidget extends AScrumWidget {
 	}
 
 	public void showQuality(Quality quality) {
-		list.extendObject(quality);
+		list.showObject(quality);
 	}
 
 	public void select(Quality quality) {
-		list.extendObject(quality);
+		list.showObject(quality);
 	}
 }

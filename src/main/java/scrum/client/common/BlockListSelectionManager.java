@@ -22,7 +22,7 @@ public class BlockListSelectionManager {
 
 	public void select(Object object) {
 		for (BlockListWidget list : lists) {
-			if (list.contains(object)) list.extendObject(object);
+			if (list.showObject(object)) return;
 		}
 	}
 

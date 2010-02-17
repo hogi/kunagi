@@ -31,6 +31,9 @@ public interface GImageBundle
     @Resource(value="formatTextItalic.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype formatTextItalic();
 
+    @Resource(value="home.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype home();
+
     @Resource(value="hyperlink.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype hyperlink();
 

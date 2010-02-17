@@ -195,6 +195,12 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		collapseRow(indexOfObject(object));
 	}
 
+	public final boolean showObject(O object) {
+		if (!extendObject(object)) return false;
+		scrollToObject(object);
+		return true;
+	}
+
 	public final void scrollToObject(O object) {
 		getBlock(object).getElement().scrollIntoView();
 	}

@@ -34,10 +34,10 @@ public class ImpedimentListWidget extends AScrumWidget {
 	}
 
 	public void showImpediment(Impediment impediment) {
-		list.extendObject(impediment);
+		list.showObject(impediment);
 	}
 
 	public void select(Impediment impediment) {
-		list.extendObject(impediment);
+		list.showObject(impediment);
 	}
 }

@@ -84,7 +84,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 	}
 
 	public void selectTask(Task task) {
-		taskList.extendObject(task);
+		taskList.showObject(task);
 	}
 
 	public static final BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {

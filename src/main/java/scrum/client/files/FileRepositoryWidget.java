@@ -35,10 +35,10 @@ public class FileRepositoryWidget extends AScrumWidget {
 	}
 
 	public void showFile(File file) {
-		list.extendObject(file);
+		list.showObject(file);
 	}
 
 	public void select(File file) {
-		list.extendObject(file);
+		list.showObject(file);
 	}
 }

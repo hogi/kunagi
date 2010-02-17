@@ -135,7 +135,7 @@ public class ProductBacklogWidget extends AScrumWidget {
 	}
 
 	public void selectRequirement(Requirement requirement) {
-		list.extendObject(requirement);
+		list.showObject(requirement);
 	}
 
 	class MoveObserver implements Runnable {

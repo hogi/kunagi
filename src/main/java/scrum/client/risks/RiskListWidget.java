@@ -34,11 +34,11 @@ public class RiskListWidget extends AScrumWidget {
 	}
 
 	public void showRisk(Risk risk) {
-		list.extendObject(risk);
+		list.showObject(risk);
 	}
 
 	public void select(Risk risk) {
-		list.extendObject(risk);
+		list.showObject(risk);
 	}
 
 }

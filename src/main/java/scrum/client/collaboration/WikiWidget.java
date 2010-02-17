@@ -1,8 +1,8 @@
 package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.DropdownMenuButtonWidget;
 import ilarkesto.gwt.client.Gwt;
-import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.ScrumGwt;
@@ -22,11 +22,11 @@ import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 
 public class WikiWidget extends AScrumWidget {
 
+	private static final String START_PAGE_NAME = "Start";
 	private String pageName;
 	private Wikipage wikipage;
 
 	private FlowPanel panel;
-	private SuggestBox pageNameBox;
 	private RichtextEditorWidget editor;
 
 	@Override
@@ -41,39 +41,55 @@ public class WikiWidget extends AScrumWidget {
 	protected void onUpdate() {
 		if (editor != null && editor.isEditMode()) return;
 
-		if (pageName == null || pageName.trim().length() == 0) pageName = "Start";
+		if (pageName == null || pageName.trim().length() == 0) pageName = START_PAGE_NAME;
 
 		wikipage = getCurrentProject().getWikipage(pageName);
 
-		pageNameBox = new SuggestBox(cm.getWiki().createPagesSuggestOracle());
+		createPageSelector();
+
+		PagePanel page = new PagePanel();
+
+		if (wikipage == null) {
+			page.addHeader(pageName, createPageSelector());
+			page.addSection("Page does not exist.");
+			page.addSection(new ButtonWidget(new CreateWikipageAction(pageName)));
+		} else {
+			page.addHeader(wikipage.getName(), createPageSelector());
+			editor = new RichtextEditorWidget(wikipage.getTextModel());
+			editor.setEditorHeight(500);
+
+			FlowPanel left = new FlowPanel();
+			left.add(editor);
+			left.add(Gwt.createSpacer(1, 10));
+			left.add(ScrumGwt.createPdfLink("Downlad as PDF", "wikipage", wikipage));
+			left.add(Gwt.createSpacer(1, 10));
+			left.add(new ButtonWidget(new DeleteWikipageAction(wikipage)));
+
+			FlowPanel right = new FlowPanel();
+			right.add(new CommentsWidget(wikipage));
+
+			page.addSection(TableBuilder.row(20, left, right));
+		}
+
+		panel.clear();
+		panel.add(page);
+		Gwt.update(panel);
+	}
+
+	private Widget createPageSelector() {
+		SuggestBox pageNameBox = new SuggestBox(cm.getWiki().createPagesSuggestOracle());
 		pageNameBox.setAutoSelectEnabled(false);
 		pageNameBox.setTitle("Enter name of wiki page");
 		pageNameBox.addSelectionHandler(new PageNameHandler());
 		pageNameBox.addKeyPressHandler(new PageNameHandler());
 		pageNameBox.setText(pageName);
 
-		PagePanel page = new PagePanel();
-
-		if (wikipage == null) {
-			page.addHeader("Wiki: " + pageName, pageNameBox, new ButtonWidget(new CreateWikipageAction(pageName)));
-			page.addSection("Page does not exist.");
-		} else {
-			page.addHeader("Wiki: " + wikipage.getName(), pageNameBox, new ButtonWidget(new DeleteWikipageAction(
-					wikipage)));
-			editor = new RichtextEditorWidget(wikipage.getTextModel());
-			editor.setEditorHeight(500);
-
-			FlowPanel right = new FlowPanel();
-			right.add(ScrumGwt.createPdfLink("Downlad as PDF", "wikipage", wikipage));
-			right.add(Gwt.createSpacer(1, 10));
-			right.add(new CommentsWidget(wikipage));
-
-			page.addSection(TableBuilder.row(20, editor, right));
+		DropdownMenuButtonWidget dropdown = new DropdownMenuButtonWidget();
+		for (Wikipage page : getCurrentProject().getWikipages()) {
+			dropdown.addAction(new ShowPageAction(page.getName()));
 		}
 
-		panel.clear();
-		panel.add(page);
-		Gwt.update(panel);
+		return TableBuilder.row(5, pageNameBox, new ButtonWidget(new ShowPageAction(START_PAGE_NAME)), dropdown);
 	}
 
 	public void showPage(String name) {
@@ -83,30 +99,35 @@ public class WikiWidget extends AScrumWidget {
 
 	class ShowPageAction extends AScrumAction {
 
-		private Wikipage page;
+		private String pageName;
 
-		public ShowPageAction(Wikipage page) {
+		public ShowPageAction(String pageName) {
 			super();
-			this.page = page;
+			this.pageName = pageName;
 		}
 
 		@Override
 		public String getLabel() {
-			return page.getName();
+			return pageName;
+		}
+
+		@Override
+		public String getTooltip() {
+			return "Goto wiki page " + pageName;
 		}
 
 		@Override
 		protected void onExecute() {
-			showPage(page.getName());
+			showPage(pageName);
 		}
 	}
 
 	class PageNameHandler implements KeyPressHandler, SelectionHandler<Suggestion> {
 
 		public void onKeyPress(KeyPressEvent event) {
+			SuggestBox pageNameBox = (SuggestBox) event.getSource();
 			if (pageNameBox.isSuggestionListShowing()) return;
 			if (event.getCharCode() == KeyCodes.KEY_ENTER) {
-				GwtLogger.DEBUG("-------------------- ENTER ----");
 				event.stopPropagation();
 				showPage(pageNameBox.getText());
 			}

@@ -31,6 +31,6 @@ public class ForumWidget extends AScrumWidget {
 	}
 
 	public void select(ForumSupport entity) {
-		list.extendObject(entity);
+		list.showObject(entity);
 	}
 }

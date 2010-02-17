@@ -117,7 +117,8 @@ public class ProjectContext extends AScrumComponent {
 		navigator.addItem("Sprint History", getSprintHistory());
 		navigator.addItem("Courtroom", punishments);
 		navigator.addItem("Personal Preferences", getProjectUserConfig());
-		navigator.addItem("WidgetsTester", getWidgetsTester());
+		if (!cm.getApp().getApplicationInfo().isProductionStage())
+			navigator.addItem("WidgetsTester", getWidgetsTester());
 	}
 
 	@Override

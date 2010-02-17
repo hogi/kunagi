@@ -29,6 +29,6 @@ public class SprintHistoryWidget extends AScrumWidget {
 	}
 
 	public boolean select(Sprint sprint) {
-		return sprintList.extendObject(sprint);
+		return sprintList.showObject(sprint);
 	}
 }

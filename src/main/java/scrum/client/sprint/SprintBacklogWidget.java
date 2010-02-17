@@ -44,8 +44,7 @@ public class SprintBacklogWidget extends AScrumWidget {
 	}
 
 	public void selectRequirement(Requirement r) {
-		requirementList.extendObject(r);
-		requirementList.scrollToObject(r);
+		requirementList.showObject(r);
 	}
 
 	public void selectTask(Task task) {

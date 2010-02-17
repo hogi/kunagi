@@ -53,10 +53,10 @@ public class IssueListWidget extends AScrumWidget {
 	}
 
 	public boolean showIssue(Issue issue) {
-		if (openList.extendObject(issue)) return true;
-		if (acceptedList.extendObject(issue)) return true;
-		if (suspendedList.extendObject(issue)) return true;
-		if (closedList.extendObject(issue)) return true;
+		if (openList.showObject(issue)) return true;
+		if (acceptedList.showObject(issue)) return true;
+		if (suspendedList.showObject(issue)) return true;
+		if (closedList.showObject(issue)) return true;
 		return false;
 	}
 
