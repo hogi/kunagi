@@ -29,28 +29,28 @@ public class FileUploadServlet extends UploadAction {
 		if (project == null) throw new PermissionDeniedException();
 
 		for (FileItem item : sessionFiles) {
-			if (false == item.isFormField()) {
-				try {
-					String filename = getFilename(item.getName());
-					java.io.File f = new java.io.File(project.getFileRepositoryPath() + "/" + filename);
-					int count = 0;
-					while (f.exists()) {
-						count++;
-						f = new java.io.File(project.getFileRepositoryPath() + "/" + insertSuffix(filename, count));
-					}
-					IO.createDirectory(f.getParentFile());
-					item.write(f);
-
-					File file = webApp.getFileDao().postFile(f, project);
-					for (GwtConversation conversation : webApp.getConversationsByProject(project, null)) {
-						conversation.sendToClient(file);
-					}
-				} catch (Exception e) {
-					LOG.error(e);
-					throw new UploadActionException(e.getMessage());
+			if (item.isFormField()) continue;
+			try {
+				String filename = getFilename(item.getName());
+				java.io.File f = new java.io.File(project.getFileRepositoryPath() + "/" + filename);
+				int count = 0;
+				while (f.exists()) {
+					count++;
+					f = new java.io.File(project.getFileRepositoryPath() + "/" + insertSuffix(filename, count));
 				}
+				IO.createDirectory(f.getParentFile());
+				item.write(f);
+
+				File file = webApp.getFileDao().postFile(f, project);
+				webApp.getTransactionService().commit();
+				for (GwtConversation conversation : webApp.getConversationsByProject(project, null)) {
+					conversation.sendToClient(file);
+				}
+				return file.getReference();
+			} catch (Exception e) {
+				LOG.error(e);
+				throw new UploadActionException(e.getMessage());
 			}
-			removeSessionFileItems(request);
 		}
 		return null;
 	}

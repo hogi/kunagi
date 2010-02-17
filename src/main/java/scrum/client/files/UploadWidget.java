@@ -24,32 +24,34 @@ public class UploadWidget extends AScrumWidget {
 		return uploader;
 	}
 
-	public static void showDialog(int topPosition, IUploader.OnFinishUploaderHandler finishHandler) {
+	public static UploadWidget showDialog(int topPosition) {
 		UploadWidget uploadWidget = new UploadWidget();
 		uploadWidget.uploader.setMaximumFiles(1);
-		uploadWidget.finishHandler = finishHandler;
 
 		uploadWidget.dialog = new DialogBox(true, true);
 		DialogBox dialog = uploadWidget.dialog;
 		dialog.setAnimationEnabled(true);
 		dialog.setWidget(uploadWidget.update());
-		uploadWidget.uploader.addOnStartUploadHandler(new StartHandler(dialog));
+		uploadWidget.uploader.addOnStatusChangedHandler(uploadWidget.new StatusChangedHandler());
 
 		dialog.center();
 		dialog.setPopupPosition(dialog.getPopupLeft(), topPosition);
 		dialog.show();
+
+		return uploadWidget;
 	}
 
-	private static class StartHandler implements IUploader.OnStartUploaderHandler {
+	public void setFinishHandler(IUploader.OnFinishUploaderHandler finishHandler) {
+		this.finishHandler = finishHandler;
+	}
 
-		private DialogBox dialog;
+	public DialogBox getDialog() {
+		return dialog;
+	}
 
-		public StartHandler(DialogBox dialog) {
-			super();
-			this.dialog = dialog;
-		}
+	private class StatusChangedHandler implements IUploader.OnStatusChangedHandler {
 
-		public void onStart(IUploader uploader) {
+		public void onStatusChanged(IUploader ul) {
 			dialog.setAutoHideEnabled(false);
 		}
 	}
@@ -57,9 +59,8 @@ public class UploadWidget extends AScrumWidget {
 	private class FinishHandler implements IUploader.OnFinishUploaderHandler {
 
 		public void onFinish(IUploader ul) {
-			if (ul.getStatus() == Status.SUCCESS) ul.cancel();
 			if (finishHandler != null) finishHandler.onFinish(ul);
-			if (dialog != null) dialog.hide();
+			if (ul.getStatus() != Status.SUCCESS && dialog != null) dialog.hide();
 		}
 
 	}

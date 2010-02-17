@@ -17,6 +17,7 @@
 
     <context-param>
         <param-name>slowUploads</param-name>
+        <!-- <param-value>200</param-value>  -->
         <param-value>0</param-value>
     </context-param>
 

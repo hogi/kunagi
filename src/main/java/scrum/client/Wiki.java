@@ -19,6 +19,7 @@ import scrum.client.wiki.WikiParser;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.PushButton;
@@ -76,11 +77,12 @@ public class Wiki extends AScrumComponent implements RichtextFormater, FileUploa
 
 				public void onClick(ClickEvent event) {
 					final BetterTextArea textArea = editor.getEditor();
-					UploadWidget.showDialog(textArea.getAbsoluteTop() + 20, new IUploader.OnFinishUploaderHandler() {
+					final UploadWidget uploadWidget = UploadWidget.showDialog(textArea.getAbsoluteTop() + 20);
+					uploadWidget.setFinishHandler(new IUploader.OnFinishUploaderHandler() {
 
 						public void onFinish(IUploader uploader) {
 							if (uploader.getStatus() == Status.SUCCESS) {
-								fileReferenceInserter = new FileReferenceInserter(textArea);
+								fileReferenceInserter = new FileReferenceInserter(textArea, uploadWidget.getDialog());
 								cm.getApp().callPing();
 							}
 						}
@@ -176,15 +178,18 @@ public class Wiki extends AScrumComponent implements RichtextFormater, FileUploa
 	private class FileReferenceInserter {
 
 		private BetterTextArea textArea;
+		private DialogBox dialog;
 
-		public FileReferenceInserter(BetterTextArea textArea) {
+		public FileReferenceInserter(BetterTextArea textArea, DialogBox dialog) {
 			super();
 			this.textArea = textArea;
+			this.dialog = dialog;
 		}
 
 		public void insertFile(File file) {
 			textArea.wrapSelection(file.getReference(), "");
 			textArea.setFocus(true);
+			dialog.hide();
 		}
 
 	}
