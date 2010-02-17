@@ -1,5 +1,7 @@
 package scrum.server.sprint;
 
+import ilarkesto.webapp.Servlet;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -21,6 +23,7 @@ public class SprintBurndownChartServlet extends AHttpServlet {
 		String height = req.getParameter("height");
 		if (height == null) height = String.valueOf(ProjectOverviewWidget.CHART_HEIGHT);
 
+		Servlet.preventCaching(resp);
 		resp.setContentType("image/png");
 
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
