@@ -189,9 +189,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		ADao dao = getDaoService().getDao(entity);
 		dao.deleteEntity(entity);
-		for (WebSession s : webApplication.getOtherSessionsByProject(conversation.getSession())) {
-			// TODO do this only if client is tracking this entity
-			s.getGwtConversation().getNextData().addDeletedEntity(entityId);
+
+		Project project = conversation.getProject();
+		if (project != null) {
+			for (GwtConversation c : webApplication.getConversationsByProject(project, conversation)) {
+				c.getNextData().addDeletedEntity(entityId);
+			}
 		}
 	}
 
