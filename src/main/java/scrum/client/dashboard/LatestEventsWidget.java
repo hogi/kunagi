@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.TableBuilder;
 
 import java.util.List;
 
+import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 import scrum.client.journal.ProjectEvent;
 import scrum.client.project.Project;
@@ -36,10 +37,22 @@ public class LatestEventsWidget extends AScrumWidget {
 				Widget timeWidget = Gwt.createDiv("LatestEventsWidget-time", event.getDateAndTime().getPeriodToNow()
 						.toShortestString()
 						+ " ago");
-				Widget textWidget = new HTML(event.toHtml());
+				String html = event.toHtml();
+				html = colorUsers(html);
+				Widget textWidget = new HTML(html);
 				tb.addRow(timeWidget, textWidget);
 			}
 		}
 		wrapper.setWidget(tb.createTable());
 	}
+
+	private String colorUsers(String html) {
+		Project project = getCurrentProject();
+		for (User user : project.getParticipants()) {
+			html = html.replace(user.getName(), "<span style='color: "
+					+ project.getUserConfig(user).getColor() + ";'>" + user.getName() + "</span>");
+		}
+		return html;
+	}
+
 }

@@ -30,12 +30,12 @@ public class TeamTasksWidget extends AScrumWidget {
 		sb.append("<div class='TeamTasksWidget'>");
 		for (User user : project.getTeamMembers()) {
 			sb.append("<div class='TeamTasksWidget-user'>");
-			sb.append("<span style='color: ").append(user.getColor()).append("; font-weight: bold;'>");
+			sb.append("<span style='color: ").append(user.getColor()).append(";'>");
 			sb.append(user.getName());
 			sb.append("</span> is working on");
 			List<Task> tasks = project.getClaimedTasks(user);
 			if (tasks.isEmpty()) {
-				sb.append(" <span style='color: red; font-weight: bold;'>nothing</span></div>");
+				sb.append(" <span style='color: red;'>nothing</span></div>");
 				continue;
 			}
 			Set<Requirement> reqs = new HashSet<Requirement>();
