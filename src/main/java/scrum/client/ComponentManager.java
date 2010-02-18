@@ -1,14 +1,23 @@
 package scrum.client;
 
 import ilarkesto.gwt.client.AComponentManager;
+import ilarkesto.scope.ComponentFactory;
+import ilarkesto.scope.DependencyInjector;
+import ilarkesto.scope.Scope;
 
-public class ComponentManager extends GComponentManager implements LogoutListener, ProjectClosedListener,
-		ProjectOpenedListener, LoginListener {
+public class ComponentManager extends GComponentManager implements ComponentFactory, DependencyInjector,
+		LogoutListener, ProjectClosedListener, ProjectOpenedListener, LoginListener {
 
 	ComponentManager() {
 		super(new EventBus(), new Dao());
 		getSystemMessageManager();
 	}
+
+	public Object createComponent(String name) {
+		return null;
+	}
+
+	public void injectDependencies(Object component, Scope scope) {}
 
 	public void onLogout() {
 		destroyAuth();

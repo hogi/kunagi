@@ -8,7 +8,7 @@
     <inherits name="gwtupload.GWTUpload"/>
     <stylesheet src="Upload.css"/>
 	
-	<inherits name="ilarkesto.gwt.ilarkesto" />
+	<inherits name="ilarkesto.Ilarkesto" />
 	
     <stylesheet src="screen.css" />
 

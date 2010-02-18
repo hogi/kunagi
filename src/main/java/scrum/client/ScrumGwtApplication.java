@@ -1,6 +1,7 @@
 package scrum.client;
 
 import ilarkesto.gwt.client.GwtLogger;
+import ilarkesto.scope.NonConcurrentScopeManager;
 import scrum.client.collaboration.Subject;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
@@ -26,7 +27,10 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	public void onModuleLoad() {
 		System.out.println("ScrumGwtApplication.onModuleLoad()");
+
 		cm = new ComponentManager();
+
+		NonConcurrentScopeManager scopeManager = new NonConcurrentScopeManager(cm, "app", cm);
 
 		final WorkspaceWidget workspace = cm.getUi().getWorkspace();
 		workspace.lock("Loading...");
