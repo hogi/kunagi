@@ -107,7 +107,7 @@ public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
 	@Override
 	public void handleDataFromServer(ADataTransferObject data) {
 		super.handleDataFromServer(data);
-		if (data.containsEntities()) {
+		if (data.containsEntities() || data.containsDeletedEntities()) {
 			cm.getEventBus().fireVisibleDataChanged();
 		}
 	}
