@@ -16,7 +16,12 @@ public class SuspendIssueAction extends GSuspendIssueAction {
 
 	@Override
 	public String getLabel() {
-		return "Suspend";
+		return "Accept";
+	}
+
+	@Override
+	public String getTooltip() {
+		return "Accept this issue. The Product Owner will review it and make a decision.";
 	}
 
 	@Override

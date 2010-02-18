@@ -33,13 +33,13 @@ public class IssueListWidget extends AScrumWidget {
 		closedList.setAutoSorter(Issue.CLOSE_DATE_COMPARATOR);
 
 		PagePanel pendingPage = new PagePanel();
-		pendingPage.addHeader("Open Issues (decision required)", new ButtonWidget(new CreateIssueAction()));
+		pendingPage.addHeader("issue inbox (decision required)", new ButtonWidget(new CreateIssueAction()));
 		pendingPage.addSection(openList);
 
 		return Gwt.createFlowPanel(pendingPage, Gwt.createSpacer(1, 10), PagePanel.createSimple(
-			"Accepted Issues (to do immediately)", acceptedList), Gwt.createSpacer(1, 10), PagePanel.createSimple(
-			"Suspended Issues (whishlist for the future)", suspendedList), Gwt.createSpacer(1, 10), PagePanel
-				.createSimple("Closed Issues (done or rejected)", closedList));
+			"bugs (Team needs to fix this)", acceptedList), Gwt.createSpacer(1, 10), PagePanel.createSimple(
+			"accepted issues (ideas and candidates for stories)", suspendedList), Gwt.createSpacer(1, 10), PagePanel
+				.createSimple("closed issues (done or rejected)", closedList));
 	}
 
 	@Override

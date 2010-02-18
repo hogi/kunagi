@@ -16,7 +16,12 @@ public class AcceptIssueAction extends GAcceptIssueAction {
 
 	@Override
 	public String getLabel() {
-		return "Accept";
+		return "Accept as bug";
+	}
+
+	@Override
+	public String getTooltip() {
+		return "Accept this issue as urgend bug in a published release. The team needs to fix this immediately.";
 	}
 
 	@Override
@@ -29,7 +34,7 @@ public class AcceptIssueAction extends GAcceptIssueAction {
 
 		@Override
 		public String getLabel() {
-			return "Undo Accept " + issue.getReference() + " " + issue.getLabel();
+			return "Undo Accept as bug: " + issue.getReference() + " " + issue.getLabel();
 		}
 
 		@Override
