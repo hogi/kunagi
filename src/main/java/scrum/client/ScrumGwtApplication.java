@@ -30,7 +30,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 		cm = new ComponentManager();
 
-		NonConcurrentScopeManager scopeManager = new NonConcurrentScopeManager(cm, "app", cm);
+		NonConcurrentScopeManager scopeManager = new NonConcurrentScopeManager("app");
 
 		final WorkspaceWidget workspace = cm.getUi().getWorkspace();
 		workspace.lock("Loading...");
