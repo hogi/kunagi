@@ -71,7 +71,8 @@
 	</target>
 	
 	<target name="release">
-		<copy tofile="/home/scrum/tomcat/webapps/scrum.war" file="build/scrum.war" />
+		<copy file="build/scrum.war" tofile="/home/scrum/tomcat/webapps/scrum.war" />
+        <copy file="build/scrum.war" tofile="/home/kunagi-demo/tomcat/webapps/kunagi-demo.war" />
 	</target>
 	
 	<target name="continousIntegrationBuild" depends="deploy" />
