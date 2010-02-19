@@ -1,9 +1,9 @@
 package scrum.client;
 
+import ilarkesto.core.scope.IncubatorComponentFactory;
+import ilarkesto.core.scope.NonConcurrentScopeManager;
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.GwtLogger;
-import ilarkesto.scope.IncubatorComponentFactory;
-import ilarkesto.scope.NonConcurrentScopeManager;
-import ilarkesto.scope.Scope;
 import scrum.client.collaboration.Subject;
 import scrum.client.communication.PingerIncubator;
 import scrum.client.files.File;

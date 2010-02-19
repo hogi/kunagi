@@ -1,7 +1,7 @@
 package scrum.client.communication;
 
-import ilarkesto.scope.ComponentIncubator;
-import ilarkesto.scope.Scope;
+import ilarkesto.core.scope.ComponentIncubator;
+import ilarkesto.core.scope.Scope;
 import scrum.client.ComponentManager;
 
 public class PingerIncubator implements ComponentIncubator<Pinger> {
