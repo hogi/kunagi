@@ -2,7 +2,10 @@ package scrum.client;
 
 import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.scope.NonConcurrentScopeManager;
+import ilarkesto.scope.Scope;
 import scrum.client.collaboration.Subject;
+import scrum.client.communication.Pinger;
+import scrum.client.communication.PingerIncubator;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -31,6 +34,8 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		cm = new ComponentManager();
 
 		NonConcurrentScopeManager scopeManager = new NonConcurrentScopeManager("app");
+		final Scope appScope = scopeManager.getScope();
+		appScope.addIncubator(new PingerIncubator());
 
 		final WorkspaceWidget workspace = cm.getUi().getWorkspace();
 		workspace.lock("Loading...");
@@ -42,7 +47,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 			public void run() {
 				cm.getPublicContext().activate();
-				cm.getPinger().reschedule();
+				((Pinger) appScope.getComponent("pinger")).start();
 			}
 		});
 

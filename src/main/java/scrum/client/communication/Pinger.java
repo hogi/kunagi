@@ -1,12 +1,18 @@
-package scrum.client;
+package scrum.client.communication;
 
-import scrum.client.common.AScrumComponent;
+import ilarkesto.gwt.client.GwtLogger;
+import scrum.client.BlockCollapsedListener;
+import scrum.client.BlockExpandedListener;
+import scrum.client.DataTransferObject;
+import scrum.client.ScrumGwtApplication;
+import scrum.client.ServerDataReceivedListener;
 import scrum.client.project.Requirement;
 
 import com.google.gwt.user.client.Timer;
 
-public class Pinger extends AScrumComponent implements ServerDataReceivedListener, BlockExpandedListener,
-		BlockCollapsedListener {
+public class Pinger implements ServerDataReceivedListener, BlockExpandedListener, BlockCollapsedListener {
+
+	private static GwtLogger log = GwtLogger.createLogger(Pinger.class);
 
 	public static final int MIN_DELAY = 1000;
 	public static final int MAX_DELAY = 5000;
@@ -15,16 +21,19 @@ public class Pinger extends AScrumComponent implements ServerDataReceivedListene
 	private int maxDelay = MAX_DELAY;
 	private long lastDataReceiveTime = System.currentTimeMillis();
 
-	@Override
-	protected void onInitialization() {
+	ScrumGwtApplication app;
+
+	public void start() {
+		// TODO replace this method by event listener
 		timer = new Timer() {
 
 			@Override
 			public void run() {
-				cm.getApp().callPing();
+				app.callPing();
 				reschedule();
 			}
 		};
+		reschedule();
 	}
 
 	public void onServerDataReceived(DataTransferObject data) {
@@ -62,6 +71,7 @@ public class Pinger extends AScrumComponent implements ServerDataReceivedListene
 	private void deactivatePowerPolling() {
 		if (maxDelay == MAX_DELAY) return;
 		maxDelay = MAX_DELAY;
+		lastDataReceiveTime = System.currentTimeMillis();
 		log.debug("PowerPolling deactivated");
 	}
 

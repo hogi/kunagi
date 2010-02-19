@@ -7,7 +7,7 @@ import ilarkesto.webapp.AWebSession;
 
 import javax.servlet.http.HttpServletRequest;
 
-import scrum.client.Pinger;
+import scrum.client.communication.Pinger;
 import scrum.server.admin.User;
 
 public class WebSession extends AWebSession {

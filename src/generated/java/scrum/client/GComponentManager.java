@@ -22,27 +22,6 @@ public abstract class GComponentManager
         super(eventBus, dao);
     }
 
-    // --- pinger ---
-
-    private Pinger pinger;
-
-    public final Pinger getPinger() {
-        if (pinger == null) {
-            pinger = new Pinger();
-            initializePinger(pinger);
-            initialize(pinger);
-        }
-        return pinger;
-    }
-
-    protected void initializePinger(Pinger pinger) {
-    }
-
-    public final void destroyPinger() {
-        destroy(pinger);
-        pinger = null;
-    }
-
     // --- auth ---
 
     private Auth auth;
