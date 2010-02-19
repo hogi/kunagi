@@ -1,8 +1,8 @@
 package scrum.client.communication;
 
-import scrum.client.ComponentManager;
 import ilarkesto.scope.ComponentIncubator;
 import ilarkesto.scope.Scope;
+import scrum.client.ComponentManager;
 
 public class PingerIncubator implements ComponentIncubator<Pinger> {
 
@@ -16,7 +16,6 @@ public class PingerIncubator implements ComponentIncubator<Pinger> {
 
 	public void initializeComponent(Pinger component, Scope scope) {
 		component.app = ComponentManager.get().getApp();
-		ComponentManager.get().getEventBus().addListener(component); // TODO refactor: run events on scopes
 	}
 
 	public boolean isAutoCreate() {

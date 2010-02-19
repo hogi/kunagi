@@ -34,6 +34,11 @@ public abstract class GEventBus
         for (ServerDataReceivedListener listener : serverDataReceivedListeners) {
             listener.onServerDataReceived(data);
         }
+        for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
+            if (component instanceof ServerDataReceivedListener) {
+                ((ServerDataReceivedListener)component).onServerDataReceived(data);
+            }
+        }
     }
 
     // --- Login ---
@@ -52,6 +57,11 @@ public abstract class GEventBus
         log.debug("Event fired: Login");
         for (LoginListener listener : loginListeners) {
             listener.onLogin();
+        }
+        for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
+            if (component instanceof LoginListener) {
+                ((LoginListener)component).onLogin();
+            }
         }
     }
 
@@ -72,6 +82,11 @@ public abstract class GEventBus
         for (LogoutListener listener : logoutListeners) {
             listener.onLogout();
         }
+        for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
+            if (component instanceof LogoutListener) {
+                ((LogoutListener)component).onLogout();
+            }
+        }
     }
 
     // --- ProjectOpened ---
@@ -90,6 +105,11 @@ public abstract class GEventBus
         log.debug("Event fired: ProjectOpened");
         for (ProjectOpenedListener listener : projectOpenedListeners) {
             listener.onProjectOpened();
+        }
+        for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
+            if (component instanceof ProjectOpenedListener) {
+                ((ProjectOpenedListener)component).onProjectOpened();
+            }
         }
     }
 
@@ -110,6 +130,11 @@ public abstract class GEventBus
         for (ProjectClosedListener listener : projectClosedListeners) {
             listener.onProjectClosed();
         }
+        for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
+            if (component instanceof ProjectClosedListener) {
+                ((ProjectClosedListener)component).onProjectClosed();
+            }
+        }
     }
 
     // --- VisibleDataChanged ---
@@ -128,6 +153,11 @@ public abstract class GEventBus
         log.debug("Event fired: VisibleDataChanged");
         for (VisibleDataChangedListener listener : visibleDataChangedListeners) {
             listener.onVisibleDataChanged();
+        }
+        for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
+            if (component instanceof VisibleDataChangedListener) {
+                ((VisibleDataChangedListener)component).onVisibleDataChanged();
+            }
         }
     }
 
@@ -148,6 +178,11 @@ public abstract class GEventBus
         for (BlockExpandedListener listener : blockExpandedListeners) {
             listener.onBlockExpanded(object);
         }
+        for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
+            if (component instanceof BlockExpandedListener) {
+                ((BlockExpandedListener)component).onBlockExpanded(object);
+            }
+        }
     }
 
     // --- BlockCollapsed ---
@@ -166,6 +201,11 @@ public abstract class GEventBus
         log.debug("Event fired: BlockCollapsed");
         for (BlockCollapsedListener listener : blockCollapsedListeners) {
             listener.onBlockCollapsed(object);
+        }
+        for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
+            if (component instanceof BlockCollapsedListener) {
+                ((BlockCollapsedListener)component).onBlockCollapsed(object);
+            }
         }
     }
 
@@ -186,6 +226,11 @@ public abstract class GEventBus
         for (SearchResultsChangedListener listener : searchResultsChangedListeners) {
             listener.onSearchResultsChanged();
         }
+        for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
+            if (component instanceof SearchResultsChangedListener) {
+                ((SearchResultsChangedListener)component).onSearchResultsChanged();
+            }
+        }
     }
 
     // --- FileUploaded ---
@@ -204,6 +249,11 @@ public abstract class GEventBus
         log.debug("Event fired: FileUploaded");
         for (FileUploadedListener listener : fileUploadedListeners) {
             listener.onFileUploaded(file);
+        }
+        for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
+            if (component instanceof FileUploadedListener) {
+                ((FileUploadedListener)component).onFileUploaded(file);
+            }
         }
     }
 
