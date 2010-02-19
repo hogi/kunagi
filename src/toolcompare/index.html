@@ -87,6 +87,8 @@ ROW TEMPLATES
                     <ul>
                     	<li>In Projekten kann man die Länge des Sprints einstellen, die als Voreinstellung beim Erzeugen von Sprints benutzt wird.</li>
                     	<li>In Projekten kann man die Einheit für Schätzungen von Storys und Tasks einstellen.</li>
+                    	<li>Man kann auswählen, welche Charts einem angezeigt werden.</li>
+                    	<li>Man kann auswählen, welche Zahlenreihe für Schätzungen verwendet wird.</li>
                     </ul>
                 </td>
                 
@@ -1008,6 +1010,17 @@ ROW TEMPLATES
                     Den Stories im Product Backlog können Sprints zugeordnet werden.
                 </td>
                 
+				<!-- BANANAscrum -->
+                <td class="compcol">
+                    Das Team kommt jederzeit durch den Punkt <em>Sprint Planning</em> zur Planungsansicht des aktuellen oder über die <em>Sprints Lists</em> zur Planungsansicht eines beliebigen Sprints. Dort sehen Teammitglieder den Product und Sprint Backlog untereinander und können:
+                    <ul>
+                    	<li>durch das Klicken auf einen <em>grünen Pfeil auf</em> im Product Backlog beliebige Storys in den Sprint ziehen,</li>
+                    	<li>durch das Klicken auf einen <em>roten Pfeil ab</em> im Sprint Backlog beliebige Storys zurück in den Product Backlog befördern,</li>
+                    	<li>die Arbeitsverteilung übernommener Tasks auf die Teammitglieder sehen,</li>
+                    	<li>auf die üblichen Funktionen der Story-Entitys zugreifen.</li>
+                    </ul>
+                </td>
+                
 				<!--Fazit -->
 				<td class="compcol rescol">
 					Denkbare Verbesserungen unseres Tools:
@@ -1015,6 +1028,7 @@ ROW TEMPLATES
 						<li>Nur das jeweils erste Requirement sollte in den aktuellen Sprint übernommen werden können.</li>
 						<li>Nach dem Sprint Planning sollte das Übernehmen neuer Requirements die Zustimmung des Product Owners erfordern.</li>
 						<li>Ggf. die Beteiligung aller Teammitglieder erfordern (stellt Commitment sicher und bezieht alle Teammiglieder mit ins Planning ein).</li>
+						<li>Sprint-Planning-Ansicht, die einem komfortables Sprint-Planning erlaubt.</li>
 					</ul>
 				</td>
 			</tr>
@@ -1065,7 +1079,17 @@ ROW TEMPLATES
                         <li>Durch Klicken auf das Task-Icon in einer Story im Product Backlog öffnet sich ein Dialog mit Tasks</li>
                         <li>Task besteht aus Title, Content, Estimate (hours) und Owners.</li>
                     </ul>
-                    
+                </td>
+                
+				<!-- BANANAscrum -->
+                <td class="compcol">
+                	Teammitglieder können in einer Beliebigen View, in der Storys zu sehen, neue Tasks erzeugen. Das Team
+                    <ul>
+                        <li>wählt <em>New task</em> in einer expandierten Story (es öffnet sich an Ort und Stelle ein Formular),</li>
+                        <li>gibt <strong>Summary</strong>, <strong>Estimate</strong> und zuständige <strong>Users</strong> (default: man selbst; Mehrfachwahl möglich) aus,</li>
+                        <li>klickt auf <em>Create</em> oder <em>Cancel</em> (der Task wird erzeugt oder verworfen und das Formular verschwindet).</li>
+                        <li>Durch das checken von <em>leave this form open</em> bleibt das Formular nach dem Erzeugen für die Eingabe weiterer Tasks erhalten.</li>
+                    </ul>
                 </td>
                 
 				<!--Fazit -->
@@ -1136,9 +1160,18 @@ ROW TEMPLATES
                     Drag-n-drop im Whiteboard oder Bearbeitungsdialog des Tasks.
                 </td>
                 
+				<!-- ScrumPad -->
+                <td class="compcol">
+                    Das Team kann
+                    <ul>
+                    	<li>durch das Bearbeiten von Tasks sich selbst (und andere) als zuständig markieren (Mehrfachauswahl möglich),</li>
+                    	<li>durch das Setzen der Restzeit auf 0 einen Task als erledigt markieren.</li>
+                    </ul>
+                </td>
+                
 				<!--Fazit -->
 				<td class="compcol rescol">
-					
+					&nbsp;
 				</td>
 			</tr>
 			
@@ -1161,12 +1194,17 @@ ROW TEMPLATES
 				
                 <!-- IceScrum -->
                 <td class="compcol">
-                    Nicht möglich. Stories können jederzeit in ein Sprint aufgenommen, bzw. aus dem Sprint entfernt werden.
+                    Nicht möglich. Storys können jederzeit in ein Sprint aufgenommen, bzw. aus dem Sprint entfernt werden.
                 </td>
                 
                 <!-- ScrumPad -->
                 <td class="compcol">
-                    Nicht möglich.  Stories können jederzeit in ein Sprint aufgenommen, bzw. aus dem Sprint entfernt werden.
+                    Nicht möglich. Storys können jederzeit in ein Sprint aufgenommen, bzw. aus dem Sprint entfernt werden.
+                </td>
+                
+                <!-- BANANAscrum -->
+                <td class="compcol">
+                    Nicht möglich. Storys können jederzeit in ein Sprint aufgenommen, bzw. aus dem Sprint entfernt werden.
                 </td>
                 
 				<!--Fazit -->
@@ -1198,6 +1236,11 @@ ROW TEMPLATES
                 </td>
                 
                 <!-- ScrumPad -->
+                <td class="compcol">
+                    Nicht möglich. Alles kann einfach geändert werden.
+                </td>
+                
+				<!-- BANANAscrum -->
                 <td class="compcol">
                     Nicht möglich. Alles kann einfach geändert werden.
                 </td>
