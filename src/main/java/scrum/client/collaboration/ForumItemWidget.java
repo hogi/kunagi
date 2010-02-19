@@ -18,6 +18,6 @@ public class ForumItemWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		return TableBuilder.row(20, entity.createForumItemWidget(), new CommentsWidget((AScrumGwtEntity) entity));
+		return TableBuilder.row(20, new CommentsWidget((AScrumGwtEntity) entity), entity.createForumItemWidget());
 	}
 }
