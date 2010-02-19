@@ -76,6 +76,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public GwtEventBusModel getGwtEventBusModel() {
 		if (gwtEventBusModel == null) {
 			gwtEventBusModel = new GwtEventBusModel();
+			gwtEventBusModel.addEvent("ApplicationStart");
 			gwtEventBusModel.addEvent("ServerDataReceived").addParameter("data", "DataTransferObject").setQuiet(true);
 			gwtEventBusModel.addEvent("Login");
 			gwtEventBusModel.addEvent("Logout");

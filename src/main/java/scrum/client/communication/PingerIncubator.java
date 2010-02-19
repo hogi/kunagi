@@ -19,7 +19,7 @@ public class PingerIncubator implements ComponentIncubator<Pinger> {
 	}
 
 	public boolean isAutoCreate() {
-		return false;
+		return true;
 	}
 
 }

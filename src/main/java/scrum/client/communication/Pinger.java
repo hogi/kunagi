@@ -1,6 +1,7 @@
 package scrum.client.communication;
 
 import ilarkesto.gwt.client.GwtLogger;
+import scrum.client.ApplicationStartListener;
 import scrum.client.BlockCollapsedListener;
 import scrum.client.BlockExpandedListener;
 import scrum.client.DataTransferObject;
@@ -10,7 +11,8 @@ import scrum.client.project.Requirement;
 
 import com.google.gwt.user.client.Timer;
 
-public class Pinger implements ServerDataReceivedListener, BlockExpandedListener, BlockCollapsedListener {
+public class Pinger implements ServerDataReceivedListener, BlockExpandedListener, BlockCollapsedListener,
+		ApplicationStartListener {
 
 	private static GwtLogger log = GwtLogger.createLogger(Pinger.class);
 
@@ -23,8 +25,7 @@ public class Pinger implements ServerDataReceivedListener, BlockExpandedListener
 
 	ScrumGwtApplication app;
 
-	public void start() {
-		// TODO replace this method by event listener
+	public void onApplicationStart() {
 		timer = new Timer() {
 
 			@Override

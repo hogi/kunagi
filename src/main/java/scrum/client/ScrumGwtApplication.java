@@ -4,7 +4,6 @@ import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.scope.NonConcurrentScopeManager;
 import ilarkesto.scope.Scope;
 import scrum.client.collaboration.Subject;
-import scrum.client.communication.Pinger;
 import scrum.client.communication.PingerIncubator;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
@@ -47,7 +46,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 			public void run() {
 				cm.getPublicContext().activate();
-				((Pinger) appScope.getComponent("pinger")).start();
+				cm.getEventBus().fireApplicationStart();
 			}
 		});
 

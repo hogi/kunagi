@@ -18,6 +18,31 @@ import java.util.*;
 public abstract class GEventBus
             extends ilarkesto.gwt.client.AEventBus {
 
+    // --- ApplicationStart ---
+
+    private Set<ApplicationStartListener> applicationStartListeners = new HashSet<ApplicationStartListener>();
+
+    public void addApplicationStartListener(ApplicationStartListener listener) {
+        applicationStartListeners.add(listener);
+    }
+
+    public void removeApplicationStartListener(ApplicationStartListener listener) {
+        applicationStartListeners.remove(listener);
+    }
+
+    public void fireApplicationStart() {
+        log.debug("Event fired: ApplicationStart");
+        for (ApplicationStartListener listener : applicationStartListeners) {
+            listener.onApplicationStart();
+        }
+        for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
+            if (component instanceof ApplicationStartListener) {
+                log.debug("  notifying component:", component);
+                ((ApplicationStartListener)component).onApplicationStart();
+            }
+        }
+    }
+
     // --- ServerDataReceived ---
 
     private Set<ServerDataReceivedListener> serverDataReceivedListeners = new HashSet<ServerDataReceivedListener>();
@@ -60,6 +85,7 @@ public abstract class GEventBus
         }
         for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
             if (component instanceof LoginListener) {
+                log.debug("  notifying component:", component);
                 ((LoginListener)component).onLogin();
             }
         }
@@ -84,6 +110,7 @@ public abstract class GEventBus
         }
         for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
             if (component instanceof LogoutListener) {
+                log.debug("  notifying component:", component);
                 ((LogoutListener)component).onLogout();
             }
         }
@@ -108,6 +135,7 @@ public abstract class GEventBus
         }
         for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
             if (component instanceof ProjectOpenedListener) {
+                log.debug("  notifying component:", component);
                 ((ProjectOpenedListener)component).onProjectOpened();
             }
         }
@@ -132,6 +160,7 @@ public abstract class GEventBus
         }
         for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
             if (component instanceof ProjectClosedListener) {
+                log.debug("  notifying component:", component);
                 ((ProjectClosedListener)component).onProjectClosed();
             }
         }
@@ -156,6 +185,7 @@ public abstract class GEventBus
         }
         for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
             if (component instanceof VisibleDataChangedListener) {
+                log.debug("  notifying component:", component);
                 ((VisibleDataChangedListener)component).onVisibleDataChanged();
             }
         }
@@ -180,6 +210,7 @@ public abstract class GEventBus
         }
         for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
             if (component instanceof BlockExpandedListener) {
+                log.debug("  notifying component:", component);
                 ((BlockExpandedListener)component).onBlockExpanded(object);
             }
         }
@@ -204,6 +235,7 @@ public abstract class GEventBus
         }
         for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
             if (component instanceof BlockCollapsedListener) {
+                log.debug("  notifying component:", component);
                 ((BlockCollapsedListener)component).onBlockCollapsed(object);
             }
         }
@@ -228,6 +260,7 @@ public abstract class GEventBus
         }
         for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
             if (component instanceof SearchResultsChangedListener) {
+                log.debug("  notifying component:", component);
                 ((SearchResultsChangedListener)component).onSearchResultsChanged();
             }
         }
@@ -252,6 +285,7 @@ public abstract class GEventBus
         }
         for (Object component : ilarkesto.scope.Scope.get().getAllComponents()) {
             if (component instanceof FileUploadedListener) {
+                log.debug("  notifying component:", component);
                 ((FileUploadedListener)component).onFileUploaded(file);
             }
         }
@@ -260,6 +294,7 @@ public abstract class GEventBus
     // --- automatic adding / removing ---
 
     public void addListener(Object listener) {
+        if (listener instanceof ApplicationStartListener) addApplicationStartListener((ApplicationStartListener)listener);
         if (listener instanceof ServerDataReceivedListener) addServerDataReceivedListener((ServerDataReceivedListener)listener);
         if (listener instanceof LoginListener) addLoginListener((LoginListener)listener);
         if (listener instanceof LogoutListener) addLogoutListener((LogoutListener)listener);
@@ -273,6 +308,7 @@ public abstract class GEventBus
     }
 
     public void removeListener(Object listener) {
+        if (listener instanceof ApplicationStartListener) removeApplicationStartListener((ApplicationStartListener)listener);
         if (listener instanceof ServerDataReceivedListener) removeServerDataReceivedListener((ServerDataReceivedListener)listener);
         if (listener instanceof LoginListener) removeLoginListener((LoginListener)listener);
         if (listener instanceof LogoutListener) removeLogoutListener((LogoutListener)listener);
