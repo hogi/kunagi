@@ -36,7 +36,8 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		IncubatorComponentFactory componentFactory = new IncubatorComponentFactory();
 		componentFactory.addIncubator(new PingerIncubator());
 
-		NonConcurrentScopeManager scopeManager = new NonConcurrentScopeManager("app", componentFactory);
+		NonConcurrentScopeManager scopeManager = NonConcurrentScopeManager.createCascadingScopeInstance("app",
+			componentFactory);
 		final Scope appScope = scopeManager.getScope();
 		appScope.getComponent("pinger");
 
