@@ -467,7 +467,7 @@ ROW TEMPLATES
                 
                 <!-- BANANAscrum -->
                 <td class="compcol">
-                	Ein Benutzer kann an User Storys (und nur an die) durch klick auf <em>Add comment [n]</em> eine Liste von Kommentaren in einem modalen Dialog sehen und neue Kommentare erzeugen. 
+                	Ein Benutzer kann an User Storys (und Impediments) durch klick auf <em>Add comment [n]</em> eine Liste von Kommentaren in einem modalen Dialog sehen und neue Kommentare erzeugen. 
                 </td>
                 
 				<!-- Fazit -->
@@ -642,15 +642,16 @@ ROW TEMPLATES
 				
                 <!-- IceScrum -->
                 <td class="compcol">
-                    Der Sprint-Backlog ist das Whiteboard<br><br>
+                    Der Sprint-Backlog ist das Whiteboard<br />
+                    <br />
                     Der Scrum Master kann
                     <ul>
                         <li>im Whiteboard anhand der Verteilung der Tasks (grafisch) erkennen, wieviel gerade von wem bearbeit wird und wieviel bereits bearbeitet wurde,</li>
                         <li>im Whiteboard auf einen Blick erkennen, wieviele Stunden noch ausstehen, und wem die Tasks gehören,</li>
                         <li>im Product Backlog auf einen Blick erkennen, wieviele Requirements bereits vom Team geschätzt wurden.</li>
                     </ul>
-                    Charts sind nicht aufrufbar.<br>
-                    <br>
+                    Charts sind nicht aufrufbar.<br />
+                    <br />
                     Für Storys können Tests definiert werden.
                 </td>
                 
@@ -661,6 +662,23 @@ ROW TEMPLATES
                         <li>Taskboard (Whiteboard)</li>
                         <li>Burndown-Chart und Burnup-Chart</li>
                     </ul>
+                </td>
+                
+                <!-- BANANAscrum -->
+                <td class="compcol">
+                    Der Scrum Master kann in der Sprint-Planning-Ansicht sehen,
+                    <ul>
+                    	<li>wie sich die verbliebene Arbeit auf die Teammitglieder verteilt</li>
+                    	<li>wieviele Stunden an Tasks für eine Story noch zu erledigen sind</li>
+                    </ul>
+                    Öffnet er Storys, die im Backlog sind, sieht er an Tasks
+                    <ul>
+                    	<li>ob sie erledigt sind (0 Stunrden Restzeit)</li>
+                    	<li>wer daran arbeitet</li>
+                    </ul>
+                    Eine Markierung fertiger Storys gibt es nicht.<br />
+                    <br />
+                    Es wird ein <strong>Burnup-Chart</strong> generiert. Woher die Daten dafür kommen, bleibt etwas cloudy.
                 </td>
                 
 				<!--Fazit -->
@@ -719,6 +737,17 @@ ROW TEMPLATES
                     Simple Liste von Impediments, bestehend aus Beschreibung und Status.
                 </td>
                 
+                <!-- ScrumPad -->
+                <td class="compcol">
+                    <ul>
+                    	<li>In der Sprint-Ansicht ist eine (defaultmäßig eingeklappte) Liste von Impediments, die ein Ausrufezeichen zeigt, wenn sich darin Impediments befinden.</li>
+                    	<li>Impediments können Analog zu Storys erzeugt werden und haben <strong>Summary</strong> und <strong>Description</strong></li>
+                    	<li>Impediments können kommentiert werden (im Gegensatz zu User-Story-Kommentaren nicht in einem modalen Dialog, sondern direkt im Impediment</li>
+                    	<li>Impediments können mit einem Kommentar durch Eingabe eines Textes und einen Klick auf <em>OK</em> als erledigt markiert werden (sie werden dann mit einem Haken versehen und haben keinen Einfluss mehr auf die Anzeige des Ausrufezeichens; der Kommentar erscheint als normaler Kommentar).</li>
+                    	<li>Analog können geschlossene Impediments wieder geöffnet werden.</li>
+                    </ul>
+                </td>
+                
 				<!--Fazit -->
 				<td class="compcol rescol">
 					Denkbare Verbesserungen unseres Tools:
@@ -749,6 +778,11 @@ ROW TEMPLATES
                 </td>
                 
                 <!-- ScrumPad -->
+                <td class="compcol">
+                    Nicht möglich.
+                </td>
+                
+                <!-- BANANAscrum -->
                 <td class="compcol">
                     Nicht möglich.
                 </td>
@@ -795,6 +829,11 @@ ROW TEMPLATES
                     Beschreibung editieren.
                 </td>
                 
+				<!-- BANANAscrum -->
+                <td class="compcol">
+                    Beschreibung editieren oder Kommentare schreiben.
+                </td>
+                
 				<!--Fazit -->
 				<td class="compcol rescol">
 					&nbsp;
@@ -825,6 +864,11 @@ ROW TEMPLATES
                 </td>
                 
                 <!-- ScrumPad -->
+                <td class="compcol">
+                    Nicht möglich.
+                </td>
+                
+				<!-- BANANAscrum -->
                 <td class="compcol">
                     Nicht möglich.
                 </td>
@@ -863,6 +907,11 @@ ROW TEMPLATES
                     Nicht möglich.
                 </td>
                 
+                <!-- BANANAscrum -->
+                <td class="compcol">
+                    Nicht möglich.
+                </td>
+                
 				<!--Fazit -->
 				<td class="compcol rescol">
 					Denkbare Verbesserungen unseres Tools:
@@ -894,6 +943,11 @@ ROW TEMPLATES
                 </td>
                 
                 <!-- ScrumPad -->
+                <td class="compcol">
+                    Nicht möglich.
+                </td>
+                
+                <!-- BANANAscrum -->
                 <td class="compcol">
                     Nicht möglich.
                 </td>
