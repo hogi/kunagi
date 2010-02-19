@@ -1,6 +1,7 @@
 package scrum.client;
 
 import ilarkesto.gwt.client.GwtLogger;
+import ilarkesto.scope.IncubatorComponentFactory;
 import ilarkesto.scope.NonConcurrentScopeManager;
 import ilarkesto.scope.Scope;
 import scrum.client.collaboration.Subject;
@@ -32,9 +33,12 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 		cm = new ComponentManager();
 
-		NonConcurrentScopeManager scopeManager = new NonConcurrentScopeManager("app");
+		IncubatorComponentFactory componentFactory = new IncubatorComponentFactory();
+		componentFactory.addIncubator(new PingerIncubator());
+
+		NonConcurrentScopeManager scopeManager = new NonConcurrentScopeManager("app", componentFactory);
 		final Scope appScope = scopeManager.getScope();
-		appScope.addIncubator(new PingerIncubator());
+		appScope.getComponent("pinger");
 
 		final WorkspaceWidget workspace = cm.getUi().getWorkspace();
 		workspace.lock("Loading...");
