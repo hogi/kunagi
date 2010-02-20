@@ -1,6 +1,6 @@
 package scrum.client.workspace;
 
-import ilarkesto.gwt.client.GwtLogger;
+import ilarkesto.core.logging.Log;
 
 import java.util.ArrayList;
 
@@ -69,7 +69,7 @@ public class ClipboardWidget extends AScrumWidget {
 
 		public void onEnter(DragContext context) {
 			if (!isDroppable(context.draggable)) {
-				GwtLogger.DEBUG("Not clipable: " + context.draggable);
+				Log.DEBUG("Not clipable: " + context.draggable);
 			}
 			panel.addStyleName(StyleSheet.DND_DROP_ALLOWED);
 		}

@@ -1,10 +1,10 @@
 package scrum.server.project;
 
 import ilarkesto.base.Utl;
+import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
 import ilarkesto.io.zip.Deflater;
 import ilarkesto.io.zip.ZipOutputStream;
-import ilarkesto.logging.Logger;
 import ilarkesto.persistence.AEntity;
 
 import java.io.BufferedOutputStream;
@@ -15,7 +15,7 @@ import java.util.Collection;
 
 public class ProjectZipper {
 
-	private static final Logger LOG = Logger.get(ProjectZipper.class);
+	private static final Log LOG = Log.get(ProjectZipper.class);
 
 	private File dataDir;
 	private Project project;

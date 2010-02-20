@@ -1,7 +1,7 @@
 package scrum.server.project;
 
 import ilarkesto.base.time.Date;
-import ilarkesto.logging.Logger;
+import ilarkesto.core.logging.Log;
 
 import java.util.Collection;
 
@@ -10,7 +10,7 @@ import scrum.server.admin.UserDao;
 
 public class ProjectDao extends GProjectDao {
 
-	private static final Logger LOG = Logger.get(ProjectDao.class);
+	private static final Log LOG = Log.get(ProjectDao.class);
 
 	// --- dependencies ---
 

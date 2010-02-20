@@ -1,6 +1,6 @@
 package scrum.client.communication;
 
-import ilarkesto.gwt.client.GwtLogger;
+import ilarkesto.core.logging.Log;
 import scrum.client.ApplicationStartListener;
 import scrum.client.BlockCollapsedListener;
 import scrum.client.BlockExpandedListener;
@@ -14,7 +14,7 @@ import com.google.gwt.user.client.Timer;
 public class Pinger implements ServerDataReceivedListener, BlockExpandedListener, BlockCollapsedListener,
 		ApplicationStartListener {
 
-	private static GwtLogger log = GwtLogger.createLogger(Pinger.class);
+	private static Log log = Log.get(Pinger.class);
 
 	public static final int MIN_DELAY = 1000;
 	public static final int MAX_DELAY = 5000;

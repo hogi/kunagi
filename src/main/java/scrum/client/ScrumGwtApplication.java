@@ -1,9 +1,10 @@
 package scrum.client;
 
+import ilarkesto.core.base.Str;
+import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.IncubatorComponentFactory;
 import ilarkesto.core.scope.NonConcurrentScopeManager;
 import ilarkesto.core.scope.Scope;
-import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.collaboration.Subject;
 import scrum.client.communication.PingerIncubator;
 import scrum.client.files.File;
@@ -23,7 +24,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			Task.REFERENCE_PREFIX, Quality.REFERENCE_PREFIX, Issue.REFERENCE_PREFIX, Impediment.REFERENCE_PREFIX,
 			Risk.REFERENCE_PREFIX, File.REFERENCE_PREFIX, Subject.REFERENCE_PREFIX };
 
-	private final GwtLogger log = GwtLogger.createLogger(getClass());
+	private final Log log = Log.get(getClass());
 
 	private ComponentManager cm;
 	private ApplicationInfo applicationInfo;
@@ -79,8 +80,14 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	@Override
 	protected void handleCommunicationError(Throwable ex) {
-		GwtLogger.ERROR("Communication Error:", ex);
-		cm.getUi().getWorkspace().abort("Lost connection to server.");
+		log.error("Communication error:", ex);
+		cm.getUi().getWorkspace().abort("Communication error: " + Str.formatException(ex));
+	}
+
+	@Override
+	protected void handleUnexpectedError(Throwable ex) {
+		log.error("Unexpected error:", ex);
+		cm.getUi().getWorkspace().abort("Unexpected error: " + Str.formatException(ex));
 	}
 
 	public final void callStartSession(Runnable callback) {

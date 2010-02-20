@@ -1,7 +1,7 @@
 package scrum.server.css;
 
+import ilarkesto.core.logging.Log;
 import ilarkesto.io.DynamicClassLoader;
-import ilarkesto.logging.Logger;
 import ilarkesto.ui.web.CssRenderer;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ import scrum.server.common.AHttpServlet;
 
 public class CssServlet extends AHttpServlet {
 
-	private static final Logger LOG = Logger.get(CssServlet.class);
+	private static final Log LOG = Log.get(CssServlet.class);
 	private static final long serialVersionUID = 1;
 
 	private transient final ScreenCssBuilder screenCssBuilder = new ScreenCssBuilder();

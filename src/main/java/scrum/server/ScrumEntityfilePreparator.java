@@ -1,7 +1,7 @@
 package scrum.server;
 
+import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
-import ilarkesto.logging.Logger;
 import ilarkesto.persistence.EntityfilePreparator;
 
 import java.io.BufferedOutputStream;
@@ -18,7 +18,7 @@ import org.jdom.output.XMLOutputter;
 
 public class ScrumEntityfilePreparator implements EntityfilePreparator {
 
-	private static final Logger LOG = Logger.get(ScrumEntityfilePreparator.class);
+	private static final Log LOG = Log.get(ScrumEntityfilePreparator.class);
 
 	public void prepareEntityfile(File file, Class type, String alias) {
 

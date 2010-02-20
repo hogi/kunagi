@@ -1,8 +1,8 @@
 package scrum.client.workspace;
 
+import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.FullscreenPanel;
 import ilarkesto.gwt.client.Gwt;
-import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.LockWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
 import scrum.client.common.AScrumWidget;
@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class WorkspaceWidget extends AScrumWidget {
 
-	private static final GwtLogger LOG = GwtLogger.createLogger(WorkspaceWidget.class);
+	private static final Log LOG = Log.get(WorkspaceWidget.class);
 
 	public static final int HEADER_HEIGHT = 25;
 
@@ -63,7 +63,7 @@ public class WorkspaceWidget extends AScrumWidget {
 	}
 
 	public void abort(String message) {
-		GwtLogger.DEBUG("Locking UI for ABORT:", message);
+		Log.DEBUG("Locking UI for ABORT:", message);
 		lockInfo.showBug(message + " Restarting your session...");
 		locker.lock(lockInfo);
 		Gwt.runLater(5000, new Runnable() {
@@ -77,13 +77,13 @@ public class WorkspaceWidget extends AScrumWidget {
 
 	public void lock(String message) {
 		initialize();
-		GwtLogger.DEBUG("Locking UI:", message);
+		Log.DEBUG("Locking UI:", message);
 		lockInfo.showWait(message);
 		locker.lock(lockInfo);
 	}
 
 	public void unlock() {
-		GwtLogger.DEBUG("Unlocking UI");
+		Log.DEBUG("Unlocking UI");
 		locker.unlock();
 	}
 

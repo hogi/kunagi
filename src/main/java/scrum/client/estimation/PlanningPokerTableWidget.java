@@ -1,7 +1,7 @@
 package scrum.client.estimation;
 
+import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.Gwt;
-import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.admin.User;
@@ -20,7 +20,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class PlanningPokerTableWidget extends AScrumWidget {
 
-	private static final GwtLogger LOG = GwtLogger.createLogger(PlanningPokerTableWidget.class);
+	private static final Log LOG = Log.get(PlanningPokerTableWidget.class);
 
 	private Requirement requirement;
 

@@ -1,6 +1,6 @@
 package scrum.client.workspace;
 
-import ilarkesto.gwt.client.GwtLogger;
+import ilarkesto.core.logging.Log;
 import scrum.client.DndManager;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.StyleSheet;
@@ -41,7 +41,7 @@ public class TrashWidget extends AScrumWidget {
 		} else {
 			trashable = false;
 		}
-		GwtLogger.DEBUG(trashable ? "Trashable:" : "Not Trashable:", draggable);
+		Log.DEBUG(trashable ? "Trashable:" : "Not Trashable:", draggable);
 		return trashable;
 	}
 
@@ -58,7 +58,7 @@ public class TrashWidget extends AScrumWidget {
 
 		public void onEnter(DragContext context) {
 			if (!isTrashable(context.draggable)) {
-				GwtLogger.DEBUG("Not trashable: " + context.draggable);
+				Log.DEBUG("Not trashable: " + context.draggable);
 				return;
 			}
 			trash.addStyleName(StyleSheet.DND_DROP_ALLOWED);

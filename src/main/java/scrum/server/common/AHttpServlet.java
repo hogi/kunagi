@@ -1,6 +1,6 @@
 package scrum.server.common;
 
-import ilarkesto.logging.Logger;
+import ilarkesto.core.logging.Log;
 import ilarkesto.webapp.Servlet;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ import scrum.server.WebSession;
 
 public abstract class AHttpServlet extends HttpServlet {
 
-	private static final Logger LOG = Logger.get(AHttpServlet.class);
+	private static final Log LOG = Log.get(AHttpServlet.class);
 
 	protected abstract void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session)
 			throws IOException;

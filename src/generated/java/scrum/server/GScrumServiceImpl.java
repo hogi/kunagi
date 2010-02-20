@@ -14,13 +14,13 @@
 package scrum.server;
 
 import java.util.*;
-import ilarkesto.logging.*;
+import ilarkesto.core.logging.Log;
 
 public abstract class GScrumServiceImpl
             extends ilarkesto.gwt.server.AGwtServiceImpl
             implements scrum.client.ScrumService {
 
-    private static final Logger LOG = Logger.get(GScrumServiceImpl.class);
+    private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GScrumServiceImpl.class);
 
     protected abstract void onPing(GwtConversation conversation);
     protected abstract void onLogin(GwtConversation conversation, java.lang.String username, java.lang.String password);

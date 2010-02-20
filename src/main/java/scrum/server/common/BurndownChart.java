@@ -1,7 +1,7 @@
 package scrum.server.common;
 
 import ilarkesto.base.time.Date;
-import ilarkesto.logging.Logger;
+import ilarkesto.core.logging.Log;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -72,7 +72,7 @@ public class BurndownChart {
 
 	}
 
-	private static final Logger LOG = Logger.get(BurndownChart.class);
+	private static final Log LOG = Log.get(BurndownChart.class);
 
 	private static final Color COLOR_PAST_LINE = new Color(0.1f, 0.9f, 0.1f);
 	private static final Color COLOR_PROJECTION_LINE = COLOR_PAST_LINE;

@@ -5,11 +5,11 @@ import ilarkesto.base.Url;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Time;
 import ilarkesto.concurrent.TaskManager;
+import ilarkesto.core.logging.Log;
 import ilarkesto.di.app.WebApplicationStarter;
 import ilarkesto.fp.FP;
 import ilarkesto.fp.Function;
 import ilarkesto.io.IO;
-import ilarkesto.logging.Logger;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
 import ilarkesto.webapp.DestroyTimeoutedSessionsTask;
@@ -33,7 +33,7 @@ import scrum.server.project.Project;
 
 public class ScrumWebApplication extends GScrumWebApplication {
 
-	private static final Logger LOG = Logger.get(ScrumWebApplication.class);
+	private static final Log LOG = Log.get(ScrumWebApplication.class);
 
 	private BurndownChart burndownChart;
 	private ScrumConfig config;
@@ -89,7 +89,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	@Override
 	protected void onStartWebApplication() {
 
-		Logger.setDebugEnabled(true); // TODO remove this for production
+		Log.setDebugEnabled(true); // TODO remove this for production
 
 		if (getUserDao().getEntities().isEmpty()) {
 			LOG.warn("No users. Creating initial user: admin");

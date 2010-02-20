@@ -48,10 +48,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.collaboration.ChatMessage(data);
             chatMessages.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("ChatMessage received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("ChatMessage received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("ChatMessage updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("ChatMessage updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -136,10 +136,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.collaboration.Comment(data);
             comments.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Comment received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("Comment received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Comment updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("Comment updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -224,10 +224,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.collaboration.Emoticon(data);
             emoticons.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Emoticon received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("Emoticon received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Emoticon updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("Emoticon updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -304,10 +304,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.files.File(data);
             files.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("File received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("File received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("File updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("File updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -408,10 +408,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.impediments.Impediment(data);
             impediments.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Impediment received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("Impediment received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Impediment updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("Impediment updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -520,10 +520,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.issues.Issue(data);
             issues.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Issue received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("Issue received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Issue updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("Issue updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -656,10 +656,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.project.Project(data);
             projects.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Project received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("Project received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Project updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("Project updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -854,10 +854,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.journal.ProjectEvent(data);
             projectEvents.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("ProjectEvent received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("ProjectEvent received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("ProjectEvent updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("ProjectEvent updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -934,10 +934,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.admin.ProjectUserConfig(data);
             projectUserConfigs.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("ProjectUserConfig received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("ProjectUserConfig received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("ProjectUserConfig updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("ProjectUserConfig updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -1022,10 +1022,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.project.Quality(data);
             qualitys.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Quality received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("Quality received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Quality updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("Quality updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -1118,10 +1118,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.release.Release(data);
             releases.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Release received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("Release received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Release updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("Release updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -1198,10 +1198,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.project.Requirement(data);
             requirements.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Requirement received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("Requirement received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Requirement updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("Requirement updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -1343,10 +1343,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.estimation.RequirementEstimationVote(data);
             requirementEstimationVotes.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("RequirementEstimationVote received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("RequirementEstimationVote received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("RequirementEstimationVote updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("RequirementEstimationVote updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -1423,10 +1423,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.risks.Risk(data);
             risks.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Risk received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("Risk received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Risk updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("Risk updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -1543,10 +1543,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.calendar.SimpleEvent(data);
             simpleEvents.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("SimpleEvent received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("SimpleEvent received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("SimpleEvent updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("SimpleEvent updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -1663,10 +1663,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.sprint.Sprint(data);
             sprints.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Sprint received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("Sprint received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Sprint updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("Sprint updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -1799,10 +1799,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.collaboration.Subject(data);
             subjects.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Subject received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("Subject received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Subject updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("Subject updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -1887,10 +1887,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.sprint.Task(data);
             tasks.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Task received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("Task received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Task updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("Task updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -1999,10 +1999,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.admin.User(data);
             users.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("User received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("User received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("User updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("User updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }
@@ -2095,10 +2095,10 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.collaboration.Wikipage(data);
             wikipages.put(id, entity);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Wikipage received: " + entity.getId() + " ("+entity+")");
+            ilarkesto.core.logging.Log.DEBUG("Wikipage received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.gwt.client.GwtLogger.DEBUG("Wikipage updated: " + entity);
+            ilarkesto.core.logging.Log.DEBUG("Wikipage updated: " + entity);
         }
         onEntityModifiedRemotely(entity);
     }

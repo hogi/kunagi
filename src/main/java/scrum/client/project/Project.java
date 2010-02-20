@@ -1,10 +1,10 @@
 package scrum.client.project;
 
+import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
-import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.Time;
 
@@ -38,7 +38,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class Project extends GProject implements ForumSupport {
 
-	private static transient final GwtLogger LOG = GwtLogger.createLogger(Project.class);
+	private static transient final Log LOG = Log.get(Project.class);
 
 	private static final String effortUnit = "pts";
 	public static final String INIT_LABEL = "New Project";

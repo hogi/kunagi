@@ -15,7 +15,7 @@ package scrum.server.project;
 
 import java.util.*;
 import ilarkesto.persistence.*;
-import ilarkesto.logging.*;
+import ilarkesto.core.logging.Log;
 import ilarkesto.base.*;
 import ilarkesto.base.time.*;
 import ilarkesto.auth.*;
@@ -47,7 +47,7 @@ public abstract class GQuality
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
-    private static final Logger LOG = Logger.get(GQuality.class);
+    private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GQuality.class);
 
     public static final String TYPE = "quality";
 

@@ -1,7 +1,7 @@
 package scrum.server.estimation;
 
+import ilarkesto.core.logging.Log;
 import ilarkesto.fp.Predicate;
-import ilarkesto.logging.Logger;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +11,7 @@ import scrum.server.project.Requirement;
 
 public class RequirementEstimationVoteDao extends GRequirementEstimationVoteDao {
 
-	private static final Logger LOG = Logger.get(RequirementEstimationVoteDao.class);
+	private static final Log LOG = Log.get(RequirementEstimationVoteDao.class);
 
 	public RequirementEstimationVote getRequirementEstimationVoteByUser(final Requirement requirement, final User user) {
 		return getEntity(new Predicate<RequirementEstimationVote>() {

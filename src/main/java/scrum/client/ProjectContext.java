@@ -1,8 +1,8 @@
 package scrum.client;
 
+import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.GwtLogger;
 import ilarkesto.gwt.client.ObjectMappedFlowPanel;
 import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
@@ -181,7 +181,7 @@ public class ProjectContext extends AScrumComponent {
 
 	public void showEntityByReference(final String reference) {
 		assert project != null;
-		GwtLogger.DEBUG("Showing entity by reference:", reference);
+		Log.DEBUG("Showing entity by reference:", reference);
 
 		if (reference.length() > 4 && reference.startsWith("[[")) {
 			String page = reference.substring(2, reference.length() - 2);
@@ -211,7 +211,7 @@ public class ProjectContext extends AScrumComponent {
 	}
 
 	public void showEntity(AGwtEntity entity) {
-		GwtLogger.DEBUG("Showing entity:", entity);
+		Log.DEBUG("Showing entity:", entity);
 		if (entity instanceof Task) {
 			showTask((Task) entity);
 		} else if (entity instanceof Requirement) {

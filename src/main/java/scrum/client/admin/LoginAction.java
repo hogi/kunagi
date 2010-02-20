@@ -1,6 +1,6 @@
 package scrum.client.admin;
 
-import ilarkesto.gwt.client.GwtLogger;
+import ilarkesto.core.logging.Log;
 import scrum.client.project.Project;
 
 public class LoginAction extends GLoginAction {
@@ -22,14 +22,14 @@ public class LoginAction extends GLoginAction {
 		cm.getApp().callLogin(loginData.getUsername(), loginData.getPassword(), new Runnable() {
 
 			public void run() {
-				GwtLogger.DEBUG("Login response received");
+				Log.DEBUG("Login response received");
 				if (!cm.getAuth().isUserLoggedIn()) {
 					log.info("Login failed.");
 					cm.getUi().unlock();
 					loginData.setFailed();
 				} else {
 					User user = getCurrentUser();
-					GwtLogger.DEBUG("Login succeded:", user);
+					Log.DEBUG("Login succeded:", user);
 					Project project = user.getCurrentProject();
 					if (project == null || user.isAdmin()) {
 						cm.getHomeContext().activate();

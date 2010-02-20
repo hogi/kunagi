@@ -5,7 +5,7 @@ import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
-import ilarkesto.logging.Logger;
+import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.webapp.AWebApplication;
@@ -44,7 +44,7 @@ import scrum.server.sprint.Task;
 
 public class ScrumServiceImpl extends GScrumServiceImpl {
 
-	private static final Logger LOG = Logger.get(ScrumServiceImpl.class);
+	private static final Log LOG = Log.get(ScrumServiceImpl.class);
 	private static final long serialVersionUID = 1;
 
 	// --- dependencies ---

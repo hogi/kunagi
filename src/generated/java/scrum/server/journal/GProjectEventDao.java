@@ -15,7 +15,7 @@ package scrum.server.journal;
 
 import java.util.*;
 import ilarkesto.persistence.*;
-import ilarkesto.logging.*;
+import ilarkesto.core.logging.Log;
 import ilarkesto.base.*;
 import ilarkesto.base.time.*;
 import ilarkesto.auth.*;

@@ -1,6 +1,6 @@
 package scrum.server.project;
 
-import ilarkesto.logging.Logger;
+import ilarkesto.core.logging.Log;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ import scrum.server.ScrumWebApplication;
 
 public class ProjectBurndownChartServlet extends HttpServlet {
 
-	private static final Logger LOG = Logger.get(ProjectBurndownChartServlet.class);
+	private static final Log LOG = Log.get(ProjectBurndownChartServlet.class);
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

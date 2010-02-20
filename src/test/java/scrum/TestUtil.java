@@ -1,7 +1,7 @@
 package scrum;
 
 import ilarkesto.base.time.Date;
-import ilarkesto.logging.Logger;
+import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.EntityStore;
 import ilarkesto.persistence.FileEntityStore;
 import ilarkesto.persistence.TransactionService;
@@ -36,7 +36,7 @@ public class TestUtil {
 		if (initialized) return;
 		initialized = true;
 
-		Logger.setDebugEnabled(true);
+		Log.setDebugEnabled(true);
 
 		entityStore = new FileEntityStore();
 

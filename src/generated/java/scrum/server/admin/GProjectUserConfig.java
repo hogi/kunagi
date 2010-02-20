@@ -15,7 +15,7 @@ package scrum.server.admin;
 
 import java.util.*;
 import ilarkesto.persistence.*;
-import ilarkesto.logging.*;
+import ilarkesto.core.logging.Log;
 import ilarkesto.base.*;
 import ilarkesto.base.time.*;
 import ilarkesto.auth.*;
@@ -46,7 +46,7 @@ public abstract class GProjectUserConfig
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
-    private static final Logger LOG = Logger.get(GProjectUserConfig.class);
+    private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GProjectUserConfig.class);
 
     public static final String TYPE = "projectUserConfig";
 

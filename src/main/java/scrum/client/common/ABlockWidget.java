@@ -1,7 +1,7 @@
 package scrum.client.common;
 
+import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.Gwt;
-import ilarkesto.gwt.client.GwtLogger;
 import scrum.client.dnd.BlockDndMarkerWidget;
 
 import com.google.gwt.dom.client.NativeEvent;
@@ -96,7 +96,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		if (!initializedExtension) {
 			if (initializingExtension) throw new RuntimeException("Extension already initializing: " + toString());
 			initializingExtension = true;
-			GwtLogger.DEBUG("Initializing extension: " + toString());
+			Log.DEBUG("Initializing extension: " + toString());
 			body = onExtendedInitialization();
 			initializedExtension = true;
 			initializingExtension = false;

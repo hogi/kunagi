@@ -1,7 +1,7 @@
 package scrum.server;
 
+import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.server.AGwtConversation;
-import ilarkesto.logging.Logger;
 import ilarkesto.persistence.AEntity;
 
 import java.util.HashSet;
@@ -13,7 +13,7 @@ import scrum.server.project.Project;
 
 public class GwtConversation extends AGwtConversation {
 
-	private static final Logger LOG = Logger.get(GwtConversation.class);
+	private static final Log LOG = Log.get(GwtConversation.class);
 
 	private Project project;
 

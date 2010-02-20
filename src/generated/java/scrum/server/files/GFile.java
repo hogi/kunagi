@@ -15,7 +15,7 @@ package scrum.server.files;
 
 import java.util.*;
 import ilarkesto.persistence.*;
-import ilarkesto.logging.*;
+import ilarkesto.core.logging.Log;
 import ilarkesto.base.*;
 import ilarkesto.base.time.*;
 import ilarkesto.auth.*;
@@ -48,7 +48,7 @@ public abstract class GFile
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
-    private static final Logger LOG = Logger.get(GFile.class);
+    private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GFile.class);
 
     public static final String TYPE = "file";
 

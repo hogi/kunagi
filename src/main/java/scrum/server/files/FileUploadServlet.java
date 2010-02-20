@@ -3,8 +3,8 @@ package scrum.server.files;
 import gwtupload.server.UploadAction;
 import gwtupload.server.exceptions.UploadActionException;
 import ilarkesto.base.PermissionDeniedException;
+import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
-import ilarkesto.logging.Logger;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import scrum.server.project.Project;
 
 public class FileUploadServlet extends UploadAction {
 
-	private static final Logger LOG = Logger.get(FileUploadServlet.class);
+	private static final Log LOG = Log.get(FileUploadServlet.class);
 
 	@Override
 	public String executeAction(HttpServletRequest request, List<FileItem> sessionFiles) throws UploadActionException {

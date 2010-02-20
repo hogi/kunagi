@@ -1,8 +1,8 @@
 package scrum.server;
 
 import ilarkesto.base.time.TimePeriod;
+import ilarkesto.core.logging.Log;
 import ilarkesto.di.Context;
-import ilarkesto.logging.Logger;
 import ilarkesto.webapp.AWebSession;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +12,7 @@ import scrum.server.admin.User;
 
 public class WebSession extends AWebSession {
 
-	private static final Logger LOG = Logger.get(WebSession.class);
+	private static final Log LOG = Log.get(WebSession.class);
 
 	private TimePeriod TIMEOUT = new TimePeriod(Pinger.MAX_DELAY * 2);
 	private User user;

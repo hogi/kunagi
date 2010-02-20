@@ -1,7 +1,7 @@
 package scrum.server.sprint;
 
 import ilarkesto.base.time.Date;
-import ilarkesto.logging.Logger;
+import ilarkesto.core.logging.Log;
 
 import java.util.List;
 import java.util.Set;
@@ -11,7 +11,7 @@ import scrum.server.project.RequirementDao;
 
 public class Sprint extends GSprint {
 
-	private static final Logger LOG = Logger.get(Sprint.class);
+	private static final Log LOG = Log.get(Sprint.class);
 
 	// --- dependencies ---
 
