@@ -207,7 +207,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	}
 
 	public final void scrollToObject(O object) {
-		getBlock(object).getElement().scrollIntoView();
+		getBlock(object).scrollIntoView();
 	}
 
 	public final void extendBlock(ABlockWidget<O> block, boolean exclusive) {

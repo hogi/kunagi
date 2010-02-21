@@ -161,9 +161,13 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	}
 
 	final void activate() {
+		onActivation();
+		scrollIntoView();
+	}
+
+	public void scrollIntoView() {
 		getElement().scrollIntoView();
 		header.getDragHandle().getElement().scrollIntoView();
-		onActivation();
 	}
 
 	protected void onActivation() {}
