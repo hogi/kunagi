@@ -1,6 +1,6 @@
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
-// generator: ilarkesto.mda.gen.gwt.GwtEntityGenerator
+// generator: ilarkesto.mda.legacy.generator.GwtEntityGenerator
 
 
 
@@ -171,9 +171,6 @@ public abstract class GRisk
 
         @Override
         public boolean isMandatory() { return true; }
-
-        @Override
-        public boolean isRichtext() { return true; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

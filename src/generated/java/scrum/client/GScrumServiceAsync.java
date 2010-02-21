@@ -1,6 +1,6 @@
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
-// generator: ilarkesto.mda.gen.gwt.GwtServiceAsyncInterfaceGenerator
+// generator: ilarkesto.mda.legacy.generator.GwtServiceAsyncInterfaceGenerator
 
 
 

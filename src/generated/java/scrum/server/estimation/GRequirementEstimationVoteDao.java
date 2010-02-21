@@ -1,6 +1,6 @@
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
-// generator: ilarkesto.mda.gen.DaoGenerator
+// generator: ilarkesto.mda.legacy.generator.DaoGenerator
 
 
 

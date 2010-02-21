@@ -435,7 +435,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			riskModel.addReference("project", getProjectModel()).setMaster(true);
 			riskModel.addPredicate("priorityEditable");
 			riskModel.addProperty("number", int.class);
-			riskModel.addStringProperty("label").setRichtext(true).setMandatory(true).setSearchable(true);
+			riskModel.addStringProperty("label").setMandatory(true).setSearchable(true);
 			riskModel.addStringProperty("description").setRichtext(true).setSearchable(true);
 			riskModel.addStringProperty("probabilityMitigation").setRichtext(true).setSearchable(true);
 			riskModel.addStringProperty("impactMitigation").setRichtext(true).setSearchable(true);
