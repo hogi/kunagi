@@ -1,7 +1,5 @@
 package scrum.client;
 
-import gwtupload.client.IUploader;
-import gwtupload.client.IUploadStatus.Status;
 import ilarkesto.gwt.client.BetterTextArea;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.Initializer;
@@ -11,7 +9,6 @@ import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.common.AScrumComponent;
 import scrum.client.files.File;
-import scrum.client.files.UploadWidget;
 import scrum.client.img.Img;
 import scrum.client.wiki.ScrumHtmlContext;
 import scrum.client.wiki.WikiModel;
@@ -19,16 +16,13 @@ import scrum.client.wiki.WikiParser;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.Widget;
 
-public class Wiki extends AScrumComponent implements RichtextFormater, FileUploadedListener {
-
-	private FileReferenceInserter fileReferenceInserter;
+public class Wiki extends AScrumComponent implements RichtextFormater {
 
 	@Override
 	protected void onInitialization() {
@@ -36,12 +30,6 @@ public class Wiki extends AScrumComponent implements RichtextFormater, FileUploa
 		Gwt.setDefaultRichtextFormater(this);
 		Gwt.setRichtextEditorEditInitializer(new RichtextEditorEditInitializer());
 		Gwt.setDefaultRichtextSyntaxInfo(WikiParser.SYNTAX_INFO_HTML);
-	}
-
-	public void onFileUploaded(File file) {
-		if (fileReferenceInserter == null) return;
-		fileReferenceInserter.insertFile(file);
-		fileReferenceInserter = null;
 	}
 
 	public String getTemplate(String name) {
@@ -76,17 +64,10 @@ public class Wiki extends AScrumComponent implements RichtextFormater, FileUploa
 			toolbar.insert(createToolbarButton(Img.bundle.upload().createImage(), "Upload file", new ClickHandler() {
 
 				public void onClick(ClickEvent event) {
-					final BetterTextArea textArea = editor.getEditor();
-					final UploadWidget uploadWidget = UploadWidget.showDialog(textArea.getAbsoluteTop() + 20);
-					uploadWidget.setFinishHandler(new IUploader.OnFinishUploaderHandler() {
-
-						public void onFinish(IUploader uploader) {
-							if (uploader.getStatus() == Status.SUCCESS) {
-								fileReferenceInserter = new FileReferenceInserter(textArea, uploadWidget.getDialog());
-								cm.getApp().callPing();
-							}
-						}
-					});
+					BetterTextArea textArea = editor.getEditor();
+					int topPosition = textArea.getAbsoluteTop() + 20;
+					ReferenceInserter refInserter = new ReferenceInserter(textArea);
+					cm.getUploader().showUploadDialog(topPosition, refInserter);
 				}
 			}), 0);
 
@@ -175,21 +156,18 @@ public class Wiki extends AScrumComponent implements RichtextFormater, FileUploa
 		return button;
 	}
 
-	private class FileReferenceInserter {
+	private class ReferenceInserter implements Uploader.UploadedFileHandler {
 
 		private BetterTextArea textArea;
-		private DialogBox dialog;
 
-		public FileReferenceInserter(BetterTextArea textArea, DialogBox dialog) {
+		public ReferenceInserter(BetterTextArea textArea) {
 			super();
 			this.textArea = textArea;
-			this.dialog = dialog;
 		}
 
-		public void insertFile(File file) {
+		public void onFileUploaded(File file) {
 			textArea.wrapSelection(file.getReference(), "");
 			textArea.setFocus(true);
-			dialog.hide();
 		}
 
 	}

@@ -1,5 +1,6 @@
 package scrum.client.files;
 
+import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.workspace.PagePanel;
@@ -9,7 +10,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class FileRepositoryWidget extends AScrumWidget {
 
 	public BlockListWidget<File> list;
-	private UploadWidget upload;
 
 	@Override
 	protected Widget onInitialization() {
@@ -18,12 +18,8 @@ public class FileRepositoryWidget extends AScrumWidget {
 		list = new BlockListWidget<File>(FileBlock.FACTORY);
 		list.setAutoSorter(File.REVERSE_UPLOAD_TIME_COMPARATOR);
 
-		upload = new UploadWidget();
-
 		PagePanel page = new PagePanel();
-		page.addHeader("Upload Files");
-		page.addSection(upload);
-		page.addHeader("File Repository");
+		page.addHeader("File Repository", new ButtonWidget(new UploadFileAction()));
 		page.addSection(list);
 		return page;
 	}
