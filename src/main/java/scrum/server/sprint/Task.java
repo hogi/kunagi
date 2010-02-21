@@ -39,12 +39,10 @@ public class Task extends GTask implements Numbered {
 		super.ensureIntegrity();
 		updateNumber();
 
-		if (!getRequirement().isInCurrentSprint()) {
-			if (getRequirement().isClosed()) {
-				getDao().deleteEntity(this);
-			} else {
-				reset();
-			}
+		if (getRequirement().isClosed()) {
+			getDao().deleteEntity(this);
+		} else if (!getRequirement().isInCurrentSprint()) {
+			reset();
 		}
 
 	}
