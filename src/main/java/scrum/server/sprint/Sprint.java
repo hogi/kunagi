@@ -43,6 +43,13 @@ public class Sprint extends GSprint {
 				sb.append("* ");
 				sb.append(requirement.getLabel());
 				sb.append("\n");
+				for (Task task : requirement.getTasks()) {
+					taskDao.deleteEntity(task);
+				}
+			} else {
+				for (Task task : requirement.getTasks()) {
+					task.reset();
+				}
 			}
 			requirement.setSprint(null);
 		}

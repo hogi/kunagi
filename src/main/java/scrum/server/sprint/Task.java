@@ -29,10 +29,23 @@ public class Task extends GTask implements Numbered {
 		if (getNumber() == 0) setNumber(getRequirement().getProject().generateTaskNumber());
 	}
 
+	public void reset() {
+		setOwner(null);
+		setBurnedWork(0);
+	}
+
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
 		updateNumber();
+
+		if (!getRequirement().isInCurrentSprint()) {
+			if (getRequirement().isClosed()) {
+				getDao().deleteEntity(this);
+			} else {
+				reset();
+			}
+		}
 
 	}
 

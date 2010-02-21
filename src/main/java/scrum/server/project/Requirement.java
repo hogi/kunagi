@@ -26,6 +26,11 @@ public class Requirement extends GRequirement implements Numbered {
 
 	// --- ---
 
+	public boolean isInCurrentSprint() {
+		if (!isSprintSet()) return false;
+		return isSprint(getProject().getCurrentSprint());
+	}
+
 	public void initializeEstimationVotes() {
 		for (User user : getProject().getTeamMembers()) {
 			RequirementEstimationVote vote = getEstimationVote(user);
