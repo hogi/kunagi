@@ -23,7 +23,7 @@ public class SprintBurndownWidget extends AScrumWidget {
 	protected void onUpdate() {
 		int width = getChartWidth();
 		sprintChart.setWidth(width + "px");
-		sprintChart.setUrl(getChartUrl(width));
+		sprintChart.setUrl(getChartUrl(width) + "&timestamp=" + System.currentTimeMillis());
 	}
 
 	private String getChartUrl(int width) {
