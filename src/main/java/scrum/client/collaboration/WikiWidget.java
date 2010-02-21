@@ -86,10 +86,11 @@ public class WikiWidget extends AScrumWidget {
 
 		DropdownMenuButtonWidget dropdown = new DropdownMenuButtonWidget();
 		for (Wikipage page : getCurrentProject().getWikipages()) {
-			dropdown.addAction(new ShowPageAction(page.getName()));
+			dropdown.addAction(new ShowPageAction("", page.getName()));
 		}
 
-		return TableBuilder.row(5, pageNameBox, new ButtonWidget(new ShowPageAction(START_PAGE_NAME)), dropdown);
+		return TableBuilder.row(5, new ButtonWidget(new ShowPageAction("Go to ", START_PAGE_NAME)), pageNameBox,
+			dropdown);
 	}
 
 	public void showPage(String name) {
@@ -99,16 +100,18 @@ public class WikiWidget extends AScrumWidget {
 
 	class ShowPageAction extends AScrumAction {
 
+		private String prefix;
 		private String pageName;
 
-		public ShowPageAction(String pageName) {
+		public ShowPageAction(String prefix, String pageName) {
 			super();
+			this.prefix = prefix;
 			this.pageName = pageName;
 		}
 
 		@Override
 		public String getLabel() {
-			return pageName;
+			return prefix + pageName;
 		}
 
 		@Override
