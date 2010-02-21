@@ -17,12 +17,14 @@ import com.google.gwt.user.client.ui.Widget;
 public class TaskInRequirementBlock extends ABlockWidget<Task> implements TrashSupport {
 
 	private SimplePanel statusIcon;
+	private Label workLabel;
 	private Label ownerLabel;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Task task = getObject();
 		statusIcon = header.insertPrefixIcon();
+		workLabel = header.appendCenterSuffix("");
 		ownerLabel = header.appendCenterSuffix("");
 		header.appendCell(new EmoticonsWidget(task), null, true, true, null);
 		header.addMenuAction(new ClaimTaskAction(task));
@@ -41,11 +43,13 @@ public class TaskInRequirementBlock extends ABlockWidget<Task> implements TrashS
 			statusImage = Img.bundle.tskClosed().createImage();
 			statusImage.setTitle("Closed.");
 			ownerLabel.setText("");
+			task.getBurnedWork();
 		} else if (task.isOwnerSet()) {
 			statusImage = Img.bundle.tskClaimed().createImage();
 			statusImage.setTitle("Claimed by " + task.getOwner().getName() + ".");
 			ownerLabel.setText(task.getOwner().getName());
 		}
+		workLabel.setText(task.getWorkText());
 		statusIcon.setWidget(statusImage);
 		header.setCenter(task.getLabel());
 	}

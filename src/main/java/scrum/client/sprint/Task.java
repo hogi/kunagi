@@ -76,16 +76,18 @@ public class Task extends GTask implements ReferenceSupport {
 		return getRemainingWork() == 0;
 	}
 
-	public String getSummary() {
-		if (isClosed()) return "Done.";
-		String s = getRemainingWork() + " hours to do.";
-		User owner = getOwner();
-		if (owner != null) {
-			s += " Owed by " + owner + ".";
+	public String getWorkText() {
+		String work;
+		if (isClosed()) {
+			work = String.valueOf(getBurnedWork());
 		} else {
-			s += " No owner.";
+			if (isClaimed()) {
+				work = getBurnedWork() + " of " + getRemainingWork();
+			} else {
+				work = String.valueOf(getRemainingWork());
+			}
 		}
-		return s;
+		return work + " hrs";
 	}
 
 	@Override
