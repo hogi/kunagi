@@ -115,11 +115,11 @@ public class Project extends GProject implements ForumSupport {
 	}
 
 	public List<SimpleEvent> getSimpleEvents() {
-		return cm.getDao().getSimpleEvents();
+		return cm.getDao().getSimpleEventsByProject(this);
 	}
 
 	public List<ProjectEvent> getProjectEvents() {
-		return cm.getDao().getProjectEvents();
+		return cm.getDao().getProjectEventsByProject(this);
 	}
 
 	public List<ProjectEvent> getLatestProjectEvents(int min) {
