@@ -201,12 +201,19 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onChangeProperties(GwtConversation conversation, String entityId, Map properties) {
 		AEntity entity = getDaoService().getEntityById(entityId);
-		if (!Auth.isEditable(entity, conversation.getSession().getUser())) throw new PermissionDeniedException();
+		User currentUser = conversation.getSession().getUser();
+		if (!Auth.isEditable(entity, currentUser)) throw new PermissionDeniedException();
 
 		if (entity instanceof Task) {
 			// update sprint day snapshot before change
 			Task task = (Task) entity;
 			task.getRequirement().getSprint().getDaySnapshot(Date.today()).update();
+		}
+
+		Sprint previousRequirementSprint = null;
+		if (entity instanceof Requirement) {
+			Requirement requirement = (Requirement) entity;
+			previousRequirementSprint = requirement.getSprint();
 		}
 
 		entity.updateProperties(properties);
@@ -217,16 +224,16 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			task.getRequirement().getSprint().getDaySnapshot(Date.today()).update();
 
 			if (task.isClosed() && properties.containsKey("remainingWork")) {
-				String event = task.getReferenceAndLabel() + " closed by " + task.getOwner().getName();
+				String event = currentUser.getName() + " closed " + task.getReferenceAndLabel();
 				if (task.getRequirement().isTasksClosed()) {
-					event += ", all tasks in " + task.getRequirement().getReferenceAndLabel() + " are closed";
+					event += ", all tasks closed in " + task.getRequirement().getReferenceAndLabel();
 				}
 				postProjectEvent(conversation, event);
 			} else if (task.isOwnerSet() && properties.containsKey("ownerId")) {
-				postProjectEvent(conversation, task.getReferenceAndLabel() + " claimed by " + task.getOwner().getName());
+				postProjectEvent(conversation, currentUser.getName() + " claimed " + task.getReferenceAndLabel());
 			}
 			if (!task.isOwnerSet() && properties.containsKey("ownerId")) {
-				postProjectEvent(conversation, task.getReferenceAndLabel() + " unclaimed");
+				postProjectEvent(conversation, currentUser.getName() + " unclaimed " + task.getReferenceAndLabel());
 			}
 		}
 
@@ -239,15 +246,19 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 				requirement.setDirty(true);
 				conversation.sendToClient(requirement);
 			}
-			if (properties.containsKey("sprintId")) {
-				if (inCurrentSprint) {
-					postProjectEvent(conversation, conversation.getSession().getUser().getName() + " pulled "
-							+ requirement.getReferenceAndLabel() + " to current sprint");
-				} else {
-					postProjectEvent(conversation, conversation.getSession().getUser().getName() + " kicked "
-							+ requirement.getReferenceAndLabel() + " from current sprint");
+
+			if (sprint != previousRequirementSprint) {
+				if (properties.containsKey("sprintId")) {
+					if (inCurrentSprint) {
+						postProjectEvent(conversation, currentUser.getName() + " pulled "
+								+ requirement.getReferenceAndLabel() + " to current sprint");
+					} else {
+						postProjectEvent(conversation, currentUser.getName() + " kicked "
+								+ requirement.getReferenceAndLabel() + " from current sprint");
+					}
 				}
 			}
+
 			if (properties.containsKey("estimatedWork")) {
 				requirement.initializeEstimationVotes();
 				requirement.setDirty(false);
@@ -266,7 +277,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Impediment) {
 			Impediment impediment = (Impediment) entity;
 			if (impediment.isClosed() && properties.containsKey("closed")) {
-				postProjectEvent(conversation, impediment.getReferenceAndLabel() + " closed");
+				postProjectEvent(conversation, currentUser.getName() + " closed " + impediment.getReferenceAndLabel());
 			}
 		}
 
@@ -275,9 +286,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			if (properties.containsKey("closeDate")) {
 				if (issue.isClosed()) {
 					issue.setCloseDate(Date.today());
-					postProjectEvent(conversation, issue.getTypeAndReferenceAndLabel() + " closed");
+					postProjectEvent(conversation, currentUser.getName() + " closed "
+							+ issue.getTypeAndReferenceAndLabel());
 				} else {
-					postProjectEvent(conversation, issue.getTypeAndReferenceAndLabel() + " reopened");
+					postProjectEvent(conversation, currentUser.getName() + " reopened "
+							+ issue.getTypeAndReferenceAndLabel());
 				}
 			}
 		}
