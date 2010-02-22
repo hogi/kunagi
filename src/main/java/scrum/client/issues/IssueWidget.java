@@ -1,7 +1,6 @@
 package scrum.client.issues;
 
 import ilarkesto.gwt.client.TableBuilder;
-import ilarkesto.gwt.client.editor.DropdownEditorWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
@@ -23,7 +22,8 @@ public class IssueWidget extends AScrumWidget {
 
 		tb.addFieldRow("Label", issue.getLabelModel());
 		tb.addFieldRow("Description", issue.getDescriptionModel());
-		tb.addFieldRow("Type", new DropdownEditorWidget<String>(issue.getTypeModel(), Issue.TYPE_LABEL_PROVIDER));
+		// tb.addFieldRow("Type", new DropdownEditorWidget<String>(issue.getTypeModel(),
+		// Issue.TYPE_LABEL_PROVIDER));
 
 		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(issue));
 	}
