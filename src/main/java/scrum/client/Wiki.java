@@ -166,7 +166,7 @@ public class Wiki extends AScrumComponent implements RichtextFormater {
 		}
 
 		public void onFileUploaded(File file) {
-			textArea.wrapSelection(file.getReference(), "");
+			textArea.wrapSelection(file.getReference() + " ", "");
 			textArea.setFocus(true);
 		}
 

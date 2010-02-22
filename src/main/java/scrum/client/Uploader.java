@@ -1,7 +1,5 @@
 package scrum.client;
 
-import gwtupload.client.IUploader;
-import gwtupload.client.IUploadStatus.Status;
 import scrum.client.common.AScrumComponent;
 import scrum.client.files.File;
 import scrum.client.files.UploadWidget;
@@ -18,21 +16,14 @@ public class Uploader extends AScrumComponent implements FileUploadedListener {
 	}
 
 	public void showUploadDialog(Integer topPosition, UploadedFileHandler uploadedFileHandler) {
+		log.debug("Acitvating file upload dialog");
 		this.uploadedFileHandler = uploadedFileHandler;
 		UploadWidget uploadWidget = UploadWidget.showDialog(topPosition);
-		dialog = uploadWidget.getDialog();
-		uploadWidget.setFinishHandler(new IUploader.OnFinishUploaderHandler() {
-
-			public void onFinish(IUploader uploader) {
-				if (uploader.getStatus() == Status.SUCCESS) {
-					cm.getApp().callPing();
-				}
-			}
-		});
-
+		this.dialog = uploadWidget.getDialog();
 	}
 
 	public void onFileUploaded(File file) {
+		log.debug("File received:", file);
 		if (dialog != null) {
 			dialog.hide();
 			dialog = null;

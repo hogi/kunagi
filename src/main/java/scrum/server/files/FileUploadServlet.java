@@ -38,8 +38,7 @@ public class FileUploadServlet extends UploadAction {
 					count++;
 					f = new java.io.File(project.getFileRepositoryPath() + "/" + insertSuffix(filename, count));
 				}
-				IO.createDirectory(f.getParentFile());
-				item.write(f);
+				IO.copyDataToFile(item.getInputStream(), f);
 
 				File file = webApp.getFileDao().postFile(f, project);
 				webApp.getTransactionService().commit();
