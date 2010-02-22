@@ -15,7 +15,7 @@ public class ForumWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		cm.getApp().callRequestForum();
 
-		list = new BlockListWidget<ForumSupport>(SubjectBlock.FACTORY);
+		list = new BlockListWidget<ForumSupport>(ForumItemBlock.FACTORY);
 		list.setAutoSorter(ForumSupport.COMPARATOR);
 
 		PagePanel page = new PagePanel();
