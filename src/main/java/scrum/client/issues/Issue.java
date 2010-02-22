@@ -24,10 +24,8 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public static final String REFERENCE_PREFIX = "iss";
 
-	public static final IssueTypeLabelProvider TYPE_LABEL_PROVIDER = new IssueTypeLabelProvider();
-
 	public Issue(Project project) {
-		setType(INIT_TYPE);
+		setType(Types.ISSUE);
 		setProject(project);
 		setDate(DateAndTime.now());
 	}
@@ -86,18 +84,6 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 	@Override
 	public List<String> getTypeOptions() {
 		return Types.ALL;
-	}
-
-	public String getTypeLabel() {
-		return TYPE_LABEL_PROVIDER.getLabel(getType());
-	}
-
-	public boolean isTypeRequirement() {
-		return Types.REQUIREMENT.equals(getType());
-	}
-
-	public boolean isTypeQuality() {
-		return Types.QUALITY.equals(getType());
 	}
 
 	@Override

@@ -1,12 +1,9 @@
 package scrum.server.issues;
 
 import ilarkesto.base.time.DateAndTime;
-import scrum.client.issues.IssueTypeLabelProvider;
 import scrum.server.common.Numbered;
 
 public class Issue extends GIssue implements Numbered {
-
-	public static final IssueTypeLabelProvider TYPE_LABEL_PROVIDER = new IssueTypeLabelProvider();
 
 	public boolean isAccepted() {
 		return getAcceptDate() != null;
@@ -20,12 +17,8 @@ public class Issue extends GIssue implements Numbered {
 		return scrum.client.issues.Issue.REFERENCE_PREFIX + getNumber();
 	}
 
-	public String getTypeLabel() {
-		return TYPE_LABEL_PROVIDER.getLabel(getType());
-	}
-
-	public String getTypeAndReferenceAndLabel() {
-		return getTypeLabel() + " " + getReference() + " " + getLabel();
+	public String getReferenceAndLabel() {
+		return getReference() + " " + getLabel();
 	}
 
 	public boolean isClosed() {
@@ -43,7 +36,7 @@ public class Issue extends GIssue implements Numbered {
 
 	@Override
 	public String toString() {
-		return getReference() + " (" + getType() + ") " + getLabel();
+		return getReferenceAndLabel();
 	}
 
 }
