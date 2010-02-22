@@ -38,7 +38,8 @@ public class Emoticon extends GEmoticon {
 		return emotion;
 	}
 
-	public static transient final List<String> EMOTIONS = Arrays.asList("smile", "sad", "surprise", "angry");
+	public static transient final List<String> EMOTIONS = Arrays.asList("grin", "smile", "wink", "surprise", "sad",
+		"cry", "angry");
 
 	public transient static LabelProvider<String> EMOTION_LABEL_PROVIDER = new LabelProvider<String>() {
 
