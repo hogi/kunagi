@@ -42,7 +42,7 @@ public class Risk extends GRisk implements Numbered {
 
 	@Override
 	public String toString() {
-		return getLabel();
+		return getReferenceAndLabel();
 	}
 
 }
