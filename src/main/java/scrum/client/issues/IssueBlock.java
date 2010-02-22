@@ -23,7 +23,7 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 		// typeLabel = header.insertPrefixLabel("80px", true);
 		// statusIcon = header.insertPrefixIcon();
 		statusSuffix = header.appendCenterSuffix("");
-		// header.addMenuAction(new ConvertIssueToRequirementAction(issue));
+		header.addMenuAction(new ConvertIssueToRequirementAction(issue));
 		// header.addMenuAction(new ConvertIssueToQualityAction(issue));
 		header.appendCell(new EmoticonsWidget(issue), null, true, true, null);
 		header.addMenuAction(new CloseIssueAction(issue));

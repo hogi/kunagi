@@ -19,8 +19,6 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 		TooltipBuilder tb = new TooltipBuilder("Convert this Issue to a real Story on the Product Backlog.");
 		if (!issue.getProject().isProductOwner(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
-		} else {
-			if (!issue.isTypeRequirement()) tb.addRemark("Issue is not of type Story.");
 		}
 
 		return tb.getTooltip();
@@ -28,7 +26,6 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 
 	@Override
 	public boolean isExecutable() {
-		if (!issue.isTypeRequirement()) return false;
 		return true;
 	}
 
