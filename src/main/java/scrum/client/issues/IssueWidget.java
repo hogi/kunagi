@@ -22,8 +22,6 @@ public class IssueWidget extends AScrumWidget {
 
 		tb.addFieldRow("Label", issue.getLabelModel());
 		tb.addFieldRow("Description", issue.getDescriptionModel());
-		// tb.addFieldRow("Type", new DropdownEditorWidget<String>(issue.getTypeModel(),
-		// Issue.TYPE_LABEL_PROVIDER));
 
 		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(issue));
 	}

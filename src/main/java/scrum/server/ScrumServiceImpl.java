@@ -286,11 +286,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			if (properties.containsKey("closeDate")) {
 				if (issue.isClosed()) {
 					issue.setCloseDate(Date.today());
-					postProjectEvent(conversation, currentUser.getName() + " closed "
-							+ issue.getTypeAndReferenceAndLabel());
+					postProjectEvent(conversation, currentUser.getName() + " closed " + issue.getReferenceAndLabel());
 				} else {
-					postProjectEvent(conversation, currentUser.getName() + " reopened "
-							+ issue.getTypeAndReferenceAndLabel());
+					postProjectEvent(conversation, currentUser.getName() + " reopened " + issue.getReferenceAndLabel());
 				}
 			}
 		}
