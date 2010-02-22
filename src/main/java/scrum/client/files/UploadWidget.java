@@ -54,7 +54,6 @@ public class UploadWidget extends AScrumWidget {
 		DialogBox dialog = uploadWidget.dialog;
 		dialog.setAnimationEnabled(true);
 		dialog.setWidget(uploadWidget.update());
-		uploadWidget.uploader.addOnStatusChangedHandler(uploadWidget.new StatusChangedHandler());
 
 		dialog.center();
 		if (topPosition != null) dialog.setPopupPosition(dialog.getPopupLeft(), topPosition);
@@ -65,13 +64,6 @@ public class UploadWidget extends AScrumWidget {
 
 	public DialogBox getDialog() {
 		return dialog;
-	}
-
-	private class StatusChangedHandler implements IUploader.OnStatusChangedHandler {
-
-		public void onStatusChanged(IUploader ul) {
-			dialog.setAutoHideEnabled(false);
-		}
 	}
 
 	private class FinishHandler implements IUploader.OnFinishUploaderHandler {
@@ -126,6 +118,7 @@ public class UploadWidget extends AScrumWidget {
 		public void setStatus(Status status) {
 			Log.DEBUG("Upload status changed:", status);
 			if (this.status == null) {
+				dialog.setAutoHideEnabled(false);
 				formPanel.hideFileField();
 				statusLabel.getElement().getStyle().setPadding(10, Unit.PX);
 			} else if (status != Status.INPROGRESS && filename != null) {
