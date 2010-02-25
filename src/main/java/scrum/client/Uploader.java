@@ -11,10 +11,6 @@ public class Uploader extends AScrumComponent implements FileUploadedListener {
 	private DialogBox dialog;
 	private UploadedFileHandler uploadedFileHandler;
 
-	public void showUploadDialog() {
-		showUploadDialog(null, null);
-	}
-
 	public void showUploadDialog(Integer topPosition, UploadedFileHandler uploadedFileHandler) {
 		log.debug("Acitvating file upload dialog");
 		this.uploadedFileHandler = uploadedFileHandler;

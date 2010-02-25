@@ -23,35 +23,36 @@ public class FileUploadServlet extends UploadAction {
 
 	@Override
 	public String executeAction(HttpServletRequest request, List<FileItem> sessionFiles) throws UploadActionException {
+		if (sessionFiles.size() != 1) throw new IllegalStateException("sessionFiles.size() == " + sessionFiles.size());
+
 		ScrumWebApplication webApp = ScrumWebApplication.get();
 		WebSession session = (WebSession) webApp.getWebSession(request);
 		Project project = session.getGwtConversation().getProject();
 		if (project == null) throw new PermissionDeniedException();
 
-		for (FileItem item : sessionFiles) {
-			if (item.isFormField()) continue;
-			try {
-				String filename = getFilename(item.getName());
-				java.io.File f = new java.io.File(project.getFileRepositoryPath() + "/" + filename);
-				int count = 0;
-				while (f.exists()) {
-					count++;
-					f = new java.io.File(project.getFileRepositoryPath() + "/" + insertSuffix(filename, count));
-				}
-				IO.copyDataToFile(item.getInputStream(), f);
-
-				File file = webApp.getFileDao().postFile(f, project);
-				webApp.getTransactionService().commit();
-				for (GwtConversation conversation : webApp.getConversationsByProject(project, null)) {
-					conversation.sendToClient(file);
-				}
-				return file.getReference();
-			} catch (Exception e) {
-				LOG.error(e);
-				throw new UploadActionException(e.getMessage());
+		FileItem item = sessionFiles.get(0);
+		try {
+			String filename = getFilename(item.getName());
+			java.io.File f = new java.io.File(project.getFileRepositoryPath() + "/" + filename);
+			int count = 0;
+			while (f.exists()) {
+				count++;
+				f = new java.io.File(project.getFileRepositoryPath() + "/" + insertSuffix(filename, count));
 			}
+			IO.copyDataToFile(item.getInputStream(), f);
+
+			File file = webApp.getFileDao().postFile(f, project);
+			webApp.getTransactionService().commit();
+			for (GwtConversation conversation : webApp.getConversationsByProject(project, null)) {
+				conversation.sendToClient(file);
+			}
+			return file.getReference();
+		} catch (Exception e) {
+			LOG.error(e);
+			throw new UploadActionException(e.getMessage());
+		} finally {
+			removeSessionFileItems(request);
 		}
-		return null;
 	}
 
 	private String insertSuffix(String name, int count) {

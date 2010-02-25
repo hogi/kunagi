@@ -1,5 +1,6 @@
 package scrum.client.files;
 
+import scrum.client.Uploader.UploadedFileHandler;
 import scrum.client.common.AScrumAction;
 
 public class UploadFileAction extends AScrumAction {
@@ -16,7 +17,15 @@ public class UploadFileAction extends AScrumAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getUploader().showUploadDialog();
+		cm.getUploader().showUploadDialog(null, new ShowFileHandler());
+	}
+
+	class ShowFileHandler implements UploadedFileHandler {
+
+		public void onFileUploaded(File file) {
+			cm.getProjectContext().showFile(file);
+		}
+
 	}
 
 }
