@@ -1,0 +1,4 @@
+"id","parentId","type","value"
+"root",,"root",
+"8bdd3434-4da8-4851-9193-eb910ee6e508","root","Package","scrum"
+"367f6ef5-f9bb-414b-92fb-260024a43918","8bdd3434-4da8-4851-9193-eb910ee6e508","Component","Pinger"
