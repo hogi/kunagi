@@ -95,24 +95,35 @@ public class ProjectContext extends AScrumComponent {
 		fileRepository = new FileRepositoryWidget();
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
-		// navigator.addItem("Project Overview", getProjectOverview());
 		navigator.addItem("Dashboard", dashboard);
-		// navigator.addItem("Task Overview", getTaskOverview());
-		navigator.addItem("Whiteboard", getWhiteboard());
-		navigator.addItem("Sprint Backlog", getSprintBacklog());
-		navigator.addItem("Product Backlog", getProductBacklog());
-		navigator.addItem("Quality Backlog", getQualityBacklog());
-		navigator.addItem("Forum", getForum());
-		navigator.addItem("Calendar", calendar);
-		navigator.addItem("Impediment List", getImpedimentList());
-		navigator.addItem("Issue Management", getIssueList());
-		navigator.addItem("Risk Management", getRiskList());
-		navigator.addItem("Wiki", getWiki());
-		navigator.addItem("File Repository", fileRepository);
-		navigator.addItem("Project Journal", getProjectEventList());
-		navigator.addItem("Next Sprint", getNextSprint());
-		navigator.addItem("Sprint History", getSprintHistory());
-		navigator.addItem("Courtroom", punishments);
+
+		String sprintGroupKey = "sprint";
+		navigator.addGroup("Sprint", sprintGroupKey);
+		navigator.addItem(sprintGroupKey, "Sprint Backlog", getSprintBacklog());
+		navigator.addItem(sprintGroupKey, "Whiteboard", getWhiteboard());
+
+		String productGroupKey = "product";
+		navigator.addGroup("Product", productGroupKey);
+		navigator.addItem(productGroupKey, "Product Backlog", getProductBacklog());
+		navigator.addItem(productGroupKey, "Quality Backlog", getQualityBacklog());
+		navigator.addItem(productGroupKey, "Issue Management", getIssueList());
+
+		String projectGroupKey = "project";
+		navigator.addGroup("Project", projectGroupKey);
+		navigator.addItem(projectGroupKey, "Impediment List", getImpedimentList());
+		navigator.addItem(projectGroupKey, "Risk Management", getRiskList());
+		navigator.addItem(projectGroupKey, "Project Journal", getProjectEventList());
+		navigator.addItem(projectGroupKey, "Next Sprint", getNextSprint());
+		navigator.addItem(projectGroupKey, "Sprint History", getSprintHistory());
+
+		String collaborationGroupKey = "collaboration";
+		navigator.addGroup("Collaboration", collaborationGroupKey);
+		navigator.addItem(collaborationGroupKey, "Forum", getForum());
+		navigator.addItem(collaborationGroupKey, "Wiki", getWiki());
+		navigator.addItem(collaborationGroupKey, "Calendar", calendar);
+		navigator.addItem(collaborationGroupKey, "File Repository", fileRepository);
+		navigator.addItem(collaborationGroupKey, "Courtroom", punishments);
+
 		navigator.addItem("Personal Preferences", getProjectUserConfig());
 	}
 

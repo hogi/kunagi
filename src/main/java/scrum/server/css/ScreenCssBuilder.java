@@ -306,14 +306,13 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	private void navigator(CssRenderer css) {
 		css.style(".NavigatorWidget-head").borderBottom(1, cNavigatorSeparator);
-		css.style(".NavigatorWidget-item").borderBottom(1, cNavigatorSeparator);
+		css.style(".NavigatorWidget-item-link").borderBottom(1, cNavigatorSeparator);
 		css.style(".NavigatorWidget-item-link a").color(cNavigatorLink).displayBlock().padding(5, 3, 5, 3)
 				.textDecorationNone();
 		css.style(".NavigatorWidget-item-link a:hover").background(cNavigatorHoverItemBackground);
-		css.style(".NavigatorWidget-item-selected .NavigatorWidget-item-link a").background(
-			cNavigatorSelectedItemBackground);
+		css.style(".NavigatorWidget-item-link-selected a").background(cNavigatorSelectedItemBackground);
 
-		css.style(".NavigatorWidget-submenu").paddingLeft(20);
+		css.style(".NavigatorWidget-submenu .NavigatorWidget-item-link a").paddingLeft(20);
 	}
 
 	private void comments(CssRenderer css) {

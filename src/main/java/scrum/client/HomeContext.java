@@ -9,8 +9,6 @@ import scrum.client.admin.UserListWidget;
 import scrum.client.common.AScrumComponent;
 import scrum.client.workspace.PagePanel;
 
-import com.google.gwt.user.client.ui.Image;
-
 public class HomeContext extends AScrumComponent {
 
 	private PagePanel sidebar;
@@ -32,8 +30,8 @@ public class HomeContext extends AScrumComponent {
 		navigator.addItem("Personal Preferences", userConfig);
 		if (getCurrentUser().isAdmin()) {
 			userList = new UserListWidget();
-			navigator.addItem((Image) null, "User Management", userList);
-			navigator.addItem((Image) null, "System Message Management", messageManager);
+			navigator.addItem("User Management", userList);
+			navigator.addItem("System Message Management", messageManager);
 		}
 
 		sidebar = new PagePanel();

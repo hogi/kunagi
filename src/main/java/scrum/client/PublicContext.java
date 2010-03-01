@@ -6,7 +6,6 @@ import scrum.client.common.AScrumComponent;
 import scrum.client.test.WidgetsTesterWidget;
 import scrum.client.workspace.PagePanel;
 
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -28,7 +27,7 @@ public class PublicContext extends AScrumComponent {
 		navigator.addItem("About", new Label(""));
 		ApplicationInfo applicationInfo = cm.getApp().getApplicationInfo();
 		if (applicationInfo != null && applicationInfo.isDevelopmentStage()) {
-			navigator.addItem((Image) null, "Widgets Tests", new WidgetsTesterWidget());
+			navigator.addItem("Widgets Tests", new WidgetsTesterWidget());
 		}
 
 		sidebar = new PagePanel();

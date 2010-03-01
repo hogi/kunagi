@@ -240,9 +240,9 @@ public class WidgetsTesterWidget extends AScrumWidget {
 
 	private void testNavigator() {
 		NavigatorWidget navigator = new NavigatorWidget();
-		navigator.addItem(Img.bundle.hyperlink(), "Item 1", "1", null);
-		navigator.addItem(Img.bundle.hyperlink(), "Item 2", "2", null);
-		navigator.addItem(Img.bundle.hyperlink(), "Item 3", "3", null);
+		navigator.addItem("Item 1", "1", null);
+		navigator.addItem("Item 2", "2", null);
+		navigator.addItem("Item 3", "3", null);
 		addTest("NavigatorWidget", navigator);
 	}
 
