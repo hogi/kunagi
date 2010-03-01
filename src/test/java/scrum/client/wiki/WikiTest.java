@@ -3,7 +3,14 @@ package scrum.client.wiki;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class WikiTest {
+public class WikiTest extends Assert {
+
+	@Test
+	public void table() {
+		assertEquals(toHtml("{|a|}"), "\n<table class='data-table'>\n<tr> <td>a</td> </tr>\n</table>\n");
+		assertEquals(toHtml("{|\n|a\n|b\n|-\n|c\n|d\n\n|}"),
+			"\n<table class='data-table'>\n<tr> <td>a</td>  <td>b</td> </tr>\n<tr> <td>c</td>  <td>d</td> </tr>\n</table>\n");
+	}
 
 	@Test
 	public void testLocalImg() {

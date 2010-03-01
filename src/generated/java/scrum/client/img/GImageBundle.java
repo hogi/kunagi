@@ -67,6 +67,9 @@ public interface GImageBundle
     @Resource(value="reqTasksClosed.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype reqTasksClosed();
 
+    @Resource(value="table.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype table();
+
     @Resource(value="trash32.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype trash32();
 

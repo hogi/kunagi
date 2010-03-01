@@ -121,6 +121,9 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".ARichtextViewEditWidget-editor").height(100).width(96, "%");
 		css.style(".AEditableTextareaWidget-editorPanel").width100();
 		css.style(".Integer-editor").width(10, "%");
+		css.style(".data-table").borderCollapseCollapse();
+		css.style(".data-table td").border(1, "#ccc").padding(5);
+		css.style(".data-table th").border(1, "#ccc").padding(5).fontWeightBold().background("#eee");
 
 		css.style(".AIntegerViewEditWidget .gwt-Button").padding(0, 3, 0, 3).fontSize(fontSizeSmall);
 

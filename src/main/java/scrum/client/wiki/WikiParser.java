@@ -314,6 +314,55 @@ public class WikiParser {
 			return;
 		}
 
+		// table
+		if (input.startsWith("{|")) {
+			burn(2);
+
+			Table table = new Table();
+			model.add(table);
+			Paragraph p = null;
+
+			while (true) {
+				boolean lastLine = false;
+				String line = getNextLine();
+				burn(line.length() + 1);
+				if (line.length() == 0 && input.length() == 0) return;
+				int closeTagIndex = line.indexOf("|}");
+				if (closeTagIndex >= 0) {
+					line = line.substring(0, closeTagIndex);
+					lastLine = true;
+				}
+
+				if (line.startsWith("|-")) {
+					table.addCell(p);
+					table.nextRow();
+					p = null;
+					continue;
+				}
+
+				if (line.startsWith("|")) {
+					table.addCell(p);
+					p = null;
+					line = line.substring(1);
+				}
+
+				if (line.length() > 0) {
+					if (p == null) {
+						p = new Paragraph(false);
+					} else {
+						p.add(new Text("\n"));
+					}
+					appendText(p, line);
+				}
+
+				if (lastLine) {
+					table.addCell(p);
+					return;
+				}
+			}
+
+		}
+
 		// toc
 		if (input.startsWith("TOC")) {
 			String line = getNextLine();
