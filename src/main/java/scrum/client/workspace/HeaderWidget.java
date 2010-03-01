@@ -3,8 +3,10 @@ package scrum.client.workspace;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.TableBuilder;
+import ilarkesto.gwt.client.SwitchingNavigatorWidget.SwitchAction;
 import ilarkesto.gwt.client.undo.UndoButtonWidget;
 import scrum.client.ApplicationInfo;
+import scrum.client.ProjectContext;
 import scrum.client.admin.LogoutAction;
 import scrum.client.common.AScrumWidget;
 import scrum.client.img.Img;
@@ -19,7 +21,6 @@ public class HeaderWidget extends AScrumWidget {
 
 	private SimplePanel wrapper;
 	private Label title;
-	private Label currentUserLabel;
 	private UndoButtonWidget undoButton;
 	private SearchInputWidget search;
 
@@ -29,9 +30,6 @@ public class HeaderWidget extends AScrumWidget {
 
 		title = new Label("");
 		title.setStyleName("HeaderWidget-title");
-
-		currentUserLabel = new Label();
-		currentUserLabel.setStyleName("HeaderWidget-user");
 
 		undoButton = new UndoButtonWidget();
 
@@ -53,17 +51,28 @@ public class HeaderWidget extends AScrumWidget {
 			title.setTitle(applicationInfo.getVersionDescription());
 		}
 
-		currentUserLabel.setText(createCurrentUserText());
-
 		TableBuilder tb = new TableBuilder();
 		tb.setCellPadding(2);
 		tb.setColumnWidths("", "", "", "60px", "100px", "50px");
-		tb.add(createLogo(), /* title, */currentUserLabel, projectOpen ? search : Gwt.createEmptyDiv(),
+		tb.add(createLogo(), createCurrentUserWidget(), projectOpen ? search : Gwt.createEmptyDiv(),
 			projectOpen ? undoButton : Gwt.createEmptyDiv(), new HyperlinkWidget(new ChangeProjectAction()),
 			new HyperlinkWidget(new LogoutAction()));
 		wrapper.setWidget(tb.createTable());
 
 		super.onUpdate();
+	}
+
+	private Widget createCurrentUserWidget() {
+		boolean loggedIn = cm.getAuth().isUserLoggedIn();
+		if (!loggedIn) return Gwt.createEmptyDiv();
+
+		ProjectContext projectContext = cm.getProjectContext();
+		if (!projectContext.isProjectOpen()) return new Label(createCurrentUserText());
+
+		SwitchAction action = projectContext.getSidebar().getNavigator().createSwitchAction(
+			projectContext.getProjectUserConfig());
+		action.setLabel(createCurrentUserText());
+		return new HyperlinkWidget(action);
 	}
 
 	private String createCurrentUserText() {
