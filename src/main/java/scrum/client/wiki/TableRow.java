@@ -24,4 +24,8 @@ public class TableRow extends AWikiElement {
 		cells.add(cell);
 	}
 
+	public List<TableCell> getCells() {
+		return cells;
+	}
+
 }

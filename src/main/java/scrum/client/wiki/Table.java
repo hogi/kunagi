@@ -32,4 +32,16 @@ public class Table extends AWikiElement {
 		currentRow = null;
 	}
 
+	public List<TableRow> getRows() {
+		return rows;
+	}
+
+	public int getColumnCount() {
+		int count = 0;
+		for (TableRow row : rows) {
+			int cells = row.getCells().size();
+			if (cells > count) count = cells;
+		}
+		return count;
+	}
 }

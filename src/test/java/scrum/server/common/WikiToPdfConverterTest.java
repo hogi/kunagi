@@ -40,6 +40,14 @@ public class WikiToPdfConverterTest {
 		sb.append("# item 1\n");
 		sb.append("# item 2\n");
 		sb.append("# item 3\n\n");
+		sb.append("= Section 3 =\n\n");
+		sb.append("{|\n");
+		sb.append("| first cell in upper left\n");
+		sb.append("| ''second cell in upper right''\n");
+		sb.append("|-\n");
+		sb.append("| <code>third cell in lower left</code>\n");
+		sb.append("| fourth cell in lower right\n");
+		sb.append("|}\n");
 		WikiParser parser = new WikiParser(sb.toString());
 		WikiModel model = parser.parse();
 

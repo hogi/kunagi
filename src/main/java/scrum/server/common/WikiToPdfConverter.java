@@ -15,6 +15,9 @@ import scrum.client.wiki.ItemList;
 import scrum.client.wiki.Link;
 import scrum.client.wiki.Paragraph;
 import scrum.client.wiki.Pre;
+import scrum.client.wiki.Table;
+import scrum.client.wiki.TableCell;
+import scrum.client.wiki.TableRow;
 import scrum.client.wiki.Text;
 import scrum.client.wiki.WikiModel;
 import scrum.client.wiki.WikiParser;
@@ -54,7 +57,22 @@ public class WikiToPdfConverter extends APdfCreator {
 			processItemList((ItemList) element, parent);
 			return;
 		}
+		if (element instanceof Table) {
+			parent.nl(defaultFont);
+			processTable((Table) element, parent);
+			return;
+		}
 		throw new RuntimeException("Unsupported Wiki-Element: " + element.getClass().getName());
+	}
+
+	private void processTable(Table wikiTable, APdfContainerElement parent) {
+		ATable pdfTable = parent.table(wikiTable.getColumnCount());
+		for (TableRow wikiRow : wikiTable.getRows()) {
+			ARow pdfRow = pdfTable.row();
+			for (TableCell wikiCell : wikiRow.getCells()) {
+				processParagraph(wikiCell.getParagraph(), pdfRow.cell());
+			}
+		}
 	}
 
 	private void processItemList(ItemList list, APdfContainerElement parent) {
