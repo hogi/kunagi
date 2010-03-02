@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GQuality
             extends AEntity
-            implements ilarkesto.search.Searchable, java.lang.Comparable<Quality> {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, ilarkesto.search.Searchable, java.lang.Comparable<Quality> {
 
     // --- AEntity ---
 

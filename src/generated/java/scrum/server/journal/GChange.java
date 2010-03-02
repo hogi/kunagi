@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GChange
             extends AEntity
-            implements java.lang.Comparable<Change> {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Change> {
 
     // --- AEntity ---
 

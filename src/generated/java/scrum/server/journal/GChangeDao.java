@@ -32,6 +32,14 @@ public abstract class GChangeDao
         return Change.class;
     }
 
+    public Set<Change> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<Change>() {
+            public boolean test(Change e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         changesByParentCache.clear();

@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GRequirementEstimationVote
             extends AEntity
-            implements java.lang.Comparable<RequirementEstimationVote> {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<RequirementEstimationVote> {
 
     // --- AEntity ---
 

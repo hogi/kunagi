@@ -32,6 +32,14 @@ public abstract class GEmoticonDao
         return Emoticon.class;
     }
 
+    public Set<Emoticon> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<Emoticon>() {
+            public boolean test(Emoticon e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         emoticonsByParentCache.clear();

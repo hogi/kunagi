@@ -32,6 +32,14 @@ public abstract class GQualityDao
         return Quality.class;
     }
 
+    public Set<Quality> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<Quality>() {
+            public boolean test(Quality e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         qualitysByProjectCache.clear();

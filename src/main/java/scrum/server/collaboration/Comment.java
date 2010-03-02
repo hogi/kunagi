@@ -1,6 +1,8 @@
 package scrum.server.collaboration;
 
+import ilarkesto.auth.Auth;
 import ilarkesto.base.Utl;
+import scrum.server.admin.User;
 
 public class Comment extends GComment {
 
@@ -11,6 +13,14 @@ public class Comment extends GComment {
 			getDao().deleteEntity(this);
 		}
 
+	}
+
+	public boolean isVisibleFor(User user) {
+		return Auth.isVisible(getParent(), user);
+	}
+
+	public boolean isEditableBy(User user) {
+		return isAuthor(user);
 	}
 
 	@Override

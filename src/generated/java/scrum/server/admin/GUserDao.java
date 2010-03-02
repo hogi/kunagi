@@ -32,6 +32,14 @@ public abstract class GUserDao
         return User.class;
     }
 
+    public Set<User> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<User>() {
+            public boolean test(User e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         usersByNameCache.clear();

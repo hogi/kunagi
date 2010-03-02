@@ -32,6 +32,14 @@ public abstract class GTaskDao
         return Task.class;
     }
 
+    public Set<Task> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<Task>() {
+            public boolean test(Task e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         tasksByRequirementCache.clear();

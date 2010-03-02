@@ -1,5 +1,7 @@
 package scrum.server.collaboration;
 
+import scrum.server.admin.User;
+
 public class Subject extends GSubject {
 
 	public void updateNumber() {
@@ -18,6 +20,10 @@ public class Subject extends GSubject {
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
 		updateNumber();
+	}
+
+	public boolean isVisibleFor(User user) {
+		return getProject().isVisibleFor(user);
 	}
 
 	@Override

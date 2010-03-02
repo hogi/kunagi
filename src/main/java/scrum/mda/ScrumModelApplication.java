@@ -623,7 +623,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	@Override
 	protected EntityModel createEntityModel(String name, String packageName) {
 		EntityModel model = super.createEntityModel(name, packageName);
-		// model.setViewProtected(true);
+		model.setViewProtected(true);
 		// model.setEditProtected(true);
 		return model;
 	}

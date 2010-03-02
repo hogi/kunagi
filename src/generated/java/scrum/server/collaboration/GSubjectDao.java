@@ -32,6 +32,14 @@ public abstract class GSubjectDao
         return Subject.class;
     }
 
+    public Set<Subject> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<Subject>() {
+            public boolean test(Subject e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         subjectsByProjectCache.clear();

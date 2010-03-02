@@ -32,6 +32,14 @@ public abstract class GCommentDao
         return Comment.class;
     }
 
+    public Set<Comment> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<Comment>() {
+            public boolean test(Comment e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         commentsByParentCache.clear();

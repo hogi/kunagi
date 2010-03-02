@@ -1,6 +1,7 @@
 package scrum.server.impediments;
 
 import ilarkesto.base.time.Date;
+import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 
 public class Impediment extends GImpediment implements Numbered {
@@ -15,6 +16,14 @@ public class Impediment extends GImpediment implements Numbered {
 
 	public String getReference() {
 		return scrum.client.impediments.Impediment.REFERENCE_PREFIX + getNumber();
+	}
+
+	public boolean isVisibleFor(User user) {
+		return getProject().isVisibleFor(user);
+	}
+
+	public boolean isEditableBy(User user) {
+		return getProject().isEditableBy(user);
 	}
 
 	@Override

@@ -32,6 +32,14 @@ public abstract class GRequirementDao
         return Requirement.class;
     }
 
+    public Set<Requirement> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<Requirement>() {
+            public boolean test(Requirement e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         requirementsByProjectCache.clear();

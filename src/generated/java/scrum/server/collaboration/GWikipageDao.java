@@ -32,6 +32,14 @@ public abstract class GWikipageDao
         return Wikipage.class;
     }
 
+    public Set<Wikipage> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<Wikipage>() {
+            public boolean test(Wikipage e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         wikipagesByProjectCache.clear();

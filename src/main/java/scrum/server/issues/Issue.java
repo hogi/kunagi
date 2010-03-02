@@ -1,6 +1,7 @@
 package scrum.server.issues;
 
 import ilarkesto.base.time.DateAndTime;
+import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 
 public class Issue extends GIssue implements Numbered {
@@ -23,6 +24,14 @@ public class Issue extends GIssue implements Numbered {
 
 	public boolean isClosed() {
 		return isCloseDateSet();
+	}
+
+	public boolean isVisibleFor(User user) {
+		return getProject().isVisibleFor(user);
+	}
+
+	public boolean isEditableBy(User user) {
+		return getProject().isEditableBy(user);
 	}
 
 	@Override

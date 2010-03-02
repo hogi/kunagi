@@ -1,6 +1,7 @@
 package scrum.server.project;
 
 import ilarkesto.base.time.Date;
+import scrum.server.admin.User;
 import scrum.server.common.BurndownSnapshot;
 
 public class ProjectSprintSnapshot extends GProjectSprintSnapshot implements Comparable<ProjectSprintSnapshot>,
@@ -26,6 +27,14 @@ public class ProjectSprintSnapshot extends GProjectSprintSnapshot implements Com
 	@Override
 	public int compareTo(ProjectSprintSnapshot other) {
 		return getDate().compareTo(other.getDate());
+	}
+
+	public boolean isVisibleFor(User user) {
+		return getProject().isVisibleFor(user);
+	}
+
+	public boolean isEditableBy(User user) {
+		return false;
 	}
 
 	@Override

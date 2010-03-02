@@ -1,5 +1,6 @@
 package scrum.server.sprint;
 
+import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.project.Project;
 
@@ -45,6 +46,14 @@ public class Task extends GTask implements Numbered {
 			reset();
 		}
 
+	}
+
+	public Project getProject() {
+		return getRequirement().getProject();
+	}
+
+	public boolean isVisibleFor(User user) {
+		return getProject().isVisibleFor(user);
 	}
 
 	@Override

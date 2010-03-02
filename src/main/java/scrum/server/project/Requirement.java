@@ -89,6 +89,10 @@ public class Requirement extends GRequirement implements Numbered {
 		return taskDao.getTasksByRequirement(this);
 	}
 
+	public boolean isVisibleFor(User user) {
+		return getProject().isVisibleFor(user);
+	}
+
 	@Override
 	public String toString() {
 		return getReferenceAndLabel();

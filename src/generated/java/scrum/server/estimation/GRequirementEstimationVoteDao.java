@@ -32,6 +32,14 @@ public abstract class GRequirementEstimationVoteDao
         return RequirementEstimationVote.class;
     }
 
+    public Set<RequirementEstimationVote> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<RequirementEstimationVote>() {
+            public boolean test(RequirementEstimationVote e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         requirementEstimationVotesByRequirementCache.clear();

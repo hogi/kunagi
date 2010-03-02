@@ -33,6 +33,10 @@ public class File extends GFile {
 		return scrum.client.files.File.REFERENCE_PREFIX + getNumber();
 	}
 
+	public boolean isEditableBy(User user) {
+		return getProject().isEditableBy(user);
+	}
+
 	@Override
 	public String toString() {
 		return getReferenceAndLabel();

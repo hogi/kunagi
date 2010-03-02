@@ -32,6 +32,14 @@ public abstract class GProjectEventDao
         return ProjectEvent.class;
     }
 
+    public Set<ProjectEvent> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<ProjectEvent>() {
+            public boolean test(ProjectEvent e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         projectEventsByProjectCache.clear();

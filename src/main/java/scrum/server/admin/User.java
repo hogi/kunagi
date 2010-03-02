@@ -37,6 +37,10 @@ public class User extends GUser {
 		if (!isColorSet()) setColor(getDefaultColor());
 	}
 
+	public boolean isVisibleFor(User user) {
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		return getName();

@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GRisk
             extends AEntity
-            implements ilarkesto.search.Searchable, java.lang.Comparable<Risk> {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, ilarkesto.search.Searchable, java.lang.Comparable<Risk> {
 
     // --- AEntity ---
 

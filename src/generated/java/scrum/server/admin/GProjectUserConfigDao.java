@@ -32,6 +32,14 @@ public abstract class GProjectUserConfigDao
         return ProjectUserConfig.class;
     }
 
+    public Set<ProjectUserConfig> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<ProjectUserConfig>() {
+            public boolean test(ProjectUserConfig e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         projectUserConfigsByProjectCache.clear();

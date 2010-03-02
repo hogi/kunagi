@@ -32,6 +32,14 @@ public abstract class GImpedimentDao
         return Impediment.class;
     }
 
+    public Set<Impediment> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<Impediment>() {
+            public boolean test(Impediment e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         impedimentsByProjectCache.clear();

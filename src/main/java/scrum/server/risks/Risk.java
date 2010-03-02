@@ -1,6 +1,7 @@
 package scrum.server.risks;
 
 import scrum.client.risks.RiskComputer;
+import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 
 public class Risk extends GRisk implements Numbered {
@@ -38,6 +39,10 @@ public class Risk extends GRisk implements Numbered {
 		super.ensureIntegrity();
 		updateNumber();
 
+	}
+
+	public boolean isVisibleFor(User user) {
+		return getProject().isVisibleFor(user);
 	}
 
 	@Override

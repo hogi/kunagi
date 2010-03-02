@@ -1,5 +1,6 @@
 package scrum.server.journal;
 
+import scrum.server.admin.User;
 import scrum.server.collaboration.ChatMessage;
 import scrum.server.collaboration.ChatMessageDao;
 
@@ -21,6 +22,14 @@ public class ProjectEvent extends GProjectEvent {
 		msg.setDateAndTime(getDateAndTime());
 		msg.setText(getLabel());
 		return msg;
+	}
+
+	public boolean isVisibleFor(User user) {
+		return getProject().isVisibleFor(user);
+	}
+
+	public boolean isEditableBy(User user) {
+		return false;
 	}
 
 	@Override

@@ -8,6 +8,10 @@ public class Release extends GRelease {
 		return getProject().isVisibleFor(user);
 	}
 
+	public boolean isEditableBy(User user) {
+		return getProject().isEditableBy(user);
+	}
+
 	@Override
 	public String toString() {
 		return getLabel();

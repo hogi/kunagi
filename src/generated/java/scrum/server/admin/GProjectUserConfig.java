@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GProjectUserConfig
             extends AEntity
-            implements java.lang.Comparable<ProjectUserConfig> {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<ProjectUserConfig> {
 
     // --- AEntity ---
 

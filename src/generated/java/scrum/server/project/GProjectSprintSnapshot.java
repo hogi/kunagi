@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GProjectSprintSnapshot
             extends AEntity
-            implements java.lang.Comparable<ProjectSprintSnapshot> {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<ProjectSprintSnapshot> {
 
     // --- AEntity ---
 

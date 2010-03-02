@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GChatMessage
             extends AEntity
-            implements java.lang.Comparable<ChatMessage> {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<ChatMessage> {
 
     // --- AEntity ---
 

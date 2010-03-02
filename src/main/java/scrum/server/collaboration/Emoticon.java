@@ -1,13 +1,16 @@
 package scrum.server.collaboration;
 
-import java.util.*;
-import ilarkesto.persistence.*;
-import ilarkesto.logging.*;
-import ilarkesto.base.*;
-import ilarkesto.base.time.*;
-import ilarkesto.auth.*;
+import ilarkesto.auth.Auth;
+import scrum.server.admin.User;
 
-public class Emoticon
-            extends GEmoticon {
+public class Emoticon extends GEmoticon {
+
+	public boolean isVisibleFor(User user) {
+		return Auth.isVisible(getParent(), user);
+	}
+
+	public boolean isEditableBy(User user) {
+		return isOwner(user);
+	}
 
 }

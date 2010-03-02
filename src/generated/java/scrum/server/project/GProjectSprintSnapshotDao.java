@@ -32,6 +32,14 @@ public abstract class GProjectSprintSnapshotDao
         return ProjectSprintSnapshot.class;
     }
 
+    public Set<ProjectSprintSnapshot> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<ProjectSprintSnapshot>() {
+            public boolean test(ProjectSprintSnapshot e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         sprintsCache = null;

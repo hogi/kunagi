@@ -6,6 +6,7 @@ import ilarkesto.core.logging.Log;
 import java.util.List;
 import java.util.Set;
 
+import scrum.server.admin.User;
 import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
 
@@ -116,6 +117,10 @@ public class Sprint extends GSprint {
 		// getDao().deleteEntity(this);
 		// }
 
+	}
+
+	public boolean isVisibleFor(User user) {
+		return getProject().isVisibleFor(user);
 	}
 
 	@Override

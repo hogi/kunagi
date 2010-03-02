@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GIssue
             extends AEntity
-            implements ilarkesto.search.Searchable, java.lang.Comparable<Issue> {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, ilarkesto.search.Searchable, java.lang.Comparable<Issue> {
 
     // --- AEntity ---
 

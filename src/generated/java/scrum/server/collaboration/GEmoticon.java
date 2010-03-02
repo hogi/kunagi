@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GEmoticon
             extends AEntity
-            implements java.lang.Comparable<Emoticon> {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Emoticon> {
 
     // --- AEntity ---
 

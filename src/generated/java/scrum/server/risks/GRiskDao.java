@@ -32,6 +32,14 @@ public abstract class GRiskDao
         return Risk.class;
     }
 
+    public Set<Risk> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<Risk>() {
+            public boolean test(Risk e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         risksByProjectCache.clear();

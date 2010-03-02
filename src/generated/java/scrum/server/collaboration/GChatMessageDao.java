@@ -32,6 +32,14 @@ public abstract class GChatMessageDao
         return ChatMessage.class;
     }
 
+    public Set<ChatMessage> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<ChatMessage>() {
+            public boolean test(ChatMessage e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
     // --- clear caches ---
     public void clearCaches() {
         chatMessagesByProjectCache.clear();

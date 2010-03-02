@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GSprint
             extends AEntity
-            implements ilarkesto.search.Searchable, java.lang.Comparable<Sprint> {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, ilarkesto.search.Searchable, java.lang.Comparable<Sprint> {
 
     // --- AEntity ---
 

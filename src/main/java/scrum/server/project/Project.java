@@ -532,6 +532,10 @@ public class Project extends GProject {
 		return containsParticipant(user);
 	}
 
+	public boolean isEditableBy(User user) {
+		return containsParticipant(user);
+	}
+
 	public boolean isDeletableBy(User user) {
 		return containsAdmin(user);
 	}
