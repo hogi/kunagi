@@ -20,6 +20,94 @@ import ilarkesto.gwt.client.*;
 public abstract class GDao
             extends ilarkesto.gwt.client.AGwtDao {
 
+    // --- Change ---
+
+    private Map<String, scrum.client.journal.Change> changes = new HashMap<String, scrum.client.journal.Change>();
+
+    public final void clearChanges() {
+        changes.clear();
+    }
+
+    public final boolean containsChange(scrum.client.journal.Change change) {
+        return changes.containsKey(change.getId());
+    }
+
+    public final void deleteChange(scrum.client.journal.Change change) {
+        changes.remove(change.getId());
+        entityDeleted(change);
+    }
+
+    public final void createChange(scrum.client.journal.Change change) {
+        changes.put(change.getId(), change);
+        entityCreated(change);
+    }
+
+    private final void updateChange(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.journal.Change entity = changes.get(id);
+        if (entity == null) {
+            entity = new scrum.client.journal.Change(data);
+            changes.put(id, entity);
+            ilarkesto.core.logging.Log.DEBUG("Change received: " + entity.getId() + " ("+entity+")");
+        } else {
+            entity.updateProperties(data);
+            ilarkesto.core.logging.Log.DEBUG("Change updated: " + entity);
+        }
+        onEntityModifiedRemotely(entity);
+    }
+
+    public final scrum.client.journal.Change getChange(String id) {
+        scrum.client.journal.Change ret = changes.get(id);
+        if (ret == null) throw new RuntimeException("Change does not exist: " + id);
+        return ret;
+    }
+
+    public final Set<scrum.client.journal.Change> getChanges(Collection<String> ids) {
+        Set<scrum.client.journal.Change> ret = new HashSet<scrum.client.journal.Change>();
+        for (String id : ids) {
+            scrum.client.journal.Change entity = changes.get(id);
+            if (entity == null) throw new RuntimeException("Change does not exist: " + id);
+            ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.journal.Change> getChanges() {
+        return new ArrayList<scrum.client.journal.Change>(changes.values());
+    }
+
+    public final List<scrum.client.journal.Change> getChangesByParent(ilarkesto.gwt.client.AGwtEntity parent) {
+        List<scrum.client.journal.Change> ret = new ArrayList<scrum.client.journal.Change>();
+        for (scrum.client.journal.Change entity : changes.values()) {
+            if (entity.isParent(parent)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.journal.Change> getChangesByUser(scrum.client.admin.User user) {
+        List<scrum.client.journal.Change> ret = new ArrayList<scrum.client.journal.Change>();
+        for (scrum.client.journal.Change entity : changes.values()) {
+            if (entity.isUser(user)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.journal.Change> getChangesByDateAndTime(ilarkesto.gwt.client.DateAndTime dateAndTime) {
+        List<scrum.client.journal.Change> ret = new ArrayList<scrum.client.journal.Change>();
+        for (scrum.client.journal.Change entity : changes.values()) {
+            if (entity.isDateAndTime(dateAndTime)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.journal.Change> getChangesByProperty(java.lang.String property) {
+        List<scrum.client.journal.Change> ret = new ArrayList<scrum.client.journal.Change>();
+        for (scrum.client.journal.Change entity : changes.values()) {
+            if (entity.isProperty(property)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- ChatMessage ---
 
     private Map<String, scrum.client.collaboration.ChatMessage> chatMessages = new HashMap<String, scrum.client.collaboration.ChatMessage>();
@@ -2148,6 +2236,7 @@ public abstract class GDao
     }
 
     public final void clearAllEntities() {
+            clearChanges();
             clearChatMessages();
             clearComments();
             clearEmoticons();
@@ -2176,6 +2265,7 @@ public abstract class GDao
     protected final Collection<Map<String, ? extends AGwtEntity>> getEntityMaps() {
         if (entityMaps == null) {
             entityMaps = new ArrayList<Map<String, ? extends AGwtEntity>>();
+            entityMaps.add(changes);
             entityMaps.add(chatMessages);
             entityMaps.add(comments);
             entityMaps.add(emoticons);
@@ -2202,6 +2292,10 @@ public abstract class GDao
 
     @Override
     protected final void updateLocalEntity(String type, Map data) {
+        if (type.equals(scrum.client.journal.Change.ENTITY_TYPE)) {
+            updateChange(data);
+            return;
+        }
         if (type.equals(scrum.client.collaboration.ChatMessage.ENTITY_TYPE)) {
             updateChatMessage(data);
             return;

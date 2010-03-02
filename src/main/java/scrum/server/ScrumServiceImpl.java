@@ -33,6 +33,7 @@ import scrum.server.common.Transient;
 import scrum.server.files.File;
 import scrum.server.impediments.Impediment;
 import scrum.server.issues.Issue;
+import scrum.server.journal.ChangeDao;
 import scrum.server.journal.ProjectEvent;
 import scrum.server.journal.ProjectEventDao;
 import scrum.server.project.Project;
@@ -56,6 +57,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private transient ScrumWebApplication webApplication;
 	private transient ProjectEventDao projectEventDao;
 	private transient EmoticonDao emoticonDao;
+	private transient ChangeDao changeDao;
+
+	public void setChangeDao(ChangeDao changeDao) {
+		this.changeDao = changeDao;
+	}
 
 	public void setEmoticonDao(EmoticonDao emoticonDao) {
 		this.emoticonDao = emoticonDao;
@@ -459,6 +465,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	protected void onRequestComments(GwtConversation conversation, String parentId) {
 		conversation.sendToClient(commentDao.getCommentsByParentId(parentId));
+	}
+
+	@Override
+	protected void onRequestChanges(GwtConversation conversation, String parentId) {
+		conversation.sendToClient(changeDao.getChangesByParentId(parentId));
 	}
 
 	@Override

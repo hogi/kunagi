@@ -44,6 +44,8 @@ public interface GScrumService
 
     DataTransferObject requestComments(java.lang.String parentId);
 
+    DataTransferObject requestChanges(java.lang.String parentId);
+
     DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties);
 
     DataTransferObject createEntity(java.lang.String type, java.util.Map properties);

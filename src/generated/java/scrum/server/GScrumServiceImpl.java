@@ -35,6 +35,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestRisks(GwtConversation conversation);
     protected abstract void onRequestRequirementEstimationVotes(GwtConversation conversation, java.lang.String requirementId);
     protected abstract void onRequestComments(GwtConversation conversation, java.lang.String parentId);
+    protected abstract void onRequestChanges(GwtConversation conversation, java.lang.String parentId);
     protected abstract void onChangeProperties(GwtConversation conversation, java.lang.String entityId, java.util.Map properties);
     protected abstract void onCreateEntity(GwtConversation conversation, java.lang.String type, java.util.Map properties);
     protected abstract void onDeleteEntity(GwtConversation conversation, java.lang.String entityId);
@@ -285,6 +286,25 @@ public abstract class GScrumServiceImpl
             onRequestComments(conversation, parentId);
         } catch (Throwable t) {
             handleServiceMethodException("requestComments",t);
+            throw new RuntimeException(t);
+        }
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public scrum.client.DataTransferObject requestChanges(java.lang.String parentId) {
+        LOG.debug("requestChanges");
+        WebSession session = (WebSession) getSession();
+        GwtConversation conversation = session.getGwtConversation();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:requestChanges");
+        context.bindCurrentThread();
+        try {
+            onRequestChanges(conversation, parentId);
+        } catch (Throwable t) {
+            handleServiceMethodException("requestChanges",t);
             throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

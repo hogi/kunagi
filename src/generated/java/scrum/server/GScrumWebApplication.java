@@ -28,6 +28,31 @@ public abstract class GScrumWebApplication
     // - composites
     // -----------------------------------------------------------
 
+    // --- changeDao ---
+
+    private scrum.server.journal.ChangeDao changeDao;
+
+    public final scrum.server.journal.ChangeDao getChangeDao() {
+        if (changeDao == null) {
+            changeDao = createChangeDao();
+            initializeChangeDao(changeDao);
+        }
+        return changeDao;
+    }
+
+    protected scrum.server.journal.ChangeDao createChangeDao() {
+        return changeDao = ilarkesto.base.Reflect.newInstance(scrum.server.journal.ChangeDao.class);
+    }
+
+    protected void initializeChangeDao(scrum.server.journal.ChangeDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetChangeDao() {
+        changeDao = null;
+    }
+
     // --- chatMessageDao ---
 
     private scrum.server.collaboration.ChatMessageDao chatMessageDao;

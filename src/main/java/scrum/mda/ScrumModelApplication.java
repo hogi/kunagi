@@ -116,6 +116,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("requestRisks");
 			gwtServiceModel.addMethod("requestRequirementEstimationVotes").addParameter("requirementId", String.class);
 			gwtServiceModel.addMethod("requestComments").addParameter("parentId", String.class);
+			gwtServiceModel.addMethod("requestChanges").addParameter("parentId", String.class);
 			gwtServiceModel.addMethod("changeProperties").addParameter("entityId", String.class).addParameter(
 				"properties", Map.class);
 			gwtServiceModel.addMethod("createEntity").addParameter("type", String.class).addParameter("properties",
@@ -555,6 +556,20 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return emoticonModel;
 	}
 
+	private EntityModel changeModel;
+
+	public EntityModel getChangeModel() {
+		if (changeModel == null) {
+			changeModel = createEntityModel("Change", "journal");
+			changeModel.setGwtSupport(true);
+			changeModel.addReference("parent", getEntityModel()).setMaster(true);
+			changeModel.addReference("user", getUserModel());
+			changeModel.addProperty("dateAndTime", DateAndTime.class).setMandatory(true);
+			changeModel.addStringProperty("property");
+		}
+		return changeModel;
+	}
+
 	private EntityModel commentModel;
 
 	public EntityModel getCommentModel() {
@@ -603,6 +618,14 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	@Override
 	protected String getBasePackageName() {
 		return "scrum.server";
+	}
+
+	@Override
+	protected EntityModel createEntityModel(String name, String packageName) {
+		EntityModel model = super.createEntityModel(name, packageName);
+		// model.setViewProtected(true);
+		// model.setEditProtected(true);
+		return model;
 	}
 
 	@Override

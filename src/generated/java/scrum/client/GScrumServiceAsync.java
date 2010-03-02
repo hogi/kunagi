@@ -44,6 +44,8 @@ public interface GScrumServiceAsync {
 
     void requestComments(java.lang.String parentId, AsyncCallback<DataTransferObject> callback);
 
+    void requestChanges(java.lang.String parentId, AsyncCallback<DataTransferObject> callback);
+
     void changeProperties(java.lang.String entityId, java.util.Map properties, AsyncCallback<DataTransferObject> callback);
 
     void createEntity(java.lang.String type, java.util.Map properties, AsyncCallback<DataTransferObject> callback);

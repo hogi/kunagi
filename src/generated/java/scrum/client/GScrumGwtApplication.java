@@ -142,6 +142,14 @@ public abstract class GScrumGwtApplication
         callRequestComments(parentId,  null);
     }
 
+    public final void callRequestChanges(java.lang.String parentId,  Runnable callback) {
+        getScrumService().requestChanges(parentId,  new DefaultCallback<DataTransferObject>(callback));
+    }
+
+    public final void callRequestChanges(java.lang.String parentId) {
+        callRequestChanges(parentId,  null);
+    }
+
     public final void callChangeProperties(java.lang.String entityId, java.util.Map properties,  Runnable callback) {
         getScrumService().changeProperties(entityId, properties,  new DefaultCallback<DataTransferObject>(callback));
     }
