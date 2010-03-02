@@ -37,6 +37,7 @@ public class RiskWidget extends AScrumWidget {
 		});
 		tb.addFieldRow("Impact Mitigation", risk.getImpactMitigationModel());
 		tb.addFieldRow("Probability Mitigation", risk.getProbabilityMitigationModel());
+		tb.addFieldRow("My emoticon", risk.createCurrentUserEmotionEditor());
 
 		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(risk));
 	}

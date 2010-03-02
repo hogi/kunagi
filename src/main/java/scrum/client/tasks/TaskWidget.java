@@ -80,6 +80,8 @@ public class TaskWidget extends AWidget {
 			}
 		}, 3);
 
+		tb.addFieldRow("My emoticon", task.createCurrentUserEmotionEditor());
+
 		return wideMode ? TableBuilder.row(20, tb.createTable(), new CommentsWidget(task)) : Gwt.createFlowPanel(tb
 				.createTable(), new CommentsWidget(task));
 	}

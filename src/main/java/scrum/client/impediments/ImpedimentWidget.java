@@ -24,6 +24,7 @@ public class ImpedimentWidget extends AScrumWidget {
 		tb.addFieldRow("Date", new DateEditorWidget(impediment.getDateModel()));
 		tb.addFieldRow("Description", impediment.getDescriptionModel());
 		tb.addFieldRow("Solution", impediment.getSolutionModel());
+		tb.addFieldRow("My emoticon", impediment.createCurrentUserEmotionEditor());
 
 		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(impediment));
 	}

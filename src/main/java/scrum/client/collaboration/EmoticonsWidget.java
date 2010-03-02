@@ -42,10 +42,10 @@ public class EmoticonsWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setWidth(null);
 		for (Emoticon emoticon : emoticons) {
-			if (emoticon.getOwner() == currentUser) continue;
+			// if (emoticon.getOwner() == currentUser) continue;
 			tb.add(createEmoticonWidget(emoticon));
 		}
-		tb.add(createEmoticonEditor());
+		// tb.add(createEmoticonEditor());
 		wrapper.setWidget(tb.createTable());
 	}
 

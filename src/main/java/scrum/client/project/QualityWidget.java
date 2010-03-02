@@ -23,6 +23,7 @@ public class QualityWidget extends AScrumWidget {
 		tb.addFieldRow("Label", quality.getLabelModel());
 		tb.addFieldRow("Description", quality.getDescriptionModel());
 		tb.addFieldRow("Test", quality.getTestDescriptionModel());
+		tb.addFieldRow("My emoticon", quality.createCurrentUserEmotionEditor());
 
 		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(quality));
 	}

@@ -3,6 +3,7 @@ package scrum.client.common;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.editor.AOptionEditorModel;
+import ilarkesto.gwt.client.editor.DropdownEditorWidget;
 
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,10 @@ public abstract class AScrumGwtEntity extends AGwtEntity {
 			if (emoticon.isOwner(currentUser)) return emoticon;
 		}
 		return null;
+	}
+
+	public DropdownEditorWidget<String> createCurrentUserEmotionEditor() {
+		return new DropdownEditorWidget<String>(getCurrentUserEmotionModel(), Emoticon.EMOTION_LABEL_PROVIDER);
 	}
 
 	public AOptionEditorModel<String> getCurrentUserEmotionModel() {

@@ -84,6 +84,8 @@ public class RequirementWidget extends AWidget {
 			}
 		});
 
+		left.addFieldRow("My emoticon", requirement.createCurrentUserEmotionEditor());
+
 		TableBuilder right = new TableBuilder();
 		if (planningPoker) {
 			right.addRow(new PlanningPokerWidget(requirement));

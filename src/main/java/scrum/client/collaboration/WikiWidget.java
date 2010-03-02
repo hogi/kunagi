@@ -16,6 +16,7 @@ import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -60,6 +61,9 @@ public class WikiWidget extends AScrumWidget {
 
 			FlowPanel left = new FlowPanel();
 			left.add(editor);
+			left.add(Gwt.createSpacer(1, 5));
+			left.add(TableBuilder.row(5, new Label("My emoticon"), wikipage.createCurrentUserEmotionEditor(),
+				new EmoticonsWidget(wikipage)));
 			left.add(Gwt.createSpacer(1, 10));
 			left.add(ScrumGwt.createPdfLink("Downlad as PDF", "wikipage", wikipage));
 			left.add(Gwt.createSpacer(1, 10));
