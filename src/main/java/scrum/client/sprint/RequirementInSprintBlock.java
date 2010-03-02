@@ -66,6 +66,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 
 		requirementWidget = new RequirementWidget(requirement, false, false, true, false, false);
 		taskList = new BlockListWidget<Task>(TaskInRequirementBlock.FACTORY);
+		taskList.setAutoSorter(Task.NUMBER_COMPARATOR);
 		commentsWidget = new CommentsWidget(requirement);
 
 		FlowPanel left = new FlowPanel();
