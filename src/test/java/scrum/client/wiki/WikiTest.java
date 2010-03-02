@@ -15,6 +15,14 @@ public class WikiTest extends Assert {
 	}
 
 	@Test
+	public void tableWithHeaders() {
+		assertEquals(toHtml("{|\n!a\n!b\n|-\n|c\n|d\n\n|}"),
+			"\n<table class='data-table'>\n<tr> <th>a</th>  <th>b</th> </tr>\n<tr> <td>c</td>  <td>d</td> </tr>\n</table>\n");
+		assertEquals(toHtml("{|\n!a!!b\n|-\n!c||d\n|}"),
+			"\n<table class='data-table'>\n<tr> <th>a</th>  <th>b</th> </tr>\n<tr> <th>c</th>  <td>d</td> </tr>\n</table>\n");
+	}
+
+	@Test
 	public void testLocalImg() {
 		Assert.assertEquals(toHtml("[[Image:fle1]]"),
 			"<a onclick='window.scrum.showEntityByReference(\"fle1\")'><img src=\"fle1\"></a>");

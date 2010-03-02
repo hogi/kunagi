@@ -1,5 +1,6 @@
 package scrum.client.wiki;
 
+import ilarkesto.core.base.Str;
 import scrum.client.ScrumGwtApplication;
 
 /**
@@ -321,6 +322,7 @@ public class WikiParser {
 			Table table = new Table();
 			model.add(table);
 			Paragraph p = null;
+			boolean header = false;
 
 			while (true) {
 				boolean lastLine = false;
@@ -334,15 +336,17 @@ public class WikiParser {
 				}
 
 				if (line.startsWith("|-")) {
-					table.addCell(p);
+					table.addCell(p, header);
 					table.nextRow();
 					p = null;
+					header = false;
 					continue;
 				}
 
-				if (line.startsWith("|")) {
-					table.addCell(p);
+				if (line.startsWith("|") || line.startsWith("!")) {
+					table.addCell(p, header);
 					p = null;
+					header = line.startsWith("!");
 					line = line.substring(1);
 				}
 
@@ -352,21 +356,22 @@ public class WikiParser {
 					} else {
 						p.add(new Text("\n"));
 					}
-					int cellSepIndex = line.indexOf("||");
+					int cellSepIndex = Str.indexOf(line, new String[] { "||", "!!", "!|" }, 0);
 					while (cellSepIndex >= 0) {
 						String cellContent = line.substring(0, cellSepIndex);
 						appendText(p, cellContent);
-						table.addCell(p);
+						table.addCell(p, header);
 						p = new Paragraph(false);
+						header = line.charAt(cellSepIndex) == '!';
 
 						line = line.substring(cellSepIndex + 2);
-						cellSepIndex = line.indexOf("||");
+						cellSepIndex = Str.indexOf(line, new String[] { "||", "!!", "!|" }, 0);
 					}
 					appendText(p, line);
 				}
 
 				if (lastLine) {
-					table.addCell(p);
+					table.addCell(p, header);
 					return;
 				}
 			}

@@ -19,13 +19,13 @@ public class Table extends AWikiElement {
 		return sb.toString();
 	}
 
-	public void addCell(Paragraph p) {
+	public void addCell(Paragraph p, boolean header) {
 		if (p == null) return;
 		if (currentRow == null) {
 			currentRow = new TableRow();
 			rows.add(currentRow);
 		}
-		currentRow.addCell(new TableCell(p));
+		currentRow.addCell(new TableCell(p, header));
 	}
 
 	public void nextRow() {

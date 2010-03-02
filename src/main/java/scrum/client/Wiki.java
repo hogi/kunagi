@@ -98,7 +98,7 @@ public class Wiki extends AScrumComponent implements RichtextFormater {
 
 				public void onClick(ClickEvent event) {
 					BetterTextArea textArea = editor.getEditor();
-					textArea.wrapSelection("\n{|\n| ", "\n| \n|-\n| \n| \n|}\n");
+					textArea.wrapSelection("\n{|\n! Header 1\n! Header 2\n|-\n| ", "\n| \n|}\n");
 					textArea.setFocus(true);
 				}
 			}), 0);
