@@ -7,6 +7,7 @@ import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.estimation.PlanningPokerWidget;
+import scrum.client.journal.ChangeHistoryWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -85,6 +86,8 @@ public class RequirementWidget extends AWidget {
 		});
 
 		left.addFieldRow("My emoticon", requirement.createCurrentUserEmotionEditor());
+
+		left.addRow(new ChangeHistoryWidget(requirement), 2);
 
 		TableBuilder right = new TableBuilder();
 		if (planningPoker) {
