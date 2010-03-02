@@ -10,6 +10,8 @@ public class WikiTest extends Assert {
 		assertEquals(toHtml("{|a|}"), "\n<table class='data-table'>\n<tr> <td>a</td> </tr>\n</table>\n");
 		assertEquals(toHtml("{|\n|a\n|b\n|-\n|c\n|d\n\n|}"),
 			"\n<table class='data-table'>\n<tr> <td>a</td>  <td>b</td> </tr>\n<tr> <td>c</td>  <td>d</td> </tr>\n</table>\n");
+		assertEquals(toHtml("{|\n|a||b\n|-\n|c||d\n|}"),
+			"\n<table class='data-table'>\n<tr> <td>a</td>  <td>b</td> </tr>\n<tr> <td>c</td>  <td>d</td> </tr>\n</table>\n");
 	}
 
 	@Test

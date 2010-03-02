@@ -352,6 +352,16 @@ public class WikiParser {
 					} else {
 						p.add(new Text("\n"));
 					}
+					int cellSepIndex = line.indexOf("||");
+					while (cellSepIndex >= 0) {
+						String cellContent = line.substring(0, cellSepIndex);
+						appendText(p, cellContent);
+						table.addCell(p);
+						p = new Paragraph(false);
+
+						line = line.substring(cellSepIndex + 2);
+						cellSepIndex = line.indexOf("||");
+					}
 					appendText(p, line);
 				}
 
