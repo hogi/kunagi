@@ -1,5 +1,6 @@
 package scrum.client.files;
 
+import ilarkesto.gwt.client.Gwt;
 import scrum.client.common.TooltipBuilder;
 
 public class DeleteFileAction extends GDeleteFileAction {
@@ -35,22 +36,8 @@ public class DeleteFileAction extends GDeleteFileAction {
 
 	@Override
 	protected void onExecute() {
+		if (!Gwt.confirm("Deleting a file is unrecoverable. Delete it anyway?")) return;
 		getCurrentProject().deleteFile(file);
-		addUndo(new Undo());
-	}
-
-	class Undo extends ALocalUndo {
-
-		@Override
-		public String getLabel() {
-			return "Undo Delete " + file.getReference() + " " + file.getLabel();
-		}
-
-		@Override
-		protected void onUndo() {
-			cm.getDao().createFile(file);
-		}
-
 	}
 
 }
