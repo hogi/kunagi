@@ -1,10 +1,14 @@
 package scrum.server.common;
 
+import ilarkesto.pdf.ACell;
 import ilarkesto.pdf.AParagraph;
 import ilarkesto.pdf.APdfContainerElement;
 import ilarkesto.pdf.ARow;
 import ilarkesto.pdf.ATable;
 import ilarkesto.pdf.FontStyle;
+
+import java.awt.Color;
+
 import scrum.client.wiki.AWikiElement;
 import scrum.client.wiki.Code;
 import scrum.client.wiki.EntityReference;
@@ -67,12 +71,22 @@ public class WikiToPdfConverter extends APdfCreator {
 
 	private void processTable(Table wikiTable, APdfContainerElement parent) {
 		ATable pdfTable = parent.table(wikiTable.getColumnCount());
+		pdfTable.setWidth(null);
+		pdfTable.setDefaultCellPadding(2f);
 		for (TableRow wikiRow : wikiTable.getRows()) {
 			ARow pdfRow = pdfTable.row();
 			for (TableCell wikiCell : wikiRow.getCells()) {
-				processParagraph(wikiCell.getParagraph(), pdfRow.cell());
+				ACell pdfCell = pdfRow.cell();
+				if (wikiCell.isHeader()) {
+					pdfCell.setFontStyle(tableHeaderFont);
+					pdfCell.setBackgroundColor(tableHeaderBackground);
+					processParagraph(wikiCell.getParagraph(), pdfCell, tableHeaderFont);
+				} else {
+					processParagraph(wikiCell.getParagraph(), pdfCell);
+				}
 			}
 		}
+		pdfTable.createCellBorders(Color.GRAY, 0.2f);
 	}
 
 	private void processItemList(ItemList list, APdfContainerElement parent) {
@@ -92,9 +106,13 @@ public class WikiToPdfConverter extends APdfCreator {
 	}
 
 	private void processParagraph(Paragraph element, APdfContainerElement parent) {
+		processParagraph(element, parent, defaultFont);
+	}
+
+	private void processParagraph(Paragraph element, APdfContainerElement parent, FontStyle font) {
 		AParagraph paragraph = parent.paragraph();
 		for (AWikiElement paragraphElement : element.getElements()) {
-			processParagraphElement(paragraphElement, paragraph, defaultFont);
+			processParagraphElement(paragraphElement, paragraph, font);
 		}
 	}
 

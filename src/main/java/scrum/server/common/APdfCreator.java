@@ -4,20 +4,25 @@ import ilarkesto.pdf.APdfBuilder;
 import ilarkesto.pdf.APdfContainerElement;
 import ilarkesto.pdf.FontStyle;
 
+import java.awt.Color;
+
 public abstract class APdfCreator {
 
 	protected FontStyle defaultFont;
+	protected FontStyle tableHeaderFont;
 	protected FontStyle codeFont;
 	protected FontStyle referenceFont;
 	protected FontStyle fieldLabelFont;
 	protected FontStyle[] headerFonts = new FontStyle[4];
+	protected Color tableHeaderBackground = Color.LIGHT_GRAY;
 
 	protected abstract void build(APdfContainerElement pdf);
 
 	protected abstract String getFilename();
 
 	public APdfCreator() {
-		defaultFont = new FontStyle().setSize(4);
+		defaultFont = new FontStyle().setSize(3);
+		tableHeaderFont = new FontStyle(defaultFont).setBold(true);
 		codeFont = new FontStyle(defaultFont).setFont("Courier");
 		referenceFont = new FontStyle(defaultFont).setFont("Courier").setItalic(true);
 		fieldLabelFont = new FontStyle(defaultFont).setItalic(true);

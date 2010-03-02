@@ -42,6 +42,9 @@ public class WikiToPdfConverterTest {
 		sb.append("# item 3\n\n");
 		sb.append("= Section 3 =\n\n");
 		sb.append("{|\n");
+		sb.append("! Header 1\n");
+		sb.append("! Header 2\n");
+		sb.append("|-\n");
 		sb.append("| first cell in upper left\n");
 		sb.append("| ''second cell in upper right''\n");
 		sb.append("|-\n");
