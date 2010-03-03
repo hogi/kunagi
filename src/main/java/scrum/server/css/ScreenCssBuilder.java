@@ -314,8 +314,9 @@ public class ScreenCssBuilder implements CssBuilder {
 				.textDecorationNone();
 		css.style(".NavigatorWidget-item-link a:hover").background(cNavigatorHoverItemBackground);
 		css.style(".NavigatorWidget-item-link-selected a").background(cNavigatorSelectedItemBackground);
+		css.style(".NavigatorWidget-item-link-selected a:hover").background(cNavigatorSelectedItemBackground);
 
-		css.style(".NavigatorWidget-submenu .NavigatorWidget-item-link a").paddingLeft(20);
+		css.style(".NavigatorWidget-submenu .NavigatorWidget-item-link a").paddingLeft(30);
 	}
 
 	private void comments(CssRenderer css) {
