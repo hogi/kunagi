@@ -21,6 +21,16 @@
         <param-value>0</param-value>
     </context-param>
 
+    <!-- css -->
+    <servlet>
+        <servlet-name>start</servlet-name>
+        <servlet-class>scrum.server.common.StartServlet</servlet-class>
+    </servlet>      
+    <servlet-mapping>
+        <servlet-name>start</servlet-name>
+        <url-pattern>/index.html</url-pattern>
+    </servlet-mapping>
+
 	<!-- main communication service -->
 	<servlet>
 		<servlet-name>scrum</servlet-name>
