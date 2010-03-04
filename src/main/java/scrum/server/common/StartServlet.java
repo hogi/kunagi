@@ -46,7 +46,8 @@ public class StartServlet extends AHttpServlet {
 	protected void onInit(ServletConfig servletConfig) {
 		super.onInit(servletConfig);
 
-		ScrumWebApplication app = ScrumWebApplication.get();
+		ScrumWebApplication app = ScrumWebApplication.get(servletConfig);
+
 		config = app.getConfig();
 		applicationInfo = app.getApplicationInfo();
 	}

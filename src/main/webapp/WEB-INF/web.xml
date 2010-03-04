@@ -21,10 +21,11 @@
         <param-value>0</param-value>
     </context-param>
 
-    <!-- css -->
+    <!-- start page -->
     <servlet>
         <servlet-name>start</servlet-name>
         <servlet-class>scrum.server.common.StartServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
     </servlet>      
     <servlet-mapping>
         <servlet-name>start</servlet-name>
@@ -35,7 +36,7 @@
 	<servlet>
 		<servlet-name>scrum</servlet-name>
 		<servlet-class>scrum.server.ScrumServiceImpl</servlet-class>
-		<load-on-startup>1</load-on-startup>
+        <load-on-startup>2</load-on-startup>
 	</servlet>	
 	<servlet-mapping>
 		<servlet-name>scrum</servlet-name>
@@ -46,6 +47,7 @@
     <servlet>
         <servlet-name>css</servlet-name>
         <servlet-class>scrum.server.css.CssServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
     </servlet>      
     <servlet-mapping>
         <servlet-name>css</servlet-name>
@@ -56,6 +58,7 @@
     <servlet>
         <servlet-name>fileDownload</servlet-name>
         <servlet-class>scrum.server.files.FileDownloadServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
     </servlet>      
     <servlet-mapping>
         <servlet-name>fileDownload</servlet-name>
@@ -87,6 +90,7 @@
 	<servlet>
 		<servlet-name>sprintBurndownChart</servlet-name>
 		<servlet-class>scrum.server.sprint.SprintBurndownChartServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
 	</servlet>		
 	<servlet-mapping>
 		<servlet-name>sprintBurndownChart</servlet-name>
@@ -107,6 +111,7 @@
     <servlet>
         <servlet-name>journalRss</servlet-name>
         <servlet-class>scrum.server.journal.JournalRssServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
     </servlet>      
     <servlet-mapping>
         <servlet-name>journalRss</servlet-name>

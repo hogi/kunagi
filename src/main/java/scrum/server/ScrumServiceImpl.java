@@ -18,9 +18,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-
 import scrum.client.admin.SystemMessage;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
@@ -498,12 +495,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
 		onServiceMethodExecuted(context);
 		return ret;
-	}
-
-	@Override
-	public void init(ServletConfig servletConfig) throws ServletException {
-		ScrumWebApplication.get(servletConfig);
-		super.init(servletConfig);
 	}
 
 	// --- helper ---
