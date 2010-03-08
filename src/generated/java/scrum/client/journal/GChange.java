@@ -145,44 +145,44 @@ public abstract class GChange
 
     }
 
-    // --- property ---
+    // --- key ---
 
-    private java.lang.String property ;
+    private java.lang.String key ;
 
-    public final java.lang.String getProperty() {
-        return this.property ;
+    public final java.lang.String getKey() {
+        return this.key ;
     }
 
-    public final Change setProperty(java.lang.String property) {
-        if (isProperty(property)) return (Change)this;
-        this.property = property ;
-        propertyChanged("property", this.property);
+    public final Change setKey(java.lang.String key) {
+        if (isKey(key)) return (Change)this;
+        this.key = key ;
+        propertyChanged("key", this.key);
         return (Change)this;
     }
 
-    public final boolean isProperty(java.lang.String property) {
-        return equals(this.property, property);
+    public final boolean isKey(java.lang.String key) {
+        return equals(this.key, key);
     }
 
-    private transient PropertyModel propertyModel;
+    private transient KeyModel keyModel;
 
-    public PropertyModel getPropertyModel() {
-        if (propertyModel == null) propertyModel = createPropertyModel();
-        return propertyModel;
+    public KeyModel getKeyModel() {
+        if (keyModel == null) keyModel = createKeyModel();
+        return keyModel;
     }
 
-    protected PropertyModel createPropertyModel() { return new PropertyModel(); }
+    protected KeyModel createKeyModel() { return new KeyModel(); }
 
-    protected class PropertyModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+    protected class KeyModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
         public java.lang.String getValue() {
-            return getProperty();
+            return getKey();
         }
 
         @Override
         public void setValue(java.lang.String value) {
-            setProperty(value);
+            setKey(value);
         }
 
         @Override
@@ -248,7 +248,7 @@ public abstract class GChange
         userId = (String) props.get("userId");
         String dateAndTimeAsString = (String) props.get("dateAndTime");
         dateAndTime  =  dateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(dateAndTimeAsString);
-        property  = (java.lang.String) props.get("property");
+        key  = (java.lang.String) props.get("key");
         value  = (java.lang.String) props.get("value");
     }
 
@@ -258,7 +258,7 @@ public abstract class GChange
         properties.put("parentId", this.parentId);
         properties.put("userId", this.userId);
         properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
-        properties.put("property", this.property);
+        properties.put("key", this.key);
         properties.put("value", this.value);
     }
 

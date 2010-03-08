@@ -217,6 +217,14 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Requirement) {
 			Requirement requirement = (Requirement) entity;
 			previousRequirementSprint = requirement.getSprint();
+
+			if (properties.containsKey("description")) {
+				changeDao.postChange(requirement, currentUser, "description", requirement.getDescription());
+			}
+			if (properties.containsKey("testDescription")) {
+				changeDao.postChange(requirement, currentUser, "testDescription", requirement.getTestDescription());
+			}
+
 		}
 
 		entity.updateProperties(properties);
@@ -244,6 +252,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			Requirement requirement = (Requirement) entity;
 			Sprint sprint = requirement.getSprint();
 			boolean inCurrentSprint = sprint != null && conversation.getProject().isCurrentSprint(sprint);
+
 			if (properties.containsKey("description") || properties.containsKey("testDescription")
 					|| properties.containsKey("qualitysIds")) {
 				requirement.setDirty(true);

@@ -2,6 +2,7 @@ package scrum.client.journal;
 
 import ilarkesto.gwt.client.HyperlinkWidget;
 
+import java.util.Collections;
 import java.util.List;
 
 import scrum.client.common.AScrumGwtEntity;
@@ -41,13 +42,17 @@ public class ChangeHistoryWidget extends AScrumWidget {
 	protected void onUpdate() {
 		changeContainerPanel.clear();
 		List<Change> changes = cm.getDao().getChangesByParent(parent);
+
 		if (showChangesHyperlink == null && !changes.isEmpty()) {
 			panel.remove(showChangesHyperlink);
 			showChangesHyperlink = null;
 		}
+
+		Collections.sort(changes, Change.DATE_AND_TIME_COMPARATOR);
 		for (Change change : changes) {
 			changeContainerPanel.add(new ChangeWidget(change));
 		}
+
 		super.onUpdate();
 	}
 

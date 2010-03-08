@@ -43,6 +43,8 @@ public class Wiki extends AScrumComponent implements RichtextFormater {
 	}
 
 	public static String toHtml(String wiki) {
+		if (wiki == null) return null;
+		if (wiki.trim().length() == 0) return "";
 		WikiParser parser = new WikiParser(wiki);
 		WikiModel model = parser.parse();
 		return model.toHtml(new ScrumHtmlContext());

@@ -39,7 +39,7 @@ public abstract class GChange
         properties.put("parentId", this.parentId);
         properties.put("userId", this.userId);
         properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
-        properties.put("property", this.property);
+        properties.put("key", this.key);
         properties.put("value", this.value);
     }
 
@@ -182,38 +182,38 @@ public abstract class GChange
     }
 
     // -----------------------------------------------------------
-    // - property
+    // - key
     // -----------------------------------------------------------
 
-    private java.lang.String property;
+    private java.lang.String key;
 
-    public final java.lang.String getProperty() {
-        return property;
+    public final java.lang.String getKey() {
+        return key;
     }
 
-    public final void setProperty(java.lang.String property) {
-        property = prepareProperty(property);
-        if (isProperty(property)) return;
-        this.property = property;
+    public final void setKey(java.lang.String key) {
+        key = prepareKey(key);
+        if (isKey(key)) return;
+        this.key = key;
         fireModified();
     }
 
-    protected java.lang.String prepareProperty(java.lang.String property) {
-        property = Str.removeUnreadableChars(property);
-        return property;
+    protected java.lang.String prepareKey(java.lang.String key) {
+        key = Str.removeUnreadableChars(key);
+        return key;
     }
 
-    public final boolean isPropertySet() {
-        return this.property != null;
+    public final boolean isKeySet() {
+        return this.key != null;
     }
 
-    public final boolean isProperty(java.lang.String property) {
-        if (this.property == null && property == null) return true;
-        return this.property != null && this.property.equals(property);
+    public final boolean isKey(java.lang.String key) {
+        if (this.key == null && key == null) return true;
+        return this.key != null && this.key.equals(key);
     }
 
-    protected final void updateProperty(Object value) {
-        setProperty((java.lang.String)value);
+    protected final void updateKey(Object value) {
+        setKey((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -259,7 +259,7 @@ public abstract class GChange
             if (property.equals("parentId")) updateParent(value);
             if (property.equals("userId")) updateUser(value);
             if (property.equals("dateAndTime")) updateDateAndTime(value);
-            if (property.equals("property")) updateProperty(value);
+            if (property.equals("key")) updateKey(value);
             if (property.equals("value")) updateValue(value);
         }
     }

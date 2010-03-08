@@ -100,10 +100,10 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.journal.Change> getChangesByProperty(java.lang.String property) {
+    public final List<scrum.client.journal.Change> getChangesByKey(java.lang.String key) {
         List<scrum.client.journal.Change> ret = new ArrayList<scrum.client.journal.Change>();
         for (scrum.client.journal.Change entity : changes.values()) {
-            if (entity.isProperty(property)) ret.add(entity);
+            if (entity.isKey(key)) ret.add(entity);
         }
         return ret;
     }

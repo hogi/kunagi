@@ -70,6 +70,10 @@ public class ScreenCssBuilder implements CssBuilder {
 	String cCommentsBorder = "#EAFFEA";
 	String cCommentDate = "darkgray";
 
+	String cChangesBackground = "#FFFFF8";
+	String cChangesBorder = "#FFFFEA";
+	String cChangeDate = "darkgray";
+
 	String cPlanningPokerTableLines = "#EEE";
 
 	public void buildCss(CssRenderer css) {
@@ -79,6 +83,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		systemMessage(css);
 		blockList(css);
 		comments(css);
+		changeHistory(css);
 		workspace(css);
 		navigator(css);
 		chat(css);
@@ -327,6 +332,16 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".CommentWidget-header-author").floatLeft().marginRight(5);
 		css.style(".CommentWidget-header-date").color(cCommentDate);
 		css.style(".CommentWidget-editor");
+	}
+
+	private void changeHistory(CssRenderer css) {
+		css.style(".ChangeHistoryWidget").background(cChangesBackground).border(1, cChangesBorder).padding(7)
+				.borderRadius(10);
+		css.style(".ChangeWidget").margin(15, 0, 10, 0).borderTop(1, cBlockHeaderBackground);
+		css.style(".ChangeWidget-header").margin(4, 0, 2, 0);
+		css.style(".ChangeWidget-header-author").floatLeft().marginRight(5);
+		css.style(".ChangeWidget-header-date").color(cChangeDate);
+		css.style(".ChangeWidget-editor");
 	}
 
 	private void blockList(CssRenderer css) {

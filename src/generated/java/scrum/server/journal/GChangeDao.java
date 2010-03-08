@@ -48,8 +48,8 @@ public abstract class GChangeDao
         usersCache = null;
         changesByDateAndTimeCache.clear();
         dateAndTimesCache = null;
-        changesByPropertyCache.clear();
-        propertysCache = null;
+        changesByKeyCache.clear();
+        keysCache = null;
         changesByValueCache.clear();
         valuesCache = null;
     }
@@ -191,41 +191,41 @@ public abstract class GChangeDao
     }
 
     // -----------------------------------------------------------
-    // - property
+    // - key
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Change>> changesByPropertyCache = new Cache<java.lang.String,Set<Change>>(
+    private final Cache<java.lang.String,Set<Change>> changesByKeyCache = new Cache<java.lang.String,Set<Change>>(
             new Cache.Factory<java.lang.String,Set<Change>>() {
-                public Set<Change> create(java.lang.String property) {
-                    return getEntities(new IsProperty(property));
+                public Set<Change> create(java.lang.String key) {
+                    return getEntities(new IsKey(key));
                 }
             });
 
-    public final Set<Change> getChangesByProperty(java.lang.String property) {
-        return changesByPropertyCache.get(property);
+    public final Set<Change> getChangesByKey(java.lang.String key) {
+        return changesByKeyCache.get(key);
     }
-    private Set<java.lang.String> propertysCache;
+    private Set<java.lang.String> keysCache;
 
-    public final Set<java.lang.String> getPropertys() {
-        if (propertysCache == null) {
-            propertysCache = new HashSet<java.lang.String>();
+    public final Set<java.lang.String> getKeys() {
+        if (keysCache == null) {
+            keysCache = new HashSet<java.lang.String>();
             for (Change e : getEntities()) {
-                if (e.isPropertySet()) propertysCache.add(e.getProperty());
+                if (e.isKeySet()) keysCache.add(e.getKey());
             }
         }
-        return propertysCache;
+        return keysCache;
     }
 
-    private static class IsProperty implements Predicate<Change> {
+    private static class IsKey implements Predicate<Change> {
 
         private java.lang.String value;
 
-        public IsProperty(java.lang.String value) {
+        public IsKey(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(Change e) {
-            return e.isProperty(value);
+            return e.isKey(value);
         }
 
     }

@@ -565,7 +565,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			changeModel.addReference("parent", getEntityModel()).setMaster(true);
 			changeModel.addReference("user", getUserModel());
 			changeModel.addProperty("dateAndTime", DateAndTime.class).setMandatory(true);
-			changeModel.addStringProperty("property");
+			changeModel.addStringProperty("key");
 			changeModel.addStringProperty("value");
 		}
 		return changeModel;
