@@ -87,6 +87,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 			// quick update without recreating whole gui
 			for (Requirement requirement : requirements) {
 				updateTaskLists(requirement);
+				super.onUpdate();
 			}
 			return;
 		}
