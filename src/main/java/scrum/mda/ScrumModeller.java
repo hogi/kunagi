@@ -11,9 +11,7 @@ import java.io.File;
 public class ScrumModeller extends Starter {
 
 	public static void main(String[] args) {
-		createModellerScope();
-
-		Scope scope = Scope.get();
+		Scope scope = createModellerScope();
 
 		ModellingSession modellingSession = scope.getComponent(ModellingSession.class);
 		modellingSession.load(new CsvFileModelSource(new File("src/model.csv")));

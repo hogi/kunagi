@@ -2,11 +2,10 @@ package scrum.client;
 
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
-import ilarkesto.core.scope.IncubatorComponentFactory;
 import ilarkesto.core.scope.NonConcurrentScopeManager;
 import ilarkesto.core.scope.Scope;
 import scrum.client.collaboration.Subject;
-import scrum.client.communication.PingerIncubator;
+import scrum.client.communication.Pinger;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -34,12 +33,10 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 		cm = new ComponentManager();
 
-		IncubatorComponentFactory componentFactory = new IncubatorComponentFactory();
-		componentFactory.addIncubator(new PingerIncubator());
-
 		NonConcurrentScopeManager scopeManager = NonConcurrentScopeManager.createCascadingScopeInstance("app",
-			componentFactory);
+			new ScrumComponentReflector());
 		final Scope appScope = scopeManager.getScope();
+		appScope.putComponent(new Pinger());
 		appScope.getComponent("pinger");
 
 		final WorkspaceWidget workspace = cm.getUi().getWorkspace();
