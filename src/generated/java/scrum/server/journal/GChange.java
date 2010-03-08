@@ -40,6 +40,7 @@ public abstract class GChange
         properties.put("userId", this.userId);
         properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
         properties.put("property", this.property);
+        properties.put("value", this.value);
     }
 
     public int compareTo(Change other) {
@@ -215,6 +216,41 @@ public abstract class GChange
         setProperty((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - value
+    // -----------------------------------------------------------
+
+    private java.lang.String value;
+
+    public final java.lang.String getValue() {
+        return value;
+    }
+
+    public final void setValue(java.lang.String value) {
+        value = prepareValue(value);
+        if (isValue(value)) return;
+        this.value = value;
+        fireModified();
+    }
+
+    protected java.lang.String prepareValue(java.lang.String value) {
+        value = Str.removeUnreadableChars(value);
+        return value;
+    }
+
+    public final boolean isValueSet() {
+        return this.value != null;
+    }
+
+    public final boolean isValue(java.lang.String value) {
+        if (this.value == null && value == null) return true;
+        return this.value != null && this.value.equals(value);
+    }
+
+    protected final void updateValue(Object value) {
+        setValue((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -224,6 +260,7 @@ public abstract class GChange
             if (property.equals("userId")) updateUser(value);
             if (property.equals("dateAndTime")) updateDateAndTime(value);
             if (property.equals("property")) updateProperty(value);
+            if (property.equals("value")) updateValue(value);
         }
     }
 

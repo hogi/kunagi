@@ -108,6 +108,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.journal.Change> getChangesByValue(java.lang.String value) {
+        List<scrum.client.journal.Change> ret = new ArrayList<scrum.client.journal.Change>();
+        for (scrum.client.journal.Change entity : changes.values()) {
+            if (entity.isValue(value)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- ChatMessage ---
 
     private Map<String, scrum.client.collaboration.ChatMessage> chatMessages = new HashMap<String, scrum.client.collaboration.ChatMessage>();

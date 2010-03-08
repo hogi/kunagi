@@ -193,6 +193,54 @@ public abstract class GChange
 
     }
 
+    // --- value ---
+
+    private java.lang.String value ;
+
+    public final java.lang.String getValue() {
+        return this.value ;
+    }
+
+    public final Change setValue(java.lang.String value) {
+        if (isValue(value)) return (Change)this;
+        this.value = value ;
+        propertyChanged("value", this.value);
+        return (Change)this;
+    }
+
+    public final boolean isValue(java.lang.String value) {
+        return equals(this.value, value);
+    }
+
+    private transient ValueModel valueModel;
+
+    public ValueModel getValueModel() {
+        if (valueModel == null) valueModel = createValueModel();
+        return valueModel;
+    }
+
+    protected ValueModel createValueModel() { return new ValueModel(); }
+
+    protected class ValueModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getValue();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setValue(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -201,6 +249,7 @@ public abstract class GChange
         String dateAndTimeAsString = (String) props.get("dateAndTime");
         dateAndTime  =  dateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(dateAndTimeAsString);
         property  = (java.lang.String) props.get("property");
+        value  = (java.lang.String) props.get("value");
     }
 
     @Override
@@ -210,6 +259,7 @@ public abstract class GChange
         properties.put("userId", this.userId);
         properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
         properties.put("property", this.property);
+        properties.put("value", this.value);
     }
 
 }
