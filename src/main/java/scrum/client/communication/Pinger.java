@@ -5,7 +5,6 @@ import scrum.client.ApplicationStartListener;
 import scrum.client.BlockCollapsedListener;
 import scrum.client.BlockExpandedListener;
 import scrum.client.DataTransferObject;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.ServerDataReceivedListener;
 import scrum.client.project.Requirement;
 
@@ -22,8 +21,6 @@ public class Pinger extends GPinger implements ServerDataReceivedListener, Block
 	private Timer timer;
 	private int maxDelay = MAX_DELAY;
 	private long lastDataReceiveTime = System.currentTimeMillis();
-
-	ScrumGwtApplication app;
 
 	public void onApplicationStart() {
 		timer = new Timer() {

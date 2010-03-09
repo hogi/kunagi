@@ -13,7 +13,7 @@ public class ScrumComponentReflector implements ComponentReflector<Object> {
 		if (component instanceof Pinger) pingerReflector.injectComponents((Pinger) component, scope);
 	}
 
-	public void callInitalizationMethods(Object component) {
+	public void callInitializationMethods(Object component) {
 		if (component instanceof Pinger) pingerReflector.callInitalizationMethods((Pinger) component);
 	}
 
