@@ -11,8 +11,8 @@ import scrum.client.project.Requirement;
 
 import com.google.gwt.user.client.Timer;
 
-public class Pinger implements ServerDataReceivedListener, BlockExpandedListener, BlockCollapsedListener,
-		ApplicationStartListener {
+public class Pinger extends GPinger implements ServerDataReceivedListener, BlockExpandedListener,
+		BlockCollapsedListener, ApplicationStartListener {
 
 	private static Log log = Log.get(Pinger.class);
 

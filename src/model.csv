@@ -1,7 +1,7 @@
 "id","parentId","type","value"
 "root",,"root",
 "276033e5-b72a-4218-8e8e-2b0575e0191e","root","GwtModule","Scrum"
-"adf3e542-4ce4-48d0-bc0a-81d1bafbd17f","root","Package","communication"
-"a43b9dfd-9582-47ac-93b8-7c01a3b74605","adf3e542-4ce4-48d0-bc0a-81d1bafbd17f","Component","Pinger"
-"761c6542-067c-49c1-982a-9e6084ae0bcc","a43b9dfd-9582-47ac-93b8-7c01a3b74605","Dependency","app"
-"31c5d556-4b6f-45e6-849e-4d17c7fe10dd","761c6542-067c-49c1-982a-9e6084ae0bcc","Type","ScrumGwtApplication"
+"a1033599-3531-47fc-94ff-49b1b58df2f2","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","communication"
+"01180eae-d2ad-4330-8a69-60996ab8014f","a1033599-3531-47fc-94ff-49b1b58df2f2","Component","Pinger"
+"c0ccf5f6-65a6-49be-8d15-5b0b4de30f8c","01180eae-d2ad-4330-8a69-60996ab8014f","Dependency","app"
+"2ba08749-ff24-45e9-8d38-7e9eeef666ff","c0ccf5f6-65a6-49be-8d15-5b0b4de30f8c","Type","ScrumGwtApplication"
