@@ -4,6 +4,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.NonConcurrentScopeManager;
 import ilarkesto.core.scope.Scope;
+import scrum.client.collaboration.Chat;
 import scrum.client.collaboration.Subject;
 import scrum.client.communication.Pinger;
 import scrum.client.files.File;
@@ -42,6 +43,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		appScope.putComponent(cm.getDao());
 		appScope.putComponent(new ChangeHistoryManager());
 		appScope.putComponent(new Pinger());
+		appScope.putComponent(new Chat());
 
 		appScope.getComponent("pinger");
 

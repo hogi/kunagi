@@ -148,27 +148,6 @@ public abstract class GComponentManager
         dndManager = null;
     }
 
-    // --- chat ---
-
-    private Chat chat;
-
-    public final Chat getChat() {
-        if (chat == null) {
-            chat = new Chat();
-            initializeChat(chat);
-            initialize(chat);
-        }
-        return chat;
-    }
-
-    protected void initializeChat(Chat chat) {
-    }
-
-    public final void destroyChat() {
-        destroy(chat);
-        chat = null;
-    }
-
     // --- usersStatus ---
 
     private UsersStatus usersStatus;

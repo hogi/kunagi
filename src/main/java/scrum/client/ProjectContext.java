@@ -1,6 +1,7 @@
 package scrum.client;
 
 import ilarkesto.core.logging.Log;
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ObjectMappedFlowPanel;
@@ -11,6 +12,7 @@ import scrum.client.admin.PunishmentsWidget;
 import scrum.client.admin.User;
 import scrum.client.calendar.CalendarWidget;
 import scrum.client.calendar.SimpleEvent;
+import scrum.client.collaboration.Chat;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.collaboration.ForumWidget;
 import scrum.client.collaboration.Subject;
@@ -212,7 +214,8 @@ public class ProjectContext extends AScrumComponent {
 				AGwtEntity entity = cm.getDao().getEntityByReference(reference);
 				if (entity == null) {
 					cm.getUi().unlock();
-					cm.getChat().postSystemMessage("Object does not exist: " + reference, false);
+					Scope.get().getComponent(Chat.class)
+							.postSystemMessage("Object does not exist: " + reference, false);
 					return;
 				}
 				cm.getUi().unlock();

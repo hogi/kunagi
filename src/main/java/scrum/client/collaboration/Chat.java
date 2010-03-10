@@ -1,15 +1,14 @@
-package scrum.client;
+package scrum.client.collaboration;
 
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import scrum.client.ComponentManager;
 import scrum.client.admin.User;
-import scrum.client.collaboration.ChatMessage;
-import scrum.client.common.AScrumComponent;
 import scrum.client.project.Project;
 
-public class Chat extends AScrumComponent {
+public class Chat extends GChat {
 
 	private LinkedList<ChatMessage> chatMessages = new LinkedList<ChatMessage>();
 
@@ -22,23 +21,27 @@ public class Chat extends AScrumComponent {
 	}
 
 	public ChatMessage postMessage(String text) {
-		return postMessage(cm.getAuth().getUser(), text, true);
+		return postMessage(ComponentManager.get().getAuth().getUser(), text, true);
 	}
 
 	private ChatMessage postMessage(User author, String text, boolean distribute) {
 		ChatMessage msg = new ChatMessage(getCurrentProject(), author, text);
 		addChatMessage(msg);
-		if (distribute) cm.getDao().createChatMessage(msg);
+		if (distribute) dao.createChatMessage(msg);
 		return msg;
 	}
 
-	void addChatMessage(ChatMessage msg) {
+	private Project getCurrentProject() {
+		return ComponentManager.get().getProjectContext().getProject();
+	}
+
+	public void addChatMessage(ChatMessage msg) {
 		Project project = getCurrentProject();
 		if (project == null || !msg.isProject(project)) return;
 		if (chatMessages.contains(msg)) return;
 		chatMessages.add(msg);
 		cleanupChatMessages();
-		cm.getProjectContext().getSidebar().getChat().update();
+		ComponentManager.get().getProjectContext().getSidebar().getChat().update();
 	}
 
 	private void cleanupChatMessages() {
@@ -50,5 +53,4 @@ public class Chat extends AScrumComponent {
 			chatMessages.remove(0);
 		Collections.sort(chatMessages);
 	}
-
 }

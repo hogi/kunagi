@@ -1,11 +1,13 @@
 package scrum.client;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.gwt.client.AGwtEntity;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import scrum.client.collaboration.Chat;
 import scrum.client.collaboration.ChatMessage;
 import scrum.client.collaboration.Subject;
 import scrum.client.files.File;
@@ -117,7 +119,7 @@ public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
 	@Override
 	protected void onEntityModifiedRemotely(AGwtEntity entity) {
 		if (entity instanceof ChatMessage) {
-			cm.getChat().addChatMessage((ChatMessage) entity);
+			Scope.get().getComponent(Chat.class).addChatMessage((ChatMessage) entity);
 		}
 		if (entity instanceof File) {
 			cm.getEventBus().fireFileUploaded((File) entity);

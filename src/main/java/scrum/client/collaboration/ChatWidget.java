@@ -1,6 +1,6 @@
 package scrum.client.collaboration;
 
-import scrum.client.Chat;
+import ilarkesto.core.scope.Scope;
 import scrum.client.Wiki;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ChatWidget extends AScrumWidget {
 
-	private Chat chat = cm.getChat();
+	private Chat chat;
 
 	private HTML output;
 	private ScrollPanel outputScroller;
@@ -23,6 +23,8 @@ public class ChatWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		chat = Scope.get().getComponent(Chat.class);
+
 		output = new HTML();
 		output.setStyleName("ChatWidget-output");
 
