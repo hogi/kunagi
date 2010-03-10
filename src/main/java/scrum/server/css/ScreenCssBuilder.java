@@ -275,14 +275,14 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	private void workspace(CssRenderer css) {
 		css.style(".Workspace").height100();
-		css.style(".Workspace-header").height(25).background(cHeaderBackground);
+		css.style(".Workspace-header").height(25).background(cHeaderBackground, "../header-bg.png");
 		css.style(".Workspace-body").height100();
 		css.style(".Workspace-body-west").floatLeft().width(200).height100();
 		css.style(".Workspace-body-center").height100();
 		css.style(".Workspace-body-center-content").padding(10);
 		css.style(".Workspace-body-west .PagePanel").padding(0);
-		css.style(".Workspace-body-west .PagePanel-header").background(cBackground).color(cHeaderText);
-		css.style(".Workspace-body-west .PagePanel-content").background(cBackground).border("0");
+		css.style(".Workspace-body-west .PagePanel-header").color(cHeaderText);
+		css.style(".Workspace-body-west .PagePanel-content").border("0");
 
 		css.style(".HeaderWidget-logo").marginLeft(5).marginRight(10); // .positionFixed().top(0).left(40).zIndex(100);
 		css.style(".HeaderWidget-title").color(cHeaderText).fontSize(12).fontWeightBold().paddingLeft(5).paddingTop(3);
@@ -379,7 +379,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".PagePanel");// .padding(10);
 		css.style(".PagePanel-content").background("white").border(1, cPagePanelBorder);
 		css.style(".PagePanel-header").padding(6, 10, 6, 10).fontSize(fontSizeTitle).lineHeight(lineHeightTitle)
-				.background(cPagePanelHeaderBackground).color(cPagePanelHeader);
+				.background(cPagePanelHeaderBackground, "../page-header-bg.png").color(cPagePanelHeader);
 		css.style(".PagePanel-header .gwt-Button").fontSize(fontSizeSmall);
 		css.style(".PagePanel-header input").fontSize(fontSizeSmall);
 		css.style(".PagePanel-header .HyperlinkWidget").fontSize(fontSizeSmall);

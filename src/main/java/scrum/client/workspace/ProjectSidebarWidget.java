@@ -1,15 +1,15 @@
 package scrum.client.workspace;
 
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.FloatingFlowPanel;
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
-import scrum.client.ComponentManager;
 import scrum.client.admin.SystemMessageWidget;
-import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.collaboration.ChatWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.communication.UsersStatusWidget;
 
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectSidebarWidget extends AScrumWidget {
@@ -30,12 +30,17 @@ public class ProjectSidebarWidget extends AScrumWidget {
 		usersTrashSplitter.add(getUsersStatus());
 		usersTrashSplitter.add(trash, true);
 
-		PagePanel page = new PagePanel();
-		page.add(new SystemMessageWidget());
-		page.addSection(getNavigator());
-		page.addSection(getChat());
-		page.addSection(usersTrashSplitter);
-		return page;
+		FlowPanel sidebar = new FlowPanel();
+		sidebar.getElement().getStyle().setMarginTop(10, Unit.PX);
+		sidebar.getElement().getStyle().setMarginLeft(10, Unit.PX);
+		sidebar.add(new SystemMessageWidget());
+		sidebar.add(getNavigator());
+		sidebar.add(Gwt.createSpacer(1, 10));
+		sidebar.add(getChat());
+		sidebar.add(Gwt.createSpacer(1, 10));
+		sidebar.add(usersTrashSplitter);
+		sidebar.add(Gwt.createSpacer(1, 10));
+		return sidebar;
 	}
 
 	public ChatWidget getChat() {

@@ -6,12 +6,14 @@ import scrum.client.common.AScrumComponent;
 import scrum.client.test.WidgetsTesterWidget;
 import scrum.client.workspace.PagePanel;
 
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class PublicContext extends AScrumComponent {
 
-	private PagePanel sidebar;
+	private FlowPanel sidebar;
 	private SwitchingNavigatorWidget navigator;
 	private LoginWidget login;
 
@@ -30,8 +32,10 @@ public class PublicContext extends AScrumComponent {
 			navigator.addItem("Widgets Tests", new WidgetsTesterWidget());
 		}
 
-		sidebar = new PagePanel();
-		sidebar.addSection(navigator);
+		sidebar = new FlowPanel();
+		sidebar.getElement().getStyle().setMarginTop(10, Unit.PX);
+		sidebar.getElement().getStyle().setMarginLeft(10, Unit.PX);
+		sidebar.add(navigator);
 	}
 
 	public void activate() {
