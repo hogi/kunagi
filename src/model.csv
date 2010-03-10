@@ -5,3 +5,5 @@
 "01180eae-d2ad-4330-8a69-60996ab8014f","a1033599-3531-47fc-94ff-49b1b58df2f2","Component","Pinger"
 "c0ccf5f6-65a6-49be-8d15-5b0b4de30f8c","01180eae-d2ad-4330-8a69-60996ab8014f","Dependency","app"
 "2ba08749-ff24-45e9-8d38-7e9eeef666ff","c0ccf5f6-65a6-49be-8d15-5b0b4de30f8c","Type","scrum.client.ScrumGwtApplication"
+"342e0a36-ad56-49d4-bb2c-47819fa693f9","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","journal"
+"18b81d9f-858d-479d-885b-c336a3b0137f","342e0a36-ad56-49d4-bb2c-47819fa693f9","Component","ChangeHistoryManager"

@@ -15,7 +15,7 @@ import scrum.client.collaboration.Emoticon;
 
 public abstract class AScrumGwtEntity extends AGwtEntity {
 
-	protected static final ComponentManager cm = ComponentManager.get();
+	protected static final transient ComponentManager cm = ComponentManager.get();
 
 	public AScrumGwtEntity() {}
 

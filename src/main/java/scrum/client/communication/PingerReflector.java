@@ -10,7 +10,7 @@ public class PingerReflector extends GPingerReflector {
 		component.app = ComponentManager.get().getApp();
 	}
 
-	public void callInitalizationMethods(Pinger component) {
+	public void callInitializationMethods(Pinger component) {
 		super.callInitializationMethods(component);
 	}
 

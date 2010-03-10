@@ -34,7 +34,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		cm = new ComponentManager();
 
 		NonConcurrentScopeManager scopeManager = NonConcurrentScopeManager.createCascadingScopeInstance("app",
-			new ScrumComponentReflector());
+			new ScrumComponentsReflector());
 		final Scope appScope = scopeManager.getScope();
 		appScope.putComponent(new Pinger());
 		appScope.getComponent("pinger");
