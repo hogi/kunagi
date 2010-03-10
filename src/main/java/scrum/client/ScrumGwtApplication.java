@@ -2,15 +2,10 @@ package scrum.client;
 
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
-import ilarkesto.core.scope.NonConcurrentScopeManager;
-import ilarkesto.core.scope.Scope;
-import scrum.client.collaboration.Chat;
 import scrum.client.collaboration.Subject;
-import scrum.client.communication.Pinger;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
-import scrum.client.journal.ChangeHistoryManager;
 import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
 import scrum.client.risks.Risk;
@@ -35,17 +30,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 		cm = new ComponentManager();
 
-		NonConcurrentScopeManager scopeManager = NonConcurrentScopeManager.createCascadingScopeInstance("app",
-			new ScrumComponentsReflector());
-
-		final Scope appScope = scopeManager.getScope();
-		appScope.putComponent("app", this);
-		appScope.putComponent(cm.getDao());
-		appScope.putComponent(new ChangeHistoryManager());
-		appScope.putComponent(new Pinger());
-		appScope.putComponent(new Chat());
-
-		appScope.getComponent("pinger");
+		ScrumScopeManager.initialize(cm);
 
 		final WorkspaceWidget workspace = cm.getUi().getWorkspace();
 		workspace.lock("Loading...");

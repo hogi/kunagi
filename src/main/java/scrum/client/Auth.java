@@ -16,12 +16,13 @@ public class Auth extends AScrumComponent implements ServerDataReceivedListener 
 	}
 
 	public void logout() {
-		if (cm.getProjectContext().isProjectOpen()) cm.getProjectContext().closeProject(false);
+		if (cm.getProjectContext().isProjectOpen()) cm.getProjectContext().closeProject();
 		log.info("Logging out");
 		cm.getUi().lock("Logging out...");
 		user = null;
 		cm.getEventBus().fireLogout();
 		cm.getApp().callLogout();
+		ScrumScopeManager.destroyUserScope();
 	}
 
 	public boolean isUserLoggedIn() {

@@ -1,5 +1,6 @@
 package scrum.client.project;
 
+import scrum.client.ScrumScopeManager;
 import scrum.client.common.TooltipBuilder;
 
 public class ChangeProjectAction extends GChangeProjectAction {
@@ -26,7 +27,9 @@ public class ChangeProjectAction extends GChangeProjectAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getProjectContext().closeProject(true);
+		cm.getProjectContext().closeProject();
+		ScrumScopeManager.destroyProjectScope();
+		cm.getHomeContext().activate();
 	}
 
 }

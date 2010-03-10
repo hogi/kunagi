@@ -1,5 +1,7 @@
 package scrum.client.project;
 
+import scrum.client.ScrumScopeManager;
+
 public class OpenProjectAction extends GOpenProjectAction {
 
 	public OpenProjectAction(Project project) {
@@ -18,7 +20,7 @@ public class OpenProjectAction extends GOpenProjectAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getProjectContext().openProject(project);
+		ScrumScopeManager.createProjectScope(project);
 	}
 
 }

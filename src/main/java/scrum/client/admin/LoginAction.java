@@ -1,6 +1,7 @@
 package scrum.client.admin;
 
 import ilarkesto.core.logging.Log;
+import scrum.client.ScrumScopeManager;
 import scrum.client.project.Project;
 
 public class LoginAction extends GLoginAction {
@@ -33,8 +34,10 @@ public class LoginAction extends GLoginAction {
 					Project project = user.getCurrentProject();
 					if (project == null || user.isAdmin()) {
 						cm.getHomeContext().activate();
+						ScrumScopeManager.createUserScope(user);
 					} else {
-						cm.getProjectContext().openProject(project);
+						ScrumScopeManager.createUserScope(user);
+						ScrumScopeManager.createProjectScope(project);
 					}
 				}
 			}

@@ -152,13 +152,12 @@ public class ProjectContext extends AScrumComponent {
 		cm.getEventBus().fireProjectOpened();
 	}
 
-	public void closeProject(boolean activateHomeView) {
+	public void closeProject() {
 		assert project != null;
 		cm.getUi().lock("Closing project...");
 		project = null;
 		cm.getApp().callCloseProject();
 		cm.getEventBus().fireProjectClosed();
-		if (activateHomeView) cm.getHomeContext().activate();
 	}
 
 	public Project getProject() {
