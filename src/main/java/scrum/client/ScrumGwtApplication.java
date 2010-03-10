@@ -9,6 +9,7 @@ import scrum.client.communication.Pinger;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
+import scrum.client.journal.ChangeHistoryManager;
 import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
 import scrum.client.risks.Risk;
@@ -35,8 +36,12 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 		NonConcurrentScopeManager scopeManager = NonConcurrentScopeManager.createCascadingScopeInstance("app",
 			new ScrumComponentsReflector());
+
 		final Scope appScope = scopeManager.getScope();
+		appScope.putComponent(cm.getDao());
+		appScope.putComponent(new ChangeHistoryManager());
 		appScope.putComponent(new Pinger());
+
 		appScope.getComponent("pinger");
 
 		final WorkspaceWidget workspace = cm.getUi().getWorkspace();

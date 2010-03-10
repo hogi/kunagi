@@ -7,3 +7,6 @@
 "2ba08749-ff24-45e9-8d38-7e9eeef666ff","c0ccf5f6-65a6-49be-8d15-5b0b4de30f8c","Type","scrum.client.ScrumGwtApplication"
 "342e0a36-ad56-49d4-bb2c-47819fa693f9","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","journal"
 "18b81d9f-858d-479d-885b-c336a3b0137f","342e0a36-ad56-49d4-bb2c-47819fa693f9","Component","ChangeHistoryManager"
+"08d9cbc3-bd9c-4b71-8bf1-0ac8fdc2ad26","18b81d9f-858d-479d-885b-c336a3b0137f","Dependency","dao"
+"3765ccf6-1587-4e5e-afbf-220e66ca2e9a","08d9cbc3-bd9c-4b71-8bf1-0ac8fdc2ad26","Type","scrum.client.Dao"
+"c0c391d4-5861-4ebb-8b43-28c05db0b513","08d9cbc3-bd9c-4b71-8bf1-0ac8fdc2ad26","Inject","true"

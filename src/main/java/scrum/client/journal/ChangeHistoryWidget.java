@@ -19,9 +19,12 @@ public class ChangeHistoryWidget extends AScrumWidget {
 	private FlowPanel changeContainerPanel;
 	private HyperlinkWidget showChangesHyperlink;
 
-	public ChangeHistoryWidget(AScrumGwtEntity parent) {
+	private ChangeHistoryManager changeHistoryManager;
+
+	public ChangeHistoryWidget(AScrumGwtEntity parent, ChangeHistoryManager changeHistoryManager) {
 		super();
 		this.parent = parent;
+		this.changeHistoryManager = changeHistoryManager;
 	}
 
 	@Override
@@ -41,7 +44,7 @@ public class ChangeHistoryWidget extends AScrumWidget {
 	@Override
 	protected void onUpdate() {
 		changeContainerPanel.clear();
-		List<Change> changes = cm.getDao().getChangesByParent(parent);
+		List<Change> changes = changeHistoryManager.getChanges(parent);
 
 		if (showChangesHyperlink == null && !changes.isEmpty()) {
 			panel.remove(showChangesHyperlink);

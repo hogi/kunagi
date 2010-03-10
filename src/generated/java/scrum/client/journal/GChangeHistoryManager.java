@@ -2,5 +2,9 @@ package scrum.client.journal;
 
 public class GChangeHistoryManager extends scrum.client.AScrumComponent {
 
+    protected static ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get("ChangeHistoryManager");
+
+    protected scrum.client.Dao dao;
+
 }
 
