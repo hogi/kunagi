@@ -8,6 +8,7 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
+import scrum.client.journal.ActivateChangeHistoryAction;
 import scrum.client.sprint.Sprint;
 
 import com.google.gwt.user.client.ui.Image;
@@ -40,6 +41,7 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 		// header.addMenuAction(new CloseRequirementEstimationVotingAction(requirement));
 		// header.addMenuAction(new RequirementEstimationVotingShowoffAction(requirement));
 		// header.addMenuAction(new ResetRequirementEstimationVotingAction(requirement));
+		header.addMenuAction(new ActivateChangeHistoryAction(requirement));
 		header.addMenuAction(new DeleteRequirementAction(requirement));
 	}
 

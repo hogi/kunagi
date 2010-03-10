@@ -26,13 +26,13 @@ public class ChangeWidget extends AScrumWidget {
 		String color = getCurrentProject().getUserConfig(changer).getColor();
 		changerLabel.getElement().getStyle().setProperty("color", color);
 
-		Label date = new Label();
+		Label date = new Label(change.getDateAndTime().toString());
 		date.setStyleName("ChangeWidget-header-date");
 
 		FlowPanel header = new FlowPanel();
 		header.setStyleName("ChangeWidget-header");
-		header.add(changerLabel);
 		header.add(date);
+		header.add(changerLabel);
 
 		FlowPanel panel = new FlowPanel();
 		panel.setStyleName("ChangeWidget");

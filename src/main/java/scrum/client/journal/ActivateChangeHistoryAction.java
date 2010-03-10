@@ -1,13 +1,14 @@
 package scrum.client.journal;
 
+import ilarkesto.core.scope.Scope;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumGwtEntity;
 
-public class ShowChangesAction extends AScrumAction {
+public class ActivateChangeHistoryAction extends AScrumAction {
 
 	private AScrumGwtEntity entity;
 
-	public ShowChangesAction(AScrumGwtEntity entity) {
+	public ActivateChangeHistoryAction(AScrumGwtEntity entity) {
 		super();
 		this.entity = entity;
 	}
@@ -19,7 +20,7 @@ public class ShowChangesAction extends AScrumAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getApp().callRequestChanges(entity.getId());
+		Scope.get().getComponent(ChangeHistoryManager.class).activateChangeHistory(entity);
 	}
 
 }

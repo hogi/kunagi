@@ -38,6 +38,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			new ScrumComponentsReflector());
 
 		final Scope appScope = scopeManager.getScope();
+		appScope.putComponent("app", this);
 		appScope.putComponent(cm.getDao());
 		appScope.putComponent(new ChangeHistoryManager());
 		appScope.putComponent(new Pinger());

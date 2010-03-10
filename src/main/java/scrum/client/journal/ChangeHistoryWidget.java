@@ -1,7 +1,5 @@
 package scrum.client.journal;
 
-import ilarkesto.gwt.client.HyperlinkWidget;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -14,11 +12,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class ChangeHistoryWidget extends AScrumWidget {
 
 	private AScrumGwtEntity parent;
-
 	private FlowPanel panel;
-	private FlowPanel changeContainerPanel;
-	private HyperlinkWidget showChangesHyperlink;
-
 	private ChangeHistoryManager changeHistoryManager;
 
 	public ChangeHistoryWidget(AScrumGwtEntity parent, ChangeHistoryManager changeHistoryManager) {
@@ -29,31 +23,21 @@ public class ChangeHistoryWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		showChangesHyperlink = new HyperlinkWidget(new ShowChangesAction(parent));
-
-		changeContainerPanel = new FlowPanel();
-
 		panel = new FlowPanel();
-		panel.setStyleName("ChangeHistoryWidget");
-		panel.add(showChangesHyperlink);
-		panel.add(changeContainerPanel);
-
 		return panel;
 	}
 
 	@Override
 	protected void onUpdate() {
-		changeContainerPanel.clear();
-		List<Change> changes = changeHistoryManager.getChanges(parent);
+		if (!changeHistoryManager.isChangeHistoryActive(parent)) return;
 
-		if (showChangesHyperlink == null && !changes.isEmpty()) {
-			panel.remove(showChangesHyperlink);
-			showChangesHyperlink = null;
-		}
+		panel.setStyleName("ChangeHistoryWidget");
+		panel.clear();
+		List<Change> changes = changeHistoryManager.getChanges(parent);
 
 		Collections.sort(changes, Change.DATE_AND_TIME_COMPARATOR);
 		for (Change change : changes) {
-			changeContainerPanel.add(new ChangeWidget(change));
+			panel.add(new ChangeWidget(change));
 		}
 
 		super.onUpdate();
