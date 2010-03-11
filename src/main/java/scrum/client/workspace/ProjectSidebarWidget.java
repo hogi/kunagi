@@ -34,6 +34,7 @@ public class ProjectSidebarWidget extends AScrumWidget {
 		sidebar.getElement().getStyle().setMarginTop(10, Unit.PX);
 		sidebar.getElement().getStyle().setMarginLeft(10, Unit.PX);
 		sidebar.add(new SystemMessageWidget());
+		sidebar.add(Gwt.createSpacer(1, 10));
 		sidebar.add(getNavigator());
 		sidebar.add(Gwt.createSpacer(1, 10));
 		sidebar.add(getChat());

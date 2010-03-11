@@ -1,6 +1,10 @@
 "id","parentId","type","value"
 "root",,"root",
 "276033e5-b72a-4218-8e8e-2b0575e0191e","root","GwtModule","Scrum"
+"a2e30272-5798-4ecd-b8b6-11fb7bb85a72","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","admin"
+"d019184f-1e5a-45ac-8466-9414bdfa1694","a2e30272-5798-4ecd-b8b6-11fb7bb85a72","Component","SystemMessageManager"
+"4117c210-7cd1-45b6-a4d4-95f0618d231e","d019184f-1e5a-45ac-8466-9414bdfa1694","Dependency","app"
+"77e7fdc3-36ea-46df-9fe4-05381b465ba1","4117c210-7cd1-45b6-a4d4-95f0618d231e","Type","scrum.client.ScrumGwtApplication"
 "11d4b7c6-fd7c-4152-8bfe-e6d12cf1c759","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","calendar"
 "259688b7-9a5e-459c-a1c5-d18b68ee795e","11d4b7c6-fd7c-4152-8bfe-e6d12cf1c759","Component","Calendar"
 "9fbffd41-4998-4d23-b9dd-734cc9334d8b","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","collaboration"

@@ -1,5 +1,6 @@
 package scrum.client.admin;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.editor.DateAndTimeEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
@@ -13,11 +14,11 @@ public class SystemMessageManagerWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		SystemMessageManager systemMessageManager = Scope.get().getComponent(SystemMessageManager.class);
+
 		FieldsWidget fields = new FieldsWidget();
-		fields.add("Text", new TextEditorWidget(cm.getSystemMessageManager().systemMessageTextModel));
-		fields
-				.add("Date and Time", new DateAndTimeEditorWidget(
-						cm.getSystemMessageManager().systemMessageExpiresModel));
+		fields.add("Text", new TextEditorWidget(systemMessageManager.systemMessageTextModel));
+		fields.add("Date and Time", new DateAndTimeEditorWidget(systemMessageManager.systemMessageExpiresModel));
 
 		PagePanel page = new PagePanel();
 		page.addHeader("System Message Management", new ButtonWidget(new ActivateSystemMessageAction()),

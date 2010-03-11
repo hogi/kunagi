@@ -1,5 +1,6 @@
 package scrum.client.admin;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TimePeriod;
@@ -12,12 +13,15 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SystemMessageWidget extends AScrumWidget {
 
+	private SystemMessageManager systemMessageManager;
 	private SimplePanel panel;
 	private Label text = new Label();
 	private Label expires = new Label();
 
 	@Override
 	protected Widget onInitialization() {
+		systemMessageManager = Scope.get().getComponent(SystemMessageManager.class);
+
 		expires.setStyleName("SystemMessageWidget-box-time");
 
 		FlowPanel content = new FlowPanel();
@@ -32,7 +36,7 @@ public class SystemMessageWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		SystemMessage message = cm.getSystemMessageManager().getSystemMessage();
+		SystemMessage message = systemMessageManager.getSystemMessage();
 		if (message.isActive()) {
 			text.setText(message.getText());
 			expires.setText(message.getExpiresAsString());

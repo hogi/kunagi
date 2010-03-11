@@ -148,25 +148,4 @@ public abstract class GComponentManager
         usersStatus = null;
     }
 
-    // --- systemMessageManager ---
-
-    private SystemMessageManager systemMessageManager;
-
-    public final SystemMessageManager getSystemMessageManager() {
-        if (systemMessageManager == null) {
-            systemMessageManager = new SystemMessageManager();
-            initializeSystemMessageManager(systemMessageManager);
-            initialize(systemMessageManager);
-        }
-        return systemMessageManager;
-    }
-
-    protected void initializeSystemMessageManager(SystemMessageManager systemMessageManager) {
-    }
-
-    public final void destroySystemMessageManager() {
-        destroy(systemMessageManager);
-        systemMessageManager = null;
-    }
-
 }

@@ -296,8 +296,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void systemMessage(CssRenderer css) {
-		css.style(".SystemMessageWidget-box").background(cErrorBackground).color(cError).border(1, cError).padding(10)
-				.margin("10px 10px 0px 10px");
+		css.style(".SystemMessageWidget-box").background(cErrorBackground).color(cError).border(1, cError).padding(10);
 		css.style(".SystemMessageWidget-box-title").fontWeightBold().marginBottom(5);
 		css.style(".SystemMessageWidget-box-time").fontStyleItalic().marginTop(5).textAlignRight();
 	}

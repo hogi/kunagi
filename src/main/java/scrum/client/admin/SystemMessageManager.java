@@ -1,13 +1,15 @@
-package scrum.client;
+package scrum.client.admin;
 
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.editor.ADateAndTimeEditorModel;
 import ilarkesto.gwt.client.editor.ATextEditorModel;
-import scrum.client.admin.SystemMessage;
-import scrum.client.common.AScrumComponent;
+import scrum.client.ComponentManager;
+import scrum.client.DataTransferObject;
+import scrum.client.ServerDataReceivedListener;
 
-public class SystemMessageManager extends AScrumComponent implements ServerDataReceivedListener {
+public class SystemMessageManager extends GSystemMessageManager implements ServerDataReceivedListener {
 
+	private ComponentManager cm = ComponentManager.get();
 	private SystemMessage systemMessage = new SystemMessage();
 
 	public void onServerDataReceived(DataTransferObject data) {
@@ -20,13 +22,13 @@ public class SystemMessageManager extends AScrumComponent implements ServerDataR
 
 	public void activateSystemMessage() {
 		systemMessage.setActive(true);
-		cm.getApp().callUpdateSystemMessage(systemMessage);
+		app.callUpdateSystemMessage(systemMessage);
 		cm.getEventBus().fireVisibleDataChanged();
 	}
 
 	public void deactivateSystemMessage() {
 		systemMessage.setActive(false);
-		cm.getApp().callUpdateSystemMessage(systemMessage);
+		app.callUpdateSystemMessage(systemMessage);
 		cm.getEventBus().fireVisibleDataChanged();
 	}
 

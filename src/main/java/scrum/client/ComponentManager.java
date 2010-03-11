@@ -7,7 +7,6 @@ public class ComponentManager extends GComponentManager implements LogoutListene
 
 	ComponentManager() {
 		super(new EventBus(), new Dao());
-		getSystemMessageManager();
 	}
 
 	public void onLogout() {
