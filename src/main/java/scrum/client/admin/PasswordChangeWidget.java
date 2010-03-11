@@ -1,10 +1,12 @@
 package scrum.client.admin;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AViewEditWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.ComponentManager;
 import scrum.client.common.FieldsWidget;
+import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -63,16 +65,16 @@ public class PasswordChangeWidget extends AViewEditWidget {
 		String newPassword = newPasswordBox.getText();
 		String newPasswordRepeat = newPasswordRepeatBox.getText();
 		if (currentPassword == null) {
-			ComponentManager.get().getUi().getWorkspace().showError("old password is empty");
+			Scope.get().getComponent(Ui.class).getWorkspace().showError("old password is empty");
 			return;
 		} else if (newPassword == null) {
-			ComponentManager.get().getUi().getWorkspace().showError("new password is empty");
+			Scope.get().getComponent(Ui.class).getWorkspace().showError("new password is empty");
 			return;
 		} else if (newPasswordRepeat == null) {
-			ComponentManager.get().getUi().getWorkspace().showError("new password repeat is empty");
+			Scope.get().getComponent(Ui.class).getWorkspace().showError("new password repeat is empty");
 			return;
 		} else if (!newPassword.equals(newPasswordRepeat)) {
-			ComponentManager.get().getUi().getWorkspace().showError(
+			Scope.get().getComponent(Ui.class).getWorkspace().showError(
 				"the new password repeat did not match the new password.");
 			return;
 		}

@@ -1,10 +1,12 @@
 package scrum.client.common;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.ComponentManager;
 import scrum.client.admin.User;
 import scrum.client.project.Project;
 import scrum.client.sprint.Sprint;
+import scrum.client.workspace.Ui;
 
 public abstract class AScrumWidget extends AWidget {
 
@@ -24,6 +26,10 @@ public abstract class AScrumWidget extends AWidget {
 
 	protected static final Sprint getCurrentSprint() {
 		return getCurrentProject().getCurrentSprint();
+	}
+
+	protected static final Ui getUi() {
+		return Scope.get().getComponent(Ui.class);
 	}
 
 }

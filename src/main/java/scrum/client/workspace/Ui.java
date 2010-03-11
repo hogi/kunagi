@@ -1,18 +1,16 @@
-package scrum.client;
+package scrum.client.workspace;
 
-import ilarkesto.gwt.client.AComponent;
 import ilarkesto.gwt.client.Gwt;
-import scrum.client.workspace.WorkspaceWidget;
+import scrum.client.VisibleDataChangedListener;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Ui extends AComponent implements VisibleDataChangedListener {
+public class Ui extends GUi implements VisibleDataChangedListener {
 
 	private WorkspaceWidget workspace;
 
 	@Override
-	protected void onInitialization() {
-		super.onInitialization();
+	public void initialize() {
 		workspace = new WorkspaceWidget();
 		Gwt.setRootWidget(workspace);
 	}

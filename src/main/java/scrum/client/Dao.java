@@ -25,16 +25,6 @@ public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
 	private EntityChangeCache cache = new EntityChangeCache();
 	private ComponentManager cm;
 
-	// --- dependencies ---
-
-	private Ui ui;
-
-	public void setUi(Ui ui) {
-		this.ui = ui;
-	}
-
-	// --- ---
-
 	Dao() {}
 
 	@Override

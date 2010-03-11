@@ -27,12 +27,6 @@ public class ComponentManager extends GComponentManager implements LogoutListene
 		destroyPublicContext();
 	}
 
-	@Override
-	protected void initializeDao(Dao dao) {
-		super.initializeDao(dao);
-		dao.setUi(getUi());
-	}
-
 	public ScrumGwtApplication getApp() {
 		return (ScrumGwtApplication) super.getApp();
 	}

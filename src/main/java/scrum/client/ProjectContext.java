@@ -44,6 +44,7 @@ import scrum.client.sprint.SprintHistoryWidget;
 import scrum.client.sprint.Task;
 import scrum.client.tasks.WhiteboardWidget;
 import scrum.client.workspace.ProjectSidebarWidget;
+import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -134,13 +135,13 @@ public class ProjectContext extends AScrumComponent {
 	}
 
 	public void activate() {
-		cm.getUi().show(sidebar, dashboard);
+		Scope.get().getComponent(Ui.class).show(sidebar, dashboard);
 	}
 
 	public void openProject(Project project) {
 		this.project = project;
 
-		cm.getUi().lock("Loading project...");
+		Scope.get().getComponent(Ui.class).lock("Loading project...");
 		cm.getApp().callSelectProject(project.getId(), new Runnable() {
 
 			public void run() {
@@ -153,7 +154,7 @@ public class ProjectContext extends AScrumComponent {
 
 	public void closeProject() {
 		assert project != null;
-		cm.getUi().lock("Closing project...");
+		Scope.get().getComponent(Ui.class).lock("Closing project...");
 		project = null;
 		cm.getApp().callCloseProject();
 		cm.getEventBus().fireProjectClosed();
@@ -205,18 +206,19 @@ public class ProjectContext extends AScrumComponent {
 			showEntity(entity);
 			return;
 		}
-		cm.getUi().lock("Searching for " + reference);
+		Scope.get().getComponent(Ui.class).lock("Searching for " + reference);
 		cm.getApp().callRequestEntityByReference(reference, new Runnable() {
 
 			public void run() {
 				AGwtEntity entity = cm.getDao().getEntityByReference(reference);
+				Ui ui = Scope.get().getComponent(Ui.class);
 				if (entity == null) {
-					cm.getUi().unlock();
+					ui.unlock();
 					Scope.get().getComponent(Chat.class)
 							.postSystemMessage("Object does not exist: " + reference, false);
 					return;
 				}
-				cm.getUi().unlock();
+				ui.unlock();
 				showEntity(entity);
 			}
 		});
@@ -313,7 +315,7 @@ public class ProjectContext extends AScrumComponent {
 	}
 
 	private SwitcherWidget getWorkarea() {
-		return cm.getUi().getWorkspace().getWorkarea();
+		return Scope.get().getComponent(Ui.class).getWorkspace().getWorkarea();
 	}
 
 	public void showWhiteboard(Task task) {

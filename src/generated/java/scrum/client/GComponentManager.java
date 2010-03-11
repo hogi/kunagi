@@ -43,27 +43,6 @@ public abstract class GComponentManager
         auth = null;
     }
 
-    // --- ui ---
-
-    private Ui ui;
-
-    public final Ui getUi() {
-        if (ui == null) {
-            ui = new Ui();
-            initializeUi(ui);
-            initialize(ui);
-        }
-        return ui;
-    }
-
-    protected void initializeUi(Ui ui) {
-    }
-
-    public final void destroyUi() {
-        destroy(ui);
-        ui = null;
-    }
-
     // --- projectContext ---
 
     private ProjectContext projectContext;

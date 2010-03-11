@@ -1,5 +1,6 @@
 package scrum.client;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.admin.ProjectSelectorWidget;
@@ -8,11 +9,14 @@ import scrum.client.admin.SystemMessageWidget;
 import scrum.client.admin.UserConfigWidget;
 import scrum.client.admin.UserListWidget;
 import scrum.client.common.AScrumComponent;
+import scrum.client.workspace.Ui;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 public class HomeContext extends AScrumComponent {
+
+	private Ui ui;
 
 	private FlowPanel sidebar;
 	private SwitchingNavigatorWidget navigator;
@@ -24,11 +28,13 @@ public class HomeContext extends AScrumComponent {
 	@Override
 	protected void onInitialization() {
 		super.onInitialization();
+		ui = Scope.get().getComponent(Ui.class);
+
 		projectSelector = new ProjectSelectorWidget();
 		userConfig = new UserConfigWidget();
 		messageManager = new SystemMessageManagerWidget();
 
-		navigator = new SwitchingNavigatorWidget(cm.getUi().getWorkspace().getWorkarea());
+		navigator = new SwitchingNavigatorWidget(ui.getWorkspace().getWorkarea());
 		navigator.addItem("Projects", projectSelector);
 		navigator.addItem("Personal Preferences", userConfig);
 		if (getCurrentUser().isAdmin()) {
@@ -46,7 +52,7 @@ public class HomeContext extends AScrumComponent {
 	}
 
 	public void activate() {
-		cm.getUi().show(sidebar, projectSelector);
+		ui.show(sidebar, projectSelector);
 	}
 
 	public UserListWidget getUserList() {

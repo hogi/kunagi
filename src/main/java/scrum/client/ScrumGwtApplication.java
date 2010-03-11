@@ -2,6 +2,7 @@ package scrum.client;
 
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
+import ilarkesto.core.scope.Scope;
 import scrum.client.collaboration.Subject;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
@@ -10,6 +11,7 @@ import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
 import scrum.client.risks.Risk;
 import scrum.client.sprint.Task;
+import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.user.client.ui.RootPanel;
@@ -32,7 +34,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 		ScrumScopeManager.initialize(cm);
 
-		final WorkspaceWidget workspace = cm.getUi().getWorkspace();
+		final WorkspaceWidget workspace = Scope.get().getComponent(Ui.class).getWorkspace();
 		workspace.lock("Loading...");
 
 		RootPanel rootPanel = RootPanel.get();
@@ -68,13 +70,13 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	@Override
 	protected void handleCommunicationError(Throwable ex) {
 		log.error("Communication error:", ex);
-		cm.getUi().getWorkspace().abort("Communication error: " + Str.formatException(ex));
+		Scope.get().getComponent(Ui.class).getWorkspace().abort("Communication error: " + Str.formatException(ex));
 	}
 
 	@Override
 	protected void handleUnexpectedError(Throwable ex) {
 		log.error("Unexpected error:", ex);
-		cm.getUi().getWorkspace().abort("Unexpected error: " + Str.formatException(ex));
+		Scope.get().getComponent(Ui.class).getWorkspace().abort("Unexpected error: " + Str.formatException(ex));
 	}
 
 	public final void callStartSession(Runnable callback) {

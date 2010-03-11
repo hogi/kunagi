@@ -1,10 +1,12 @@
 package scrum.client;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.admin.LoginWidget;
 import scrum.client.common.AScrumComponent;
 import scrum.client.test.WidgetsTesterWidget;
 import scrum.client.workspace.PagePanel;
+import scrum.client.workspace.Ui;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -23,7 +25,7 @@ public class PublicContext extends AScrumComponent {
 
 		login = new LoginWidget();
 
-		navigator = new SwitchingNavigatorWidget(cm.getUi().getWorkspace().getWorkarea());
+		navigator = new SwitchingNavigatorWidget(Scope.get().getComponent(Ui.class).getWorkspace().getWorkarea());
 		navigator.addItem("Login", login);
 		navigator.addItem("Register", createRegisterWidget());
 		navigator.addItem("About", new Label(""));
@@ -39,7 +41,7 @@ public class PublicContext extends AScrumComponent {
 	}
 
 	public void activate() {
-		cm.getUi().show(sidebar, login);
+		Scope.get().getComponent(Ui.class).show(sidebar, login);
 	}
 
 	private Widget createRegisterWidget() {

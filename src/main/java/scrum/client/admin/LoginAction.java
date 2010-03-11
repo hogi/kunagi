@@ -1,8 +1,10 @@
 package scrum.client.admin;
 
 import ilarkesto.core.logging.Log;
+import ilarkesto.core.scope.Scope;
 import scrum.client.ScrumScopeManager;
 import scrum.client.project.Project;
+import scrum.client.workspace.Ui;
 
 public class LoginAction extends GLoginAction {
 
@@ -19,14 +21,15 @@ public class LoginAction extends GLoginAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getUi().getWorkspace().lock("Checking login data...");
+		final Ui ui = Scope.get().getComponent(Ui.class);
+		ui.getWorkspace().lock("Checking login data...");
 		cm.getApp().callLogin(loginData.getUsername(), loginData.getPassword(), new Runnable() {
 
 			public void run() {
 				Log.DEBUG("Login response received");
 				if (!cm.getAuth().isUserLoggedIn()) {
 					log.info("Login failed.");
-					cm.getUi().unlock();
+					ui.unlock();
 					loginData.setFailed();
 				} else {
 					User user = getCurrentUser();

@@ -16,6 +16,7 @@ import scrum.client.project.Project;
 import scrum.client.search.Search;
 import scrum.client.undo.Undo;
 import scrum.client.workspace.DndManager;
+import scrum.client.workspace.Ui;
 
 public class ScrumScopeManager {
 
@@ -38,6 +39,7 @@ public class ScrumScopeManager {
 		scope.putComponent("app", cm.getApp());
 		scope.putComponent(cm.getDao());
 		scope.putComponent(new Pinger());
+		scope.putComponent(new Ui());
 		scope.putComponent(new SystemMessageManager());
 
 		appScope.wireComponents();

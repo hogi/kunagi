@@ -51,7 +51,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtComponentsModel = new ComponentModel("GwtComponents", getBasePackageName());
 			gwtComponentsModel.setGwt(true);
 			gwtComponentsModel.addComposite("Auth");
-			gwtComponentsModel.addComposite("Ui");
 			gwtComponentsModel.addComposite("ProjectContext");
 			gwtComponentsModel.addComposite("PublicContext");
 			gwtComponentsModel.addComposite("HomeContext");

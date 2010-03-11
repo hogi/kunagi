@@ -1,7 +1,9 @@
 package scrum.client;
 
+import ilarkesto.core.scope.Scope;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumComponent;
+import scrum.client.workspace.Ui;
 
 public class Auth extends AScrumComponent implements ServerDataReceivedListener {
 
@@ -18,7 +20,7 @@ public class Auth extends AScrumComponent implements ServerDataReceivedListener 
 	public void logout() {
 		if (cm.getProjectContext().isProjectOpen()) cm.getProjectContext().closeProject();
 		log.info("Logging out");
-		cm.getUi().lock("Logging out...");
+		Scope.get().getComponent(Ui.class).lock("Logging out..."); // TODO dependency
 		user = null;
 		cm.getEventBus().fireLogout();
 		cm.getApp().callLogout();
