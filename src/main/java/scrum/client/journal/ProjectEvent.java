@@ -5,6 +5,8 @@ import ilarkesto.gwt.client.DateAndTime;
 import java.util.Comparator;
 import java.util.Map;
 
+import scrum.client.collaboration.Wiki;
+
 public class ProjectEvent extends GProjectEvent {
 
 	public ProjectEvent(Map data) {
@@ -24,7 +26,7 @@ public class ProjectEvent extends GProjectEvent {
 
 	@Override
 	public String toHtml() {
-		return cm.getWiki().richtextToHtml(getLabel());
+		return Wiki.toHtml(getLabel());
 	}
 
 	@Override

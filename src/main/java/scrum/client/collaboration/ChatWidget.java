@@ -1,7 +1,6 @@
 package scrum.client.collaboration;
 
 import ilarkesto.core.scope.Scope;
-import scrum.client.Wiki;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 

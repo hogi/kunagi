@@ -190,27 +190,6 @@ public abstract class GComponentManager
         systemMessageManager = null;
     }
 
-    // --- wiki ---
-
-    private Wiki wiki;
-
-    public final Wiki getWiki() {
-        if (wiki == null) {
-            wiki = new Wiki();
-            initializeWiki(wiki);
-            initialize(wiki);
-        }
-        return wiki;
-    }
-
-    protected void initializeWiki(Wiki wiki) {
-    }
-
-    public final void destroyWiki() {
-        destroy(wiki);
-        wiki = null;
-    }
-
     // --- undo ---
 
     private Undo undo;

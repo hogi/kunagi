@@ -5,6 +5,7 @@ import ilarkesto.core.scope.NonConcurrentScopeManager;
 import ilarkesto.core.scope.Scope;
 import scrum.client.admin.User;
 import scrum.client.collaboration.Chat;
+import scrum.client.collaboration.Wiki;
 import scrum.client.communication.Pinger;
 import scrum.client.journal.ChangeHistoryManager;
 import scrum.client.project.Project;
@@ -47,6 +48,7 @@ public class ScrumScopeManager {
 
 		scope.putComponent(new Chat());
 		scope.putComponent(new ChangeHistoryManager());
+		scope.putComponent(new Wiki());
 
 		projectScope.wireComponents();
 		cm.getProjectContext().openProject(project);

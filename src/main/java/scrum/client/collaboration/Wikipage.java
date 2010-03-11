@@ -23,7 +23,7 @@ public class Wikipage extends GWikipage implements ForumSupport {
 
 	@Override
 	public String toHtml() {
-		return cm.getWiki().richtextToHtml("[[" + getName() + "]]");
+		return Wiki.toHtml("[[" + getName() + "]]");
 	}
 
 	@Override

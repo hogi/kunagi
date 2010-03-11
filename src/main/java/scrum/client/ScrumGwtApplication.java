@@ -46,7 +46,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			}
 		});
 
-		cm.getWiki();
 		ScrumJs.initialize();
 	}
 

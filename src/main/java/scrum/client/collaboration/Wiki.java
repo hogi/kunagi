@@ -1,4 +1,4 @@
-package scrum.client;
+package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.BetterTextArea;
 import ilarkesto.gwt.client.Gwt;
@@ -6,10 +6,11 @@ import ilarkesto.gwt.client.Initializer;
 import ilarkesto.gwt.client.RichtextFormater;
 import ilarkesto.gwt.client.ToolbarWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
-import scrum.client.collaboration.Wikipage;
-import scrum.client.common.AScrumComponent;
+import scrum.client.ComponentManager;
+import scrum.client.Uploader;
 import scrum.client.files.File;
 import scrum.client.img.Img;
+import scrum.client.project.Project;
 import scrum.client.wiki.ScrumHtmlContext;
 import scrum.client.wiki.WikiModel;
 import scrum.client.wiki.WikiParser;
@@ -22,11 +23,10 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.Widget;
 
-public class Wiki extends AScrumComponent implements RichtextFormater {
+public class Wiki extends GWiki implements RichtextFormater {
 
 	@Override
-	protected void onInitialization() {
-		super.onInitialization();
+	public void initialize() {
 		Gwt.setDefaultRichtextFormater(this);
 		Gwt.setRichtextEditorEditInitializer(new RichtextEditorEditInitializer());
 		Gwt.setDefaultRichtextSyntaxInfo(WikiParser.SYNTAX_INFO_HTML);
@@ -37,8 +37,11 @@ public class Wiki extends AScrumComponent implements RichtextFormater {
 		return page == null ? null : page.getText();
 	}
 
+	private Project getCurrentProject() {
+		return ComponentManager.get().getProjectContext().getProject();
+	}
+
 	public String richtextToHtml(String text) {
-		if (Gwt.isEmpty(text)) return text;
 		return toHtml(text);
 	}
 
@@ -69,7 +72,7 @@ public class Wiki extends AScrumComponent implements RichtextFormater {
 					BetterTextArea textArea = editor.getEditor();
 					int topPosition = textArea.getAbsoluteTop() + 20;
 					ReferenceInserter refInserter = new ReferenceInserter(textArea);
-					cm.getUploader().showUploadDialog(topPosition, refInserter);
+					ComponentManager.get().getUploader().showUploadDialog(topPosition, refInserter);
 				}
 			}), 0);
 

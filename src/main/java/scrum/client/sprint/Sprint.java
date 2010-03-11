@@ -1,5 +1,6 @@
 package scrum.client.sprint;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.TimePeriod;
 
@@ -11,6 +12,7 @@ import java.util.Map;
 
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
+import scrum.client.collaboration.Wiki;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
@@ -19,6 +21,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
 
 public class Sprint extends GSprint implements ForumSupport {
+
+	private Wiki wiki = Scope.get().getComponent(Wiki.class);
 
 	public Sprint(Project project, String label) {
 		setProject(project);
@@ -176,22 +180,22 @@ public class Sprint extends GSprint implements ForumSupport {
 
 	@Override
 	public String getGoalTemplate() {
-		return cm.getWiki().getTemplate("sprint.goal");
+		return wiki.getTemplate("sprint.goal");
 	}
 
 	@Override
 	public String getPlanningNoteTemplate() {
-		return cm.getWiki().getTemplate("sprint.planning");
+		return wiki.getTemplate("sprint.planning");
 	}
 
 	@Override
 	public String getRetrospectiveNoteTemplate() {
-		return cm.getWiki().getTemplate("sprint.retrospective");
+		return wiki.getTemplate("sprint.retrospective");
 	}
 
 	@Override
 	public String getReviewNoteTemplate() {
-		return cm.getWiki().getTemplate("sprint.review");
+		return wiki.getTemplate("sprint.review");
 	}
 
 	public boolean isCurrent() {

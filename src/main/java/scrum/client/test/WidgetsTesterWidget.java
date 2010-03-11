@@ -14,7 +14,7 @@ import ilarkesto.gwt.client.editor.AIntegerEditorModel;
 import ilarkesto.gwt.client.editor.ATextEditorModel;
 import ilarkesto.gwt.client.editor.IntegerEditorWidget;
 import scrum.client.ScrumGwt;
-import scrum.client.Wiki;
+import scrum.client.collaboration.Wiki;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;

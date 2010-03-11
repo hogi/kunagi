@@ -1,5 +1,6 @@
 package scrum.client.collaboration;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.DropdownMenuButtonWidget;
 import ilarkesto.gwt.client.Gwt;
@@ -26,12 +27,14 @@ public class WikiWidget extends AScrumWidget {
 	private static final String START_PAGE_NAME = "Start";
 	private String pageName;
 	private Wikipage wikipage;
+	private Wiki wiki;
 
 	private FlowPanel panel;
 	private RichtextEditorWidget editor;
 
 	@Override
 	protected Widget onInitialization() {
+		wiki = Scope.get().getComponent(Wiki.class);
 
 		panel = new FlowPanel();
 		panel.setStyleName("WikiWidget");
@@ -81,7 +84,7 @@ public class WikiWidget extends AScrumWidget {
 	}
 
 	private Widget createPageSelector() {
-		SuggestBox pageNameBox = new SuggestBox(cm.getWiki().createPagesSuggestOracle());
+		SuggestBox pageNameBox = new SuggestBox(wiki.createPagesSuggestOracle());
 		pageNameBox.setAutoSelectEnabled(false);
 		pageNameBox.setTitle("Enter name of wiki page");
 		pageNameBox.addSelectionHandler(new PageNameHandler());

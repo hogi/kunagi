@@ -1,8 +1,8 @@
 package scrum.client.journal;
 
 import ilarkesto.gwt.client.ATextWidget;
-import scrum.client.Wiki;
 import scrum.client.admin.User;
+import scrum.client.collaboration.Wiki;
 import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
