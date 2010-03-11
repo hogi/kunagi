@@ -2,7 +2,6 @@ package scrum.client.dnd;
 
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockListWidget;
-import scrum.client.workspace.ClipboardItemWidget;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.VetoDragException;
@@ -75,10 +74,6 @@ public class BlockDropController implements DropController {
 		if (draggable instanceof ABlockWidget) {
 			ABlockWidget block = (ABlockWidget) draggable;
 			return targetBlock.getList().acceptsDrop(block);
-		}
-		if (draggable instanceof ClipboardItemWidget) {
-			ClipboardItemWidget item = (ClipboardItemWidget) draggable;
-			return item.getPayload().getList() == targetBlock.getList();
 		}
 		return false;
 	}

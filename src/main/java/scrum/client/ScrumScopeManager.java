@@ -11,6 +11,7 @@ import scrum.client.communication.Pinger;
 import scrum.client.journal.ChangeHistoryManager;
 import scrum.client.project.Project;
 import scrum.client.undo.Undo;
+import scrum.client.workspace.DndManager;
 
 public class ScrumScopeManager {
 
@@ -53,6 +54,7 @@ public class ScrumScopeManager {
 		scope.putComponent(new Wiki());
 		scope.putComponent(new Calendar());
 		scope.putComponent(new Undo());
+		scope.putComponent(new DndManager());
 
 		projectScope.wireComponents();
 		cm.getProjectContext().openProject(project);

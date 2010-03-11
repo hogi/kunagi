@@ -1,10 +1,9 @@
-package scrum.client;
+package scrum.client.workspace;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import scrum.client.common.ABlockWidget;
-import scrum.client.common.AScrumComponent;
 import scrum.client.common.BlockListWidget;
 import scrum.client.dnd.BlockDropController;
 import scrum.client.dnd.BlockListDropController;
@@ -12,7 +11,7 @@ import scrum.client.dnd.ScrumDragController;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class DndManager extends AScrumComponent {
+public class DndManager extends GDndManager {
 
 	private ScrumDragController dragController;
 	private Map<ABlockWidget, BlockDropController> blockDropControllers;
@@ -22,13 +21,6 @@ public class DndManager extends AScrumComponent {
 		dragController = new ScrumDragController();
 		blockDropControllers = new HashMap<ABlockWidget, BlockDropController>();
 		blockListDropControllers = new HashMap<BlockListWidget, BlockListDropController>();
-	}
-
-	@Override
-	protected void onDestroy() {
-		dragController.clearSelection();
-		dragController.resetCache();
-		super.onDestroy();
 	}
 
 	public void registerDropTarget(BlockListWidget list) {
@@ -66,5 +58,4 @@ public class DndManager extends AScrumComponent {
 	public ScrumDragController getDragController() {
 		return dragController;
 	}
-
 }

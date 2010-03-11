@@ -1,7 +1,7 @@
 package scrum.client.workspace;
 
 import ilarkesto.core.logging.Log;
-import scrum.client.DndManager;
+import ilarkesto.core.scope.Scope;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.StyleSheet;
 import scrum.client.dnd.TrashSupport;
@@ -15,12 +15,14 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class TrashWidget extends AScrumWidget {
 
-	private DndManager dndManager = cm.getDndManager();
+	private DndManager dndManager;
 	private HorizontalPanel trash;
 	private DropController trashDropController = new TrashDropController();
 
 	@Override
 	protected Widget onInitialization() {
+		dndManager = Scope.get().getComponent(DndManager.class);
+
 		trash = new HorizontalPanel();
 		trash.setStyleName("TrashWidget");
 		trash.add(Img.bundle.trash32().createImage());

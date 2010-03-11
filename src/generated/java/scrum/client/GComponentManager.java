@@ -127,27 +127,6 @@ public abstract class GComponentManager
         homeContext = null;
     }
 
-    // --- dndManager ---
-
-    private DndManager dndManager;
-
-    public final DndManager getDndManager() {
-        if (dndManager == null) {
-            dndManager = new DndManager();
-            initializeDndManager(dndManager);
-            initialize(dndManager);
-        }
-        return dndManager;
-    }
-
-    protected void initializeDndManager(DndManager dndManager) {
-    }
-
-    public final void destroyDndManager() {
-        destroy(dndManager);
-        dndManager = null;
-    }
-
     // --- usersStatus ---
 
     private UsersStatus usersStatus;

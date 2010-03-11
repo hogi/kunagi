@@ -1,6 +1,7 @@
 package scrum.client.common;
 
 import ilarkesto.core.logging.Log;
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.ObjectMappedFlowPanel;
 
@@ -10,9 +11,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import scrum.client.DndManager;
 import scrum.client.dnd.BlockDndMarkerWidget;
 import scrum.client.dnd.BlockListDropAction;
+import scrum.client.workspace.DndManager;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -24,7 +25,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 
 	// private static final Logger LOG = Logger.get(BlockListWidget.class);
 
-	private DndManager dndManager = cm.getDndManager();
+	DndManager dndManager;
 
 	private ObjectMappedFlowPanel<O, ABlockWidget<O>> list;
 	private boolean dndSorting = true;
@@ -60,6 +61,8 @@ public final class BlockListWidget<O> extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		dndManager = Scope.get().getComponent(DndManager.class);
+
 		list = new ObjectMappedFlowPanel<O, ABlockWidget<O>>(
 				new ObjectMappedFlowPanel.WidgetFactory<O, ABlockWidget<O>>() {
 
@@ -124,6 +127,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	}
 
 	public final boolean isDndSorting() {
+		if (dndManager == null) return false;
 		return dndSorting;
 	}
 
@@ -332,12 +336,12 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	@Override
 	protected void onLoad() {
 		super.onLoad();
-		dndManager.registerDropTarget(this);
+		if (dndManager != null) dndManager.registerDropTarget(this);
 	}
 
 	@Override
 	protected void onUnload() {
-		dndManager.unregisterDropTarget(this);
+		if (dndManager != null) dndManager.unregisterDropTarget(this);
 		super.onUnload();
 	}
 

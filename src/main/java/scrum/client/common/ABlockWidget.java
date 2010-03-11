@@ -50,7 +50,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 			header.appendCell(new UsersOnBlockWidget((AScrumGwtEntity) getObject()), null, false, false, null);
 		}
 
-		cm.getDndManager().makeDraggable(this, header.getDragHandle());
+		if (list.dndManager != null) list.dndManager.makeDraggable(this, header.getDragHandle());
 
 		panel = Gwt.createFlowPanel("ABlockWidget", null, header);
 		panel.add(header);
@@ -176,7 +176,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	protected void onLoad() {
 		super.onLoad();
 		if (getList().isDndSorting()) {
-			cm.getDndManager().registerDropTarget(this);
+			getList().dndManager.registerDropTarget(this);
 		}
 		if (extended) cm.getEventBus().fireBlockExpanded(getObject());
 	}
@@ -184,7 +184,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	@Override
 	protected void onUnload() {
 		if (extended) cm.getEventBus().fireBlockCollapsed(getObject());
-		cm.getDndManager().unregisterDropTarget(this);
+		if (list.dndManager != null) list.dndManager.unregisterDropTarget(this);
 		super.onUnload();
 	}
 
