@@ -1,6 +1,7 @@
 package scrum.client.project;
 
 import ilarkesto.core.logging.Log;
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.DateAndTime;
@@ -17,13 +18,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import scrum.client.UsersStatus;
 import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.collaboration.Subject;
+import scrum.client.collaboration.UsersStatus;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.files.File;
@@ -467,7 +468,7 @@ public class Project extends GProject implements ForumSupport {
 	};
 
 	public Set<User> getUsersSelecting(AGwtEntity entity) {
-		UsersStatus usersStatus = cm.getUsersStatus();
+		UsersStatus usersStatus = Scope.get().getComponent(UsersStatus.class);
 		Set<User> users = new HashSet<User>();
 		for (User user : getParticipants()) {
 			if (usersStatus.getSelectedEntitysIds(user).contains(entity.getId())) {

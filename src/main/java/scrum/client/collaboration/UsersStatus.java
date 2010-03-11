@@ -1,4 +1,4 @@
-package scrum.client;
+package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.AGwtEntity;
 
@@ -6,19 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import scrum.client.BlockCollapsedListener;
+import scrum.client.BlockExpandedListener;
+import scrum.client.ComponentManager;
+import scrum.client.DataTransferObject;
+import scrum.client.ServerDataReceivedListener;
+import scrum.client.UsersStatusData;
 import scrum.client.admin.User;
-import scrum.client.common.AScrumComponent;
 
-public class UsersStatus extends AScrumComponent implements ServerDataReceivedListener, BlockCollapsedListener,
+public class UsersStatus extends GUsersStatus implements ServerDataReceivedListener, BlockCollapsedListener,
 		BlockExpandedListener {
 
-	private UsersStatusData usersStatus;
-
-	@Override
-	protected void onInitialization() {
-		super.onInitialization();
-		usersStatus = new UsersStatusData();
-	}
+	private ComponentManager cm = ComponentManager.get();
+	private UsersStatusData usersStatus = new UsersStatusData();
 
 	public void onBlockExpanded(Object object) {
 		if (object instanceof AGwtEntity && cm.getProjectContext().isProjectOpen()) {
@@ -59,13 +59,17 @@ public class UsersStatus extends AScrumComponent implements ServerDataReceivedLi
 	private void addSelectedEntityId(String id) {
 		String userId = getCurrentUser().getId();
 		boolean added = usersStatus.addSelectedEntityId(userId, id);
-		if (added) cm.getApp().callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());
+		if (added) app.callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());
 	}
 
 	private void removeSelectedEntityId(String id) {
 		String userId = getCurrentUser().getId();
 		boolean removed = usersStatus.removeSelectedEntityId(userId, id);
-		if (removed) cm.getApp().callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());
+		if (removed) app.callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());
+	}
+
+	private User getCurrentUser() {
+		return cm.getAuth().getUser();
 	}
 
 }

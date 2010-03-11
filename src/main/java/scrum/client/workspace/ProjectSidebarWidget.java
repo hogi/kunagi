@@ -5,8 +5,8 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.admin.SystemMessageWidget;
 import scrum.client.collaboration.ChatWidget;
+import scrum.client.collaboration.UsersStatusWidget;
 import scrum.client.common.AScrumWidget;
-import scrum.client.communication.UsersStatusWidget;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;

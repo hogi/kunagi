@@ -1,6 +1,6 @@
-package scrum.client.communication;
+package scrum.client.collaboration;
 
-import scrum.client.UsersStatus;
+import ilarkesto.core.scope.Scope;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 
@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class UserStatusWidget extends AScrumWidget {
 
+	private UsersStatus usersStatus;
 	private Label label;
 	private User user;
 
@@ -22,6 +23,8 @@ public class UserStatusWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		usersStatus = Scope.get().getComponent(UsersStatus.class);
+
 		label = new Label(user.getName() + getCurrentProject().getUsersRolesAsString(user, " (", ")"));
 		label.setStyleName("UserStatusWidget");
 		return label;
@@ -29,7 +32,6 @@ public class UserStatusWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		UsersStatus usersStatus = cm.getUsersStatus();
 		String color = getCurrentProject().getUserConfig(user).getColor();
 		label.getElement().getStyle().setProperty("color", color);
 		Highlighter highlighter = new Highlighter();

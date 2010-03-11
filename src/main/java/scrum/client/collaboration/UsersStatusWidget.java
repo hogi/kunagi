@@ -1,4 +1,4 @@
-package scrum.client.communication;
+package scrum.client.collaboration;
 
 import java.util.ArrayList;
 import java.util.Collections;

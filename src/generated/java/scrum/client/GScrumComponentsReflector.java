@@ -8,6 +8,8 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     protected ilarkesto.core.scope.ComponentReflector chatReflector = createChatReflector();
 
+    protected ilarkesto.core.scope.ComponentReflector usersStatusReflector = createUsersStatusReflector();
+
     protected ilarkesto.core.scope.ComponentReflector wikiReflector = createWikiReflector();
 
     protected ilarkesto.core.scope.ComponentReflector pingerReflector = createPingerReflector();
@@ -26,6 +28,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.admin.SystemMessageManager) systemMessageManagerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.calendar.Calendar) calendarReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.collaboration.Chat) chatReflector.injectComponents(component, scope);
+        if (component instanceof scrum.client.collaboration.UsersStatus) usersStatusReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.collaboration.Wiki) wikiReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.communication.Pinger) pingerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.injectComponents(component, scope);
@@ -39,6 +42,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.admin.SystemMessageManager) systemMessageManagerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.calendar.Calendar) calendarReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.collaboration.Chat) chatReflector.callInitializationMethods(component);
+        if (component instanceof scrum.client.collaboration.UsersStatus) usersStatusReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.collaboration.Wiki) wikiReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.communication.Pinger) pingerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.callInitializationMethods(component);
@@ -52,6 +56,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.admin.SystemMessageManager) systemMessageManagerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.calendar.Calendar) calendarReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.collaboration.Chat) chatReflector.outjectComponents(component, scope);
+        if (component instanceof scrum.client.collaboration.UsersStatus) usersStatusReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.collaboration.Wiki) wikiReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.communication.Pinger) pingerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.outjectComponents(component, scope);
@@ -71,6 +76,10 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     public ilarkesto.core.scope.ComponentReflector createChatReflector() {
         return new scrum.client.collaboration.GChatReflector();
+    }
+
+    public ilarkesto.core.scope.ComponentReflector createUsersStatusReflector() {
+        return new scrum.client.collaboration.GUsersStatusReflector();
     }
 
     public ilarkesto.core.scope.ComponentReflector createWikiReflector() {

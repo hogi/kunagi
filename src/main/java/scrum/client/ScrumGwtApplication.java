@@ -51,8 +51,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	@Override
 	protected void onServerData(DataTransferObject data) {
-		if (data.usersStatus != null) cm.getUsersStatus();
-
 		if (data.applicationInfo != null) {
 			this.applicationInfo = data.applicationInfo;
 			log.debug("applicationInfo:", data.applicationInfo);

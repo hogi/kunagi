@@ -127,25 +127,4 @@ public abstract class GComponentManager
         homeContext = null;
     }
 
-    // --- usersStatus ---
-
-    private UsersStatus usersStatus;
-
-    public final UsersStatus getUsersStatus() {
-        if (usersStatus == null) {
-            usersStatus = new UsersStatus();
-            initializeUsersStatus(usersStatus);
-            initialize(usersStatus);
-        }
-        return usersStatus;
-    }
-
-    protected void initializeUsersStatus(UsersStatus usersStatus) {
-    }
-
-    public final void destroyUsersStatus() {
-        destroy(usersStatus);
-        usersStatus = null;
-    }
-
 }

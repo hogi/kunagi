@@ -7,6 +7,7 @@ import scrum.client.admin.SystemMessageManager;
 import scrum.client.admin.User;
 import scrum.client.calendar.Calendar;
 import scrum.client.collaboration.Chat;
+import scrum.client.collaboration.UsersStatus;
 import scrum.client.collaboration.Wiki;
 import scrum.client.communication.Pinger;
 import scrum.client.files.Uploader;
@@ -61,6 +62,7 @@ public class ScrumScopeManager {
 		scope.putComponent(new DndManager());
 		scope.putComponent(new Uploader());
 		scope.putComponent(new Search());
+		scope.putComponent(new UsersStatus());
 
 		projectScope.wireComponents();
 		cm.getProjectContext().openProject(project);

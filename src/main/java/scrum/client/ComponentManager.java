@@ -17,7 +17,6 @@ public class ComponentManager extends GComponentManager implements LogoutListene
 
 	public void onProjectClosed() {
 		destroyProjectContext();
-		destroyUsersStatus();
 	}
 
 	public void onProjectOpened() {

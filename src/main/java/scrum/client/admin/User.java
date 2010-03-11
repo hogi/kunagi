@@ -1,9 +1,11 @@
 package scrum.client.admin;
 
+import ilarkesto.core.scope.Scope;
+
 import java.util.Comparator;
 import java.util.Map;
 
-import scrum.client.UsersStatus;
+import scrum.client.collaboration.UsersStatus;
 
 public class User extends GUser {
 
@@ -41,7 +43,7 @@ public class User extends GUser {
 	public transient static final Comparator<User> ONLINE_OFFLINE_COMPARATOR = new Comparator<User>() {
 
 		public int compare(User a, User b) {
-			UsersStatus usersStatus = cm.getUsersStatus();
+			UsersStatus usersStatus = Scope.get().getComponent(UsersStatus.class);
 			boolean aOnline = usersStatus.isOnline(a);
 			boolean bOnline = usersStatus.isOnline(b);
 			if (aOnline == bOnline) return a.getName().compareTo(b.getName());
