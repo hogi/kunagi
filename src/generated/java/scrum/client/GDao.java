@@ -25,6 +25,7 @@ public abstract class GDao
     private Map<String, scrum.client.journal.Change> changes = new HashMap<String, scrum.client.journal.Change>();
 
     public final void clearChanges() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Changes");
         changes.clear();
     }
 
@@ -121,6 +122,7 @@ public abstract class GDao
     private Map<String, scrum.client.collaboration.ChatMessage> chatMessages = new HashMap<String, scrum.client.collaboration.ChatMessage>();
 
     public final void clearChatMessages() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing ChatMessages");
         chatMessages.clear();
     }
 
@@ -209,6 +211,7 @@ public abstract class GDao
     private Map<String, scrum.client.collaboration.Comment> comments = new HashMap<String, scrum.client.collaboration.Comment>();
 
     public final void clearComments() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Comments");
         comments.clear();
     }
 
@@ -297,6 +300,7 @@ public abstract class GDao
     private Map<String, scrum.client.collaboration.Emoticon> emoticons = new HashMap<String, scrum.client.collaboration.Emoticon>();
 
     public final void clearEmoticons() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Emoticons");
         emoticons.clear();
     }
 
@@ -377,6 +381,7 @@ public abstract class GDao
     private Map<String, scrum.client.files.File> files = new HashMap<String, scrum.client.files.File>();
 
     public final void clearFiles() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Files");
         files.clear();
     }
 
@@ -481,6 +486,7 @@ public abstract class GDao
     private Map<String, scrum.client.impediments.Impediment> impediments = new HashMap<String, scrum.client.impediments.Impediment>();
 
     public final void clearImpediments() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Impediments");
         impediments.clear();
     }
 
@@ -593,6 +599,7 @@ public abstract class GDao
     private Map<String, scrum.client.issues.Issue> issues = new HashMap<String, scrum.client.issues.Issue>();
 
     public final void clearIssues() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Issues");
         issues.clear();
     }
 
@@ -729,6 +736,7 @@ public abstract class GDao
     private Map<String, scrum.client.project.Project> projects = new HashMap<String, scrum.client.project.Project>();
 
     public final void clearProjects() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Projects");
         projects.clear();
     }
 
@@ -927,6 +935,7 @@ public abstract class GDao
     private Map<String, scrum.client.journal.ProjectEvent> projectEvents = new HashMap<String, scrum.client.journal.ProjectEvent>();
 
     public final void clearProjectEvents() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing ProjectEvents");
         projectEvents.clear();
     }
 
@@ -1007,6 +1016,7 @@ public abstract class GDao
     private Map<String, scrum.client.admin.ProjectUserConfig> projectUserConfigs = new HashMap<String, scrum.client.admin.ProjectUserConfig>();
 
     public final void clearProjectUserConfigs() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing ProjectUserConfigs");
         projectUserConfigs.clear();
     }
 
@@ -1095,6 +1105,7 @@ public abstract class GDao
     private Map<String, scrum.client.project.Quality> qualitys = new HashMap<String, scrum.client.project.Quality>();
 
     public final void clearQualitys() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Qualitys");
         qualitys.clear();
     }
 
@@ -1191,6 +1202,7 @@ public abstract class GDao
     private Map<String, scrum.client.release.Release> releases = new HashMap<String, scrum.client.release.Release>();
 
     public final void clearReleases() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Releases");
         releases.clear();
     }
 
@@ -1271,6 +1283,7 @@ public abstract class GDao
     private Map<String, scrum.client.project.Requirement> requirements = new HashMap<String, scrum.client.project.Requirement>();
 
     public final void clearRequirements() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Requirements");
         requirements.clear();
     }
 
@@ -1416,6 +1429,7 @@ public abstract class GDao
     private Map<String, scrum.client.estimation.RequirementEstimationVote> requirementEstimationVotes = new HashMap<String, scrum.client.estimation.RequirementEstimationVote>();
 
     public final void clearRequirementEstimationVotes() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing RequirementEstimationVotes");
         requirementEstimationVotes.clear();
     }
 
@@ -1496,6 +1510,7 @@ public abstract class GDao
     private Map<String, scrum.client.risks.Risk> risks = new HashMap<String, scrum.client.risks.Risk>();
 
     public final void clearRisks() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Risks");
         risks.clear();
     }
 
@@ -1616,6 +1631,7 @@ public abstract class GDao
     private Map<String, scrum.client.calendar.SimpleEvent> simpleEvents = new HashMap<String, scrum.client.calendar.SimpleEvent>();
 
     public final void clearSimpleEvents() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing SimpleEvents");
         simpleEvents.clear();
     }
 
@@ -1736,6 +1752,7 @@ public abstract class GDao
     private Map<String, scrum.client.sprint.Sprint> sprints = new HashMap<String, scrum.client.sprint.Sprint>();
 
     public final void clearSprints() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Sprints");
         sprints.clear();
     }
 
@@ -1872,6 +1889,7 @@ public abstract class GDao
     private Map<String, scrum.client.collaboration.Subject> subjects = new HashMap<String, scrum.client.collaboration.Subject>();
 
     public final void clearSubjects() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Subjects");
         subjects.clear();
     }
 
@@ -1960,6 +1978,7 @@ public abstract class GDao
     private Map<String, scrum.client.sprint.Task> tasks = new HashMap<String, scrum.client.sprint.Task>();
 
     public final void clearTasks() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Tasks");
         tasks.clear();
     }
 
@@ -2072,6 +2091,7 @@ public abstract class GDao
     private Map<String, scrum.client.admin.User> users = new HashMap<String, scrum.client.admin.User>();
 
     public final void clearUsers() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Users");
         users.clear();
     }
 
@@ -2168,6 +2188,7 @@ public abstract class GDao
     private Map<String, scrum.client.collaboration.Wikipage> wikipages = new HashMap<String, scrum.client.collaboration.Wikipage>();
 
     public final void clearWikipages() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Wikipages");
         wikipages.clear();
     }
 

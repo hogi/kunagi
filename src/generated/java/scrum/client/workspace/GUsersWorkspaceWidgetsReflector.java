@@ -8,6 +8,7 @@ public class GUsersWorkspaceWidgetsReflector implements ilarkesto.core.scope.Com
     }
 
     public void callInitializationMethods(UsersWorkspaceWidgets component) {
+        component.initialize();
     }
 
     public void outjectComponents(UsersWorkspaceWidgets component, ilarkesto.core.scope.Scope scope) {

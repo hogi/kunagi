@@ -1,35 +1,33 @@
-package scrum.client;
+package scrum.client.workspace;
 
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
+import scrum.client.ApplicationInfo;
+import scrum.client.ApplicationStartListener;
+import scrum.client.LogoutListener;
 import scrum.client.admin.LoginWidget;
-import scrum.client.common.AScrumComponent;
 import scrum.client.test.WidgetsTesterWidget;
-import scrum.client.workspace.PagePanel;
-import scrum.client.workspace.Ui;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PublicContext extends AScrumComponent {
+public class PublicWorkspaceWidgets extends GPublicWorkspaceWidgets implements ApplicationStartListener, LogoutListener {
 
 	private FlowPanel sidebar;
 	private SwitchingNavigatorWidget navigator;
 	private LoginWidget login;
 
 	@Override
-	protected void onInitialization() {
-		super.onInitialization();
-
+	public void initialize() {
 		login = new LoginWidget();
 
 		navigator = new SwitchingNavigatorWidget(Scope.get().getComponent(Ui.class).getWorkspace().getWorkarea());
 		navigator.addItem("Login", login);
 		navigator.addItem("Register", createRegisterWidget());
 		navigator.addItem("About", new Label(""));
-		ApplicationInfo applicationInfo = cm.getApp().getApplicationInfo();
+		ApplicationInfo applicationInfo = app.getApplicationInfo();
 		if (applicationInfo != null && applicationInfo.isDevelopmentStage()) {
 			navigator.addItem("Widgets Tests", new WidgetsTesterWidget());
 		}
@@ -40,8 +38,16 @@ public class PublicContext extends AScrumComponent {
 		sidebar.add(navigator);
 	}
 
-	public void activate() {
-		Scope.get().getComponent(Ui.class).show(sidebar, login);
+	public void onApplicationStart() {
+		activate();
+	}
+
+	public void onLogout() {
+		activate();
+	}
+
+	private void activate() {
+		ui.show(sidebar, login);
 	}
 
 	private Widget createRegisterWidget() {

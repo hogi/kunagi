@@ -43,25 +43,4 @@ public abstract class GComponentManager
         projectContext = null;
     }
 
-    // --- publicContext ---
-
-    private PublicContext publicContext;
-
-    public final PublicContext getPublicContext() {
-        if (publicContext == null) {
-            publicContext = new PublicContext();
-            initializePublicContext(publicContext);
-            initialize(publicContext);
-        }
-        return publicContext;
-    }
-
-    protected void initializePublicContext(PublicContext publicContext) {
-    }
-
-    public final void destroyPublicContext() {
-        destroy(publicContext);
-        publicContext = null;
-    }
-
 }

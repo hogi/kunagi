@@ -20,7 +20,8 @@ public class UsersWorkspaceWidgets extends GUsersWorkspaceWidgets {
 	private UserListWidget userList;
 	private SystemMessageManagerWidget messageManager;
 
-	public void activate() {
+	@Override
+	public void initialize() {
 		projectSelector = new ProjectSelectorWidget();
 		userConfig = new UserConfigWidget();
 		messageManager = new SystemMessageManagerWidget();
@@ -40,6 +41,9 @@ public class UsersWorkspaceWidgets extends GUsersWorkspaceWidgets {
 		sidebar.add(new SystemMessageWidget());
 		sidebar.add(Gwt.createSpacer(1, 10));
 		sidebar.add(navigator);
+	}
+
+	public void activate() {
 		ui.show(sidebar, projectSelector);
 	}
 

@@ -43,7 +43,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		callStartSession(new Runnable() {
 
 			public void run() {
-				cm.getPublicContext().activate();
 				cm.getEventBus().fireApplicationStart();
 			}
 		});

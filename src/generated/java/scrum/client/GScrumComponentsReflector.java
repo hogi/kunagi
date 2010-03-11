@@ -26,9 +26,11 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     protected ilarkesto.core.scope.ComponentReflector dndManagerReflector = createDndManagerReflector();
 
-    protected ilarkesto.core.scope.ComponentReflector usersWorkspaceWidgetsReflector = createUsersWorkspaceWidgetsReflector();
+    protected ilarkesto.core.scope.ComponentReflector publicWorkspaceWidgetsReflector = createPublicWorkspaceWidgetsReflector();
 
     protected ilarkesto.core.scope.ComponentReflector uiReflector = createUiReflector();
+
+    protected ilarkesto.core.scope.ComponentReflector usersWorkspaceWidgetsReflector = createUsersWorkspaceWidgetsReflector();
 
     public void injectComponents(Object component, ilarkesto.core.scope.Scope scope) {
         if (component instanceof scrum.client.admin.Auth) authReflector.injectComponents(component, scope);
@@ -43,8 +45,9 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.search.Search) searchReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.undo.Undo) undoReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.workspace.DndManager) dndManagerReflector.injectComponents(component, scope);
-        if (component instanceof scrum.client.workspace.UsersWorkspaceWidgets) usersWorkspaceWidgetsReflector.injectComponents(component, scope);
+        if (component instanceof scrum.client.workspace.PublicWorkspaceWidgets) publicWorkspaceWidgetsReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.workspace.Ui) uiReflector.injectComponents(component, scope);
+        if (component instanceof scrum.client.workspace.UsersWorkspaceWidgets) usersWorkspaceWidgetsReflector.injectComponents(component, scope);
     }
 
     public void callInitializationMethods(Object component) {
@@ -60,8 +63,9 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.search.Search) searchReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.undo.Undo) undoReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.workspace.DndManager) dndManagerReflector.callInitializationMethods(component);
-        if (component instanceof scrum.client.workspace.UsersWorkspaceWidgets) usersWorkspaceWidgetsReflector.callInitializationMethods(component);
+        if (component instanceof scrum.client.workspace.PublicWorkspaceWidgets) publicWorkspaceWidgetsReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.workspace.Ui) uiReflector.callInitializationMethods(component);
+        if (component instanceof scrum.client.workspace.UsersWorkspaceWidgets) usersWorkspaceWidgetsReflector.callInitializationMethods(component);
     }
 
     public void outjectComponents(Object component, ilarkesto.core.scope.Scope scope) {
@@ -77,8 +81,9 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.search.Search) searchReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.undo.Undo) undoReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.workspace.DndManager) dndManagerReflector.outjectComponents(component, scope);
-        if (component instanceof scrum.client.workspace.UsersWorkspaceWidgets) usersWorkspaceWidgetsReflector.outjectComponents(component, scope);
+        if (component instanceof scrum.client.workspace.PublicWorkspaceWidgets) publicWorkspaceWidgetsReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.workspace.Ui) uiReflector.outjectComponents(component, scope);
+        if (component instanceof scrum.client.workspace.UsersWorkspaceWidgets) usersWorkspaceWidgetsReflector.outjectComponents(component, scope);
     }
 
     public ilarkesto.core.scope.ComponentReflector createAuthReflector() {
@@ -129,12 +134,16 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         return new scrum.client.workspace.GDndManagerReflector();
     }
 
-    public ilarkesto.core.scope.ComponentReflector createUsersWorkspaceWidgetsReflector() {
-        return new scrum.client.workspace.GUsersWorkspaceWidgetsReflector();
+    public ilarkesto.core.scope.ComponentReflector createPublicWorkspaceWidgetsReflector() {
+        return new scrum.client.workspace.GPublicWorkspaceWidgetsReflector();
     }
 
     public ilarkesto.core.scope.ComponentReflector createUiReflector() {
         return new scrum.client.workspace.GUiReflector();
+    }
+
+    public ilarkesto.core.scope.ComponentReflector createUsersWorkspaceWidgetsReflector() {
+        return new scrum.client.workspace.GUsersWorkspaceWidgetsReflector();
     }
 
 }
