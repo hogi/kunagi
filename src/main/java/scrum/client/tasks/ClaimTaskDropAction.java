@@ -1,5 +1,6 @@
 package scrum.client.tasks;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.undo.AUndoOperation;
 import scrum.client.ComponentManager;
 import scrum.client.admin.User;
@@ -21,7 +22,7 @@ public class ClaimTaskDropAction implements BlockListDropAction<Task> {
 		task.setRequirement(this.requirement);
 		task.claim();
 		ComponentManager.get().getEventBus().fireVisibleDataChanged();
-		ComponentManager.get().getUndo().getManager().add(new Undo(owner, task, requirement));
+		Scope.get().getComponent(scrum.client.undo.Undo.class).getManager().add(new Undo(owner, task, requirement));
 		return true;
 	}
 

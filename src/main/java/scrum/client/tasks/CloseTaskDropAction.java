@@ -1,5 +1,6 @@
 package scrum.client.tasks;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.undo.AUndoOperation;
 import scrum.client.ComponentManager;
 import scrum.client.dnd.BlockListDropAction;
@@ -18,7 +19,7 @@ public class CloseTaskDropAction implements BlockListDropAction<Task> {
 		Requirement requirement = task.getRequirement();
 		task.setRequirement(this.requirement);
 		if (!task.isClosed()) task.setDone(ComponentManager.get().getAuth().getUser());
-		ComponentManager.get().getUndo().getManager().add(new Undo(task, requirement));
+		Scope.get().getComponent(scrum.client.undo.Undo.class).getManager().add(new Undo(task, requirement));
 		return true;
 	}
 

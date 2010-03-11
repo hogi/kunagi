@@ -1,5 +1,6 @@
 package scrum.client.workspace;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.TableBuilder;
@@ -12,6 +13,7 @@ import scrum.client.common.AScrumWidget;
 import scrum.client.img.Img;
 import scrum.client.project.ChangeProjectAction;
 import scrum.client.search.SearchInputWidget;
+import scrum.client.undo.Undo;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -83,7 +85,7 @@ public class HeaderWidget extends AScrumWidget {
 			if (cm.getProjectContext().isProjectOpen()) {
 				text.append(getCurrentProject().getUsersRolesAsString(getCurrentUser(), " (", ")"));
 				text.append(" @ " + getCurrentProject().getLabel());
-				undoButton.setUndoManager(cm.getUndo().getManager());
+				undoButton.setUndoManager(Scope.get().getComponent(Undo.class).getManager());
 			}
 		}
 		return text.toString();

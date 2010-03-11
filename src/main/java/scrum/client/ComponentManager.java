@@ -20,7 +20,6 @@ public class ComponentManager extends GComponentManager implements LogoutListene
 		destroyProjectContext();
 		destroyUsersStatus();
 		destroyDndManager();
-		destroyUndo();
 	}
 
 	public void onProjectOpened() {

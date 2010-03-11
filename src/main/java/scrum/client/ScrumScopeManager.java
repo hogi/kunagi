@@ -10,6 +10,7 @@ import scrum.client.collaboration.Wiki;
 import scrum.client.communication.Pinger;
 import scrum.client.journal.ChangeHistoryManager;
 import scrum.client.project.Project;
+import scrum.client.undo.Undo;
 
 public class ScrumScopeManager {
 
@@ -51,6 +52,7 @@ public class ScrumScopeManager {
 		scope.putComponent(new ChangeHistoryManager());
 		scope.putComponent(new Wiki());
 		scope.putComponent(new Calendar());
+		scope.putComponent(new Undo());
 
 		projectScope.wireComponents();
 		cm.getProjectContext().openProject(project);

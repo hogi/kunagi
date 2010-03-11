@@ -20,3 +20,6 @@
 "08d9cbc3-bd9c-4b71-8bf1-0ac8fdc2ad26","18b81d9f-858d-479d-885b-c336a3b0137f","Dependency","dao"
 "3765ccf6-1587-4e5e-afbf-220e66ca2e9a","08d9cbc3-bd9c-4b71-8bf1-0ac8fdc2ad26","Type","scrum.client.Dao"
 "c0c391d4-5861-4ebb-8b43-28c05db0b513","08d9cbc3-bd9c-4b71-8bf1-0ac8fdc2ad26","Inject","true"
+"f4cfd7a4-2568-4fd2-a7aa-583c5b3e6846","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","undo"
+"d4d6b548-0fc1-40fc-8c36-88086601c3c2","f4cfd7a4-2568-4fd2-a7aa-583c5b3e6846","Component","Undo"
+"4c80fa71-cef6-4274-a2c0-f6f2db12f7a8","d4d6b548-0fc1-40fc-8c36-88086601c3c2","InitializationProcedure","initialize"

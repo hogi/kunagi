@@ -1,11 +1,13 @@
 package scrum.client.common;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.undo.AUndoOperation;
 import scrum.client.ComponentManager;
 import scrum.client.admin.User;
 import scrum.client.project.Project;
 import scrum.client.sprint.Sprint;
+import scrum.client.undo.Undo;
 
 public abstract class AScrumAction extends AAction {
 
@@ -18,7 +20,7 @@ public abstract class AScrumAction extends AAction {
 	// --- helper ---
 
 	protected static final void addUndo(AUndoOperation undo) {
-		cm.getUndo().getManager().add(undo);
+		Scope.get().getComponent(Undo.class).getManager().add(undo);
 	}
 
 	protected static final boolean isCurrentSprint(Sprint sprint) {
