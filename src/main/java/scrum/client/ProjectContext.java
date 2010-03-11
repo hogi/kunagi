@@ -35,6 +35,8 @@ import scrum.client.project.QualityBacklogWidget;
 import scrum.client.project.Requirement;
 import scrum.client.risks.Risk;
 import scrum.client.risks.RiskListWidget;
+import scrum.client.search.Search;
+import scrum.client.search.SearchResultsWidget;
 import scrum.client.sprint.NextSprintWidget;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.SprintBacklogWidget;
@@ -180,7 +182,7 @@ public class ProjectContext extends AScrumComponent {
 
 	public void showSearchResults() {
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
-		SearchResultsWidget results = cm.getSearch().getResultsWidget();
+		SearchResultsWidget results = Scope.get().getComponent(Search.class).getResultsWidget();
 		if (!searchResultsAdded) {
 			navigator.addItem("Search Results", results);
 			searchResultsAdded = true;

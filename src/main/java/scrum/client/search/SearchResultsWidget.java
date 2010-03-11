@@ -1,4 +1,6 @@
-package scrum.client;
+package scrum.client.search;
+
+import ilarkesto.core.scope.Scope;
 
 import java.util.List;
 import java.util.Map;
@@ -22,10 +24,12 @@ import com.google.gwt.user.client.ui.Widget;
 public class SearchResultsWidget extends AScrumWidget {
 
 	private SearchResults searchResults;
+	private Search search;
 
 	@Override
 	protected Widget onInitialization() {
-		searchResults = cm.getSearch().getResults();
+		search = Scope.get().getComponent(Search.class);
+		searchResults = search.getResults();
 		return empty();
 	}
 

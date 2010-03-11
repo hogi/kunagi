@@ -1,4 +1,4 @@
-package scrum.client;
+package scrum.client.search;
 
 import ilarkesto.core.logging.Log;
 
@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.ComponentManager;
 import scrum.client.common.AScrumGwtEntity;
 
 public class SearchResults {

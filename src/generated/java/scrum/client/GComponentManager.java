@@ -169,25 +169,4 @@ public abstract class GComponentManager
         systemMessageManager = null;
     }
 
-    // --- search ---
-
-    private Search search;
-
-    public final Search getSearch() {
-        if (search == null) {
-            search = new Search();
-            initializeSearch(search);
-            initialize(search);
-        }
-        return search;
-    }
-
-    protected void initializeSearch(Search search) {
-    }
-
-    public final void destroySearch() {
-        destroy(search);
-        search = null;
-    }
-
 }

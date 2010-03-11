@@ -11,6 +11,7 @@ import scrum.client.communication.Pinger;
 import scrum.client.files.Uploader;
 import scrum.client.journal.ChangeHistoryManager;
 import scrum.client.project.Project;
+import scrum.client.search.Search;
 import scrum.client.undo.Undo;
 import scrum.client.workspace.DndManager;
 
@@ -57,6 +58,7 @@ public class ScrumScopeManager {
 		scope.putComponent(new Undo());
 		scope.putComponent(new DndManager());
 		scope.putComponent(new Uploader());
+		scope.putComponent(new Search());
 
 		projectScope.wireComponents();
 		cm.getProjectContext().openProject(project);

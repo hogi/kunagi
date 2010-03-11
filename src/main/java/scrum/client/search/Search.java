@@ -1,4 +1,4 @@
-package scrum.client;
+package scrum.client.search;
 
 import ilarkesto.gwt.client.Gwt;
 
@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import scrum.client.common.AScrumComponent;
+import scrum.client.ComponentManager;
+import scrum.client.SearchResultsChangedListener;
 import scrum.client.common.AScrumGwtEntity;
 import scrum.client.project.Project;
 
-public class Search extends AScrumComponent implements SearchResultsChangedListener {
+public class Search extends GSearch implements SearchResultsChangedListener {
 
 	private SearchResults results = new SearchResults();
 	private SearchResultsWidget resultsWidget;
@@ -23,7 +24,7 @@ public class Search extends AScrumComponent implements SearchResultsChangedListe
 		results.clear();
 		if (Gwt.isEmpty(searchText)) return;
 
-		cm.getApp().callSearch(searchText, new Runnable() {
+		app.callSearch(searchText, new Runnable() {
 
 			public void run() {
 				searchClient(searchText);
@@ -31,8 +32,8 @@ public class Search extends AScrumComponent implements SearchResultsChangedListe
 			}
 		});
 
-		if (cm.getProjectContext().isProjectOpen()) {
-			cm.getProjectContext().showSearchResults();
+		if (ComponentManager.get().getProjectContext().isProjectOpen()) {
+			ComponentManager.get().getProjectContext().showSearchResults();
 		} else {
 			// TODO
 		}
@@ -43,8 +44,8 @@ public class Search extends AScrumComponent implements SearchResultsChangedListe
 	private void searchClient(String text) {
 		String[] keys = parseKeys(text);
 
-		if (cm.getProjectContext().isProjectOpen()) {
-			Project project = getCurrentProject();
+		if (ComponentManager.get().getProjectContext().isProjectOpen()) {
+			Project project = ComponentManager.get().getProjectContext().getProject();
 
 			results.addEntities(getMatching(project.getRequirements(), keys));
 			results.addEntities(getMatching(project.getQualitys(), keys));

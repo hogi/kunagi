@@ -1,5 +1,6 @@
 package scrum.client.search;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 import scrum.client.common.AScrumWidget;
 
@@ -11,11 +12,14 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SearchInputWidget extends AScrumWidget {
 
+	private Search search;
 	private TextBox input;
 	private boolean dirty;
 
 	@Override
 	protected Widget onInitialization() {
+		search = Scope.get().getComponent(Search.class);
+
 		input = new TextBox();
 		input.addKeyUpHandler(new InputHandler());
 
@@ -27,7 +31,7 @@ public class SearchInputWidget extends AScrumWidget {
 
 	private void submitSearch() {
 		dirty = false;
-		cm.getSearch().search(input.getText());
+		search.search(input.getText());
 	}
 
 	class InputHandler implements KeyUpHandler {
