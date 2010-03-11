@@ -190,25 +190,4 @@ public abstract class GComponentManager
         search = null;
     }
 
-    // --- uploader ---
-
-    private Uploader uploader;
-
-    public final Uploader getUploader() {
-        if (uploader == null) {
-            uploader = new Uploader();
-            initializeUploader(uploader);
-            initialize(uploader);
-        }
-        return uploader;
-    }
-
-    protected void initializeUploader(Uploader uploader) {
-    }
-
-    public final void destroyUploader() {
-        destroy(uploader);
-        uploader = null;
-    }
-
 }

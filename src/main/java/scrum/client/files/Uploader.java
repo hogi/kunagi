@@ -1,12 +1,10 @@
-package scrum.client;
+package scrum.client.files;
 
-import scrum.client.common.AScrumComponent;
-import scrum.client.files.File;
-import scrum.client.files.UploadWidget;
+import scrum.client.FileUploadedListener;
 
 import com.google.gwt.user.client.ui.DialogBox;
 
-public class Uploader extends AScrumComponent implements FileUploadedListener {
+public class Uploader extends GUploader implements FileUploadedListener {
 
 	private DialogBox dialog;
 	private UploadedFileHandler uploadedFileHandler;
@@ -35,5 +33,4 @@ public class Uploader extends AScrumComponent implements FileUploadedListener {
 		void onFileUploaded(File file);
 
 	}
-
 }

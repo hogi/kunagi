@@ -7,8 +7,8 @@ import ilarkesto.gwt.client.RichtextFormater;
 import ilarkesto.gwt.client.ToolbarWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.ComponentManager;
-import scrum.client.Uploader;
 import scrum.client.files.File;
+import scrum.client.files.Uploader;
 import scrum.client.img.Img;
 import scrum.client.project.Project;
 import scrum.client.wiki.ScrumHtmlContext;
@@ -72,7 +72,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 					BetterTextArea textArea = editor.getEditor();
 					int topPosition = textArea.getAbsoluteTop() + 20;
 					ReferenceInserter refInserter = new ReferenceInserter(textArea);
-					ComponentManager.get().getUploader().showUploadDialog(topPosition, refInserter);
+					uploader.showUploadDialog(topPosition, refInserter);
 				}
 			}), 0);
 

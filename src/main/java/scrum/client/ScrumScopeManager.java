@@ -8,6 +8,7 @@ import scrum.client.calendar.Calendar;
 import scrum.client.collaboration.Chat;
 import scrum.client.collaboration.Wiki;
 import scrum.client.communication.Pinger;
+import scrum.client.files.Uploader;
 import scrum.client.journal.ChangeHistoryManager;
 import scrum.client.project.Project;
 import scrum.client.undo.Undo;
@@ -55,6 +56,7 @@ public class ScrumScopeManager {
 		scope.putComponent(new Calendar());
 		scope.putComponent(new Undo());
 		scope.putComponent(new DndManager());
+		scope.putComponent(new Uploader());
 
 		projectScope.wireComponents();
 		cm.getProjectContext().openProject(project);

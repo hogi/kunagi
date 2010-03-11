@@ -1,7 +1,8 @@
 package scrum.client.files;
 
-import scrum.client.Uploader.UploadedFileHandler;
+import ilarkesto.core.scope.Scope;
 import scrum.client.common.AScrumAction;
+import scrum.client.files.Uploader.UploadedFileHandler;
 
 public class UploadFileAction extends AScrumAction {
 
@@ -17,7 +18,7 @@ public class UploadFileAction extends AScrumAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getUploader().showUploadDialog(null, new ShowFileHandler());
+		Scope.get().getComponent(Uploader.class).showUploadDialog(null, new ShowFileHandler());
 	}
 
 	class ShowFileHandler implements UploadedFileHandler {
