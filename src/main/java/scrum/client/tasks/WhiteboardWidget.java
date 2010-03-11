@@ -196,6 +196,8 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 	}
 
 	public void selectTask(Task task) {
+		Requirement requirement = task.getRequirement();
+		updateTaskLists(requirement);
 		selectionManager.select(task);
 	}
 

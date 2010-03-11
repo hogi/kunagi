@@ -134,8 +134,9 @@ public class ProductBacklogWidget extends AScrumWidget {
 		return true;
 	}
 
-	public void selectRequirement(Requirement requirement) {
-		list.showObject(requirement);
+	public boolean select(Requirement requirement) {
+		if (!list.contains(requirement)) update();
+		return list.showObject(requirement);
 	}
 
 	class MoveObserver implements Runnable {

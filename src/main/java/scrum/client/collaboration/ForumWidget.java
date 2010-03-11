@@ -30,7 +30,8 @@ public class ForumWidget extends AScrumWidget {
 		list.setObjects(getCurrentProject().getEntitiesWithComments());
 	}
 
-	public void select(ForumSupport entity) {
-		list.showObject(entity);
+	public boolean select(ForumSupport entity) {
+		if (!list.contains(entity)) update();
+		return list.showObject(entity);
 	}
 }

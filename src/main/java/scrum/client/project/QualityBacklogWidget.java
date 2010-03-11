@@ -27,11 +27,8 @@ public class QualityBacklogWidget extends AScrumWidget {
 		list.setObjects(getCurrentProject().getQualitys());
 	}
 
-	public void showQuality(Quality quality) {
-		list.showObject(quality);
-	}
-
-	public void select(Quality quality) {
-		list.showObject(quality);
+	public boolean select(Quality quality) {
+		if (!list.contains(quality)) update();
+		return list.showObject(quality);
 	}
 }

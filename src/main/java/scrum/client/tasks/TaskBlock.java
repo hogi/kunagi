@@ -76,10 +76,6 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 		return new DeleteTaskAction(getObject());
 	}
 
-	private boolean isTaskOverview() {
-		return container instanceof TaskOverviewWidget;
-	}
-
 	public TaskBlockContainer getContainer() {
 		return this.container;
 	}

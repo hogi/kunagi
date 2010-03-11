@@ -32,7 +32,7 @@ public class CreateRequirementAction extends GCreateRequirementAction {
 	@Override
 	protected void onExecute() {
 		Requirement requirement = getCurrentProject().createNewRequirement();
-		cm.getProjectContext().showRequirement(requirement);
+		cm.getProjectContext().showProductBacklog(requirement);
 		// addUndo(new Undo(requirement));
 	}
 

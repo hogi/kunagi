@@ -40,7 +40,6 @@ import scrum.client.sprint.Sprint;
 import scrum.client.sprint.SprintBacklogWidget;
 import scrum.client.sprint.SprintHistoryWidget;
 import scrum.client.sprint.Task;
-import scrum.client.tasks.TaskOverviewWidget;
 import scrum.client.tasks.WhiteboardWidget;
 import scrum.client.workspace.ProjectSidebarWidget;
 
@@ -53,7 +52,6 @@ public class ProjectContext extends AScrumComponent {
 	private ProjectSidebarWidget sidebar = new ProjectSidebarWidget();
 	private DashboardWidget dashboard;
 	private ProjectOverviewWidget projectOverview;
-	private TaskOverviewWidget taskOverview;
 	private WhiteboardWidget whiteboard;
 	private SprintBacklogWidget sprintBacklog;
 	private ProductBacklogWidget productBacklog;
@@ -78,7 +76,6 @@ public class ProjectContext extends AScrumComponent {
 	ProjectContext() {
 		projectOverview = new ProjectOverviewWidget();
 		dashboard = new DashboardWidget();
-		taskOverview = new TaskOverviewWidget();
 		whiteboard = new WhiteboardWidget();
 		sprintBacklog = new SprintBacklogWidget();
 		productBacklog = new ProductBacklogWidget();
@@ -290,8 +287,6 @@ public class ProjectContext extends AScrumComponent {
 	public void showTask(Task task) {
 		if (getWorkarea().isShowing(whiteboard)) {
 			showWhiteboard(task);
-		} else if (getWorkarea().isShowing(taskOverview)) {
-			showTaskOverview(task);
 		} else {
 			showSprintBacklog(task);
 		}
@@ -329,11 +324,6 @@ public class ProjectContext extends AScrumComponent {
 		sprintBacklog.selectTask(task);
 	}
 
-	public void showTaskOverview(Task task) {
-		select(taskOverview);
-		taskOverview.selectTask(task);
-	}
-
 	public void showSprintBacklog(Requirement requirement) {
 		select(sprintBacklog);
 		if (requirement != null) sprintBacklog.selectRequirement(requirement);
@@ -341,12 +331,12 @@ public class ProjectContext extends AScrumComponent {
 
 	public void showProductBacklog(Requirement requirement) {
 		select(productBacklog);
-		productBacklog.selectRequirement(requirement);
+		productBacklog.select(requirement);
 	}
 
 	public void showImpedimentList(Impediment impediment) {
 		select(impedimentList);
-		impedimentList.showImpediment(impediment);
+		impedimentList.select(impediment);
 	}
 
 	public void showForum(ForumSupport entity) {
@@ -356,17 +346,17 @@ public class ProjectContext extends AScrumComponent {
 
 	public void showIssueList(Issue issue) {
 		select(issueList);
-		issueList.showIssue(issue);
+		issueList.select(issue);
 	}
 
 	public void showQualityBacklog(Quality quality) {
 		select(qualityBacklog);
-		qualityBacklog.showQuality(quality);
+		qualityBacklog.select(quality);
 	}
 
 	public void showRiskList(Risk risk) {
 		select(riskList);
-		riskList.showRisk(risk);
+		riskList.select(risk);
 	}
 
 	public void showCalendar(SimpleEvent event) {
@@ -436,10 +426,6 @@ public class ProjectContext extends AScrumComponent {
 
 	public SprintBacklogWidget getSprintBacklog() {
 		return sprintBacklog;
-	}
-
-	public TaskOverviewWidget getTaskOverview() {
-		return taskOverview;
 	}
 
 	public WhiteboardWidget getWhiteboard() {

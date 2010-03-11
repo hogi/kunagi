@@ -52,15 +52,12 @@ public class IssueListWidget extends AScrumWidget {
 		closedList.setObjects(project.getClosedIssues());
 	}
 
-	public boolean showIssue(Issue issue) {
+	public boolean select(Issue issue) {
+		update();
 		if (openList.showObject(issue)) return true;
 		if (acceptedList.showObject(issue)) return true;
 		if (suspendedList.showObject(issue)) return true;
 		if (closedList.showObject(issue)) return true;
 		return false;
-	}
-
-	public boolean select(Issue issue) {
-		return showIssue(issue);
 	}
 }

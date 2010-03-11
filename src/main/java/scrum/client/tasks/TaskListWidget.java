@@ -36,8 +36,9 @@ public class TaskListWidget extends AWidget {
 		return list;
 	}
 
-	public void selectTask(Task task) {
-		list.showObject(task);
+	public boolean selectTask(Task task) {
+		if (!list.contains(task)) update();
+		return list.showObject(task);
 	}
 
 	public void setTasks(List<Task> tasks) {

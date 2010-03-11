@@ -33,12 +33,9 @@ public class RiskListWidget extends AScrumWidget {
 		list.setObjects(getCurrentProject().getRisks());
 	}
 
-	public void showRisk(Risk risk) {
-		list.showObject(risk);
-	}
-
-	public void select(Risk risk) {
-		list.showObject(risk);
+	public boolean select(Risk risk) {
+		if (!list.contains(risk)) update();
+		return list.showObject(risk);
 	}
 
 }

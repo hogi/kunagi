@@ -33,11 +33,8 @@ public class ImpedimentListWidget extends AScrumWidget {
 		list.setObjects(getCurrentProject().getImpediments());
 	}
 
-	public void showImpediment(Impediment impediment) {
-		list.showObject(impediment);
-	}
-
-	public void select(Impediment impediment) {
-		list.showObject(impediment);
+	public boolean select(Impediment impediment) {
+		if (!list.contains(impediment)) update();
+		return list.showObject(impediment);
 	}
 }
