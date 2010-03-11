@@ -1,5 +1,6 @@
 package scrum.client.calendar;
 
+import ilarkesto.core.scope.Scope;
 import scrum.client.common.AScrumAction;
 
 public class YearSelectedAction extends AScrumAction {
@@ -17,7 +18,7 @@ public class YearSelectedAction extends AScrumAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getCalendar().showYear(year);
+		Scope.get().getComponent(Calendar.class).showYear(year);
 	}
 
 }

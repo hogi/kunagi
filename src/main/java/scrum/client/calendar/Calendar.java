@@ -1,15 +1,21 @@
-package scrum.client;
+package scrum.client.calendar;
 
 import ilarkesto.gwt.client.Date;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import scrum.client.calendar.SimpleEvent;
-import scrum.client.common.AScrumComponent;
+import scrum.client.ComponentManager;
+import scrum.client.project.Project;
 import scrum.client.sprint.Sprint;
 
-public class Calendar extends AScrumComponent {
+public class Calendar extends GCalendar {
+
+	private ComponentManager cm = ComponentManager.get();
+
+	private Project getCurrentProject() {
+		return cm.getProjectContext().getProject();
+	}
 
 	public List<SimpleEvent> getEventsByDate(Date date) {
 		List<SimpleEvent> ret = new ArrayList<SimpleEvent>();
@@ -66,5 +72,4 @@ public class Calendar extends AScrumComponent {
 		}
 		return ret;
 	}
-
 }

@@ -211,27 +211,6 @@ public abstract class GComponentManager
         undo = null;
     }
 
-    // --- calendar ---
-
-    private Calendar calendar;
-
-    public final Calendar getCalendar() {
-        if (calendar == null) {
-            calendar = new Calendar();
-            initializeCalendar(calendar);
-            initialize(calendar);
-        }
-        return calendar;
-    }
-
-    protected void initializeCalendar(Calendar calendar) {
-    }
-
-    public final void destroyCalendar() {
-        destroy(calendar);
-        calendar = null;
-    }
-
     // --- search ---
 
     private Search search;

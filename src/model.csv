@@ -1,6 +1,8 @@
 "id","parentId","type","value"
 "root",,"root",
 "276033e5-b72a-4218-8e8e-2b0575e0191e","root","GwtModule","Scrum"
+"11d4b7c6-fd7c-4152-8bfe-e6d12cf1c759","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","calendar"
+"259688b7-9a5e-459c-a1c5-d18b68ee795e","11d4b7c6-fd7c-4152-8bfe-e6d12cf1c759","Component","Calendar"
 "9fbffd41-4998-4d23-b9dd-734cc9334d8b","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","collaboration"
 "f85421d2-ee4a-4f0c-8048-3cba8eca125d","9fbffd41-4998-4d23-b9dd-734cc9334d8b","Component","Chat"
 "0d789ee9-36c7-4de4-bda6-d4415b5f839b","f85421d2-ee4a-4f0c-8048-3cba8eca125d","Dependency","dao"

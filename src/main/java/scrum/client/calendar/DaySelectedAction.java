@@ -1,5 +1,6 @@
 package scrum.client.calendar;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Date;
 import scrum.client.common.AScrumAction;
 
@@ -18,7 +19,7 @@ public class DaySelectedAction extends AScrumAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getCalendar().showDate(date);
+		Scope.get().getComponent(Calendar.class).showDate(date);
 	}
 
 }

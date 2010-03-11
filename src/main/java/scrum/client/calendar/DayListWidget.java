@@ -1,5 +1,6 @@
 package scrum.client.calendar;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.Gwt;
 
@@ -21,6 +22,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class DayListWidget extends AScrumWidget {
 
+	private Calendar calendar;
+
 	private int visibleDays = 21;
 	private SimplePanel wrapper;
 	private BlockListSelectionManager selectionManager;
@@ -37,6 +40,8 @@ public class DayListWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		calendar = Scope.get().getComponent(Calendar.class);
+
 		selectionManager = new BlockListSelectionManager();
 		lists = new HashMap<Date, BlockListWidget<SimpleEvent>>();
 
@@ -48,7 +53,7 @@ public class DayListWidget extends AScrumWidget {
 	@Override
 	protected void onUpdate() {
 		for (Map.Entry<Date, BlockListWidget<SimpleEvent>> entry : lists.entrySet()) {
-			List<SimpleEvent> events = cm.getCalendar().getEventsByDate(entry.getKey());
+			List<SimpleEvent> events = calendar.getEventsByDate(entry.getKey());
 			entry.getValue().setObjects(events);
 		}
 	}
@@ -125,7 +130,7 @@ public class DayListWidget extends AScrumWidget {
 
 	private Widget createDayContent(Date date) {
 		FlowPanel panel = new FlowPanel();
-		for (String info : cm.getCalendar().getInfos(date)) {
+		for (String info : calendar.getInfos(date)) {
 			panel.add(Gwt.createDiv("DayListWidget-date-info", info));
 		}
 		panel.add(createEventList(date));

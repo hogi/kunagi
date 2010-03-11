@@ -1,5 +1,6 @@
 package scrum.client.calendar;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 import scrum.client.common.AScrumAction;
 
@@ -18,7 +19,7 @@ public class MonthSelectedAction extends AScrumAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getCalendar().showMonth(month);
+		Scope.get().getComponent(Calendar.class).showMonth(month);
 	}
 
 }

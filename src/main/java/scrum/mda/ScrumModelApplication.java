@@ -59,7 +59,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtComponentsModel.addComposite("UsersStatus");
 			gwtComponentsModel.addComposite("SystemMessageManager");
 			gwtComponentsModel.addComposite("Undo");
-			gwtComponentsModel.addComposite("Calendar");
 			gwtComponentsModel.addComposite("Search");
 			gwtComponentsModel.addComposite("Uploader");
 		}

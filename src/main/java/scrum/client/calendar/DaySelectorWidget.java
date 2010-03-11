@@ -1,5 +1,6 @@
 package scrum.client.calendar;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Date;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class DaySelectorWidget extends ADateSelectorWidget {
 
 	@Override
 	protected List<SimpleEvent> getEvents() {
-		return cm.getCalendar().getEventsByDate(date);
+		return Scope.get().getComponent(Calendar.class).getEventsByDate(date);
 	}
 
 	@Override

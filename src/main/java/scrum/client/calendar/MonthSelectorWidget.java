@@ -1,5 +1,6 @@
 package scrum.client.calendar;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Date;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class MonthSelectorWidget extends ADateSelectorWidget {
 
 	@Override
 	protected List<SimpleEvent> getEvents() {
-		return cm.getCalendar().getEventsByMonth(year, month);
+		return Scope.get().getComponent(Calendar.class).getEventsByMonth(year, month);
 	}
 
 	@Override
