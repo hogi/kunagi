@@ -18,6 +18,7 @@ import scrum.client.search.Search;
 import scrum.client.undo.Undo;
 import scrum.client.workspace.DndManager;
 import scrum.client.workspace.Ui;
+import scrum.client.workspace.UsersWorkspaceWidgets;
 
 public class ScrumScopeManager {
 
@@ -50,6 +51,7 @@ public class ScrumScopeManager {
 	public static void createUserScope(User user) {
 		userScope = appScope.createScope("user");
 		Scope scope = scopeManager.setScope(userScope);
+		scope.putComponent(new UsersWorkspaceWidgets());
 
 		userScope.wireComponents();
 	}

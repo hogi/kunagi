@@ -1,7 +1,9 @@
 package scrum.client.project;
 
+import ilarkesto.core.scope.Scope;
 import scrum.client.ScrumScopeManager;
 import scrum.client.common.TooltipBuilder;
+import scrum.client.workspace.UsersWorkspaceWidgets;
 
 public class ChangeProjectAction extends GChangeProjectAction {
 
@@ -29,7 +31,7 @@ public class ChangeProjectAction extends GChangeProjectAction {
 	protected void onExecute() {
 		cm.getProjectContext().closeProject();
 		ScrumScopeManager.destroyProjectScope();
-		cm.getHomeContext().activate();
+		Scope.get().getComponent(UsersWorkspaceWidgets.class).activate();
 	}
 
 }

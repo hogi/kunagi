@@ -1,5 +1,7 @@
 package scrum.client.admin;
 
+import ilarkesto.core.scope.Scope;
+import scrum.client.workspace.UsersWorkspaceWidgets;
 
 public class CreateUserAction extends GCreateUserAction {
 
@@ -17,7 +19,7 @@ public class CreateUserAction extends GCreateUserAction {
 	protected void onExecute() {
 		User user = new User();
 		cm.getDao().createUser(user);
-		cm.getHomeContext().getUserList().showUser(user);
+		Scope.get().getComponent(UsersWorkspaceWidgets.class).getUserList().showUser(user);
 	}
 
 }

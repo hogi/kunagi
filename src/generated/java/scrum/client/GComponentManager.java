@@ -64,25 +64,4 @@ public abstract class GComponentManager
         publicContext = null;
     }
 
-    // --- homeContext ---
-
-    private HomeContext homeContext;
-
-    public final HomeContext getHomeContext() {
-        if (homeContext == null) {
-            homeContext = new HomeContext();
-            initializeHomeContext(homeContext);
-            initialize(homeContext);
-        }
-        return homeContext;
-    }
-
-    protected void initializeHomeContext(HomeContext homeContext) {
-    }
-
-    public final void destroyHomeContext() {
-        destroy(homeContext);
-        homeContext = null;
-    }
-
 }

@@ -52,7 +52,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtComponentsModel.setGwt(true);
 			gwtComponentsModel.addComposite("ProjectContext");
 			gwtComponentsModel.addComposite("PublicContext");
-			gwtComponentsModel.addComposite("HomeContext");
 		}
 		return gwtComponentsModel;
 	}
