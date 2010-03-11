@@ -65,7 +65,7 @@ public class HeaderWidget extends AScrumWidget {
 	}
 
 	private Widget createCurrentUserWidget() {
-		boolean loggedIn = cm.getAuth().isUserLoggedIn();
+		boolean loggedIn = getAuth().isUserLoggedIn();
 		if (!loggedIn) return Gwt.createEmptyDiv();
 
 		ProjectContext projectContext = cm.getProjectContext();
@@ -78,7 +78,7 @@ public class HeaderWidget extends AScrumWidget {
 	}
 
 	private String createCurrentUserText() {
-		boolean loggedIn = cm.getAuth().isUserLoggedIn();
+		boolean loggedIn = getAuth().isUserLoggedIn();
 		StringBuilder text = new StringBuilder();
 		if (loggedIn) {
 			text.append(getCurrentUser().getName());

@@ -69,7 +69,7 @@ public class UsersStatus extends GUsersStatus implements ServerDataReceivedListe
 	}
 
 	private User getCurrentUser() {
-		return cm.getAuth().getUser();
+		return auth.getUser();
 	}
 
 }

@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import scrum.client.admin.Auth;
 import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
 import scrum.client.calendar.SimpleEvent;
@@ -57,7 +58,7 @@ public class Project extends GProject implements ForumSupport {
 
 	@Override
 	public boolean isEditable() {
-		return isAdmin(cm.getAuth().getUser());
+		return isAdmin(Scope.get().getComponent(Auth.class).getUser());
 	}
 
 	public List<Task> getClaimedTasks(User user) {

@@ -27,7 +27,7 @@ public class LoginAction extends GLoginAction {
 
 			public void run() {
 				Log.DEBUG("Login response received");
-				if (!cm.getAuth().isUserLoggedIn()) {
+				if (!getAuth().isUserLoggedIn()) {
 					log.info("Login failed.");
 					ui.unlock();
 					loginData.setFailed();

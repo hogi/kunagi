@@ -10,7 +10,6 @@ public class ComponentManager extends GComponentManager implements LogoutListene
 	}
 
 	public void onLogout() {
-		destroyAuth();
 		destroyHomeContext();
 		getPublicContext().activate();
 	}

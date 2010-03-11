@@ -21,7 +21,7 @@ public class Chat extends GChat {
 	}
 
 	public ChatMessage postMessage(String text) {
-		return postMessage(ComponentManager.get().getAuth().getUser(), text, true);
+		return postMessage(auth.getUser(), text, true);
 	}
 
 	private ChatMessage postMessage(User author, String text, boolean distribute) {

@@ -79,7 +79,7 @@ public class CommentsWidget extends AScrumWidget {
 		String text = editor.getEditorText();
 		if (Gwt.isEmpty(text)) return;
 		text = text.trim();
-		Comment comment = new Comment(parent, cm.getAuth().getUser(), text);
+		Comment comment = new Comment(parent, getAuth().getUser(), text);
 		cm.getDao().createComment(comment);
 	}
 

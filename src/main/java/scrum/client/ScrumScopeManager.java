@@ -3,6 +3,7 @@ package scrum.client;
 import ilarkesto.core.scope.CascadingScope;
 import ilarkesto.core.scope.NonConcurrentScopeManager;
 import ilarkesto.core.scope.Scope;
+import scrum.client.admin.Auth;
 import scrum.client.admin.SystemMessageManager;
 import scrum.client.admin.User;
 import scrum.client.calendar.Calendar;
@@ -41,6 +42,7 @@ public class ScrumScopeManager {
 		scope.putComponent(new Pinger());
 		scope.putComponent(new Ui());
 		scope.putComponent(new SystemMessageManager());
+		scope.putComponent(new Auth());
 
 		appScope.wireComponents();
 	}

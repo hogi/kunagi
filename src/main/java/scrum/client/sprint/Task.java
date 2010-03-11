@@ -1,9 +1,12 @@
 package scrum.client.sprint;
 
+import ilarkesto.core.scope.Scope;
+
 import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.ScrumJs;
+import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.project.Requirement;
@@ -24,7 +27,7 @@ public class Task extends GTask implements ReferenceSupport {
 	}
 
 	public void claim() {
-		User user = cm.getAuth().getUser();
+		User user = Scope.get().getComponent(Auth.class).getUser();
 		boolean ownerchange = !isOwner(user);
 		if (isClosed()) {
 			setUnDone(user);
@@ -145,7 +148,8 @@ public class Task extends GTask implements ReferenceSupport {
 
 	@Override
 	public boolean isEditable() {
-		if (!cm.getProjectContext().getProject().isTeamMember(cm.getAuth().getUser())) return false;
+		if (!cm.getProjectContext().getProject().isTeamMember(Scope.get().getComponent(Auth.class).getUser()))
+			return false;
 		return true;
 	}
 

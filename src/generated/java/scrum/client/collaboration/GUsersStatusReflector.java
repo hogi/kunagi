@@ -4,6 +4,7 @@ public class GUsersStatusReflector implements ilarkesto.core.scope.ComponentRefl
 
     public void injectComponents(UsersStatus component, ilarkesto.core.scope.Scope scope) {
         component.app = (scrum.client.ScrumGwtApplication) scope.getComponent("app");
+        component.auth = (scrum.client.admin.Auth) scope.getComponent("auth");
     }
 
     public void callInitializationMethods(UsersStatus component) {

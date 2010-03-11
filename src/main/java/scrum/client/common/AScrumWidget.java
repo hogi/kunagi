@@ -3,6 +3,7 @@ package scrum.client.common;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.ComponentManager;
+import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.project.Project;
 import scrum.client.sprint.Sprint;
@@ -15,8 +16,12 @@ public abstract class AScrumWidget extends AWidget {
 	// --- helper ---
 
 	protected static final User getCurrentUser() {
-		assert cm.getAuth().isUserLoggedIn();
-		return cm.getAuth().getUser();
+		assert getAuth().isUserLoggedIn();
+		return getAuth().getUser();
+	}
+
+	protected static final Auth getAuth() {
+		return Scope.get().getComponent(Auth.class);
 	}
 
 	protected static final Project getCurrentProject() {

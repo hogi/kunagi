@@ -1,5 +1,6 @@
 package scrum.client.project;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumJs;
+import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.ReferenceSupport;
@@ -74,7 +76,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Forum
 	}
 
 	public void setVote(Float estimatedWork) {
-		RequirementEstimationVote vote = getEstimationVote(cm.getAuth().getUser());
+		RequirementEstimationVote vote = getEstimationVote(Scope.get().getComponent(Auth.class).getUser());
 		if (vote == null) throw new IllegalStateException("vote == null");
 		vote.setEstimatedWork(estimatedWork);
 		if (estimatedWork != null && isWorkEstimationVotingComplete()) activateWorkEstimationVotingShowoff();
@@ -274,7 +276,8 @@ public class Requirement extends GRequirement implements ReferenceSupport, Forum
 	@Override
 	public boolean isEditable() {
 		if (isInCurrentSprint()) return false;
-		if (!cm.getProjectContext().getProject().isProductOwner(cm.getAuth().getUser())) return false;
+		if (!cm.getProjectContext().getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser()))
+			return false;
 		return true;
 	}
 

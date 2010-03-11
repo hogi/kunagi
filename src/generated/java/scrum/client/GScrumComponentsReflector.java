@@ -2,6 +2,8 @@ package scrum.client;
 
 public class GScrumComponentsReflector implements ilarkesto.core.scope.ComponentReflector {
 
+    protected ilarkesto.core.scope.ComponentReflector authReflector = createAuthReflector();
+
     protected ilarkesto.core.scope.ComponentReflector systemMessageManagerReflector = createSystemMessageManagerReflector();
 
     protected ilarkesto.core.scope.ComponentReflector calendarReflector = createCalendarReflector();
@@ -27,6 +29,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
     protected ilarkesto.core.scope.ComponentReflector uiReflector = createUiReflector();
 
     public void injectComponents(Object component, ilarkesto.core.scope.Scope scope) {
+        if (component instanceof scrum.client.admin.Auth) authReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.admin.SystemMessageManager) systemMessageManagerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.calendar.Calendar) calendarReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.collaboration.Chat) chatReflector.injectComponents(component, scope);
@@ -42,6 +45,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
     }
 
     public void callInitializationMethods(Object component) {
+        if (component instanceof scrum.client.admin.Auth) authReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.admin.SystemMessageManager) systemMessageManagerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.calendar.Calendar) calendarReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.collaboration.Chat) chatReflector.callInitializationMethods(component);
@@ -57,6 +61,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
     }
 
     public void outjectComponents(Object component, ilarkesto.core.scope.Scope scope) {
+        if (component instanceof scrum.client.admin.Auth) authReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.admin.SystemMessageManager) systemMessageManagerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.calendar.Calendar) calendarReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.collaboration.Chat) chatReflector.outjectComponents(component, scope);
@@ -69,6 +74,10 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.undo.Undo) undoReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.workspace.DndManager) dndManagerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.workspace.Ui) uiReflector.outjectComponents(component, scope);
+    }
+
+    public ilarkesto.core.scope.ComponentReflector createAuthReflector() {
+        return new scrum.client.admin.GAuthReflector();
     }
 
     public ilarkesto.core.scope.ComponentReflector createSystemMessageManagerReflector() {

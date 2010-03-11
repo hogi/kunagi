@@ -1,17 +1,19 @@
 package scrum.client.collaboration;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.LabelProvider;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.admin.Auth;
 import scrum.client.common.AScrumGwtEntity;
 
 public class Emoticon extends GEmoticon {
 
 	public Emoticon(AScrumGwtEntity parent, String emotion) {
-		setOwner(cm.getAuth().getUser());
+		setOwner(Scope.get().getComponent(Auth.class).getUser());
 		setParent(parent);
 		setEmotion(emotion);
 	}

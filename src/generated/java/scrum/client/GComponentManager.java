@@ -22,27 +22,6 @@ public abstract class GComponentManager
         super(eventBus, dao);
     }
 
-    // --- auth ---
-
-    private Auth auth;
-
-    public final Auth getAuth() {
-        if (auth == null) {
-            auth = new Auth();
-            initializeAuth(auth);
-            initialize(auth);
-        }
-        return auth;
-    }
-
-    protected void initializeAuth(Auth auth) {
-    }
-
-    public final void destroyAuth() {
-        destroy(auth);
-        auth = null;
-    }
-
     // --- projectContext ---
 
     private ProjectContext projectContext;

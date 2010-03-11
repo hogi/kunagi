@@ -1,5 +1,7 @@
 package scrum.client.admin;
 
+import ilarkesto.core.scope.Scope;
+
 import java.util.Map;
 
 public class ProjectUserConfig extends GProjectUserConfig {
@@ -10,7 +12,7 @@ public class ProjectUserConfig extends GProjectUserConfig {
 
 	@Override
 	public boolean isMisconductsEditable() {
-		return cm.getProjectContext().getProject().isScrumMaster(cm.getAuth().getUser());
+		return cm.getProjectContext().getProject().isScrumMaster(Scope.get().getComponent(Auth.class).getUser());
 	}
 
 	public ProjectUserConfig(Map data) {

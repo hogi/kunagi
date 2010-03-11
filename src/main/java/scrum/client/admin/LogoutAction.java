@@ -9,12 +9,12 @@ public class LogoutAction extends GLogoutAction {
 
 	@Override
 	public boolean isExecutable() {
-		return cm.getAuth().isUserLoggedIn();
+		return getAuth().isUserLoggedIn();
 	}
 
 	@Override
 	protected void onExecute() {
-		cm.getAuth().logout();
+		getAuth().logout();
 	}
 
 }

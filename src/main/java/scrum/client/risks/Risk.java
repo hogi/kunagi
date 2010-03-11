@@ -1,5 +1,6 @@
 package scrum.client.risks;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumJs;
+import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.ReferenceSupport;
@@ -71,7 +73,7 @@ public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport, F
 	@Override
 	public boolean isPriorityEditable() {
 		Project project = cm.getProjectContext().getProject();
-		User user = cm.getAuth().getUser();
+		User user = Scope.get().getComponent(Auth.class).getUser();
 		return project.isProductOwner(user) || project.isTeamMember(user);
 	}
 

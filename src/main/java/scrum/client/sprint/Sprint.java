@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.collaboration.Wiki;
@@ -149,7 +150,8 @@ public class Sprint extends GSprint implements ForumSupport {
 	@Override
 	public boolean isEditable() {
 		if (isCompleted()) return false;
-		if (!cm.getProjectContext().getProject().isProductOwner(cm.getAuth().getUser())) return false;
+		if (!cm.getProjectContext().getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser()))
+			return false;
 		return true;
 	}
 
@@ -161,20 +163,23 @@ public class Sprint extends GSprint implements ForumSupport {
 
 	@Override
 	public boolean isRetrospectiveEditable() {
-		if (!cm.getProjectContext().getProject().isScrumMaster(cm.getAuth().getUser())) return false;
+		if (!cm.getProjectContext().getProject().isScrumMaster(Scope.get().getComponent(Auth.class).getUser()))
+			return false;
 		return true;
 	}
 
 	@Override
 	public boolean isReviewEditable() {
-		if (!cm.getProjectContext().getProject().isProductOwner(cm.getAuth().getUser())) return false;
+		if (!cm.getProjectContext().getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser()))
+			return false;
 		return true;
 	}
 
 	@Override
 	public boolean isDatesEditable() {
 		if (isCompleted()) return false;
-		if (!cm.getProjectContext().getProject().isProductOwner(cm.getAuth().getUser())) return false;
+		if (!cm.getProjectContext().getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser()))
+			return false;
 		return true;
 	}
 

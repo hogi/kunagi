@@ -6,5 +6,7 @@ public abstract class GUsersStatus extends scrum.client.AScrumComponent {
 
     protected scrum.client.ScrumGwtApplication app;
 
+    protected scrum.client.admin.Auth auth;
+
 }
 

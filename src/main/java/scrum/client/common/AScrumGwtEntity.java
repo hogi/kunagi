@@ -1,5 +1,6 @@
 package scrum.client.common;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.editor.AOptionEditorModel;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.ComponentManager;
+import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.Emoticon;
@@ -54,7 +56,7 @@ public abstract class AScrumGwtEntity extends AGwtEntity {
 	}
 
 	public Emoticon getCurrentUserEmoticon() {
-		User currentUser = cm.getAuth().getUser();
+		User currentUser = Scope.get().getComponent(Auth.class).getUser();
 		for (Emoticon emoticon : getEmoticons()) {
 			if (emoticon.isOwner(currentUser)) return emoticon;
 		}
