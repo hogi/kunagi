@@ -64,7 +64,7 @@ public class WikiWidget extends AScrumWidget {
 		} else {
 			page.addHeader(wikipage.getName(), createPageSelector());
 			editor = new RichtextEditorWidget(wikipage.getTextModel());
-			editor.setEditorHeight(500);
+			editor.setEditorHeight(600);
 
 			FlowPanel left = new FlowPanel();
 			left.add(editor);
