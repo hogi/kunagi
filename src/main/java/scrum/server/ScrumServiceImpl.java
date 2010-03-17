@@ -32,6 +32,7 @@ import scrum.server.common.Transient;
 import scrum.server.files.File;
 import scrum.server.impediments.Impediment;
 import scrum.server.issues.Issue;
+import scrum.server.journal.Change;
 import scrum.server.journal.ChangeDao;
 import scrum.server.journal.ProjectEvent;
 import scrum.server.journal.ProjectEventDao;
@@ -205,10 +206,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 	}
 
-	private void postChangeIfChanged(AEntity entity, Map properties, User user, String property) {
+	private void postChangeIfChanged(GwtConversation conversation, AEntity entity, Map properties, User user,
+			String property) {
 		if (properties.containsKey(property)) {
 			Object value = Reflect.getProperty(entity, property);
-			changeDao.postChange(entity, user, property, value);
+			Change change = changeDao.postChange(entity, user, property, value);
+			conversation.sendToClient(change);
 		}
 	}
 
@@ -229,11 +232,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			Requirement requirement = (Requirement) entity;
 			previousRequirementSprint = requirement.getSprint();
 
-			postChangeIfChanged(entity, properties, currentUser, "description");
-			postChangeIfChanged(entity, properties, currentUser, "testDescription");
+			postChangeIfChanged(conversation, entity, properties, currentUser, "description");
+			postChangeIfChanged(conversation, entity, properties, currentUser, "testDescription");
 		}
 		if (entity instanceof Wikipage) {
-			postChangeIfChanged(entity, properties, currentUser, "text");
+			postChangeIfChanged(conversation, entity, properties, currentUser, "text");
 		}
 
 		entity.updateProperties(properties);

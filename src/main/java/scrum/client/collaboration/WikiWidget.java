@@ -9,6 +9,7 @@ import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
+import scrum.client.journal.ActivateChangeHistoryAction;
 import scrum.client.journal.ChangeHistoryManager;
 import scrum.client.journal.ChangeHistoryWidget;
 import scrum.client.workspace.PagePanel;
@@ -66,26 +67,34 @@ public class WikiWidget extends AScrumWidget {
 			editor = new RichtextEditorWidget(wikipage.getTextModel());
 			editor.setEditorHeight(600);
 
+			FlowPanel right = new FlowPanel();
+			right.add(new CommentsWidget(wikipage));
+
+			page.addSection(TableBuilder.row(20, editor, right));
+
+			page.addHeader("Page properties", createActionsDropdown());
+
 			FlowPanel left = new FlowPanel();
-			left.add(editor);
 			left.add(Gwt.createSpacer(1, 5));
 			left.add(TableBuilder.row(5, new Label("My emoticon"), wikipage.createCurrentUserEmotionEditor(),
 				new EmoticonsWidget(wikipage)));
 			left.add(Gwt.createSpacer(1, 10));
 			left.add(ScrumGwt.createPdfLink("Downlad as PDF", "wikipage", wikipage));
 			left.add(Gwt.createSpacer(1, 10));
-			left.add(new ButtonWidget(new DeleteWikipageAction(wikipage)));
 			left.add(new ChangeHistoryWidget(wikipage, changeHistoryManager));
-
-			FlowPanel right = new FlowPanel();
-			right.add(new CommentsWidget(wikipage));
-
-			page.addSection(TableBuilder.row(20, left, right));
+			page.addSection(left);
 		}
 
 		panel.clear();
 		panel.add(page);
 		Gwt.update(panel);
+	}
+
+	private Widget createActionsDropdown() {
+		DropdownMenuButtonWidget dropdown = new DropdownMenuButtonWidget();
+		dropdown.addAction(new ActivateChangeHistoryAction(wikipage));
+		dropdown.addAction(new DeleteWikipageAction(wikipage));
+		return dropdown;
 	}
 
 	private Widget createPageSelector() {
