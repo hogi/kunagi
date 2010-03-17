@@ -200,7 +200,7 @@ public class Project extends GProject {
 		rss.setTitle(getLabel() + " Event Journal");
 		rss.setLanguage("en");
 		rss.setLink(baseUrl);
-		for (ProjectEvent event : getProjectEvents()) {
+		for (ProjectEvent event : getLatestProjectEvents()) {
 			Rss20Builder.Item item = rss.addItem();
 			item.setTitle(event.getLabel());
 			item.setDescription(event.getLabel());
