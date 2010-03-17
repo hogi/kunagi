@@ -11,7 +11,9 @@ import ilarkesto.search.Searchable;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -216,6 +218,17 @@ public class Project extends GProject {
 
 	public Set<SimpleEvent> getCalendarEvents() {
 		return simpleEventDao.getSimpleEventsByProject(this);
+	}
+
+	public List<ProjectEvent> getLatestProjectEvents() {
+		List<ProjectEvent> events = new LinkedList<ProjectEvent>(getProjectEvents());
+		int max = 30;
+		if (events.size() <= max) return events;
+		Collections.sort(events);
+		while (events.size() > max) {
+			events.remove(0);
+		}
+		return events;
 	}
 
 	public Set<ProjectEvent> getProjectEvents() {

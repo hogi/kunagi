@@ -4,7 +4,7 @@ import scrum.server.admin.User;
 import scrum.server.collaboration.ChatMessage;
 import scrum.server.collaboration.ChatMessageDao;
 
-public class ProjectEvent extends GProjectEvent {
+public class ProjectEvent extends GProjectEvent implements Comparable<ProjectEvent> {
 
 	// --- dependencies ---
 
@@ -22,6 +22,11 @@ public class ProjectEvent extends GProjectEvent {
 		msg.setDateAndTime(getDateAndTime());
 		msg.setText(getLabel());
 		return msg;
+	}
+
+	@Override
+	public int compareTo(ProjectEvent other) {
+		return getDateAndTime().compareTo(other.getDateAndTime());
 	}
 
 	public boolean isVisibleFor(User user) {
