@@ -116,7 +116,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	protected void onSetSelectedEntitysIds(GwtConversation conversation, Set ids) {
-		webApplication.setUsersSelectedEntities(conversation.getProject(), conversation, ids);
+		Project project = conversation.getProject();
+		if (project == null) return;
+		webApplication.setUsersSelectedEntities(project, conversation, ids);
 	}
 
 	@Override
