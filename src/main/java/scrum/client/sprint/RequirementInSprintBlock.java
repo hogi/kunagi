@@ -8,6 +8,7 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.img.Img;
+import scrum.client.journal.ActivateChangeHistoryAction;
 import scrum.client.project.CloseRequirementAction;
 import scrum.client.project.RemoveRequirementFromSprintAction;
 import scrum.client.project.ReopenRequirementAction;
@@ -40,6 +41,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 		header.addMenuAction(new CloseRequirementAction(requirement));
 		header.addMenuAction(new ReopenRequirementAction(requirement));
 		header.addMenuAction(new RemoveRequirementFromSprintAction(requirement));
+		header.addMenuAction(new ActivateChangeHistoryAction(requirement));
 		header.addMenuAction(new CreateTaskAction(requirement));
 	}
 

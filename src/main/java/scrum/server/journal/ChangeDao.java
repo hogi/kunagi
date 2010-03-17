@@ -18,13 +18,13 @@ public class ChangeDao extends GChangeDao {
 		changesByParentIdCache.clear();
 	}
 
-	public Change postChange(AEntity parent, User user, String key, String value) {
+	public Change postChange(AEntity parent, User user, String key, Object value) {
 		Change change = newEntityInstance();
 		change.setDateAndTime(DateAndTime.now());
 		change.setParent(parent);
 		change.setUser(user);
 		change.setKey(key);
-		change.setValue(value);
+		change.setValue(value == null ? null : value.toString());
 		saveEntity(change);
 		return change;
 	}

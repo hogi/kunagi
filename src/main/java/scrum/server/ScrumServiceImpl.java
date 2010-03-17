@@ -2,6 +2,7 @@ package scrum.server;
 
 import ilarkesto.auth.Auth;
 import ilarkesto.base.PermissionDeniedException;
+import ilarkesto.base.Reflect;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
@@ -25,6 +26,7 @@ import scrum.server.collaboration.ChatMessage;
 import scrum.server.collaboration.Comment;
 import scrum.server.collaboration.CommentDao;
 import scrum.server.collaboration.EmoticonDao;
+import scrum.server.collaboration.Wikipage;
 import scrum.server.common.Numbered;
 import scrum.server.common.Transient;
 import scrum.server.files.File;
@@ -201,6 +203,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 	}
 
+	private void postChangeIfChanged(AEntity entity, Map properties, User user, String property) {
+		if (properties.containsKey(property)) {
+			Object value = Reflect.getProperty(entity, property);
+			changeDao.postChange(entity, user, property, value);
+		}
+	}
+
 	@Override
 	public void onChangeProperties(GwtConversation conversation, String entityId, Map properties) {
 		AEntity entity = getDaoService().getEntityById(entityId);
@@ -218,13 +227,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			Requirement requirement = (Requirement) entity;
 			previousRequirementSprint = requirement.getSprint();
 
-			if (properties.containsKey("description")) {
-				changeDao.postChange(requirement, currentUser, "description", requirement.getDescription());
-			}
-			if (properties.containsKey("testDescription")) {
-				changeDao.postChange(requirement, currentUser, "testDescription", requirement.getTestDescription());
-			}
-
+			postChangeIfChanged(entity, properties, currentUser, "description");
+			postChangeIfChanged(entity, properties, currentUser, "testDescription");
+		}
+		if (entity instanceof Wikipage) {
+			postChangeIfChanged(entity, properties, currentUser, "text");
 		}
 
 		entity.updateProperties(properties);

@@ -9,6 +9,8 @@ import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
+import scrum.client.journal.ChangeHistoryManager;
+import scrum.client.journal.ChangeHistoryWidget;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -28,6 +30,7 @@ public class WikiWidget extends AScrumWidget {
 	private String pageName;
 	private Wikipage wikipage;
 	private Wiki wiki;
+	private ChangeHistoryManager changeHistoryManager;
 
 	private FlowPanel panel;
 	private RichtextEditorWidget editor;
@@ -35,6 +38,7 @@ public class WikiWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		wiki = Scope.get().getComponent(Wiki.class);
+		changeHistoryManager = Scope.get().getComponent(ChangeHistoryManager.class);
 
 		panel = new FlowPanel();
 		panel.setStyleName("WikiWidget");
@@ -71,6 +75,7 @@ public class WikiWidget extends AScrumWidget {
 			left.add(ScrumGwt.createPdfLink("Downlad as PDF", "wikipage", wikipage));
 			left.add(Gwt.createSpacer(1, 10));
 			left.add(new ButtonWidget(new DeleteWikipageAction(wikipage)));
+			left.add(new ChangeHistoryWidget(wikipage, changeHistoryManager));
 
 			FlowPanel right = new FlowPanel();
 			right.add(new CommentsWidget(wikipage));
