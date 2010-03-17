@@ -288,9 +288,19 @@ public class Project extends GProject {
 		return fileDao.getFileByNumber(number, this);
 	}
 
+	public SimpleEvent getSimpleEventByNumber(int number) {
+		return simpleEventDao.getSimpleEventByNumber(number, this);
+	}
+
 	public synchronized int generateTaskNumber() {
 		int number = getLastTaskNumber() + 1;
 		setLastTaskNumber(number);
+		return number;
+	}
+
+	public synchronized int generateEventNumber() {
+		int number = getLastEventNumber() + 1;
+		setLastEventNumber(number);
 		return number;
 	}
 

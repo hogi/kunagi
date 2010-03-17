@@ -46,6 +46,8 @@ public abstract class GSimpleEventDao
         projectsCache = null;
         simpleEventsByLabelCache.clear();
         labelsCache = null;
+        simpleEventsByNumberCache.clear();
+        numbersCache = null;
         simpleEventsByDateCache.clear();
         datesCache = null;
         simpleEventsByTimeCache.clear();
@@ -152,6 +154,46 @@ public abstract class GSimpleEventDao
 
         public boolean test(SimpleEvent e) {
             return e.isLabel(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<SimpleEvent>> simpleEventsByNumberCache = new Cache<Integer,Set<SimpleEvent>>(
+            new Cache.Factory<Integer,Set<SimpleEvent>>() {
+                public Set<SimpleEvent> create(Integer number) {
+                    return getEntities(new IsNumber(number));
+                }
+            });
+
+    public final Set<SimpleEvent> getSimpleEventsByNumber(int number) {
+        return simpleEventsByNumberCache.get(number);
+    }
+    private Set<Integer> numbersCache;
+
+    public final Set<Integer> getNumbers() {
+        if (numbersCache == null) {
+            numbersCache = new HashSet<Integer>();
+            for (SimpleEvent e : getEntities()) {
+                numbersCache.add(e.getNumber());
+            }
+        }
+        return numbersCache;
+    }
+
+    private static class IsNumber implements Predicate<SimpleEvent> {
+
+        private int value;
+
+        public IsNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(SimpleEvent e) {
+            return e.isNumber(value);
         }
 
     }

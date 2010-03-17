@@ -7,11 +7,15 @@ import scrum.server.project.Project;
 public class Task extends GTask implements Numbered {
 
 	public String getReferenceAndLabel() {
-		return getReference() + " (" + getLabel() + ")";
+		return getReference() + " " + getLabel();
 	}
 
 	public String getReference() {
 		return scrum.client.sprint.Task.REFERENCE_PREFIX + getNumber();
+	}
+
+	public void updateNumber() {
+		if (getNumber() == 0) setNumber(getRequirement().getProject().generateTaskNumber());
 	}
 
 	public boolean isProject(Project project) {
@@ -24,10 +28,6 @@ public class Task extends GTask implements Numbered {
 
 	public boolean isSprint(Sprint sprint) {
 		return getRequirement().isSprint(sprint);
-	}
-
-	public void updateNumber() {
-		if (getNumber() == 0) setNumber(getRequirement().getProject().generateTaskNumber());
 	}
 
 	public void reset() {

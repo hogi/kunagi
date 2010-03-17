@@ -7,6 +7,7 @@ import ilarkesto.gwt.client.AGwtEntity;
 import java.util.HashMap;
 import java.util.Map;
 
+import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Chat;
 import scrum.client.collaboration.ChatMessage;
 import scrum.client.collaboration.Subject;
@@ -88,6 +89,11 @@ public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
 			return null;
 		} else if (reference.startsWith(Subject.REFERENCE_PREFIX)) {
 			for (Subject e : getSubjects()) {
+				if (e.isNumber(number)) return e;
+			}
+			return null;
+		} else if (reference.startsWith(SimpleEvent.REFERENCE_PREFIX)) {
+			for (SimpleEvent e : getSimpleEvents()) {
 				if (e.isNumber(number)) return e;
 			}
 			return null;

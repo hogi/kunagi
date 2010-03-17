@@ -1,6 +1,5 @@
 package scrum.client;
 
-import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
@@ -193,7 +192,7 @@ public class ProjectContext extends AScrumComponent {
 
 	public void showEntityByReference(final String reference) {
 		assert project != null;
-		Log.DEBUG("Showing entity by reference:", reference);
+		log.debug("Showing entity by reference:", reference);
 
 		if (reference.length() > 4 && reference.startsWith("[[")) {
 			String page = reference.substring(2, reference.length() - 2);
@@ -225,7 +224,7 @@ public class ProjectContext extends AScrumComponent {
 	}
 
 	public void showEntity(AGwtEntity entity) {
-		Log.DEBUG("Showing entity:", entity);
+		log.debug("Showing entity:", entity);
 		if (entity instanceof Task) {
 			showTask((Task) entity);
 		} else if (entity instanceof Requirement) {
@@ -244,6 +243,8 @@ public class ProjectContext extends AScrumComponent {
 			showFile((File) entity);
 		} else if (entity instanceof Sprint) {
 			showSprint((Sprint) entity);
+		} else if (entity instanceof SimpleEvent) {
+			showCalendar((SimpleEvent) entity);
 		} else if (entity instanceof Project) {
 			showDashboard();
 		} else {

@@ -914,6 +914,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByLastEventNumber(int lastEventNumber) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isLastEventNumber(lastEventNumber)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.project.Project> getProjectsByPunishmentFactor(int punishmentFactor) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
@@ -1695,6 +1703,14 @@ public abstract class GDao
         List<scrum.client.calendar.SimpleEvent> ret = new ArrayList<scrum.client.calendar.SimpleEvent>();
         for (scrum.client.calendar.SimpleEvent entity : simpleEvents.values()) {
             if (entity.isLabel(label)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.calendar.SimpleEvent> getSimpleEventsByNumber(int number) {
+        List<scrum.client.calendar.SimpleEvent> ret = new ArrayList<scrum.client.calendar.SimpleEvent>();
+        for (scrum.client.calendar.SimpleEvent entity : simpleEvents.values()) {
+            if (entity.isNumber(number)) ret.add(entity);
         }
         return ret;
     }

@@ -26,7 +26,7 @@ public class SimpleEventBlock extends ABlockWidget<SimpleEvent> implements Trash
 	@Override
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		SimpleEvent event = getObject();
-		header.setDragHandle("evt");
+		header.setDragHandle(event.getReference());
 		timeLabel.setText(event.getTimeAsString());
 		durationLabel.setText(event.getDurationAsString());
 		header.setCenter(event.getLabel());

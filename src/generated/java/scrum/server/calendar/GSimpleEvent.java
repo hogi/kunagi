@@ -38,6 +38,7 @@ public abstract class GSimpleEvent
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("label", this.label);
+        properties.put("number", this.number);
         properties.put("date", this.date == null ? null : this.date.toString());
         properties.put("time", this.time == null ? null : this.time.toString());
         properties.put("location", this.location);
@@ -148,6 +149,35 @@ public abstract class GSimpleEvent
 
     protected final void updateLabel(Object value) {
         setLabel((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private int number;
+
+    public final int getNumber() {
+        return number;
+    }
+
+    public final void setNumber(int number) {
+        number = prepareNumber(number);
+        if (isNumber(number)) return;
+        this.number = number;
+        fireModified();
+    }
+
+    protected int prepareNumber(int number) {
+        return number;
+    }
+
+    public final boolean isNumber(int number) {
+        return this.number == number;
+    }
+
+    protected final void updateNumber(Object value) {
+        setNumber((Integer)value);
     }
 
     // -----------------------------------------------------------
@@ -366,6 +396,7 @@ public abstract class GSimpleEvent
             Object value = entry.getValue();
             if (property.equals("projectId")) updateProject(value);
             if (property.equals("label")) updateLabel(value);
+            if (property.equals("number")) updateNumber(value);
             if (property.equals("date")) updateDate(value);
             if (property.equals("time")) updateTime(value);
             if (property.equals("location")) updateLocation(value);

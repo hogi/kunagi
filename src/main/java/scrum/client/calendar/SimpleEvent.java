@@ -9,11 +9,14 @@ import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.collaboration.ForumSupport;
+import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class SimpleEvent extends GSimpleEvent implements ForumSupport {
+public class SimpleEvent extends GSimpleEvent implements ForumSupport, ReferenceSupport {
+
+	public static final String REFERENCE_PREFIX = "evt";
 
 	public SimpleEvent() {
 		super();
@@ -44,6 +47,7 @@ public class SimpleEvent extends GSimpleEvent implements ForumSupport {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append(getReference()).append(" ");
 		sb.append(getDate().toString());
 		Time time = getTime();
 		if (time != null) {
@@ -53,7 +57,7 @@ public class SimpleEvent extends GSimpleEvent implements ForumSupport {
 		if (location != null) {
 			sb.append(" @ ").append(location);
 		}
-		sb.append(getLabel());
+		sb.append(" ").append(getLabel());
 		return sb.toString();
 	}
 
@@ -62,7 +66,7 @@ public class SimpleEvent extends GSimpleEvent implements ForumSupport {
 	}
 
 	public String getReference() {
-		return "evt";
+		return REFERENCE_PREFIX + getNumber();
 	}
 
 	public static Comparator<SimpleEvent> TIME_COMPARATOR = new Comparator<SimpleEvent>() {

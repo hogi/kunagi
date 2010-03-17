@@ -156,6 +156,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			simpleEventModel.setViewProtected(true);
 			simpleEventModel.addReference("project", getProjectModel()).setMaster(true);
 			simpleEventModel.addStringProperty("label").setMandatory(true).setSearchable(true);
+			simpleEventModel.addProperty("number", int.class).setMandatory(true);
 			simpleEventModel.addProperty("date", Date.class);
 			simpleEventModel.addProperty("time", Time.class);
 			simpleEventModel.addStringProperty("location").setSearchable(true);
@@ -199,6 +200,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addProperty("lastImpedimentNumber", int.class);
 			projectModel.addProperty("lastFileNumber", int.class);
 			projectModel.addProperty("lastSubjectNumber", int.class);
+			projectModel.addProperty("lastEventNumber", int.class);
 			projectModel.addProperty("punishmentFactor", int.class);
 			projectModel.addStringProperty("punishmentUnit");
 			getApplicationModel().addCreateAction(projectModel);
