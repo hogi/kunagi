@@ -6,6 +6,7 @@ import ilarkesto.gwt.client.editor.DropdownEditorWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
+import scrum.client.journal.ChangeHistoryWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -38,6 +39,7 @@ public class RiskWidget extends AScrumWidget {
 		tb.addFieldRow("Impact Mitigation", risk.getImpactMitigationModel());
 		tb.addFieldRow("Probability Mitigation", risk.getProbabilityMitigationModel());
 		tb.addFieldRow("My emoticon", risk.createCurrentUserEmotionEditor());
+		tb.addRow(new ChangeHistoryWidget(risk), 2);
 
 		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(risk));
 	}

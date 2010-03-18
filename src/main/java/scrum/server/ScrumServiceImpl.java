@@ -40,6 +40,7 @@ import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
+import scrum.server.risks.Risk;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.Task;
 
@@ -237,6 +238,18 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 		if (entity instanceof Wikipage) {
 			postChangeIfChanged(conversation, entity, properties, currentUser, "text");
+		}
+		if (entity instanceof Risk) {
+			postChangeIfChanged(conversation, entity, properties, currentUser, "description");
+			postChangeIfChanged(conversation, entity, properties, currentUser, "probabilityMitigation");
+			postChangeIfChanged(conversation, entity, properties, currentUser, "impactMitigation");
+		}
+		if (entity instanceof Impediment) {
+			postChangeIfChanged(conversation, entity, properties, currentUser, "description");
+			postChangeIfChanged(conversation, entity, properties, currentUser, "solution");
+		}
+		if (entity instanceof Issue) {
+			postChangeIfChanged(conversation, entity, properties, currentUser, "description");
 		}
 
 		entity.updateProperties(properties);

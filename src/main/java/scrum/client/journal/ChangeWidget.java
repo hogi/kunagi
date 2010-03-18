@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class ChangeWidget extends AScrumWidget {
 
 	private Change change;
+	private Label date;
 
 	public ChangeWidget(Change change) {
 		super();
@@ -26,7 +27,7 @@ public class ChangeWidget extends AScrumWidget {
 		String color = getCurrentProject().getUserConfig(changer).getColor();
 		changerLabel.getElement().getStyle().setProperty("color", color);
 
-		Label date = new Label(change.getDateAndTime().toString());
+		date = new Label();
 		date.setStyleName("ChangeWidget-header-date");
 
 		FlowPanel header = new FlowPanel();
@@ -40,6 +41,12 @@ public class ChangeWidget extends AScrumWidget {
 		panel.add(createBody());
 
 		return panel;
+	}
+
+	@Override
+	protected void onUpdate() {
+		date.setText(change.getDateAndTime().getPeriodToNow().toShortestString() + " ago");
+		super.onUpdate();
 	}
 
 	private Widget createBody() {

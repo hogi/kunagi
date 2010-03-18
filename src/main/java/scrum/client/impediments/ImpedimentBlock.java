@@ -7,6 +7,7 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
+import scrum.client.journal.ActivateChangeHistoryAction;
 
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -24,6 +25,7 @@ public class ImpedimentBlock extends ABlockWidget<Impediment> implements TrashSu
 		dateLabel = header.insertPrefixLabel("70px", true);
 		statusIcon = header.insertPrefixIcon();
 		header.appendCell(new EmoticonsWidget(impediment), null, true, true, null);
+		header.addMenuAction(new ActivateChangeHistoryAction(impediment));
 		header.addMenuAction(new CloseImpedimentAction(impediment));
 		header.addMenuAction(new DeleteImpedimentAction(impediment));
 	}

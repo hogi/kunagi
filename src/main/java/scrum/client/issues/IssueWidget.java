@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
+import scrum.client.journal.ChangeHistoryWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -23,6 +24,7 @@ public class IssueWidget extends AScrumWidget {
 		tb.addFieldRow("Label", issue.getLabelModel());
 		tb.addFieldRow("Description", issue.getDescriptionModel());
 		tb.addFieldRow("My emoticon", issue.createCurrentUserEmotionEditor());
+		tb.addRow(new ChangeHistoryWidget(issue), 2);
 
 		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(issue));
 	}

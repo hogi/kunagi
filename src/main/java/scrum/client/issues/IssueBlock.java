@@ -6,6 +6,7 @@ import scrum.client.common.AScrumAction;
 import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
+import scrum.client.journal.ActivateChangeHistoryAction;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -26,6 +27,7 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 
 		header.appendCell(new EmoticonsWidget(issue), null, true, true, null);
 
+		header.addMenuAction(new ActivateChangeHistoryAction(issue));
 		header.addMenuAction(new ConvertIssueToRequirementAction(issue));
 		header.addMenuAction(new CloseIssueAction(issue));
 		header.addMenuAction(new AcceptIssueAction(issue));

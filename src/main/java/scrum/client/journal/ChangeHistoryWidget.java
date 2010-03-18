@@ -1,5 +1,7 @@
 package scrum.client.journal;
 
+import ilarkesto.core.scope.Scope;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -16,14 +18,15 @@ public class ChangeHistoryWidget extends AScrumWidget {
 	private FlowPanel panel;
 	private ChangeHistoryManager changeHistoryManager;
 
-	public ChangeHistoryWidget(AScrumGwtEntity parent, ChangeHistoryManager changeHistoryManager) {
+	public ChangeHistoryWidget(AScrumGwtEntity parent) {
 		super();
 		this.parent = parent;
-		this.changeHistoryManager = changeHistoryManager;
 	}
 
 	@Override
 	protected Widget onInitialization() {
+		changeHistoryManager = Scope.get().getComponent(ChangeHistoryManager.class);
+
 		panel = new FlowPanel();
 		return panel;
 	}

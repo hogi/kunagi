@@ -1,6 +1,5 @@
 package scrum.client.project;
 
-import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
@@ -8,7 +7,6 @@ import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.estimation.PlanningPokerWidget;
-import scrum.client.journal.ChangeHistoryManager;
 import scrum.client.journal.ChangeHistoryWidget;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -89,7 +87,7 @@ public class RequirementWidget extends AWidget {
 
 		left.addFieldRow("My emoticon", requirement.createCurrentUserEmotionEditor());
 
-		left.addRow(new ChangeHistoryWidget(requirement, Scope.get().getComponent(ChangeHistoryManager.class)), 2);
+		left.addRow(new ChangeHistoryWidget(requirement), 2);
 
 		TableBuilder right = new TableBuilder();
 		if (planningPoker) {
