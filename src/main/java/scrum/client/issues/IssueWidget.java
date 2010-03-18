@@ -41,8 +41,27 @@ public class IssueWidget extends AScrumWidget {
 	}
 
 	private Widget createActionsPanelForOpenIssue() {
-		return ScrumGwt.createActionsPanel(new Label("This issue is open. Product Owner needs to decide."), Gwt
-				.createSpacer(1, 10), TableBuilder.row(false, 10, new ButtonWidget(new AcceptIssueAction(issue)),
-			new ButtonWidget(new AcceptUrgentIssueAction(issue)), new ButtonWidget(new CloseIssueAction(issue))));
+		TableBuilder tb = new TableBuilder();
+		tb.setWidth(null);
+		tb.setColumnWidths("30%", "10", "30%", "10", "30%");
+
+		tb.addRow(new Label("This issue is open. As Product Owner, you have to decide:"), 5);
+		tb.addRow(Gwt.createSpacer(1, 10));
+
+		tb.add(new ButtonWidget(new AcceptIssueAction(issue)));
+		tb.add(Gwt.createSpacer(10, 1));
+		tb.add(new ButtonWidget(new AcceptUrgentIssueAction(issue)));
+		tb.add(Gwt.createSpacer(10, 1));
+		tb.add(new ButtonWidget(new CloseIssueAction(issue)));
+		tb.nextRow();
+		tb.addRow(Gwt.createSpacer(1, 10));
+
+		tb.add(new Label("If this issue makes sense for the future."));
+		tb.add(Gwt.createSpacer(10, 1));
+		tb.add(new Label("If this issue needs to be fixed immediately by the team."));
+		tb.add(Gwt.createSpacer(10, 1));
+		tb.add(new Label("If this issue makes no sense, is a duplicate or is already fixed."));
+
+		return ScrumGwt.createActionsPanel(tb.createTable());
 	}
 }

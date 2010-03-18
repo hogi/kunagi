@@ -74,8 +74,8 @@ public class ScreenCssBuilder implements CssBuilder {
 	String cChangesBorder = "#FFFFEA";
 	String cChangeDate = cCommentDate;
 
-	String cActionsBackground = "#FFC697";
-	String cActionsBorder = cPagePanelHeader;
+	String cActionsBackground = cPagePanelHeaderBackground;
+	String cActionsBorder = "#FFC697";
 
 	String cPlanningPokerTableLines = "#EEE";
 
