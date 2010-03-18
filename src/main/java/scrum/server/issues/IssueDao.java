@@ -8,11 +8,12 @@ import scrum.server.project.Project;
 
 public class IssueDao extends GIssueDao {
 
-	public Set<Issue> getAcceptedIssues(final Project project) {
+	public Set<Issue> getUrgentAndOpenIssues(final Project project) {
 		return getEntities(new Predicate<Issue>() {
 
 			public boolean test(Issue issue) {
-				return issue.isProject(project) && issue.isAccepted();
+				if (!issue.isProject(project)) return false;
+				return issue.isAcceptedUrgent() || issue.isOpen();
 			}
 		});
 	}

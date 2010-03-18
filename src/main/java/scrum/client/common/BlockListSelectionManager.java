@@ -20,10 +20,10 @@ public class BlockListSelectionManager {
 			list.collapseAll();
 	}
 
-	public void select(Object object) {
+	public boolean select(Object object) {
 		for (BlockListWidget list : lists) {
-			if (list.showObject(object)) return;
+			if (list.showObject(object)) return true;
 		}
+		return false;
 	}
-
 }

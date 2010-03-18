@@ -46,6 +46,7 @@ public class Project extends GProject implements ForumSupport {
 	public static final String INIT_LABEL = "New Project";
 
 	private transient Comparator<Requirement> requirementsOrderComparator;
+	private transient Comparator<Issue> issuesOrderComparator;
 
 	public Project(User creator) {
 		setLabel(INIT_LABEL);
@@ -219,7 +220,7 @@ public class Project extends GProject implements ForumSupport {
 		return sb.toString();
 	}
 
-	public void updateRequirementsOrder() {
+	private void updateRequirementsOrder() {
 		List<Requirement> requirements = getRequirements();
 		Collections.sort(requirements, getRequirementsOrderComparator());
 		updateRequirementsOrder(requirements);
@@ -227,6 +228,10 @@ public class Project extends GProject implements ForumSupport {
 
 	public void updateRequirementsOrder(List<Requirement> requirements) {
 		setRequirementsOrderIds(Gwt.getIdsAsList(requirements));
+	}
+
+	public void updateUrgentIssuesOrder(List<Issue> issues) {
+		setUrgentIssuesOrderIds(Gwt.getIdsAsList(issues));
 	}
 
 	public void setParticipantsConfigured(Collection<User> users) {
@@ -427,6 +432,28 @@ public class Project extends GProject implements ForumSupport {
 	@Override
 	public String toString() {
 		return getLabel();
+	}
+
+	public Comparator<Issue> getIssuesOrderComparator() {
+		if (issuesOrderComparator == null) issuesOrderComparator = new Comparator<Issue>() {
+
+			public int compare(Issue a, Issue b) {
+				List<String> order = getUrgentIssuesOrderIds();
+				int additional = order.size();
+				int ia = order.indexOf(a.getId());
+				if (ia < 0) {
+					ia = additional;
+					additional++;
+				}
+				int ib = order.indexOf(b.getId());
+				if (ib < 0) {
+					ib = additional;
+					additional++;
+				}
+				return ia - ib;
+			}
+		};
+		return issuesOrderComparator;
 	}
 
 	public Comparator<Requirement> getRequirementsOrderComparator() {

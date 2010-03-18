@@ -68,6 +68,8 @@ public abstract class GProjectDao
         velocitysCache = null;
         projectsByRequirementsOrderIdCache.clear();
         requirementsOrderIdsCache = null;
+        projectsByUrgentIssuesOrderIdCache.clear();
+        urgentIssuesOrderIdsCache = null;
         projectsByLastTaskNumberCache.clear();
         lastTaskNumbersCache = null;
         projectsByLastRequirementNumberCache.clear();
@@ -624,6 +626,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.containsRequirementsOrderId(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - urgentIssuesOrderIds
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByUrgentIssuesOrderIdCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String urgentIssuesOrderId) {
+                    return getEntities(new ContainsUrgentIssuesOrderId(urgentIssuesOrderId));
+                }
+            });
+
+    public final Set<Project> getProjectsByUrgentIssuesOrderId(java.lang.String urgentIssuesOrderId) {
+        return projectsByUrgentIssuesOrderIdCache.get(urgentIssuesOrderId);
+    }
+    private Set<java.lang.String> urgentIssuesOrderIdsCache;
+
+    public final Set<java.lang.String> getUrgentIssuesOrderIds() {
+        if (urgentIssuesOrderIdsCache == null) {
+            urgentIssuesOrderIdsCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                urgentIssuesOrderIdsCache.addAll(e.getUrgentIssuesOrderIds());
+            }
+        }
+        return urgentIssuesOrderIdsCache;
+    }
+
+    private static class ContainsUrgentIssuesOrderId implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public ContainsUrgentIssuesOrderId(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.containsUrgentIssuesOrderId(value);
         }
 
     }

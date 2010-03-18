@@ -6,8 +6,12 @@ import scrum.server.common.Numbered;
 
 public class Issue extends GIssue implements Numbered {
 
-	public boolean isAccepted() {
-		return getAcceptDate() != null;
+	public boolean isAcceptedUrgent() {
+		return getAcceptDate() != null && isUrgent();
+	}
+
+	public boolean isOpen() {
+		return !isClosed() && !isAcceptedUrgent();
 	}
 
 	public void updateNumber() {

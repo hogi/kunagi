@@ -44,7 +44,7 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 		Element root = doc.getRootElement();
 
 		Element acceptDate = root.getChild("acceptDate");
-		if (acceptDate != null) {
+		if (acceptDate != null && root.getChild("urgent") == null) {
 			JDom.addTextElement(root, "urgent", "true");
 			modified = true;
 		}

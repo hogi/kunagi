@@ -49,6 +49,7 @@ public abstract class GProject
         properties.put("nextSprintId", this.nextSprintId);
         properties.put("velocity", this.velocity);
         properties.put("requirementsOrderIds", this.requirementsOrderIds);
+        properties.put("urgentIssuesOrderIds", this.urgentIssuesOrderIds);
         properties.put("lastTaskNumber", this.lastTaskNumber);
         properties.put("lastRequirementNumber", this.lastRequirementNumber);
         properties.put("lastQualityNumber", this.lastQualityNumber);
@@ -878,6 +879,96 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
+    // - urgentIssuesOrderIds
+    // -----------------------------------------------------------
+
+    private java.util.List<java.lang.String> urgentIssuesOrderIds = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getUrgentIssuesOrderIds() {
+        return new java.util.ArrayList<java.lang.String>(urgentIssuesOrderIds);
+    }
+
+    public final void setUrgentIssuesOrderIds(Collection<java.lang.String> urgentIssuesOrderIds) {
+        urgentIssuesOrderIds = prepareUrgentIssuesOrderIds(urgentIssuesOrderIds);
+        if (urgentIssuesOrderIds == null) urgentIssuesOrderIds = Collections.emptyList();
+        if (this.urgentIssuesOrderIds.equals(urgentIssuesOrderIds)) return;
+        this.urgentIssuesOrderIds = new java.util.ArrayList<java.lang.String>(urgentIssuesOrderIds);
+        fireModified();
+    }
+
+    protected Collection<java.lang.String> prepareUrgentIssuesOrderIds(Collection<java.lang.String> urgentIssuesOrderIds) {
+        return urgentIssuesOrderIds;
+    }
+
+    public final boolean containsUrgentIssuesOrderId(java.lang.String urgentIssuesOrderId) {
+        if (urgentIssuesOrderId == null) return false;
+        return this.urgentIssuesOrderIds.contains(urgentIssuesOrderId);
+    }
+
+    public final int getUrgentIssuesOrderIdsCount() {
+        return this.urgentIssuesOrderIds.size();
+    }
+
+    public final boolean isUrgentIssuesOrderIdsEmpty() {
+        return this.urgentIssuesOrderIds.isEmpty();
+    }
+
+    public final boolean addUrgentIssuesOrderId(java.lang.String urgentIssuesOrderId) {
+        if (urgentIssuesOrderId == null) throw new IllegalArgumentException("urgentIssuesOrderId == null");
+        boolean added = this.urgentIssuesOrderIds.add(urgentIssuesOrderId);
+        if (added) fireModified();
+        return added;
+    }
+
+    public final boolean addUrgentIssuesOrderIds(Collection<java.lang.String> urgentIssuesOrderIds) {
+        if (urgentIssuesOrderIds == null) throw new IllegalArgumentException("urgentIssuesOrderIds == null");
+        boolean added = false;
+        for (java.lang.String urgentIssuesOrderId : urgentIssuesOrderIds) {
+            added = added | this.urgentIssuesOrderIds.add(urgentIssuesOrderId);
+        }
+        if (added) fireModified();
+        return added;
+    }
+
+    public final boolean removeUrgentIssuesOrderId(java.lang.String urgentIssuesOrderId) {
+        if (urgentIssuesOrderId == null) throw new IllegalArgumentException("urgentIssuesOrderId == null");
+        if (this.urgentIssuesOrderIds == null) return false;
+        boolean removed = this.urgentIssuesOrderIds.remove(urgentIssuesOrderId);
+        if (removed) fireModified();
+        return removed;
+    }
+
+    public final boolean removeUrgentIssuesOrderIds(Collection<java.lang.String> urgentIssuesOrderIds) {
+        if (urgentIssuesOrderIds == null) return false;
+        if (urgentIssuesOrderIds.isEmpty()) return false;
+        boolean removed = false;
+        for (java.lang.String _element: urgentIssuesOrderIds) {
+            removed = removed | removeUrgentIssuesOrderId(_element);
+        }
+        return removed;
+    }
+
+    public final boolean clearUrgentIssuesOrderIds() {
+        if (this.urgentIssuesOrderIds.isEmpty()) return false;
+        this.urgentIssuesOrderIds.clear();
+        fireModified();
+        return true;
+    }
+
+    public final String getUrgentIssuesOrderIdsAsCommaSeparatedString() {
+        if (this.urgentIssuesOrderIds.isEmpty()) return null;
+        return Str.concat(this.urgentIssuesOrderIds,", ");
+    }
+
+    public final void setUrgentIssuesOrderIdsAsCommaSeparatedString(String urgentIssuesOrderIds) {
+        this.urgentIssuesOrderIds = new java.util.ArrayList(Str.parseCommaSeparatedString(urgentIssuesOrderIds));
+    }
+
+    protected final void updateUrgentIssuesOrderIds(Object value) {
+        setUrgentIssuesOrderIds((java.util.List<java.lang.String>) value);
+    }
+
+    // -----------------------------------------------------------
     // - lastTaskNumber
     // -----------------------------------------------------------
 
@@ -1220,6 +1311,7 @@ public abstract class GProject
             if (property.equals("nextSprintId")) updateNextSprint(value);
             if (property.equals("velocity")) updateVelocity(value);
             if (property.equals("requirementsOrderIds")) updateRequirementsOrderIds(value);
+            if (property.equals("urgentIssuesOrderIds")) updateUrgentIssuesOrderIds(value);
             if (property.equals("lastTaskNumber")) updateLastTaskNumber(value);
             if (property.equals("lastRequirementNumber")) updateLastRequirementNumber(value);
             if (property.equals("lastQualityNumber")) updateLastQualityNumber(value);
@@ -1249,6 +1341,7 @@ public abstract class GProject
         repairDeadCurrentSprintReference(entityId);
         repairDeadNextSprintReference(entityId);
         if (this.requirementsOrderIds == null) this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
+        if (this.urgentIssuesOrderIds == null) this.urgentIssuesOrderIds = new java.util.ArrayList<java.lang.String>();
     }
 
     // --- ensure integrity ---
@@ -1318,6 +1411,7 @@ public abstract class GProject
             repairDeadNextSprintReference(this.nextSprintId);
         }
         if (this.requirementsOrderIds == null) this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
+        if (this.urgentIssuesOrderIds == null) this.urgentIssuesOrderIds = new java.util.ArrayList<java.lang.String>();
     }
 
 

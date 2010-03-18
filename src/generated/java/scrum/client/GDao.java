@@ -882,6 +882,7 @@ public abstract class GDao
     }
 
 
+
     public final List<scrum.client.project.Project> getProjectsByLastTaskNumber(int lastTaskNumber) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {

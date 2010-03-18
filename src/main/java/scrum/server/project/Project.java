@@ -435,8 +435,8 @@ public class Project extends GProject {
 		return issueDao.getIssuesByProject(this);
 	}
 
-	public Set<Issue> getAcceptedIssues() {
-		return issueDao.getAcceptedIssues(this);
+	public Set<Issue> getUrgentAndOpenIssues() {
+		return issueDao.getUrgentAndOpenIssues(this);
 	}
 
 	public Set<Risk> getRisks() {

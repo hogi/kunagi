@@ -1,5 +1,6 @@
 package scrum.client.dashboard;
 
+import java.util.Collections;
 import java.util.List;
 
 import scrum.client.common.AScrumWidget;
@@ -25,6 +26,7 @@ public class UrgentIssuesWidget extends AScrumWidget {
 		StringBuilder sb = new StringBuilder();
 
 		List<Issue> issues = project.getUrgentIssues();
+		Collections.sort(issues, project.getIssuesOrderComparator());
 		if (issues.isEmpty()) {
 			sb.append("No urgent issues.");
 		} else {

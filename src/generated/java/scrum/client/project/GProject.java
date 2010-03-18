@@ -507,6 +507,21 @@ public abstract class GProject
         propertyChanged("requirementsOrderIds", this.requirementsOrderIds);
     }
 
+    // --- urgentIssuesOrderIds ---
+
+    private java.util.List<java.lang.String> urgentIssuesOrderIds = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getUrgentIssuesOrderIds() {
+        return new java.util.ArrayList<java.lang.String>(urgentIssuesOrderIds);
+    }
+
+    public final void setUrgentIssuesOrderIds(java.util.List<java.lang.String> urgentIssuesOrderIds) {
+        if (urgentIssuesOrderIds == null) throw new IllegalArgumentException("null is not allowed");
+        if (this.urgentIssuesOrderIds.equals(urgentIssuesOrderIds)) return;
+        this.urgentIssuesOrderIds = new java.util.ArrayList<java.lang.String>(urgentIssuesOrderIds);
+        propertyChanged("urgentIssuesOrderIds", this.urgentIssuesOrderIds);
+    }
+
     // --- lastTaskNumber ---
 
     private int lastTaskNumber ;
@@ -1153,6 +1168,7 @@ public abstract class GProject
         nextSprintId = (String) props.get("nextSprintId");
         velocity  = (java.lang.Integer) props.get("velocity");
         requirementsOrderIds  = (java.util.List<java.lang.String>) props.get("requirementsOrderIds");
+        urgentIssuesOrderIds  = (java.util.List<java.lang.String>) props.get("urgentIssuesOrderIds");
         lastTaskNumber  = (Integer) props.get("lastTaskNumber");
         lastRequirementNumber  = (Integer) props.get("lastRequirementNumber");
         lastQualityNumber  = (Integer) props.get("lastQualityNumber");
@@ -1182,6 +1198,7 @@ public abstract class GProject
         properties.put("nextSprintId", this.nextSprintId);
         properties.put("velocity", this.velocity);
         properties.put("requirementsOrderIds", this.requirementsOrderIds);
+        properties.put("urgentIssuesOrderIds", this.urgentIssuesOrderIds);
         properties.put("lastTaskNumber", this.lastTaskNumber);
         properties.put("lastRequirementNumber", this.lastRequirementNumber);
         properties.put("lastQualityNumber", this.lastQualityNumber);
