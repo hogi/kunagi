@@ -27,6 +27,7 @@ public class AcceptUrgentIssueAction extends GAcceptUrgentIssueAction {
 	@Override
 	protected void onExecute() {
 		issue.acceptAsUrgent();
+		cm.getProjectContext().showIssueList(issue);
 		addUndo(new Undo());
 	}
 

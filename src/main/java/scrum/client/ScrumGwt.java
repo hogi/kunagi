@@ -4,9 +4,20 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.common.AScrumGwtEntity;
 
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Widget;
 
 public class ScrumGwt extends Gwt {
+
+	public static Widget createActionsPanel(Widget... widgets) {
+		FlowPanel panel = new FlowPanel();
+		panel.setStyleName("ActionsPanel");
+		for (Widget widget : widgets) {
+			panel.add(widget);
+		}
+		return panel;
+	}
 
 	public static TableBuilder createFieldTable() {
 		TableBuilder tb = new TableBuilder();

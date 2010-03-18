@@ -27,6 +27,7 @@ public class AcceptIssueAction extends GAcceptIssueAction {
 	@Override
 	protected void onExecute() {
 		issue.accept();
+		cm.getProjectContext().showIssueList(issue);
 		addUndo(new Undo());
 	}
 

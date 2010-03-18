@@ -72,7 +72,10 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	String cChangesBackground = "#FFFFF8";
 	String cChangesBorder = "#FFFFEA";
-	String cChangeDate = "darkgray";
+	String cChangeDate = cCommentDate;
+
+	String cActionsBackground = "#FFC697";
+	String cActionsBorder = cPagePanelHeader;
 
 	String cPlanningPokerTableLines = "#EEE";
 
@@ -83,6 +86,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		systemMessage(css);
 		blockList(css);
 		comments(css);
+		actions(css);
 		changeHistory(css);
 		workspace(css);
 		navigator(css);
@@ -321,6 +325,10 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".NavigatorWidget-item-link-selected a:hover").background(cNavigatorSelectedItemBackground);
 
 		css.style(".NavigatorWidget-submenu .NavigatorWidget-item-link a").paddingLeft(30);
+	}
+
+	private void actions(CssRenderer css) {
+		css.style(".ActionsPanel").background(cActionsBackground).border(1, cActionsBorder).padding(7).borderRadius(10);
 	}
 
 	private void comments(CssRenderer css) {

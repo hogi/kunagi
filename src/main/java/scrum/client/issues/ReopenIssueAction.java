@@ -20,6 +20,7 @@ public class ReopenIssueAction extends GReopenIssueAction {
 	@Override
 	protected void onExecute() {
 		issue.reopen();
+		cm.getProjectContext().showIssueList(issue);
 	}
 
 }
