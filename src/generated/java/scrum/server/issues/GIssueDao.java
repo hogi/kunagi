@@ -56,8 +56,15 @@ public abstract class GIssueDao
         labelsCache = null;
         issuesByDescriptionCache.clear();
         descriptionsCache = null;
+        issuesByStatementCache.clear();
+        statementsCache = null;
         issuesByAcceptDateCache.clear();
         acceptDatesCache = null;
+        issuesByUrgentCache.clear();
+        issuesByOwnerCache.clear();
+        ownersCache = null;
+        issuesByFixDateCache.clear();
+        fixDatesCache = null;
         issuesBySuspendDateCache.clear();
         suspendDatesCache = null;
         issuesByCloseDateCache.clear();
@@ -361,6 +368,46 @@ public abstract class GIssueDao
     }
 
     // -----------------------------------------------------------
+    // - statement
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Issue>> issuesByStatementCache = new Cache<java.lang.String,Set<Issue>>(
+            new Cache.Factory<java.lang.String,Set<Issue>>() {
+                public Set<Issue> create(java.lang.String statement) {
+                    return getEntities(new IsStatement(statement));
+                }
+            });
+
+    public final Set<Issue> getIssuesByStatement(java.lang.String statement) {
+        return issuesByStatementCache.get(statement);
+    }
+    private Set<java.lang.String> statementsCache;
+
+    public final Set<java.lang.String> getStatements() {
+        if (statementsCache == null) {
+            statementsCache = new HashSet<java.lang.String>();
+            for (Issue e : getEntities()) {
+                if (e.isStatementSet()) statementsCache.add(e.getStatement());
+            }
+        }
+        return statementsCache;
+    }
+
+    private static class IsStatement implements Predicate<Issue> {
+
+        private java.lang.String value;
+
+        public IsStatement(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isStatement(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - acceptDate
     // -----------------------------------------------------------
 
@@ -396,6 +443,115 @@ public abstract class GIssueDao
 
         public boolean test(Issue e) {
             return e.isAcceptDate(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - urgent
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<Issue>> issuesByUrgentCache = new Cache<Boolean,Set<Issue>>(
+            new Cache.Factory<Boolean,Set<Issue>>() {
+                public Set<Issue> create(Boolean urgent) {
+                    return getEntities(new IsUrgent(urgent));
+                }
+            });
+
+    public final Set<Issue> getIssuesByUrgent(boolean urgent) {
+        return issuesByUrgentCache.get(urgent);
+    }
+
+    private static class IsUrgent implements Predicate<Issue> {
+
+        private boolean value;
+
+        public IsUrgent(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return value == e.isUrgent();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - owner
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.admin.User,Set<Issue>> issuesByOwnerCache = new Cache<scrum.server.admin.User,Set<Issue>>(
+            new Cache.Factory<scrum.server.admin.User,Set<Issue>>() {
+                public Set<Issue> create(scrum.server.admin.User owner) {
+                    return getEntities(new IsOwner(owner));
+                }
+            });
+
+    public final Set<Issue> getIssuesByOwner(scrum.server.admin.User owner) {
+        return issuesByOwnerCache.get(owner);
+    }
+    private Set<scrum.server.admin.User> ownersCache;
+
+    public final Set<scrum.server.admin.User> getOwners() {
+        if (ownersCache == null) {
+            ownersCache = new HashSet<scrum.server.admin.User>();
+            for (Issue e : getEntities()) {
+                if (e.isOwnerSet()) ownersCache.add(e.getOwner());
+            }
+        }
+        return ownersCache;
+    }
+
+    private static class IsOwner implements Predicate<Issue> {
+
+        private scrum.server.admin.User value;
+
+        public IsOwner(scrum.server.admin.User value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isOwner(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - fixDate
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.Date,Set<Issue>> issuesByFixDateCache = new Cache<ilarkesto.base.time.Date,Set<Issue>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<Issue>>() {
+                public Set<Issue> create(ilarkesto.base.time.Date fixDate) {
+                    return getEntities(new IsFixDate(fixDate));
+                }
+            });
+
+    public final Set<Issue> getIssuesByFixDate(ilarkesto.base.time.Date fixDate) {
+        return issuesByFixDateCache.get(fixDate);
+    }
+    private Set<ilarkesto.base.time.Date> fixDatesCache;
+
+    public final Set<ilarkesto.base.time.Date> getFixDates() {
+        if (fixDatesCache == null) {
+            fixDatesCache = new HashSet<ilarkesto.base.time.Date>();
+            for (Issue e : getEntities()) {
+                if (e.isFixDateSet()) fixDatesCache.add(e.getFixDate());
+            }
+        }
+        return fixDatesCache;
+    }
+
+    private static class IsFixDate implements Predicate<Issue> {
+
+        private ilarkesto.base.time.Date value;
+
+        public IsFixDate(ilarkesto.base.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isFixDate(value);
         }
 
     }

@@ -43,7 +43,11 @@ public abstract class GIssue
         properties.put("creatorId", this.creatorId);
         properties.put("label", this.label);
         properties.put("description", this.description);
+        properties.put("statement", this.statement);
         properties.put("acceptDate", this.acceptDate == null ? null : this.acceptDate.toString());
+        properties.put("urgent", this.urgent);
+        properties.put("ownerId", this.ownerId);
+        properties.put("fixDate", this.fixDate == null ? null : this.fixDate.toString());
         properties.put("suspendDate", this.suspendDate == null ? null : this.suspendDate.toString());
         properties.put("closeDate", this.closeDate == null ? null : this.closeDate.toString());
     }
@@ -65,6 +69,7 @@ public abstract class GIssue
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
+        if (matchesKey(getStatement(), key)) return true;
         return false;
     }
 
@@ -333,6 +338,41 @@ public abstract class GIssue
     }
 
     // -----------------------------------------------------------
+    // - statement
+    // -----------------------------------------------------------
+
+    private java.lang.String statement;
+
+    public final java.lang.String getStatement() {
+        return statement;
+    }
+
+    public final void setStatement(java.lang.String statement) {
+        statement = prepareStatement(statement);
+        if (isStatement(statement)) return;
+        this.statement = statement;
+        fireModified();
+    }
+
+    protected java.lang.String prepareStatement(java.lang.String statement) {
+        statement = Str.removeUnreadableChars(statement);
+        return statement;
+    }
+
+    public final boolean isStatementSet() {
+        return this.statement != null;
+    }
+
+    public final boolean isStatement(java.lang.String statement) {
+        if (this.statement == null && statement == null) return true;
+        return this.statement != null && this.statement.equals(statement);
+    }
+
+    protected final void updateStatement(Object value) {
+        setStatement((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
     // - acceptDate
     // -----------------------------------------------------------
 
@@ -365,6 +405,118 @@ public abstract class GIssue
     protected final void updateAcceptDate(Object value) {
         value = value == null ? null : new ilarkesto.base.time.Date((String)value);
         setAcceptDate((ilarkesto.base.time.Date)value);
+    }
+
+    // -----------------------------------------------------------
+    // - urgent
+    // -----------------------------------------------------------
+
+    private boolean urgent;
+
+    public final boolean isUrgent() {
+        return urgent;
+    }
+
+    public final void setUrgent(boolean urgent) {
+        urgent = prepareUrgent(urgent);
+        if (isUrgent(urgent)) return;
+        this.urgent = urgent;
+        fireModified();
+    }
+
+    protected boolean prepareUrgent(boolean urgent) {
+        return urgent;
+    }
+
+    public final boolean isUrgent(boolean urgent) {
+        return this.urgent == urgent;
+    }
+
+    protected final void updateUrgent(Object value) {
+        setUrgent((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - owner
+    // -----------------------------------------------------------
+
+    private String ownerId;
+    private transient scrum.server.admin.User ownerCache;
+
+    private void updateOwnerCache() {
+        ownerCache = this.ownerId == null ? null : (scrum.server.admin.User)userDao.getById(this.ownerId);
+    }
+
+    public final scrum.server.admin.User getOwner() {
+        if (ownerCache == null) updateOwnerCache();
+        return ownerCache;
+    }
+
+    public final void setOwner(scrum.server.admin.User owner) {
+        owner = prepareOwner(owner);
+        if (isOwner(owner)) return;
+        this.ownerId = owner == null ? null : owner.getId();
+        ownerCache = owner;
+        fireModified();
+    }
+
+    protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
+        return owner;
+    }
+
+    protected void repairDeadOwnerReference(String entityId) {
+        if (entityId.equals(this.ownerId)) {
+            this.ownerId = null;
+            fireModified();
+        }
+    }
+
+    public final boolean isOwnerSet() {
+        return this.ownerId != null;
+    }
+
+    public final boolean isOwner(scrum.server.admin.User owner) {
+        if (this.ownerId == null && owner == null) return true;
+        return owner != null && owner.getId().equals(this.ownerId);
+    }
+
+    protected final void updateOwner(Object value) {
+        setOwner(value == null ? null : (scrum.server.admin.User)userDao.getById((String)value));
+    }
+
+    // -----------------------------------------------------------
+    // - fixDate
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date fixDate;
+
+    public final ilarkesto.base.time.Date getFixDate() {
+        return fixDate;
+    }
+
+    public final void setFixDate(ilarkesto.base.time.Date fixDate) {
+        fixDate = prepareFixDate(fixDate);
+        if (isFixDate(fixDate)) return;
+        this.fixDate = fixDate;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.Date prepareFixDate(ilarkesto.base.time.Date fixDate) {
+        return fixDate;
+    }
+
+    public final boolean isFixDateSet() {
+        return this.fixDate != null;
+    }
+
+    public final boolean isFixDate(ilarkesto.base.time.Date fixDate) {
+        if (this.fixDate == null && fixDate == null) return true;
+        return this.fixDate != null && this.fixDate.equals(fixDate);
+    }
+
+    protected final void updateFixDate(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setFixDate((ilarkesto.base.time.Date)value);
     }
 
     // -----------------------------------------------------------
@@ -449,7 +601,11 @@ public abstract class GIssue
             if (property.equals("creatorId")) updateCreator(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("description")) updateDescription(value);
+            if (property.equals("statement")) updateStatement(value);
             if (property.equals("acceptDate")) updateAcceptDate(value);
+            if (property.equals("urgent")) updateUrgent(value);
+            if (property.equals("ownerId")) updateOwner(value);
+            if (property.equals("fixDate")) updateFixDate(value);
             if (property.equals("suspendDate")) updateSuspendDate(value);
             if (property.equals("closeDate")) updateCloseDate(value);
         }
@@ -459,6 +615,7 @@ public abstract class GIssue
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadCreatorReference(entityId);
+        repairDeadOwnerReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -480,6 +637,12 @@ public abstract class GIssue
         } catch (EntityDoesNotExistException ex) {
             LOG.info("Repairing dead creator reference");
             repairDeadCreatorReference(this.creatorId);
+        }
+        try {
+            getOwner();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead owner reference");
+            repairDeadOwnerReference(this.ownerId);
         }
     }
 

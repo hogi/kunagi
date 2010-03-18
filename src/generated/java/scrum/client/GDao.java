@@ -707,10 +707,42 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.issues.Issue> getIssuesByStatement(java.lang.String statement) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isStatement(statement)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.issues.Issue> getIssuesByAcceptDate(ilarkesto.gwt.client.Date acceptDate) {
         List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
         for (scrum.client.issues.Issue entity : issues.values()) {
             if (entity.isAcceptDate(acceptDate)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.issues.Issue> getIssuesByUrgent(boolean urgent) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isUrgent(urgent)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.issues.Issue> getIssuesByOwner(scrum.client.admin.User owner) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isOwner(owner)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.issues.Issue> getIssuesByFixDate(ilarkesto.gwt.client.Date fixDate) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isFixDate(fixDate)) ret.add(entity);
         }
         return ret;
     }

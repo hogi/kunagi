@@ -15,12 +15,12 @@ package scrum.client.issues;
 
 import java.util.*;
 
-public abstract class GSuspendIssueAction
+public abstract class GAcceptUrgentIssueAction
             extends scrum.client.common.AScrumAction {
 
     protected scrum.client.issues.Issue issue;
 
-    public GSuspendIssueAction(scrum.client.issues.Issue issue) {
+    public GAcceptUrgentIssueAction(scrum.client.issues.Issue issue) {
         this.issue = issue;
     }
 

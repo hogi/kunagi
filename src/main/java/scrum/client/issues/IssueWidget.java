@@ -23,6 +23,7 @@ public class IssueWidget extends AScrumWidget {
 
 		tb.addFieldRow("Label", issue.getLabelModel());
 		tb.addFieldRow("Description", issue.getDescriptionModel());
+		tb.addFieldRow("Statement", issue.getStatementModel());
 		tb.addFieldRow("My emoticon", issue.createCurrentUserEmotionEditor());
 		tb.addRow(new ChangeHistoryWidget(issue), 2);
 

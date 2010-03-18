@@ -363,6 +363,57 @@ public abstract class GIssue
 
     }
 
+    // --- statement ---
+
+    private java.lang.String statement ;
+
+    public final java.lang.String getStatement() {
+        return this.statement ;
+    }
+
+    public final Issue setStatement(java.lang.String statement) {
+        if (isStatement(statement)) return (Issue)this;
+        this.statement = statement ;
+        propertyChanged("statement", this.statement);
+        return (Issue)this;
+    }
+
+    public final boolean isStatement(java.lang.String statement) {
+        return equals(this.statement, statement);
+    }
+
+    private transient StatementModel statementModel;
+
+    public StatementModel getStatementModel() {
+        if (statementModel == null) statementModel = createStatementModel();
+        return statementModel;
+    }
+
+    protected StatementModel createStatementModel() { return new StatementModel(); }
+
+    protected class StatementModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getStatement();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setStatement(value);
+        }
+
+        @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- acceptDate ---
 
     private ilarkesto.gwt.client.Date acceptDate ;
@@ -401,6 +452,98 @@ public abstract class GIssue
         @Override
         public void setValue(ilarkesto.gwt.client.Date value) {
             setAcceptDate(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- urgent ---
+
+    private boolean urgent ;
+
+    public final boolean isUrgent() {
+        return this.urgent ;
+    }
+
+    public final Issue setUrgent(boolean urgent) {
+        if (isUrgent(urgent)) return (Issue)this;
+        this.urgent = urgent ;
+        propertyChanged("urgent", this.urgent);
+        return (Issue)this;
+    }
+
+    public final boolean isUrgent(boolean urgent) {
+        return equals(this.urgent, urgent);
+    }
+
+    // --- owner ---
+
+    private String ownerId;
+
+    public final scrum.client.admin.User getOwner() {
+        if (ownerId == null) return null;
+        return getDao().getUser(this.ownerId);
+    }
+
+    public final boolean isOwnerSet() {
+        return ownerId != null;
+    }
+
+    public final Issue setOwner(scrum.client.admin.User owner) {
+        String id = owner == null ? null : owner.getId();
+        if (equals(this.ownerId, id)) return (Issue) this;
+        this.ownerId = id;
+        propertyChanged("ownerId", this.ownerId);
+        return (Issue)this;
+    }
+
+    public final boolean isOwner(scrum.client.admin.User owner) {
+        return equals(this.ownerId, owner);
+    }
+
+    // --- fixDate ---
+
+    private ilarkesto.gwt.client.Date fixDate ;
+
+    public final ilarkesto.gwt.client.Date getFixDate() {
+        return this.fixDate ;
+    }
+
+    public final Issue setFixDate(ilarkesto.gwt.client.Date fixDate) {
+        if (isFixDate(fixDate)) return (Issue)this;
+        this.fixDate = fixDate ;
+        propertyChanged("fixDate", this.fixDate);
+        return (Issue)this;
+    }
+
+    public final boolean isFixDate(ilarkesto.gwt.client.Date fixDate) {
+        return equals(this.fixDate, fixDate);
+    }
+
+    private transient FixDateModel fixDateModel;
+
+    public FixDateModel getFixDateModel() {
+        if (fixDateModel == null) fixDateModel = createFixDateModel();
+        return fixDateModel;
+    }
+
+    protected FixDateModel createFixDateModel() { return new FixDateModel(); }
+
+    protected class FixDateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public ilarkesto.gwt.client.Date getValue() {
+            return getFixDate();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.Date value) {
+            setFixDate(value);
         }
 
         @Override
@@ -518,8 +661,13 @@ public abstract class GIssue
         creatorId = (String) props.get("creatorId");
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
+        statement  = (java.lang.String) props.get("statement");
         String acceptDateAsString = (String) props.get("acceptDate");
         acceptDate  =  acceptDateAsString == null ? null : new ilarkesto.gwt.client.Date(acceptDateAsString);
+        urgent  = (Boolean) props.get("urgent");
+        ownerId = (String) props.get("ownerId");
+        String fixDateAsString = (String) props.get("fixDate");
+        fixDate  =  fixDateAsString == null ? null : new ilarkesto.gwt.client.Date(fixDateAsString);
         String suspendDateAsString = (String) props.get("suspendDate");
         suspendDate  =  suspendDateAsString == null ? null : new ilarkesto.gwt.client.Date(suspendDateAsString);
         String closeDateAsString = (String) props.get("closeDate");
@@ -536,7 +684,11 @@ public abstract class GIssue
         properties.put("creatorId", this.creatorId);
         properties.put("label", this.label);
         properties.put("description", this.description);
+        properties.put("statement", this.statement);
         properties.put("acceptDate", this.acceptDate == null ? null : this.acceptDate.toString());
+        properties.put("urgent", this.urgent);
+        properties.put("ownerId", this.ownerId);
+        properties.put("fixDate", this.fixDate == null ? null : this.fixDate.toString());
         properties.put("suspendDate", this.suspendDate == null ? null : this.suspendDate.toString());
         properties.put("closeDate", this.closeDate == null ? null : this.closeDate.toString());
     }
@@ -546,6 +698,7 @@ public abstract class GIssue
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
+        if (matchesKey(getStatement(), key)) return true;
         return false;
     }
 

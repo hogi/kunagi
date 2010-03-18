@@ -9,7 +9,7 @@ import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class IssueListWidget extends AScrumWidget {
+public class IssueManagementWidget extends AScrumWidget {
 
 	public BlockListWidget<Issue> openList;
 	public BlockListWidget<Issue> acceptedList;
@@ -37,7 +37,7 @@ public class IssueListWidget extends AScrumWidget {
 		pendingPage.addSection(openList);
 
 		return Gwt.createFlowPanel(pendingPage, Gwt.createSpacer(1, 10), PagePanel.createSimple(
-			"bugs (Team needs to fix this)", acceptedList), Gwt.createSpacer(1, 10), PagePanel.createSimple(
+			"urgent issues (Team needs to fix this)", acceptedList), Gwt.createSpacer(1, 10), PagePanel.createSimple(
 			"accepted issues (ideas and candidates for stories)", suspendedList), Gwt.createSpacer(1, 10), PagePanel
 				.createSimple("closed issues (done or rejected)", closedList));
 	}
@@ -47,7 +47,7 @@ public class IssueListWidget extends AScrumWidget {
 		super.onUpdate();
 		Project project = getCurrentProject();
 		openList.setObjects(project.getOpenIssues());
-		acceptedList.setObjects(project.getAcceptedIssues());
+		acceptedList.setObjects(project.getUrgentIssues());
 		suspendedList.setObjects(project.getSusendedIssues());
 		closedList.setObjects(project.getClosedIssues());
 	}

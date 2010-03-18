@@ -3,6 +3,7 @@ package scrum.server;
 import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
 import ilarkesto.persistence.EntityfilePreparator;
+import ilarkesto.xml.JDom;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -25,13 +26,13 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 		try {
 			if ("_template_".equalsIgnoreCase(alias)) prepare_template_(file);
 			// if ("projectUserConfig".equalsIgnoreCase(alias)) prepareProjectUserConfig(file);
-			if ("risk".equalsIgnoreCase(alias)) prepareRisk(file);
+			if ("issue".equalsIgnoreCase(alias)) prepareIssue(file);
 		} catch (Throwable ex) {
 			throw new RuntimeException(ex);
 		}
 	}
 
-	private void prepareRisk(File file) throws IOException {
+	private void prepareIssue(File file) throws IOException {
 		boolean modified = false;
 
 		Document doc;
@@ -42,9 +43,9 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 		}
 		Element root = doc.getRootElement();
 
-		Element plans = root.getChild("mitigationPlans");
-		if (plans != null) {
-			plans.setName("impactMitigation");
+		Element acceptDate = root.getChild("acceptDate");
+		if (acceptDate != null) {
+			JDom.addTextElement(root, "urgent", "true");
 			modified = true;
 		}
 

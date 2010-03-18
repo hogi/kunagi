@@ -9,7 +9,7 @@ import scrum.client.project.Project;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AcceptedIssuesWidget extends AScrumWidget {
+public class UrgentIssuesWidget extends AScrumWidget {
 
 	private HTML html;
 
@@ -24,9 +24,9 @@ public class AcceptedIssuesWidget extends AScrumWidget {
 		Project project = getCurrentProject();
 		StringBuilder sb = new StringBuilder();
 
-		List<Issue> issues = project.getAcceptedIssues();
+		List<Issue> issues = project.getUrgentIssues();
 		if (issues.isEmpty()) {
-			sb.append("No accepted issues.");
+			sb.append("No urgent issues.");
 		} else {
 			sb.append("<ul class='AcceptedIssuesWidget'>");
 			for (Issue impediment : issues) {

@@ -24,7 +24,7 @@ import scrum.client.files.FileRepositoryWidget;
 import scrum.client.impediments.Impediment;
 import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.issues.Issue;
-import scrum.client.issues.IssueListWidget;
+import scrum.client.issues.IssueManagementWidget;
 import scrum.client.journal.JournalWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.Project;
@@ -62,7 +62,7 @@ public class ProjectContext extends AScrumComponent {
 	private CalendarWidget calendar;
 	private NextSprintWidget nextSprint;
 	private ImpedimentListWidget impedimentList;
-	private IssueListWidget issueList;
+	private IssueManagementWidget issueList;
 	private RiskListWidget riskList;
 	private WikiWidget wiki;
 	private SprintHistoryWidget sprintHistory;
@@ -86,7 +86,7 @@ public class ProjectContext extends AScrumComponent {
 		calendar = new CalendarWidget();
 		nextSprint = new NextSprintWidget();
 		impedimentList = new ImpedimentListWidget();
-		issueList = new IssueListWidget();
+		issueList = new IssueManagementWidget();
 		riskList = new RiskListWidget();
 		projectUserConfig = new ProjectUserConfigWidget();
 		sprintHistory = new SprintHistoryWidget();
@@ -397,7 +397,7 @@ public class ProjectContext extends AScrumComponent {
 		return fileRepository;
 	}
 
-	public IssueListWidget getIssueList() {
+	public IssueManagementWidget getIssueList() {
 		return issueList;
 	}
 

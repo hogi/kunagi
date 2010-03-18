@@ -27,12 +27,12 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 
 		header.appendCell(new EmoticonsWidget(issue), null, true, true, null);
 
-		header.addMenuAction(new ActivateChangeHistoryAction(issue));
-		header.addMenuAction(new ConvertIssueToRequirementAction(issue));
-		header.addMenuAction(new CloseIssueAction(issue));
+		header.addMenuAction(new AcceptUrgentIssueAction(issue));
 		header.addMenuAction(new AcceptIssueAction(issue));
-		header.addMenuAction(new SuspendIssueAction(issue));
+		header.addMenuAction(new ConvertIssueToRequirementAction(issue));
 		header.addMenuAction(new ReopenIssueAction(issue));
+		header.addMenuAction(new CloseIssueAction(issue));
+		header.addMenuAction(new ActivateChangeHistoryAction(issue));
 		header.addMenuAction(new DeleteIssueAction(issue));
 	}
 

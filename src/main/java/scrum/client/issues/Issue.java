@@ -54,8 +54,8 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public String getStatusLabel() {
 		if (isClosed()) return "closed on " + getCloseDate();
-		if (isAccepted()) return "accepted on " + getAcceptDate();
-		if (isSuspended()) return "suspended on " + getSuspendDate();
+		if (isAccepted()) return "accepted as urgent on " + getAcceptDate();
+		if (isSuspended()) return "accepted on " + getSuspendDate();
 		return "issued on " + getDate().getDate();
 	}
 
@@ -63,12 +63,13 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 		setCloseDate(Date.today());
 	}
 
-	public void suspend() {
+	public void accept() {
 		setSuspendDate(Date.today());
 	}
 
-	public void accept() {
+	public void acceptAsUrgent() {
 		setAcceptDate(Date.today());
+		setUrgent(true);
 	}
 
 	public void reopen() {

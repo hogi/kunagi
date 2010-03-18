@@ -26,8 +26,8 @@ public class DashboardWidget extends AScrumWidget {
 		tasks.addSection(TableBuilder.row(10, new TeamTasksWidget(), new UpcomingTasksWidget()));
 
 		PagePanel issues = new PagePanel();
-		issues.addHeader("Current Bugs", new HyperlinkWidget(nav.createSwitchAction(pc.getIssueList())));
-		issues.addSection(new AcceptedIssuesWidget());
+		issues.addHeader("Urgent Issues", new HyperlinkWidget(nav.createSwitchAction(pc.getIssueList())));
+		issues.addSection(new UrgentIssuesWidget());
 
 		PagePanel sprintComments = PagePanel.createSimple("Sprint Comments", new CommentsWidget(getCurrentSprint()));
 

@@ -328,10 +328,10 @@ public class Project extends GProject implements ForumSupport {
 		return ret;
 	}
 
-	public List<Issue> getAcceptedIssues() {
+	public List<Issue> getUrgentIssues() {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getIssues()) {
-			if (issue.isAccepted()) ret.add(issue);
+			if (issue.isAccepted() && issue.isUrgent()) ret.add(issue);
 		}
 		return ret;
 	}

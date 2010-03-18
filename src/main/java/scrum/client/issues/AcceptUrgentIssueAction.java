@@ -1,8 +1,8 @@
 package scrum.client.issues;
 
-public class SuspendIssueAction extends GSuspendIssueAction {
+public class AcceptUrgentIssueAction extends GAcceptUrgentIssueAction {
 
-	public SuspendIssueAction(scrum.client.issues.Issue issue) {
+	public AcceptUrgentIssueAction(scrum.client.issues.Issue issue) {
 		super(issue);
 	}
 
@@ -16,17 +16,17 @@ public class SuspendIssueAction extends GSuspendIssueAction {
 
 	@Override
 	public String getLabel() {
-		return "Accept";
+		return "Accept as urgent";
 	}
 
 	@Override
 	public String getTooltip() {
-		return "Accept this issue. The Product Owner will review it and make a decision.";
+		return "Accept this issue as urgend bug in a published release. The team needs to fix this immediately.";
 	}
 
 	@Override
 	protected void onExecute() {
-		issue.suspend();
+		issue.acceptAsUrgent();
 		addUndo(new Undo());
 	}
 
@@ -34,7 +34,7 @@ public class SuspendIssueAction extends GSuspendIssueAction {
 
 		@Override
 		public String getLabel() {
-			return "Undo Suspend " + issue.getReference() + " " + issue.getLabel();
+			return "Undo Accept as urgent: " + issue.getReference() + " " + issue.getLabel();
 		}
 
 		@Override
