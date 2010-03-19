@@ -49,7 +49,7 @@ public class DeleteRequirementAction extends GDeleteRequirementAction {
 
 		@Override
 		protected void onUndo() {
-			cm.getDao().createRequirement(requirement);
+			getDao().createRequirement(requirement);
 		}
 
 	}

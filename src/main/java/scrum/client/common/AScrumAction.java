@@ -4,6 +4,7 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.undo.AUndoOperation;
 import scrum.client.ComponentManager;
+import scrum.client.Dao;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.ScrumScopeManager;
 import scrum.client.admin.Auth;
@@ -38,6 +39,10 @@ public abstract class AScrumAction extends AAction {
 
 	protected static final Auth getAuth() {
 		return Scope.get().getComponent(Auth.class);
+	}
+
+	protected static final Dao getDao() {
+		return Dao.get();
 	}
 
 	protected static final Project getCurrentProject() {

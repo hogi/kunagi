@@ -35,7 +35,7 @@ public class CreateSimpleEventAction extends GCreateSimpleEventAction {
 	protected void onExecute() {
 		SimpleEvent event = new SimpleEvent(getCurrentProject(), Scope.get()
 				.getComponent(ProjectWorkspaceWidgets.class).getCalendar().getSelectedDate());
-		cm.getDao().createSimpleEvent(event);
+		getDao().createSimpleEvent(event);
 		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showCalendar(event);
 	}
 

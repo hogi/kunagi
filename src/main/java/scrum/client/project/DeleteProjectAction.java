@@ -37,7 +37,7 @@ public class DeleteProjectAction extends GDeleteProjectAction {
 	@Override
 	protected void onExecute() {
 		if (!Gwt.confirm("Delete project " + project.getLabel() + "?")) return;
-		cm.getDao().deleteProject(project);
+		getDao().deleteProject(project);
 		addUndo(new Undo());
 	}
 
@@ -50,7 +50,7 @@ public class DeleteProjectAction extends GDeleteProjectAction {
 
 		@Override
 		protected void onUndo() {
-			cm.getDao().createProject(project);
+			getDao().createProject(project);
 		}
 
 	}

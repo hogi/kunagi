@@ -47,7 +47,7 @@ public class DeleteIssueAction extends GDeleteIssueAction {
 
 		@Override
 		protected void onUndo() {
-			cm.getDao().createIssue(issue);
+			getDao().createIssue(issue);
 		}
 
 	}

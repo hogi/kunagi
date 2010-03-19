@@ -23,7 +23,7 @@ public class DeleteUserAction extends GDeleteUserAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getDao().deleteUser(user);
+		getDao().deleteUser(user);
 		addUndo(new Undo());
 	}
 
@@ -36,7 +36,7 @@ public class DeleteUserAction extends GDeleteUserAction {
 
 		@Override
 		protected void onUndo() {
-			cm.getDao().createUser(user);
+			getDao().createUser(user);
 		}
 
 	}

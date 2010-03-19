@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.ComponentManager;
+import scrum.client.Dao;
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.Comment;
@@ -23,7 +24,7 @@ public abstract class AScrumGwtEntity extends AGwtEntity {
 	public AScrumGwtEntity() {}
 
 	public List<Comment> getComments() {
-		return cm.getDao().getCommentsByParent(this);
+		return getDao().getCommentsByParent(this);
 	}
 
 	public Comment getLatestComment() {
@@ -35,7 +36,7 @@ public abstract class AScrumGwtEntity extends AGwtEntity {
 	}
 
 	public List<Emoticon> getEmoticons() {
-		return cm.getDao().getEmoticonsByParent(this);
+		return getDao().getEmoticonsByParent(this);
 	}
 
 	public void setCurrentUserEmoticon(String emotion) {
@@ -44,12 +45,12 @@ public abstract class AScrumGwtEntity extends AGwtEntity {
 		if (emoticon == null) {
 			if (!delete) {
 				emoticon = new Emoticon(this, emotion);
-				cm.getDao().createEmoticon(emoticon);
+				getDao().createEmoticon(emoticon);
 				return;
 			}
 		} else {
 			if (delete) {
-				cm.getDao().deleteEmoticon(emoticon);
+				getDao().deleteEmoticon(emoticon);
 			} else {
 				emoticon.setEmotion(emotion);
 			}
@@ -105,6 +106,11 @@ public abstract class AScrumGwtEntity extends AGwtEntity {
 
 	public String toHtml() {
 		return Gwt.escapeHtml(toString());
+	}
+
+	@Override
+	protected Dao getDao() {
+		return Dao.get();
 	}
 
 }

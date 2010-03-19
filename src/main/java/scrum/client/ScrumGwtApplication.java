@@ -3,6 +3,7 @@ package scrum.client;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
+import ilarkesto.gwt.client.AGwtDao;
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Subject;
 import scrum.client.files.File;
@@ -81,6 +82,11 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	public final void callStartSession(Runnable callback) {
 		getScrumService().startSession(new DefaultCallback<DataTransferObject>(callback));
+	}
+
+	@Override
+	protected AGwtDao getDao() {
+		return Dao.get();
 	}
 
 }

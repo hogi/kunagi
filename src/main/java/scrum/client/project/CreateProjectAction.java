@@ -32,7 +32,7 @@ public class CreateProjectAction extends GCreateProjectAction {
 	@Override
 	protected void onExecute() {
 		Project project = new Project(getCurrentUser());
-		cm.getDao().createProject(project);
+		getDao().createProject(project);
 	}
 
 }

@@ -48,7 +48,7 @@ public class DeleteImpedimentAction extends GDeleteImpedimentAction {
 
 		@Override
 		protected void onUndo() {
-			cm.getDao().createImpediment(impediment);
+			getDao().createImpediment(impediment);
 		}
 
 	}

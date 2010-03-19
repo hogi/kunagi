@@ -34,7 +34,7 @@ public class DeleteSimpleEventAction extends GDeleteSimpleEventAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getDao().deleteSimpleEvent(simpleEvent);
+		getDao().deleteSimpleEvent(simpleEvent);
 		addUndo(new Undo());
 	}
 
@@ -47,7 +47,7 @@ public class DeleteSimpleEventAction extends GDeleteSimpleEventAction {
 
 		@Override
 		protected void onUndo() {
-			cm.getDao().createSimpleEvent(simpleEvent);
+			getDao().createSimpleEvent(simpleEvent);
 		}
 
 	}

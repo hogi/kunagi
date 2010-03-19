@@ -34,7 +34,7 @@ public class DeleteSubjectAction extends GDeleteSubjectAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getDao().deleteSubject(subject);
+		getDao().deleteSubject(subject);
 		addUndo(new Undo());
 	}
 
@@ -47,7 +47,7 @@ public class DeleteSubjectAction extends GDeleteSubjectAction {
 
 		@Override
 		protected void onUndo() {
-			cm.getDao().createSubject(subject);
+			getDao().createSubject(subject);
 		}
 
 	}

@@ -40,8 +40,8 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 	@Override
 	protected void onExecute() {
 		Requirement requirement = new Requirement(issue);
-		cm.getDao().createRequirement(requirement);
-		cm.getDao().deleteIssue(issue);
+		getDao().createRequirement(requirement);
+		getDao().deleteIssue(issue);
 		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showProductBacklog(requirement);
 		addUndo(new Undo(requirement));
 	}
@@ -61,8 +61,8 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 
 		@Override
 		protected void onUndo() {
-			cm.getDao().deleteRequirement(requirement);
-			cm.getDao().createIssue(issue);
+			getDao().deleteRequirement(requirement);
+			getDao().createIssue(issue);
 		}
 
 	}

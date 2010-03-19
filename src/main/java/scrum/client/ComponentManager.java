@@ -5,7 +5,7 @@ import ilarkesto.gwt.client.AComponentManager;
 public class ComponentManager extends GComponentManager {
 
 	ComponentManager() {
-		super(new EventBus(), new Dao());
+		super(new EventBus());
 	}
 
 	@Override

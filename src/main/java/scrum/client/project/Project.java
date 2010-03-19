@@ -118,11 +118,11 @@ public class Project extends GProject implements ForumSupport {
 	}
 
 	public List<SimpleEvent> getSimpleEvents() {
-		return cm.getDao().getSimpleEventsByProject(this);
+		return getDao().getSimpleEventsByProject(this);
 	}
 
 	public List<ProjectEvent> getProjectEvents() {
-		return cm.getDao().getProjectEventsByProject(this);
+		return getDao().getProjectEventsByProject(this);
 	}
 
 	public List<ProjectEvent> getLatestProjectEvents(int min) {
@@ -142,11 +142,11 @@ public class Project extends GProject implements ForumSupport {
 	}
 
 	public List<Wikipage> getWikipages() {
-		return cm.getDao().getWikipagesByProject(this);
+		return getDao().getWikipagesByProject(this);
 	}
 
 	public List<File> getFiles() {
-		return cm.getDao().getFilesByProject(this);
+		return getDao().getFilesByProject(this);
 	}
 
 	public Wikipage getWikipage(String name) {

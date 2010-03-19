@@ -40,8 +40,8 @@ public class ConvertIssueToQualityAction extends GConvertIssueToQualityAction {
 	@Override
 	protected void onExecute() {
 		Quality quality = new Quality(issue);
-		cm.getDao().createQuality(quality);
-		cm.getDao().deleteIssue(issue);
+		getDao().createQuality(quality);
+		getDao().deleteIssue(issue);
 		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showQualityBacklog(quality);
 		addUndo(new Undo(quality));
 	}
@@ -61,8 +61,8 @@ public class ConvertIssueToQualityAction extends GConvertIssueToQualityAction {
 
 		@Override
 		protected void onUndo() {
-			cm.getDao().deleteQuality(quality);
-			cm.getDao().createIssue(issue);
+			getDao().deleteQuality(quality);
+			getDao().createIssue(issue);
 		}
 
 	}

@@ -48,7 +48,7 @@ public class DeleteQualityAction extends GDeleteQualityAction {
 
 		@Override
 		protected void onUndo() {
-			cm.getDao().createQuality(quality);
+			getDao().createQuality(quality);
 		}
 
 	}

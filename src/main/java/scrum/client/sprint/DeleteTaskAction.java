@@ -53,7 +53,7 @@ public class DeleteTaskAction extends GDeleteTaskAction {
 
 		@Override
 		protected void onUndo() {
-			cm.getDao().createTask(task);
+			getDao().createTask(task);
 		}
 
 	}

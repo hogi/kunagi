@@ -16,7 +16,7 @@ public class DeleteWikipageAction extends GDeleteWikipageAction {
 	@Override
 	protected void onExecute() {
 		if (!Gwt.confirm("Delete wiki page " + wikipage.getName() + "?")) return;
-		cm.getDao().deleteWikipage(wikipage);
+		getDao().deleteWikipage(wikipage);
 		addUndo(new Undo());
 	}
 
@@ -29,7 +29,7 @@ public class DeleteWikipageAction extends GDeleteWikipageAction {
 
 		@Override
 		protected void onUndo() {
-			cm.getDao().createWikipage(wikipage);
+			getDao().createWikipage(wikipage);
 		}
 
 	}

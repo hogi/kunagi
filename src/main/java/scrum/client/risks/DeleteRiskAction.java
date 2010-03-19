@@ -49,7 +49,7 @@ public class DeleteRiskAction extends GDeleteRiskAction {
 
 		@Override
 		protected void onUndo() {
-			cm.getDao().createRisk(risk);
+			getDao().createRisk(risk);
 		}
 
 	}

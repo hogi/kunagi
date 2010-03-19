@@ -23,11 +23,13 @@ import com.google.gwt.user.client.Timer;
 
 public class Dao extends GDao {
 
+	private static final Dao INSTANCE = new Dao();
+
 	private EntityChangeCache cache = new EntityChangeCache();
 	private ScrumGwtApplication app;
 	private EventBus eventBus;
 
-	Dao() {}
+	private Dao() {}
 
 	public void setEventBus(EventBus eventBus) {
 		this.eventBus = eventBus;
@@ -148,7 +150,7 @@ public class Dao extends GDao {
 	// --- ---
 
 	public static Dao get() {
-		return ComponentManager.get().getDao();
+		return INSTANCE;
 	}
 
 	private class EntityChangeCache extends Timer {

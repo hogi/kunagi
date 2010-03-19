@@ -3,6 +3,7 @@ package scrum.client.common;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.ComponentManager;
+import scrum.client.Dao;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.ScrumScopeManager;
 import scrum.client.admin.Auth;
@@ -41,5 +42,9 @@ public abstract class AScrumWidget extends AWidget {
 
 	protected static final ScrumGwtApplication getApp() {
 		return (ScrumGwtApplication) Scope.get().getComponent("app");
+	}
+
+	protected static final Dao getDao() {
+		return Dao.get();
 	}
 }

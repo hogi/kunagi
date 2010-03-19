@@ -33,7 +33,7 @@ public class ScrumScopeManager {
 	static void initialize(ComponentManager cm) {
 		assert scopeManager == null;
 
-		Dao dao = cm.getDao();
+		Dao dao = Dao.get();
 		dao.setApp(cm.getApp());
 		dao.setEventBus(cm.getEventBus());
 
