@@ -6,6 +6,7 @@ import java.util.Set;
 
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
+import scrum.client.issues.Issue;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
@@ -33,24 +34,25 @@ public class TeamTasksWidget extends AScrumWidget {
 			sb.append("<span style='color: ").append(user.getColor()).append(";'>");
 			sb.append(user.getName());
 			sb.append("</span> is working on");
+
 			List<Task> tasks = project.getClaimedTasks(user);
-			if (tasks.isEmpty()) {
+			List<Issue> issues = project.getClaimedUnfixedIssues(user);
+
+			if (tasks.isEmpty() && issues.isEmpty()) {
 				sb.append(" <span style='color: red;'>nothing</span></div>");
 				continue;
 			}
-			Set<Requirement> reqs = new HashSet<Requirement>();
-			for (Task task : tasks) {
-				reqs.add(task.getRequirement());
-			}
+
 			sb.append("<ul>");
-			for (Requirement req : reqs) {
+			for (Issue issue : issues) {
+				sb.append("<li>").append(issue.toHtml()).append("</li>");
+			}
+			for (Requirement req : getRequirements(tasks)) {
 				sb.append("<li>");
 				sb.append(req.toHtml());
 				sb.append("<ul>");
 				for (Task task : req.getClaimedTasks(user)) {
-					sb.append("<li>");
-					sb.append(task.toHtml());
-					sb.append("</li>");
+					sb.append("<li>").append(task.toHtml()).append("</li>");
 				}
 				sb.append("</ul></li>");
 			}
@@ -59,4 +61,13 @@ public class TeamTasksWidget extends AScrumWidget {
 		sb.append("</div>");
 		html.setHTML(sb.toString());
 	}
+
+	private Set<Requirement> getRequirements(List<Task> tasks) {
+		Set<Requirement> reqs = new HashSet<Requirement>();
+		for (Task task : tasks) {
+			reqs.add(task.getRequirement());
+		}
+		return reqs;
+	}
+
 }

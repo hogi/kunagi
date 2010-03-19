@@ -10,6 +10,12 @@ public class ReopenIssueAction extends GReopenIssueAction {
 	}
 
 	@Override
+	public boolean isPermitted() {
+		if (!issue.getProject().isProductOwner(getCurrentUser())) return false;
+		return true;
+	}
+
+	@Override
 	public boolean isExecutable() {
 		if (issue.isOpen()) return false;
 		return true;
@@ -17,7 +23,7 @@ public class ReopenIssueAction extends GReopenIssueAction {
 
 	@Override
 	public String getLabel() {
-		return "Reopen";
+		return "Move to inbox";
 	}
 
 	@Override

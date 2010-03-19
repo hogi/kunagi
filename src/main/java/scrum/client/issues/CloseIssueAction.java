@@ -7,14 +7,20 @@ public class CloseIssueAction extends GCloseIssueAction {
 	}
 
 	@Override
+	public String getLabel() {
+		return "Close";
+	}
+
+	@Override
 	public boolean isExecutable() {
 		if (issue.isClosed()) return false;
 		return true;
 	}
 
 	@Override
-	public String getLabel() {
-		return "Close";
+	public boolean isPermitted() {
+		if (!getCurrentProject().isProductOwner(getCurrentUser())) return false;
+		return true;
 	}
 
 	@Override

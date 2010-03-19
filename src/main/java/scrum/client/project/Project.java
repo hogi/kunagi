@@ -62,6 +62,14 @@ public class Project extends GProject implements ForumSupport {
 		return isAdmin(Scope.get().getComponent(Auth.class).getUser());
 	}
 
+	public List<Issue> getClaimedUnfixedIssues(User user) {
+		List<Issue> issues = new ArrayList<Issue>();
+		for (Issue issue : getUrgentIssues()) {
+			if (issue.isOwner(user) && !issue.isFixed()) issues.add(issue);
+		}
+		return issues;
+	}
+
 	public List<Task> getClaimedTasks(User user) {
 		List<Task> tasks = new ArrayList<Task>();
 		for (Requirement req : getRequirements()) {
@@ -329,6 +337,14 @@ public class Project extends GProject implements ForumSupport {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getIssues()) {
 			if (issue.isSuspended()) ret.add(issue);
+		}
+		return ret;
+	}
+
+	public List<Issue> getUnclaimedUrgentIssues() {
+		List<Issue> ret = new ArrayList<Issue>();
+		for (Issue issue : getUrgentIssues()) {
+			if (issue.getOwner() == null) ret.add(issue);
 		}
 		return ret;
 	}

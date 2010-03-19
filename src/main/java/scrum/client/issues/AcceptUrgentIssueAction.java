@@ -10,14 +10,6 @@ public class AcceptUrgentIssueAction extends GAcceptUrgentIssueAction {
 	}
 
 	@Override
-	public boolean isExecutable() {
-		if (issue.isClosed()) return false;
-		if (issue.isSuspended()) return false;
-		if (issue.isAccepted()) return false;
-		return true;
-	}
-
-	@Override
 	public String getLabel() {
 		return "Accept as urgent";
 	}
@@ -25,6 +17,20 @@ public class AcceptUrgentIssueAction extends GAcceptUrgentIssueAction {
 	@Override
 	public String getTooltip() {
 		return "Accept this issue as urgend bug in a published release. The team needs to fix this immediately.";
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!issue.getProject().isProductOwner(getCurrentUser())) return false;
+		return true;
+	}
+
+	@Override
+	public boolean isExecutable() {
+		if (issue.isClosed()) return false;
+		if (issue.isSuspended()) return false;
+		if (issue.isAccepted()) return false;
+		return true;
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class IssueWidget extends AScrumWidget {
 
 	private Issue issue;
+	private boolean fixedOnInitialization;
 
 	public IssueWidget(Issue issue) {
 		super();
@@ -23,6 +24,8 @@ public class IssueWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		fixedOnInitialization = issue.isFixed();
+
 		TableBuilder left = ScrumGwt.createFieldTable();
 		left.addFieldRow("Label", issue.getLabelModel());
 		left.addFieldRow("Description", issue.getDescriptionModel());
@@ -31,13 +34,22 @@ public class IssueWidget extends AScrumWidget {
 		left.addRow(new ChangeHistoryWidget(issue), 2);
 
 		FlowPanel right = new FlowPanel();
-		if (issue.isOpen() && getCurrentProject().isProductOwnerOrScrumMaster(getCurrentUser())) {
+		if (issue.isOpen() && issue.getProject().isProductOwnerOrScrumMaster(getCurrentUser())) {
 			right.add(createActionsPanelForOpenIssue());
+			right.add(ScrumGwt.createSpacer(1, 10));
+		} else if (issue.isUrgent() && issue.isFixed()
+				&& issue.getProject().isProductOwnerOrScrumMaster(getCurrentUser())) {
+			right.add(createActionsPanelForFixedIssue());
 			right.add(ScrumGwt.createSpacer(1, 10));
 		}
 		right.add(new CommentsWidget(issue));
 
 		return TableBuilder.row(20, left.createTable(), right);
+	}
+
+	@Override
+	protected boolean isResetRequired() {
+		return fixedOnInitialization && !issue.isFixed();
 	}
 
 	private Widget createActionsPanelForOpenIssue() {
@@ -61,6 +73,27 @@ public class IssueWidget extends AScrumWidget {
 		tb.add(new Label("If this issue needs to be fixed immediately by the team."));
 		tb.add(Gwt.createSpacer(10, 1));
 		tb.add(new Label("If this issue makes no sense, is a duplicate or is already fixed."));
+
+		return ScrumGwt.createActionsPanel(tb.createTable());
+	}
+
+	private Widget createActionsPanelForFixedIssue() {
+		TableBuilder tb = new TableBuilder();
+		tb.setWidth(null);
+		tb.setColumnWidths("48%", "10", "48%");
+
+		tb.addRow(new Label("This issue is fixed. As Product Owner, you have to decide:"), 3);
+		tb.addRow(Gwt.createSpacer(1, 10));
+
+		tb.add(new ButtonWidget(new CloseIssueAction(issue)));
+		tb.add(Gwt.createSpacer(10, 1));
+		tb.add(new ButtonWidget(new RejectFixIssueAction(issue)));
+		tb.nextRow();
+		tb.addRow(Gwt.createSpacer(1, 10));
+
+		tb.add(new Label("If this issue is fixed sufficiently."));
+		tb.add(Gwt.createSpacer(10, 1));
+		tb.add(new Label("If this issue is fixed insufficient. Please provide a comment in this case."));
 
 		return ScrumGwt.createActionsPanel(tb.createTable());
 	}

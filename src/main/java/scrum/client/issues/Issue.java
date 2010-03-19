@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumJs;
+import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
@@ -34,6 +35,10 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 		super(data);
 	}
 
+	public void claim(User user) {
+		setOwner(user);
+	}
+
 	public boolean isSuspended() {
 		if (isClosed()) return false;
 		return getSuspendDate() != null;
@@ -54,12 +59,31 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public String getStatusLabel() {
 		if (isClosed()) return "closed on " + getCloseDate();
-		if (isAccepted()) return "accepted as urgent on " + getAcceptDate();
+		if (isAccepted()) {
+			String s = "";
+			if (isFixed()) s += "fixed by ";
+			if (isOwnerSet()) s += getOwner().getName();
+			return s;
+		}
 		if (isSuspended()) return "accepted on " + getSuspendDate();
 		return "issued on " + getDate().getDate();
 	}
 
+	public void setFixed(User user) {
+		setOwner(user);
+		setFixDate(Date.today());
+	}
+
+	public void rejectFix() {
+		setFixDate(null);
+	}
+
+	public boolean isFixed() {
+		return getFixDate() != null;
+	}
+
 	public void close() {
+		setOwner(null);
 		setCloseDate(Date.today());
 	}
 

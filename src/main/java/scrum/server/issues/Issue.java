@@ -10,6 +10,10 @@ public class Issue extends GIssue implements Numbered {
 		return getAcceptDate() != null && isUrgent();
 	}
 
+	public boolean isFixed() {
+		return isFixDateSet();
+	}
+
 	public boolean isOpen() {
 		return !isClosed() && !isAcceptedUrgent();
 	}

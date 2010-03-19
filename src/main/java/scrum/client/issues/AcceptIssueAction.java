@@ -10,14 +10,6 @@ public class AcceptIssueAction extends GAcceptIssueAction {
 	}
 
 	@Override
-	public boolean isExecutable() {
-		if (issue.isClosed()) return false;
-		if (issue.isSuspended()) return false;
-		if (issue.isAccepted()) return false;
-		return true;
-	}
-
-	@Override
 	public String getLabel() {
 		return "Accept";
 	}
@@ -25,6 +17,20 @@ public class AcceptIssueAction extends GAcceptIssueAction {
 	@Override
 	public String getTooltip() {
 		return "Accept this issue.";
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!issue.getProject().isProductOwner(getCurrentUser())) return false;
+		return true;
+	}
+
+	@Override
+	public boolean isExecutable() {
+		if (issue.isClosed()) return false;
+		if (issue.isSuspended()) return false;
+		if (issue.isAccepted()) return false;
+		return true;
 	}
 
 	@Override

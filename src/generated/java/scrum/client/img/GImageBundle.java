@@ -43,8 +43,11 @@ public interface GImageBundle
     @Resource(value="impOpen.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype impOpen();
 
-    @Resource(value="issClosed.png")
-    com.google.gwt.user.client.ui.AbstractImagePrototype issClosed();
+    @Resource(value="issClaimed.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype issClaimed();
+
+    @Resource(value="issFixed.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype issFixed();
 
     @Resource(value="itemlist.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype itemlist();

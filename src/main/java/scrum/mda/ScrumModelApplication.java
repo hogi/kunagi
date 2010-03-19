@@ -492,6 +492,9 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addProperty("suspendDate", Date.class);
 			issueModel.addProperty("closeDate", Date.class);
 			getApplicationModel().addCreateAction(issueModel);
+			issueModel.addAction("ClaimIssue");
+			issueModel.addAction("FixIssue");
+			issueModel.addAction("RejectFixIssue");
 			issueModel.addAction("DeleteIssue");
 			issueModel.addAction("CloseIssue");
 			issueModel.addAction("AcceptIssue");
