@@ -1,6 +1,8 @@
 package scrum.client.risks;
 
+import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class CreateRiskAction extends GCreateRiskAction {
 
@@ -33,7 +35,7 @@ public class CreateRiskAction extends GCreateRiskAction {
 	@Override
 	protected void onExecute() {
 		Risk risk = getCurrentProject().createNewRisk();
-		cm.getProjectContext().showRiskList(risk);
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showRiskList(risk);
 	}
 
 }

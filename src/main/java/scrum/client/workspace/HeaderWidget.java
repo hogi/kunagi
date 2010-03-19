@@ -7,7 +7,6 @@ import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget.SwitchAction;
 import ilarkesto.gwt.client.undo.UndoButtonWidget;
 import scrum.client.ApplicationInfo;
-import scrum.client.ProjectContext;
 import scrum.client.ScrumScopeManager;
 import scrum.client.admin.LogoutAction;
 import scrum.client.common.AScrumWidget;
@@ -72,11 +71,10 @@ public class HeaderWidget extends AScrumWidget {
 		boolean loggedIn = getAuth().isUserLoggedIn();
 		if (!loggedIn) return Gwt.createEmptyDiv();
 
-		ProjectContext projectContext = cm.getProjectContext();
+		ProjectWorkspaceWidgets widgets = Scope.get().getComponent(ProjectWorkspaceWidgets.class);
 		if (!ScrumScopeManager.isProjectScope()) return new Label(createCurrentUserText());
 
-		SwitchAction action = projectContext.getSidebar().getNavigator().createSwitchAction(
-			projectContext.getProjectUserConfig());
+		SwitchAction action = widgets.getSidebar().getNavigator().createSwitchAction(widgets.getProjectUserConfig());
 		action.setLabel(createCurrentUserText());
 		return new HyperlinkWidget(action);
 	}

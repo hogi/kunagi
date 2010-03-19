@@ -3,6 +3,7 @@ package scrum.client.files;
 import ilarkesto.core.scope.Scope;
 import scrum.client.common.AScrumAction;
 import scrum.client.files.Uploader.UploadedFileHandler;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class UploadFileAction extends AScrumAction {
 
@@ -24,7 +25,7 @@ public class UploadFileAction extends AScrumAction {
 	class ShowFileHandler implements UploadedFileHandler {
 
 		public void onFileUploaded(File file) {
-			cm.getProjectContext().showFile(file);
+			Scope.get().getComponent(ProjectWorkspaceWidgets.class).showFile(file);
 		}
 
 	}

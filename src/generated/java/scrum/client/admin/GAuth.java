@@ -8,5 +8,7 @@ public abstract class GAuth extends scrum.client.AScrumComponent {
 
     protected scrum.client.Dao dao;
 
+    protected scrum.client.workspace.PublicWorkspaceWidgets publicWorkspaceWidgets;
+
 }
 

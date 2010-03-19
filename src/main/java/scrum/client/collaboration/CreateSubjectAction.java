@@ -1,6 +1,8 @@
 package scrum.client.collaboration;
 
+import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class CreateSubjectAction extends GCreateSubjectAction {
 
@@ -32,7 +34,7 @@ public class CreateSubjectAction extends GCreateSubjectAction {
 	@Override
 	protected void onExecute() {
 		Subject subject = getCurrentProject().createNewSubject();
-		cm.getProjectContext().showForum(subject);
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showForum(subject);
 	}
 
 }

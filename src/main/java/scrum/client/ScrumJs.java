@@ -1,5 +1,8 @@
 package scrum.client;
 
+import ilarkesto.core.scope.Scope;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
+
 public class ScrumJs {
 
 	private static final ComponentManager cm = ComponentManager.get();
@@ -12,7 +15,7 @@ public class ScrumJs {
 	}-*/;
 
 	public static void showEntityByReference(String reference) {
-		cm.getProjectContext().showEntityByReference(reference);
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntityByReference(reference);
 	}
 
 	public static String createShowEntityByReferenceLink(String reference) {

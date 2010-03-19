@@ -21,7 +21,7 @@ import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.Timer;
 
-public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
+public class Dao extends GDao {
 
 	private EntityChangeCache cache = new EntityChangeCache();
 	private ComponentManager cm;
@@ -34,7 +34,7 @@ public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
 		cm = ComponentManager.get();
 	}
 
-	public void onProjectClosed() {
+	public void clearProjectEntities() {
 		clearChatMessages();
 		clearImpediments();
 		clearQualitys();
@@ -44,10 +44,10 @@ public class Dao extends GDao implements LogoutListener, ProjectClosedListener {
 		clearTasks();
 		clearComments();
 		clearWikipages();
-	}
-
-	public void onLogout() {
-		clearAllEntities();
+		clearIssues();
+		clearSimpleEvents();
+		clearProjectUserConfigs();
+		clearProjectEvents();
 	}
 
 	public AGwtEntity getEntityByReference(String reference) {

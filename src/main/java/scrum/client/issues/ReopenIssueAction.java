@@ -1,5 +1,8 @@
 package scrum.client.issues;
 
+import ilarkesto.core.scope.Scope;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
+
 public class ReopenIssueAction extends GReopenIssueAction {
 
 	public ReopenIssueAction(scrum.client.issues.Issue issue) {
@@ -20,7 +23,7 @@ public class ReopenIssueAction extends GReopenIssueAction {
 	@Override
 	protected void onExecute() {
 		issue.reopen();
-		cm.getProjectContext().showIssueList(issue);
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showIssueList(issue);
 	}
 
 }

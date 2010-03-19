@@ -1,7 +1,9 @@
 package scrum.client.issues;
 
+import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
 import scrum.client.project.Quality;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class ConvertIssueToQualityAction extends GConvertIssueToQualityAction {
 
@@ -40,7 +42,7 @@ public class ConvertIssueToQualityAction extends GConvertIssueToQualityAction {
 		Quality quality = new Quality(issue);
 		cm.getDao().createQuality(quality);
 		cm.getDao().deleteIssue(issue);
-		cm.getProjectContext().showQualityBacklog(quality);
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showQualityBacklog(quality);
 		addUndo(new Undo(quality));
 	}
 

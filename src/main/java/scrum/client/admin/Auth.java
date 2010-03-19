@@ -21,13 +21,13 @@ public class Auth extends GAuth implements ServerDataReceivedListener {
 	}
 
 	public void logout() {
-		if (ScrumScopeManager.isProjectScope()) cm.getProjectContext().closeProject();
 		log.info("Logging out");
 		Scope.get().getComponent(Ui.class).lock("Logging out..."); // TODO dependency
 		user = null;
-		cm.getEventBus().fireLogout();
-		app.callLogout();
 		ScrumScopeManager.destroyUserScope();
+		app.callLogout();
+		dao.clearAllEntities();
+		publicWorkspaceWidgets.activate();
 	}
 
 	public boolean isUserLoggedIn() {

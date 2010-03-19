@@ -2,14 +2,10 @@ package scrum.client;
 
 import ilarkesto.gwt.client.AComponentManager;
 
-public class ComponentManager extends GComponentManager implements ProjectClosedListener {
+public class ComponentManager extends GComponentManager {
 
 	ComponentManager() {
 		super(new EventBus(), new Dao());
-	}
-
-	public void onProjectClosed() {
-		destroyProjectContext();
 	}
 
 	public ScrumGwtApplication getApp() {

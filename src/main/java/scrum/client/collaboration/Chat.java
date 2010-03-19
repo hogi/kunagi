@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import scrum.client.ComponentManager;
 import scrum.client.admin.User;
 
 public class Chat extends GChat {
@@ -35,7 +34,7 @@ public class Chat extends GChat {
 		if (chatMessages.contains(msg)) return;
 		chatMessages.add(msg);
 		cleanupChatMessages();
-		ComponentManager.get().getProjectContext().getSidebar().getChat().update();
+		projectWorkspaceWidgets.getSidebar().getChat().update();
 	}
 
 	private void cleanupChatMessages() {

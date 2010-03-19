@@ -1,6 +1,8 @@
 package scrum.client.project;
 
+import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class CreateRequirementAction extends GCreateRequirementAction {
 
@@ -32,7 +34,7 @@ public class CreateRequirementAction extends GCreateRequirementAction {
 	@Override
 	protected void onExecute() {
 		Requirement requirement = getCurrentProject().createNewRequirement();
-		cm.getProjectContext().showProductBacklog(requirement);
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showProductBacklog(requirement);
 		// addUndo(new Undo(requirement));
 	}
 

@@ -1,5 +1,8 @@
 package scrum.client.issues;
 
+import ilarkesto.core.scope.Scope;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
+
 public class AcceptUrgentIssueAction extends GAcceptUrgentIssueAction {
 
 	public AcceptUrgentIssueAction(scrum.client.issues.Issue issue) {
@@ -27,7 +30,7 @@ public class AcceptUrgentIssueAction extends GAcceptUrgentIssueAction {
 	@Override
 	protected void onExecute() {
 		issue.acceptAsUrgent();
-		cm.getProjectContext().showIssueList(issue);
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showIssueList(issue);
 		addUndo(new Undo());
 	}
 

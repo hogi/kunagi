@@ -10,5 +10,7 @@ public abstract class GChat extends scrum.client.AScrumComponent {
 
     protected scrum.client.project.Project project;
 
+    protected scrum.client.workspace.ProjectWorkspaceWidgets projectWorkspaceWidgets;
+
 }
 

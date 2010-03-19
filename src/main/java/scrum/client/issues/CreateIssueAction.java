@@ -1,5 +1,8 @@
 package scrum.client.issues;
 
+import ilarkesto.core.scope.Scope;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
+
 public class CreateIssueAction extends GCreateIssueAction {
 
 	@Override
@@ -15,7 +18,7 @@ public class CreateIssueAction extends GCreateIssueAction {
 	@Override
 	protected void onExecute() {
 		Issue issue = getCurrentProject().createNewIssue();
-		cm.getProjectContext().showIssueList(issue);
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showIssueList(issue);
 		addUndo(new Undo(issue));
 	}
 

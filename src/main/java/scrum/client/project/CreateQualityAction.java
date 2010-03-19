@@ -1,6 +1,8 @@
 package scrum.client.project;
 
+import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class CreateQualityAction extends GCreateQualityAction {
 
@@ -33,7 +35,7 @@ public class CreateQualityAction extends GCreateQualityAction {
 	@Override
 	protected void onExecute() {
 		Quality quality = getCurrentProject().createNewQuality();
-		cm.getProjectContext().showQualityBacklog(quality);
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showQualityBacklog(quality);
 		// addUndo(new Undo(quality));
 	}
 

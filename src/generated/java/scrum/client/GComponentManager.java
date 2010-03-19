@@ -22,25 +22,4 @@ public abstract class GComponentManager
         super(eventBus, dao);
     }
 
-    // --- projectContext ---
-
-    private ProjectContext projectContext;
-
-    public final ProjectContext getProjectContext() {
-        if (projectContext == null) {
-            projectContext = new ProjectContext();
-            initializeProjectContext(projectContext);
-            initialize(projectContext);
-        }
-        return projectContext;
-    }
-
-    protected void initializeProjectContext(ProjectContext projectContext) {
-    }
-
-    public final void destroyProjectContext() {
-        destroy(projectContext);
-        projectContext = null;
-    }
-
 }

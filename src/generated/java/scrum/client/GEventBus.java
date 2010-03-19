@@ -91,81 +91,6 @@ public abstract class GEventBus
         }
     }
 
-    // --- Logout ---
-
-    private Set<LogoutListener> logoutListeners = new HashSet<LogoutListener>();
-
-    public void addLogoutListener(LogoutListener listener) {
-        logoutListeners.add(listener);
-    }
-
-    public void removeLogoutListener(LogoutListener listener) {
-        logoutListeners.remove(listener);
-    }
-
-    public void fireLogout() {
-        log.debug("Event fired: Logout");
-        for (LogoutListener listener : logoutListeners) {
-            listener.onLogout();
-        }
-        for (Object component : ilarkesto.core.scope.Scope.get().getAllComponents()) {
-            if (component instanceof LogoutListener) {
-                log.debug("  notifying component:", component);
-                ((LogoutListener)component).onLogout();
-            }
-        }
-    }
-
-    // --- ProjectOpened ---
-
-    private Set<ProjectOpenedListener> projectOpenedListeners = new HashSet<ProjectOpenedListener>();
-
-    public void addProjectOpenedListener(ProjectOpenedListener listener) {
-        projectOpenedListeners.add(listener);
-    }
-
-    public void removeProjectOpenedListener(ProjectOpenedListener listener) {
-        projectOpenedListeners.remove(listener);
-    }
-
-    public void fireProjectOpened() {
-        log.debug("Event fired: ProjectOpened");
-        for (ProjectOpenedListener listener : projectOpenedListeners) {
-            listener.onProjectOpened();
-        }
-        for (Object component : ilarkesto.core.scope.Scope.get().getAllComponents()) {
-            if (component instanceof ProjectOpenedListener) {
-                log.debug("  notifying component:", component);
-                ((ProjectOpenedListener)component).onProjectOpened();
-            }
-        }
-    }
-
-    // --- ProjectClosed ---
-
-    private Set<ProjectClosedListener> projectClosedListeners = new HashSet<ProjectClosedListener>();
-
-    public void addProjectClosedListener(ProjectClosedListener listener) {
-        projectClosedListeners.add(listener);
-    }
-
-    public void removeProjectClosedListener(ProjectClosedListener listener) {
-        projectClosedListeners.remove(listener);
-    }
-
-    public void fireProjectClosed() {
-        log.debug("Event fired: ProjectClosed");
-        for (ProjectClosedListener listener : projectClosedListeners) {
-            listener.onProjectClosed();
-        }
-        for (Object component : ilarkesto.core.scope.Scope.get().getAllComponents()) {
-            if (component instanceof ProjectClosedListener) {
-                log.debug("  notifying component:", component);
-                ((ProjectClosedListener)component).onProjectClosed();
-            }
-        }
-    }
-
     // --- VisibleDataChanged ---
 
     private Set<VisibleDataChangedListener> visibleDataChangedListeners = new HashSet<VisibleDataChangedListener>();
@@ -297,9 +222,6 @@ public abstract class GEventBus
         if (listener instanceof ApplicationStartListener) addApplicationStartListener((ApplicationStartListener)listener);
         if (listener instanceof ServerDataReceivedListener) addServerDataReceivedListener((ServerDataReceivedListener)listener);
         if (listener instanceof LoginListener) addLoginListener((LoginListener)listener);
-        if (listener instanceof LogoutListener) addLogoutListener((LogoutListener)listener);
-        if (listener instanceof ProjectOpenedListener) addProjectOpenedListener((ProjectOpenedListener)listener);
-        if (listener instanceof ProjectClosedListener) addProjectClosedListener((ProjectClosedListener)listener);
         if (listener instanceof VisibleDataChangedListener) addVisibleDataChangedListener((VisibleDataChangedListener)listener);
         if (listener instanceof BlockExpandedListener) addBlockExpandedListener((BlockExpandedListener)listener);
         if (listener instanceof BlockCollapsedListener) addBlockCollapsedListener((BlockCollapsedListener)listener);
@@ -311,9 +233,6 @@ public abstract class GEventBus
         if (listener instanceof ApplicationStartListener) removeApplicationStartListener((ApplicationStartListener)listener);
         if (listener instanceof ServerDataReceivedListener) removeServerDataReceivedListener((ServerDataReceivedListener)listener);
         if (listener instanceof LoginListener) removeLoginListener((LoginListener)listener);
-        if (listener instanceof LogoutListener) removeLogoutListener((LogoutListener)listener);
-        if (listener instanceof ProjectOpenedListener) removeProjectOpenedListener((ProjectOpenedListener)listener);
-        if (listener instanceof ProjectClosedListener) removeProjectClosedListener((ProjectClosedListener)listener);
         if (listener instanceof VisibleDataChangedListener) removeVisibleDataChangedListener((VisibleDataChangedListener)listener);
         if (listener instanceof BlockExpandedListener) removeBlockExpandedListener((BlockExpandedListener)listener);
         if (listener instanceof BlockCollapsedListener) removeBlockCollapsedListener((BlockCollapsedListener)listener);

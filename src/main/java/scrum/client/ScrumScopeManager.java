@@ -3,6 +3,7 @@ package scrum.client;
 import ilarkesto.core.scope.CascadingScope;
 import ilarkesto.core.scope.NonConcurrentScopeManager;
 import ilarkesto.core.scope.Scope;
+import ilarkesto.gwt.client.ObjectMappedFlowPanel;
 import scrum.client.admin.Auth;
 import scrum.client.admin.SystemMessageManager;
 import scrum.client.admin.User;
@@ -17,6 +18,7 @@ import scrum.client.project.Project;
 import scrum.client.search.Search;
 import scrum.client.undo.Undo;
 import scrum.client.workspace.DndManager;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
 import scrum.client.workspace.PublicWorkspaceWidgets;
 import scrum.client.workspace.Ui;
 import scrum.client.workspace.UsersWorkspaceWidgets;
@@ -64,11 +66,13 @@ public class ScrumScopeManager {
 
 	public static void createProjectScope(Project project) {
 		assert project != null;
+		Scope.get().getComponent(Ui.class).lock("Loading " + project.getLabel() + "...");
 
 		projectScope = userScope.createScope("project");
 		Scope scope = scopeManager.setScope(projectScope);
 
 		scope.putComponent("project", project);
+		final ProjectWorkspaceWidgets projectWorkspaceWidgets = scope.putComponent(new ProjectWorkspaceWidgets());
 		scope.putComponent(new Chat());
 		scope.putComponent(new ChangeHistoryManager());
 		scope.putComponent(new Wiki());
@@ -80,10 +84,20 @@ public class ScrumScopeManager {
 		scope.putComponent(new UsersStatus());
 
 		projectScope.wireComponents();
-		cm.getProjectContext().openProject(project);
+
+		cm.getApp().callSelectProject(project.getId(), new Runnable() {
+
+			public void run() {
+				projectWorkspaceWidgets.activate();
+			}
+		});
 	}
 
 	public static void destroyProjectScope() {
+		Scope.get().getComponent(Ui.class).lock("Closing project...");
+		cm.getApp().callCloseProject();
+		cm.getDao().clearProjectEntities();
+		ObjectMappedFlowPanel.objectHeights.clear();
 		projectScope = null;
 		scopeManager.setScope(userScope);
 	}

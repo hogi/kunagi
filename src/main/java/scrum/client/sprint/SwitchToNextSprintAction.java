@@ -4,6 +4,7 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 import scrum.client.common.TooltipBuilder;
 import scrum.client.project.Requirement;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
 import scrum.client.workspace.Ui;
 
 public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
@@ -38,7 +39,7 @@ public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 		cm.getApp().callSwitchToNextSprint(new Runnable() {
 
 			public void run() {
-				cm.getProjectContext().showSprintBacklog((Requirement) null);
+				Scope.get().getComponent(ProjectWorkspaceWidgets.class).showSprintBacklog((Requirement) null);
 				Scope.get().getComponent(Ui.class).unlock();
 			}
 		});

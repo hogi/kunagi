@@ -50,7 +50,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (gwtComponentsModel == null) {
 			gwtComponentsModel = new ComponentModel("GwtComponents", getBasePackageName());
 			gwtComponentsModel.setGwt(true);
-			gwtComponentsModel.addComposite("ProjectContext");
 		}
 		return gwtComponentsModel;
 	}
@@ -67,9 +66,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtEventBusModel.addEvent("ApplicationStart");
 			gwtEventBusModel.addEvent("ServerDataReceived").addParameter("data", "DataTransferObject").setQuiet(true);
 			gwtEventBusModel.addEvent("Login");
-			gwtEventBusModel.addEvent("Logout");
-			gwtEventBusModel.addEvent("ProjectOpened");
-			gwtEventBusModel.addEvent("ProjectClosed");
 			gwtEventBusModel.addEvent("VisibleDataChanged");
 			gwtEventBusModel.addEvent("BlockExpanded").addParameter("object", Object.class);
 			gwtEventBusModel.addEvent("BlockCollapsed").addParameter("object", Object.class);

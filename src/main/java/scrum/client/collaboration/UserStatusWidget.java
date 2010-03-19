@@ -3,6 +3,7 @@ package scrum.client.collaboration;
 import ilarkesto.core.scope.Scope;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
@@ -47,11 +48,11 @@ public class UserStatusWidget extends AScrumWidget {
 	class Highlighter implements MouseMoveHandler, MouseOutHandler {
 
 		public void onMouseMove(MouseMoveEvent event) {
-			cm.getProjectContext().highlightUser(user);
+			Scope.get().getComponent(ProjectWorkspaceWidgets.class).highlightUser(user);
 		}
 
 		public void onMouseOut(MouseOutEvent event) {
-			cm.getProjectContext().highlightUser(null);
+			Scope.get().getComponent(ProjectWorkspaceWidgets.class).highlightUser(null);
 		}
 	}
 }

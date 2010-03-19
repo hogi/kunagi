@@ -1,9 +1,8 @@
-package scrum.client;
+package scrum.client.workspace;
 
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.ObjectMappedFlowPanel;
 import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.admin.ProjectUserConfigWidget;
@@ -16,7 +15,6 @@ import scrum.client.collaboration.ForumSupport;
 import scrum.client.collaboration.ForumWidget;
 import scrum.client.collaboration.Subject;
 import scrum.client.collaboration.WikiWidget;
-import scrum.client.common.AScrumComponent;
 import scrum.client.context.UserHighlightSupport;
 import scrum.client.dashboard.DashboardWidget;
 import scrum.client.files.File;
@@ -42,14 +40,10 @@ import scrum.client.sprint.SprintBacklogWidget;
 import scrum.client.sprint.SprintHistoryWidget;
 import scrum.client.sprint.Task;
 import scrum.client.tasks.WhiteboardWidget;
-import scrum.client.workspace.ProjectSidebarWidget;
-import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectContext extends AScrumComponent {
-
-	private Project project;
+public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 
 	private ProjectSidebarWidget sidebar = new ProjectSidebarWidget();
 	private DashboardWidget dashboard;
@@ -75,7 +69,7 @@ public class ProjectContext extends AScrumComponent {
 
 	private User highlightedUser;
 
-	ProjectContext() {
+	public ProjectWorkspaceWidgets() {
 		projectOverview = new ProjectOverviewWidget();
 		dashboard = new DashboardWidget();
 		whiteboard = new WhiteboardWidget();
@@ -128,36 +122,8 @@ public class ProjectContext extends AScrumComponent {
 		navigator.addItem("Personal Preferences", getProjectUserConfig());
 	}
 
-	@Override
-	protected void onDestroy() {
-		ObjectMappedFlowPanel.objectHeights.clear();
-	}
-
 	public void activate() {
 		Scope.get().getComponent(Ui.class).show(sidebar, dashboard);
-	}
-
-	public void openProject(Project project) {
-		this.project = project;
-
-		Scope.get().getComponent(Ui.class).lock("Loading project...");
-		cm.getApp().callSelectProject(project.getId(), new Runnable() {
-
-			public void run() {
-				activate();
-			}
-		});
-
-		cm.getEventBus().fireProjectOpened();
-	}
-
-	public void closeProject() {
-		assert project != null;
-		Scope.get().getComponent(Ui.class).lock("Closing project...");
-		project = null;
-		cm.getApp().callCloseProject();
-		cm.getEventBus().fireProjectClosed();
-		ScrumScopeManager.destroyProjectScope();
 	}
 
 	public void highlightUser(User user) {
@@ -184,7 +150,6 @@ public class ProjectContext extends AScrumComponent {
 	}
 
 	public void showEntityByReference(final String reference) {
-		assert project != null;
 		log.debug("Showing entity by reference:", reference);
 
 		if (reference.length() > 4 && reference.startsWith("[[")) {
@@ -193,16 +158,16 @@ public class ProjectContext extends AScrumComponent {
 			return;
 		}
 
-		AGwtEntity entity = cm.getDao().getEntityByReference(reference);
+		AGwtEntity entity = dao.getEntityByReference(reference);
 		if (entity != null) {
 			showEntity(entity);
 			return;
 		}
 		Scope.get().getComponent(Ui.class).lock("Searching for " + reference);
-		cm.getApp().callRequestEntityByReference(reference, new Runnable() {
+		app.callRequestEntityByReference(reference, new Runnable() {
 
 			public void run() {
-				AGwtEntity entity = cm.getDao().getEntityByReference(reference);
+				AGwtEntity entity = dao.getEntityByReference(reference);
 				Ui ui = Scope.get().getComponent(Ui.class);
 				if (entity == null) {
 					ui.unlock();
@@ -291,7 +256,7 @@ public class ProjectContext extends AScrumComponent {
 	}
 
 	public void showRequirement(Requirement requirement) {
-		boolean inCurrentSprint = getCurrentProject().isCurrentSprint(requirement.getSprint());
+		boolean inCurrentSprint = requirement.isInCurrentSprint();
 		if (inCurrentSprint) {
 			if (getWorkarea().isShowing(productBacklog)) {
 				showProductBacklog(requirement);

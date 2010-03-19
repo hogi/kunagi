@@ -1,5 +1,8 @@
 package scrum.client.common;
 
+import ilarkesto.core.scope.Scope;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
+
 public class ShowEntityAction extends AScrumAction {
 
 	private AScrumGwtEntity entity;
@@ -18,7 +21,7 @@ public class ShowEntityAction extends AScrumAction {
 
 	@Override
 	protected void onExecute() {
-		cm.getProjectContext().showEntity(entity);
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntity(entity);
 	}
 
 }

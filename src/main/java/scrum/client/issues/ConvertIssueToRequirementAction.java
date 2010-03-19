@@ -1,7 +1,9 @@
 package scrum.client.issues;
 
+import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
 import scrum.client.project.Requirement;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementAction {
 
@@ -40,7 +42,7 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 		Requirement requirement = new Requirement(issue);
 		cm.getDao().createRequirement(requirement);
 		cm.getDao().deleteIssue(issue);
-		cm.getProjectContext().showProductBacklog(requirement);
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showProductBacklog(requirement);
 		addUndo(new Undo(requirement));
 	}
 

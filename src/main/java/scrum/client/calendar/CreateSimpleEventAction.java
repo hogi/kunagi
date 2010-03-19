@@ -1,6 +1,8 @@
 package scrum.client.calendar;
 
+import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class CreateSimpleEventAction extends GCreateSimpleEventAction {
 
@@ -31,9 +33,10 @@ public class CreateSimpleEventAction extends GCreateSimpleEventAction {
 
 	@Override
 	protected void onExecute() {
-		SimpleEvent event = new SimpleEvent(getCurrentProject(), cm.getProjectContext().getCalendar().getSelectedDate());
+		SimpleEvent event = new SimpleEvent(getCurrentProject(), Scope.get()
+				.getComponent(ProjectWorkspaceWidgets.class).getCalendar().getSelectedDate());
 		cm.getDao().createSimpleEvent(event);
-		cm.getProjectContext().showCalendar(event);
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showCalendar(event);
 	}
 
 }

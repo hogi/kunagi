@@ -6,5 +6,7 @@ public abstract class GCalendar extends scrum.client.AScrumComponent {
 
     protected scrum.client.project.Project project;
 
+    protected scrum.client.workspace.ProjectWorkspaceWidgets projectWorkspaceWidgets;
+
 }
 

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import scrum.client.ComponentManager;
 import scrum.client.SearchResultsChangedListener;
 import scrum.client.common.AScrumGwtEntity;
 
@@ -31,7 +30,7 @@ public class Search extends GSearch implements SearchResultsChangedListener {
 			}
 		});
 
-		ComponentManager.get().getProjectContext().showSearchResults();
+		projectWorkspaceWidgets.showSearchResults();
 
 		searchClient(searchText);
 	}

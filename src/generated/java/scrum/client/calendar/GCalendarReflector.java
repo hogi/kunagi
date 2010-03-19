@@ -4,6 +4,7 @@ public class GCalendarReflector implements ilarkesto.core.scope.ComponentReflect
 
     public void injectComponents(Calendar component, ilarkesto.core.scope.Scope scope) {
         component.project = (scrum.client.project.Project) scope.getComponent("project");
+        component.projectWorkspaceWidgets = (scrum.client.workspace.ProjectWorkspaceWidgets) scope.getComponent("projectWorkspaceWidgets");
     }
 
     public void callInitializationMethods(Calendar component) {

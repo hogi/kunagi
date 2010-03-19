@@ -1,7 +1,9 @@
 package scrum.client.sprint;
 
+import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
 import scrum.client.project.Requirement;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class CreateTaskAction extends GCreateTaskAction {
 
@@ -40,7 +42,7 @@ public class CreateTaskAction extends GCreateTaskAction {
 	@Override
 	protected void onExecute() {
 		Task task = requirement.createNewTask();
-		cm.getProjectContext().showTask(task);
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showTask(task);
 	}
 
 }
