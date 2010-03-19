@@ -23,18 +23,17 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SearchResultsWidget extends AScrumWidget {
 
-	private SearchResults searchResults;
 	private Search search;
 
 	@Override
 	protected Widget onInitialization() {
 		search = Scope.get().getComponent(Search.class);
-		searchResults = search.getResults();
 		return empty();
 	}
 
 	@Override
 	protected void onUpdate() {
+		SearchResults searchResults = search.getResults();
 		if (searchResults.isEmpty()) {
 			replaceContent(empty());
 			return;
