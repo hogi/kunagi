@@ -8,6 +8,7 @@ public class ComponentManager extends GComponentManager {
 		super(new EventBus(), new Dao());
 	}
 
+	@Override
 	public ScrumGwtApplication getApp() {
 		return (ScrumGwtApplication) super.getApp();
 	}

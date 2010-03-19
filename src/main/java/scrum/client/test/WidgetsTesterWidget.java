@@ -96,7 +96,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 
 			@Override
 			protected void onExecute() {
-				cm.getApp().callSelectProject("invalidprojectid");
+				getApp().callSelectProject("invalidprojectid");
 			}
 
 			@Override

@@ -36,7 +36,7 @@ public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 	protected void onExecute() {
 		if (!Gwt.confirm("Switch to next Sprint?")) return;
 		Scope.get().getComponent(Ui.class).lock("Switching to next Sprint");
-		cm.getApp().callSwitchToNextSprint(new Runnable() {
+		getApp().callSwitchToNextSprint(new Runnable() {
 
 			public void run() {
 				Scope.get().getComponent(ProjectWorkspaceWidgets.class).showSprintBacklog((Requirement) null);

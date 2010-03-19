@@ -70,7 +70,7 @@ public class UploadWidget extends AScrumWidget {
 
 		public void onFinish(IUploader ul) {
 			if (ul.getStatus() != Status.SUCCESS) {
-				cm.getApp().callPing();
+				getApp().callPing();
 				if (dialog != null) dialog.hide();
 			}
 		}

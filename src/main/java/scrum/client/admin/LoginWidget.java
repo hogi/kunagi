@@ -49,7 +49,7 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 
 		Widget content = fields.createTable();
 
-		ApplicationInfo appInfo = cm.getApp().getApplicationInfo();
+		ApplicationInfo appInfo = getApp().getApplicationInfo();
 		if (!appInfo.isProductionStage()) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("<div class='LoginWidget-errorMessage'>");
@@ -87,7 +87,7 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 	@Override
 	protected void onUpdate() {
 		super.onUpdate();
-		ApplicationInfo applicationInfo = cm.getApp().getApplicationInfo();
+		ApplicationInfo applicationInfo = getApp().getApplicationInfo();
 		if (applicationInfo != null && applicationInfo.isDevelopmentStage()) {
 			username.setText("duke");
 			password.setText("geheim");

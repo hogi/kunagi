@@ -24,14 +24,17 @@ import com.google.gwt.user.client.Timer;
 public class Dao extends GDao {
 
 	private EntityChangeCache cache = new EntityChangeCache();
-	private ComponentManager cm;
+	private ScrumGwtApplication app;
+	private EventBus eventBus;
 
 	Dao() {}
 
-	@Override
-	protected void onInitialization() {
-		super.onInitialization();
-		cm = ComponentManager.get();
+	public void setEventBus(EventBus eventBus) {
+		this.eventBus = eventBus;
+	}
+
+	public void setApp(ScrumGwtApplication app) {
+		this.app = app;
 	}
 
 	public void clearProjectEntities() {
@@ -106,7 +109,7 @@ public class Dao extends GDao {
 	public void handleDataFromServer(ADataTransferObject data) {
 		super.handleDataFromServer(data);
 		if (data.containsEntities() || data.containsDeletedEntities()) {
-			cm.getEventBus().fireVisibleDataChanged();
+			eventBus.fireVisibleDataChanged();
 		}
 	}
 
@@ -118,7 +121,7 @@ public class Dao extends GDao {
 			Scope.get().getComponent(Chat.class).addChatMessage((ChatMessage) entity);
 		}
 		if (entity instanceof File) {
-			cm.getEventBus().fireFileUploaded((File) entity);
+			eventBus.fireFileUploaded((File) entity);
 		}
 	}
 
@@ -129,12 +132,12 @@ public class Dao extends GDao {
 
 	@Override
 	protected void onEntityCreatedLocaly(AGwtEntity entity) {
-		cm.getApp().callCreateEntity(entity.getEntityType(), entity.createPropertiesMap());
+		app.callCreateEntity(entity.getEntityType(), entity.createPropertiesMap());
 	}
 
 	@Override
 	protected void onEntityDeletedLocaly(AGwtEntity entity) {
-		cm.getApp().callDeleteEntity(entity.getId());
+		app.callDeleteEntity(entity.getId());
 	}
 
 	@Override
@@ -164,7 +167,7 @@ public class Dao extends GDao {
 
 		private void flush() {
 			for (Map.Entry<String, Map> entry : entityProperties.entrySet()) {
-				cm.getApp().callChangeProperties(entry.getKey(), entry.getValue());
+				app.callChangeProperties(entry.getKey(), entry.getValue());
 			}
 			entityProperties = new HashMap<String, Map>(3);
 		}

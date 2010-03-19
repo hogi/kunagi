@@ -38,7 +38,7 @@ public class StartRequirementEstimationVotingAction extends GStartRequirementEst
 
 	@Override
 	protected void onExecute() {
-		cm.getApp().callActivateRequirementEstimationVoting(requirement.getId());
+		getApp().callActivateRequirementEstimationVoting(requirement.getId());
 	}
 
 }

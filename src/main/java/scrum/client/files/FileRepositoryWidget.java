@@ -13,7 +13,7 @@ public class FileRepositoryWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		cm.getApp().callRequestImpediments();
+		getApp().callRequestImpediments();
 
 		list = new BlockListWidget<File>(FileBlock.FACTORY);
 		list.setAutoSorter(File.REVERSE_UPLOAD_TIME_COMPARATOR);

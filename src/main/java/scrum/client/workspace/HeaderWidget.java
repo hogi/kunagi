@@ -47,7 +47,7 @@ public class HeaderWidget extends AScrumWidget {
 
 		undoButton.setUndoManager(null);
 
-		ApplicationInfo applicationInfo = cm.getApp().getApplicationInfo();
+		ApplicationInfo applicationInfo = getApp().getApplicationInfo();
 		if (applicationInfo != null) {
 			title.setText(applicationInfo.getName());
 			title.setTitle(applicationInfo.getVersionDescription());

@@ -13,7 +13,7 @@ public class ForumWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		cm.getApp().callRequestForum();
+		getApp().callRequestForum();
 
 		list = new BlockListWidget<ForumSupport>(ForumItemBlock.FACTORY);
 		list.setAutoSorter(ForumSupport.COMPARATOR);

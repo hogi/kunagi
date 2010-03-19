@@ -4,6 +4,7 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.undo.AUndoOperation;
 import scrum.client.ComponentManager;
+import scrum.client.ScrumGwtApplication;
 import scrum.client.ScrumScopeManager;
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
@@ -42,6 +43,10 @@ public abstract class AScrumAction extends AAction {
 	protected static final Project getCurrentProject() {
 		assert ScrumScopeManager.isProjectScope();
 		return ScrumScopeManager.getProject();
+	}
+
+	protected static final ScrumGwtApplication getApp() {
+		return (ScrumGwtApplication) Scope.get().getComponent("app");
 	}
 
 	protected abstract class ALocalUndo extends AUndoOperation {

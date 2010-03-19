@@ -30,19 +30,19 @@ public class ScrumScopeManager {
 	private static CascadingScope userScope;
 	private static CascadingScope projectScope;
 
-	private static ComponentManager cm;
-
 	static void initialize(ComponentManager cm) {
 		assert scopeManager == null;
 
-		ScrumScopeManager.cm = cm;
+		Dao dao = cm.getDao();
+		dao.setApp(cm.getApp());
+		dao.setEventBus(cm.getEventBus());
 
 		scopeManager = NonConcurrentScopeManager.createCascadingScopeInstance("app", new ScrumComponentsReflector());
 		appScope = (CascadingScope) scopeManager.getScope();
 		Scope scope = appScope;
 
 		scope.putComponent("app", cm.getApp());
-		scope.putComponent(cm.getDao());
+		scope.putComponent(dao);
 		scope.putComponent(new Pinger());
 		scope.putComponent(new Ui());
 		scope.putComponent(new SystemMessageManager());
@@ -85,7 +85,7 @@ public class ScrumScopeManager {
 
 		projectScope.wireComponents();
 
-		cm.getApp().callSelectProject(project.getId(), new Runnable() {
+		((ScrumGwtApplication) appScope.getComponent("app")).callSelectProject(project.getId(), new Runnable() {
 
 			public void run() {
 				projectWorkspaceWidgets.activate();
@@ -95,8 +95,8 @@ public class ScrumScopeManager {
 
 	public static void destroyProjectScope() {
 		Scope.get().getComponent(Ui.class).lock("Closing project...");
-		cm.getApp().callCloseProject();
-		cm.getDao().clearProjectEntities();
+		((ScrumGwtApplication) appScope.getComponent("app")).callCloseProject();
+		appScope.getComponent(Dao.class).clearProjectEntities();
 		ObjectMappedFlowPanel.objectHeights.clear();
 		projectScope = null;
 		scopeManager.setScope(userScope);

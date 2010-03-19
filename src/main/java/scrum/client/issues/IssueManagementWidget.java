@@ -23,7 +23,7 @@ public class IssueManagementWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		cm.getApp().callRequestIssues();
+		getApp().callRequestIssues();
 
 		selectionManager = new BlockListSelectionManager();
 
