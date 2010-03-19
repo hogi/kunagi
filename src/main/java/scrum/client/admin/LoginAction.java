@@ -33,6 +33,7 @@ public class LoginAction extends GLoginAction {
 					ui.unlock();
 					loginData.setFailed();
 				} else {
+					loginData.clear();
 					User user = getCurrentUser();
 					Log.DEBUG("Login succeded:", user);
 					Project project = user.getCurrentProject();

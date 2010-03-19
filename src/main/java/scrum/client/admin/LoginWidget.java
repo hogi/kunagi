@@ -79,6 +79,11 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 		errorMessage.setText("Login failed. Try again.");
 	}
 
+	public void clear() {
+		username.setText(null);
+		password.setText(null);
+	}
+
 	@Override
 	protected void onUpdate() {
 		super.onUpdate();

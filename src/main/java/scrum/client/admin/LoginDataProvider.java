@@ -8,4 +8,6 @@ public interface LoginDataProvider {
 
 	void setFailed();
 
+	void clear();
+
 }
