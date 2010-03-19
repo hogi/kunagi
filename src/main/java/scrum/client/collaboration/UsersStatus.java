@@ -21,13 +21,13 @@ public class UsersStatus extends GUsersStatus implements ServerDataReceivedListe
 	private UsersStatusData usersStatus = new UsersStatusData();
 
 	public void onBlockExpanded(Object object) {
-		if (object instanceof AGwtEntity && cm.getProjectContext().isProjectOpen()) {
+		if (object instanceof AGwtEntity) {
 			addSelectedEntityId(((AGwtEntity) object).getId());
 		}
 	}
 
 	public void onBlockCollapsed(Object object) {
-		if (object instanceof AGwtEntity && cm.getProjectContext().isProjectOpen()) {
+		if (object instanceof AGwtEntity) {
 			removeSelectedEntityId(((AGwtEntity) object).getId());
 		}
 	}

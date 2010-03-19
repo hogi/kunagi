@@ -51,17 +51,24 @@ public class ScrumScopeManager {
 	}
 
 	public static void createUserScope(User user) {
+		assert user != null;
+
 		userScope = appScope.createScope("user");
 		Scope scope = scopeManager.setScope(userScope);
+
+		scope.putComponent("user", user);
 		scope.putComponent(new UsersWorkspaceWidgets());
 
 		userScope.wireComponents();
 	}
 
 	public static void createProjectScope(Project project) {
+		assert project != null;
+
 		projectScope = userScope.createScope("project");
 		Scope scope = scopeManager.setScope(projectScope);
 
+		scope.putComponent("project", project);
 		scope.putComponent(new Chat());
 		scope.putComponent(new ChangeHistoryManager());
 		scope.putComponent(new Wiki());
@@ -82,9 +89,13 @@ public class ScrumScopeManager {
 	}
 
 	public static void destroyUserScope() {
-		projectScope = null;
+		destroyProjectScope();
 		userScope = null;
 		scopeManager.setScope(appScope);
+	}
+
+	public static boolean isProjectScope() {
+		return projectScope != null;
 	}
 
 }

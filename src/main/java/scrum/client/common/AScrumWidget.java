@@ -3,6 +3,7 @@ package scrum.client.common;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AWidget;
 import scrum.client.ComponentManager;
+import scrum.client.ScrumScopeManager;
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.project.Project;
@@ -25,7 +26,7 @@ public abstract class AScrumWidget extends AWidget {
 	}
 
 	protected static final Project getCurrentProject() {
-		assert cm.getProjectContext().isProjectOpen();
+		assert ScrumScopeManager.isProjectScope();
 		return cm.getProjectContext().getProject();
 	}
 

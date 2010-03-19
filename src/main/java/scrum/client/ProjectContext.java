@@ -157,14 +157,11 @@ public class ProjectContext extends AScrumComponent {
 		project = null;
 		cm.getApp().callCloseProject();
 		cm.getEventBus().fireProjectClosed();
+		ScrumScopeManager.destroyProjectScope();
 	}
 
 	public Project getProject() {
 		return project;
-	}
-
-	public boolean isProjectOpen() {
-		return project != null;
 	}
 
 	public void highlightUser(User user) {

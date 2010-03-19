@@ -32,11 +32,7 @@ public class Search extends GSearch implements SearchResultsChangedListener {
 			}
 		});
 
-		if (ComponentManager.get().getProjectContext().isProjectOpen()) {
-			ComponentManager.get().getProjectContext().showSearchResults();
-		} else {
-			// TODO
-		}
+		ComponentManager.get().getProjectContext().showSearchResults();
 
 		searchClient(searchText);
 	}
@@ -44,20 +40,16 @@ public class Search extends GSearch implements SearchResultsChangedListener {
 	private void searchClient(String text) {
 		String[] keys = parseKeys(text);
 
-		if (ComponentManager.get().getProjectContext().isProjectOpen()) {
-			Project project = ComponentManager.get().getProjectContext().getProject();
+		Project project = ComponentManager.get().getProjectContext().getProject();
 
-			results.addEntities(getMatching(project.getRequirements(), keys));
-			results.addEntities(getMatching(project.getQualitys(), keys));
-			results.addEntities(getMatching(project.getTasks(), keys));
-			results.addEntities(getMatching(project.getWikipages(), keys));
-			results.addEntities(getMatching(project.getFiles(), keys));
-			results.addEntities(getMatching(project.getIssues(), keys));
-			results.addEntities(getMatching(project.getImpediments(), keys));
-			results.addEntities(getMatching(project.getRisks(), keys));
-		} else {
-			// TODO
-		}
+		results.addEntities(getMatching(project.getRequirements(), keys));
+		results.addEntities(getMatching(project.getQualitys(), keys));
+		results.addEntities(getMatching(project.getTasks(), keys));
+		results.addEntities(getMatching(project.getWikipages(), keys));
+		results.addEntities(getMatching(project.getFiles(), keys));
+		results.addEntities(getMatching(project.getIssues(), keys));
+		results.addEntities(getMatching(project.getImpediments(), keys));
+		results.addEntities(getMatching(project.getRisks(), keys));
 
 	}
 

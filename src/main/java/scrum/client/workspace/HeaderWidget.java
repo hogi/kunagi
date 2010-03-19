@@ -8,6 +8,7 @@ import ilarkesto.gwt.client.SwitchingNavigatorWidget.SwitchAction;
 import ilarkesto.gwt.client.undo.UndoButtonWidget;
 import scrum.client.ApplicationInfo;
 import scrum.client.ProjectContext;
+import scrum.client.ScrumScopeManager;
 import scrum.client.admin.LogoutAction;
 import scrum.client.common.AScrumWidget;
 import scrum.client.img.Img;
@@ -43,7 +44,7 @@ public class HeaderWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		boolean projectOpen = cm.getProjectContext().isProjectOpen();
+		boolean projectOpen = ScrumScopeManager.isProjectScope();
 
 		undoButton.setUndoManager(null);
 
@@ -56,8 +57,11 @@ public class HeaderWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setCellPadding(2);
 		tb.setColumnWidths("", "", "", "60px", "100px", "50px");
-		tb.add(createLogo(), createCurrentUserWidget(), projectOpen ? search : Gwt.createEmptyDiv(),
-			projectOpen ? undoButton : Gwt.createEmptyDiv(), new HyperlinkWidget(new ChangeProjectAction()),
+		Widget searchWidget = projectOpen ? search : Gwt.createEmptyDiv();
+		Widget undoWidget = projectOpen ? undoButton : Gwt.createEmptyDiv();
+		Widget changeProjectWidget = projectOpen ? new HyperlinkWidget(new ChangeProjectAction()) : Gwt
+				.createEmptyDiv();
+		tb.add(createLogo(), createCurrentUserWidget(), searchWidget, undoWidget, changeProjectWidget,
 			new HyperlinkWidget(new LogoutAction()));
 		wrapper.setWidget(tb.createTable());
 
@@ -69,7 +73,7 @@ public class HeaderWidget extends AScrumWidget {
 		if (!loggedIn) return Gwt.createEmptyDiv();
 
 		ProjectContext projectContext = cm.getProjectContext();
-		if (!projectContext.isProjectOpen()) return new Label(createCurrentUserText());
+		if (!ScrumScopeManager.isProjectScope()) return new Label(createCurrentUserText());
 
 		SwitchAction action = projectContext.getSidebar().getNavigator().createSwitchAction(
 			projectContext.getProjectUserConfig());
@@ -82,7 +86,7 @@ public class HeaderWidget extends AScrumWidget {
 		StringBuilder text = new StringBuilder();
 		if (loggedIn) {
 			text.append(getCurrentUser().getName());
-			if (cm.getProjectContext().isProjectOpen()) {
+			if (ScrumScopeManager.isProjectScope()) {
 				text.append(getCurrentProject().getUsersRolesAsString(getCurrentUser(), " (", ")"));
 				text.append(" @ " + getCurrentProject().getLabel());
 				undoButton.setUndoManager(Scope.get().getComponent(Undo.class).getManager());

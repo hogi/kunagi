@@ -2,6 +2,7 @@ package scrum.client.common;
 
 import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.Gwt;
+import scrum.client.ScrumScopeManager;
 import scrum.client.dnd.BlockDndMarkerWidget;
 
 import com.google.gwt.dom.client.NativeEvent;
@@ -46,7 +47,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	protected final Widget onInitialization() {
 		header = new BlockHeaderWidget();
 		header.initialize();
-		if (cm.getProjectContext().isProjectOpen() && getObject() instanceof AScrumGwtEntity) {
+		if (ScrumScopeManager.isProjectScope() && getObject() instanceof AScrumGwtEntity) {
 			header.appendCell(new UsersOnBlockWidget((AScrumGwtEntity) getObject()), null, false, false, null);
 		}
 
