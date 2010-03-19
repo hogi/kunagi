@@ -2,12 +2,24 @@
 
 // generator: ilarkesto.mda.legacy.generator.GwtComponentManagerGenerator
 
+
+
+
+
+
+
+
+
+
 package scrum.client;
 
-public abstract class GComponentManager extends ilarkesto.gwt.client.AComponentManager<EventBus, Dao> {
+import java.util.*;
 
-	GComponentManager(EventBus eventBus) {
-		super(eventBus);
-	}
+public abstract class GComponentManager
+            extends ilarkesto.gwt.client.AComponentManager<EventBus, Dao> {
+
+    GComponentManager(EventBus eventBus) {
+        super(eventBus);
+    }
 
 }
