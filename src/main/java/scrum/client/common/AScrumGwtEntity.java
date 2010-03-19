@@ -6,6 +6,7 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.editor.AOptionEditorModel;
 import ilarkesto.gwt.client.editor.DropdownEditorWidget;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -72,7 +73,9 @@ public abstract class AScrumGwtEntity extends AGwtEntity {
 
 			@Override
 			public List<String> getOptions() {
-				return Emoticon.EMOTIONS;
+				List<String> options = new ArrayList<String>(Emoticon.EMOTIONS);
+				options.add(0, "");
+				return options;
 			}
 
 			@Override
