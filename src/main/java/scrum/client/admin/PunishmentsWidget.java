@@ -19,7 +19,7 @@ public class PunishmentsWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 
 		PagePanel page = new PagePanel();
-		Project project = cm.getProjectContext().getProject();
+		Project project = getCurrentProject();
 
 		TableBuilder main = ScrumGwt.createFieldTable();
 

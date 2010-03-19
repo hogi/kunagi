@@ -9,7 +9,6 @@ import java.util.List;
 import scrum.client.ComponentManager;
 import scrum.client.SearchResultsChangedListener;
 import scrum.client.common.AScrumGwtEntity;
-import scrum.client.project.Project;
 
 public class Search extends GSearch implements SearchResultsChangedListener {
 
@@ -39,8 +38,6 @@ public class Search extends GSearch implements SearchResultsChangedListener {
 
 	private void searchClient(String text) {
 		String[] keys = parseKeys(text);
-
-		Project project = ComponentManager.get().getProjectContext().getProject();
 
 		results.addEntities(getMatching(project.getRequirements(), keys));
 		results.addEntities(getMatching(project.getQualitys(), keys));

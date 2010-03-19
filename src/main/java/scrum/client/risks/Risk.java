@@ -72,7 +72,7 @@ public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport, F
 
 	@Override
 	public boolean isPriorityEditable() {
-		Project project = cm.getProjectContext().getProject();
+		Project project = getProject();
 		User user = Scope.get().getComponent(Auth.class).getUser();
 		return project.isProductOwner(user) || project.isTeamMember(user);
 	}

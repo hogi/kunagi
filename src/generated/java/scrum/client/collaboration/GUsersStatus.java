@@ -8,5 +8,7 @@ public abstract class GUsersStatus extends scrum.client.AScrumComponent {
 
     protected scrum.client.admin.Auth auth;
 
+    protected scrum.client.project.Project project;
+
 }
 

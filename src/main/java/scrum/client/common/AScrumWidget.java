@@ -27,7 +27,7 @@ public abstract class AScrumWidget extends AWidget {
 
 	protected static final Project getCurrentProject() {
 		assert ScrumScopeManager.isProjectScope();
-		return cm.getProjectContext().getProject();
+		return ScrumScopeManager.getProject();
 	}
 
 	protected static final Sprint getCurrentSprint() {

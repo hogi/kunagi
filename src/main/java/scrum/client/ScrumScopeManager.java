@@ -98,4 +98,7 @@ public class ScrumScopeManager {
 		return projectScope != null;
 	}
 
+	public static Project getProject() {
+		return (Project) projectScope.getComponent("project");
+	}
 }

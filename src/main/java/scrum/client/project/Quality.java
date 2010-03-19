@@ -49,8 +49,7 @@ public class Quality extends GQuality implements ReferenceSupport, ForumSupport 
 
 	@Override
 	public boolean isEditable() {
-		if (!cm.getProjectContext().getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser()))
-			return false;
+		if (!getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser())) return false;
 		return true;
 	}
 

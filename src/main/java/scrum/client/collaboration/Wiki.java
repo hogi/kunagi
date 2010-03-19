@@ -6,11 +6,9 @@ import ilarkesto.gwt.client.Initializer;
 import ilarkesto.gwt.client.RichtextFormater;
 import ilarkesto.gwt.client.ToolbarWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
-import scrum.client.ComponentManager;
 import scrum.client.files.File;
 import scrum.client.files.Uploader;
 import scrum.client.img.Img;
-import scrum.client.project.Project;
 import scrum.client.wiki.ScrumHtmlContext;
 import scrum.client.wiki.WikiModel;
 import scrum.client.wiki.WikiParser;
@@ -33,12 +31,8 @@ public class Wiki extends GWiki implements RichtextFormater {
 	}
 
 	public String getTemplate(String name) {
-		Wikipage page = getCurrentProject().getWikipage("template:" + name);
+		Wikipage page = project.getWikipage("template:" + name);
 		return page == null ? null : page.getText();
-	}
-
-	private Project getCurrentProject() {
-		return ComponentManager.get().getProjectContext().getProject();
 	}
 
 	public String richtextToHtml(String text) {
@@ -55,7 +49,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 	public SuggestOracle createPagesSuggestOracle() {
 		MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-		for (Wikipage page : getCurrentProject().getWikipages()) {
+		for (Wikipage page : project.getWikipages()) {
 			oracle.add(page.getName());
 		}
 		return oracle;

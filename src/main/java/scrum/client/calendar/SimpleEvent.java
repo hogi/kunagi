@@ -11,6 +11,7 @@ import java.util.Map;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
+import scrum.client.project.Project;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -18,16 +19,10 @@ public class SimpleEvent extends GSimpleEvent implements ForumSupport, Reference
 
 	public static final String REFERENCE_PREFIX = "evt";
 
-	public SimpleEvent() {
-		super();
-		setDate(Date.today());
-		setProject(cm.getProjectContext().getProject());
-	}
-
-	public SimpleEvent(Date date) {
+	public SimpleEvent(Project project, Date date) {
 		super();
 		setDate(date);
-		setProject(cm.getProjectContext().getProject());
+		setProject(project);
 	}
 
 	public SimpleEvent(Map data) {

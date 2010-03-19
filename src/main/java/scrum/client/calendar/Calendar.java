@@ -6,20 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import scrum.client.ComponentManager;
-import scrum.client.project.Project;
 import scrum.client.sprint.Sprint;
 
 public class Calendar extends GCalendar {
 
 	private ComponentManager cm = ComponentManager.get();
 
-	private Project getCurrentProject() {
-		return cm.getProjectContext().getProject();
-	}
-
 	public List<SimpleEvent> getEventsByDate(Date date) {
 		List<SimpleEvent> ret = new ArrayList<SimpleEvent>();
-		for (SimpleEvent event : getCurrentProject().getSimpleEvents()) {
+		for (SimpleEvent event : project.getSimpleEvents()) {
 			if (event.isDate(date)) ret.add(event);
 		}
 		return ret;
@@ -27,7 +22,7 @@ public class Calendar extends GCalendar {
 
 	public List<SimpleEvent> getEventsByYear(int year) {
 		List<SimpleEvent> ret = new ArrayList<SimpleEvent>();
-		for (SimpleEvent event : getCurrentProject().getSimpleEvents()) {
+		for (SimpleEvent event : project.getSimpleEvents()) {
 			if (event.getDate().getYear() == year) ret.add(event);
 		}
 		return ret;
@@ -35,7 +30,7 @@ public class Calendar extends GCalendar {
 
 	public List<SimpleEvent> getEventsByMonth(int year, int month) {
 		List<SimpleEvent> ret = new ArrayList<SimpleEvent>();
-		for (SimpleEvent event : getCurrentProject().getSimpleEvents()) {
+		for (SimpleEvent event : project.getSimpleEvents()) {
 			Date date = event.getDate();
 			if (date.getYear() == year && date.getMonth() == month) ret.add(event);
 		}
@@ -66,7 +61,7 @@ public class Calendar extends GCalendar {
 
 	public List<String> getInfos(Date date) {
 		List<String> ret = new ArrayList<String>();
-		for (Sprint sprint : getCurrentProject().getSprints()) {
+		for (Sprint sprint : project.getSprints()) {
 			if (sprint.isEnd(date)) ret.add(0, "End of Sprint: " + sprint.getLabel());
 			if (sprint.isBegin(date)) ret.add("Begin of Sprint: " + sprint.getLabel());
 		}

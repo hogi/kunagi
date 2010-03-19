@@ -9,6 +9,7 @@ import scrum.client.ScrumJs;
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.common.ReferenceSupport;
+import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 
 public class Task extends GTask implements ReferenceSupport {
@@ -146,10 +147,13 @@ public class Task extends GTask implements ReferenceSupport {
 		return sum;
 	}
 
+	public Project getProject() {
+		return getRequirement().getProject();
+	}
+
 	@Override
 	public boolean isEditable() {
-		if (!cm.getProjectContext().getProject().isTeamMember(Scope.get().getComponent(Auth.class).getUser()))
-			return false;
+		if (!getProject().isTeamMember(Scope.get().getComponent(Auth.class).getUser())) return false;
 		return true;
 	}
 

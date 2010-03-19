@@ -29,7 +29,8 @@ public class PublishSimpleEventAction extends GPublishSimpleEventAction {
 			suffix += ", " + Gwt.DTF_HOUR_MINUTE.format(new DateAndTime(simpleEvent.getDate(), time).toJavaDate());
 		String location = simpleEvent.getLocation();
 		if (!Gwt.isEmpty(location)) suffix += " @ " + location;
-		cm.getDao().createProjectEvent(new ProjectEvent(simpleEvent.getLabel() + " scheduled to " + suffix));
+		cm.getDao().createProjectEvent(
+			new ProjectEvent(getCurrentProject(), simpleEvent.getLabel() + " scheduled to " + suffix));
 	}
 
 }

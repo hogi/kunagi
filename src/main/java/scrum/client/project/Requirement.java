@@ -83,7 +83,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Forum
 	}
 
 	public boolean isWorkEstimationVotingComplete() {
-		for (User user : cm.getProjectContext().getProject().getTeamMembers()) {
+		for (User user : getProject().getTeamMembers()) {
 			RequirementEstimationVote vote = getEstimationVote(user);
 			if (vote == null || vote.getEstimatedWork() == null) return false;
 		}
@@ -276,8 +276,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Forum
 	@Override
 	public boolean isEditable() {
 		if (isInCurrentSprint()) return false;
-		if (!cm.getProjectContext().getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser()))
-			return false;
+		if (!getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser())) return false;
 		return true;
 	}
 

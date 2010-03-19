@@ -25,7 +25,7 @@ public class AScrumComponent extends AComponent {
 
 	protected static final Project getCurrentProject() {
 		assert ScrumScopeManager.isProjectScope();
-		return cm.getProjectContext().getProject();
+		return ScrumScopeManager.getProject();
 	}
 
 }

@@ -160,10 +160,6 @@ public class ProjectContext extends AScrumComponent {
 		ScrumScopeManager.destroyProjectScope();
 	}
 
-	public Project getProject() {
-		return project;
-	}
-
 	public void highlightUser(User user) {
 		if (highlightedUser == user) return;
 		Widget currentWidget = getWorkarea().getCurrentWidget();

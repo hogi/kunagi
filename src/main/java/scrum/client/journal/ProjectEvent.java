@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.collaboration.Wiki;
+import scrum.client.project.Project;
 
 public class ProjectEvent extends GProjectEvent {
 
@@ -13,9 +14,9 @@ public class ProjectEvent extends GProjectEvent {
 		super(data);
 	}
 
-	public ProjectEvent(String label) {
+	public ProjectEvent(Project project, String label) {
 		setDateAndTime(DateAndTime.now());
-		setProject(cm.getProjectContext().getProject());
+		setProject(project);
 		setLabel(label);
 	}
 

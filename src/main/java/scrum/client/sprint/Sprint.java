@@ -150,8 +150,7 @@ public class Sprint extends GSprint implements ForumSupport {
 	@Override
 	public boolean isEditable() {
 		if (isCompleted()) return false;
-		if (!cm.getProjectContext().getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser()))
-			return false;
+		if (!getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser())) return false;
 		return true;
 	}
 
@@ -163,23 +162,20 @@ public class Sprint extends GSprint implements ForumSupport {
 
 	@Override
 	public boolean isRetrospectiveEditable() {
-		if (!cm.getProjectContext().getProject().isScrumMaster(Scope.get().getComponent(Auth.class).getUser()))
-			return false;
+		if (!getProject().isScrumMaster(Scope.get().getComponent(Auth.class).getUser())) return false;
 		return true;
 	}
 
 	@Override
 	public boolean isReviewEditable() {
-		if (!cm.getProjectContext().getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser()))
-			return false;
+		if (!getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser())) return false;
 		return true;
 	}
 
 	@Override
 	public boolean isDatesEditable() {
 		if (isCompleted()) return false;
-		if (!cm.getProjectContext().getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser()))
-			return false;
+		if (!getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser())) return false;
 		return true;
 	}
 

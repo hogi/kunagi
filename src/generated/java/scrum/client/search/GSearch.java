@@ -6,5 +6,7 @@ public abstract class GSearch extends scrum.client.AScrumComponent {
 
     protected scrum.client.ScrumGwtApplication app;
 
+    protected scrum.client.project.Project project;
+
 }
 

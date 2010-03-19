@@ -41,7 +41,7 @@ public abstract class AScrumAction extends AAction {
 
 	protected static final Project getCurrentProject() {
 		assert ScrumScopeManager.isProjectScope();
-		return cm.getProjectContext().getProject();
+		return ScrumScopeManager.getProject();
 	}
 
 	protected abstract class ALocalUndo extends AUndoOperation {

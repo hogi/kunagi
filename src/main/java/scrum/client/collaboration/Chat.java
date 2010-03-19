@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 import scrum.client.ComponentManager;
 import scrum.client.admin.User;
-import scrum.client.project.Project;
 
 public class Chat extends GChat {
 
@@ -25,18 +24,13 @@ public class Chat extends GChat {
 	}
 
 	private ChatMessage postMessage(User author, String text, boolean distribute) {
-		ChatMessage msg = new ChatMessage(getCurrentProject(), author, text);
+		ChatMessage msg = new ChatMessage(project, author, text);
 		addChatMessage(msg);
 		if (distribute) dao.createChatMessage(msg);
 		return msg;
 	}
 
-	private Project getCurrentProject() {
-		return ComponentManager.get().getProjectContext().getProject();
-	}
-
 	public void addChatMessage(ChatMessage msg) {
-		Project project = getCurrentProject();
 		if (project == null || !msg.isProject(project)) return;
 		if (chatMessages.contains(msg)) return;
 		chatMessages.add(msg);

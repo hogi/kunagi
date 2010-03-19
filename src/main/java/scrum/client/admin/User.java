@@ -5,6 +5,7 @@ import ilarkesto.core.scope.Scope;
 import java.util.Comparator;
 import java.util.Map;
 
+import scrum.client.ScrumScopeManager;
 import scrum.client.collaboration.UsersStatus;
 
 public class User extends GUser {
@@ -21,7 +22,7 @@ public class User extends GUser {
 	}
 
 	public ProjectUserConfig getProjectConfig() {
-		return cm.getProjectContext().getProject().getUserConfig(this);
+		return ScrumScopeManager.getProject().getUserConfig(this);
 	}
 
 	public int compareTo(User u) {

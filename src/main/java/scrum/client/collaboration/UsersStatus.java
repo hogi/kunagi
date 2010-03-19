@@ -42,7 +42,7 @@ public class UsersStatus extends GUsersStatus implements ServerDataReceivedListe
 
 	public List<User> getOnlineUsers() {
 		List<User> ret = new ArrayList<User>();
-		for (User user : cm.getProjectContext().getProject().getParticipants()) {
+		for (User user : project.getParticipants()) {
 			if (isOnline(user)) ret.add(user);
 		}
 		return ret;
