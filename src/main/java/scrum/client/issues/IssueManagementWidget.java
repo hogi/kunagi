@@ -39,7 +39,7 @@ public class IssueManagementWidget extends AScrumWidget {
 
 		acceptedList = new BlockListWidget<Issue>(IssueBlock.FACTORY);
 		acceptedList.setSelectionManager(selectionManager);
-		acceptedList.setAutoSorter(Issue.SUSPEND_DATE_COMPARATOR);
+		acceptedList.setAutoSorter(Issue.ACCEPT_DATE_COMPARATOR);
 
 		closedList = new BlockListWidget<Issue>(IssueBlock.FACTORY);
 		closedList.setSelectionManager(selectionManager);
@@ -61,7 +61,7 @@ public class IssueManagementWidget extends AScrumWidget {
 		Project project = getCurrentProject();
 		openList.setObjects(project.getOpenIssues());
 		urgentList.setObjects(project.getUrgentIssues());
-		acceptedList.setObjects(project.getSusendedIssues());
+		acceptedList.setObjects(project.getAcceptedNonUrgentIssues());
 		closedList.setObjects(project.getClosedIssues());
 	}
 

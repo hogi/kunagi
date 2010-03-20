@@ -554,54 +554,6 @@ public abstract class GIssue
 
     }
 
-    // --- suspendDate ---
-
-    private ilarkesto.gwt.client.Date suspendDate ;
-
-    public final ilarkesto.gwt.client.Date getSuspendDate() {
-        return this.suspendDate ;
-    }
-
-    public final Issue setSuspendDate(ilarkesto.gwt.client.Date suspendDate) {
-        if (isSuspendDate(suspendDate)) return (Issue)this;
-        this.suspendDate = suspendDate ;
-        propertyChanged("suspendDate", this.suspendDate);
-        return (Issue)this;
-    }
-
-    public final boolean isSuspendDate(ilarkesto.gwt.client.Date suspendDate) {
-        return equals(this.suspendDate, suspendDate);
-    }
-
-    private transient SuspendDateModel suspendDateModel;
-
-    public SuspendDateModel getSuspendDateModel() {
-        if (suspendDateModel == null) suspendDateModel = createSuspendDateModel();
-        return suspendDateModel;
-    }
-
-    protected SuspendDateModel createSuspendDateModel() { return new SuspendDateModel(); }
-
-    protected class SuspendDateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
-
-        @Override
-        public ilarkesto.gwt.client.Date getValue() {
-            return getSuspendDate();
-        }
-
-        @Override
-        public void setValue(ilarkesto.gwt.client.Date value) {
-            setSuspendDate(value);
-        }
-
-        @Override
-        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
-            super.onChangeValue(oldValue, newValue);
-            addUndo(this, oldValue);
-        }
-
-    }
-
     // --- closeDate ---
 
     private ilarkesto.gwt.client.Date closeDate ;
@@ -668,8 +620,6 @@ public abstract class GIssue
         ownerId = (String) props.get("ownerId");
         String fixDateAsString = (String) props.get("fixDate");
         fixDate  =  fixDateAsString == null ? null : new ilarkesto.gwt.client.Date(fixDateAsString);
-        String suspendDateAsString = (String) props.get("suspendDate");
-        suspendDate  =  suspendDateAsString == null ? null : new ilarkesto.gwt.client.Date(suspendDateAsString);
         String closeDateAsString = (String) props.get("closeDate");
         closeDate  =  closeDateAsString == null ? null : new ilarkesto.gwt.client.Date(closeDateAsString);
     }
@@ -689,7 +639,6 @@ public abstract class GIssue
         properties.put("urgent", this.urgent);
         properties.put("ownerId", this.ownerId);
         properties.put("fixDate", this.fixDate == null ? null : this.fixDate.toString());
-        properties.put("suspendDate", this.suspendDate == null ? null : this.suspendDate.toString());
         properties.put("closeDate", this.closeDate == null ? null : this.closeDate.toString());
     }
 

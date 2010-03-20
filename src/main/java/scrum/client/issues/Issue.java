@@ -39,18 +39,18 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 		setOwner(user);
 	}
 
-	public boolean isSuspended() {
-		if (isClosed()) return false;
-		return getSuspendDate() != null;
-	}
-
 	public boolean isAccepted() {
 		if (isClosed()) return false;
 		return getAcceptDate() != null;
 	}
 
+	public boolean isAcceptedUrgent() {
+		if (isClosed()) return false;
+		return getAcceptDate() != null && isUrgent();
+	}
+
 	public boolean isOpen() {
-		return !isClosed() && !isSuspended() && !isAccepted();
+		return !isClosed() && !isAccepted();
 	}
 
 	public boolean isClosed() {
@@ -59,13 +59,13 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public String getStatusLabel() {
 		if (isClosed()) return "closed on " + getCloseDate();
-		if (isAccepted()) {
+		if (isAcceptedUrgent()) {
 			String s = "";
 			if (isFixed()) s += "fixed by ";
 			if (isOwnerSet()) s += getOwner().getName();
 			return s;
 		}
-		if (isSuspended()) return "accepted on " + getSuspendDate();
+		if (isAccepted()) return "accepted on " + getAcceptDate();
 		return "issued on " + getDate().getDate();
 	}
 
@@ -88,7 +88,7 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 	}
 
 	public void accept() {
-		setSuspendDate(Date.today());
+		setAcceptDate(Date.today());
 	}
 
 	public void acceptAsUrgent() {
@@ -98,7 +98,7 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public void reopen() {
 		setAcceptDate(null);
-		setSuspendDate(null);
+		setUrgent(false);
 		setCloseDate(null);
 	}
 
@@ -136,13 +136,6 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 		public int compare(Issue a, Issue b) {
 			return b.getCloseDate().compareTo(a.getCloseDate());
-		}
-	};
-
-	public static final Comparator<Issue> SUSPEND_DATE_COMPARATOR = new Comparator<Issue>() {
-
-		public int compare(Issue a, Issue b) {
-			return b.getSuspendDate().compareTo(a.getSuspendDate());
 		}
 	};
 

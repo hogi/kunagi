@@ -47,7 +47,7 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 		Issue issue = getObject();
 		// typeLabel.setText(issue.getTypeLabel());
 		Image statusImage = null;
-		if (issue.isUrgent()) {
+		if (issue.isAcceptedUrgent()) {
 			if (issue.isFixed()) {
 				statusImage = Img.bundle.issFixed().createImage();
 				statusImage.setTitle("Closed.");

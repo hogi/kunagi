@@ -28,7 +28,6 @@ public class AcceptUrgentIssueAction extends GAcceptUrgentIssueAction {
 	@Override
 	public boolean isExecutable() {
 		if (issue.isClosed()) return false;
-		if (issue.isSuspended()) return false;
 		if (issue.isAccepted()) return false;
 		return true;
 	}

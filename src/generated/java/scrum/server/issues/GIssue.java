@@ -48,7 +48,6 @@ public abstract class GIssue
         properties.put("urgent", this.urgent);
         properties.put("ownerId", this.ownerId);
         properties.put("fixDate", this.fixDate == null ? null : this.fixDate.toString());
-        properties.put("suspendDate", this.suspendDate == null ? null : this.suspendDate.toString());
         properties.put("closeDate", this.closeDate == null ? null : this.closeDate.toString());
     }
 
@@ -520,41 +519,6 @@ public abstract class GIssue
     }
 
     // -----------------------------------------------------------
-    // - suspendDate
-    // -----------------------------------------------------------
-
-    private ilarkesto.base.time.Date suspendDate;
-
-    public final ilarkesto.base.time.Date getSuspendDate() {
-        return suspendDate;
-    }
-
-    public final void setSuspendDate(ilarkesto.base.time.Date suspendDate) {
-        suspendDate = prepareSuspendDate(suspendDate);
-        if (isSuspendDate(suspendDate)) return;
-        this.suspendDate = suspendDate;
-        fireModified();
-    }
-
-    protected ilarkesto.base.time.Date prepareSuspendDate(ilarkesto.base.time.Date suspendDate) {
-        return suspendDate;
-    }
-
-    public final boolean isSuspendDateSet() {
-        return this.suspendDate != null;
-    }
-
-    public final boolean isSuspendDate(ilarkesto.base.time.Date suspendDate) {
-        if (this.suspendDate == null && suspendDate == null) return true;
-        return this.suspendDate != null && this.suspendDate.equals(suspendDate);
-    }
-
-    protected final void updateSuspendDate(Object value) {
-        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
-        setSuspendDate((ilarkesto.base.time.Date)value);
-    }
-
-    // -----------------------------------------------------------
     // - closeDate
     // -----------------------------------------------------------
 
@@ -606,7 +570,6 @@ public abstract class GIssue
             if (property.equals("urgent")) updateUrgent(value);
             if (property.equals("ownerId")) updateOwner(value);
             if (property.equals("fixDate")) updateFixDate(value);
-            if (property.equals("suspendDate")) updateSuspendDate(value);
             if (property.equals("closeDate")) updateCloseDate(value);
         }
     }

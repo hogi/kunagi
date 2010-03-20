@@ -65,8 +65,6 @@ public abstract class GIssueDao
         ownersCache = null;
         issuesByFixDateCache.clear();
         fixDatesCache = null;
-        issuesBySuspendDateCache.clear();
-        suspendDatesCache = null;
         issuesByCloseDateCache.clear();
         closeDatesCache = null;
     }
@@ -552,46 +550,6 @@ public abstract class GIssueDao
 
         public boolean test(Issue e) {
             return e.isFixDate(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
-    // - suspendDate
-    // -----------------------------------------------------------
-
-    private final Cache<ilarkesto.base.time.Date,Set<Issue>> issuesBySuspendDateCache = new Cache<ilarkesto.base.time.Date,Set<Issue>>(
-            new Cache.Factory<ilarkesto.base.time.Date,Set<Issue>>() {
-                public Set<Issue> create(ilarkesto.base.time.Date suspendDate) {
-                    return getEntities(new IsSuspendDate(suspendDate));
-                }
-            });
-
-    public final Set<Issue> getIssuesBySuspendDate(ilarkesto.base.time.Date suspendDate) {
-        return issuesBySuspendDateCache.get(suspendDate);
-    }
-    private Set<ilarkesto.base.time.Date> suspendDatesCache;
-
-    public final Set<ilarkesto.base.time.Date> getSuspendDates() {
-        if (suspendDatesCache == null) {
-            suspendDatesCache = new HashSet<ilarkesto.base.time.Date>();
-            for (Issue e : getEntities()) {
-                if (e.isSuspendDateSet()) suspendDatesCache.add(e.getSuspendDate());
-            }
-        }
-        return suspendDatesCache;
-    }
-
-    private static class IsSuspendDate implements Predicate<Issue> {
-
-        private ilarkesto.base.time.Date value;
-
-        public IsSuspendDate(ilarkesto.base.time.Date value) {
-            this.value = value;
-        }
-
-        public boolean test(Issue e) {
-            return e.isSuspendDate(value);
         }
 
     }

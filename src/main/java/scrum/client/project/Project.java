@@ -333,10 +333,10 @@ public class Project extends GProject implements ForumSupport {
 		return ret;
 	}
 
-	public List<Issue> getSusendedIssues() {
+	public List<Issue> getAcceptedNonUrgentIssues() {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getIssues()) {
-			if (issue.isSuspended()) ret.add(issue);
+			if (issue.isAccepted() && !issue.isUrgent()) ret.add(issue);
 		}
 		return ret;
 	}
@@ -352,7 +352,7 @@ public class Project extends GProject implements ForumSupport {
 	public List<Issue> getUrgentIssues() {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getIssues()) {
-			if (issue.isAccepted() && issue.isUrgent()) ret.add(issue);
+			if (issue.isAcceptedUrgent()) ret.add(issue);
 		}
 		return ret;
 	}

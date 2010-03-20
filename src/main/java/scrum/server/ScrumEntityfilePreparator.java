@@ -3,7 +3,6 @@ package scrum.server;
 import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
 import ilarkesto.persistence.EntityfilePreparator;
-import ilarkesto.xml.JDom;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -43,9 +42,9 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 		}
 		Element root = doc.getRootElement();
 
-		Element acceptDate = root.getChild("acceptDate");
-		if (acceptDate != null && root.getChild("urgent") == null) {
-			JDom.addTextElement(root, "urgent", "true");
+		Element suspendDate = root.getChild("suspendDate");
+		if (suspendDate != null) {
+			suspendDate.setName("acceptDate");
 			modified = true;
 		}
 
