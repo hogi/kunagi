@@ -18,6 +18,10 @@ public class Issue extends GIssue implements Numbered {
 		return !isClosed() && !isAcceptedUrgent();
 	}
 
+	public boolean isAccepted() {
+		return !isClosed() && isAcceptDateSet();
+	}
+
 	public void updateNumber() {
 		if (getNumber() == 0) setNumber(getProject().generateIssueNumber());
 	}

@@ -465,10 +465,17 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	protected void onRequestIssues(GwtConversation conversation) {
+	protected void onRequestAcceptedIssues(GwtConversation conversation) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
-		conversation.sendToClient(project.getIssues());
+		conversation.sendToClient(project.getAcceptedIssues());
+	}
+
+	@Override
+	protected void onRequestClosedIssues(GwtConversation conversation) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		conversation.sendToClient(project.getClosedIssues());
 	}
 
 	@Override

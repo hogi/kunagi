@@ -36,7 +36,9 @@ public interface GScrumService
 
     DataTransferObject requestImpediments();
 
-    DataTransferObject requestIssues();
+    DataTransferObject requestAcceptedIssues();
+
+    DataTransferObject requestClosedIssues();
 
     DataTransferObject requestRisks();
 

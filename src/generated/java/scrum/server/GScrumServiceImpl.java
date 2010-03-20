@@ -31,7 +31,8 @@ public abstract class GScrumServiceImpl
     protected abstract void onCloseProject(GwtConversation conversation);
     protected abstract void onSwitchToNextSprint(GwtConversation conversation);
     protected abstract void onRequestImpediments(GwtConversation conversation);
-    protected abstract void onRequestIssues(GwtConversation conversation);
+    protected abstract void onRequestAcceptedIssues(GwtConversation conversation);
+    protected abstract void onRequestClosedIssues(GwtConversation conversation);
     protected abstract void onRequestRisks(GwtConversation conversation);
     protected abstract void onRequestRequirementEstimationVotes(GwtConversation conversation, java.lang.String requirementId);
     protected abstract void onRequestComments(GwtConversation conversation, java.lang.String parentId);
@@ -218,17 +219,36 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject requestIssues() {
-        LOG.debug("requestIssues");
+    public scrum.client.DataTransferObject requestAcceptedIssues() {
+        LOG.debug("requestAcceptedIssues");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
-        context.setName("gwt-srv:requestIssues");
+        context.setName("gwt-srv:requestAcceptedIssues");
         context.bindCurrentThread();
         try {
-            onRequestIssues(conversation);
+            onRequestAcceptedIssues(conversation);
         } catch (Throwable t) {
-            handleServiceMethodException("requestIssues",t);
+            handleServiceMethodException("requestAcceptedIssues",t);
+            throw new RuntimeException(t);
+        }
+        scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+        onServiceMethodExecuted(context);
+        return ret;
+    }
+
+
+    public scrum.client.DataTransferObject requestClosedIssues() {
+        LOG.debug("requestClosedIssues");
+        WebSession session = (WebSession) getSession();
+        GwtConversation conversation = session.getGwtConversation();
+        ilarkesto.di.Context context = ilarkesto.di.Context.get();
+        context.setName("gwt-srv:requestClosedIssues");
+        context.bindCurrentThread();
+        try {
+            onRequestClosedIssues(conversation);
+        } catch (Throwable t) {
+            handleServiceMethodException("requestClosedIssues",t);
             throw new RuntimeException(t);
         }
         scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

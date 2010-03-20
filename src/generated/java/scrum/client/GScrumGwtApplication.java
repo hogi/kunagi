@@ -110,12 +110,20 @@ public abstract class GScrumGwtApplication
         callRequestImpediments( null);
     }
 
-    public final void callRequestIssues( Runnable callback) {
-        getScrumService().requestIssues( new DefaultCallback<DataTransferObject>(callback));
+    public final void callRequestAcceptedIssues( Runnable callback) {
+        getScrumService().requestAcceptedIssues( new DefaultCallback<DataTransferObject>(callback));
     }
 
-    public final void callRequestIssues() {
-        callRequestIssues( null);
+    public final void callRequestAcceptedIssues() {
+        callRequestAcceptedIssues( null);
+    }
+
+    public final void callRequestClosedIssues( Runnable callback) {
+        getScrumService().requestClosedIssues( new DefaultCallback<DataTransferObject>(callback));
+    }
+
+    public final void callRequestClosedIssues() {
+        callRequestClosedIssues( null);
     }
 
     public final void callRequestRisks( Runnable callback) {

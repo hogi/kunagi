@@ -8,11 +8,33 @@ import scrum.server.project.Project;
 
 public class IssueDao extends GIssueDao {
 
+	public Set<Issue> getAcceptedIssues(final Project project) {
+		return getEntities(new Predicate<Issue>() {
+
+			public boolean test(Issue issue) {
+				if (!issue.isProject(project)) return false;
+				if (issue.isClosed()) return false;
+				return issue.isAccepted();
+			}
+		});
+	}
+
+	public Set<Issue> getClosedIssues(final Project project) {
+		return getEntities(new Predicate<Issue>() {
+
+			public boolean test(Issue issue) {
+				if (!issue.isProject(project)) return false;
+				return issue.isClosed();
+			}
+		});
+	}
+
 	public Set<Issue> getUrgentAndOpenIssues(final Project project) {
 		return getEntities(new Predicate<Issue>() {
 
 			public boolean test(Issue issue) {
 				if (!issue.isProject(project)) return false;
+				if (issue.isClosed()) return false;
 				return issue.isAcceptedUrgent() || issue.isOpen();
 			}
 		});

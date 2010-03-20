@@ -23,7 +23,7 @@ public class IssueManagementWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		getApp().callRequestIssues();
+		getApp().callRequestAcceptedIssues();
 
 		selectionManager = new BlockListSelectionManager();
 
@@ -51,8 +51,15 @@ public class IssueManagementWidget extends AScrumWidget {
 
 		return Gwt.createFlowPanel(pendingPage, Gwt.createSpacer(1, 10), PagePanel.createSimple(
 			"urgent issues (Team needs to fix this)", urgentList), Gwt.createSpacer(1, 10), PagePanel.createSimple(
-			"accepted issues (ideas and candidates for stories)", acceptedList), Gwt.createSpacer(1, 10), PagePanel
-				.createSimple("closed issues (done or rejected)", closedList));
+			"accepted issues (ideas and candidates for stories)", acceptedList), Gwt.createSpacer(1, 10),
+			createClosedPage());
+	}
+
+	private Widget createClosedPage() {
+		PagePanel page = new PagePanel();
+		page.addHeader("closed issues (done or rejected)", new ButtonWidget(new RequestClosedIssuesAction()));
+		page.addSection(closedList);
+		return page;
 	}
 
 	@Override
