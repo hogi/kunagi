@@ -409,6 +409,15 @@ public class Project extends GProject implements ForumSupport {
 		getDao().deleteQuality(item);
 	}
 
+	public List<Requirement> getProductBacklogRequirements() {
+		List<Requirement> ret = new ArrayList<Requirement>();
+		for (Requirement requirement : getRequirements()) {
+			if (requirement.isClosed() && !requirement.isInCurrentSprint()) continue;
+			ret.add(requirement);
+		}
+		return ret;
+	}
+
 	public List<Requirement> getRequirements() {
 		return getDao().getRequirementsByProject(this);
 	}
