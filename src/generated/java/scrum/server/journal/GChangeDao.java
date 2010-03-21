@@ -50,8 +50,10 @@ public abstract class GChangeDao
         dateAndTimesCache = null;
         changesByKeyCache.clear();
         keysCache = null;
-        changesByValueCache.clear();
-        valuesCache = null;
+        changesByOldValueCache.clear();
+        oldValuesCache = null;
+        changesByNewValueCache.clear();
+        newValuesCache = null;
     }
 
     @Override
@@ -231,41 +233,81 @@ public abstract class GChangeDao
     }
 
     // -----------------------------------------------------------
-    // - value
+    // - oldValue
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Change>> changesByValueCache = new Cache<java.lang.String,Set<Change>>(
+    private final Cache<java.lang.String,Set<Change>> changesByOldValueCache = new Cache<java.lang.String,Set<Change>>(
             new Cache.Factory<java.lang.String,Set<Change>>() {
-                public Set<Change> create(java.lang.String value) {
-                    return getEntities(new IsValue(value));
+                public Set<Change> create(java.lang.String oldValue) {
+                    return getEntities(new IsOldValue(oldValue));
                 }
             });
 
-    public final Set<Change> getChangesByValue(java.lang.String value) {
-        return changesByValueCache.get(value);
+    public final Set<Change> getChangesByOldValue(java.lang.String oldValue) {
+        return changesByOldValueCache.get(oldValue);
     }
-    private Set<java.lang.String> valuesCache;
+    private Set<java.lang.String> oldValuesCache;
 
-    public final Set<java.lang.String> getValues() {
-        if (valuesCache == null) {
-            valuesCache = new HashSet<java.lang.String>();
+    public final Set<java.lang.String> getOldValues() {
+        if (oldValuesCache == null) {
+            oldValuesCache = new HashSet<java.lang.String>();
             for (Change e : getEntities()) {
-                if (e.isValueSet()) valuesCache.add(e.getValue());
+                if (e.isOldValueSet()) oldValuesCache.add(e.getOldValue());
             }
         }
-        return valuesCache;
+        return oldValuesCache;
     }
 
-    private static class IsValue implements Predicate<Change> {
+    private static class IsOldValue implements Predicate<Change> {
 
         private java.lang.String value;
 
-        public IsValue(java.lang.String value) {
+        public IsOldValue(java.lang.String value) {
             this.value = value;
         }
 
         public boolean test(Change e) {
-            return e.isValue(value);
+            return e.isOldValue(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - newValue
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Change>> changesByNewValueCache = new Cache<java.lang.String,Set<Change>>(
+            new Cache.Factory<java.lang.String,Set<Change>>() {
+                public Set<Change> create(java.lang.String newValue) {
+                    return getEntities(new IsNewValue(newValue));
+                }
+            });
+
+    public final Set<Change> getChangesByNewValue(java.lang.String newValue) {
+        return changesByNewValueCache.get(newValue);
+    }
+    private Set<java.lang.String> newValuesCache;
+
+    public final Set<java.lang.String> getNewValues() {
+        if (newValuesCache == null) {
+            newValuesCache = new HashSet<java.lang.String>();
+            for (Change e : getEntities()) {
+                if (e.isNewValueSet()) newValuesCache.add(e.getNewValue());
+            }
+        }
+        return newValuesCache;
+    }
+
+    private static class IsNewValue implements Predicate<Change> {
+
+        private java.lang.String value;
+
+        public IsNewValue(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Change e) {
+            return e.isNewValue(value);
         }
 
     }

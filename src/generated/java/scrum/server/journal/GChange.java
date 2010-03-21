@@ -40,7 +40,8 @@ public abstract class GChange
         properties.put("userId", this.userId);
         properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
         properties.put("key", this.key);
-        properties.put("value", this.value);
+        properties.put("oldValue", this.oldValue);
+        properties.put("newValue", this.newValue);
     }
 
     public int compareTo(Change other) {
@@ -217,38 +218,73 @@ public abstract class GChange
     }
 
     // -----------------------------------------------------------
-    // - value
+    // - oldValue
     // -----------------------------------------------------------
 
-    private java.lang.String value;
+    private java.lang.String oldValue;
 
-    public final java.lang.String getValue() {
-        return value;
+    public final java.lang.String getOldValue() {
+        return oldValue;
     }
 
-    public final void setValue(java.lang.String value) {
-        value = prepareValue(value);
-        if (isValue(value)) return;
-        this.value = value;
+    public final void setOldValue(java.lang.String oldValue) {
+        oldValue = prepareOldValue(oldValue);
+        if (isOldValue(oldValue)) return;
+        this.oldValue = oldValue;
         fireModified();
     }
 
-    protected java.lang.String prepareValue(java.lang.String value) {
-        value = Str.removeUnreadableChars(value);
-        return value;
+    protected java.lang.String prepareOldValue(java.lang.String oldValue) {
+        oldValue = Str.removeUnreadableChars(oldValue);
+        return oldValue;
     }
 
-    public final boolean isValueSet() {
-        return this.value != null;
+    public final boolean isOldValueSet() {
+        return this.oldValue != null;
     }
 
-    public final boolean isValue(java.lang.String value) {
-        if (this.value == null && value == null) return true;
-        return this.value != null && this.value.equals(value);
+    public final boolean isOldValue(java.lang.String oldValue) {
+        if (this.oldValue == null && oldValue == null) return true;
+        return this.oldValue != null && this.oldValue.equals(oldValue);
     }
 
-    protected final void updateValue(Object value) {
-        setValue((java.lang.String)value);
+    protected final void updateOldValue(Object value) {
+        setOldValue((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - newValue
+    // -----------------------------------------------------------
+
+    private java.lang.String newValue;
+
+    public final java.lang.String getNewValue() {
+        return newValue;
+    }
+
+    public final void setNewValue(java.lang.String newValue) {
+        newValue = prepareNewValue(newValue);
+        if (isNewValue(newValue)) return;
+        this.newValue = newValue;
+        fireModified();
+    }
+
+    protected java.lang.String prepareNewValue(java.lang.String newValue) {
+        newValue = Str.removeUnreadableChars(newValue);
+        return newValue;
+    }
+
+    public final boolean isNewValueSet() {
+        return this.newValue != null;
+    }
+
+    public final boolean isNewValue(java.lang.String newValue) {
+        if (this.newValue == null && newValue == null) return true;
+        return this.newValue != null && this.newValue.equals(newValue);
+    }
+
+    protected final void updateNewValue(Object value) {
+        setNewValue((java.lang.String)value);
     }
 
     public void updateProperties(Map<?, ?> properties) {
@@ -260,7 +296,8 @@ public abstract class GChange
             if (property.equals("userId")) updateUser(value);
             if (property.equals("dateAndTime")) updateDateAndTime(value);
             if (property.equals("key")) updateKey(value);
-            if (property.equals("value")) updateValue(value);
+            if (property.equals("oldValue")) updateOldValue(value);
+            if (property.equals("newValue")) updateNewValue(value);
         }
     }
 

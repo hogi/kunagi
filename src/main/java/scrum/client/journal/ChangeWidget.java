@@ -54,7 +54,7 @@ public class ChangeWidget extends AScrumWidget {
 
 			@Override
 			protected void onUpdate() {
-				setHtml(Wiki.toHtml(change.getValue()));
+				setHtml(Wiki.toHtml(change.getDiff()));
 			}
 		};
 

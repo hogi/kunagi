@@ -193,44 +193,92 @@ public abstract class GChange
 
     }
 
-    // --- value ---
+    // --- oldValue ---
 
-    private java.lang.String value ;
+    private java.lang.String oldValue ;
 
-    public final java.lang.String getValue() {
-        return this.value ;
+    public final java.lang.String getOldValue() {
+        return this.oldValue ;
     }
 
-    public final Change setValue(java.lang.String value) {
-        if (isValue(value)) return (Change)this;
-        this.value = value ;
-        propertyChanged("value", this.value);
+    public final Change setOldValue(java.lang.String oldValue) {
+        if (isOldValue(oldValue)) return (Change)this;
+        this.oldValue = oldValue ;
+        propertyChanged("oldValue", this.oldValue);
         return (Change)this;
     }
 
-    public final boolean isValue(java.lang.String value) {
-        return equals(this.value, value);
+    public final boolean isOldValue(java.lang.String oldValue) {
+        return equals(this.oldValue, oldValue);
     }
 
-    private transient ValueModel valueModel;
+    private transient OldValueModel oldValueModel;
 
-    public ValueModel getValueModel() {
-        if (valueModel == null) valueModel = createValueModel();
-        return valueModel;
+    public OldValueModel getOldValueModel() {
+        if (oldValueModel == null) oldValueModel = createOldValueModel();
+        return oldValueModel;
     }
 
-    protected ValueModel createValueModel() { return new ValueModel(); }
+    protected OldValueModel createOldValueModel() { return new OldValueModel(); }
 
-    protected class ValueModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+    protected class OldValueModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
         public java.lang.String getValue() {
-            return getValue();
+            return getOldValue();
         }
 
         @Override
         public void setValue(java.lang.String value) {
-            setValue(value);
+            setOldValue(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- newValue ---
+
+    private java.lang.String newValue ;
+
+    public final java.lang.String getNewValue() {
+        return this.newValue ;
+    }
+
+    public final Change setNewValue(java.lang.String newValue) {
+        if (isNewValue(newValue)) return (Change)this;
+        this.newValue = newValue ;
+        propertyChanged("newValue", this.newValue);
+        return (Change)this;
+    }
+
+    public final boolean isNewValue(java.lang.String newValue) {
+        return equals(this.newValue, newValue);
+    }
+
+    private transient NewValueModel newValueModel;
+
+    public NewValueModel getNewValueModel() {
+        if (newValueModel == null) newValueModel = createNewValueModel();
+        return newValueModel;
+    }
+
+    protected NewValueModel createNewValueModel() { return new NewValueModel(); }
+
+    protected class NewValueModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getNewValue();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setNewValue(value);
         }
 
         @Override
@@ -249,7 +297,8 @@ public abstract class GChange
         String dateAndTimeAsString = (String) props.get("dateAndTime");
         dateAndTime  =  dateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(dateAndTimeAsString);
         key  = (java.lang.String) props.get("key");
-        value  = (java.lang.String) props.get("value");
+        oldValue  = (java.lang.String) props.get("oldValue");
+        newValue  = (java.lang.String) props.get("newValue");
     }
 
     @Override
@@ -259,7 +308,8 @@ public abstract class GChange
         properties.put("userId", this.userId);
         properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
         properties.put("key", this.key);
-        properties.put("value", this.value);
+        properties.put("oldValue", this.oldValue);
+        properties.put("newValue", this.newValue);
     }
 
 }

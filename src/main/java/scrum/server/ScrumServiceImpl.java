@@ -210,8 +210,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private void postChangeIfChanged(GwtConversation conversation, AEntity entity, Map properties, User user,
 			String property) {
 		if (properties.containsKey(property)) {
-			Object value = Reflect.getProperty(entity, property);
-			Change change = changeDao.postChange(entity, user, property, value);
+			Object oldValue = Reflect.getProperty(entity, property);
+			Object newValue = properties.get(property);
+			Change change = changeDao.postChange(entity, user, property, oldValue, newValue);
 			conversation.sendToClient(change);
 		}
 	}

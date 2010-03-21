@@ -25,13 +25,13 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 		try {
 			if ("_template_".equalsIgnoreCase(alias)) prepare_template_(file);
 			// if ("projectUserConfig".equalsIgnoreCase(alias)) prepareProjectUserConfig(file);
-			if ("issue".equalsIgnoreCase(alias)) prepareIssue(file);
+			if ("change".equalsIgnoreCase(alias)) prepareChange(file);
 		} catch (Throwable ex) {
 			throw new RuntimeException(ex);
 		}
 	}
 
-	private void prepareIssue(File file) throws IOException {
+	private void prepareChange(File file) throws IOException {
 		boolean modified = false;
 
 		Document doc;
@@ -42,9 +42,9 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 		}
 		Element root = doc.getRootElement();
 
-		Element suspendDate = root.getChild("suspendDate");
-		if (suspendDate != null) {
-			suspendDate.setName("acceptDate");
+		Element value = root.getChild("value");
+		if (value != null) {
+			value.setName("oldValue");
 			modified = true;
 		}
 

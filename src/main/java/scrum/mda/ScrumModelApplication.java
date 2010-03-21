@@ -560,7 +560,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			changeModel.addReference("user", getUserModel());
 			changeModel.addProperty("dateAndTime", DateAndTime.class).setMandatory(true);
 			changeModel.addStringProperty("key");
-			changeModel.addStringProperty("value");
+			changeModel.addStringProperty("oldValue");
+			changeModel.addStringProperty("newValue");
 		}
 		return changeModel;
 	}

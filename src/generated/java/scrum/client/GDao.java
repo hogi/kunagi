@@ -109,10 +109,18 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.journal.Change> getChangesByValue(java.lang.String value) {
+    public final List<scrum.client.journal.Change> getChangesByOldValue(java.lang.String oldValue) {
         List<scrum.client.journal.Change> ret = new ArrayList<scrum.client.journal.Change>();
         for (scrum.client.journal.Change entity : changes.values()) {
-            if (entity.isValue(value)) ret.add(entity);
+            if (entity.isOldValue(oldValue)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.journal.Change> getChangesByNewValue(java.lang.String newValue) {
+        List<scrum.client.journal.Change> ret = new ArrayList<scrum.client.journal.Change>();
+        for (scrum.client.journal.Change entity : changes.values()) {
+            if (entity.isNewValue(newValue)) ret.add(entity);
         }
         return ret;
     }

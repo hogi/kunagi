@@ -1,5 +1,7 @@
 package scrum.client.journal;
 
+import ilarkesto.core.base.Str;
+
 import java.util.Comparator;
 import java.util.Map;
 
@@ -14,9 +16,11 @@ public class Change extends GChange {
 	}
 
 	private String getFieldChangeLabel() {
-		String value = getValue();
-		if (value == null) return "created " + getFieldLabel();
-		return "changed " + getFieldLabel() + " from:";
+		String oldValue = getOldValue();
+		if (Str.isEmpty(oldValue)) return "created " + getFieldLabel();
+		String newValue = getNewValue();
+		if (Str.isEmpty(newValue)) return "deleted " + getFieldLabel();
+		return "changed " + getFieldLabel();
 	}
 
 	private String getFieldLabel() {
@@ -34,5 +38,17 @@ public class Change extends GChange {
 			return b.getDateAndTime().compareTo(a.getDateAndTime());
 		}
 	};
+
+	public String getDiff() {
+		String oldValue = getOldValue();
+		if (Str.isEmpty(oldValue)) return getNewValue();
+		String newValue = getNewValue();
+		if (Str.isEmpty(newValue)) return null;
+		return createDiff(oldValue, newValue);
+	}
+
+	private static String createDiff(String oldValue, String newValue) {
+		return oldValue + "\n\n          < old | new >\n\n" + newValue;
+	}
 
 }
