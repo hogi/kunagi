@@ -34,11 +34,10 @@ public class IssueWidget extends AScrumWidget {
 		left.addRow(new ChangeHistoryWidget(issue), 2);
 
 		FlowPanel right = new FlowPanel();
-		if (issue.isOpen() && issue.getProject().isProductOwnerOrScrumMaster(getCurrentUser())) {
+		if (issue.isOpen() && issue.getProject().isProductOwner(getCurrentUser())) {
 			right.add(createActionsPanelForOpenIssue());
 			right.add(ScrumGwt.createSpacer(1, 10));
-		} else if (issue.isUrgent() && issue.isFixed()
-				&& issue.getProject().isProductOwnerOrScrumMaster(getCurrentUser())) {
+		} else if (issue.isUrgent() && issue.isFixed() && issue.getProject().isProductOwner(getCurrentUser())) {
 			right.add(createActionsPanelForFixedIssue());
 			right.add(ScrumGwt.createSpacer(1, 10));
 		}
