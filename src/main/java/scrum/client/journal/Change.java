@@ -5,6 +5,8 @@ import ilarkesto.core.base.Str;
 import java.util.Comparator;
 import java.util.Map;
 
+import scrum.client.issues.Issue;
+
 public class Change extends GChange {
 
 	public Change(Map data) {
@@ -16,6 +18,11 @@ public class Change extends GChange {
 	}
 
 	private String getFieldChangeLabel() {
+		String key = getKey();
+		if (getParent() instanceof Issue) {
+			if (key.equals("closeDate")) return Str.isEmpty(getNewValue()) ? "reopened issue" : "closed issue";
+		}
+
 		String oldValue = getOldValue();
 		if (Str.isEmpty(oldValue)) return "created " + getFieldLabel();
 		String newValue = getNewValue();
@@ -23,8 +30,22 @@ public class Change extends GChange {
 		return "changed " + getFieldLabel();
 	}
 
+	public String getDiff() {
+		String key = getKey();
+		if (getParent() instanceof Issue) {
+			if (key.equals("closeDate")) return null;
+		}
+
+		String oldValue = getOldValue();
+		if (Str.isEmpty(oldValue)) return getNewValue();
+		String newValue = getNewValue();
+		if (Str.isEmpty(newValue)) return null;
+		return createDiff(oldValue, newValue);
+	}
+
 	private String getFieldLabel() {
-		return getKey();
+		String key = getKey();
+		return key;
 	}
 
 	@Override
@@ -38,14 +59,6 @@ public class Change extends GChange {
 			return b.getDateAndTime().compareTo(a.getDateAndTime());
 		}
 	};
-
-	public String getDiff() {
-		String oldValue = getOldValue();
-		if (Str.isEmpty(oldValue)) return getNewValue();
-		String newValue = getNewValue();
-		if (Str.isEmpty(newValue)) return null;
-		return createDiff(oldValue, newValue);
-	}
 
 	private static String createDiff(String oldValue, String newValue) {
 		return oldValue + "\n\n          < old | new >\n\n" + newValue;

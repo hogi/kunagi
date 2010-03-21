@@ -23,7 +23,7 @@ public class ReopenIssueAction extends GReopenIssueAction {
 
 	@Override
 	public String getLabel() {
-		return "Move to inbox";
+		return issue.isClosed() ? "Re-Open" : "Move to inbox";
 	}
 
 	@Override
