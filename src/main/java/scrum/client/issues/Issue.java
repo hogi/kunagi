@@ -1,5 +1,6 @@
 package scrum.client.issues;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
@@ -33,6 +34,15 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public Issue(Map data) {
 		super(data);
+	}
+
+	public void appendStatement(String text) {
+		String statement = getStatement();
+		if (Str.isEmpty(statement)) {
+			setStatement(text);
+			return;
+		}
+		setStatement(statement + "\n\n" + text);
 	}
 
 	public void claim(User user) {

@@ -28,7 +28,8 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 
 	@Override
 	public boolean isExecutable() {
-		if (!issue.isOpen()) return false;
+		if (issue.isClosed()) return false;
+		if (issue.isAcceptedUrgent()) return false;
 		return true;
 	}
 
@@ -42,7 +43,8 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 	protected void onExecute() {
 		Requirement requirement = new Requirement(issue);
 		getDao().createRequirement(requirement);
-		getDao().deleteIssue(issue);
+		issue.appendStatement("Created Story in Product Backlog");
+		issue.close();
 		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showProductBacklog(requirement);
 		addUndo(new Undo(requirement));
 	}
