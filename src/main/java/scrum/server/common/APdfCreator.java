@@ -40,7 +40,7 @@ public abstract class APdfCreator {
 	// --- helper ---
 
 	protected void wiki(APdfContainerElement parent, String wikiCode) {
-		WikiToPdfConverter.buildPdf(parent, wikiCode);
+		WikiToPdfConverter.buildPdf(parent, wikiCode, new ScrumPdfContext());
 	}
 
 }

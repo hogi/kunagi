@@ -2,6 +2,7 @@ package scrum.server.collaboration;
 
 import ilarkesto.pdf.APdfContainerElement;
 import scrum.server.common.APdfCreator;
+import scrum.server.common.ScrumPdfContext;
 import scrum.server.common.WikiToPdfConverter;
 
 public class WikipagePdfCreator extends APdfCreator {
@@ -15,7 +16,7 @@ public class WikipagePdfCreator extends APdfCreator {
 
 	@Override
 	protected void build(APdfContainerElement pdf) {
-		WikiToPdfConverter.buildPdf(pdf, wikipage.getText());
+		WikiToPdfConverter.buildPdf(pdf, wikipage.getText(), new ScrumPdfContext());
 	}
 
 	@Override

@@ -4,18 +4,18 @@ public class Image extends AWikiElement {
 
 	private String reference;
 	private boolean thumb;
-	private boolean left;
+	private boolean thumbAlignmentLeft;
 
-	public Image(String reference, boolean thumb, boolean left) {
+	public Image(String reference, boolean thumb, boolean thumbAlignmentLeft) {
 		super();
 		this.reference = reference;
 		this.thumb = thumb;
-		this.left = left;
+		this.thumbAlignmentLeft = thumbAlignmentLeft;
 	}
 
 	@Override
 	String toHtml(HtmlContext context) {
-		boolean external = reference.startsWith("http://") || reference.startsWith("https://");
+		boolean external = isExternal();
 		StringBuilder sb = new StringBuilder();
 		if (external) {
 			sb.append("<a href=\"");
@@ -34,12 +34,16 @@ public class Image extends AWikiElement {
 		}
 		if (thumb) {
 			sb.append("\" width=\"100px\" align=\"");
-			sb.append(left ? "left" : "right");
+			sb.append(thumbAlignmentLeft ? "left" : "right");
 		}
 		// TODO alt="label"
 		sb.append("\">");
 		sb.append("</a>");
 		return sb.toString();
+	}
+
+	public boolean isExternal() {
+		return reference.startsWith("http://") || reference.startsWith("https://");
 	}
 
 	public String getReference() {
@@ -50,8 +54,8 @@ public class Image extends AWikiElement {
 		return thumb;
 	}
 
-	public boolean isLeft() {
-		return left;
+	public boolean isThumbAlignmentLeft() {
+		return thumbAlignmentLeft;
 	}
 
 	@Override

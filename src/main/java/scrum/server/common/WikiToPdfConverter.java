@@ -1,6 +1,7 @@
 package scrum.server.common;
 
 import ilarkesto.pdf.ACell;
+import ilarkesto.pdf.AImage;
 import ilarkesto.pdf.AParagraph;
 import ilarkesto.pdf.APdfContainerElement;
 import ilarkesto.pdf.ARow;
@@ -29,9 +30,11 @@ import scrum.client.wiki.WikiParser;
 public class WikiToPdfConverter extends APdfCreator {
 
 	private WikiModel model;
+	private PdfContext pdfContext;
 
-	public WikiToPdfConverter(WikiModel model) {
+	public WikiToPdfConverter(WikiModel model, PdfContext pdfContext) {
 		this.model = model;
+		this.pdfContext = pdfContext;
 	}
 
 	@Override
@@ -149,8 +152,18 @@ public class WikiToPdfConverter extends APdfCreator {
 	}
 
 	private void processImage(Image image, AParagraph parent) {
+		AImage pdfImage = pdfContext.appendImage(parent, image);
+		if (pdfImage == null) return;
 
-	// TODO
+		if (image.isThumb()) {
+			if (image.isThumbAlignmentLeft()) {
+				pdfImage.setAlignLeft();
+			} else {
+				pdfImage.setAlignRight();
+			}
+			pdfImage.setScaleByHeight(20f);
+		}
+
 	}
 
 	private void processLink(Link link, AParagraph parent) {
@@ -178,11 +191,11 @@ public class WikiToPdfConverter extends APdfCreator {
 		parent.text(text.getText(), fontStyle);
 	}
 
-	public static void buildPdf(APdfContainerElement parent, String code) {
+	public static void buildPdf(APdfContainerElement parent, String code, PdfContext pdfContext) {
 		if (code == null) return;
 		WikiParser parser = new WikiParser(code);
 		WikiModel model = parser.parse();
-		WikiToPdfConverter converter = new WikiToPdfConverter(model);
+		WikiToPdfConverter converter = new WikiToPdfConverter(model, pdfContext);
 		converter.build(parent);
 	}
 

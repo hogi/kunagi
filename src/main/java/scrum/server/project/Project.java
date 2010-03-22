@@ -288,6 +288,10 @@ public class Project extends GProject {
 		return fileDao.getFileByNumber(number, this);
 	}
 
+	public File getFileByReference(String reference) {
+		return getFileByNumber(Integer.parseInt(reference.substring(3)));
+	}
+
 	public SimpleEvent getSimpleEventByNumber(int number) {
 		return simpleEventDao.getSimpleEventByNumber(number, this);
 	}

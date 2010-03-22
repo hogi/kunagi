@@ -4,6 +4,7 @@ import ilarkesto.pdf.APdfContainerElement;
 import ilarkesto.pdf.FieldList;
 import scrum.server.common.APdfCreator;
 import scrum.server.common.BurndownChart;
+import scrum.server.common.ScrumPdfContext;
 import scrum.server.common.WikiToPdfConverter;
 
 public class SprintReportPdfCreator extends APdfCreator {
@@ -35,17 +36,17 @@ public class SprintReportPdfCreator extends APdfCreator {
 
 		if (sprint.isCompletedRequirementLabelsSet()) {
 			pdf.paragraph().nl().text("Completed Stories", headerFonts[1]).nl();
-			WikiToPdfConverter.buildPdf(pdf, sprint.getCompletedRequirementLabels());
+			WikiToPdfConverter.buildPdf(pdf, sprint.getCompletedRequirementLabels(), new ScrumPdfContext());
 		}
 
 		if (sprint.isReviewNoteSet()) {
 			pdf.paragraph().nl().text("Review notes", headerFonts[1]).nl();
-			WikiToPdfConverter.buildPdf(pdf, sprint.getReviewNote());
+			WikiToPdfConverter.buildPdf(pdf, sprint.getReviewNote(), new ScrumPdfContext());
 		}
 
 		if (sprint.isRetrospectiveNoteSet()) {
 			pdf.paragraph().nl().text("Retrospective notes", headerFonts[1]).nl();
-			WikiToPdfConverter.buildPdf(pdf, sprint.getRetrospectiveNote());
+			WikiToPdfConverter.buildPdf(pdf, sprint.getRetrospectiveNote(), new ScrumPdfContext());
 		}
 
 	}
