@@ -26,8 +26,7 @@ public class ScrumConfig {
 	}
 
 	public boolean isStartupDelete() {
-		// TODO set default to 'false', when going productive
-		return p.getBoolean("startup.delete", true);
+		return p.getBoolean("startup.delete", false);
 	}
 
 	public boolean isStageIntegration() {

@@ -1,11 +1,14 @@
 package scrum.client.journal;
 
 import ilarkesto.core.base.Str;
+import ilarkesto.gwt.client.AGwtEntity;
 
 import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.issues.Issue;
+import scrum.client.risks.Risk;
+import scrum.client.risks.RiskComputer;
 
 public class Change extends GChange {
 
@@ -32,15 +35,24 @@ public class Change extends GChange {
 
 	public String getDiff() {
 		String key = getKey();
-		if (getParent() instanceof Issue) {
+		AGwtEntity parent = getParent();
+		String oldValue = getOldValue();
+		String newValue = getNewValue();
+
+		if (parent instanceof Issue) {
 			if (key.equals("closeDate")) return null;
+		} else if (parent instanceof Risk) {
+			if (key.equals("impact"))
+				return createSinglelineDiff(RiskComputer.getImpactLabel(oldValue), RiskComputer
+						.getImpactLabel(newValue));
+			if (key.equals("probability"))
+				return createSinglelineDiff(RiskComputer.getProbabilityLabel(oldValue), RiskComputer
+						.getProbabilityLabel(newValue));
 		}
 
-		String oldValue = getOldValue();
 		if (Str.isEmpty(oldValue)) return getNewValue();
-		String newValue = getNewValue();
 		if (Str.isEmpty(newValue)) return null;
-		return createDiff(oldValue, newValue);
+		return createMultilineDiff(oldValue, newValue);
 	}
 
 	private String getFieldLabel() {
@@ -60,7 +72,11 @@ public class Change extends GChange {
 		}
 	};
 
-	private static String createDiff(String oldValue, String newValue) {
+	private static String createSinglelineDiff(Object oldValue, Object newValue) {
+		return oldValue + "<code> -> </code>" + newValue;
+	}
+
+	private static String createMultilineDiff(String oldValue, String newValue) {
 		return oldValue + "\n\n          < old | new >\n\n" + newValue;
 	}
 

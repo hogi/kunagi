@@ -4,12 +4,22 @@ import ilarkesto.gwt.client.LabelProvider;
 
 public class RiskComputer {
 
+	public static String getProbabilityLabel(String probability) {
+		if (probability == null) return null;
+		return getProbabilityLabel(Integer.parseInt(probability));
+	}
+
 	public static String getProbabilityLabel(int probability) {
 		if (probability > 80) return "very likely";
 		if (probability > 60) return "likely";
 		if (probability > 40) return "possible";
 		if (probability > 20) return "unlikely";
 		return "very unlikely";
+	}
+
+	public static String getImpactLabel(String impact) {
+		if (impact == null) return null;
+		return getImpactLabel(Integer.parseInt(impact));
 	}
 
 	public static String getImpactLabel(int impact) {

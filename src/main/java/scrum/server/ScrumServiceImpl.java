@@ -242,6 +242,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 		if (entity instanceof Risk) {
 			postChangeIfChanged(conversation, entity, properties, currentUser, "description");
+			postChangeIfChanged(conversation, entity, properties, currentUser, "probability");
+			postChangeIfChanged(conversation, entity, properties, currentUser, "impact");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "probabilityMitigation");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "impactMitigation");
 		}
