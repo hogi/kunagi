@@ -250,6 +250,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Impediment) {
 			postChangeIfChanged(conversation, entity, properties, currentUser, "description");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "solution");
+			postChangeIfChanged(conversation, entity, properties, currentUser, "closed");
 		}
 		if (entity instanceof Issue) {
 			postChangeIfChanged(conversation, entity, properties, currentUser, "description");

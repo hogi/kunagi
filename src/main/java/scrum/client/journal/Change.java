@@ -6,6 +6,7 @@ import ilarkesto.gwt.client.AGwtEntity;
 import java.util.Comparator;
 import java.util.Map;
 
+import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
 import scrum.client.risks.Risk;
 import scrum.client.risks.RiskComputer;
@@ -22,13 +23,17 @@ public class Change extends GChange {
 
 	private String getFieldChangeLabel() {
 		String key = getKey();
-		if (getParent() instanceof Issue) {
-			if (key.equals("closeDate")) return Str.isEmpty(getNewValue()) ? "reopened issue" : "closed issue";
+		AGwtEntity parent = getParent();
+		String oldValue = getOldValue();
+		String newValue = getNewValue();
+
+		if (parent instanceof Issue) {
+			if (key.equals("closeDate")) return Str.isEmpty(newValue) ? "reopened issue" : "closed issue";
+		} else if (parent instanceof Impediment) {
+			if (key.equals("closed")) return Str.isTrue(newValue) ? "closed impediment" : "reopened impediment";
 		}
 
-		String oldValue = getOldValue();
 		if (Str.isEmpty(oldValue)) return "created " + getFieldLabel();
-		String newValue = getNewValue();
 		if (Str.isEmpty(newValue)) return "deleted " + getFieldLabel();
 		return "changed " + getFieldLabel();
 	}
@@ -41,6 +46,8 @@ public class Change extends GChange {
 
 		if (parent instanceof Issue) {
 			if (key.equals("closeDate")) return null;
+		} else if (parent instanceof Impediment) {
+			if (key.equals("closed")) return null;
 		} else if (parent instanceof Risk) {
 			if (key.equals("impact"))
 				return createSinglelineDiff(RiskComputer.getImpactLabel(oldValue), RiskComputer
