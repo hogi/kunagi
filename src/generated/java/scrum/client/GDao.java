@@ -38,9 +38,14 @@ public abstract class GDao
         entityDeleted(change);
     }
 
+    public final void createChange(scrum.client.journal.Change change, Runnable successAction) {
+        changes.put(change.getId(), change);
+        entityCreated(change, successAction);
+    }
+
     public final void createChange(scrum.client.journal.Change change) {
         changes.put(change.getId(), change);
-        entityCreated(change);
+        entityCreated(change, null);
     }
 
     private final void updateChange(Map data) {
@@ -143,9 +148,14 @@ public abstract class GDao
         entityDeleted(chatMessage);
     }
 
+    public final void createChatMessage(scrum.client.collaboration.ChatMessage chatMessage, Runnable successAction) {
+        chatMessages.put(chatMessage.getId(), chatMessage);
+        entityCreated(chatMessage, successAction);
+    }
+
     public final void createChatMessage(scrum.client.collaboration.ChatMessage chatMessage) {
         chatMessages.put(chatMessage.getId(), chatMessage);
-        entityCreated(chatMessage);
+        entityCreated(chatMessage, null);
     }
 
     private final void updateChatMessage(Map data) {
@@ -232,9 +242,14 @@ public abstract class GDao
         entityDeleted(comment);
     }
 
+    public final void createComment(scrum.client.collaboration.Comment comment, Runnable successAction) {
+        comments.put(comment.getId(), comment);
+        entityCreated(comment, successAction);
+    }
+
     public final void createComment(scrum.client.collaboration.Comment comment) {
         comments.put(comment.getId(), comment);
-        entityCreated(comment);
+        entityCreated(comment, null);
     }
 
     private final void updateComment(Map data) {
@@ -321,9 +336,14 @@ public abstract class GDao
         entityDeleted(emoticon);
     }
 
+    public final void createEmoticon(scrum.client.collaboration.Emoticon emoticon, Runnable successAction) {
+        emoticons.put(emoticon.getId(), emoticon);
+        entityCreated(emoticon, successAction);
+    }
+
     public final void createEmoticon(scrum.client.collaboration.Emoticon emoticon) {
         emoticons.put(emoticon.getId(), emoticon);
-        entityCreated(emoticon);
+        entityCreated(emoticon, null);
     }
 
     private final void updateEmoticon(Map data) {
@@ -402,9 +422,14 @@ public abstract class GDao
         entityDeleted(file);
     }
 
+    public final void createFile(scrum.client.files.File file, Runnable successAction) {
+        files.put(file.getId(), file);
+        entityCreated(file, successAction);
+    }
+
     public final void createFile(scrum.client.files.File file) {
         files.put(file.getId(), file);
-        entityCreated(file);
+        entityCreated(file, null);
     }
 
     private final void updateFile(Map data) {
@@ -507,9 +532,14 @@ public abstract class GDao
         entityDeleted(impediment);
     }
 
+    public final void createImpediment(scrum.client.impediments.Impediment impediment, Runnable successAction) {
+        impediments.put(impediment.getId(), impediment);
+        entityCreated(impediment, successAction);
+    }
+
     public final void createImpediment(scrum.client.impediments.Impediment impediment) {
         impediments.put(impediment.getId(), impediment);
-        entityCreated(impediment);
+        entityCreated(impediment, null);
     }
 
     private final void updateImpediment(Map data) {
@@ -620,9 +650,14 @@ public abstract class GDao
         entityDeleted(issue);
     }
 
+    public final void createIssue(scrum.client.issues.Issue issue, Runnable successAction) {
+        issues.put(issue.getId(), issue);
+        entityCreated(issue, successAction);
+    }
+
     public final void createIssue(scrum.client.issues.Issue issue) {
         issues.put(issue.getId(), issue);
-        entityCreated(issue);
+        entityCreated(issue, null);
     }
 
     private final void updateIssue(Map data) {
@@ -781,9 +816,14 @@ public abstract class GDao
         entityDeleted(project);
     }
 
+    public final void createProject(scrum.client.project.Project project, Runnable successAction) {
+        projects.put(project.getId(), project);
+        entityCreated(project, successAction);
+    }
+
     public final void createProject(scrum.client.project.Project project) {
         projects.put(project.getId(), project);
-        entityCreated(project);
+        entityCreated(project, null);
     }
 
     private final void updateProject(Map data) {
@@ -989,9 +1029,14 @@ public abstract class GDao
         entityDeleted(projectEvent);
     }
 
+    public final void createProjectEvent(scrum.client.journal.ProjectEvent projectEvent, Runnable successAction) {
+        projectEvents.put(projectEvent.getId(), projectEvent);
+        entityCreated(projectEvent, successAction);
+    }
+
     public final void createProjectEvent(scrum.client.journal.ProjectEvent projectEvent) {
         projectEvents.put(projectEvent.getId(), projectEvent);
-        entityCreated(projectEvent);
+        entityCreated(projectEvent, null);
     }
 
     private final void updateProjectEvent(Map data) {
@@ -1070,9 +1115,14 @@ public abstract class GDao
         entityDeleted(projectUserConfig);
     }
 
+    public final void createProjectUserConfig(scrum.client.admin.ProjectUserConfig projectUserConfig, Runnable successAction) {
+        projectUserConfigs.put(projectUserConfig.getId(), projectUserConfig);
+        entityCreated(projectUserConfig, successAction);
+    }
+
     public final void createProjectUserConfig(scrum.client.admin.ProjectUserConfig projectUserConfig) {
         projectUserConfigs.put(projectUserConfig.getId(), projectUserConfig);
-        entityCreated(projectUserConfig);
+        entityCreated(projectUserConfig, null);
     }
 
     private final void updateProjectUserConfig(Map data) {
@@ -1159,9 +1209,14 @@ public abstract class GDao
         entityDeleted(quality);
     }
 
+    public final void createQuality(scrum.client.project.Quality quality, Runnable successAction) {
+        qualitys.put(quality.getId(), quality);
+        entityCreated(quality, successAction);
+    }
+
     public final void createQuality(scrum.client.project.Quality quality) {
         qualitys.put(quality.getId(), quality);
-        entityCreated(quality);
+        entityCreated(quality, null);
     }
 
     private final void updateQuality(Map data) {
@@ -1256,9 +1311,14 @@ public abstract class GDao
         entityDeleted(release);
     }
 
+    public final void createRelease(scrum.client.release.Release release, Runnable successAction) {
+        releases.put(release.getId(), release);
+        entityCreated(release, successAction);
+    }
+
     public final void createRelease(scrum.client.release.Release release) {
         releases.put(release.getId(), release);
-        entityCreated(release);
+        entityCreated(release, null);
     }
 
     private final void updateRelease(Map data) {
@@ -1337,9 +1397,14 @@ public abstract class GDao
         entityDeleted(requirement);
     }
 
+    public final void createRequirement(scrum.client.project.Requirement requirement, Runnable successAction) {
+        requirements.put(requirement.getId(), requirement);
+        entityCreated(requirement, successAction);
+    }
+
     public final void createRequirement(scrum.client.project.Requirement requirement) {
         requirements.put(requirement.getId(), requirement);
-        entityCreated(requirement);
+        entityCreated(requirement, null);
     }
 
     private final void updateRequirement(Map data) {
@@ -1483,9 +1548,14 @@ public abstract class GDao
         entityDeleted(requirementEstimationVote);
     }
 
+    public final void createRequirementEstimationVote(scrum.client.estimation.RequirementEstimationVote requirementEstimationVote, Runnable successAction) {
+        requirementEstimationVotes.put(requirementEstimationVote.getId(), requirementEstimationVote);
+        entityCreated(requirementEstimationVote, successAction);
+    }
+
     public final void createRequirementEstimationVote(scrum.client.estimation.RequirementEstimationVote requirementEstimationVote) {
         requirementEstimationVotes.put(requirementEstimationVote.getId(), requirementEstimationVote);
-        entityCreated(requirementEstimationVote);
+        entityCreated(requirementEstimationVote, null);
     }
 
     private final void updateRequirementEstimationVote(Map data) {
@@ -1564,9 +1634,14 @@ public abstract class GDao
         entityDeleted(risk);
     }
 
+    public final void createRisk(scrum.client.risks.Risk risk, Runnable successAction) {
+        risks.put(risk.getId(), risk);
+        entityCreated(risk, successAction);
+    }
+
     public final void createRisk(scrum.client.risks.Risk risk) {
         risks.put(risk.getId(), risk);
-        entityCreated(risk);
+        entityCreated(risk, null);
     }
 
     private final void updateRisk(Map data) {
@@ -1685,9 +1760,14 @@ public abstract class GDao
         entityDeleted(simpleEvent);
     }
 
+    public final void createSimpleEvent(scrum.client.calendar.SimpleEvent simpleEvent, Runnable successAction) {
+        simpleEvents.put(simpleEvent.getId(), simpleEvent);
+        entityCreated(simpleEvent, successAction);
+    }
+
     public final void createSimpleEvent(scrum.client.calendar.SimpleEvent simpleEvent) {
         simpleEvents.put(simpleEvent.getId(), simpleEvent);
-        entityCreated(simpleEvent);
+        entityCreated(simpleEvent, null);
     }
 
     private final void updateSimpleEvent(Map data) {
@@ -1814,9 +1894,14 @@ public abstract class GDao
         entityDeleted(sprint);
     }
 
+    public final void createSprint(scrum.client.sprint.Sprint sprint, Runnable successAction) {
+        sprints.put(sprint.getId(), sprint);
+        entityCreated(sprint, successAction);
+    }
+
     public final void createSprint(scrum.client.sprint.Sprint sprint) {
         sprints.put(sprint.getId(), sprint);
-        entityCreated(sprint);
+        entityCreated(sprint, null);
     }
 
     private final void updateSprint(Map data) {
@@ -1951,9 +2036,14 @@ public abstract class GDao
         entityDeleted(subject);
     }
 
+    public final void createSubject(scrum.client.collaboration.Subject subject, Runnable successAction) {
+        subjects.put(subject.getId(), subject);
+        entityCreated(subject, successAction);
+    }
+
     public final void createSubject(scrum.client.collaboration.Subject subject) {
         subjects.put(subject.getId(), subject);
-        entityCreated(subject);
+        entityCreated(subject, null);
     }
 
     private final void updateSubject(Map data) {
@@ -2040,9 +2130,14 @@ public abstract class GDao
         entityDeleted(task);
     }
 
+    public final void createTask(scrum.client.sprint.Task task, Runnable successAction) {
+        tasks.put(task.getId(), task);
+        entityCreated(task, successAction);
+    }
+
     public final void createTask(scrum.client.sprint.Task task) {
         tasks.put(task.getId(), task);
-        entityCreated(task);
+        entityCreated(task, null);
     }
 
     private final void updateTask(Map data) {
@@ -2153,9 +2248,14 @@ public abstract class GDao
         entityDeleted(user);
     }
 
+    public final void createUser(scrum.client.admin.User user, Runnable successAction) {
+        users.put(user.getId(), user);
+        entityCreated(user, successAction);
+    }
+
     public final void createUser(scrum.client.admin.User user) {
         users.put(user.getId(), user);
-        entityCreated(user);
+        entityCreated(user, null);
     }
 
     private final void updateUser(Map data) {
@@ -2250,9 +2350,14 @@ public abstract class GDao
         entityDeleted(wikipage);
     }
 
+    public final void createWikipage(scrum.client.collaboration.Wikipage wikipage, Runnable successAction) {
+        wikipages.put(wikipage.getId(), wikipage);
+        entityCreated(wikipage, successAction);
+    }
+
     public final void createWikipage(scrum.client.collaboration.Wikipage wikipage) {
         wikipages.put(wikipage.getId(), wikipage);
-        entityCreated(wikipage);
+        entityCreated(wikipage, null);
     }
 
     private final void updateWikipage(Map data) {

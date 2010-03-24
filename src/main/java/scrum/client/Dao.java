@@ -133,8 +133,8 @@ public class Dao extends GDao {
 	// --- local events ---
 
 	@Override
-	protected void onEntityCreatedLocaly(AGwtEntity entity) {
-		app.callCreateEntity(entity.getEntityType(), entity.createPropertiesMap());
+	protected void onEntityCreatedLocaly(AGwtEntity entity, Runnable successAction) {
+		app.callCreateEntity(entity.getEntityType(), entity.createPropertiesMap(), successAction);
 	}
 
 	@Override

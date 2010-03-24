@@ -59,6 +59,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		if (data.applicationInfo != null) {
 			this.applicationInfo = data.applicationInfo;
 			log.debug("applicationInfo:", data.applicationInfo);
+			// Scope.get().putComponent(data.applicationInfo);
 		} else {
 			assert this.applicationInfo != null;
 		}
