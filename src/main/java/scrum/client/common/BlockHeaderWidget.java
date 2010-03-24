@@ -14,7 +14,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
 
 public class BlockHeaderWidget extends AWidget {
 
@@ -53,6 +52,12 @@ public class BlockHeaderWidget extends AWidget {
 		table.add(centerFocusPanel);
 
 		return table;
+	}
+
+	@Override
+	protected void onUpdate() {
+		super.onUpdate();
+		centerFocusPanel.setFocus(false);
 	}
 
 	public Label appendCenterSuffix(String text) {

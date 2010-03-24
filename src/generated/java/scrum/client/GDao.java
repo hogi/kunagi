@@ -2457,4 +2457,31 @@ public abstract class GDao
        throw new RuntimeException("Unsupported type: " + type);
     }
 
+    @Override
+    public final Map<String, Integer> getEntityCounts() {
+        Map<String, Integer> ret = new HashMap<String, Integer>();
+        ret.put("Change", changes.size());
+        ret.put("ChatMessage", chatMessages.size());
+        ret.put("Comment", comments.size());
+        ret.put("Emoticon", emoticons.size());
+        ret.put("File", files.size());
+        ret.put("Impediment", impediments.size());
+        ret.put("Issue", issues.size());
+        ret.put("Project", projects.size());
+        ret.put("ProjectEvent", projectEvents.size());
+        ret.put("ProjectUserConfig", projectUserConfigs.size());
+        ret.put("Quality", qualitys.size());
+        ret.put("Release", releases.size());
+        ret.put("Requirement", requirements.size());
+        ret.put("RequirementEstimationVote", requirementEstimationVotes.size());
+        ret.put("Risk", risks.size());
+        ret.put("SimpleEvent", simpleEvents.size());
+        ret.put("Sprint", sprints.size());
+        ret.put("Subject", subjects.size());
+        ret.put("Task", tasks.size());
+        ret.put("User", users.size());
+        ret.put("Wikipage", wikipages.size());
+        return ret;
+    }
+
 }

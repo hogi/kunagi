@@ -3,16 +3,23 @@ package scrum.client.workspace;
 import ilarkesto.core.scope.Scope;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumWidget;
+import scrum.client.test.GwtStatusWidget;
 
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class StatusWidget extends AScrumWidget {
 
 	private ScrumGwtApplication app;
+
+	private FocusPanel focusPanel;
 	private Label status;
 	private Style statusStyle;
+
 	private long onTime;
 
 	@Override
@@ -24,7 +31,10 @@ public class StatusWidget extends AScrumWidget {
 		status.setStyleName("StatusWidget");
 		statusStyle = status.getElement().getStyle();
 
-		return status;
+		focusPanel = new FocusPanel(status);
+		focusPanel.addClickHandler(new StatusClickHandler());
+
+		return focusPanel;
 	}
 
 	@Override
@@ -50,4 +60,14 @@ public class StatusWidget extends AScrumWidget {
 	private boolean isOn() {
 		return onTime > 0;
 	}
+
+	class StatusClickHandler implements ClickHandler {
+
+		public void onClick(ClickEvent event) {
+			Scope.get().getComponent(Ui.class).getWorkspace().getWorkarea().show(new GwtStatusWidget());
+			focusPanel.setFocus(false);
+		}
+
+	}
+
 }
