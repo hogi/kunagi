@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GwtStatusWidget extends AScrumWidget {
+public class ScrumStatusWidget extends AScrumWidget {
 
 	private Dao dao;
 

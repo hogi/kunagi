@@ -25,7 +25,7 @@ public class HeaderWidget extends AScrumWidget {
 	private Label title;
 	private UndoButtonWidget undoButton;
 	private SearchInputWidget search;
-	private StatusWidget status;
+	private CommunicationIndicatorWidget status;
 
 	@Override
 	protected Widget onInitialization() {
@@ -34,7 +34,7 @@ public class HeaderWidget extends AScrumWidget {
 		title = new Label("");
 		title.setStyleName("HeaderWidget-title");
 
-		status = new StatusWidget();
+		status = new CommunicationIndicatorWidget();
 
 		undoButton = new UndoButtonWidget();
 
