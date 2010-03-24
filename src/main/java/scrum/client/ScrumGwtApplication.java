@@ -6,6 +6,7 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtDao;
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Subject;
+import scrum.client.common.AScrumWidget;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -28,6 +29,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	private ComponentManager cm;
 	private ApplicationInfo applicationInfo;
+	private AScrumWidget statusWidget;
 
 	public void onModuleLoad() {
 		System.out.println("ScrumGwtApplication.onModuleLoad()");
@@ -87,6 +89,22 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	@Override
 	protected AGwtDao getDao() {
 		return Dao.get();
+	}
+
+	public void setStatusWidget(AScrumWidget statusWidget) {
+		this.statusWidget = statusWidget;
+	}
+
+	@Override
+	protected void onServiceCall() {
+		super.onServiceCall();
+		if (statusWidget != null) statusWidget.update();
+	}
+
+	@Override
+	protected void onServiceCallReturn() {
+		super.onServiceCallReturn();
+		if (statusWidget != null) statusWidget.update();
 	}
 
 }

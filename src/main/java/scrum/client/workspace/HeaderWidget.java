@@ -25,6 +25,7 @@ public class HeaderWidget extends AScrumWidget {
 	private Label title;
 	private UndoButtonWidget undoButton;
 	private SearchInputWidget search;
+	private StatusWidget status;
 
 	@Override
 	protected Widget onInitialization() {
@@ -32,6 +33,8 @@ public class HeaderWidget extends AScrumWidget {
 
 		title = new Label("");
 		title.setStyleName("HeaderWidget-title");
+
+		status = new StatusWidget();
 
 		undoButton = new UndoButtonWidget();
 
@@ -55,12 +58,12 @@ public class HeaderWidget extends AScrumWidget {
 
 		TableBuilder tb = new TableBuilder();
 		tb.setCellPadding(2);
-		tb.setColumnWidths("", "", "", "60px", "100px", "50px");
+		tb.setColumnWidths("70px", "", "", "", "60px", "100px", "50px");
 		Widget searchWidget = projectOpen ? search : Gwt.createEmptyDiv();
 		Widget undoWidget = projectOpen ? undoButton : Gwt.createEmptyDiv();
 		Widget changeProjectWidget = projectOpen ? new HyperlinkWidget(new ChangeProjectAction()) : Gwt
 				.createEmptyDiv();
-		tb.add(createLogo(), createCurrentUserWidget(), searchWidget, undoWidget, changeProjectWidget,
+		tb.add(createLogo(), status, createCurrentUserWidget(), searchWidget, undoWidget, changeProjectWidget,
 			new HyperlinkWidget(new LogoutAction()));
 		wrapper.setWidget(tb.createTable());
 

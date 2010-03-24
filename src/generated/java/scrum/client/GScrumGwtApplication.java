@@ -39,6 +39,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callPing( Runnable callback) {
+        onServiceCall();
         getScrumService().ping( new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -47,6 +48,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callLogin(java.lang.String username, java.lang.String password,  Runnable callback) {
+        onServiceCall();
         getScrumService().login(username, password,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -55,6 +57,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callLogout( Runnable callback) {
+        onServiceCall();
         getScrumService().logout( new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -63,6 +66,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callChangePassword(java.lang.String oldPassword, java.lang.String newPassword,  Runnable callback) {
+        onServiceCall();
         getScrumService().changePassword(oldPassword, newPassword,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -71,6 +75,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callResetPassword(java.lang.String userId,  Runnable callback) {
+        onServiceCall();
         getScrumService().resetPassword(userId,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -79,6 +84,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callSelectProject(java.lang.String projectId,  Runnable callback) {
+        onServiceCall();
         getScrumService().selectProject(projectId,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -87,6 +93,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callCloseProject( Runnable callback) {
+        onServiceCall();
         getScrumService().closeProject( new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -95,6 +102,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callSwitchToNextSprint( Runnable callback) {
+        onServiceCall();
         getScrumService().switchToNextSprint( new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -103,6 +111,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callRequestImpediments( Runnable callback) {
+        onServiceCall();
         getScrumService().requestImpediments( new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -111,6 +120,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callRequestAcceptedIssues( Runnable callback) {
+        onServiceCall();
         getScrumService().requestAcceptedIssues( new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -119,6 +129,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callRequestClosedIssues( Runnable callback) {
+        onServiceCall();
         getScrumService().requestClosedIssues( new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -127,6 +138,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callRequestRisks( Runnable callback) {
+        onServiceCall();
         getScrumService().requestRisks( new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -135,6 +147,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callRequestRequirementEstimationVotes(java.lang.String requirementId,  Runnable callback) {
+        onServiceCall();
         getScrumService().requestRequirementEstimationVotes(requirementId,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -143,6 +156,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callRequestComments(java.lang.String parentId,  Runnable callback) {
+        onServiceCall();
         getScrumService().requestComments(parentId,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -151,6 +165,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callRequestChanges(java.lang.String parentId,  Runnable callback) {
+        onServiceCall();
         getScrumService().requestChanges(parentId,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -159,6 +174,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callChangeProperties(java.lang.String entityId, java.util.Map properties,  Runnable callback) {
+        onServiceCall();
         getScrumService().changeProperties(entityId, properties,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -167,6 +183,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callCreateEntity(java.lang.String type, java.util.Map properties,  Runnable callback) {
+        onServiceCall();
         getScrumService().createEntity(type, properties,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -175,6 +192,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callDeleteEntity(java.lang.String entityId,  Runnable callback) {
+        onServiceCall();
         getScrumService().deleteEntity(entityId,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -183,6 +201,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callRequestEntityByReference(java.lang.String reference,  Runnable callback) {
+        onServiceCall();
         getScrumService().requestEntityByReference(reference,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -191,6 +210,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callSetSelectedEntitysIds(java.util.Set ids,  Runnable callback) {
+        onServiceCall();
         getScrumService().setSelectedEntitysIds(ids,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -199,6 +219,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callSleep(long millis,  Runnable callback) {
+        onServiceCall();
         getScrumService().sleep(millis,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -207,6 +228,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callUpdateSystemMessage(scrum.client.admin.SystemMessage systemMessage,  Runnable callback) {
+        onServiceCall();
         getScrumService().updateSystemMessage(systemMessage,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -215,6 +237,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callSearch(java.lang.String text,  Runnable callback) {
+        onServiceCall();
         getScrumService().search(text,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -223,6 +246,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callActivateRequirementEstimationVoting(java.lang.String requirementId,  Runnable callback) {
+        onServiceCall();
         getScrumService().activateRequirementEstimationVoting(requirementId,  new DefaultCallback<DataTransferObject>(callback));
     }
 
@@ -231,6 +255,7 @@ public abstract class GScrumGwtApplication
     }
 
     public final void callRequestForum( Runnable callback) {
+        onServiceCall();
         getScrumService().requestForum( new DefaultCallback<DataTransferObject>(callback));
     }
 
