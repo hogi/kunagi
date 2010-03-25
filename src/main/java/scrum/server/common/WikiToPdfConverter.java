@@ -161,7 +161,7 @@ public class WikiToPdfConverter extends APdfCreator {
 			} else {
 				pdfImage.setAlignRight();
 			}
-			pdfImage.setScaleByHeight(20f);
+			pdfImage.setScaleByWidth(40f);
 		}
 
 	}
