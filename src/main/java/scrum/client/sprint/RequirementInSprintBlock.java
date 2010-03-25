@@ -9,6 +9,7 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.img.Img;
 import scrum.client.journal.ActivateChangeHistoryAction;
+import scrum.client.journal.ChangeHistoryWidget;
 import scrum.client.project.CloseRequirementAction;
 import scrum.client.project.RemoveRequirementFromSprintAction;
 import scrum.client.project.ReopenRequirementAction;
@@ -28,6 +29,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 	private RequirementWidget requirementWidget;
 	private CommentsWidget commentsWidget;
 	private FlexTable bodyWidget;
+	private ChangeHistoryWidget changeHistoryWidget;
 
 	private SimplePanel statusIcon;
 	private Label statusLabel;
@@ -66,14 +68,16 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 	protected Widget onExtendedInitialization() {
 		Requirement requirement = getObject();
 
-		requirementWidget = new RequirementWidget(requirement, false, false, true, false, false);
+		requirementWidget = new RequirementWidget(requirement, false, false, true, false, false, false);
 		taskList = new BlockListWidget<Task>(TaskInRequirementBlock.FACTORY);
 		taskList.setAutoSorter(Task.NUMBER_COMPARATOR);
 		commentsWidget = new CommentsWidget(requirement);
+		changeHistoryWidget = new ChangeHistoryWidget(requirement);
 
 		FlowPanel left = new FlowPanel();
 		left.add(requirementWidget);
 		left.add(taskList);
+		left.add(changeHistoryWidget);
 
 		bodyWidget = TableBuilder.row(20, left, commentsWidget);
 		return bodyWidget;
@@ -84,6 +88,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 		requirementWidget.update();
 		taskList.setObjects(getObject().getTasks());
 		commentsWidget.update();
+		changeHistoryWidget.update();
 	}
 
 	public void selectTask(Task task) {

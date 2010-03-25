@@ -19,15 +19,17 @@ public class RequirementWidget extends AWidget {
 	private boolean showTaskWork;
 	private boolean showComments;
 	private boolean planningPoker;
+	private boolean showChangeHistory;
 
 	public RequirementWidget(Requirement requirement, boolean showLabel, boolean showSprint, boolean showTaskWork,
-			boolean showComments, boolean planningPoker) {
+			boolean showComments, boolean planningPoker, boolean showChangeHistory) {
 		this.requirement = requirement;
 		this.showLabel = showLabel;
 		this.showSprint = showSprint;
 		this.showTaskWork = showTaskWork;
 		this.showComments = showComments;
 		this.planningPoker = planningPoker;
+		this.showChangeHistory = showChangeHistory;
 	}
 
 	@Override
@@ -87,7 +89,7 @@ public class RequirementWidget extends AWidget {
 
 		left.addFieldRow("My emoticon", requirement.createCurrentUserEmotionEditor());
 
-		left.addRow(new ChangeHistoryWidget(requirement), 2);
+		if (showChangeHistory) left.addRow(new ChangeHistoryWidget(requirement), 2);
 
 		TableBuilder right = new TableBuilder();
 		if (planningPoker) {
