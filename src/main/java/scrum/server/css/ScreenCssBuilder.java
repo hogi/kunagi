@@ -97,6 +97,10 @@ public class ScreenCssBuilder implements CssBuilder {
 		calendar(css);
 		planningPoker(css);
 
+		css.style(".EmoticonSelectorWidget-emoticon").border(1, "white").borderRadius(2).padding(1, 1, 0, 1);
+		css.style(".EmoticonSelectorWidget-emoticon-selected").background(cPagePanelHeaderBackground).border(1,
+			cPagePanelHeader);
+
 		css.style(".TrashWidget").background(cTrashBackground).border(1, cTrashBorder).padding(5);
 
 		css.style(".ToolbarWidget").background(cToolbarBackground).padding(3, 0, 3, 3);
