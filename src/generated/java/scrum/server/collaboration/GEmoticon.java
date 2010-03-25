@@ -60,6 +60,10 @@ public abstract class GEmoticon
         parentCache = this.parentId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.parentId);
     }
 
+    public final String getParentId() {
+        return this.parentId;
+    }
+
     public final ilarkesto.persistence.AEntity getParent() {
         if (parentCache == null) updateParentCache();
         return parentCache;
@@ -105,6 +109,10 @@ public abstract class GEmoticon
 
     private void updateOwnerCache() {
         ownerCache = this.ownerId == null ? null : (scrum.server.admin.User)userDao.getById(this.ownerId);
+    }
+
+    public final String getOwnerId() {
+        return this.ownerId;
     }
 
     public final scrum.server.admin.User getOwner() {

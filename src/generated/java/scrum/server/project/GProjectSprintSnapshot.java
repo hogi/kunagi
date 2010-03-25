@@ -60,6 +60,10 @@ public abstract class GProjectSprintSnapshot
         sprintCache = this.sprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
     }
 
+    public final String getSprintId() {
+        return this.sprintId;
+    }
+
     public final scrum.server.sprint.Sprint getSprint() {
         if (sprintCache == null) updateSprintCache();
         return sprintCache;

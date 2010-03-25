@@ -76,6 +76,10 @@ public abstract class GFile
         projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
+    public final String getProjectId() {
+        return this.projectId;
+    }
+
     public final scrum.server.project.Project getProject() {
         if (projectCache == null) updateProjectCache();
         return projectCache;

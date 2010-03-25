@@ -60,6 +60,10 @@ public abstract class GRequirementEstimationVote
         requirementCache = this.requirementId == null ? null : (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
     }
 
+    public final String getRequirementId() {
+        return this.requirementId;
+    }
+
     public final scrum.server.project.Requirement getRequirement() {
         if (requirementCache == null) updateRequirementCache();
         return requirementCache;
@@ -105,6 +109,10 @@ public abstract class GRequirementEstimationVote
 
     private void updateUserCache() {
         userCache = this.userId == null ? null : (scrum.server.admin.User)userDao.getById(this.userId);
+    }
+
+    public final String getUserId() {
+        return this.userId;
     }
 
     public final scrum.server.admin.User getUser() {

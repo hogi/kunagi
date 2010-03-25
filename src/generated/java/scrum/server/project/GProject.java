@@ -669,6 +669,10 @@ public abstract class GProject
         currentSprintCache = this.currentSprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.currentSprintId);
     }
 
+    public final String getCurrentSprintId() {
+        return this.currentSprintId;
+    }
+
     public final scrum.server.sprint.Sprint getCurrentSprint() {
         if (currentSprintCache == null) updateCurrentSprintCache();
         return currentSprintCache;
@@ -715,6 +719,10 @@ public abstract class GProject
 
     private void updateNextSprintCache() {
         nextSprintCache = this.nextSprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.nextSprintId);
+    }
+
+    public final String getNextSprintId() {
+        return this.nextSprintId;
     }
 
     public final scrum.server.sprint.Sprint getNextSprint() {

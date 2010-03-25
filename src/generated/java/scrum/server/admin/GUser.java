@@ -173,6 +173,10 @@ public abstract class GUser
         currentProjectCache = this.currentProjectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.currentProjectId);
     }
 
+    public final String getCurrentProjectId() {
+        return this.currentProjectId;
+    }
+
     public final scrum.server.project.Project getCurrentProject() {
         if (currentProjectCache == null) updateCurrentProjectCache();
         return currentProjectCache;

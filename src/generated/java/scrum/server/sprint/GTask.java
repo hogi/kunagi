@@ -76,6 +76,10 @@ public abstract class GTask
         requirementCache = this.requirementId == null ? null : (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
     }
 
+    public final String getRequirementId() {
+        return this.requirementId;
+    }
+
     public final scrum.server.project.Requirement getRequirement() {
         if (requirementCache == null) updateRequirementCache();
         return requirementCache;
@@ -278,6 +282,10 @@ public abstract class GTask
 
     private void updateOwnerCache() {
         ownerCache = this.ownerId == null ? null : (scrum.server.admin.User)userDao.getById(this.ownerId);
+    }
+
+    public final String getOwnerId() {
+        return this.ownerId;
     }
 
     public final scrum.server.admin.User getOwner() {

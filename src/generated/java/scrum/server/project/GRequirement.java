@@ -82,6 +82,10 @@ public abstract class GRequirement
         projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
+    public final String getProjectId() {
+        return this.projectId;
+    }
+
     public final scrum.server.project.Project getProject() {
         if (projectCache == null) updateProjectCache();
         return projectCache;
@@ -127,6 +131,10 @@ public abstract class GRequirement
 
     private void updateSprintCache() {
         sprintCache = this.sprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
+    }
+
+    public final String getSprintId() {
+        return this.sprintId;
     }
 
     public final scrum.server.sprint.Sprint getSprint() {

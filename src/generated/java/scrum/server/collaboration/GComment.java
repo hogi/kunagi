@@ -72,6 +72,10 @@ public abstract class GComment
         parentCache = this.parentId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.parentId);
     }
 
+    public final String getParentId() {
+        return this.parentId;
+    }
+
     public final ilarkesto.persistence.AEntity getParent() {
         if (parentCache == null) updateParentCache();
         return parentCache;
@@ -117,6 +121,10 @@ public abstract class GComment
 
     private void updateAuthorCache() {
         authorCache = this.authorId == null ? null : (scrum.server.admin.User)userDao.getById(this.authorId);
+    }
+
+    public final String getAuthorId() {
+        return this.authorId;
     }
 
     public final scrum.server.admin.User getAuthor() {

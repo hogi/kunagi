@@ -210,6 +210,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private void postChangeIfChanged(GwtConversation conversation, AEntity entity, Map properties, User user,
 			String property) {
 		if (properties.containsKey(property)) {
+			boolean reference = property.endsWith("Id");
 			Object oldValue = Reflect.getProperty(entity, property);
 			Object newValue = properties.get(property);
 			Change change = changeDao.postChange(entity, user, property, oldValue, newValue);
@@ -236,6 +237,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 			postChangeIfChanged(conversation, entity, properties, currentUser, "description");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "testDescription");
+			postChangeIfChanged(conversation, entity, properties, currentUser, "sprintId");
+			postChangeIfChanged(conversation, entity, properties, currentUser, "closed");
 		}
 		if (entity instanceof Wikipage) {
 			postChangeIfChanged(conversation, entity, properties, currentUser, "text");

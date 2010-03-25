@@ -83,6 +83,10 @@ public abstract class GIssue
         projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
+    public final String getProjectId() {
+        return this.projectId;
+    }
+
     public final scrum.server.project.Project getProject() {
         if (projectCache == null) updateProjectCache();
         return projectCache;
@@ -227,6 +231,10 @@ public abstract class GIssue
 
     private void updateCreatorCache() {
         creatorCache = this.creatorId == null ? null : (scrum.server.admin.User)userDao.getById(this.creatorId);
+    }
+
+    public final String getCreatorId() {
+        return this.creatorId;
     }
 
     public final scrum.server.admin.User getCreator() {
@@ -444,6 +452,10 @@ public abstract class GIssue
 
     private void updateOwnerCache() {
         ownerCache = this.ownerId == null ? null : (scrum.server.admin.User)userDao.getById(this.ownerId);
+    }
+
+    public final String getOwnerId() {
+        return this.ownerId;
     }
 
     public final scrum.server.admin.User getOwner() {

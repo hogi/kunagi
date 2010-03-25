@@ -8,6 +8,7 @@ import java.util.Map;
 
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
+import scrum.client.project.Requirement;
 import scrum.client.risks.Risk;
 import scrum.client.risks.RiskComputer;
 
@@ -31,6 +32,10 @@ public class Change extends GChange {
 			if (key.equals("closeDate")) return Str.isEmpty(newValue) ? "reopened issue" : "closed issue";
 		} else if (parent instanceof Impediment) {
 			if (key.equals("closed")) return Str.isTrue(newValue) ? "closed impediment" : "reopened impediment";
+		} else if (parent instanceof Requirement) {
+			if (key.equals("closed")) return Str.isTrue(newValue) ? "closed story" : "reopened story";
+			if (key.equals("sprintId"))
+				return newValue == null ? "kicked story from sprint" : "pulled story to sprint";
 		}
 
 		if (Str.isEmpty(oldValue)) return "created " + getFieldLabel();
@@ -55,6 +60,9 @@ public class Change extends GChange {
 			if (key.equals("probability"))
 				return createSinglelineDiff(RiskComputer.getProbabilityLabel(oldValue), RiskComputer
 						.getProbabilityLabel(newValue));
+		} else if (parent instanceof Requirement) {
+			if (key.equals("closed")) return null;
+			if (key.equals("sprintId")) return null;
 		}
 
 		if (Str.isEmpty(oldValue)) return getNewValue();

@@ -61,6 +61,10 @@ public abstract class GProjectUserConfig
         projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
+    public final String getProjectId() {
+        return this.projectId;
+    }
+
     public final scrum.server.project.Project getProject() {
         if (projectCache == null) updateProjectCache();
         return projectCache;
@@ -106,6 +110,10 @@ public abstract class GProjectUserConfig
 
     private void updateUserCache() {
         userCache = this.userId == null ? null : (scrum.server.admin.User)userDao.getById(this.userId);
+    }
+
+    public final String getUserId() {
+        return this.userId;
     }
 
     public final scrum.server.admin.User getUser() {
