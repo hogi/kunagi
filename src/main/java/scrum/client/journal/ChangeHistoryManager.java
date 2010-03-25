@@ -15,7 +15,6 @@ public class ChangeHistoryManager extends GChangeHistoryManager {
 		}
 		currentChangeHistoryParent = entity;
 		log.info("ChangeHistory activated for", entity);
-		dao.clearChanges();
 		if (currentChangeHistoryParent != null) app.callRequestChanges(currentChangeHistoryParent.getId());
 	}
 

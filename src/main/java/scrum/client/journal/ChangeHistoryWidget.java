@@ -17,6 +17,7 @@ public class ChangeHistoryWidget extends AScrumWidget {
 	private AScrumGwtEntity parent;
 	private FlowPanel panel;
 	private ChangeHistoryManager changeHistoryManager;
+	private boolean active;
 
 	public ChangeHistoryWidget(AScrumGwtEntity parent) {
 		super();
@@ -33,9 +34,20 @@ public class ChangeHistoryWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		if (!changeHistoryManager.isChangeHistoryActive(parent)) return;
+		if (!changeHistoryManager.isChangeHistoryActive(parent)) {
+			if (active) {
+				panel.clear();
+				panel.removeStyleName("ChangeHistoryWidget");
+				active = false;
+			}
+			return;
+		}
 
-		panel.setStyleName("ChangeHistoryWidget");
+		if (!active) {
+			panel.setStyleName("ChangeHistoryWidget");
+			active = true;
+		}
+
 		panel.clear();
 		List<Change> changes = changeHistoryManager.getChanges(parent);
 
