@@ -31,19 +31,21 @@ public class TeamTasksWidget extends AScrumWidget {
 		Project project = getCurrentProject();
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div class='TeamTasksWidget'>");
+
+		List<User> lazyUsers = new ArrayList<User>();
 		for (User user : project.getTeamMembers()) {
 			sb.append("<div class='TeamTasksWidget-user'>");
-			sb.append("<span style='color: ").append(user.getColor()).append(";'>");
-			sb.append(user.getName());
-			sb.append("</span> is working on");
 
 			List<Task> tasks = project.getClaimedTasks(user);
 			List<Issue> issues = project.getClaimedBugs(user);
-
 			if (tasks.isEmpty() && issues.isEmpty()) {
-				sb.append(" <span style='color: red;'>nothing</span></div>");
+				lazyUsers.add(user);
 				continue;
 			}
+
+			sb.append("<span style='color: ").append(user.getColor()).append(";'>");
+			sb.append(user.getName());
+			sb.append("</span> is working on");
 
 			sb.append("<ul>");
 			for (Issue issue : issues) {
@@ -64,6 +66,14 @@ public class TeamTasksWidget extends AScrumWidget {
 			}
 			sb.append("</ul></div>");
 		}
+
+		for (User user : lazyUsers) {
+			sb.append("<div class='TeamTasksWidget-user'>");
+			sb.append("<span style='color: ").append(user.getColor()).append(";'>");
+			sb.append(user.getName());
+			sb.append("</span> is working on <span style='color: red;'>nothing</span></div>");
+		}
+
 		sb.append("</div>");
 		html.setHTML(sb.toString());
 	}
