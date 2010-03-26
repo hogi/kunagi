@@ -6,10 +6,10 @@ import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DropdownEditorWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
+import scrum.client.collaboration.EmoticonSelectorWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.journal.ChangeHistoryWidget;
 
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -35,20 +35,20 @@ public class IssueWidget extends AScrumWidget {
 		}
 		left.addFieldRow("Description", issue.getDescriptionModel());
 		left.addFieldRow("Statement", issue.getStatementModel());
-		left.addFieldRow("My emoticon", issue.createCurrentUserEmotionEditor());
 		left.addRow(new ChangeHistoryWidget(issue), 2);
 
-		FlowPanel right = new FlowPanel();
+		TableBuilder right = ScrumGwt.createFieldTable();
 		if (issue.isOpen() && issue.getProject().isProductOwner(getCurrentUser())) {
-			right.add(createActionsPanelForOpenIssue());
-			right.add(ScrumGwt.createSpacer(1, 10));
+			right.addRow(createActionsPanelForOpenIssue(), 2);
+			right.addRow(ScrumGwt.createSpacer(1, 10), 2);
 		} else if (issue.isUrgent() && issue.isFixed() && issue.getProject().isProductOwner(getCurrentUser())) {
-			right.add(createActionsPanelForFixedIssue());
-			right.add(ScrumGwt.createSpacer(1, 10));
+			right.addRow(createActionsPanelForFixedIssue(), 2);
+			right.addRow(ScrumGwt.createSpacer(1, 10), 2);
 		}
-		right.add(new CommentsWidget(issue));
+		right.addFieldRow("My emoticon", new EmoticonSelectorWidget(issue));
+		right.addRow(new CommentsWidget(issue), 2);
 
-		return TableBuilder.row(20, left.createTable(), right);
+		return TableBuilder.row(20, left.createTable(), right.createTable());
 	}
 
 	@Override

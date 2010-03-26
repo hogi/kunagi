@@ -19,7 +19,6 @@ import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -51,8 +50,6 @@ public class WikiWidget extends AScrumWidget {
 
 		wikipage = getCurrentProject().getWikipage(pageName);
 
-		createPageSelector();
-
 		PagePanel page = new PagePanel();
 
 		if (wikipage == null) {
@@ -60,22 +57,18 @@ public class WikiWidget extends AScrumWidget {
 			page.addSection("Page does not exist.");
 			page.addSection(new ButtonWidget(new CreateWikipageAction(pageName)));
 		} else {
-			page.addHeader(wikipage.getName(), createPageSelector());
+			page.addHeader(wikipage.getName(), createPageSelector(), new EmoticonsWidget(wikipage));
 			editor = new RichtextEditorWidget(wikipage.getTextModel());
 			editor.setEditorHeight(600);
 
 			FlowPanel right = new FlowPanel();
 			right.add(new CommentsWidget(wikipage));
 
-			page.addSection(TableBuilder.row(20, editor, right));
+			page.addSection(TableBuilder.row(20, editor, ScrumGwt.createEmoticonsAndComments(wikipage)));
 
 			page.addHeader("Page properties", createActionsDropdown());
 
 			FlowPanel left = new FlowPanel();
-			left.add(Gwt.createSpacer(1, 5));
-			left.add(TableBuilder.row(5, new Label("My emoticon"), wikipage.createCurrentUserEmotionEditor(),
-				new EmoticonsWidget(wikipage)));
-			left.add(Gwt.createSpacer(1, 10));
 			left.add(ScrumGwt.createPdfLink("Downlad as PDF", "wikipage", wikipage));
 			left.add(Gwt.createSpacer(1, 10));
 			left.add(new ChangeHistoryWidget(wikipage));

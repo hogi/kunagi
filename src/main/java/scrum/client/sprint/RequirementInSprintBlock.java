@@ -1,7 +1,8 @@
 package scrum.client.sprint;
 
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
-import scrum.client.collaboration.CommentsWidget;
+import scrum.client.ScrumGwt;
 import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockHeaderWidget;
@@ -27,7 +28,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 
 	private BlockListWidget<Task> taskList;
 	private RequirementWidget requirementWidget;
-	private CommentsWidget commentsWidget;
+	private Widget right;
 	private FlexTable bodyWidget;
 	private ChangeHistoryWidget changeHistoryWidget;
 
@@ -71,7 +72,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 		requirementWidget = new RequirementWidget(requirement, false, false, true, false, false, false);
 		taskList = new BlockListWidget<Task>(TaskInRequirementBlock.FACTORY);
 		taskList.setAutoSorter(Task.NUMBER_COMPARATOR);
-		commentsWidget = new CommentsWidget(requirement);
+		right = ScrumGwt.createEmoticonsAndComments(requirement);
 		changeHistoryWidget = new ChangeHistoryWidget(requirement);
 
 		FlowPanel left = new FlowPanel();
@@ -79,7 +80,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 		left.add(taskList);
 		left.add(changeHistoryWidget);
 
-		bodyWidget = TableBuilder.row(20, left, commentsWidget);
+		bodyWidget = TableBuilder.row(20, left, right);
 		return bodyWidget;
 	}
 
@@ -87,7 +88,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 	protected void onUpdateBody() {
 		requirementWidget.update();
 		taskList.setObjects(getObject().getTasks());
-		commentsWidget.update();
+		Gwt.update(right);
 		changeHistoryWidget.update();
 	}
 

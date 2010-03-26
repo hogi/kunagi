@@ -15,9 +15,6 @@ import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.Emoticon;
-import scrum.client.collaboration.EmoticonSelectorWidget;
-
-import com.google.gwt.user.client.ui.Widget;
 
 public abstract class AScrumGwtEntity extends AGwtEntity {
 
@@ -65,12 +62,6 @@ public abstract class AScrumGwtEntity extends AGwtEntity {
 			if (emoticon.isOwner(currentUser)) return emoticon;
 		}
 		return null;
-	}
-
-	public Widget createCurrentUserEmotionEditor() {
-		return new EmoticonSelectorWidget(this);
-		// return new DropdownEditorWidget<String>(getCurrentUserEmotionModel(),
-		// Emoticon.EMOTION_LABEL_PROVIDER);
 	}
 
 	public AOptionEditorModel<String> getCurrentUserEmotionModel() {

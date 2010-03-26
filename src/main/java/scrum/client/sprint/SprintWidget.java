@@ -7,7 +7,6 @@ import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextOutputWidget;
 import scrum.client.ScrumGwt;
-import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -86,7 +85,6 @@ public class SprintWidget extends AScrumWidget {
 		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()), cols - 1);
 		tb.addFieldRow("Review Note", new RichtextEditorWidget(sprint.getReviewNoteModel()), cols - 1);
 		tb.addFieldRow("Retrospecitve Note", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel()), cols - 1);
-		tb.addFieldRow("My emoticon", sprint.createCurrentUserEmotionEditor());
 
 		if (completed) {
 			tb.add(ScrumGwt.createPdfLink("Download Report as PDF", "sprintReport", sprint), cols);
@@ -94,7 +92,7 @@ public class SprintWidget extends AScrumWidget {
 			tb.add(ScrumGwt.createPdfLink("Download as PDF", "sprintBacklog", sprint), cols);
 		}
 
-		return TableBuilder.row(10, tb.createTable(), new CommentsWidget(sprint));
+		return TableBuilder.row(10, tb.createTable(), ScrumGwt.createEmoticonsAndComments(sprint));
 	}
 
 	public Sprint getSprint() {

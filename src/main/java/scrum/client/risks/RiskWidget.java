@@ -4,7 +4,6 @@ import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DropdownEditorWidget;
 import scrum.client.ScrumGwt;
-import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.journal.ChangeHistoryWidget;
 
@@ -38,10 +37,9 @@ public class RiskWidget extends AScrumWidget {
 		});
 		tb.addFieldRow("Impact Mitigation", risk.getImpactMitigationModel());
 		tb.addFieldRow("Probability Mitigation", risk.getProbabilityMitigationModel());
-		tb.addFieldRow("My emoticon", risk.createCurrentUserEmotionEditor());
 		tb.addRow(new ChangeHistoryWidget(risk), 2);
 
-		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(risk));
+		return TableBuilder.row(20, tb.createTable(), ScrumGwt.createEmoticonsAndComments(risk));
 	}
 
 }

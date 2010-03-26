@@ -38,6 +38,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	String cNavigatorHoverItemBackground = "#E9EEF6";
 
 	String cBlockHeaderBackground = cNavigatorHoverItemBackground;
+	String cBlockSelectionBorder = cHeaderBackground;
 	String cBlockHeaderHoverBackground = cBackground;
 	String cBlockHeaderDragHandleBackground = "#FBFBFF";
 	String cBlockHeaderCellSecondary = "gray";
@@ -97,9 +98,9 @@ public class ScreenCssBuilder implements CssBuilder {
 		calendar(css);
 		planningPoker(css);
 
-		css.style(".EmoticonSelectorWidget-emoticon").border(1, "white").borderRadius(2).padding(1, 1, 0, 1);
-		css.style(".EmoticonSelectorWidget-emoticon-selected").background(cPagePanelHeaderBackground).border(1,
-			cBlockHeaderBackground);
+		css.style(".EmoticonSelectorWidget-emoticon").border(1, "white").borderRadius(2).padding(2, 1, 0, 1);
+		css.style(".EmoticonSelectorWidget-emoticon-selected").background(cBlockHeaderBackground).border(1,
+			cBlockSelectionBorder).padding(2, 3, 0, 2);
 
 		css.style(".TrashWidget").background(cTrashBackground).border(1, cTrashBorder).padding(5);
 
@@ -358,7 +359,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void blockList(CssRenderer css) {
-		css.style(".ABlockWidget-extended").border(2, cHeaderBackground).padding(3).backgroundWhite();
+		css.style(".ABlockWidget-extended").border(2, cBlockSelectionBorder).padding(3).backgroundWhite();
 		css.style(".ABlockWidget-body").padding(10).border(1, cBlockHeaderBackground);
 
 		// css.style(".BlockListWidget").border(1, "yellow").minHeight(50, "px");

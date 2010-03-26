@@ -2,7 +2,6 @@ package scrum.client.project;
 
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwt;
-import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -23,8 +22,7 @@ public class QualityWidget extends AScrumWidget {
 		tb.addFieldRow("Label", quality.getLabelModel());
 		tb.addFieldRow("Description", quality.getDescriptionModel());
 		tb.addFieldRow("Test", quality.getTestDescriptionModel());
-		tb.addFieldRow("My emoticon", quality.createCurrentUserEmotionEditor());
 
-		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(quality));
+		return TableBuilder.row(20, tb.createTable(), ScrumGwt.createEmoticonsAndComments(quality));
 	}
 }

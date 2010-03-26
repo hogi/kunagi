@@ -6,7 +6,6 @@ import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwt;
-import scrum.client.collaboration.CommentsWidget;
 import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -80,9 +79,7 @@ public class TaskWidget extends AWidget {
 			}
 		}, 3);
 
-		tb.addFieldRow("My emoticon", task.createCurrentUserEmotionEditor());
-
-		return wideMode ? TableBuilder.row(20, tb.createTable(), new CommentsWidget(task)) : Gwt.createFlowPanel(tb
-				.createTable(), new CommentsWidget(task));
+		return wideMode ? TableBuilder.row(20, tb.createTable(), ScrumGwt.createEmoticonsAndComments(task)) : Gwt
+				.createFlowPanel(tb.createTable(), ScrumGwt.createEmoticonsAndComments(task));
 	}
 }

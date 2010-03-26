@@ -1,6 +1,7 @@
 package scrum.client.sprint;
 
 import ilarkesto.core.scope.Scope;
+import ilarkesto.gwt.client.HyperlinkWidget;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -8,11 +9,15 @@ import java.util.Map;
 import scrum.client.ScrumJs;
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
+import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.ReferenceSupport;
+import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 
-public class Task extends GTask implements ReferenceSupport {
+import com.google.gwt.user.client.ui.Widget;
+
+public class Task extends GTask implements ReferenceSupport, ForumSupport {
 
 	public static final int INIT_EFFORT = 1;
 	public static final String REFERENCE_PREFIX = "tsk";
@@ -155,6 +160,10 @@ public class Task extends GTask implements ReferenceSupport {
 	public boolean isEditable() {
 		if (!getProject().isTeamMember(Scope.get().getComponent(Auth.class).getUser())) return false;
 		return true;
+	}
+
+	public Widget createForumItemWidget() {
+		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
 
 	public static final Comparator<Task> NUMBER_COMPARATOR = new Comparator<Task>() {
