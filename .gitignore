@@ -1,4 +1,5 @@
 runtimedata
+build
 test-output
 temp-testng*
 tomcat
