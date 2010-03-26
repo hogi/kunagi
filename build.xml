@@ -76,6 +76,15 @@
 		<copy file="build/scrum.war" tofile="/home/kunagi-demo/tomcat/webapps/kunagi-demo.war" />
 	</target>
 	
+	<target name="sourceforge">
+		<exec executable="git" dir="sourceforge-svn" failonerror="true">
+			<arg line="svn rebase"/>
+		</exec>
+        <exec executable="git" dir="sourceforge-svn" failonerror="true">
+            <arg line="svn dcommit"/>
+        </exec>
+	</target>
+	
 	<target name="continousIntegrationBuild" depends="deploy" />
 
 	<target name="continousIntegrationRelease" depends="release" />	
