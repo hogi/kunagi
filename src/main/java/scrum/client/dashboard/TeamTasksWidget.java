@@ -1,5 +1,7 @@
 package scrum.client.dashboard;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,11 +49,15 @@ public class TeamTasksWidget extends AScrumWidget {
 			for (Issue issue : issues) {
 				sb.append("<li>").append(issue.toHtml()).append("</li>");
 			}
-			for (Requirement req : getRequirements(tasks)) {
+			List<Requirement> requirements = new ArrayList<Requirement>(getRequirements(tasks));
+			Collections.sort(requirements, project.getRequirementsOrderComparator());
+			for (Requirement req : requirements) {
 				sb.append("<li>");
 				sb.append(req.toHtml());
 				sb.append("<ul>");
-				for (Task task : req.getClaimedTasks(user)) {
+				List<Task> usersTasks = req.getClaimedTasks(user);
+				Collections.sort(usersTasks, Task.NUMBER_COMPARATOR);
+				for (Task task : usersTasks) {
 					sb.append("<li>").append(task.toHtml()).append("</li>");
 				}
 				sb.append("</ul></li>");
