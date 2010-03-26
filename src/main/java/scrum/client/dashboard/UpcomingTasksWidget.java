@@ -30,14 +30,12 @@ public class UpcomingTasksWidget extends AScrumWidget {
 
 		Project project = getCurrentProject();
 
-		List<Issue> issues = project.getUnclaimedUrgentIssues();
-		Collections.sort(issues, project.getIssuesOrderComparator());
-		if (issues.isEmpty()) {
-			sb.append("No urgent issues.");
-		} else {
-			sb.append("Unclaimed urgent issues:");
+		List<Issue> criticalBugs = project.getUnclaimedBugs(2);
+		Collections.sort(criticalBugs, project.getIssuesOrderComparator());
+		if (!criticalBugs.isEmpty()) {
+			sb.append("<span style='color: red; font-weight: bold;'>Unclaimed critical bugs</span>:");
 			sb.append("<ul>");
-			for (Issue issue : issues) {
+			for (Issue issue : criticalBugs) {
 				sb.append("<li>");
 				sb.append(issue.toHtml());
 				sb.append("</li>");
@@ -45,14 +43,27 @@ public class UpcomingTasksWidget extends AScrumWidget {
 			sb.append("</ul>");
 		}
 
-		int maxTasks = project.getTeamMembers().size() - issues.size();
-		int minTasks = 10 - issues.size();
+		List<Issue> severeBugs = project.getUnclaimedBugs(1);
+		Collections.sort(severeBugs, project.getIssuesOrderComparator());
+		if (!severeBugs.isEmpty()) {
+			sb.append("<span style='color: red;'>Unclaimed severe bugs</span>:");
+			sb.append("<ul>");
+			for (Issue issue : severeBugs) {
+				sb.append("<li>");
+				sb.append(issue.toHtml());
+				sb.append("</li>");
+			}
+			sb.append("</ul>");
+		}
+
+		int maxTasks = project.getTeamMembers().size() - criticalBugs.size() - severeBugs.size();
+		int minTasks = 10 - criticalBugs.size();
 		if (maxTasks < minTasks) maxTasks = minTasks;
+		int taskCount = 0;
 		List<Task> tasks = project.getCurrentSprint().getUnclaimedTasks(true);
 		Collections.sort(tasks, Task.NUMBER_COMPARATOR);
 		if (!tasks.isEmpty()) {
-			int taskCount = 0;
-			sb.append("Next upcoming Tasks:");
+			sb.append("Next upcoming tasks:");
 			sb.append("<ul>");
 			Requirement req = null;
 			for (Task task : tasks) {
@@ -75,6 +86,40 @@ public class UpcomingTasksWidget extends AScrumWidget {
 			}
 			sb.append("</ul></li>");
 			sb.append("</ul></div>");
+		}
+
+		if (taskCount < maxTasks) {
+			List<Issue> normalBugs = project.getUnclaimedBugs(0);
+			Collections.sort(normalBugs, project.getIssuesOrderComparator());
+			if (!normalBugs.isEmpty()) {
+				sb.append("<span style='color: black;'>Unclaimed normal bugs</span>:");
+				sb.append("<ul>");
+				for (Issue issue : normalBugs) {
+					sb.append("<li>");
+					sb.append(issue.toHtml());
+					sb.append("</li>");
+					taskCount++;
+					if (taskCount == maxTasks) break;
+				}
+				sb.append("</ul>");
+			}
+		}
+
+		if (taskCount < maxTasks) {
+			List<Issue> minorBugs = project.getUnclaimedBugs(-1);
+			Collections.sort(minorBugs, project.getIssuesOrderComparator());
+			if (!minorBugs.isEmpty()) {
+				sb.append("<span style='color: #555;'>Unclaimed minor bugs</span>:");
+				sb.append("<ul>");
+				for (Issue issue : minorBugs) {
+					sb.append("<li>");
+					sb.append(issue.toHtml());
+					sb.append("</li>");
+					taskCount++;
+					if (taskCount == maxTasks) break;
+				}
+				sb.append("</ul>");
+			}
 		}
 
 		sb.append("</div>");

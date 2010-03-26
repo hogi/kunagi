@@ -15,12 +15,12 @@ package scrum.client.issues;
 
 import java.util.*;
 
-public abstract class GAcceptIssueAction
+public abstract class GAcceptIssueAsBugAction
             extends scrum.client.common.AScrumAction {
 
     protected scrum.client.issues.Issue issue;
 
-    public GAcceptIssueAction(scrum.client.issues.Issue issue) {
+    public GAcceptIssueAsBugAction(scrum.client.issues.Issue issue) {
         this.issue = issue;
     }
 

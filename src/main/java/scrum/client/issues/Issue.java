@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
+import ilarkesto.gwt.client.LabelProvider;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -23,8 +24,8 @@ import com.google.gwt.user.client.ui.Widget;
 public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public static final String INIT_TYPE = Types.ISSUE;
-
 	public static final String REFERENCE_PREFIX = "iss";
+	public static final Integer[] SEVERITY_OPTIONS = { 2, 1, 0, -1 };
 
 	public Issue(Project project) {
 		setType(Types.ISSUE);
@@ -54,9 +55,12 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 		return getAcceptDate() != null;
 	}
 
-	public boolean isAcceptedUrgent() {
-		if (isClosed()) return false;
-		return getAcceptDate() != null && isUrgent();
+	public boolean isBug() {
+		return isAccepted() && isUrgent();
+	}
+
+	public boolean isIdea() {
+		return isAccepted() && !isUrgent();
 	}
 
 	public boolean isOpen() {
@@ -69,13 +73,13 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public String getStatusLabel() {
 		if (isClosed()) return "closed on " + getCloseDate();
-		if (isAcceptedUrgent()) {
+		if (isBug()) {
 			String s = "";
 			if (isFixed()) s += "fixed by ";
 			if (isOwnerSet()) s += getOwner().getName();
 			return s;
 		}
-		if (isAccepted()) return "accepted on " + getAcceptDate();
+		if (isIdea()) return "accepted on " + getAcceptDate();
 		return "issued on " + getDate().getDate();
 	}
 
@@ -112,6 +116,15 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 		setCloseDate(null);
 	}
 
+	public String getSeverityLabel() {
+		return SEVERITY_LABELS.getLabel(getSeverity());
+	}
+
+	@Override
+	public List<Integer> getSeverityOptions() {
+		return Arrays.asList(SEVERITY_OPTIONS);
+	}
+
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
 	}
@@ -135,6 +148,16 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
 
+	public static final Comparator<Issue> SEVERITY_COMPARATOR = new Comparator<Issue>() {
+
+		public int compare(Issue a, Issue b) {
+			int aSeverity = a.getSeverity();
+			int bSeverity = b.getSeverity();
+			if (aSeverity == bSeverity) return ACCEPT_DATE_COMPARATOR.compare(a, b);
+			return bSeverity - aSeverity;
+		}
+	};
+
 	public static final Comparator<Issue> ISSUE_DATE_COMPARATOR = new Comparator<Issue>() {
 
 		public int compare(Issue a, Issue b) {
@@ -156,6 +179,24 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 		}
 	};
 
+	public static LabelProvider<Integer> SEVERITY_LABELS = new LabelProvider<Integer>() {
+
+		public String getLabel(Integer severity) {
+			switch (severity) {
+				case 2:
+					return "critical";
+				case 1:
+					return "severe";
+				case 0:
+					return "normal";
+				case -1:
+					return "minor ";
+			}
+			return String.valueOf(severity);
+		}
+	};
+
+	@Deprecated
 	public static class Types {
 
 		public static final String ISSUE = "issue";

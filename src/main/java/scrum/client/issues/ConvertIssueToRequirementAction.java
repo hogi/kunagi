@@ -18,7 +18,7 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Convert this Issue to a real Story on the Product Backlog.");
+		TooltipBuilder tb = new TooltipBuilder("Convert this Issue to a Story on the Product Backlog.");
 		if (!issue.getProject().isProductOwner(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 		}
@@ -28,8 +28,7 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 
 	@Override
 	public boolean isExecutable() {
-		if (issue.isClosed()) return false;
-		if (issue.isAcceptedUrgent()) return false;
+		if (!issue.isOpen() && !issue.isIdea()) return false;
 		return true;
 	}
 

@@ -3,20 +3,20 @@ package scrum.client.issues;
 import ilarkesto.core.scope.Scope;
 import scrum.client.workspace.ProjectWorkspaceWidgets;
 
-public class AcceptUrgentIssueAction extends GAcceptUrgentIssueAction {
+public class AcceptIssueAsIdeaAction extends GAcceptIssueAsIdeaAction {
 
-	public AcceptUrgentIssueAction(scrum.client.issues.Issue issue) {
+	public AcceptIssueAsIdeaAction(scrum.client.issues.Issue issue) {
 		super(issue);
 	}
 
 	@Override
 	public String getLabel() {
-		return "Accept as urgent";
+		return "Accept as idea";
 	}
 
 	@Override
 	public String getTooltip() {
-		return "Accept this issue as urgend bug in a published release. The team needs to fix this immediately.";
+		return "Accept this issue as an idea for future stories.";
 	}
 
 	@Override
@@ -28,13 +28,13 @@ public class AcceptUrgentIssueAction extends GAcceptUrgentIssueAction {
 	@Override
 	public boolean isExecutable() {
 		if (issue.isClosed()) return false;
-		if (issue.isAccepted()) return false;
+		if (issue.isIdea()) return false;
 		return true;
 	}
 
 	@Override
 	protected void onExecute() {
-		issue.acceptAsUrgent();
+		issue.accept();
 		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showIssueList(issue);
 		addUndo(new Undo());
 	}
@@ -43,7 +43,7 @@ public class AcceptUrgentIssueAction extends GAcceptUrgentIssueAction {
 
 		@Override
 		public String getLabel() {
-			return "Undo Accept as urgent: " + issue.getReference() + " " + issue.getLabel();
+			return "Undo Accept idea " + issue.getReference() + " " + issue.getLabel();
 		}
 
 		@Override

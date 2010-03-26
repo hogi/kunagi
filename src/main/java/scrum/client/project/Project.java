@@ -62,9 +62,9 @@ public class Project extends GProject implements ForumSupport {
 		return isAdmin(Scope.get().getComponent(Auth.class).getUser());
 	}
 
-	public List<Issue> getClaimedUnfixedIssues(User user) {
+	public List<Issue> getClaimedBugs(User user) {
 		List<Issue> issues = new ArrayList<Issue>();
-		for (Issue issue : getUrgentIssues()) {
+		for (Issue issue : getBugs()) {
 			if (issue.isOwner(user) && !issue.isFixed()) issues.add(issue);
 		}
 		return issues;
@@ -333,26 +333,26 @@ public class Project extends GProject implements ForumSupport {
 		return ret;
 	}
 
-	public List<Issue> getAcceptedNonUrgentIssues() {
+	public List<Issue> getIdeas() {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getIssues()) {
-			if (issue.isAccepted() && !issue.isUrgent()) ret.add(issue);
+			if (issue.isIdea()) ret.add(issue);
 		}
 		return ret;
 	}
 
-	public List<Issue> getUnclaimedUrgentIssues() {
+	public List<Issue> getUnclaimedBugs(int severity) {
 		List<Issue> ret = new ArrayList<Issue>();
-		for (Issue issue : getUrgentIssues()) {
-			if (issue.getOwner() == null) ret.add(issue);
+		for (Issue issue : getBugs()) {
+			if (issue.getOwner() == null && issue.isSeverity(severity)) ret.add(issue);
 		}
 		return ret;
 	}
 
-	public List<Issue> getUrgentIssues() {
+	public List<Issue> getBugs() {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getIssues()) {
-			if (issue.isAcceptedUrgent()) ret.add(issue);
+			if (issue.isBug()) ret.add(issue);
 		}
 		return ret;
 	}

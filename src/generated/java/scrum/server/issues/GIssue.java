@@ -46,6 +46,7 @@ public abstract class GIssue
         properties.put("statement", this.statement);
         properties.put("acceptDate", this.acceptDate == null ? null : this.acceptDate.toString());
         properties.put("urgent", this.urgent);
+        properties.put("severity", this.severity);
         properties.put("ownerId", this.ownerId);
         properties.put("fixDate", this.fixDate == null ? null : this.fixDate.toString());
         properties.put("closeDate", this.closeDate == null ? null : this.closeDate.toString());
@@ -444,6 +445,35 @@ public abstract class GIssue
     }
 
     // -----------------------------------------------------------
+    // - severity
+    // -----------------------------------------------------------
+
+    private int severity;
+
+    public final int getSeverity() {
+        return severity;
+    }
+
+    public final void setSeverity(int severity) {
+        severity = prepareSeverity(severity);
+        if (isSeverity(severity)) return;
+        this.severity = severity;
+        fireModified();
+    }
+
+    protected int prepareSeverity(int severity) {
+        return severity;
+    }
+
+    public final boolean isSeverity(int severity) {
+        return this.severity == severity;
+    }
+
+    protected final void updateSeverity(Object value) {
+        setSeverity((Integer)value);
+    }
+
+    // -----------------------------------------------------------
     // - owner
     // -----------------------------------------------------------
 
@@ -580,6 +610,7 @@ public abstract class GIssue
             if (property.equals("statement")) updateStatement(value);
             if (property.equals("acceptDate")) updateAcceptDate(value);
             if (property.equals("urgent")) updateUrgent(value);
+            if (property.equals("severity")) updateSeverity(value);
             if (property.equals("ownerId")) updateOwner(value);
             if (property.equals("fixDate")) updateFixDate(value);
             if (property.equals("closeDate")) updateCloseDate(value);

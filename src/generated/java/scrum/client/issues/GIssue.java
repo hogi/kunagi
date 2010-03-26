@@ -481,6 +481,61 @@ public abstract class GIssue
         return equals(this.urgent, urgent);
     }
 
+    // --- severity ---
+
+    private int severity ;
+
+    public final int getSeverity() {
+        return this.severity ;
+    }
+
+    public final Issue setSeverity(int severity) {
+        if (isSeverity(severity)) return (Issue)this;
+        this.severity = severity ;
+        propertyChanged("severity", this.severity);
+        return (Issue)this;
+    }
+
+    public abstract List<java.lang.Integer> getSeverityOptions();
+
+    public final boolean isSeverity(int severity) {
+        return equals(this.severity, severity);
+    }
+
+    private transient SeverityModel severityModel;
+
+    public SeverityModel getSeverityModel() {
+        if (severityModel == null) severityModel = createSeverityModel();
+        return severityModel;
+    }
+
+    protected SeverityModel createSeverityModel() { return new SeverityModel(); }
+
+    protected class SeverityModel extends ilarkesto.gwt.client.editor.AOptionEditorModel<java.lang.Integer> {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getSeverity();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setSeverity(value);
+        }
+
+        @Override
+        public List<java.lang.Integer> getOptions() {
+            return getSeverityOptions();
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- owner ---
 
     private String ownerId;
@@ -617,6 +672,7 @@ public abstract class GIssue
         String acceptDateAsString = (String) props.get("acceptDate");
         acceptDate  =  acceptDateAsString == null ? null : new ilarkesto.gwt.client.Date(acceptDateAsString);
         urgent  = (Boolean) props.get("urgent");
+        severity  = (Integer) props.get("severity");
         ownerId = (String) props.get("ownerId");
         String fixDateAsString = (String) props.get("fixDate");
         fixDate  =  fixDateAsString == null ? null : new ilarkesto.gwt.client.Date(fixDateAsString);
@@ -637,6 +693,7 @@ public abstract class GIssue
         properties.put("statement", this.statement);
         properties.put("acceptDate", this.acceptDate == null ? null : this.acceptDate.toString());
         properties.put("urgent", this.urgent);
+        properties.put("severity", this.severity);
         properties.put("ownerId", this.ownerId);
         properties.put("fixDate", this.fixDate == null ? null : this.fixDate.toString());
         properties.put("closeDate", this.closeDate == null ? null : this.closeDate.toString());

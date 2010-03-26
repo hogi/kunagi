@@ -19,19 +19,20 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 	private SimplePanel statusIcon;
 	// private Label typeLabel;
 	private Label statusSuffix;
+	private Label severityPrefix;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
-		// typeLabel = new Label();
 		Issue issue = getObject();
-		// typeLabel = header.insertPrefixLabel("80px", true);
-		statusIcon = header.insertPrefixIcon();
+
+		if (issue.isBug()) statusIcon = header.insertPrefixIcon();
+		if (issue.isBug()) severityPrefix = header.insertPrefixLabel("50px", false);
 		statusSuffix = header.appendCenterSuffix("");
 
 		header.appendCell(new EmoticonsWidget(issue), null, true, true, null);
 
-		header.addMenuAction(new AcceptUrgentIssueAction(issue));
-		header.addMenuAction(new AcceptIssueAction(issue));
+		header.addMenuAction(new AcceptIssueAsBugAction(issue));
+		header.addMenuAction(new AcceptIssueAsIdeaAction(issue));
 		header.addMenuAction(new ClaimIssueAction(issue));
 		header.addMenuAction(new FixIssueAction(issue));
 		header.addMenuAction(new RejectFixIssueAction(issue));
@@ -45,9 +46,9 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 	@Override
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Issue issue = getObject();
-		// typeLabel.setText(issue.getTypeLabel());
-		Image statusImage = null;
-		if (issue.isAcceptedUrgent()) {
+		if (issue.isBug()) {
+			Image statusImage = null;
+			severityPrefix.setText(issue.getSeverityLabel());
 			if (issue.isFixed()) {
 				statusImage = Img.bundle.issFixed().createImage();
 				statusImage.setTitle("Closed.");
@@ -55,9 +56,9 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 				statusImage = Img.bundle.issClaimed().createImage();
 				statusImage.setTitle("Claimed by " + issue.getOwner().getName());
 			}
+			statusIcon.setWidget(statusImage);
+			statusSuffix.setText(issue.getStatusLabel());
 		}
-		statusIcon.setWidget(statusImage);
-		statusSuffix.setText(issue.getStatusLabel());
 		header.setDragHandle(issue.getReference());
 		header.setCenter(issue.getLabel());
 	}

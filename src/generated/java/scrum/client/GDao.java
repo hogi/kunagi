@@ -774,6 +774,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.issues.Issue> getIssuesBySeverity(int severity) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isSeverity(severity)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.issues.Issue> getIssuesByOwner(scrum.client.admin.User owner) {
         List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
         for (scrum.client.issues.Issue entity : issues.values()) {

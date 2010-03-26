@@ -481,7 +481,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.setGwtSupport(true);
 			issueModel.addReference("project", getProjectModel()).setMaster(true);
 			issueModel.addProperty("number", int.class);
-			issueModel.addStringProperty("type").setOptionRestricted(true).setMandatory(true);
+			issueModel.addStringProperty("type").setOptionRestricted(true);
 			issueModel.addProperty("date", DateAndTime.class).setMandatory(true);
 			issueModel.addReference("creator", getUserModel());
 			issueModel.addStringProperty("label").setMandatory(true).setSearchable(true);
@@ -489,6 +489,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addStringProperty("statement").setRichtext(true).setSearchable(true);
 			issueModel.addProperty("acceptDate", Date.class);
 			issueModel.addProperty("urgent", boolean.class);
+			issueModel.addProperty("severity", int.class).setOptionRestricted(true);
 			issueModel.addReference("owner", getUserModel());
 			issueModel.addProperty("fixDate", Date.class);
 			issueModel.addProperty("closeDate", Date.class);
@@ -498,8 +499,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addAction("RejectFixIssue");
 			issueModel.addAction("DeleteIssue");
 			issueModel.addAction("CloseIssue");
-			issueModel.addAction("AcceptIssue");
-			issueModel.addAction("AcceptUrgentIssue");
+			issueModel.addAction("AcceptIssueAsIdea");
+			issueModel.addAction("AcceptIssueAsBug");
 			issueModel.addAction("ReopenIssue");
 			issueModel.addAction("ConvertIssueToRequirement");
 			issueModel.addAction("ConvertIssueToQuality");

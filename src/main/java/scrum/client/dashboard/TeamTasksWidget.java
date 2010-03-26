@@ -38,7 +38,7 @@ public class TeamTasksWidget extends AScrumWidget {
 			sb.append("</span> is working on");
 
 			List<Task> tasks = project.getClaimedTasks(user);
-			List<Issue> issues = project.getClaimedUnfixedIssues(user);
+			List<Issue> issues = project.getClaimedBugs(user);
 
 			if (tasks.isEmpty() && issues.isEmpty()) {
 				sb.append(" <span style='color: red;'>nothing</span></div>");

@@ -61,6 +61,8 @@ public abstract class GIssueDao
         issuesByAcceptDateCache.clear();
         acceptDatesCache = null;
         issuesByUrgentCache.clear();
+        issuesBySeverityCache.clear();
+        severitysCache = null;
         issuesByOwnerCache.clear();
         ownersCache = null;
         issuesByFixDateCache.clear();
@@ -470,6 +472,46 @@ public abstract class GIssueDao
 
         public boolean test(Issue e) {
             return value == e.isUrgent();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - severity
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Issue>> issuesBySeverityCache = new Cache<Integer,Set<Issue>>(
+            new Cache.Factory<Integer,Set<Issue>>() {
+                public Set<Issue> create(Integer severity) {
+                    return getEntities(new IsSeverity(severity));
+                }
+            });
+
+    public final Set<Issue> getIssuesBySeverity(int severity) {
+        return issuesBySeverityCache.get(severity);
+    }
+    private Set<Integer> severitysCache;
+
+    public final Set<Integer> getSeveritys() {
+        if (severitysCache == null) {
+            severitysCache = new HashSet<Integer>();
+            for (Issue e : getEntities()) {
+                severitysCache.add(e.getSeverity());
+            }
+        }
+        return severitysCache;
+    }
+
+    private static class IsSeverity implements Predicate<Issue> {
+
+        private int value;
+
+        public IsSeverity(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isSeverity(value);
         }
 
     }

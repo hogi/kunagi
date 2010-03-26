@@ -16,8 +16,8 @@ import com.google.gwt.user.client.ui.Widget;
 public class IssueManagementWidget extends AScrumWidget {
 
 	public BlockListWidget<Issue> openList;
-	public BlockListWidget<Issue> urgentList;
-	public BlockListWidget<Issue> acceptedList;
+	public BlockListWidget<Issue> bugList;
+	public BlockListWidget<Issue> ideaList;
 	public BlockListWidget<Issue> closedList;
 	private BlockListSelectionManager selectionManager;
 
@@ -31,15 +31,16 @@ public class IssueManagementWidget extends AScrumWidget {
 		openList.setSelectionManager(selectionManager);
 		openList.setAutoSorter(Issue.ISSUE_DATE_COMPARATOR);
 
-		urgentList = new BlockListWidget<Issue>(IssueBlock.FACTORY);
-		urgentList.setSelectionManager(selectionManager);
-		urgentList.setAutoSorter(getCurrentProject().getIssuesOrderComparator());
-		urgentList.setDndSorting(true);
-		urgentList.setMoveObserver(new UrgentMoveObserver());
+		bugList = new BlockListWidget<Issue>(IssueBlock.FACTORY);
+		bugList.setSelectionManager(selectionManager);
+		bugList.setAutoSorter(Issue.SEVERITY_COMPARATOR);
+		// bugList.setAutoSorter(getCurrentProject().getIssuesOrderComparator());
+		// bugList.setDndSorting(true);
+		// bugList.setMoveObserver(new UrgentMoveObserver());
 
-		acceptedList = new BlockListWidget<Issue>(IssueBlock.FACTORY);
-		acceptedList.setSelectionManager(selectionManager);
-		acceptedList.setAutoSorter(Issue.ACCEPT_DATE_COMPARATOR);
+		ideaList = new BlockListWidget<Issue>(IssueBlock.FACTORY);
+		ideaList.setSelectionManager(selectionManager);
+		ideaList.setAutoSorter(Issue.ACCEPT_DATE_COMPARATOR);
 
 		closedList = new BlockListWidget<Issue>(IssueBlock.FACTORY);
 		closedList.setSelectionManager(selectionManager);
@@ -50,9 +51,8 @@ public class IssueManagementWidget extends AScrumWidget {
 		pendingPage.addSection(openList);
 
 		return Gwt.createFlowPanel(pendingPage, Gwt.createSpacer(1, 10), PagePanel.createSimple(
-			"urgent issues (Team needs to fix this)", urgentList), Gwt.createSpacer(1, 10), PagePanel.createSimple(
-			"accepted issues (ideas and candidates for stories)", acceptedList), Gwt.createSpacer(1, 10),
-			createClosedPage());
+			"bugs (Team needs to fix this)", bugList), Gwt.createSpacer(1, 10), PagePanel.createSimple(
+			"ideas (Product owner needs to create stories)", ideaList), Gwt.createSpacer(1, 10), createClosedPage());
 	}
 
 	private Widget createClosedPage() {
@@ -67,8 +67,8 @@ public class IssueManagementWidget extends AScrumWidget {
 		super.onUpdate();
 		Project project = getCurrentProject();
 		openList.setObjects(project.getOpenIssues());
-		urgentList.setObjects(project.getUrgentIssues());
-		acceptedList.setObjects(project.getAcceptedNonUrgentIssues());
+		bugList.setObjects(project.getBugs());
+		ideaList.setObjects(project.getIdeas());
 		closedList.setObjects(project.getClosedIssues());
 	}
 
@@ -80,7 +80,7 @@ public class IssueManagementWidget extends AScrumWidget {
 	class UrgentMoveObserver implements Runnable {
 
 		public void run() {
-			List<Issue> issues = urgentList.getObjects();
+			List<Issue> issues = bugList.getObjects();
 			getCurrentProject().updateUrgentIssuesOrder(issues);
 			update();
 		}
