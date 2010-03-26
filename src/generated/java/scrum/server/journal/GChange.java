@@ -42,6 +42,7 @@ public abstract class GChange
         properties.put("key", this.key);
         properties.put("oldValue", this.oldValue);
         properties.put("newValue", this.newValue);
+        properties.put("comment", this.comment);
     }
 
     public int compareTo(Change other) {
@@ -295,6 +296,41 @@ public abstract class GChange
         setNewValue((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - comment
+    // -----------------------------------------------------------
+
+    private java.lang.String comment;
+
+    public final java.lang.String getComment() {
+        return comment;
+    }
+
+    public final void setComment(java.lang.String comment) {
+        comment = prepareComment(comment);
+        if (isComment(comment)) return;
+        this.comment = comment;
+        fireModified();
+    }
+
+    protected java.lang.String prepareComment(java.lang.String comment) {
+        comment = Str.removeUnreadableChars(comment);
+        return comment;
+    }
+
+    public final boolean isCommentSet() {
+        return this.comment != null;
+    }
+
+    public final boolean isComment(java.lang.String comment) {
+        if (this.comment == null && comment == null) return true;
+        return this.comment != null && this.comment.equals(comment);
+    }
+
+    protected final void updateComment(Object value) {
+        setComment((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -306,6 +342,7 @@ public abstract class GChange
             if (property.equals("key")) updateKey(value);
             if (property.equals("oldValue")) updateOldValue(value);
             if (property.equals("newValue")) updateNewValue(value);
+            if (property.equals("comment")) updateComment(value);
         }
     }
 

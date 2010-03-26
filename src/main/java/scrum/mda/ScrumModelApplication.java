@@ -563,6 +563,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			changeModel.addStringProperty("key");
 			changeModel.addStringProperty("oldValue");
 			changeModel.addStringProperty("newValue");
+			changeModel.addStringProperty("comment").setRichtext(true);
 		}
 		return changeModel;
 	}

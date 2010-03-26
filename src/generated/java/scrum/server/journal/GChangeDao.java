@@ -54,6 +54,8 @@ public abstract class GChangeDao
         oldValuesCache = null;
         changesByNewValueCache.clear();
         newValuesCache = null;
+        changesByCommentCache.clear();
+        commentsCache = null;
     }
 
     @Override
@@ -308,6 +310,46 @@ public abstract class GChangeDao
 
         public boolean test(Change e) {
             return e.isNewValue(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - comment
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Change>> changesByCommentCache = new Cache<java.lang.String,Set<Change>>(
+            new Cache.Factory<java.lang.String,Set<Change>>() {
+                public Set<Change> create(java.lang.String comment) {
+                    return getEntities(new IsComment(comment));
+                }
+            });
+
+    public final Set<Change> getChangesByComment(java.lang.String comment) {
+        return changesByCommentCache.get(comment);
+    }
+    private Set<java.lang.String> commentsCache;
+
+    public final Set<java.lang.String> getComments() {
+        if (commentsCache == null) {
+            commentsCache = new HashSet<java.lang.String>();
+            for (Change e : getEntities()) {
+                if (e.isCommentSet()) commentsCache.add(e.getComment());
+            }
+        }
+        return commentsCache;
+    }
+
+    private static class IsComment implements Predicate<Change> {
+
+        private java.lang.String value;
+
+        public IsComment(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Change e) {
+            return e.isComment(value);
         }
 
     }

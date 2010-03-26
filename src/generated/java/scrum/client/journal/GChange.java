@@ -289,6 +289,57 @@ public abstract class GChange
 
     }
 
+    // --- comment ---
+
+    private java.lang.String comment ;
+
+    public final java.lang.String getComment() {
+        return this.comment ;
+    }
+
+    public final Change setComment(java.lang.String comment) {
+        if (isComment(comment)) return (Change)this;
+        this.comment = comment ;
+        propertyChanged("comment", this.comment);
+        return (Change)this;
+    }
+
+    public final boolean isComment(java.lang.String comment) {
+        return equals(this.comment, comment);
+    }
+
+    private transient CommentModel commentModel;
+
+    public CommentModel getCommentModel() {
+        if (commentModel == null) commentModel = createCommentModel();
+        return commentModel;
+    }
+
+    protected CommentModel createCommentModel() { return new CommentModel(); }
+
+    protected class CommentModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getComment();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setComment(value);
+        }
+
+        @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -299,6 +350,7 @@ public abstract class GChange
         key  = (java.lang.String) props.get("key");
         oldValue  = (java.lang.String) props.get("oldValue");
         newValue  = (java.lang.String) props.get("newValue");
+        comment  = (java.lang.String) props.get("comment");
     }
 
     @Override
@@ -310,6 +362,7 @@ public abstract class GChange
         properties.put("key", this.key);
         properties.put("oldValue", this.oldValue);
         properties.put("newValue", this.newValue);
+        properties.put("comment", this.comment);
     }
 
 }

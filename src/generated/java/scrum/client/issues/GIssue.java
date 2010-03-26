@@ -175,9 +175,6 @@ public abstract class GIssue
         }
 
         @Override
-        public boolean isMandatory() { return true; }
-
-        @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);

@@ -74,6 +74,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	String cChangesBackground = "#FFFFF8";
 	String cChangesBorder = "#FFFFEA";
 	String cChangeDate = cCommentDate;
+	String cChangesCommentBackground = "#F7F7F0";
 
 	String cActionsBackground = cPagePanelHeaderBackground;
 	String cActionsBorder = "#FFC697";
@@ -113,11 +114,6 @@ public class ScreenCssBuilder implements CssBuilder {
 				.displayBlock().padding(3);
 		css.style(".FieldsWidget-fieldLabel").color(cHeaderBackground).lineHeight(22).whiteSpaceNowrap();
 
-		css.style(".AViewEditWidget-viewer").background(cFieldBackground).border(1, "dotted",
-			cNavigatorSelectedItemBackground);
-		css.style(".AViewEditWidget-error").color(cError).background(cErrorBackground).border(1, cError).margin(2)
-				.padding(2);
-
 		css.style(".dnd-drop-allowed").background(cHeaderBackground);
 
 		css.style(".WidgetsTesterWidget .test-content").background("white").color("black").border(1, "#AAA");
@@ -131,10 +127,13 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style(".PunishmentsWidget-tableHeader").padding(10).fontSize(fontSizeTitle).lineHeight(lineHeightTitle);
 
-		css.style(".AViewEditWidget-viewer").cursorPointer().minWidth(16).minHeight(16).displayBlock().padding(3);
+		css.style(".AViewEditWidget-viewer").background(cFieldBackground).border(1, "dotted",
+			cNavigatorSelectedItemBackground).cursorPointer().minWidth(16).minHeight(16).displayBlock().padding(3);
 		css.style(".ARichtextViewEditWidget-editor").height(100).width(96, "%");
 		css.style(".AEditableTextareaWidget-editorPanel").width100();
 		css.style(".Integer-editor").width(10, "%");
+		css.style(".AViewEditWidget-error").color(cError).background(cErrorBackground).border(1, cError).margin(2)
+				.padding(2);
 		css.style(".data-table").borderCollapseCollapse();
 		css.style(".data-table td").border(1, "#ccc").padding(5);
 		css.style(".data-table th").border(1, "#ccc").padding(5).fontWeightBold().textAlignCenter().background("#eee");
@@ -355,7 +354,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".ChangeWidget-header").margin(4, 0, 2, 0);
 		css.style(".ChangeWidget-header-author").floatLeft().marginRight(5);
 		css.style(".ChangeWidget-header-date").floatLeft().marginRight(5).color(cChangeDate);
-		css.style(".ChangeWidget-editor");
+		css.style(".ChangeWidget-comment").marginTop(4);
+		css.style(".ChangeWidget-comment .AViewEditWidget-viewer").background(cChangesCommentBackground);
 	}
 
 	private void blockList(CssRenderer css) {

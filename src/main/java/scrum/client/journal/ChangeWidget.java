@@ -1,6 +1,8 @@
 package scrum.client.journal;
 
 import ilarkesto.gwt.client.ATextWidget;
+import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.admin.User;
 import scrum.client.collaboration.Wiki;
 import scrum.client.common.AScrumWidget;
@@ -61,6 +63,7 @@ public class ChangeWidget extends AScrumWidget {
 		FlowPanel panel = new FlowPanel();
 		panel.add(new Label(change.getLabel()));
 		panel.add(valueWidget);
+		panel.add(Gwt.createDiv("ChangeWidget-comment", new RichtextEditorWidget(change.getCommentModel())));
 		return panel;
 	}
 
