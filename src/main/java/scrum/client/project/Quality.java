@@ -1,12 +1,11 @@
 package scrum.client.project;
 
 import ilarkesto.core.scope.Scope;
-import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 
 import java.util.Map;
 
-import scrum.client.ScrumJs;
+import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.ReferenceSupport;
@@ -39,7 +38,7 @@ public class Quality extends GQuality implements ReferenceSupport, ForumSupport 
 
 	@Override
 	public String toHtml() {
-		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + Gwt.escapeHtml(getLabel());
+		return ScrumGwt.toHtml(getReference(), getLabel());
 	}
 
 	@Override

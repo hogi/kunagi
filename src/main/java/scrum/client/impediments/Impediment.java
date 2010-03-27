@@ -6,7 +6,7 @@ import ilarkesto.gwt.client.HyperlinkWidget;
 import java.util.Comparator;
 import java.util.Map;
 
-import scrum.client.ScrumJs;
+import scrum.client.ScrumGwt;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
@@ -37,7 +37,7 @@ public class Impediment extends GImpediment implements ReferenceSupport, ForumSu
 
 	@Override
 	public String toHtml() {
-		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + getLabel();
+		return ScrumGwt.toHtml(getReference(), getLabel());
 	}
 
 	@Override

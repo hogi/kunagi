@@ -11,6 +11,8 @@ import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Chat;
 import scrum.client.collaboration.ChatMessage;
 import scrum.client.collaboration.Subject;
+import scrum.client.collaboration.Wikipage;
+import scrum.client.common.AScrumGwtEntity;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -55,7 +57,20 @@ public class Dao extends GDao {
 		clearProjectEvents();
 	}
 
-	public AGwtEntity getEntityByReference(String reference) {
+	public void requestEntityByReference(String reference) {
+		app.callRequestEntityByReference(reference);
+	}
+
+	public AScrumGwtEntity getEntityByReference(String reference) {
+
+		if (reference.length() > 4 && reference.startsWith("[[")) {
+			String pageName = reference.substring(2, reference.length() - 2);
+			for (Wikipage e : getWikipages()) {
+				if (e.isName(pageName)) return e;
+			}
+			return null;
+		}
+
 		int number = Integer.parseInt(reference.substring(Requirement.REFERENCE_PREFIX.length()));
 		if (reference.startsWith(Requirement.REFERENCE_PREFIX)) {
 			for (Requirement e : getRequirements()) {

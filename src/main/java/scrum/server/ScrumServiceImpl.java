@@ -497,6 +497,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	protected void onRequestEntityByReference(GwtConversation conversation, String reference) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
+
+		if (reference.length() > 4 && reference.startsWith("[[")) {
+			String pageName = reference.substring(2, reference.length() - 2);
+			conversation.sendToClient(project.getWikipageByName(pageName));
+			return;
+		}
+
 		int number = Integer.parseInt(reference.substring(scrum.client.project.Requirement.REFERENCE_PREFIX.length()));
 		if (reference.startsWith(scrum.client.project.Requirement.REFERENCE_PREFIX)) {
 			conversation.sendToClient(project.getRequirementByNumber(number));

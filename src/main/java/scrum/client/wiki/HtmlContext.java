@@ -4,4 +4,6 @@ public interface HtmlContext {
 
 	String getDownloadUrlByReference(String reference);
 
+	String getEntityLabelByReference(String reference);
+
 }

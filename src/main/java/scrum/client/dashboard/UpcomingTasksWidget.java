@@ -3,7 +3,6 @@ package scrum.client.dashboard;
 import java.util.Collections;
 import java.util.List;
 
-import scrum.client.ScrumJs;
 import scrum.client.common.AScrumWidget;
 import scrum.client.issues.Issue;
 import scrum.client.project.Project;
@@ -73,13 +72,11 @@ public class UpcomingTasksWidget extends AScrumWidget {
 					if (first) sb.append("</ul></li>");
 					req = task.getRequirement();
 					sb.append("<li>");
-					sb.append(ScrumJs.createShowEntityByReferenceLink(req.getReference()));
-					sb.append(" ").append(req.getLabel());
+					sb.append(req.toHtml());
 					sb.append("<ul>");
 				}
 				sb.append("<li>");
-				sb.append(ScrumJs.createShowEntityByReferenceLink(task.getReference()));
-				sb.append(" ").append(task.getLabel());
+				sb.append(task.toHtml());
 				sb.append("</li>");
 				taskCount++;
 				if (taskCount == maxTasks) break;

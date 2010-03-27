@@ -1,11 +1,9 @@
 package scrum.client.files;
 
-import ilarkesto.gwt.client.Gwt;
-
 import java.util.Comparator;
 import java.util.Map;
 
-import scrum.client.ScrumJs;
+import scrum.client.ScrumGwt;
 import scrum.client.common.ReferenceSupport;
 
 public class File extends GFile implements ReferenceSupport {
@@ -27,7 +25,7 @@ public class File extends GFile implements ReferenceSupport {
 
 	@Override
 	public String toHtml() {
-		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + Gwt.escapeHtml(getLabel());
+		return ScrumGwt.toHtml(getReference(), getLabel());
 	}
 
 	@Override

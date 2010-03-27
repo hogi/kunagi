@@ -15,6 +15,7 @@ import scrum.client.collaboration.ForumSupport;
 import scrum.client.collaboration.ForumWidget;
 import scrum.client.collaboration.Subject;
 import scrum.client.collaboration.WikiWidget;
+import scrum.client.collaboration.Wikipage;
 import scrum.client.context.UserHighlightSupport;
 import scrum.client.dashboard.DashboardWidget;
 import scrum.client.files.File;
@@ -152,12 +153,6 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 	public void showEntityByReference(final String reference) {
 		log.debug("Showing entity by reference:", reference);
 
-		if (reference.length() > 4 && reference.startsWith("[[")) {
-			String page = reference.substring(2, reference.length() - 2);
-			showWiki(page);
-			return;
-		}
-
 		AGwtEntity entity = dao.getEntityByReference(reference);
 		if (entity != null) {
 			showEntity(entity);
@@ -201,6 +196,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 			showFile((File) entity);
 		} else if (entity instanceof Sprint) {
 			showSprint((Sprint) entity);
+		} else if (entity instanceof Wikipage) {
+			showWiki((Wikipage) entity);
 		} else if (entity instanceof SimpleEvent) {
 			showCalendar((SimpleEvent) entity);
 		} else if (entity instanceof Project) {
@@ -269,6 +266,11 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 	}
 
 	public void showWiki(String page) {
+		select(wiki);
+		if (page != null) wiki.showPage(page);
+	}
+
+	public void showWiki(Wikipage page) {
 		select(wiki);
 		if (page != null) wiki.showPage(page);
 	}

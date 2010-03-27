@@ -5,7 +5,6 @@ import ilarkesto.gwt.client.TableBuilder;
 import java.util.Map;
 
 import scrum.client.ScrumGwt;
-import scrum.client.ScrumJs;
 import scrum.client.project.Project;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -28,7 +27,7 @@ public class Subject extends GSubject implements ForumSupport {
 
 	@Override
 	public String toHtml() {
-		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + getLabel();
+		return ScrumGwt.toHtml(getReference(), getLabel());
 	}
 
 	public Widget createForumItemWidget() {

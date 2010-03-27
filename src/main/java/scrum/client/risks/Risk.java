@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import scrum.client.ScrumJs;
+import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
@@ -79,7 +79,7 @@ public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport, F
 
 	@Override
 	public String toHtml() {
-		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + Gwt.escapeHtml(getLabel());
+		return ScrumGwt.toHtml(getReference(), getLabel());
 	}
 
 	@Override

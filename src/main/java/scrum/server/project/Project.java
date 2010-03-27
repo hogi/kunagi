@@ -296,6 +296,10 @@ public class Project extends GProject {
 		return simpleEventDao.getSimpleEventByNumber(number, this);
 	}
 
+	public Wikipage getWikipageByName(String name) {
+		return wikipageDao.getWikipageByName(name, this);
+	}
+
 	public synchronized int generateTaskNumber() {
 		int number = getLastTaskNumber() + 1;
 		setLastTaskNumber(number);

@@ -53,4 +53,9 @@ public class ScrumGwt extends Gwt {
 		return createServletDownloadLink("pdf.pdf?pdfId=" + pdfId + "&" + parameters, text);
 	}
 
+	public static String toHtml(String reference, String label) {
+		label = escapeHtml(label);
+		return ScrumJs.createShowEntityByReferenceLink(reference, label) + " " + label;
+	}
+
 }

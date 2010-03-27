@@ -20,7 +20,15 @@ public class EntityReference extends AWikiElement {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<a onclick='window.scrum.showEntityByReference(\"");
 		sb.append(reference);
-		sb.append("\")'>");
+		sb.append("\")");
+		String entityLabel = context.getEntityLabelByReference(reference);
+		if (entityLabel != null) {
+			entityLabel = entityLabel.replace("'", "`");
+			entityLabel = entityLabel.replace("\"", "`");
+			sb.append("' title='");
+			sb.append(entityLabel);
+		}
+		sb.append("'>");
 		sb.append(escapeHtml(label));
 		sb.append("</a>");
 		return sb.toString();

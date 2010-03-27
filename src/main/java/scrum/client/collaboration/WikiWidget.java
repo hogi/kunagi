@@ -109,6 +109,11 @@ public class WikiWidget extends AScrumWidget {
 		update();
 	}
 
+	public void showPage(Wikipage page) {
+		this.pageName = page == null ? null : page.getName();
+		update();
+	}
+
 	class ShowPageAction extends AScrumAction {
 
 		private String prefix;

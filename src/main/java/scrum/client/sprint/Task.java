@@ -6,7 +6,7 @@ import ilarkesto.gwt.client.HyperlinkWidget;
 import java.util.Comparator;
 import java.util.Map;
 
-import scrum.client.ScrumJs;
+import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
@@ -101,7 +101,7 @@ public class Task extends GTask implements ReferenceSupport, ForumSupport {
 
 	@Override
 	public String toHtml() {
-		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + getLabel();
+		return ScrumGwt.toHtml(getReference(), getLabel());
 	}
 
 	@Override

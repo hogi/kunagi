@@ -151,6 +151,10 @@ public class WikiTest extends Assert {
 			return reference;
 		}
 
+		public String getEntityLabelByReference(String reference) {
+			return null;
+		}
+
 	}
 
 }

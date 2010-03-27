@@ -4,7 +4,6 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.DateAndTime;
-import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.LabelProvider;
 
@@ -13,7 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import scrum.client.ScrumJs;
+import scrum.client.ScrumGwt;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.ReferenceSupport;
@@ -156,7 +155,7 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	@Override
 	public String toHtml() {
-		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + Gwt.escapeHtml(getLabel());
+		return ScrumGwt.toHtml(getReference(), getLabel());
 	}
 
 	@Override

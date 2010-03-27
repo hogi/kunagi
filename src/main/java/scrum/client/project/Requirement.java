@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import scrum.client.ScrumJs;
+import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
@@ -282,7 +282,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Forum
 
 	@Override
 	public String toHtml() {
-		return ScrumJs.createShowEntityByReferenceLink(getReference()) + " " + Gwt.escapeHtml(getLabel());
+		return ScrumGwt.toHtml(getReference(), getLabel());
 	}
 
 	@Override
