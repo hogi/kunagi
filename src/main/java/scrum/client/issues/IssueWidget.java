@@ -41,7 +41,7 @@ public class IssueWidget extends AScrumWidget {
 		if (issue.isOpen() && issue.getProject().isProductOwner(getCurrentUser())) {
 			right.addRow(createActionsPanelForOpenIssue(), 2);
 			right.addRow(ScrumGwt.createSpacer(1, 10), 2);
-		} else if (issue.isUrgent() && issue.isFixed() && issue.getProject().isProductOwner(getCurrentUser())) {
+		} else if (issue.isBug() && issue.isFixed() && issue.getProject().isProductOwner(getCurrentUser())) {
 			right.addRow(createActionsPanelForFixedIssue(), 2);
 			right.addRow(ScrumGwt.createSpacer(1, 10), 2);
 		}
