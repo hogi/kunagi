@@ -325,10 +325,12 @@ public class Project extends GProject implements ForumSupport {
 		return getDao().getSubjectsByProject(this);
 	}
 
-	public List<Issue> getOpenIssues() {
+	public List<Issue> getOpenIssues(boolean includeSuspended) {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getIssues()) {
-			if (issue.isOpen()) ret.add(issue);
+			if (!issue.isOpen()) continue;
+			if (!includeSuspended && issue.isSuspended()) continue;
+			ret.add(issue);
 		}
 		return ret;
 	}

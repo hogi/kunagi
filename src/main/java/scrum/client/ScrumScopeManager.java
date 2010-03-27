@@ -13,6 +13,7 @@ import scrum.client.collaboration.UsersStatus;
 import scrum.client.collaboration.Wiki;
 import scrum.client.communication.Pinger;
 import scrum.client.files.Uploader;
+import scrum.client.issues.IssueManager;
 import scrum.client.journal.ChangeHistoryManager;
 import scrum.client.project.Project;
 import scrum.client.search.Search;
@@ -82,6 +83,7 @@ public class ScrumScopeManager {
 		scope.putComponent(new Uploader());
 		scope.putComponent(new Search());
 		scope.putComponent(new UsersStatus());
+		scope.putComponent(new IssueManager());
 
 		projectScope.wireComponents();
 

@@ -38,6 +38,10 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 		header.addMenuAction(new RejectFixIssueAction(issue));
 		header.addMenuAction(new ConvertIssueToRequirementAction(issue));
 		header.addMenuAction(new ReopenIssueAction(issue));
+		header.addMenuAction(new SuspendIssueAction(issue, 7));
+		header.addMenuAction(new SuspendIssueAction(issue, 30));
+		header.addMenuAction(new SuspendIssueAction(issue, 180));
+		header.addMenuAction(new UnsuspendIssueAction(issue));
 		header.addMenuAction(new CloseIssueAction(issue));
 		header.addMenuAction(new ActivateChangeHistoryAction(issue));
 		header.addMenuAction(new DeleteIssueAction(issue));
@@ -57,8 +61,8 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 				statusImage.setTitle("Claimed by " + issue.getOwner().getName());
 			}
 			if (statusIcon != null) statusIcon.setWidget(statusImage);
-			statusSuffix.setText(issue.getStatusLabel());
 		}
+		statusSuffix.setText(issue.getStatusLabel());
 		header.setDragHandle(issue.getReference());
 		header.setCenter(issue.getLabel());
 	}

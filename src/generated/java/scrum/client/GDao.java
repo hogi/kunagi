@@ -814,6 +814,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.issues.Issue> getIssuesBySuspendedUntilDate(ilarkesto.gwt.client.Date suspendedUntilDate) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isSuspendedUntilDate(suspendedUntilDate)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Project ---
 
     private Map<String, scrum.client.project.Project> projects = new HashMap<String, scrum.client.project.Project>();

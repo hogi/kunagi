@@ -69,6 +69,8 @@ public abstract class GIssueDao
         fixDatesCache = null;
         issuesByCloseDateCache.clear();
         closeDatesCache = null;
+        issuesBySuspendedUntilDateCache.clear();
+        suspendedUntilDatesCache = null;
     }
 
     @Override
@@ -632,6 +634,46 @@ public abstract class GIssueDao
 
         public boolean test(Issue e) {
             return e.isCloseDate(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - suspendedUntilDate
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.Date,Set<Issue>> issuesBySuspendedUntilDateCache = new Cache<ilarkesto.base.time.Date,Set<Issue>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<Issue>>() {
+                public Set<Issue> create(ilarkesto.base.time.Date suspendedUntilDate) {
+                    return getEntities(new IsSuspendedUntilDate(suspendedUntilDate));
+                }
+            });
+
+    public final Set<Issue> getIssuesBySuspendedUntilDate(ilarkesto.base.time.Date suspendedUntilDate) {
+        return issuesBySuspendedUntilDateCache.get(suspendedUntilDate);
+    }
+    private Set<ilarkesto.base.time.Date> suspendedUntilDatesCache;
+
+    public final Set<ilarkesto.base.time.Date> getSuspendedUntilDates() {
+        if (suspendedUntilDatesCache == null) {
+            suspendedUntilDatesCache = new HashSet<ilarkesto.base.time.Date>();
+            for (Issue e : getEntities()) {
+                if (e.isSuspendedUntilDateSet()) suspendedUntilDatesCache.add(e.getSuspendedUntilDate());
+            }
+        }
+        return suspendedUntilDatesCache;
+    }
+
+    private static class IsSuspendedUntilDate implements Predicate<Issue> {
+
+        private ilarkesto.base.time.Date value;
+
+        public IsSuspendedUntilDate(ilarkesto.base.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isSuspendedUntilDate(value);
         }
 
     }

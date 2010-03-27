@@ -48,6 +48,8 @@
 "248d69c1-7161-452d-bab1-00c3416d8c32","a1033599-3531-47fc-94ff-49b1b58df2f2","ServiceMethod","ping"
 "453a2303-7c02-4542-910a-2a2b6a110a17","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","files"
 "3c2bfe38-7a70-4484-ad77-df36dad7a1b0","453a2303-7c02-4542-910a-2a2b6a110a17","Component","Uploader"
+"34d8f17a-9772-4951-b00a-7d54b9fba6d0","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","issues"
+"2e5700c6-bcf9-43dd-99a6-5ff5d2f2d0d9","34d8f17a-9772-4951-b00a-7d54b9fba6d0","Component","IssueManager"
 "342e0a36-ad56-49d4-bb2c-47819fa693f9","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","journal"
 "18b81d9f-858d-479d-885b-c336a3b0137f","342e0a36-ad56-49d4-bb2c-47819fa693f9","Component","ChangeHistoryManager"
 "dbf220d9-b506-4545-8e7f-2e514e3b2ea2","18b81d9f-858d-479d-885b-c336a3b0137f","Dependency","app"

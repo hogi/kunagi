@@ -1,6 +1,7 @@
 package scrum.client.issues;
 
 import ilarkesto.core.base.Str;
+import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
@@ -23,6 +24,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
+	private static Log log = Log.get(Issue.class);
+
 	public static final String INIT_TYPE = Types.ISSUE;
 	public static final String REFERENCE_PREFIX = "iss";
 	public static final Integer[] SEVERITY_OPTIONS = { 2, 1, 0, -1 };
@@ -35,6 +38,22 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public Issue(Map data) {
 		super(data);
+	}
+
+	public boolean isSuspended() {
+		Date date = getSuspendedUntilDate();
+		if (date == null) return false;
+		return date.isAfter(Date.today());
+	}
+
+	public void suspend(int days) {
+		Date date = Date.today().addDays(days);
+		log.info("Suspending for", days, "days, until", date);
+		setSuspendedUntilDate(date);
+	}
+
+	public void unsuspend() {
+		setSuspendedUntilDate(null);
 	}
 
 	public void appendStatement(String text) {
@@ -80,6 +99,7 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 			return s;
 		}
 		if (isIdea()) return "accepted on " + getAcceptDate();
+		if (isSuspended()) return "suspended until " + getSuspendedUntilDate();
 		return "issued on " + getDate().getDate();
 	}
 

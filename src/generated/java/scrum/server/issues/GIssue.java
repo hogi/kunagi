@@ -50,6 +50,7 @@ public abstract class GIssue
         properties.put("ownerId", this.ownerId);
         properties.put("fixDate", this.fixDate == null ? null : this.fixDate.toString());
         properties.put("closeDate", this.closeDate == null ? null : this.closeDate.toString());
+        properties.put("suspendedUntilDate", this.suspendedUntilDate == null ? null : this.suspendedUntilDate.toString());
     }
 
     public int compareTo(Issue other) {
@@ -595,6 +596,41 @@ public abstract class GIssue
         setCloseDate((ilarkesto.base.time.Date)value);
     }
 
+    // -----------------------------------------------------------
+    // - suspendedUntilDate
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date suspendedUntilDate;
+
+    public final ilarkesto.base.time.Date getSuspendedUntilDate() {
+        return suspendedUntilDate;
+    }
+
+    public final void setSuspendedUntilDate(ilarkesto.base.time.Date suspendedUntilDate) {
+        suspendedUntilDate = prepareSuspendedUntilDate(suspendedUntilDate);
+        if (isSuspendedUntilDate(suspendedUntilDate)) return;
+        this.suspendedUntilDate = suspendedUntilDate;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.Date prepareSuspendedUntilDate(ilarkesto.base.time.Date suspendedUntilDate) {
+        return suspendedUntilDate;
+    }
+
+    public final boolean isSuspendedUntilDateSet() {
+        return this.suspendedUntilDate != null;
+    }
+
+    public final boolean isSuspendedUntilDate(ilarkesto.base.time.Date suspendedUntilDate) {
+        if (this.suspendedUntilDate == null && suspendedUntilDate == null) return true;
+        return this.suspendedUntilDate != null && this.suspendedUntilDate.equals(suspendedUntilDate);
+    }
+
+    protected final void updateSuspendedUntilDate(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setSuspendedUntilDate((ilarkesto.base.time.Date)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -614,6 +650,7 @@ public abstract class GIssue
             if (property.equals("ownerId")) updateOwner(value);
             if (property.equals("fixDate")) updateFixDate(value);
             if (property.equals("closeDate")) updateCloseDate(value);
+            if (property.equals("suspendedUntilDate")) updateSuspendedUntilDate(value);
         }
     }
 

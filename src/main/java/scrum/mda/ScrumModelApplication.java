@@ -137,6 +137,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			applicationModel.addAction("Logout", getBasePackageName() + ".admin");
 			applicationModel.addAction("ChangeProject", getBasePackageName() + ".project");
 			applicationModel.addAction("RequestClosedIssues", getBasePackageName() + ".issues");
+			applicationModel.addAction("ShowSuspendedIssues", getBasePackageName() + ".issues");
+			applicationModel.addAction("HideSuspendedIssues", getBasePackageName() + ".issues");
 		}
 		return applicationModel;
 	}
@@ -493,6 +495,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addReference("owner", getUserModel());
 			issueModel.addProperty("fixDate", Date.class);
 			issueModel.addProperty("closeDate", Date.class);
+			issueModel.addProperty("suspendedUntilDate", Date.class);
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("ClaimIssue");
 			issueModel.addAction("FixIssue");
@@ -504,6 +507,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addAction("ReopenIssue");
 			issueModel.addAction("ConvertIssueToRequirement");
 			issueModel.addAction("ConvertIssueToQuality");
+			issueModel.addAction("SuspendIssue");
+			issueModel.addAction("UnsuspendIssue");
 		}
 		return issueModel;
 	}

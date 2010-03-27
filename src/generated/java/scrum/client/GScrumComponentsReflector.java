@@ -18,6 +18,8 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     protected ilarkesto.core.scope.ComponentReflector uploaderReflector = createUploaderReflector();
 
+    protected ilarkesto.core.scope.ComponentReflector issueManagerReflector = createIssueManagerReflector();
+
     protected ilarkesto.core.scope.ComponentReflector changeHistoryManagerReflector = createChangeHistoryManagerReflector();
 
     protected ilarkesto.core.scope.ComponentReflector searchReflector = createSearchReflector();
@@ -43,6 +45,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.collaboration.Wiki) wikiReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.communication.Pinger) pingerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.injectComponents(component, scope);
+        if (component instanceof scrum.client.issues.IssueManager) issueManagerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.journal.ChangeHistoryManager) changeHistoryManagerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.search.Search) searchReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.undo.Undo) undoReflector.injectComponents(component, scope);
@@ -62,6 +65,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.collaboration.Wiki) wikiReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.communication.Pinger) pingerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.callInitializationMethods(component);
+        if (component instanceof scrum.client.issues.IssueManager) issueManagerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.journal.ChangeHistoryManager) changeHistoryManagerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.search.Search) searchReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.undo.Undo) undoReflector.callInitializationMethods(component);
@@ -81,6 +85,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.collaboration.Wiki) wikiReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.communication.Pinger) pingerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.outjectComponents(component, scope);
+        if (component instanceof scrum.client.issues.IssueManager) issueManagerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.journal.ChangeHistoryManager) changeHistoryManagerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.search.Search) searchReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.undo.Undo) undoReflector.outjectComponents(component, scope);
@@ -121,6 +126,10 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     public ilarkesto.core.scope.ComponentReflector createUploaderReflector() {
         return new scrum.client.files.GUploaderReflector();
+    }
+
+    public ilarkesto.core.scope.ComponentReflector createIssueManagerReflector() {
+        return new scrum.client.issues.GIssueManagerReflector();
     }
 
     public ilarkesto.core.scope.ComponentReflector createChangeHistoryManagerReflector() {

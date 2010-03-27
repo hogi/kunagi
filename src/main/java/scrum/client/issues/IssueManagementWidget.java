@@ -1,5 +1,6 @@
 package scrum.client.issues;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 
@@ -11,19 +12,24 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.project.Project;
 import scrum.client.workspace.PagePanel;
 
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class IssueManagementWidget extends AScrumWidget {
+
+	private IssueManager issueManager;
 
 	public BlockListWidget<Issue> openList;
 	public BlockListWidget<Issue> bugList;
 	public BlockListWidget<Issue> ideaList;
 	public BlockListWidget<Issue> closedList;
 	private BlockListSelectionManager selectionManager;
+	private SimplePanel suspensionStatusButtonWrapper;
 
 	@Override
 	protected Widget onInitialization() {
 		getApp().callRequestAcceptedIssues();
+		issueManager = Scope.get().getComponent(IssueManager.class);
 
 		selectionManager = new BlockListSelectionManager();
 
@@ -46,11 +52,14 @@ public class IssueManagementWidget extends AScrumWidget {
 		closedList.setSelectionManager(selectionManager);
 		closedList.setAutoSorter(Issue.CLOSE_DATE_COMPARATOR);
 
-		PagePanel pendingPage = new PagePanel();
-		pendingPage.addHeader("issue inbox (decision required)", new ButtonWidget(new CreateIssueAction()));
-		pendingPage.addSection(openList);
+		suspensionStatusButtonWrapper = new SimplePanel();
 
-		return Gwt.createFlowPanel(pendingPage, Gwt.createSpacer(1, 10), PagePanel.createSimple(
+		PagePanel inboxPage = new PagePanel();
+		inboxPage.addHeader("issue inbox (decision required)", new ButtonWidget(new CreateIssueAction()),
+			suspensionStatusButtonWrapper);
+		inboxPage.addSection(openList);
+
+		return Gwt.createFlowPanel(inboxPage, Gwt.createSpacer(1, 10), PagePanel.createSimple(
 			"bugs (Team needs to fix this)", bugList), Gwt.createSpacer(1, 10), PagePanel.createSimple(
 			"ideas (Product owner needs to create stories)", ideaList), Gwt.createSpacer(1, 10), createClosedPage());
 	}
@@ -64,12 +73,16 @@ public class IssueManagementWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		super.onUpdate();
+		suspensionStatusButtonWrapper.setWidget(new ButtonWidget(
+				issueManager.isSuspendedIssuesVisible() ? new HideSuspendedIssuesAction()
+						: new ShowSuspendedIssuesAction()));
+
 		Project project = getCurrentProject();
-		openList.setObjects(project.getOpenIssues());
+		openList.setObjects(project.getOpenIssues(issueManager.isSuspendedIssuesVisible()));
 		bugList.setObjects(project.getBugs());
 		ideaList.setObjects(project.getIdeas());
 		closedList.setObjects(project.getClosedIssues());
+		super.onUpdate();
 	}
 
 	public boolean select(Issue issue) {

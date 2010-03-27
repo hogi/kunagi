@@ -654,6 +654,54 @@ public abstract class GIssue
 
     }
 
+    // --- suspendedUntilDate ---
+
+    private ilarkesto.gwt.client.Date suspendedUntilDate ;
+
+    public final ilarkesto.gwt.client.Date getSuspendedUntilDate() {
+        return this.suspendedUntilDate ;
+    }
+
+    public final Issue setSuspendedUntilDate(ilarkesto.gwt.client.Date suspendedUntilDate) {
+        if (isSuspendedUntilDate(suspendedUntilDate)) return (Issue)this;
+        this.suspendedUntilDate = suspendedUntilDate ;
+        propertyChanged("suspendedUntilDate", this.suspendedUntilDate);
+        return (Issue)this;
+    }
+
+    public final boolean isSuspendedUntilDate(ilarkesto.gwt.client.Date suspendedUntilDate) {
+        return equals(this.suspendedUntilDate, suspendedUntilDate);
+    }
+
+    private transient SuspendedUntilDateModel suspendedUntilDateModel;
+
+    public SuspendedUntilDateModel getSuspendedUntilDateModel() {
+        if (suspendedUntilDateModel == null) suspendedUntilDateModel = createSuspendedUntilDateModel();
+        return suspendedUntilDateModel;
+    }
+
+    protected SuspendedUntilDateModel createSuspendedUntilDateModel() { return new SuspendedUntilDateModel(); }
+
+    protected class SuspendedUntilDateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public ilarkesto.gwt.client.Date getValue() {
+            return getSuspendedUntilDate();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.Date value) {
+            setSuspendedUntilDate(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -675,6 +723,8 @@ public abstract class GIssue
         fixDate  =  fixDateAsString == null ? null : new ilarkesto.gwt.client.Date(fixDateAsString);
         String closeDateAsString = (String) props.get("closeDate");
         closeDate  =  closeDateAsString == null ? null : new ilarkesto.gwt.client.Date(closeDateAsString);
+        String suspendedUntilDateAsString = (String) props.get("suspendedUntilDate");
+        suspendedUntilDate  =  suspendedUntilDateAsString == null ? null : new ilarkesto.gwt.client.Date(suspendedUntilDateAsString);
     }
 
     @Override
@@ -694,6 +744,7 @@ public abstract class GIssue
         properties.put("ownerId", this.ownerId);
         properties.put("fixDate", this.fixDate == null ? null : this.fixDate.toString());
         properties.put("closeDate", this.closeDate == null ? null : this.closeDate.toString());
+        properties.put("suspendedUntilDate", this.suspendedUntilDate == null ? null : this.suspendedUntilDate.toString());
     }
 
     @Override
