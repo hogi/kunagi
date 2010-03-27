@@ -11,10 +11,12 @@ import java.util.Map;
 import scrum.client.ApplicationInfo;
 import scrum.client.Dao;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.collaboration.Comment;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
 import scrum.client.issues.Issue;
 import scrum.client.project.Requirement;
+import scrum.client.sprint.Task;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Label;
@@ -50,9 +52,11 @@ public class ScrumStatusWidget extends AScrumWidget {
 	private Widget createGenerators() {
 		TableBuilder tb = new TableBuilder();
 		tb.setWidth(null);
-		tb.setCellSpacing(5);
+		tb.setCellPadding(5);
 		tb.addRow(new ButtonWidget(new GenerateRequirementsAction()));
 		tb.addRow(new ButtonWidget(new GenerateIssuesAction()));
+		tb.addRow(new ButtonWidget(new GenerateTasksAction()));
+		tb.addRow(new ButtonWidget(new GenerateCommentsAction()));
 		return tb.createTable();
 	}
 
@@ -66,6 +70,46 @@ public class ScrumStatusWidget extends AScrumWidget {
 		}
 		entityCountWrapper.setWidget(tb.createTable());
 		super.onUpdate();
+	}
+
+	class GenerateCommentsAction extends AScrumAction {
+
+		@Override
+		public String getLabel() {
+			return "Generate Comments";
+		}
+
+		@Override
+		protected void onExecute() {
+			DateAndTime time = DateAndTime.now();
+			Requirement req = getCurrentProject().getCurrentSprint().getRequirements().get(0);
+			for (int i = 0; i < COUNT; i++) {
+				Comment comment = new Comment(req, getCurrentUser(), time + " " + longText());
+				dao.createComment(comment);
+			}
+		}
+
+	}
+
+	class GenerateTasksAction extends AScrumAction {
+
+		@Override
+		public String getLabel() {
+			return "Generate Tasks";
+		}
+
+		@Override
+		protected void onExecute() {
+			DateAndTime time = DateAndTime.now();
+			Requirement req = getCurrentProject().getCurrentSprint().getRequirements().get(0);
+			for (int i = 0; i < COUNT; i++) {
+				Task task = new Task(req);
+				task.setLabel("Generated Task " + time + " - #" + i);
+				task.setDescription(longText());
+				dao.createTask(task);
+			}
+		}
+
 	}
 
 	class GenerateIssuesAction extends AScrumAction {
