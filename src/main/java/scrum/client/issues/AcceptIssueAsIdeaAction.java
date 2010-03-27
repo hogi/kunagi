@@ -27,8 +27,7 @@ public class AcceptIssueAsIdeaAction extends GAcceptIssueAsIdeaAction {
 
 	@Override
 	public boolean isExecutable() {
-		if (issue.isClosed()) return false;
-		if (issue.isIdea()) return false;
+		if (!issue.isOpen()) return false;
 		return true;
 	}
 
