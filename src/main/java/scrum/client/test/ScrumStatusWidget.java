@@ -13,6 +13,7 @@ import scrum.client.Dao;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
+import scrum.client.issues.Issue;
 import scrum.client.project.Requirement;
 import scrum.client.workspace.PagePanel;
 
@@ -50,7 +51,8 @@ public class ScrumStatusWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setWidth(null);
 		tb.setCellSpacing(5);
-		tb.addRow(new ButtonWidget(new GenerateStoriesAction()));
+		tb.addRow(new ButtonWidget(new GenerateRequirementsAction()));
+		tb.addRow(new ButtonWidget(new GenerateIssuesAction()));
 		return tb.createTable();
 	}
 
@@ -66,7 +68,27 @@ public class ScrumStatusWidget extends AScrumWidget {
 		super.onUpdate();
 	}
 
-	class GenerateStoriesAction extends AScrumAction {
+	class GenerateIssuesAction extends AScrumAction {
+
+		@Override
+		public String getLabel() {
+			return "Generate Issues";
+		}
+
+		@Override
+		protected void onExecute() {
+			DateAndTime time = DateAndTime.now();
+			for (int i = 0; i < COUNT; i++) {
+				Issue issue = new Issue(getCurrentProject());
+				issue.setLabel("Generated Issue " + time + " - #" + i);
+				issue.setDescription(longText());
+				dao.createIssue(issue);
+			}
+		}
+
+	}
+
+	class GenerateRequirementsAction extends AScrumAction {
 
 		@Override
 		public String getLabel() {
@@ -76,17 +98,30 @@ public class ScrumStatusWidget extends AScrumWidget {
 		@Override
 		protected void onExecute() {
 			DateAndTime time = DateAndTime.now();
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < COUNT; i++) {
 				final Requirement req = new Requirement(getCurrentProject());
 				req.setLabel("Generated Story " + time + " - #" + i);
-				req
-						.setDescription("A description for the generated Story. A description for the generated Story. A description for the generated Story. A description for the generated Story. A description for the generated Story. A description for the generated Story. A description for the generated Story. A description for the generated Story. A description for the generated Story. ");
-				req
-						.setTestDescription("A test description for the generated Story. A test description for the generated Story. A test description for the generated Story. A test description for the generated Story. A test description for the generated Story. A test description for the generated Story. A test description for the generated Story. ");
+				req.setDescription(longText());
+				req.setTestDescription(longText());
 				dao.createRequirement(req);
 			}
 		}
 
 	}
+
+	private static String longText() {
+		return text(10);
+	}
+
+	private static String text(int lines) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < lines; i++) {
+			sb
+					.append("This is stupid text. You should not waste your time to read it. There is nothing valuable to find.\n");
+		}
+		return sb.toString();
+	}
+
+	private static final int COUNT = 10;
 
 }
