@@ -67,6 +67,9 @@ public interface GImageBundle
     @Resource(value="reqPoker.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype reqPoker();
 
+    @Resource(value="reqRejected.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype reqRejected();
+
     @Resource(value="reqTasksClosed.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype reqTasksClosed();
 

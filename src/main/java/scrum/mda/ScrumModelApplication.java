@@ -274,6 +274,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addStringProperty("testDescription").setRichtext(true).setEditablePredicate("editable")
 					.setSearchable(true);
 			requirementModel.addProperty("estimatedWork", Float.class);
+			requirementModel.addProperty("rejectDate", Date.class);
 			requirementModel.addProperty("closed", boolean.class);
 			requirementModel.addProperty("dirty", boolean.class);
 			requirementModel.addProperty("workEstimationVotingActive", boolean.class);
@@ -285,6 +286,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addAction("SetRequirementDirty");
 			requirementModel.addAction("SetRequirementClean");
 			requirementModel.addAction("CloseRequirement");
+			requirementModel.addAction("RejectRequirement");
+			requirementModel.addAction("FixRequirement");
 			requirementModel.addAction("ReopenRequirement");
 			requirementModel.addAction("StartRequirementEstimationVoting");
 			requirementModel.addAction("CloseRequirementEstimationVoting");

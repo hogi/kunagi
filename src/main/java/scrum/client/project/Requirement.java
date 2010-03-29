@@ -1,6 +1,7 @@
 package scrum.client.project;
 
 import ilarkesto.core.scope.Scope;
+import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 
@@ -43,6 +44,27 @@ public class Requirement extends GRequirement implements ReferenceSupport, Forum
 
 	public Requirement(Map data) {
 		super(data);
+	}
+
+	public boolean isDecidable() {
+		if (!isTasksClosed()) return false;
+		if (getRejectDate() != null) return false;
+		return true;
+	}
+
+	public boolean isRejected() {
+		if (isClosed()) return false;
+		if (!isTasksClosed()) return false;
+		if (!isInCurrentSprint()) return false;
+		return getRejectDate() != null;
+	}
+
+	public void reject() {
+		setRejectDate(Date.today());
+	}
+
+	public void fix() {
+		setRejectDate(null);
 	}
 
 	public String getEstimatedWorkAsString() {

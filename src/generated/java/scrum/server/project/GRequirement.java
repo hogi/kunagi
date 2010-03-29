@@ -44,6 +44,7 @@ public abstract class GRequirement
         properties.put("description", this.description);
         properties.put("testDescription", this.testDescription);
         properties.put("estimatedWork", this.estimatedWork);
+        properties.put("rejectDate", this.rejectDate == null ? null : this.rejectDate.toString());
         properties.put("closed", this.closed);
         properties.put("dirty", this.dirty);
         properties.put("workEstimationVotingActive", this.workEstimationVotingActive);
@@ -430,6 +431,41 @@ public abstract class GRequirement
     }
 
     // -----------------------------------------------------------
+    // - rejectDate
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date rejectDate;
+
+    public final ilarkesto.base.time.Date getRejectDate() {
+        return rejectDate;
+    }
+
+    public final void setRejectDate(ilarkesto.base.time.Date rejectDate) {
+        rejectDate = prepareRejectDate(rejectDate);
+        if (isRejectDate(rejectDate)) return;
+        this.rejectDate = rejectDate;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.Date prepareRejectDate(ilarkesto.base.time.Date rejectDate) {
+        return rejectDate;
+    }
+
+    public final boolean isRejectDateSet() {
+        return this.rejectDate != null;
+    }
+
+    public final boolean isRejectDate(ilarkesto.base.time.Date rejectDate) {
+        if (this.rejectDate == null && rejectDate == null) return true;
+        return this.rejectDate != null && this.rejectDate.equals(rejectDate);
+    }
+
+    protected final void updateRejectDate(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setRejectDate((ilarkesto.base.time.Date)value);
+    }
+
+    // -----------------------------------------------------------
     // - closed
     // -----------------------------------------------------------
 
@@ -558,6 +594,7 @@ public abstract class GRequirement
             if (property.equals("description")) updateDescription(value);
             if (property.equals("testDescription")) updateTestDescription(value);
             if (property.equals("estimatedWork")) updateEstimatedWork(value);
+            if (property.equals("rejectDate")) updateRejectDate(value);
             if (property.equals("closed")) updateClosed(value);
             if (property.equals("dirty")) updateDirty(value);
             if (property.equals("workEstimationVotingActive")) updateWorkEstimationVotingActive(value);

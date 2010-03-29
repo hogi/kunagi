@@ -95,7 +95,7 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 
 	@Override
 	protected Widget onExtendedInitialization() {
-		return new RequirementWidget(getObject(), true, true, false, true, true, true);
+		return new RequirementWidget(getObject(), true, true, false, true, true, true, false);
 	}
 
 	public AScrumAction getTrashAction() {

@@ -58,6 +58,8 @@ public abstract class GRequirementDao
         testDescriptionsCache = null;
         requirementsByEstimatedWorkCache.clear();
         estimatedWorksCache = null;
+        requirementsByRejectDateCache.clear();
+        rejectDatesCache = null;
         requirementsByClosedCache.clear();
         requirementsByDirtyCache.clear();
         requirementsByWorkEstimationVotingActiveCache.clear();
@@ -396,6 +398,46 @@ public abstract class GRequirementDao
 
         public boolean test(Requirement e) {
             return e.isEstimatedWork(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - rejectDate
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.Date,Set<Requirement>> requirementsByRejectDateCache = new Cache<ilarkesto.base.time.Date,Set<Requirement>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<Requirement>>() {
+                public Set<Requirement> create(ilarkesto.base.time.Date rejectDate) {
+                    return getEntities(new IsRejectDate(rejectDate));
+                }
+            });
+
+    public final Set<Requirement> getRequirementsByRejectDate(ilarkesto.base.time.Date rejectDate) {
+        return requirementsByRejectDateCache.get(rejectDate);
+    }
+    private Set<ilarkesto.base.time.Date> rejectDatesCache;
+
+    public final Set<ilarkesto.base.time.Date> getRejectDates() {
+        if (rejectDatesCache == null) {
+            rejectDatesCache = new HashSet<ilarkesto.base.time.Date>();
+            for (Requirement e : getEntities()) {
+                if (e.isRejectDateSet()) rejectDatesCache.add(e.getRejectDate());
+            }
+        }
+        return rejectDatesCache;
+    }
+
+    private static class IsRejectDate implements Predicate<Requirement> {
+
+        private ilarkesto.base.time.Date value;
+
+        public IsRejectDate(ilarkesto.base.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(Requirement e) {
+            return e.isRejectDate(value);
         }
 
     }

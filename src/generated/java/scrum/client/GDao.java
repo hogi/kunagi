@@ -1522,6 +1522,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Requirement> getRequirementsByRejectDate(ilarkesto.gwt.client.Date rejectDate) {
+        List<scrum.client.project.Requirement> ret = new ArrayList<scrum.client.project.Requirement>();
+        for (scrum.client.project.Requirement entity : requirements.values()) {
+            if (entity.isRejectDate(rejectDate)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.project.Requirement> getRequirementsByClosed(boolean closed) {
         List<scrum.client.project.Requirement> ret = new ArrayList<scrum.client.project.Requirement>();
         for (scrum.client.project.Requirement entity : requirements.values()) {

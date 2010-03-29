@@ -12,6 +12,8 @@ import scrum.client.img.Img;
 import scrum.client.journal.ActivateChangeHistoryAction;
 import scrum.client.journal.ChangeHistoryWidget;
 import scrum.client.project.CloseRequirementAction;
+import scrum.client.project.FixRequirementAction;
+import scrum.client.project.RejectRequirementAction;
 import scrum.client.project.RemoveRequirementFromSprintAction;
 import scrum.client.project.ReopenRequirementAction;
 import scrum.client.project.Requirement;
@@ -28,19 +30,26 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 
 	private BlockListWidget<Task> taskList;
 	private RequirementWidget requirementWidget;
-	private Widget right;
+	private FlowPanel right;
 	private FlexTable bodyWidget;
 	private ChangeHistoryWidget changeHistoryWidget;
 
 	private SimplePanel statusIcon;
 	private Label statusLabel;
 
+	private boolean decidableOnInitialization;
+
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Requirement requirement = getObject();
+
+		decidableOnInitialization = requirement.isDecidable();
+
 		statusIcon = header.insertPrefixIcon();
 		statusLabel = header.appendCenterSuffix("");
 		header.appendCell(new EmoticonsWidget(requirement), null, true, true, null);
+		header.addMenuAction(new RejectRequirementAction(requirement));
+		header.addMenuAction(new FixRequirementAction(requirement));
 		header.addMenuAction(new CloseRequirementAction(requirement));
 		header.addMenuAction(new ReopenRequirementAction(requirement));
 		header.addMenuAction(new RemoveRequirementFromSprintAction(requirement));
@@ -49,13 +58,21 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 	}
 
 	@Override
+	protected boolean isResetRequired() {
+		return decidableOnInitialization != getObject().isDecidable();
+	}
+
+	@Override
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Requirement requirement = getObject();
 		header.setDragHandle(requirement.getReference());
 		Image statusImage = null;
-		if (requirement.isClosed()) {
+		if (requirement.isRejected()) {
+			statusImage = Img.bundle.reqRejected().createImage();
+			statusImage.setTitle("Rejected.");
+		} else if (requirement.isClosed()) {
 			statusImage = Img.bundle.reqClosed().createImage();
-			statusImage.setTitle("Closed.");
+			statusImage.setTitle("Accepted.");
 		} else if (requirement.isTasksClosed()) {
 			statusImage = Img.bundle.reqTasksClosed().createImage();
 			statusImage.setTitle("All tasks done.");
@@ -69,16 +86,22 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 	protected Widget onExtendedInitialization() {
 		Requirement requirement = getObject();
 
-		requirementWidget = new RequirementWidget(requirement, false, false, true, false, false, false);
+		requirementWidget = new RequirementWidget(requirement, false, false, true, false, false, false, false);
 		taskList = new BlockListWidget<Task>(TaskInRequirementBlock.FACTORY);
 		taskList.setAutoSorter(Task.NUMBER_COMPARATOR);
-		right = ScrumGwt.createEmoticonsAndComments(requirement);
 		changeHistoryWidget = new ChangeHistoryWidget(requirement);
 
 		FlowPanel left = new FlowPanel();
 		left.add(requirementWidget);
 		left.add(taskList);
 		left.add(changeHistoryWidget);
+
+		right = new FlowPanel();
+		if (requirement.isDecidable() && requirement.getProject().isProductOwner(getCurrentUser())) {
+			right.add(RequirementWidget.createActionsPanelForCompletedRequirement(requirement));
+			right.add(Gwt.createSpacer(1, 10));
+		}
+		right.add(ScrumGwt.createEmoticonsAndComments(requirement));
 
 		bodyWidget = TableBuilder.row(20, left, right);
 		return bodyWidget;

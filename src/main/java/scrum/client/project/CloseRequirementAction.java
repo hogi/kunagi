@@ -10,34 +10,35 @@ public class CloseRequirementAction extends GCloseRequirementAction {
 
 	@Override
 	public String getLabel() {
-		return "Close";
+		return "Accept";
 	}
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Close this Story.");
+		TooltipBuilder tb = new TooltipBuilder("Accept this Story as completed.");
 
 		if (!getCurrentProject().isProductOwner(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 		} else {
 			if (requirement.isClosed()) tb.addRemark("Story is already closed.");
-			// if (requirement.getRemainingWork() > 0) tb.addRemark("Requirement contains unclosed tasks.");
+			if (!requirement.getTasks().isEmpty() && !requirement.isTasksClosed())
+				tb.addRemark("Requirement contains unclosed tasks.");
 		}
 
 		return tb.getTooltip();
 	}
 
 	@Override
-	public boolean isExecutable() {
-		if (requirement.isClosed()) return false;
-		if (!requirement.isInCurrentSprint()) return false;
+	public boolean isPermitted() {
+		if (!getCurrentProject().isProductOwner(getCurrentUser())) return false;
+		if (!requirement.isTasksClosed()) return false;
 		return true;
 	}
 
 	@Override
-	public boolean isPermitted() {
-		if (!getCurrentProject().isProductOwner(getCurrentUser())) return false;
-		// if (requirement.getRemainingWork() > 0) return false;
+	public boolean isExecutable() {
+		if (requirement.isClosed()) return false;
+		if (!requirement.isInCurrentSprint()) return false;
 		return true;
 	}
 

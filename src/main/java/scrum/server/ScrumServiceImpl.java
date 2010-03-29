@@ -181,6 +181,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			issue.setCreator(conversation.getSession().getUser());
 		}
 
+		if (entity instanceof Task) {
+			Task task = (Task) entity;
+			task.getRequirement().setRejectDate(null);
+		}
+
 		if (!(entity instanceof Transient)) dao.saveEntity(entity);
 
 		sendToClients(conversation, entity);
@@ -266,12 +271,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Task) {
 			// update sprint day snapshot after change
 			Task task = (Task) entity;
-			task.getRequirement().getSprint().getDaySnapshot(Date.today()).update();
+			Requirement requirement = task.getRequirement();
+			requirement.getSprint().getDaySnapshot(Date.today()).update();
 
 			if (task.isClosed() && properties.containsKey("remainingWork")) {
 				String event = currentUser.getName() + " closed " + task.getReferenceAndLabel();
-				if (task.getRequirement().isTasksClosed()) {
-					event += ", all tasks closed in " + task.getRequirement().getReferenceAndLabel();
+				if (requirement.isTasksClosed()) {
+					event += ", all tasks closed in " + requirement.getReferenceAndLabel();
 				}
 				postProjectEvent(conversation, event);
 			} else if (task.isOwnerSet() && properties.containsKey("ownerId")) {
@@ -279,6 +285,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 			if (!task.isOwnerSet() && properties.containsKey("ownerId")) {
 				postProjectEvent(conversation, currentUser.getName() + " unclaimed " + task.getReferenceAndLabel());
+			}
+			if (!task.isClosed() && requirement.isRejectDateSet()) {
+				requirement.setRejectDate(null);
+				sendToClients(conversation, requirement);
 			}
 		}
 
@@ -291,6 +301,16 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 					|| properties.containsKey("qualitysIds")) {
 				requirement.setDirty(true);
 				conversation.sendToClient(requirement);
+			}
+
+			if (properties.containsKey("rejectDate") && requirement.isRejectDateSet()) {
+				postProjectEvent(conversation, currentUser.getName() + " rejected "
+						+ requirement.getReferenceAndLabel());
+			}
+
+			if (properties.containsKey("accepted") && requirement.isRejectDateSet()) {
+				postProjectEvent(conversation, currentUser.getName() + " accepted "
+						+ requirement.getReferenceAndLabel());
 			}
 
 			if (sprint != previousRequirementSprint) {

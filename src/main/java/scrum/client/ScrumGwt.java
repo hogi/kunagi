@@ -15,6 +15,7 @@ public class ScrumGwt extends Gwt {
 	public static Widget createEmoticonsAndComments(AScrumGwtEntity entity) {
 		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.addFieldRow("My emoticon", new EmoticonSelectorWidget(entity));
+		tb.addRow(Gwt.createSpacer(1, 5));
 		tb.addRow(new CommentsWidget(entity), 2);
 		return tb.createTable();
 	}

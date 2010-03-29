@@ -392,6 +392,54 @@ public abstract class GRequirement
 
     }
 
+    // --- rejectDate ---
+
+    private ilarkesto.gwt.client.Date rejectDate ;
+
+    public final ilarkesto.gwt.client.Date getRejectDate() {
+        return this.rejectDate ;
+    }
+
+    public final Requirement setRejectDate(ilarkesto.gwt.client.Date rejectDate) {
+        if (isRejectDate(rejectDate)) return (Requirement)this;
+        this.rejectDate = rejectDate ;
+        propertyChanged("rejectDate", this.rejectDate);
+        return (Requirement)this;
+    }
+
+    public final boolean isRejectDate(ilarkesto.gwt.client.Date rejectDate) {
+        return equals(this.rejectDate, rejectDate);
+    }
+
+    private transient RejectDateModel rejectDateModel;
+
+    public RejectDateModel getRejectDateModel() {
+        if (rejectDateModel == null) rejectDateModel = createRejectDateModel();
+        return rejectDateModel;
+    }
+
+    protected RejectDateModel createRejectDateModel() { return new RejectDateModel(); }
+
+    protected class RejectDateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public ilarkesto.gwt.client.Date getValue() {
+            return getRejectDate();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.Date value) {
+            setRejectDate(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- closed ---
 
     private boolean closed ;
@@ -479,6 +527,8 @@ public abstract class GRequirement
         description  = (java.lang.String) props.get("description");
         testDescription  = (java.lang.String) props.get("testDescription");
         estimatedWork  = (java.lang.Float) props.get("estimatedWork");
+        String rejectDateAsString = (String) props.get("rejectDate");
+        rejectDate  =  rejectDateAsString == null ? null : new ilarkesto.gwt.client.Date(rejectDateAsString);
         closed  = (Boolean) props.get("closed");
         dirty  = (Boolean) props.get("dirty");
         workEstimationVotingActive  = (Boolean) props.get("workEstimationVotingActive");
@@ -496,6 +546,7 @@ public abstract class GRequirement
         properties.put("description", this.description);
         properties.put("testDescription", this.testDescription);
         properties.put("estimatedWork", this.estimatedWork);
+        properties.put("rejectDate", this.rejectDate == null ? null : this.rejectDate.toString());
         properties.put("closed", this.closed);
         properties.put("dirty", this.dirty);
         properties.put("workEstimationVotingActive", this.workEstimationVotingActive);
