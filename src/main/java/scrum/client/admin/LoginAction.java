@@ -39,11 +39,10 @@ public class LoginAction extends GLoginAction {
 					User user = getCurrentUser();
 					Log.DEBUG("Login succeded:", user);
 					Project project = user.getCurrentProject();
+					ScrumScopeManager.createUserScope(user);
 					if (project == null || user.isAdmin()) {
-						ScrumScopeManager.createUserScope(user);
 						Scope.get().getComponent(UsersWorkspaceWidgets.class).activate();
 					} else {
-						ScrumScopeManager.createUserScope(user);
 						ScrumScopeManager.createProjectScope(project);
 					}
 				}
