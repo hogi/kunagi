@@ -21,7 +21,7 @@ public class FileDownloadServlet extends AHttpServlet {
 		String reference = req.getParameter("reference");
 		if (fileId == null && reference == null) throw new RuntimeException("fileId==null && reference==null");
 
-		Project project = session.getGwtConversation().getProject();
+		Project project = getProject(session, req);
 		File file;
 
 		if (fileId != null) {

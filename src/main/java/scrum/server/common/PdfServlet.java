@@ -3,7 +3,6 @@ package scrum.server.common;
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.time.Date;
 import ilarkesto.pdf.itext.PdfBuilder;
-import ilarkesto.persistence.AEntity;
 import ilarkesto.webapp.Servlet;
 
 import java.io.IOException;
@@ -11,14 +10,12 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.calendar.CalendarPdfCreator;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.collaboration.WikipagePdfCreator;
 import scrum.server.impediments.ImpedimentListPdfCreator;
 import scrum.server.project.ProductBacklogPdfCreator;
-import scrum.server.project.Project;
 import scrum.server.risks.RiskListPdfCreator;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintBacklogPdfCreator;
@@ -40,34 +37,34 @@ public class PdfServlet extends AHttpServlet {
 	private APdfCreator createCalendar(HttpServletRequest req, WebSession session) {
 		Date from = new Date(req.getParameter("from"));
 		Date to = new Date(req.getParameter("to"));
-		return new CalendarPdfCreator(getProject(session), from, to);
+		return new CalendarPdfCreator(getProject(session, req), from, to);
 	}
 
 	private APdfCreator createRiskList(HttpServletRequest req, WebSession session) {
-		return new RiskListPdfCreator(getProject(session));
+		return new RiskListPdfCreator(getProject(session, req));
 	}
 
 	private APdfCreator createImpedimentList(HttpServletRequest req, WebSession session) {
-		return new ImpedimentListPdfCreator(getProject(session));
+		return new ImpedimentListPdfCreator(getProject(session, req));
 	}
 
 	private APdfCreator createSprintBacklog(HttpServletRequest req, WebSession session) {
-		return new SprintBacklogPdfCreator(getProject(session));
+		return new SprintBacklogPdfCreator(getProject(session, req));
 	}
 
 	private APdfCreator createProductBacklog(HttpServletRequest req, WebSession session) {
-		return new ProductBacklogPdfCreator(getProject(session));
+		return new ProductBacklogPdfCreator(getProject(session, req));
 	}
 
 	private APdfCreator createWikipage(HttpServletRequest req, WebSession session) {
 		Wikipage wikipage = getEntityByParameter(req, Wikipage.class);
-		if (!wikipage.isProject(getProject(session))) throw new PermissionDeniedException();
+		if (!wikipage.isProject(getProject(session, req))) throw new PermissionDeniedException();
 		return new WikipagePdfCreator(wikipage);
 	}
 
 	private APdfCreator createSprintReport(HttpServletRequest req, WebSession session) {
 		Sprint sprint = getEntityByParameter(req, Sprint.class);
-		if (!sprint.isProject(getProject(session))) throw new PermissionDeniedException();
+		if (!sprint.isProject(getProject(session, req))) throw new PermissionDeniedException();
 		return new SprintReportPdfCreator(sprint);
 	}
 
@@ -78,31 +75,11 @@ public class PdfServlet extends AHttpServlet {
 		APdfCreator creator = getPdfCreator(pdfId, req, session);
 
 		resp.setContentType("application/pdf");
-		Servlet.setFilename(creator.getFilename(), resp);
+		Servlet.setFilename(creator.getFilename() + ".pdf", resp);
 
 		PdfBuilder pdf = new PdfBuilder();
 		creator.build(pdf);
 		pdf.write(resp.getOutputStream());
-	}
-
-	protected String getFilename() {
-		return null;
-	}
-
-	// --- helper ---
-
-	protected <E extends AEntity> E getEntityByParameter(HttpServletRequest req, Class<E> type) {
-		return getEntityByParameter(req, "entityId", type);
-	}
-
-	protected <E extends AEntity> E getEntityByParameter(HttpServletRequest req, String parameterName, Class<E> type) {
-		String id = req.getParameter(parameterName);
-		if (id == null) throw new RuntimeException(parameterName + "==null");
-		return (E) ScrumWebApplication.get().getDaoService().getById(id);
-	}
-
-	protected Project getProject(WebSession session) {
-		return session.getGwtConversation().getProject();
 	}
 
 }

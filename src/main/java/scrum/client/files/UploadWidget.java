@@ -6,10 +6,12 @@ import gwtupload.client.SingleUploader;
 import gwtupload.client.Uploader;
 import gwtupload.client.IUploadStatus.Status;
 import ilarkesto.core.logging.Log;
+import ilarkesto.core.scope.Scope;
 
 import java.util.Set;
 
 import scrum.client.common.AScrumWidget;
+import scrum.client.project.Project;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -17,10 +19,13 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class UploadWidget extends AScrumWidget {
+
+	private static final Log log = Log.get(UploadWidget.class);
 
 	private FormFlowPanel formPanel = new FormFlowPanel();
 	private Button button = new Button();
@@ -103,7 +108,8 @@ public class UploadWidget extends AScrumWidget {
 		}
 
 		public void setError(String error) {
-			Log.DEBUG("----------------------> setError()", error);
+			log.error("Upload failed: " + error);
+			statusLabel.setText(error);
 		}
 
 		public void setFileName(String name) {
@@ -149,6 +155,10 @@ public class UploadWidget extends AScrumWidget {
 
 		public FormFlowPanel() {
 			super.add(formElements);
+			Project project = Scope.get().getComponent(Project.class);
+			Hidden projectIdField = new Hidden("projectId", project.getId());
+			projectIdField.setName("projectId");
+			add(projectIdField);
 		}
 
 		@Override

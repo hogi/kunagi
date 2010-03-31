@@ -1,6 +1,8 @@
 package scrum.server.common;
 
+import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.core.logging.Log;
+import ilarkesto.persistence.AEntity;
 import ilarkesto.webapp.Servlet;
 
 import java.io.IOException;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
+import scrum.server.project.Project;
 
 public abstract class AHttpServlet extends HttpServlet {
 
@@ -56,6 +59,24 @@ public abstract class AHttpServlet extends HttpServlet {
 	@Override
 	public final void init() throws ServletException {
 		super.init();
+	}
+
+	// --- helper ---
+
+	public static <E extends AEntity> E getEntityByParameter(HttpServletRequest req, Class<E> type) {
+		return getEntityByParameter(req, "entityId", type);
+	}
+
+	public static <E extends AEntity> E getEntityByParameter(HttpServletRequest req, String parameterName, Class<E> type) {
+		String id = req.getParameter(parameterName);
+		if (id == null) throw new RuntimeException(parameterName + "==null");
+		return (E) ScrumWebApplication.get().getDaoService().getById(id);
+	}
+
+	public static Project getProject(WebSession session, HttpServletRequest req) {
+		Project project = getEntityByParameter(req, "projectId", Project.class);
+		if (!project.isVisibleFor(session.getUser())) throw new PermissionDeniedException();
+		return project;
 	}
 
 }

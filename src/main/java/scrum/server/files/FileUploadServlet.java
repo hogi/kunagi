@@ -6,6 +6,7 @@ import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,15 +20,31 @@ import scrum.server.project.Project;
 
 public class FileUploadServlet extends UploadAction {
 
-	private static final Log LOG = Log.get(FileUploadServlet.class);
+	private static final Log log = Log.get(FileUploadServlet.class);
 
 	@Override
-	public String executeAction(HttpServletRequest request, List<FileItem> sessionFiles) throws UploadActionException {
+	public String executeAction(HttpServletRequest req, List<FileItem> sessionFiles) throws UploadActionException {
+		sessionFiles = new ArrayList<FileItem>(sessionFiles);
+		String projectId = null;
+		for (FileItem item : new ArrayList<FileItem>(sessionFiles)) {
+			String fieldName = item.getFieldName();
+			if (item.isFormField()) {
+				log.debug(fieldName, "->", item.getString());
+				sessionFiles.remove(item);
+				if (fieldName.equals("projectId")) projectId = item.getString();
+			} else {
+				log.debug(fieldName, "-> [file]");
+			}
+		}
+		if (projectId == null) throw new RuntimeException("projectId == null");
 		if (sessionFiles.size() != 1) throw new IllegalStateException("sessionFiles.size() == " + sessionFiles.size());
 
 		ScrumWebApplication webApp = ScrumWebApplication.get();
-		WebSession session = (WebSession) webApp.getWebSession(request);
-		Project project = session.getGwtConversation().getProject();
+		WebSession session = (WebSession) webApp.getWebSession(req);
+
+		Project project = (Project) ScrumWebApplication.get().getDaoService().getById(projectId);
+		if (!project.isVisibleFor(session.getUser())) throw new PermissionDeniedException();
+
 		if (project == null) throw new PermissionDeniedException();
 
 		FileItem item = sessionFiles.get(0);
@@ -48,10 +65,10 @@ public class FileUploadServlet extends UploadAction {
 			}
 			return file.getReference();
 		} catch (Exception e) {
-			LOG.error(e);
+			log.error(e);
 			throw new UploadActionException(e.getMessage());
 		} finally {
-			removeSessionFileItems(request);
+			removeSessionFileItems(req);
 		}
 	}
 

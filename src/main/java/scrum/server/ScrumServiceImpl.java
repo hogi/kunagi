@@ -7,10 +7,10 @@ import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
+import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.webapp.AWebApplication;
-import ilarkesto.webapp.AWebSession;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -371,7 +371,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 		}
 
-		sendToOtherSessionsByProject(conversation, entity);
+		sendToOtherConversationsByProject(conversation, entity);
 	}
 
 	@Override
@@ -605,12 +605,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	private void sendToClients(GwtConversation conversation, AEntity entity) {
 		conversation.sendToClient(entity);
-		sendToOtherSessionsByProject(conversation, entity);
+		sendToOtherConversationsByProject(conversation, entity);
 	}
 
-	private void sendToOtherSessionsByProject(GwtConversation conversation, AEntity entity) {
-		for (AWebSession s : webApplication.getOtherSessionsByProject(conversation.getSession())) {
-			s.getGwtConversation().sendToClient(entity);
+	private void sendToOtherConversationsByProject(GwtConversation conversation, AEntity entity) {
+		for (AGwtConversation c : webApplication.getConversationsByProject(conversation.getProject(), conversation)) {
+			c.sendToClient(entity);
 		}
 	}
 

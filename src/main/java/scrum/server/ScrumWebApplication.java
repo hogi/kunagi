@@ -2,20 +2,19 @@ package scrum.server;
 
 import ilarkesto.base.Tm;
 import ilarkesto.base.Url;
-import ilarkesto.base.Utl;
 import ilarkesto.base.time.Time;
 import ilarkesto.concurrent.TaskManager;
 import ilarkesto.core.logging.Log;
 import ilarkesto.di.app.WebApplicationStarter;
 import ilarkesto.fp.FP;
 import ilarkesto.fp.Function;
+import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.io.IO;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
 import ilarkesto.webapp.DestroyTimeoutedSessionsTask;
 import ilarkesto.webapp.Servlet;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -150,24 +149,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return ret;
 	}
 
-	public Set<WebSession> getOtherSessionsByProject(WebSession currentSession) {
-		Project project = currentSession.getGwtConversation().getProject();
-		if (project == null) return Collections.emptySet();
-		Set<WebSession> ret = getSessionsByProject(project);
-		ret.remove(currentSession);
-		return ret;
-	}
-
-	public Set<WebSession> getSessionsByProject(Project project) {
-		Set<WebSession> ret = new HashSet<WebSession>();
-		for (AWebSession webSession : getWebSessions()) {
-			if (webSession.isSessionInvalidated()) continue;
-			WebSession session = (WebSession) webSession;
-			if (Utl.equals(project, session.getGwtConversation().getProject())) ret.add(session);
-		}
-		return ret;
-	}
-
 	public Set<User> getSessionUsersByProject(Project project) {
 		Set<User> ret = new HashSet<User>();
 		for (GwtConversation conversation : getConversationsByProject(project, null)) {
@@ -210,7 +191,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	protected AWebSession createWebSession(HttpServletRequest httpRequest) {
 		WebSession session = new WebSession(context, httpRequest);
 		autowire(session);
-		session.getGwtConversation().getNextData().systemMessage = systemMessage;
 		return session;
 	}
 
@@ -229,9 +209,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	public void updateSystemMessage(SystemMessage systemMessage) {
 		this.systemMessage = systemMessage;
-		for (AWebSession session : getWebSessions()) {
-			LOG.debug("Sending SystemMessage to:", session);
-			((WebSession) session).getGwtConversation().getNextData().systemMessage = systemMessage;
+		for (AGwtConversation conversation : getGwtConversations()) {
+			LOG.debug("Sending SystemMessage to:", conversation);
+			((GwtConversation) conversation).getNextData().systemMessage = systemMessage;
 		}
 	}
 

@@ -1,10 +1,12 @@
 package scrum.client;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.collaboration.EmoticonSelectorWidget;
 import scrum.client.common.AScrumGwtEntity;
+import scrum.client.project.Project;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -51,7 +53,10 @@ public class ScrumGwt extends Gwt {
 	}
 
 	public static HTML createPdfLink(String text, String pdfId, String parameters) {
-		return createServletDownloadLink("pdf.pdf?pdfId=" + pdfId + "&" + parameters, text);
+		Project project = Scope.get().getComponent(Project.class);
+		assert project != null;
+		return createServletDownloadLink("pdf.pdf?projectId=" + project.getId() + "&pdfId=" + pdfId + "&" + parameters,
+			text);
 	}
 
 	public static String toHtml(String reference, String label) {
