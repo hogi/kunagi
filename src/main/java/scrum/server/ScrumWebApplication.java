@@ -149,7 +149,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return ret;
 	}
 
-	public Set<User> getSessionUsersByProject(Project project) {
+	public Set<User> getConversationUsersByProject(Project project) {
 		Set<User> ret = new HashSet<User>();
 		for (GwtConversation conversation : getConversationsByProject(project, null)) {
 			ret.add(conversation.getSession().getUser());
@@ -159,7 +159,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	public void updateOnlineTeamMembers(Project project, GwtConversation exclude) {
 		if (project == null) return;
-		Set<User> users = getSessionUsersByProject(project);
+		Set<User> users = getConversationUsersByProject(project);
 		Set<String> userIds = new HashSet<String>(FP.foreach(users, new Function<User, String>() {
 
 			public String eval(User user) {

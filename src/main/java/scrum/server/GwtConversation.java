@@ -1,5 +1,6 @@
 package scrum.server;
 
+import ilarkesto.base.time.TimePeriod;
 import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.persistence.AEntity;
@@ -7,6 +8,7 @@ import ilarkesto.persistence.AEntity;
 import java.util.HashSet;
 
 import scrum.client.DataTransferObject;
+import scrum.client.communication.Pinger;
 import scrum.server.collaboration.Emoticon;
 import scrum.server.collaboration.EmoticonDao;
 import scrum.server.project.Project;
@@ -14,6 +16,7 @@ import scrum.server.project.Project;
 public class GwtConversation extends AGwtConversation {
 
 	private static final Log LOG = Log.get(GwtConversation.class);
+	private TimePeriod TIMEOUT = new TimePeriod(Pinger.MAX_DELAY * 2);
 
 	private Project project;
 
@@ -69,6 +72,11 @@ public class GwtConversation extends AGwtConversation {
 	public void setProject(Project project) {
 		LOG.info("Project selected:", project);
 		this.project = project;
+	}
+
+	@Override
+	protected TimePeriod getTimeout() {
+		return TIMEOUT;
 	}
 
 }

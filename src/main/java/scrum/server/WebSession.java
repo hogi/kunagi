@@ -1,5 +1,6 @@
 package scrum.server;
 
+import ilarkesto.base.Tm;
 import ilarkesto.base.time.TimePeriod;
 import ilarkesto.core.logging.Log;
 import ilarkesto.di.Context;
@@ -8,14 +9,13 @@ import ilarkesto.webapp.AWebSession;
 
 import javax.servlet.http.HttpServletRequest;
 
-import scrum.client.communication.Pinger;
 import scrum.server.admin.User;
 
 public class WebSession extends AWebSession {
 
 	private static final Log LOG = Log.get(WebSession.class);
 
-	private TimePeriod TIMEOUT = new TimePeriod(Pinger.MAX_DELAY * 2);
+	private TimePeriod TIMEOUT = new TimePeriod(Tm.HOUR);
 	private User user;
 
 	public WebSession(Context parentContext, HttpServletRequest initialRequest) {
@@ -25,12 +25,6 @@ public class WebSession extends AWebSession {
 	@Override
 	public GwtConversation getGwtConversation(int conversationNumber) {
 		return (GwtConversation) super.getGwtConversation(conversationNumber);
-	}
-
-	@Deprecated
-	@Override
-	public GwtConversation getGwtConversation() {
-		return (GwtConversation) super.getGwtConversation();
 	}
 
 	@Override
