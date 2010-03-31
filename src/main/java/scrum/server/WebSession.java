@@ -3,6 +3,7 @@ package scrum.server;
 import ilarkesto.base.time.TimePeriod;
 import ilarkesto.core.logging.Log;
 import ilarkesto.di.Context;
+import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.webapp.AWebSession;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +24,14 @@ public class WebSession extends AWebSession {
 
 	@Override
 	public GwtConversation getGwtConversation() {
-		if (gwtConversation == null) {
-			gwtConversation = new GwtConversation(this, nextGwtConversationNumber());
-			((GwtConversation) gwtConversation).setEmoticonDao(ScrumWebApplication.get().getEmoticonDao());
-		}
-		return (GwtConversation) gwtConversation;
+		return (GwtConversation) super.getGwtConversation();
+	}
+
+	@Override
+	public AGwtConversation createGwtConversation() {
+		GwtConversation gwtConversation = new GwtConversation(this, nextGwtConversationNumber());
+		gwtConversation.setEmoticonDao(ScrumWebApplication.get().getEmoticonDao());
+		return gwtConversation;
 	}
 
 	public void setUser(User user) {
@@ -42,7 +46,6 @@ public class WebSession extends AWebSession {
 
 	@Override
 	protected void onInvalidate() {
-		if (gwtConversation != null) getGwtConversation().invalidate();
 		setUser(null);
 		super.onInvalidate();
 	}

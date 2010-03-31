@@ -35,14 +35,15 @@ public class ScrumScopeManager {
 		assert scopeManager == null;
 
 		Dao dao = Dao.get();
-		dao.setApp(cm.getApp());
+		ScrumGwtApplication app = cm.getApp();
+		dao.setApp(app);
 		dao.setEventBus(cm.getEventBus());
 
 		scopeManager = NonConcurrentScopeManager.createCascadingScopeInstance("app", new ScrumComponentsReflector());
 		appScope = (CascadingScope) scopeManager.getScope();
 		Scope scope = appScope;
 
-		scope.putComponent("app", cm.getApp());
+		scope.putComponent("app", app);
 		scope.putComponent(dao);
 		scope.putComponent(new Pinger());
 		scope.putComponent(new Ui());

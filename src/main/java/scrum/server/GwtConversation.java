@@ -39,7 +39,9 @@ public class GwtConversation extends AGwtConversation {
 		}
 	}
 
+	@Override
 	public void invalidate() {
+		super.invalidate();
 		ScrumWebApplication.get().updateOnlineTeamMembers(getProject(), this);
 		if (getSession().getUser() != null && project != null)
 			ScrumWebApplication.get().setUsersSelectedEntities(project, this, new HashSet<String>(0));

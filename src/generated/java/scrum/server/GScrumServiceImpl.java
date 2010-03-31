@@ -49,7 +49,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestForum(GwtConversation conversation);
 
 
-    public scrum.client.DataTransferObject ping() {
+    public scrum.client.DataTransferObject ping(int conversationNumber) {
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
         ilarkesto.di.Context context = ilarkesto.di.Context.get();
@@ -67,7 +67,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject login(java.lang.String username, java.lang.String password) {
+    public scrum.client.DataTransferObject login(int conversationNumber, java.lang.String username, java.lang.String password) {
         LOG.debug("login");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -86,7 +86,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject logout() {
+    public scrum.client.DataTransferObject logout(int conversationNumber) {
         LOG.debug("logout");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -105,7 +105,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject changePassword(java.lang.String oldPassword, java.lang.String newPassword) {
+    public scrum.client.DataTransferObject changePassword(int conversationNumber, java.lang.String oldPassword, java.lang.String newPassword) {
         LOG.debug("changePassword");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -124,7 +124,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject resetPassword(java.lang.String userId) {
+    public scrum.client.DataTransferObject resetPassword(int conversationNumber, java.lang.String userId) {
         LOG.debug("resetPassword");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -143,7 +143,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject selectProject(java.lang.String projectId) {
+    public scrum.client.DataTransferObject selectProject(int conversationNumber, java.lang.String projectId) {
         LOG.debug("selectProject");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -162,7 +162,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject closeProject() {
+    public scrum.client.DataTransferObject closeProject(int conversationNumber) {
         LOG.debug("closeProject");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -181,7 +181,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject switchToNextSprint() {
+    public scrum.client.DataTransferObject switchToNextSprint(int conversationNumber) {
         LOG.debug("switchToNextSprint");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -200,7 +200,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject requestImpediments() {
+    public scrum.client.DataTransferObject requestImpediments(int conversationNumber) {
         LOG.debug("requestImpediments");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -219,7 +219,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject requestAcceptedIssues() {
+    public scrum.client.DataTransferObject requestAcceptedIssues(int conversationNumber) {
         LOG.debug("requestAcceptedIssues");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -238,7 +238,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject requestClosedIssues() {
+    public scrum.client.DataTransferObject requestClosedIssues(int conversationNumber) {
         LOG.debug("requestClosedIssues");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -257,7 +257,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject requestRisks() {
+    public scrum.client.DataTransferObject requestRisks(int conversationNumber) {
         LOG.debug("requestRisks");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -276,7 +276,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject requestRequirementEstimationVotes(java.lang.String requirementId) {
+    public scrum.client.DataTransferObject requestRequirementEstimationVotes(int conversationNumber, java.lang.String requirementId) {
         LOG.debug("requestRequirementEstimationVotes");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -295,7 +295,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject requestComments(java.lang.String parentId) {
+    public scrum.client.DataTransferObject requestComments(int conversationNumber, java.lang.String parentId) {
         LOG.debug("requestComments");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -314,7 +314,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject requestChanges(java.lang.String parentId) {
+    public scrum.client.DataTransferObject requestChanges(int conversationNumber, java.lang.String parentId) {
         LOG.debug("requestChanges");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -333,7 +333,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties) {
+    public scrum.client.DataTransferObject changeProperties(int conversationNumber, java.lang.String entityId, java.util.Map properties) {
         LOG.debug("changeProperties");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -352,7 +352,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject createEntity(java.lang.String type, java.util.Map properties) {
+    public scrum.client.DataTransferObject createEntity(int conversationNumber, java.lang.String type, java.util.Map properties) {
         LOG.debug("createEntity");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -371,7 +371,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject deleteEntity(java.lang.String entityId) {
+    public scrum.client.DataTransferObject deleteEntity(int conversationNumber, java.lang.String entityId) {
         LOG.debug("deleteEntity");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -390,7 +390,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject requestEntityByReference(java.lang.String reference) {
+    public scrum.client.DataTransferObject requestEntityByReference(int conversationNumber, java.lang.String reference) {
         LOG.debug("requestEntityByReference");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -409,7 +409,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject setSelectedEntitysIds(java.util.Set ids) {
+    public scrum.client.DataTransferObject setSelectedEntitysIds(int conversationNumber, java.util.Set ids) {
         LOG.debug("setSelectedEntitysIds");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -428,7 +428,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject sleep(long millis) {
+    public scrum.client.DataTransferObject sleep(int conversationNumber, long millis) {
         LOG.debug("sleep");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -447,7 +447,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject updateSystemMessage(scrum.client.admin.SystemMessage systemMessage) {
+    public scrum.client.DataTransferObject updateSystemMessage(int conversationNumber, scrum.client.admin.SystemMessage systemMessage) {
         LOG.debug("updateSystemMessage");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -466,7 +466,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject search(java.lang.String text) {
+    public scrum.client.DataTransferObject search(int conversationNumber, java.lang.String text) {
         LOG.debug("search");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -485,7 +485,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject activateRequirementEstimationVoting(java.lang.String requirementId) {
+    public scrum.client.DataTransferObject activateRequirementEstimationVoting(int conversationNumber, java.lang.String requirementId) {
         LOG.debug("activateRequirementEstimationVoting");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();
@@ -504,7 +504,7 @@ public abstract class GScrumServiceImpl
     }
 
 
-    public scrum.client.DataTransferObject requestForum() {
+    public scrum.client.DataTransferObject requestForum(int conversationNumber) {
         LOG.debug("requestForum");
         WebSession session = (WebSession) getSession();
         GwtConversation conversation = session.getGwtConversation();

@@ -8,8 +8,8 @@ import ilarkesto.gwt.client.TableBuilder;
 
 import java.util.Map;
 
-import scrum.client.ApplicationInfo;
 import scrum.client.Dao;
+import scrum.client.ScrumGwt;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.collaboration.Comment;
 import scrum.client.common.AScrumAction;
@@ -26,22 +26,27 @@ import com.google.gwt.user.client.ui.Widget;
 public class ScrumStatusWidget extends AScrumWidget {
 
 	private Dao dao;
-	private ApplicationInfo applicationInfo;
+	private ScrumGwtApplication app;
 
 	private SimplePanel entityCountWrapper;
+	private SimplePanel stateInformationWrapper;
 
 	@Override
 	protected Widget onInitialization() {
 		dao = Scope.get().getComponent(Dao.class);
-		applicationInfo = ((ScrumGwtApplication) Scope.get().getComponent("app")).getApplicationInfo();
+		app = (ScrumGwtApplication) Scope.get().getComponent("app");
 
 		entityCountWrapper = new SimplePanel();
+		stateInformationWrapper = new SimplePanel();
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Entities");
 		page.addSection(entityCountWrapper);
 
-		if (!applicationInfo.isProductionStage()) {
+		page.addHeader("State information");
+		page.addSection(stateInformationWrapper);
+
+		if (!app.getApplicationInfo().isProductionStage()) {
 			page.addHeader("Generators");
 			page.addSection(createGenerators());
 		}
@@ -69,7 +74,17 @@ public class ScrumStatusWidget extends AScrumWidget {
 			tb.addRow(Gwt.createFieldLabel(entry.getKey()), new Label(String.valueOf(entry.getValue())));
 		}
 		entityCountWrapper.setWidget(tb.createTable());
+		stateInformationWrapper.setWidget(createStateInformation());
 		super.onUpdate();
+	}
+
+	private Widget createStateInformation() {
+		TableBuilder tb = ScrumGwt.createFieldTable();
+		tb.addFieldRow("activeServiceCallCount", new Label(String.valueOf(app.getActiveServiceCallCount())));
+		tb.addFieldRow("conversationNumber", new Label(String.valueOf(app.getConversationNumber())));
+		tb.addFieldRow("entityIdBase", new Label(dao.getEntityIdBase()));
+		tb.addFieldRow("entityIdCounter", new Label(String.valueOf(dao.getEntityIdCounter())));
+		return tb.createTable();
 	}
 
 	class GenerateCommentsAction extends AScrumAction {

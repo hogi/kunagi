@@ -18,54 +18,54 @@ import java.util.*;
 public interface GScrumService
             extends com.google.gwt.user.client.rpc.RemoteService {
 
-    DataTransferObject ping();
+    DataTransferObject ping(int conversationNumber);
 
-    DataTransferObject login(java.lang.String username, java.lang.String password);
+    DataTransferObject login(int conversationNumber, java.lang.String username, java.lang.String password);
 
-    DataTransferObject logout();
+    DataTransferObject logout(int conversationNumber);
 
-    DataTransferObject changePassword(java.lang.String oldPassword, java.lang.String newPassword);
+    DataTransferObject changePassword(int conversationNumber, java.lang.String oldPassword, java.lang.String newPassword);
 
-    DataTransferObject resetPassword(java.lang.String userId);
+    DataTransferObject resetPassword(int conversationNumber, java.lang.String userId);
 
-    DataTransferObject selectProject(java.lang.String projectId);
+    DataTransferObject selectProject(int conversationNumber, java.lang.String projectId);
 
-    DataTransferObject closeProject();
+    DataTransferObject closeProject(int conversationNumber);
 
-    DataTransferObject switchToNextSprint();
+    DataTransferObject switchToNextSprint(int conversationNumber);
 
-    DataTransferObject requestImpediments();
+    DataTransferObject requestImpediments(int conversationNumber);
 
-    DataTransferObject requestAcceptedIssues();
+    DataTransferObject requestAcceptedIssues(int conversationNumber);
 
-    DataTransferObject requestClosedIssues();
+    DataTransferObject requestClosedIssues(int conversationNumber);
 
-    DataTransferObject requestRisks();
+    DataTransferObject requestRisks(int conversationNumber);
 
-    DataTransferObject requestRequirementEstimationVotes(java.lang.String requirementId);
+    DataTransferObject requestRequirementEstimationVotes(int conversationNumber, java.lang.String requirementId);
 
-    DataTransferObject requestComments(java.lang.String parentId);
+    DataTransferObject requestComments(int conversationNumber, java.lang.String parentId);
 
-    DataTransferObject requestChanges(java.lang.String parentId);
+    DataTransferObject requestChanges(int conversationNumber, java.lang.String parentId);
 
-    DataTransferObject changeProperties(java.lang.String entityId, java.util.Map properties);
+    DataTransferObject changeProperties(int conversationNumber, java.lang.String entityId, java.util.Map properties);
 
-    DataTransferObject createEntity(java.lang.String type, java.util.Map properties);
+    DataTransferObject createEntity(int conversationNumber, java.lang.String type, java.util.Map properties);
 
-    DataTransferObject deleteEntity(java.lang.String entityId);
+    DataTransferObject deleteEntity(int conversationNumber, java.lang.String entityId);
 
-    DataTransferObject requestEntityByReference(java.lang.String reference);
+    DataTransferObject requestEntityByReference(int conversationNumber, java.lang.String reference);
 
-    DataTransferObject setSelectedEntitysIds(java.util.Set ids);
+    DataTransferObject setSelectedEntitysIds(int conversationNumber, java.util.Set ids);
 
-    DataTransferObject sleep(long millis);
+    DataTransferObject sleep(int conversationNumber, long millis);
 
-    DataTransferObject updateSystemMessage(scrum.client.admin.SystemMessage systemMessage);
+    DataTransferObject updateSystemMessage(int conversationNumber, scrum.client.admin.SystemMessage systemMessage);
 
-    DataTransferObject search(java.lang.String text);
+    DataTransferObject search(int conversationNumber, java.lang.String text);
 
-    DataTransferObject activateRequirementEstimationVoting(java.lang.String requirementId);
+    DataTransferObject activateRequirementEstimationVoting(int conversationNumber, java.lang.String requirementId);
 
-    DataTransferObject requestForum();
+    DataTransferObject requestForum(int conversationNumber);
 
 }
