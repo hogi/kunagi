@@ -44,14 +44,15 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		RootPanel rootPanel = RootPanel.get();
 		rootPanel.getElement().getStyle().setProperty("position", "relative");
 		rootPanel.add(workspace);
-		callStartSession(new Runnable() {
+		ScrumJs.initialize();
+
+		callStartConversation(new Runnable() {
 
 			public void run() {
 				cm.getEventBus().fireApplicationStart();
 			}
 		});
 
-		ScrumJs.initialize();
 	}
 
 	@Override
@@ -83,8 +84,8 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		Scope.get().getComponent(Ui.class).getWorkspace().abort("Unexpected error: " + Str.formatException(ex));
 	}
 
-	public final void callStartSession(Runnable callback) {
-		getScrumService().startSession(new DefaultCallback<DataTransferObject>(callback));
+	public final void callStartConversation(Runnable callback) {
+		getScrumService().startConversation(new DefaultCallback<DataTransferObject>(callback));
 	}
 
 	@Override

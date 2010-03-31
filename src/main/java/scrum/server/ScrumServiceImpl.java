@@ -17,7 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 import scrum.client.admin.SystemMessage;
 import scrum.server.admin.User;
@@ -110,10 +109,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		webApplication.updateSystemMessage(systemMessage);
 	}
 
-	private void onStartSession(GwtConversation conversation) {
+	private void onStartConversation(GwtConversation conversation) {
 		conversation.clearRemoteEntities();
 		conversation.getNextData().applicationInfo = webApplication.getApplicationInfo();
-		conversation.getNextData().entityIdBase = UUID.randomUUID().toString();
 	}
 
 	@Override
@@ -387,7 +385,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 
 		conversation.getSession().setUser(user);
-		conversation.getNextData().entityIdBase = UUID.randomUUID().toString();
 		conversation.getNextData().setUserId(user.getId());
 		conversation.getNextData().systemMessage = webApplication.getSystemMessage();
 		conversation.sendToClient(user);
@@ -573,17 +570,17 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Utl.sleep(millis);
 	}
 
-	public scrum.client.DataTransferObject startSession() {
-		LOG.debug("startSession");
+	public scrum.client.DataTransferObject startConversation() {
+		LOG.debug("startConversation");
 		WebSession session = (WebSession) getSession();
-		GwtConversation conversation = session.getGwtConversation();
+		GwtConversation conversation = session.getGwtConversation(-1);
 		ilarkesto.di.Context context = ilarkesto.di.Context.get();
 		context.setName("gwt-srv:startSession");
 		context.bindCurrentThread();
 		try {
-			onStartSession(conversation);
+			onStartConversation(conversation);
 		} catch (Throwable t) {
-			handleServiceMethodException("startSession", t);
+			handleServiceMethodException(conversation.getNumber(), "startSession", t);
 			throw new RuntimeException(t);
 		}
 		scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

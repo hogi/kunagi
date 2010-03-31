@@ -23,6 +23,12 @@ public class WebSession extends AWebSession {
 	}
 
 	@Override
+	public GwtConversation getGwtConversation(int conversationNumber) {
+		return (GwtConversation) super.getGwtConversation(conversationNumber);
+	}
+
+	@Deprecated
+	@Override
 	public GwtConversation getGwtConversation() {
 		return (GwtConversation) super.getGwtConversation();
 	}
