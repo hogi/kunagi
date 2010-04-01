@@ -65,7 +65,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtEventBusModel = new GwtEventBusModel();
 			gwtEventBusModel.addEvent("ApplicationStart");
 			gwtEventBusModel.addEvent("ServerDataReceived").addParameter("data", "DataTransferObject").setQuiet(true);
-			gwtEventBusModel.addEvent("Login");
 			gwtEventBusModel.addEvent("VisibleDataChanged");
 			gwtEventBusModel.addEvent("BlockExpanded").addParameter("object", Object.class);
 			gwtEventBusModel.addEvent("BlockCollapsed").addParameter("object", Object.class);

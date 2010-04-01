@@ -28,7 +28,7 @@ public class CssServlet extends AHttpServlet {
 		CssBuilder builder = getCssBuilder();
 		builder.buildCss(css);
 		css.flush();
-		LOG.debug(builder);
+		// LOG.debug(builder);
 	}
 
 	private CssBuilder getCssBuilder() {

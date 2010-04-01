@@ -124,7 +124,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	protected void onLogout(GwtConversation conversation) {
 		WebSession session = conversation.getSession();
-		session.invalidate();
 		webApplication.destroyWebSession(session, getThreadLocalRequest().getSession());
 	}
 
@@ -385,11 +384,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 
 		conversation.getSession().setUser(user);
-		conversation.getNextData().setUserId(user.getId());
-		conversation.getNextData().systemMessage = webApplication.getSystemMessage();
-		conversation.sendToClient(user);
-		conversation.sendToClient(projectDao.getEntitiesVisibleForUser(user));
-		conversation.sendToClient(userDao.getEntitiesVisibleForUser(user));
+		conversation.sendUserScopeDataToClient(user);
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import java.util.HashSet;
 
 import scrum.client.DataTransferObject;
 import scrum.client.communication.Pinger;
+import scrum.server.admin.User;
 import scrum.server.collaboration.Emoticon;
 import scrum.server.collaboration.EmoticonDao;
 import scrum.server.project.Project;
@@ -16,7 +17,7 @@ import scrum.server.project.Project;
 public class GwtConversation extends AGwtConversation {
 
 	private static final Log LOG = Log.get(GwtConversation.class);
-	private TimePeriod TIMEOUT = new TimePeriod(Pinger.MAX_DELAY * 2);
+	private TimePeriod TIMEOUT = new TimePeriod(Pinger.MAX_DELAY * 10);
 
 	private Project project;
 
@@ -32,6 +33,15 @@ public class GwtConversation extends AGwtConversation {
 
 	public GwtConversation(WebSession session, int number) {
 		super(session, number);
+	}
+
+	public void sendUserScopeDataToClient(User user) {
+		getNextData().setUserId(user.getId());
+		ScrumWebApplication app = ScrumWebApplication.get();
+		getNextData().systemMessage = app.getSystemMessage();
+		sendToClient(user);
+		sendToClient(app.getProjectDao().getEntitiesVisibleForUser(user));
+		sendToClient(app.getUserDao().getEntitiesVisibleForUser(user));
 	}
 
 	@Override

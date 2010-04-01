@@ -3,7 +3,6 @@ package scrum.client.workspace;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.ApplicationInfo;
-import scrum.client.ApplicationStartListener;
 import scrum.client.admin.LoginWidget;
 import scrum.client.test.WidgetsTesterWidget;
 
@@ -12,7 +11,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PublicWorkspaceWidgets extends GPublicWorkspaceWidgets implements ApplicationStartListener {
+public class PublicWorkspaceWidgets extends GPublicWorkspaceWidgets {
 
 	private FlowPanel sidebar;
 	private SwitchingNavigatorWidget navigator;
@@ -35,10 +34,6 @@ public class PublicWorkspaceWidgets extends GPublicWorkspaceWidgets implements A
 		sidebar.getElement().getStyle().setMarginTop(10, Unit.PX);
 		sidebar.getElement().getStyle().setMarginLeft(10, Unit.PX);
 		sidebar.add(navigator);
-	}
-
-	public void onApplicationStart() {
-		activate();
 	}
 
 	public void activate() {

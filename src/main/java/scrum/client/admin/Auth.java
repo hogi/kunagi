@@ -1,33 +1,36 @@
 package scrum.client.admin;
 
-import ilarkesto.core.scope.Scope;
-import scrum.client.ComponentManager;
 import scrum.client.DataTransferObject;
 import scrum.client.ScrumScopeManager;
 import scrum.client.ServerDataReceivedListener;
-import scrum.client.workspace.Ui;
+
+import com.google.gwt.user.client.Window;
 
 public class Auth extends GAuth implements ServerDataReceivedListener {
 
-	private ComponentManager cm = ComponentManager.get();
 	private User user;
 
 	public void onServerDataReceived(DataTransferObject data) {
 		if (data.isUserSet()) {
 			user = dao.getUser(data.getUserId());
 			log.info("User logged in:", user);
-			cm.getEventBus().fireLogin();
+			ScrumScopeManager.createUserScope(user);
 		}
 	}
 
 	public void logout() {
 		log.info("Logging out");
-		Scope.get().getComponent(Ui.class).lock("Logging out..."); // TODO dependency
-		user = null;
-		ScrumScopeManager.destroyUserScope();
+		ui.lock("Logging out...");
+
+		pinger.shutdown();
 		app.callLogout();
-		dao.clearAllEntities();
-		publicWorkspaceWidgets.activate();
+
+		// user = null;
+		// ScrumScopeManager.destroyUserScope();
+		// app.resetConversation();
+		// dao.clearAllEntities();
+
+		Window.Location.reload();
 	}
 
 	public boolean isUserLoggedIn() {

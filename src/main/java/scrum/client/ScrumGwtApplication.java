@@ -10,10 +10,12 @@ import scrum.client.common.AScrumWidget;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
+import scrum.client.project.Project;
 import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
 import scrum.client.risks.Risk;
 import scrum.client.sprint.Task;
+import scrum.client.workspace.PublicWorkspaceWidgets;
 import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkspaceWidget;
 
@@ -49,10 +51,18 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		callStartConversation(new Runnable() {
 
 			public void run() {
+				if (Scope.get().getComponent(Project.class) == null) {
+					Scope.get().getComponent(PublicWorkspaceWidgets.class).activate();
+				}
 				cm.getEventBus().fireApplicationStart();
 			}
 		});
 
+	}
+
+	@Override
+	public void resetConversation() {
+		super.resetConversation();
 	}
 
 	@Override

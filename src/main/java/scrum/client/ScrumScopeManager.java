@@ -64,6 +64,13 @@ public class ScrumScopeManager {
 		scope.putComponent(new UsersWorkspaceWidgets());
 
 		userScope.wireComponents();
+
+		Project project = user.getCurrentProject();
+		if (project == null || user.isAdmin()) {
+			Scope.get().getComponent(UsersWorkspaceWidgets.class).activate();
+		} else {
+			ScrumScopeManager.createProjectScope(project);
+		}
 	}
 
 	public static void createProjectScope(Project project) {

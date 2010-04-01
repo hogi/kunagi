@@ -66,31 +66,6 @@ public abstract class GEventBus
         }
     }
 
-    // --- Login ---
-
-    private Set<LoginListener> loginListeners = new HashSet<LoginListener>();
-
-    public void addLoginListener(LoginListener listener) {
-        loginListeners.add(listener);
-    }
-
-    public void removeLoginListener(LoginListener listener) {
-        loginListeners.remove(listener);
-    }
-
-    public void fireLogin() {
-        log.debug("Event fired: Login");
-        for (LoginListener listener : loginListeners) {
-            listener.onLogin();
-        }
-        for (Object component : ilarkesto.core.scope.Scope.get().getAllComponents()) {
-            if (component instanceof LoginListener) {
-                log.debug("  notifying component:", component);
-                ((LoginListener)component).onLogin();
-            }
-        }
-    }
-
     // --- VisibleDataChanged ---
 
     private Set<VisibleDataChangedListener> visibleDataChangedListeners = new HashSet<VisibleDataChangedListener>();
@@ -221,7 +196,6 @@ public abstract class GEventBus
     public void addListener(Object listener) {
         if (listener instanceof ApplicationStartListener) addApplicationStartListener((ApplicationStartListener)listener);
         if (listener instanceof ServerDataReceivedListener) addServerDataReceivedListener((ServerDataReceivedListener)listener);
-        if (listener instanceof LoginListener) addLoginListener((LoginListener)listener);
         if (listener instanceof VisibleDataChangedListener) addVisibleDataChangedListener((VisibleDataChangedListener)listener);
         if (listener instanceof BlockExpandedListener) addBlockExpandedListener((BlockExpandedListener)listener);
         if (listener instanceof BlockCollapsedListener) addBlockCollapsedListener((BlockCollapsedListener)listener);
@@ -232,7 +206,6 @@ public abstract class GEventBus
     public void removeListener(Object listener) {
         if (listener instanceof ApplicationStartListener) removeApplicationStartListener((ApplicationStartListener)listener);
         if (listener instanceof ServerDataReceivedListener) removeServerDataReceivedListener((ServerDataReceivedListener)listener);
-        if (listener instanceof LoginListener) removeLoginListener((LoginListener)listener);
         if (listener instanceof VisibleDataChangedListener) removeVisibleDataChangedListener((VisibleDataChangedListener)listener);
         if (listener instanceof BlockExpandedListener) removeBlockExpandedListener((BlockExpandedListener)listener);
         if (listener instanceof BlockCollapsedListener) removeBlockCollapsedListener((BlockCollapsedListener)listener);

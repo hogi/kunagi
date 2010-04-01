@@ -152,7 +152,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public Set<User> getConversationUsersByProject(Project project) {
 		Set<User> ret = new HashSet<User>();
 		for (GwtConversation conversation : getConversationsByProject(project, null)) {
-			ret.add(conversation.getSession().getUser());
+			User user = conversation.getSession().getUser();
+			if (user != null) ret.add(user);
 		}
 		return ret;
 	}

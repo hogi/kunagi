@@ -3,10 +3,7 @@ package scrum.client.admin;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
 import scrum.client.ScrumGwtApplication;
-import scrum.client.ScrumScopeManager;
-import scrum.client.project.Project;
 import scrum.client.workspace.Ui;
-import scrum.client.workspace.UsersWorkspaceWidgets;
 
 public class LoginAction extends GLoginAction {
 
@@ -36,15 +33,6 @@ public class LoginAction extends GLoginAction {
 					loginData.setFailed();
 				} else {
 					loginData.clear();
-					User user = getCurrentUser();
-					Log.DEBUG("Login succeded:", user);
-					Project project = user.getCurrentProject();
-					ScrumScopeManager.createUserScope(user);
-					if (project == null || user.isAdmin()) {
-						Scope.get().getComponent(UsersWorkspaceWidgets.class).activate();
-					} else {
-						ScrumScopeManager.createProjectScope(project);
-					}
 				}
 			}
 		});

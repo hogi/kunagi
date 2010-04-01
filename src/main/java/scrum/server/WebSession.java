@@ -31,7 +31,9 @@ public class WebSession extends AWebSession {
 	public AGwtConversation createGwtConversation() {
 		GwtConversation gwtConversation = new GwtConversation(this, nextGwtConversationNumber());
 		gwtConversation.setEmoticonDao(ScrumWebApplication.get().getEmoticonDao());
-		gwtConversation.getNextData().systemMessage = ScrumWebApplication.get().getSystemMessage();
+
+		if (user != null) gwtConversation.sendUserScopeDataToClient(user);
+
 		return gwtConversation;
 	}
 

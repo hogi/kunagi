@@ -34,6 +34,13 @@ public class Pinger extends GPinger implements ServerDataReceivedListener, Block
 		reschedule();
 	}
 
+	public void shutdown() {
+		log.info("Shutting down");
+		if (timer == null) return;
+		timer.cancel();
+		timer = null;
+	}
+
 	public void onServerDataReceived(DataTransferObject data) {
 		if (data.containsEntities() || data.usersStatus != null) {
 			lastDataReceiveTime = System.currentTimeMillis();
