@@ -12,15 +12,10 @@ import scrum.client.admin.User;
 import scrum.client.project.Project;
 import scrum.client.sprint.Sprint;
 import scrum.client.undo.Undo;
-import scrum.client.workspace.Ui;
 
 public abstract class AScrumAction extends AAction {
 
 	protected static final ComponentManager cm = ComponentManager.get();
-
-	public AScrumAction() {
-		super(Scope.get().getComponent(Ui.class).getWorkspace());
-	}
 
 	// --- helper ---
 
