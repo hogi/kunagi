@@ -19,6 +19,7 @@ import scrum.client.project.Project;
 import scrum.client.search.Search;
 import scrum.client.undo.Undo;
 import scrum.client.workspace.DndManager;
+import scrum.client.workspace.Navigator;
 import scrum.client.workspace.ProjectWorkspaceWidgets;
 import scrum.client.workspace.PublicWorkspaceWidgets;
 import scrum.client.workspace.Ui;
@@ -50,6 +51,7 @@ public class ScrumScopeManager {
 		scope.putComponent(new SystemMessageManager());
 		scope.putComponent(new Auth());
 		scope.putComponent(new PublicWorkspaceWidgets());
+		scope.putComponent(new Navigator());
 
 		appScope.wireComponents();
 	}
@@ -67,13 +69,13 @@ public class ScrumScopeManager {
 
 		Project project = user.getCurrentProject();
 		if (project == null || user.isAdmin()) {
-			Scope.get().getComponent(UsersWorkspaceWidgets.class).activate();
+			appScope.getComponent(Navigator.class).gotoProjectSelector();
 		} else {
-			ScrumScopeManager.createProjectScope(project);
+			appScope.getComponent(Navigator.class).gotoProject(project.getId());
 		}
 	}
 
-	public static void createProjectScope(Project project) {
+	public static void createProjectScope(final Project project) {
 		assert project != null;
 		Scope.get().getComponent(Ui.class).lock("Loading " + project.getLabel() + "...");
 
@@ -99,6 +101,7 @@ public class ScrumScopeManager {
 
 			public void run() {
 				projectWorkspaceWidgets.activate();
+				Scope.get().getComponent(Navigator.class).gotoProject(project.getId());
 			}
 		});
 	}
@@ -110,12 +113,6 @@ public class ScrumScopeManager {
 		ObjectMappedFlowPanel.objectHeights.clear();
 		projectScope = null;
 		scopeManager.setScope(userScope);
-	}
-
-	public static void destroyUserScope() {
-		destroyProjectScope();
-		userScope = null;
-		scopeManager.setScope(appScope);
 	}
 
 	public static boolean isProjectScope() {

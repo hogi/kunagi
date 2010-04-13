@@ -4,8 +4,6 @@ import scrum.client.DataTransferObject;
 import scrum.client.ScrumScopeManager;
 import scrum.client.ServerDataReceivedListener;
 
-import com.google.gwt.user.client.Window;
-
 public class Auth extends GAuth implements ServerDataReceivedListener {
 
 	private User user;
@@ -29,8 +27,6 @@ public class Auth extends GAuth implements ServerDataReceivedListener {
 		// ScrumScopeManager.destroyUserScope();
 		// app.resetConversation();
 		// dao.clearAllEntities();
-
-		Window.Location.reload();
 	}
 
 	public boolean isUserLoggedIn() {

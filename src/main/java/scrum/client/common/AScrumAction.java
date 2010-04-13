@@ -12,6 +12,7 @@ import scrum.client.admin.User;
 import scrum.client.project.Project;
 import scrum.client.sprint.Sprint;
 import scrum.client.undo.Undo;
+import scrum.client.workspace.Navigator;
 
 public abstract class AScrumAction extends AAction {
 
@@ -47,6 +48,10 @@ public abstract class AScrumAction extends AAction {
 
 	protected static final ScrumGwtApplication getApp() {
 		return (ScrumGwtApplication) Scope.get().getComponent("app");
+	}
+
+	protected static final Navigator getNavigator() {
+		return Scope.get().getComponent(Navigator.class);
 	}
 
 	protected abstract class ALocalUndo extends AUndoOperation {
