@@ -199,12 +199,12 @@ public class Project extends GProject {
 		Rss20Builder rss = new Rss20Builder();
 		rss.setTitle(getLabel() + " Event Journal");
 		rss.setLanguage("en");
-		rss.setLink(baseUrl);
+		rss.setLink(baseUrl + "#project=" + getId());
 		for (ProjectEvent event : getLatestProjectEvents()) {
 			Rss20Builder.Item item = rss.addItem();
 			item.setTitle(event.getLabel());
 			item.setDescription(event.getLabel());
-			item.setLink(baseUrl);
+			item.setLink(baseUrl + "#project=" + getId());
 			item.setGuid(event.getId());
 			item.setPubDate(event.getDateAndTime());
 		}

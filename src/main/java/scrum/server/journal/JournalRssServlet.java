@@ -1,7 +1,5 @@
 package scrum.server.journal;
 
-import ilarkesto.core.logging.Log;
-
 import java.io.IOException;
 
 import javax.servlet.ServletConfig;
@@ -16,7 +14,6 @@ import scrum.server.project.ProjectDao;
 
 public class JournalRssServlet extends AHttpServlet {
 
-	private static final Log LOG = Log.get(JournalRssServlet.class);
 	private static final long serialVersionUID = 1;
 
 	private ProjectDao projectDao;
