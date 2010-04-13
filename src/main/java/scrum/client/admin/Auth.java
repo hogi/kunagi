@@ -17,16 +17,7 @@ public class Auth extends GAuth implements ServerDataReceivedListener {
 	}
 
 	public void logout() {
-		log.info("Logging out");
-		ui.lock("Logging out...");
-
-		pinger.shutdown();
-		app.callLogout();
-
-		// user = null;
-		// ScrumScopeManager.destroyUserScope();
-		// app.resetConversation();
-		// dao.clearAllEntities();
+		user = null;
 	}
 
 	public boolean isUserLoggedIn() {

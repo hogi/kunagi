@@ -4,9 +4,11 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtDao;
+import scrum.client.admin.Auth;
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Subject;
 import scrum.client.common.AScrumWidget;
+import scrum.client.communication.Pinger;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -18,7 +20,9 @@ import scrum.client.workspace.Navigator;
 import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkspaceWidget;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class ScrumGwtApplication extends GScrumGwtApplication {
@@ -77,6 +81,25 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	public ApplicationInfo getApplicationInfo() {
 		return applicationInfo;
+	}
+
+	public void logout() {
+		log.info("Logging out");
+
+		Scope.get().getComponent(Ui.class).lock("Logging out...");
+		Scope.get().getComponent(Auth.class).logout();
+		Scope.get().getComponent(Pinger.class).shutdown();
+		Scope.get().getComponent(Dao.class).clearAllEntities();
+
+		callLogout(new Runnable() {
+
+			public void run() {
+				String url = GWT.getHostPageBaseURL();
+				if (!GWT.isScript()) url += "index.html?gwt.codesvr=localhost:9997";
+				Window.Location.replace(url);
+			}
+		});
+
 	}
 
 	@Override
