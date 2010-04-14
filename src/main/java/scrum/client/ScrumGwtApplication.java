@@ -55,6 +55,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		callStartConversation(new Runnable() {
 
 			public void run() {
+				cm.getEventBus().fireApplicationStart();
 				Scope.get().getComponent(Navigator.class).evalHistoryToken(History.getToken());
 			}
 		});
