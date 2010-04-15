@@ -56,6 +56,8 @@ public interface GScrumService
 
     DataTransferObject requestEntityByReference(int conversationNumber, java.lang.String reference);
 
+    DataTransferObject requestEntity(int conversationNumber, java.lang.String entityId);
+
     DataTransferObject setSelectedEntitysIds(int conversationNumber, java.util.Set ids);
 
     DataTransferObject sleep(int conversationNumber, long millis);

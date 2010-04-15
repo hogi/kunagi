@@ -1,6 +1,7 @@
 package scrum.client.workspace;
 
 import ilarkesto.core.scope.Scope;
+import ilarkesto.gwt.client.AGwtEntity;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -69,8 +70,14 @@ public class Navigator extends GNavigator {
 		if (project == null) {
 			project = dao.getProject(projectId);
 			if (project == null) throw new RuntimeException("Project does not exist: " + projectId);
-			ScrumScopeManager.createProjectScope(project);
+			ScrumScopeManager.createProjectScope(project, tokens.get("entity"));
 			return;
+		}
+
+		String entityId = tokens.get("entity");
+		if (entityId != null) {
+			AGwtEntity entity = dao.getEntity(entityId);
+			projectWorkspaceWidgets.showEntity(entity);
 		}
 
 	}
@@ -104,6 +111,14 @@ public class Navigator extends GNavigator {
 
 	public void gotoProject(String projectId) {
 		gotoToken("project=" + projectId);
+	}
+
+	public void gotoEntity(String projectId, String entityId) {
+		if (entityId == null) {
+			gotoProject(projectId);
+			return;
+		}
+		gotoToken("project=" + projectId + "|entity=" + entityId);
 	}
 
 	private void gotoToken(String token) {

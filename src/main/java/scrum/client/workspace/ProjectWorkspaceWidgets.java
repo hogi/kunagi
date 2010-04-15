@@ -176,6 +176,31 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		});
 	}
 
+	public void showEntityById(final String entityId) {
+		log.debug("Showing entity by id:", entityId);
+
+		AGwtEntity entity = dao.getEntity(entityId);
+		if (entity != null) {
+			showEntity(entity);
+			return;
+		}
+		Scope.get().getComponent(Ui.class).lock("Searching for " + entityId);
+		app.callRequestEntity(entityId, new Runnable() {
+
+			public void run() {
+				AGwtEntity entity = dao.getEntity(entityId);
+				Ui ui = Scope.get().getComponent(Ui.class);
+				if (entity == null) {
+					ui.unlock();
+					Scope.get().getComponent(Chat.class).postSystemMessage("Entity does not exist: " + entityId, false);
+					return;
+				}
+				ui.unlock();
+				showEntity(entity);
+			}
+		});
+	}
+
 	public void showEntity(AGwtEntity entity) {
 		log.debug("Showing entity:", entity);
 		if (entity instanceof Task) {

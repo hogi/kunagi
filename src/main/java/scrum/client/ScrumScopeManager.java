@@ -68,7 +68,7 @@ public class ScrumScopeManager {
 		userScope.wireComponents();
 	}
 
-	public static void createProjectScope(final Project project) {
+	public static void createProjectScope(final Project project, final String selectedEntityId) {
 		assert project != null;
 		Scope.get().getComponent(Ui.class).lock("Loading " + project.getLabel() + "...");
 
@@ -94,7 +94,7 @@ public class ScrumScopeManager {
 
 			public void run() {
 				projectWorkspaceWidgets.activate();
-				Scope.get().getComponent(Navigator.class).gotoProject(project.getId());
+				Scope.get().getComponent(Navigator.class).gotoEntity(project.getId(), selectedEntityId);
 			}
 		});
 	}

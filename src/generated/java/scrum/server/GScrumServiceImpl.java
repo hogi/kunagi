@@ -41,6 +41,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onCreateEntity(GwtConversation conversation, java.lang.String type, java.util.Map properties);
     protected abstract void onDeleteEntity(GwtConversation conversation, java.lang.String entityId);
     protected abstract void onRequestEntityByReference(GwtConversation conversation, java.lang.String reference);
+    protected abstract void onRequestEntity(GwtConversation conversation, java.lang.String entityId);
     protected abstract void onSetSelectedEntitysIds(GwtConversation conversation, java.util.Set ids);
     protected abstract void onSleep(GwtConversation conversation, long millis);
     protected abstract void onUpdateSystemMessage(GwtConversation conversation, scrum.client.admin.SystemMessage systemMessage);
@@ -438,6 +439,27 @@ public abstract class GScrumServiceImpl
                 onRequestEntityByReference(conversation, reference);
             } catch (Throwable t) {
                 handleServiceMethodException(conversationNumber, "requestEntityByReference",t);
+                throw new RuntimeException(t);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+
+    public scrum.client.DataTransferObject requestEntity(int conversationNumber, java.lang.String entityId) {
+        LOG.debug("requestEntity");
+        WebSession session = (WebSession) getSession();
+        synchronized(session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:requestEntity");
+            context.bindCurrentThread();
+            try {
+                onRequestEntity(conversation, entityId);
+            } catch (Throwable t) {
+                handleServiceMethodException(conversationNumber, "requestEntity",t);
                 throw new RuntimeException(t);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

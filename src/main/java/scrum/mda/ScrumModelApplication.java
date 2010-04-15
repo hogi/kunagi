@@ -106,6 +106,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				Map.class);
 			gwtServiceModel.addMethod("deleteEntity").addParameter("entityId", String.class);
 			gwtServiceModel.addMethod("requestEntityByReference").addParameter("reference", String.class);
+			gwtServiceModel.addMethod("requestEntity").addParameter("entityId", String.class);
 			gwtServiceModel.addMethod("setSelectedEntitysIds").addParameter("ids", Set.class);
 			gwtServiceModel.addMethod("sleep").addParameter("millis", long.class);
 			gwtServiceModel.addMethod("updateSystemMessage").addParameter("systemMessage",

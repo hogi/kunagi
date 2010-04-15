@@ -10,6 +10,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
+import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.webapp.AWebApplication;
 
 import java.util.Collection;
@@ -503,6 +504,21 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
 		conversation.sendToClient(project.getRisks());
+	}
+
+	@Override
+	protected void onRequestEntity(GwtConversation conversation, String entityId) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+
+		try {
+			AEntity entity = getDaoService().getById(entityId);
+			if (!Auth.isVisible(entity, conversation.getSession().getUser())) throw new PermissionDeniedException();
+			// TODO check if entity is from project
+			conversation.sendToClient(entity);
+		} catch (EntityDoesNotExistException ex) {
+			// nop
+		}
 	}
 
 	@Override

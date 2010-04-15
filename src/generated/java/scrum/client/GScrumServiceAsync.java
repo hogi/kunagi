@@ -56,6 +56,8 @@ public interface GScrumServiceAsync {
 
     void requestEntityByReference(int conversationNumber, java.lang.String reference, AsyncCallback<DataTransferObject> callback);
 
+    void requestEntity(int conversationNumber, java.lang.String entityId, AsyncCallback<DataTransferObject> callback);
+
     void setSelectedEntitysIds(int conversationNumber, java.util.Set ids, AsyncCallback<DataTransferObject> callback);
 
     void sleep(int conversationNumber, long millis, AsyncCallback<DataTransferObject> callback);
