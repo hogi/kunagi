@@ -3,6 +3,7 @@ package scrum.client.admin;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
 import scrum.client.ScrumGwtApplication;
+import scrum.client.workspace.Navigator;
 import scrum.client.workspace.Ui;
 
 public class LoginAction extends GLoginAction {
@@ -33,6 +34,7 @@ public class LoginAction extends GLoginAction {
 					loginData.setFailed();
 				} else {
 					loginData.clear();
+					Scope.get().getComponent(Navigator.class).gotoStart();
 				}
 			}
 		});

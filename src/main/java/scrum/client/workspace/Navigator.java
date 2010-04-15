@@ -16,6 +16,8 @@ import com.google.gwt.user.client.History;
 
 public class Navigator extends GNavigator {
 
+	private Map<String, String> tokensForStart;
+
 	@Override
 	public void initialize() {
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
@@ -42,7 +44,7 @@ public class Navigator extends GNavigator {
 		}
 
 		if (user == null) {
-			// TODO save token for use after login
+			tokensForStart = tokens;
 			gotoLogin();
 			return;
 		}
@@ -71,6 +73,25 @@ public class Navigator extends GNavigator {
 			return;
 		}
 
+	}
+
+	public void gotoStart() {
+		User user = auth.getUser();
+		if (user == null) {
+			evalHistoryToken(History.getToken());
+			return;
+		}
+		if (tokensForStart == null) {
+			Project project = user.getCurrentProject();
+			if (project == null || user.isAdmin()) {
+				gotoProjectSelector();
+			} else {
+				gotoProject(project.getId());
+			}
+		} else {
+			onHistoryToken(tokensForStart);
+			tokensForStart = null;
+		}
 	}
 
 	public void gotoLogin() {

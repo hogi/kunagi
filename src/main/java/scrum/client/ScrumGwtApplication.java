@@ -21,7 +21,6 @@ import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -56,7 +55,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 			public void run() {
 				cm.getEventBus().fireApplicationStart();
-				Scope.get().getComponent(Navigator.class).evalHistoryToken(History.getToken());
+				Scope.get().getComponent(Navigator.class).gotoStart();
 			}
 		});
 
