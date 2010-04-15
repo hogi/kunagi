@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import scrum.client.BlockExpandedListener;
 import scrum.client.ScrumScopeManager;
 import scrum.client.admin.User;
 import scrum.client.project.Project;
@@ -15,7 +16,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 
-public class Navigator extends GNavigator {
+public class Navigator extends GNavigator implements BlockExpandedListener {
 
 	private Map<String, String> tokensForStart;
 
@@ -77,7 +78,7 @@ public class Navigator extends GNavigator {
 		String entityId = tokens.get("entity");
 		if (entityId != null) {
 			AGwtEntity entity = dao.getEntity(entityId);
-			projectWorkspaceWidgets.showEntity(entity);
+			Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntity(entity);
 		}
 
 	}
@@ -113,6 +114,11 @@ public class Navigator extends GNavigator {
 		gotoToken("project=" + projectId);
 	}
 
+	public void gotoEntity(String entityId) {
+		Project project = Scope.get().getComponent(Project.class);
+		gotoEntity(project.getId(), entityId);
+	}
+
 	public void gotoEntity(String projectId, String entityId) {
 		if (entityId == null) {
 			gotoProject(projectId);
@@ -123,6 +129,17 @@ public class Navigator extends GNavigator {
 
 	private void gotoToken(String token) {
 		History.newItem(token);
+	}
+
+	public void setToken(AGwtEntity entity) {
+		Project project = Scope.get().getComponent(Project.class);
+		History.newItem("project=" + project.getId() + "|entity=" + entity.getId());
+	}
+
+	public void onBlockExpanded(Object object) {
+		if (object instanceof AGwtEntity) {
+			setToken((AGwtEntity) object);
+		}
 	}
 
 	private Map<String, String> parseHistoryToken(String token) {

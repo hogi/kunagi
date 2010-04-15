@@ -84,8 +84,6 @@
 "012606fe-a781-4580-81a6-5dc005035516","dde2730f-b257-437b-84a8-f39b53b7e986","Dependency","dao"
 "9b17a28f-e3b8-40dc-9312-8238fce1efec","012606fe-a781-4580-81a6-5dc005035516","Type","scrum.client.Dao"
 "42167333-39dc-4999-b126-a4c6badccfa6","dde2730f-b257-437b-84a8-f39b53b7e986","InitializationProcedure","initialize"
-"c0ade59f-7a48-4cc1-94ec-452b5fa8f9d9","dde2730f-b257-437b-84a8-f39b53b7e986","Dependency","projectWorkspaceWidgets"
-"f76dfb4c-c6f8-4336-b11c-f496317abdab","c0ade59f-7a48-4cc1-94ec-452b5fa8f9d9","Type","ProjectWorkspaceWidgets"
 "fbf99968-d7e7-45dc-9713-830abe594855","a6206e9c-11c2-4304-a249-ef470d2881ef","Component","ProjectWorkspaceWidgets"
 "468aa018-1a43-46fd-8d3d-d26b3af95a58","fbf99968-d7e7-45dc-9713-830abe594855","Dependency","app"
 "68de7abd-1c59-4bb0-9f97-027522b9fab7","468aa018-1a43-46fd-8d3d-d26b3af95a58","Type","scrum.client.ScrumGwtApplication"

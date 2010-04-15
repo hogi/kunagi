@@ -9,7 +9,5 @@ public abstract class GNavigator extends scrum.client.AScrumComponent {
 
     protected scrum.client.Dao dao;
 
-    protected ProjectWorkspaceWidgets projectWorkspaceWidgets;
-
 }
 

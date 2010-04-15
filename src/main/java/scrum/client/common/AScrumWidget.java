@@ -18,6 +18,10 @@ public abstract class AScrumWidget extends AWidget {
 
 	// --- helper ---
 
+	// protected static final Navigator getNavigator() {
+	// return Scope.get().getComponent(Navigator.class);
+	// }
+
 	protected static final User getCurrentUser() {
 		assert getAuth().isUserLoggedIn();
 		return getAuth().getUser();
