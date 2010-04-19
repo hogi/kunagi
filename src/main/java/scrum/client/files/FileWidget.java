@@ -28,8 +28,8 @@ public class FileWidget extends AScrumWidget {
 
 		TableBuilder left = ScrumGwt.createFieldTable();
 		left.addFieldRow("Label", file.getLabelModel());
-		left.addFieldRow("Download", Gwt.createServletDownloadLink("fileDownload?fileId=" + file.getId(), file
-				.getFilename()));
+		left.addFieldRow("Download", Gwt.createServletDownloadLink("fileDownload?projectId=" + project.getId()
+				+ "&fileId=" + file.getId(), file.getFilename()));
 		left.addFieldRow("Notes", file.getNoteModel());
 		left.addFieldRow("Uploaded", file.getUploadTimeModel());
 
