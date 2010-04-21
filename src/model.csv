@@ -79,6 +79,8 @@
 "a6206e9c-11c2-4304-a249-ef470d2881ef","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","workspace"
 "cc671927-19e9-4ef1-95de-92ae61170d28","a6206e9c-11c2-4304-a249-ef470d2881ef","Component","DndManager"
 "dde2730f-b257-437b-84a8-f39b53b7e986","a6206e9c-11c2-4304-a249-ef470d2881ef","Component","Navigator"
+"a97c789f-30f1-476a-90a2-30d7df2094ce","dde2730f-b257-437b-84a8-f39b53b7e986","Dependency","app"
+"9dac74d4-ff18-43f6-bf4a-264348ffcdae","a97c789f-30f1-476a-90a2-30d7df2094ce","Type","scrum.client.ScrumGwtApplication"
 "1dd84734-7a5a-416a-a7d9-df6b3d78682f","dde2730f-b257-437b-84a8-f39b53b7e986","Dependency","auth"
 "14143987-866e-4ffb-beea-dc0913a27ec1","1dd84734-7a5a-416a-a7d9-df6b3d78682f","Type","scrum.client.admin.Auth"
 "012606fe-a781-4580-81a6-5dc005035516","dde2730f-b257-437b-84a8-f39b53b7e986","Dependency","dao"

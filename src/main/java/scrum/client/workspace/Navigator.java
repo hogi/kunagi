@@ -30,13 +30,13 @@ public class Navigator extends GNavigator implements BlockExpandedListener {
 		});
 	}
 
-	public void evalHistoryToken(String token) {
+	private void evalHistoryToken(String token) {
 		log.info("evaluating history token:", token);
 		// if (token == null || token.length() == 0) return;
 		onHistoryToken(parseHistoryToken(token));
 	}
 
-	private void onHistoryToken(Map<String, String> tokens) {
+	private void onHistoryToken(final Map<String, String> tokens) {
 		User user = auth.getUser();
 		Project project = Scope.get().getComponent(Project.class);
 
@@ -71,14 +71,16 @@ public class Navigator extends GNavigator implements BlockExpandedListener {
 		if (project == null) {
 			project = dao.getProject(projectId);
 			if (project == null) throw new RuntimeException("Project does not exist: " + projectId);
-			ScrumScopeManager.createProjectScope(project, tokens.get("entity"));
-			return;
-		}
+			ScrumScopeManager.createProjectScope(project, new Runnable() {
 
-		String entityId = tokens.get("entity");
-		if (entityId != null) {
-			AGwtEntity entity = dao.getEntity(entityId);
-			Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntity(entity);
+				public void run() {
+					Scope.get().getComponent(ProjectWorkspaceWidgets.class).activate();
+					String entityId = tokens.get("entity");
+					if (entityId != null) {
+						Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntityById(entityId);
+					}
+				}
+			});
 		}
 
 	}
@@ -90,11 +92,15 @@ public class Navigator extends GNavigator implements BlockExpandedListener {
 			return;
 		}
 		if (tokensForStart == null) {
-			Project project = user.getCurrentProject();
-			if (project == null || user.isAdmin()) {
-				gotoProjectSelector();
+			if (History.getToken().contains("project=")) {
+				evalHistoryToken(History.getToken());
 			} else {
-				gotoProject(project.getId());
+				Project project = user.getCurrentProject();
+				if (project == null || user.isAdmin()) {
+					gotoProjectSelector();
+				} else {
+					gotoProject(project.getId());
+				}
 			}
 		} else {
 			onHistoryToken(tokensForStart);

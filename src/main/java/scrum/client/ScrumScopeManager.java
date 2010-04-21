@@ -68,7 +68,7 @@ public class ScrumScopeManager {
 		userScope.wireComponents();
 	}
 
-	public static void createProjectScope(final Project project, final String selectedEntityId) {
+	public static void createProjectScope(final Project project, Runnable action) {
 		assert project != null;
 		Scope.get().getComponent(Ui.class).lock("Loading " + project.getLabel() + "...");
 
@@ -76,7 +76,7 @@ public class ScrumScopeManager {
 		Scope scope = scopeManager.setScope(projectScope);
 
 		scope.putComponent("project", project);
-		final ProjectWorkspaceWidgets projectWorkspaceWidgets = scope.putComponent(new ProjectWorkspaceWidgets());
+		scope.putComponent(new ProjectWorkspaceWidgets());
 		scope.putComponent(new Chat());
 		scope.putComponent(new ChangeHistoryManager());
 		scope.putComponent(new Wiki());
@@ -90,13 +90,7 @@ public class ScrumScopeManager {
 
 		projectScope.wireComponents();
 
-		((ScrumGwtApplication) appScope.getComponent("app")).callSelectProject(project.getId(), new Runnable() {
-
-			public void run() {
-				projectWorkspaceWidgets.activate();
-				Scope.get().getComponent(Navigator.class).gotoEntity(project.getId(), selectedEntityId);
-			}
-		});
+		((ScrumGwtApplication) appScope.getComponent("app")).callSelectProject(project.getId(), action);
 	}
 
 	public static void destroyProjectScope() {

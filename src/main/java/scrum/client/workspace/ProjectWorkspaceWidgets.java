@@ -3,6 +3,7 @@ package scrum.client.workspace;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.EntityDoesNotExistException;
 import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.admin.ProjectUserConfigWidget;
@@ -179,7 +180,12 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 	public void showEntityById(final String entityId) {
 		log.debug("Showing entity by id:", entityId);
 
-		AGwtEntity entity = dao.getEntity(entityId);
+		AGwtEntity entity;
+		try {
+			entity = dao.getEntity(entityId);
+		} catch (EntityDoesNotExistException ex) {
+			entity = null;
+		}
 		if (entity != null) {
 			showEntity(entity);
 			return;
@@ -188,7 +194,12 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		app.callRequestEntity(entityId, new Runnable() {
 
 			public void run() {
-				AGwtEntity entity = dao.getEntity(entityId);
+				AGwtEntity entity;
+				try {
+					entity = dao.getEntity(entityId);
+				} catch (EntityDoesNotExistException ex) {
+					entity = null;
+				}
 				Ui ui = Scope.get().getComponent(Ui.class);
 				if (entity == null) {
 					ui.unlock();
