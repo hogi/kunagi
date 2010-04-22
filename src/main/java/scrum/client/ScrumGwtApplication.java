@@ -49,6 +49,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		RootPanel rootPanel = RootPanel.get();
 		rootPanel.getElement().getStyle().setProperty("position", "relative");
 		rootPanel.add(workspace);
+		// rootPanel.add(new WidgetsTesterWidget().update());
 		ScrumJs.initialize();
 
 		callStartConversation(new Runnable() {

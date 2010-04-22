@@ -25,11 +25,15 @@ import scrum.client.img.Img;
 import scrum.client.project.EstimationBarWidget;
 import scrum.client.workspace.PagePanel;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
 public class WidgetsTesterWidget extends AScrumWidget {
@@ -41,6 +45,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 		page = new PagePanel();
 		page.setStyleName("WidgetsTesterWidget");
 
+		textTextarea();
 		testDropdown();
 		testActions();
 		testPagePanel();
@@ -55,6 +60,18 @@ public class WidgetsTesterWidget extends AScrumWidget {
 		// testImageAnchor();
 
 		return page;
+	}
+
+	private void textTextarea() {
+		final TextArea ta = new TextArea();
+		Button btn = new Button("check", new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				int cursorPos = ta.getCursorPos();
+				Gwt.confirm("cursorPos: " + cursorPos);
+			}
+		});
+		addTest("Textarea", Gwt.createFlowPanel(ta, btn));
 	}
 
 	private void testDropdown() {
