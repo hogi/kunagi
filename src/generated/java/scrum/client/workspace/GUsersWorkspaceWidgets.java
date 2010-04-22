@@ -1,6 +1,6 @@
 package scrum.client.workspace;
 
-public abstract class GUsersWorkspaceWidgets extends scrum.client.AScrumComponent {
+public abstract class GUsersWorkspaceWidgets {
 
     protected static ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(UsersWorkspaceWidgets.class);
 
@@ -8,6 +8,11 @@ public abstract class GUsersWorkspaceWidgets extends scrum.client.AScrumComponen
     protected scrum.client.admin.Auth auth;
 
     protected Ui ui;
+
+    @Override
+    public String toString() {
+        return "UsersWorkspaceWidgets";
+    }
 
 }
 

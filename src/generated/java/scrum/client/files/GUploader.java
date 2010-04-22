@@ -1,8 +1,13 @@
 package scrum.client.files;
 
-public abstract class GUploader extends scrum.client.AScrumComponent {
+public abstract class GUploader {
 
     protected static ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Uploader.class);
+
+    @Override
+    public String toString() {
+        return "Uploader";
+    }
 
 }
 

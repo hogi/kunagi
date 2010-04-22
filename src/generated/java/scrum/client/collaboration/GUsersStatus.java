@@ -1,6 +1,6 @@
 package scrum.client.collaboration;
 
-public abstract class GUsersStatus extends scrum.client.AScrumComponent {
+public abstract class GUsersStatus {
 
     protected static ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(UsersStatus.class);
 
@@ -9,6 +9,11 @@ public abstract class GUsersStatus extends scrum.client.AScrumComponent {
     protected scrum.client.admin.Auth auth;
 
     protected scrum.client.project.Project project;
+
+    @Override
+    public String toString() {
+        return "UsersStatus";
+    }
 
 }
 

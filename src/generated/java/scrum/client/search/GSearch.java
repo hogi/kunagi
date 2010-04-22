@@ -1,6 +1,6 @@
 package scrum.client.search;
 
-public abstract class GSearch extends scrum.client.AScrumComponent {
+public abstract class GSearch {
 
     protected static ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Search.class);
 
@@ -9,6 +9,11 @@ public abstract class GSearch extends scrum.client.AScrumComponent {
     protected scrum.client.project.Project project;
 
     protected scrum.client.workspace.ProjectWorkspaceWidgets projectWorkspaceWidgets;
+
+    @Override
+    public String toString() {
+        return "Search";
+    }
 
 }
 

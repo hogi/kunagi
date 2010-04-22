@@ -1,6 +1,6 @@
 package scrum.client.workspace;
 
-public abstract class GNavigator extends scrum.client.AScrumComponent {
+public abstract class GNavigator {
 
     protected static ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Navigator.class);
 
@@ -10,6 +10,11 @@ public abstract class GNavigator extends scrum.client.AScrumComponent {
     protected scrum.client.admin.Auth auth;
 
     protected scrum.client.Dao dao;
+
+    @Override
+    public String toString() {
+        return "Navigator";
+    }
 
 }
 

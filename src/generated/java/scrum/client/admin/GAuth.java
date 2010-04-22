@@ -1,6 +1,6 @@
 package scrum.client.admin;
 
-public abstract class GAuth extends scrum.client.AScrumComponent {
+public abstract class GAuth {
 
     protected static ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Auth.class);
 
@@ -13,6 +13,11 @@ public abstract class GAuth extends scrum.client.AScrumComponent {
     protected scrum.client.workspace.PublicWorkspaceWidgets publicWorkspaceWidgets;
 
     protected scrum.client.workspace.Ui ui;
+
+    @Override
+    public String toString() {
+        return "Auth";
+    }
 
 }
 

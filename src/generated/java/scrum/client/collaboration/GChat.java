@@ -1,6 +1,6 @@
 package scrum.client.collaboration;
 
-public abstract class GChat extends scrum.client.AScrumComponent {
+public abstract class GChat {
 
     protected static ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Chat.class);
 
@@ -11,6 +11,11 @@ public abstract class GChat extends scrum.client.AScrumComponent {
     protected scrum.client.project.Project project;
 
     protected scrum.client.workspace.ProjectWorkspaceWidgets projectWorkspaceWidgets;
+
+    @Override
+    public String toString() {
+        return "Chat";
+    }
 
 }
 

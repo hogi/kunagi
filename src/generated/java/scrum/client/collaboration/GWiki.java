@@ -1,6 +1,6 @@
 package scrum.client.collaboration;
 
-public abstract class GWiki extends scrum.client.AScrumComponent {
+public abstract class GWiki {
 
     protected static ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Wiki.class);
 
@@ -10,6 +10,11 @@ public abstract class GWiki extends scrum.client.AScrumComponent {
     protected scrum.client.project.Project project;
 
     protected scrum.client.files.Uploader uploader;
+
+    @Override
+    public String toString() {
+        return "Wiki";
+    }
 
 }
 
