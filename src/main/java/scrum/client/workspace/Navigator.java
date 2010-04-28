@@ -157,13 +157,13 @@ public class Navigator extends GNavigator implements BlockExpandedListener {
 		this.page = page;
 		if (!History.getToken().contains("page=" + page)) {
 			Project project = Scope.get().getComponent(Project.class);
-			History.newItem("project=" + project.getId() + "|page=" + page);
+			History.newItem("project=" + project.getId() + "|page=" + page, false);
 		}
 	}
 
 	public void setToken(AGwtEntity entity) {
 		Project project = Scope.get().getComponent(Project.class);
-		History.newItem("project=" + project.getId() + "|page=" + page + "|entity=" + entity.getId());
+		History.newItem("project=" + project.getId() + "|page=" + page + "|entity=" + entity.getId(), false);
 	}
 
 	public void onBlockExpanded(Object object) {
