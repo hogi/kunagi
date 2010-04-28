@@ -202,6 +202,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addProperty("lastFileNumber", int.class);
 			projectModel.addProperty("lastSubjectNumber", int.class);
 			projectModel.addProperty("lastEventNumber", int.class);
+			projectModel.addProperty("lastReleaseNumber", int.class);
 			projectModel.addProperty("punishmentFactor", int.class);
 			projectModel.addStringProperty("punishmentUnit");
 			getApplicationModel().addCreateAction(projectModel);
@@ -238,8 +239,12 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			releaseModel.setGwtSupport(true);
 			releaseModel.setViewProtected(true);
 			releaseModel.addReference("project", getProjectModel()).setMaster(true);
+			releaseModel.addProperty("number", int.class).setMandatory(true);
 			releaseModel.addStringProperty("label").setMandatory(true).setSearchable(true);
+			releaseModel.addStringProperty("note").setSearchable(true);
 			releaseModel.addProperty("publicationDate", Date.class);
+			releaseModel.addProperty("published", boolean.class);
+			releaseModel.addStringProperty("releaseNotes").setSearchable(true);
 		}
 		return releaseModel;
 	}

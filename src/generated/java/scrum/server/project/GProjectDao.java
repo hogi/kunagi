@@ -88,6 +88,8 @@ public abstract class GProjectDao
         lastSubjectNumbersCache = null;
         projectsByLastEventNumberCache.clear();
         lastEventNumbersCache = null;
+        projectsByLastReleaseNumberCache.clear();
+        lastReleaseNumbersCache = null;
         projectsByPunishmentFactorCache.clear();
         punishmentFactorsCache = null;
         projectsByPunishmentUnitCache.clear();
@@ -1026,6 +1028,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isLastEventNumber(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - lastReleaseNumber
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Project>> projectsByLastReleaseNumberCache = new Cache<Integer,Set<Project>>(
+            new Cache.Factory<Integer,Set<Project>>() {
+                public Set<Project> create(Integer lastReleaseNumber) {
+                    return getEntities(new IsLastReleaseNumber(lastReleaseNumber));
+                }
+            });
+
+    public final Set<Project> getProjectsByLastReleaseNumber(int lastReleaseNumber) {
+        return projectsByLastReleaseNumberCache.get(lastReleaseNumber);
+    }
+    private Set<Integer> lastReleaseNumbersCache;
+
+    public final Set<Integer> getLastReleaseNumbers() {
+        if (lastReleaseNumbersCache == null) {
+            lastReleaseNumbersCache = new HashSet<Integer>();
+            for (Project e : getEntities()) {
+                lastReleaseNumbersCache.add(e.getLastReleaseNumber());
+            }
+        }
+        return lastReleaseNumbersCache;
+    }
+
+    private static class IsLastReleaseNumber implements Predicate<Project> {
+
+        private int value;
+
+        public IsLastReleaseNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isLastReleaseNumber(value);
         }
 
     }

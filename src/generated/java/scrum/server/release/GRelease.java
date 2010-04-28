@@ -37,8 +37,12 @@ public abstract class GRelease
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
+        properties.put("number", this.number);
         properties.put("label", this.label);
+        properties.put("note", this.note);
         properties.put("publicationDate", this.publicationDate == null ? null : this.publicationDate.toString());
+        properties.put("published", this.published);
+        properties.put("releaseNotes", this.releaseNotes);
     }
 
     public int compareTo(Release other) {
@@ -57,6 +61,8 @@ public abstract class GRelease
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getNote(), key)) return true;
+        if (matchesKey(getReleaseNotes(), key)) return true;
         return false;
     }
 
@@ -112,6 +118,35 @@ public abstract class GRelease
     }
 
     // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private int number;
+
+    public final int getNumber() {
+        return number;
+    }
+
+    public final void setNumber(int number) {
+        number = prepareNumber(number);
+        if (isNumber(number)) return;
+        this.number = number;
+        fireModified();
+    }
+
+    protected int prepareNumber(int number) {
+        return number;
+    }
+
+    public final boolean isNumber(int number) {
+        return this.number == number;
+    }
+
+    protected final void updateNumber(Object value) {
+        setNumber((Integer)value);
+    }
+
+    // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
 
@@ -144,6 +179,41 @@ public abstract class GRelease
 
     protected final void updateLabel(Object value) {
         setLabel((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - note
+    // -----------------------------------------------------------
+
+    private java.lang.String note;
+
+    public final java.lang.String getNote() {
+        return note;
+    }
+
+    public final void setNote(java.lang.String note) {
+        note = prepareNote(note);
+        if (isNote(note)) return;
+        this.note = note;
+        fireModified();
+    }
+
+    protected java.lang.String prepareNote(java.lang.String note) {
+        note = Str.removeUnreadableChars(note);
+        return note;
+    }
+
+    public final boolean isNoteSet() {
+        return this.note != null;
+    }
+
+    public final boolean isNote(java.lang.String note) {
+        if (this.note == null && note == null) return true;
+        return this.note != null && this.note.equals(note);
+    }
+
+    protected final void updateNote(Object value) {
+        setNote((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -181,14 +251,82 @@ public abstract class GRelease
         setPublicationDate((ilarkesto.base.time.Date)value);
     }
 
+    // -----------------------------------------------------------
+    // - published
+    // -----------------------------------------------------------
+
+    private boolean published;
+
+    public final boolean isPublished() {
+        return published;
+    }
+
+    public final void setPublished(boolean published) {
+        published = preparePublished(published);
+        if (isPublished(published)) return;
+        this.published = published;
+        fireModified();
+    }
+
+    protected boolean preparePublished(boolean published) {
+        return published;
+    }
+
+    public final boolean isPublished(boolean published) {
+        return this.published == published;
+    }
+
+    protected final void updatePublished(Object value) {
+        setPublished((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - releaseNotes
+    // -----------------------------------------------------------
+
+    private java.lang.String releaseNotes;
+
+    public final java.lang.String getReleaseNotes() {
+        return releaseNotes;
+    }
+
+    public final void setReleaseNotes(java.lang.String releaseNotes) {
+        releaseNotes = prepareReleaseNotes(releaseNotes);
+        if (isReleaseNotes(releaseNotes)) return;
+        this.releaseNotes = releaseNotes;
+        fireModified();
+    }
+
+    protected java.lang.String prepareReleaseNotes(java.lang.String releaseNotes) {
+        releaseNotes = Str.removeUnreadableChars(releaseNotes);
+        return releaseNotes;
+    }
+
+    public final boolean isReleaseNotesSet() {
+        return this.releaseNotes != null;
+    }
+
+    public final boolean isReleaseNotes(java.lang.String releaseNotes) {
+        if (this.releaseNotes == null && releaseNotes == null) return true;
+        return this.releaseNotes != null && this.releaseNotes.equals(releaseNotes);
+    }
+
+    protected final void updateReleaseNotes(Object value) {
+        setReleaseNotes((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
             if (property.equals("id")) continue;
             Object value = entry.getValue();
             if (property.equals("projectId")) updateProject(value);
+            if (property.equals("number")) updateNumber(value);
             if (property.equals("label")) updateLabel(value);
+            if (property.equals("note")) updateNote(value);
             if (property.equals("publicationDate")) updatePublicationDate(value);
+            if (property.equals("published")) updatePublished(value);
+            if (property.equals("releaseNotes")) updateReleaseNotes(value);
         }
     }
 

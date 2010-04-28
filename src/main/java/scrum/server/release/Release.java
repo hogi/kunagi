@@ -1,8 +1,21 @@
 package scrum.server.release;
 
 import scrum.server.admin.User;
+import scrum.server.common.Numbered;
 
-public class Release extends GRelease {
+public class Release extends GRelease implements Numbered {
+
+	public void updateNumber() {
+		if (getNumber() == 0) setNumber(getProject().generateReleaseNumber());
+	}
+
+	public String getReference() {
+		return scrum.client.release.Release.REFERENCE_PREFIX + getNumber();
+	}
+
+	public String getReferenceAndLabel() {
+		return getReference() + " " + getLabel();
+	}
 
 	public boolean isVisibleFor(User user) {
 		return getProject().isVisibleFor(user);
@@ -14,7 +27,13 @@ public class Release extends GRelease {
 
 	@Override
 	public String toString() {
-		return getLabel();
+		return getReferenceAndLabel();
+	}
+
+	@Override
+	public void ensureIntegrity() {
+		super.ensureIntegrity();
+		updateNumber();
 	}
 
 }

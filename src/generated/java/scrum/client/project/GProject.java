@@ -1044,6 +1044,64 @@ public abstract class GProject
 
     }
 
+    // --- lastReleaseNumber ---
+
+    private int lastReleaseNumber ;
+
+    public final int getLastReleaseNumber() {
+        return this.lastReleaseNumber ;
+    }
+
+    public final Project setLastReleaseNumber(int lastReleaseNumber) {
+        if (isLastReleaseNumber(lastReleaseNumber)) return (Project)this;
+        this.lastReleaseNumber = lastReleaseNumber ;
+        propertyChanged("lastReleaseNumber", this.lastReleaseNumber);
+        return (Project)this;
+    }
+
+    public final boolean isLastReleaseNumber(int lastReleaseNumber) {
+        return equals(this.lastReleaseNumber, lastReleaseNumber);
+    }
+
+    private transient LastReleaseNumberModel lastReleaseNumberModel;
+
+    public LastReleaseNumberModel getLastReleaseNumberModel() {
+        if (lastReleaseNumberModel == null) lastReleaseNumberModel = createLastReleaseNumberModel();
+        return lastReleaseNumberModel;
+    }
+
+    protected LastReleaseNumberModel createLastReleaseNumberModel() { return new LastReleaseNumberModel(); }
+
+    protected class LastReleaseNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getLastReleaseNumber();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setLastReleaseNumber(value);
+        }
+
+            @Override
+            public void increment() {
+                setLastReleaseNumber(getLastReleaseNumber() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setLastReleaseNumber(getLastReleaseNumber() - 1);
+            }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- punishmentFactor ---
 
     private int punishmentFactor ;
@@ -1178,6 +1236,7 @@ public abstract class GProject
         lastFileNumber  = (Integer) props.get("lastFileNumber");
         lastSubjectNumber  = (Integer) props.get("lastSubjectNumber");
         lastEventNumber  = (Integer) props.get("lastEventNumber");
+        lastReleaseNumber  = (Integer) props.get("lastReleaseNumber");
         punishmentFactor  = (Integer) props.get("punishmentFactor");
         punishmentUnit  = (java.lang.String) props.get("punishmentUnit");
     }
@@ -1208,6 +1267,7 @@ public abstract class GProject
         properties.put("lastFileNumber", this.lastFileNumber);
         properties.put("lastSubjectNumber", this.lastSubjectNumber);
         properties.put("lastEventNumber", this.lastEventNumber);
+        properties.put("lastReleaseNumber", this.lastReleaseNumber);
         properties.put("punishmentFactor", this.punishmentFactor);
         properties.put("punishmentUnit", this.punishmentUnit);
     }

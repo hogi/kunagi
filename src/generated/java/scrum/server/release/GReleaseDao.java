@@ -44,10 +44,17 @@ public abstract class GReleaseDao
     public void clearCaches() {
         releasesByProjectCache.clear();
         projectsCache = null;
+        releasesByNumberCache.clear();
+        numbersCache = null;
         releasesByLabelCache.clear();
         labelsCache = null;
+        releasesByNoteCache.clear();
+        notesCache = null;
         releasesByPublicationDateCache.clear();
         publicationDatesCache = null;
+        releasesByPublishedCache.clear();
+        releasesByReleaseNotesCache.clear();
+        releaseNotessCache = null;
     }
 
     @Override
@@ -107,6 +114,46 @@ public abstract class GReleaseDao
     }
 
     // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Release>> releasesByNumberCache = new Cache<Integer,Set<Release>>(
+            new Cache.Factory<Integer,Set<Release>>() {
+                public Set<Release> create(Integer number) {
+                    return getEntities(new IsNumber(number));
+                }
+            });
+
+    public final Set<Release> getReleasesByNumber(int number) {
+        return releasesByNumberCache.get(number);
+    }
+    private Set<Integer> numbersCache;
+
+    public final Set<Integer> getNumbers() {
+        if (numbersCache == null) {
+            numbersCache = new HashSet<Integer>();
+            for (Release e : getEntities()) {
+                numbersCache.add(e.getNumber());
+            }
+        }
+        return numbersCache;
+    }
+
+    private static class IsNumber implements Predicate<Release> {
+
+        private int value;
+
+        public IsNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Release e) {
+            return e.isNumber(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - label
     // -----------------------------------------------------------
 
@@ -147,6 +194,46 @@ public abstract class GReleaseDao
     }
 
     // -----------------------------------------------------------
+    // - note
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Release>> releasesByNoteCache = new Cache<java.lang.String,Set<Release>>(
+            new Cache.Factory<java.lang.String,Set<Release>>() {
+                public Set<Release> create(java.lang.String note) {
+                    return getEntities(new IsNote(note));
+                }
+            });
+
+    public final Set<Release> getReleasesByNote(java.lang.String note) {
+        return releasesByNoteCache.get(note);
+    }
+    private Set<java.lang.String> notesCache;
+
+    public final Set<java.lang.String> getNotes() {
+        if (notesCache == null) {
+            notesCache = new HashSet<java.lang.String>();
+            for (Release e : getEntities()) {
+                if (e.isNoteSet()) notesCache.add(e.getNote());
+            }
+        }
+        return notesCache;
+    }
+
+    private static class IsNote implements Predicate<Release> {
+
+        private java.lang.String value;
+
+        public IsNote(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Release e) {
+            return e.isNote(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - publicationDate
     // -----------------------------------------------------------
 
@@ -182,6 +269,75 @@ public abstract class GReleaseDao
 
         public boolean test(Release e) {
             return e.isPublicationDate(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - published
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<Release>> releasesByPublishedCache = new Cache<Boolean,Set<Release>>(
+            new Cache.Factory<Boolean,Set<Release>>() {
+                public Set<Release> create(Boolean published) {
+                    return getEntities(new IsPublished(published));
+                }
+            });
+
+    public final Set<Release> getReleasesByPublished(boolean published) {
+        return releasesByPublishedCache.get(published);
+    }
+
+    private static class IsPublished implements Predicate<Release> {
+
+        private boolean value;
+
+        public IsPublished(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(Release e) {
+            return value == e.isPublished();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - releaseNotes
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Release>> releasesByReleaseNotesCache = new Cache<java.lang.String,Set<Release>>(
+            new Cache.Factory<java.lang.String,Set<Release>>() {
+                public Set<Release> create(java.lang.String releaseNotes) {
+                    return getEntities(new IsReleaseNotes(releaseNotes));
+                }
+            });
+
+    public final Set<Release> getReleasesByReleaseNotes(java.lang.String releaseNotes) {
+        return releasesByReleaseNotesCache.get(releaseNotes);
+    }
+    private Set<java.lang.String> releaseNotessCache;
+
+    public final Set<java.lang.String> getReleaseNotess() {
+        if (releaseNotessCache == null) {
+            releaseNotessCache = new HashSet<java.lang.String>();
+            for (Release e : getEntities()) {
+                if (e.isReleaseNotesSet()) releaseNotessCache.add(e.getReleaseNotes());
+            }
+        }
+        return releaseNotessCache;
+    }
+
+    private static class IsReleaseNotes implements Predicate<Release> {
+
+        private java.lang.String value;
+
+        public IsReleaseNotes(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Release e) {
+            return e.isReleaseNotes(value);
         }
 
     }

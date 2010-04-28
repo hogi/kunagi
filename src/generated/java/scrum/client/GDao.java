@@ -1019,6 +1019,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByLastReleaseNumber(int lastReleaseNumber) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isLastReleaseNumber(lastReleaseNumber)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.project.Project> getProjectsByPunishmentFactor(int punishmentFactor) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
@@ -1387,6 +1395,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.release.Release> getReleasesByNumber(int number) {
+        List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
+        for (scrum.client.release.Release entity : releases.values()) {
+            if (entity.isNumber(number)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.release.Release> getReleasesByLabel(java.lang.String label) {
         List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
         for (scrum.client.release.Release entity : releases.values()) {
@@ -1395,10 +1411,34 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.release.Release> getReleasesByNote(java.lang.String note) {
+        List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
+        for (scrum.client.release.Release entity : releases.values()) {
+            if (entity.isNote(note)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.release.Release> getReleasesByPublicationDate(ilarkesto.gwt.client.Date publicationDate) {
         List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
         for (scrum.client.release.Release entity : releases.values()) {
             if (entity.isPublicationDate(publicationDate)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.release.Release> getReleasesByPublished(boolean published) {
+        List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
+        for (scrum.client.release.Release entity : releases.values()) {
+            if (entity.isPublished(published)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.release.Release> getReleasesByReleaseNotes(java.lang.String releaseNotes) {
+        List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
+        for (scrum.client.release.Release entity : releases.values()) {
+            if (entity.isReleaseNotes(releaseNotes)) ret.add(entity);
         }
         return ret;
     }

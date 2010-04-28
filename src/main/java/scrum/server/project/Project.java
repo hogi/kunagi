@@ -348,6 +348,12 @@ public class Project extends GProject {
 		return number;
 	}
 
+	public synchronized int generateReleaseNumber() {
+		int number = getLastReleaseNumber() + 1;
+		setLastReleaseNumber(number);
+		return number;
+	}
+
 	public synchronized int generateQualityNumber() {
 		int number = getLastQualityNumber() + 1;
 		setLastQualityNumber(number);
