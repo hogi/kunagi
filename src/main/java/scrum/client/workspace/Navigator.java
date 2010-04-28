@@ -83,6 +83,10 @@ public class Navigator extends GNavigator implements BlockExpandedListener {
 			});
 		}
 
+		String entityId = tokens.get("entity");
+		if (entityId != null) {
+			Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntityById(entityId);
+		}
 	}
 
 	public void gotoStart() {
