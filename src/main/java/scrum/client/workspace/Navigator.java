@@ -19,6 +19,7 @@ import com.google.gwt.user.client.History;
 public class Navigator extends GNavigator implements BlockExpandedListener {
 
 	private Map<String, String> tokensForStart;
+	private String page = "Dashboard";
 
 	@Override
 	public void initialize() {
@@ -76,11 +77,21 @@ public class Navigator extends GNavigator implements BlockExpandedListener {
 				public void run() {
 					Scope.get().getComponent(ProjectWorkspaceWidgets.class).activate();
 					String entityId = tokens.get("entity");
+					String page = tokens.get("page");
+					if (page != null) {
+						Scope.get().getComponent(ProjectWorkspaceWidgets.class).showPage(page);
+					}
 					if (entityId != null) {
 						Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntityById(entityId);
 					}
 				}
 			});
+			return;
+		}
+
+		String page = tokens.get("page");
+		if (page != null) {
+			Scope.get().getComponent(ProjectWorkspaceWidgets.class).showPage(page);
 		}
 
 		String entityId = tokens.get("entity");
@@ -141,9 +152,18 @@ public class Navigator extends GNavigator implements BlockExpandedListener {
 		History.newItem(token);
 	}
 
+	public void setPageToken(String page) {
+		if (page.equals(this.page)) return;
+		this.page = page;
+		if (!History.getToken().contains("page=" + page)) {
+			Project project = Scope.get().getComponent(Project.class);
+			History.newItem("project=" + project.getId() + "|page=" + page);
+		}
+	}
+
 	public void setToken(AGwtEntity entity) {
 		Project project = Scope.get().getComponent(Project.class);
-		History.newItem("project=" + project.getId() + "|entity=" + entity.getId());
+		History.newItem("project=" + project.getId() + "|page=" + page + "|entity=" + entity.getId());
 	}
 
 	public void onBlockExpanded(Object object) {

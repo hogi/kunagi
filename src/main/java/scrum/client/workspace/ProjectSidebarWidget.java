@@ -1,6 +1,5 @@
 package scrum.client.workspace;
 
-import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
@@ -56,8 +55,7 @@ public class ProjectSidebarWidget extends AScrumWidget {
 	}
 
 	public SwitchingNavigatorWidget getNavigator() {
-		if (navigator == null)
-			navigator = new SwitchingNavigatorWidget(Scope.get().getComponent(Ui.class).getWorkspace().getWorkarea());
+		if (navigator == null) navigator = new ScrumNavigatorWidget();
 		return navigator;
 	}
 

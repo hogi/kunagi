@@ -31,4 +31,8 @@ public class JournalWidget extends AScrumWidget {
 		super.onUpdate();
 	}
 
+	public boolean select(ProjectEvent event) {
+		return list.showObject(event);
+	}
+
 }

@@ -1,5 +1,6 @@
 package scrum.client.workspace;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
@@ -17,6 +18,7 @@ import scrum.client.collaboration.ForumWidget;
 import scrum.client.collaboration.Subject;
 import scrum.client.collaboration.WikiWidget;
 import scrum.client.collaboration.Wikipage;
+import scrum.client.common.AScrumWidget;
 import scrum.client.context.UserHighlightSupport;
 import scrum.client.dashboard.DashboardWidget;
 import scrum.client.files.File;
@@ -26,6 +28,7 @@ import scrum.client.impediments.ImpedimentListWidget;
 import scrum.client.issues.Issue;
 import scrum.client.issues.IssueManagementWidget;
 import scrum.client.journal.JournalWidget;
+import scrum.client.journal.ProjectEvent;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.Project;
 import scrum.client.project.ProjectOverviewWidget;
@@ -238,9 +241,58 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 			showCalendar((SimpleEvent) entity);
 		} else if (entity instanceof Project) {
 			showDashboard();
+		} else if (entity instanceof ProjectEvent) {
+			showProjectEventList((ProjectEvent) entity);
 		} else {
 			throw new RuntimeException("Showing entity not supported: " + entity.getClass().getName());
 		}
+	}
+
+	public void showPage(String page) {
+		if (isPage(page, dashboard)) {
+			showDashboard();
+		} else if (isPage(page, whiteboard)) {
+			showWhiteboard(null);
+		} else if (isPage(page, sprintBacklog)) {
+			showSprintBacklog((Requirement) null);
+		} else if (isPage(page, productBacklog)) {
+			showProductBacklog(null);
+		} else if (isPage(page, qualityBacklog)) {
+			showQualityBacklog(null);
+		} else if (isPage(page, forum)) {
+			showForum(null);
+		} else if (isPage(page, calendar)) {
+			showCalendar(null);
+		} else if (isPage(page, nextSprint)) {
+			select(nextSprint);
+		} else if (isPage(page, impedimentList)) {
+			showImpedimentList(null);
+		} else if (isPage(page, issueList)) {
+			showIssueList(null);
+		} else if (isPage(page, riskList)) {
+			showRiskList(null);
+		} else if (isPage(page, projectUserConfig)) {
+			select(projectUserConfig);
+		} else if (isPage(page, sprintHistory)) {
+			showSprintHistory(null);
+		} else if (isPage(page, wiki)) {
+			showWiki((Wikipage) null);
+		} else if (isPage(page, punishments)) {
+			select(punishments);
+		} else if (isPage(page, projectEventList)) {
+			showProjectEventList(null);
+		} else if (isPage(page, fileRepository)) {
+			showFile(null);
+		}
+	}
+
+	private boolean isPage(String pageName, AScrumWidget page) {
+		return pageName.equals(getPageName(page));
+	}
+
+	private String getPageName(AScrumWidget page) {
+		String name = Str.getSimpleName(page.getClass());
+		return name.substring(0, name.length() - 6);
 	}
 
 	public void showDashboard() {
@@ -253,6 +305,11 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		} else {
 			showSprintHistory(sprint);
 		}
+	}
+
+	public void showProjectEventList(ProjectEvent event) {
+		select(projectEventList);
+		projectEventList.select(event);
 	}
 
 	public void showSprintHistory(Sprint sprint) {
@@ -363,6 +420,10 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 	public void showCalendar(SimpleEvent event) {
 		select(calendar);
 		calendar.showEvent(event);
+	}
+
+	public void showProjectEvent(ProjectEvent event) {
+
 	}
 
 	private void select(AWidget widget) {

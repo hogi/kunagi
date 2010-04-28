@@ -123,6 +123,7 @@ public class DayListWidget extends AScrumWidget {
 	}
 
 	public void showEvent(SimpleEvent event) {
+		if (event == null) return;
 		showDate(event.getDate());
 		update();
 		selectionManager.select(event);
