@@ -229,44 +229,44 @@ public abstract class GRelease
 
     }
 
-    // --- publicationDate ---
+    // --- releaseDate ---
 
-    private ilarkesto.gwt.client.Date publicationDate ;
+    private ilarkesto.gwt.client.Date releaseDate ;
 
-    public final ilarkesto.gwt.client.Date getPublicationDate() {
-        return this.publicationDate ;
+    public final ilarkesto.gwt.client.Date getReleaseDate() {
+        return this.releaseDate ;
     }
 
-    public final Release setPublicationDate(ilarkesto.gwt.client.Date publicationDate) {
-        if (isPublicationDate(publicationDate)) return (Release)this;
-        this.publicationDate = publicationDate ;
-        propertyChanged("publicationDate", this.publicationDate);
+    public final Release setReleaseDate(ilarkesto.gwt.client.Date releaseDate) {
+        if (isReleaseDate(releaseDate)) return (Release)this;
+        this.releaseDate = releaseDate ;
+        propertyChanged("releaseDate", this.releaseDate);
         return (Release)this;
     }
 
-    public final boolean isPublicationDate(ilarkesto.gwt.client.Date publicationDate) {
-        return equals(this.publicationDate, publicationDate);
+    public final boolean isReleaseDate(ilarkesto.gwt.client.Date releaseDate) {
+        return equals(this.releaseDate, releaseDate);
     }
 
-    private transient PublicationDateModel publicationDateModel;
+    private transient ReleaseDateModel releaseDateModel;
 
-    public PublicationDateModel getPublicationDateModel() {
-        if (publicationDateModel == null) publicationDateModel = createPublicationDateModel();
-        return publicationDateModel;
+    public ReleaseDateModel getReleaseDateModel() {
+        if (releaseDateModel == null) releaseDateModel = createReleaseDateModel();
+        return releaseDateModel;
     }
 
-    protected PublicationDateModel createPublicationDateModel() { return new PublicationDateModel(); }
+    protected ReleaseDateModel createReleaseDateModel() { return new ReleaseDateModel(); }
 
-    protected class PublicationDateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+    protected class ReleaseDateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
 
         @Override
         public ilarkesto.gwt.client.Date getValue() {
-            return getPublicationDate();
+            return getReleaseDate();
         }
 
         @Override
         public void setValue(ilarkesto.gwt.client.Date value) {
-            setPublicationDate(value);
+            setReleaseDate(value);
         }
 
         @Override
@@ -277,23 +277,23 @@ public abstract class GRelease
 
     }
 
-    // --- published ---
+    // --- released ---
 
-    private boolean published ;
+    private boolean released ;
 
-    public final boolean isPublished() {
-        return this.published ;
+    public final boolean isReleased() {
+        return this.released ;
     }
 
-    public final Release setPublished(boolean published) {
-        if (isPublished(published)) return (Release)this;
-        this.published = published ;
-        propertyChanged("published", this.published);
+    public final Release setReleased(boolean released) {
+        if (isReleased(released)) return (Release)this;
+        this.released = released ;
+        propertyChanged("released", this.released);
         return (Release)this;
     }
 
-    public final boolean isPublished(boolean published) {
-        return equals(this.published, published);
+    public final boolean isReleased(boolean released) {
+        return equals(this.released, released);
     }
 
     // --- releaseNotes ---
@@ -351,9 +351,9 @@ public abstract class GRelease
         number  = (Integer) props.get("number");
         label  = (java.lang.String) props.get("label");
         note  = (java.lang.String) props.get("note");
-        String publicationDateAsString = (String) props.get("publicationDate");
-        publicationDate  =  publicationDateAsString == null ? null : new ilarkesto.gwt.client.Date(publicationDateAsString);
-        published  = (Boolean) props.get("published");
+        String releaseDateAsString = (String) props.get("releaseDate");
+        releaseDate  =  releaseDateAsString == null ? null : new ilarkesto.gwt.client.Date(releaseDateAsString);
+        released  = (Boolean) props.get("released");
         releaseNotes  = (java.lang.String) props.get("releaseNotes");
     }
 
@@ -364,8 +364,8 @@ public abstract class GRelease
         properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("note", this.note);
-        properties.put("publicationDate", this.publicationDate == null ? null : this.publicationDate.toString());
-        properties.put("published", this.published);
+        properties.put("releaseDate", this.releaseDate == null ? null : this.releaseDate.toString());
+        properties.put("released", this.released);
         properties.put("releaseNotes", this.releaseNotes);
     }
 

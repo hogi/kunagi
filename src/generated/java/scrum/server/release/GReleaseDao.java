@@ -50,9 +50,9 @@ public abstract class GReleaseDao
         labelsCache = null;
         releasesByNoteCache.clear();
         notesCache = null;
-        releasesByPublicationDateCache.clear();
-        publicationDatesCache = null;
-        releasesByPublishedCache.clear();
+        releasesByReleaseDateCache.clear();
+        releaseDatesCache = null;
+        releasesByReleasedCache.clear();
         releasesByReleaseNotesCache.clear();
         releaseNotessCache = null;
     }
@@ -234,70 +234,70 @@ public abstract class GReleaseDao
     }
 
     // -----------------------------------------------------------
-    // - publicationDate
+    // - releaseDate
     // -----------------------------------------------------------
 
-    private final Cache<ilarkesto.base.time.Date,Set<Release>> releasesByPublicationDateCache = new Cache<ilarkesto.base.time.Date,Set<Release>>(
+    private final Cache<ilarkesto.base.time.Date,Set<Release>> releasesByReleaseDateCache = new Cache<ilarkesto.base.time.Date,Set<Release>>(
             new Cache.Factory<ilarkesto.base.time.Date,Set<Release>>() {
-                public Set<Release> create(ilarkesto.base.time.Date publicationDate) {
-                    return getEntities(new IsPublicationDate(publicationDate));
+                public Set<Release> create(ilarkesto.base.time.Date releaseDate) {
+                    return getEntities(new IsReleaseDate(releaseDate));
                 }
             });
 
-    public final Set<Release> getReleasesByPublicationDate(ilarkesto.base.time.Date publicationDate) {
-        return releasesByPublicationDateCache.get(publicationDate);
+    public final Set<Release> getReleasesByReleaseDate(ilarkesto.base.time.Date releaseDate) {
+        return releasesByReleaseDateCache.get(releaseDate);
     }
-    private Set<ilarkesto.base.time.Date> publicationDatesCache;
+    private Set<ilarkesto.base.time.Date> releaseDatesCache;
 
-    public final Set<ilarkesto.base.time.Date> getPublicationDates() {
-        if (publicationDatesCache == null) {
-            publicationDatesCache = new HashSet<ilarkesto.base.time.Date>();
+    public final Set<ilarkesto.base.time.Date> getReleaseDates() {
+        if (releaseDatesCache == null) {
+            releaseDatesCache = new HashSet<ilarkesto.base.time.Date>();
             for (Release e : getEntities()) {
-                if (e.isPublicationDateSet()) publicationDatesCache.add(e.getPublicationDate());
+                if (e.isReleaseDateSet()) releaseDatesCache.add(e.getReleaseDate());
             }
         }
-        return publicationDatesCache;
+        return releaseDatesCache;
     }
 
-    private static class IsPublicationDate implements Predicate<Release> {
+    private static class IsReleaseDate implements Predicate<Release> {
 
         private ilarkesto.base.time.Date value;
 
-        public IsPublicationDate(ilarkesto.base.time.Date value) {
+        public IsReleaseDate(ilarkesto.base.time.Date value) {
             this.value = value;
         }
 
         public boolean test(Release e) {
-            return e.isPublicationDate(value);
+            return e.isReleaseDate(value);
         }
 
     }
 
     // -----------------------------------------------------------
-    // - published
+    // - released
     // -----------------------------------------------------------
 
-    private final Cache<Boolean,Set<Release>> releasesByPublishedCache = new Cache<Boolean,Set<Release>>(
+    private final Cache<Boolean,Set<Release>> releasesByReleasedCache = new Cache<Boolean,Set<Release>>(
             new Cache.Factory<Boolean,Set<Release>>() {
-                public Set<Release> create(Boolean published) {
-                    return getEntities(new IsPublished(published));
+                public Set<Release> create(Boolean released) {
+                    return getEntities(new IsReleased(released));
                 }
             });
 
-    public final Set<Release> getReleasesByPublished(boolean published) {
-        return releasesByPublishedCache.get(published);
+    public final Set<Release> getReleasesByReleased(boolean released) {
+        return releasesByReleasedCache.get(released);
     }
 
-    private static class IsPublished implements Predicate<Release> {
+    private static class IsReleased implements Predicate<Release> {
 
         private boolean value;
 
-        public IsPublished(boolean value) {
+        public IsReleased(boolean value) {
             this.value = value;
         }
 
         public boolean test(Release e) {
-            return value == e.isPublished();
+            return value == e.isReleased();
         }
 
     }

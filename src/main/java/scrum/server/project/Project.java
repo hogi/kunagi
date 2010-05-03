@@ -177,6 +177,7 @@ public class Project extends GProject {
 		ret.addAll(getMatching(getImpediments(), keys));
 		ret.addAll(getMatching(getRisks(), keys));
 		ret.addAll(getMatching(getFiles(), keys));
+		ret.addAll(getMatching(getReleases(), keys));
 		return ret;
 	}
 
@@ -529,6 +530,7 @@ public class Project extends GProject {
 		ret.addAll(getComments(getUserConfigs()));
 		ret.addAll(getComments(getProjectEvents()));
 		ret.addAll(getComments(getSubjects()));
+		ret.addAll(getComments(getReleases()));
 		return ret;
 	}
 

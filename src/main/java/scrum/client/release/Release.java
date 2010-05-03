@@ -1,7 +1,9 @@
 package scrum.client.release;
 
+import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.HyperlinkWidget;
 
+import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.ScrumGwt;
@@ -42,5 +44,17 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 	public String toString() {
 		return super.getLabel();
 	}
+
+	public static final Comparator<Release> DATE_COMPARATOR = new Comparator<Release>() {
+
+		public int compare(Release ra, Release rb) {
+			Date a = ra.getReleaseDate();
+			Date b = rb.getReleaseDate();
+			if (a == null && b == null) return 0;
+			if (a == null) return 1;
+			if (b == null) return -1;
+			return a.compareTo(b);
+		}
+	};
 
 }

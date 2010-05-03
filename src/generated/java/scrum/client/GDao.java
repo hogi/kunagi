@@ -1419,18 +1419,18 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.release.Release> getReleasesByPublicationDate(ilarkesto.gwt.client.Date publicationDate) {
+    public final List<scrum.client.release.Release> getReleasesByReleaseDate(ilarkesto.gwt.client.Date releaseDate) {
         List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
         for (scrum.client.release.Release entity : releases.values()) {
-            if (entity.isPublicationDate(publicationDate)) ret.add(entity);
+            if (entity.isReleaseDate(releaseDate)) ret.add(entity);
         }
         return ret;
     }
 
-    public final List<scrum.client.release.Release> getReleasesByPublished(boolean published) {
+    public final List<scrum.client.release.Release> getReleasesByReleased(boolean released) {
         List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
         for (scrum.client.release.Release entity : releases.values()) {
-            if (entity.isPublished(published)) ret.add(entity);
+            if (entity.isReleased(released)) ret.add(entity);
         }
         return ret;
     }

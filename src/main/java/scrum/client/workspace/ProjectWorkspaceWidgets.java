@@ -33,6 +33,8 @@ import scrum.client.project.ProjectOverviewWidget;
 import scrum.client.project.Quality;
 import scrum.client.project.QualityBacklogWidget;
 import scrum.client.project.Requirement;
+import scrum.client.release.Release;
+import scrum.client.release.ReleaseManagementWidget;
 import scrum.client.risks.Risk;
 import scrum.client.risks.RiskListWidget;
 import scrum.client.search.Search;
@@ -61,6 +63,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 	private ImpedimentListWidget impedimentList;
 	private IssueManagementWidget issueList;
 	private RiskListWidget riskList;
+	private ReleaseManagementWidget releaseList;
 	private WikiWidget wiki;
 	private SprintHistoryWidget sprintHistory;
 	private ProjectUserConfigWidget projectUserConfig;
@@ -94,6 +97,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		pages.addPage(new Page(qualityBacklog, "Qualities", productGroupKey));
 		issueList = new IssueManagementWidget();
 		pages.addPage(new Page(issueList, "Issue Management", productGroupKey));
+		releaseList = new ReleaseManagementWidget();
+		pages.addPage(new Page(releaseList, "Release Management", productGroupKey));
 
 		String projectGroupKey = "project";
 		impedimentList = new ImpedimentListWidget();
@@ -254,6 +259,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 			showDashboard();
 		} else if (entity instanceof ProjectEvent) {
 			showProjectEventList((ProjectEvent) entity);
+		} else if (entity instanceof Release) {
+			showRelease((Release) entity);
 		} else {
 			throw new RuntimeException("Showing entity not supported: " + entity.getClass().getName());
 		}
@@ -290,6 +297,11 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 	public void showIssue(Issue issue) {
 		select(issueList);
 		issueList.select(issue);
+	}
+
+	public void showRelease(Release release) {
+		select(releaseList);
+		releaseList.select(release);
 	}
 
 	public void showImpediment(Impediment impediment) {

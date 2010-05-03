@@ -40,8 +40,8 @@ public abstract class GRelease
         properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("note", this.note);
-        properties.put("publicationDate", this.publicationDate == null ? null : this.publicationDate.toString());
-        properties.put("published", this.published);
+        properties.put("releaseDate", this.releaseDate == null ? null : this.releaseDate.toString());
+        properties.put("released", this.released);
         properties.put("releaseNotes", this.releaseNotes);
     }
 
@@ -217,67 +217,67 @@ public abstract class GRelease
     }
 
     // -----------------------------------------------------------
-    // - publicationDate
+    // - releaseDate
     // -----------------------------------------------------------
 
-    private ilarkesto.base.time.Date publicationDate;
+    private ilarkesto.base.time.Date releaseDate;
 
-    public final ilarkesto.base.time.Date getPublicationDate() {
-        return publicationDate;
+    public final ilarkesto.base.time.Date getReleaseDate() {
+        return releaseDate;
     }
 
-    public final void setPublicationDate(ilarkesto.base.time.Date publicationDate) {
-        publicationDate = preparePublicationDate(publicationDate);
-        if (isPublicationDate(publicationDate)) return;
-        this.publicationDate = publicationDate;
+    public final void setReleaseDate(ilarkesto.base.time.Date releaseDate) {
+        releaseDate = prepareReleaseDate(releaseDate);
+        if (isReleaseDate(releaseDate)) return;
+        this.releaseDate = releaseDate;
         fireModified();
     }
 
-    protected ilarkesto.base.time.Date preparePublicationDate(ilarkesto.base.time.Date publicationDate) {
-        return publicationDate;
+    protected ilarkesto.base.time.Date prepareReleaseDate(ilarkesto.base.time.Date releaseDate) {
+        return releaseDate;
     }
 
-    public final boolean isPublicationDateSet() {
-        return this.publicationDate != null;
+    public final boolean isReleaseDateSet() {
+        return this.releaseDate != null;
     }
 
-    public final boolean isPublicationDate(ilarkesto.base.time.Date publicationDate) {
-        if (this.publicationDate == null && publicationDate == null) return true;
-        return this.publicationDate != null && this.publicationDate.equals(publicationDate);
+    public final boolean isReleaseDate(ilarkesto.base.time.Date releaseDate) {
+        if (this.releaseDate == null && releaseDate == null) return true;
+        return this.releaseDate != null && this.releaseDate.equals(releaseDate);
     }
 
-    protected final void updatePublicationDate(Object value) {
+    protected final void updateReleaseDate(Object value) {
         value = value == null ? null : new ilarkesto.base.time.Date((String)value);
-        setPublicationDate((ilarkesto.base.time.Date)value);
+        setReleaseDate((ilarkesto.base.time.Date)value);
     }
 
     // -----------------------------------------------------------
-    // - published
+    // - released
     // -----------------------------------------------------------
 
-    private boolean published;
+    private boolean released;
 
-    public final boolean isPublished() {
-        return published;
+    public final boolean isReleased() {
+        return released;
     }
 
-    public final void setPublished(boolean published) {
-        published = preparePublished(published);
-        if (isPublished(published)) return;
-        this.published = published;
+    public final void setReleased(boolean released) {
+        released = prepareReleased(released);
+        if (isReleased(released)) return;
+        this.released = released;
         fireModified();
     }
 
-    protected boolean preparePublished(boolean published) {
-        return published;
+    protected boolean prepareReleased(boolean released) {
+        return released;
     }
 
-    public final boolean isPublished(boolean published) {
-        return this.published == published;
+    public final boolean isReleased(boolean released) {
+        return this.released == released;
     }
 
-    protected final void updatePublished(Object value) {
-        setPublished((Boolean)value);
+    protected final void updateReleased(Object value) {
+        setReleased((Boolean)value);
     }
 
     // -----------------------------------------------------------
@@ -324,8 +324,8 @@ public abstract class GRelease
             if (property.equals("number")) updateNumber(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("note")) updateNote(value);
-            if (property.equals("publicationDate")) updatePublicationDate(value);
-            if (property.equals("published")) updatePublished(value);
+            if (property.equals("releaseDate")) updateReleaseDate(value);
+            if (property.equals("released")) updateReleased(value);
             if (property.equals("releaseNotes")) updateReleaseNotes(value);
         }
     }

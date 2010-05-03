@@ -32,6 +32,7 @@ import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
 import scrum.client.journal.ProjectEvent;
+import scrum.client.release.Release;
 import scrum.client.risks.Risk;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
@@ -375,6 +376,26 @@ public class Project extends GProject implements ForumSupport {
 		return getDao().getRisksByProject(this);
 	}
 
+	public List<Release> getReleases() {
+		return getDao().getReleasesByProject(this);
+	}
+
+	public List<Release> getReleasedReleases() {
+		List<Release> ret = new ArrayList<Release>();
+		for (Release release : getReleases()) {
+			if (release.isReleased()) ret.add(release);
+		}
+		return ret;
+	}
+
+	public List<Release> getPlannedReleases() {
+		List<Release> ret = new ArrayList<Release>();
+		for (Release release : getReleases()) {
+			if (!release.isReleased()) ret.add(release);
+		}
+		return ret;
+	}
+
 	public List<Risk> getHighestRisks(int max) {
 		List<Risk> ret = getRisks();
 		Collections.sort(ret, Risk.PRIORITY_COMPARATOR);
@@ -388,6 +409,12 @@ public class Project extends GProject implements ForumSupport {
 		Risk risk = new Risk(this);
 		getDao().createRisk(risk);
 		return risk;
+	}
+
+	public Release createNewRelease() {
+		Release release = new Release(this);
+		getDao().createRelease(release);
+		return release;
 	}
 
 	public Requirement createNewRequirement() {

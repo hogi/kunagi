@@ -242,9 +242,11 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			releaseModel.addProperty("number", int.class).setMandatory(true);
 			releaseModel.addStringProperty("label").setMandatory(true).setSearchable(true);
 			releaseModel.addStringProperty("note").setSearchable(true);
-			releaseModel.addProperty("publicationDate", Date.class);
-			releaseModel.addProperty("published", boolean.class);
+			releaseModel.addProperty("releaseDate", Date.class);
+			releaseModel.addProperty("released", boolean.class);
 			releaseModel.addStringProperty("releaseNotes").setSearchable(true);
+			getApplicationModel().addCreateAction(releaseModel);
+			releaseModel.addAction("DeleteRelease");
 		}
 		return releaseModel;
 	}

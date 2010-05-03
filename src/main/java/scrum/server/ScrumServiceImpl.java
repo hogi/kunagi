@@ -415,6 +415,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		conversation.sendToClient(project.getCalendarEvents());
 		conversation.sendToClient(project.getFiles());
 		conversation.sendToClient(project.getUrgentAndOpenIssues());
+		conversation.sendToClient(project.getReleases());
 		webApplication.updateOnlineTeamMembers(project, null);
 	}
 
