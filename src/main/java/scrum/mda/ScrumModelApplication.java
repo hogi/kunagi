@@ -247,6 +247,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			releaseModel.addStringProperty("releaseNotes").setSearchable(true);
 			getApplicationModel().addCreateAction(releaseModel);
 			releaseModel.addAction("DeleteRelease");
+			releaseModel.addAction("ReleaseRelease");
+			releaseModel.addAction("UnreleaseRelease");
 		}
 		return releaseModel;
 	}
