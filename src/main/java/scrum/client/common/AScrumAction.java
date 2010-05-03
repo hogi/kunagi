@@ -3,6 +3,7 @@ package scrum.client.common;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.undo.AUndoOperation;
+import ilarkesto.gwt.client.undo.UndoManager;
 import scrum.client.ComponentManager;
 import scrum.client.Dao;
 import scrum.client.ScrumGwtApplication;
@@ -20,8 +21,12 @@ public abstract class AScrumAction extends AAction {
 
 	// --- helper ---
 
-	protected static final void addUndo(AUndoOperation undo) {
-		Scope.get().getComponent(Undo.class).getManager().add(undo);
+	protected static final void addUndo(AUndoOperation aundo) {
+		Undo undo = Scope.get().getComponent(Undo.class);
+		if (undo == null) return;
+		UndoManager manager = undo.getManager();
+		if (manager == null) return;
+		manager.add(aundo);
 	}
 
 	protected static final boolean isCurrentSprint(Sprint sprint) {

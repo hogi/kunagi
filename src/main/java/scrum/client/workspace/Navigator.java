@@ -163,6 +163,7 @@ public class Navigator extends GNavigator implements BlockExpandedListener {
 
 	public void setToken(AGwtEntity entity) {
 		Project project = Scope.get().getComponent(Project.class);
+		if (project == null) return;
 		History.newItem("project=" + project.getId() + "|page=" + page + "|entity=" + entity.getId(), false);
 	}
 
