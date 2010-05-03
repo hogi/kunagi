@@ -1,6 +1,5 @@
 package scrum.client.workspace;
 
-import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
@@ -18,7 +17,6 @@ import scrum.client.collaboration.ForumWidget;
 import scrum.client.collaboration.Subject;
 import scrum.client.collaboration.WikiWidget;
 import scrum.client.collaboration.Wikipage;
-import scrum.client.common.AScrumWidget;
 import scrum.client.context.UserHighlightSupport;
 import scrum.client.dashboard.DashboardWidget;
 import scrum.client.files.File;
@@ -70,61 +68,74 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 	private JournalWidget projectEventList;
 	private FileRepositoryWidget fileRepository;
 
+	private PageSet pages = new PageSet();
+
 	private boolean searchResultsAdded;
 
 	private User highlightedUser;
 
 	public ProjectWorkspaceWidgets() {
+
 		projectOverview = new ProjectOverviewWidget();
 		dashboard = new DashboardWidget();
+
+		pages.addPage(new Page(dashboard, "Dashboard", null));
+
+		String sprintGroupKey = "sprint";
 		whiteboard = new WhiteboardWidget();
+		pages.addPage(new Page(whiteboard, "Whiteboard", sprintGroupKey));
 		sprintBacklog = new SprintBacklogWidget();
+		pages.addPage(new Page(sprintBacklog, "Sprint Backlog", sprintGroupKey));
+
+		String productGroupKey = "product";
 		productBacklog = new ProductBacklogWidget();
+		pages.addPage(new Page(productBacklog, "Product Backlog", productGroupKey));
 		qualityBacklog = new QualityBacklogWidget();
-		forum = new ForumWidget();
-		calendar = new CalendarWidget();
-		nextSprint = new NextSprintWidget();
-		impedimentList = new ImpedimentListWidget();
+		pages.addPage(new Page(qualityBacklog, "Qualities", productGroupKey));
 		issueList = new IssueManagementWidget();
+		pages.addPage(new Page(issueList, "Issue Management", productGroupKey));
+
+		String projectGroupKey = "project";
+		impedimentList = new ImpedimentListWidget();
+		pages.addPage(new Page(impedimentList, "Impediment List", projectGroupKey));
 		riskList = new RiskListWidget();
-		projectUserConfig = new ProjectUserConfigWidget();
-		sprintHistory = new SprintHistoryWidget();
-		wiki = new WikiWidget();
-		punishments = new PunishmentsWidget();
+		pages.addPage(new Page(riskList, "Risk Management", projectGroupKey));
 		projectEventList = new JournalWidget();
+		pages.addPage(new Page(projectEventList, "Project Journal", projectGroupKey));
+		nextSprint = new NextSprintWidget();
+		pages.addPage(new Page(nextSprint, "Next Sprint", projectGroupKey));
+		sprintHistory = new SprintHistoryWidget();
+		pages.addPage(new Page(sprintHistory, "Sprint History", projectGroupKey));
+
+		String collaborationGroupKey = "collaboration";
+		forum = new ForumWidget();
+		pages.addPage(new Page(forum, "Forum", collaborationGroupKey));
+		wiki = new WikiWidget();
+		pages.addPage(new Page(wiki, "Wiki", collaborationGroupKey));
+		calendar = new CalendarWidget();
+		pages.addPage(new Page(calendar, "Calendar", collaborationGroupKey));
 		fileRepository = new FileRepositoryWidget();
+		pages.addPage(new Page(fileRepository, "File Repository", collaborationGroupKey));
+		punishments = new PunishmentsWidget();
+		pages.addPage(new Page(punishments, "Courtroom", collaborationGroupKey));
+
+		projectUserConfig = new ProjectUserConfigWidget();
+		pages.addPage(new Page(projectUserConfig, "Personal Preferences", null));
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
 		navigator.addItem("Dashboard", dashboard);
-
-		String sprintGroupKey = "sprint";
-		navigator.addGroup("Sprint", sprintGroupKey);
-		navigator.addItem(sprintGroupKey, "Sprint Backlog", getSprintBacklog());
-		navigator.addItem(sprintGroupKey, "Whiteboard", getWhiteboard());
-
-		String productGroupKey = "product";
-		navigator.addGroup("Product", productGroupKey);
-		navigator.addItem(productGroupKey, "Product Backlog", getProductBacklog());
-		navigator.addItem(productGroupKey, "Quality Backlog", getQualityBacklog());
-		navigator.addItem(productGroupKey, "Issue Management", getIssueList());
-
-		String projectGroupKey = "project";
-		navigator.addGroup("Project", projectGroupKey);
-		navigator.addItem(projectGroupKey, "Impediment List", getImpedimentList());
-		navigator.addItem(projectGroupKey, "Risk Management", getRiskList());
-		navigator.addItem(projectGroupKey, "Project Journal", getProjectEventList());
-		navigator.addItem(projectGroupKey, "Next Sprint", getNextSprint());
-		navigator.addItem(projectGroupKey, "Sprint History", getSprintHistory());
-
-		String collaborationGroupKey = "collaboration";
-		navigator.addGroup("Collaboration", collaborationGroupKey);
-		navigator.addItem(collaborationGroupKey, "Forum", getForum());
-		navigator.addItem(collaborationGroupKey, "Wiki", getWiki());
-		navigator.addItem(collaborationGroupKey, "Calendar", calendar);
-		navigator.addItem(collaborationGroupKey, "File Repository", fileRepository);
-		navigator.addItem(collaborationGroupKey, "Courtroom", punishments);
-
+		addNavigatorGroup(navigator, sprintGroupKey, "Sprint");
+		addNavigatorGroup(navigator, productGroupKey, "Product");
+		addNavigatorGroup(navigator, projectGroupKey, "Project");
+		addNavigatorGroup(navigator, collaborationGroupKey, "Collaboration");
 		navigator.addItem("Personal Preferences", getProjectUserConfig());
+	}
+
+	private void addNavigatorGroup(SwitchingNavigatorWidget navigator, String groupKey, String label) {
+		navigator.addGroup(label, groupKey);
+		for (Page page : pages.getPagesByGroupKey(groupKey)) {
+			navigator.addItem(groupKey, page.getLabel(), page.getWidget());
+		}
 	}
 
 	public void activate() {
@@ -248,51 +259,10 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		}
 	}
 
-	public void showPage(String page) {
-		if (isPage(page, dashboard)) {
-			showDashboard();
-		} else if (isPage(page, whiteboard)) {
-			showWhiteboard(null);
-		} else if (isPage(page, sprintBacklog)) {
-			showSprintBacklog((Requirement) null);
-		} else if (isPage(page, productBacklog)) {
-			showProductBacklog(null);
-		} else if (isPage(page, qualityBacklog)) {
-			showQualityBacklog(null);
-		} else if (isPage(page, forum)) {
-			showForum(null);
-		} else if (isPage(page, calendar)) {
-			showCalendar(null);
-		} else if (isPage(page, nextSprint)) {
-			select(nextSprint);
-		} else if (isPage(page, impedimentList)) {
-			showImpedimentList(null);
-		} else if (isPage(page, issueList)) {
-			showIssueList(null);
-		} else if (isPage(page, riskList)) {
-			showRiskList(null);
-		} else if (isPage(page, projectUserConfig)) {
-			select(projectUserConfig);
-		} else if (isPage(page, sprintHistory)) {
-			showSprintHistory(null);
-		} else if (isPage(page, wiki)) {
-			showWiki((Wikipage) null);
-		} else if (isPage(page, punishments)) {
-			select(punishments);
-		} else if (isPage(page, projectEventList)) {
-			showProjectEventList(null);
-		} else if (isPage(page, fileRepository)) {
-			showFile(null);
-		}
-	}
-
-	private boolean isPage(String pageName, AScrumWidget page) {
-		return pageName.equals(getPageName(page));
-	}
-
-	private String getPageName(AScrumWidget page) {
-		String name = Str.getSimpleName(page.getClass());
-		return name.substring(0, name.length() - 6);
+	public void showPage(String pageName) {
+		Page page = pages.getPageByName(pageName);
+		if (page == null) return;
+		select(page.getWidget());
 	}
 
 	public void showDashboard() {

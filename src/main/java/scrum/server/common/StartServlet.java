@@ -29,7 +29,7 @@ public class StartServlet extends AHttpServlet {
 
 		html.startHEAD(applicationInfo.getName(), "EN");
 		html.META("X-UA-Compatible", "chrome=1");
-		html.LINKfavicon();
+		// TODO html.LINKfavicon();
 		html.SCRIPTjavascript("scrum.ScrumGwtApplication/scrum.ScrumGwtApplication.nocache.js", null);
 		html.endHEAD();
 
