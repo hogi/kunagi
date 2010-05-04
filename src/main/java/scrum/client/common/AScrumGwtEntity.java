@@ -1,5 +1,6 @@
 package scrum.client.common;
 
+import ilarkesto.core.base.ToHtmlSupport;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.Gwt;
@@ -16,7 +17,7 @@ import scrum.client.admin.User;
 import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.Emoticon;
 
-public abstract class AScrumGwtEntity extends AGwtEntity {
+public abstract class AScrumGwtEntity extends AGwtEntity implements ToHtmlSupport {
 
 	protected static final transient ComponentManager cm = ComponentManager.get();
 

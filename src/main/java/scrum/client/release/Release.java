@@ -3,13 +3,16 @@ package scrum.client.release;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.HyperlinkWidget;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
+import scrum.client.issues.Issue;
 import scrum.client.project.Project;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -27,6 +30,30 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 		super(data);
 	}
 
+	public List<Issue> getAffectedByIssues() {
+		List<Issue> ret = new ArrayList<Issue>();
+		for (Issue issue : getDao().getIssues()) {
+			if (issue.getAffectedReleases().contains(this)) ret.add(issue);
+		}
+		return ret;
+	}
+
+	public List<Issue> getFixedIssues() {
+		List<Issue> ret = new ArrayList<Issue>();
+		for (Issue issue : getDao().getIssues()) {
+			if (issue.isClosed() && issue.getFixReleases().contains(this)) ret.add(issue);
+		}
+		return ret;
+	}
+
+	public List<Issue> getPlannedIssues() {
+		List<Issue> ret = new ArrayList<Issue>();
+		for (Issue issue : getDao().getIssues()) {
+			if (!issue.isClosed() && issue.getAffectedReleases().contains(this)) ret.add(issue);
+		}
+		return ret;
+	}
+
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
 	}
@@ -42,7 +69,7 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 
 	@Override
 	public String toString() {
-		return super.getLabel();
+		return getReference() + " " + getLabel();
 	}
 
 	public static final Comparator<Release> DATE_COMPARATOR = new Comparator<Release>() {

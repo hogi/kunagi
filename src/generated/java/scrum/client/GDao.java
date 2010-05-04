@@ -822,6 +822,8 @@ public abstract class GDao
         return ret;
     }
 
+
+
     // --- Project ---
 
     private Map<String, scrum.client.project.Project> projects = new HashMap<String, scrum.client.project.Project>();

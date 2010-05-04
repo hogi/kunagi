@@ -96,17 +96,17 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		qualityBacklog = new QualityBacklogWidget();
 		pages.addPage(new Page(qualityBacklog, "Qualities", productGroupKey));
 		issueList = new IssueManagementWidget();
-		pages.addPage(new Page(issueList, "Issue Management", productGroupKey));
+		pages.addPage(new Page(issueList, "Issues", productGroupKey));
 		releaseList = new ReleaseManagementWidget();
-		pages.addPage(new Page(releaseList, "Release Management", productGroupKey));
+		pages.addPage(new Page(releaseList, "Releases", productGroupKey));
 
 		String projectGroupKey = "project";
 		impedimentList = new ImpedimentListWidget();
-		pages.addPage(new Page(impedimentList, "Impediment List", projectGroupKey));
+		pages.addPage(new Page(impedimentList, "Impediments", projectGroupKey));
 		riskList = new RiskListWidget();
-		pages.addPage(new Page(riskList, "Risk Management", projectGroupKey));
+		pages.addPage(new Page(riskList, "Risks", projectGroupKey));
 		projectEventList = new JournalWidget();
-		pages.addPage(new Page(projectEventList, "Project Journal", projectGroupKey));
+		pages.addPage(new Page(projectEventList, "Journal", projectGroupKey));
 		nextSprint = new NextSprintWidget();
 		pages.addPage(new Page(nextSprint, "Next Sprint", projectGroupKey));
 		sprintHistory = new SprintHistoryWidget();

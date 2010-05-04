@@ -40,6 +40,8 @@ public interface GScrumService
 
     DataTransferObject requestClosedIssues(int conversationNumber);
 
+    DataTransferObject requestReleaseIssues(int conversationNumber, java.lang.String releaseId);
+
     DataTransferObject requestRisks(int conversationNumber);
 
     DataTransferObject requestRequirementEstimationVotes(int conversationNumber, java.lang.String requirementId);

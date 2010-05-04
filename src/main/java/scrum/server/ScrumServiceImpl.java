@@ -40,6 +40,8 @@ import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
+import scrum.server.release.Release;
+import scrum.server.release.ReleaseDao;
 import scrum.server.risks.Risk;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.Task;
@@ -54,11 +56,16 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private transient ProjectDao projectDao;
 	private transient UserDao userDao;
 	private transient RequirementDao requirementDao;
+	private transient ReleaseDao releaseDao;
 	private transient CommentDao commentDao;
 	private transient ScrumWebApplication webApplication;
 	private transient ProjectEventDao projectEventDao;
 	private transient EmoticonDao emoticonDao;
 	private transient ChangeDao changeDao;
+
+	public void setReleaseDao(ReleaseDao releaseDao) {
+		this.releaseDao = releaseDao;
+	}
 
 	public void setChangeDao(ChangeDao changeDao) {
 		this.changeDao = changeDao;
@@ -468,6 +475,15 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		sendToClients(conversation, project.getRequirements());
 		sendToClients(conversation, project.getTasks());
 		sendToClients(conversation, project);
+	}
+
+	@Override
+	protected void onRequestReleaseIssues(GwtConversation conversation, String releaseId) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		Release release = releaseDao.getById(releaseId);
+		if (!release.isProject(project)) throw new PermissionDeniedException();
+		conversation.sendToClient(release.getIssues());
 	}
 
 	@Override

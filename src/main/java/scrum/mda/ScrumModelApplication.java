@@ -96,6 +96,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("requestImpediments");
 			gwtServiceModel.addMethod("requestAcceptedIssues");
 			gwtServiceModel.addMethod("requestClosedIssues");
+			gwtServiceModel.addMethod("requestReleaseIssues").addParameter("releaseId", String.class);
 			gwtServiceModel.addMethod("requestRisks");
 			gwtServiceModel.addMethod("requestRequirementEstimationVotes").addParameter("requirementId", String.class);
 			gwtServiceModel.addMethod("requestComments").addParameter("parentId", String.class);
@@ -508,6 +509,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addProperty("fixDate", Date.class);
 			issueModel.addProperty("closeDate", Date.class);
 			issueModel.addProperty("suspendedUntilDate", Date.class);
+			issueModel.addSetReference("affectedReleases", getReleaseModel());
+			issueModel.addSetReference("fixReleases", getReleaseModel());
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("ClaimIssue");
 			issueModel.addAction("FixIssue");

@@ -18,15 +18,19 @@ public class ReleaseWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		getApp().callRequestReleaseIssues(release.getId());
+
 		TableBuilder tb = ScrumGwt.createFieldTable();
 
 		tb.addFieldRow("Label", release.getLabelModel());
 		tb.addFieldRow("Release date", release.getReleaseDateModel());
 		tb.addFieldRow("Description", release.getNoteModel());
 		tb.addFieldRow("Release notes", release.getReleaseNotesModel());
+		tb.addFieldRow("Affected by issues", ScrumGwt.createToHtmlItemsWidget(release.getAffectedByIssues()));
+		tb.addFieldRow("Fixed issues", ScrumGwt.createToHtmlItemsWidget(release.getFixedIssues()));
+		tb.addFieldRow("Planned issues", ScrumGwt.createToHtmlItemsWidget(release.getPlannedIssues()));
 		tb.addRow(new ChangeHistoryWidget(release), 2);
 
 		return TableBuilder.row(20, tb.createTable(), ScrumGwt.createEmoticonsAndComments(release));
 	}
-
 }

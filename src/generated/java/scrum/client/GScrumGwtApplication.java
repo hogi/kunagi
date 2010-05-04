@@ -137,6 +137,15 @@ public abstract class GScrumGwtApplication
         callRequestClosedIssues( null);
     }
 
+    public final void callRequestReleaseIssues(java.lang.String releaseId,  Runnable callback) {
+        onServiceCall();
+        getScrumService().requestReleaseIssues(conversationNumber, releaseId,  new DefaultCallback<DataTransferObject>(callback, "requestReleaseIssues"));
+    }
+
+    public final void callRequestReleaseIssues(java.lang.String releaseId) {
+        callRequestReleaseIssues(releaseId,  null);
+    }
+
     public final void callRequestRisks( Runnable callback) {
         onServiceCall();
         getScrumService().requestRisks(conversationNumber,  new DefaultCallback<DataTransferObject>(callback, "requestRisks"));

@@ -40,6 +40,8 @@ public interface GScrumServiceAsync {
 
     void requestClosedIssues(int conversationNumber, AsyncCallback<DataTransferObject> callback);
 
+    void requestReleaseIssues(int conversationNumber, java.lang.String releaseId, AsyncCallback<DataTransferObject> callback);
+
     void requestRisks(int conversationNumber, AsyncCallback<DataTransferObject> callback);
 
     void requestRequirementEstimationVotes(int conversationNumber, java.lang.String requirementId, AsyncCallback<DataTransferObject> callback);

@@ -51,6 +51,8 @@ public abstract class GIssue
         properties.put("fixDate", this.fixDate == null ? null : this.fixDate.toString());
         properties.put("closeDate", this.closeDate == null ? null : this.closeDate.toString());
         properties.put("suspendedUntilDate", this.suspendedUntilDate == null ? null : this.suspendedUntilDate.toString());
+        properties.put("affectedReleasesIds", this.affectedReleasesIds);
+        properties.put("fixReleasesIds", this.fixReleasesIds);
     }
 
     public int compareTo(Issue other) {
@@ -631,6 +633,180 @@ public abstract class GIssue
         setSuspendedUntilDate((ilarkesto.base.time.Date)value);
     }
 
+    // -----------------------------------------------------------
+    // - affectedReleases
+    // -----------------------------------------------------------
+
+    private java.util.Set<String> affectedReleasesIds = new java.util.HashSet<String>();
+
+    public final java.util.Set<scrum.server.release.Release> getAffectedReleases() {
+        return (java.util.Set) releaseDao.getByIdsAsSet(this.affectedReleasesIds);
+    }
+
+    public final void setAffectedReleases(Collection<scrum.server.release.Release> affectedReleases) {
+        affectedReleases = prepareAffectedReleases(affectedReleases);
+        if (affectedReleases == null) affectedReleases = Collections.emptyList();
+        java.util.Set<String> ids = getIdsAsSet(affectedReleases);
+        if (this.affectedReleasesIds.equals(ids)) return;
+        this.affectedReleasesIds = ids;
+        fireModified();
+    }
+
+    protected Collection<scrum.server.release.Release> prepareAffectedReleases(Collection<scrum.server.release.Release> affectedReleases) {
+        return affectedReleases;
+    }
+
+    protected void repairDeadAffectedReleaseReference(String entityId) {
+        if (this.affectedReleasesIds.remove(entityId)) fireModified();
+    }
+
+    public final boolean containsAffectedRelease(scrum.server.release.Release affectedRelease) {
+        if (affectedRelease == null) return false;
+        return this.affectedReleasesIds.contains(affectedRelease.getId());
+    }
+
+    public final int getAffectedReleasesCount() {
+        return this.affectedReleasesIds.size();
+    }
+
+    public final boolean isAffectedReleasesEmpty() {
+        return this.affectedReleasesIds.isEmpty();
+    }
+
+    public final boolean addAffectedRelease(scrum.server.release.Release affectedRelease) {
+        if (affectedRelease == null) throw new IllegalArgumentException("affectedRelease == null");
+        boolean added = this.affectedReleasesIds.add(affectedRelease.getId());
+        if (added) fireModified();
+        return added;
+    }
+
+    public final boolean addAffectedReleases(Collection<scrum.server.release.Release> affectedReleases) {
+        if (affectedReleases == null) throw new IllegalArgumentException("affectedReleases == null");
+        boolean added = false;
+        for (scrum.server.release.Release affectedRelease : affectedReleases) {
+            added = added | this.affectedReleasesIds.add(affectedRelease.getId());
+        }
+        if (added) fireModified();
+        return added;
+    }
+
+    public final boolean removeAffectedRelease(scrum.server.release.Release affectedRelease) {
+        if (affectedRelease == null) throw new IllegalArgumentException("affectedRelease == null");
+        if (this.affectedReleasesIds == null) return false;
+        boolean removed = this.affectedReleasesIds.remove(affectedRelease.getId());
+        if (removed) fireModified();
+        return removed;
+    }
+
+    public final boolean removeAffectedReleases(Collection<scrum.server.release.Release> affectedReleases) {
+        if (affectedReleases == null) return false;
+        if (affectedReleases.isEmpty()) return false;
+        boolean removed = false;
+        for (scrum.server.release.Release _element: affectedReleases) {
+            removed = removed | removeAffectedRelease(_element);
+        }
+        return removed;
+    }
+
+    public final boolean clearAffectedReleases() {
+        if (this.affectedReleasesIds.isEmpty()) return false;
+        this.affectedReleasesIds.clear();
+        fireModified();
+        return true;
+    }
+
+    protected final void updateAffectedReleases(Object value) {
+        Collection<String> ids = (Collection<String>) value;
+        setAffectedReleases((java.util.Set) releaseDao.getByIdsAsSet(ids));
+    }
+
+    // -----------------------------------------------------------
+    // - fixReleases
+    // -----------------------------------------------------------
+
+    private java.util.Set<String> fixReleasesIds = new java.util.HashSet<String>();
+
+    public final java.util.Set<scrum.server.release.Release> getFixReleases() {
+        return (java.util.Set) releaseDao.getByIdsAsSet(this.fixReleasesIds);
+    }
+
+    public final void setFixReleases(Collection<scrum.server.release.Release> fixReleases) {
+        fixReleases = prepareFixReleases(fixReleases);
+        if (fixReleases == null) fixReleases = Collections.emptyList();
+        java.util.Set<String> ids = getIdsAsSet(fixReleases);
+        if (this.fixReleasesIds.equals(ids)) return;
+        this.fixReleasesIds = ids;
+        fireModified();
+    }
+
+    protected Collection<scrum.server.release.Release> prepareFixReleases(Collection<scrum.server.release.Release> fixReleases) {
+        return fixReleases;
+    }
+
+    protected void repairDeadFixReleaseReference(String entityId) {
+        if (this.fixReleasesIds.remove(entityId)) fireModified();
+    }
+
+    public final boolean containsFixRelease(scrum.server.release.Release fixRelease) {
+        if (fixRelease == null) return false;
+        return this.fixReleasesIds.contains(fixRelease.getId());
+    }
+
+    public final int getFixReleasesCount() {
+        return this.fixReleasesIds.size();
+    }
+
+    public final boolean isFixReleasesEmpty() {
+        return this.fixReleasesIds.isEmpty();
+    }
+
+    public final boolean addFixRelease(scrum.server.release.Release fixRelease) {
+        if (fixRelease == null) throw new IllegalArgumentException("fixRelease == null");
+        boolean added = this.fixReleasesIds.add(fixRelease.getId());
+        if (added) fireModified();
+        return added;
+    }
+
+    public final boolean addFixReleases(Collection<scrum.server.release.Release> fixReleases) {
+        if (fixReleases == null) throw new IllegalArgumentException("fixReleases == null");
+        boolean added = false;
+        for (scrum.server.release.Release fixRelease : fixReleases) {
+            added = added | this.fixReleasesIds.add(fixRelease.getId());
+        }
+        if (added) fireModified();
+        return added;
+    }
+
+    public final boolean removeFixRelease(scrum.server.release.Release fixRelease) {
+        if (fixRelease == null) throw new IllegalArgumentException("fixRelease == null");
+        if (this.fixReleasesIds == null) return false;
+        boolean removed = this.fixReleasesIds.remove(fixRelease.getId());
+        if (removed) fireModified();
+        return removed;
+    }
+
+    public final boolean removeFixReleases(Collection<scrum.server.release.Release> fixReleases) {
+        if (fixReleases == null) return false;
+        if (fixReleases.isEmpty()) return false;
+        boolean removed = false;
+        for (scrum.server.release.Release _element: fixReleases) {
+            removed = removed | removeFixRelease(_element);
+        }
+        return removed;
+    }
+
+    public final boolean clearFixReleases() {
+        if (this.fixReleasesIds.isEmpty()) return false;
+        this.fixReleasesIds.clear();
+        fireModified();
+        return true;
+    }
+
+    protected final void updateFixReleases(Object value) {
+        Collection<String> ids = (Collection<String>) value;
+        setFixReleases((java.util.Set) releaseDao.getByIdsAsSet(ids));
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -651,6 +827,8 @@ public abstract class GIssue
             if (property.equals("fixDate")) updateFixDate(value);
             if (property.equals("closeDate")) updateCloseDate(value);
             if (property.equals("suspendedUntilDate")) updateSuspendedUntilDate(value);
+            if (property.equals("affectedReleasesIds")) updateAffectedReleases(value);
+            if (property.equals("fixReleasesIds")) updateFixReleases(value);
         }
     }
 
@@ -659,6 +837,10 @@ public abstract class GIssue
         repairDeadProjectReference(entityId);
         repairDeadCreatorReference(entityId);
         repairDeadOwnerReference(entityId);
+        if (this.affectedReleasesIds == null) this.affectedReleasesIds = new java.util.HashSet<String>();
+        repairDeadAffectedReleaseReference(entityId);
+        if (this.fixReleasesIds == null) this.fixReleasesIds = new java.util.HashSet<String>();
+        repairDeadFixReleaseReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -687,6 +869,26 @@ public abstract class GIssue
             LOG.info("Repairing dead owner reference");
             repairDeadOwnerReference(this.ownerId);
         }
+        if (this.affectedReleasesIds == null) this.affectedReleasesIds = new java.util.HashSet<String>();
+        Set<String> affectedReleases = new HashSet<String>(this.affectedReleasesIds);
+        for (String entityId : affectedReleases) {
+            try {
+                releaseDao.getById(entityId);
+            } catch (EntityDoesNotExistException ex) {
+                LOG.info("Repairing dead affectedRelease reference");
+                repairDeadAffectedReleaseReference(entityId);
+            }
+        }
+        if (this.fixReleasesIds == null) this.fixReleasesIds = new java.util.HashSet<String>();
+        Set<String> fixReleases = new HashSet<String>(this.fixReleasesIds);
+        for (String entityId : fixReleases) {
+            try {
+                releaseDao.getById(entityId);
+            } catch (EntityDoesNotExistException ex) {
+                LOG.info("Repairing dead fixRelease reference");
+                repairDeadFixReleaseReference(entityId);
+            }
+        }
     }
 
 
@@ -698,6 +900,12 @@ public abstract class GIssue
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GIssue.projectDao = projectDao;
+    }
+
+    static scrum.server.release.ReleaseDao releaseDao;
+
+    public static final void setReleaseDao(scrum.server.release.ReleaseDao releaseDao) {
+        GIssue.releaseDao = releaseDao;
     }
 
     static IssueDao issueDao;

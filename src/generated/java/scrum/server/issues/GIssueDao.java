@@ -71,6 +71,10 @@ public abstract class GIssueDao
         closeDatesCache = null;
         issuesBySuspendedUntilDateCache.clear();
         suspendedUntilDatesCache = null;
+        issuesByAffectedReleaseCache.clear();
+        affectedReleasesCache = null;
+        issuesByFixReleaseCache.clear();
+        fixReleasesCache = null;
     }
 
     @Override
@@ -678,6 +682,86 @@ public abstract class GIssueDao
 
     }
 
+    // -----------------------------------------------------------
+    // - affectedReleases
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.release.Release,Set<Issue>> issuesByAffectedReleaseCache = new Cache<scrum.server.release.Release,Set<Issue>>(
+            new Cache.Factory<scrum.server.release.Release,Set<Issue>>() {
+                public Set<Issue> create(scrum.server.release.Release affectedRelease) {
+                    return getEntities(new ContainsAffectedRelease(affectedRelease));
+                }
+            });
+
+    public final Set<Issue> getIssuesByAffectedRelease(scrum.server.release.Release affectedRelease) {
+        return issuesByAffectedReleaseCache.get(affectedRelease);
+    }
+    private Set<scrum.server.release.Release> affectedReleasesCache;
+
+    public final Set<scrum.server.release.Release> getAffectedReleases() {
+        if (affectedReleasesCache == null) {
+            affectedReleasesCache = new HashSet<scrum.server.release.Release>();
+            for (Issue e : getEntities()) {
+                affectedReleasesCache.addAll(e.getAffectedReleases());
+            }
+        }
+        return affectedReleasesCache;
+    }
+
+    private static class ContainsAffectedRelease implements Predicate<Issue> {
+
+        private scrum.server.release.Release value;
+
+        public ContainsAffectedRelease(scrum.server.release.Release value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.containsAffectedRelease(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - fixReleases
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.release.Release,Set<Issue>> issuesByFixReleaseCache = new Cache<scrum.server.release.Release,Set<Issue>>(
+            new Cache.Factory<scrum.server.release.Release,Set<Issue>>() {
+                public Set<Issue> create(scrum.server.release.Release fixRelease) {
+                    return getEntities(new ContainsFixRelease(fixRelease));
+                }
+            });
+
+    public final Set<Issue> getIssuesByFixRelease(scrum.server.release.Release fixRelease) {
+        return issuesByFixReleaseCache.get(fixRelease);
+    }
+    private Set<scrum.server.release.Release> fixReleasesCache;
+
+    public final Set<scrum.server.release.Release> getFixReleases() {
+        if (fixReleasesCache == null) {
+            fixReleasesCache = new HashSet<scrum.server.release.Release>();
+            for (Issue e : getEntities()) {
+                fixReleasesCache.addAll(e.getFixReleases());
+            }
+        }
+        return fixReleasesCache;
+    }
+
+    private static class ContainsFixRelease implements Predicate<Issue> {
+
+        private scrum.server.release.Release value;
+
+        public ContainsFixRelease(scrum.server.release.Release value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.containsFixRelease(value);
+        }
+
+    }
+
     // --- valueObject classes ---
     @Override
     protected Set<Class> getValueObjectClasses() {
@@ -697,6 +781,12 @@ public abstract class GIssueDao
 
     public void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         this.projectDao = projectDao;
+    }
+
+    scrum.server.release.ReleaseDao releaseDao;
+
+    public void setReleaseDao(scrum.server.release.ReleaseDao releaseDao) {
+        this.releaseDao = releaseDao;
     }
 
 }

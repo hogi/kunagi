@@ -1,5 +1,6 @@
 package scrum.client.issues;
 
+import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
@@ -9,6 +10,7 @@ import scrum.client.collaboration.CommentsWidget;
 import scrum.client.collaboration.EmoticonSelectorWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.journal.ChangeHistoryWidget;
+import scrum.client.release.Release;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -35,6 +37,52 @@ public class IssueWidget extends AScrumWidget {
 		}
 		left.addFieldRow("Description", issue.getDescriptionModel());
 		left.addFieldRow("Statement", issue.getStatementModel());
+		left.addFieldRow("Affected releases", new AMultiSelectionViewEditWidget<Release>() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerItems(issue.getAffectedReleases());
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setEditorItems(issue.getProject().getReleases());
+				setEditorSelectedItems(issue.getAffectedReleases());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				issue.setAffectedReleases(getEditorSelectedItems());
+			}
+
+			@Override
+			public boolean isEditable() {
+				return true;
+			}
+		});
+		left.addFieldRow("Fix releases", new AMultiSelectionViewEditWidget<Release>() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerItems(issue.getFixReleases());
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setEditorItems(issue.getProject().getReleases());
+				setEditorSelectedItems(issue.getFixReleases());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				issue.setFixReleases(getEditorSelectedItems());
+			}
+
+			@Override
+			public boolean isEditable() {
+				return true;
+			}
+		});
 		left.addRow(new ChangeHistoryWidget(issue), 2);
 
 		TableBuilder right = ScrumGwt.createFieldTable();

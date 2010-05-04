@@ -702,6 +702,62 @@ public abstract class GIssue
 
     }
 
+    // --- affectedReleases ---
+
+    private Set<String> affectedReleasesIds = new HashSet<String>();
+
+    public final java.util.Set<scrum.client.release.Release> getAffectedReleases() {
+        if ( affectedReleasesIds.isEmpty()) return Collections.emptySet();
+        return getDao().getReleases(this.affectedReleasesIds);
+    }
+
+    public final void setAffectedReleases(Collection<scrum.client.release.Release> values) {
+        affectedReleasesIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("affectedReleasesIds", this.affectedReleasesIds);
+    }
+
+    public final void addAffectedRelease(scrum.client.release.Release affectedRelease) {
+        String id = affectedRelease.getId();
+        if (affectedReleasesIds.contains(id)) return;
+        affectedReleasesIds.add(id);
+        propertyChanged("affectedReleasesIds", this.affectedReleasesIds);
+    }
+
+    public final void removeAffectedRelease(scrum.client.release.Release affectedRelease) {
+        String id = affectedRelease.getId();
+        if (!affectedReleasesIds.contains(id)) return;
+        affectedReleasesIds.remove(id);
+        propertyChanged("affectedReleasesIds", this.affectedReleasesIds);
+    }
+
+    // --- fixReleases ---
+
+    private Set<String> fixReleasesIds = new HashSet<String>();
+
+    public final java.util.Set<scrum.client.release.Release> getFixReleases() {
+        if ( fixReleasesIds.isEmpty()) return Collections.emptySet();
+        return getDao().getReleases(this.fixReleasesIds);
+    }
+
+    public final void setFixReleases(Collection<scrum.client.release.Release> values) {
+        fixReleasesIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("fixReleasesIds", this.fixReleasesIds);
+    }
+
+    public final void addFixRelease(scrum.client.release.Release fixRelease) {
+        String id = fixRelease.getId();
+        if (fixReleasesIds.contains(id)) return;
+        fixReleasesIds.add(id);
+        propertyChanged("fixReleasesIds", this.fixReleasesIds);
+    }
+
+    public final void removeFixRelease(scrum.client.release.Release fixRelease) {
+        String id = fixRelease.getId();
+        if (!fixReleasesIds.contains(id)) return;
+        fixReleasesIds.remove(id);
+        propertyChanged("fixReleasesIds", this.fixReleasesIds);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -725,6 +781,8 @@ public abstract class GIssue
         closeDate  =  closeDateAsString == null ? null : new ilarkesto.gwt.client.Date(closeDateAsString);
         String suspendedUntilDateAsString = (String) props.get("suspendedUntilDate");
         suspendedUntilDate  =  suspendedUntilDateAsString == null ? null : new ilarkesto.gwt.client.Date(suspendedUntilDateAsString);
+        affectedReleasesIds = (Set<String>) props.get("affectedReleasesIds");
+        fixReleasesIds = (Set<String>) props.get("fixReleasesIds");
     }
 
     @Override
@@ -745,6 +803,8 @@ public abstract class GIssue
         properties.put("fixDate", this.fixDate == null ? null : this.fixDate.toString());
         properties.put("closeDate", this.closeDate == null ? null : this.closeDate.toString());
         properties.put("suspendedUntilDate", this.suspendedUntilDate == null ? null : this.suspendedUntilDate.toString());
+        properties.put("affectedReleasesIds", this.affectedReleasesIds);
+        properties.put("fixReleasesIds", this.fixReleasesIds);
     }
 
     @Override
