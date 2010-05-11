@@ -58,18 +58,38 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
         deactivatePage("download");
         deactivatePage("support");
         deactivatePage("development");
+        deactivatePage("message");
         activatePage(name);
     }
 
     function deactivatePage(name) {
         $("page-"+name).style.display = "none";
-        $("link-"+name).style.background = null;
+        link = $("link-"+name);
+        if (link != null) link.style.background = null;
     }
 
     function activatePage(name) {
         $("page-"+name).style.display = "block";
-        $("link-"+name).style.background = "#394686";
+        link = $("link-"+name);
+        if (link != null) link.style.background = "#394686";
     }
+
+    function getRequestParameter (parameterName) {
+        var queryString = window.top.location.search.substring(1);
+        var parameterName = parameterName + "=";
+        if ( queryString.length > 0 ) {
+            begin = queryString.indexOf ( parameterName );
+            if ( begin != -1 ) {
+                begin += parameterName.length;
+                end = queryString.indexOf ( "&" , begin );
+                if ( end == -1 ) {
+                    end = queryString.length
+                }
+                return unescape ( queryString.substring ( begin, end ) );
+            }
+            return null;
+        }
+    }     
     
 </script>
 
@@ -259,7 +279,18 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
                 <div class="clear"></div>
             </div>
         
-        </div>
+        </div><!-- page-development -->
+
+
+
+        <div id="page-message" style="display: none;">    
+            
+            <div class="section">
+                <span id="messageOutput"></span>
+            </div>
+        
+        </div><!-- page-message -->
+
                     
     </div><!-- content -->
     
@@ -271,7 +302,12 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
 
 
 <script type="text/javascript">
-showPage("home");
+    showPage("home");
+    var message = getRequestParameter("message");
+    if (message != null) {
+        $("messageOutput").innerHTML = message;    
+        showPage("message");
+    }
 </script>
 
 <script type="text/javascript">
