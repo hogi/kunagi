@@ -118,4 +118,14 @@
         <url-pattern>/scrum.ScrumGwtApplication/projectJournal.rss</url-pattern>
     </servlet-mapping>
 
+    <!-- issue -->
+    <servlet>
+        <servlet-name>issue</servlet-name>
+        <servlet-class>scrum.server.issues.IssueServlet</servlet-class>
+    </servlet>      
+    <servlet-mapping>
+        <servlet-name>issue</servlet-name>
+        <url-pattern>/submitIssue</url-pattern>
+    </servlet-mapping>
+
 </web-app>

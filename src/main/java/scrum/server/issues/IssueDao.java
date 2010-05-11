@@ -1,5 +1,6 @@
 package scrum.server.issues;
 
+import ilarkesto.base.time.DateAndTime;
 import ilarkesto.fp.Predicate;
 
 import java.util.Set;
@@ -49,8 +50,18 @@ public class IssueDao extends GIssueDao {
 		});
 	}
 
+	public Issue postIssue(Project project, String label, String text, String issuerName, String issuerEmail) {
+		Issue issue = newEntityInstance();
+		issue.setProject(project);
+		issue.setLabel(label);
+		issue.setDescription(text);
+		issue.setDate(DateAndTime.now());
+		saveEntity(issue);
+		return issue;
+	}
+
 	public void createTestIssue(Project project, int variant) {
-		Issue issue = new Issue();
+		Issue issue = newEntityInstance();
 		issue.setProject(project);
 		issue.setLabel("Issue " + variant);
 		if (variant < scrum.client.issues.Issue.Types.ALL.size()) {
