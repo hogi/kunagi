@@ -7,7 +7,7 @@
 	<meta name="google-site-verification" content="J_A-jkvvOE0Tyruc6MhB5MxFDltbQO84579ZIVYcuyg" />
     	<meta name="y_key" content="7cc8fa0621a57566" />
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-
+    <script type="text/javascript" language="javascript" src="prototype.js"></script>
 
 	<!--<script src="http://www.prototypejs.org/assets/2008/9/29/prototype-1.6.0.3.js" ></script>-->
 
@@ -15,12 +15,17 @@
 
 * {margin: 0; padding: 0;}
 body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",sans-serif; color: #333;}
-    #main {width: 600px; margin: 20px auto 50px auto; border: 1px solid #555;}
+    #main {width: 600px; margin: 20px auto 1000px auto; border: 1px solid #555;}
 
     #header {height: 80px; background: #233C9B url("header.jpg") 0 0 no-repeat; color:#FFF;}
         h1 {font: 30pt/55pt "georgia",serif; color: white; margin: 0px 20px; color: #192666;}
             h1 .orange {color: orange;}
     #header img {margin: 0px 10px; border: none;}
+    
+    #menu {background: #192666;}
+        #menu a {color: #fff; font-weight: bold; border-right: 1px solid #338; cursor: pointer; display: block; padding: 10px;}
+        #menu a:hover {background: #293676; color: #fff;}
+        #menu a.current {background: orange; border: 1px solid red;}
     
     #content {background: white; padding: 25px;}
 		#content a {color: #B37400;}
@@ -35,7 +40,7 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
             .featureseparator {clear: both; height: 10px;}
             ul {margin-left: 20px; margin-top: 10px;}
         #content .separator {height: 25px; margin-bottom: 25px; border-bottom: 1px solid #CCC;}
-    #footer {background:#192666; color: #CCC; padding: 0px 10px; font-size: 8px; text-align: right;}
+    #footer {background: #192666; color: #CCC; padding: 0px 10px; font-size: 8px; text-align: right;}
     
 	.clear {clear: both;}
 	</style>
@@ -44,7 +49,29 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
 	
 </head>
 
-<body bgcolor="#808080" background="../bg.png" onload="$('organizantoCommandInput').focus();">
+<body bgcolor="#808080" background="../bg.png">
+
+<script type="text/javascript">
+
+    function showPage(name) {
+        deactivatePage("home");
+        deactivatePage("download");
+        deactivatePage("support");
+        deactivatePage("development");
+        activatePage(name);
+    }
+
+    function deactivatePage(name) {
+        $("page-"+name).style.display = "none";
+        $("link-"+name).style.background = null;
+    }
+
+    function activatePage(name) {
+        $("page-"+name).style.display = "block";
+        $("link-"+name).style.background = "#394686";
+    }
+    
+</script>
 
 <div id="main">
 
@@ -52,132 +79,175 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
 	   <a href="http://kunagi.org/"><img src="kunagi.png" height="85" alt="kunagi"></a>
     </div>
     
-    <div id="content">
-    
-        <div class="section">
-            <p>
-                Kunagi is a software project management tool based on the agile framework <a href="http://en.wikipedia.org/wiki/Scrum_%28development%29" target="_blank">Scrum</a>.
-                It is designed for distributed teams of pragmatic people, which need tight collaboration to build a complex product the agile way. 
-                Kunagi is <a href="http://en.wikipedia.org/wiki/Free_software" target="_blank">free</a>.
-            </p>
-        </div>
-
-        <div class="separator"></div>
-        
-        <div class="section">
-            <h2>Online demo</h2>
-            <div class="middle">
-                <p>
-                    Take a closer look at Kunagi by trying the online demo.
-                    It is preconfigured with example projects.
-                </p>
-            </div>
-            <div class="sidebar">
-                <div class="starter">
-                    <a target="_blank" href="https://servisto.de/scrum-latest/">Start Demo</a>
-                </div>
-            </div>
-            <div class="clear"></div>
-        </div>
-
-        <div class="separator"></div>
-        
-        <div class="section">
-            <h2>Download</h2>
-            <div class="middle">
-                <p>
-                    Download the latest version of Kunagi and install it on your own server.
-                    It is an ordinary Java Web Application.
-                </p>
-            </div>
-            <div class="sidebar">
-		<div class="starter">
-			<a href="kunagi.war">Download</a>
-		</div>
-            </div>
-            <div class="clear"></div>
-        </div>
-
-        <div class="separator"></div>
-        
-        <div class="section">
-            <h2>Features</h2>
-            
-            <p>
-                Post <strong>Comments</strong> on every entity. Get informed of other peoples comments on the project journal.
-            </p>
-            
-            <div class="featureseparator"></div>
-            <p>
-                <img src="screenshots/productbacklog-thumb.png" alt="Product Backlog" align="right" class="screenshotthumb">
-                Edit Stories directly in the <strong>Product Backlog</strong> and prioritize them by drag'n'drop.
-                Project the volume of future releases by adjusting assumed velocity.
-                Play <strong>Planning Poker</strong> in the backlog to estimate User Stories.
-            </p>
-            
-            <div class="featureseparator"></div>
-            <p>
-                <img src="screenshots/wiki-thumb.png" alt="Wiki" align="right" class="screenshotthumb">
-                The integrated <strong>Wiki</strong> provides space for custom documents.
-                Pages can be downloaded as PDF.
-                All description fields (Stories, Tasks, Impediments,...) are based on the Wiki-Syntax which is similar to the MediaWiki-Syntax.
-            </p>
-            
-            <div class="featureseparator"></div>
-            <p>
-                Use a pragmatic approach to <strong>Risk Management</strong>.
-                Document project risks and prioritize them by impact and probability.
-                Then document plans for mitigation. 
-            </p>
-            
-        </div>
-
-		<div class="separator"></div>
-		
-		<div class="section">
-			<h2>Development Team</h2>
-            <p>Kunagi is developed by a distributed team of experienced software developers:</p>
-            <ul>
-                <li><a>Artjom Kochtchi</a> is Product Owner and Team member</li>
-                <li><a href="http://koczewski.de/" target="_blank">Witoslaw Koczewski</a> is ScrumMaster and Team member</li>
-                <li><a href="http://fabianhager.de/" target="_blank">Fabian Hager</a> is Team member</li>
-                <li><a href="http://grubalski.de/" target="_blank">Kacper Grubalski</a> is Team member</li>
-                <li><a>Fabian Wischnewski</a> is Team member</li>
-            </ul>
-		</div>
-        		
-        <div class="separator"></div>
-        
-        <div class="section">
-            <h2>Infos for Software Developers</h2>
-            <div class="middle">
-                <a target="_blank" href="https://spreadsheets.google.com/ccc?key=pO4f820H8bM3ckVvlddLTHw&hl=en">Project Management (Google Doc)</a><br>
-                <a target="_blank" href="https://servisto.de/organizanto/179246cd-e81c-4299-8201-0303a515ebbd">Organizanto Project</a><br>
-                <a target="_blank" href="https://servisto.de/organizanto/5cfe9dd8-a1dd-4a37-8314-c40b242ed33f">Continous Integration</a><br>
-                
-                <a target="_blank" href="https://sourceforge.net/projects/kunagi/">SourceForge</a><br>
-                <a target="_blank" href="https://code.google.com/p/kunagi/">Google Code</a><br>
-                <a target="_blank" href="http://github.com/witek/kunagi/">GitHub</a><br>
-                <a target="_blank" href="https://launchpad.net/kunagi/">launchpad</a><br>
-                <a target="_blank" href="http://freshmeat.net/projects/kunagi/">freshmeat</a><br>
-                <a target="_blank" href="http://www.facebook.com/pages/kunagi/106332836057762">Facebook</a><br>
-                
-                <a target="_blank" href="https://servisto.de/projects/ilarkesto/javadoc/">Ilarkesto Javadocs</a><br>
-            </div>
-            <div class="sidebar">
-                <div class="starter">
-                    <a target="_blank" href="https://servisto.de/scrum/">Start Release</a>
-                </div>
-            </div>
-            <div class="clear"></div>
-        </div>            
+    <div id="menu">
+        <table cellspacing="0" cellpadding="0" width="100%"><tr>
+            <td><a id="link-home" onclick="showPage('home')">Home</a></td>
+            <td><a id="link-download" onclick="showPage('download')">Download</a></td>
+            <td><a id="link-support" onclick="showPage('support')">Support</a></td>
+            <td><a id="link-development" onclick="showPage('development')">Development</a></td>
+            <td width="90%"></td>
+        </tr></table>
     </div>
+    
+    <div id="content">
+
+    
+        <div id="page-home">
+    
+            <div class="section">
+                <p>
+                    Kunagi is a software project management tool based on the agile framework <a href="http://en.wikipedia.org/wiki/Scrum_%28development%29" target="_blank">Scrum</a>.
+                    It is designed for distributed teams of pragmatic people, which need tight collaboration to build a complex product the agile way. 
+                    Kunagi is <a href="http://en.wikipedia.org/wiki/Free_software" target="_blank">free</a>.
+                </p>
+            </div>
+    
+            <div class="separator"></div>
+            
+            <div class="section">
+                <h2>Online demo</h2>
+                <div class="middle">
+                    <p>
+                        Take a closer look at Kunagi by trying the online demo.
+                        It is preconfigured with example projects.
+                    </p>
+                </div>
+                <div class="sidebar">
+                    <div class="starter">
+                        <a target="_blank" href="https://servisto.de/scrum-latest/">Start Demo</a>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+    
+            <div class="separator"></div>
+
+            <div class="section">
+                <h2>Features</h2>
+                
+                <p>
+                    Post <strong>Comments</strong> on every entity. Get informed of other peoples comments on the project journal.
+                </p>
+                
+                <div class="featureseparator"></div>
+                <p>
+                    <img src="screenshots/productbacklog-thumb.png" alt="Product Backlog" align="right" class="screenshotthumb">
+                    Edit Stories directly in the <strong>Product Backlog</strong> and prioritize them by drag'n'drop.
+                    Project the volume of future releases by adjusting assumed velocity.
+                    Play <strong>Planning Poker</strong> in the backlog to estimate User Stories.
+                </p>
+                
+                <div class="featureseparator"></div>
+                <p>
+                    <img src="screenshots/wiki-thumb.png" alt="Wiki" align="right" class="screenshotthumb">
+                    The integrated <strong>Wiki</strong> provides space for custom documents.
+                    Pages can be downloaded as PDF.
+                    All description fields (Stories, Tasks, Impediments,...) are based on the Wiki-Syntax which is similar to the MediaWiki-Syntax.
+                </p>
+                
+                <div class="featureseparator"></div>
+                <p>
+                    Use a pragmatic approach to <strong>Risk Management</strong>.
+                    Document project risks and prioritize them by impact and probability.
+                    Then document plans for mitigation. 
+                </p>
+                
+            </div>
+
+        </div><!-- page-home -->
+    
+        
+        
+        
+        <div id="page-download" style="display: none;">
+            
+            <div class="section">
+                <h2>Download</h2>
+                <div class="middle">
+                    <p>
+                        Download the latest version of Kunagi and install it on your own server.
+                        It is an ordinary Java Web Application.
+                    </p>
+                </div>
+                <div class="sidebar">
+    		<div class="starter">
+    			<a href="kunagi.war">Download</a>
+    		</div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            
+        </div><!-- page-download -->
+        
+        
+        
+        
+        
+        <div id="page-support" style="display: none;">
+        
+            <div class="section">
+            </div>
+            
+        </div><!-- page-support -->
+
+        
+        
+        
+        
+        <div id="page-development" style="display: none;">    
+    		
+    		<div class="section">
+    			<h2>Development Team</h2>
+                <p>Kunagi is developed by a distributed team of experienced software developers:</p>
+                <ul>
+                    <li><a>Artjom Kochtchi</a> is Product Owner and Team member</li>
+                    <li><a href="http://koczewski.de/" target="_blank">Witoslaw Koczewski</a> is ScrumMaster and Team member</li>
+                    <li><a href="http://fabianhager.de/" target="_blank">Fabian Hager</a> is Team member</li>
+                    <li><a href="http://grubalski.de/" target="_blank">Kacper Grubalski</a> is Team member</li>
+                    <li><a>Fabian Wischnewski</a> is Team member</li>
+                </ul>
+    		</div>
+            		
+            <div class="separator"></div>
+            
+            <div class="section">
+                <h2>Infos for Software Developers</h2>
+                <div class="middle">
+                    <a target="_blank" href="https://spreadsheets.google.com/ccc?key=pO4f820H8bM3ckVvlddLTHw&hl=en">Project Management (Google Doc)</a><br>
+                    <a target="_blank" href="https://servisto.de/organizanto/179246cd-e81c-4299-8201-0303a515ebbd">Organizanto Project</a><br>
+                    <a target="_blank" href="https://servisto.de/organizanto/5cfe9dd8-a1dd-4a37-8314-c40b242ed33f">Continous Integration</a><br>
+                    
+                    <a target="_blank" href="https://sourceforge.net/projects/kunagi/">SourceForge</a><br>
+                    <a target="_blank" href="https://code.google.com/p/kunagi/">Google Code</a><br>
+                    <a target="_blank" href="http://github.com/witek/kunagi/">GitHub</a><br>
+                    <a target="_blank" href="https://launchpad.net/kunagi/">launchpad</a><br>
+                    <a target="_blank" href="http://freshmeat.net/projects/kunagi/">freshmeat</a><br>
+                    <a target="_blank" href="http://www.facebook.com/pages/kunagi/106332836057762">Facebook</a><br>
+                    
+                    <a target="_blank" href="https://servisto.de/projects/ilarkesto/javadoc/">Ilarkesto Javadocs</a><br>
+                </div>
+                <div class="sidebar">
+                    <div class="starter">
+                        <a target="_blank" href="https://servisto.de/scrum/">Start Release</a>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        
+        </div>
+                    
+    </div><!-- content -->
     
     <div id="footer">
         &nbsp;
     </div>
     
 </div>
+
+
+<script type="text/javascript">
+showPage("home");
+</script>
 
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
