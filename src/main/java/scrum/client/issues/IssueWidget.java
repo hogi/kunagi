@@ -4,7 +4,9 @@ import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
+import ilarkesto.gwt.client.editor.AEditorModel;
 import ilarkesto.gwt.client.editor.DropdownEditorWidget;
+import ilarkesto.gwt.client.editor.TextOutputWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.collaboration.EmoticonSelectorWidget;
@@ -36,6 +38,16 @@ public class IssueWidget extends AScrumWidget {
 					Issue.SEVERITY_LABELS));
 		}
 		left.addFieldRow("Description", issue.getDescriptionModel());
+		left.addFieldRow("Issuer", new TextOutputWidget(new AEditorModel<String>() {
+
+			@Override
+			public String getValue() {
+				return issue.getIssuer();
+			}
+
+			@Override
+			public void setValue(String value) {}
+		}));
 		left.addFieldRow("Statement", issue.getStatementModel());
 		left.addFieldRow("Affected releases", new AMultiSelectionViewEditWidget<Release>() {
 

@@ -58,6 +58,10 @@ public abstract class GIssueDao
         descriptionsCache = null;
         issuesByStatementCache.clear();
         statementsCache = null;
+        issuesByIssuerNameCache.clear();
+        issuerNamesCache = null;
+        issuesByIssuerEmailCache.clear();
+        issuerEmailsCache = null;
         issuesByAcceptDateCache.clear();
         acceptDatesCache = null;
         issuesByUrgentCache.clear();
@@ -409,6 +413,86 @@ public abstract class GIssueDao
 
         public boolean test(Issue e) {
             return e.isStatement(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - issuerName
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Issue>> issuesByIssuerNameCache = new Cache<java.lang.String,Set<Issue>>(
+            new Cache.Factory<java.lang.String,Set<Issue>>() {
+                public Set<Issue> create(java.lang.String issuerName) {
+                    return getEntities(new IsIssuerName(issuerName));
+                }
+            });
+
+    public final Set<Issue> getIssuesByIssuerName(java.lang.String issuerName) {
+        return issuesByIssuerNameCache.get(issuerName);
+    }
+    private Set<java.lang.String> issuerNamesCache;
+
+    public final Set<java.lang.String> getIssuerNames() {
+        if (issuerNamesCache == null) {
+            issuerNamesCache = new HashSet<java.lang.String>();
+            for (Issue e : getEntities()) {
+                if (e.isIssuerNameSet()) issuerNamesCache.add(e.getIssuerName());
+            }
+        }
+        return issuerNamesCache;
+    }
+
+    private static class IsIssuerName implements Predicate<Issue> {
+
+        private java.lang.String value;
+
+        public IsIssuerName(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isIssuerName(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - issuerEmail
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Issue>> issuesByIssuerEmailCache = new Cache<java.lang.String,Set<Issue>>(
+            new Cache.Factory<java.lang.String,Set<Issue>>() {
+                public Set<Issue> create(java.lang.String issuerEmail) {
+                    return getEntities(new IsIssuerEmail(issuerEmail));
+                }
+            });
+
+    public final Set<Issue> getIssuesByIssuerEmail(java.lang.String issuerEmail) {
+        return issuesByIssuerEmailCache.get(issuerEmail);
+    }
+    private Set<java.lang.String> issuerEmailsCache;
+
+    public final Set<java.lang.String> getIssuerEmails() {
+        if (issuerEmailsCache == null) {
+            issuerEmailsCache = new HashSet<java.lang.String>();
+            for (Issue e : getEntities()) {
+                if (e.isIssuerEmailSet()) issuerEmailsCache.add(e.getIssuerEmail());
+            }
+        }
+        return issuerEmailsCache;
+    }
+
+    private static class IsIssuerEmail implements Predicate<Issue> {
+
+        private java.lang.String value;
+
+        public IsIssuerEmail(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isIssuerEmail(value);
         }
 
     }

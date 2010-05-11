@@ -766,6 +766,22 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.issues.Issue> getIssuesByIssuerName(java.lang.String issuerName) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isIssuerName(issuerName)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.issues.Issue> getIssuesByIssuerEmail(java.lang.String issuerEmail) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isIssuerEmail(issuerEmail)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.issues.Issue> getIssuesByAcceptDate(ilarkesto.gwt.client.Date acceptDate) {
         List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
         for (scrum.client.issues.Issue entity : issues.values()) {

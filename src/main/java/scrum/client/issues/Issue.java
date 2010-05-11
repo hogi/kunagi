@@ -39,6 +39,19 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 		super(data);
 	}
 
+	public String getIssuer() {
+		if (isCreatorSet()) return getCreator().getName();
+
+		String name = getIssuerName();
+		String email = getIssuerEmail();
+
+		if (name == null && email == null) return null;
+		if (name == null) return email;
+		if (email == null) return name;
+
+		return name + "<" + email + ">";
+	}
+
 	public boolean isSuspended() {
 		Date date = getSuspendedUntilDate();
 		if (date == null) return false;

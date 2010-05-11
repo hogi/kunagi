@@ -411,6 +411,102 @@ public abstract class GIssue
 
     }
 
+    // --- issuerName ---
+
+    private java.lang.String issuerName ;
+
+    public final java.lang.String getIssuerName() {
+        return this.issuerName ;
+    }
+
+    public final Issue setIssuerName(java.lang.String issuerName) {
+        if (isIssuerName(issuerName)) return (Issue)this;
+        this.issuerName = issuerName ;
+        propertyChanged("issuerName", this.issuerName);
+        return (Issue)this;
+    }
+
+    public final boolean isIssuerName(java.lang.String issuerName) {
+        return equals(this.issuerName, issuerName);
+    }
+
+    private transient IssuerNameModel issuerNameModel;
+
+    public IssuerNameModel getIssuerNameModel() {
+        if (issuerNameModel == null) issuerNameModel = createIssuerNameModel();
+        return issuerNameModel;
+    }
+
+    protected IssuerNameModel createIssuerNameModel() { return new IssuerNameModel(); }
+
+    protected class IssuerNameModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getIssuerName();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setIssuerName(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- issuerEmail ---
+
+    private java.lang.String issuerEmail ;
+
+    public final java.lang.String getIssuerEmail() {
+        return this.issuerEmail ;
+    }
+
+    public final Issue setIssuerEmail(java.lang.String issuerEmail) {
+        if (isIssuerEmail(issuerEmail)) return (Issue)this;
+        this.issuerEmail = issuerEmail ;
+        propertyChanged("issuerEmail", this.issuerEmail);
+        return (Issue)this;
+    }
+
+    public final boolean isIssuerEmail(java.lang.String issuerEmail) {
+        return equals(this.issuerEmail, issuerEmail);
+    }
+
+    private transient IssuerEmailModel issuerEmailModel;
+
+    public IssuerEmailModel getIssuerEmailModel() {
+        if (issuerEmailModel == null) issuerEmailModel = createIssuerEmailModel();
+        return issuerEmailModel;
+    }
+
+    protected IssuerEmailModel createIssuerEmailModel() { return new IssuerEmailModel(); }
+
+    protected class IssuerEmailModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getIssuerEmail();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setIssuerEmail(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- acceptDate ---
 
     private ilarkesto.gwt.client.Date acceptDate ;
@@ -770,6 +866,8 @@ public abstract class GIssue
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
         statement  = (java.lang.String) props.get("statement");
+        issuerName  = (java.lang.String) props.get("issuerName");
+        issuerEmail  = (java.lang.String) props.get("issuerEmail");
         String acceptDateAsString = (String) props.get("acceptDate");
         acceptDate  =  acceptDateAsString == null ? null : new ilarkesto.gwt.client.Date(acceptDateAsString);
         urgent  = (Boolean) props.get("urgent");
@@ -796,6 +894,8 @@ public abstract class GIssue
         properties.put("label", this.label);
         properties.put("description", this.description);
         properties.put("statement", this.statement);
+        properties.put("issuerName", this.issuerName);
+        properties.put("issuerEmail", this.issuerEmail);
         properties.put("acceptDate", this.acceptDate == null ? null : this.acceptDate.toString());
         properties.put("urgent", this.urgent);
         properties.put("severity", this.severity);

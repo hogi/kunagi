@@ -44,6 +44,8 @@ public abstract class GIssue
         properties.put("label", this.label);
         properties.put("description", this.description);
         properties.put("statement", this.statement);
+        properties.put("issuerName", this.issuerName);
+        properties.put("issuerEmail", this.issuerEmail);
         properties.put("acceptDate", this.acceptDate == null ? null : this.acceptDate.toString());
         properties.put("urgent", this.urgent);
         properties.put("severity", this.severity);
@@ -381,6 +383,76 @@ public abstract class GIssue
 
     protected final void updateStatement(Object value) {
         setStatement((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - issuerName
+    // -----------------------------------------------------------
+
+    private java.lang.String issuerName;
+
+    public final java.lang.String getIssuerName() {
+        return issuerName;
+    }
+
+    public final void setIssuerName(java.lang.String issuerName) {
+        issuerName = prepareIssuerName(issuerName);
+        if (isIssuerName(issuerName)) return;
+        this.issuerName = issuerName;
+        fireModified();
+    }
+
+    protected java.lang.String prepareIssuerName(java.lang.String issuerName) {
+        issuerName = Str.removeUnreadableChars(issuerName);
+        return issuerName;
+    }
+
+    public final boolean isIssuerNameSet() {
+        return this.issuerName != null;
+    }
+
+    public final boolean isIssuerName(java.lang.String issuerName) {
+        if (this.issuerName == null && issuerName == null) return true;
+        return this.issuerName != null && this.issuerName.equals(issuerName);
+    }
+
+    protected final void updateIssuerName(Object value) {
+        setIssuerName((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - issuerEmail
+    // -----------------------------------------------------------
+
+    private java.lang.String issuerEmail;
+
+    public final java.lang.String getIssuerEmail() {
+        return issuerEmail;
+    }
+
+    public final void setIssuerEmail(java.lang.String issuerEmail) {
+        issuerEmail = prepareIssuerEmail(issuerEmail);
+        if (isIssuerEmail(issuerEmail)) return;
+        this.issuerEmail = issuerEmail;
+        fireModified();
+    }
+
+    protected java.lang.String prepareIssuerEmail(java.lang.String issuerEmail) {
+        issuerEmail = Str.removeUnreadableChars(issuerEmail);
+        return issuerEmail;
+    }
+
+    public final boolean isIssuerEmailSet() {
+        return this.issuerEmail != null;
+    }
+
+    public final boolean isIssuerEmail(java.lang.String issuerEmail) {
+        if (this.issuerEmail == null && issuerEmail == null) return true;
+        return this.issuerEmail != null && this.issuerEmail.equals(issuerEmail);
+    }
+
+    protected final void updateIssuerEmail(Object value) {
+        setIssuerEmail((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -820,6 +892,8 @@ public abstract class GIssue
             if (property.equals("label")) updateLabel(value);
             if (property.equals("description")) updateDescription(value);
             if (property.equals("statement")) updateStatement(value);
+            if (property.equals("issuerName")) updateIssuerName(value);
+            if (property.equals("issuerEmail")) updateIssuerEmail(value);
             if (property.equals("acceptDate")) updateAcceptDate(value);
             if (property.equals("urgent")) updateUrgent(value);
             if (property.equals("severity")) updateSeverity(value);

@@ -56,6 +56,8 @@ public class IssueDao extends GIssueDao {
 		issue.setLabel(label);
 		issue.setDescription(text);
 		issue.setDate(DateAndTime.now());
+		issue.setIssuerName(issuerName);
+		issue.setIssuerEmail(issuerEmail);
 		saveEntity(issue);
 		return issue;
 	}

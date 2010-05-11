@@ -502,6 +502,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addStringProperty("label").setMandatory(true).setSearchable(true);
 			issueModel.addStringProperty("description").setRichtext(true).setSearchable(true);
 			issueModel.addStringProperty("statement").setRichtext(true).setSearchable(true);
+			issueModel.addStringProperty("issuerName");
+			issueModel.addStringProperty("issuerEmail");
 			issueModel.addProperty("acceptDate", Date.class);
 			issueModel.addProperty("urgent", boolean.class);
 			issueModel.addProperty("severity", int.class).setOptionRestricted(true);
