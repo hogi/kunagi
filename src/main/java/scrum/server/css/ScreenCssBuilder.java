@@ -297,7 +297,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".HeaderWidget-user").color(cHeaderText).fontSize(12).textAlignCenter().marginTop(3).marginRight(5);
 		css.style(".HeaderWidget .ToolbarWidget").background("none").margin(0).textAlignRight();
 		css.style(".HeaderWidget .ToolbarWidget .FloatingFlowPanel-element").floatRight();
-		css.style(".HeaderWidget .gwt-Hyperlink a").color(cHeaderLink);
+		css.style(".HeaderWidget a").color(cHeaderLink);
 
 		css.style(".StatusWidget").width(10).height(6).marginTop(8).borderRadius(1);
 

@@ -302,7 +302,9 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
 
 
 <script type="text/javascript">
-    showPage("home");
+    page = getRequestParameter("page");
+    if (page == null) page = "home";
+    showPage(page);
     var message = getRequestParameter("message");
     if (message != null) {
         $("messageOutput").innerHTML = message;    

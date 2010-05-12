@@ -15,6 +15,7 @@ import scrum.client.project.ChangeProjectAction;
 import scrum.client.search.SearchInputWidget;
 import scrum.client.undo.Undo;
 
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -26,6 +27,7 @@ public class HeaderWidget extends AScrumWidget {
 	private UndoButtonWidget undoButton;
 	private SearchInputWidget search;
 	private CommunicationIndicatorWidget status;
+	private HTML feedback;
 
 	@Override
 	protected Widget onInitialization() {
@@ -39,6 +41,8 @@ public class HeaderWidget extends AScrumWidget {
 		undoButton = new UndoButtonWidget();
 
 		search = new SearchInputWidget();
+
+		feedback = new HTML("<a href='http://kunagi.org?page=support' target='blank'>Support/Feedback</a>");
 
 		wrapper = Gwt.createDiv("HeaderWidget", title);
 		return wrapper;
@@ -58,13 +62,13 @@ public class HeaderWidget extends AScrumWidget {
 
 		TableBuilder tb = new TableBuilder();
 		tb.setCellPadding(2);
-		tb.setColumnWidths("70px", "", "", "", "60px", "100px", "50px");
+		tb.setColumnWidths("70px", "", "", "", "200px", "60px", "100px", "50px");
 		Widget searchWidget = projectOpen ? search : Gwt.createEmptyDiv();
 		Widget undoWidget = projectOpen ? undoButton : Gwt.createEmptyDiv();
 		Widget changeProjectWidget = projectOpen ? new HyperlinkWidget(new ChangeProjectAction()) : Gwt
 				.createEmptyDiv();
-		tb.add(createLogo(), status, createCurrentUserWidget(), searchWidget, undoWidget, changeProjectWidget,
-			new HyperlinkWidget(new LogoutAction()));
+		tb.add(createLogo(), status, createCurrentUserWidget(), searchWidget, feedback, undoWidget,
+			changeProjectWidget, new HyperlinkWidget(new LogoutAction()));
 		wrapper.setWidget(tb.createTable());
 
 		super.onUpdate();
