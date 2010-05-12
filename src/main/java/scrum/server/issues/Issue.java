@@ -6,6 +6,19 @@ import scrum.server.common.Numbered;
 
 public class Issue extends GIssue implements Numbered {
 
+	public String getIssuer() {
+		if (isCreatorSet()) return getCreator().getName();
+
+		String name = getIssuerName();
+		String email = getIssuerEmail();
+
+		if (name == null && email == null) return null;
+		if (name == null) return email;
+		if (email == null) return name;
+
+		return name + " <" + email + ">";
+	}
+
 	public boolean isAcceptedUrgent() {
 		return getAcceptDate() != null && isUrgent();
 	}

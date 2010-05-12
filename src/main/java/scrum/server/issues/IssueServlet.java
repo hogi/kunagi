@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
+import scrum.server.journal.ProjectEventDao;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 
@@ -25,6 +26,7 @@ public class IssueServlet extends AHttpServlet {
 
 	private IssueDao issueDao;
 	private ProjectDao projectDao;
+	private ProjectEventDao projectEventDao;
 	private TransactionService transactionService;
 
 	@Override
@@ -39,7 +41,8 @@ public class IssueServlet extends AHttpServlet {
 			message = submitIssue(projectId, text, name, email);
 		} catch (Throwable ex) {
 			log.error("Submitting issue failed.", "\n" + Servlet.toString(req, "  "), ex);
-			message = "Submitting issue failed: " + Str.getRootCauseMessage(ex);
+			message = "<h2>Failure</h2><p>Submitting your issue failed: <strong>" + Str.getRootCauseMessage(ex)
+					+ "</strong></p><p>We are sorry, please try again later.</p>";
 		}
 
 		String returnUrl = req.getParameter("returnUrl");
@@ -53,8 +56,10 @@ public class IssueServlet extends AHttpServlet {
 		if (projectId == null) throw new RuntimeException("projectId == null");
 		Project project = projectDao.getById(projectId);
 		Issue issue = issueDao.postIssue(project, "Message from the Internets", text, name, email);
+		projectEventDao.postEvent(project, issue.getIssuer() + " submitted " + issue.getReferenceAndLabel());
 		transactionService.commit();
-		return "Your issue was submitted as " + issue.getReference() + ". Thank you!";
+		return "<h2>Issue submitted</h2><p>Your issue was submitted as <code>" + issue.getReference()
+				+ "</code>. It will be reviewed by our Product Owner.</p><p>Thank you!</p>";
 	}
 
 	@Override
@@ -63,6 +68,7 @@ public class IssueServlet extends AHttpServlet {
 		issueDao = app.getIssueDao();
 		projectDao = app.getProjectDao();
 		transactionService = app.getTransactionService();
+		projectEventDao = app.getProjectEventDao();
 	}
 
 }
