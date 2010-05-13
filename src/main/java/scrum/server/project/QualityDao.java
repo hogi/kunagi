@@ -22,19 +22,27 @@ public class QualityDao extends GQualityDao {
 
 	// --- test data ---
 
-	public void createTestQuality(Project project, int variant) {
+	public boolean createTestQuality(Project project, int variant) {
 		Quality quality = newEntityInstance();
 		quality.setProject(project);
 
 		if (variant == 1) {
-			quality.setLabel("Corporate Design");
-			quality.setDescription("All GUI elements must reflect the corporate design.");
+			quality.setLabel("Undeniable Success");
 		} else if (variant == 2) {
-			quality.setLabel("Coffee shock");
-			quality.setDescription("Developers must consume coffee during work at all costs.");
-			quality.setTestDescription("At least 10 cups per day per developer.");
+			quality.setLabel("Orgasmic Joy-of-Use");
+		} else if (variant == 3) {
+			quality.setLabel("Effervescent Happiness");
+		} else if (variant == 4) {
+			quality.setLabel("Supersonic Communication");
+		} else if (variant == 5) {
+			quality.setLabel("Endless Freedom");
+		} else if (variant == 6) {
+			quality.setLabel("Flawless Integration");
+		} else {
+			return false;
 		}
 
 		saveEntity(quality);
+		return true;
 	}
 }

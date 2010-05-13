@@ -637,19 +637,14 @@ public class Project extends GProject {
 
 	public void addTestRequirements(int variant) {
 		if (variant == 0) return;
-
-		requirementDao.createTestRequirement(this, 1);
-		requirementDao.createTestRequirement(this, 2);
-		requirementDao.createTestRequirement(this, 3);
-		requirementDao.createTestRequirement(this, 4);
-		requirementDao.createTestRequirement(this, 5);
+		int v = 1;
+		while (requirementDao.createTestRequirement(this, v)) {}
 	}
 
 	public void addTestQualitys(int variant) {
 		if (variant == 0) return;
-
-		qualityDao.createTestQuality(this, 1);
-		qualityDao.createTestQuality(this, 2);
+		int v = 0;
+		while (qualityDao.createTestQuality(this, v++)) {}
 	}
 
 	public void addTestSprints(int variant) {

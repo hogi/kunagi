@@ -102,11 +102,8 @@ public class Requirement extends GRequirement implements Numbered {
 
 	public void addTestTasks(int variant) {
 		if (variant == 0) return;
-		taskDao.createTestTask(this, 0);
-		taskDao.createTestTask(this, 1);
-		taskDao.createTestTask(this, 2);
-		taskDao.createTestTask(this, 3);
-		taskDao.createTestTask(this, 4);
+		int v = 1;
+		while (taskDao.createTestTask(this, v)) {}
 	}
 
 }
