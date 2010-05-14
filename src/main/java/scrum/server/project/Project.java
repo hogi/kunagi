@@ -591,22 +591,14 @@ public class Project extends GProject {
 
 	public void addTestImpediments(int variant) {
 		if (variant == 0) return;
-
-		impedimentDao.createTestImpediment(this, 1);
-		impedimentDao.createTestImpediment(this, 2);
-		impedimentDao.createTestImpediment(this, 3);
+		int v = 1;
+		while (impedimentDao.createTestImpediment(this, v++)) {}
 	}
 
 	public void addTestRisks(int variant) {
 		if (variant == 0) return;
-
-		riskDao.createTestRisk(this, 1);
-		riskDao.createTestRisk(this, 2);
-		riskDao.createTestRisk(this, 3);
-		riskDao.createTestRisk(this, 4);
-		riskDao.createTestRisk(this, 5);
-		riskDao.createTestRisk(this, 6);
-		riskDao.createTestRisk(this, 7);
+		int v = 1;
+		while (riskDao.createTestRisk(this, v++)) {}
 	}
 
 	public void addTestSimpleEvents(int variant) {
@@ -638,7 +630,7 @@ public class Project extends GProject {
 	public void addTestRequirements(int variant) {
 		if (variant == 0) return;
 		int v = 1;
-		while (requirementDao.createTestRequirement(this, v)) {}
+		while (requirementDao.createTestRequirement(this, v++)) {}
 	}
 
 	public void addTestQualitys(int variant) {
