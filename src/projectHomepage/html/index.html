@@ -23,9 +23,8 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
     #header img {margin: 0px 10px; border: none;}
     
     #menu {background: #192666;}
-        #menu a {color: #fff; font-weight: bold; border-right: 1px solid #338; cursor: pointer; display: block; padding: 10px;}
-        #menu a:hover {background: #293676; color: #fff;}
-        #menu a.current {background: orange; border: 1px solid red;}
+        #menu a.navigLink {color: #fff; font-weight: bold; border-right: 1px solid #338; cursor: pointer; display: block; padding: 10px;}
+        #menu a.navigLink:hover {background: #293676; color: #fff;}
     
     #content {background: white; padding: 25px;}
 		#content a {color: #B37400;}
@@ -101,11 +100,12 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
     
     <div id="menu">
         <table cellspacing="0" cellpadding="0" width="100%"><tr>
-            <td><a id="link-home" onclick="showPage('home')">Home</a></td>
-            <td><a id="link-download" onclick="showPage('download')">Download</a></td>
-            <td><a id="link-support" onclick="showPage('support')">Support</a></td>
-            <td><a id="link-development" onclick="showPage('development')">Development</a></td>
+            <td><a id="link-home" class="navigLink" onclick="showPage('home')">Home</a></td>
+            <td><a id="link-download" class="navigLink" onclick="showPage('download')">Download</a></td>
+            <td><a id="link-support" class="navigLink" onclick="showPage('support')">Support</a></td>
+            <td><a id="link-development" class="navigLink" onclick="showPage('development')">Development</a></td>
             <td width="90%"></td>
+            <td><a href="http://flattr.com/thing/2486/Kunagi" target="_blank"><img src="http://api.flattr.com/button/button-compact-static-100x17.png" title="Flattr this" border="0" style="margin: 5px 10px 0px 0px;" /></a></td>
         </tr></table>
     </div>
     
