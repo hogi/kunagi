@@ -14,6 +14,8 @@
 
 * {margin: 0; padding: 0;}
 body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",sans-serif; color: #333;}
+img {border: none;}
+
     #main {width: 600px; margin: 20px auto 1000px auto; border: 1px solid #555;}
 
     #header {height: 80px; background: #233C9B url("header.jpg") 0 0 no-repeat; color:#FFF;}
@@ -28,6 +30,7 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
     #content {background: white; padding: 25px;}
 		#content a {color: #B37400;}
 		#content .section {padding: 0px 0px;}
+            #content .section p {margin-bottom: 10px;}
 			h2 {font: 15pt/20pt "georgia",serif; color: #233C9B; margin-bottom: 10px;}
 			.middle {float: left; width: 350px;}
 			.sidebar {float: right;}
@@ -37,7 +40,7 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
             img.screenshotthumb {margin: 0px 0px 10px 10px; border: 1px solid #DDD;}
             .featureseparator {clear: both; height: 10px;}
             ul {margin-left: 20px; margin-top: 10px;}
-        #content .separator {height: 25px; margin-bottom: 25px; border-bottom: 1px solid #CCC;}
+        #content .separator {height: 15px; margin-bottom: 25px; border-bottom: 1px solid #CCC;}
     #footer {background: #192666; color: #CCC; padding: 0px 10px; font-size: 8px; text-align: right;}
     
 	.clear {clear: both;}
@@ -115,9 +118,14 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
     
             <div class="section">
                 <p>
-                    Kunagi is a software project management tool based on the agile framework <a href="http://en.wikipedia.org/wiki/Scrum_%28development%29" target="_blank">Scrum</a>.
-                    It is designed for distributed teams of pragmatic people, which need tight collaboration to build a complex product the agile way. 
-                    Kunagi is <a href="http://en.wikipedia.org/wiki/Free_software" target="_blank">free</a>.
+                    Kunagi offers integrated project management, supplementing Scrum by a selection of other best
+                    practices to cover all project management needs. It does not only offer management of basic Scrum
+                    documents, but also a variety of additional data. Furthermore, it includes several features for the
+                    ease of use and collaboration.
+                </p><p>
+                    Kunagi aims to be accessible and suitable for professional as well as non-professional development
+                    of projects of any size. The web interface uses latest technology to achieve the usability of
+                    desktop software while being accessible from everywhere.                    
                 </p>
             </div>
     
@@ -142,35 +150,37 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
             <div class="separator"></div>
 
             <div class="section">
-                <h2>Features</h2>
+                <h2>Description</h2>
                 
                 <p>
-                    Post <strong>Comments</strong> on every entity. Get informed of other peoples comments on the project journal.
+                    Kunagi is a free web-based tool for integrated project management and collaboration based on Scrum.
+                    It is integrated, as it aims to allow users to manage their complete project using only one tool.
+                    For that purpose, Scrum was supplemented by a selection of other best practices to cover all project
+                    management needs. The tool's range provides not only the basis for all Scrum practices (like
+                    product, sprint backlogs and impediment list), but also offers management of additional important
+                    project data (like non-functional requirements, risks, files, issues and bugs) as well as several
+                    functionalities for the ease of use (featuring a project dashboard, interactive whiteboard for the
+                    current sprint and planning poker for estimation) and team collaboration (including comments for
+                    every entity and a discussion board).
+                </p><p>
+                    Kunagi aims for, but is not limited to, software projects. The light nature of agile project
+                    management allows for use by professionals as well as non-professionals causing minimal overhead to
+                    the project. Therefore, it is also suitable for small projects done by virtual teams, i. e. teams
+                    that are scattered across the world.
+                </p><p>
+                    Using Kunagi's web interface it is possible to access project related data from everywhere. Although
+                    being an online application, the powerful interface is built to keep up with the flexibility of
+                    desktop applications, as it makes use of asynchronous technology employing the Google Web Toolkit 
+                    (GWT).
+                </p><p>
+                    Last, but not least, it is important to us that the tool helps people get their work done. We
+                    understand that it is therefore important for the tool to be not only suitable for project 
+                    management, but furthermore to be accessible, offer a coherent work flow and be fun to use. For this 
+                    reason, we have been using Kunagi for it's own project management since it was ready to provide 
+                    sufficient functionality for our needs. Moreover, after the tool's release, we will provide 
+                    additions, enhancements and updates to it on a regular basis.
                 </p>
-                
-                <div class="featureseparator"></div>
-                <p>
-                    <img src="screenshots/productbacklog-thumb.png" alt="Product Backlog" align="right" class="screenshotthumb">
-                    Edit Stories directly in the <strong>Product Backlog</strong> and prioritize them by drag'n'drop.
-                    Project the volume of future releases by adjusting assumed velocity.
-                    Play <strong>Planning Poker</strong> in the backlog to estimate User Stories.
-                </p>
-                
-                <div class="featureseparator"></div>
-                <p>
-                    <img src="screenshots/wiki-thumb.png" alt="Wiki" align="right" class="screenshotthumb">
-                    The integrated <strong>Wiki</strong> provides space for custom documents.
-                    Pages can be downloaded as PDF.
-                    All description fields (Stories, Tasks, Impediments,...) are based on the Wiki-Syntax which is similar to the MediaWiki-Syntax.
-                </p>
-                
-                <div class="featureseparator"></div>
-                <p>
-                    Use a pragmatic approach to <strong>Risk Management</strong>.
-                    Document project risks and prioritize them by impact and probability.
-                    Then document plans for mitigation. 
-                </p>
-                
+                                
             </div>
 
         </div><!-- page-home -->
@@ -195,6 +205,30 @@ body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",san
                 </div>
                 <div class="clear"></div>
             </div>
+
+            <div class="separator"></div>
+
+            <div class="section">
+                <a href="http://www.gnu.org/licenses/agpl.html" target="_blank"><img src="agplv3-88x31.png" alt="GNU Affero General Public License"
+                    align="right" style="margin: 0px 0px 15px 25px;"></a>
+                <h2>Copying</h2>
+                <p>
+                    Kunagi is free software: you can redistribute it and/or modify
+                    it under the terms of the <strong>GNU Affero General Public License</strong> as published
+                    by the Free Software Foundation, either version 3 of the License, or
+                    (at your option) any later version.
+                </p><p>
+                    Kunagi is distributed in the hope that it will be useful,
+                    but WITHOUT ANY WARRANTY; without even the implied warranty of
+                    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+                    GNU Affero General Public License for more details.
+                </p><p>
+                    Get a copy of the GNU Affero General Public License from
+                    <a href="http://www.gnu.org/licenses/" target="_blank">gnu.org</a>
+                </p>
+            </div>
+            
+            
             
         </div><!-- page-download -->
         

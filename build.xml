@@ -52,6 +52,8 @@
 	<target name="webapp" depends="compile">
 		<copy todir="build/webapp">
 			<fileset dir="src/main/webapp" />
+			<fileset file="README" />
+            <fileset file="COPYING" />
 		</copy>
 		<copy todir="build/webapp/WEB-INF/lib">
 			<fileset dir="../ilarkesto/lib" />
