@@ -30,6 +30,18 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 		super(data);
 	}
 
+	public boolean isMajor() {
+		return !isBugfix();
+	}
+
+	public boolean isBugfix() {
+		return isParentReleaseSet();
+	}
+
+	public List<Release> getBugfixReleases() {
+		return getDao().getReleasesByParentRelease(this);
+	}
+
 	public List<Issue> getAffectedByIssues() {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getDao().getIssues()) {

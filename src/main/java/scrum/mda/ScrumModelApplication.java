@@ -240,6 +240,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			releaseModel.setGwtSupport(true);
 			releaseModel.setViewProtected(true);
 			releaseModel.addReference("project", getProjectModel()).setMaster(true);
+			releaseModel.addReference("parentRelease", getReleaseModel());
 			releaseModel.addProperty("number", int.class).setMandatory(true);
 			releaseModel.addStringProperty("label").setMandatory(true).setSearchable(true);
 			releaseModel.addStringProperty("note").setSearchable(true);
@@ -250,6 +251,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			releaseModel.addAction("DeleteRelease");
 			releaseModel.addAction("ReleaseRelease");
 			releaseModel.addAction("UnreleaseRelease");
+			releaseModel.addAction("CreateBugfixRelease");
 		}
 		return releaseModel;
 	}

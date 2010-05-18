@@ -44,6 +44,8 @@ public abstract class GReleaseDao
     public void clearCaches() {
         releasesByProjectCache.clear();
         projectsCache = null;
+        releasesByParentReleaseCache.clear();
+        parentReleasesCache = null;
         releasesByNumberCache.clear();
         numbersCache = null;
         releasesByLabelCache.clear();
@@ -109,6 +111,46 @@ public abstract class GReleaseDao
 
         public boolean test(Release e) {
             return e.isProject(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - parentRelease
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.release.Release,Set<Release>> releasesByParentReleaseCache = new Cache<scrum.server.release.Release,Set<Release>>(
+            new Cache.Factory<scrum.server.release.Release,Set<Release>>() {
+                public Set<Release> create(scrum.server.release.Release parentRelease) {
+                    return getEntities(new IsParentRelease(parentRelease));
+                }
+            });
+
+    public final Set<Release> getReleasesByParentRelease(scrum.server.release.Release parentRelease) {
+        return releasesByParentReleaseCache.get(parentRelease);
+    }
+    private Set<scrum.server.release.Release> parentReleasesCache;
+
+    public final Set<scrum.server.release.Release> getParentReleases() {
+        if (parentReleasesCache == null) {
+            parentReleasesCache = new HashSet<scrum.server.release.Release>();
+            for (Release e : getEntities()) {
+                if (e.isParentReleaseSet()) parentReleasesCache.add(e.getParentRelease());
+            }
+        }
+        return parentReleasesCache;
+    }
+
+    private static class IsParentRelease implements Predicate<Release> {
+
+        private scrum.server.release.Release value;
+
+        public IsParentRelease(scrum.server.release.Release value) {
+            this.value = value;
+        }
+
+        public boolean test(Release e) {
+            return e.isParentRelease(value);
         }
 
     }

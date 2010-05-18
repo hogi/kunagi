@@ -19,6 +19,9 @@ import com.google.gwt.user.client.ui.ImageBundle;
 public interface GImageBundle
             extends com.google.gwt.user.client.ui.ImageBundle {
 
+    @Resource(value="bugfixRelease.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype bugfixRelease();
+
     @Resource(value="enumlist.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype enumlist();
 
@@ -54,6 +57,9 @@ public interface GImageBundle
 
     @Resource(value="logo25.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype logo25();
+
+    @Resource(value="majorRelease.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype majorRelease();
 
     @Resource(value="reqClosed.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype reqClosed();

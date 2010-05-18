@@ -69,6 +69,31 @@ public abstract class GRelease
         return equals(this.projectId, project);
     }
 
+    // --- parentRelease ---
+
+    private String parentReleaseId;
+
+    public final scrum.client.release.Release getParentRelease() {
+        if (parentReleaseId == null) return null;
+        return getDao().getRelease(this.parentReleaseId);
+    }
+
+    public final boolean isParentReleaseSet() {
+        return parentReleaseId != null;
+    }
+
+    public final Release setParentRelease(scrum.client.release.Release parentRelease) {
+        String id = parentRelease == null ? null : parentRelease.getId();
+        if (equals(this.parentReleaseId, id)) return (Release) this;
+        this.parentReleaseId = id;
+        propertyChanged("parentReleaseId", this.parentReleaseId);
+        return (Release)this;
+    }
+
+    public final boolean isParentRelease(scrum.client.release.Release parentRelease) {
+        return equals(this.parentReleaseId, parentRelease);
+    }
+
     // --- number ---
 
     private int number ;
@@ -348,6 +373,7 @@ public abstract class GRelease
 
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
+        parentReleaseId = (String) props.get("parentReleaseId");
         number  = (Integer) props.get("number");
         label  = (java.lang.String) props.get("label");
         note  = (java.lang.String) props.get("note");
@@ -361,6 +387,7 @@ public abstract class GRelease
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
+        properties.put("parentReleaseId", this.parentReleaseId);
         properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("note", this.note);

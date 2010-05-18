@@ -10,7 +10,7 @@ public class ReleaseReleaseAction extends GReleaseReleaseAction {
 
 	@Override
 	public String getLabel() {
-		return "Mark as released";
+		return "Mark as published";
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ReleaseReleaseAction extends GReleaseReleaseAction {
 
 		@Override
 		public String getLabel() {
-			return "Undo Mark as released " + release.getReference() + " " + release.getLabel();
+			return "Undo Mark as published " + release.getReference() + " " + release.getLabel();
 		}
 
 		@Override

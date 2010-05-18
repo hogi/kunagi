@@ -37,6 +37,7 @@ public abstract class GRelease
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
+        properties.put("parentReleaseId", this.parentReleaseId);
         properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("note", this.note);
@@ -115,6 +116,58 @@ public abstract class GRelease
 
     protected final void updateProject(Object value) {
         setProject(value == null ? null : (scrum.server.project.Project)projectDao.getById((String)value));
+    }
+
+    // -----------------------------------------------------------
+    // - parentRelease
+    // -----------------------------------------------------------
+
+    private String parentReleaseId;
+    private transient scrum.server.release.Release parentReleaseCache;
+
+    private void updateParentReleaseCache() {
+        parentReleaseCache = this.parentReleaseId == null ? null : (scrum.server.release.Release)releaseDao.getById(this.parentReleaseId);
+    }
+
+    public final String getParentReleaseId() {
+        return this.parentReleaseId;
+    }
+
+    public final scrum.server.release.Release getParentRelease() {
+        if (parentReleaseCache == null) updateParentReleaseCache();
+        return parentReleaseCache;
+    }
+
+    public final void setParentRelease(scrum.server.release.Release parentRelease) {
+        parentRelease = prepareParentRelease(parentRelease);
+        if (isParentRelease(parentRelease)) return;
+        this.parentReleaseId = parentRelease == null ? null : parentRelease.getId();
+        parentReleaseCache = parentRelease;
+        fireModified();
+    }
+
+    protected scrum.server.release.Release prepareParentRelease(scrum.server.release.Release parentRelease) {
+        return parentRelease;
+    }
+
+    protected void repairDeadParentReleaseReference(String entityId) {
+        if (entityId.equals(this.parentReleaseId)) {
+            this.parentReleaseId = null;
+            fireModified();
+        }
+    }
+
+    public final boolean isParentReleaseSet() {
+        return this.parentReleaseId != null;
+    }
+
+    public final boolean isParentRelease(scrum.server.release.Release parentRelease) {
+        if (this.parentReleaseId == null && parentRelease == null) return true;
+        return parentRelease != null && parentRelease.getId().equals(this.parentReleaseId);
+    }
+
+    protected final void updateParentRelease(Object value) {
+        setParentRelease(value == null ? null : (scrum.server.release.Release)releaseDao.getById((String)value));
     }
 
     // -----------------------------------------------------------
@@ -321,6 +374,7 @@ public abstract class GRelease
             if (property.equals("id")) continue;
             Object value = entry.getValue();
             if (property.equals("projectId")) updateProject(value);
+            if (property.equals("parentReleaseId")) updateParentRelease(value);
             if (property.equals("number")) updateNumber(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("note")) updateNote(value);
@@ -333,6 +387,7 @@ public abstract class GRelease
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
+        repairDeadParentReleaseReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -348,6 +403,12 @@ public abstract class GRelease
         } catch (EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
+        }
+        try {
+            getParentRelease();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead parentRelease reference");
+            repairDeadParentReleaseReference(this.parentReleaseId);
         }
     }
 
