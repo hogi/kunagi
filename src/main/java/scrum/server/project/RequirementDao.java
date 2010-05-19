@@ -90,11 +90,11 @@ public class RequirementDao extends GRequirementDao {
 		} else if (variant == 13) {
 			requirement.setLabel("Irresistable User Interface");
 			requirement
-					.setLabel("As a User I want the User Interface to be irresistable so that I can experience Orgasmic Joy-of-Use.");
+					.setDescription("As a User I want the User Interface to be irresistable so that I can experience Orgasmic Joy-of-Use.");
 			requirement.setEstimatedWork(20f);
 		} else if (variant == 14) {
 			requirement.setLabel("Succulent Documentation");
-			requirement.setLabel("As a Noob I want Succulent Documentation. Yammy!");
+			requirement.setDescription("As a Noob I want Succulent Documentation. Yammy!");
 			requirement.setEstimatedWork(40f);
 		} else if (variant == 15) {
 			requirement.setLabel("Outlasting Collaboration");
