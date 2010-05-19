@@ -33,7 +33,7 @@ public class AcceptIssueAsBugAction extends GAcceptIssueAsBugAction {
 
 	@Override
 	protected void onExecute() {
-		issue.acceptAsUrgent();
+		issue.acceptAsBug();
 		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showIssueList(issue);
 		addUndo(new Undo());
 	}

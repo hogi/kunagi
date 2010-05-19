@@ -133,11 +133,11 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 		setCloseDate(Date.today());
 	}
 
-	public void accept() {
+	public void acceptAsIdea() {
 		setAcceptDate(Date.today());
 	}
 
-	public void acceptAsUrgent() {
+	public void acceptAsBug() {
 		setAcceptDate(Date.today());
 		setUrgent(true);
 	}

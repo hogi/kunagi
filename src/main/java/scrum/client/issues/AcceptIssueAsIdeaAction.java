@@ -33,7 +33,7 @@ public class AcceptIssueAsIdeaAction extends GAcceptIssueAsIdeaAction {
 
 	@Override
 	protected void onExecute() {
-		issue.accept();
+		issue.acceptAsIdea();
 		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showIssueList(issue);
 		addUndo(new Undo());
 	}

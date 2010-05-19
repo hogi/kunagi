@@ -619,12 +619,8 @@ public class Project extends GProject {
 
 	public void addTestIssues(int variant) {
 		if (variant == 0) return;
-
-		issueDao.createTestIssue(this, 1);
-		issueDao.createTestIssue(this, 2);
-		issueDao.createTestIssue(this, 3);
-		issueDao.createTestIssue(this, 4);
-		issueDao.createTestIssue(this, 5);
+		int v = 1;
+		while (issueDao.createTestIssue(this, v++)) {}
 	}
 
 	public void addTestRequirements(int variant) {
