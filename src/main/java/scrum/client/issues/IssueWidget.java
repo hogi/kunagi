@@ -7,6 +7,10 @@ import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.AEditorModel;
 import ilarkesto.gwt.client.editor.DropdownEditorWidget;
 import ilarkesto.gwt.client.editor.TextOutputWidget;
+
+import java.util.Collections;
+import java.util.List;
+
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.collaboration.EmoticonSelectorWidget;
@@ -58,7 +62,9 @@ public class IssueWidget extends AScrumWidget {
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorItems(issue.getProject().getReleases());
+				List<Release> releases = issue.getProject().getReleasedReleases();
+				Collections.sort(releases, Release.DATE_COMPARATOR);
+				setEditorItems(releases);
 				setEditorSelectedItems(issue.getAffectedReleases());
 			}
 
@@ -81,7 +87,9 @@ public class IssueWidget extends AScrumWidget {
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorItems(issue.getProject().getReleases());
+				List<Release> releases = issue.getProject().getReleases();
+				Collections.sort(releases, Release.DATE_COMPARATOR);
+				setEditorItems(releases);
 				setEditorSelectedItems(issue.getFixReleases());
 			}
 
