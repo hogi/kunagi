@@ -16,7 +16,7 @@ public class Issue extends GIssue implements Numbered {
 		if (name == null) return email;
 		if (email == null) return name;
 
-		return name + " <" + email + ">";
+		return name + " (" + email + ")";
 	}
 
 	public boolean isAcceptedUrgent() {

@@ -49,7 +49,7 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 		if (name == null) return email;
 		if (email == null) return name;
 
-		return name + " <" + email + ">";
+		return name + " (" + email + ")";
 	}
 
 	public boolean isSuspended() {
