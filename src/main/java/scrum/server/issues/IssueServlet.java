@@ -2,6 +2,7 @@ package scrum.server.issues;
 
 import ilarkesto.base.Str;
 import ilarkesto.core.logging.Log;
+import ilarkesto.io.IO;
 import ilarkesto.persistence.TransactionService;
 import ilarkesto.webapp.Servlet;
 
@@ -31,6 +32,8 @@ public class IssueServlet extends AHttpServlet {
 
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
+		req.setCharacterEncoding(IO.UTF_8);
+
 		String projectId = req.getParameter("projectId");
 		String text = req.getParameter("text");
 		String name = req.getParameter("name");
