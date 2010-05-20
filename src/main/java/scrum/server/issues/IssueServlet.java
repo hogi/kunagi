@@ -41,6 +41,14 @@ public class IssueServlet extends AHttpServlet {
 		String email = req.getParameter("email");
 		if (Str.isEmpty(email)) email = null;
 
+		log.info("Message from the internets");
+		log.info("    projectId: " + projectId);
+		log.info("    name: " + name);
+		log.info("    email: " + email);
+		log.info("    text: " + text);
+		log.info("  Request-Data:");
+		log.info(Servlet.toString(req, "        "));
+
 		String message;
 		try {
 			message = submitIssue(projectId, text, name, email);
