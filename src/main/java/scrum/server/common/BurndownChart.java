@@ -1,7 +1,7 @@
 package scrum.server.common;
 
+import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
-import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 
 import java.awt.BasicStroke;
