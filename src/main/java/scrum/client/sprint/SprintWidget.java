@@ -30,6 +30,13 @@ public class SprintWidget extends AScrumWidget {
 		int cols = 6;
 		tb.addFieldRow("Label", sprint.getLabelModel(), cols - 1);
 		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()), cols - 1);
+		tb.addFieldRow("Releases", new AFieldValueWidget() {
+
+			@Override
+			protected void onUpdate() {
+				setContent(ScrumGwt.createToHtmlItemsWidget(sprint.getReleases()));
+			}
+		});
 
 		if (completed) {
 			tb.addFieldRow("Velocity", new TextOutputWidget(sprint.getVelocityModel()), cols - 1);

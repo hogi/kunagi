@@ -14,6 +14,8 @@ import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.issues.Issue;
 import scrum.client.project.Project;
+import scrum.client.project.Requirement;
+import scrum.client.sprint.Sprint;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -95,5 +97,13 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 			return a.compareTo(b);
 		}
 	};
+
+	public List<Requirement> getRequirements() {
+		List<Requirement> ret = new ArrayList<Requirement>();
+		for (Sprint sprint : getSprints()) {
+			ret.addAll(sprint.getRequirements());
+		}
+		return ret;
+	}
 
 }

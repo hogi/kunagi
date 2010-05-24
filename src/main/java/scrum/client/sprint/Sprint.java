@@ -17,6 +17,7 @@ import scrum.client.collaboration.Wiki;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
+import scrum.client.release.Release;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
@@ -32,6 +33,14 @@ public class Sprint extends GSprint implements ForumSupport {
 
 	public Sprint(Map data) {
 		super(data);
+	}
+
+	public List<Release> getReleases() {
+		List<Release> ret = new ArrayList<Release>();
+		for (Release release : getDao().getReleasesByProject(getProject())) {
+			if (release.getSprints().contains(this)) ret.add(release);
+		}
+		return ret;
 	}
 
 	public String getChartUrl(int width, int height) {

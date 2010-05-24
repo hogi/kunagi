@@ -1,9 +1,11 @@
 package scrum.client.release;
 
+import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.journal.ChangeHistoryWidget;
+import scrum.client.sprint.Sprint;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -11,9 +13,9 @@ public class ReleaseWidget extends AScrumWidget {
 
 	private Release release;
 
-	public ReleaseWidget(Release risk) {
+	public ReleaseWidget(Release release) {
 		super();
-		this.release = risk;
+		this.release = release;
 	}
 
 	@Override
@@ -26,6 +28,34 @@ public class ReleaseWidget extends AScrumWidget {
 		tb.addFieldRow("Release date", release.getReleaseDateModel());
 		tb.addFieldRow("Description", release.getNoteModel());
 		tb.addFieldRow("Release notes", release.getReleaseNotesModel());
+		if (release.isMajor()) {
+			tb.addFieldRow("Sprints", new AMultiSelectionViewEditWidget<Sprint>() {
+
+				@Override
+				protected void onViewerUpdate() {
+					setViewerItems(release.getSprints());
+				}
+
+				@Override
+				protected void onEditorUpdate() {
+					setEditorItems(release.getProject().getSprints());
+					setEditorSelectedItems(release.getSprints());
+				}
+
+				@Override
+				protected void onEditorSubmit() {
+					release.setSprints(getEditorSelectedItems());
+				}
+
+				@Override
+				public boolean isEditable() {
+					return release.getProject().isProductOwner(getCurrentUser());
+				}
+			});
+
+			tb.addFieldRow("Sprints", ScrumGwt.createToHtmlItemsWidget(release.getSprints()));
+			tb.addFieldRow("Requirements", ScrumGwt.createToHtmlItemsWidget(release.getRequirements()));
+		}
 		tb.addFieldRow("Affected by issues", ScrumGwt.createToHtmlItemsWidget(release.getAffectedByIssues()));
 		tb.addFieldRow("Fixed issues", ScrumGwt.createToHtmlItemsWidget(release.getFixedIssues()));
 		tb.addFieldRow("Planned issues", ScrumGwt.createToHtmlItemsWidget(release.getPlannedIssues()));
