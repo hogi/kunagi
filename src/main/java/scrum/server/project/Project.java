@@ -5,6 +5,7 @@ import ilarkesto.base.Str;
 import ilarkesto.base.time.Date;
 import ilarkesto.pdf.APdfBuilder;
 import ilarkesto.persistence.AEntity;
+import ilarkesto.persistence.Persist;
 import ilarkesto.rss.Rss20Builder;
 import ilarkesto.search.Searchable;
 
@@ -74,6 +75,10 @@ public class Project extends GProject {
 	private static RequirementEstimationVoteDao requirementEstimationVoteDao;
 	private static SprintDaySnapshotDao sprintDaySnapshotDao;
 	private static SubjectDao subjectDao;
+
+	public void updateRequirementsOrder(List<Requirement> requirements) {
+		setRequirementsOrderIds(Persist.getIdsAsList(requirements));
+	}
 
 	public static void setSubjectDao(SubjectDao subjectDao) {
 		Project.subjectDao = subjectDao;
