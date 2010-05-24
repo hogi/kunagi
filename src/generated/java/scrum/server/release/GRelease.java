@@ -38,6 +38,7 @@ public abstract class GRelease
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("parentReleaseId", this.parentReleaseId);
+        properties.put("sprintsIds", this.sprintsIds);
         properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("note", this.note);
@@ -168,6 +169,93 @@ public abstract class GRelease
 
     protected final void updateParentRelease(Object value) {
         setParentRelease(value == null ? null : (scrum.server.release.Release)releaseDao.getById((String)value));
+    }
+
+    // -----------------------------------------------------------
+    // - sprints
+    // -----------------------------------------------------------
+
+    private java.util.Set<String> sprintsIds = new java.util.HashSet<String>();
+
+    public final java.util.Set<scrum.server.sprint.Sprint> getSprints() {
+        return (java.util.Set) sprintDao.getByIdsAsSet(this.sprintsIds);
+    }
+
+    public final void setSprints(Collection<scrum.server.sprint.Sprint> sprints) {
+        sprints = prepareSprints(sprints);
+        if (sprints == null) sprints = Collections.emptyList();
+        java.util.Set<String> ids = getIdsAsSet(sprints);
+        if (this.sprintsIds.equals(ids)) return;
+        this.sprintsIds = ids;
+        fireModified();
+    }
+
+    protected Collection<scrum.server.sprint.Sprint> prepareSprints(Collection<scrum.server.sprint.Sprint> sprints) {
+        return sprints;
+    }
+
+    protected void repairDeadSprintReference(String entityId) {
+        if (this.sprintsIds.remove(entityId)) fireModified();
+    }
+
+    public final boolean containsSprint(scrum.server.sprint.Sprint sprint) {
+        if (sprint == null) return false;
+        return this.sprintsIds.contains(sprint.getId());
+    }
+
+    public final int getSprintsCount() {
+        return this.sprintsIds.size();
+    }
+
+    public final boolean isSprintsEmpty() {
+        return this.sprintsIds.isEmpty();
+    }
+
+    public final boolean addSprint(scrum.server.sprint.Sprint sprint) {
+        if (sprint == null) throw new IllegalArgumentException("sprint == null");
+        boolean added = this.sprintsIds.add(sprint.getId());
+        if (added) fireModified();
+        return added;
+    }
+
+    public final boolean addSprints(Collection<scrum.server.sprint.Sprint> sprints) {
+        if (sprints == null) throw new IllegalArgumentException("sprints == null");
+        boolean added = false;
+        for (scrum.server.sprint.Sprint sprint : sprints) {
+            added = added | this.sprintsIds.add(sprint.getId());
+        }
+        if (added) fireModified();
+        return added;
+    }
+
+    public final boolean removeSprint(scrum.server.sprint.Sprint sprint) {
+        if (sprint == null) throw new IllegalArgumentException("sprint == null");
+        if (this.sprintsIds == null) return false;
+        boolean removed = this.sprintsIds.remove(sprint.getId());
+        if (removed) fireModified();
+        return removed;
+    }
+
+    public final boolean removeSprints(Collection<scrum.server.sprint.Sprint> sprints) {
+        if (sprints == null) return false;
+        if (sprints.isEmpty()) return false;
+        boolean removed = false;
+        for (scrum.server.sprint.Sprint _element: sprints) {
+            removed = removed | removeSprint(_element);
+        }
+        return removed;
+    }
+
+    public final boolean clearSprints() {
+        if (this.sprintsIds.isEmpty()) return false;
+        this.sprintsIds.clear();
+        fireModified();
+        return true;
+    }
+
+    protected final void updateSprints(Object value) {
+        Collection<String> ids = (Collection<String>) value;
+        setSprints((java.util.Set) sprintDao.getByIdsAsSet(ids));
     }
 
     // -----------------------------------------------------------
@@ -375,6 +463,7 @@ public abstract class GRelease
             Object value = entry.getValue();
             if (property.equals("projectId")) updateProject(value);
             if (property.equals("parentReleaseId")) updateParentRelease(value);
+            if (property.equals("sprintsIds")) updateSprints(value);
             if (property.equals("number")) updateNumber(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("note")) updateNote(value);
@@ -388,6 +477,8 @@ public abstract class GRelease
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadParentReleaseReference(entityId);
+        if (this.sprintsIds == null) this.sprintsIds = new java.util.HashSet<String>();
+        repairDeadSprintReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -410,6 +501,16 @@ public abstract class GRelease
             LOG.info("Repairing dead parentRelease reference");
             repairDeadParentReleaseReference(this.parentReleaseId);
         }
+        if (this.sprintsIds == null) this.sprintsIds = new java.util.HashSet<String>();
+        Set<String> sprints = new HashSet<String>(this.sprintsIds);
+        for (String entityId : sprints) {
+            try {
+                sprintDao.getById(entityId);
+            } catch (EntityDoesNotExistException ex) {
+                LOG.info("Repairing dead sprint reference");
+                repairDeadSprintReference(entityId);
+            }
+        }
     }
 
 
@@ -421,6 +522,12 @@ public abstract class GRelease
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GRelease.projectDao = projectDao;
+    }
+
+    static scrum.server.sprint.SprintDao sprintDao;
+
+    public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
+        GRelease.sprintDao = sprintDao;
     }
 
     static ReleaseDao releaseDao;

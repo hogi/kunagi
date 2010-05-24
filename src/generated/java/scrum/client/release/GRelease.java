@@ -94,6 +94,34 @@ public abstract class GRelease
         return equals(this.parentReleaseId, parentRelease);
     }
 
+    // --- sprints ---
+
+    private Set<String> sprintsIds = new HashSet<String>();
+
+    public final java.util.Set<scrum.client.sprint.Sprint> getSprints() {
+        if ( sprintsIds.isEmpty()) return Collections.emptySet();
+        return getDao().getSprints(this.sprintsIds);
+    }
+
+    public final void setSprints(Collection<scrum.client.sprint.Sprint> values) {
+        sprintsIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("sprintsIds", this.sprintsIds);
+    }
+
+    public final void addSprint(scrum.client.sprint.Sprint sprint) {
+        String id = sprint.getId();
+        if (sprintsIds.contains(id)) return;
+        sprintsIds.add(id);
+        propertyChanged("sprintsIds", this.sprintsIds);
+    }
+
+    public final void removeSprint(scrum.client.sprint.Sprint sprint) {
+        String id = sprint.getId();
+        if (!sprintsIds.contains(id)) return;
+        sprintsIds.remove(id);
+        propertyChanged("sprintsIds", this.sprintsIds);
+    }
+
     // --- number ---
 
     private int number ;
@@ -374,6 +402,7 @@ public abstract class GRelease
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
         parentReleaseId = (String) props.get("parentReleaseId");
+        sprintsIds = (Set<String>) props.get("sprintsIds");
         number  = (Integer) props.get("number");
         label  = (java.lang.String) props.get("label");
         note  = (java.lang.String) props.get("note");
@@ -388,6 +417,7 @@ public abstract class GRelease
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("parentReleaseId", this.parentReleaseId);
+        properties.put("sprintsIds", this.sprintsIds);
         properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("note", this.note);

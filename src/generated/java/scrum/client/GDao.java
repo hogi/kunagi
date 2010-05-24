@@ -1421,6 +1421,7 @@ public abstract class GDao
         return ret;
     }
 
+
     public final List<scrum.client.release.Release> getReleasesByNumber(int number) {
         List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
         for (scrum.client.release.Release entity : releases.values()) {

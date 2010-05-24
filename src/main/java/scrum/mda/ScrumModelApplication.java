@@ -241,6 +241,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			releaseModel.setViewProtected(true);
 			releaseModel.addReference("project", getProjectModel()).setMaster(true);
 			releaseModel.addReference("parentRelease", getReleaseModel());
+			releaseModel.addSetReference("sprints", getSprintModel());
 			releaseModel.addProperty("number", int.class).setMandatory(true);
 			releaseModel.addStringProperty("label").setMandatory(true).setSearchable(true);
 			releaseModel.addStringProperty("note").setSearchable(true);

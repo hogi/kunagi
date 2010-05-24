@@ -46,6 +46,8 @@ public abstract class GReleaseDao
         projectsCache = null;
         releasesByParentReleaseCache.clear();
         parentReleasesCache = null;
+        releasesBySprintCache.clear();
+        sprintsCache = null;
         releasesByNumberCache.clear();
         numbersCache = null;
         releasesByLabelCache.clear();
@@ -151,6 +153,46 @@ public abstract class GReleaseDao
 
         public boolean test(Release e) {
             return e.isParentRelease(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - sprints
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.sprint.Sprint,Set<Release>> releasesBySprintCache = new Cache<scrum.server.sprint.Sprint,Set<Release>>(
+            new Cache.Factory<scrum.server.sprint.Sprint,Set<Release>>() {
+                public Set<Release> create(scrum.server.sprint.Sprint sprint) {
+                    return getEntities(new ContainsSprint(sprint));
+                }
+            });
+
+    public final Set<Release> getReleasesBySprint(scrum.server.sprint.Sprint sprint) {
+        return releasesBySprintCache.get(sprint);
+    }
+    private Set<scrum.server.sprint.Sprint> sprintsCache;
+
+    public final Set<scrum.server.sprint.Sprint> getSprints() {
+        if (sprintsCache == null) {
+            sprintsCache = new HashSet<scrum.server.sprint.Sprint>();
+            for (Release e : getEntities()) {
+                sprintsCache.addAll(e.getSprints());
+            }
+        }
+        return sprintsCache;
+    }
+
+    private static class ContainsSprint implements Predicate<Release> {
+
+        private scrum.server.sprint.Sprint value;
+
+        public ContainsSprint(scrum.server.sprint.Sprint value) {
+            this.value = value;
+        }
+
+        public boolean test(Release e) {
+            return e.containsSprint(value);
         }
 
     }
@@ -403,6 +445,12 @@ public abstract class GReleaseDao
 
     public void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         this.projectDao = projectDao;
+    }
+
+    scrum.server.sprint.SprintDao sprintDao;
+
+    public void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
+        this.sprintDao = sprintDao;
     }
 
 }
