@@ -18,6 +18,7 @@ import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
 import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
+import scrum.client.release.Release;
 import scrum.client.risks.Risk;
 import scrum.client.sprint.Task;
 
@@ -114,6 +115,11 @@ public class Dao extends GDao {
 			return null;
 		} else if (reference.startsWith(SimpleEvent.REFERENCE_PREFIX)) {
 			for (SimpleEvent e : getSimpleEvents()) {
+				if (e.isNumber(number)) return e;
+			}
+			return null;
+		} else if (reference.startsWith(Release.REFERENCE_PREFIX)) {
+			for (Release e : getReleases()) {
 				if (e.isNumber(number)) return e;
 			}
 			return null;

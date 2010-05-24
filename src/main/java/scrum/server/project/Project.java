@@ -302,6 +302,10 @@ public class Project extends GProject {
 		return simpleEventDao.getSimpleEventByNumber(number, this);
 	}
 
+	public Release getReleaseByNumber(int number) {
+		return releaseDao.getReleaseByNumber(number, this);
+	}
+
 	public Wikipage getWikipageByName(String name) {
 		return wikipageDao.getWikipageByName(name, this);
 	}
