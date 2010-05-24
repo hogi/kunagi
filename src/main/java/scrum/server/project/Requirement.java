@@ -97,13 +97,4 @@ public class Requirement extends GRequirement implements Numbered {
 	public String toString() {
 		return getReferenceAndLabel();
 	}
-
-	// --- test data ---
-
-	public void addTestTasks(int variant) {
-		if (variant == 0) return;
-		int v = 1;
-		while (taskDao.createTestTask(this, v)) {}
-	}
-
 }

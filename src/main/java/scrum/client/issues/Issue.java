@@ -27,7 +27,13 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public static final String INIT_TYPE = Types.ISSUE;
 	public static final String REFERENCE_PREFIX = "iss";
-	public static final Integer[] SEVERITY_OPTIONS = { 2, 1, 0, -1 };
+
+	public static final int CRITICAL = 2;
+	public static final int SEVERE = 1;
+	public static final int NORMAL = 0;
+	public static final int MINOR = -1;
+
+	public static final Integer[] SEVERITY_OPTIONS = { CRITICAL, SEVERE, NORMAL, MINOR };
 
 	public Issue(Project project) {
 		setType(Types.ISSUE);

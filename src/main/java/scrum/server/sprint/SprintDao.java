@@ -15,16 +15,16 @@ public class SprintDao extends GSprintDao {
 
 	// --- test data ---
 
-	public void createTestSprint(Project project, int variant) {
+	public void createTestSprint(Project project) {
 		Date begin = Date.beforeDays(15);
 		Date end = Date.inDays(15);
 
 		Sprint sprint = newEntityInstance();
 		sprint.setProject(project);
-		sprint.setLabel("Sprint -" + variant);
+		sprint.setLabel("Our first Sprint!");
 		sprint.setBegin(begin);
 		sprint.setEnd(end);
-		if (variant > 0) sprint.setVelocity(new Float(20 + variant));
+		sprint.setVelocity(20f);
 		saveEntity(sprint);
 
 		project.setCurrentSprint(sprint);
@@ -40,5 +40,4 @@ public class SprintDao extends GSprintDao {
 			snapshot.setRemainingWork(remainingWork);
 		}
 	}
-
 }

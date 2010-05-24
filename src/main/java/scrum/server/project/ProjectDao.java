@@ -39,7 +39,7 @@ public class ProjectDao extends GProjectDao {
 
 	// --- test data ---
 
-	public void createTestProject(int variant) {
+	public void createTestProject() {
 		User po;
 		User sm;
 
@@ -51,7 +51,7 @@ public class ProjectDao extends GProjectDao {
 		team.remove(sm);
 
 		Project project = postProject(userDao.getUserByName("admin"));
-		project.setLabel("Project " + variant);
+		project.setLabel("Demo");
 		project.setBegin(Date.today().addMonths(-2));
 		project.setEnd(Date.today().addMonths(5));
 		project.addParticipants(userDao.getEntities());
@@ -59,18 +59,16 @@ public class ProjectDao extends GProjectDao {
 		project.addTeamMembers(team);
 		project.addProductOwner(po);
 		project.addScrumMaster(sm);
-		project.addTestImpediments(variant);
-		project.addTestSprints(variant);
-		project.addTestRequirements(variant);
-		project.addTestRisks(variant);
-		project.addTestQualitys(variant);
-		project.addTestIssues(variant);
-		project.addTestEvents(variant);
-		project.addTestSimpleEvents(variant);
+		project.addTestImpediments();
+		project.addTestSprints();
+		project.addTestRequirements();
+		project.addTestRisks();
+		project.addTestQualitys();
+		project.addTestIssues();
+		project.addTestEvents();
+		project.addTestSimpleEvents();
 
-		if (variant == 1) {
-			userDao.getTestUser("duke").setCurrentProject(project);
-		}
+		po.setCurrentProject(project);
 	}
 
 }

@@ -598,58 +598,222 @@ public class Project extends GProject {
 
 	// --- test data ---
 
-	public void addTestImpediments(int variant) {
-		if (variant == 0) return;
-		int v = 1;
-		while (impedimentDao.createTestImpediment(this, v++)) {}
+	public void addTestImpediments() {
+		Impediment imp = null;
+
+		// no documentation
+		imp = impedimentDao.postImpediment(this, Date.randomPast(5), "There is no documentation. Seriously.", false);
+		imp.setDescription("Someone promised that, I remember. Where is it?");
+
+		// no daily scrums
+		imp = impedimentDao.postImpediment(this, Date.randomPast(5), "Daily Scrums are not daily", true);
+		imp.setDescription("\"Daily Scrums\" are supposed to be daily. That's why they are called DAILY Scrums.");
+		imp
+				.setSolution("Fixed time and place to 09.00 p. m. at Starbucks every morning (except weekdays, weekends and holydays).");
+
+		// no coffee
+		imp = impedimentDao.postImpediment(this, Date.randomPast(5), "There is no coffee machine", false);
 	}
 
-	public void addTestRisks(int variant) {
-		if (variant == 0) return;
-		int v = 1;
-		while (riskDao.createTestRisk(this, v++)) {}
+	public void addTestRisks() {
+		Risk rsk = null;
+
+		// god
+		rsk = riskDao.postRisk(this, "God comes to judge the living and the dead", 0, 100);
+		rsk.setImpactMitigation("Nothing we can do here.");
+
+		// duke
+		rsk = riskDao.postRisk(this, "Duke Nukem Forever is released", 20, 100);
+		rsk.setProbabilityMitigation("Nothing to mitigate here. The probability is close to nothing.");
+		rsk.setImpactMitigation("Nothing to mitigate here. Everyone will be playing. Everything will be lost.");
+
+		// sudden death
+		rsk = riskDao.postRisk(this, "Sudden Death", 50, 40);
+		rsk.setImpactMitigation("Go to the roof if it's by rising sea level.");
 	}
 
-	public void addTestSimpleEvents(int variant) {
-		if (variant == 0) return;
-
-		simpleEventDao.createTestEvent(this, 1);
-		simpleEventDao.createTestEvent(this, 2);
-		simpleEventDao.createTestEvent(this, 3);
+	public void addTestSimpleEvents() {
+	// let people generate their own events
 	}
 
-	public void addTestEvents(int variant) {
-		if (variant == 0) return;
-
-		projectEventDao.createTestEvent(this, 1);
-		projectEventDao.createTestEvent(this, 2);
-		projectEventDao.createTestEvent(this, 3);
+	public void addTestEvents() {
+	// no test events
 	}
 
-	public void addTestIssues(int variant) {
-		if (variant == 0) return;
-		int v = 1;
-		while (issueDao.createTestIssue(this, v++)) {}
+	public void addTestIssues() {
+		Issue iss = null;
+
+		// noobs
+		iss = issueDao.postIssue(this, "thiz cr4p don't work, n00bz!!1");
+		iss.setDescription("go home, u noobz ..#");
+
+		// eclipse integration
+		iss = issueDao.postIssue(this, "I want eclipse integration");
+		iss.setDescription("I would be really nice if eclipse commits would be represented in Kunagi! Thank you!");
+
+		// link bug
+		iss = issueDao.postIssue(this, "Bug: Links don't work");
+		iss.setDescription("When I try to post links to other pages, I get links to the Wiki. WTF?");
+
+		// date crash
+		iss = issueDao.postIssue(this, "Crash when using Dates after 2012");
+		iss
+				.setDescription("The program crashes whenever I enter dates after 2012. Can't figure out what the problem is though.");
+		iss.setAcceptDate(Date.beforeDays(2));
+		iss.setUrgent(true);
+		iss.setSeverity(scrum.client.issues.Issue.SEVERE);
+
+		// gui bug
+		iss = issueDao.postIssue(this, "GUI inconsistency between PB and SB");
+		iss
+				.setDescription("The order of Qualities and Tests is different between widgets in the PB and SB. It should be the same.");
+		iss.setAcceptDate(Date.beforeDays(35));
+		iss.setUrgent(true);
+		iss.setSeverity(scrum.client.issues.Issue.MINOR);
+
+		// navi display bug
+		iss = issueDao.postIssue(this, "navigation displays wrong current view");
+		iss
+				.setDescription("When I open the Whiteboard, \"Sprint Backlog\" is selected in the navigation. Same for other jumps.");
+		iss.setAcceptDate(Date.today());
+		iss.setUrgent(true);
+		iss.setSeverity(scrum.client.issues.Issue.MINOR);
+
+		// terrific pb suggestion
+		iss = issueDao.postIssue(this, "Product Backlog should be terrific, not amazing");
+		iss
+				.setDescription("56% of users want a terrific PB, not an amazing one. We should change that in one of the upcoming releases.");
+		iss.setAcceptDate(Date.today());
+
+		// flattr
+		iss = issueDao.postIssue(this, "Add a flattr-button");
+		iss.setDescription("See [http://flattr.com].");
+		iss.setCloseDate(Date.beforeDays(1));
+
+		// thank you
+		iss = issueDao.postIssue(this, "I like this software, thank you!");
+		iss.setDescription("I'm using Kunagi for my own project now. Thanks for the great work.");
+		iss.setCloseDate(Date.today());
 	}
 
-	public void addTestRequirements(int variant) {
-		if (variant == 0) return;
-		int v = 1;
-		while (requirementDao.createTestRequirement(this, v++)) {}
+	public void addTestRequirements() {
+		Requirement req = null;
+		List<Requirement> reqOrder = new LinkedList<Requirement>();
+
+		// Unsurpassed Concept
+		req = requirementDao.postRequirement(this, "Unsurpassed Concept", 3f);
+		req
+				.setDescription("As a Product Owner I want the concept to be unsurpassable so I don't have to worry about ROI anymore.");
+		reqOrder.add(req);
+		req.setSprint(getCurrentSprint());
+		taskDao.postTask(req, "Create Concept", 2, 1);
+		taskDao.postTask(req, "Make Sure All Others Are Inferior", 5, 3);
+
+		// Amazing Product Backlog
+		req = requirementDao.postRequirement(this, "Amazing Product Backlog", 2f);
+		req.setDescription("As a Product Owner I want my Backlog to be amazing so that people stand in awe.");
+		reqOrder.add(req);
+		req.setSprint(getCurrentSprint());
+		taskDao.postTask(req, "Creation of Storys", 1, 0);
+		taskDao.postTask(req, "Intelligent Design of Storys", 1, 0);
+		taskDao.postTask(req, "Deletion of Storys", 1, 0);
+
+		// Functional Quality Backlog
+		req = requirementDao.postRequirement(this, "Functional Quality Backlog", 1f);
+		req
+				.setDescription("As a Product Owner I want my non-functional Requirements to be functional, so I can use them.");
+		reqOrder.add(req);
+		req.setSprint(getCurrentSprint());
+		taskDao.postTask(req, "Copy And Paste Product Backlog", 1, 0);
+		taskDao.postTask(req, "Marry Storys and Qualitys", 1, 0);
+
+		// Groundbraking Scrum Backlog
+		req = requirementDao.postRequirement(this, "Groundbraking Scrum Backlog", 1f);
+		req
+				.setDescription("As a Team member I want the Scrum Backlog to be groundbreaking, so that everybody can see that I am the most important here.");
+		reqOrder.add(req);
+		req.setSprint(getCurrentSprint());
+		taskDao.postTask(req, "Create Tasks", 1, 0);
+		taskDao.postTask(req, "Create More Tasks", 1, 0);
+
+		// Breathtaking Whiteboard
+		req = requirementDao.postRequirement(this, "Breathtaking Whiteboard", 8f);
+		req
+				.setDescription("As a Team member I want the current state of things to be displayed on a Whiteboard, so I can play around when I am bored.");
+		reqOrder.add(req);
+
+		// Empowering Impediment List
+		req = requirementDao.postRequirement(this, "Empowering Impediment List", 2f);
+		req
+				.setDescription("As a Scrum Master I want the Impedimen List to be empowering. Best thing would be self-resolving Impediments.");
+		reqOrder.add(req);
+
+		// Divine Risk Management
+		req = requirementDao.postRequirement(this, "Divine Risk Management", 5f);
+		req
+				.setDescription("As a Team member, I want Risk Management to be devine. Wait, that makes Risk Management superfluous, I guess.");
+		reqOrder.add(req);
+
+		// Miraculous Issue Management
+		req = requirementDao.postRequirement(this, "Miraculous Issue Management", 3f);
+		req
+				.setDescription("As a Product Owner I want my Issue Management to be miraculous, so that Issues close themselves AND sometimes even each other.");
+		reqOrder.add(req);
+
+		// Immaculate Bug Tracking
+		req = requirementDao.postRequirement(this, "Immaculate Bug Tracking", 2f);
+		req
+				.setDescription("As a Team member I want immaculate Bug Tracking. A Bug Tracking containing no bugs would be suitable.");
+		reqOrder.add(req);
+
+		// Unbeatable Planning Poker
+		req = requirementDao.postRequirement(this, "Unbeatable Planning Poker", null);
+		req.setDescription("As I User I want Planning Poker to be so good that nobody can beat it.");
+		reqOrder.add(req);
+
+		// Enlightening Wiki
+		req = requirementDao.postRequirement(this, "Enlightening Wiki", 5f);
+		req
+				.setDescription("As a User I want the Wiki to enlighten me so that I am enlightened after reading (makes sense, doesn't it?).");
+		reqOrder.add(req);
+
+		// Absorbing Discussion Board
+		req = requirementDao.postRequirement(this, "Absorbing Discussion Board", 5f);
+		req
+				.setDescription("As a User I want the Discussion Board to be absorbing, so that I never have time to do my work.");
+		reqOrder.add(req);
+
+		// Irresistable User Interface
+		req = requirementDao.postRequirement(this, "Irresistable User Interface", 20f);
+		req
+				.setDescription("As a User I want the User Interface to be irresistable so that I can experience Orgasmic Joy-of-Use.");
+		reqOrder.add(req);
+
+		// Succulent Documentation
+		req = requirementDao.postRequirement(this, "Succulent Documentation", null);
+		req.setDescription("As a Noob I want Succulent Documentation. Yammy!");
+		reqOrder.add(req);
+
+		// Outlasting Collaboration
+		req = requirementDao.postRequirement(this, "Outlasting Collaboration", null);
+		req.setDescription("This is still an epic. Nothing to see, really.");
+		reqOrder.add(req);
+
+		updateRequirementsOrder(reqOrder);
 	}
 
-	public void addTestQualitys(int variant) {
-		if (variant == 0) return;
-		int v = 1;
-		while (qualityDao.createTestQuality(this, v++)) {}
+	public void addTestQualitys() {
+		Quality qly = null;
+
+		qly = qualityDao.postQuality(this, "Undeniable Success");
+		qly = qualityDao.postQuality(this, "Orgasmic Joy-of-Use");
+		qly = qualityDao.postQuality(this, "Effervescent Happiness");
+		qly = qualityDao.postQuality(this, "Supersonic Communication");
+		qly = qualityDao.postQuality(this, "Endless Freedom");
+		qly = qualityDao.postQuality(this, "Flawless Integration");
 	}
 
-	public void addTestSprints(int variant) {
-		sprintDao.createTestSprint(this, 0);
-		if (variant == 0) return;
-		sprintDao.createTestSprint(this, 1);
-		sprintDao.createTestSprint(this, 2);
-		sprintDao.createTestSprint(this, 3);
+	public void addTestSprints() {
+		sprintDao.createTestSprint(this);
 	}
-
 }
