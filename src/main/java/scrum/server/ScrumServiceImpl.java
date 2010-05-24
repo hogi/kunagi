@@ -194,6 +194,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (!(entity instanceof Transient)) dao.saveEntity(entity);
 
 		sendToClients(conversation, entity);
+
+		if (entity instanceof Task || entity instanceof Requirement || entity instanceof Wikipage
+				|| entity instanceof Risk || entity instanceof Impediment || entity instanceof Issue) {
+			User user = conversation.getSession().getUser();
+			Change change = changeDao.postChange(entity, user, "@created", null, null);
+			conversation.sendToClient(change);
+		}
 	}
 
 	@Override

@@ -19,6 +19,7 @@ public class Change extends GChange {
 	}
 
 	public String getLabel() {
+		if ("@created".equals(getKey())) return "created entity";
 		return getFieldChangeLabel();
 	}
 
