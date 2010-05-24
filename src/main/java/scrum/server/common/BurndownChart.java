@@ -1,6 +1,7 @@
 package scrum.server.common;
 
 import ilarkesto.base.time.Date;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 
 import java.awt.BasicStroke;
@@ -27,6 +28,7 @@ import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.xy.DefaultXYDataset;
 
+import scrum.server.css.ScreenCssBuilder;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.ProjectSprintSnapshot;
@@ -74,9 +76,9 @@ public class BurndownChart {
 
 	private static final Log LOG = Log.get(BurndownChart.class);
 
-	private static final Color COLOR_PAST_LINE = new Color(0.1f, 0.9f, 0.1f);
-	private static final Color COLOR_PROJECTION_LINE = COLOR_PAST_LINE;
-	private static final Color COLOR_OPTIMUM_LINE = new Color(0.85f, 0.85f, 0.85f);
+	private static final Color COLOR_PAST_LINE = Utl.parseHtmlColor(ScreenCssBuilder.cBurndownLine);
+	private static final Color COLOR_PROJECTION_LINE = Utl.parseHtmlColor(ScreenCssBuilder.cBurndownProjectionLine);
+	private static final Color COLOR_OPTIMUM_LINE = Utl.parseHtmlColor(ScreenCssBuilder.cBurndownOptimalLine);
 
 	// --- dependencies ---
 

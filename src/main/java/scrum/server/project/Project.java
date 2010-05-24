@@ -631,7 +631,7 @@ public class Project extends GProject {
 
 	public void addTestQualitys(int variant) {
 		if (variant == 0) return;
-		int v = 0;
+		int v = 1;
 		while (qualityDao.createTestQuality(this, v++)) {}
 	}
 

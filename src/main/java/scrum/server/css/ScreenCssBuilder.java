@@ -9,77 +9,81 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	// http://www.colorcombos.com/color-scheme-203.html
 
-	String fontFamily = "Arial Unicode MS, Arial, sans-serif";
-	int fontSize = 12;
-	int lineHeight = 16;
+	public static String fontFamily = "Arial Unicode MS, Arial, sans-serif";
+	public static int fontSize = 12;
+	public static int lineHeight = 16;
 
-	int fontSizeSmall = 9;
-	int lineHeightSmall = 9;
+	public static int fontSizeSmall = 9;
+	public static int lineHeightSmall = 9;
 
-	int fontSizeTitle = 14;
-	int lineHeightTitle = 18;
+	public static int fontSizeTitle = 14;
+	public static int lineHeightTitle = 18;
 
-	String cBackground = "#F2F5FE";
+	public static String cBackground = "#F2F5FE";
 
-	String cHeaderBackground = "#667B99";
-	String cHeaderLink = "#D6E4E1";
+	public static String cHeaderBackground = "#667B99";
+	public static String cHeaderLink = "#D6E4E1";
 
-	String cEstimationBar0 = cHeaderBackground;
-	String cEstimationBar1 = "#669976";
+	public static String cEstimationBar0 = cHeaderBackground;
+	public static String cEstimationBar1 = "#669976";
 
-	String cLink = "#2956B2";
-	String cErrorBackground = "#FEE";
-	String cError = "darkred";
-	String cHeaderText = "white";
+	public static String cLink = "#2956B2";
+	public static String cErrorBackground = "#FEE";
+	public static String cError = "darkred";
+	public static String cHeaderText = "white";
 
-	String cNavigatorSeparator = "#D9DEE6";
-	String cNavigatorLink = "#465B79";
-	String cNavigatorSelectedItemBackground = "#CCD5E6";
-	String cNavigatorHoverItemBackground = "#E9EEF6";
+	public static String cNavigatorSeparator = "#D9DEE6";
+	public static String cNavigatorLink = "#465B79";
+	public static String cNavigatorSelectedItemBackground = "#CCD5E6";
+	public static String cNavigatorHoverItemBackground = "#E9EEF6";
 
-	String cBlockHeaderBackground = cNavigatorHoverItemBackground;
-	String cBlockSelectionBorder = cHeaderBackground;
-	String cBlockHeaderHoverBackground = cBackground;
-	String cBlockHeaderDragHandleBackground = "#FBFBFF";
-	String cBlockHeaderCellSecondary = "gray";
+	public static String cBlockHeaderBackground = cNavigatorHoverItemBackground;
+	public static String cBlockSelectionBorder = cHeaderBackground;
+	public static String cBlockHeaderHoverBackground = cBackground;
+	public static String cBlockHeaderDragHandleBackground = "#FBFBFF";
+	public static String cBlockHeaderCellSecondary = "gray";
 
-	String cToolbarBackground = cNavigatorHoverItemBackground;
+	public static String cToolbarBackground = cNavigatorHoverItemBackground;
 
-	String cPagePanelHeaderBackground = "#FFF7F0";
-	String cPagePanelHeader = "#FF6637";
-	String cPagePanelBorder = cNavigatorSeparator;
+	public static String cPagePanelHeaderBackground = "#FFF7F0";
+	public static String cPagePanelHeader = "#FF6637";
+	public static String cPagePanelBorder = cNavigatorSeparator;
 
-	String cChatBackground = "white";
-	String cChatBorder = cPagePanelBorder;
+	public static String cChatBackground = "white";
+	public static String cChatBorder = cPagePanelBorder;
 
-	String cTrashBackground = cNavigatorHoverItemBackground;
-	String cTrashBorder = cPagePanelBorder;
+	public static String cTrashBackground = cNavigatorHoverItemBackground;
+	public static String cTrashBorder = cPagePanelBorder;
 
-	String cFieldBackground = "#FAFDFF";
+	public static String cFieldBackground = "#FAFDFF";
 
-	String cWaitBackground = cFieldBackground;
-	String cWait = cLink;
+	public static String cWaitBackground = cFieldBackground;
+	public static String cWait = cLink;
 
-	String cButtonText = "#444";
-	String cButtonTextHover = "#500";
-	String cButtonTextDisabled = "lightgray";
-	String cButtonBorder = "#666";
-	String cButtonBorderHover = "#866";
-	String cButtonBorderDisabled = cButtonTextDisabled;
+	public static String cButtonText = "#444";
+	public static String cButtonTextHover = "#500";
+	public static String cButtonTextDisabled = "lightgray";
+	public static String cButtonBorder = "#666";
+	public static String cButtonBorderHover = "#866";
+	public static String cButtonBorderDisabled = cButtonTextDisabled;
 
-	String cCommentsBackground = "#F8FFF8";
-	String cCommentsBorder = "#EAFFEA";
-	String cCommentDate = "darkgray";
+	public static String cCommentsBackground = "#F8FFF8";
+	public static String cCommentsBorder = "#EAFFEA";
+	public static String cCommentDate = "darkgray";
 
-	String cChangesBackground = "#FFFFF8";
-	String cChangesBorder = "#FFFFEA";
-	String cChangeDate = cCommentDate;
-	String cChangesCommentBackground = "#F7F7F0";
+	public static String cChangesBackground = "#FFFFF8";
+	public static String cChangesBorder = "#FFFFEA";
+	public static String cChangeDate = cCommentDate;
+	public static String cChangesCommentBackground = "#F7F7F0";
 
-	String cActionsBackground = cPagePanelHeaderBackground;
-	String cActionsBorder = "#FFC697";
+	public static String cActionsBackground = cPagePanelHeaderBackground;
+	public static String cActionsBorder = "#FFC697";
 
-	String cPlanningPokerTableLines = "#EEE";
+	public static String cPlanningPokerTableLines = "#EEE";
+
+	public static String cBurndownLine = cHeaderBackground;
+	public static String cBurndownProjectionLine = cBurndownLine;
+	public static String cBurndownOptimalLine = cPagePanelBorder;
 
 	public void buildCss(CssRenderer css) {
 		html(css);

@@ -94,6 +94,7 @@ public class Project extends GProject implements ForumSupport {
 			count++;
 			if (count >= 12) break;
 		}
+
 		float avarage = sum / count;
 		String avarageString = String.valueOf(avarage);
 		int idx = avarageString.lastIndexOf('.');
