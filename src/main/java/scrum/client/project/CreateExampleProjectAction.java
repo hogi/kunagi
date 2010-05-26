@@ -1,5 +1,8 @@
 package scrum.client.project;
 
+import ilarkesto.core.scope.Scope;
+import scrum.client.workspace.Ui;
+
 public class CreateExampleProjectAction extends GCreateExampleProjectAction {
 
 	@Override
@@ -9,7 +12,13 @@ public class CreateExampleProjectAction extends GCreateExampleProjectAction {
 
 	@Override
 	protected void onExecute() {
-		getApp().callCreateExampleProject();
+		Scope.get().getComponent(Ui.class).lock("Creating Example Project...");
+		getApp().callCreateExampleProject(new Runnable() {
+
+			public void run() {
+				Scope.get().getComponent(Ui.class).unlock();
+			}
+		});
 	}
 
 }
