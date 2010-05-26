@@ -54,7 +54,7 @@ public class IssueServlet extends AHttpServlet {
 			message = submitIssue(projectId, text, name, email);
 		} catch (Throwable ex) {
 			log.error("Submitting issue failed.", "\n" + Servlet.toString(req, "  "), ex);
-			message = "<h2>Failure</h2><p>Submitting your issue failed: <strong>" + Str.getRootCauseMessage(ex)
+			message = "<h2>Failure</h2><p>Submitting your feedback failed: <strong>" + Str.getRootCauseMessage(ex)
 					+ "</strong></p><p>We are sorry, please try again later.</p>";
 		}
 
@@ -71,8 +71,9 @@ public class IssueServlet extends AHttpServlet {
 		Issue issue = issueDao.postIssue(project, "Message from the Internets", text, name, email);
 		projectEventDao.postEvent(project, issue.getIssuer() + " submitted " + issue.getReferenceAndLabel());
 		transactionService.commit();
-		return "<h2>Issue submitted</h2><p>Your issue was submitted as <code>" + issue.getReference()
-				+ "</code>. It will be reviewed by our Product Owner.</p><p>Thank you!</p>";
+		return "<h2>Feedback submitted</h2>" + "<p>Thank you for your feedback!</p>"
+				+ "<p>In case you submitted a bug or feature request, it is now known as <code>" + issue.getReference()
+				+ "</code> and will be reviewed by our Product Owner shortly.</p><p>Thank you!</p>";
 	}
 
 	@Override
