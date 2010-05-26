@@ -13,7 +13,8 @@ public class TooltipBuilder {
 	public static String NOT_PRODUCT_OWNER = "You are not Product Owner.";
 	public static String NOT_SCRUMTEAM = "You are neither Product Owner nor ScrumMaster nor Team Member.";
 	public static String NOT_TEAM_NOR_PRODUCT_OWNER = "You are neither Team Member nor Product Owner.";
-	public static String NOT_ADMIN = "You are not Admin.";
+	public static String NOT_ADMIN = "You are not Project Admin.";
+	public static String NOT_SYS_ADMIN = "You are not System Admin.";
 
 	public TooltipBuilder(String mainTooltip) {
 		this.mainTooltip = mainTooltip;

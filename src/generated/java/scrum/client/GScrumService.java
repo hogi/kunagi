@@ -32,6 +32,8 @@ public interface GScrumService
 
     DataTransferObject closeProject(int conversationNumber);
 
+    DataTransferObject createExampleProject(int conversationNumber);
+
     DataTransferObject switchToNextSprint(int conversationNumber);
 
     DataTransferObject requestImpediments(int conversationNumber);

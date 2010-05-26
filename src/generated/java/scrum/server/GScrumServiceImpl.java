@@ -29,6 +29,7 @@ public abstract class GScrumServiceImpl
     protected abstract void onResetPassword(GwtConversation conversation, java.lang.String userId);
     protected abstract void onSelectProject(GwtConversation conversation, java.lang.String projectId);
     protected abstract void onCloseProject(GwtConversation conversation);
+    protected abstract void onCreateExampleProject(GwtConversation conversation);
     protected abstract void onSwitchToNextSprint(GwtConversation conversation);
     protected abstract void onRequestImpediments(GwtConversation conversation);
     protected abstract void onRequestAcceptedIssues(GwtConversation conversation);
@@ -188,6 +189,27 @@ public abstract class GScrumServiceImpl
                 onCloseProject(conversation);
             } catch (Throwable t) {
                 handleServiceMethodException(conversationNumber, "closeProject",t);
+                throw new RuntimeException(t);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+
+    public scrum.client.DataTransferObject createExampleProject(int conversationNumber) {
+        LOG.debug("createExampleProject");
+        WebSession session = (WebSession) getSession();
+        synchronized(session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:createExampleProject");
+            context.bindCurrentThread();
+            try {
+                onCreateExampleProject(conversation);
+            } catch (Throwable t) {
+                handleServiceMethodException(conversationNumber, "createExampleProject",t);
                 throw new RuntimeException(t);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

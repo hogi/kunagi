@@ -110,7 +110,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		getUserDao().postUser("cartman");
 		getUserDao().postUser("duke");
 		getUserDao().postUser("spinne");
-		getProjectDao().createTestProject();
+		getProjectDao().postExampleProject(getUserDao().getUserByName("admin"));
 
 		getTransactionService().commit();
 	}

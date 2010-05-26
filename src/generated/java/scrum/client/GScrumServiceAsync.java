@@ -32,6 +32,8 @@ public interface GScrumServiceAsync {
 
     void closeProject(int conversationNumber, AsyncCallback<DataTransferObject> callback);
 
+    void createExampleProject(int conversationNumber, AsyncCallback<DataTransferObject> callback);
+
     void switchToNextSprint(int conversationNumber, AsyncCallback<DataTransferObject> callback);
 
     void requestImpediments(int conversationNumber, AsyncCallback<DataTransferObject> callback);

@@ -101,6 +101,15 @@ public abstract class GScrumGwtApplication
         callCloseProject( null);
     }
 
+    public final void callCreateExampleProject( Runnable callback) {
+        onServiceCall();
+        getScrumService().createExampleProject(conversationNumber,  new DefaultCallback<DataTransferObject>(callback, "createExampleProject"));
+    }
+
+    public final void callCreateExampleProject() {
+        callCreateExampleProject( null);
+    }
+
     public final void callSwitchToNextSprint( Runnable callback) {
         onServiceCall();
         getScrumService().switchToNextSprint(conversationNumber,  new DefaultCallback<DataTransferObject>(callback, "switchToNextSprint"));

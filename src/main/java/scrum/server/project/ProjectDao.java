@@ -1,6 +1,7 @@
 package scrum.server.project;
 
 import ilarkesto.base.time.Date;
+import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
 
 import java.util.Collection;
@@ -39,26 +40,26 @@ public class ProjectDao extends GProjectDao {
 
 	// --- test data ---
 
-	public void createTestProject() {
-		User po;
-		User sm;
-
-		po = userDao.getTestUser("duke");
-		sm = userDao.getTestUser("spinne");
+	public Project postExampleProject(User admin) {
+		User po = userDao.getTestUser("duke");
+		User sm = userDao.getTestUser("spinne");
 
 		Collection<User> team = userDao.getEntities();
-		team.remove(po);
-		team.remove(sm);
+		// team.remove(po);
+		// team.remove(sm);
 
-		Project project = postProject(userDao.getUserByName("admin"));
-		project.setLabel("Demo");
+		Project project = postProject(admin);
+		project.setLabel("Example Project # " + DateAndTime.now());
 		project.setBegin(Date.today().addMonths(-2));
 		project.setEnd(Date.today().addMonths(5));
 		project.addParticipants(userDao.getEntities());
 		project.addAdmins(userDao.getEntities());
 		project.addTeamMembers(team);
+		project.addTeamMember(admin);
 		project.addProductOwner(po);
+		project.addProductOwner(admin);
 		project.addScrumMaster(sm);
+		project.addScrumMaster(admin);
 		project.addTestImpediments();
 		project.addTestSprints();
 		project.addTestRequirements();
@@ -69,6 +70,8 @@ public class ProjectDao extends GProjectDao {
 		project.addTestSimpleEvents();
 
 		po.setCurrentProject(project);
+
+		return project;
 	}
 
 }

@@ -92,6 +92,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("resetPassword").addParameter("userId", String.class);
 			gwtServiceModel.addMethod("selectProject").addParameter("projectId", String.class);
 			gwtServiceModel.addMethod("closeProject");
+			gwtServiceModel.addMethod("createExampleProject");
 			gwtServiceModel.addMethod("switchToNextSprint");
 			gwtServiceModel.addMethod("requestImpediments");
 			gwtServiceModel.addMethod("requestAcceptedIssues");
@@ -137,6 +138,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			applicationModel.addAction("Login", getBasePackageName() + ".admin");
 			applicationModel.addAction("Logout", getBasePackageName() + ".admin");
 			applicationModel.addAction("ChangeProject", getBasePackageName() + ".project");
+			applicationModel.addAction("CreateExampleProject", getBasePackageName() + ".project");
 			applicationModel.addAction("RequestClosedIssues", getBasePackageName() + ".issues");
 			applicationModel.addAction("ShowSuspendedIssues", getBasePackageName() + ".issues");
 			applicationModel.addAction("HideSuspendedIssues", getBasePackageName() + ".issues");

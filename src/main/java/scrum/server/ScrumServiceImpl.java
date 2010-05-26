@@ -102,6 +102,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	// --- ---
 
 	@Override
+	protected void onCreateExampleProject(GwtConversation conversation) {
+		User user = conversation.getSession().getUser();
+		Project project = projectDao.postExampleProject(user);
+		conversation.sendToClient(project);
+	}
+
+	@Override
 	protected void onSearch(GwtConversation conversation, String text) {
 		Project project = conversation.getProject();
 		if (project == null) return;
@@ -407,7 +414,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Project project = projectDao.getById(projectId);
 		User user = conversation.getSession().getUser();
 		if (!project.isVisibleFor(user))
-			throw new RuntimeException("Project '" + project + "' is not visible for user '" + user + "'");
+			throw new PermissionDeniedException("Project '" + project + "' is not visible for user '" + user + "'");
 		conversation.setProject(project);
 		user.setCurrentProject(project);
 
