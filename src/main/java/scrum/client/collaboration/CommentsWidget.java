@@ -49,11 +49,10 @@ public class CommentsWidget extends AScrumWidget {
 	protected void onUpdate() {
 		containerPanel.clear();
 
-		if (editor != null) {
-			containerPanel.add(editor);
-			editor.switchToEditMode();
-		} else {
+		if (this.editor == null) {
 			containerPanel.add(activateCommentLink);
+		} else {
+			containerPanel.add(this.editor);
 		}
 
 		List<Comment> comments = parent.getComments();
@@ -84,7 +83,7 @@ public class CommentsWidget extends AScrumWidget {
 	}
 
 	private void activateEditor() {
-		editor = new RichtextEditorWidget(new ATextEditorModel() {
+		this.editor = new RichtextEditorWidget(new ATextEditorModel() {
 
 			@Override
 			public void setValue(String text) {
@@ -96,7 +95,8 @@ public class CommentsWidget extends AScrumWidget {
 				return null;
 			}
 		});
-		editor.setModeSwitchHandler(new AViewEditWidget.ModeSwitchHandler() {
+		this.editor.switchToEditMode();
+		this.editor.setModeSwitchHandler(new AViewEditWidget.ModeSwitchHandler() {
 
 			public void onViewerActivated() {
 				editor = null;
@@ -105,8 +105,6 @@ public class CommentsWidget extends AScrumWidget {
 
 			public void onEditorActivated() {}
 		});
-
-		update();
 	}
 
 	private class ActivateCommentEditorAction extends AAction {

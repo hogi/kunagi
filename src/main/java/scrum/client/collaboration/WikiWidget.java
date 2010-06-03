@@ -32,6 +32,7 @@ public class WikiWidget extends AScrumWidget {
 
 	private FlowPanel panel;
 	private RichtextEditorWidget editor;
+	private Widget emoticonsAndComments;
 
 	@Override
 	protected Widget onInitialization() {
@@ -48,7 +49,11 @@ public class WikiWidget extends AScrumWidget {
 
 		if (pageName == null || pageName.trim().length() == 0) pageName = START_PAGE_NAME;
 
-		wikipage = getCurrentProject().getWikipage(pageName);
+		Wikipage newWikipage = getCurrentProject().getWikipage(pageName);
+		if (newWikipage != null && wikipage != newWikipage) {
+			emoticonsAndComments = ScrumGwt.createEmoticonsAndComments(newWikipage);
+		}
+		wikipage = newWikipage;
 
 		PagePanel page = new PagePanel();
 
@@ -64,7 +69,7 @@ public class WikiWidget extends AScrumWidget {
 			FlowPanel right = new FlowPanel();
 			right.add(new CommentsWidget(wikipage));
 
-			page.addSection(TableBuilder.row(20, editor, ScrumGwt.createEmoticonsAndComments(wikipage)));
+			page.addSection(TableBuilder.row(20, editor, emoticonsAndComments));
 
 			page.addHeader("Page properties", createActionsDropdown());
 
