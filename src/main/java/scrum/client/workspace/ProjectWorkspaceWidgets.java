@@ -113,10 +113,10 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		pages.addPage(new Page(sprintHistory, "Sprint History", projectGroupKey));
 
 		String collaborationGroupKey = "collaboration";
-		forum = new ForumWidget();
-		pages.addPage(new Page(forum, "Forum", collaborationGroupKey));
 		wiki = new WikiWidget();
 		pages.addPage(new Page(wiki, "Wiki", collaborationGroupKey));
+		forum = new ForumWidget();
+		pages.addPage(new Page(forum, "Forum", collaborationGroupKey));
 		calendar = new CalendarWidget();
 		pages.addPage(new Page(calendar, "Calendar", collaborationGroupKey));
 		fileRepository = new FileRepositoryWidget();
