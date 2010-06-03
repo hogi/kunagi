@@ -9,9 +9,15 @@ public class EstimationBarFactory {
 		int sprintOffset = 0;
 		float remainingWorkInSprint = velocity == null ? 0 : velocity;
 		List<Float> workPerSprint;
+		boolean stop = false;
 		for (Requirement requirement : requirements) {
 			workPerSprint = new ArrayList<Float>();
 			Float estimatedWork = requirement.getEstimatedWork();
+			if (estimatedWork == null) stop = true;
+			if (stop) {
+				requirement.setEstimationBar(new EstimationBar(sprintOffset + 1, workPerSprint));
+				continue;
+			}
 			if (velocity == null || velocity == 0 || estimatedWork == null) {
 				if (estimatedWork != null) workPerSprint.add(estimatedWork);
 				requirement.setEstimationBar(new EstimationBar(sprintOffset, workPerSprint));
