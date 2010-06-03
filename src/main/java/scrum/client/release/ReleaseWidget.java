@@ -1,6 +1,7 @@
 package scrum.client.release;
 
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
+import ilarkesto.gwt.client.AOutputViewEditWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
@@ -53,12 +54,42 @@ public class ReleaseWidget extends AScrumWidget {
 				}
 			});
 
-			tb.addFieldRow("Sprints", ScrumGwt.createToHtmlItemsWidget(release.getSprints()));
-			tb.addFieldRow("Requirements", ScrumGwt.createToHtmlItemsWidget(release.getRequirements()));
+			tb.addFieldRow("Sprints", new AOutputViewEditWidget() {
+
+				@Override
+				protected void onViewerUpdate() {
+					setViewer(ScrumGwt.createToHtmlItemsWidget(release.getSprints()));
+				}
+			});
+			tb.addFieldRow("Requirements", new AOutputViewEditWidget() {
+
+				@Override
+				protected void onViewerUpdate() {
+					setViewer(ScrumGwt.createToHtmlItemsWidget(release.getRequirements()));
+				}
+			});
 		}
-		tb.addFieldRow("Affected by issues", ScrumGwt.createToHtmlItemsWidget(release.getAffectedByIssues()));
-		tb.addFieldRow("Fixed issues", ScrumGwt.createToHtmlItemsWidget(release.getFixedIssues()));
-		tb.addFieldRow("Planned issues", ScrumGwt.createToHtmlItemsWidget(release.getPlannedIssues()));
+		tb.addFieldRow("Affected by issues", new AOutputViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewer(ScrumGwt.createToHtmlItemsWidget(release.getAffectedByIssues()));
+			}
+		});
+		tb.addFieldRow("Fixed issues", new AOutputViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewer(ScrumGwt.createToHtmlItemsWidget(release.getFixedIssues()));
+			}
+		});
+		tb.addFieldRow("Planned issues", new AOutputViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewer(ScrumGwt.createToHtmlItemsWidget(release.getPlannedIssues()));
+			}
+		});
 		tb.addRow(new ChangeHistoryWidget(release), 2);
 
 		return TableBuilder.row(20, tb.createTable(), ScrumGwt.createEmoticonsAndComments(release));

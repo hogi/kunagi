@@ -69,6 +69,8 @@ public class ReleaseBlock extends ABlockWidget<Release> implements TrashSupport 
 				dateSuffix += " (in " + today.getPeriodTo(date).toDays() + " days)";
 			} else if (date.isBefore(today)) {
 				dateSuffix += " (" + date.getPeriodTo(today).toShortestString() + " ago)";
+			} else {
+				dateSuffix += " (today)";
 			}
 		} else {
 			dateSuffix = "unscheduled";

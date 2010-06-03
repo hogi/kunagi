@@ -63,7 +63,7 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 	public List<Issue> getPlannedIssues() {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getDao().getIssues()) {
-			if (!issue.isClosed() && issue.getAffectedReleases().contains(this)) ret.add(issue);
+			if (!issue.isClosed() && issue.getFixReleases().contains(this)) ret.add(issue);
 		}
 		return ret;
 	}

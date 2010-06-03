@@ -63,7 +63,7 @@ public class IssueWidget extends AScrumWidget {
 			@Override
 			protected void onEditorUpdate() {
 				List<Release> releases = issue.getProject().getReleasedReleases();
-				Collections.sort(releases, Release.DATE_COMPARATOR);
+				Collections.sort(releases, Release.DATE_REVERSE_COMPARATOR);
 				setEditorItems(releases);
 				setEditorSelectedItems(issue.getAffectedReleases());
 			}
@@ -88,7 +88,7 @@ public class IssueWidget extends AScrumWidget {
 			@Override
 			protected void onEditorUpdate() {
 				List<Release> releases = issue.getProject().getReleases();
-				Collections.sort(releases, Release.DATE_COMPARATOR);
+				Collections.sort(releases, Release.DATE_REVERSE_COMPARATOR);
 				setEditorItems(releases);
 				setEditorSelectedItems(issue.getFixReleases());
 			}
