@@ -28,7 +28,7 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 
 	@Override
 	public boolean isExecutable() {
-		if (!issue.isOpen() && !issue.isIdea()) return false;
+		if (issue.isClosed()) return false;
 		return true;
 	}
 
