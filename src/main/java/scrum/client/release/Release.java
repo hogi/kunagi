@@ -98,6 +98,13 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 		}
 	};
 
+	public static final Comparator<Release> DATE_REVERSE_COMPARATOR = new Comparator<Release>() {
+
+		public int compare(Release ra, Release rb) {
+			return -DATE_COMPARATOR.compare(ra, rb);
+		}
+	};
+
 	public List<Requirement> getRequirements() {
 		List<Requirement> ret = new ArrayList<Requirement>();
 		for (Sprint sprint : getSprints()) {

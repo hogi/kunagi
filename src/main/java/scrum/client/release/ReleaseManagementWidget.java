@@ -24,7 +24,7 @@ public class ReleaseManagementWidget extends AScrumWidget {
 
 		published = new BlockListWidget<Release>(ReleaseBlock.FACTORY);
 		published.setSelectionManager(selectionManager);
-		published.setAutoSorter(Release.DATE_COMPARATOR);
+		published.setAutoSorter(Release.DATE_REVERSE_COMPARATOR);
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Planned releases", new ButtonWidget(new CreateReleaseAction()));
