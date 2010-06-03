@@ -43,7 +43,7 @@ public class TeamTasksWidget extends AScrumWidget {
 				continue;
 			}
 
-			sb.append("<span style='color: ").append(user.getColor()).append(";'>");
+			sb.append("<span style='color: ").append(project.getUserConfig(user).getColor()).append(";'>");
 			sb.append(user.getName());
 			sb.append("</span> is working on");
 
@@ -69,7 +69,7 @@ public class TeamTasksWidget extends AScrumWidget {
 
 		for (User user : lazyUsers) {
 			sb.append("<div class='TeamTasksWidget-user'>");
-			sb.append("<span style='color: ").append(user.getColor()).append(";'>");
+			sb.append("<span style='color: ").append(project.getUserConfig(user).getColor()).append(";'>");
 			sb.append(user.getName());
 			sb.append("</span> is working on <span style='color: red;'>nothing</span></div>");
 		}
