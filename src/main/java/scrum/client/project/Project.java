@@ -95,13 +95,15 @@ public class Project extends GProject implements ForumSupport {
 			if (count >= 12) break;
 		}
 
-		float avarage = sum / count;
-		String avarageString = String.valueOf(avarage);
-		int idx = avarageString.lastIndexOf('.');
-		if (idx > 0 && avarageString.length() > idx + 1) {
-			avarageString = avarageString.substring(0, idx + 2);
+		if (count > 0 && sum > 0) {
+			float avarage = sum / count;
+			String avarageString = String.valueOf(avarage);
+			int idx = avarageString.lastIndexOf('.');
+			if (idx > 0 && avarageString.length() > idx + 1) {
+				avarageString = avarageString.substring(0, idx + 2);
+			}
+			sb.append("[ ").append(avarageString).append(" avg. ]");
 		}
-		sb.append("[ ").append(avarageString).append(" avg. ]");
 		return sb.toString();
 	}
 
