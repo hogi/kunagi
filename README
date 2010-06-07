@@ -31,36 +31,35 @@ COPYING
 DESCRIPTION
 
     Kunagi is a free web-based tool for integrated project management and
-    collaboration based on Scrum. It is integrated, as it aims to allow
-    users to manage their complete project using only one tool. For that
-    purpose, Scrum was supplemented by a selection of other best practices
-    to cover all project management needs. The tool's range provides not only
-    the basis for all Scrum practices (like product, sprint backlogs and
-    impediment list), but also offers management of additional important
-    project data (like non-functional requirements, risks, files, issues and
-    bugs) as well as several functionalities for the ease of use (featuring a
-    project dashboard, interactive whiteboard for the current sprint and
-    planning poker for estimation) and team collaboration (including comments
-    for every entity and a discussion board).
+    collaboration based on Scrum. It is integrated, allowing users to manage
+    their complete project using only one tool. For that purpose, Scrum is
+    supplemented by a selection of other best practices to cover all project
+    management needs. The tool's range provides not only the basis for all
+    Scrum practices (like product, sprint backlogs and impediment list), but
+    also offers management of additional important project data (like non-
+    functional requirements, risks, files, issues and bugs), as well as
+    several features for ease of use (featuring a project dashboard, an
+    interactive whiteboard for the current sprint and planning poker for
+    estimation) and team collaboration (including comments for every entity,
+    a wiki and a discussion board).
 
-    Kunagi aims for, but is not limited to, software projects. The light
-    nature of agile project management allows for use by professionals as well
-    as non-professionals causing minimal overhead to the project. Therefore,
+    Kunagi is aimed at, but not limited to, software projects. The light
+    nature of agile project management allows for use by both professionals
+    and non-professionals, causing minimal overhead to the project. Therefore,
     it is also suitable for small projects done by virtual teams, i. e. teams
     that are scattered across the world.
 
-    Using Kunagi's web interface it is possible to access project related data
-    from everywhere. Although being an online application, the powerful
-    interface is built to keep up with the flexibility of desktop
-    applications, as it makes use of asynchronous technology employing the
-    Google Web Toolkit (GWT).
+    Using Kunagi's web interface, it is possible to access project related
+    data from anywhere. Despite being an online application, the powerful
+    interface is built to keep up with the flexibility of desktop software,
+    as it makes use of asynchronous technology employing the Google Web
+    Toolkit (GWT).
 
     Last, but not least, it is important to us that the tool helps people get
     their work done. We understand that it is therefore important for the tool
-    to be not only suitable for project management, but furthermore to be
-    accessible, offer a coherent work flow and be fun to use. For this reason,
-    we have been using Kunagi for it's own project management since it was
-    ready to provide sufficient functionality for our needs. Moreover, after
-    the tool's release, we will provide additions, enhancements and updates to
-    it on a regular basis.
+    to be not only suitable for project management, but also be accessible,
+    offer a coherent work flow and be fun to use. For this reason, we have been
+    using Kunagi for it's own project management, once it was ready to provide
+    sufficient functionality for our needs. Moreover, after the tool's release,
+    we will provide additions, enhancements and updates on a regular basis.
 
