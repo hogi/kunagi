@@ -51,13 +51,13 @@ public class ProductBacklogWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		super.onUpdate();
-
 		List<Requirement> requirements = getCurrentProject().getProductBacklogRequirements();
 		Collections.sort(requirements, getCurrentProject().getRequirementsOrderComparator());
 		EstimationBarFactory.createEstimationBars(requirements, getCurrentProject().getVelocity());
 
 		list.setObjects(requirements);
+
+		super.onUpdate();
 	}
 
 	public boolean select(Requirement requirement) {

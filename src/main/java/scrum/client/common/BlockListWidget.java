@@ -150,7 +150,6 @@ public final class BlockListWidget<O> extends AScrumWidget {
 			Collections.sort(newObjects, autoSorter);
 		}
 		list.set(newObjects);
-		update();
 	}
 
 	public final void setObjects(Collection<O> newObjects) {

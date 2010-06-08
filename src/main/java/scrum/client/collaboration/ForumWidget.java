@@ -26,8 +26,8 @@ public class ForumWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		super.onUpdate();
 		list.setObjects(getCurrentProject().getEntitiesWithComments());
+		super.onUpdate();
 	}
 
 	public boolean select(ForumSupport entity) {

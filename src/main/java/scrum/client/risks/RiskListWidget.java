@@ -29,8 +29,8 @@ public class RiskListWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		super.onUpdate();
 		list.setObjects(getCurrentProject().getRisks());
+		super.onUpdate();
 	}
 
 	public boolean select(Risk risk) {

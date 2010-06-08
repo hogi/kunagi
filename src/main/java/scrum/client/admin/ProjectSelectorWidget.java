@@ -30,8 +30,8 @@ public class ProjectSelectorWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		super.onUpdate();
 		list.setObjects(Dao.get().getProjects());
+		super.onUpdate();
 	}
 
 	public BlockListWidget<Project> getList() {

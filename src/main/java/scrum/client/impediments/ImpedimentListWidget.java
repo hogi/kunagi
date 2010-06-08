@@ -29,8 +29,8 @@ public class ImpedimentListWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		super.onUpdate();
 		list.setObjects(getCurrentProject().getImpediments());
+		super.onUpdate();
 	}
 
 	public boolean select(Impediment impediment) {

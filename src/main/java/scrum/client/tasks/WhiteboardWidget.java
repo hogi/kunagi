@@ -200,6 +200,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		Requirement requirement = task.getRequirement();
 		updateTaskLists(requirement);
 		selectionManager.select(task);
+		update();
 	}
 
 	public boolean isShowOwner() {

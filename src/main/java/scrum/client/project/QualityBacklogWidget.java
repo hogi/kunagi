@@ -23,8 +23,8 @@ public class QualityBacklogWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		super.onUpdate();
 		list.setObjects(getCurrentProject().getQualitys());
+		super.onUpdate();
 	}
 
 	public boolean select(Quality quality) {

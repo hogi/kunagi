@@ -24,8 +24,8 @@ public class UserListWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		super.onUpdate();
 		list.setObjects(getDao().getUsers());
+		super.onUpdate();
 	}
 
 	public void showUser(User user) {

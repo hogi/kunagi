@@ -26,8 +26,8 @@ public class FileRepositoryWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		super.onUpdate();
 		list.setObjects(getCurrentProject().getFiles());
+		super.onUpdate();
 	}
 
 	public void showFile(File file) {

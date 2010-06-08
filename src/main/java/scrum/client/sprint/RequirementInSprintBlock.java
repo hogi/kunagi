@@ -111,6 +111,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 	protected void onUpdateBody() {
 		requirementWidget.update();
 		taskList.setObjects(getObject().getTasks());
+		taskList.update();
 		Gwt.update(right);
 		changeHistoryWidget.update();
 	}
