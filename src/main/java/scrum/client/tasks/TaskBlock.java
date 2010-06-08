@@ -1,5 +1,6 @@
 package scrum.client.tasks;
 
+import ilarkesto.core.logging.Log;
 import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
@@ -34,6 +35,7 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
+		Log.DEBUG("TaskBlock.onInitializationHeader()");
 		Task task = getObject();
 		statusIcon = header.insertPrefixIcon();
 		if (container.isShowRequirement()) requirementLabel = header.appendCenterSuffix(null);
@@ -48,6 +50,7 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 
 	@Override
 	protected void onUpdateHeader(BlockHeaderWidget header) {
+		Log.DEBUG("TaskBlock.onUpdateHeader()");
 		Task task = getObject();
 		header.setDragHandle(task.getReference());
 		Image statusImage = null;
