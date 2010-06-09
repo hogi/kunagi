@@ -46,7 +46,7 @@ img {border: none;}
 	.clear {clear: both;}
 	</style>
 	
-	<title>kunagi - Agile project management based on Scrum</title>
+	<title>Kunagi - Agile project management based on Scrum</title>
 	
 </head>
 
@@ -56,6 +56,7 @@ img {border: none;}
 
     function showPage(name) {
         deactivatePage("home");
+        deactivatePage("screenshots");
         deactivatePage("download");
         deactivatePage("support");
         deactivatePage("development");
@@ -103,6 +104,7 @@ img {border: none;}
     <div id="menu">
         <table cellspacing="0" cellpadding="0" width="100%"><tr>
             <td><a id="link-home" class="navigLink" onclick="showPage('home')">Home</a></td>
+            <td><a id="link-screenshots" class="navigLink" onclick="showPage('screenshots')">Screenshots</a></td>
             <td><a id="link-download" class="navigLink" onclick="showPage('download')">Download</a></td>
             <td><a id="link-support" class="navigLink" onclick="showPage('support')">Support</a></td>
             <td><a id="link-development" class="navigLink" onclick="showPage('development')">Development</a></td>
@@ -192,6 +194,28 @@ img {border: none;}
 
         </div><!-- page-home -->
     
+        
+        
+        
+        <div id="page-screenshots" style="display: none;">
+            
+            <div class="section">
+                <h2>Screenshots</h2>
+                <table id="screen-table" style="width:100%; border-spacing:30px;">
+                	<tr>
+                		<td><a href="screenshots/dashboard.png"><img src="screenshots/dashboard_thumb.png" alt="Project Dashboard" /></a></td>
+                		<td><a href="screenshots/productbacklog.png"><img src="screenshots/productbacklog_thumb.png" alt="Product Backlog and Planning Poker"/></a></td>
+                	</tr>
+                	<tr>
+                		<td><a href="screenshots/whiteboard.png"><img src="screenshots/whiteboard_thumb.png" alt="Whiteboard" /></a></td>
+                		<td>&nbsp;</td>
+                	</tr>
+                </table>
+            </div>
+            
+        </div><!-- page-screenshots -->
+        
+        
         
         
         
