@@ -37,7 +37,6 @@ public class TaskRemainingWorkWidget extends AWidget {
 
 	@Override
 	protected void onUpdate() {
-		remainingWork.update();
 		toolbar.clear();
 		if (task.isClosed()) {
 			AScrumAction action = new ReopenTaskAction(task);
@@ -50,7 +49,7 @@ public class TaskRemainingWorkWidget extends AWidget {
 				toolbar.addButton(action);
 			}
 		}
-		toolbar.update();
+		super.onUpdate();
 	}
 
 	class RemainingWorkWidget extends AIntegerViewEditWidget {
