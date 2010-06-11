@@ -6,10 +6,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import scrum.client.SearchResultsChangedListener;
 import scrum.client.common.AScrumGwtEntity;
 
-public class Search extends GSearch implements SearchResultsChangedListener {
+public class Search extends GSearch implements SearchResultsChangedHandler {
 
 	private SearchResults results = new SearchResults();
 	private SearchResultsWidget resultsWidget;
@@ -81,7 +80,7 @@ public class Search extends GSearch implements SearchResultsChangedListener {
 		return results;
 	}
 
-	public void onSearchResultsChanged() {
+	public void onSearchResultsChanged(SearchResultsChangedEvent event) {
 		getResultsWidget().update();
 	}
 

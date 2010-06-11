@@ -1,3 +1,5 @@
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+
 package scrum.client.communication;
 
 public abstract class GPinger {

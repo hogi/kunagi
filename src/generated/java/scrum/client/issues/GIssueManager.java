@@ -1,3 +1,5 @@
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+
 package scrum.client.issues;
 
 public abstract class GIssueManager {

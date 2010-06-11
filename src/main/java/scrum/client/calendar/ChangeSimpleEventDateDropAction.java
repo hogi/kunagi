@@ -1,8 +1,8 @@
 package scrum.client.calendar;
 
 import ilarkesto.gwt.client.Date;
-import scrum.client.ComponentManager;
 import scrum.client.dnd.BlockListDropAction;
+import scrum.client.workspace.VisibleDataChangedEvent;
 
 public class ChangeSimpleEventDateDropAction implements BlockListDropAction<SimpleEvent> {
 
@@ -15,7 +15,7 @@ public class ChangeSimpleEventDateDropAction implements BlockListDropAction<Simp
 
 	public boolean onDrop(SimpleEvent event) {
 		event.setDate(date);
-		ComponentManager.get().getEventBus().fireVisibleDataChanged();
+		new VisibleDataChangedEvent().fireInCurrentScope();
 		return true;
 	}
 

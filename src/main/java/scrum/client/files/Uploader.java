@@ -1,10 +1,8 @@
 package scrum.client.files;
 
-import scrum.client.FileUploadedListener;
-
 import com.google.gwt.user.client.ui.DialogBox;
 
-public class Uploader extends GUploader implements FileUploadedListener {
+public class Uploader extends GUploader implements FileUploadedHandler {
 
 	private DialogBox dialog;
 	private UploadedFileHandler uploadedFileHandler;
@@ -16,7 +14,8 @@ public class Uploader extends GUploader implements FileUploadedListener {
 		this.dialog = uploadWidget.getDialog();
 	}
 
-	public void onFileUploaded(File file) {
+	public void onFileUploaded(FileUploadedEvent event) {
+		File file = event.getFile();
 		log.debug("File received:", file);
 		if (dialog != null) {
 			dialog.hide();

@@ -14,6 +14,7 @@ import scrum.client.collaboration.Subject;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.common.AScrumGwtEntity;
 import scrum.client.files.File;
+import scrum.client.files.FileUploadedEvent;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
 import scrum.client.project.Quality;
@@ -21,6 +22,7 @@ import scrum.client.project.Requirement;
 import scrum.client.release.Release;
 import scrum.client.risks.Risk;
 import scrum.client.sprint.Task;
+import scrum.client.workspace.VisibleDataChangedEvent;
 
 import com.google.gwt.user.client.Timer;
 
@@ -30,13 +32,8 @@ public class Dao extends GDao {
 
 	private EntityChangeCache cache = new EntityChangeCache();
 	private ScrumGwtApplication app;
-	private EventBus eventBus;
 
 	private Dao() {}
-
-	public void setEventBus(EventBus eventBus) {
-		this.eventBus = eventBus;
-	}
 
 	public void setApp(ScrumGwtApplication app) {
 		this.app = app;
@@ -132,7 +129,7 @@ public class Dao extends GDao {
 	public void handleDataFromServer(ADataTransferObject data) {
 		super.handleDataFromServer(data);
 		if (data.containsEntities() || data.containsDeletedEntities()) {
-			eventBus.fireVisibleDataChanged();
+			new VisibleDataChangedEvent().fireInCurrentScope();
 		}
 	}
 
@@ -144,7 +141,7 @@ public class Dao extends GDao {
 			Scope.get().getComponent(Chat.class).addChatMessage((ChatMessage) entity);
 		}
 		if (entity instanceof File) {
-			eventBus.fireFileUploaded((File) entity);
+			new FileUploadedEvent((File) entity).fireInCurrentScope();
 		}
 	}
 

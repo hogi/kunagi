@@ -1,3 +1,5 @@
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+
 package scrum.client.undo;
 
 public class GUndoReflector implements ilarkesto.core.scope.ComponentReflector<Undo> {

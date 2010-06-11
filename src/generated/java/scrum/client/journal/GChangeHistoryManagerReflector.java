@@ -1,3 +1,5 @@
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+
 package scrum.client.journal;
 
 public class GChangeHistoryManagerReflector implements ilarkesto.core.scope.ComponentReflector<ChangeHistoryManager> {

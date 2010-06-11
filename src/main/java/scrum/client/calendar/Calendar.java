@@ -5,12 +5,9 @@ import ilarkesto.gwt.client.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import scrum.client.ComponentManager;
 import scrum.client.sprint.Sprint;
 
 public class Calendar extends GCalendar {
-
-	private ComponentManager cm = ComponentManager.get();
 
 	public List<SimpleEvent> getEventsByDate(Date date) {
 		List<SimpleEvent> ret = new ArrayList<SimpleEvent>();

@@ -5,8 +5,6 @@ import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class ScrumJs {
 
-	private static final ComponentManager cm = ComponentManager.get();
-
 	static native void initialize() /*-{
 									$wnd.scrum = new Object();
 									$wnd.scrum.showEntityByReference = function(reference) {

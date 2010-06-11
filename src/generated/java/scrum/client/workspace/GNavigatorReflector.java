@@ -1,3 +1,5 @@
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+
 package scrum.client.workspace;
 
 public class GNavigatorReflector implements ilarkesto.core.scope.ComponentReflector<Navigator> {

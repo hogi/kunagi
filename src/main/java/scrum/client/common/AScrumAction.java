@@ -4,7 +4,6 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.undo.AUndoOperation;
 import ilarkesto.gwt.client.undo.UndoManager;
-import scrum.client.ComponentManager;
 import scrum.client.Dao;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.ScrumScopeManager;
@@ -16,8 +15,6 @@ import scrum.client.undo.Undo;
 import scrum.client.workspace.Navigator;
 
 public abstract class AScrumAction extends AAction {
-
-	protected static final ComponentManager cm = ComponentManager.get();
 
 	// --- helper ---
 

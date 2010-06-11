@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.common.AScrumGwtEntity;
 import scrum.client.common.AScrumWidget;
+import scrum.client.workspace.VisibleDataChangedEvent;
 
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
@@ -79,7 +80,7 @@ public class EmoticonSelectorWidget extends AScrumWidget {
 
 		public void onClick(ClickEvent event) {
 			entity.setCurrentUserEmoticon(emotion);
-			cm.getEventBus().fireVisibleDataChanged();
+			new VisibleDataChangedEvent().fireInCurrentScope();
 		}
 	}
 }

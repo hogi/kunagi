@@ -11,6 +11,7 @@ import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 import scrum.client.project.RequirementEstimationVotingShowoffAction;
 import scrum.client.project.ResetRequirementEstimationVotingAction;
+import scrum.client.workspace.VisibleDataChangedEvent;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -155,7 +156,7 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 
 		public void onClick(ClickEvent event) {
 			requirement.setEstimatedWork(estimation);
-			cm.getEventBus().fireVisibleDataChanged();
+			new VisibleDataChangedEvent().fireInCurrentScope();
 		}
 	}
 
@@ -170,7 +171,7 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 
 		public void onClick(ClickEvent event) {
 			requirement.setVote(estimation);
-			cm.getEventBus().fireVisibleDataChanged();
+			new VisibleDataChangedEvent().fireInCurrentScope();
 		}
 	}
 
@@ -178,7 +179,7 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 
 		public void onClick(ClickEvent event) {
 			requirement.setVote(null);
-			cm.getEventBus().fireVisibleDataChanged();
+			new VisibleDataChangedEvent().fireInCurrentScope();
 		}
 	}
 }

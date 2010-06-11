@@ -1,3 +1,5 @@
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+
 package scrum.client.calendar;
 
 public class GCalendarReflector implements ilarkesto.core.scope.ComponentReflector<Calendar> {

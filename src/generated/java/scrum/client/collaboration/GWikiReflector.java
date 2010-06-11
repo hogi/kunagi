@@ -1,3 +1,5 @@
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+
 package scrum.client.collaboration;
 
 public class GWikiReflector implements ilarkesto.core.scope.ComponentReflector<Wiki> {

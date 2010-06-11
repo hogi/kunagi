@@ -6,37 +6,42 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import scrum.client.BlockCollapsedListener;
-import scrum.client.BlockExpandedListener;
-import scrum.client.ComponentManager;
 import scrum.client.DataTransferObject;
-import scrum.client.ServerDataReceivedListener;
 import scrum.client.UsersStatusData;
 import scrum.client.admin.User;
+import scrum.client.communication.ServerDataReceivedEvent;
+import scrum.client.communication.ServerDataReceivedHandler;
+import scrum.client.workspace.BlockCollapsedEvent;
+import scrum.client.workspace.BlockCollapsedHandler;
+import scrum.client.workspace.BlockExpandedEvent;
+import scrum.client.workspace.BlockExpandedHandler;
+import scrum.client.workspace.VisibleDataChangedEvent;
 
-public class UsersStatus extends GUsersStatus implements ServerDataReceivedListener, BlockCollapsedListener,
-		BlockExpandedListener {
+public class UsersStatus extends GUsersStatus implements ServerDataReceivedHandler, BlockCollapsedHandler,
+		BlockExpandedHandler {
 
-	private ComponentManager cm = ComponentManager.get();
 	private UsersStatusData usersStatus = new UsersStatusData();
 
-	public void onBlockExpanded(Object object) {
+	public void onBlockExpanded(BlockExpandedEvent event) {
+		Object object = event.getObject();
 		if (object instanceof AGwtEntity) {
 			addSelectedEntityId(((AGwtEntity) object).getId());
 		}
 	}
 
-	public void onBlockCollapsed(Object object) {
+	public void onBlockCollapsed(BlockCollapsedEvent event) {
+		Object object = event.getObject();
 		if (object instanceof AGwtEntity) {
 			removeSelectedEntityId(((AGwtEntity) object).getId());
 		}
 	}
 
-	public void onServerDataReceived(DataTransferObject data) {
+	public void onServerDataReceived(ServerDataReceivedEvent event) {
+		DataTransferObject data = event.getData();
 		if (data.usersStatus != null) {
 			usersStatus = data.usersStatus;
 			log.debug("usersStatus updated:", usersStatus);
-			cm.getEventBus().fireVisibleDataChanged();
+			new VisibleDataChangedEvent().fireInCurrentScope();
 		}
 	}
 

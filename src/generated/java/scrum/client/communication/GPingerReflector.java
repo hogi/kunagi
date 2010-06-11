@@ -1,3 +1,5 @@
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+
 package scrum.client.communication;
 
 public class GPingerReflector implements ilarkesto.core.scope.ComponentReflector<Pinger> {

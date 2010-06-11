@@ -1,3 +1,5 @@
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+
 package scrum.client.workspace;
 
 public class GProjectWorkspaceWidgetsReflector implements ilarkesto.core.scope.ComponentReflector<ProjectWorkspaceWidgets> {

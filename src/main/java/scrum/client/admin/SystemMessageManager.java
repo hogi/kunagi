@@ -3,33 +3,34 @@ package scrum.client.admin;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.editor.ADateAndTimeEditorModel;
 import ilarkesto.gwt.client.editor.ATextEditorModel;
-import scrum.client.ComponentManager;
 import scrum.client.DataTransferObject;
-import scrum.client.ServerDataReceivedListener;
+import scrum.client.communication.ServerDataReceivedEvent;
+import scrum.client.communication.ServerDataReceivedHandler;
+import scrum.client.workspace.VisibleDataChangedEvent;
 
-public class SystemMessageManager extends GSystemMessageManager implements ServerDataReceivedListener {
+public class SystemMessageManager extends GSystemMessageManager implements ServerDataReceivedHandler {
 
-	private ComponentManager cm = ComponentManager.get();
 	private SystemMessage systemMessage = new SystemMessage();
 
-	public void onServerDataReceived(DataTransferObject data) {
+	public void onServerDataReceived(ServerDataReceivedEvent event) {
+		DataTransferObject data = event.getData();
 		if (data.systemMessage != null) {
 			systemMessage = data.systemMessage;
 			log.info("SystemMessage received:", systemMessage);
-			cm.getEventBus().fireVisibleDataChanged();
+			new VisibleDataChangedEvent().fireInCurrentScope();
 		}
 	}
 
 	public void activateSystemMessage() {
 		systemMessage.setActive(true);
 		app.callUpdateSystemMessage(systemMessage);
-		cm.getEventBus().fireVisibleDataChanged();
+		new VisibleDataChangedEvent().fireInCurrentScope();
 	}
 
 	public void deactivateSystemMessage() {
 		systemMessage.setActive(false);
 		app.callUpdateSystemMessage(systemMessage);
-		cm.getEventBus().fireVisibleDataChanged();
+		new VisibleDataChangedEvent().fireInCurrentScope();
 	}
 
 	public SystemMessage getSystemMessage() {

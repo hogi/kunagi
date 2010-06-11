@@ -1,3 +1,5 @@
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+
 package scrum.client.admin;
 
 public class GSystemMessageManagerReflector implements ilarkesto.core.scope.ComponentReflector<SystemMessageManager> {

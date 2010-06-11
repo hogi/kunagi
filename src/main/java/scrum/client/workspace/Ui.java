@@ -1,11 +1,10 @@
 package scrum.client.workspace;
 
 import ilarkesto.gwt.client.Gwt;
-import scrum.client.VisibleDataChangedListener;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Ui extends GUi implements VisibleDataChangedListener {
+public class Ui extends GUi implements VisibleDataChangedHandler {
 
 	private WorkspaceWidget workspace;
 
@@ -15,7 +14,7 @@ public class Ui extends GUi implements VisibleDataChangedListener {
 		Gwt.setRootWidget(workspace);
 	}
 
-	public void onVisibleDataChanged() {
+	public void onVisibleDataChanged(VisibleDataChangedEvent event) {
 		workspace.update();
 	}
 

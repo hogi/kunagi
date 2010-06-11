@@ -66,6 +66,9 @@
 	</target>
 	
 	<target name="deploy" depends="war">
+		<exec executable="sudo" failonerror="true">
+			<arg line="" />
+		</exec>
 		<copy tofile="/home/scrum-latest/tomcat/webapps/scrum-latest.war" file="build/scrum.war" />
 		<copy todir="/var/www/servisto.de/projects/scrum">
 			<fileset dir="src/projectHomepage/html" />

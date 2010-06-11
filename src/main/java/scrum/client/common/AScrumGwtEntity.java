@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import scrum.client.ComponentManager;
 import scrum.client.Dao;
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
@@ -18,8 +17,6 @@ import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.Emoticon;
 
 public abstract class AScrumGwtEntity extends AGwtEntity implements ToHtmlSupport {
-
-	protected static final transient ComponentManager cm = ComponentManager.get();
 
 	public AScrumGwtEntity() {}
 

@@ -1,17 +1,19 @@
 package scrum.client.communication;
 
 import ilarkesto.core.logging.Log;
-import scrum.client.ApplicationStartListener;
-import scrum.client.BlockCollapsedListener;
-import scrum.client.BlockExpandedListener;
 import scrum.client.DataTransferObject;
-import scrum.client.ServerDataReceivedListener;
+import scrum.client.core.ApplicationStartedEvent;
+import scrum.client.core.ApplicationStartedHandler;
 import scrum.client.project.Requirement;
+import scrum.client.workspace.BlockCollapsedEvent;
+import scrum.client.workspace.BlockCollapsedHandler;
+import scrum.client.workspace.BlockExpandedEvent;
+import scrum.client.workspace.BlockExpandedHandler;
 
 import com.google.gwt.user.client.Timer;
 
-public class Pinger extends GPinger implements ServerDataReceivedListener, BlockExpandedListener,
-		BlockCollapsedListener, ApplicationStartListener {
+public class Pinger extends GPinger implements ServerDataReceivedHandler, BlockExpandedHandler, BlockCollapsedHandler,
+		ApplicationStartedHandler {
 
 	private static Log log = Log.get(Pinger.class);
 
@@ -22,7 +24,7 @@ public class Pinger extends GPinger implements ServerDataReceivedListener, Block
 	private int maxDelay = MAX_DELAY;
 	private long lastDataReceiveTime = System.currentTimeMillis();
 
-	public void onApplicationStart() {
+	public void onApplicationStarted(ApplicationStartedEvent event) {
 		timer = new Timer() {
 
 			@Override
@@ -41,18 +43,20 @@ public class Pinger extends GPinger implements ServerDataReceivedListener, Block
 		timer = null;
 	}
 
-	public void onServerDataReceived(DataTransferObject data) {
+	public void onServerDataReceived(ServerDataReceivedEvent event) {
+		DataTransferObject data = event.getData();
 		if (data.containsEntities() || data.usersStatus != null) {
 			lastDataReceiveTime = System.currentTimeMillis();
 			reschedule();
 		}
 	}
 
-	public void onBlockCollapsed(Object object) {
+	public void onBlockCollapsed(BlockCollapsedEvent event) {
 		deactivatePowerPolling();
 	}
 
-	public void onBlockExpanded(Object object) {
+	public void onBlockExpanded(BlockExpandedEvent event) {
+		Object object = event.getObject();
 		if (object instanceof Requirement) {
 			Requirement requirement = (Requirement) object;
 			if (requirement.isWorkEstimationVotingActive()) activatePowerPolling();

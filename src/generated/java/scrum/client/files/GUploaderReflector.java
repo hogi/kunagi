@@ -1,3 +1,5 @@
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+
 package scrum.client.files;
 
 public class GUploaderReflector implements ilarkesto.core.scope.ComponentReflector<Uploader> {

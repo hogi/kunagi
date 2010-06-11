@@ -9,6 +9,8 @@ import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Subject;
 import scrum.client.common.AScrumWidget;
 import scrum.client.communication.Pinger;
+import scrum.client.communication.ServerDataReceivedEvent;
+import scrum.client.core.ApplicationStartedEvent;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -34,16 +36,13 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	private final Log log = Log.get(getClass());
 
-	private ComponentManager cm;
 	private ApplicationInfo applicationInfo;
 	private AScrumWidget statusWidget;
 
 	public void onModuleLoad() {
 		System.out.println("ScrumGwtApplication.onModuleLoad()");
 
-		cm = new ComponentManager();
-
-		ScrumScopeManager.initialize(cm);
+		ScrumScopeManager.initialize();
 
 		final WorkspaceWidget workspace = Scope.get().getComponent(Ui.class).getWorkspace();
 		workspace.lock("Loading...");
@@ -57,7 +56,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		callStartConversation(new Runnable() {
 
 			public void run() {
-				cm.getEventBus().fireApplicationStart();
+				new ApplicationStartedEvent().fireInCurrentScope();
 				Scope.get().getComponent(Navigator.class).gotoStart();
 			}
 		});
@@ -79,7 +78,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			assert this.applicationInfo != null;
 		}
 
-		cm.getEventBus().fireServerDataReceived(data);
+		new ServerDataReceivedEvent(data).fireInCurrentScope();
 	}
 
 	public ApplicationInfo getApplicationInfo() {

@@ -1,3 +1,5 @@
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+
 package scrum.client.collaboration;
 
 public class GUsersStatusReflector implements ilarkesto.core.scope.ComponentReflector<UsersStatus> {

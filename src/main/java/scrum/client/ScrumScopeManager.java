@@ -3,6 +3,7 @@ package scrum.client;
 import ilarkesto.core.scope.CascadingScope;
 import ilarkesto.core.scope.NonConcurrentScopeManager;
 import ilarkesto.core.scope.Scope;
+import ilarkesto.gwt.client.AGwtApplication;
 import ilarkesto.gwt.client.ObjectMappedFlowPanel;
 import scrum.client.admin.Auth;
 import scrum.client.admin.SystemMessageManager;
@@ -32,13 +33,12 @@ public class ScrumScopeManager {
 	private static CascadingScope userScope;
 	private static CascadingScope projectScope;
 
-	static void initialize(ComponentManager cm) {
+	static void initialize() {
 		assert scopeManager == null;
 
 		Dao dao = Dao.get();
-		ScrumGwtApplication app = cm.getApp();
+		ScrumGwtApplication app = (ScrumGwtApplication) AGwtApplication.get();
 		dao.setApp(app);
-		dao.setEventBus(cm.getEventBus());
 
 		scopeManager = NonConcurrentScopeManager.createCascadingScopeInstance("app", new ScrumComponentsReflector());
 		appScope = (CascadingScope) scopeManager.getScope();

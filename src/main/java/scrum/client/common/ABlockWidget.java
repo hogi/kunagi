@@ -4,6 +4,8 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.Gwt;
 import scrum.client.ScrumScopeManager;
 import scrum.client.dnd.BlockDndMarkerWidget;
+import scrum.client.workspace.BlockCollapsedEvent;
+import scrum.client.workspace.BlockExpandedEvent;
 
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -151,10 +153,10 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		this.extended = extended;
 
 		if (extended) {
-			cm.getEventBus().fireBlockExpanded(getObject());
+			new BlockExpandedEvent(getObject()).fireInCurrentScope();
 			panel.addStyleName("ABlockWidget-extended");
 		} else {
-			cm.getEventBus().fireBlockCollapsed(getObject());
+			new BlockCollapsedEvent(getObject()).fireInCurrentScope();
 			panel.removeStyleName("ABlockWidget-extended");
 		}
 
@@ -179,12 +181,14 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		if (getList().isDndSorting()) {
 			getList().dndManager.registerDropTarget(this);
 		}
-		if (extended) cm.getEventBus().fireBlockExpanded(getObject());
+		if (extended) new BlockExpandedEvent(getObject()).fireInCurrentScope();
+
 	}
 
 	@Override
 	protected void onUnload() {
-		if (extended) cm.getEventBus().fireBlockCollapsed(getObject());
+		if (extended) new BlockCollapsedEvent(getObject()).fireInCurrentScope();
+
 		if (list.dndManager != null) list.dndManager.unregisterDropTarget(this);
 		super.onUnload();
 	}

@@ -1,3 +1,5 @@
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+
 package scrum.client.admin;
 
 public class GAuthReflector implements ilarkesto.core.scope.ComponentReflector<Auth> {

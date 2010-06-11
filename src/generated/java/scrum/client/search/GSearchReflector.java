@@ -1,3 +1,5 @@
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+
 package scrum.client.search;
 
 public class GSearchReflector implements ilarkesto.core.scope.ComponentReflector<Search> {

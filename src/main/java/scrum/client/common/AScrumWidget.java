@@ -2,7 +2,6 @@ package scrum.client.common;
 
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AWidget;
-import scrum.client.ComponentManager;
 import scrum.client.Dao;
 import scrum.client.ScrumGwtApplication;
 import scrum.client.ScrumScopeManager;
@@ -13,8 +12,6 @@ import scrum.client.sprint.Sprint;
 import scrum.client.workspace.Ui;
 
 public abstract class AScrumWidget extends AWidget {
-
-	protected static final ComponentManager cm = ComponentManager.get();
 
 	// --- helper ---
 

@@ -9,13 +9,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import scrum.client.ComponentManager;
 import scrum.client.common.AScrumGwtEntity;
 
 public class SearchResults {
 
 	private static final Log LOG = Log.get(SearchResults.class);
-	private static ComponentManager cm = ComponentManager.get();
 
 	private Collection<AScrumGwtEntity> entities = new HashSet<AScrumGwtEntity>();
 
@@ -26,14 +24,14 @@ public class SearchResults {
 	public void clear() {
 		if (entities.isEmpty()) return;
 		entities.clear();
-		cm.getEventBus().fireSearchResultsChanged();
+		new SearchResultsChangedEvent().fireInCurrentScope();
 	}
 
 	public void addEntities(List<? extends AScrumGwtEntity> entities) {
 		boolean changed = this.entities.addAll(entities);
 		if (changed) {
 			LOG.info("SearchResults:", this.entities.size());
-			cm.getEventBus().fireSearchResultsChanged();
+			new SearchResultsChangedEvent().fireInCurrentScope();
 		}
 	}
 

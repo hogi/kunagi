@@ -8,13 +8,9 @@ import ilarkesto.mda.legacy.AGeneratorApplication;
 import ilarkesto.mda.legacy.generator.GwtActionGenerator;
 import ilarkesto.mda.legacy.generator.GwtActionTemplateGenerator;
 import ilarkesto.mda.legacy.generator.GwtApplicationGenerator;
-import ilarkesto.mda.legacy.generator.GwtComponentManagerGenerator;
-import ilarkesto.mda.legacy.generator.GwtComponentTemplateGenerator;
 import ilarkesto.mda.legacy.generator.GwtDaoGenerator;
 import ilarkesto.mda.legacy.generator.GwtEntityGenerator;
 import ilarkesto.mda.legacy.generator.GwtEntityTemplateGenerator;
-import ilarkesto.mda.legacy.generator.GwtEventBusGenerator;
-import ilarkesto.mda.legacy.generator.GwtEventListenerGenerator;
 import ilarkesto.mda.legacy.generator.GwtImageBundleGenerator;
 import ilarkesto.mda.legacy.generator.GwtServiceAsyncInterfaceGenerator;
 import ilarkesto.mda.legacy.generator.GwtServiceImplementationGenerator;
@@ -22,12 +18,8 @@ import ilarkesto.mda.legacy.generator.GwtServiceInterfaceGenerator;
 import ilarkesto.mda.legacy.model.ActionModel;
 import ilarkesto.mda.legacy.model.ApplicationModel;
 import ilarkesto.mda.legacy.model.BeanModel;
-import ilarkesto.mda.legacy.model.ComponentModel;
-import ilarkesto.mda.legacy.model.CompositeModel;
 import ilarkesto.mda.legacy.model.DatobModel;
 import ilarkesto.mda.legacy.model.EntityModel;
-import ilarkesto.mda.legacy.model.EventModel;
-import ilarkesto.mda.legacy.model.GwtEventBusModel;
 import ilarkesto.mda.legacy.model.GwtServiceModel;
 
 import java.util.List;
@@ -38,40 +30,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 
 	public static void main(String[] args) {
 		ApplicationStarter.startApplication(ScrumModelApplication.class).generateClasses().shutdown();
-	}
-
-	// ------------------
-	// --- components ---
-	// ------------------
-
-	private ComponentModel gwtComponentsModel;
-
-	public ComponentModel getGwtComponentsModel() {
-		if (gwtComponentsModel == null) {
-			gwtComponentsModel = new ComponentModel("GwtComponents", getBasePackageName());
-			gwtComponentsModel.setGwt(true);
-		}
-		return gwtComponentsModel;
-	}
-
-	// --------------
-	// --- events ---
-	// --------------
-
-	private GwtEventBusModel gwtEventBusModel;
-
-	public GwtEventBusModel getGwtEventBusModel() {
-		if (gwtEventBusModel == null) {
-			gwtEventBusModel = new GwtEventBusModel();
-			gwtEventBusModel.addEvent("ApplicationStart");
-			gwtEventBusModel.addEvent("ServerDataReceived").addParameter("data", "DataTransferObject").setQuiet(true);
-			gwtEventBusModel.addEvent("VisibleDataChanged");
-			gwtEventBusModel.addEvent("BlockExpanded").addParameter("object", Object.class);
-			gwtEventBusModel.addEvent("BlockCollapsed").addParameter("object", Object.class);
-			gwtEventBusModel.addEvent("SearchResultsChanged");
-			gwtEventBusModel.addEvent("FileUploaded").addParameter("file", "scrum.client.files.File");
-		}
-		return gwtEventBusModel;
 	}
 
 	// ---------------
@@ -679,14 +637,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		new GwtApplicationGenerator(getApplicationModel()).generate();
 		new GwtDaoGenerator(getApplicationModel(), getFinalEntityModels(false)).generate();
 		new GwtImageBundleGenerator("scrum.client.img").generate();
-		new GwtEventBusGenerator(getApplicationModel(), getGwtEventBusModel()).generate();
-		for (EventModel eventModel : getGwtEventBusModel().getEvents()) {
-			new GwtEventListenerGenerator(eventModel, applicationModel).generate();
-		}
-		new GwtComponentManagerGenerator(getGwtComponentsModel()).generate();
-		for (CompositeModel composite : getGwtComponentsModel().getComposites()) {
-			new GwtComponentTemplateGenerator(getApplicationModel(), composite).generate();
-		}
 	}
 
 	private void generateActions(List<ActionModel> actions) {

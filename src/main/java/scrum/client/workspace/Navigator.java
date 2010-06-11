@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import scrum.client.BlockExpandedListener;
 import scrum.client.ScrumScopeManager;
 import scrum.client.admin.User;
 import scrum.client.project.Project;
@@ -16,7 +15,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 
-public class Navigator extends GNavigator implements BlockExpandedListener {
+public class Navigator extends GNavigator implements BlockExpandedHandler {
 
 	private Map<String, String> tokensForStart;
 	private String page = "Dashboard";
@@ -167,7 +166,8 @@ public class Navigator extends GNavigator implements BlockExpandedListener {
 		History.newItem("project=" + project.getId() + "|page=" + page + "|entity=" + entity.getId(), false);
 	}
 
-	public void onBlockExpanded(Object object) {
+	public void onBlockExpanded(BlockExpandedEvent event) {
+		Object object = event.getObject();
 		if (object instanceof AGwtEntity) {
 			setToken((AGwtEntity) object);
 		}
