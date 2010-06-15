@@ -5,5 +5,6 @@ package scrum.client.workspace;
 public interface VisibleDataChangedHandler {
 
     public abstract void onVisibleDataChanged(VisibleDataChangedEvent event);
+
 }
 

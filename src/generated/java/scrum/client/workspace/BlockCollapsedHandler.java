@@ -5,5 +5,6 @@ package scrum.client.workspace;
 public interface BlockCollapsedHandler {
 
     public abstract void onBlockCollapsed(BlockCollapsedEvent event);
+
 }
 

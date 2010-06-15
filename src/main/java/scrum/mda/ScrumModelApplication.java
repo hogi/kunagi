@@ -12,72 +12,18 @@ import ilarkesto.mda.legacy.generator.GwtDaoGenerator;
 import ilarkesto.mda.legacy.generator.GwtEntityGenerator;
 import ilarkesto.mda.legacy.generator.GwtEntityTemplateGenerator;
 import ilarkesto.mda.legacy.generator.GwtImageBundleGenerator;
-import ilarkesto.mda.legacy.generator.GwtServiceAsyncInterfaceGenerator;
-import ilarkesto.mda.legacy.generator.GwtServiceImplementationGenerator;
-import ilarkesto.mda.legacy.generator.GwtServiceInterfaceGenerator;
 import ilarkesto.mda.legacy.model.ActionModel;
 import ilarkesto.mda.legacy.model.ApplicationModel;
 import ilarkesto.mda.legacy.model.BeanModel;
 import ilarkesto.mda.legacy.model.DatobModel;
 import ilarkesto.mda.legacy.model.EntityModel;
-import ilarkesto.mda.legacy.model.GwtServiceModel;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class ScrumModelApplication extends AGeneratorApplication {
 
 	public static void main(String[] args) {
 		ApplicationStarter.startApplication(ScrumModelApplication.class).generateClasses().shutdown();
-	}
-
-	// ---------------
-	// --- service ---
-	// ---------------
-
-	private GwtServiceModel gwtServiceModel;
-
-	public GwtServiceModel getGwtServiceModel() {
-		if (gwtServiceModel == null) {
-			gwtServiceModel = createGwtServiceModel("scrum");
-			gwtServiceModel.addMethod("ping");
-			gwtServiceModel.addMethod("login").addParameter("username", String.class).addParameter("password",
-				String.class);
-			gwtServiceModel.addMethod("logout");
-			gwtServiceModel.addMethod("changePassword").addParameter("oldPassword", String.class).addParameter(
-				"newPassword", String.class);
-			gwtServiceModel.addMethod("resetPassword").addParameter("userId", String.class);
-			gwtServiceModel.addMethod("selectProject").addParameter("projectId", String.class);
-			gwtServiceModel.addMethod("closeProject");
-			gwtServiceModel.addMethod("createExampleProject");
-			gwtServiceModel.addMethod("switchToNextSprint");
-			gwtServiceModel.addMethod("requestImpediments");
-			gwtServiceModel.addMethod("requestAcceptedIssues");
-			gwtServiceModel.addMethod("requestClosedIssues");
-			gwtServiceModel.addMethod("requestReleaseIssues").addParameter("releaseId", String.class);
-			gwtServiceModel.addMethod("requestRisks");
-			gwtServiceModel.addMethod("requestRequirementEstimationVotes").addParameter("requirementId", String.class);
-			gwtServiceModel.addMethod("requestComments").addParameter("parentId", String.class);
-			gwtServiceModel.addMethod("requestChanges").addParameter("parentId", String.class);
-			gwtServiceModel.addMethod("changeProperties").addParameter("entityId", String.class).addParameter(
-				"properties", Map.class);
-			gwtServiceModel.addMethod("createEntity").addParameter("type", String.class).addParameter("properties",
-				Map.class);
-			gwtServiceModel.addMethod("deleteEntity").addParameter("entityId", String.class);
-			gwtServiceModel.addMethod("requestEntityByReference").addParameter("reference", String.class);
-			gwtServiceModel.addMethod("requestEntity").addParameter("entityId", String.class);
-			gwtServiceModel.addMethod("setSelectedEntitysIds").addParameter("ids", Set.class);
-			gwtServiceModel.addMethod("sleep").addParameter("millis", long.class);
-			gwtServiceModel.addMethod("updateSystemMessage").addParameter("systemMessage",
-				"scrum.client.admin.SystemMessage");
-			gwtServiceModel.addMethod("search").addParameter("text", String.class);
-			gwtServiceModel.addMethod("activateRequirementEstimationVoting")
-					.addParameter("requirementId", String.class);
-			gwtServiceModel.addMethod("requestForum");
-
-		}
-		return gwtServiceModel;
 	}
 
 	// -------------------
@@ -90,7 +36,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (applicationModel == null) {
 			applicationModel = createWebApplicationModel("Scrum");
 			applicationModel.addDaosAsComposites(getFinalEntityModels(true));
-			applicationModel.addGwtService(getGwtServiceModel());
 
 			applicationModel.addAction("SwitchToNextSprint", getBasePackageName() + ".sprint");
 			applicationModel.addAction("Login", getBasePackageName() + ".admin");
@@ -631,9 +576,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	protected void onGeneration() {
 		super.onGeneration();
 		generateActions(getApplicationModel().getActions());
-		new GwtServiceInterfaceGenerator(getGwtServiceModel()).generate();
-		new GwtServiceAsyncInterfaceGenerator(getGwtServiceModel()).generate();
-		new GwtServiceImplementationGenerator(getGwtServiceModel()).generate();
 		new GwtApplicationGenerator(getApplicationModel()).generate();
 		new GwtDaoGenerator(getApplicationModel(), getFinalEntityModels(false)).generate();
 		new GwtImageBundleGenerator("scrum.client.img").generate();

@@ -1,69 +1,80 @@
-// ----------> GENERATED FILE - DON'T TOUCH! <----------
-
-// generator: ilarkesto.mda.legacy.generator.GwtServiceImplementationGenerator
-
-
-
-
-
-
-
-
-
+// // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
 package scrum.server;
 
-import java.util.*;
-import ilarkesto.core.logging.Log;
+public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtServiceImpl implements scrum.client.ScrumService {
 
-public abstract class GScrumServiceImpl
-            extends ilarkesto.gwt.server.AGwtServiceImpl
-            implements scrum.client.ScrumService {
+    protected static ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(ScrumServiceImpl.class);
 
-    private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GScrumServiceImpl.class);
+    public abstract void onChangePassword(GwtConversation conversation, String newPassword, String oldPassword);
 
-    protected abstract void onPing(GwtConversation conversation);
-    protected abstract void onLogin(GwtConversation conversation, java.lang.String username, java.lang.String password);
-    protected abstract void onLogout(GwtConversation conversation);
-    protected abstract void onChangePassword(GwtConversation conversation, java.lang.String oldPassword, java.lang.String newPassword);
-    protected abstract void onResetPassword(GwtConversation conversation, java.lang.String userId);
-    protected abstract void onSelectProject(GwtConversation conversation, java.lang.String projectId);
-    protected abstract void onCloseProject(GwtConversation conversation);
-    protected abstract void onCreateExampleProject(GwtConversation conversation);
-    protected abstract void onSwitchToNextSprint(GwtConversation conversation);
-    protected abstract void onRequestImpediments(GwtConversation conversation);
-    protected abstract void onRequestAcceptedIssues(GwtConversation conversation);
-    protected abstract void onRequestClosedIssues(GwtConversation conversation);
-    protected abstract void onRequestReleaseIssues(GwtConversation conversation, java.lang.String releaseId);
-    protected abstract void onRequestRisks(GwtConversation conversation);
-    protected abstract void onRequestRequirementEstimationVotes(GwtConversation conversation, java.lang.String requirementId);
-    protected abstract void onRequestComments(GwtConversation conversation, java.lang.String parentId);
-    protected abstract void onRequestChanges(GwtConversation conversation, java.lang.String parentId);
-    protected abstract void onChangeProperties(GwtConversation conversation, java.lang.String entityId, java.util.Map properties);
-    protected abstract void onCreateEntity(GwtConversation conversation, java.lang.String type, java.util.Map properties);
-    protected abstract void onDeleteEntity(GwtConversation conversation, java.lang.String entityId);
-    protected abstract void onRequestEntityByReference(GwtConversation conversation, java.lang.String reference);
-    protected abstract void onRequestEntity(GwtConversation conversation, java.lang.String entityId);
-    protected abstract void onSetSelectedEntitysIds(GwtConversation conversation, java.util.Set ids);
-    protected abstract void onSleep(GwtConversation conversation, long millis);
-    protected abstract void onUpdateSystemMessage(GwtConversation conversation, scrum.client.admin.SystemMessage systemMessage);
-    protected abstract void onSearch(GwtConversation conversation, java.lang.String text);
-    protected abstract void onActivateRequirementEstimationVoting(GwtConversation conversation, java.lang.String requirementId);
-    protected abstract void onRequestForum(GwtConversation conversation);
+    public abstract void onLogin(GwtConversation conversation, String username, String password);
 
+    public abstract void onLogout(GwtConversation conversation);
 
-    public scrum.client.DataTransferObject ping(int conversationNumber) {
+    public abstract void onResetPassword(GwtConversation conversation, String userId);
+
+    public abstract void onUpdateSystemMessage(GwtConversation conversation, scrum.client.admin.SystemMessage systemMessage);
+
+    public abstract void onRequestComments(GwtConversation conversation, String parentId);
+
+    public abstract void onRequestForum(GwtConversation conversation);
+
+    public abstract void onSetSelectedEntitysIds(GwtConversation conversation, java.util.Set ids);
+
+    public abstract void onPing(GwtConversation conversation);
+
+    public abstract void onChangeProperties(GwtConversation conversation, String entityId, java.util.Map properties);
+
+    public abstract void onCreateEntity(GwtConversation conversation, String type, java.util.Map properties);
+
+    public abstract void onDeleteEntity(GwtConversation conversation, String entityId);
+
+    public abstract void onRequestEntity(GwtConversation conversation, String entityId);
+
+    public abstract void onRequestEntityByReference(GwtConversation conversation, String reference);
+
+    public abstract void onSleep(GwtConversation conversation, long millis);
+
+    public abstract void onActivateRequirementEstimationVoting(GwtConversation conversation, String requirementId);
+
+    public abstract void onRequestRequirementEstimationVotes(GwtConversation conversation, String requirementId);
+
+    public abstract void onRequestImpediments(GwtConversation conversation);
+
+    public abstract void onRequestAcceptedIssues(GwtConversation conversation);
+
+    public abstract void onRequestClosedIssues(GwtConversation conversation);
+
+    public abstract void onRequestReleaseIssues(GwtConversation conversation, String releaseId);
+
+    public abstract void onRequestChanges(GwtConversation conversation, String parentId);
+
+    public abstract void onCloseProject(GwtConversation conversation);
+
+    public abstract void onCreateExampleProject(GwtConversation conversation);
+
+    public abstract void onSelectProject(GwtConversation conversation, String projectId);
+
+    public abstract void onRequestRisks(GwtConversation conversation);
+
+    public abstract void onSearch(GwtConversation conversation, String text);
+
+    public abstract void onSwitchToNextSprint(GwtConversation conversation);
+
+    public scrum.client.DataTransferObject changePassword(int conversationNumber, String newPassword, String oldPassword) {
+        log.debug("Handling service call: ChangePassword");
         WebSession session = (WebSession) getSession();
-        synchronized(session) {
+        synchronized (session) {
             GwtConversation conversation = session.getGwtConversation(conversationNumber);
             ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:ping");
+            context.setName("gwt-srv:ChangePassword");
             context.bindCurrentThread();
             try {
-                onPing(conversation);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "ping",t);
-                throw new RuntimeException(t);
+                onChangePassword(conversation, newPassword, oldPassword);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "ChangePassword", ex);
+                throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
             onServiceMethodExecuted(context);
@@ -71,20 +82,19 @@ public abstract class GScrumServiceImpl
         }
     }
 
-
-    public scrum.client.DataTransferObject login(int conversationNumber, java.lang.String username, java.lang.String password) {
-        LOG.debug("login");
+    public scrum.client.DataTransferObject login(int conversationNumber, String username, String password) {
+        log.debug("Handling service call: Login");
         WebSession session = (WebSession) getSession();
-        synchronized(session) {
+        synchronized (session) {
             GwtConversation conversation = session.getGwtConversation(conversationNumber);
             ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:login");
+            context.setName("gwt-srv:Login");
             context.bindCurrentThread();
             try {
                 onLogin(conversation, username, password);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "login",t);
-                throw new RuntimeException(t);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "Login", ex);
+                throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
             onServiceMethodExecuted(context);
@@ -92,20 +102,19 @@ public abstract class GScrumServiceImpl
         }
     }
 
-
     public scrum.client.DataTransferObject logout(int conversationNumber) {
-        LOG.debug("logout");
+        log.debug("Handling service call: Logout");
         WebSession session = (WebSession) getSession();
-        synchronized(session) {
+        synchronized (session) {
             GwtConversation conversation = session.getGwtConversation(conversationNumber);
             ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:logout");
+            context.setName("gwt-srv:Logout");
             context.bindCurrentThread();
             try {
                 onLogout(conversation);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "logout",t);
-                throw new RuntimeException(t);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "Logout", ex);
+                throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
             onServiceMethodExecuted(context);
@@ -113,461 +122,39 @@ public abstract class GScrumServiceImpl
         }
     }
 
-
-    public scrum.client.DataTransferObject changePassword(int conversationNumber, java.lang.String oldPassword, java.lang.String newPassword) {
-        LOG.debug("changePassword");
+    public scrum.client.DataTransferObject resetPassword(int conversationNumber, String userId) {
+        log.debug("Handling service call: ResetPassword");
         WebSession session = (WebSession) getSession();
-        synchronized(session) {
+        synchronized (session) {
             GwtConversation conversation = session.getGwtConversation(conversationNumber);
             ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:changePassword");
-            context.bindCurrentThread();
-            try {
-                onChangePassword(conversation, oldPassword, newPassword);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "changePassword",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject resetPassword(int conversationNumber, java.lang.String userId) {
-        LOG.debug("resetPassword");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:resetPassword");
+            context.setName("gwt-srv:ResetPassword");
             context.bindCurrentThread();
             try {
                 onResetPassword(conversation, userId);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "resetPassword",t);
-                throw new RuntimeException(t);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "ResetPassword", ex);
+                throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
             onServiceMethodExecuted(context);
             return ret;
         }
     }
-
-
-    public scrum.client.DataTransferObject selectProject(int conversationNumber, java.lang.String projectId) {
-        LOG.debug("selectProject");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:selectProject");
-            context.bindCurrentThread();
-            try {
-                onSelectProject(conversation, projectId);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "selectProject",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject closeProject(int conversationNumber) {
-        LOG.debug("closeProject");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:closeProject");
-            context.bindCurrentThread();
-            try {
-                onCloseProject(conversation);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "closeProject",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject createExampleProject(int conversationNumber) {
-        LOG.debug("createExampleProject");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:createExampleProject");
-            context.bindCurrentThread();
-            try {
-                onCreateExampleProject(conversation);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "createExampleProject",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject switchToNextSprint(int conversationNumber) {
-        LOG.debug("switchToNextSprint");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:switchToNextSprint");
-            context.bindCurrentThread();
-            try {
-                onSwitchToNextSprint(conversation);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "switchToNextSprint",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject requestImpediments(int conversationNumber) {
-        LOG.debug("requestImpediments");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:requestImpediments");
-            context.bindCurrentThread();
-            try {
-                onRequestImpediments(conversation);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "requestImpediments",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject requestAcceptedIssues(int conversationNumber) {
-        LOG.debug("requestAcceptedIssues");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:requestAcceptedIssues");
-            context.bindCurrentThread();
-            try {
-                onRequestAcceptedIssues(conversation);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "requestAcceptedIssues",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject requestClosedIssues(int conversationNumber) {
-        LOG.debug("requestClosedIssues");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:requestClosedIssues");
-            context.bindCurrentThread();
-            try {
-                onRequestClosedIssues(conversation);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "requestClosedIssues",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject requestReleaseIssues(int conversationNumber, java.lang.String releaseId) {
-        LOG.debug("requestReleaseIssues");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:requestReleaseIssues");
-            context.bindCurrentThread();
-            try {
-                onRequestReleaseIssues(conversation, releaseId);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "requestReleaseIssues",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject requestRisks(int conversationNumber) {
-        LOG.debug("requestRisks");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:requestRisks");
-            context.bindCurrentThread();
-            try {
-                onRequestRisks(conversation);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "requestRisks",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject requestRequirementEstimationVotes(int conversationNumber, java.lang.String requirementId) {
-        LOG.debug("requestRequirementEstimationVotes");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:requestRequirementEstimationVotes");
-            context.bindCurrentThread();
-            try {
-                onRequestRequirementEstimationVotes(conversation, requirementId);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "requestRequirementEstimationVotes",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject requestComments(int conversationNumber, java.lang.String parentId) {
-        LOG.debug("requestComments");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:requestComments");
-            context.bindCurrentThread();
-            try {
-                onRequestComments(conversation, parentId);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "requestComments",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject requestChanges(int conversationNumber, java.lang.String parentId) {
-        LOG.debug("requestChanges");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:requestChanges");
-            context.bindCurrentThread();
-            try {
-                onRequestChanges(conversation, parentId);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "requestChanges",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject changeProperties(int conversationNumber, java.lang.String entityId, java.util.Map properties) {
-        LOG.debug("changeProperties");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:changeProperties");
-            context.bindCurrentThread();
-            try {
-                onChangeProperties(conversation, entityId, properties);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "changeProperties",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject createEntity(int conversationNumber, java.lang.String type, java.util.Map properties) {
-        LOG.debug("createEntity");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:createEntity");
-            context.bindCurrentThread();
-            try {
-                onCreateEntity(conversation, type, properties);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "createEntity",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject deleteEntity(int conversationNumber, java.lang.String entityId) {
-        LOG.debug("deleteEntity");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:deleteEntity");
-            context.bindCurrentThread();
-            try {
-                onDeleteEntity(conversation, entityId);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "deleteEntity",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject requestEntityByReference(int conversationNumber, java.lang.String reference) {
-        LOG.debug("requestEntityByReference");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:requestEntityByReference");
-            context.bindCurrentThread();
-            try {
-                onRequestEntityByReference(conversation, reference);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "requestEntityByReference",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject requestEntity(int conversationNumber, java.lang.String entityId) {
-        LOG.debug("requestEntity");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:requestEntity");
-            context.bindCurrentThread();
-            try {
-                onRequestEntity(conversation, entityId);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "requestEntity",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject setSelectedEntitysIds(int conversationNumber, java.util.Set ids) {
-        LOG.debug("setSelectedEntitysIds");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:setSelectedEntitysIds");
-            context.bindCurrentThread();
-            try {
-                onSetSelectedEntitysIds(conversation, ids);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "setSelectedEntitysIds",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-
-    public scrum.client.DataTransferObject sleep(int conversationNumber, long millis) {
-        LOG.debug("sleep");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:sleep");
-            context.bindCurrentThread();
-            try {
-                onSleep(conversation, millis);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "sleep",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
 
     public scrum.client.DataTransferObject updateSystemMessage(int conversationNumber, scrum.client.admin.SystemMessage systemMessage) {
-        LOG.debug("updateSystemMessage");
+        log.debug("Handling service call: UpdateSystemMessage");
         WebSession session = (WebSession) getSession();
-        synchronized(session) {
+        synchronized (session) {
             GwtConversation conversation = session.getGwtConversation(conversationNumber);
             ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:updateSystemMessage");
+            context.setName("gwt-srv:UpdateSystemMessage");
             context.bindCurrentThread();
             try {
                 onUpdateSystemMessage(conversation, systemMessage);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "updateSystemMessage",t);
-                throw new RuntimeException(t);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "UpdateSystemMessage", ex);
+                throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
             onServiceMethodExecuted(context);
@@ -575,62 +162,458 @@ public abstract class GScrumServiceImpl
         }
     }
 
-
-    public scrum.client.DataTransferObject search(int conversationNumber, java.lang.String text) {
-        LOG.debug("search");
+    public scrum.client.DataTransferObject requestComments(int conversationNumber, String parentId) {
+        log.debug("Handling service call: RequestComments");
         WebSession session = (WebSession) getSession();
-        synchronized(session) {
+        synchronized (session) {
             GwtConversation conversation = session.getGwtConversation(conversationNumber);
             ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:search");
+            context.setName("gwt-srv:RequestComments");
             context.bindCurrentThread();
             try {
-                onSearch(conversation, text);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "search",t);
-                throw new RuntimeException(t);
+                onRequestComments(conversation, parentId);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestComments", ex);
+                throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
             onServiceMethodExecuted(context);
             return ret;
         }
     }
-
-
-    public scrum.client.DataTransferObject activateRequirementEstimationVoting(int conversationNumber, java.lang.String requirementId) {
-        LOG.debug("activateRequirementEstimationVoting");
-        WebSession session = (WebSession) getSession();
-        synchronized(session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:activateRequirementEstimationVoting");
-            context.bindCurrentThread();
-            try {
-                onActivateRequirementEstimationVoting(conversation, requirementId);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "activateRequirementEstimationVoting",t);
-                throw new RuntimeException(t);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
 
     public scrum.client.DataTransferObject requestForum(int conversationNumber) {
-        LOG.debug("requestForum");
+        log.debug("Handling service call: RequestForum");
         WebSession session = (WebSession) getSession();
-        synchronized(session) {
+        synchronized (session) {
             GwtConversation conversation = session.getGwtConversation(conversationNumber);
             ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:requestForum");
+            context.setName("gwt-srv:RequestForum");
             context.bindCurrentThread();
             try {
                 onRequestForum(conversation);
-            } catch (Throwable t) {
-                handleServiceMethodException(conversationNumber, "requestForum",t);
-                throw new RuntimeException(t);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestForum", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject setSelectedEntitysIds(int conversationNumber, java.util.Set ids) {
+        log.debug("Handling service call: SetSelectedEntitysIds");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:SetSelectedEntitysIds");
+            context.bindCurrentThread();
+            try {
+                onSetSelectedEntitysIds(conversation, ids);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "SetSelectedEntitysIds", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject ping(int conversationNumber) {
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:Ping");
+            context.bindCurrentThread();
+            try {
+                onPing(conversation);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "Ping", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject changeProperties(int conversationNumber, String entityId, java.util.Map properties) {
+        log.debug("Handling service call: ChangeProperties");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:ChangeProperties");
+            context.bindCurrentThread();
+            try {
+                onChangeProperties(conversation, entityId, properties);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "ChangeProperties", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject createEntity(int conversationNumber, String type, java.util.Map properties) {
+        log.debug("Handling service call: CreateEntity");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:CreateEntity");
+            context.bindCurrentThread();
+            try {
+                onCreateEntity(conversation, type, properties);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "CreateEntity", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject deleteEntity(int conversationNumber, String entityId) {
+        log.debug("Handling service call: DeleteEntity");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:DeleteEntity");
+            context.bindCurrentThread();
+            try {
+                onDeleteEntity(conversation, entityId);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "DeleteEntity", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject requestEntity(int conversationNumber, String entityId) {
+        log.debug("Handling service call: RequestEntity");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:RequestEntity");
+            context.bindCurrentThread();
+            try {
+                onRequestEntity(conversation, entityId);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestEntity", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject requestEntityByReference(int conversationNumber, String reference) {
+        log.debug("Handling service call: RequestEntityByReference");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:RequestEntityByReference");
+            context.bindCurrentThread();
+            try {
+                onRequestEntityByReference(conversation, reference);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestEntityByReference", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject sleep(int conversationNumber, long millis) {
+        log.debug("Handling service call: Sleep");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:Sleep");
+            context.bindCurrentThread();
+            try {
+                onSleep(conversation, millis);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "Sleep", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject activateRequirementEstimationVoting(int conversationNumber, String requirementId) {
+        log.debug("Handling service call: ActivateRequirementEstimationVoting");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:ActivateRequirementEstimationVoting");
+            context.bindCurrentThread();
+            try {
+                onActivateRequirementEstimationVoting(conversation, requirementId);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "ActivateRequirementEstimationVoting", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject requestRequirementEstimationVotes(int conversationNumber, String requirementId) {
+        log.debug("Handling service call: RequestRequirementEstimationVotes");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:RequestRequirementEstimationVotes");
+            context.bindCurrentThread();
+            try {
+                onRequestRequirementEstimationVotes(conversation, requirementId);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestRequirementEstimationVotes", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject requestImpediments(int conversationNumber) {
+        log.debug("Handling service call: RequestImpediments");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:RequestImpediments");
+            context.bindCurrentThread();
+            try {
+                onRequestImpediments(conversation);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestImpediments", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject requestAcceptedIssues(int conversationNumber) {
+        log.debug("Handling service call: RequestAcceptedIssues");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:RequestAcceptedIssues");
+            context.bindCurrentThread();
+            try {
+                onRequestAcceptedIssues(conversation);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestAcceptedIssues", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject requestClosedIssues(int conversationNumber) {
+        log.debug("Handling service call: RequestClosedIssues");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:RequestClosedIssues");
+            context.bindCurrentThread();
+            try {
+                onRequestClosedIssues(conversation);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestClosedIssues", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject requestReleaseIssues(int conversationNumber, String releaseId) {
+        log.debug("Handling service call: RequestReleaseIssues");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:RequestReleaseIssues");
+            context.bindCurrentThread();
+            try {
+                onRequestReleaseIssues(conversation, releaseId);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestReleaseIssues", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject requestChanges(int conversationNumber, String parentId) {
+        log.debug("Handling service call: RequestChanges");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:RequestChanges");
+            context.bindCurrentThread();
+            try {
+                onRequestChanges(conversation, parentId);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestChanges", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject closeProject(int conversationNumber) {
+        log.debug("Handling service call: CloseProject");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:CloseProject");
+            context.bindCurrentThread();
+            try {
+                onCloseProject(conversation);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "CloseProject", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject createExampleProject(int conversationNumber) {
+        log.debug("Handling service call: CreateExampleProject");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:CreateExampleProject");
+            context.bindCurrentThread();
+            try {
+                onCreateExampleProject(conversation);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "CreateExampleProject", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject selectProject(int conversationNumber, String projectId) {
+        log.debug("Handling service call: SelectProject");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:SelectProject");
+            context.bindCurrentThread();
+            try {
+                onSelectProject(conversation, projectId);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "SelectProject", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject requestRisks(int conversationNumber) {
+        log.debug("Handling service call: RequestRisks");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:RequestRisks");
+            context.bindCurrentThread();
+            try {
+                onRequestRisks(conversation);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestRisks", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject search(int conversationNumber, String text) {
+        log.debug("Handling service call: Search");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:Search");
+            context.bindCurrentThread();
+            try {
+                onSearch(conversation, text);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "Search", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject switchToNextSprint(int conversationNumber) {
+        log.debug("Handling service call: SwitchToNextSprint");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:SwitchToNextSprint");
+            context.bindCurrentThread();
+            try {
+                onSwitchToNextSprint(conversation);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "SwitchToNextSprint", ex);
+                throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
             onServiceMethodExecuted(context);
@@ -639,3 +622,4 @@ public abstract class GScrumServiceImpl
     }
 
 }
+

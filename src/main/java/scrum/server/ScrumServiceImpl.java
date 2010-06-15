@@ -103,14 +103,14 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	// --- ---
 
 	@Override
-	protected void onCreateExampleProject(GwtConversation conversation) {
+	public void onCreateExampleProject(GwtConversation conversation) {
 		User user = conversation.getSession().getUser();
 		Project project = projectDao.postExampleProject(user);
 		conversation.sendToClient(project);
 	}
 
 	@Override
-	protected void onSearch(GwtConversation conversation, String text) {
+	public void onSearch(GwtConversation conversation, String text) {
 		Project project = conversation.getProject();
 		if (project == null) return;
 		List<AEntity> foundEntities = project.search(text);
@@ -119,7 +119,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	protected void onUpdateSystemMessage(GwtConversation conversation, SystemMessage systemMessage) {
+	public void onUpdateSystemMessage(GwtConversation conversation, SystemMessage systemMessage) {
 		User user = conversation.getSession().getUser();
 		if (user == null || user.isAdmin() == false) throw new PermissionDeniedException();
 		webApplication.updateSystemMessage(systemMessage);
@@ -131,26 +131,26 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	protected void onSetSelectedEntitysIds(GwtConversation conversation, Set ids) {
+	public void onSetSelectedEntitysIds(GwtConversation conversation, Set ids) {
 		Project project = conversation.getProject();
 		if (project == null) return;
 		webApplication.setUsersSelectedEntities(project, conversation, ids);
 	}
 
 	@Override
-	protected void onLogout(GwtConversation conversation) {
+	public void onLogout(GwtConversation conversation) {
 		WebSession session = conversation.getSession();
 		webApplication.destroyWebSession(session, getThreadLocalRequest().getSession());
 	}
 
 	@Override
-	protected void onResetPassword(GwtConversation conversation, String userId) {
+	public void onResetPassword(GwtConversation conversation, String userId) {
 		User user = userDao.getById(userId);
 		user.setPassword("geheim");
 	}
 
 	@Override
-	protected void onChangePassword(GwtConversation conversation, String oldPassword, String newPassword) {
+	public void onChangePassword(GwtConversation conversation, String oldPassword, String newPassword) {
 		User user = conversation.getSession().getUser();
 		if (user.matchesPassword(oldPassword) == false) { throw new RuntimeException("Wrong password"); }
 
@@ -442,7 +442,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	protected void onRequestForum(GwtConversation conversation) {
+	public void onRequestForum(GwtConversation conversation) {
 		Project project = conversation.getProject();
 		Set<AEntity> parents = new HashSet<AEntity>();
 		parents.addAll(project.getSubjects());
@@ -454,7 +454,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	protected void onCloseProject(GwtConversation conversation) {
+	public void onCloseProject(GwtConversation conversation) {
 		Project project = conversation.getProject();
 		if (project != null) webApplication.setUsersSelectedEntities(project, conversation, new HashSet<String>(0));
 		conversation.clearRemoteEntities();
@@ -463,7 +463,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	protected void onActivateRequirementEstimationVoting(GwtConversation conversation, String requirementId) {
+	public void onActivateRequirementEstimationVoting(GwtConversation conversation, String requirementId) {
 		Requirement requirement = requirementDao.getById(requirementId);
 		if (requirement == null || !requirement.isProject(conversation.getProject()))
 			throw new PermissionDeniedException();
@@ -475,7 +475,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	protected void onSwitchToNextSprint(GwtConversation conversation) {
+	public void onSwitchToNextSprint(GwtConversation conversation) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
 		Sprint oldSprint = project.getCurrentSprint();
@@ -493,7 +493,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	protected void onRequestReleaseIssues(GwtConversation conversation, String releaseId) {
+	public void onRequestReleaseIssues(GwtConversation conversation, String releaseId) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
 		Release release = releaseDao.getById(releaseId);
@@ -502,7 +502,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	protected void onRequestRequirementEstimationVotes(GwtConversation conversation, String requirementId) {
+	public void onRequestRequirementEstimationVotes(GwtConversation conversation, String requirementId) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
 		Requirement requirement = requirementDao.getById(requirementId);
@@ -518,28 +518,28 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	protected void onRequestAcceptedIssues(GwtConversation conversation) {
+	public void onRequestAcceptedIssues(GwtConversation conversation) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
 		conversation.sendToClient(project.getAcceptedIssues());
 	}
 
 	@Override
-	protected void onRequestClosedIssues(GwtConversation conversation) {
+	public void onRequestClosedIssues(GwtConversation conversation) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
 		conversation.sendToClient(project.getClosedIssues());
 	}
 
 	@Override
-	protected void onRequestRisks(GwtConversation conversation) {
+	public void onRequestRisks(GwtConversation conversation) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
 		conversation.sendToClient(project.getRisks());
 	}
 
 	@Override
-	protected void onRequestEntity(GwtConversation conversation, String entityId) {
+	public void onRequestEntity(GwtConversation conversation, String entityId) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
 
@@ -554,7 +554,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	protected void onRequestEntityByReference(GwtConversation conversation, String reference) {
+	public void onRequestEntityByReference(GwtConversation conversation, String reference) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
 
@@ -597,12 +597,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	protected void onRequestComments(GwtConversation conversation, String parentId) {
+	public void onRequestComments(GwtConversation conversation, String parentId) {
 		conversation.sendToClient(commentDao.getCommentsByParentId(parentId));
 	}
 
 	@Override
-	protected void onRequestChanges(GwtConversation conversation, String parentId) {
+	public void onRequestChanges(GwtConversation conversation, String parentId) {
 		conversation.sendToClient(changeDao.getChangesByParentId(parentId));
 	}
 

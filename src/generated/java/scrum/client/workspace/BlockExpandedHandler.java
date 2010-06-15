@@ -5,5 +5,6 @@ package scrum.client.workspace;
 public interface BlockExpandedHandler {
 
     public abstract void onBlockExpanded(BlockExpandedEvent event);
+
 }
 
