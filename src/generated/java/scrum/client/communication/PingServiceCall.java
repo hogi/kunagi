@@ -2,17 +2,19 @@
 
 package scrum.client.communication;
 
-public class PingServiceCall implements ilarkesto.core.service.ServiceCall {
+public class PingServiceCall extends scrum.client.core.AServiceCall {
 
     public  PingServiceCall() {
     }
 
     public void execute(Runnable returnHandler) {
-        scrum.client.ScrumGwtApplication.get().callPing(returnHandler);
+        serviceCaller.onServiceCall();
+        serviceCaller.getService().ping(serviceCaller.getConversationNumber(), new DefaultCallback(returnHandler));
     }
 
-    public void execute() {
-        execute(null);
+    @Override
+    public String toString() {
+        return "Ping";
     }
 
 }

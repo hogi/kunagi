@@ -17,7 +17,9 @@ import scrum.client.core.ServiceCaller;
 import scrum.client.files.Uploader;
 import scrum.client.issues.IssueManager;
 import scrum.client.journal.ChangeHistoryManager;
+import scrum.client.project.CloseProjectServiceCall;
 import scrum.client.project.Project;
+import scrum.client.project.SelectProjectServiceCall;
 import scrum.client.search.Search;
 import scrum.client.undo.Undo;
 import scrum.client.workspace.DndManager;
@@ -92,12 +94,12 @@ public class ScrumScopeManager {
 
 		projectScope.wireComponents();
 
-		((ScrumGwtApplication) appScope.getComponent("app")).callSelectProject(project.getId(), action);
+		new SelectProjectServiceCall(project.getId()).execute(action);
 	}
 
 	public static void destroyProjectScope() {
 		Scope.get().getComponent(Ui.class).lock("Closing project...");
-		((ScrumGwtApplication) appScope.getComponent("app")).callCloseProject();
+		new CloseProjectServiceCall().execute();
 		appScope.getComponent(Dao.class).clearProjectEntities();
 		ObjectMappedFlowPanel.objectHeights.clear();
 		projectScope = null;

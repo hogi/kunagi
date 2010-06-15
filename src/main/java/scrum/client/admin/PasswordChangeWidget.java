@@ -4,7 +4,6 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AViewEditWidget;
 import ilarkesto.gwt.client.ToolbarWidget;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.FieldsWidget;
 import scrum.client.workspace.Ui;
 
@@ -78,7 +77,7 @@ public class PasswordChangeWidget extends AViewEditWidget {
 				"the new password repeat did not match the new password.");
 			return;
 		}
-		((ScrumGwtApplication) Scope.get().getComponent("app")).callChangePassword(currentPassword, newPassword);
+		new ChangePasswordServiceCall(currentPassword, newPassword).execute();
 	}
 
 	@Override

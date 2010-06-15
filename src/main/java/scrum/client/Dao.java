@@ -13,6 +13,10 @@ import scrum.client.collaboration.ChatMessage;
 import scrum.client.collaboration.Subject;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.common.AScrumGwtEntity;
+import scrum.client.core.ChangePropertiesServiceCall;
+import scrum.client.core.CreateEntityServiceCall;
+import scrum.client.core.DeleteEntityServiceCall;
+import scrum.client.core.RequestEntityByReferenceServiceCall;
 import scrum.client.files.File;
 import scrum.client.files.FileUploadedEvent;
 import scrum.client.impediments.Impediment;
@@ -56,7 +60,7 @@ public class Dao extends GDao {
 	}
 
 	public void requestEntityByReference(String reference) {
-		app.callRequestEntityByReference(reference);
+		new RequestEntityByReferenceServiceCall(reference).execute();
 	}
 
 	public AScrumGwtEntity getEntityByReference(String reference) {
@@ -152,12 +156,12 @@ public class Dao extends GDao {
 
 	@Override
 	protected void onEntityCreatedLocaly(AGwtEntity entity, Runnable successAction) {
-		app.callCreateEntity(entity.getEntityType(), entity.createPropertiesMap(), successAction);
+		new CreateEntityServiceCall(entity.getEntityType(), entity.createPropertiesMap()).execute(successAction);
 	}
 
 	@Override
 	protected void onEntityDeletedLocaly(AGwtEntity entity) {
-		app.callDeleteEntity(entity.getId());
+		new DeleteEntityServiceCall(entity.getId()).execute();
 	}
 
 	@Override
@@ -187,7 +191,7 @@ public class Dao extends GDao {
 
 		private void flush() {
 			for (Map.Entry<String, Map> entry : entityProperties.entrySet()) {
-				app.callChangeProperties(entry.getKey(), entry.getValue());
+				new ChangePropertiesServiceCall(entry.getKey(), entry.getValue()).execute();
 			}
 			entityProperties = new HashMap<String, Map>(3);
 		}

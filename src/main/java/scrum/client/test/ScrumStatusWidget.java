@@ -27,7 +27,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class ScrumStatusWidget extends AScrumWidget {
 
 	private Dao dao;
-	private ScrumGwtApplication app;
 	private ServiceCaller serviceCaller;
 
 	private SimplePanel entityCountWrapper;
@@ -36,7 +35,7 @@ public class ScrumStatusWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		dao = Scope.get().getComponent(Dao.class);
-		app = (ScrumGwtApplication) Scope.get().getComponent("app");
+		ScrumGwtApplication app = (ScrumGwtApplication) Scope.get().getComponent("app");
 		serviceCaller = Scope.get().getComponent(ServiceCaller.class);
 
 		entityCountWrapper = new SimplePanel();
@@ -84,7 +83,7 @@ public class ScrumStatusWidget extends AScrumWidget {
 	private Widget createStateInformation() {
 		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.addFieldRow("activeServiceCallCount", new Label(String.valueOf(serviceCaller.getActiveServiceCallCount())));
-		tb.addFieldRow("conversationNumber", new Label(String.valueOf(app.getConversationNumber())));
+		tb.addFieldRow("conversationNumber", new Label(String.valueOf(serviceCaller.getConversationNumber())));
 		tb.addFieldRow("entityIdBase", new Label(dao.getEntityIdBase()));
 		tb.addFieldRow("entityIdCounter", new Label(String.valueOf(dao.getEntityIdCounter())));
 		return tb.createTable();

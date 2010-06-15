@@ -6,12 +6,12 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtApplication;
 import ilarkesto.gwt.client.AGwtDao;
 import scrum.client.admin.Auth;
+import scrum.client.admin.LogoutServiceCall;
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Subject;
 import scrum.client.communication.Pinger;
-import scrum.client.communication.ServerDataReceivedEvent;
+import scrum.client.communication.StartConversationServiceCall;
 import scrum.client.core.ApplicationStartedEvent;
-import scrum.client.core.ServiceCaller;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -37,7 +37,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	private final Log log = Log.get(getClass());
 
-	private ApplicationInfo applicationInfo;
+	public ApplicationInfo applicationInfo;
 
 	public void onModuleLoad() {
 		System.out.println("ScrumGwtApplication.onModuleLoad()");
@@ -53,7 +53,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		// rootPanel.add(new WidgetsTesterWidget().update());
 		ScrumJs.initialize();
 
-		callStartConversation(new Runnable() {
+		new StartConversationServiceCall().execute(new Runnable() {
 
 			public void run() {
 				new ApplicationStartedEvent().fireInCurrentScope();
@@ -61,24 +61,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 			}
 		});
 
-	}
-
-	@Override
-	public void resetConversation() {
-		super.resetConversation();
-	}
-
-	@Override
-	protected void onServerData(DataTransferObject data) {
-		if (data.applicationInfo != null) {
-			this.applicationInfo = data.applicationInfo;
-			log.debug("applicationInfo:", data.applicationInfo);
-			// Scope.get().putComponent(data.applicationInfo);
-		} else {
-			assert this.applicationInfo != null;
-		}
-
-		new ServerDataReceivedEvent(data).fireInCurrentScope();
 	}
 
 	public ApplicationInfo getApplicationInfo() {
@@ -93,7 +75,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		Scope.get().getComponent(Pinger.class).shutdown();
 		Scope.get().getComponent(Dao.class).clearAllEntities();
 
-		callLogout(new Runnable() {
+		new LogoutServiceCall().execute(new Runnable() {
 
 			public void run() {
 				String url = GWT.getHostPageBaseURL();
@@ -105,7 +87,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	}
 
 	@Override
-	protected void handleCommunicationError(Throwable ex) {
+	public void handleCommunicationError(Throwable ex) {
 		Scope.get().getComponent(Ui.class).getWorkspace().abort(Str.formatException(ex));
 	}
 
@@ -115,23 +97,9 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		Scope.get().getComponent(Ui.class).getWorkspace().abort("Unexpected error: " + Str.formatException(ex));
 	}
 
-	public final void callStartConversation(Runnable callback) {
-		getScrumService().startConversation(new DefaultCallback<DataTransferObject>(callback, "startConversation"));
-	}
-
 	@Override
 	protected AGwtDao getDao() {
 		return Dao.get();
-	}
-
-	@Override
-	protected void onServiceCall() {
-		Scope.get().getComponent(ServiceCaller.class).onServiceCall();
-	}
-
-	@Override
-	protected void onServiceCallReturn() {
-		Scope.get().getComponent(ServiceCaller.class).onServiceCallReturn();
 	}
 
 	public static ScrumGwtApplication get() {

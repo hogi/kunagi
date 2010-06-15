@@ -21,7 +21,7 @@ public class Search extends GSearch implements SearchResultsChangedHandler {
 		results.clear();
 		if (Gwt.isEmpty(searchText)) return;
 
-		app.callSearch(searchText, new Runnable() {
+		new SearchServiceCall(searchText).execute(new Runnable() {
 
 			public void run() {
 				searchClient(searchText);

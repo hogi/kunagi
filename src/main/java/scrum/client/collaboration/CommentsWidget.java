@@ -33,7 +33,7 @@ public class CommentsWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		getApp().callRequestComments(parent.getId()); // TODO commentsManagerComponent
+		new RequestCommentsServiceCall(parent.getId()).execute(); // TODO commentsManagerComponent
 
 		activateCommentLink = new HyperlinkWidget(new ActivateCommentEditorAction());
 

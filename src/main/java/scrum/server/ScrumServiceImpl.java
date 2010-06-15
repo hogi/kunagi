@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import scrum.client.DataTransferObject;
 import scrum.client.admin.SystemMessage;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
@@ -615,7 +616,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Utl.sleep(millis);
 	}
 
-	public scrum.client.DataTransferObject startConversation() {
+	public DataTransferObject startConversation(int conversationNumber) {
 		LOG.debug("startConversation");
 		WebSession session = (WebSession) getSession();
 		GwtConversation conversation = session.getGwtConversation(-1);

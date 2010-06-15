@@ -3,6 +3,7 @@ package scrum.client.files;
 import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
+import scrum.client.impediments.RequestImpedimentsServiceCall;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -13,7 +14,7 @@ public class FileRepositoryWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		getApp().callRequestImpediments();
+		new RequestImpedimentsServiceCall().execute();
 
 		list = new BlockListWidget<File>(FileBlock.FACTORY);
 		list.setAutoSorter(File.REVERSE_UPLOAD_TIME_COMPARATOR);

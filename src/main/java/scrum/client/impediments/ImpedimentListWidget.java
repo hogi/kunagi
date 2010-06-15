@@ -15,7 +15,7 @@ public class ImpedimentListWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		getApp().callRequestImpediments();
+		new RequestImpedimentsServiceCall().execute();
 
 		list = new BlockListWidget<Impediment>(ImpedimentBlock.FACTORY);
 		list.setAutoSorter(Impediment.REVERSE_DATE_COMPARATOR);

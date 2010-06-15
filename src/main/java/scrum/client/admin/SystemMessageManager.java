@@ -23,13 +23,13 @@ public class SystemMessageManager extends GSystemMessageManager implements Serve
 
 	public void activateSystemMessage() {
 		systemMessage.setActive(true);
-		app.callUpdateSystemMessage(systemMessage);
+		new UpdateSystemMessageServiceCall(systemMessage).execute();
 		new VisibleDataChangedEvent().fireInCurrentScope();
 	}
 
 	public void deactivateSystemMessage() {
 		systemMessage.setActive(false);
-		app.callUpdateSystemMessage(systemMessage);
+		new UpdateSystemMessageServiceCall(systemMessage).execute();
 		new VisibleDataChangedEvent().fireInCurrentScope();
 	}
 

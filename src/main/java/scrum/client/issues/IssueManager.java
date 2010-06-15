@@ -21,7 +21,7 @@ public class IssueManager extends GIssueManager {
 		if (this.closedIssuesVisible == closedIssuesVisible) return;
 		this.closedIssuesVisible = closedIssuesVisible;
 		if (closedIssuesVisible) {
-			app.callRequestClosedIssues();
+			new RequestClosedIssuesServiceCall().execute();
 		}
 	}
 

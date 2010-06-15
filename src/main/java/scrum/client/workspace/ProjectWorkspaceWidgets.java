@@ -18,6 +18,8 @@ import scrum.client.collaboration.Subject;
 import scrum.client.collaboration.WikiWidget;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.context.UserHighlightSupport;
+import scrum.client.core.RequestEntityByReferenceServiceCall;
+import scrum.client.core.RequestEntityServiceCall;
 import scrum.client.dashboard.DashboardWidget;
 import scrum.client.files.File;
 import scrum.client.files.FileRepositoryWidget;
@@ -179,7 +181,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 			return;
 		}
 		Scope.get().getComponent(Ui.class).lock("Searching for " + reference);
-		app.callRequestEntityByReference(reference, new Runnable() {
+		new RequestEntityByReferenceServiceCall(reference).execute(new Runnable() {
 
 			public void run() {
 				AGwtEntity entity = dao.getEntityByReference(reference);
@@ -210,7 +212,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 			return;
 		}
 		Scope.get().getComponent(Ui.class).lock("Searching for " + entityId);
-		app.callRequestEntity(entityId, new Runnable() {
+		new RequestEntityServiceCall(entityId).execute(new Runnable() {
 
 			public void run() {
 				AGwtEntity entity;

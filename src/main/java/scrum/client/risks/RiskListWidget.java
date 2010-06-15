@@ -15,7 +15,7 @@ public class RiskListWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		getApp().callRequestRisks();
+		new RequestRisksServiceCall().execute();
 
 		list = new BlockListWidget<Risk>(RiskBlock.FACTORY);
 		list.setAutoSorter(Risk.PRIORITY_COMPARATOR);

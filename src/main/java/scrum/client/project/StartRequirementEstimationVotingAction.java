@@ -1,6 +1,7 @@
 package scrum.client.project;
 
 import scrum.client.common.TooltipBuilder;
+import scrum.client.estimation.ActivateRequirementEstimationVotingServiceCall;
 
 public class StartRequirementEstimationVotingAction extends GStartRequirementEstimationVotingAction {
 
@@ -38,7 +39,7 @@ public class StartRequirementEstimationVotingAction extends GStartRequirementEst
 
 	@Override
 	protected void onExecute() {
-		getApp().callActivateRequirementEstimationVoting(requirement.getId());
+		new ActivateRequirementEstimationVotingServiceCall(requirement.getId()).execute();
 	}
 
 }

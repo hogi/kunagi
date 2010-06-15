@@ -2,23 +2,25 @@
 
 package scrum.client.admin;
 
-public class LoginServiceCall implements ilarkesto.core.service.ServiceCall {
-
-    private String password;
+public class LoginServiceCall extends scrum.client.core.AServiceCall {
 
     private String username;
 
-    public  LoginServiceCall(String password, String username) {
-        this.password = password;
+    private String password;
+
+    public  LoginServiceCall(String username, String password) {
         this.username = username;
+        this.password = password;
     }
 
     public void execute(Runnable returnHandler) {
-        scrum.client.ScrumGwtApplication.get().callLogin(password, username, returnHandler);
+        serviceCaller.onServiceCall();
+        serviceCaller.getService().login(serviceCaller.getConversationNumber(), username, password, new DefaultCallback(returnHandler));
     }
 
-    public void execute() {
-        execute(null);
+    @Override
+    public String toString() {
+        return "Login";
     }
 
 }

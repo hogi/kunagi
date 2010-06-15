@@ -23,6 +23,7 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.img.Img;
 import scrum.client.project.EstimationBarWidget;
+import scrum.client.project.SelectProjectServiceCall;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -113,7 +114,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 
 			@Override
 			protected void onExecute() {
-				getApp().callSelectProject("invalidprojectid");
+				new SelectProjectServiceCall("invalidprojectid").execute();
 			}
 
 			@Override

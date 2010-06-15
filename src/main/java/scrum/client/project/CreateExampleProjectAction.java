@@ -13,7 +13,7 @@ public class CreateExampleProjectAction extends GCreateExampleProjectAction {
 	@Override
 	protected void onExecute() {
 		Scope.get().getComponent(Ui.class).lock("Creating Example Project...");
-		getApp().callCreateExampleProject(new Runnable() {
+		new CreateExampleProjectServiceCall().execute(new Runnable() {
 
 			public void run() {
 				Scope.get().getComponent(Ui.class).unlock();

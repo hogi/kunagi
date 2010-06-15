@@ -2,6 +2,5 @@ package scrum.client;
 
 public interface ScrumService extends GScrumService {
 
-	DataTransferObject startConversation();
-
+	DataTransferObject startConversation(int conversationNumber);
 }

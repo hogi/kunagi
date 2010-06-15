@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.AOutputViewEditWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
+import scrum.client.issues.RequestReleaseIssuesServiceCall;
 import scrum.client.journal.ChangeHistoryWidget;
 import scrum.client.sprint.Sprint;
 
@@ -21,7 +22,7 @@ public class ReleaseWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		getApp().callRequestReleaseIssues(release.getId());
+		new RequestReleaseIssuesServiceCall(release.getId()).execute();
 
 		TableBuilder tb = ScrumGwt.createFieldTable();
 

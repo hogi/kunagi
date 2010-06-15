@@ -64,13 +64,13 @@ public class UsersStatus extends GUsersStatus implements ServerDataReceivedHandl
 	private void addSelectedEntityId(String id) {
 		String userId = getCurrentUser().getId();
 		boolean added = usersStatus.addSelectedEntityId(userId, id);
-		if (added) app.callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());
+		if (added) new SetSelectedEntitysIdsServiceCall(usersStatus.get(userId).getSelectedEntitysIds()).execute();
 	}
 
 	private void removeSelectedEntityId(String id) {
 		String userId = getCurrentUser().getId();
 		boolean removed = usersStatus.removeSelectedEntityId(userId, id);
-		if (removed) app.callSetSelectedEntitysIds(usersStatus.get(userId).getSelectedEntitysIds());
+		if (removed) new SetSelectedEntitysIdsServiceCall(usersStatus.get(userId).getSelectedEntitysIds()).execute();
 	}
 
 	private User getCurrentUser() {

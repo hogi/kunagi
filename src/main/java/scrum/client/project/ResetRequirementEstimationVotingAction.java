@@ -1,5 +1,7 @@
 package scrum.client.project;
 
+import scrum.client.estimation.ActivateRequirementEstimationVotingServiceCall;
+
 public class ResetRequirementEstimationVotingAction extends GResetRequirementEstimationVotingAction {
 
 	public ResetRequirementEstimationVotingAction(scrum.client.project.Requirement requirement) {
@@ -25,7 +27,7 @@ public class ResetRequirementEstimationVotingAction extends GResetRequirementEst
 
 	@Override
 	protected void onExecute() {
-		getApp().callActivateRequirementEstimationVoting(requirement.getId());
+		new ActivateRequirementEstimationVotingServiceCall(requirement.getId()).execute();
 	}
 
 }
