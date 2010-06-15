@@ -15,8 +15,9 @@
 * {margin: 0; padding: 0;}
 body {background: #F2F5FE url("bg.png") 0 0 repeat; font:14px/19px "verdana",sans-serif; color: #333;}
 img {border: none;}
+table td {vertical-align: top;}
 
-    #main {width: 600px; margin: 20px auto 1000px auto; border: 1px solid #555;}
+    #main {width: 750px; margin: 20px auto 1000px auto; border: 1px solid #555;}
 
     #header {height: 80px; background: #233C9B url("header.jpg") 0 0 no-repeat; color:#FFF;}
         h1 {font: 30pt/55pt "georgia",serif; color: white; margin: 0px 20px; color: #192666;}
@@ -32,7 +33,7 @@ img {border: none;}
 		#content .section {padding: 0px 0px;}
             #content .section p {margin-bottom: 10px;}
 			h2 {font: 15pt/20pt "georgia",serif; color: #233C9B; margin-bottom: 10px;}
-			.middle {float: left; width: 350px;}
+			.middle {float: left; width: 500px;}
 			.sidebar {float: right;}
 		        #content .starter {background: orange url("button_bg.png") 0 0 repeat-x; border: 1px solid orange; width: 150px; padding: 5px; text-align: center; -moz-border-radius: 5px; margin-bottom: 5px;}
 		            #content .starter a {color: #B37400; font-size: 16px; font-weight: bold; text-decoration: none;}
@@ -109,7 +110,7 @@ img {border: none;}
             <td><a id="link-support" class="navigLink" onclick="showPage('support')">Support</a></td>
             <td><a id="link-development" class="navigLink" onclick="showPage('development')">Development</a></td>
             <td width="90%"></td>
-            <td><a href="http://flattr.com/thing/2486/Kunagi" target="_blank"><img src="http://api.flattr.com/button/button-compact-static-100x17.png" title="Flattr this" border="0" style="margin: 5px 10px 0px 0px;" /></a></td>
+            <td style="vertical-align: middle;"><a href="http://flattr.com/thing/2486/Kunagi" target="_blank"><img src="http://api.flattr.com/button/button-compact-static-100x17.png" title="Flattr this" border="0" style="margin: 5px 10px 0px 0px;" /></a></td>
         </tr></table>
     </div>
     
@@ -179,7 +180,7 @@ img {border: none;}
 					Using Kunagi's <strong>web interface</strong>, it is possible to access project related data from anywhere.
 					Despite being an online application, the <strong>powerful interface</strong> is built to keep up with the
 					flexibility of desktop software, as it makes use of <strong>asynchronous</strong> technology employing the
-					<strong>Google Web Toolkit</strong> (<a href="http://code.google.com/webtoolkit/">GWT</a>).
+					<strong>Google Web Toolkit</strong> (<a href="http://code.google.com/webtoolkit/" target="_blank">GWT</a>).
                 </p><p>
 					Last, but not least, it is important to us that the tool helps people get their work done. We understand
 					that it is therefore important for the tool to be not only <strong>suitable</strong> for project management,
@@ -200,11 +201,11 @@ img {border: none;}
         <div id="page-screenshots" style="display: none;">
             
             <div class="section">
-                <h2>Screenshots</h2>
-                <table id="screen-table" style="width: 100%; border-spacing: 30px; font-size: 70%;">
+                <table id="screen-table" width="100%">
+			<tr><td colspan="2"> <h2>Dashboard</h2> </td></tr>
                 	<tr>
                 		<td><a href="screenshots/dashboard.png"><img src="screenshots/dashboard_thumb.png" alt="Project Dashboard" /></a></td>
-                		<td>
+                		<td style="padding-left: 30px;">
                 			<p>
                 				The <strong>dashboard</strong> shows all important information relevant to the current sprint.
                 			</p><p>
@@ -214,9 +215,10 @@ img {border: none;}
                 			</p>		
                 		</td>
                 	</tr>
+			<tr><td colspan="2"> <div class="separator"></div> <h2>Product Backlog</h2> </td></tr>
                 	<tr>
                 		<td><a href="screenshots/productbacklog.png"><img src="screenshots/productbacklog_thumb.png" alt="Product Backlog and Planning Poker"/></a></td>
-                		<td>
+                		<td style="padding-left: 30px;">
                 			<p>
                 				The <strong>Product Backlog</strong> is a prioritized list of desired product features in
                 				form of User Stories. 
@@ -227,9 +229,11 @@ img {border: none;}
                 				scope</strong>of future Sprints.
                 			</p>
                 		</td>
+			</tr>
+			<tr><td colspan="2"> <div class="separator"></div> <h2>Whiteboard</h2> </td></tr>
                 	<tr>
                 		<td><a href="screenshots/whiteboard.png"><img src="screenshots/whiteboard_thumb.png" alt="Whiteboard" /></a></td>
-                		<td>
+                		<td style="padding-left: 30px;;">
                 			<p>
                 				The <strong>whiteboard</strong> serves as an intuitive view of the current Sprint's progress.
                 			</p><p>
@@ -316,7 +320,7 @@ img {border: none;}
                         <tr>
                             <td> <span class="label">Name:</span> </td>
                             <td> <input name="name" type="text"> </td>
-                            <td align="right" valign="bottom" rowspan="2"> <input name="submit" type="submit" value="Submit issue" style="padding: 3px; font-size: 16px;"> </td>
+                            <td align="right" valign="bottom" rowspan="2"> <input name="submit" type="submit" value="Submit issue" style="padding: 3px; font-size: 18px; width: 200px; height: 55px;"> </td>
                         </tr>
                         <tr>
                             <td style="padding-top: 3px;"> <span class="label">E-Mail:</span> </td>
@@ -352,7 +356,6 @@ img {border: none;}
             <div class="section">
                 <h2>Infos for Software Developers</h2>
                 <div class="middle">
-                    <a target="_blank" href="https://spreadsheets.google.com/ccc?key=pO4f820H8bM3ckVvlddLTHw&hl=en">Project Management (Google Doc)</a><br>
                     <a target="_blank" href="https://servisto.de/organizanto/179246cd-e81c-4299-8201-0303a515ebbd">Organizanto Project</a><br>
                     <a target="_blank" href="https://servisto.de/organizanto/5cfe9dd8-a1dd-4a37-8314-c40b242ed33f">Continous Integration</a><br>
                     
