@@ -2,7 +2,6 @@ package scrum.client.admin;
 
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.workspace.Navigator;
 import scrum.client.workspace.Ui;
 
@@ -23,8 +22,7 @@ public class LoginAction extends GLoginAction {
 	protected void onExecute() {
 		final Ui ui = Scope.get().getComponent(Ui.class);
 		ui.getWorkspace().lock("Checking login data...");
-		((ScrumGwtApplication) Scope.get().getComponent("app")).callLogin(loginData.getUsername(), loginData
-				.getPassword(), new Runnable() {
+		new LoginServiceCall(loginData.getUsername(), loginData.getPassword()).execute(new Runnable() {
 
 			public void run() {
 				Log.DEBUG("Login response received");

@@ -1,8 +1,8 @@
 package scrum.client.workspace;
 
 import ilarkesto.core.scope.Scope;
-import scrum.client.ScrumGwtApplication;
 import scrum.client.common.AScrumWidget;
+import scrum.client.core.ServiceCaller;
 import scrum.client.test.ScrumStatusWidget;
 
 import com.google.gwt.dom.client.Style;
@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CommunicationIndicatorWidget extends AScrumWidget {
 
-	private ScrumGwtApplication app;
+	private ServiceCaller serviceCaller;
 
 	private FocusPanel focusPanel;
 	private Label status;
@@ -24,8 +24,8 @@ public class CommunicationIndicatorWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		app = (ScrumGwtApplication) Scope.get().getComponent("app");
-		app.setStatusWidget(this);
+		serviceCaller = Scope.get().getComponent(ServiceCaller.class);
+		serviceCaller.setStatusWidget(this);
 
 		status = new Label();
 		status.setStyleName("StatusWidget");
@@ -39,7 +39,7 @@ public class CommunicationIndicatorWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		int count = app.getActiveServiceCallCount();
+		int count = serviceCaller.getActiveServiceCallCount();
 		if (count > 0) {
 			if (!isOn()) switchOn();
 		} else {

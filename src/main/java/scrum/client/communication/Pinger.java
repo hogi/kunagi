@@ -29,7 +29,7 @@ public class Pinger extends GPinger implements ServerDataReceivedHandler, BlockE
 
 			@Override
 			public void run() {
-				app.callPing();
+				new PingServiceCall().execute();
 				reschedule();
 			}
 		};

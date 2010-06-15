@@ -14,6 +14,7 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.collaboration.Comment;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
+import scrum.client.core.ServiceCaller;
 import scrum.client.issues.Issue;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
@@ -27,6 +28,7 @@ public class ScrumStatusWidget extends AScrumWidget {
 
 	private Dao dao;
 	private ScrumGwtApplication app;
+	private ServiceCaller serviceCaller;
 
 	private SimplePanel entityCountWrapper;
 	private SimplePanel stateInformationWrapper;
@@ -35,6 +37,7 @@ public class ScrumStatusWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		dao = Scope.get().getComponent(Dao.class);
 		app = (ScrumGwtApplication) Scope.get().getComponent("app");
+		serviceCaller = Scope.get().getComponent(ServiceCaller.class);
 
 		entityCountWrapper = new SimplePanel();
 		stateInformationWrapper = new SimplePanel();
@@ -80,7 +83,7 @@ public class ScrumStatusWidget extends AScrumWidget {
 
 	private Widget createStateInformation() {
 		TableBuilder tb = ScrumGwt.createFieldTable();
-		tb.addFieldRow("activeServiceCallCount", new Label(String.valueOf(app.getActiveServiceCallCount())));
+		tb.addFieldRow("activeServiceCallCount", new Label(String.valueOf(serviceCaller.getActiveServiceCallCount())));
 		tb.addFieldRow("conversationNumber", new Label(String.valueOf(app.getConversationNumber())));
 		tb.addFieldRow("entityIdBase", new Label(dao.getEntityIdBase()));
 		tb.addFieldRow("entityIdCounter", new Label(String.valueOf(dao.getEntityIdCounter())));

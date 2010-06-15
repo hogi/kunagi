@@ -3,14 +3,15 @@ package scrum.client;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
+import ilarkesto.gwt.client.AGwtApplication;
 import ilarkesto.gwt.client.AGwtDao;
 import scrum.client.admin.Auth;
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Subject;
-import scrum.client.common.AScrumWidget;
 import scrum.client.communication.Pinger;
 import scrum.client.communication.ServerDataReceivedEvent;
 import scrum.client.core.ApplicationStartedEvent;
+import scrum.client.core.ServiceCaller;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -37,7 +38,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	private final Log log = Log.get(getClass());
 
 	private ApplicationInfo applicationInfo;
-	private AScrumWidget statusWidget;
 
 	public void onModuleLoad() {
 		System.out.println("ScrumGwtApplication.onModuleLoad()");
@@ -124,20 +124,18 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		return Dao.get();
 	}
 
-	public void setStatusWidget(AScrumWidget statusWidget) {
-		this.statusWidget = statusWidget;
-	}
-
 	@Override
 	protected void onServiceCall() {
-		super.onServiceCall();
-		if (statusWidget != null) statusWidget.update();
+		Scope.get().getComponent(ServiceCaller.class).onServiceCall();
 	}
 
 	@Override
 	protected void onServiceCallReturn() {
-		super.onServiceCallReturn();
-		if (statusWidget != null) statusWidget.update();
+		Scope.get().getComponent(ServiceCaller.class).onServiceCallReturn();
+	}
+
+	public static ScrumGwtApplication get() {
+		return (ScrumGwtApplication) AGwtApplication.get();
 	}
 
 }

@@ -13,6 +13,7 @@ import scrum.client.collaboration.Chat;
 import scrum.client.collaboration.UsersStatus;
 import scrum.client.collaboration.Wiki;
 import scrum.client.communication.Pinger;
+import scrum.client.core.ServiceCaller;
 import scrum.client.files.Uploader;
 import scrum.client.issues.IssueManager;
 import scrum.client.journal.ChangeHistoryManager;
@@ -46,6 +47,7 @@ public class ScrumScopeManager {
 
 		scope.putComponent("app", app);
 		scope.putComponent(dao);
+		scope.putComponent(new ServiceCaller());
 		scope.putComponent(new Pinger());
 		scope.putComponent(new Ui());
 		scope.putComponent(new SystemMessageManager());

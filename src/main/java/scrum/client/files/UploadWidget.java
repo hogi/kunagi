@@ -11,6 +11,7 @@ import ilarkesto.core.scope.Scope;
 import java.util.Set;
 
 import scrum.client.common.AScrumWidget;
+import scrum.client.communication.PingServiceCall;
 import scrum.client.project.Project;
 
 import com.google.gwt.dom.client.Style.Unit;
@@ -75,7 +76,7 @@ public class UploadWidget extends AScrumWidget {
 
 		public void onFinish(IUploader ul) {
 			if (ul.getStatus() != Status.SUCCESS) {
-				getApp().callPing();
+				new PingServiceCall().execute();
 				if (dialog != null) dialog.hide();
 			}
 		}
