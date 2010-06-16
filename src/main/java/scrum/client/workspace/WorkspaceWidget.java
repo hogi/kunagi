@@ -25,7 +25,7 @@ public class WorkspaceWidget extends AScrumWidget {
 	private LockWidget locker;
 	private LockInfoWidget lockInfo;
 	private SwitcherWidget sidebar;
-	private SwitcherWidget workarea;
+	private SwitcherWidget workarea = new SwitcherWidget(true);
 
 	@Override
 	protected Widget onInitialization() {
@@ -34,7 +34,6 @@ public class WorkspaceWidget extends AScrumWidget {
 		lockInfo = new LockInfoWidget();
 		HeaderWidget header = new HeaderWidget();
 		sidebar = new SwitcherWidget(true);
-		workarea = new SwitcherWidget(true);
 		workarea.setStyleName("Workspace-body-center-content");
 
 		ScrollPanel sidebarScroller = new ScrollPanel(sidebar);

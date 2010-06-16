@@ -1,6 +1,5 @@
 package scrum.client.workspace;
 
-import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.ApplicationInfo;
 import scrum.client.admin.LoginWidget;
@@ -21,7 +20,7 @@ public class PublicWorkspaceWidgets extends GPublicWorkspaceWidgets {
 	public void initialize() {
 		login = new LoginWidget();
 
-		navigator = new SwitchingNavigatorWidget(Scope.get().getComponent(Ui.class).getWorkspace().getWorkarea());
+		navigator = new SwitchingNavigatorWidget(ui.getWorkspace().getWorkarea());
 		navigator.addItem("Login", login);
 		navigator.addItem("Register", createRegisterWidget());
 		navigator.addItem("About", new Label(""));
