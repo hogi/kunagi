@@ -1,6 +1,5 @@
 package scrum.client.common;
 
-import ilarkesto.gwt.client.AViewEditWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
@@ -25,8 +24,6 @@ public class FieldsWidget extends AWidget {
 	private Grid grid;
 	private List<Widget> widgets = new ArrayList<Widget>();
 
-	private Widget autoUpdateWidget = Gwt.getRootWidget();
-
 	@Override
 	protected Widget onInitialization() {
 		grid = new Grid(0, 2);
@@ -42,9 +39,6 @@ public class FieldsWidget extends AWidget {
 
 	public <W extends Widget> W add(String label, W value) {
 		widgets.add(value);
-		if (autoUpdateWidget != null && value instanceof AViewEditWidget) {
-			((AViewEditWidget) value).setAutoUpdateWidget(autoUpdateWidget);
-		}
 		return addWidget(label, value);
 	}
 
@@ -76,10 +70,6 @@ public class FieldsWidget extends AWidget {
 		grid.setWidget(row, 1, value);
 
 		return value;
-	}
-
-	public void setAutoUpdateWidget(AWidget autoUpdateWidget) {
-		this.autoUpdateWidget = autoUpdateWidget;
 	}
 
 }
