@@ -8,6 +8,7 @@
     	<meta name="y_key" content="7cc8fa0621a57566" />
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <script type="text/javascript" language="javascript" src="prototype.js"></script>
+    <script type="text/javascript" language="javascript" src="jquery-1.4.2.min.js"></script>
     <script type="text/javascript" language="javascript" src="http://kill-ie6.pirateboy.net/kill-ie6.js" ></script>
 
 	<style type="text/css">
@@ -54,6 +55,18 @@ table td {vertical-align: top;}
 <body bgcolor="#808080" background="../bg.png">
 
 <script type="text/javascript">
+    var $jq = jQuery.noConflict();
+
+    $jq(window).bind("hashchange", function() {
+        processUrl();
+    });
+
+    function processUrl() {
+        page = window.location.hash;
+        if (page != null && page.startsWith("#")) page = page.substring(1);
+        if (page == null || page.length == 0) page = "home";
+        showPage(page);
+    }
 
     function showPage(name) {
         deactivatePage("home");
@@ -66,13 +79,23 @@ table td {vertical-align: top;}
     }
 
     function deactivatePage(name) {
-        $("page-"+name).style.display = "none";
+        div = $("page-"+name);
+        if (div == null) {
+            return;
+        } 
+        div.style.display = "none";
         link = $("link-"+name);
         if (link != null) link.style.background = null;
     }
 
     function activatePage(name) {
-        $("page-"+name).style.display = "block";
+        window.location.hash = name;
+        div = name.lenght > 20 ? null : $("page-"+name); 
+        if (div == null) {
+        	$("messageOutput").innerHTML = name;
+        	div = $("page-message");
+        } 
+        div.style.display = "block";
         link = $("link-"+name);
         if (link != null) link.style.background = "#394686";
     }
@@ -308,7 +331,7 @@ table td {vertical-align: top;}
                 <h2>Contact / Feedback</h2>
                 <form method="post" action="https://servisto.de/scrum/submitIssue" accept-charset="UTF-8">
                     <input name="projectId" type="hidden" value="ef50396a-0e3a-479b-8808-c31cdfd77fa0">
-                    <input name="returnUrl" type="hidden" value="http://kunagi.org">
+                    <input name="returnUrl" type="hidden" value="http://kunagi.org#{message}">
                     <table cellspacing="0" cellpadding="0" border="0" width="100%">
                         <tr>
                             <td colspan="3">
@@ -399,14 +422,9 @@ table td {vertical-align: top;}
 
 
 <script type="text/javascript">
-    page = getRequestParameter("page");
-    if (page == null) page = "home";
-    showPage(page);
-    var message = getRequestParameter("message");
-    if (message != null) {
-        $("messageOutput").innerHTML = message;    
-        showPage("message");
-    }
+
+    processUrl();
+    
 </script>
 
 <script type="text/javascript">
