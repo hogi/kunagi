@@ -12,6 +12,7 @@ import ilarkesto.search.Searchable;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -530,7 +531,7 @@ public class Project extends GProject {
 
 	private Set<Comment> getComments(boolean latestOnly) {
 		Set<Comment> ret = new HashSet<Comment>();
-		ret.addAll(commentDao.getCommentsByParent(this));
+		ret.addAll(getComments(Arrays.asList(this), latestOnly));
 		ret.addAll(getComments(getSprints(), latestOnly));
 		ret.addAll(getComments(getParticipants(), latestOnly));
 		ret.addAll(getComments(getRequirements(), latestOnly));
@@ -566,7 +567,8 @@ public class Project extends GProject {
 		for (Comment comment : comments) {
 			if (latest == null || comment.getDateAndTime().isAfter(latest.getDateAndTime())) latest = comment;
 		}
-		return latest == null ? new HashSet<Comment>(0) : Utl.toSet(latest);
+		assert latest != null;
+		return Utl.toSet(latest);
 	}
 
 	public Set<Quality> getQualitys() {
