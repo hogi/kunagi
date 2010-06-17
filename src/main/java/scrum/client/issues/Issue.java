@@ -76,7 +76,7 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public void appendStatement(String text) {
 		String statement = getStatement();
-		if (Str.isEmpty(statement)) {
+		if (Str.isBlanc(statement)) {
 			setStatement(text);
 			return;
 		}

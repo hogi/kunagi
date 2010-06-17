@@ -14,6 +14,8 @@ public abstract class GNavigator {
 
     protected scrum.client.Dao dao;
 
+    protected scrum.client.core.ModeSwitcher modeSwitcher;
+
     @Override
     public String toString() {
         return "Navigator";

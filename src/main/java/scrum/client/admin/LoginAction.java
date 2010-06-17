@@ -1,8 +1,6 @@
 package scrum.client.admin;
 
-import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
-import scrum.client.workspace.Navigator;
 import scrum.client.workspace.Ui;
 
 public class LoginAction extends GLoginAction {
@@ -25,14 +23,12 @@ public class LoginAction extends GLoginAction {
 		new LoginServiceCall(loginData.getUsername(), loginData.getPassword()).execute(new Runnable() {
 
 			public void run() {
-				Log.DEBUG("Login response received");
 				if (!getAuth().isUserLoggedIn()) {
 					log.info("Login failed.");
 					ui.unlock();
 					loginData.setFailed();
 				} else {
 					loginData.clear();
-					Scope.get().getComponent(Navigator.class).gotoStart();
 				}
 			}
 		});

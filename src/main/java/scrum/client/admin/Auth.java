@@ -15,6 +15,7 @@ public class Auth extends GAuth implements ServerDataReceivedHandler {
 			user = dao.getUser(data.getUserId());
 			log.info("User logged in:", user);
 			ScrumScopeManager.createUserScope(user);
+			new UserLoggedInEvent().fireInCurrentScope();
 		}
 	}
 

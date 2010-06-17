@@ -13,13 +13,13 @@ import scrum.client.collaboration.Chat;
 import scrum.client.collaboration.UsersStatus;
 import scrum.client.collaboration.Wiki;
 import scrum.client.communication.Pinger;
+import scrum.client.core.ModeSwitcher;
 import scrum.client.core.ServiceCaller;
 import scrum.client.files.Uploader;
 import scrum.client.issues.IssueManager;
 import scrum.client.journal.ChangeHistoryManager;
 import scrum.client.project.CloseProjectServiceCall;
 import scrum.client.project.Project;
-import scrum.client.project.SelectProjectServiceCall;
 import scrum.client.search.Search;
 import scrum.client.undo.Undo;
 import scrum.client.workspace.DndManager;
@@ -53,6 +53,7 @@ public class ScrumScopeManager {
 		scope.putComponent(new Pinger());
 		scope.putComponent(new Ui());
 		scope.putComponent(new SystemMessageManager());
+		scope.putComponent(new ModeSwitcher());
 		scope.putComponent(new Auth());
 		scope.putComponent(new PublicWorkspaceWidgets());
 		scope.putComponent(new Navigator());
@@ -72,10 +73,7 @@ public class ScrumScopeManager {
 		userScope.wireComponents();
 	}
 
-	public static void createProjectScope(final Project project, Runnable action) {
-		assert project != null;
-		Scope.get().getComponent(Ui.class).lock("Loading " + project.getLabel() + "...");
-
+	public static void createProjectScope(Project project) {
 		projectScope = userScope.createScope("project");
 		Scope scope = scopeManager.setScope(projectScope);
 
@@ -93,8 +91,6 @@ public class ScrumScopeManager {
 		scope.putComponent(new IssueManager());
 
 		projectScope.wireComponents();
-
-		new SelectProjectServiceCall(project.getId()).execute(action);
 	}
 
 	public static void destroyProjectScope() {

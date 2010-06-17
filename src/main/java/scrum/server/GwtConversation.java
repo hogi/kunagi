@@ -40,8 +40,8 @@ public class GwtConversation extends AGwtConversation {
 		ScrumWebApplication app = ScrumWebApplication.get();
 		getNextData().systemMessage = app.getSystemMessage();
 		sendToClient(user);
-		sendToClient(app.getProjectDao().getEntitiesVisibleForUser(user));
-		sendToClient(app.getUserDao().getEntitiesVisibleForUser(user));
+		sendToClient(app.getProjectDao().getEntitiesVisibleForUser(user)); // all projects
+		sendToClient(app.getUserDao().getEntitiesVisibleForUser(user)); // all users
 	}
 
 	@Override

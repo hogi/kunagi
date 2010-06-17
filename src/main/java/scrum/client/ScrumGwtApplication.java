@@ -20,7 +20,6 @@ import scrum.client.project.Requirement;
 import scrum.client.release.Release;
 import scrum.client.risks.Risk;
 import scrum.client.sprint.Task;
-import scrum.client.workspace.Navigator;
 import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkspaceWidget;
 
@@ -57,7 +56,6 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 			public void run() {
 				new ApplicationStartedEvent().fireInCurrentScope();
-				Scope.get().getComponent(Navigator.class).gotoStart();
 			}
 		});
 

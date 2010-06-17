@@ -1,5 +1,6 @@
 package scrum.client.workspace;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 
@@ -7,17 +8,21 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import scrum.client.ScrumScopeManager;
 import scrum.client.admin.User;
+import scrum.client.admin.UserLoggedInEvent;
+import scrum.client.admin.UserLoggedInHandler;
+import scrum.client.core.ApplicationStartedEvent;
+import scrum.client.core.ApplicationStartedHandler;
 import scrum.client.project.Project;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 
-public class Navigator extends GNavigator implements BlockExpandedHandler {
+public class Navigator extends GNavigator implements BlockExpandedHandler, UserLoggedInHandler,
+		ApplicationStartedHandler {
 
-	private Map<String, String> tokensForStart;
+	private String startToken;
 	private String page = "Dashboard";
 
 	@Override
@@ -37,23 +42,14 @@ public class Navigator extends GNavigator implements BlockExpandedHandler {
 	}
 
 	private void onHistoryToken(final Map<String, String> tokens) {
-		User user = auth.getUser();
-		Project project = Scope.get().getComponent(Project.class);
 
 		if (tokens.containsKey("login")) {
-			Scope.get().getComponent(PublicWorkspaceWidgets.class).activate();
-			return;
-		}
-
-		if (user == null) {
-			tokensForStart = tokens;
-			gotoLogin();
+			modeSwitcher.activatePublicMode();
 			return;
 		}
 
 		if (tokens.containsKey("projectSelector")) {
-			if (project != null) ScrumScopeManager.destroyProjectScope();
-			Scope.get().getComponent(UsersWorkspaceWidgets.class).activate();
+			modeSwitcher.activateUserMode();
 			return;
 		}
 
@@ -63,28 +59,15 @@ public class Navigator extends GNavigator implements BlockExpandedHandler {
 			return;
 		}
 
+		Project project = Scope.get().getComponent(Project.class);
 		if (project != null && !projectId.equals(project.getId())) {
-			ScrumScopeManager.destroyProjectScope();
 			project = null;
 		}
 
 		if (project == null) {
 			project = dao.getProject(projectId);
 			if (project == null) throw new RuntimeException("Project does not exist: " + projectId);
-			ScrumScopeManager.createProjectScope(project, new Runnable() {
-
-				public void run() {
-					Scope.get().getComponent(ProjectWorkspaceWidgets.class).activate();
-					String entityId = tokens.get("entity");
-					String page = tokens.get("page");
-					if (page != null) {
-						Scope.get().getComponent(ProjectWorkspaceWidgets.class).showPage(page);
-					}
-					if (entityId != null) {
-						Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntityById(entityId);
-					}
-				}
-			});
+			modeSwitcher.acitvateProjectMode(project, tokens.get("page"), tokens.get("entity"));
 			return;
 		}
 
@@ -99,31 +82,39 @@ public class Navigator extends GNavigator implements BlockExpandedHandler {
 		}
 	}
 
-	public void gotoStart() {
+	public void onApplicationStarted(ApplicationStartedEvent event) {
 		User user = auth.getUser();
+		String historyToken = History.getToken();
 		if (user == null) {
-			evalHistoryToken(History.getToken());
+			startToken = Str.isBlanc(historyToken) ? null : historyToken;
+			modeSwitcher.activatePublicMode();
 			return;
 		}
-		if (tokensForStart == null) {
-			if (History.getToken().contains("project=")) {
-				evalHistoryToken(History.getToken());
-			} else {
-				Project project = user.getCurrentProject();
-				if (project == null || user.isAdmin()) {
-					gotoProjectSelector();
-				} else {
-					gotoProject(project.getId());
-				}
-			}
+
+		if (historyToken.contains("project=")) {
+			evalHistoryToken(historyToken);
 		} else {
-			onHistoryToken(tokensForStart);
-			tokensForStart = null;
+			gotoUsersStart();
 		}
 	}
 
-	public void gotoLogin() {
-		gotoToken("login");
+	private void gotoUsersStart() {
+		User user = auth.getUser();
+		Project project = user.getCurrentProject();
+		if (project == null || user.isAdmin()) {
+			gotoProjectSelector();
+		} else {
+			gotoProject(project.getId());
+		}
+	}
+
+	public void onUserLoggedIn(UserLoggedInEvent event) {
+		if (startToken != null) {
+			log.info("Activating history start token: " + startToken);
+			History.newItem(startToken, true);
+			return;
+		}
+		gotoUsersStart();
 	}
 
 	public void gotoProjectSelector() {
