@@ -8,6 +8,7 @@
     	<meta name="y_key" content="7cc8fa0621a57566" />
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <script type="text/javascript" language="javascript" src="prototype.js"></script>
+    <script type="text/javascript" language="javascript" src="scriptaculous.js"></script>
     <script type="text/javascript" language="javascript" src="jquery-1.4.2.min.js"></script>
     <script type="text/javascript" language="javascript" src="http://kill-ie6.pirateboy.net/kill-ie6.js" ></script>
 
@@ -26,10 +27,10 @@ table td {vertical-align: top;}
     #header img {margin: 0px 10px; border: none;}
     
     #menu {background: #192666;}
-        #menu a.navigLink {color: #fff; font-weight: bold; border-right: 1px solid #338; cursor: pointer; display: block; padding: 10px;}
+        #menu a.navigLink {color: #fff; font-weight: bold; border-right: 1px solid #338; cursor: pointer; display: block; padding: 10px; text-decoration: none;}
         #menu a.navigLink:hover {background: #293676; color: #fff;}
     
-    #content {background: white; padding: 25px;}
+    #content {background: white; padding: 25px; min-height: 500px;}
 		#content a {color: #B37400;}
 		#content .section {padding: 0px 0px;}
             #content .section p {margin-bottom: 10px;}
@@ -95,7 +96,8 @@ table td {vertical-align: top;}
         	$("messageOutput").innerHTML = name;
         	div = $("page-message");
         } 
-        div.style.display = "block";
+        //div.style.display = "block";
+        div.appear({ duration: 0.25 });
         link = $("link-"+name);
         if (link != null) link.style.background = "#394686";
     }
@@ -127,11 +129,11 @@ table td {vertical-align: top;}
     
     <div id="menu">
         <table cellspacing="0" cellpadding="0" width="100%"><tr>
-            <td><a id="link-home" class="navigLink" onclick="showPage('home')">Home</a></td>
-            <td><a id="link-screenshots" class="navigLink" onclick="showPage('screenshots')">Screenshots</a></td>
-            <td><a id="link-download" class="navigLink" onclick="showPage('download')">Download</a></td>
-            <td><a id="link-support" class="navigLink" onclick="showPage('support')">Support</a></td>
-            <td><a id="link-development" class="navigLink" onclick="showPage('development')">Development</a></td>
+            <td><a id="link-home" class="navigLink" href="#home" onfocus="blur()">Home</a></td>
+            <td><a id="link-screenshots" class="navigLink" href="#screenshots" onfocus="blur()">Screenshots</a></td>
+            <td><a id="link-download" class="navigLink" href="#download" onfocus="blur()">Download</a></td>
+            <td><a id="link-support" class="navigLink" href="#support" onfocus="blur()">Support</a></td>
+            <td><a id="link-development" class="navigLink" href="#development" onfocus="blur()">Development</a></td>
             <td width="90%"></td>
             <td style="vertical-align: middle;"><a href="http://flattr.com/thing/2486/Kunagi" target="_blank"><img src="http://api.flattr.com/button/button-compact-static-100x17.png" title="Flattr this" border="0" style="margin: 5px 10px 0px 0px;" /></a></td>
         </tr></table>
