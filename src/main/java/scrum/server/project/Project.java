@@ -561,6 +561,7 @@ public class Project extends GProject {
 	}
 
 	private Set<Comment> getLatest(Set<Comment> comments) {
+		if (comments.size() < 2) return comments;
 		Comment latest = null;
 		for (Comment comment : comments) {
 			if (latest == null || comment.getDateAndTime().isAfter(latest.getDateAndTime())) latest = comment;
