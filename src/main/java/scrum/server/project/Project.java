@@ -556,9 +556,10 @@ public class Project extends GProject {
 	private Set<Comment> getComments(Collection<? extends AEntity> entities, boolean latestOnly) {
 		Set<Comment> ret = new HashSet<Comment>();
 		for (AEntity entity : entities) {
-			ret.addAll(commentDao.getCommentsByParent(entity));
+			Set<Comment> comments = commentDao.getCommentsByParent(entity);
+			ret.addAll(latestOnly ? getLatest(comments) : comments);
 		}
-		return latestOnly ? getLatest(ret) : ret;
+		return ret;
 	}
 
 	private Set<Comment> getLatest(Set<Comment> comments) {
