@@ -73,7 +73,7 @@ public class IssueServlet extends AHttpServlet {
 		transactionService.commit();
 		return "<h2>Feedback submitted</h2>" + "<p>Thank you for your feedback!</p>"
 				+ "<p>In case you submitted a bug or feature request, it is now known as <code>" + issue.getReference()
-				+ "</code> and will be reviewed by our Product Owner shortly.</p><p>Thank you!</p>";
+				+ "</code> and will be reviewed by our Product Owner shortly.</p>";
 	}
 
 	@Override
