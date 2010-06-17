@@ -2,6 +2,7 @@ package scrum.server.project;
 
 import ilarkesto.base.Money;
 import ilarkesto.base.Str;
+import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.pdf.APdfBuilder;
 import ilarkesto.persistence.AEntity;
@@ -519,36 +520,52 @@ public class Project extends GProject {
 		return simpleEventDao.getSimpleEventsByProject(this);
 	}
 
-	public Set<Comment> getComments() {
+	public Set<Comment> getAllComments() {
+		return getComments(false);
+	}
+
+	public Set<Comment> getLatestComments() {
+		return getComments(true);
+	}
+
+	private Set<Comment> getComments(boolean latestOnly) {
 		Set<Comment> ret = new HashSet<Comment>();
 		ret.addAll(commentDao.getCommentsByParent(this));
-		ret.addAll(getComments(getSprints()));
-		ret.addAll(getComments(getParticipants()));
-		ret.addAll(getComments(getRequirements()));
-		ret.addAll(getComments(getQualitys()));
-		ret.addAll(getComments(getTasks()));
-		ret.addAll(getComments(getImpediments()));
-		ret.addAll(getComments(getIssues()));
-		ret.addAll(getComments(getRisks()));
-		ret.addAll(getComments(getWikipages()));
-		ret.addAll(getComments(getSimpleEvents()));
-		ret.addAll(getComments(getFiles()));
-		ret.addAll(getComments(getReleases()));
-		ret.addAll(getComments(getSprintSnapshots()));
-		ret.addAll(getComments(getRequirementEstimationVotes()));
-		ret.addAll(getComments(getUserConfigs()));
-		ret.addAll(getComments(getProjectEvents()));
-		ret.addAll(getComments(getSubjects()));
-		ret.addAll(getComments(getReleases()));
+		ret.addAll(getComments(getSprints(), latestOnly));
+		ret.addAll(getComments(getParticipants(), latestOnly));
+		ret.addAll(getComments(getRequirements(), latestOnly));
+		ret.addAll(getComments(getQualitys(), latestOnly));
+		ret.addAll(getComments(getTasks(), latestOnly));
+		ret.addAll(getComments(getImpediments(), latestOnly));
+		ret.addAll(getComments(getIssues(), latestOnly));
+		ret.addAll(getComments(getRisks(), latestOnly));
+		ret.addAll(getComments(getWikipages(), latestOnly));
+		ret.addAll(getComments(getSimpleEvents(), latestOnly));
+		ret.addAll(getComments(getFiles(), latestOnly));
+		ret.addAll(getComments(getReleases(), latestOnly));
+		ret.addAll(getComments(getSprintSnapshots(), latestOnly));
+		ret.addAll(getComments(getRequirementEstimationVotes(), latestOnly));
+		ret.addAll(getComments(getUserConfigs(), latestOnly));
+		ret.addAll(getComments(getProjectEvents(), latestOnly));
+		ret.addAll(getComments(getSubjects(), latestOnly));
+		ret.addAll(getComments(getReleases(), latestOnly));
 		return ret;
 	}
 
-	private Set<Comment> getComments(Collection<? extends AEntity> entities) {
+	private Set<Comment> getComments(Collection<? extends AEntity> entities, boolean latestOnly) {
 		Set<Comment> ret = new HashSet<Comment>();
 		for (AEntity entity : entities) {
 			ret.addAll(commentDao.getCommentsByParent(entity));
 		}
-		return ret;
+		return latestOnly ? getLatest(ret) : ret;
+	}
+
+	private Set<Comment> getLatest(Set<Comment> comments) {
+		Comment latest = null;
+		for (Comment comment : comments) {
+			if (latest == null || comment.getDateAndTime().isAfter(latest.getDateAndTime())) latest = comment;
+		}
+		return latest == null ? new HashSet<Comment>(0) : Utl.toSet(latest);
 	}
 
 	public Set<Quality> getQualitys() {

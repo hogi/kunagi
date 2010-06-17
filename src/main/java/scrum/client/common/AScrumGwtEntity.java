@@ -3,6 +3,7 @@ package scrum.client.common;
 import ilarkesto.core.base.ToHtmlSupport;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
+import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.editor.AOptionEditorModel;
 
@@ -30,6 +31,11 @@ public abstract class AScrumGwtEntity extends AGwtEntity implements ToHtmlSuppor
 			if (latest == null || comment.getDateAndTime().isAfter(latest.getDateAndTime())) latest = comment;
 		}
 		return latest;
+	}
+
+	public DateAndTime getLatestCommentDateAndTime() {
+		Comment latest = getLatestComment();
+		return latest == null ? null : latest.getDateAndTime();
 	}
 
 	public List<Emoticon> getEmoticons() {

@@ -1,5 +1,7 @@
 package scrum.client.collaboration;
 
+import ilarkesto.gwt.client.DateAndTime;
+
 import java.util.Comparator;
 
 import scrum.client.common.AScrumGwtEntity;
@@ -17,12 +19,12 @@ public interface ForumSupport {
 	public static final Comparator<ForumSupport> COMPARATOR = new Comparator<ForumSupport>() {
 
 		public int compare(ForumSupport aFs, ForumSupport bFs) {
-			Comment aComment = ((AScrumGwtEntity) aFs).getLatestComment();
-			Comment bComment = ((AScrumGwtEntity) bFs).getLatestComment();
-			if (aComment == null && bComment == null) return 0;
-			if (aComment == null) return -1;
-			if (bComment == null) return 1;
-			return bComment.getDateAndTime().compareTo(aComment.getDateAndTime());
+			DateAndTime aTime = ((AScrumGwtEntity) aFs).getLatestCommentDateAndTime();
+			DateAndTime bTime = ((AScrumGwtEntity) bFs).getLatestCommentDateAndTime();
+			if (aTime == null && bTime == null) return 0;
+			if (aTime == null) return -1;
+			if (bTime == null) return 1;
+			return bTime.compareTo(aTime);
 		}
 	};
 }

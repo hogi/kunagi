@@ -63,7 +63,7 @@ public class ProjectZipper {
 		zipEntities("sprintDaySnapshot", project.getExistingSprintDaySnapshots());
 		zipEntities("projectUserConfig", project.getUserConfigs());
 		zipEntities("projectEvent", project.getProjectEvents());
-		zipEntities("comment", project.getComments());
+		zipEntities("comment", project.getAllComments());
 
 		for (scrum.server.files.File fle : project.getFiles()) {
 			IO.addZipEntry(zipout, "files/", fle.getJavaFile(), null, null);

@@ -446,7 +446,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Project project = conversation.getProject();
 		Set<AEntity> parents = new HashSet<AEntity>();
 		parents.addAll(project.getSubjects());
-		for (Comment comment : project.getComments()) {
+		for (Comment comment : project.getLatestComments()) {
 			conversation.sendToClient(comment);
 			parents.add(comment.getParent());
 		}
