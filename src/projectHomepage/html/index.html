@@ -46,6 +46,7 @@ table td {vertical-align: top;}
         #content .separator {height: 15px; margin-bottom: 25px; border-bottom: 1px solid #CCC;}
     #footer {background: #192666; color: #CCC; padding: 0px 10px; font-size: 8px; text-align: right;}
     .error {background: darkred; border: 1px solid darkred; text-align: center; color: #FFA; font-size: 16px; font-weight: bold; padding: 10px; margin-bottom: 20px;}
+    input.submit {color: #B37400; font-size: 18px; background: orange url("img/button_bg.png") 0 0 repeat-x; border: 1px solid orange; width: 150px; padding: 5px; text-align: center; -moz-border-radius: 5px; cursor: pointer;}
 	.clear {clear: both;}
 	</style>
 	
@@ -302,7 +303,7 @@ table td {vertical-align: top;}
             <div class="separator"></div>
 
             <div class="section">
-                <a href="http://www.gnu.org/licenses/agpl.html" target="_blank"><img src="agplv3-88x31.png" alt="GNU Affero General Public License"
+                <a href="http://www.gnu.org/licenses/agpl.html" target="_blank"><img src="img/agplv3-88x31.png" alt="GNU Affero General Public License"
                     align="right" style="margin: 0px 0px 15px 25px;"></a>
                 <h2>Copying</h2>
                 <p>
@@ -346,13 +347,17 @@ table td {vertical-align: top;}
                             </td>
                         </tr>
                         <tr>
-                            <td> <span class="label">Name:</span> </td>
-                            <td> <input name="name" type="text"> </td>
-                            <td align="right" valign="bottom" rowspan="2"> <input name="submit" type="submit" value="Submit issue" style="padding: 3px; font-size: 18px; width: 200px; height: 55px;"> </td>
-                        </tr>
-                        <tr>
-                            <td style="padding-top: 3px;"> <span class="label">E-Mail:</span> </td>
-                            <td style="padding-top: 3px;"> <input name="email" type="text"> </td>
+                            <td>
+                                <span class="label">Name:</span>
+                                <input name="name" type="text">
+                            </td>
+                            <td>
+                                <span class="label">E-Mail:</span>
+                                <input name="email" type="text">
+                            </td>
+                            <td align="right">
+                                <input name="submit" type="submit" class="submit" value="Submit issue">
+                            </td>
                         </tr>
                     </table>
                 </form>
