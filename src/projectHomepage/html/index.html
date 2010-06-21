@@ -130,12 +130,14 @@ table td {vertical-align: top;}
     
     <div id="menu">
         <table cellspacing="0" cellpadding="0" width="100%"><tr>
-            <td><a id="link-home" class="navigLink" href="#home" onfocus="blur()">Home</a></td>
-            <td><a id="link-screenshots" class="navigLink" href="#screenshots" onfocus="blur()">Screenshots</a></td>
-            <td><a id="link-download" class="navigLink" href="#download" onfocus="blur()">Download</a></td>
-            <td><a id="link-support" class="navigLink" href="#support" onfocus="blur()">Support</a></td>
-            <td><a id="link-development" class="navigLink" href="#development" onfocus="blur()">Development</a></td>
+            
+            <td><a id="link-home" class="navigLink" onclick="showPage('home')" href="#home" onfocus="blur()">Home</a></td>
+            <td><a id="link-screenshots" class="navigLink" onclick="showPage('screenshots')" href="#screenshots" onfocus="blur()">Screenshots</a></td>
+            <td><a id="link-download" class="navigLink" onclick="showPage('download')" href="#download" onfocus="blur()">Download</a></td>
+            <td><a id="link-support" class="navigLink" onclick="showPage('support')" href="#support" onfocus="blur()">Support</a></td>
+            <td><a id="link-development" class="navigLink" onclick="showPage('development')" href="#development" onfocus="blur()">Development</a></td>
             <td width="90%"></td>
+            
             <td style="vertical-align: middle;"><a href="http://flattr.com/thing/2486/Kunagi" target="_blank"><img src="http://api.flattr.com/button/button-compact-static-100x17.png" title="Flattr this" border="0" style="margin: 5px 10px 0px 0px;" /></a></td>
         </tr></table>
     </div>
