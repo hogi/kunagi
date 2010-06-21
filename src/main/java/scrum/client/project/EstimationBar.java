@@ -20,7 +20,8 @@ public class EstimationBar {
 	}
 
 	public int getEndSprintOffset() {
-		return sprintOffset + workPerSprint.size() - 1;
+		int offset = workPerSprint.isEmpty() ? 0 : workPerSprint.size() - 1;
+		return sprintOffset + offset;
 	}
 
 	public List<Float> getWorkPerSprint() {
@@ -28,8 +29,6 @@ public class EstimationBar {
 	}
 
 	public boolean isCompetedOnSameSprint(EstimationBar previous) {
-		if (workPerSprint.isEmpty()) return true;
-		if (workPerSprint.size() == 1 && workPerSprint.get(0) == 0) return true;
 		return getEndSprintOffset() == previous.getEndSprintOffset();
 	}
 

@@ -12,12 +12,13 @@ public class EstimationBarFactory {
 		boolean stop = false;
 		for (Requirement requirement : requirements) {
 			workPerSprint = new ArrayList<Float>();
+
 			Float estimatedWork = requirement.getEstimatedWork();
-			if (estimatedWork == null) stop = true;
-			if (stop) {
-				requirement.setEstimationBar(new EstimationBar(sprintOffset + 1, workPerSprint));
-				continue;
+			if (estimatedWork == null && !stop) {
+				stop = true;
+				sprintOffset++;
 			}
+
 			if (velocity == null || velocity == 0 || estimatedWork == null) {
 				if (estimatedWork != null) workPerSprint.add(estimatedWork);
 				requirement.setEstimationBar(new EstimationBar(sprintOffset, workPerSprint));
@@ -27,7 +28,7 @@ public class EstimationBarFactory {
 			while (work > remainingWorkInSprint) {
 				workPerSprint.add(remainingWorkInSprint);
 				work -= remainingWorkInSprint;
-				sprintOffset++;
+				if (!stop) sprintOffset++;
 				remainingWorkInSprint = velocity;
 			}
 			if (work > 0) {
@@ -36,7 +37,7 @@ public class EstimationBarFactory {
 			}
 			requirement.setEstimationBar(new EstimationBar(sprintOffset - workPerSprint.size() + 1, workPerSprint));
 			if (remainingWorkInSprint == 0) {
-				sprintOffset++;
+				if (!stop) sprintOffset++;
 				remainingWorkInSprint = velocity;
 			}
 		}

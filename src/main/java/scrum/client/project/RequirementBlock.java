@@ -52,7 +52,7 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 		Image statusImage = null;
 		if (requirement.isWorkEstimationVotingActive()) {
 			statusImage = Img.bundle.reqPoker().createImage();
-			statusImage.setTitle("Estimation geame \"Planning Poker\" active.");
+			statusImage.setTitle("Estimation game \"Planning Poker\" active.");
 		} else if (requirement.isInCurrentSprint()) {
 			statusImage = Img.bundle.reqInSprint().createImage();
 			statusImage.setTitle("In current sprint.");
@@ -69,14 +69,12 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 
 		boolean sprintBorder = false;
 		Requirement previous = getList().getPrevious(requirement);
-		while (previous != null && previous.getEstimatedWork() == null)
-			previous = getList().getPrevious(previous);
-		if (previous != null && previous.getEstimatedWork() != null) {
-			EstimationBar estimationBar = previous.getEstimationBar();
-			sprintBorder = !requirement.getEstimationBar().isCompetedOnSameSprint(estimationBar);
+		if (previous != null) {
+			EstimationBar previousEstimationBar = previous.getEstimationBar();
+			sprintBorder = !requirement.getEstimationBar().isCompetedOnSameSprint(previousEstimationBar);
 		}
 
-		if (sprintBorder) {
+		if (previous != null && sprintBorder) {
 			if (sprintBorderIndicator == null) {
 				sprintBorderIndicator = new SprintSwitchIndicatorWidget();
 				Sprint sprint = getCurrentProject().getCurrentSprint();
