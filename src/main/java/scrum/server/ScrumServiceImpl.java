@@ -675,6 +675,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onRegister(GwtConversation conversation, String username, String email, String password) {
+		if (userDao.getUserByName(username) != null || userDao.getUsersByEmail(email) != null) {
+			// username or email already exists
+			return;
+		}
+
 		User user = userDao.newEntityInstance();
 		user.setName(username);
 		user.setEmail(email);
@@ -684,8 +689,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Session session = Eml.createSmtpSession(config.getSmtpHost(), config.getSmtpUser(), config.getSmtpPassword());
 		MimeMessage message = Eml.createTextMessage(session, "Test Mail From Servisto", "Test Mail Text", config
 				.getSmtpFrom(), email);
-		Eml.sendSmtpMessage(session, message);
+		// Eml.sendSmtpMessage(session, message);
 		// FIXME E-Mail is not send. If that works, saveEntity below should be invoked
-		// userDao.saveEntity(user);
+		userDao.saveEntity(user);
+		onLogin(conversation, username, password);
 	}
 }

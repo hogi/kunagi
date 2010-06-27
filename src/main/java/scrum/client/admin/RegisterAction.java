@@ -24,10 +24,14 @@ public class RegisterAction extends GLoginAction {
 				.getPassword()).execute(new Runnable() {
 
 			public void run() {
-				registrationData.setSuccessful("Thank you, " + registrationData.getUsername()
-						+ "! You account has been created. You may now use it to login to the application.");
-				registrationData.clear();
-				ui.unlock();
+				if (!getAuth().isUserLoggedIn()) {
+					// TODO proper information about why registration was unsuccessful
+					registrationData.setFailed("Registration failed. Username or E-Mail already exist.");
+					ui.unlock();
+				} else {
+					// TODO show message that e-mail verification is required
+					registrationData.clear();
+				}
 			}
 		});
 	}

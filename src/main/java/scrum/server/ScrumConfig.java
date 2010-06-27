@@ -46,6 +46,6 @@ public class ScrumConfig {
 	}
 
 	public String getSmtpFrom() {
-		return p.get("smpt.from");
+		return p.get("smtp.from");
 	}
 }

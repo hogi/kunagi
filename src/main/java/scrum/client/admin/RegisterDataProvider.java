@@ -10,8 +10,6 @@ public interface RegisterDataProvider {
 
 	void setFailed(String message);
 
-	void setSuccessful(String message);
-
 	void clear();
 
 }

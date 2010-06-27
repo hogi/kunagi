@@ -89,11 +89,6 @@ public class RegisterWidget extends AScrumWidget implements RegisterDataProvider
 		this.message.setText(message);
 	}
 
-	public void setSuccessful(String message) {
-		this.message.setStyleName("LoginWidget-successMessage");
-		this.message.setText(message);
-	}
-
 	class InputKeyHandler implements KeyPressHandler {
 
 		public void onKeyPress(KeyPressEvent event) {
