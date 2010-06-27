@@ -2407,6 +2407,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.admin.User> getUsersByEmailVerified(boolean emailVerified) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isEmailVerified(emailVerified)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.admin.User> getUsersByEmail(java.lang.String email) {
         List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
         for (scrum.client.admin.User entity : users.values()) {

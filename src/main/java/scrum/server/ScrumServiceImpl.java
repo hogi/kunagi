@@ -7,6 +7,7 @@ import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
+import ilarkesto.email.Eml;
 import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
@@ -18,6 +19,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 
 import scrum.client.DataTransferObject;
 import scrum.client.admin.SystemMessage;
@@ -669,4 +673,19 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		return ScrumWebApplication.class;
 	}
 
+	@Override
+	public void onRegister(GwtConversation conversation, String username, String email, String password) {
+		User user = userDao.newEntityInstance();
+		user.setName(username);
+		user.setEmail(email);
+		user.setPassword(password);
+		user.setEmailVerified(false);
+		ScrumConfig config = new ScrumConfig(webApplication.getApplicationDataDir());
+		Session session = Eml.createSmtpSession(config.getSmtpHost(), config.getSmtpUser(), config.getSmtpPassword());
+		MimeMessage message = Eml.createTextMessage(session, "Test Mail From Servisto", "Test Mail Text", config
+				.getSmtpFrom(), email);
+		Eml.sendSmtpMessage(session, message);
+		// FIXME E-Mail is not send. If that works, saveEntity below should be invoked
+		// userDao.saveEntity(user);
+	}
 }

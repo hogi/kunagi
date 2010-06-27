@@ -32,4 +32,20 @@ public class ScrumConfig {
 	public boolean isStageIntegration() {
 		return p.getBoolean("stage.integration", false);
 	}
+
+	public String getSmtpHost() {
+		return p.get("smtp.host");
+	}
+
+	public String getSmtpUser() {
+		return p.get("smtp.user");
+	}
+
+	public String getSmtpPassword() {
+		return p.get("smtp.password");
+	}
+
+	public String getSmtpFrom() {
+		return p.get("smpt.from");
+	}
 }

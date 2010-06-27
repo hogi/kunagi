@@ -372,6 +372,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.setSuperbean(super.getUserModel());
 			userModel.addStringProperty("name").setMandatory(true).setSearchable(true);
 			userModel.addProperty("admin", boolean.class);
+			userModel.addProperty("emailVerified", boolean.class);
 			userModel.addStringProperty("email").setSearchable(true);
 			userModel.addReference("currentProject", getProjectModel());
 			userModel.addStringProperty("color");

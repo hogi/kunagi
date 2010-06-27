@@ -114,6 +114,25 @@ public abstract class GUser
         return equals(this.admin, admin);
     }
 
+    // --- emailVerified ---
+
+    private boolean emailVerified ;
+
+    public final boolean isEmailVerified() {
+        return this.emailVerified ;
+    }
+
+    public final User setEmailVerified(boolean emailVerified) {
+        if (isEmailVerified(emailVerified)) return (User)this;
+        this.emailVerified = emailVerified ;
+        propertyChanged("emailVerified", this.emailVerified);
+        return (User)this;
+    }
+
+    public final boolean isEmailVerified(boolean emailVerified) {
+        return equals(this.emailVerified, emailVerified);
+    }
+
     // --- email ---
 
     private java.lang.String email ;
@@ -240,6 +259,7 @@ public abstract class GUser
     public void updateProperties(Map props) {
         name  = (java.lang.String) props.get("name");
         admin  = (Boolean) props.get("admin");
+        emailVerified  = (Boolean) props.get("emailVerified");
         email  = (java.lang.String) props.get("email");
         currentProjectId = (String) props.get("currentProjectId");
         color  = (java.lang.String) props.get("color");
@@ -250,6 +270,7 @@ public abstract class GUser
         super.storeProperties(properties);
         properties.put("name", this.name);
         properties.put("admin", this.admin);
+        properties.put("emailVerified", this.emailVerified);
         properties.put("email", this.email);
         properties.put("currentProjectId", this.currentProjectId);
         properties.put("color", this.color);

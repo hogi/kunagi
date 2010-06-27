@@ -38,6 +38,7 @@ public abstract class GUser
         super.storeProperties(properties);
         properties.put("name", this.name);
         properties.put("admin", this.admin);
+        properties.put("emailVerified", this.emailVerified);
         properties.put("email", this.email);
         properties.put("currentProjectId", this.currentProjectId);
         properties.put("color", this.color);
@@ -125,6 +126,35 @@ public abstract class GUser
 
     protected final void updateAdmin(Object value) {
         setAdmin((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - emailVerified
+    // -----------------------------------------------------------
+
+    private boolean emailVerified;
+
+    public final boolean isEmailVerified() {
+        return emailVerified;
+    }
+
+    public final void setEmailVerified(boolean emailVerified) {
+        emailVerified = prepareEmailVerified(emailVerified);
+        if (isEmailVerified(emailVerified)) return;
+        this.emailVerified = emailVerified;
+        fireModified();
+    }
+
+    protected boolean prepareEmailVerified(boolean emailVerified) {
+        return emailVerified;
+    }
+
+    public final boolean isEmailVerified(boolean emailVerified) {
+        return this.emailVerified == emailVerified;
+    }
+
+    protected final void updateEmailVerified(Object value) {
+        setEmailVerified((Boolean)value);
     }
 
     // -----------------------------------------------------------
@@ -256,6 +286,7 @@ public abstract class GUser
             Object value = entry.getValue();
             if (property.equals("name")) updateName(value);
             if (property.equals("admin")) updateAdmin(value);
+            if (property.equals("emailVerified")) updateEmailVerified(value);
             if (property.equals("email")) updateEmail(value);
             if (property.equals("currentProjectId")) updateCurrentProject(value);
             if (property.equals("color")) updateColor(value);

@@ -10,6 +10,8 @@ public interface ScrumServiceAsync {
 
     void logout(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
+    void register(int conversationNumber, String username, String password, String email, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
+
     void resetPassword(int conversationNumber, String userId, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
     void updateSystemMessage(int conversationNumber, scrum.client.admin.SystemMessage systemMessage, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);

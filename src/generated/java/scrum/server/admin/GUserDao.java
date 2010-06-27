@@ -45,6 +45,7 @@ public abstract class GUserDao
         usersByNameCache.clear();
         namesCache = null;
         usersByAdminCache.clear();
+        usersByEmailVerifiedCache.clear();
         usersByEmailCache.clear();
         emailsCache = null;
         usersByCurrentProjectCache.clear();
@@ -134,6 +135,35 @@ public abstract class GUserDao
 
         public boolean test(User e) {
             return value == e.isAdmin();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - emailVerified
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByEmailVerifiedCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean emailVerified) {
+                    return getEntities(new IsEmailVerified(emailVerified));
+                }
+            });
+
+    public final Set<User> getUsersByEmailVerified(boolean emailVerified) {
+        return usersByEmailVerifiedCache.get(emailVerified);
+    }
+
+    private static class IsEmailVerified implements Predicate<User> {
+
+        private boolean value;
+
+        public IsEmailVerified(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isEmailVerified();
         }
 
     }
