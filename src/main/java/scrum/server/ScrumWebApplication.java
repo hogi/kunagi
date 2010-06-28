@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 import scrum.client.ApplicationInfo;
 import scrum.client.UsersStatusData;
 import scrum.client.admin.SystemMessage;
+import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.common.BurndownChart;
@@ -66,6 +67,10 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			burndownChart.setProjectDao(getProjectDao());
 		}
 		return burndownChart;
+	}
+
+	public SystemConfig getSystemConfig() {
+		return getSystemConfigDao().getSystemConfig();
 	}
 
 	public ScrumConfig getConfig() {

@@ -2211,6 +2211,100 @@ public abstract class GDao
         return ret;
     }
 
+    // --- SystemConfig ---
+
+    private Map<String, scrum.client.admin.SystemConfig> systemConfigs = new HashMap<String, scrum.client.admin.SystemConfig>();
+
+    public final void clearSystemConfigs() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing SystemConfigs");
+        systemConfigs.clear();
+    }
+
+    public final boolean containsSystemConfig(scrum.client.admin.SystemConfig systemConfig) {
+        return systemConfigs.containsKey(systemConfig.getId());
+    }
+
+    public final void deleteSystemConfig(scrum.client.admin.SystemConfig systemConfig) {
+        systemConfigs.remove(systemConfig.getId());
+        entityDeleted(systemConfig);
+    }
+
+    public final void createSystemConfig(scrum.client.admin.SystemConfig systemConfig, Runnable successAction) {
+        systemConfigs.put(systemConfig.getId(), systemConfig);
+        entityCreated(systemConfig, successAction);
+    }
+
+    public final void createSystemConfig(scrum.client.admin.SystemConfig systemConfig) {
+        systemConfigs.put(systemConfig.getId(), systemConfig);
+        entityCreated(systemConfig, null);
+    }
+
+    private final void updateSystemConfig(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.admin.SystemConfig entity = systemConfigs.get(id);
+        if (entity == null) {
+            entity = new scrum.client.admin.SystemConfig(data);
+            systemConfigs.put(id, entity);
+            ilarkesto.core.logging.Log.DEBUG("SystemConfig received: " + entity.getId() + " ("+entity+")");
+        } else {
+            entity.updateProperties(data);
+            ilarkesto.core.logging.Log.DEBUG("SystemConfig updated: " + entity);
+        }
+        onEntityModifiedRemotely(entity);
+    }
+
+    public final scrum.client.admin.SystemConfig getSystemConfig(String id) {
+        scrum.client.admin.SystemConfig ret = systemConfigs.get(id);
+        if (ret == null) throw new RuntimeException("SystemConfig does not exist: " + id);
+        return ret;
+    }
+
+    public final Set<scrum.client.admin.SystemConfig> getSystemConfigs(Collection<String> ids) {
+        Set<scrum.client.admin.SystemConfig> ret = new HashSet<scrum.client.admin.SystemConfig>();
+        for (String id : ids) {
+            scrum.client.admin.SystemConfig entity = systemConfigs.get(id);
+            if (entity == null) throw new RuntimeException("SystemConfig does not exist: " + id);
+            ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigs() {
+        return new ArrayList<scrum.client.admin.SystemConfig>(systemConfigs.values());
+    }
+
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsByGoogleAnalyticsId(java.lang.String googleAnalyticsId) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isGoogleAnalyticsId(googleAnalyticsId)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsBySmtpServer(java.lang.String smtpServer) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isSmtpServer(smtpServer)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsBySmtpUser(java.lang.String smtpUser) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isSmtpUser(smtpUser)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsBySmtpPassword(java.lang.String smtpPassword) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isSmtpPassword(smtpPassword)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Task ---
 
     private Map<String, scrum.client.sprint.Task> tasks = new HashMap<String, scrum.client.sprint.Task>();
@@ -2544,6 +2638,7 @@ public abstract class GDao
             clearSimpleEvents();
             clearSprints();
             clearSubjects();
+            clearSystemConfigs();
             clearTasks();
             clearUsers();
             clearWikipages();
@@ -2573,6 +2668,7 @@ public abstract class GDao
             entityMaps.add(simpleEvents);
             entityMaps.add(sprints);
             entityMaps.add(subjects);
+            entityMaps.add(systemConfigs);
             entityMaps.add(tasks);
             entityMaps.add(users);
             entityMaps.add(wikipages);
@@ -2654,6 +2750,10 @@ public abstract class GDao
             updateSubject(data);
             return;
         }
+        if (type.equals(scrum.client.admin.SystemConfig.ENTITY_TYPE)) {
+            updateSystemConfig(data);
+            return;
+        }
         if (type.equals(scrum.client.sprint.Task.ENTITY_TYPE)) {
             updateTask(data);
             return;
@@ -2690,6 +2790,7 @@ public abstract class GDao
         ret.put("SimpleEvent", simpleEvents.size());
         ret.put("Sprint", sprints.size());
         ret.put("Subject", subjects.size());
+        ret.put("SystemConfig", systemConfigs.size());
         ret.put("Task", tasks.size());
         ret.put("User", users.size());
         ret.put("Wikipage", wikipages.size());

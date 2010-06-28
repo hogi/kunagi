@@ -42,6 +42,7 @@ public class GwtConversation extends AGwtConversation {
 		sendToClient(user);
 		sendToClient(app.getProjectDao().getEntitiesVisibleForUser(user)); // all projects
 		sendToClient(app.getUserDao().getEntitiesVisibleForUser(user)); // all users
+		if (user.isAdmin()) sendToClient(app.getSystemConfig());
 	}
 
 	@Override

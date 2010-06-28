@@ -5,8 +5,10 @@ import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.gwt.client.AGwtEntity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import scrum.client.admin.SystemConfig;
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Chat;
 import scrum.client.collaboration.ChatMessage;
@@ -57,6 +59,11 @@ public class Dao extends GDao {
 		clearSimpleEvents();
 		clearProjectUserConfigs();
 		clearProjectEvents();
+	}
+
+	public SystemConfig getSystemConfig() {
+		List<SystemConfig> configs = getSystemConfigs();
+		return configs.size() > 0 ? configs.get(0) : null;
 	}
 
 	public void requestEntityByReference(String reference) {

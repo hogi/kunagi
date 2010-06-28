@@ -1,0 +1,246 @@
+// ----------> GENERATED FILE - DON'T TOUCH! <----------
+
+// generator: ilarkesto.mda.legacy.generator.DaoGenerator
+
+
+
+
+
+
+
+
+
+
+package scrum.server.admin;
+
+import java.util.*;
+import ilarkesto.persistence.*;
+import ilarkesto.core.logging.Log;
+import ilarkesto.base.*;
+import ilarkesto.base.time.*;
+import ilarkesto.auth.*;
+import ilarkesto.fp.*;
+
+public abstract class GSystemConfigDao
+            extends ilarkesto.persistence.ADao<SystemConfig> {
+
+    public final String getEntityName() {
+        return SystemConfig.TYPE;
+    }
+
+    public final Class getEntityClass() {
+        return SystemConfig.class;
+    }
+
+    public Set<SystemConfig> getEntitiesVisibleForUser(final scrum.server.admin.User user) {
+        return getEntities(new Predicate<SystemConfig>() {
+            public boolean test(SystemConfig e) {
+                return Auth.isVisible(e, user);
+            }
+        });
+    }
+
+    // --- clear caches ---
+    public void clearCaches() {
+        systemConfigsByGoogleAnalyticsIdCache.clear();
+        googleAnalyticsIdsCache = null;
+        systemConfigsBySmtpServerCache.clear();
+        smtpServersCache = null;
+        systemConfigsBySmtpUserCache.clear();
+        smtpUsersCache = null;
+        systemConfigsBySmtpPasswordCache.clear();
+        smtpPasswordsCache = null;
+    }
+
+    @Override
+    public void entityDeleted(EntityEvent event) {
+        super.entityDeleted(event);
+        if (event.getEntity() instanceof SystemConfig) {
+            clearCaches();
+        }
+    }
+
+    @Override
+    public void entitySaved(EntityEvent event) {
+        super.entitySaved(event);
+        if (event.getEntity() instanceof SystemConfig) {
+            clearCaches();
+        }
+    }
+
+    // -----------------------------------------------------------
+    // - googleAnalyticsId
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsByGoogleAnalyticsIdCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String googleAnalyticsId) {
+                    return getEntities(new IsGoogleAnalyticsId(googleAnalyticsId));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByGoogleAnalyticsId(java.lang.String googleAnalyticsId) {
+        return systemConfigsByGoogleAnalyticsIdCache.get(googleAnalyticsId);
+    }
+    private Set<java.lang.String> googleAnalyticsIdsCache;
+
+    public final Set<java.lang.String> getGoogleAnalyticsIds() {
+        if (googleAnalyticsIdsCache == null) {
+            googleAnalyticsIdsCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isGoogleAnalyticsIdSet()) googleAnalyticsIdsCache.add(e.getGoogleAnalyticsId());
+            }
+        }
+        return googleAnalyticsIdsCache;
+    }
+
+    private static class IsGoogleAnalyticsId implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsGoogleAnalyticsId(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isGoogleAnalyticsId(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - smtpServer
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsBySmtpServerCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String smtpServer) {
+                    return getEntities(new IsSmtpServer(smtpServer));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsBySmtpServer(java.lang.String smtpServer) {
+        return systemConfigsBySmtpServerCache.get(smtpServer);
+    }
+    private Set<java.lang.String> smtpServersCache;
+
+    public final Set<java.lang.String> getSmtpServers() {
+        if (smtpServersCache == null) {
+            smtpServersCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isSmtpServerSet()) smtpServersCache.add(e.getSmtpServer());
+            }
+        }
+        return smtpServersCache;
+    }
+
+    private static class IsSmtpServer implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsSmtpServer(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isSmtpServer(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - smtpUser
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsBySmtpUserCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String smtpUser) {
+                    return getEntities(new IsSmtpUser(smtpUser));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsBySmtpUser(java.lang.String smtpUser) {
+        return systemConfigsBySmtpUserCache.get(smtpUser);
+    }
+    private Set<java.lang.String> smtpUsersCache;
+
+    public final Set<java.lang.String> getSmtpUsers() {
+        if (smtpUsersCache == null) {
+            smtpUsersCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isSmtpUserSet()) smtpUsersCache.add(e.getSmtpUser());
+            }
+        }
+        return smtpUsersCache;
+    }
+
+    private static class IsSmtpUser implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsSmtpUser(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isSmtpUser(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - smtpPassword
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsBySmtpPasswordCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String smtpPassword) {
+                    return getEntities(new IsSmtpPassword(smtpPassword));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsBySmtpPassword(java.lang.String smtpPassword) {
+        return systemConfigsBySmtpPasswordCache.get(smtpPassword);
+    }
+    private Set<java.lang.String> smtpPasswordsCache;
+
+    public final Set<java.lang.String> getSmtpPasswords() {
+        if (smtpPasswordsCache == null) {
+            smtpPasswordsCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isSmtpPasswordSet()) smtpPasswordsCache.add(e.getSmtpPassword());
+            }
+        }
+        return smtpPasswordsCache;
+    }
+
+    private static class IsSmtpPassword implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsSmtpPassword(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isSmtpPassword(value);
+        }
+
+    }
+
+    // --- valueObject classes ---
+    @Override
+    protected Set<Class> getValueObjectClasses() {
+        Set<Class> ret = new HashSet<Class>(super.getValueObjectClasses());
+        return ret;
+    }
+
+    @Override
+    public Map<String, Class> getAliases() {
+        Map<String, Class> aliases = new HashMap<String, Class>(super.getAliases());
+        return aliases;
+    }
+
+    // --- dependencies ---
+
+}

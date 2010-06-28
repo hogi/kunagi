@@ -528,6 +528,31 @@ public abstract class GScrumWebApplication
         subjectDao = null;
     }
 
+    // --- systemConfigDao ---
+
+    private scrum.server.admin.SystemConfigDao systemConfigDao;
+
+    public final scrum.server.admin.SystemConfigDao getSystemConfigDao() {
+        if (systemConfigDao == null) {
+            systemConfigDao = createSystemConfigDao();
+            initializeSystemConfigDao(systemConfigDao);
+        }
+        return systemConfigDao;
+    }
+
+    protected scrum.server.admin.SystemConfigDao createSystemConfigDao() {
+        return systemConfigDao = ilarkesto.base.Reflect.newInstance(scrum.server.admin.SystemConfigDao.class);
+    }
+
+    protected void initializeSystemConfigDao(scrum.server.admin.SystemConfigDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetSystemConfigDao() {
+        systemConfigDao = null;
+    }
+
     // --- taskDao ---
 
     private scrum.server.sprint.TaskDao taskDao;

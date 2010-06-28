@@ -3,7 +3,6 @@ package scrum.mda;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.base.time.Time;
-import ilarkesto.di.app.ApplicationStarter;
 import ilarkesto.mda.legacy.AGeneratorApplication;
 import ilarkesto.mda.legacy.generator.GwtActionGenerator;
 import ilarkesto.mda.legacy.generator.GwtActionTemplateGenerator;
@@ -23,7 +22,8 @@ import java.util.List;
 public class ScrumModelApplication extends AGeneratorApplication {
 
 	public static void main(String[] args) {
-		ApplicationStarter.startApplication(ScrumModelApplication.class).generateClasses().shutdown();
+		ScrumModeller.main(args);
+		// ApplicationStarter.startApplication(ScrumModelApplication.class).generateClasses().shutdown();
 	}
 
 	// -------------------
@@ -52,6 +52,22 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	// ----------------
 	// --- entities ---
 	// ----------------
+
+	private EntityModel systemConfigModel;
+
+	public EntityModel getSystemConfigModel() {
+		if (systemConfigModel == null) {
+			systemConfigModel = createEntityModel("SystemConfig", "admin");
+			systemConfigModel.setGwtSupport(true);
+			systemConfigModel.setViewProtected(true);
+			systemConfigModel.addStringProperty("googleAnalyticsId");
+			systemConfigModel.addStringProperty("smtpServer");
+			systemConfigModel.addStringProperty("smtpUser");
+			systemConfigModel.addStringProperty("smtpPassword");
+			autowire(systemConfigModel);
+		}
+		return systemConfigModel;
+	}
 
 	private EntityModel simpleEventModel;
 

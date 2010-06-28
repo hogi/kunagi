@@ -3,6 +3,7 @@ package scrum.client.workspace;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.admin.ProjectSelectorWidget;
+import scrum.client.admin.SystemConfigWidget;
 import scrum.client.admin.SystemMessageManagerWidget;
 import scrum.client.admin.SystemMessageWidget;
 import scrum.client.admin.UserConfigWidget;
@@ -19,18 +20,21 @@ public class UsersWorkspaceWidgets extends GUsersWorkspaceWidgets {
 	private UserConfigWidget userConfig;
 	private UserListWidget userList;
 	private SystemMessageManagerWidget messageManager;
+	private SystemConfigWidget systemConfig;
 
 	@Override
 	public void initialize() {
 		projectSelector = new ProjectSelectorWidget();
 		userConfig = new UserConfigWidget();
 		messageManager = new SystemMessageManagerWidget();
+		systemConfig = new SystemConfigWidget();
 
 		navigator = new SwitchingNavigatorWidget(ui.getWorkspace().getWorkarea());
 		navigator.addItem("Projects", projectSelector);
 		navigator.addItem("Personal Preferences", userConfig);
 		if (auth.getUser().isAdmin()) {
 			userList = new UserListWidget();
+			navigator.addItem("System Configuration", systemConfig);
 			navigator.addItem("User Management", userList);
 			navigator.addItem("System Message Management", messageManager);
 		}
