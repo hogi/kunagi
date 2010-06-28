@@ -173,4 +173,14 @@ public class Task extends GTask implements ReferenceSupport, ForumSupport {
 		}
 	};
 
+	public static final Comparator<Task> REQUIREMENT_ORDER_THEN_NUMBER_COMPARATOR = new Comparator<Task>() {
+
+		public int compare(Task a, Task b) {
+			Requirement ar = a.getRequirement();
+			Requirement br = b.getRequirement();
+			int reqOrder = ar.getProject().getRequirementsOrderComparator().compare(ar, br);
+			return reqOrder == 0 ? a.getNumber() - b.getNumber() : reqOrder;
+		}
+	};
+
 }
