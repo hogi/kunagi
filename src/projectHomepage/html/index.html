@@ -54,6 +54,7 @@ table td {vertical-align: top;}
             img.screenshotthumb {margin: 0px 0px 10px 10px; border: 1px solid #DDD;}
             .featureseparator {clear: both; height: 10px;}
             ul {margin-left: 20px; margin-top: 10px;}
+            ol {margin-left: 30px; margin-top: 10px; margin-bottom: 10px;}
         #content .separator {height: 15px; margin-bottom: 25px; border-bottom: 1px solid #CCC;}
     #footer {background: #192666; color: #CCC; padding: 0px 10px; font-size: 8px; text-align: right;}
     .error {background: darkred; border: 1px solid darkred; text-align: center; color: #FFA; font-size: 16px; font-weight: bold; padding: 10px; margin-bottom: 20px;}
@@ -303,8 +304,9 @@ table td {vertical-align: top;}
                 <h2>Download</h2>
                 <div class="middle">
                     <p>
-                        Download the <strong>latest version</strong> of Kunagi and install it on your own server.
-                        It is an ordinary Java Web Application.
+                        Kunagi is a Java web application. You can deploy it to your favorite web application
+                        server on your favorite operating system. For the majorty of servers, all you have to do,
+                        is to copy the current <code>kunagi.war</code> to the <code>webapps</code> directory.
                     </p>
                 </div>
                 <div class="sidebar">
@@ -348,7 +350,7 @@ table td {vertical-align: top;}
         <div id="page-support" style="display: none;">
         
             <div class="section">
-            
+
                 <h2>Contact / Feedback</h2>
                 <form method="post" action="https://servisto.de/scrum/submitIssue" accept-charset="UTF-8">
                     <input name="projectId" type="hidden" value="ef50396a-0e3a-479b-8808-c31cdfd77fa0">
@@ -376,6 +378,22 @@ table td {vertical-align: top;}
                         </tr>
                     </table>
                 </form>
+
+
+                <div class="separator"></div>                    
+            
+                <h2>Installation with Tomcat</h2>
+                <p>If you don't have a web application server yet, here is an example, how to install Kunagi
+                with Apache Tomcat.</p>
+                <ol>
+                    <li>Download Tomcat from <a href="http://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
+                    <li>Extract the downloaded Tomcat archive.</li>
+                    <li>Download Kunagi from <a href="http://kunagi.org/#download" target="_blank">kunagi.org</a> and copy it to the webapps direcotry of your Tomcat.</li>
+                    <li>Start Tomcat by executing the <code>startup.xxx</code> script from the <code>bin</code> direcotry.</li>
+                    <li>Check Tomcat and Kunagi log file <code>logs/catalina.out</code> for errors.</li>
+                </ol>
+                <p>By default, Tomcat listens on port 8080. So you can access Kunagi by opening
+                <code>http://localhost:8080/kunagi/</code>.</p>
             
             </div>
             
