@@ -1,8 +1,11 @@
 package scrum.server.admin;
 
+import ilarkesto.core.logging.Log;
 import ilarkesto.fp.Predicate;
 
 public class UserDao extends GUserDao {
+
+	private static Log log = Log.get(UserDao.class);
 
 	@Override
 	public User getUserByName(final String name) {
@@ -16,10 +19,16 @@ public class UserDao extends GUserDao {
 
 	@Override
 	public User postUser(String name, String password) {
+		return postUser(null, name, password);
+	}
+
+	public User postUser(String email, String name, String password) {
 		User user = newEntityInstance();
+		user.setEmail(email);
 		user.setName(name);
 		user.setPassword(password);
 		saveEntity(user);
+		log.info("User created:", user);
 		return user;
 	}
 

@@ -46,7 +46,6 @@ public abstract class GUserDao
         namesCache = null;
         usersByAdminCache.clear();
         usersByEmailVerifiedCache.clear();
-        usersByEmailCache.clear();
         emailsCache = null;
         usersByCurrentProjectCache.clear();
         currentProjectsCache = null;
@@ -172,15 +171,8 @@ public abstract class GUserDao
     // - email
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<User>> usersByEmailCache = new Cache<java.lang.String,Set<User>>(
-            new Cache.Factory<java.lang.String,Set<User>>() {
-                public Set<User> create(java.lang.String email) {
-                    return getEntities(new IsEmail(email));
-                }
-            });
-
-    public final Set<User> getUsersByEmail(java.lang.String email) {
-        return usersByEmailCache.get(email);
+    public final User getUserByEmail(java.lang.String email) {
+        return getEntity(new IsEmail(email));
     }
     private Set<java.lang.String> emailsCache;
 

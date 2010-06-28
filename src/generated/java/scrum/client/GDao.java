@@ -2305,6 +2305,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsBySmtpFrom(java.lang.String smtpFrom) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isSmtpFrom(smtpFrom)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Task ---
 
     private Map<String, scrum.client.sprint.Task> tasks = new HashMap<String, scrum.client.sprint.Task>();
@@ -2509,12 +2517,11 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.admin.User> getUsersByEmail(java.lang.String email) {
-        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+    public final scrum.client.admin.User getUserByEmail(java.lang.String email) {
         for (scrum.client.admin.User entity : users.values()) {
-            if (entity.isEmail(email)) ret.add(entity);
+            if (entity.isEmail(email)) return entity;
         }
-        return ret;
+        return null;
     }
 
     public final List<scrum.client.admin.User> getUsersByCurrentProject(scrum.client.project.Project currentProject) {

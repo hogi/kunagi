@@ -64,6 +64,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			systemConfigModel.addStringProperty("smtpServer");
 			systemConfigModel.addStringProperty("smtpUser");
 			systemConfigModel.addStringProperty("smtpPassword");
+			systemConfigModel.addStringProperty("smtpFrom");
 			autowire(systemConfigModel);
 		}
 		return systemConfigModel;
@@ -389,7 +390,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.addStringProperty("name").setMandatory(true).setSearchable(true);
 			userModel.addProperty("admin", boolean.class);
 			userModel.addProperty("emailVerified", boolean.class);
-			userModel.addStringProperty("email").setSearchable(true);
+			userModel.addStringProperty("email").setSearchable(true).setUnique(true);
 			userModel.addReference("currentProject", getProjectModel());
 			userModel.addStringProperty("color");
 			getApplicationModel().addCreateAction(userModel);

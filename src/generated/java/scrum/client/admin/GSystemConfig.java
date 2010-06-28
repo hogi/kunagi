@@ -236,6 +236,54 @@ public abstract class GSystemConfig
 
     }
 
+    // --- smtpFrom ---
+
+    private java.lang.String smtpFrom ;
+
+    public final java.lang.String getSmtpFrom() {
+        return this.smtpFrom ;
+    }
+
+    public final SystemConfig setSmtpFrom(java.lang.String smtpFrom) {
+        if (isSmtpFrom(smtpFrom)) return (SystemConfig)this;
+        this.smtpFrom = smtpFrom ;
+        propertyChanged("smtpFrom", this.smtpFrom);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isSmtpFrom(java.lang.String smtpFrom) {
+        return equals(this.smtpFrom, smtpFrom);
+    }
+
+    private transient SmtpFromModel smtpFromModel;
+
+    public SmtpFromModel getSmtpFromModel() {
+        if (smtpFromModel == null) smtpFromModel = createSmtpFromModel();
+        return smtpFromModel;
+    }
+
+    protected SmtpFromModel createSmtpFromModel() { return new SmtpFromModel(); }
+
+    protected class SmtpFromModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getSmtpFrom();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setSmtpFrom(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -243,6 +291,7 @@ public abstract class GSystemConfig
         smtpServer  = (java.lang.String) props.get("smtpServer");
         smtpUser  = (java.lang.String) props.get("smtpUser");
         smtpPassword  = (java.lang.String) props.get("smtpPassword");
+        smtpFrom  = (java.lang.String) props.get("smtpFrom");
     }
 
     @Override
@@ -252,6 +301,7 @@ public abstract class GSystemConfig
         properties.put("smtpServer", this.smtpServer);
         properties.put("smtpUser", this.smtpUser);
         properties.put("smtpPassword", this.smtpPassword);
+        properties.put("smtpFrom", this.smtpFrom);
     }
 
 }

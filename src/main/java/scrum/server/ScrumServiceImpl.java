@@ -25,6 +25,7 @@ import javax.mail.internet.MimeMessage;
 
 import scrum.client.DataTransferObject;
 import scrum.client.admin.SystemMessage;
+import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.collaboration.ChatMessage;
@@ -675,23 +676,32 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onRegister(GwtConversation conversation, String username, String email, String password) {
-		if (userDao.getUserByName(username) != null || userDao.getUsersByEmail(email) != null) {
-			// username or email already exists
+		if (userDao.getUserByName(username) != null) {
+			// TODO Meldung an client
+			log.warn("Registration failed. User name already exists:", username);
+			return;
+		}
+		if (userDao.getUserByEmail(email) != null) {
+			// TODO Meldung an client
+			log.warn("Registration failed. User email already exists:", email);
 			return;
 		}
 
-		User user = userDao.newEntityInstance();
-		user.setName(username);
-		user.setEmail(email);
-		user.setPassword(password);
-		user.setEmailVerified(false);
-		ScrumConfig config = new ScrumConfig(webApplication.getApplicationDataDir());
-		Session session = Eml.createSmtpSession(config.getSmtpHost(), config.getSmtpUser(), config.getSmtpPassword());
-		MimeMessage message = Eml.createTextMessage(session, "Test Mail From Servisto", "Test Mail Text", config
-				.getSmtpFrom(), email);
-		// Eml.sendSmtpMessage(session, message);
-		// FIXME E-Mail is not send. If that works, saveEntity below should be invoked
-		userDao.saveEntity(user);
-		onLogin(conversation, username, password);
+		SystemConfig config = webApplication.getSystemConfig();
+		String smtpServer = config.getSmtpServer();
+		if (smtpServer == null) {
+			log.warn("SMTP server not set in System Configuration");
+		} else {
+			Session session = Eml.createSmtpSession(smtpServer, config.getSmtpUser(), config.getSmtpPassword());
+			MimeMessage message = Eml.createTextMessage(session, "Test Mail From Servisto", "Test Mail Text", config
+					.getSmtpFrom(), email);
+			Eml.sendSmtpMessage(session, message);
+		}
+
+		User user = userDao.postUser(email, username, password);
+
+		conversation.getSession().setUser(user);
+		conversation.sendUserScopeDataToClient(user);
 	}
+
 }

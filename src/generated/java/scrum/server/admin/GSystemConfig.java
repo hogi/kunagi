@@ -40,6 +40,7 @@ public abstract class GSystemConfig
         properties.put("smtpServer", this.smtpServer);
         properties.put("smtpUser", this.smtpUser);
         properties.put("smtpPassword", this.smtpPassword);
+        properties.put("smtpFrom", this.smtpFrom);
     }
 
     public int compareTo(SystemConfig other) {
@@ -190,6 +191,41 @@ public abstract class GSystemConfig
         setSmtpPassword((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - smtpFrom
+    // -----------------------------------------------------------
+
+    private java.lang.String smtpFrom;
+
+    public final java.lang.String getSmtpFrom() {
+        return smtpFrom;
+    }
+
+    public final void setSmtpFrom(java.lang.String smtpFrom) {
+        smtpFrom = prepareSmtpFrom(smtpFrom);
+        if (isSmtpFrom(smtpFrom)) return;
+        this.smtpFrom = smtpFrom;
+        fireModified();
+    }
+
+    protected java.lang.String prepareSmtpFrom(java.lang.String smtpFrom) {
+        smtpFrom = Str.removeUnreadableChars(smtpFrom);
+        return smtpFrom;
+    }
+
+    public final boolean isSmtpFromSet() {
+        return this.smtpFrom != null;
+    }
+
+    public final boolean isSmtpFrom(java.lang.String smtpFrom) {
+        if (this.smtpFrom == null && smtpFrom == null) return true;
+        return this.smtpFrom != null && this.smtpFrom.equals(smtpFrom);
+    }
+
+    protected final void updateSmtpFrom(Object value) {
+        setSmtpFrom((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -199,6 +235,7 @@ public abstract class GSystemConfig
             if (property.equals("smtpServer")) updateSmtpServer(value);
             if (property.equals("smtpUser")) updateSmtpUser(value);
             if (property.equals("smtpPassword")) updateSmtpPassword(value);
+            if (property.equals("smtpFrom")) updateSmtpFrom(value);
         }
     }
 

@@ -50,6 +50,8 @@ public abstract class GSystemConfigDao
         smtpUsersCache = null;
         systemConfigsBySmtpPasswordCache.clear();
         smtpPasswordsCache = null;
+        systemConfigsBySmtpFromCache.clear();
+        smtpFromsCache = null;
     }
 
     @Override
@@ -224,6 +226,46 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return e.isSmtpPassword(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - smtpFrom
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsBySmtpFromCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String smtpFrom) {
+                    return getEntities(new IsSmtpFrom(smtpFrom));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsBySmtpFrom(java.lang.String smtpFrom) {
+        return systemConfigsBySmtpFromCache.get(smtpFrom);
+    }
+    private Set<java.lang.String> smtpFromsCache;
+
+    public final Set<java.lang.String> getSmtpFroms() {
+        if (smtpFromsCache == null) {
+            smtpFromsCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isSmtpFromSet()) smtpFromsCache.add(e.getSmtpFrom());
+            }
+        }
+        return smtpFromsCache;
+    }
+
+    private static class IsSmtpFrom implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsSmtpFrom(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isSmtpFrom(value);
         }
 
     }
