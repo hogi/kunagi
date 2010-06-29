@@ -37,8 +37,9 @@
 		<replace file="build/webapp/WEB-INF/classes/scrum/server/build.properties" token="@build-date@" value="${build.tstamp}" />
 
 		<java classname="com.google.gwt.dev.Compiler" failonerror="true" fork="true">
-            <arg value="-war" />
-            <arg value="build/webapp" />
+            <arg value="-war" /> <arg value="build/webapp" />
+			<arg value="-style" /> <arg value="PRETTY" />
+			<arg value="-localWorkers" /> <arg value="20" />
             <arg value="scrum.ScrumGwtApplication" />
             <classpath location="src/main/java" />
             <classpath location="src/generated/java" />
