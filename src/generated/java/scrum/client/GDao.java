@@ -2273,6 +2273,14 @@ public abstract class GDao
         return new ArrayList<scrum.client.admin.SystemConfig>(systemConfigs.values());
     }
 
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsByUrl(java.lang.String url) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isUrl(url)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.admin.SystemConfig> getSystemConfigsByGoogleAnalyticsId(java.lang.String googleAnalyticsId) {
         List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
         for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {

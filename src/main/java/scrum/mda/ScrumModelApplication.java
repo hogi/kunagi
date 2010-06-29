@@ -60,6 +60,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			systemConfigModel = createEntityModel("SystemConfig", "admin");
 			systemConfigModel.setGwtSupport(true);
 			systemConfigModel.setViewProtected(true);
+			systemConfigModel.addStringProperty("url");
 			systemConfigModel.addStringProperty("googleAnalyticsId");
 			systemConfigModel.addStringProperty("smtpServer");
 			systemConfigModel.addStringProperty("smtpUser");

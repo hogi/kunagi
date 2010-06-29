@@ -42,6 +42,8 @@ public abstract class GSystemConfigDao
 
     // --- clear caches ---
     public void clearCaches() {
+        systemConfigsByUrlCache.clear();
+        urlsCache = null;
         systemConfigsByGoogleAnalyticsIdCache.clear();
         googleAnalyticsIdsCache = null;
         systemConfigsBySmtpServerCache.clear();
@@ -68,6 +70,46 @@ public abstract class GSystemConfigDao
         if (event.getEntity() instanceof SystemConfig) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - url
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsByUrlCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String url) {
+                    return getEntities(new IsUrl(url));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByUrl(java.lang.String url) {
+        return systemConfigsByUrlCache.get(url);
+    }
+    private Set<java.lang.String> urlsCache;
+
+    public final Set<java.lang.String> getUrls() {
+        if (urlsCache == null) {
+            urlsCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isUrlSet()) urlsCache.add(e.getUrl());
+            }
+        }
+        return urlsCache;
+    }
+
+    private static class IsUrl implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsUrl(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isUrl(value);
+        }
+
     }
 
     // -----------------------------------------------------------

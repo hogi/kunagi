@@ -151,8 +151,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public String getBaseUrl() {
-		// TODO discover the right URL
-		return getConfig().isStageIntegration() ? "https://servisto.de/scrum-latest/" : "https://servisto.de/scrum/";
+		return getConfig().isStageIntegration() ? "https://servisto.de/scrum-latest/" : getSystemConfig().getUrl();
 	}
 
 	private UserDao userDao;

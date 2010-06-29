@@ -36,6 +36,7 @@ public abstract class GSystemConfig
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("url", this.url);
         properties.put("googleAnalyticsId", this.googleAnalyticsId);
         properties.put("smtpServer", this.smtpServer);
         properties.put("smtpUser", this.smtpUser);
@@ -50,6 +51,41 @@ public abstract class GSystemConfig
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GSystemConfig.class);
 
     public static final String TYPE = "systemConfig";
+
+    // -----------------------------------------------------------
+    // - url
+    // -----------------------------------------------------------
+
+    private java.lang.String url;
+
+    public final java.lang.String getUrl() {
+        return url;
+    }
+
+    public final void setUrl(java.lang.String url) {
+        url = prepareUrl(url);
+        if (isUrl(url)) return;
+        this.url = url;
+        fireModified();
+    }
+
+    protected java.lang.String prepareUrl(java.lang.String url) {
+        url = Str.removeUnreadableChars(url);
+        return url;
+    }
+
+    public final boolean isUrlSet() {
+        return this.url != null;
+    }
+
+    public final boolean isUrl(java.lang.String url) {
+        if (this.url == null && url == null) return true;
+        return this.url != null && this.url.equals(url);
+    }
+
+    protected final void updateUrl(Object value) {
+        setUrl((java.lang.String)value);
+    }
 
     // -----------------------------------------------------------
     // - googleAnalyticsId
@@ -231,6 +267,7 @@ public abstract class GSystemConfig
             String property = (String) entry.getKey();
             if (property.equals("id")) continue;
             Object value = entry.getValue();
+            if (property.equals("url")) updateUrl(value);
             if (property.equals("googleAnalyticsId")) updateGoogleAnalyticsId(value);
             if (property.equals("smtpServer")) updateSmtpServer(value);
             if (property.equals("smtpUser")) updateSmtpUser(value);

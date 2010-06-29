@@ -44,6 +44,54 @@ public abstract class GSystemConfig
         return ENTITY_TYPE;
     }
 
+    // --- url ---
+
+    private java.lang.String url ;
+
+    public final java.lang.String getUrl() {
+        return this.url ;
+    }
+
+    public final SystemConfig setUrl(java.lang.String url) {
+        if (isUrl(url)) return (SystemConfig)this;
+        this.url = url ;
+        propertyChanged("url", this.url);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isUrl(java.lang.String url) {
+        return equals(this.url, url);
+    }
+
+    private transient UrlModel urlModel;
+
+    public UrlModel getUrlModel() {
+        if (urlModel == null) urlModel = createUrlModel();
+        return urlModel;
+    }
+
+    protected UrlModel createUrlModel() { return new UrlModel(); }
+
+    protected class UrlModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getUrl();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setUrl(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- googleAnalyticsId ---
 
     private java.lang.String googleAnalyticsId ;
@@ -287,6 +335,7 @@ public abstract class GSystemConfig
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
+        url  = (java.lang.String) props.get("url");
         googleAnalyticsId  = (java.lang.String) props.get("googleAnalyticsId");
         smtpServer  = (java.lang.String) props.get("smtpServer");
         smtpUser  = (java.lang.String) props.get("smtpUser");
@@ -297,6 +346,7 @@ public abstract class GSystemConfig
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("url", this.url);
         properties.put("googleAnalyticsId", this.googleAnalyticsId);
         properties.put("smtpServer", this.smtpServer);
         properties.put("smtpUser", this.smtpUser);

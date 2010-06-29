@@ -40,7 +40,7 @@ public class User extends GUser {
 			sb.append("You have created a Kunagi account on ").append(urlBase).append("\n");
 			sb.append("\n");
 			sb.append("Please visit the following link, to confirm your email: ").append(urlBase).append(
-				"/confirmEmail?user=").append(getId()).append("&email=").append(getEmail()).append("\n");
+				"confirmEmail?user=").append(getId()).append("&email=").append(getEmail()).append("\n");
 
 			Session session = Eml.createSmtpSession(smtpServer, config.getSmtpUser(), config.getSmtpPassword());
 			MimeMessage message = Eml.createTextMessage(session, "Kunagi email verification: " + getEmail(), sb
