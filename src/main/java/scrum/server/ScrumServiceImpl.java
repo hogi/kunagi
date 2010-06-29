@@ -399,7 +399,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onLogin(GwtConversation conversation, String username, String password) {
 		conversation.clearRemoteEntities();
-		User user = userDao.getUserByName(username);
+		User user = null;
+		if (username.contains("@")) {
+			user = userDao.getUserByEmail(username);
+		}
+		if (user == null) {
+			user = userDao.getUserByName(username);
+		}
 
 		if (user == null || user.matchesPassword(password) == false) {
 			conversation.getNextData().errors.add("Login failed.");
