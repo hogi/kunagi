@@ -37,9 +37,8 @@
 		<replace file="build/webapp/WEB-INF/classes/scrum/server/build.properties" token="@build-date@" value="${build.tstamp}" />
 
 		<java classname="com.google.gwt.dev.Compiler" failonerror="true" fork="true">
-            <arg value="-war" /> <arg value="build/webapp" />
-			<arg value="-style" /> <arg value="PRETTY" />
-			<arg value="-localWorkers" /> <arg value="20" />
+            <arg value="-war" />
+            <arg value="build/webapp" />
             <arg value="scrum.ScrumGwtApplication" />
             <classpath location="src/main/java" />
             <classpath location="src/generated/java" />
@@ -75,6 +74,9 @@
 	</target>
 	
 	<target name="release">
+		<exec executable="scp" failonerror="true">
+			  <arg line="build/scrum.war koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/kunagi.war" />
+		</exec>
 		<copy file="build/scrum.war" tofile="/var/www/servisto.de/projects/scrum/kunagi.war" />
 		<copy file="build/scrum.war" tofile="/home/scrum/tomcat/webapps/scrum.war" />
 		<copy file="build/scrum.war" tofile="/home/kunagi-demo/tomcat/webapps/kunagi-demo.war" />
