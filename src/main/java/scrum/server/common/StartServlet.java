@@ -25,7 +25,7 @@ public class StartServlet extends AHttpServlet {
 		resp.setContentType("text/html");
 
 		HtmlRenderer html = new HtmlRenderer(resp.getOutputStream(), charset);
-		html.startHTML();
+		html.startHTMLstandard();
 
 		html.startHEAD(applicationInfo.getName(), "EN");
 		html.META("X-UA-Compatible", "chrome=1");
