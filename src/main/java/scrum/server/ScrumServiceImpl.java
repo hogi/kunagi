@@ -7,7 +7,6 @@ import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
-import ilarkesto.email.Eml;
 import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
@@ -20,12 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.mail.Session;
-import javax.mail.internet.MimeMessage;
-
 import scrum.client.DataTransferObject;
 import scrum.client.admin.SystemMessage;
-import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.collaboration.ChatMessage;
@@ -687,18 +682,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			return;
 		}
 
-		SystemConfig config = webApplication.getSystemConfig();
-		String smtpServer = config.getSmtpServer();
-		if (smtpServer == null) {
-			log.warn("SMTP server not set in System Configuration");
-		} else {
-			Session session = Eml.createSmtpSession(smtpServer, config.getSmtpUser(), config.getSmtpPassword());
-			MimeMessage message = Eml.createTextMessage(session, "Test Mail From Servisto", "Test Mail Text", config
-					.getSmtpFrom(), email);
-			Eml.sendSmtpMessage(session, message);
-		}
-
 		User user = userDao.postUser(email, username, password);
+		user.triggerEmailVerification();
 
 		conversation.getSession().setUser(user);
 		conversation.sendUserScopeDataToClient(user);

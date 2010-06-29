@@ -128,4 +128,14 @@
         <url-pattern>/submitIssue</url-pattern>
     </servlet-mapping>
 
+    <!-- email confirmation -->
+    <servlet>
+        <servlet-name>confirmEmail</servlet-name>
+        <servlet-class>scrum.server.admin.ConfirmEmailServlet</servlet-class>
+    </servlet>      
+    <servlet-mapping>
+        <servlet-name>confirmEmail</servlet-name>
+        <url-pattern>/confirmEmail</url-pattern>
+    </servlet-mapping>
+
 </web-app>
