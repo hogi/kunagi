@@ -42,7 +42,7 @@ public class HeaderWidget extends AScrumWidget {
 
 		search = new SearchInputWidget();
 
-		feedback = new HTML("<a href='http://kunagi.org?page=support' target='blank'>Support/Feedback</a>");
+		feedback = new HTML("<a href='http://kunagi.org/#support' target='blank'>Support/Feedback</a>");
 
 		wrapper = Gwt.createDiv("HeaderWidget", title);
 		return wrapper;
