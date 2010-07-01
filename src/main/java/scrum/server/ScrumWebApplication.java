@@ -169,7 +169,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		for (Object element : getGwtConversations()) {
 			if (element == exception) continue;
 			GwtConversation conversation = (GwtConversation) element;
-			if (project.equals(conversation.getProject())) ret.add(conversation);
+			if (project != null && project.equals(conversation.getProject())) ret.add(conversation);
 		}
 		return ret;
 	}
