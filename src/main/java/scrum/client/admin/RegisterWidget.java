@@ -47,7 +47,7 @@ public class RegisterWidget extends AScrumWidget implements RegisterDataProvider
 
 		fields.addRow(message, 2);
 		fields.addFieldRow("Username", username);
-		fields.addFieldRow("E-Mail", email);
+		fields.addFieldRow("Email", email);
 		fields.addFieldRow("Password", password);
 		fields.addFieldRow("", new ButtonWidget(new RegisterAction(this)), 2);
 

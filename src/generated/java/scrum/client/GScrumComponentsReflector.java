@@ -18,6 +18,8 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     protected ilarkesto.core.scope.ComponentReflector pingerReflector = createPingerReflector();
 
+    protected ilarkesto.core.scope.ComponentReflector serverErrorManagerReflector = createServerErrorManagerReflector();
+
     protected ilarkesto.core.scope.ComponentReflector modeSwitcherReflector = createModeSwitcherReflector();
 
     protected ilarkesto.core.scope.ComponentReflector serviceCallerReflector = createServiceCallerReflector();
@@ -52,6 +54,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.collaboration.UsersStatus) usersStatusReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.collaboration.Wiki) wikiReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.communication.Pinger) pingerReflector.injectComponents(component, scope);
+        if (component instanceof scrum.client.communication.ServerErrorManager) serverErrorManagerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.core.ModeSwitcher) modeSwitcherReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.core.ServiceCaller) serviceCallerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.injectComponents(component, scope);
@@ -75,6 +78,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.collaboration.UsersStatus) usersStatusReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.collaboration.Wiki) wikiReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.communication.Pinger) pingerReflector.callInitializationMethods(component);
+        if (component instanceof scrum.client.communication.ServerErrorManager) serverErrorManagerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.core.ModeSwitcher) modeSwitcherReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.core.ServiceCaller) serviceCallerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.callInitializationMethods(component);
@@ -98,6 +102,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.collaboration.UsersStatus) usersStatusReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.collaboration.Wiki) wikiReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.communication.Pinger) pingerReflector.outjectComponents(component, scope);
+        if (component instanceof scrum.client.communication.ServerErrorManager) serverErrorManagerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.core.ModeSwitcher) modeSwitcherReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.core.ServiceCaller) serviceCallerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.outjectComponents(component, scope);
@@ -139,6 +144,10 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     public ilarkesto.core.scope.ComponentReflector createPingerReflector() {
         return new scrum.client.communication.GPingerReflector();
+    }
+
+    public ilarkesto.core.scope.ComponentReflector createServerErrorManagerReflector() {
+        return new scrum.client.communication.GServerErrorManagerReflector();
     }
 
     public ilarkesto.core.scope.ComponentReflector createModeSwitcherReflector() {

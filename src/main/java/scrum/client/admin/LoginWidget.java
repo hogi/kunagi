@@ -43,8 +43,8 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 		fields.setWidth(null);
 
 		fields.addRow(errorMessage, 2);
-		fields.addFieldRow("Username", username);
-		fields.addFieldRow("Password", password);
+		fields.addFieldRow("Username / Email", username);
+		fields.addFieldRow("Secret Password", password);
 		fields.addFieldRow("", new ButtonWidget(new LoginAction(this)), 2);
 
 		Widget content = fields.createTable();

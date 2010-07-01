@@ -89,6 +89,7 @@
 "37466eb3-a0ce-4702-84de-a78d95e8d66f","5ba03af7-33a1-4956-a112-65684adcb398","Parameter","data"
 "3c489c71-7558-4468-93d8-50e21c64c0e1","37466eb3-a0ce-4702-84de-a78d95e8d66f","Type","scrum.client.DataTransferObject"
 "cda87391-07ed-40bc-af10-867c953a1bad","5ba03af7-33a1-4956-a112-65684adcb398","Flag","quiet"
+"c17c3708-9eb7-4079-a154-9f479514a3e3","a1033599-3531-47fc-94ff-49b1b58df2f2","Component","ServerErrorManager"
 "38073843-054c-434d-9eca-ef4f423e587f","a1033599-3531-47fc-94ff-49b1b58df2f2","ServiceCall","StartConversation"
 "467e3715-9187-42cb-b4f1-4d58f2fca0c0","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","core"
 "43052d5b-ccd7-48d7-acce-f975d01005c1","467e3715-9187-42cb-b4f1-4d58f2fca0c0","Event","ApplicationStarted"

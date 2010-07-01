@@ -408,7 +408,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 
 		if (user == null || user.matchesPassword(password) == false) {
-			conversation.getNextData().errors.add("Login failed.");
+			conversation.getNextData().addError("Login failed.");
 			return;
 		}
 
@@ -678,12 +678,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onRegister(GwtConversation conversation, String username, String email, String password) {
 		if (userDao.getUserByName(username) != null) {
-			// TODO Meldung an client
+			conversation.getNextData().addError("Registration failed. Name '" + username + "' is already used.");
 			log.warn("Registration failed. User name already exists:", username);
 			return;
 		}
 		if (userDao.getUserByEmail(email) != null) {
-			// TODO Meldung an client
+			conversation.getNextData().addError("Registration failed. Email '" + email + "' is already used.");
 			log.warn("Registration failed. User email already exists:", email);
 			return;
 		}

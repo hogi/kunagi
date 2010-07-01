@@ -13,6 +13,7 @@ import scrum.client.collaboration.Chat;
 import scrum.client.collaboration.UsersStatus;
 import scrum.client.collaboration.Wiki;
 import scrum.client.communication.Pinger;
+import scrum.client.communication.ServerErrorManager;
 import scrum.client.core.ModeSwitcher;
 import scrum.client.core.ServiceCaller;
 import scrum.client.files.Uploader;
@@ -57,6 +58,7 @@ public class ScrumScopeManager {
 		scope.putComponent(new Auth());
 		scope.putComponent(new PublicWorkspaceWidgets());
 		scope.putComponent(new Navigator());
+		scope.putComponent(new ServerErrorManager());
 
 		appScope.wireComponents();
 	}
