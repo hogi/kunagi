@@ -394,6 +394,7 @@ table td {vertical-align: top;}
                     <li>Download Tomcat from <a href="http://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
                     <li>Extract the downloaded Tomcat archive.</li>
                     <li>Download Kunagi from <a href="http://kunagi.org/#download" target="_blank">kunagi.org</a> and copy it to the webapps direcotry of your Tomcat.</li>
+                    <li>Make sure, the working direcotry or the home direcotry of the user, which is running Tomcat is writable for the user.</li>
                     <li>Start Tomcat by executing the <code>startup.bat</code> (Windows) or <code>startup.sh</code> (Linux) script from the bin directory.</li>
                     <li>Check Tomcat and Kunagi log file <code>logs/catalina.out</code> for errors.</li>
                 </ol>
@@ -401,6 +402,8 @@ table td {vertical-align: top;}
                     <code>http://localhost:8080/kunagi/</code>.</p>
                 <p>Depending on your operating system or distribution, some of the steps might be unnecessary if
                     Tomcat is installed via an installation wizard (Windows) or software repositories (Linux).</p>
+                <p>When using Ubuntu with the Tomcat provided by the distro, you have to make <code>/var/lib/tomcat6/</code> writable
+                    to the user <code>tomcat6</code>.</p>
             
             </div>
             
