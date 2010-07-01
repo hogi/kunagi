@@ -42,6 +42,7 @@ table td {vertical-align: top;}
     
     #content {background: white; padding: 25px; min-height: 500px;}
 		#content a {color: #B37400;}
+        #content code {color: #7070A0; font-family: monospace;}
 		#content .section {padding: 0px 0px;}
             #content .section p {margin-bottom: 10px;}
 			h2 {font: 15pt/20pt "georgia",serif; color: #233C9B; margin-bottom: 10px;}
@@ -388,14 +389,18 @@ table td {vertical-align: top;}
                 <p>If you don't have a web application server yet, here is an example, how to install Kunagi
                 with Apache Tomcat.</p>
                 <ol>
+                    <li>Install Sun Java 6 and verify by executing the command <code>java -version</code>.</li>
+                    <li>Make sure that an environment variable <code>JRE_HOME</code> (in case of Java JRE) or <code>JAVA_HOME</code> (in case of SDK) is set to the Java installation path.</li>
                     <li>Download Tomcat from <a href="http://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
                     <li>Extract the downloaded Tomcat archive.</li>
                     <li>Download Kunagi from <a href="http://kunagi.org/#download" target="_blank">kunagi.org</a> and copy it to the webapps direcotry of your Tomcat.</li>
-                    <li>Start Tomcat by executing the <code>startup.xxx</code> script from the <code>bin</code> direcotry.</li>
+                    <li>Start Tomcat by executing the <code>startup.bat</code> (Windows) or <code>startup.sh</code> (Linux) script from the bin directory.</li>
                     <li>Check Tomcat and Kunagi log file <code>logs/catalina.out</code> for errors.</li>
                 </ol>
                 <p>By default, Tomcat listens on port 8080. So you can access Kunagi by opening
-                <code>http://localhost:8080/kunagi/</code>.</p>
+                    <code>http://localhost:8080/kunagi/</code>.</p>
+                <p>Depending on your operating system or distribution, some of the steps might be unnecessary if
+                    Tomcat is installed via an installation wizard (Windows) or software repositories (Linux).</p>
             
             </div>
             
