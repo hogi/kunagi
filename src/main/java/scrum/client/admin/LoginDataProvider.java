@@ -6,7 +6,7 @@ public interface LoginDataProvider {
 
 	String getPassword();
 
-	void setFailed();
+	void setFailed(String message);
 
 	void clear();
 

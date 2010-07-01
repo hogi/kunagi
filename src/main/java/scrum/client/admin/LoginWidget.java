@@ -45,7 +45,8 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 		fields.addRow(errorMessage, 2);
 		fields.addFieldRow("Username / Email", username);
 		fields.addFieldRow("Secret Password", password);
-		fields.addFieldRow("", new ButtonWidget(new LoginAction(this)), 2);
+		fields.addFieldRow("", Gwt.createHorizontalPanel(5, new ButtonWidget(new LoginAction(this)), new ButtonWidget(
+				new RequestNewPasswordAction(this))));
 
 		Widget content = fields.createTable();
 
@@ -74,9 +75,9 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 		return page;
 	}
 
-	public void setFailed() {
+	public void setFailed(String message) {
 		errorMessage.setStyleName("LoginWidget-errorMessage");
-		errorMessage.setText("Login failed. Try again.");
+		errorMessage.setText(message);
 	}
 
 	public void clear() {

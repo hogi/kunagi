@@ -146,7 +146,34 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onResetPassword(GwtConversation conversation, String userId) {
 		User user = userDao.getById(userId);
-		user.setPassword("geheim");
+		if (user.isEmailSet()) {
+			user.triggerPasswordReset();
+		} else {
+			user.setPassword("geheim");
+		}
+	}
+
+	@Override
+	public void onRequestNewPassword(GwtConversation conversation, String login) {
+		User user = null;
+		if (login.contains("@")) {
+			user = userDao.getUserByEmail(login);
+		}
+		if (user == null) {
+			user = userDao.getUserByName(login);
+		}
+
+		if (user == null) {
+			conversation.getNextData().addError("User '" + login + "' does not exist.");
+			return;
+		}
+
+		if (!user.isEmailSet()) {
+			conversation.getNextData().addError("No email address for user '" + login + "'. Please contact the admin.");
+			return;
+		}
+
+		user.triggerNewPasswordRequest();
 	}
 
 	@Override

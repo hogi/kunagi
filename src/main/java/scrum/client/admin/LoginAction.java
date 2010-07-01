@@ -1,6 +1,7 @@
 package scrum.client.admin;
 
 import ilarkesto.core.scope.Scope;
+import scrum.client.communication.ServerErrorManager;
 import scrum.client.workspace.Ui;
 
 public class LoginAction extends GLoginAction {
@@ -25,13 +26,14 @@ public class LoginAction extends GLoginAction {
 			public void run() {
 				if (!getAuth().isUserLoggedIn()) {
 					log.info("Login failed.");
+					String error = Scope.get().getComponent(ServerErrorManager.class).popErrorsAsString();
+					if (error == null) error = "Login failed.";
+					loginData.setFailed(error);
 					ui.unlock();
-					loginData.setFailed();
 				} else {
 					loginData.clear();
 				}
 			}
 		});
 	}
-
 }

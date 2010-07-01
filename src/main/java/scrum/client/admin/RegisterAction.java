@@ -47,9 +47,7 @@ public class RegisterAction extends GLoginAction {
 			public void run() {
 				if (!getAuth().isUserLoggedIn()) {
 					String error = Scope.get().getComponent(ServerErrorManager.class).popErrorsAsString();
-					if (error == null) {
-						error = "Registration failed.";
-					}
+					if (error == null) error = "Registration failed.";
 					registrationData.setFailed(error);
 					ui.unlock();
 				} else {

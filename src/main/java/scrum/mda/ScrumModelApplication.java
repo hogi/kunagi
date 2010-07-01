@@ -40,6 +40,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			applicationModel.addAction("SwitchToNextSprint", getBasePackageName() + ".sprint");
 			applicationModel.addAction("Login", getBasePackageName() + ".admin");
 			applicationModel.addAction("Logout", getBasePackageName() + ".admin");
+			applicationModel.addAction("RequestNewPassword", getBasePackageName() + ".admin");
 			applicationModel.addAction("ChangeProject", getBasePackageName() + ".project");
 			applicationModel.addAction("CreateExampleProject", getBasePackageName() + ".project");
 			applicationModel.addAction("RequestClosedIssues", getBasePackageName() + ".issues");

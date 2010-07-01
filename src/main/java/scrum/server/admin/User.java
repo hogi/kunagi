@@ -1,6 +1,7 @@
 package scrum.server.admin;
 
 import ilarkesto.base.Crypt;
+import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.email.Eml;
@@ -46,6 +47,58 @@ public class User extends GUser {
 			MimeMessage message = Eml.createTextMessage(session, "Kunagi email verification: " + getEmail(), sb
 					.toString(), config.getSmtpFrom(), getEmail());
 			Eml.sendSmtpMessage(session, message);
+		}
+	}
+
+	public void triggerNewPasswordRequest() {
+		String urlBase = webApplication.getBaseUrl();
+		SystemConfig config = webApplication.getSystemConfig();
+		String smtpServer = config.getSmtpServer();
+		if (smtpServer == null) {
+			throw new RuntimeException("SMTP server not set in System Configuration");
+		} else {
+			String newPassword = Str.generatePassword(8);
+			StringBuilder sb = new StringBuilder();
+			sb.append("You requested a new password for your Kunagi account on ").append(urlBase).append("\n");
+			sb.append("\n");
+			sb.append("Email: ").append(getEmail()).append("\n");
+			sb.append("Password: ").append(newPassword).append("\n");
+			sb.append("\n");
+			sb.append("You sould change this password, since somebody else could read this email.");
+
+			Session session = Eml.createSmtpSession(smtpServer, config.getSmtpUser(), config.getSmtpPassword());
+			MimeMessage message = Eml.createTextMessage(session, "Kunagi password", sb.toString(),
+				config.getSmtpFrom(), getEmail());
+			Eml.sendSmtpMessage(session, message);
+
+			setPassword(newPassword);
+			log.info("Password changed for", this);
+		}
+	}
+
+	public void triggerPasswordReset() {
+		String urlBase = webApplication.getBaseUrl();
+		SystemConfig config = webApplication.getSystemConfig();
+		String smtpServer = config.getSmtpServer();
+		if (smtpServer == null) {
+			throw new RuntimeException("SMTP server not set in System Configuration");
+		} else {
+			String newPassword = Str.generatePassword(8);
+			StringBuilder sb = new StringBuilder();
+			sb.append("An admin created a new password for your Kunagi account on ").append(urlBase).append("\n");
+			sb.append("\n");
+			sb.append("Email: ").append(getEmail()).append("\n");
+			sb.append("Password: ").append(newPassword).append("\n");
+			sb.append("\n");
+			sb.append("You sould change this password, since somebody else could read this email.");
+
+			Session session = Eml.createSmtpSession(smtpServer, config.getSmtpUser(), config.getSmtpPassword());
+			MimeMessage message = Eml.createTextMessage(session, "Kunagi password", sb.toString(),
+				config.getSmtpFrom(), getEmail());
+			Eml.sendSmtpMessage(session, message);
+
+			setPassword(newPassword);
+			log.info("Password changed for", this);
 		}
 	}
 

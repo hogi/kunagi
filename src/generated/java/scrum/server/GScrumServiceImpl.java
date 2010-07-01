@@ -14,6 +14,8 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onRegister(GwtConversation conversation, String username, String password, String email);
 
+    public abstract void onRequestNewPassword(GwtConversation conversation, String login);
+
     public abstract void onResetPassword(GwtConversation conversation, String userId);
 
     public abstract void onUpdateSystemMessage(GwtConversation conversation, scrum.client.admin.SystemMessage systemMessage);
@@ -136,6 +138,26 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRegister(conversation, username, password, email);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "Register", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject requestNewPassword(int conversationNumber, String login) {
+        log.debug("Handling service call: RequestNewPassword");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:RequestNewPassword");
+            context.bindCurrentThread();
+            try {
+                onRequestNewPassword(conversation, login);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestNewPassword", ex);
                 throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
