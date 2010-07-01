@@ -1,6 +1,7 @@
 package scrum.client.issues;
 
 import ilarkesto.core.scope.Scope;
+import scrum.client.common.TooltipBuilder;
 import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class AcceptIssueAsBugAction extends GAcceptIssueAsBugAction {
@@ -16,12 +17,17 @@ public class AcceptIssueAsBugAction extends GAcceptIssueAsBugAction {
 
 	@Override
 	public String getTooltip() {
-		return "Accept this issue as bug in a published release. The team needs to fix this.";
+		TooltipBuilder tb = new TooltipBuilder(
+				"Accept this issue as bug in a published release. The team needs to fix this.");
+		if (!issue.getProject().isProductOwnerOrScrumMaster(getCurrentUser())) {
+			tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER_NOR_SCRUMMASTER);
+		}
+		return tb.getTooltip();
 	}
 
 	@Override
 	public boolean isPermitted() {
-		if (!issue.getProject().isProductOwner(getCurrentUser())) return false;
+		if (!issue.getProject().isProductOwnerOrScrumMaster(getCurrentUser())) return false;
 		return true;
 	}
 

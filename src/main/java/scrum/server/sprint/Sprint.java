@@ -49,7 +49,11 @@ public class Sprint extends GSprint {
 				}
 			} else {
 				for (Task task : requirement.getTasks()) {
-					task.reset();
+					if (task.isClosed()) {
+						taskDao.deleteEntity(task);
+					} else {
+						task.reset();
+					}
 				}
 			}
 			requirement.setSprint(null);
