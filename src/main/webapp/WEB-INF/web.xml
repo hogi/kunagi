@@ -80,6 +80,7 @@
     <servlet>
         <servlet-name>backupDownload</servlet-name>
         <servlet-class>scrum.server.project.BackupDownloadServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
     </servlet>      
     <servlet-mapping>
         <servlet-name>backupDownload</servlet-name>
@@ -101,6 +102,7 @@
     <servlet>
         <servlet-name>pdf</servlet-name>
         <servlet-class>scrum.server.common.PdfServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
     </servlet>      
     <servlet-mapping>
         <servlet-name>pdf</servlet-name>
@@ -122,6 +124,7 @@
     <servlet>
         <servlet-name>issue</servlet-name>
         <servlet-class>scrum.server.issues.IssueServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
     </servlet>      
     <servlet-mapping>
         <servlet-name>issue</servlet-name>
@@ -132,6 +135,7 @@
     <servlet>
         <servlet-name>confirmEmail</servlet-name>
         <servlet-class>scrum.server.admin.ConfirmEmailServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
     </servlet>      
     <servlet-mapping>
         <servlet-name>confirmEmail</servlet-name>

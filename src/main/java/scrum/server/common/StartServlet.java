@@ -2,6 +2,7 @@ package scrum.server.common;
 
 import ilarkesto.io.IO;
 import ilarkesto.ui.web.HtmlRenderer;
+import ilarkesto.webapp.Servlet;
 
 import java.io.IOException;
 
@@ -46,6 +47,8 @@ public class StartServlet extends AHttpServlet {
 	@Override
 	protected void onInit(ServletConfig servletConfig) {
 		super.onInit(servletConfig);
+
+		System.out.println("Initializing Kunagi (" + Servlet.getWebappUrl(servletConfig, false) + ")");
 
 		ScrumWebApplication app = ScrumWebApplication.get(servletConfig);
 

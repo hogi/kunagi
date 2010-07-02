@@ -72,7 +72,6 @@
 				<exclude name="**/google-collect-*.jar" />
 				<exclude name="**/commons-io-*.jar" />
                 <exclude name="**/commons-logging-*.jar" />
-	            <exclude name="**/log4j-*.jar" />
 				<exclude name="**/junit-*.jar" />
                 <exclude name="**/testng-*.jar" />
                 <exclude name="**/httpunit-*.jar" />
