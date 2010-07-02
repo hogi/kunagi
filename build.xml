@@ -69,6 +69,10 @@
                 <exclude name="**/javadoc/" />
 				<exclude name="**/gwt-dev.jar" />
                 <exclude name="**/servlet-api-*.jar" />
+				<exclude name="**/google-collect-*.jar" />
+				<exclude name="**/commons-io-*.jar" />
+                <exclude name="**/commons-logging-*.jar" />
+	            <exclude name="**/log4j-*.jar" />
 				<exclude name="**/junit-*.jar" />
                 <exclude name="**/testng-*.jar" />
                 <exclude name="**/httpunit-*.jar" />
@@ -77,6 +81,8 @@
                 <exclude name="**/bsh-*.jar" />
 				<exclude name="**/gdata-*.jar" />
 				<exclude name="**/jaudiotagger-*.jar" />
+				<exclude name="**/jcip-annotations.jar" />
+                <exclude name="**/jcommon-*.jar" />
 			</fileset>
 		</copy>
 	</target>
