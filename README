@@ -4,28 +4,7 @@ KUNAGI
     and collaboration based on Scrum.
 
     http://kunagi.org
-
-
-
-COPYING
-
-    Copyright 2008, 2009, 2010
-	Witoslaw Koczewski, Artjom Kochtchi, Fabian Hager, Kacper Grubalski
-
-    This file is part of Kunagi.
-
-    Kunagi is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Kunagi is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with Foobar. If not, see <http://www.gnu.org/licenses/>.
+    mailto:support@kunagi.org
 
 	
 DESCRIPTION
@@ -63,3 +42,40 @@ DESCRIPTION
     sufficient functionality for our needs. Moreover, after the tool's release,
     we will provide additions, enhancements and updates on a regular basis.
 
+
+COPYING
+
+    Copyright 2008, 2009, 2010
+    Witoslaw Koczewski, Artjom Kochtchi, Fabian Hager, Kacper Grubalski
+
+    Kunagi is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Kunagi is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with Kunagi. If not, see <http://www.gnu.org/licenses/>.
+
+    
+INCLUDED LIBRARIES
+
+    Kunagi uses libraries from other projects with different open source
+    licenses. The following are included in our package:
+
+    - Google Web Toolkit - Apache License, Version 2.0
+    - gwt-dnd - Apache License, Version 2.0
+    - gwt-upload - Apache License, Version 2.0
+    - iText PDF - GNU Affero General Public License
+    - JFreeChart - GNU Lesser General Public License
+    - XStream - Berkeley Software Distribution License
+    - JDOM - Apache-style open source license
+    - Commons Fileupload - Apache License, Version 2.0
+    - JavaMail - Common Development and Distribution License
+    - Log4j - Apache License, Version 2.0
+
+    

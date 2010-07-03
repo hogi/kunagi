@@ -33,9 +33,6 @@
                 <fileset dir="../ilarkesto/lib" />
             </classpath>
         </javac>
-		<delete>
-			  <fileset dir="build/webapp/WEB-INF/classes" includes="**/*.java, **/package.html" />
-		</delete>
 	</target>
 
     <target name="compile-gwt" depends="clean, init">
@@ -61,7 +58,7 @@
 		<copy todir="build/webapp" verbose="true">
 			<fileset dir="src/main/webapp" />
 			<fileset file="README" />
-			<fileset file="COPYING" />
+			<fileset dir="." includes="license.*" />
 		</copy>
 		<copy todir="build/webapp/WEB-INF/lib" verbose="true">
 			<fileset dir="../ilarkesto/lib">
