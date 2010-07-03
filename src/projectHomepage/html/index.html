@@ -48,12 +48,11 @@ input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 
 		#content .section {padding: 0px 0px;}
             #content .section p {margin-bottom: 10px;}
 			h2 {font: 15pt/20pt "georgia",serif; color: #233C9B; margin-bottom: 10px;}
-            h3 {font: 12pt/17pt "georgia",serif; color: black; margin-bottom: 10px;}
+            h3 {font: 13pt/17pt "georgia",serif; color: black; margin-bottom: 10px;}
 			.middle {float: left; width: 500px;}
 			.sidebar {float: right;}
 		        #content .starter {background: orange url("img/button_bg.png") 0 0 repeat-x; border: 1px solid orange; width: 150px; padding: 5px; text-align: center; -moz-border-radius: 5px; margin-bottom: 5px;}
 		            #content .starter a {color: #B37400; font-size: 16px; font-weight: bold; text-decoration: none;}
-            h3 {font: 12pt/16pt "georgia",serif; font-weight: bold; margin-bottom: 10px;}
             img.screenshotthumb {margin: 0px 0px 10px 10px; border: 1px solid #DDD;}
             .featureseparator {clear: both; height: 10px;}
             ul {margin-left: 20px; margin-top: 10px;}
@@ -432,8 +431,17 @@ input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 
 
 
                 <div class="separator"></div>                    
+
+                <h2>Installation</h2>
             
-                <h2>Installation with Tomcat</h2>
+                <h3>Installation on Ubuntu 10.04 Jaunty</h3>
+                <ol>
+                    <li>Install Java and Tomcat packages: <a href="apt://sun-java6-jdk,tomcat6">sun-java6-jdk tomcat6</a>.</li>
+                    <li>Download Kunagi from <a href="http://kunagi.org/#download" target="_blank">kunagi.org</a> and copy it to <code>/var/lib/tomcat6/webapps/</code>.</li>
+                </ol>                
+                <p>Kunagi should be accessible by opening <a href="http://localhost:8080/kunagi/" target="_blank">http://localhost:8080/kunagi/</a>.</p>
+            
+                <h3>Installation with Tomcat</h3>
                 <p>If you don't have a web application server yet, here is an example, how to install Kunagi
                 with Apache Tomcat.</p>
                 <ol>
@@ -447,7 +455,7 @@ input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 
                     <li>Check Tomcat and Kunagi log file <code>logs/catalina.out</code> for errors.</li>
                 </ol>
                 <p>By default, Tomcat listens on port 8080. So you can access Kunagi by opening
-                    <code>http://localhost:8080/kunagi/</code>.</p>
+                    <a href="http://localhost:8080/kunagi/" target="_blank">http://localhost:8080/kunagi/</a>.</p>
                 <p>Depending on your operating system or distribution, some of the steps might be unnecessary if
                     Tomcat is installed via an installation wizard (Windows) or software repositories (Linux).</p>
             
