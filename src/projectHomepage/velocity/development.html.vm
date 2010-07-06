@@ -3,6 +3,28 @@
 #header("development")
 
 <div class="section">
+    <h2>Sprint Backlog</h2>
+    <ul>
+    #foreach( $story in $sprintBacklog.stories )
+        <li><code>$story.reference</code> $story.label</li>
+    #end
+    </ul>
+</div>
+
+<div class="separator"></div>
+
+<div class="section">
+    <h2>Product Backlog</h2>
+    <ul>
+    #foreach( $story in $productBacklog.stories )
+        <li><code>$story.reference</code> $story.label</li>
+    #end
+    </ul>
+</div>
+
+<div class="separator"></div>
+
+<div class="section">
     <h2>Development Team</h2>
     <p>Kunagi is developed by a distributed team of experienced software developers:</p>
     <ul>

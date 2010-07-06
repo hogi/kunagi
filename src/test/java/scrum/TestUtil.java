@@ -1,5 +1,6 @@
 package scrum;
 
+import ilarkesto.base.Str;
 import ilarkesto.base.time.Date;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.EntityStore;
@@ -7,6 +8,8 @@ import ilarkesto.persistence.FileEntityStore;
 import ilarkesto.persistence.TransactionService;
 import scrum.server.calendar.SimpleEvent;
 import scrum.server.calendar.SimpleEventDao;
+import scrum.server.collaboration.Wikipage;
+import scrum.server.collaboration.WikipageDao;
 import scrum.server.impediments.Impediment;
 import scrum.server.impediments.ImpedimentDao;
 import scrum.server.project.Project;
@@ -31,6 +34,7 @@ public class TestUtil {
 	private static ImpedimentDao impedimentDao;
 	private static RiskDao riskDao;
 	private static SimpleEventDao simpleEventDao;
+	private static WikipageDao wikipageDao;
 
 	private static void initialize() {
 		if (initialized) return;
@@ -42,6 +46,9 @@ public class TestUtil {
 
 		transactionService = new TransactionService();
 		transactionService.setEntityStore(entityStore);
+
+		wikipageDao = new WikipageDao();
+		wikipageDao.setTransactionService(transactionService);
 
 		simpleEventDao = new SimpleEventDao();
 		simpleEventDao.setTransactionService(transactionService);
@@ -65,6 +72,7 @@ public class TestUtil {
 
 		projectDao = new ProjectDao();
 		projectDao.setTransactionService(transactionService);
+		Project.setWikipageDao(wikipageDao);
 		Project.setSprintDaySnapshotDao(sprintDaySnapshotDao);
 		Project.setRequirementDao(requirementDao);
 		Project.setSprintDao(sprintDao);
@@ -72,6 +80,22 @@ public class TestUtil {
 		Project.setRiskDao(riskDao);
 		Project.setSimpleEventDao(simpleEventDao);
 
+	}
+
+	public static Wikipage createWikipage(Project project, String name) {
+		String text = "== " + name + " ==";
+		text += "\n\n" + Str.generateRandomParagraph();
+		text += "\n\n" + "* " + name + "\n* " + name;
+		text += "\n\n" + Str.generateRandomParagraph();
+		return createWikipage(project, name, text);
+	}
+
+	public static Wikipage createWikipage(Project project, String name, String text) {
+		Wikipage wikipage = wikipageDao.newEntityInstance();
+		wikipage.setProject(project);
+		wikipage.setName(name);
+		wikipage.setText(text);
+		return wikipage;
 	}
 
 	public static SimpleEvent createSimpleEvent(Project project, int number) {
@@ -121,8 +145,8 @@ public class TestUtil {
 	}
 
 	public static Requirement createRequirement(Project project, int number) {
-		return createRequirement(project, number, "Requirement #" + number, "Some description for requirement number "
-				+ number);
+		return createRequirement(project, number, Str.generateRandomSentence(4, 5) + " (#" + number + ")",
+			Str.generateRandomParagraph());
 	}
 
 	public static Requirement createRequirement(Project project, int number, String label, String description) {

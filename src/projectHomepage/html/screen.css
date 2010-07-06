@@ -31,8 +31,9 @@ input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 
         h3 {font: 12pt/16pt "georgia",serif; font-weight: bold; margin-bottom: 10px;}
         img.screenshotthumb {margin: 0px 0px 10px 10px; border: 1px solid #DDD;}
         .featureseparator {clear: both; height: 10px;}
-        ul {margin-left: 20px; margin-top: 10px;}
+        ul {margin-left: 20px; margin-top: 10px; margin-bottom: 10px;}
         ol {margin-left: 30px; margin-top: 10px; margin-bottom: 10px;}
+        .secondaryText {color: #666;}
     #content .separator {height: 15px; margin-bottom: 25px; border-bottom: 1px solid #CCC;}
 #footer {background: #192666; color: #CCC; padding: 0px 10px; font-size: 8px; text-align: right;}
 .error {background: darkred; border: 1px solid darkred; text-align: center; color: #FFA; font-size: 16px; font-weight: bold; padding: 10px; margin-bottom: 20px;}

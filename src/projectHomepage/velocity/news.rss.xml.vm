@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    >
+ 
+  <channel>
+    <title>Kunagi News</title>
+    <atom:link href="http://kunagi.org/news.rss.xml" rel="self" type="application/rss+xml" />
+    <link>http://kunagi.org</link>
+    <description>Kunagi News</description>
+    <language>en</language>
+    <sy:updatePeriod>daily</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <image>
+      <url>http://kunagi.org/img/kunagi.png</url>
+      <title>Kunagi Logo</title>
+      <link>http://kunagi.org</link>
+    </image>
+ 
+#foreach( $blogEntry in $blogEntries )    
+    <item>
+      <title>$blogEntry.title</title>
+      <description><![CDATA[$blogEntry.plainText]]></description>
+      <link>http://kunagi.org/news.html#$blogEntry.reference</link>
+      <author>Kunagi Team</author>
+      <guid>http://kunagi.org/news.html#$blogEntry.reference</guid>
+      <pubDate>$blogEntry.rssDate</pubDate>
+    </item>
+#end 
+ 
+  </channel>
+ 
+</rss>

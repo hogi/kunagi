@@ -2,6 +2,8 @@ package scrum.server.project;
 
 import ilarkesto.base.Str;
 import ilarkesto.base.time.Date;
+import ilarkesto.base.time.DateAndTime;
+import ilarkesto.base.time.Time;
 import ilarkesto.core.logging.Log;
 import ilarkesto.velocity.Velocity;
 
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import scrum.client.wiki.HtmlContext;
 import scrum.client.wiki.WikiModel;
@@ -37,6 +40,8 @@ public class HomepageUpdater {
 		context.put("project", createProjectMap());
 		context.put("wiki", createWikiMap());
 		context.put("blogEntries", createBlogEntries());
+		context.put("sprintBacklog", createSprintBacklog());
+		context.put("productBacklog", createProductBacklog());
 
 		updateHomepage(templatePath, outputPath, context);
 	}
@@ -45,13 +50,53 @@ public class HomepageUpdater {
 		List<Map<String, String>> entryList = new ArrayList<Map<String, String>>();
 		// TODO loop blog entries. don't forget to sort.
 		for (int i = 0; i < 5; i++) {
+			String reference = "blg" + i;
+			String title = Str.generateRandomSentence(4, 6);
+			String text = Str.generateRandomParagraph();
+			DateAndTime date = new DateAndTime(Date.beforeDays(i), Time.now());
+
 			Map<String, String> entryMap = new HashMap<String, String>();
-			entryMap.put("date", Date.beforeDays(i).toString(Date.FORMAT_SHORTWEEKDAY_DAY_MONTH_YEAR));
-			entryMap.put("title", Str.generateRandomSentence(4, 6));
-			entryMap.put("text", "<p>" + Str.generateRandomParagraph() + "</p>");
+			entryMap.put("reference", reference);
+			entryMap.put("title", title);
+			entryMap.put("text", "<p>" + wiki2html(text, htmlContext) + "</p>");
+			entryMap.put("plainText", text);
+			entryMap.put("date", date.toString(DateAndTime.FORMAT_WEEKDAY_LONGMONTH_DAY_YEAR_HOUR_MINUTE));
+			entryMap.put("rssDate", date.toString(DateAndTime.FORMAT_RFC822));
 			entryList.add(entryMap);
 		}
 		return entryList;
+	}
+
+	private Map<String, ?> createSprintBacklog() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Map<String, String>> storysList = new ArrayList<Map<String, String>>();
+		map.put("stories", storysList);
+		Set<Requirement> requirements = project.getCurrentSprint().getRequirements();
+		for (Requirement requirement : requirements) {
+			Map<String, String> storyMap = createStoryMap(requirement);
+			storysList.add(storyMap);
+		}
+		return map;
+	}
+
+	private Map<String, ?> createProductBacklog() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Map<String, String>> storysList = new ArrayList<Map<String, String>>();
+		map.put("stories", storysList);
+		Set<Requirement> requirements = project.getRequirements();
+		for (Requirement requirement : requirements) {
+			if (requirement.isClosed() || requirement.isInCurrentSprint()) continue;
+			Map<String, String> storyMap = createStoryMap(requirement);
+			storysList.add(storyMap);
+		}
+		return map;
+	}
+
+	private Map<String, String> createStoryMap(Requirement requirement) {
+		Map<String, String> storyMap = new HashMap<String, String>();
+		storyMap.put("reference", requirement.getReference());
+		storyMap.put("label", requirement.getLabel());
+		return storyMap;
 	}
 
 	private Map<String, String> createWikiMap() {
@@ -64,6 +109,7 @@ public class HomepageUpdater {
 
 	private Map<String, Object> createProjectMap() {
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("label", project.getLabel());
 		map.put("shortDescription", wiki2html(project.getShortDescription(), htmlContext));
 		map.put("description", wiki2html(project.getShortDescription(), htmlContext));
 		map.put("longDescription", wiki2html(project.getShortDescription(), htmlContext));
