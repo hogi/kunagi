@@ -18,14 +18,8 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <link rel="stylesheet" href="screen.css" type="text/css" />
     <script type="text/javascript" language="javascript" src="js/prototype.js"></script>
-    <script type="text/javascript" language="javascript" src="js/scriptaculous.js"></script>
-    <script type="text/javascript" language="javascript" src="js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" language="javascript" src="js/kill-ie6.js" ></script>
+    <script type="text/javascript" language="javascript" src="js/kill-ie6.js"></script>
 
-#literal()
-    <style type="text/css">
-    </style>
-#end
 </head>
 
 <body bgcolor="#808080" background="img/bg.png">
@@ -62,7 +56,7 @@
 
 
 #macro( navigLink $page $label $currentPage )
-    <td><a id="link-${page}" class="navigLink #if($page==$currentPage)navigLinkSelected#end" href="${page}.html">${label}</a></td>
+    <td><a class="navigLink #if($page==$currentPage)navigLinkSelected#end" href="${page}.html">${label}</a></td>
 #end
 
 

@@ -60,6 +60,8 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onSelectProject(GwtConversation conversation, String projectId);
 
+    public abstract void onUpdateProjectHomepage(GwtConversation conversation);
+
     public abstract void onRequestRisks(GwtConversation conversation);
 
     public abstract void onSearch(GwtConversation conversation, String text);
@@ -597,6 +599,26 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onSelectProject(conversation, projectId);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "SelectProject", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject updateProjectHomepage(int conversationNumber) {
+        log.debug("Handling service call: UpdateProjectHomepage");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:UpdateProjectHomepage");
+            context.bindCurrentThread();
+            try {
+                onUpdateProjectHomepage(conversation);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "UpdateProjectHomepage", ex);
                 throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

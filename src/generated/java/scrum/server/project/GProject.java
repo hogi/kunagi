@@ -37,7 +37,9 @@ public abstract class GProject
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("label", this.label);
+        properties.put("shortDescription", this.shortDescription);
         properties.put("description", this.description);
+        properties.put("longDescription", this.longDescription);
         properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("participantsIds", this.participantsIds);
@@ -62,6 +64,7 @@ public abstract class GProject
         properties.put("lastReleaseNumber", this.lastReleaseNumber);
         properties.put("punishmentFactor", this.punishmentFactor);
         properties.put("punishmentUnit", this.punishmentUnit);
+        properties.put("homepageDir", this.homepageDir);
     }
 
     public int compareTo(Project other) {
@@ -80,7 +83,9 @@ public abstract class GProject
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getShortDescription(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
+        if (matchesKey(getLongDescription(), key)) return true;
         return false;
     }
 
@@ -120,6 +125,41 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
+    // - shortDescription
+    // -----------------------------------------------------------
+
+    private java.lang.String shortDescription;
+
+    public final java.lang.String getShortDescription() {
+        return shortDescription;
+    }
+
+    public final void setShortDescription(java.lang.String shortDescription) {
+        shortDescription = prepareShortDescription(shortDescription);
+        if (isShortDescription(shortDescription)) return;
+        this.shortDescription = shortDescription;
+        fireModified();
+    }
+
+    protected java.lang.String prepareShortDescription(java.lang.String shortDescription) {
+        shortDescription = Str.removeUnreadableChars(shortDescription);
+        return shortDescription;
+    }
+
+    public final boolean isShortDescriptionSet() {
+        return this.shortDescription != null;
+    }
+
+    public final boolean isShortDescription(java.lang.String shortDescription) {
+        if (this.shortDescription == null && shortDescription == null) return true;
+        return this.shortDescription != null && this.shortDescription.equals(shortDescription);
+    }
+
+    protected final void updateShortDescription(Object value) {
+        setShortDescription((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
     // - description
     // -----------------------------------------------------------
 
@@ -152,6 +192,41 @@ public abstract class GProject
 
     protected final void updateDescription(Object value) {
         setDescription((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - longDescription
+    // -----------------------------------------------------------
+
+    private java.lang.String longDescription;
+
+    public final java.lang.String getLongDescription() {
+        return longDescription;
+    }
+
+    public final void setLongDescription(java.lang.String longDescription) {
+        longDescription = prepareLongDescription(longDescription);
+        if (isLongDescription(longDescription)) return;
+        this.longDescription = longDescription;
+        fireModified();
+    }
+
+    protected java.lang.String prepareLongDescription(java.lang.String longDescription) {
+        longDescription = Str.removeUnreadableChars(longDescription);
+        return longDescription;
+    }
+
+    public final boolean isLongDescriptionSet() {
+        return this.longDescription != null;
+    }
+
+    public final boolean isLongDescription(java.lang.String longDescription) {
+        if (this.longDescription == null && longDescription == null) return true;
+        return this.longDescription != null && this.longDescription.equals(longDescription);
+    }
+
+    protected final void updateLongDescription(Object value) {
+        setLongDescription((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -1331,13 +1406,50 @@ public abstract class GProject
         setPunishmentUnit((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - homepageDir
+    // -----------------------------------------------------------
+
+    private java.lang.String homepageDir;
+
+    public final java.lang.String getHomepageDir() {
+        return homepageDir;
+    }
+
+    public final void setHomepageDir(java.lang.String homepageDir) {
+        homepageDir = prepareHomepageDir(homepageDir);
+        if (isHomepageDir(homepageDir)) return;
+        this.homepageDir = homepageDir;
+        fireModified();
+    }
+
+    protected java.lang.String prepareHomepageDir(java.lang.String homepageDir) {
+        homepageDir = Str.removeUnreadableChars(homepageDir);
+        return homepageDir;
+    }
+
+    public final boolean isHomepageDirSet() {
+        return this.homepageDir != null;
+    }
+
+    public final boolean isHomepageDir(java.lang.String homepageDir) {
+        if (this.homepageDir == null && homepageDir == null) return true;
+        return this.homepageDir != null && this.homepageDir.equals(homepageDir);
+    }
+
+    protected final void updateHomepageDir(Object value) {
+        setHomepageDir((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
             if (property.equals("id")) continue;
             Object value = entry.getValue();
             if (property.equals("label")) updateLabel(value);
+            if (property.equals("shortDescription")) updateShortDescription(value);
             if (property.equals("description")) updateDescription(value);
+            if (property.equals("longDescription")) updateLongDescription(value);
             if (property.equals("begin")) updateBegin(value);
             if (property.equals("end")) updateEnd(value);
             if (property.equals("participantsIds")) updateParticipants(value);
@@ -1362,6 +1474,7 @@ public abstract class GProject
             if (property.equals("lastReleaseNumber")) updateLastReleaseNumber(value);
             if (property.equals("punishmentFactor")) updatePunishmentFactor(value);
             if (property.equals("punishmentUnit")) updatePunishmentUnit(value);
+            if (property.equals("homepageDir")) updateHomepageDir(value);
         }
     }
 

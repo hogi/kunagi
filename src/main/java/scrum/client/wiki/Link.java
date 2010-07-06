@@ -30,6 +30,8 @@ public class Link extends AWikiElement {
 		if (s.startsWith("http://")) return s;
 		if (s.startsWith("https://")) return s;
 		if (s.startsWith("ftp://")) return s;
+		if (s.startsWith("mailto://")) return s;
+		if (s.startsWith("apt://")) return s;
 		return "http://" + s;
 	}
 

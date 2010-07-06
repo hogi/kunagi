@@ -60,6 +60,8 @@ public interface ScrumServiceAsync {
 
     void selectProject(int conversationNumber, String projectId, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
+    void updateProjectHomepage(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
+
     void requestRisks(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
     void search(int conversationNumber, String text, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);

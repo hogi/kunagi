@@ -29,7 +29,7 @@ public class ProjectUserConfigWidget extends AScrumWidget {
 
 		globalUserConfig = new UserConfigWidget();
 		PagePanel page = new PagePanel();
-		page.addHeader("Project Preferences");
+		page.addHeader("Personal preferences for current project");
 		page.addSection(fields);
 
 		return Gwt.createFlowPanel(page, globalUserConfig);

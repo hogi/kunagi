@@ -37,6 +37,7 @@ import scrum.server.journal.Change;
 import scrum.server.journal.ChangeDao;
 import scrum.server.journal.ProjectEvent;
 import scrum.server.journal.ProjectEventDao;
+import scrum.server.project.HomepageUpdater;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
@@ -627,6 +628,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			return;
 		}
 		LOG.info("Requested entity not found:", reference);
+	}
+
+	@Override
+	public void onUpdateProjectHomepage(GwtConversation conversation) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		HomepageUpdater.updateHomepage(project);
 	}
 
 	@Override

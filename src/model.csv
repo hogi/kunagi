@@ -154,6 +154,7 @@
 "a9cd6400-f5fa-45c3-813d-52998ed7aa72","c829a32f-5300-49a9-983a-75bc0e214ae4","Event","ProjectDataReceived"
 "a62f9f7b-97c6-4859-bbf7-b80526518615","c829a32f-5300-49a9-983a-75bc0e214ae4","ServiceCall","SelectProject"
 "a0ae3821-a9ad-477c-80c7-7ccdb35593f0","a62f9f7b-97c6-4859-bbf7-b80526518615","Parameter","projectId"
+"2ad87630-3dad-4482-8e60-0337ab4de49a","c829a32f-5300-49a9-983a-75bc0e214ae4","ServiceCall","UpdateProjectHomepage"
 "36bbd22e-34a2-4d1d-8fda-adfd067cc42e","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","risks"
 "1a4e9603-9e9d-4a67-a7ce-e61958ed12aa","36bbd22e-34a2-4d1d-8fda-adfd067cc42e","ServiceCall","RequestRisks"
 "ae5b4e14-6025-4e7d-91f9-5bb88c73bca8","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","search"

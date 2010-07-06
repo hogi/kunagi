@@ -105,7 +105,9 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.setGwtSupport(true);
 			projectModel.addPredicate("editable");
 			projectModel.addStringProperty("label").setMandatory(true).setSearchable(true);
+			projectModel.addStringProperty("shortDescription").setSearchable(true);
 			projectModel.addStringProperty("description").setRichtext(true).setSearchable(true);
+			projectModel.addStringProperty("longDescription").setRichtext(true).setSearchable(true);
 			projectModel.addProperty("begin", Date.class);
 			projectModel.addProperty("end", Date.class);
 			projectModel.addSetReference("participants", getUserModel());
@@ -130,9 +132,11 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addProperty("lastReleaseNumber", int.class);
 			projectModel.addProperty("punishmentFactor", int.class);
 			projectModel.addStringProperty("punishmentUnit");
+			projectModel.addStringProperty("homepageDir");
 			getApplicationModel().addCreateAction(projectModel);
 			projectModel.addAction("DeleteProject");
 			projectModel.addAction("OpenProject");
+			projectModel.addAction("UpdateProjectHomepage");
 		}
 		return projectModel;
 	}

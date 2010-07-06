@@ -30,7 +30,7 @@ public class UserConfigWidget extends AScrumWidget {
 		});
 
 		PagePanel page = new PagePanel();
-		page.addHeader("Global Preferences");
+		page.addHeader("Personal preferences for all projects");
 		page.addSection(fields);
 		return page;
 	}

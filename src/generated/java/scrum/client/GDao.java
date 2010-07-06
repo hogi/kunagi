@@ -910,10 +910,26 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByShortDescription(java.lang.String shortDescription) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isShortDescription(shortDescription)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.project.Project> getProjectsByDescription(java.lang.String description) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
             if (entity.isDescription(description)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Project> getProjectsByLongDescription(java.lang.String longDescription) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isLongDescription(longDescription)) ret.add(entity);
         }
         return ret;
     }
@@ -1057,6 +1073,14 @@ public abstract class GDao
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
             if (entity.isPunishmentUnit(punishmentUnit)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Project> getProjectsByHomepageDir(java.lang.String homepageDir) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isHomepageDir(homepageDir)) ret.add(entity);
         }
         return ret;
     }

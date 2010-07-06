@@ -44,8 +44,12 @@ public abstract class GProjectDao
     public void clearCaches() {
         projectsByLabelCache.clear();
         labelsCache = null;
+        projectsByShortDescriptionCache.clear();
+        shortDescriptionsCache = null;
         projectsByDescriptionCache.clear();
         descriptionsCache = null;
+        projectsByLongDescriptionCache.clear();
+        longDescriptionsCache = null;
         projectsByBeginCache.clear();
         beginsCache = null;
         projectsByEndCache.clear();
@@ -94,6 +98,8 @@ public abstract class GProjectDao
         punishmentFactorsCache = null;
         projectsByPunishmentUnitCache.clear();
         punishmentUnitsCache = null;
+        projectsByHomepageDirCache.clear();
+        homepageDirsCache = null;
     }
 
     @Override
@@ -153,6 +159,46 @@ public abstract class GProjectDao
     }
 
     // -----------------------------------------------------------
+    // - shortDescription
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByShortDescriptionCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String shortDescription) {
+                    return getEntities(new IsShortDescription(shortDescription));
+                }
+            });
+
+    public final Set<Project> getProjectsByShortDescription(java.lang.String shortDescription) {
+        return projectsByShortDescriptionCache.get(shortDescription);
+    }
+    private Set<java.lang.String> shortDescriptionsCache;
+
+    public final Set<java.lang.String> getShortDescriptions() {
+        if (shortDescriptionsCache == null) {
+            shortDescriptionsCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isShortDescriptionSet()) shortDescriptionsCache.add(e.getShortDescription());
+            }
+        }
+        return shortDescriptionsCache;
+    }
+
+    private static class IsShortDescription implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsShortDescription(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isShortDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - description
     // -----------------------------------------------------------
 
@@ -188,6 +234,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - longDescription
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByLongDescriptionCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String longDescription) {
+                    return getEntities(new IsLongDescription(longDescription));
+                }
+            });
+
+    public final Set<Project> getProjectsByLongDescription(java.lang.String longDescription) {
+        return projectsByLongDescriptionCache.get(longDescription);
+    }
+    private Set<java.lang.String> longDescriptionsCache;
+
+    public final Set<java.lang.String> getLongDescriptions() {
+        if (longDescriptionsCache == null) {
+            longDescriptionsCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isLongDescriptionSet()) longDescriptionsCache.add(e.getLongDescription());
+            }
+        }
+        return longDescriptionsCache;
+    }
+
+    private static class IsLongDescription implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsLongDescription(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isLongDescription(value);
         }
 
     }
@@ -1148,6 +1234,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isPunishmentUnit(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - homepageDir
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByHomepageDirCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String homepageDir) {
+                    return getEntities(new IsHomepageDir(homepageDir));
+                }
+            });
+
+    public final Set<Project> getProjectsByHomepageDir(java.lang.String homepageDir) {
+        return projectsByHomepageDirCache.get(homepageDir);
+    }
+    private Set<java.lang.String> homepageDirsCache;
+
+    public final Set<java.lang.String> getHomepageDirs() {
+        if (homepageDirsCache == null) {
+            homepageDirsCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isHomepageDirSet()) homepageDirsCache.add(e.getHomepageDir());
+            }
+        }
+        return homepageDirsCache;
+    }
+
+    private static class IsHomepageDir implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsHomepageDir(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isHomepageDir(value);
         }
 
     }

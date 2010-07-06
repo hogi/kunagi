@@ -97,6 +97,54 @@ public abstract class GProject
 
     }
 
+    // --- shortDescription ---
+
+    private java.lang.String shortDescription ;
+
+    public final java.lang.String getShortDescription() {
+        return this.shortDescription ;
+    }
+
+    public final Project setShortDescription(java.lang.String shortDescription) {
+        if (isShortDescription(shortDescription)) return (Project)this;
+        this.shortDescription = shortDescription ;
+        propertyChanged("shortDescription", this.shortDescription);
+        return (Project)this;
+    }
+
+    public final boolean isShortDescription(java.lang.String shortDescription) {
+        return equals(this.shortDescription, shortDescription);
+    }
+
+    private transient ShortDescriptionModel shortDescriptionModel;
+
+    public ShortDescriptionModel getShortDescriptionModel() {
+        if (shortDescriptionModel == null) shortDescriptionModel = createShortDescriptionModel();
+        return shortDescriptionModel;
+    }
+
+    protected ShortDescriptionModel createShortDescriptionModel() { return new ShortDescriptionModel(); }
+
+    protected class ShortDescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getShortDescription();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setShortDescription(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- description ---
 
     private java.lang.String description ;
@@ -135,6 +183,57 @@ public abstract class GProject
         @Override
         public void setValue(java.lang.String value) {
             setDescription(value);
+        }
+
+        @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- longDescription ---
+
+    private java.lang.String longDescription ;
+
+    public final java.lang.String getLongDescription() {
+        return this.longDescription ;
+    }
+
+    public final Project setLongDescription(java.lang.String longDescription) {
+        if (isLongDescription(longDescription)) return (Project)this;
+        this.longDescription = longDescription ;
+        propertyChanged("longDescription", this.longDescription);
+        return (Project)this;
+    }
+
+    public final boolean isLongDescription(java.lang.String longDescription) {
+        return equals(this.longDescription, longDescription);
+    }
+
+    private transient LongDescriptionModel longDescriptionModel;
+
+    public LongDescriptionModel getLongDescriptionModel() {
+        if (longDescriptionModel == null) longDescriptionModel = createLongDescriptionModel();
+        return longDescriptionModel;
+    }
+
+    protected LongDescriptionModel createLongDescriptionModel() { return new LongDescriptionModel(); }
+
+    protected class LongDescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getLongDescription();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLongDescription(value);
         }
 
         @Override
@@ -1208,11 +1307,61 @@ public abstract class GProject
 
     }
 
+    // --- homepageDir ---
+
+    private java.lang.String homepageDir ;
+
+    public final java.lang.String getHomepageDir() {
+        return this.homepageDir ;
+    }
+
+    public final Project setHomepageDir(java.lang.String homepageDir) {
+        if (isHomepageDir(homepageDir)) return (Project)this;
+        this.homepageDir = homepageDir ;
+        propertyChanged("homepageDir", this.homepageDir);
+        return (Project)this;
+    }
+
+    public final boolean isHomepageDir(java.lang.String homepageDir) {
+        return equals(this.homepageDir, homepageDir);
+    }
+
+    private transient HomepageDirModel homepageDirModel;
+
+    public HomepageDirModel getHomepageDirModel() {
+        if (homepageDirModel == null) homepageDirModel = createHomepageDirModel();
+        return homepageDirModel;
+    }
+
+    protected HomepageDirModel createHomepageDirModel() { return new HomepageDirModel(); }
+
+    protected class HomepageDirModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getHomepageDir();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setHomepageDir(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
         label  = (java.lang.String) props.get("label");
+        shortDescription  = (java.lang.String) props.get("shortDescription");
         description  = (java.lang.String) props.get("description");
+        longDescription  = (java.lang.String) props.get("longDescription");
         String beginAsString = (String) props.get("begin");
         begin  =  beginAsString == null ? null : new ilarkesto.gwt.client.Date(beginAsString);
         String endAsString = (String) props.get("end");
@@ -1239,13 +1388,16 @@ public abstract class GProject
         lastReleaseNumber  = (Integer) props.get("lastReleaseNumber");
         punishmentFactor  = (Integer) props.get("punishmentFactor");
         punishmentUnit  = (java.lang.String) props.get("punishmentUnit");
+        homepageDir  = (java.lang.String) props.get("homepageDir");
     }
 
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("label", this.label);
+        properties.put("shortDescription", this.shortDescription);
         properties.put("description", this.description);
+        properties.put("longDescription", this.longDescription);
         properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("participantsIds", this.participantsIds);
@@ -1270,13 +1422,16 @@ public abstract class GProject
         properties.put("lastReleaseNumber", this.lastReleaseNumber);
         properties.put("punishmentFactor", this.punishmentFactor);
         properties.put("punishmentUnit", this.punishmentUnit);
+        properties.put("homepageDir", this.homepageDir);
     }
 
     @Override
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getShortDescription(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
+        if (matchesKey(getLongDescription(), key)) return true;
         return false;
     }
 

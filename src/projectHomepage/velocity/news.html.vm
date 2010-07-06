@@ -1,0 +1,13 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+#header("news")
+
+#foreach( $blogEntry in $blogEntries )
+    <div class="section">
+        <h2><em>$blogEntry.date</em> $blogEntry.title</h2>
+        $blogEntry.text
+    </div>
+    <div class="separator"></div>
+#end
+
+#footer()

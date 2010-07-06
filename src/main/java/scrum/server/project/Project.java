@@ -156,6 +156,11 @@ public class Project extends GProject {
 
 	// --- ---
 
+	public java.io.File getHomepageDirFile() {
+		if (!isHomepageDirSet()) return null;
+		return new java.io.File(getHomepageDir());
+	}
+
 	public void buildProductBacklogReport(APdfBuilder pdf) {}
 
 	public void scanFiles() {

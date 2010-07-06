@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+#header("development")
+
+<div class="section">
+    <h2>Development Team</h2>
+    <p>Kunagi is developed by a distributed team of experienced software developers:</p>
+    <ul>
+        <li><a>Artjom Kochtchi</a> is Product Owner and Team member</li>
+        <li><a href="http://koczewski.de/" target="_blank">Witoslaw Koczewski</a> (<a href="http://koczewski.de/witoslaw-koczewski-csm.pdf" target="_blank">CSM</a>) is ScrumMaster and Team member</li>
+        <li><a href="http://fabianhager.de/" target="_blank">Fabian Hager</a> is Team member</li>
+        <li><a href="http://grubalski.de/" target="_blank">Kacper Grubalski</a> is Team member</li>
+        <li><a>Fabian Wischnewski</a> is Team member</li>
+    </ul>
+</div>
+
+<div class="separator"></div>
+
+<div class="section">
+    <h2>Donations</h2>
+    <p>Kunagi is free software, developed in our spare time. The software will stay free no matter what,
+        but donations would allow us to invest more time into the project.</p>
+    <table><tr>
+        <td width="100">
+            <h3>Flattr</h3>
+            <script type="text/javascript">var flattr_url = 'http://kunagi.org';</script>
+            <script src="http://api.flattr.com/button/load.js" type="text/javascript"></script>
+        </td><td width="170">
+            <h3>Paypal</h3>
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="DY452MLW6V4LE">
+                <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                <img alt="" border="0" src="https://www.paypal.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+            </form>
+        </td><td width="100">
+            <h3>SourceForge</h3>
+            <a href="http://sourceforge.net/donate/index.php?group_id=306714" target="_blank">
+                <img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" alt="Support the Kunagi Project" />
+            </a>
+        </td>
+    </tr></table>
+</div>
+
+<div class="separator"></div>
+
+<div class="section">
+    <h2>Infos for Software Developers</h2>
+    <div class="middle">
+        <a target="_blank" href="https://servisto.de/organizanto/179246cd-e81c-4299-8201-0303a515ebbd">Organizanto Project</a><br>
+        <a target="_blank" href="https://servisto.de/organizanto/5cfe9dd8-a1dd-4a37-8314-c40b242ed33f">Continous Integration</a><br>
+        
+        <a target="_blank" href="https://sourceforge.net/projects/kunagi/">SourceForge</a><br>
+        <a target="_blank" href="https://code.google.com/p/kunagi/">Google Code</a><br>
+        <a target="_blank" href="http://github.com/witek/kunagi/">GitHub</a><br>
+        <a target="_blank" href="https://launchpad.net/kunagi/">launchpad</a><br>
+        <a target="_blank" href="http://freshmeat.net/projects/kunagi/">freshmeat</a><br>
+        <a target="_blank" href="http://www.facebook.com/pages/kunagi/106332836057762">Facebook</a><br>
+        
+        <a target="_blank" href="https://servisto.de/projects/ilarkesto/javadoc/">Ilarkesto Javadocs</a><br>
+    </div>
+    <div class="sidebar">
+        <div class="starter">
+            <a target="_blank" href="https://servisto.de/scrum/">Start Release</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+
+#footer()

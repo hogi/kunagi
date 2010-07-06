@@ -420,6 +420,8 @@ public class WikiParser {
 		if (s.startsWith("https://")) return true;
 		if (s.startsWith("www.")) return true;
 		if (s.startsWith("ftp://")) return true;
+		if (s.startsWith("apt://")) return true;
+		if (s.startsWith("mailto://")) return true;
 		return false;
 	}
 

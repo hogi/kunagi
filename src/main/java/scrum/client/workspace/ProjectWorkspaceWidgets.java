@@ -31,6 +31,7 @@ import scrum.client.journal.JournalWidget;
 import scrum.client.journal.ProjectEvent;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.Project;
+import scrum.client.project.ProjectAdminWidget;
 import scrum.client.project.ProjectOverviewWidget;
 import scrum.client.project.Quality;
 import scrum.client.project.QualityBacklogWidget;
@@ -72,6 +73,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 	private PunishmentsWidget punishments;
 	private JournalWidget projectEventList;
 	private FileRepositoryWidget fileRepository;
+	private ProjectAdminWidget projectAdmin;
 
 	private PageSet pages = new PageSet();
 
@@ -126,8 +128,11 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		punishments = new PunishmentsWidget();
 		pages.addPage(new Page(punishments, "Courtroom", collaborationGroupKey));
 
+		String administrationKey = "administration";
 		projectUserConfig = new ProjectUserConfigWidget();
-		pages.addPage(new Page(projectUserConfig, "Personal Preferences", null));
+		pages.addPage(new Page(projectUserConfig, "Personal Preferences", administrationKey));
+		projectAdmin = new ProjectAdminWidget();
+		pages.addPage(new Page(projectAdmin, "Project administration", administrationKey));
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
 		navigator.addItem("Dashboard", dashboard);
@@ -135,7 +140,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		addNavigatorGroup(navigator, productGroupKey, "Product");
 		addNavigatorGroup(navigator, projectGroupKey, "Project");
 		addNavigatorGroup(navigator, collaborationGroupKey, "Collaboration");
-		navigator.addItem("Personal Preferences", getProjectUserConfig());
+		addNavigatorGroup(navigator, administrationKey, "Administration");
 	}
 
 	private void addNavigatorGroup(SwitchingNavigatorWidget navigator, String groupKey, String label) {
