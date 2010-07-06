@@ -1,0 +1,93 @@
+#macro( header $page )
+<html>
+
+<head>
+
+    <title>Kunagi - Agile project management based on Scrum</title>
+    <meta name="description" content="Kunagi is a web-based tool for integrated agile project management and collaboration based on Scrum">
+    <meta name="author" content="Artjom Kochtchi, Witoslaw Koczewski">
+    <meta name="keywords" content="Scrum, Project Management, agile, tool">
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="content-language" content="en">
+
+    <meta name="google-site-verification" content="J_A-jkvvOE0Tyruc6MhB5MxFDltbQO84579ZIVYcuyg" />
+    <meta name="y_key" content="7cc8fa0621a57566" />
+
+    <meta name="robots" content="index">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="screen.css" type="text/css" />
+    <script type="text/javascript" language="javascript" src="js/prototype.js"></script>
+    <script type="text/javascript" language="javascript" src="js/scriptaculous.js"></script>
+    <script type="text/javascript" language="javascript" src="js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" language="javascript" src="js/kill-ie6.js" ></script>
+
+#literal()
+    <style type="text/css">
+    </style>
+#end
+</head>
+
+<body bgcolor="#808080" background="img/bg.png">
+
+<div id="main">
+
+    <div id="header">
+       <a href="http://kunagi.org/"><img src="img/kunagi.png" height="85" alt="kunagi"></a>
+    </div>
+    
+    <div id="menu">
+        <table cellspacing="0" cellpadding="0" width="100%"><tr>
+            
+            #navigLink("index", "Home", $page)
+            #navigLink("screenshots", "Screenshots", $page)
+            #navigLink("download", "Download", $page)
+            #navigLink("support", "Support", $page)
+            #navigLink("development", "Development", $page)
+            
+            <td width="90%"></td>
+            
+            <td style="vertical-align: middle;">
+                <div style="margin: 5px 10px 0px 0px;">
+                <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;username=kunagi"><img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=kunagi"></script>
+                </div>
+            </td>
+        </tr></table>
+    </div>
+    
+    <div id="content">
+#end
+
+
+
+
+#macro( navigLink $page $label $currentPage )
+    <td><a id="link-${page}" class="navigLink #if($page==$currentPage)navigLinkSelected#end" href="${page}.html">${label}</a></td>
+#end
+
+
+
+
+
+#macro( footer )
+    </div><!-- content -->
+    
+    <div id="footer">
+        Copyright 2010 Artjom Kochtchi, Witoslaw Koczewski, Fabian Hager
+    </div>
+    
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-12836945-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+</body>
+</html>
+#end
