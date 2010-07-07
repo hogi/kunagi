@@ -5,13 +5,10 @@ import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.base.time.Time;
 import ilarkesto.core.logging.Log;
+import ilarkesto.velocity.ContextBuilder;
 import ilarkesto.velocity.Velocity;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import scrum.client.wiki.HtmlContext;
@@ -24,105 +21,86 @@ public class HomepageUpdater {
 	private static Log log = Log.get(HomepageUpdater.class);
 
 	private Project project;
-	private Map<String, Object> context;
 	private MyHtmlContext htmlContext;
+	private File outputDir;
 
-	private HomepageUpdater(Project project) {
+	private HomepageUpdater(Project project, String outputPath) {
 		super();
 		assert project != null;
 		this.project = project;
+		this.outputDir = new File(outputPath);
 		htmlContext = new MyHtmlContext(project);
 	}
 
-	private void updateHomepage(String templatePath, String outputPath) {
-		context = new HashMap<String, Object>();
+	private void processTemplates(String templatePath) {
+		ContextBuilder context = new ContextBuilder();
 
-		context.put("project", createProjectMap());
-		context.put("wiki", createWikiMap());
-		context.put("blogEntries", createBlogEntries());
-		context.put("sprintBacklog", createSprintBacklog());
-		context.put("productBacklog", createProductBacklog());
+		fillProject(context.putSubContext("project"));
+		fillWiki(context.putSubContext("wiki"));
+		fillBlog(context.putSubContext("blog"));
+		fillSprintBacklog(context.putSubContext("sprintBacklog"));
+		fillProductBacklog(context.putSubContext("productBacklog"));
 
-		updateHomepage(templatePath, outputPath, context);
+		Velocity.processDir(new java.io.File(templatePath), outputDir, context);
 	}
 
-	private List<Map<String, String>> createBlogEntries() {
-		List<Map<String, String>> entryList = new ArrayList<Map<String, String>>();
+	private void fillBlog(ContextBuilder context) {
 		// TODO loop blog entries. don't forget to sort.
 		for (int i = 0; i < 5; i++) {
-			String reference = "blg" + i;
-			String title = Str.generateRandomSentence(4, 6);
-			String text = Str.generateRandomParagraph();
-			DateAndTime date = new DateAndTime(Date.beforeDays(i), Time.now());
-
-			Map<String, String> entryMap = new HashMap<String, String>();
-			entryMap.put("reference", reference);
-			entryMap.put("title", title);
-			entryMap.put("text", "<p>" + wiki2html(text, htmlContext) + "</p>");
-			entryMap.put("plainText", text);
-			entryMap.put("date", date.toString(DateAndTime.FORMAT_WEEKDAY_LONGMONTH_DAY_YEAR_HOUR_MINUTE));
-			entryMap.put("rssDate", date.toString(DateAndTime.FORMAT_RFC822));
-			entryList.add(entryMap);
+			fillBlogEntry(context.addSubContext("entries"), i);
 		}
-		return entryList;
 	}
 
-	private Map<String, ?> createSprintBacklog() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<Map<String, String>> storysList = new ArrayList<Map<String, String>>();
-		map.put("stories", storysList);
+	private void fillBlogEntry(ContextBuilder context, int i/* replace i by blogEntry */) {
+		String reference = "blg" + i;
+		String title = Str.generateRandomSentence(4, 6);
+		String text = Str.generateRandomParagraph();
+		DateAndTime date = new DateAndTime(Date.beforeDays(i), Time.now());
+
+		context.put("reference", reference);
+		context.put("title", title);
+		context.put("text", "<p>" + wiki2html(text, htmlContext) + "</p>");
+		context.put("plainText", text);
+		context.put("date", date.toString(DateAndTime.FORMAT_WEEKDAY_LONGMONTH_DAY_YEAR_HOUR_MINUTE));
+		context.put("rssDate", date.toString(DateAndTime.FORMAT_RFC822));
+	}
+
+	private void fillSprintBacklog(ContextBuilder context) {
 		Set<Requirement> requirements = project.getCurrentSprint().getRequirements();
 		for (Requirement requirement : requirements) {
-			Map<String, String> storyMap = createStoryMap(requirement);
-			storysList.add(storyMap);
+			fillStory(context.addSubContext("stories"), requirement);
 		}
-		return map;
 	}
 
-	private Map<String, ?> createProductBacklog() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<Map<String, String>> storysList = new ArrayList<Map<String, String>>();
-		map.put("stories", storysList);
+	private void fillProductBacklog(ContextBuilder context) {
 		Set<Requirement> requirements = project.getRequirements();
 		for (Requirement requirement : requirements) {
 			if (requirement.isClosed() || requirement.isInCurrentSprint()) continue;
-			Map<String, String> storyMap = createStoryMap(requirement);
-			storysList.add(storyMap);
+			fillStory(context.addSubContext("stories"), requirement);
 		}
-		return map;
 	}
 
-	private Map<String, String> createStoryMap(Requirement requirement) {
-		Map<String, String> storyMap = new HashMap<String, String>();
-		storyMap.put("reference", requirement.getReference());
-		storyMap.put("label", requirement.getLabel());
-		return storyMap;
+	private void fillStory(ContextBuilder context, Requirement requirement) {
+		context.put("reference", requirement.getReference());
+		context.put("label", requirement.getLabel());
 	}
 
-	private Map<String, String> createWikiMap() {
-		Map<String, String> map = new HashMap<String, String>();
+	private void fillWiki(ContextBuilder context) {
 		for (Wikipage page : project.getWikipages()) {
-			map.put(page.getName(), wiki2html(page.getText(), htmlContext));
+			context.put(page.getName(), wiki2html(page.getText(), htmlContext));
 		}
-		return map;
 	}
 
-	private Map<String, Object> createProjectMap() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("label", project.getLabel());
-		map.put("shortDescription", wiki2html(project.getShortDescription(), htmlContext));
-		map.put("description", wiki2html(project.getShortDescription(), htmlContext));
-		map.put("longDescription", wiki2html(project.getShortDescription(), htmlContext));
-		return map;
+	private void fillProject(ContextBuilder context) {
+		context.put("label", project.getLabel());
+		context.put("shortDescription", wiki2html(project.getShortDescription(), htmlContext));
+		context.put("description", wiki2html(project.getShortDescription(), htmlContext));
+		context.put("longDescription", wiki2html(project.getShortDescription(), htmlContext));
 	}
 
 	public static void updateHomepage(String templatePath, String outputPath, Project project) {
-		HomepageUpdater updater = new HomepageUpdater(project);
-		updater.updateHomepage(templatePath, outputPath);
-	}
-
-	public static void updateHomepage(String templatePath, String outputPath, Map<String, Object> context) {
-		Velocity.processDir(new java.io.File(templatePath), new java.io.File(outputPath), context);
+		HomepageUpdater updater = new HomepageUpdater(project, outputPath);
+		updater.processTemplates(templatePath);
 	}
 
 	public static void updateHomepage(Project project) {
@@ -134,7 +112,6 @@ public class HomepageUpdater {
 
 		File velocityDir = new File(homepageDir.getPath() + "/velocity");
 		if (velocityDir.exists()) updateHomepage(velocityDir.getPath(), homepageDir.getPath(), project);
-
 	}
 
 	public static String wiki2html(String wikitext, HtmlContext context) {
@@ -164,4 +141,5 @@ public class HomepageUpdater {
 		}
 
 	}
+
 }

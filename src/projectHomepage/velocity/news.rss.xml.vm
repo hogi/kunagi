@@ -22,7 +22,7 @@
       <link>http://kunagi.org</link>
     </image>
  
-#foreach( $blogEntry in $blogEntries )    
+#foreach( $blogEntry in $blog.entries )    
     <item>
       <title>$blogEntry.title</title>
       <description><![CDATA[$blogEntry.plainText]]></description>
