@@ -1205,6 +1205,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByAutoUpdateHomepage(boolean autoUpdateHomepage) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isAutoUpdateHomepage(autoUpdateHomepage)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- ProjectEvent ---
 
     private Map<String, scrum.client.journal.ProjectEvent> projectEvents = new HashMap<String, scrum.client.journal.ProjectEvent>();

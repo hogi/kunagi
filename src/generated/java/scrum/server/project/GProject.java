@@ -66,6 +66,7 @@ public abstract class GProject
         properties.put("punishmentFactor", this.punishmentFactor);
         properties.put("punishmentUnit", this.punishmentUnit);
         properties.put("homepageDir", this.homepageDir);
+        properties.put("autoUpdateHomepage", this.autoUpdateHomepage);
     }
 
     public int compareTo(Project other) {
@@ -1471,6 +1472,35 @@ public abstract class GProject
         setHomepageDir((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - autoUpdateHomepage
+    // -----------------------------------------------------------
+
+    private boolean autoUpdateHomepage;
+
+    public final boolean isAutoUpdateHomepage() {
+        return autoUpdateHomepage;
+    }
+
+    public final void setAutoUpdateHomepage(boolean autoUpdateHomepage) {
+        autoUpdateHomepage = prepareAutoUpdateHomepage(autoUpdateHomepage);
+        if (isAutoUpdateHomepage(autoUpdateHomepage)) return;
+        this.autoUpdateHomepage = autoUpdateHomepage;
+        fireModified();
+    }
+
+    protected boolean prepareAutoUpdateHomepage(boolean autoUpdateHomepage) {
+        return autoUpdateHomepage;
+    }
+
+    public final boolean isAutoUpdateHomepage(boolean autoUpdateHomepage) {
+        return this.autoUpdateHomepage == autoUpdateHomepage;
+    }
+
+    protected final void updateAutoUpdateHomepage(Object value) {
+        setAutoUpdateHomepage((Boolean)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -1506,6 +1536,7 @@ public abstract class GProject
             if (property.equals("punishmentFactor")) updatePunishmentFactor(value);
             if (property.equals("punishmentUnit")) updatePunishmentUnit(value);
             if (property.equals("homepageDir")) updateHomepageDir(value);
+            if (property.equals("autoUpdateHomepage")) updateAutoUpdateHomepage(value);
         }
     }
 

@@ -1413,6 +1413,25 @@ public abstract class GProject
 
     }
 
+    // --- autoUpdateHomepage ---
+
+    private boolean autoUpdateHomepage ;
+
+    public final boolean isAutoUpdateHomepage() {
+        return this.autoUpdateHomepage ;
+    }
+
+    public final Project setAutoUpdateHomepage(boolean autoUpdateHomepage) {
+        if (isAutoUpdateHomepage(autoUpdateHomepage)) return (Project)this;
+        this.autoUpdateHomepage = autoUpdateHomepage ;
+        propertyChanged("autoUpdateHomepage", this.autoUpdateHomepage);
+        return (Project)this;
+    }
+
+    public final boolean isAutoUpdateHomepage(boolean autoUpdateHomepage) {
+        return equals(this.autoUpdateHomepage, autoUpdateHomepage);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -1448,6 +1467,7 @@ public abstract class GProject
         punishmentFactor  = (Integer) props.get("punishmentFactor");
         punishmentUnit  = (java.lang.String) props.get("punishmentUnit");
         homepageDir  = (java.lang.String) props.get("homepageDir");
+        autoUpdateHomepage  = (Boolean) props.get("autoUpdateHomepage");
     }
 
     @Override
@@ -1483,6 +1503,7 @@ public abstract class GProject
         properties.put("punishmentFactor", this.punishmentFactor);
         properties.put("punishmentUnit", this.punishmentUnit);
         properties.put("homepageDir", this.homepageDir);
+        properties.put("autoUpdateHomepage", this.autoUpdateHomepage);
     }
 
     @Override

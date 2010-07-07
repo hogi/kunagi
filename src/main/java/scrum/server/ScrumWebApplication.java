@@ -51,6 +51,7 @@ import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.common.BurndownChart;
+import scrum.server.project.HomepageUpdaterTask;
 import scrum.server.project.Project;
 
 public class ScrumWebApplication extends GScrumWebApplication {
@@ -128,6 +129,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 		// test data
 		if (getProjectDao().getEntities().isEmpty()) createTestData();
+
 	}
 
 	private void createTestData() {
@@ -145,6 +147,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	@Override
 	protected void scheduleTasks(TaskManager tm) {
 		tm.scheduleWithFixedDelay(autowire(new DestroyTimeoutedSessionsTask()), Tm.MINUTE);
+		tm.scheduleWithFixedDelay(autowire(new HomepageUpdaterTask()), Tm.HOUR);
 	}
 
 	@Override

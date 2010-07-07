@@ -135,6 +135,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addProperty("punishmentFactor", int.class);
 			projectModel.addStringProperty("punishmentUnit");
 			projectModel.addStringProperty("homepageDir");
+			projectModel.addProperty("autoUpdateHomepage", boolean.class);
 			getApplicationModel().addCreateAction(projectModel);
 			projectModel.addAction("DeleteProject");
 			projectModel.addAction("OpenProject");

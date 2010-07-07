@@ -44,7 +44,9 @@ public class HomepageUpdater {
 		fillProductBacklog(context.putSubContext("productBacklog"));
 		fillIssues(context);
 
-		Velocity.processDir(new java.io.File(templatePath), outputDir, context);
+		synchronized (project) {
+			Velocity.processDir(new java.io.File(templatePath), outputDir, context);
+		}
 	}
 
 	private void fillIssues(ContextBuilder context) {

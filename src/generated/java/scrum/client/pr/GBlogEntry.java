@@ -120,6 +120,9 @@ public abstract class GBlogEntry
             }
 
         @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);

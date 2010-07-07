@@ -102,6 +102,7 @@ public abstract class GProjectDao
         punishmentUnitsCache = null;
         projectsByHomepageDirCache.clear();
         homepageDirsCache = null;
+        projectsByAutoUpdateHomepageCache.clear();
     }
 
     @Override
@@ -1316,6 +1317,35 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isHomepageDir(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - autoUpdateHomepage
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<Project>> projectsByAutoUpdateHomepageCache = new Cache<Boolean,Set<Project>>(
+            new Cache.Factory<Boolean,Set<Project>>() {
+                public Set<Project> create(Boolean autoUpdateHomepage) {
+                    return getEntities(new IsAutoUpdateHomepage(autoUpdateHomepage));
+                }
+            });
+
+    public final Set<Project> getProjectsByAutoUpdateHomepage(boolean autoUpdateHomepage) {
+        return projectsByAutoUpdateHomepageCache.get(autoUpdateHomepage);
+    }
+
+    private static class IsAutoUpdateHomepage implements Predicate<Project> {
+
+        private boolean value;
+
+        public IsAutoUpdateHomepage(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return value == e.isAutoUpdateHomepage();
         }
 
     }
