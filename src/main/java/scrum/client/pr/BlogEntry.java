@@ -9,4 +9,8 @@ public class BlogEntry extends GBlogEntry {
 	public BlogEntry(Map data) {
 		super(data);
 	}
+
+	public String getReference() {
+		return REFERENCE_PREFIX + getNumber();
+	}
 }

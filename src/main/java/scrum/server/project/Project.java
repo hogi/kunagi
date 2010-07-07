@@ -507,7 +507,7 @@ public class Project extends GProject {
 		return releaseDao.getReleasesByProject(this);
 	}
 
-	public Set<BlogEntry> getBlogEntries() {
+	public Set<BlogEntry> getBlogEntrys() {
 		return blogEntryDao.getBlogEntrysByProject(this);
 	}
 
