@@ -83,7 +83,7 @@ public abstract class GChatMessage
     }
 
     protected void repairDeadProjectReference(String entityId) {
-        if (entityId.equals(this.projectId)) {
+        if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
     }
@@ -134,7 +134,7 @@ public abstract class GChatMessage
     }
 
     protected void repairDeadAuthorReference(String entityId) {
-        if (entityId.equals(this.authorId)) {
+        if (this.authorId == null || entityId.equals(this.authorId)) {
             this.authorId = null;
             fireModified();
         }

@@ -202,6 +202,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		ADao dao = getDaoService().getDaoByName(type);
 		AEntity entity = dao.newEntityInstance(id);
 		entity.updateProperties(properties);
+		User currentUser = conversation.getSession().getUser();
 
 		if (entity instanceof Numbered) {
 			((Numbered) entity).updateNumber();
@@ -226,7 +227,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Issue) {
 			Issue issue = (Issue) entity;
 			issue.setDate(DateAndTime.now());
-			issue.setCreator(conversation.getSession().getUser());
+			issue.setCreator(currentUser);
 		}
 
 		if (entity instanceof Task) {
@@ -237,7 +238,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof BlogEntry) {
 			BlogEntry blogEntry = (BlogEntry) entity;
 			blogEntry.setDateAndTime(DateAndTime.now());
-			blogEntry.addAuthor(conversation.getSession().getUser());
+			blogEntry.addAuthor(currentUser);
+			postProjectEvent(conversation, currentUser.getName() + " published " + blogEntry.getReferenceAndLabel());
 		}
 
 		if (!(entity instanceof Transient)) dao.saveEntity(entity);
@@ -247,7 +249,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Task || entity instanceof Requirement || entity instanceof Wikipage
 				|| entity instanceof Risk || entity instanceof Impediment || entity instanceof Issue
 				|| entity instanceof BlogEntry) {
-			User user = conversation.getSession().getUser();
+			User user = currentUser;
 			Change change = changeDao.postChange(entity, user, "@created", null, null);
 			conversation.sendToClient(change);
 		}
@@ -499,7 +501,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		conversation.sendToClient(project.getFiles());
 		conversation.sendToClient(project.getUrgentAndOpenIssues());
 		conversation.sendToClient(project.getReleases());
-		// conversation.sendToClient(project.getBlogEntrys());
+		conversation.sendToClient(project.getBlogEntrys());
 
 		webApplication.updateOnlineTeamMembers(project, null);
 	}

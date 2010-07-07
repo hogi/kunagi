@@ -111,7 +111,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadProjectReference(String entityId) {
-        if (entityId.equals(this.projectId)) {
+        if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
     }
@@ -261,7 +261,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadCreatorReference(String entityId) {
-        if (entityId.equals(this.creatorId)) {
+        if (this.creatorId == null || entityId.equals(this.creatorId)) {
             this.creatorId = null;
             fireModified();
         }
@@ -581,7 +581,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadOwnerReference(String entityId) {
-        if (entityId.equals(this.ownerId)) {
+        if (this.ownerId == null || entityId.equals(this.ownerId)) {
             this.ownerId = null;
             fireModified();
         }

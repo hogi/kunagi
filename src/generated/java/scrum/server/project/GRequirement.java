@@ -105,7 +105,7 @@ public abstract class GRequirement
     }
 
     protected void repairDeadProjectReference(String entityId) {
-        if (entityId.equals(this.projectId)) {
+        if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
     }
@@ -156,7 +156,7 @@ public abstract class GRequirement
     }
 
     protected void repairDeadSprintReference(String entityId) {
-        if (entityId.equals(this.sprintId)) {
+        if (this.sprintId == null || entityId.equals(this.sprintId)) {
             this.sprintId = null;
             fireModified();
         }

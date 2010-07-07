@@ -102,7 +102,7 @@ public abstract class GSimpleEvent
     }
 
     protected void repairDeadProjectReference(String entityId) {
-        if (entityId.equals(this.projectId)) {
+        if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
     }

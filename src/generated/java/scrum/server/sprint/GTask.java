@@ -98,7 +98,7 @@ public abstract class GTask
     }
 
     protected void repairDeadRequirementReference(String entityId) {
-        if (entityId.equals(this.requirementId)) {
+        if (this.requirementId == null || entityId.equals(this.requirementId)) {
             repairMissingMaster();
         }
     }
@@ -306,7 +306,7 @@ public abstract class GTask
     }
 
     protected void repairDeadOwnerReference(String entityId) {
-        if (entityId.equals(this.ownerId)) {
+        if (this.ownerId == null || entityId.equals(this.ownerId)) {
             this.ownerId = null;
             fireModified();
         }

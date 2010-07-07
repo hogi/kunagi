@@ -32,6 +32,7 @@ import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
 import scrum.client.journal.ProjectEvent;
+import scrum.client.pr.BlogEntry;
 import scrum.client.release.Release;
 import scrum.client.risks.Risk;
 import scrum.client.sprint.Sprint;
@@ -414,6 +415,12 @@ public class Project extends GProject implements ForumSupport {
 		return risk;
 	}
 
+	public BlogEntry createNewBlogEntry() {
+		BlogEntry blogEntry = new BlogEntry(this);
+		getDao().createBlogEntry(blogEntry);
+		return blogEntry;
+	}
+
 	public Release createNewRelease(Release parentRelease) {
 		Release release = new Release(this);
 		Date date = Date.today();
@@ -474,6 +481,10 @@ public class Project extends GProject implements ForumSupport {
 
 	public List<Quality> getQualitys() {
 		return getDao().getQualitysByProject(this);
+	}
+
+	public List<BlogEntry> getBlogEntrys() {
+		return getDao().getBlogEntrysByProject(this);
 	}
 
 	public Sprint createNewSprint() {

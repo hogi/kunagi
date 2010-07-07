@@ -82,7 +82,7 @@ public abstract class GProjectSprintSnapshot
     }
 
     protected void repairDeadSprintReference(String entityId) {
-        if (entityId.equals(this.sprintId)) {
+        if (this.sprintId == null || entityId.equals(this.sprintId)) {
             repairMissingMaster();
         }
     }

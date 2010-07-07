@@ -579,11 +579,15 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			blogEntryModel.addReference("project", getProjectModel()).setMaster(true);
 			blogEntryModel.addProperty("number", int.class).setMandatory(true);
 			blogEntryModel.addSetReference("authors", getUserModel());
-			blogEntryModel.addProperty("title", String.class).setMandatory(true).setSearchable(true);
-			blogEntryModel.addProperty("text", String.class).setSearchable(true);
+			blogEntryModel.addStringProperty("title").setMandatory(true).setSearchable(true);
+			blogEntryModel.addStringProperty("text").setRichtext(true).setSearchable(true);
 			blogEntryModel.addProperty("dateAndTime", DateAndTime.class);
 			blogEntryModel.addSetReference("releases", getReleaseModel());
 			blogEntryModel.addProperty("published", boolean.class);
+			getApplicationModel().addCreateAction(blogEntryModel);
+			blogEntryModel.addAction("DeleteBlogEntry");
+			blogEntryModel.addAction("PublishBlogEntry");
+			blogEntryModel.addAction("UnpublishBlogEntry");
 		}
 		return blogEntryModel;
 	}

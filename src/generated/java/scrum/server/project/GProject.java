@@ -769,7 +769,7 @@ public abstract class GProject
     }
 
     protected void repairDeadCurrentSprintReference(String entityId) {
-        if (entityId.equals(this.currentSprintId)) {
+        if (this.currentSprintId == null || entityId.equals(this.currentSprintId)) {
             this.currentSprintId = null;
             fireModified();
         }
@@ -821,7 +821,7 @@ public abstract class GProject
     }
 
     protected void repairDeadNextSprintReference(String entityId) {
-        if (entityId.equals(this.nextSprintId)) {
+        if (this.nextSprintId == null || entityId.equals(this.nextSprintId)) {
             this.nextSprintId = null;
             fireModified();
         }

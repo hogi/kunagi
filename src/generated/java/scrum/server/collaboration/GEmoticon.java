@@ -82,7 +82,7 @@ public abstract class GEmoticon
     }
 
     protected void repairDeadParentReference(String entityId) {
-        if (entityId.equals(this.parentId)) {
+        if (this.parentId == null || entityId.equals(this.parentId)) {
             repairMissingMaster();
         }
     }
@@ -133,7 +133,7 @@ public abstract class GEmoticon
     }
 
     protected void repairDeadOwnerReference(String entityId) {
-        if (entityId.equals(this.ownerId)) {
+        if (this.ownerId == null || entityId.equals(this.ownerId)) {
             this.ownerId = null;
             fireModified();
         }

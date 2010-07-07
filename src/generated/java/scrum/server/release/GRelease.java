@@ -101,7 +101,7 @@ public abstract class GRelease
     }
 
     protected void repairDeadProjectReference(String entityId) {
-        if (entityId.equals(this.projectId)) {
+        if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
     }
@@ -152,7 +152,7 @@ public abstract class GRelease
     }
 
     protected void repairDeadParentReleaseReference(String entityId) {
-        if (entityId.equals(this.parentReleaseId)) {
+        if (this.parentReleaseId == null || entityId.equals(this.parentReleaseId)) {
             this.parentReleaseId = null;
             fireModified();
         }

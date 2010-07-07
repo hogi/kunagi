@@ -2,7 +2,6 @@ package scrum.client.pr;
 
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.TableBuilder;
-import scrum.client.Dao;
 import scrum.client.ScrumGwt;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
@@ -29,12 +28,12 @@ public class BlogEntryWidget extends AScrumWidget {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerItems(blogEntry.getProject().getParticipants());
+				setViewerItems(blogEntry.getAuthors());
 			}
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorItems(Dao.get().getUsers());
+				setEditorItems(blogEntry.getProject().getParticipants());
 				setEditorSelectedItems(blogEntry.getAuthors());
 			}
 
@@ -45,8 +44,7 @@ public class BlogEntryWidget extends AScrumWidget {
 
 			@Override
 			public boolean isEditable() {
-				// TODO change to only PO
-				return false;
+				return true;
 			}
 		});
 

@@ -19,6 +19,9 @@ import com.google.gwt.user.client.ui.ImageBundle;
 public interface GImageBundle
             extends com.google.gwt.user.client.ui.ImageBundle {
 
+    @Resource(value="blgPublished.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype blgPublished();
+
     @Resource(value="bugfixRelease.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype bugfixRelease();
 

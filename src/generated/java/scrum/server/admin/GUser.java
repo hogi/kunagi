@@ -225,7 +225,7 @@ public abstract class GUser
     }
 
     protected void repairDeadCurrentProjectReference(String entityId) {
-        if (entityId.equals(this.currentProjectId)) {
+        if (this.currentProjectId == null || entityId.equals(this.currentProjectId)) {
             this.currentProjectId = null;
             fireModified();
         }

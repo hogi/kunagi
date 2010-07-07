@@ -86,7 +86,7 @@ public abstract class GChange
     }
 
     protected void repairDeadParentReference(String entityId) {
-        if (entityId.equals(this.parentId)) {
+        if (this.parentId == null || entityId.equals(this.parentId)) {
             repairMissingMaster();
         }
     }
@@ -137,7 +137,7 @@ public abstract class GChange
     }
 
     protected void repairDeadUserReference(String entityId) {
-        if (entityId.equals(this.userId)) {
+        if (this.userId == null || entityId.equals(this.userId)) {
             this.userId = null;
             fireModified();
         }

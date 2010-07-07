@@ -3,6 +3,6 @@ build
 test-output
 temp-testng*
 tomcat
-hs_err_*.log
+*.log
 velocity.log*
 

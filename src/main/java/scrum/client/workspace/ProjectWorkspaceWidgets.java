@@ -29,6 +29,8 @@ import scrum.client.issues.Issue;
 import scrum.client.issues.IssueManagementWidget;
 import scrum.client.journal.JournalWidget;
 import scrum.client.journal.ProjectEvent;
+import scrum.client.pr.BlogEntry;
+import scrum.client.pr.BlogWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.Project;
 import scrum.client.project.ProjectAdminWidget;
@@ -74,6 +76,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 	private JournalWidget projectEventList;
 	private FileRepositoryWidget fileRepository;
 	private ProjectAdminWidget projectAdmin;
+	private BlogWidget blog;
 
 	private PageSet pages = new PageSet();
 
@@ -129,6 +132,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		pages.addPage(new Page(punishments, "Courtroom", collaborationGroupKey));
 
 		String administrationKey = "administration";
+		blog = new BlogWidget();
+		pages.addPage(new Page(blog, "Blog", administrationKey));
 		projectUserConfig = new ProjectUserConfigWidget();
 		pages.addPage(new Page(projectUserConfig, "Personal Preferences", administrationKey));
 		projectAdmin = new ProjectAdminWidget();
@@ -268,6 +273,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 			showProjectEventList((ProjectEvent) entity);
 		} else if (entity instanceof Release) {
 			showRelease((Release) entity);
+		} else if (entity instanceof BlogEntry) {
+			showBlog((BlogEntry) entity);
 		} else {
 			throw new RuntimeException("Showing entity not supported: " + entity.getClass().getName());
 		}
@@ -399,6 +406,11 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 	public void showQualityBacklog(Quality quality) {
 		select(qualityBacklog);
 		qualityBacklog.select(quality);
+	}
+
+	public void showBlog(BlogEntry blogEntry) {
+		select(blog);
+		blog.select(blogEntry);
 	}
 
 	public void showRiskList(Risk risk) {

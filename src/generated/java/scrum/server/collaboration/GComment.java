@@ -94,7 +94,7 @@ public abstract class GComment
     }
 
     protected void repairDeadParentReference(String entityId) {
-        if (entityId.equals(this.parentId)) {
+        if (this.parentId == null || entityId.equals(this.parentId)) {
             repairMissingMaster();
         }
     }
@@ -145,7 +145,7 @@ public abstract class GComment
     }
 
     protected void repairDeadAuthorReference(String entityId) {
-        if (entityId.equals(this.authorId)) {
+        if (this.authorId == null || entityId.equals(this.authorId)) {
             this.authorId = null;
             fireModified();
         }

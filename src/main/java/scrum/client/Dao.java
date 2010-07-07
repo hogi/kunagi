@@ -23,6 +23,7 @@ import scrum.client.files.File;
 import scrum.client.files.FileUploadedEvent;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
+import scrum.client.pr.BlogEntry;
 import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
 import scrum.client.release.Release;
@@ -128,6 +129,11 @@ public class Dao extends GDao {
 			return null;
 		} else if (reference.startsWith(Release.REFERENCE_PREFIX)) {
 			for (Release e : getReleases()) {
+				if (e.isNumber(number)) return e;
+			}
+			return null;
+		} else if (reference.startsWith(BlogEntry.REFERENCE_PREFIX)) {
+			for (BlogEntry e : getBlogEntrys()) {
 				if (e.isNumber(number)) return e;
 			}
 			return null;

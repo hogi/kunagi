@@ -67,6 +67,7 @@ public class HomepageUpdater {
 		List<BlogEntry> entries = new ArrayList<BlogEntry>(project.getBlogEntrys());
 		Collections.sort(entries);
 		for (BlogEntry entry : entries) {
+			if (!entry.isPublished()) continue;
 			fillBlogEntry(context.addSubContext("entries"), entry);
 		}
 	}

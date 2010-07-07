@@ -1,6 +1,7 @@
 package scrum.server.journal;
 
 import ilarkesto.auth.Auth;
+import ilarkesto.persistence.AEntity;
 import scrum.server.admin.User;
 
 public class Change extends GChange {
@@ -15,7 +16,12 @@ public class Change extends GChange {
 
 	@Override
 	public String toString() {
-		return getUser() + " on " + getDateAndTime() + ": " + getParent() + " ." + getKey();
+		AEntity parent;
+		try {
+			parent = getParent();
+		} catch (Throwable ex) {
+			parent = null;
+		}
+		return getUser() + " on " + getDateAndTime() + ": " + parent + " ." + getKey();
 	}
-
 }

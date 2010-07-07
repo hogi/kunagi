@@ -82,7 +82,7 @@ public abstract class GRequirementEstimationVote
     }
 
     protected void repairDeadRequirementReference(String entityId) {
-        if (entityId.equals(this.requirementId)) {
+        if (this.requirementId == null || entityId.equals(this.requirementId)) {
             repairMissingMaster();
         }
     }
@@ -133,7 +133,7 @@ public abstract class GRequirementEstimationVote
     }
 
     protected void repairDeadUserReference(String entityId) {
-        if (entityId.equals(this.userId)) {
+        if (this.userId == null || entityId.equals(this.userId)) {
             repairMissingMaster();
         }
     }

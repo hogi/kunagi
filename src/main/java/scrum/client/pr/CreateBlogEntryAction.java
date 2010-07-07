@@ -1,19 +1,19 @@
-package scrum.client.project;
+package scrum.client.pr;
 
 import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
 import scrum.client.workspace.ProjectWorkspaceWidgets;
 
-public class CreateQualityAction extends GCreateQualityAction {
+public class CreateBlogEntryAction extends GCreateBlogEntryAction {
 
 	@Override
 	public String getLabel() {
-		return "Create new Quality";
+		return "Create new Blog entry";
 	}
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Create a new Quality.");
+		TooltipBuilder tb = new TooltipBuilder("Create new Blog entry");
 
 		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
@@ -34,8 +34,7 @@ public class CreateQualityAction extends GCreateQualityAction {
 
 	@Override
 	protected void onExecute() {
-		Quality quality = getCurrentProject().createNewQuality();
-		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showQualityBacklog(quality);
+		BlogEntry blogEntry = getCurrentProject().createNewBlogEntry();
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showBlog(blogEntry);
 	}
-
 }

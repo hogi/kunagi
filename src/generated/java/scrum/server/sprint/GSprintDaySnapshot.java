@@ -83,7 +83,7 @@ public abstract class GSprintDaySnapshot
     }
 
     protected void repairDeadSprintReference(String entityId) {
-        if (entityId.equals(this.sprintId)) {
+        if (this.sprintId == null || entityId.equals(this.sprintId)) {
             this.sprintId = null;
             fireModified();
         }
