@@ -655,6 +655,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		} else if (reference.startsWith(scrum.client.release.Release.REFERENCE_PREFIX)) {
 			conversation.sendToClient(project.getReleaseByNumber(number));
 			return;
+		} else if (reference.startsWith(scrum.client.pr.BlogEntry.REFERENCE_PREFIX)) {
+			conversation.sendToClient(project.getBlogEntryByNumber(number));
+			return;
 		}
 		LOG.info("Requested entity not found:", reference);
 	}

@@ -15,6 +15,7 @@ import scrum.client.core.ApplicationStartedEvent;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
+import scrum.client.pr.BlogEntry;
 import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
 import scrum.client.release.Release;
@@ -32,7 +33,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	public static final String[] REFERENCE_PREFIXES = new String[] { Requirement.REFERENCE_PREFIX,
 			Task.REFERENCE_PREFIX, Quality.REFERENCE_PREFIX, Issue.REFERENCE_PREFIX, Impediment.REFERENCE_PREFIX,
 			Risk.REFERENCE_PREFIX, File.REFERENCE_PREFIX, Subject.REFERENCE_PREFIX, SimpleEvent.REFERENCE_PREFIX,
-			Release.REFERENCE_PREFIX };
+			Release.REFERENCE_PREFIX, BlogEntry.REFERENCE_PREFIX };
 
 	private final Log log = Log.get(getClass());
 

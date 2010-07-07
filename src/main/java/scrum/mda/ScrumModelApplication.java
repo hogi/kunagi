@@ -576,7 +576,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			blogEntryModel = createEntityModel("BlogEntry", "pr");
 			blogEntryModel.setGwtSupport(true);
 			blogEntryModel.addReference("project", getProjectModel()).setMaster(true);
-			blogEntryModel.addProperty("number", int.class);
+			blogEntryModel.addProperty("number", int.class).setMandatory(true);
 			blogEntryModel.addSetReference("authors", getUserModel());
 			blogEntryModel.addProperty("title", String.class).setMandatory(true).setSearchable(true);
 			blogEntryModel.addProperty("text", String.class).setSearchable(true);

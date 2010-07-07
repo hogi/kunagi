@@ -195,6 +195,7 @@ public class Project extends GProject {
 		ret.addAll(getMatching(getRisks(), keys));
 		ret.addAll(getMatching(getFiles(), keys));
 		ret.addAll(getMatching(getReleases(), keys));
+		ret.addAll(getMatching(getBlogEntrys(), keys));
 		return ret;
 	}
 
@@ -316,6 +317,10 @@ public class Project extends GProject {
 
 	public Release getReleaseByNumber(int number) {
 		return releaseDao.getReleaseByNumber(number, this);
+	}
+
+	public BlogEntry getBlogEntryByNumber(int number) {
+		return blogEntryDao.getBlogEntryByNumber(number, this);
 	}
 
 	public Wikipage getWikipageByName(String name) {
@@ -570,6 +575,7 @@ public class Project extends GProject {
 		ret.addAll(getComments(getProjectEvents(), latestOnly));
 		ret.addAll(getComments(getSubjects(), latestOnly));
 		ret.addAll(getComments(getReleases(), latestOnly));
+		ret.addAll(getComments(getBlogEntrys(), latestOnly));
 		return ret;
 	}
 

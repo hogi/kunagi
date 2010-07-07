@@ -9,7 +9,7 @@ public class BlogEntry extends GBlogEntry {
 	}
 
 	public String getReferenceAndLabel() {
-		return getReference() + " (" + getTitle() + ")";
+		return getReference() + " " + getTitle();
 	}
 
 	public String getReference() {
@@ -17,7 +17,13 @@ public class BlogEntry extends GBlogEntry {
 	}
 
 	public void updateNumber() {
-		if (getNumber() == 0) setNumber(getProject().generateRequirementNumber());
+		if (getNumber() == 0) setNumber(getProject().generateBlogEntryNumber());
+	}
+
+	@Override
+	public void ensureIntegrity() {
+		super.ensureIntegrity();
+		updateNumber();
 	}
 
 	@Override
