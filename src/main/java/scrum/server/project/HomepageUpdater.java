@@ -9,7 +9,9 @@ import ilarkesto.velocity.ContextBuilder;
 import ilarkesto.velocity.Velocity;
 
 import java.io.File;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import scrum.client.wiki.HtmlContext;
 import scrum.client.wiki.WikiModel;
@@ -66,14 +68,16 @@ public class HomepageUpdater {
 	}
 
 	private void fillSprintBacklog(ContextBuilder context) {
-		Set<Requirement> requirements = project.getCurrentSprint().getRequirements();
+		List<Requirement> requirements = new ArrayList<Requirement>(project.getCurrentSprint().getRequirements());
+		Collections.sort(requirements, project.getRequirementsOrderComparator());
 		for (Requirement requirement : requirements) {
 			fillStory(context.addSubContext("stories"), requirement);
 		}
 	}
 
 	private void fillProductBacklog(ContextBuilder context) {
-		Set<Requirement> requirements = project.getRequirements();
+		List<Requirement> requirements = new ArrayList<Requirement>(project.getRequirements());
+		Collections.sort(requirements, project.getRequirementsOrderComparator());
 		for (Requirement requirement : requirements) {
 			if (requirement.isClosed() || requirement.isInCurrentSprint()) continue;
 			fillStory(context.addSubContext("stories"), requirement);

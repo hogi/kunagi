@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -58,6 +59,7 @@ import scrum.server.sprint.TaskDao;
 public class Project extends GProject {
 
 	private transient UsersStatusData usersStatus;
+	private transient Comparator<Requirement> requirementsOrderComparator;
 
 	// --- dependencies ---
 
@@ -647,8 +649,7 @@ public class Project extends GProject {
 		// no daily scrums
 		imp = impedimentDao.postImpediment(this, Date.randomPast(5), "Daily Scrums are not daily", true);
 		imp.setDescription("\"Daily Scrums\" are supposed to be daily. That's why they are called DAILY Scrums.");
-		imp
-				.setSolution("Fixed time and place to 09.00 p. m. at Starbucks every morning (except weekdays, weekends and holydays).");
+		imp.setSolution("Fixed time and place to 09.00 p. m. at Starbucks every morning (except weekdays, weekends and holydays).");
 
 		// no coffee
 		imp = impedimentDao.postImpediment(this, Date.randomPast(5), "There is no coffee machine", false);
@@ -672,11 +673,11 @@ public class Project extends GProject {
 	}
 
 	public void addTestSimpleEvents() {
-	// let people generate their own events
+		// let people generate their own events
 	}
 
 	public void addTestEvents() {
-	// no test events
+		// no test events
 	}
 
 	public void addTestIssues() {
@@ -696,32 +697,28 @@ public class Project extends GProject {
 
 		// date crash
 		iss = issueDao.postIssue(this, "Crash when using Dates after 2012");
-		iss
-				.setDescription("The program crashes whenever I enter dates after 2012. Can't figure out what the problem is though.");
+		iss.setDescription("The program crashes whenever I enter dates after 2012. Can't figure out what the problem is though.");
 		iss.setAcceptDate(Date.beforeDays(2));
 		iss.setUrgent(true);
 		iss.setSeverity(scrum.client.issues.Issue.SEVERE);
 
 		// gui bug
 		iss = issueDao.postIssue(this, "GUI inconsistency between PB and SB");
-		iss
-				.setDescription("The order of Qualities and Tests is different between widgets in the PB and SB. It should be the same.");
+		iss.setDescription("The order of Qualities and Tests is different between widgets in the PB and SB. It should be the same.");
 		iss.setAcceptDate(Date.beforeDays(35));
 		iss.setUrgent(true);
 		iss.setSeverity(scrum.client.issues.Issue.MINOR);
 
 		// navi display bug
 		iss = issueDao.postIssue(this, "navigation displays wrong current view");
-		iss
-				.setDescription("When I open the Whiteboard, \"Sprint Backlog\" is selected in the navigation. Same for other jumps.");
+		iss.setDescription("When I open the Whiteboard, \"Sprint Backlog\" is selected in the navigation. Same for other jumps.");
 		iss.setAcceptDate(Date.today());
 		iss.setUrgent(true);
 		iss.setSeverity(scrum.client.issues.Issue.MINOR);
 
 		// terrific pb suggestion
 		iss = issueDao.postIssue(this, "Product Backlog should be terrific, not amazing");
-		iss
-				.setDescription("56% of users want a terrific PB, not an amazing one. We should change that in one of the upcoming releases.");
+		iss.setDescription("56% of users want a terrific PB, not an amazing one. We should change that in one of the upcoming releases.");
 		iss.setAcceptDate(Date.today());
 
 		// flattr
@@ -741,8 +738,7 @@ public class Project extends GProject {
 
 		// Unsurpassed Concept
 		req = requirementDao.postRequirement(this, "Unsurpassed Concept", 3f);
-		req
-				.setDescription("As a Product Owner I want the concept to be unsurpassable so I don't have to worry about ROI anymore.");
+		req.setDescription("As a Product Owner I want the concept to be unsurpassable so I don't have to worry about ROI anymore.");
 		reqOrder.add(req);
 		req.setSprint(getCurrentSprint());
 		taskDao.postTask(req, "Create Concept", 2, 1);
@@ -759,8 +755,7 @@ public class Project extends GProject {
 
 		// Functional Quality Backlog
 		req = requirementDao.postRequirement(this, "Functional Quality Backlog", 1f);
-		req
-				.setDescription("As a Product Owner I want my non-functional Requirements to be functional, so I can use them.");
+		req.setDescription("As a Product Owner I want my non-functional Requirements to be functional, so I can use them.");
 		reqOrder.add(req);
 		req.setSprint(getCurrentSprint());
 		taskDao.postTask(req, "Copy And Paste Product Backlog", 1, 0);
@@ -768,8 +763,7 @@ public class Project extends GProject {
 
 		// Groundbraking Scrum Backlog
 		req = requirementDao.postRequirement(this, "Groundbraking Scrum Backlog", 1f);
-		req
-				.setDescription("As a Team member I want the Scrum Backlog to be groundbreaking, so that everybody can see that I am the most important here.");
+		req.setDescription("As a Team member I want the Scrum Backlog to be groundbreaking, so that everybody can see that I am the most important here.");
 		reqOrder.add(req);
 		req.setSprint(getCurrentSprint());
 		taskDao.postTask(req, "Create Tasks", 1, 0);
@@ -777,32 +771,27 @@ public class Project extends GProject {
 
 		// Breathtaking Whiteboard
 		req = requirementDao.postRequirement(this, "Breathtaking Whiteboard", 8f);
-		req
-				.setDescription("As a Team member I want the current state of things to be displayed on a Whiteboard, so I can play around when I am bored.");
+		req.setDescription("As a Team member I want the current state of things to be displayed on a Whiteboard, so I can play around when I am bored.");
 		reqOrder.add(req);
 
 		// Empowering Impediment List
 		req = requirementDao.postRequirement(this, "Empowering Impediment List", 2f);
-		req
-				.setDescription("As a Scrum Master I want the Impedimen List to be empowering. Best thing would be self-resolving Impediments.");
+		req.setDescription("As a Scrum Master I want the Impedimen List to be empowering. Best thing would be self-resolving Impediments.");
 		reqOrder.add(req);
 
 		// Divine Risk Management
 		req = requirementDao.postRequirement(this, "Divine Risk Management", 5f);
-		req
-				.setDescription("As a Team member, I want Risk Management to be devine. Wait, that makes Risk Management superfluous, I guess.");
+		req.setDescription("As a Team member, I want Risk Management to be devine. Wait, that makes Risk Management superfluous, I guess.");
 		reqOrder.add(req);
 
 		// Miraculous Issue Management
 		req = requirementDao.postRequirement(this, "Miraculous Issue Management", 3f);
-		req
-				.setDescription("As a Product Owner I want my Issue Management to be miraculous, so that Issues close themselves AND sometimes even each other.");
+		req.setDescription("As a Product Owner I want my Issue Management to be miraculous, so that Issues close themselves AND sometimes even each other.");
 		reqOrder.add(req);
 
 		// Immaculate Bug Tracking
 		req = requirementDao.postRequirement(this, "Immaculate Bug Tracking", 2f);
-		req
-				.setDescription("As a Team member I want immaculate Bug Tracking. A Bug Tracking containing no bugs would be suitable.");
+		req.setDescription("As a Team member I want immaculate Bug Tracking. A Bug Tracking containing no bugs would be suitable.");
 		reqOrder.add(req);
 
 		// Unbeatable Planning Poker
@@ -812,20 +801,17 @@ public class Project extends GProject {
 
 		// Enlightening Wiki
 		req = requirementDao.postRequirement(this, "Enlightening Wiki", 5f);
-		req
-				.setDescription("As a User I want the Wiki to enlighten me so that I am enlightened after reading (makes sense, doesn't it?).");
+		req.setDescription("As a User I want the Wiki to enlighten me so that I am enlightened after reading (makes sense, doesn't it?).");
 		reqOrder.add(req);
 
 		// Absorbing Discussion Board
 		req = requirementDao.postRequirement(this, "Absorbing Discussion Board", 5f);
-		req
-				.setDescription("As a User I want the Discussion Board to be absorbing, so that I never have time to do my work.");
+		req.setDescription("As a User I want the Discussion Board to be absorbing, so that I never have time to do my work.");
 		reqOrder.add(req);
 
 		// Irresistable User Interface
 		req = requirementDao.postRequirement(this, "Irresistable User Interface", 20f);
-		req
-				.setDescription("As a User I want the User Interface to be irresistable so that I can experience Orgasmic Joy-of-Use.");
+		req.setDescription("As a User I want the User Interface to be irresistable so that I can experience Orgasmic Joy-of-Use.");
 		reqOrder.add(req);
 
 		// Succulent Documentation
@@ -855,4 +841,27 @@ public class Project extends GProject {
 	public void addTestSprints() {
 		sprintDao.createTestSprint(this);
 	}
+
+	public Comparator<Requirement> getRequirementsOrderComparator() {
+		if (requirementsOrderComparator == null) requirementsOrderComparator = new Comparator<Requirement>() {
+
+			public int compare(Requirement a, Requirement b) {
+				List<String> order = getRequirementsOrderIds();
+				int additional = order.size();
+				int ia = order.indexOf(a.getId());
+				if (ia < 0) {
+					ia = additional;
+					additional++;
+				}
+				int ib = order.indexOf(b.getId());
+				if (ib < 0) {
+					ib = additional;
+					additional++;
+				}
+				return ia - ib;
+			}
+		};
+		return requirementsOrderComparator;
+	}
+
 }
