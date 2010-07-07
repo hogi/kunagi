@@ -1201,6 +1201,64 @@ public abstract class GProject
 
     }
 
+    // --- lastBlogEntryNumber ---
+
+    private int lastBlogEntryNumber ;
+
+    public final int getLastBlogEntryNumber() {
+        return this.lastBlogEntryNumber ;
+    }
+
+    public final Project setLastBlogEntryNumber(int lastBlogEntryNumber) {
+        if (isLastBlogEntryNumber(lastBlogEntryNumber)) return (Project)this;
+        this.lastBlogEntryNumber = lastBlogEntryNumber ;
+        propertyChanged("lastBlogEntryNumber", this.lastBlogEntryNumber);
+        return (Project)this;
+    }
+
+    public final boolean isLastBlogEntryNumber(int lastBlogEntryNumber) {
+        return equals(this.lastBlogEntryNumber, lastBlogEntryNumber);
+    }
+
+    private transient LastBlogEntryNumberModel lastBlogEntryNumberModel;
+
+    public LastBlogEntryNumberModel getLastBlogEntryNumberModel() {
+        if (lastBlogEntryNumberModel == null) lastBlogEntryNumberModel = createLastBlogEntryNumberModel();
+        return lastBlogEntryNumberModel;
+    }
+
+    protected LastBlogEntryNumberModel createLastBlogEntryNumberModel() { return new LastBlogEntryNumberModel(); }
+
+    protected class LastBlogEntryNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getLastBlogEntryNumber();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setLastBlogEntryNumber(value);
+        }
+
+            @Override
+            public void increment() {
+                setLastBlogEntryNumber(getLastBlogEntryNumber() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setLastBlogEntryNumber(getLastBlogEntryNumber() - 1);
+            }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- punishmentFactor ---
 
     private int punishmentFactor ;
@@ -1386,6 +1444,7 @@ public abstract class GProject
         lastSubjectNumber  = (Integer) props.get("lastSubjectNumber");
         lastEventNumber  = (Integer) props.get("lastEventNumber");
         lastReleaseNumber  = (Integer) props.get("lastReleaseNumber");
+        lastBlogEntryNumber  = (Integer) props.get("lastBlogEntryNumber");
         punishmentFactor  = (Integer) props.get("punishmentFactor");
         punishmentUnit  = (java.lang.String) props.get("punishmentUnit");
         homepageDir  = (java.lang.String) props.get("homepageDir");
@@ -1420,6 +1479,7 @@ public abstract class GProject
         properties.put("lastSubjectNumber", this.lastSubjectNumber);
         properties.put("lastEventNumber", this.lastEventNumber);
         properties.put("lastReleaseNumber", this.lastReleaseNumber);
+        properties.put("lastBlogEntryNumber", this.lastBlogEntryNumber);
         properties.put("punishmentFactor", this.punishmentFactor);
         properties.put("punishmentUnit", this.punishmentUnit);
         properties.put("homepageDir", this.homepageDir);

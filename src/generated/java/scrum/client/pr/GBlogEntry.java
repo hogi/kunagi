@@ -69,6 +69,64 @@ public abstract class GBlogEntry
         return equals(this.projectId, project);
     }
 
+    // --- number ---
+
+    private int number ;
+
+    public final int getNumber() {
+        return this.number ;
+    }
+
+    public final BlogEntry setNumber(int number) {
+        if (isNumber(number)) return (BlogEntry)this;
+        this.number = number ;
+        propertyChanged("number", this.number);
+        return (BlogEntry)this;
+    }
+
+    public final boolean isNumber(int number) {
+        return equals(this.number, number);
+    }
+
+    private transient NumberModel numberModel;
+
+    public NumberModel getNumberModel() {
+        if (numberModel == null) numberModel = createNumberModel();
+        return numberModel;
+    }
+
+    protected NumberModel createNumberModel() { return new NumberModel(); }
+
+    protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getNumber();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setNumber(value);
+        }
+
+            @Override
+            public void increment() {
+                setNumber(getNumber() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setNumber(getNumber() - 1);
+            }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- authors ---
 
     private Set<String> authorsIds = new HashSet<String>();
@@ -295,6 +353,7 @@ public abstract class GBlogEntry
 
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
+        number  = (Integer) props.get("number");
         authorsIds = (Set<String>) props.get("authorsIds");
         title  = (java.lang.String) props.get("title");
         text  = (java.lang.String) props.get("text");
@@ -308,6 +367,7 @@ public abstract class GBlogEntry
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
+        properties.put("number", this.number);
         properties.put("authorsIds", this.authorsIds);
         properties.put("title", this.title);
         properties.put("text", this.text);

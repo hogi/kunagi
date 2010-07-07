@@ -43,6 +43,8 @@ import scrum.server.issues.Issue;
 import scrum.server.issues.IssueDao;
 import scrum.server.journal.ProjectEvent;
 import scrum.server.journal.ProjectEventDao;
+import scrum.server.pr.BlogEntry;
+import scrum.server.pr.BlogEntryDao;
 import scrum.server.release.Release;
 import scrum.server.release.ReleaseDao;
 import scrum.server.risks.Risk;
@@ -77,6 +79,7 @@ public class Project extends GProject {
 	private static RequirementEstimationVoteDao requirementEstimationVoteDao;
 	private static SprintDaySnapshotDao sprintDaySnapshotDao;
 	private static SubjectDao subjectDao;
+	private static BlogEntryDao blogEntryDao;
 
 	public void updateRequirementsOrder(List<Requirement> requirements) {
 		setRequirementsOrderIds(Persist.getIdsAsList(requirements));
@@ -377,6 +380,12 @@ public class Project extends GProject {
 		return number;
 	}
 
+	public synchronized int generateBlogEntryNumber() {
+		int number = getLastBlogEntryNumber() + 1;
+		setLastBlogEntryNumber(number);
+		return number;
+	}
+
 	public ProjectSprintSnapshot getCurrentSprintSnapshot() {
 		ProjectSprintSnapshot snapshot = projectSprintSnapshotDao.getProjectSprintSnapshotBySprint(getCurrentSprint());
 		if (snapshot == null) snapshot = createSprintSnapshot();
@@ -496,6 +505,10 @@ public class Project extends GProject {
 
 	public Set<Release> getReleases() {
 		return releaseDao.getReleasesByProject(this);
+	}
+
+	public Set<BlogEntry> getBlogEntries() {
+		return blogEntryDao.getBlogEntrysByProject(this);
 	}
 
 	public Set<RequirementEstimationVote> getRequirementEstimationVotes() {

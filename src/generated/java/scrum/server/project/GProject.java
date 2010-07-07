@@ -62,6 +62,7 @@ public abstract class GProject
         properties.put("lastSubjectNumber", this.lastSubjectNumber);
         properties.put("lastEventNumber", this.lastEventNumber);
         properties.put("lastReleaseNumber", this.lastReleaseNumber);
+        properties.put("lastBlogEntryNumber", this.lastBlogEntryNumber);
         properties.put("punishmentFactor", this.punishmentFactor);
         properties.put("punishmentUnit", this.punishmentUnit);
         properties.put("homepageDir", this.homepageDir);
@@ -1343,6 +1344,35 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
+    // - lastBlogEntryNumber
+    // -----------------------------------------------------------
+
+    private int lastBlogEntryNumber;
+
+    public final int getLastBlogEntryNumber() {
+        return lastBlogEntryNumber;
+    }
+
+    public final void setLastBlogEntryNumber(int lastBlogEntryNumber) {
+        lastBlogEntryNumber = prepareLastBlogEntryNumber(lastBlogEntryNumber);
+        if (isLastBlogEntryNumber(lastBlogEntryNumber)) return;
+        this.lastBlogEntryNumber = lastBlogEntryNumber;
+        fireModified();
+    }
+
+    protected int prepareLastBlogEntryNumber(int lastBlogEntryNumber) {
+        return lastBlogEntryNumber;
+    }
+
+    public final boolean isLastBlogEntryNumber(int lastBlogEntryNumber) {
+        return this.lastBlogEntryNumber == lastBlogEntryNumber;
+    }
+
+    protected final void updateLastBlogEntryNumber(Object value) {
+        setLastBlogEntryNumber((Integer)value);
+    }
+
+    // -----------------------------------------------------------
     // - punishmentFactor
     // -----------------------------------------------------------
 
@@ -1472,6 +1502,7 @@ public abstract class GProject
             if (property.equals("lastSubjectNumber")) updateLastSubjectNumber(value);
             if (property.equals("lastEventNumber")) updateLastEventNumber(value);
             if (property.equals("lastReleaseNumber")) updateLastReleaseNumber(value);
+            if (property.equals("lastBlogEntryNumber")) updateLastBlogEntryNumber(value);
             if (property.equals("punishmentFactor")) updatePunishmentFactor(value);
             if (property.equals("punishmentUnit")) updatePunishmentUnit(value);
             if (property.equals("homepageDir")) updateHomepageDir(value);

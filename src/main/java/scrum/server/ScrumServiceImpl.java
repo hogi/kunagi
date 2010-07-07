@@ -37,6 +37,8 @@ import scrum.server.journal.Change;
 import scrum.server.journal.ChangeDao;
 import scrum.server.journal.ProjectEvent;
 import scrum.server.journal.ProjectEventDao;
+import scrum.server.pr.BlogEntry;
+import scrum.server.pr.BlogEntryDao;
 import scrum.server.project.HomepageUpdater;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
@@ -64,6 +66,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private transient ProjectEventDao projectEventDao;
 	private transient EmoticonDao emoticonDao;
 	private transient ChangeDao changeDao;
+	private transient BlogEntryDao blogEntryDao;
 
 	public void setReleaseDao(ReleaseDao releaseDao) {
 		this.releaseDao = releaseDao;
@@ -99,6 +102,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	public void setCommentDao(CommentDao commentDao) {
 		this.commentDao = commentDao;
+	}
+
+	public void setBlogEntryDao(BlogEntryDao blogEntryDao) {
+		this.blogEntryDao = blogEntryDao;
 	}
 
 	// --- ---
@@ -227,12 +234,19 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			task.getRequirement().setRejectDate(null);
 		}
 
+		if (entity instanceof BlogEntry) {
+			BlogEntry blogEntry = (BlogEntry) entity;
+			blogEntry.setDateAndTime(DateAndTime.now());
+			blogEntry.addAuthor(conversation.getSession().getUser());
+		}
+
 		if (!(entity instanceof Transient)) dao.saveEntity(entity);
 
 		sendToClients(conversation, entity);
 
 		if (entity instanceof Task || entity instanceof Requirement || entity instanceof Wikipage
-				|| entity instanceof Risk || entity instanceof Impediment || entity instanceof Issue) {
+				|| entity instanceof Risk || entity instanceof Impediment || entity instanceof Issue
+				|| entity instanceof BlogEntry) {
 			User user = conversation.getSession().getUser();
 			Change change = changeDao.postChange(entity, user, "@created", null, null);
 			conversation.sendToClient(change);
@@ -312,6 +326,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			postChangeIfChanged(conversation, entity, properties, currentUser, "description");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "statement");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "closeDate");
+		}
+		if (entity instanceof BlogEntry) {
+			postChangeIfChanged(conversation, entity, properties, currentUser, "text");
 		}
 
 		entity.updateProperties(properties);
@@ -421,6 +438,14 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 		}
 
+		if (entity instanceof BlogEntry) {
+			BlogEntry blogEntry = (BlogEntry) entity;
+
+			if (properties.containsKey("published") && blogEntry.isPublished()) {
+				postProjectEvent(conversation, currentUser.getName() + " published " + blogEntry.getReferenceAndLabel());
+			}
+		}
+
 		sendToOtherConversationsByProject(conversation, entity);
 	}
 
@@ -472,6 +497,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		conversation.sendToClient(project.getFiles());
 		conversation.sendToClient(project.getUrgentAndOpenIssues());
 		conversation.sendToClient(project.getReleases());
+		conversation.sendToClient(project.getBlogEntries());
+
 		webApplication.updateOnlineTeamMembers(project, null);
 	}
 

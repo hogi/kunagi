@@ -90,6 +90,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.pr.BlogEntry> getBlogEntrysByNumber(int number) {
+        List<scrum.client.pr.BlogEntry> ret = new ArrayList<scrum.client.pr.BlogEntry>();
+        for (scrum.client.pr.BlogEntry entity : blogEntrys.values()) {
+            if (entity.isNumber(number)) ret.add(entity);
+        }
+        return ret;
+    }
+
 
     public final List<scrum.client.pr.BlogEntry> getBlogEntrysByTitle(java.lang.String title) {
         List<scrum.client.pr.BlogEntry> ret = new ArrayList<scrum.client.pr.BlogEntry>();
@@ -1161,6 +1169,14 @@ public abstract class GDao
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
             if (entity.isLastReleaseNumber(lastReleaseNumber)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Project> getProjectsByLastBlogEntryNumber(int lastBlogEntryNumber) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isLastBlogEntryNumber(lastBlogEntryNumber)) ret.add(entity);
         }
         return ret;
     }

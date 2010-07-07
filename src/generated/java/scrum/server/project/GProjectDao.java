@@ -94,6 +94,8 @@ public abstract class GProjectDao
         lastEventNumbersCache = null;
         projectsByLastReleaseNumberCache.clear();
         lastReleaseNumbersCache = null;
+        projectsByLastBlogEntryNumberCache.clear();
+        lastBlogEntryNumbersCache = null;
         projectsByPunishmentFactorCache.clear();
         punishmentFactorsCache = null;
         projectsByPunishmentUnitCache.clear();
@@ -1154,6 +1156,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isLastReleaseNumber(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - lastBlogEntryNumber
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Project>> projectsByLastBlogEntryNumberCache = new Cache<Integer,Set<Project>>(
+            new Cache.Factory<Integer,Set<Project>>() {
+                public Set<Project> create(Integer lastBlogEntryNumber) {
+                    return getEntities(new IsLastBlogEntryNumber(lastBlogEntryNumber));
+                }
+            });
+
+    public final Set<Project> getProjectsByLastBlogEntryNumber(int lastBlogEntryNumber) {
+        return projectsByLastBlogEntryNumberCache.get(lastBlogEntryNumber);
+    }
+    private Set<Integer> lastBlogEntryNumbersCache;
+
+    public final Set<Integer> getLastBlogEntryNumbers() {
+        if (lastBlogEntryNumbersCache == null) {
+            lastBlogEntryNumbersCache = new HashSet<Integer>();
+            for (Project e : getEntities()) {
+                lastBlogEntryNumbersCache.add(e.getLastBlogEntryNumber());
+            }
+        }
+        return lastBlogEntryNumbersCache;
+    }
+
+    private static class IsLastBlogEntryNumber implements Predicate<Project> {
+
+        private int value;
+
+        public IsLastBlogEntryNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isLastBlogEntryNumber(value);
         }
 
     }

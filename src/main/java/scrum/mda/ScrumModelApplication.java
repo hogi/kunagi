@@ -130,6 +130,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addProperty("lastSubjectNumber", int.class);
 			projectModel.addProperty("lastEventNumber", int.class);
 			projectModel.addProperty("lastReleaseNumber", int.class);
+			projectModel.addProperty("lastBlogEntryNumber", int.class);
 			projectModel.addProperty("punishmentFactor", int.class);
 			projectModel.addStringProperty("punishmentUnit");
 			projectModel.addStringProperty("homepageDir");
@@ -574,6 +575,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			blogEntryModel = createEntityModel("BlogEntry", "pr");
 			blogEntryModel.setGwtSupport(true);
 			blogEntryModel.addReference("project", getProjectModel()).setMaster(true);
+			blogEntryModel.addProperty("number", int.class);
 			blogEntryModel.addSetReference("authors", getUserModel());
 			blogEntryModel.addProperty("title", String.class).setMandatory(true).setSearchable(true);
 			blogEntryModel.addProperty("text", String.class).setSearchable(true);

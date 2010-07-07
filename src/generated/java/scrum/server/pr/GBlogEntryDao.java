@@ -44,6 +44,8 @@ public abstract class GBlogEntryDao
     public void clearCaches() {
         blogEntrysByProjectCache.clear();
         projectsCache = null;
+        blogEntrysByNumberCache.clear();
+        numbersCache = null;
         blogEntrysByAuthorCache.clear();
         authorsCache = null;
         blogEntrysByTitleCache.clear();
@@ -109,6 +111,46 @@ public abstract class GBlogEntryDao
 
         public boolean test(BlogEntry e) {
             return e.isProject(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<BlogEntry>> blogEntrysByNumberCache = new Cache<Integer,Set<BlogEntry>>(
+            new Cache.Factory<Integer,Set<BlogEntry>>() {
+                public Set<BlogEntry> create(Integer number) {
+                    return getEntities(new IsNumber(number));
+                }
+            });
+
+    public final Set<BlogEntry> getBlogEntrysByNumber(int number) {
+        return blogEntrysByNumberCache.get(number);
+    }
+    private Set<Integer> numbersCache;
+
+    public final Set<Integer> getNumbers() {
+        if (numbersCache == null) {
+            numbersCache = new HashSet<Integer>();
+            for (BlogEntry e : getEntities()) {
+                numbersCache.add(e.getNumber());
+            }
+        }
+        return numbersCache;
+    }
+
+    private static class IsNumber implements Predicate<BlogEntry> {
+
+        private int value;
+
+        public IsNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(BlogEntry e) {
+            return e.isNumber(value);
         }
 
     }
