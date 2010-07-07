@@ -17,6 +17,7 @@ import scrum.server.WebSession;
 
 public class StartServlet extends AHttpServlet {
 
+	private static String webappUrl = "http://localhost:8080/kunagi/";
 	private ScrumConfig config;
 	private ApplicationInfo applicationInfo;
 
@@ -48,11 +49,16 @@ public class StartServlet extends AHttpServlet {
 	protected void onInit(ServletConfig servletConfig) {
 		super.onInit(servletConfig);
 
-		System.out.println("Initializing Kunagi (" + Servlet.getWebappUrl(servletConfig, false) + ")");
+		webappUrl = Servlet.getWebappUrl(servletConfig, false);
+		System.out.println("Initializing Kunagi (" + webappUrl + ")");
 
 		ScrumWebApplication app = ScrumWebApplication.get(servletConfig);
 
 		config = app.getConfig();
 		applicationInfo = app.getApplicationInfo();
+	}
+
+	public static String getWebappUrl() {
+		return webappUrl;
 	}
 }
