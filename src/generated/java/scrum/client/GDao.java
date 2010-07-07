@@ -20,6 +20,110 @@ import ilarkesto.gwt.client.*;
 public abstract class GDao
             extends ilarkesto.gwt.client.AGwtDao {
 
+    // --- BlogEntry ---
+
+    private Map<String, scrum.client.pr.BlogEntry> blogEntrys = new HashMap<String, scrum.client.pr.BlogEntry>();
+
+    public final void clearBlogEntrys() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing BlogEntrys");
+        blogEntrys.clear();
+    }
+
+    public final boolean containsBlogEntry(scrum.client.pr.BlogEntry blogEntry) {
+        return blogEntrys.containsKey(blogEntry.getId());
+    }
+
+    public final void deleteBlogEntry(scrum.client.pr.BlogEntry blogEntry) {
+        blogEntrys.remove(blogEntry.getId());
+        entityDeleted(blogEntry);
+    }
+
+    public final void createBlogEntry(scrum.client.pr.BlogEntry blogEntry, Runnable successAction) {
+        blogEntrys.put(blogEntry.getId(), blogEntry);
+        entityCreated(blogEntry, successAction);
+    }
+
+    public final void createBlogEntry(scrum.client.pr.BlogEntry blogEntry) {
+        blogEntrys.put(blogEntry.getId(), blogEntry);
+        entityCreated(blogEntry, null);
+    }
+
+    private final void updateBlogEntry(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.pr.BlogEntry entity = blogEntrys.get(id);
+        if (entity == null) {
+            entity = new scrum.client.pr.BlogEntry(data);
+            blogEntrys.put(id, entity);
+            ilarkesto.core.logging.Log.DEBUG("BlogEntry received: " + entity.getId() + " ("+entity+")");
+        } else {
+            entity.updateProperties(data);
+            ilarkesto.core.logging.Log.DEBUG("BlogEntry updated: " + entity);
+        }
+        onEntityModifiedRemotely(entity);
+    }
+
+    public final scrum.client.pr.BlogEntry getBlogEntry(String id) {
+        scrum.client.pr.BlogEntry ret = blogEntrys.get(id);
+        if (ret == null) throw new RuntimeException("BlogEntry does not exist: " + id);
+        return ret;
+    }
+
+    public final Set<scrum.client.pr.BlogEntry> getBlogEntrys(Collection<String> ids) {
+        Set<scrum.client.pr.BlogEntry> ret = new HashSet<scrum.client.pr.BlogEntry>();
+        for (String id : ids) {
+            scrum.client.pr.BlogEntry entity = blogEntrys.get(id);
+            if (entity == null) throw new RuntimeException("BlogEntry does not exist: " + id);
+            ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.pr.BlogEntry> getBlogEntrys() {
+        return new ArrayList<scrum.client.pr.BlogEntry>(blogEntrys.values());
+    }
+
+    public final List<scrum.client.pr.BlogEntry> getBlogEntrysByProject(scrum.client.project.Project project) {
+        List<scrum.client.pr.BlogEntry> ret = new ArrayList<scrum.client.pr.BlogEntry>();
+        for (scrum.client.pr.BlogEntry entity : blogEntrys.values()) {
+            if (entity.isProject(project)) ret.add(entity);
+        }
+        return ret;
+    }
+
+
+    public final List<scrum.client.pr.BlogEntry> getBlogEntrysByTitle(java.lang.String title) {
+        List<scrum.client.pr.BlogEntry> ret = new ArrayList<scrum.client.pr.BlogEntry>();
+        for (scrum.client.pr.BlogEntry entity : blogEntrys.values()) {
+            if (entity.isTitle(title)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.pr.BlogEntry> getBlogEntrysByText(java.lang.String text) {
+        List<scrum.client.pr.BlogEntry> ret = new ArrayList<scrum.client.pr.BlogEntry>();
+        for (scrum.client.pr.BlogEntry entity : blogEntrys.values()) {
+            if (entity.isText(text)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.pr.BlogEntry> getBlogEntrysByDateAndTime(ilarkesto.gwt.client.DateAndTime dateAndTime) {
+        List<scrum.client.pr.BlogEntry> ret = new ArrayList<scrum.client.pr.BlogEntry>();
+        for (scrum.client.pr.BlogEntry entity : blogEntrys.values()) {
+            if (entity.isDateAndTime(dateAndTime)) ret.add(entity);
+        }
+        return ret;
+    }
+
+
+    public final List<scrum.client.pr.BlogEntry> getBlogEntrysByPublished(boolean published) {
+        List<scrum.client.pr.BlogEntry> ret = new ArrayList<scrum.client.pr.BlogEntry>();
+        for (scrum.client.pr.BlogEntry entity : blogEntrys.values()) {
+            if (entity.isPublished(published)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Change ---
 
     private Map<String, scrum.client.journal.Change> changes = new HashMap<String, scrum.client.journal.Change>();
@@ -2659,6 +2763,7 @@ public abstract class GDao
     }
 
     public final void clearAllEntities() {
+            clearBlogEntrys();
             clearChanges();
             clearChatMessages();
             clearComments();
@@ -2689,6 +2794,7 @@ public abstract class GDao
     protected final Collection<Map<String, ? extends AGwtEntity>> getEntityMaps() {
         if (entityMaps == null) {
             entityMaps = new ArrayList<Map<String, ? extends AGwtEntity>>();
+            entityMaps.add(blogEntrys);
             entityMaps.add(changes);
             entityMaps.add(chatMessages);
             entityMaps.add(comments);
@@ -2717,6 +2823,10 @@ public abstract class GDao
 
     @Override
     protected final void updateLocalEntity(String type, Map data) {
+        if (type.equals(scrum.client.pr.BlogEntry.ENTITY_TYPE)) {
+            updateBlogEntry(data);
+            return;
+        }
         if (type.equals(scrum.client.journal.Change.ENTITY_TYPE)) {
             updateChange(data);
             return;
@@ -2811,6 +2921,7 @@ public abstract class GDao
     @Override
     public final Map<String, Integer> getEntityCounts() {
         Map<String, Integer> ret = new HashMap<String, Integer>();
+        ret.put("BlogEntry", blogEntrys.size());
         ret.put("Change", changes.size());
         ret.put("ChatMessage", chatMessages.size());
         ret.put("Comment", comments.size());

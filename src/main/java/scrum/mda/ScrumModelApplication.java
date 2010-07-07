@@ -567,6 +567,23 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		return projectEventModel;
 	}
 
+	private EntityModel blogEntryModel;
+
+	public EntityModel getBlogEntryModel() {
+		if (blogEntryModel == null) {
+			blogEntryModel = createEntityModel("BlogEntry", "pr");
+			blogEntryModel.setGwtSupport(true);
+			blogEntryModel.addReference("project", getProjectModel()).setMaster(true);
+			blogEntryModel.addSetReference("authors", getUserModel());
+			blogEntryModel.addProperty("title", String.class).setMandatory(true).setSearchable(true);
+			blogEntryModel.addProperty("text", String.class).setSearchable(true);
+			blogEntryModel.addProperty("dateAndTime", DateAndTime.class);
+			blogEntryModel.addSetReference("releases", getReleaseModel());
+			blogEntryModel.addProperty("published", boolean.class);
+		}
+		return blogEntryModel;
+	}
+
 	@Override
 	protected String getBasePackageName() {
 		return "scrum.server";

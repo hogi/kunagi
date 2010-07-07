@@ -28,6 +28,31 @@ public abstract class GScrumWebApplication
     // - composites
     // -----------------------------------------------------------
 
+    // --- blogEntryDao ---
+
+    private scrum.server.pr.BlogEntryDao blogEntryDao;
+
+    public final scrum.server.pr.BlogEntryDao getBlogEntryDao() {
+        if (blogEntryDao == null) {
+            blogEntryDao = createBlogEntryDao();
+            initializeBlogEntryDao(blogEntryDao);
+        }
+        return blogEntryDao;
+    }
+
+    protected scrum.server.pr.BlogEntryDao createBlogEntryDao() {
+        return blogEntryDao = ilarkesto.base.Reflect.newInstance(scrum.server.pr.BlogEntryDao.class);
+    }
+
+    protected void initializeBlogEntryDao(scrum.server.pr.BlogEntryDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetBlogEntryDao() {
+        blogEntryDao = null;
+    }
+
     // --- changeDao ---
 
     private scrum.server.journal.ChangeDao changeDao;
