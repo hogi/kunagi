@@ -19,10 +19,13 @@ package scrum.server;
 
 import ilarkesto.base.Tm;
 import ilarkesto.base.Url;
+import ilarkesto.base.time.DateAndTime;
 import ilarkesto.base.time.Time;
 import ilarkesto.concurrent.TaskManager;
+import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.di.app.WebApplicationStarter;
+import ilarkesto.email.Eml;
 import ilarkesto.fp.FP;
 import ilarkesto.fp.Function;
 import ilarkesto.gwt.server.AGwtConversation;
@@ -36,6 +39,8 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,7 +55,7 @@ import scrum.server.project.Project;
 
 public class ScrumWebApplication extends GScrumWebApplication {
 
-	private static final Log LOG = Log.get(ScrumWebApplication.class);
+	private static final Log log = Log.get(ScrumWebApplication.class);
 
 	private BurndownChart burndownChart;
 	private ScrumConfig config;
@@ -100,7 +105,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	@Override
 	public void ensureIntegrity() {
 		if (getConfig().isStartupDelete()) {
-			LOG.warn("DELETING ALL ENTITIES (set startup.delete=false in config.properties to prevent this behavior)");
+			log.warn("DELETING ALL ENTITIES (set startup.delete=false in config.properties to prevent this behavior)");
 			IO.delete(getApplicationDataDir() + "/entities");
 		}
 
@@ -113,7 +118,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		Log.setDebugEnabled(true); // TODO remove this for production
 
 		if (getUserDao().getEntities().isEmpty()) {
-			LOG.warn("No users. Creating initial user: admin");
+			log.warn("No users. Creating initial user: admin");
 			getUserDao().postUser("admin").setAdmin(true);
 			getTransactionService().commit();
 		}
@@ -126,7 +131,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	private void createTestData() {
-		LOG.warn("Creating test data");
+		log.warn("Creating test data");
 
 		getUserDao().postUser("homer");
 		getUserDao().postUser("cartman");
@@ -193,7 +198,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			}
 		}));
 		project.getUsersStatus().setOnlineUsers(userIds);
-		LOG.debug("Updated online team members on project:", project, "->", project.getUsersStatus());
+		log.debug("Updated online team members on project:", project, "->", project.getUsersStatus());
 		sendUsersStatusToClients(project, exclude);
 	}
 
@@ -236,7 +241,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public void updateSystemMessage(SystemMessage systemMessage) {
 		this.systemMessage = systemMessage;
 		for (AGwtConversation conversation : getGwtConversations()) {
-			LOG.debug("Sending SystemMessage to:", conversation);
+			log.debug("Sending SystemMessage to:", conversation);
 			((GwtConversation) conversation).getNextData().systemMessage = systemMessage;
 		}
 	}
@@ -253,6 +258,48 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if (AWebApplication.isStarted()) return get();
 		return (ScrumWebApplication) WebApplicationStarter.startWebApplication(ScrumWebApplication.class.getName(),
 			Servlet.getContextPath(servletConfig));
+	}
+
+	public void triggerRegisterNotification(User user) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Kunagi URL: ").append(getBaseUrl()).append("\n");
+		sb.append("Name: ").append(user.getName()).append("\n");
+		sb.append("Email: ").append(user.getEmail()).append("\n");
+		sb.append("Date/Time: ").append(DateAndTime.now()).append("\n");
+		sendEmail(null, null, "User registered on " + getBaseUrl(), sb.toString());
+	}
+
+	public void sendEmail(String from, String to, String subject, String text) {
+		Session session = createSmtpSession();
+		if (session == null) return;
+		SystemConfig config = getSystemConfig();
+
+		if (Str.isBlanc(from)) from = config.getSmtpFrom();
+		if (Str.isBlanc(from)) {
+			log.error("Missing configuration: smtpFrom");
+			return;
+		}
+
+		if (Str.isBlanc(to)) to = config.getAdminEmail();
+		if (Str.isBlanc(to)) {
+			log.error("Missing configuration: adminEmail");
+			return;
+		}
+
+		if (Str.isBlanc(subject)) subject = "Kunagi";
+
+		MimeMessage message = Eml.createTextMessage(session, subject, text, from, to);
+		Eml.sendSmtpMessage(session, message);
+	}
+
+	public Session createSmtpSession() {
+		SystemConfig config = getSystemConfig();
+		String smtpServer = config.getSmtpServer();
+		if (smtpServer == null) {
+			log.error("Missing configuration: smtpServer");
+			return null;
+		}
+		return Eml.createSmtpSession(smtpServer, config.getSmtpUser(), config.getSmtpPassword());
 	}
 
 }

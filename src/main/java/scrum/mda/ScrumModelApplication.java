@@ -62,6 +62,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			systemConfigModel.setGwtSupport(true);
 			systemConfigModel.setViewProtected(true);
 			systemConfigModel.addStringProperty("url");
+			systemConfigModel.addStringProperty("adminEmail");
 			systemConfigModel.addStringProperty("googleAnalyticsId");
 			systemConfigModel.addStringProperty("smtpServer");
 			systemConfigModel.addStringProperty("smtpUser");
@@ -262,10 +263,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			qualityModel.addPredicate("editable");
 			qualityModel.addReference("project", getProjectModel()).setMaster(true);
 			qualityModel.addProperty("number", int.class);
-			qualityModel.addStringProperty("label").setMandatory(true).setSearchable(true).setEditablePredicate(
-				"editable");
-			qualityModel.addStringProperty("description").setRichtext(true).setSearchable(true).setEditablePredicate(
-				"editable");
+			qualityModel.addStringProperty("label").setMandatory(true).setSearchable(true)
+					.setEditablePredicate("editable");
+			qualityModel.addStringProperty("description").setRichtext(true).setSearchable(true)
+					.setEditablePredicate("editable");
 			qualityModel.addStringProperty("testDescription").setRichtext(true).setSearchable(true)
 					.setEditablePredicate("editable");
 			getApplicationModel().addCreateAction(qualityModel);
@@ -286,10 +287,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			sprintModel.addPredicate("retrospectiveEditable");
 			sprintModel.addPredicate("datesEditable");
 			sprintModel.addReference("project", getProjectModel()).setMaster(true);
-			sprintModel.addStringProperty("label").setMandatory(true).setSearchable(true).setEditablePredicate(
-				"editable");
-			sprintModel.addStringProperty("goal").setRichtext(true).setTemplateAvailable(true).setEditablePredicate(
-				"editable").setSearchable(true);
+			sprintModel.addStringProperty("label").setMandatory(true).setSearchable(true)
+					.setEditablePredicate("editable");
+			sprintModel.addStringProperty("goal").setRichtext(true).setTemplateAvailable(true)
+					.setEditablePredicate("editable").setSearchable(true);
 			sprintModel.addProperty("begin", Date.class).setEditablePredicate("datesEditable");
 			sprintModel.addProperty("end", Date.class).setEditablePredicate("datesEditable");
 			sprintModel.addProperty("velocity", Float.class);
@@ -376,10 +377,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			riskModel.addStringProperty("description").setRichtext(true).setSearchable(true);
 			riskModel.addStringProperty("probabilityMitigation").setRichtext(true).setSearchable(true);
 			riskModel.addStringProperty("impactMitigation").setRichtext(true).setSearchable(true);
-			riskModel.addProperty("probability", int.class).setOptionRestricted(true).setEditablePredicate(
-				"priorityEditable");
-			riskModel.addProperty("impact", int.class).setOptionRestricted(true).setEditablePredicate(
-				"priorityEditable");
+			riskModel.addProperty("probability", int.class).setOptionRestricted(true)
+					.setEditablePredicate("priorityEditable");
+			riskModel.addProperty("impact", int.class).setOptionRestricted(true)
+					.setEditablePredicate("priorityEditable");
 			getApplicationModel().addCreateAction(riskModel);
 			riskModel.addAction("DeleteRisk");
 		}
@@ -560,10 +561,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectEventModel.setGwtSupport(true);
 			projectEventModel.addPredicate("editable");
 			projectEventModel.addReference("project", getProjectModel()).setMaster(true);
-			projectEventModel.addStringProperty("label").setMandatory(true).setSearchable(true).setEditablePredicate(
-				"editable").setSearchable(true);
-			projectEventModel.addProperty("dateAndTime", DateAndTime.class).setMandatory(true).setEditablePredicate(
-				"editable");
+			projectEventModel.addStringProperty("label").setMandatory(true).setSearchable(true)
+					.setEditablePredicate("editable").setSearchable(true);
+			projectEventModel.addProperty("dateAndTime", DateAndTime.class).setMandatory(true)
+					.setEditablePredicate("editable");
 		}
 		return projectEventModel;
 	}

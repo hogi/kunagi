@@ -44,6 +44,8 @@ public abstract class GSystemConfigDao
     public void clearCaches() {
         systemConfigsByUrlCache.clear();
         urlsCache = null;
+        systemConfigsByAdminEmailCache.clear();
+        adminEmailsCache = null;
         systemConfigsByGoogleAnalyticsIdCache.clear();
         googleAnalyticsIdsCache = null;
         systemConfigsBySmtpServerCache.clear();
@@ -108,6 +110,46 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return e.isUrl(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - adminEmail
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsByAdminEmailCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String adminEmail) {
+                    return getEntities(new IsAdminEmail(adminEmail));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByAdminEmail(java.lang.String adminEmail) {
+        return systemConfigsByAdminEmailCache.get(adminEmail);
+    }
+    private Set<java.lang.String> adminEmailsCache;
+
+    public final Set<java.lang.String> getAdminEmails() {
+        if (adminEmailsCache == null) {
+            adminEmailsCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isAdminEmailSet()) adminEmailsCache.add(e.getAdminEmail());
+            }
+        }
+        return adminEmailsCache;
+    }
+
+    private static class IsAdminEmail implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsAdminEmail(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isAdminEmail(value);
         }
 
     }

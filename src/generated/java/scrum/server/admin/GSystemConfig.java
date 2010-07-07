@@ -37,6 +37,7 @@ public abstract class GSystemConfig
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("url", this.url);
+        properties.put("adminEmail", this.adminEmail);
         properties.put("googleAnalyticsId", this.googleAnalyticsId);
         properties.put("smtpServer", this.smtpServer);
         properties.put("smtpUser", this.smtpUser);
@@ -85,6 +86,41 @@ public abstract class GSystemConfig
 
     protected final void updateUrl(Object value) {
         setUrl((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - adminEmail
+    // -----------------------------------------------------------
+
+    private java.lang.String adminEmail;
+
+    public final java.lang.String getAdminEmail() {
+        return adminEmail;
+    }
+
+    public final void setAdminEmail(java.lang.String adminEmail) {
+        adminEmail = prepareAdminEmail(adminEmail);
+        if (isAdminEmail(adminEmail)) return;
+        this.adminEmail = adminEmail;
+        fireModified();
+    }
+
+    protected java.lang.String prepareAdminEmail(java.lang.String adminEmail) {
+        adminEmail = Str.removeUnreadableChars(adminEmail);
+        return adminEmail;
+    }
+
+    public final boolean isAdminEmailSet() {
+        return this.adminEmail != null;
+    }
+
+    public final boolean isAdminEmail(java.lang.String adminEmail) {
+        if (this.adminEmail == null && adminEmail == null) return true;
+        return this.adminEmail != null && this.adminEmail.equals(adminEmail);
+    }
+
+    protected final void updateAdminEmail(Object value) {
+        setAdminEmail((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -268,6 +304,7 @@ public abstract class GSystemConfig
             if (property.equals("id")) continue;
             Object value = entry.getValue();
             if (property.equals("url")) updateUrl(value);
+            if (property.equals("adminEmail")) updateAdminEmail(value);
             if (property.equals("googleAnalyticsId")) updateGoogleAnalyticsId(value);
             if (property.equals("smtpServer")) updateSmtpServer(value);
             if (property.equals("smtpUser")) updateSmtpUser(value);

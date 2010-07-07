@@ -92,6 +92,54 @@ public abstract class GSystemConfig
 
     }
 
+    // --- adminEmail ---
+
+    private java.lang.String adminEmail ;
+
+    public final java.lang.String getAdminEmail() {
+        return this.adminEmail ;
+    }
+
+    public final SystemConfig setAdminEmail(java.lang.String adminEmail) {
+        if (isAdminEmail(adminEmail)) return (SystemConfig)this;
+        this.adminEmail = adminEmail ;
+        propertyChanged("adminEmail", this.adminEmail);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isAdminEmail(java.lang.String adminEmail) {
+        return equals(this.adminEmail, adminEmail);
+    }
+
+    private transient AdminEmailModel adminEmailModel;
+
+    public AdminEmailModel getAdminEmailModel() {
+        if (adminEmailModel == null) adminEmailModel = createAdminEmailModel();
+        return adminEmailModel;
+    }
+
+    protected AdminEmailModel createAdminEmailModel() { return new AdminEmailModel(); }
+
+    protected class AdminEmailModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getAdminEmail();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setAdminEmail(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- googleAnalyticsId ---
 
     private java.lang.String googleAnalyticsId ;
@@ -336,6 +384,7 @@ public abstract class GSystemConfig
 
     public void updateProperties(Map props) {
         url  = (java.lang.String) props.get("url");
+        adminEmail  = (java.lang.String) props.get("adminEmail");
         googleAnalyticsId  = (java.lang.String) props.get("googleAnalyticsId");
         smtpServer  = (java.lang.String) props.get("smtpServer");
         smtpUser  = (java.lang.String) props.get("smtpUser");
@@ -347,6 +396,7 @@ public abstract class GSystemConfig
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("url", this.url);
+        properties.put("adminEmail", this.adminEmail);
         properties.put("googleAnalyticsId", this.googleAnalyticsId);
         properties.put("smtpServer", this.smtpServer);
         properties.put("smtpUser", this.smtpUser);

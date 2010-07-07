@@ -18,6 +18,7 @@ public class SystemConfigWidget extends AScrumWidget {
 		page.addHeader("Kunagi installation");
 		TableBuilder tbKunagi = ScrumGwt.createFieldTable();
 		tbKunagi.addFieldRow("Public URL", config.getUrlModel());
+		tbKunagi.addFieldRow("Administrator email", config.getAdminEmailModel());
 		page.addSection(tbKunagi.createTable());
 
 		page.addHeader("Email Server");

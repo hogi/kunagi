@@ -369,23 +369,25 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 
 			if (properties.containsKey("rejectDate") && requirement.isRejectDateSet()) {
-				postProjectEvent(conversation, currentUser.getName() + " rejected "
-						+ requirement.getReferenceAndLabel());
+				postProjectEvent(conversation,
+					currentUser.getName() + " rejected " + requirement.getReferenceAndLabel());
 			}
 
 			if (properties.containsKey("accepted") && requirement.isRejectDateSet()) {
-				postProjectEvent(conversation, currentUser.getName() + " accepted "
-						+ requirement.getReferenceAndLabel());
+				postProjectEvent(conversation,
+					currentUser.getName() + " accepted " + requirement.getReferenceAndLabel());
 			}
 
 			if (sprint != previousRequirementSprint) {
 				if (properties.containsKey("sprintId")) {
 					if (inCurrentSprint) {
-						postProjectEvent(conversation, currentUser.getName() + " pulled "
-								+ requirement.getReferenceAndLabel() + " to current sprint");
+						postProjectEvent(conversation,
+							currentUser.getName() + " pulled " + requirement.getReferenceAndLabel()
+									+ " to current sprint");
 					} else {
-						postProjectEvent(conversation, currentUser.getName() + " kicked "
-								+ requirement.getReferenceAndLabel() + " from current sprint");
+						postProjectEvent(conversation,
+							currentUser.getName() + " kicked " + requirement.getReferenceAndLabel()
+									+ " from current sprint");
 					}
 				}
 			}
@@ -432,8 +434,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 				if (issue.isFixed()) {
 					postProjectEvent(conversation, currentUser.getName() + " fixed " + issue.getReferenceAndLabel());
 				} else {
-					postProjectEvent(conversation, currentUser.getName() + " rejected fix for "
-							+ issue.getReferenceAndLabel());
+					postProjectEvent(conversation,
+						currentUser.getName() + " rejected fix for " + issue.getReferenceAndLabel());
 				}
 			}
 		}
@@ -676,7 +678,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onPing(GwtConversation conversation) {
-	// nop
+		// nop
 	}
 
 	@Override
@@ -752,6 +754,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		User user = userDao.postUser(email, username, password);
 		user.triggerEmailVerification();
+		webApplication.triggerRegisterNotification(user);
 
 		conversation.getSession().setUser(user);
 		conversation.sendUserScopeDataToClient(user);
