@@ -83,8 +83,8 @@ public class Project extends GProject {
 	private static SubjectDao subjectDao;
 	private static BlogEntryDao blogEntryDao;
 
-	public void updateRequirementsOrder(List<Requirement> requirements) {
-		setRequirementsOrderIds(Persist.getIdsAsList(requirements));
+	public static void setBlogEntryDao(BlogEntryDao blogEntryDao) {
+		Project.blogEntryDao = blogEntryDao;
 	}
 
 	public static void setSubjectDao(SubjectDao subjectDao) {
@@ -160,6 +160,10 @@ public class Project extends GProject {
 	}
 
 	// --- ---
+
+	public void updateRequirementsOrder(List<Requirement> requirements) {
+		setRequirementsOrderIds(Persist.getIdsAsList(requirements));
+	}
 
 	public java.io.File getHomepageDirFile() {
 		if (!isHomepageDirSet()) return null;

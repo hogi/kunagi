@@ -2,6 +2,8 @@ package scrum;
 
 import ilarkesto.base.Str;
 import ilarkesto.base.time.Date;
+import ilarkesto.base.time.DateAndTime;
+import ilarkesto.base.time.Time;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.EntityStore;
 import ilarkesto.persistence.FileEntityStore;
@@ -12,6 +14,8 @@ import scrum.server.collaboration.Wikipage;
 import scrum.server.collaboration.WikipageDao;
 import scrum.server.impediments.Impediment;
 import scrum.server.impediments.ImpedimentDao;
+import scrum.server.pr.BlogEntry;
+import scrum.server.pr.BlogEntryDao;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
@@ -35,6 +39,7 @@ public class TestUtil {
 	private static RiskDao riskDao;
 	private static SimpleEventDao simpleEventDao;
 	private static WikipageDao wikipageDao;
+	private static BlogEntryDao blogEntryDao;
 
 	private static void initialize() {
 		if (initialized) return;
@@ -70,6 +75,9 @@ public class TestUtil {
 		Sprint.setSprintDaySnapshotDao(sprintDaySnapshotDao);
 		Sprint.setRequirementDao(requirementDao);
 
+		blogEntryDao = new BlogEntryDao();
+		blogEntryDao.setTransactionService(transactionService);
+
 		projectDao = new ProjectDao();
 		projectDao.setTransactionService(transactionService);
 		Project.setWikipageDao(wikipageDao);
@@ -79,6 +87,7 @@ public class TestUtil {
 		Project.setImpedimentDao(impedimentDao);
 		Project.setRiskDao(riskDao);
 		Project.setSimpleEventDao(simpleEventDao);
+		Project.setBlogEntryDao(blogEntryDao);
 
 	}
 
@@ -142,6 +151,21 @@ public class TestUtil {
 		impediment.setLabel(label);
 		impediment.setDescription(description);
 		return impediment;
+	}
+
+	public static BlogEntry createBlogEntry(Project project, int number) {
+		DateAndTime date = new DateAndTime(Date.beforeDays(number * 5), Time.now());
+		return createBlogEntry(project, number, Str.generateRandomSentence(4, 6), Str.generateRandomParagraph(), date);
+	}
+
+	public static BlogEntry createBlogEntry(Project project, int number, String title, String text,
+			DateAndTime dateAndTime) {
+		BlogEntry entry = blogEntryDao.newEntityInstance();
+		entry.setProject(project);
+		entry.setNumber(number);
+		entry.setTitle(title);
+		entry.setDateAndTime(dateAndTime);
+		return entry;
 	}
 
 	public static Requirement createRequirement(Project project, int number) {
