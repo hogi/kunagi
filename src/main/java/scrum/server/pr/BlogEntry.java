@@ -1,8 +1,10 @@
 package scrum.server.pr;
 
+import ilarkesto.base.Utl;
+import ilarkesto.base.time.DateAndTime;
 import scrum.server.admin.User;
 
-public class BlogEntry extends GBlogEntry {
+public class BlogEntry extends GBlogEntry implements Comparable<BlogEntry> {
 
 	public boolean isVisibleFor(User user) {
 		return getProject().isVisibleFor(user);
@@ -24,6 +26,12 @@ public class BlogEntry extends GBlogEntry {
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
 		updateNumber();
+		if (!isDateAndTimeSet()) setDateAndTime(DateAndTime.now());
+	}
+
+	@Override
+	public int compareTo(BlogEntry other) {
+		return Utl.compare(getDateAndTime(), other.getDateAndTime()) * -1;
 	}
 
 	@Override

@@ -1,9 +1,7 @@
 package scrum.server.project;
 
 import ilarkesto.base.Str;
-import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
-import ilarkesto.base.time.Time;
 import ilarkesto.core.logging.Log;
 import ilarkesto.velocity.ContextBuilder;
 import ilarkesto.velocity.Velocity;
@@ -17,6 +15,7 @@ import scrum.client.wiki.HtmlContext;
 import scrum.client.wiki.WikiModel;
 import scrum.client.wiki.WikiParser;
 import scrum.server.collaboration.Wikipage;
+import scrum.server.pr.BlogEntry;
 
 public class HomepageUpdater {
 
@@ -47,22 +46,19 @@ public class HomepageUpdater {
 	}
 
 	private void fillBlog(ContextBuilder context) {
-		// TODO loop blog entries. don't forget to sort.
-		for (int i = 0; i < 5; i++) {
-			fillBlogEntry(context.addSubContext("entries"), i);
+		List<BlogEntry> entries = new ArrayList<BlogEntry>(project.getBlogEntrys());
+		Collections.sort(entries);
+		for (BlogEntry entry : entries) {
+			fillBlogEntry(context.addSubContext("entries"), entry);
 		}
 	}
 
-	private void fillBlogEntry(ContextBuilder context, int i/* replace i by blogEntry */) {
-		String reference = "blg" + i;
-		String title = Str.generateRandomSentence(4, 6);
-		String text = Str.generateRandomParagraph();
-		DateAndTime date = new DateAndTime(Date.beforeDays(i), Time.now());
-
-		context.put("reference", reference);
-		context.put("title", title);
-		context.put("text", "<p>" + wiki2html(text, htmlContext) + "</p>");
-		context.put("plainText", text);
+	private void fillBlogEntry(ContextBuilder context, BlogEntry entry) {
+		context.put("reference", entry.getReference());
+		context.put("title", entry.getTitle());
+		context.put("text", wiki2html(entry.getText(), htmlContext));
+		context.put("plainText", wiki2text(entry.getText()));
+		DateAndTime date = entry.getDateAndTime();
 		context.put("date", date.toString(DateAndTime.FORMAT_WEEKDAY_LONGMONTH_DAY_YEAR_HOUR_MINUTE));
 		context.put("rssDate", date.toString(DateAndTime.FORMAT_RFC822));
 	}
@@ -123,6 +119,11 @@ public class HomepageUpdater {
 		WikiParser wikiParser = new WikiParser(wikitext);
 		WikiModel model = wikiParser.parse();
 		return model.toHtml(context);
+	}
+
+	public static String wiki2text(String wikitext) {
+		if (Str.isBlanc(wikitext)) return "";
+		return wikitext;
 	}
 
 	private static class MyHtmlContext implements HtmlContext {

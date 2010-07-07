@@ -1,5 +1,6 @@
 package scrum.server.pr;
 
+import ilarkesto.base.time.DateAndTime;
 import ilarkesto.fp.Predicate;
 import scrum.server.project.Project;
 
@@ -12,6 +13,13 @@ public class BlogEntryDao extends GBlogEntryDao {
 				return t.isNumber(number) && t.isProject(project);
 			}
 		});
+	}
+
+	@Override
+	public BlogEntry newEntityInstance() {
+		BlogEntry entry = super.newEntityInstance();
+		entry.setDateAndTime(DateAndTime.now());
+		return entry;
 	}
 
 }

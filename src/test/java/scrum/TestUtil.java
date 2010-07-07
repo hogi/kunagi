@@ -164,6 +164,7 @@ public class TestUtil {
 		entry.setProject(project);
 		entry.setNumber(number);
 		entry.setTitle(title);
+		entry.setText(text);
 		entry.setDateAndTime(dateAndTime);
 		return entry;
 	}
