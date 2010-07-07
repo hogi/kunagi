@@ -15,6 +15,7 @@ import scrum.client.wiki.HtmlContext;
 import scrum.client.wiki.WikiModel;
 import scrum.client.wiki.WikiParser;
 import scrum.server.collaboration.Wikipage;
+import scrum.server.issues.Issue;
 import scrum.server.pr.BlogEntry;
 
 public class HomepageUpdater {
@@ -41,8 +42,23 @@ public class HomepageUpdater {
 		fillBlog(context.putSubContext("blog"));
 		fillSprintBacklog(context.putSubContext("sprintBacklog"));
 		fillProductBacklog(context.putSubContext("productBacklog"));
+		fillIssues(context);
 
 		Velocity.processDir(new java.io.File(templatePath), outputDir, context);
+	}
+
+	private void fillIssues(ContextBuilder context) {
+		List<Issue> issues = new ArrayList<Issue>(project.getIssues());
+		for (Issue issue : issues) {
+			if (issue.isClosed()) continue;
+			if (issue.isAcceptedUrgent()) fillIssue(context.addSubContext("bugs"), issue);
+		}
+	}
+
+	private void fillIssue(ContextBuilder context, Issue issue) {
+		context.put("reference", issue.getReference());
+		context.put("label", issue.getLabel());
+		context.put("description", wiki2text(issue.getDescription()));
 	}
 
 	private void fillBlog(ContextBuilder context) {

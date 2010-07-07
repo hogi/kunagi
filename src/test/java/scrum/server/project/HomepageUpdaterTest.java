@@ -5,6 +5,7 @@ import ilarkesto.base.time.Date;
 import org.testng.annotations.Test;
 
 import scrum.TestUtil;
+import scrum.server.issues.Issue;
 import scrum.server.sprint.Sprint;
 
 public class HomepageUpdaterTest {
@@ -27,6 +28,12 @@ public class HomepageUpdaterTest {
 
 		for (int i = 0; i < 5; i++) {
 			TestUtil.createBlogEntry(project, i);
+		}
+
+		for (int i = 0; i < 5; i++) {
+			Issue issue = TestUtil.createIssue(project, i);
+			issue.setAcceptDate(Date.today());
+			issue.setUrgent(true);
 		}
 
 		HomepageUpdater.updateHomepage("src/projectHomepage/velocity", "test-output/homepage", project);

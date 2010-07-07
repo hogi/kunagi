@@ -14,6 +14,8 @@ import scrum.server.collaboration.Wikipage;
 import scrum.server.collaboration.WikipageDao;
 import scrum.server.impediments.Impediment;
 import scrum.server.impediments.ImpedimentDao;
+import scrum.server.issues.Issue;
+import scrum.server.issues.IssueDao;
 import scrum.server.pr.BlogEntry;
 import scrum.server.pr.BlogEntryDao;
 import scrum.server.project.Project;
@@ -40,6 +42,7 @@ public class TestUtil {
 	private static SimpleEventDao simpleEventDao;
 	private static WikipageDao wikipageDao;
 	private static BlogEntryDao blogEntryDao;
+	private static IssueDao issueDao;
 
 	private static void initialize() {
 		if (initialized) return;
@@ -78,6 +81,9 @@ public class TestUtil {
 		blogEntryDao = new BlogEntryDao();
 		blogEntryDao.setTransactionService(transactionService);
 
+		issueDao = new IssueDao();
+		issueDao.setTransactionService(transactionService);
+
 		projectDao = new ProjectDao();
 		projectDao.setTransactionService(transactionService);
 		Project.setWikipageDao(wikipageDao);
@@ -88,7 +94,20 @@ public class TestUtil {
 		Project.setRiskDao(riskDao);
 		Project.setSimpleEventDao(simpleEventDao);
 		Project.setBlogEntryDao(blogEntryDao);
+		Project.setIssueDao(issueDao);
+	}
 
+	public static Issue createIssue(Project project, int number) {
+		return createIssue(project, number, Str.generateRandomSentence(4, 8), Str.generateRandomParagraph());
+	}
+
+	public static Issue createIssue(Project project, int number, String label, String description) {
+		Issue issue = issueDao.newEntityInstance();
+		issue.setProject(project);
+		issue.setNumber(number);
+		issue.setLabel(label);
+		issue.setDescription(description);
+		return issue;
 	}
 
 	public static Wikipage createWikipage(Project project, String name) {

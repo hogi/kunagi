@@ -36,6 +36,22 @@
 
 <div class="separator"></div>                    
 
+
+<div class="section">
+    
+    <h2>Known issues</h2>
+    <ul>
+    #foreach ($issue in $bugs)
+        <li><code>$issue.reference</code> $issue.label</li>
+    #end
+    </ul>
+    
+</div>
+
+<div class="separator"></div>                    
+
+
+
 <div class="section">
     $wiki.InstallDoc
 </div>
