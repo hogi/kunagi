@@ -17,7 +17,7 @@
     <meta name="robots" content="index">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <link rel="stylesheet" href="screen.css" type="text/css" />
-    <link rel="alternate" type="application/rss+xml" title="Kunagi News as RSS 2.0" href="news.rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Kunagi Blog as RSS 2.0" href="blog.rss.xml" />
     <script type="text/javascript" language="javascript" src="js/prototype.js"></script>
     <script type="text/javascript" language="javascript" src="js/kill-ie6.js"></script>
 
@@ -35,7 +35,7 @@
         <table cellspacing="0" cellpadding="0" width="100%"><tr>
             
             #navigLink("index", "Home", $page)
-            #navigLink("news", "News", $page)
+            #navigLink("blog", "Blog", $page)
             #navigLink("screenshots", "Screenshots", $page)
             #navigLink("download", "Download", $page)
             #navigLink("support", "Support", $page)

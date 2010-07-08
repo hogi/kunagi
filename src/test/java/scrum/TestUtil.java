@@ -98,15 +98,17 @@ public class TestUtil {
 	}
 
 	public static Issue createIssue(Project project, int number) {
-		return createIssue(project, number, Str.generateRandomSentence(4, 8), Str.generateRandomParagraph());
+		return createIssue(project, number, Str.generateRandomSentence(4, 8), Str.generateRandomParagraph(),
+			Str.generateRandomParagraph());
 	}
 
-	public static Issue createIssue(Project project, int number, String label, String description) {
+	public static Issue createIssue(Project project, int number, String label, String description, String statement) {
 		Issue issue = issueDao.newEntityInstance();
 		issue.setProject(project);
 		issue.setNumber(number);
 		issue.setLabel(label);
 		issue.setDescription(description);
+		issue.setStatement(statement);
 		return issue;
 	}
 

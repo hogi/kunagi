@@ -28,7 +28,7 @@ public class HomepageUpdaterTest {
 		TestUtil.createWikipage(project, "IncludedLibraries");
 
 		for (int i = 0; i < 5; i++) {
-			TestUtil.createBlogEntry(project, i);
+			TestUtil.createBlogEntry(project, i).setPublished(true);
 		}
 
 		for (int i = 0; i < 5; i++) {

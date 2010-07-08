@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
-#header("news")
+#header("blog")
 
-<a href="news.rss.xml" style="float: right; line-height: 16px;">RSS Feed</a>
-<a href="news.rss.xml" style="float: right;"><img src="img/rss.png" alt="RSS" style="margin-right: 5px;"></a>
+<a href="blog.rss.xml" style="float: right; line-height: 16px;">RSS Feed</a>
+<a href="blog.rss.xml" style="float: right;"><img src="img/rss.png" alt="RSS" style="margin-right: 5px;"></a>
 
 #foreach( $blogEntry in $blog.entries )
-    <a ref="$blogEntry.reference"></a>
+    <a name="$blogEntry.reference"></a>
     <div class="section">
         <h2>$blogEntry.title</h2>
         <p class="secondaryText">$blogEntry.date</p>

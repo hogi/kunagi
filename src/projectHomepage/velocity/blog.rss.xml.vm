@@ -9,10 +9,10 @@
     >
  
   <channel>
-    <title>Kunagi News</title>
-    <atom:link href="http://kunagi.org/news.rss.xml" rel="self" type="application/rss+xml" />
+    <title>Kunagi Blog</title>
+    <atom:link href="http://kunagi.org/blog.rss.xml" rel="self" type="application/rss+xml" />
     <link>http://kunagi.org</link>
-    <description>Kunagi News</description>
+    <description>Kunagi Blog</description>
     <language>en</language>
     <sy:updatePeriod>daily</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -26,9 +26,9 @@
     <item>
       <title>$blogEntry.title</title>
       <description><![CDATA[$blogEntry.plainText]]></description>
-      <link>http://kunagi.org/news.html#$blogEntry.reference</link>
+      <link>http://kunagi.org/blog.html#$blogEntry.reference</link>
       <author>Kunagi Team</author>
-      <guid>http://kunagi.org/news.html#$blogEntry.reference</guid>
+      <guid>http://kunagi.org/blog.html#$blogEntry.reference</guid>
       <pubDate>$blogEntry.rssDate</pubDate>
     </item>
 #end 

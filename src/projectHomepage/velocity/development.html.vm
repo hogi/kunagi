@@ -6,7 +6,7 @@
     <h2>Sprint Backlog</h2>
     <ul>
     #foreach( $story in $sprintBacklog.stories )
-        <li><code>$story.reference</code> $story.label</li>
+        <li><a href="${story.reference}.html">$story.reference</a> $story.label</li>
     #end
     </ul>
 </div>
@@ -17,7 +17,7 @@
     <h2>Product Backlog</h2>
     <ul>
     #foreach( $story in $productBacklog.stories )
-        <li><code>$story.reference</code> $story.label</li>
+        <li><a href="${story.reference}.html">$story.reference</a> $story.label</li>
     #end
     </ul>
 </div>

@@ -24,19 +24,22 @@ public class HomepageUpdater {
 
 	private Project project;
 	private MyHtmlContext htmlContext;
+	private File templateDir;
 	private File outputDir;
+	private Velocity velocity;
 
-	private HomepageUpdater(Project project, String outputPath) {
+	private HomepageUpdater(Project project, String templatePath, String outputPath) {
 		super();
 		assert project != null;
 		this.project = project;
+		this.templateDir = new File(templatePath);
 		this.outputDir = new File(outputPath);
 		htmlContext = new MyHtmlContext(project);
+		velocity = new Velocity(templateDir);
 	}
 
-	private void processTemplates(String templatePath) {
+	private void processDefaultTemplates() {
 		ContextBuilder context = new ContextBuilder();
-
 		fillProject(context.putSubContext("project"));
 		fillWiki(context.putSubContext("wiki"));
 		fillBlog(context.putSubContext("blog"));
@@ -44,23 +47,72 @@ public class HomepageUpdater {
 		fillProductBacklog(context.putSubContext("productBacklog"));
 		fillIssues(context);
 
-		synchronized (project) {
-			Velocity.processDir(new java.io.File(templatePath), outputDir, context);
+		File[] templateFiles = templateDir.listFiles();
+		if (templateFiles == null) return;
+		for (File templateFile : templateFiles) {
+			String templateName = templateFile.getName();
+			if (!templateName.endsWith(".vm")) continue;
+			if (templateName.equals(Velocity.LIB_TEMPLATE_NAME)) continue;
+			if (templateName.startsWith("iss.")) continue;
+			String outputFileName = Str.removeSuffix(templateName, ".vm");
+			velocity.processTemplate(templateName, new File(outputDir.getPath() + "/" + outputFileName), context);
+		}
+	}
+
+	private void processIssueTemplates() {
+		List<Issue> issues = new ArrayList<Issue>(project.getUrgentAndOpenIssues());
+		for (Issue issue : issues) {
+			ContextBuilder context = new ContextBuilder();
+			fillIssue(context.putSubContext("issue"), issue);
+			String reference = issue.getReference();
+			processEntityTemplate(context, reference);
+		}
+	}
+
+	private void processStoryTemplates() {
+		List<Requirement> requirements = new ArrayList<Requirement>(project.getRequirements());
+		for (Requirement requirement : requirements) {
+			if (requirement.isClosed()) continue;
+			ContextBuilder context = new ContextBuilder();
+			fillStory(context.putSubContext("story"), requirement);
+			processEntityTemplate(context, requirement.getReference());
+		}
+
+		List<Issue> issues = new ArrayList<Issue>(project.getUrgentAndOpenIssues());
+		for (Issue issue : issues) {
+			ContextBuilder context = new ContextBuilder();
+			fillIssue(context.putSubContext("issue"), issue);
+			processEntityTemplate(context, issue.getReference());
+		}
+	}
+
+	private void processEntityTemplate(ContextBuilder context, String reference) {
+		String prefix = reference.substring(0, 3);
+		File[] templateFiles = templateDir.listFiles();
+		if (templateFiles == null) return;
+		for (File templateFile : templateFiles) {
+			String templateName = templateFile.getName();
+			if (!templateName.endsWith(".vm")) continue;
+			if (!templateName.startsWith(prefix + ".")) continue;
+			String outputFileName = Str.removeSuffix(templateName, ".vm");
+			outputFileName = Str.removePrefix(outputFileName, prefix + ".");
+			outputFileName = reference + "." + outputFileName;
+			velocity.processTemplate(templateName, new File(outputDir.getPath() + "/" + outputFileName), context);
 		}
 	}
 
 	private void fillIssues(ContextBuilder context) {
-		List<Issue> issues = new ArrayList<Issue>(project.getIssues());
+		List<Issue> issues = new ArrayList<Issue>(project.getUrgentAndOpenIssues());
 		for (Issue issue : issues) {
-			if (issue.isClosed()) continue;
-			if (issue.isAcceptedUrgent()) fillIssue(context.addSubContext("bugs"), issue);
+			fillIssue(context.addSubContext("bugs"), issue);
 		}
 	}
 
 	private void fillIssue(ContextBuilder context, Issue issue) {
 		context.put("reference", issue.getReference());
 		context.put("label", issue.getLabel());
-		context.put("description", wiki2text(issue.getDescription()));
+		context.put("description", wiki2html(issue.getDescription(), htmlContext));
+		context.put("statement", wiki2html(issue.getStatement(), htmlContext));
 	}
 
 	private void fillBlog(ContextBuilder context) {
@@ -102,6 +154,7 @@ public class HomepageUpdater {
 	private void fillStory(ContextBuilder context, Requirement requirement) {
 		context.put("reference", requirement.getReference());
 		context.put("label", requirement.getLabel());
+		context.put("description", wiki2html(requirement.getDescription(), htmlContext));
 	}
 
 	private void fillWiki(ContextBuilder context) {
@@ -118,8 +171,12 @@ public class HomepageUpdater {
 	}
 
 	public static void updateHomepage(String templatePath, String outputPath, Project project) {
-		HomepageUpdater updater = new HomepageUpdater(project, outputPath);
-		updater.processTemplates(templatePath);
+		HomepageUpdater updater = new HomepageUpdater(project, templatePath, outputPath);
+		synchronized (project) {
+			updater.processDefaultTemplates();
+			updater.processIssueTemplates();
+			updater.processStoryTemplates();
+		}
 	}
 
 	public static void updateHomepage(Project project) {

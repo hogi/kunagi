@@ -1,0 +1,18 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+#header("iss")
+
+<div class="section">
+    <h2>$issue.label</h2>
+    <p>$issue.description</p>
+</div>
+
+<div class="separator"></div>
+
+<div class="section">
+    <h3>Statement from Kunagi Team</h3>
+    <p>$issue.statement</p>
+</div>
+
+
+#footer()
