@@ -4,7 +4,7 @@
 <head>
 
     <title>Kunagi - Agile project management based on Scrum</title>
-    <meta name="description" content="Kunagi is a web-based tool for integrated agile project management and collaboration based on Scrum">
+    <meta name="description" content="$project.shortDescription">
     <meta name="author" content="Artjom Kochtchi, Witoslaw Koczewski">
     <meta name="keywords" content="Scrum, Project Management, agile, tool">
 
