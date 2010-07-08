@@ -78,7 +78,6 @@
 				<exclude name="**/gdata-*.jar" />
 				<exclude name="**/jaudiotagger-*.jar" />
 				<exclude name="**/jcip-annotations.jar" />
-                <exclude name="**/jcommon-*.jar" />
 			</fileset>
 		</copy>
 	</target>
