@@ -8,7 +8,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.NumberFormat;
@@ -37,42 +36,6 @@ import scrum.server.sprint.SprintDao;
 import scrum.server.sprint.SprintDaySnapshot;
 
 public class BurndownChart {
-
-	public static void main(String[] args) {
-
-		List<BurndownSnapshot> shots = new ArrayList<BurndownSnapshot>();
-
-		shots.add(shot(new Date(2008, 7, 1), 0, 0));
-		shots.add(shot(new Date(2008, 7, 2), 0, 0));
-		shots.add(shot(new Date(2008, 7, 3), 0, 0));
-		shots.add(shot(new Date(2008, 7, 4), 5, 45));
-		shots.add(shot(new Date(2008, 7, 5), 10, 40));
-		shots.add(shot(new Date(2008, 7, 6), 15, 35));
-		shots.add(shot(new Date(2008, 7, 7), 18, 40));
-		shots.add(shot(new Date(2008, 7, 8), 25, 33));
-		shots.add(shot(new Date(2008, 7, 9), 28, 30));
-
-		DefaultXYDataset data = createSprintBurndownChartDataset(shots, new Date(2008, 7, 1), new Date(2008, 7, 31));
-		double tick = 1.0;
-		double max = getMaximum(data);
-
-		while (max / tick > 25) {
-			tick *= 2;
-			if (max / tick <= 25) break;
-			tick *= 2.5;
-			if (max / tick <= 25) break;
-			tick *= 2;
-		}
-		JFreeChart chart = createSprintBurndownChart(data, "Date", "Work", new Date(2008, 7, 1), new Date(2008, 7, 31),
-			1, 3, max * 1.1, tick);
-
-		try {
-			ChartUtilities.saveChartAsPNG(new File("runtimedata/test/chart.png"), chart, 500, 500);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-
-	}
 
 	private static final Log LOG = Log.get(BurndownChart.class);
 
@@ -178,9 +141,9 @@ public class BurndownChart {
 		}
 	}
 
-	private static JFreeChart createSprintBurndownChart(DefaultXYDataset data, String dateAxisLabel,
-			String valueAxisLabel, Date firstDay, Date lastDay, int dateMarkTickUnit, int dateLabelTickUnit,
-			double upperBoundary, double valueLabelTickUnit) {
+	static JFreeChart createSprintBurndownChart(DefaultXYDataset data, String dateAxisLabel, String valueAxisLabel,
+			Date firstDay, Date lastDay, int dateMarkTickUnit, int dateLabelTickUnit, double upperBoundary,
+			double valueLabelTickUnit) {
 		JFreeChart chart = ChartFactory.createXYLineChart("", "", "", data, PlotOrientation.VERTICAL, false, true,
 			false);
 
@@ -229,7 +192,7 @@ public class BurndownChart {
 		return chart;
 	}
 
-	private static double getMaximum(DefaultXYDataset data) {
+	static double getMaximum(DefaultXYDataset data) {
 		double max = 0;
 		for (int i = 0; i < data.getSeriesCount(); i++) {
 			for (int j = 0; j < data.getItemCount(i); j++) {
@@ -242,7 +205,7 @@ public class BurndownChart {
 		return max;
 	}
 
-	private static DefaultXYDataset createSprintBurndownChartDataset(List<BurndownSnapshot> snapshots, Date firstDay,
+	static DefaultXYDataset createSprintBurndownChartDataset(List<BurndownSnapshot> snapshots, Date firstDay,
 			Date lastDay) {
 		if (snapshots.isEmpty()) throw new IllegalArgumentException("snapshots.isEmpty()");
 
@@ -301,7 +264,7 @@ public class BurndownChart {
 				idealDates.add(snapshotDateMillis);
 				idealValues.add(idealWork);
 
-				idealWork += (jump);
+				if (idealWork == 0) idealWork += (jump);
 
 				idealDates.add(snapshotDateMillis);
 				idealValues.add(idealWork);
@@ -389,20 +352,6 @@ public class BurndownChart {
 			array[1][i] = b.get(i);
 		}
 		return array;
-	}
-
-	private static SprintDaySnapshot shot(Date d, int b, int r) {
-		SprintDaySnapshot s = new SprintDaySnapshot();
-		try {
-			s.setDate(d);
-		} catch (NullPointerException e) {}
-		try {
-			s.setBurnedWork(b);
-		} catch (NullPointerException e) {}
-		try {
-			s.setRemainingWork(r);
-		} catch (NullPointerException e) {}
-		return s;
 	}
 
 }
