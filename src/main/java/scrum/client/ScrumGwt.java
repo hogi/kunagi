@@ -1,6 +1,7 @@
 package scrum.client;
 
 import ilarkesto.core.scope.Scope;
+import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.collaboration.CommentsWidget;
@@ -13,6 +14,16 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ScrumGwt extends Gwt {
+
+	public static String getPeriodToAsShortestString(String prefix, DateAndTime dateAndTime, String suffix) {
+		if (dateAndTime == null) return null;
+		return prefix + getPeriodToAsShortestString(dateAndTime) + suffix;
+	}
+
+	public static String getPeriodToAsShortestString(DateAndTime dateAndTime) {
+		if (dateAndTime == null) return null;
+		return dateAndTime.getPeriodToNow().toShortestString();
+	}
 
 	public static Widget createEmoticonsAndComments(AScrumGwtEntity entity) {
 		TableBuilder tb = ScrumGwt.createFieldTable();

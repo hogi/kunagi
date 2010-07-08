@@ -51,6 +51,8 @@ public abstract class GUserDao
         currentProjectsCache = null;
         usersByColorCache.clear();
         colorsCache = null;
+        usersByLastLoginDateAndTimeCache.clear();
+        lastLoginDateAndTimesCache = null;
     }
 
     @Override
@@ -276,6 +278,46 @@ public abstract class GUserDao
 
         public boolean test(User e) {
             return e.isColor(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - lastLoginDateAndTime
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.DateAndTime,Set<User>> usersByLastLoginDateAndTimeCache = new Cache<ilarkesto.base.time.DateAndTime,Set<User>>(
+            new Cache.Factory<ilarkesto.base.time.DateAndTime,Set<User>>() {
+                public Set<User> create(ilarkesto.base.time.DateAndTime lastLoginDateAndTime) {
+                    return getEntities(new IsLastLoginDateAndTime(lastLoginDateAndTime));
+                }
+            });
+
+    public final Set<User> getUsersByLastLoginDateAndTime(ilarkesto.base.time.DateAndTime lastLoginDateAndTime) {
+        return usersByLastLoginDateAndTimeCache.get(lastLoginDateAndTime);
+    }
+    private Set<ilarkesto.base.time.DateAndTime> lastLoginDateAndTimesCache;
+
+    public final Set<ilarkesto.base.time.DateAndTime> getLastLoginDateAndTimes() {
+        if (lastLoginDateAndTimesCache == null) {
+            lastLoginDateAndTimesCache = new HashSet<ilarkesto.base.time.DateAndTime>();
+            for (User e : getEntities()) {
+                if (e.isLastLoginDateAndTimeSet()) lastLoginDateAndTimesCache.add(e.getLastLoginDateAndTime());
+            }
+        }
+        return lastLoginDateAndTimesCache;
+    }
+
+    private static class IsLastLoginDateAndTime implements Predicate<User> {
+
+        private ilarkesto.base.time.DateAndTime value;
+
+        public IsLastLoginDateAndTime(ilarkesto.base.time.DateAndTime value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return e.isLastLoginDateAndTime(value);
         }
 
     }

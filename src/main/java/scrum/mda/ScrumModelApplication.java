@@ -402,6 +402,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.addStringProperty("email").setSearchable(true).setUnique(true);
 			userModel.addReference("currentProject", getProjectModel());
 			userModel.addStringProperty("color");
+			userModel.addProperty("lastLoginDateAndTime", DateAndTime.class);
 			getApplicationModel().addCreateAction(userModel);
 			userModel.addAction("DeleteUser");
 		}

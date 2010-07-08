@@ -254,6 +254,54 @@ public abstract class GUser
 
     }
 
+    // --- lastLoginDateAndTime ---
+
+    private ilarkesto.gwt.client.DateAndTime lastLoginDateAndTime ;
+
+    public final ilarkesto.gwt.client.DateAndTime getLastLoginDateAndTime() {
+        return this.lastLoginDateAndTime ;
+    }
+
+    public final User setLastLoginDateAndTime(ilarkesto.gwt.client.DateAndTime lastLoginDateAndTime) {
+        if (isLastLoginDateAndTime(lastLoginDateAndTime)) return (User)this;
+        this.lastLoginDateAndTime = lastLoginDateAndTime ;
+        propertyChanged("lastLoginDateAndTime", this.lastLoginDateAndTime);
+        return (User)this;
+    }
+
+    public final boolean isLastLoginDateAndTime(ilarkesto.gwt.client.DateAndTime lastLoginDateAndTime) {
+        return equals(this.lastLoginDateAndTime, lastLoginDateAndTime);
+    }
+
+    private transient LastLoginDateAndTimeModel lastLoginDateAndTimeModel;
+
+    public LastLoginDateAndTimeModel getLastLoginDateAndTimeModel() {
+        if (lastLoginDateAndTimeModel == null) lastLoginDateAndTimeModel = createLastLoginDateAndTimeModel();
+        return lastLoginDateAndTimeModel;
+    }
+
+    protected LastLoginDateAndTimeModel createLastLoginDateAndTimeModel() { return new LastLoginDateAndTimeModel(); }
+
+    protected class LastLoginDateAndTimeModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
+
+        @Override
+        public ilarkesto.gwt.client.DateAndTime getValue() {
+            return getLastLoginDateAndTime();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.DateAndTime value) {
+            setLastLoginDateAndTime(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.DateAndTime oldValue, ilarkesto.gwt.client.DateAndTime newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -263,6 +311,8 @@ public abstract class GUser
         email  = (java.lang.String) props.get("email");
         currentProjectId = (String) props.get("currentProjectId");
         color  = (java.lang.String) props.get("color");
+        String lastLoginDateAndTimeAsString = (String) props.get("lastLoginDateAndTime");
+        lastLoginDateAndTime  =  lastLoginDateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(lastLoginDateAndTimeAsString);
     }
 
     @Override
@@ -274,6 +324,7 @@ public abstract class GUser
         properties.put("email", this.email);
         properties.put("currentProjectId", this.currentProjectId);
         properties.put("color", this.color);
+        properties.put("lastLoginDateAndTime", this.lastLoginDateAndTime == null ? null : this.lastLoginDateAndTime.toString());
     }
 
     @Override

@@ -42,6 +42,7 @@ public abstract class GUser
         properties.put("email", this.email);
         properties.put("currentProjectId", this.currentProjectId);
         properties.put("color", this.color);
+        properties.put("lastLoginDateAndTime", this.lastLoginDateAndTime == null ? null : this.lastLoginDateAndTime.toString());
     }
 
     public int compareTo(User other) {
@@ -279,6 +280,41 @@ public abstract class GUser
         setColor((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - lastLoginDateAndTime
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.DateAndTime lastLoginDateAndTime;
+
+    public final ilarkesto.base.time.DateAndTime getLastLoginDateAndTime() {
+        return lastLoginDateAndTime;
+    }
+
+    public final void setLastLoginDateAndTime(ilarkesto.base.time.DateAndTime lastLoginDateAndTime) {
+        lastLoginDateAndTime = prepareLastLoginDateAndTime(lastLoginDateAndTime);
+        if (isLastLoginDateAndTime(lastLoginDateAndTime)) return;
+        this.lastLoginDateAndTime = lastLoginDateAndTime;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.DateAndTime prepareLastLoginDateAndTime(ilarkesto.base.time.DateAndTime lastLoginDateAndTime) {
+        return lastLoginDateAndTime;
+    }
+
+    public final boolean isLastLoginDateAndTimeSet() {
+        return this.lastLoginDateAndTime != null;
+    }
+
+    public final boolean isLastLoginDateAndTime(ilarkesto.base.time.DateAndTime lastLoginDateAndTime) {
+        if (this.lastLoginDateAndTime == null && lastLoginDateAndTime == null) return true;
+        return this.lastLoginDateAndTime != null && this.lastLoginDateAndTime.equals(lastLoginDateAndTime);
+    }
+
+    protected final void updateLastLoginDateAndTime(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.DateAndTime((String)value);
+        setLastLoginDateAndTime((ilarkesto.base.time.DateAndTime)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -290,6 +326,7 @@ public abstract class GUser
             if (property.equals("email")) updateEmail(value);
             if (property.equals("currentProjectId")) updateCurrentProject(value);
             if (property.equals("color")) updateColor(value);
+            if (property.equals("lastLoginDateAndTime")) updateLastLoginDateAndTime(value);
         }
     }
 

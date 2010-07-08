@@ -468,6 +468,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			return;
 		}
 
+		user.setLastLoginDateAndTime(DateAndTime.now());
 		conversation.getSession().setUser(user);
 		conversation.sendUserScopeDataToClient(user);
 	}
