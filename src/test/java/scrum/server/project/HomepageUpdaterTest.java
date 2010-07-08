@@ -31,10 +31,17 @@ public class HomepageUpdaterTest {
 			TestUtil.createBlogEntry(project, i).setPublished(true);
 		}
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 1; i <= 5; i++) {
 			Issue issue = TestUtil.createIssue(project, i);
 			issue.setAcceptDate(Date.today());
 			issue.setUrgent(true);
+		}
+		for (int i = 6; i <= 10; i++) {
+			Issue issue = TestUtil.createIssue(project, i);
+			issue.setAcceptDate(Date.today());
+		}
+		for (int i = 11; i <= 15; i++) {
+			Issue issue = TestUtil.createIssue(project, i);
 		}
 
 		HomepageUpdater.updateHomepage("src/projectHomepage/velocity", "test-output/homepage", project);

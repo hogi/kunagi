@@ -77,13 +77,6 @@ public class HomepageUpdater {
 			fillStory(context.putSubContext("story"), requirement);
 			processEntityTemplate(context, requirement.getReference());
 		}
-
-		List<Issue> issues = new ArrayList<Issue>(project.getUrgentIssues());
-		for (Issue issue : issues) {
-			ContextBuilder context = new ContextBuilder();
-			fillIssue(context.putSubContext("issue"), issue);
-			processEntityTemplate(context, issue.getReference());
-		}
 	}
 
 	private void processEntityTemplate(ContextBuilder context, String reference) {
@@ -102,7 +95,7 @@ public class HomepageUpdater {
 	}
 
 	private void fillIssues(ContextBuilder context) {
-		List<Issue> issues = new ArrayList<Issue>(project.getUrgentAndOpenIssues());
+		List<Issue> issues = new ArrayList<Issue>(project.getUrgentIssues());
 		for (Issue issue : issues) {
 			fillIssue(context.addSubContext("bugs"), issue);
 		}
