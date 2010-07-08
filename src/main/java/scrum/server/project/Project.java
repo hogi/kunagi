@@ -856,6 +856,8 @@ public class Project extends GProject {
 		if (requirementsOrderComparator == null) requirementsOrderComparator = new Comparator<Requirement>() {
 
 			public int compare(Requirement a, Requirement b) {
+				if (a.isInCurrentSprint() && !b.isInCurrentSprint()) return -1;
+				if (b.isInCurrentSprint() && !a.isInCurrentSprint()) return 1;
 				List<String> order = getRequirementsOrderIds();
 				int additional = order.size();
 				int ia = order.indexOf(a.getId());
