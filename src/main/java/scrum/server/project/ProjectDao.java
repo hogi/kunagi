@@ -40,26 +40,27 @@ public class ProjectDao extends GProjectDao {
 
 	// --- test data ---
 
-	public Project postExampleProject(User admin) {
-		User po = userDao.getTestUser("duke");
-		User sm = userDao.getTestUser("spinne");
-
+	public Project postExampleProject(User owner, User po, User sm) {
 		Collection<User> team = userDao.getEntities();
 		// team.remove(po);
 		// team.remove(sm);
 
-		Project project = postProject(admin);
+		Project project = postProject(owner);
 		project.setLabel("Example Project # " + DateAndTime.now());
 		project.setBegin(Date.today().addMonths(-2));
 		project.setEnd(Date.today().addMonths(5));
-		project.addParticipants(userDao.getEntities());
-		project.addAdmins(userDao.getEntities());
-		project.addTeamMembers(team);
-		project.addTeamMember(admin);
+
+		project.addAdmin(owner);
 		project.addProductOwner(po);
-		project.addProductOwner(admin);
+		project.addProductOwner(owner);
 		project.addScrumMaster(sm);
-		project.addScrumMaster(admin);
+		project.addScrumMaster(owner);
+		project.addTeamMember(owner);
+		project.addParticipants(project.getAdmins());
+		project.addParticipants(project.getTeamMembers());
+		project.addParticipants(project.getProductOwners());
+		project.addParticipants(project.getScrumMasters());
+
 		project.addTestImpediments();
 		project.addTestSprints();
 		project.addTestRequirements();
