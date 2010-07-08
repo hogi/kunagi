@@ -158,9 +158,9 @@ public class HomepageUpdater {
 
 	private void fillProject(ContextBuilder context) {
 		context.put("label", project.getLabel());
-		context.put("shortDescription", wiki2html(project.getShortDescription(), htmlContext));
-		context.put("description", wiki2html(project.getShortDescription(), htmlContext));
-		context.put("longDescription", wiki2html(project.getShortDescription(), htmlContext));
+		context.put("shortDescription", project.getShortDescription());
+		context.put("description", wiki2html(project.getDescription(), htmlContext));
+		context.put("longDescription", wiki2html(project.getLongDescription(), htmlContext));
 	}
 
 	public static void updateHomepage(String templatePath, String outputPath, Project project) {
