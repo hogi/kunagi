@@ -13,4 +13,13 @@ public class Emoticon extends GEmoticon {
 		return isOwner(user);
 	}
 
+	@Override
+	public void ensureIntegrity() {
+		if (isEmotionSet() && !scrum.client.collaboration.Emoticon.EMOTIONS.contains(getEmotion())) {
+			getDao().deleteEntity(this);
+			return;
+		}
+		super.ensureIntegrity();
+	}
+
 }

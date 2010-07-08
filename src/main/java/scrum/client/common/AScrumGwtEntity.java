@@ -73,7 +73,7 @@ public abstract class AScrumGwtEntity extends AGwtEntity implements ToHtmlSuppor
 
 			@Override
 			public List<String> getOptions() {
-				List<String> options = new ArrayList<String>(Emoticon.EMOTIONS);
+				List<String> options = new ArrayList<String>(Emoticon.EMOTIONS_LEGACY);
 				options.add(0, "");
 				return options;
 			}

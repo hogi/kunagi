@@ -1,11 +1,9 @@
 package scrum.client.collaboration;
 
-import ilarkesto.gwt.client.DropdownMenuButtonWidget;
 import ilarkesto.gwt.client.TableBuilder;
 
 import java.util.List;
 
-import scrum.client.admin.User;
 import scrum.client.common.AScrumGwtEntity;
 import scrum.client.common.AScrumWidget;
 
@@ -37,7 +35,6 @@ public class EmoticonsWidget extends AScrumWidget {
 	protected void onUpdate() {
 		wrapper.clear();
 
-		User currentUser = getCurrentUser();
 		List<Emoticon> emoticons = entity.getEmoticons();
 		TableBuilder tb = new TableBuilder();
 		tb.setWidth(null);
@@ -47,19 +44,6 @@ public class EmoticonsWidget extends AScrumWidget {
 		}
 		// tb.add(createEmoticonEditor());
 		wrapper.setWidget(tb.createTable());
-	}
-
-	private Widget createEmoticonEditor() {
-		Emoticon emoticon = entity.getCurrentUserEmoticon();
-		DropdownMenuButtonWidget dropdown = new DropdownMenuButtonWidget();
-		dropdown.setIcon(getEmotionImage(emoticon == null ? null : emoticon.getEmotion()));
-		dropdown.getElement().getStyle().setMarginLeft(2, Unit.PX);
-		if (emoticon != null) dropdown.setTitle(emoticon.getEmotionLabel());
-		dropdown.addAction(new SetEmoticonAction(entity, null));
-		for (String emotion : Emoticon.EMOTIONS) {
-			dropdown.addAction(new SetEmoticonAction(entity, emotion));
-		}
-		return dropdown.update();
 	}
 
 	private Widget createEmoticonWidget(Emoticon emoticon) {
