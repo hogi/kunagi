@@ -136,6 +136,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addStringProperty("punishmentUnit");
 			projectModel.addStringProperty("homepageDir");
 			projectModel.addProperty("autoUpdateHomepage", boolean.class);
+			projectModel.addProperty("lastOpenedDateAndTime", DateAndTime.class);
 			getApplicationModel().addCreateAction(projectModel);
 			projectModel.addAction("DeleteProject");
 			projectModel.addAction("OpenProject");

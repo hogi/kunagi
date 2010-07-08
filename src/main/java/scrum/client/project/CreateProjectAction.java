@@ -1,6 +1,8 @@
 package scrum.client.project;
 
+import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
+import scrum.client.workspace.UsersWorkspaceWidgets;
 
 public class CreateProjectAction extends GCreateProjectAction {
 
@@ -13,8 +15,6 @@ public class CreateProjectAction extends GCreateProjectAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Create a new Project.");
 
-		// if (!getCurrentUser().isAdmin()) tb.addRemark(TooltipBuilder.NOT_ADMIN);
-
 		return tb.getTooltip();
 	}
 
@@ -25,7 +25,6 @@ public class CreateProjectAction extends GCreateProjectAction {
 
 	@Override
 	public boolean isPermitted() {
-		// if (!getCurrentUser().isAdmin()) return false;
 		return true;
 	}
 
@@ -33,6 +32,7 @@ public class CreateProjectAction extends GCreateProjectAction {
 	protected void onExecute() {
 		Project project = new Project(getCurrentUser());
 		getDao().createProject(project);
+		Scope.get().getComponent(UsersWorkspaceWidgets.class).getProjectSelector().select(project);
 	}
 
 }

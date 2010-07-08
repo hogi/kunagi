@@ -1213,6 +1213,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByLastOpenedDateAndTime(ilarkesto.gwt.client.DateAndTime lastOpenedDateAndTime) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isLastOpenedDateAndTime(lastOpenedDateAndTime)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- ProjectEvent ---
 
     private Map<String, scrum.client.journal.ProjectEvent> projectEvents = new HashMap<String, scrum.client.journal.ProjectEvent>();

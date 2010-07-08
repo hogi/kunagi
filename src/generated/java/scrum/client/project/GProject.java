@@ -1432,6 +1432,54 @@ public abstract class GProject
         return equals(this.autoUpdateHomepage, autoUpdateHomepage);
     }
 
+    // --- lastOpenedDateAndTime ---
+
+    private ilarkesto.gwt.client.DateAndTime lastOpenedDateAndTime ;
+
+    public final ilarkesto.gwt.client.DateAndTime getLastOpenedDateAndTime() {
+        return this.lastOpenedDateAndTime ;
+    }
+
+    public final Project setLastOpenedDateAndTime(ilarkesto.gwt.client.DateAndTime lastOpenedDateAndTime) {
+        if (isLastOpenedDateAndTime(lastOpenedDateAndTime)) return (Project)this;
+        this.lastOpenedDateAndTime = lastOpenedDateAndTime ;
+        propertyChanged("lastOpenedDateAndTime", this.lastOpenedDateAndTime);
+        return (Project)this;
+    }
+
+    public final boolean isLastOpenedDateAndTime(ilarkesto.gwt.client.DateAndTime lastOpenedDateAndTime) {
+        return equals(this.lastOpenedDateAndTime, lastOpenedDateAndTime);
+    }
+
+    private transient LastOpenedDateAndTimeModel lastOpenedDateAndTimeModel;
+
+    public LastOpenedDateAndTimeModel getLastOpenedDateAndTimeModel() {
+        if (lastOpenedDateAndTimeModel == null) lastOpenedDateAndTimeModel = createLastOpenedDateAndTimeModel();
+        return lastOpenedDateAndTimeModel;
+    }
+
+    protected LastOpenedDateAndTimeModel createLastOpenedDateAndTimeModel() { return new LastOpenedDateAndTimeModel(); }
+
+    protected class LastOpenedDateAndTimeModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
+
+        @Override
+        public ilarkesto.gwt.client.DateAndTime getValue() {
+            return getLastOpenedDateAndTime();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.DateAndTime value) {
+            setLastOpenedDateAndTime(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.DateAndTime oldValue, ilarkesto.gwt.client.DateAndTime newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -1468,6 +1516,8 @@ public abstract class GProject
         punishmentUnit  = (java.lang.String) props.get("punishmentUnit");
         homepageDir  = (java.lang.String) props.get("homepageDir");
         autoUpdateHomepage  = (Boolean) props.get("autoUpdateHomepage");
+        String lastOpenedDateAndTimeAsString = (String) props.get("lastOpenedDateAndTime");
+        lastOpenedDateAndTime  =  lastOpenedDateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(lastOpenedDateAndTimeAsString);
     }
 
     @Override
@@ -1504,6 +1554,7 @@ public abstract class GProject
         properties.put("punishmentUnit", this.punishmentUnit);
         properties.put("homepageDir", this.homepageDir);
         properties.put("autoUpdateHomepage", this.autoUpdateHomepage);
+        properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
     }
 
     @Override

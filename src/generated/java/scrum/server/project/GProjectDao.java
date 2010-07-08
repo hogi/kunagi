@@ -103,6 +103,8 @@ public abstract class GProjectDao
         projectsByHomepageDirCache.clear();
         homepageDirsCache = null;
         projectsByAutoUpdateHomepageCache.clear();
+        projectsByLastOpenedDateAndTimeCache.clear();
+        lastOpenedDateAndTimesCache = null;
     }
 
     @Override
@@ -1346,6 +1348,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return value == e.isAutoUpdateHomepage();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - lastOpenedDateAndTime
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.DateAndTime,Set<Project>> projectsByLastOpenedDateAndTimeCache = new Cache<ilarkesto.base.time.DateAndTime,Set<Project>>(
+            new Cache.Factory<ilarkesto.base.time.DateAndTime,Set<Project>>() {
+                public Set<Project> create(ilarkesto.base.time.DateAndTime lastOpenedDateAndTime) {
+                    return getEntities(new IsLastOpenedDateAndTime(lastOpenedDateAndTime));
+                }
+            });
+
+    public final Set<Project> getProjectsByLastOpenedDateAndTime(ilarkesto.base.time.DateAndTime lastOpenedDateAndTime) {
+        return projectsByLastOpenedDateAndTimeCache.get(lastOpenedDateAndTime);
+    }
+    private Set<ilarkesto.base.time.DateAndTime> lastOpenedDateAndTimesCache;
+
+    public final Set<ilarkesto.base.time.DateAndTime> getLastOpenedDateAndTimes() {
+        if (lastOpenedDateAndTimesCache == null) {
+            lastOpenedDateAndTimesCache = new HashSet<ilarkesto.base.time.DateAndTime>();
+            for (Project e : getEntities()) {
+                if (e.isLastOpenedDateAndTimeSet()) lastOpenedDateAndTimesCache.add(e.getLastOpenedDateAndTime());
+            }
+        }
+        return lastOpenedDateAndTimesCache;
+    }
+
+    private static class IsLastOpenedDateAndTime implements Predicate<Project> {
+
+        private ilarkesto.base.time.DateAndTime value;
+
+        public IsLastOpenedDateAndTime(ilarkesto.base.time.DateAndTime value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isLastOpenedDateAndTime(value);
         }
 
     }

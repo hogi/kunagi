@@ -1,5 +1,6 @@
 package scrum.client.project;
 
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
@@ -570,6 +571,13 @@ public class Project extends GProject implements ForumSupport {
 
 		public int compare(Project a, Project b) {
 			return a.getLabel().compareTo(b.getLabel());
+		}
+	};
+
+	public static final Comparator<Project> LAST_OPENED_COMPARATOR = new Comparator<Project>() {
+
+		public int compare(Project a, Project b) {
+			return Utl.compare(a.getLastOpenedDateAndTime(), b.getLastOpenedDateAndTime()) * -1;
 		}
 	};
 

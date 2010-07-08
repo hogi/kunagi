@@ -19,7 +19,7 @@ public class ProjectSelectorWidget extends AWidget {
 	protected Widget onInitialization() {
 
 		list = new BlockListWidget<Project>(ProjectBlock.FACTORY);
-		list.setAutoSorter(Project.LABEL_COMPARATOR);
+		list.setAutoSorter(Project.LAST_OPENED_COMPARATOR);
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Projects", new ButtonWidget(new CreateProjectAction()), new ButtonWidget(
@@ -36,6 +36,11 @@ public class ProjectSelectorWidget extends AWidget {
 
 	public BlockListWidget<Project> getList() {
 		return this.list;
+	}
+
+	public boolean select(Project project) {
+		if (!list.contains(project)) update();
+		return list.showObject(project);
 	}
 
 }

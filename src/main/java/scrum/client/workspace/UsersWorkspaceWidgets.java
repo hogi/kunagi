@@ -55,4 +55,8 @@ public class UsersWorkspaceWidgets extends GUsersWorkspaceWidgets {
 		return userList;
 	}
 
+	public ProjectSelectorWidget getProjectSelector() {
+		return projectSelector;
+	}
+
 }

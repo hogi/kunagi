@@ -67,6 +67,7 @@ public abstract class GProject
         properties.put("punishmentUnit", this.punishmentUnit);
         properties.put("homepageDir", this.homepageDir);
         properties.put("autoUpdateHomepage", this.autoUpdateHomepage);
+        properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
     }
 
     public int compareTo(Project other) {
@@ -1501,6 +1502,41 @@ public abstract class GProject
         setAutoUpdateHomepage((Boolean)value);
     }
 
+    // -----------------------------------------------------------
+    // - lastOpenedDateAndTime
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.DateAndTime lastOpenedDateAndTime;
+
+    public final ilarkesto.base.time.DateAndTime getLastOpenedDateAndTime() {
+        return lastOpenedDateAndTime;
+    }
+
+    public final void setLastOpenedDateAndTime(ilarkesto.base.time.DateAndTime lastOpenedDateAndTime) {
+        lastOpenedDateAndTime = prepareLastOpenedDateAndTime(lastOpenedDateAndTime);
+        if (isLastOpenedDateAndTime(lastOpenedDateAndTime)) return;
+        this.lastOpenedDateAndTime = lastOpenedDateAndTime;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.DateAndTime prepareLastOpenedDateAndTime(ilarkesto.base.time.DateAndTime lastOpenedDateAndTime) {
+        return lastOpenedDateAndTime;
+    }
+
+    public final boolean isLastOpenedDateAndTimeSet() {
+        return this.lastOpenedDateAndTime != null;
+    }
+
+    public final boolean isLastOpenedDateAndTime(ilarkesto.base.time.DateAndTime lastOpenedDateAndTime) {
+        if (this.lastOpenedDateAndTime == null && lastOpenedDateAndTime == null) return true;
+        return this.lastOpenedDateAndTime != null && this.lastOpenedDateAndTime.equals(lastOpenedDateAndTime);
+    }
+
+    protected final void updateLastOpenedDateAndTime(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.DateAndTime((String)value);
+        setLastOpenedDateAndTime((ilarkesto.base.time.DateAndTime)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -1537,6 +1573,7 @@ public abstract class GProject
             if (property.equals("punishmentUnit")) updatePunishmentUnit(value);
             if (property.equals("homepageDir")) updateHomepageDir(value);
             if (property.equals("autoUpdateHomepage")) updateAutoUpdateHomepage(value);
+            if (property.equals("lastOpenedDateAndTime")) updateLastOpenedDateAndTime(value);
         }
     }
 

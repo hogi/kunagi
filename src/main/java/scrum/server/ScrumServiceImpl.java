@@ -479,6 +479,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		User user = conversation.getSession().getUser();
 		if (!project.isVisibleFor(user))
 			throw new PermissionDeniedException("Project '" + project + "' is not visible for user '" + user + "'");
+
+		project.setLastOpenedDateAndTime(DateAndTime.now());
 		conversation.setProject(project);
 		user.setCurrentProject(project);
 

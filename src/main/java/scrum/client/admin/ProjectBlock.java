@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.Dao;
+import scrum.client.ScrumGwt;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
@@ -13,13 +14,17 @@ import scrum.client.project.DeleteProjectAction;
 import scrum.client.project.OpenProjectAction;
 import scrum.client.project.Project;
 
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectBlock extends ABlockWidget<Project> {
 
+	private Label lastOpenedLabel;
+
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Project project = getObject();
+		lastOpenedLabel = header.appendCenterSuffix("");
 		header.addToolbarAction(new OpenProjectAction(project));
 		header.addMenuAction(new DeleteProjectAction(project));
 	}
@@ -29,6 +34,8 @@ public class ProjectBlock extends ABlockWidget<Project> {
 		Project project = getObject();
 		header.setDragHandle("prj");
 		header.setCenter(project.getLabel());
+		lastOpenedLabel.setText(ScrumGwt.getPeriodToAsShortestString("last opened ",
+			project.getLastOpenedDateAndTime(), " ago"));
 	}
 
 	@Override
@@ -160,8 +167,8 @@ public class ProjectBlock extends ABlockWidget<Project> {
 		});
 
 		if (project.isAdmin(getCurrentUser())) {
-			fields.add("", Gwt.createServletDownloadLink("backupDownload.zip?projectId=" + project.getId(),
-				"Download Backup ZIP"));
+			fields.add("",
+				Gwt.createServletDownloadLink("backupDownload.zip?projectId=" + project.getId(), "Download Backup ZIP"));
 		}
 
 		return fields;

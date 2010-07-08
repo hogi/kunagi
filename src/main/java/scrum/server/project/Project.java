@@ -636,7 +636,7 @@ public class Project extends GProject {
 	}
 
 	public boolean isVisibleFor(User user) {
-		return containsParticipant(user);
+		return user.isAdmin() || containsParticipant(user);
 	}
 
 	public boolean isEditableBy(User user) {
