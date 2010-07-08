@@ -1,6 +1,7 @@
 package scrum.server.project;
 
 import ilarkesto.base.Str;
+import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
 import ilarkesto.velocity.ContextBuilder;
@@ -123,7 +124,7 @@ public class HomepageUpdater {
 		context.put("text", wiki2html(entry.getText(), htmlContext));
 		context.put("plainText", wiki2text(entry.getText()));
 		DateAndTime date = entry.getDateAndTime();
-		context.put("date", date.toString(DateAndTime.FORMAT_WEEKDAY_LONGMONTH_DAY_YEAR_HOUR_MINUTE));
+		context.put("date", date.toString(Date.FORMAT_LONGMONTH_DAY_YEAR));
 		context.put("rssDate", date.toString(DateAndTime.FORMAT_RFC822));
 	}
 
