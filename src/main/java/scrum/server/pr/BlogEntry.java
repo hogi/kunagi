@@ -3,8 +3,9 @@ package scrum.server.pr;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.DateAndTime;
 import scrum.server.admin.User;
+import scrum.server.common.Numbered;
 
-public class BlogEntry extends GBlogEntry implements Comparable<BlogEntry> {
+public class BlogEntry extends GBlogEntry implements Numbered, Comparable<BlogEntry> {
 
 	public boolean isVisibleFor(User user) {
 		return getProject().isVisibleFor(user);

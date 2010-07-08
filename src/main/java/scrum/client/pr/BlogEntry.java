@@ -1,14 +1,20 @@
 package scrum.client.pr;
 
 import ilarkesto.core.base.Utl;
+import ilarkesto.gwt.client.HyperlinkWidget;
 
 import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.ScrumGwt;
+import scrum.client.collaboration.ForumSupport;
+import scrum.client.common.ReferenceSupport;
+import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
 
-public class BlogEntry extends GBlogEntry {
+import com.google.gwt.user.client.ui.Widget;
+
+public class BlogEntry extends GBlogEntry implements ReferenceSupport, ForumSupport {
 
 	public static final String REFERENCE_PREFIX = "blg";
 
@@ -25,6 +31,11 @@ public class BlogEntry extends GBlogEntry {
 	}
 
 	@Override
+	public String getLabel() {
+		return getTitle();
+	}
+
+	@Override
 	public String toHtml() {
 		return ScrumGwt.toHtml(getReference(), getTitle());
 	}
@@ -32,6 +43,10 @@ public class BlogEntry extends GBlogEntry {
 	@Override
 	public String toString() {
 		return getReference() + " " + getTitle();
+	}
+
+	public Widget createForumItemWidget() {
+		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
 
 	public static final Comparator<BlogEntry> DATE_COMPARATOR = new Comparator<BlogEntry>() {
