@@ -60,7 +60,7 @@ public class HomepageUpdater {
 	}
 
 	private void processIssueTemplates() {
-		List<Issue> issues = new ArrayList<Issue>(project.getUrgentAndOpenIssues());
+		List<Issue> issues = new ArrayList<Issue>(project.getUrgentIssues());
 		for (Issue issue : issues) {
 			ContextBuilder context = new ContextBuilder();
 			fillIssue(context.putSubContext("issue"), issue);
@@ -78,7 +78,7 @@ public class HomepageUpdater {
 			processEntityTemplate(context, requirement.getReference());
 		}
 
-		List<Issue> issues = new ArrayList<Issue>(project.getUrgentAndOpenIssues());
+		List<Issue> issues = new ArrayList<Issue>(project.getUrgentIssues());
 		for (Issue issue : issues) {
 			ContextBuilder context = new ContextBuilder();
 			fillIssue(context.putSubContext("issue"), issue);

@@ -498,6 +498,10 @@ public class Project extends GProject {
 		return issueDao.getUrgentAndOpenIssues(this);
 	}
 
+	public Set<Issue> getUrgentIssues() {
+		return issueDao.getUrgentIssues(this);
+	}
+
 	public Set<Risk> getRisks() {
 		return riskDao.getRisksByProject(this);
 	}
