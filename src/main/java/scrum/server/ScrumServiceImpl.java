@@ -239,7 +239,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			BlogEntry blogEntry = (BlogEntry) entity;
 			blogEntry.setDateAndTime(DateAndTime.now());
 			blogEntry.addAuthor(currentUser);
-			postProjectEvent(conversation, currentUser.getName() + " published " + blogEntry.getReferenceAndLabel());
 		}
 
 		if (!(entity instanceof Transient)) dao.saveEntity(entity);
