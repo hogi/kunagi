@@ -19,6 +19,7 @@ public class ProjectAdminWidget extends AScrumWidget {
 
 		page.addHeader("Public Descriptions");
 		TableBuilder tbDescr = ScrumGwt.createFieldTable();
+		tbDescr.addFieldRow("Label", project.getLabelModel());
 		tbDescr.addFieldRow("Short description", project.getShortDescriptionModel());
 		tbDescr.addFieldRow("Main description", project.getDescriptionModel());
 		tbDescr.addFieldRow("Long description", project.getLongDescriptionModel());
