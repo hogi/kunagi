@@ -403,6 +403,54 @@ public abstract class GRelease
 
     }
 
+    // --- scmTag ---
+
+    private java.lang.String scmTag ;
+
+    public final java.lang.String getScmTag() {
+        return this.scmTag ;
+    }
+
+    public final Release setScmTag(java.lang.String scmTag) {
+        if (isScmTag(scmTag)) return (Release)this;
+        this.scmTag = scmTag ;
+        propertyChanged("scmTag", this.scmTag);
+        return (Release)this;
+    }
+
+    public final boolean isScmTag(java.lang.String scmTag) {
+        return equals(this.scmTag, scmTag);
+    }
+
+    private transient ScmTagModel scmTagModel;
+
+    public ScmTagModel getScmTagModel() {
+        if (scmTagModel == null) scmTagModel = createScmTagModel();
+        return scmTagModel;
+    }
+
+    protected ScmTagModel createScmTagModel() { return new ScmTagModel(); }
+
+    protected class ScmTagModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getScmTag();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setScmTag(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -416,6 +464,7 @@ public abstract class GRelease
         releaseDate  =  releaseDateAsString == null ? null : new ilarkesto.gwt.client.Date(releaseDateAsString);
         released  = (Boolean) props.get("released");
         releaseNotes  = (java.lang.String) props.get("releaseNotes");
+        scmTag  = (java.lang.String) props.get("scmTag");
     }
 
     @Override
@@ -430,6 +479,7 @@ public abstract class GRelease
         properties.put("releaseDate", this.releaseDate == null ? null : this.releaseDate.toString());
         properties.put("released", this.released);
         properties.put("releaseNotes", this.releaseNotes);
+        properties.put("scmTag", this.scmTag);
     }
 
     @Override
@@ -438,6 +488,7 @@ public abstract class GRelease
         if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getNote(), key)) return true;
         if (matchesKey(getReleaseNotes(), key)) return true;
+        if (matchesKey(getScmTag(), key)) return true;
         return false;
     }
 

@@ -1630,6 +1630,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.release.Release> getReleasesByScmTag(java.lang.String scmTag) {
+        List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
+        for (scrum.client.release.Release entity : releases.values()) {
+            if (entity.isScmTag(scmTag)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Requirement ---
 
     private Map<String, scrum.client.project.Requirement> requirements = new HashMap<String, scrum.client.project.Requirement>();

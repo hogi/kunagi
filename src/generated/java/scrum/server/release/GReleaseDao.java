@@ -59,6 +59,8 @@ public abstract class GReleaseDao
         releasesByReleasedCache.clear();
         releasesByReleaseNotesCache.clear();
         releaseNotessCache = null;
+        releasesByScmTagCache.clear();
+        scmTagsCache = null;
     }
 
     @Override
@@ -422,6 +424,46 @@ public abstract class GReleaseDao
 
         public boolean test(Release e) {
             return e.isReleaseNotes(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - scmTag
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Release>> releasesByScmTagCache = new Cache<java.lang.String,Set<Release>>(
+            new Cache.Factory<java.lang.String,Set<Release>>() {
+                public Set<Release> create(java.lang.String scmTag) {
+                    return getEntities(new IsScmTag(scmTag));
+                }
+            });
+
+    public final Set<Release> getReleasesByScmTag(java.lang.String scmTag) {
+        return releasesByScmTagCache.get(scmTag);
+    }
+    private Set<java.lang.String> scmTagsCache;
+
+    public final Set<java.lang.String> getScmTags() {
+        if (scmTagsCache == null) {
+            scmTagsCache = new HashSet<java.lang.String>();
+            for (Release e : getEntities()) {
+                if (e.isScmTagSet()) scmTagsCache.add(e.getScmTag());
+            }
+        }
+        return scmTagsCache;
+    }
+
+    private static class IsScmTag implements Predicate<Release> {
+
+        private java.lang.String value;
+
+        public IsScmTag(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Release e) {
+            return e.isScmTag(value);
         }
 
     }

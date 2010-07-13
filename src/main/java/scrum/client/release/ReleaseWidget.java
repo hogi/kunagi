@@ -30,6 +30,7 @@ public class ReleaseWidget extends AScrumWidget {
 		tb.addFieldRow("Release date", release.getReleaseDateModel());
 		tb.addFieldRow("Description", release.getNoteModel());
 		tb.addFieldRow("Release notes", release.getReleaseNotesModel());
+		tb.addFieldRow("SCM Tag", release.getScmTagModel());
 		if (release.isMajor()) {
 			tb.addFieldRow("Sprints", new AMultiSelectionViewEditWidget<Sprint>() {
 

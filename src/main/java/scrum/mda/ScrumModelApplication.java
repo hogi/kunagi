@@ -180,6 +180,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			releaseModel.addProperty("releaseDate", Date.class);
 			releaseModel.addProperty("released", boolean.class);
 			releaseModel.addStringProperty("releaseNotes").setRichtext(true).setSearchable(true);
+			releaseModel.addStringProperty("scmTag").setSearchable(true);
 			getApplicationModel().addCreateAction(releaseModel);
 			releaseModel.addAction("DeleteRelease");
 			releaseModel.addAction("ReleaseRelease");

@@ -45,6 +45,7 @@ public abstract class GRelease
         properties.put("releaseDate", this.releaseDate == null ? null : this.releaseDate.toString());
         properties.put("released", this.released);
         properties.put("releaseNotes", this.releaseNotes);
+        properties.put("scmTag", this.scmTag);
     }
 
     public int compareTo(Release other) {
@@ -65,6 +66,7 @@ public abstract class GRelease
         if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getNote(), key)) return true;
         if (matchesKey(getReleaseNotes(), key)) return true;
+        if (matchesKey(getScmTag(), key)) return true;
         return false;
     }
 
@@ -456,6 +458,41 @@ public abstract class GRelease
         setReleaseNotes((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - scmTag
+    // -----------------------------------------------------------
+
+    private java.lang.String scmTag;
+
+    public final java.lang.String getScmTag() {
+        return scmTag;
+    }
+
+    public final void setScmTag(java.lang.String scmTag) {
+        scmTag = prepareScmTag(scmTag);
+        if (isScmTag(scmTag)) return;
+        this.scmTag = scmTag;
+        fireModified();
+    }
+
+    protected java.lang.String prepareScmTag(java.lang.String scmTag) {
+        scmTag = Str.removeUnreadableChars(scmTag);
+        return scmTag;
+    }
+
+    public final boolean isScmTagSet() {
+        return this.scmTag != null;
+    }
+
+    public final boolean isScmTag(java.lang.String scmTag) {
+        if (this.scmTag == null && scmTag == null) return true;
+        return this.scmTag != null && this.scmTag.equals(scmTag);
+    }
+
+    protected final void updateScmTag(Object value) {
+        setScmTag((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -470,6 +507,7 @@ public abstract class GRelease
             if (property.equals("releaseDate")) updateReleaseDate(value);
             if (property.equals("released")) updateReleased(value);
             if (property.equals("releaseNotes")) updateReleaseNotes(value);
+            if (property.equals("scmTag")) updateScmTag(value);
         }
     }
 
