@@ -1,5 +1,6 @@
 package scrum.client.admin;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
@@ -10,6 +11,7 @@ import scrum.client.workspace.PagePanel;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -52,6 +54,13 @@ public class RegisterWidget extends AScrumWidget implements RegisterDataProvider
 		fields.addFieldRow("", new ButtonWidget(new RegisterAction(this)), 2);
 
 		Widget content = fields.createTable();
+
+		SystemConfig config = getDao().getSystemConfig();
+		String message = config.getRegisterPageMessage();
+		if (!Str.isBlank(message)) {
+			content = TableBuilder.row(40, content, new HTML("<div class='LoginWidget-errorMessage'>" + message
+					+ "</div>"));
+		}
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Register");

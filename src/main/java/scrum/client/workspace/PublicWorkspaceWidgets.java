@@ -8,22 +8,23 @@ import scrum.client.test.WidgetsTesterWidget;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
 
 public class PublicWorkspaceWidgets extends GPublicWorkspaceWidgets {
 
 	private FlowPanel sidebar;
 	private SwitchingNavigatorWidget navigator;
 	private LoginWidget login;
+	private AboutWidget about;
 
 	@Override
 	public void initialize() {
 		login = new LoginWidget();
+		about = new AboutWidget();
 
 		navigator = new SwitchingNavigatorWidget(ui.getWorkspace().getWorkarea());
 		navigator.addItem("Login", login);
 		navigator.addItem("Register", new RegisterWidget());
-		navigator.addItem("About", new Label(""));
+		navigator.addItem("About", about);
 		ApplicationInfo applicationInfo = app.getApplicationInfo();
 		if (applicationInfo != null && applicationInfo.isDevelopmentStage()) {
 			navigator.addItem("Widgets Tests", new WidgetsTesterWidget());

@@ -136,6 +136,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private void onStartConversation(GwtConversation conversation) {
 		conversation.clearRemoteEntities();
 		conversation.getNextData().applicationInfo = webApplication.getApplicationInfo();
+		conversation.sendToClient(webApplication.getSystemConfig());
 	}
 
 	@Override

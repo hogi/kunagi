@@ -3,8 +3,8 @@ package scrum.client.workspace;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
-import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget.SwitchAction;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.undo.UndoButtonWidget;
 import scrum.client.ApplicationInfo;
 import scrum.client.ScrumScopeManager;
@@ -42,7 +42,7 @@ public class HeaderWidget extends AScrumWidget {
 
 		search = new SearchInputWidget();
 
-		feedback = new HTML("<a href='http://kunagi.org/#support' target='blank'>Support/Feedback</a>");
+		feedback = new HTML("<a href='http://kunagi.org/support.html' target='blank'>Support/Feedback</a>");
 
 		wrapper = Gwt.createDiv("HeaderWidget", title);
 		return wrapper;

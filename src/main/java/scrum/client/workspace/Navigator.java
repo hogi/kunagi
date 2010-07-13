@@ -86,7 +86,7 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, UserL
 		User user = auth.getUser();
 		String historyToken = History.getToken();
 		if (user == null) {
-			startToken = Str.isBlanc(historyToken) ? null : historyToken;
+			startToken = Str.isBlank(historyToken) ? null : historyToken;
 			modeSwitcher.activatePublicMode();
 			return;
 		}

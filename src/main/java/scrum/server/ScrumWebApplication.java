@@ -279,19 +279,19 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if (session == null) return;
 		SystemConfig config = getSystemConfig();
 
-		if (Str.isBlanc(from)) from = config.getSmtpFrom();
-		if (Str.isBlanc(from)) {
+		if (Str.isBlank(from)) from = config.getSmtpFrom();
+		if (Str.isBlank(from)) {
 			log.error("Missing configuration: smtpFrom");
 			return;
 		}
 
-		if (Str.isBlanc(to)) to = config.getAdminEmail();
-		if (Str.isBlanc(to)) {
+		if (Str.isBlank(to)) to = config.getAdminEmail();
+		if (Str.isBlank(to)) {
 			log.error("Missing configuration: adminEmail");
 			return;
 		}
 
-		if (Str.isBlanc(subject)) subject = "Kunagi";
+		if (Str.isBlank(subject)) subject = "Kunagi";
 
 		MimeMessage message = Eml.createTextMessage(session, subject, text, from, to);
 		Eml.sendSmtpMessage(session, message);

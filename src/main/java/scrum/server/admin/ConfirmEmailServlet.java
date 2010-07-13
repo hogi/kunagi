@@ -28,7 +28,7 @@ public class ConfirmEmailServlet extends AHttpServlet {
 			return;
 		}
 		String email = req.getParameter("email");
-		if (Str.isBlanc(email) || !user.isEmail(email)) {
+		if (Str.isBlank(email) || !user.isEmail(email)) {
 			resp.sendError(HttpServletResponse.SC_FORBIDDEN);
 			return;
 		}

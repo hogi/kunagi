@@ -56,6 +56,12 @@ public abstract class GSystemConfigDao
         smtpPasswordsCache = null;
         systemConfigsBySmtpFromCache.clear();
         smtpFromsCache = null;
+        systemConfigsByLoginPageMessageCache.clear();
+        loginPageMessagesCache = null;
+        systemConfigsByRegisterPageMessageCache.clear();
+        registerPageMessagesCache = null;
+        systemConfigsByAboutPageMessageCache.clear();
+        aboutPageMessagesCache = null;
     }
 
     @Override
@@ -350,6 +356,126 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return e.isSmtpFrom(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - loginPageMessage
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsByLoginPageMessageCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String loginPageMessage) {
+                    return getEntities(new IsLoginPageMessage(loginPageMessage));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByLoginPageMessage(java.lang.String loginPageMessage) {
+        return systemConfigsByLoginPageMessageCache.get(loginPageMessage);
+    }
+    private Set<java.lang.String> loginPageMessagesCache;
+
+    public final Set<java.lang.String> getLoginPageMessages() {
+        if (loginPageMessagesCache == null) {
+            loginPageMessagesCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isLoginPageMessageSet()) loginPageMessagesCache.add(e.getLoginPageMessage());
+            }
+        }
+        return loginPageMessagesCache;
+    }
+
+    private static class IsLoginPageMessage implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsLoginPageMessage(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isLoginPageMessage(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - registerPageMessage
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsByRegisterPageMessageCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String registerPageMessage) {
+                    return getEntities(new IsRegisterPageMessage(registerPageMessage));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByRegisterPageMessage(java.lang.String registerPageMessage) {
+        return systemConfigsByRegisterPageMessageCache.get(registerPageMessage);
+    }
+    private Set<java.lang.String> registerPageMessagesCache;
+
+    public final Set<java.lang.String> getRegisterPageMessages() {
+        if (registerPageMessagesCache == null) {
+            registerPageMessagesCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isRegisterPageMessageSet()) registerPageMessagesCache.add(e.getRegisterPageMessage());
+            }
+        }
+        return registerPageMessagesCache;
+    }
+
+    private static class IsRegisterPageMessage implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsRegisterPageMessage(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isRegisterPageMessage(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - aboutPageMessage
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsByAboutPageMessageCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String aboutPageMessage) {
+                    return getEntities(new IsAboutPageMessage(aboutPageMessage));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByAboutPageMessage(java.lang.String aboutPageMessage) {
+        return systemConfigsByAboutPageMessageCache.get(aboutPageMessage);
+    }
+    private Set<java.lang.String> aboutPageMessagesCache;
+
+    public final Set<java.lang.String> getAboutPageMessages() {
+        if (aboutPageMessagesCache == null) {
+            aboutPageMessagesCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isAboutPageMessageSet()) aboutPageMessagesCache.add(e.getAboutPageMessage());
+            }
+        }
+        return aboutPageMessagesCache;
+    }
+
+    private static class IsAboutPageMessage implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsAboutPageMessage(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isAboutPageMessage(value);
         }
 
     }

@@ -30,7 +30,7 @@ public class Change extends GChange {
 		String newValue = getNewValue();
 
 		if (parent instanceof Issue) {
-			if (key.equals("closeDate")) return Str.isBlanc(newValue) ? "reopened issue" : "closed issue";
+			if (key.equals("closeDate")) return Str.isBlank(newValue) ? "reopened issue" : "closed issue";
 		} else if (parent instanceof Impediment) {
 			if (key.equals("closed")) return Str.isTrue(newValue) ? "closed impediment" : "reopened impediment";
 		} else if (parent instanceof Requirement) {
@@ -39,8 +39,8 @@ public class Change extends GChange {
 				return newValue == null ? "kicked story from sprint" : "pulled story to sprint";
 		}
 
-		if (Str.isBlanc(oldValue)) return "created " + getFieldLabel();
-		if (Str.isBlanc(newValue)) return "deleted " + getFieldLabel();
+		if (Str.isBlank(oldValue)) return "created " + getFieldLabel();
+		if (Str.isBlank(newValue)) return "deleted " + getFieldLabel();
 		return "changed " + getFieldLabel();
 	}
 
@@ -66,8 +66,8 @@ public class Change extends GChange {
 			if (key.equals("sprintId")) return null;
 		}
 
-		if (Str.isBlanc(oldValue)) return getNewValue();
-		if (Str.isBlanc(newValue)) return null;
+		if (Str.isBlank(oldValue)) return getNewValue();
+		if (Str.isBlank(newValue)) return null;
 		return createMultilineDiff(oldValue, newValue);
 	}
 

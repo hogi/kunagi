@@ -19,7 +19,7 @@ public class UpdateProjectHomepageAction extends GUpdateProjectHomepageAction {
 
 	@Override
 	public boolean isExecutable() {
-		if (Str.isBlanc(project.getHomepageDir())) return false;
+		if (Str.isBlank(project.getHomepageDir())) return false;
 		return true;
 	}
 

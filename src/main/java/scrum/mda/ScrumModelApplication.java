@@ -61,6 +61,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			systemConfigModel = createEntityModel("SystemConfig", "admin");
 			systemConfigModel.setGwtSupport(true);
 			systemConfigModel.setViewProtected(true);
+			systemConfigModel.setEditProtected(true);
 			systemConfigModel.addStringProperty("url");
 			systemConfigModel.addStringProperty("adminEmail");
 			systemConfigModel.addStringProperty("googleAnalyticsId");
@@ -68,6 +69,9 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			systemConfigModel.addStringProperty("smtpUser");
 			systemConfigModel.addStringProperty("smtpPassword");
 			systemConfigModel.addStringProperty("smtpFrom");
+			systemConfigModel.addStringProperty("loginPageMessage").setRichtext(true);
+			systemConfigModel.addStringProperty("registerPageMessage").setRichtext(true);
+			systemConfigModel.addStringProperty("aboutPageMessage").setRichtext(true);
 			autowire(systemConfigModel);
 		}
 		return systemConfigModel;

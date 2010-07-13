@@ -21,7 +21,7 @@ public class RequestNewPasswordAction extends GRequestNewPasswordAction {
 	@Override
 	protected void onExecute() {
 		String login = loginWidget.getUsername();
-		if (Str.isBlanc(login)) {
+		if (Str.isBlank(login)) {
 			loginWidget.setFailed("Email required.");
 			return;
 		}

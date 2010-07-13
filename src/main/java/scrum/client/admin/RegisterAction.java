@@ -25,17 +25,17 @@ public class RegisterAction extends GLoginAction {
 		String email = registrationData.getEmail();
 		String password = registrationData.getPassword();
 
-		if (Str.isBlanc(username)) {
+		if (Str.isBlank(username)) {
 			registrationData.setFailed("Username required.");
 			return;
 		}
 
-		if (Str.isBlanc(email)) {
+		if (Str.isBlank(email)) {
 			registrationData.setFailed("Email required.");
 			return;
 		}
 
-		if (Str.isBlanc(password)) {
+		if (Str.isBlank(password)) {
 			registrationData.setFailed("Password required.");
 			return;
 		}

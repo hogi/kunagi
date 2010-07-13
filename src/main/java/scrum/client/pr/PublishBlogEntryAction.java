@@ -22,8 +22,8 @@ public class PublishBlogEntryAction extends GPublishBlogEntryAction {
 	@Override
 	public boolean isExecutable() {
 		if (blogEntry.isPublished()) return false;
-		if (Str.isBlanc(blogEntry.getTitle())) return false;
-		if (Str.isBlanc(blogEntry.getText())) return false;
+		if (Str.isBlank(blogEntry.getTitle())) return false;
+		if (Str.isBlank(blogEntry.getText())) return false;
 		return true;
 	}
 

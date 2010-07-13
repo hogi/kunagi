@@ -37,9 +37,9 @@ public class IssueServlet extends AHttpServlet {
 		String projectId = req.getParameter("projectId");
 		String text = req.getParameter("text");
 		String name = req.getParameter("name");
-		if (Str.isBlanc(name)) name = null;
+		if (Str.isBlank(name)) name = null;
 		String email = req.getParameter("email");
-		if (Str.isBlanc(email)) email = null;
+		if (Str.isBlank(email)) email = null;
 
 		log.info("Message from the internets");
 		log.info("    projectId: " + projectId);

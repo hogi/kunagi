@@ -380,6 +380,159 @@ public abstract class GSystemConfig
 
     }
 
+    // --- loginPageMessage ---
+
+    private java.lang.String loginPageMessage ;
+
+    public final java.lang.String getLoginPageMessage() {
+        return this.loginPageMessage ;
+    }
+
+    public final SystemConfig setLoginPageMessage(java.lang.String loginPageMessage) {
+        if (isLoginPageMessage(loginPageMessage)) return (SystemConfig)this;
+        this.loginPageMessage = loginPageMessage ;
+        propertyChanged("loginPageMessage", this.loginPageMessage);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isLoginPageMessage(java.lang.String loginPageMessage) {
+        return equals(this.loginPageMessage, loginPageMessage);
+    }
+
+    private transient LoginPageMessageModel loginPageMessageModel;
+
+    public LoginPageMessageModel getLoginPageMessageModel() {
+        if (loginPageMessageModel == null) loginPageMessageModel = createLoginPageMessageModel();
+        return loginPageMessageModel;
+    }
+
+    protected LoginPageMessageModel createLoginPageMessageModel() { return new LoginPageMessageModel(); }
+
+    protected class LoginPageMessageModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getLoginPageMessage();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLoginPageMessage(value);
+        }
+
+        @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- registerPageMessage ---
+
+    private java.lang.String registerPageMessage ;
+
+    public final java.lang.String getRegisterPageMessage() {
+        return this.registerPageMessage ;
+    }
+
+    public final SystemConfig setRegisterPageMessage(java.lang.String registerPageMessage) {
+        if (isRegisterPageMessage(registerPageMessage)) return (SystemConfig)this;
+        this.registerPageMessage = registerPageMessage ;
+        propertyChanged("registerPageMessage", this.registerPageMessage);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isRegisterPageMessage(java.lang.String registerPageMessage) {
+        return equals(this.registerPageMessage, registerPageMessage);
+    }
+
+    private transient RegisterPageMessageModel registerPageMessageModel;
+
+    public RegisterPageMessageModel getRegisterPageMessageModel() {
+        if (registerPageMessageModel == null) registerPageMessageModel = createRegisterPageMessageModel();
+        return registerPageMessageModel;
+    }
+
+    protected RegisterPageMessageModel createRegisterPageMessageModel() { return new RegisterPageMessageModel(); }
+
+    protected class RegisterPageMessageModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getRegisterPageMessage();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setRegisterPageMessage(value);
+        }
+
+        @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- aboutPageMessage ---
+
+    private java.lang.String aboutPageMessage ;
+
+    public final java.lang.String getAboutPageMessage() {
+        return this.aboutPageMessage ;
+    }
+
+    public final SystemConfig setAboutPageMessage(java.lang.String aboutPageMessage) {
+        if (isAboutPageMessage(aboutPageMessage)) return (SystemConfig)this;
+        this.aboutPageMessage = aboutPageMessage ;
+        propertyChanged("aboutPageMessage", this.aboutPageMessage);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isAboutPageMessage(java.lang.String aboutPageMessage) {
+        return equals(this.aboutPageMessage, aboutPageMessage);
+    }
+
+    private transient AboutPageMessageModel aboutPageMessageModel;
+
+    public AboutPageMessageModel getAboutPageMessageModel() {
+        if (aboutPageMessageModel == null) aboutPageMessageModel = createAboutPageMessageModel();
+        return aboutPageMessageModel;
+    }
+
+    protected AboutPageMessageModel createAboutPageMessageModel() { return new AboutPageMessageModel(); }
+
+    protected class AboutPageMessageModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public java.lang.String getValue() {
+            return getAboutPageMessage();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setAboutPageMessage(value);
+        }
+
+        @Override
+        public boolean isRichtext() { return true; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -390,6 +543,9 @@ public abstract class GSystemConfig
         smtpUser  = (java.lang.String) props.get("smtpUser");
         smtpPassword  = (java.lang.String) props.get("smtpPassword");
         smtpFrom  = (java.lang.String) props.get("smtpFrom");
+        loginPageMessage  = (java.lang.String) props.get("loginPageMessage");
+        registerPageMessage  = (java.lang.String) props.get("registerPageMessage");
+        aboutPageMessage  = (java.lang.String) props.get("aboutPageMessage");
     }
 
     @Override
@@ -402,6 +558,9 @@ public abstract class GSystemConfig
         properties.put("smtpUser", this.smtpUser);
         properties.put("smtpPassword", this.smtpPassword);
         properties.put("smtpFrom", this.smtpFrom);
+        properties.put("loginPageMessage", this.loginPageMessage);
+        properties.put("registerPageMessage", this.registerPageMessage);
+        properties.put("aboutPageMessage", this.aboutPageMessage);
     }
 
 }

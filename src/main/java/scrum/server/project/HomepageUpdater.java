@@ -185,14 +185,14 @@ public class HomepageUpdater {
 	}
 
 	public static String wiki2html(String wikitext, HtmlContext context) {
-		if (Str.isBlanc(wikitext)) return "";
+		if (Str.isBlank(wikitext)) return "";
 		WikiParser wikiParser = new WikiParser(wikitext);
 		WikiModel model = wikiParser.parse();
 		return model.toHtml(context);
 	}
 
 	public static String wiki2text(String wikitext) {
-		if (Str.isBlanc(wikitext)) return "";
+		if (Str.isBlank(wikitext)) return "";
 		return wikitext;
 	}
 

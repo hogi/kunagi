@@ -1,5 +1,6 @@
 package scrum.server;
 
+import ilarkesto.auth.Auth;
 import ilarkesto.base.time.TimePeriod;
 import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.server.AGwtConversation;
@@ -9,6 +10,7 @@ import java.util.HashSet;
 
 import scrum.client.DataTransferObject;
 import scrum.client.communication.Pinger;
+import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
 import scrum.server.collaboration.Emoticon;
 import scrum.server.collaboration.EmoticonDao;
@@ -35,6 +37,29 @@ public class GwtConversation extends AGwtConversation {
 		super(session, number);
 	}
 
+	@Override
+	protected void filterEntityProperties(AEntity entity, java.util.Map propertiesMap) {
+		super.filterEntityProperties(entity, propertiesMap);
+		User user = getSession().getUser();
+
+		if (entity instanceof SystemConfig) {
+			if (user == null || !user.isAdmin()) {
+				propertiesMap.remove("smtpPassword");
+			}
+		} else if (entity instanceof User) {
+			if (user == null || user != entity) {
+				propertiesMap.remove("password");
+				propertiesMap.remove("email");
+			}
+		}
+
+	}
+
+	@Override
+	protected boolean isEntityVisible(AEntity entity) {
+		return Auth.isVisible(entity, getSession().getUser());
+	}
+
 	public void sendUserScopeDataToClient(User user) {
 		getNextData().setUserId(user.getId());
 		ScrumWebApplication app = ScrumWebApplication.get();
@@ -42,7 +67,6 @@ public class GwtConversation extends AGwtConversation {
 		sendToClient(user);
 		sendToClient(app.getProjectDao().getEntitiesVisibleForUser(user)); // all projects
 		sendToClient(app.getUserDao().getEntitiesVisibleForUser(user)); // all users
-		if (user.isAdmin()) sendToClient(app.getSystemConfig());
 	}
 
 	@Override

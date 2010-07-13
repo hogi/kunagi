@@ -15,7 +15,14 @@ public class SystemConfigWidget extends AScrumWidget {
 
 		PagePanel page = new PagePanel();
 
-		page.addHeader("Kunagi installation");
+		page.addHeader("Messages");
+		TableBuilder tbMessages = ScrumGwt.createFieldTable();
+		tbMessages.addFieldRow("Login Page", config.getLoginPageMessageModel());
+		tbMessages.addFieldRow("Register Page", config.getRegisterPageMessageModel());
+		tbMessages.addFieldRow("About Page", config.getAboutPageMessageModel());
+		page.addSection(tbMessages.createTable());
+
+		page.addHeader("Installation");
 		TableBuilder tbKunagi = ScrumGwt.createFieldTable();
 		tbKunagi.addFieldRow("Public URL", config.getUrlModel());
 		tbKunagi.addFieldRow("Administrator email", config.getAdminEmailModel());

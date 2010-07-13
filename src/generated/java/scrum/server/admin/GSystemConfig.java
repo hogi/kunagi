@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GSystemConfig
             extends AEntity
-            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<SystemConfig> {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, ilarkesto.auth.EditProtected<scrum.server.admin.User>, java.lang.Comparable<SystemConfig> {
 
     // --- AEntity ---
 
@@ -43,6 +43,9 @@ public abstract class GSystemConfig
         properties.put("smtpUser", this.smtpUser);
         properties.put("smtpPassword", this.smtpPassword);
         properties.put("smtpFrom", this.smtpFrom);
+        properties.put("loginPageMessage", this.loginPageMessage);
+        properties.put("registerPageMessage", this.registerPageMessage);
+        properties.put("aboutPageMessage", this.aboutPageMessage);
     }
 
     public int compareTo(SystemConfig other) {
@@ -298,6 +301,111 @@ public abstract class GSystemConfig
         setSmtpFrom((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - loginPageMessage
+    // -----------------------------------------------------------
+
+    private java.lang.String loginPageMessage;
+
+    public final java.lang.String getLoginPageMessage() {
+        return loginPageMessage;
+    }
+
+    public final void setLoginPageMessage(java.lang.String loginPageMessage) {
+        loginPageMessage = prepareLoginPageMessage(loginPageMessage);
+        if (isLoginPageMessage(loginPageMessage)) return;
+        this.loginPageMessage = loginPageMessage;
+        fireModified();
+    }
+
+    protected java.lang.String prepareLoginPageMessage(java.lang.String loginPageMessage) {
+        loginPageMessage = Str.removeUnreadableChars(loginPageMessage);
+        return loginPageMessage;
+    }
+
+    public final boolean isLoginPageMessageSet() {
+        return this.loginPageMessage != null;
+    }
+
+    public final boolean isLoginPageMessage(java.lang.String loginPageMessage) {
+        if (this.loginPageMessage == null && loginPageMessage == null) return true;
+        return this.loginPageMessage != null && this.loginPageMessage.equals(loginPageMessage);
+    }
+
+    protected final void updateLoginPageMessage(Object value) {
+        setLoginPageMessage((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - registerPageMessage
+    // -----------------------------------------------------------
+
+    private java.lang.String registerPageMessage;
+
+    public final java.lang.String getRegisterPageMessage() {
+        return registerPageMessage;
+    }
+
+    public final void setRegisterPageMessage(java.lang.String registerPageMessage) {
+        registerPageMessage = prepareRegisterPageMessage(registerPageMessage);
+        if (isRegisterPageMessage(registerPageMessage)) return;
+        this.registerPageMessage = registerPageMessage;
+        fireModified();
+    }
+
+    protected java.lang.String prepareRegisterPageMessage(java.lang.String registerPageMessage) {
+        registerPageMessage = Str.removeUnreadableChars(registerPageMessage);
+        return registerPageMessage;
+    }
+
+    public final boolean isRegisterPageMessageSet() {
+        return this.registerPageMessage != null;
+    }
+
+    public final boolean isRegisterPageMessage(java.lang.String registerPageMessage) {
+        if (this.registerPageMessage == null && registerPageMessage == null) return true;
+        return this.registerPageMessage != null && this.registerPageMessage.equals(registerPageMessage);
+    }
+
+    protected final void updateRegisterPageMessage(Object value) {
+        setRegisterPageMessage((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - aboutPageMessage
+    // -----------------------------------------------------------
+
+    private java.lang.String aboutPageMessage;
+
+    public final java.lang.String getAboutPageMessage() {
+        return aboutPageMessage;
+    }
+
+    public final void setAboutPageMessage(java.lang.String aboutPageMessage) {
+        aboutPageMessage = prepareAboutPageMessage(aboutPageMessage);
+        if (isAboutPageMessage(aboutPageMessage)) return;
+        this.aboutPageMessage = aboutPageMessage;
+        fireModified();
+    }
+
+    protected java.lang.String prepareAboutPageMessage(java.lang.String aboutPageMessage) {
+        aboutPageMessage = Str.removeUnreadableChars(aboutPageMessage);
+        return aboutPageMessage;
+    }
+
+    public final boolean isAboutPageMessageSet() {
+        return this.aboutPageMessage != null;
+    }
+
+    public final boolean isAboutPageMessage(java.lang.String aboutPageMessage) {
+        if (this.aboutPageMessage == null && aboutPageMessage == null) return true;
+        return this.aboutPageMessage != null && this.aboutPageMessage.equals(aboutPageMessage);
+    }
+
+    protected final void updateAboutPageMessage(Object value) {
+        setAboutPageMessage((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -310,6 +418,9 @@ public abstract class GSystemConfig
             if (property.equals("smtpUser")) updateSmtpUser(value);
             if (property.equals("smtpPassword")) updateSmtpPassword(value);
             if (property.equals("smtpFrom")) updateSmtpFrom(value);
+            if (property.equals("loginPageMessage")) updateLoginPageMessage(value);
+            if (property.equals("registerPageMessage")) updateRegisterPageMessage(value);
+            if (property.equals("aboutPageMessage")) updateAboutPageMessage(value);
         }
     }
 

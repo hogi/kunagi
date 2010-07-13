@@ -1,5 +1,6 @@
 package scrum.client.admin;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
@@ -50,25 +51,32 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 
 		Widget content = fields.createTable();
 
-		ApplicationInfo appInfo = getApp().getApplicationInfo();
-		if (!appInfo.isProductionStage()) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("<div class='LoginWidget-errorMessage'>");
-			sb
-					.append("This is a demo system with preconfigured projects.<br>All your data will be deleted by next day.");
-			sb.append("</div>");
-			sb.append("<div style='color: gray;'>");
-			sb.append("<br>Test&nbsp;users:&nbsp;");
-			sb.append("<strong>duke</strong>&nbsp;(PO),&nbsp;");
-			sb.append("<strong>spinne</strong>&nbsp;(SM),&nbsp;");
-			sb.append("<strong>cartman</strong>&nbsp;(T),&nbsp;");
-			sb.append("<strong>homer</strong>&nbsp;(T)<br>");
-			sb.append("Password: <strong>geheim</strong>");
-			sb.append("</div>");
-			content = TableBuilder.row(40, content, new HTML(sb.toString()));
+		PagePanel page = new PagePanel();
+
+		SystemConfig config = getDao().getSystemConfig();
+		String message = config.getLoginPageMessage();
+		if (!Str.isBlank(message)) {
+			content = TableBuilder.row(40, content, new HTML("<div class='LoginWidget-errorMessage'>" + message
+					+ "</div>"));
+		} else {
+			ApplicationInfo appInfo = getApp().getApplicationInfo();
+			if (!appInfo.isProductionStage()) {
+				StringBuilder sb = new StringBuilder();
+				sb.append("<div class='LoginWidget-errorMessage'>");
+				sb.append("This is a demo system with preconfigured projects.<br>All your data will be deleted by next day.");
+				sb.append("</div>");
+				sb.append("<div style='color: gray;'>");
+				sb.append("<br>Test&nbsp;users:&nbsp;");
+				sb.append("<strong>duke</strong>&nbsp;(PO),&nbsp;");
+				sb.append("<strong>spinne</strong>&nbsp;(SM),&nbsp;");
+				sb.append("<strong>cartman</strong>&nbsp;(T),&nbsp;");
+				sb.append("<strong>homer</strong>&nbsp;(T)<br>");
+				sb.append("Password: <strong>geheim</strong>");
+				sb.append("</div>");
+				content = TableBuilder.row(40, content, new HTML(sb.toString()));
+			}
 		}
 
-		PagePanel page = new PagePanel();
 		page.addHeader("Login");
 		page.addSection(Gwt.createCenterer(content));
 
