@@ -30,24 +30,23 @@ public class IssueDao extends GIssueDao {
 		});
 	}
 
-	public Set<Issue> getUrgentAndOpenIssues(final Project project) {
+	public Set<Issue> getOpenIssues(final Project project) {
 		return getEntities(new Predicate<Issue>() {
 
 			public boolean test(Issue issue) {
 				if (!issue.isProject(project)) return false;
-				if (issue.isClosed()) return false;
-				return issue.isAcceptedUrgent() || issue.isOpen();
+				return issue.isOpen();
 			}
 		});
 	}
 
-	public Set<Issue> getUrgentIssues(final Project project) {
+	public Set<Issue> getOpenBugs(final Project project) {
 		return getEntities(new Predicate<Issue>() {
 
 			public boolean test(Issue issue) {
 				if (!issue.isProject(project)) return false;
 				if (issue.isClosed()) return false;
-				return issue.isAcceptedUrgent();
+				return issue.isBug();
 			}
 		});
 	}

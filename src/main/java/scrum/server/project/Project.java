@@ -494,12 +494,12 @@ public class Project extends GProject {
 		return issueDao.getClosedIssues(this);
 	}
 
-	public Set<Issue> getUrgentAndOpenIssues() {
-		return issueDao.getUrgentAndOpenIssues(this);
+	public Set<Issue> getOpenIssues() {
+		return issueDao.getOpenIssues(this);
 	}
 
-	public Set<Issue> getUrgentIssues() {
-		return issueDao.getUrgentIssues(this);
+	public Set<Issue> getOpenBugs() {
+		return issueDao.getOpenBugs(this);
 	}
 
 	public Set<Risk> getRisks() {

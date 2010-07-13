@@ -61,7 +61,7 @@ public class HomepageUpdater {
 	}
 
 	private void processIssueTemplates() {
-		List<Issue> issues = new ArrayList<Issue>(project.getUrgentIssues());
+		List<Issue> issues = new ArrayList<Issue>(project.getOpenBugs());
 		for (Issue issue : issues) {
 			ContextBuilder context = new ContextBuilder();
 			fillIssue(context.putSubContext("issue"), issue);
@@ -96,7 +96,7 @@ public class HomepageUpdater {
 	}
 
 	private void fillIssues(ContextBuilder context) {
-		List<Issue> issues = new ArrayList<Issue>(project.getUrgentIssues());
+		List<Issue> issues = new ArrayList<Issue>(project.getOpenBugs());
 		for (Issue issue : issues) {
 			fillIssue(context.addSubContext("bugs"), issue);
 		}

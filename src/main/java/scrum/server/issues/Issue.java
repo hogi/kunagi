@@ -19,8 +19,12 @@ public class Issue extends GIssue implements Numbered {
 		return name + " (" + email + ")";
 	}
 
-	public boolean isAcceptedUrgent() {
-		return getAcceptDate() != null && isUrgent();
+	public boolean isBug() {
+		return isAccepted() && isUrgent();
+	}
+
+	public boolean isIdea() {
+		return isAccepted() && !isUrgent();
 	}
 
 	public boolean isFixed() {
@@ -28,10 +32,10 @@ public class Issue extends GIssue implements Numbered {
 	}
 
 	public boolean isOpen() {
-		return !isClosed() && !isAcceptedUrgent();
+		return !isClosed();
 	}
 
-	public boolean isAccepted() {
+	protected boolean isAccepted() {
 		return !isClosed() && isAcceptDateSet();
 	}
 
