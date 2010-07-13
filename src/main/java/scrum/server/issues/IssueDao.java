@@ -51,6 +51,17 @@ public class IssueDao extends GIssueDao {
 		});
 	}
 
+	public Set<Issue> getOpenIdeas(final Project project) {
+		return getEntities(new Predicate<Issue>() {
+
+			public boolean test(Issue issue) {
+				if (!issue.isProject(project)) return false;
+				if (issue.isClosed()) return false;
+				return issue.isIdea();
+			}
+		});
+	}
+
 	public Issue getIssueByNumber(final int number, final Project project) {
 		return getEntity(new Predicate<Issue>() {
 

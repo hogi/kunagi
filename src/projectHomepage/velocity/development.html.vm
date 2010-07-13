@@ -20,6 +20,7 @@
         <li><a href="${story.reference}.html">$story.reference</a> $story.label</li>
     #end
     </ul>
+    <p>There are more story canditates among collected <a href="ideas.html">ideas</a>.</p>
 </div>
 
 <div class="separator"></div>

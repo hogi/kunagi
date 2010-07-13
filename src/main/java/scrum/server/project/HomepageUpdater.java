@@ -46,7 +46,8 @@ public class HomepageUpdater {
 		fillBlog(context.putSubContext("blog"));
 		fillSprintBacklog(context.putSubContext("sprintBacklog"));
 		fillProductBacklog(context.putSubContext("productBacklog"));
-		fillIssues(context);
+		fillBugs(context);
+		fillIdeas(context);
 
 		File[] templateFiles = templateDir.listFiles();
 		if (templateFiles == null) return;
@@ -62,6 +63,7 @@ public class HomepageUpdater {
 
 	private void processIssueTemplates() {
 		List<Issue> issues = new ArrayList<Issue>(project.getOpenBugs());
+		issues.addAll(project.getOpenIdeas());
 		for (Issue issue : issues) {
 			ContextBuilder context = new ContextBuilder();
 			fillIssue(context.putSubContext("issue"), issue);
@@ -95,10 +97,17 @@ public class HomepageUpdater {
 		}
 	}
 
-	private void fillIssues(ContextBuilder context) {
+	private void fillBugs(ContextBuilder context) {
 		List<Issue> issues = new ArrayList<Issue>(project.getOpenBugs());
 		for (Issue issue : issues) {
 			fillIssue(context.addSubContext("bugs"), issue);
+		}
+	}
+
+	private void fillIdeas(ContextBuilder context) {
+		List<Issue> issues = new ArrayList<Issue>(project.getOpenIdeas());
+		for (Issue issue : issues) {
+			fillIssue(context.addSubContext("ideas"), issue);
 		}
 	}
 

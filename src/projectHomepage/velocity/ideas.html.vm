@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+#header("ideas")
+
+<div class="section">
+    
+    <h2>Ideas</h2>
+    <ul>
+    #foreach ($issue in $ideas)
+        <li><a href="${issue.reference}.html">$issue.reference</a> $issue.label</li>
+    #end
+    </ul>
+    
+</div>
+
+#footer()

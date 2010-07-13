@@ -502,6 +502,10 @@ public class Project extends GProject {
 		return issueDao.getOpenBugs(this);
 	}
 
+	public Set<Issue> getOpenIdeas() {
+		return issueDao.getOpenIdeas(this);
+	}
+
 	public Set<Risk> getRisks() {
 		return riskDao.getRisksByProject(this);
 	}
