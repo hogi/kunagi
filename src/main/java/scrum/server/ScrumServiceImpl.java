@@ -156,6 +156,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	public void onResetPassword(GwtConversation conversation, String userId) {
 		User user = userDao.getById(userId);
 		if (user.isEmailSet()) {
+			if (!user.isEmailVerified()) user.triggerEmailVerification();
 			user.triggerPasswordReset();
 		} else {
 			user.setPassword("geheim");
@@ -182,6 +183,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			return;
 		}
 
+		if (!user.isEmailVerified()) user.triggerEmailVerification();
 		user.triggerNewPasswordRequest();
 	}
 
@@ -466,6 +468,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		if (user == null || user.matchesPassword(password) == false) {
 			conversation.getNextData().addError("Login failed.");
+			return;
+		}
+
+		if (user.isDisabled()) {
+			conversation.getNextData().addError("User is disabled.");
 			return;
 		}
 

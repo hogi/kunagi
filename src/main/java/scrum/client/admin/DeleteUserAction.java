@@ -1,5 +1,7 @@
 package scrum.client.admin;
 
+import ilarkesto.gwt.client.Gwt;
+
 public class DeleteUserAction extends GDeleteUserAction {
 
 	public DeleteUserAction(User user) {
@@ -18,11 +20,14 @@ public class DeleteUserAction extends GDeleteUserAction {
 
 	@Override
 	public boolean isExecutable() {
-		return getCurrentUser().isAdmin();
+		if (!user.isDisabled()) return false;
+		if (!getCurrentUser().isAdmin()) return false;
+		return true;
 	}
 
 	@Override
 	protected void onExecute() {
+		if (!Gwt.confirm("Delete user " + user.getName() + "?")) return;
 		getDao().deleteUser(user);
 		addUndo(new Undo());
 	}

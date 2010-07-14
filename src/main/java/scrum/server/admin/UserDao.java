@@ -1,5 +1,6 @@
 package scrum.server.admin;
 
+import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
 import ilarkesto.fp.Predicate;
 
@@ -40,6 +41,7 @@ public class UserDao extends GUserDao {
 	public User newEntityInstance() {
 		User user = super.newEntityInstance();
 		user.setPassword("geheim");
+		user.setRegistrationDateAndTime(DateAndTime.now());
 		return user;
 	}
 

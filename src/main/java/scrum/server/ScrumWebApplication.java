@@ -47,6 +47,7 @@ import javax.servlet.http.HttpServletRequest;
 import scrum.client.ApplicationInfo;
 import scrum.client.UsersStatusData;
 import scrum.client.admin.SystemMessage;
+import scrum.server.admin.DisableUsersWithUnverifiedEmailsTask;
 import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
@@ -150,6 +151,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	protected void scheduleTasks(TaskManager tm) {
 		tm.scheduleWithFixedDelay(autowire(new DestroyTimeoutedSessionsTask()), Tm.MINUTE);
 		tm.scheduleWithFixedDelay(autowire(new HomepageUpdaterTask()), Tm.HOUR);
+		tm.scheduleWithFixedDelay(autowire(new DisableUsersWithUnverifiedEmailsTask()), Tm.HOUR);
 	}
 
 	@Override

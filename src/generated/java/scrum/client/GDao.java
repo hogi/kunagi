@@ -2759,6 +2759,22 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.admin.User> getUsersByRegistrationDateAndTime(ilarkesto.gwt.client.DateAndTime registrationDateAndTime) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isRegistrationDateAndTime(registrationDateAndTime)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByDisabled(boolean disabled) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isDisabled(disabled)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Wikipage ---
 
     private Map<String, scrum.client.collaboration.Wikipage> wikipages = new HashMap<String, scrum.client.collaboration.Wikipage>();

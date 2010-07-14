@@ -412,8 +412,12 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.addReference("currentProject", getProjectModel());
 			userModel.addStringProperty("color");
 			userModel.addProperty("lastLoginDateAndTime", DateAndTime.class);
+			userModel.addProperty("registrationDateAndTime", DateAndTime.class);
+			userModel.addProperty("disabled", boolean.class);
 			getApplicationModel().addCreateAction(userModel);
 			userModel.addAction("DeleteUser");
+			userModel.addAction("DisableUser");
+			userModel.addAction("EnableUser");
 		}
 		return userModel;
 	}

@@ -302,6 +302,73 @@ public abstract class GUser
 
     }
 
+    // --- registrationDateAndTime ---
+
+    private ilarkesto.gwt.client.DateAndTime registrationDateAndTime ;
+
+    public final ilarkesto.gwt.client.DateAndTime getRegistrationDateAndTime() {
+        return this.registrationDateAndTime ;
+    }
+
+    public final User setRegistrationDateAndTime(ilarkesto.gwt.client.DateAndTime registrationDateAndTime) {
+        if (isRegistrationDateAndTime(registrationDateAndTime)) return (User)this;
+        this.registrationDateAndTime = registrationDateAndTime ;
+        propertyChanged("registrationDateAndTime", this.registrationDateAndTime);
+        return (User)this;
+    }
+
+    public final boolean isRegistrationDateAndTime(ilarkesto.gwt.client.DateAndTime registrationDateAndTime) {
+        return equals(this.registrationDateAndTime, registrationDateAndTime);
+    }
+
+    private transient RegistrationDateAndTimeModel registrationDateAndTimeModel;
+
+    public RegistrationDateAndTimeModel getRegistrationDateAndTimeModel() {
+        if (registrationDateAndTimeModel == null) registrationDateAndTimeModel = createRegistrationDateAndTimeModel();
+        return registrationDateAndTimeModel;
+    }
+
+    protected RegistrationDateAndTimeModel createRegistrationDateAndTimeModel() { return new RegistrationDateAndTimeModel(); }
+
+    protected class RegistrationDateAndTimeModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
+
+        @Override
+        public ilarkesto.gwt.client.DateAndTime getValue() {
+            return getRegistrationDateAndTime();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.DateAndTime value) {
+            setRegistrationDateAndTime(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.DateAndTime oldValue, ilarkesto.gwt.client.DateAndTime newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- disabled ---
+
+    private boolean disabled ;
+
+    public final boolean isDisabled() {
+        return this.disabled ;
+    }
+
+    public final User setDisabled(boolean disabled) {
+        if (isDisabled(disabled)) return (User)this;
+        this.disabled = disabled ;
+        propertyChanged("disabled", this.disabled);
+        return (User)this;
+    }
+
+    public final boolean isDisabled(boolean disabled) {
+        return equals(this.disabled, disabled);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -313,6 +380,9 @@ public abstract class GUser
         color  = (java.lang.String) props.get("color");
         String lastLoginDateAndTimeAsString = (String) props.get("lastLoginDateAndTime");
         lastLoginDateAndTime  =  lastLoginDateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(lastLoginDateAndTimeAsString);
+        String registrationDateAndTimeAsString = (String) props.get("registrationDateAndTime");
+        registrationDateAndTime  =  registrationDateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(registrationDateAndTimeAsString);
+        disabled  = (Boolean) props.get("disabled");
     }
 
     @Override
@@ -325,6 +395,8 @@ public abstract class GUser
         properties.put("currentProjectId", this.currentProjectId);
         properties.put("color", this.color);
         properties.put("lastLoginDateAndTime", this.lastLoginDateAndTime == null ? null : this.lastLoginDateAndTime.toString());
+        properties.put("registrationDateAndTime", this.registrationDateAndTime == null ? null : this.registrationDateAndTime.toString());
+        properties.put("disabled", this.disabled);
     }
 
     @Override

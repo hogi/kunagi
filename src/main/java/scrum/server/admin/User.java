@@ -148,4 +148,10 @@ public class User extends GUser {
 		return names;
 	}
 
+	public boolean isEmailVerificationOverdue() {
+		if (!isRegistrationDateAndTimeSet()) return false;
+		if (isEmailVerified()) return false;
+		return getRegistrationDateAndTime().getPeriodToNow().abs().toHours() > 72;
+	}
+
 }

@@ -97,4 +97,10 @@ public interface GImageBundle
     @Resource(value="upload.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype upload();
 
+    @Resource(value="usrDisabled.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype usrDisabled();
+
+    @Resource(value="usrEmailUnverified.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype usrEmailUnverified();
+
 }

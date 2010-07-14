@@ -53,6 +53,9 @@ public abstract class GUserDao
         colorsCache = null;
         usersByLastLoginDateAndTimeCache.clear();
         lastLoginDateAndTimesCache = null;
+        usersByRegistrationDateAndTimeCache.clear();
+        registrationDateAndTimesCache = null;
+        usersByDisabledCache.clear();
     }
 
     @Override
@@ -318,6 +321,75 @@ public abstract class GUserDao
 
         public boolean test(User e) {
             return e.isLastLoginDateAndTime(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - registrationDateAndTime
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.DateAndTime,Set<User>> usersByRegistrationDateAndTimeCache = new Cache<ilarkesto.base.time.DateAndTime,Set<User>>(
+            new Cache.Factory<ilarkesto.base.time.DateAndTime,Set<User>>() {
+                public Set<User> create(ilarkesto.base.time.DateAndTime registrationDateAndTime) {
+                    return getEntities(new IsRegistrationDateAndTime(registrationDateAndTime));
+                }
+            });
+
+    public final Set<User> getUsersByRegistrationDateAndTime(ilarkesto.base.time.DateAndTime registrationDateAndTime) {
+        return usersByRegistrationDateAndTimeCache.get(registrationDateAndTime);
+    }
+    private Set<ilarkesto.base.time.DateAndTime> registrationDateAndTimesCache;
+
+    public final Set<ilarkesto.base.time.DateAndTime> getRegistrationDateAndTimes() {
+        if (registrationDateAndTimesCache == null) {
+            registrationDateAndTimesCache = new HashSet<ilarkesto.base.time.DateAndTime>();
+            for (User e : getEntities()) {
+                if (e.isRegistrationDateAndTimeSet()) registrationDateAndTimesCache.add(e.getRegistrationDateAndTime());
+            }
+        }
+        return registrationDateAndTimesCache;
+    }
+
+    private static class IsRegistrationDateAndTime implements Predicate<User> {
+
+        private ilarkesto.base.time.DateAndTime value;
+
+        public IsRegistrationDateAndTime(ilarkesto.base.time.DateAndTime value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return e.isRegistrationDateAndTime(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - disabled
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByDisabledCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean disabled) {
+                    return getEntities(new IsDisabled(disabled));
+                }
+            });
+
+    public final Set<User> getUsersByDisabled(boolean disabled) {
+        return usersByDisabledCache.get(disabled);
+    }
+
+    private static class IsDisabled implements Predicate<User> {
+
+        private boolean value;
+
+        public IsDisabled(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isDisabled();
         }
 
     }

@@ -43,6 +43,8 @@ public abstract class GUser
         properties.put("currentProjectId", this.currentProjectId);
         properties.put("color", this.color);
         properties.put("lastLoginDateAndTime", this.lastLoginDateAndTime == null ? null : this.lastLoginDateAndTime.toString());
+        properties.put("registrationDateAndTime", this.registrationDateAndTime == null ? null : this.registrationDateAndTime.toString());
+        properties.put("disabled", this.disabled);
     }
 
     public int compareTo(User other) {
@@ -315,6 +317,70 @@ public abstract class GUser
         setLastLoginDateAndTime((ilarkesto.base.time.DateAndTime)value);
     }
 
+    // -----------------------------------------------------------
+    // - registrationDateAndTime
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.DateAndTime registrationDateAndTime;
+
+    public final ilarkesto.base.time.DateAndTime getRegistrationDateAndTime() {
+        return registrationDateAndTime;
+    }
+
+    public final void setRegistrationDateAndTime(ilarkesto.base.time.DateAndTime registrationDateAndTime) {
+        registrationDateAndTime = prepareRegistrationDateAndTime(registrationDateAndTime);
+        if (isRegistrationDateAndTime(registrationDateAndTime)) return;
+        this.registrationDateAndTime = registrationDateAndTime;
+        fireModified();
+    }
+
+    protected ilarkesto.base.time.DateAndTime prepareRegistrationDateAndTime(ilarkesto.base.time.DateAndTime registrationDateAndTime) {
+        return registrationDateAndTime;
+    }
+
+    public final boolean isRegistrationDateAndTimeSet() {
+        return this.registrationDateAndTime != null;
+    }
+
+    public final boolean isRegistrationDateAndTime(ilarkesto.base.time.DateAndTime registrationDateAndTime) {
+        if (this.registrationDateAndTime == null && registrationDateAndTime == null) return true;
+        return this.registrationDateAndTime != null && this.registrationDateAndTime.equals(registrationDateAndTime);
+    }
+
+    protected final void updateRegistrationDateAndTime(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.DateAndTime((String)value);
+        setRegistrationDateAndTime((ilarkesto.base.time.DateAndTime)value);
+    }
+
+    // -----------------------------------------------------------
+    // - disabled
+    // -----------------------------------------------------------
+
+    private boolean disabled;
+
+    public final boolean isDisabled() {
+        return disabled;
+    }
+
+    public final void setDisabled(boolean disabled) {
+        disabled = prepareDisabled(disabled);
+        if (isDisabled(disabled)) return;
+        this.disabled = disabled;
+        fireModified();
+    }
+
+    protected boolean prepareDisabled(boolean disabled) {
+        return disabled;
+    }
+
+    public final boolean isDisabled(boolean disabled) {
+        return this.disabled == disabled;
+    }
+
+    protected final void updateDisabled(Object value) {
+        setDisabled((Boolean)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -327,6 +393,8 @@ public abstract class GUser
             if (property.equals("currentProjectId")) updateCurrentProject(value);
             if (property.equals("color")) updateColor(value);
             if (property.equals("lastLoginDateAndTime")) updateLastLoginDateAndTime(value);
+            if (property.equals("registrationDateAndTime")) updateRegistrationDateAndTime(value);
+            if (property.equals("disabled")) updateDisabled(value);
         }
     }
 
