@@ -1,6 +1,7 @@
 package scrum.server.common;
 
 import ilarkesto.base.time.Date;
+import ilarkesto.io.IO;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,8 +46,10 @@ public class BurndownChartTest {
 		JFreeChart chart = BurndownChart.createSprintBurndownChart(data, "Date", "Work", new Date(2008, 7, 1),
 			new Date(2008, 7, 31), 1, 3, max * 1.1, tick);
 
+		File file = new File("test-output/sprintBurndownChart.png");
+		IO.createDirectory(file.getParentFile());
 		try {
-			ChartUtilities.saveChartAsPNG(new File("test-output/sprintBurndownChart.png"), chart, 500, 500);
+			ChartUtilities.saveChartAsPNG(file, chart, 500, 500);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
