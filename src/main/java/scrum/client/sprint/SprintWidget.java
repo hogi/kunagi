@@ -3,7 +3,6 @@ package scrum.client.sprint;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
-import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextOutputWidget;
 import scrum.client.ScrumGwt;
@@ -43,9 +42,9 @@ public class SprintWidget extends AScrumWidget {
 		}
 
 		tb.addFieldLabel("Dates");
-		tb.addField("Begin", new DateEditorWidget(sprint.getBeginModel()));
+		tb.addField("Begin", sprint.getBeginModel(), 1);
 
-		tb.addField("End", new DateEditorWidget(sprint.getEndModel()));
+		tb.addField("End", sprint.getEndModel(), 1);
 		tb.addRow(Gwt.createSpacer(1, 1));
 
 		if (completed == false) {
