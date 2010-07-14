@@ -8,6 +8,8 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.EntityStore;
 import ilarkesto.persistence.FileEntityStore;
 import ilarkesto.persistence.TransactionService;
+import scrum.server.admin.User;
+import scrum.server.admin.UserDao;
 import scrum.server.calendar.SimpleEvent;
 import scrum.server.calendar.SimpleEventDao;
 import scrum.server.collaboration.Wikipage;
@@ -43,6 +45,7 @@ public class TestUtil {
 	private static WikipageDao wikipageDao;
 	private static BlogEntryDao blogEntryDao;
 	private static IssueDao issueDao;
+	private static UserDao userDao;
 
 	private static void initialize() {
 		if (initialized) return;
@@ -54,6 +57,9 @@ public class TestUtil {
 
 		transactionService = new TransactionService();
 		transactionService.setEntityStore(entityStore);
+
+		userDao = new UserDao();
+		userDao.setTransactionService(transactionService);
 
 		wikipageDao = new WikipageDao();
 		wikipageDao.setTransactionService(transactionService);
@@ -77,6 +83,7 @@ public class TestUtil {
 		sprintDao.setTransactionService(transactionService);
 		Sprint.setSprintDaySnapshotDao(sprintDaySnapshotDao);
 		Sprint.setRequirementDao(requirementDao);
+		Sprint.setUserDao(userDao);
 
 		blogEntryDao = new BlogEntryDao();
 		blogEntryDao.setTransactionService(transactionService);
@@ -97,12 +104,20 @@ public class TestUtil {
 		Project.setIssueDao(issueDao);
 	}
 
+	public static User createUser(String name) {
+		initialize();
+		User user = userDao.newEntityInstance();
+		user.setName(name);
+		return user;
+	}
+
 	public static Issue createIssue(Project project, int number) {
 		return createIssue(project, number, Str.generateRandomSentence(4, 8), Str.generateRandomParagraph(),
 			Str.generateRandomParagraph());
 	}
 
 	public static Issue createIssue(Project project, int number, String label, String description, String statement) {
+		initialize();
 		Issue issue = issueDao.newEntityInstance();
 		issue.setProject(project);
 		issue.setNumber(number);
@@ -121,6 +136,7 @@ public class TestUtil {
 	}
 
 	public static Wikipage createWikipage(Project project, String name, String text) {
+		initialize();
 		Wikipage wikipage = wikipageDao.newEntityInstance();
 		wikipage.setProject(project);
 		wikipage.setName(name);
@@ -134,6 +150,7 @@ public class TestUtil {
 	}
 
 	public static SimpleEvent createSimpleEvent(Project project, Date date, String label, String location, String note) {
+		initialize();
 		SimpleEvent event = simpleEventDao.newEntityInstance();
 		event.setProject(project);
 		event.setDate(date);
@@ -148,6 +165,7 @@ public class TestUtil {
 	}
 
 	public static Risk createRisk(Project project, int number, String label, String description) {
+		initialize();
 		Risk risk = riskDao.newEntityInstance();
 		risk.setProject(project);
 		risk.setNumber(number);
@@ -181,6 +199,7 @@ public class TestUtil {
 
 	public static BlogEntry createBlogEntry(Project project, int number, String title, String text,
 			DateAndTime dateAndTime) {
+		initialize();
 		BlogEntry entry = blogEntryDao.newEntityInstance();
 		entry.setProject(project);
 		entry.setNumber(number);

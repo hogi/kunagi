@@ -62,6 +62,12 @@ public abstract class GSprintDao
         reviewNotesCache = null;
         sprintsByRetrospectiveNoteCache.clear();
         retrospectiveNotesCache = null;
+        sprintsByProductOwnerCache.clear();
+        productOwnersCache = null;
+        sprintsByScrumMasterCache.clear();
+        scrumMastersCache = null;
+        sprintsByTeamMemberCache.clear();
+        teamMembersCache = null;
     }
 
     @Override
@@ -476,6 +482,126 @@ public abstract class GSprintDao
 
         public boolean test(Sprint e) {
             return e.isRetrospectiveNote(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - productOwners
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.admin.User,Set<Sprint>> sprintsByProductOwnerCache = new Cache<scrum.server.admin.User,Set<Sprint>>(
+            new Cache.Factory<scrum.server.admin.User,Set<Sprint>>() {
+                public Set<Sprint> create(scrum.server.admin.User productOwner) {
+                    return getEntities(new ContainsProductOwner(productOwner));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByProductOwner(scrum.server.admin.User productOwner) {
+        return sprintsByProductOwnerCache.get(productOwner);
+    }
+    private Set<scrum.server.admin.User> productOwnersCache;
+
+    public final Set<scrum.server.admin.User> getProductOwners() {
+        if (productOwnersCache == null) {
+            productOwnersCache = new HashSet<scrum.server.admin.User>();
+            for (Sprint e : getEntities()) {
+                productOwnersCache.addAll(e.getProductOwners());
+            }
+        }
+        return productOwnersCache;
+    }
+
+    private static class ContainsProductOwner implements Predicate<Sprint> {
+
+        private scrum.server.admin.User value;
+
+        public ContainsProductOwner(scrum.server.admin.User value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.containsProductOwner(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - scrumMasters
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.admin.User,Set<Sprint>> sprintsByScrumMasterCache = new Cache<scrum.server.admin.User,Set<Sprint>>(
+            new Cache.Factory<scrum.server.admin.User,Set<Sprint>>() {
+                public Set<Sprint> create(scrum.server.admin.User scrumMaster) {
+                    return getEntities(new ContainsScrumMaster(scrumMaster));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByScrumMaster(scrum.server.admin.User scrumMaster) {
+        return sprintsByScrumMasterCache.get(scrumMaster);
+    }
+    private Set<scrum.server.admin.User> scrumMastersCache;
+
+    public final Set<scrum.server.admin.User> getScrumMasters() {
+        if (scrumMastersCache == null) {
+            scrumMastersCache = new HashSet<scrum.server.admin.User>();
+            for (Sprint e : getEntities()) {
+                scrumMastersCache.addAll(e.getScrumMasters());
+            }
+        }
+        return scrumMastersCache;
+    }
+
+    private static class ContainsScrumMaster implements Predicate<Sprint> {
+
+        private scrum.server.admin.User value;
+
+        public ContainsScrumMaster(scrum.server.admin.User value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.containsScrumMaster(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - teamMembers
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.admin.User,Set<Sprint>> sprintsByTeamMemberCache = new Cache<scrum.server.admin.User,Set<Sprint>>(
+            new Cache.Factory<scrum.server.admin.User,Set<Sprint>>() {
+                public Set<Sprint> create(scrum.server.admin.User teamMember) {
+                    return getEntities(new ContainsTeamMember(teamMember));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByTeamMember(scrum.server.admin.User teamMember) {
+        return sprintsByTeamMemberCache.get(teamMember);
+    }
+    private Set<scrum.server.admin.User> teamMembersCache;
+
+    public final Set<scrum.server.admin.User> getTeamMembers() {
+        if (teamMembersCache == null) {
+            teamMembersCache = new HashSet<scrum.server.admin.User>();
+            for (Sprint e : getEntities()) {
+                teamMembersCache.addAll(e.getTeamMembers());
+            }
+        }
+        return teamMembersCache;
+    }
+
+    private static class ContainsTeamMember implements Predicate<Sprint> {
+
+        private scrum.server.admin.User value;
+
+        public ContainsTeamMember(scrum.server.admin.User value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.containsTeamMember(value);
         }
 
     }

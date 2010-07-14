@@ -308,6 +308,9 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setEditablePredicate("reviewEditable").setSearchable(true);
 			sprintModel.addStringProperty("retrospectiveNote").setRichtext(true).setTemplateAvailable(true)
 					.setEditablePredicate("retrospectiveEditable").setSearchable(true);
+			sprintModel.addSetReference("productOwners", getUserModel());
+			sprintModel.addSetReference("scrumMasters", getUserModel());
+			sprintModel.addSetReference("teamMembers", getUserModel());
 		}
 		return sprintModel;
 	}

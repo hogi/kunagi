@@ -4,6 +4,7 @@ import ilarkesto.base.time.Date;
 import ilarkesto.pdf.itext.PdfBuilder;
 
 import java.io.File;
+import java.util.Arrays;
 
 import org.testng.annotations.Test;
 
@@ -98,6 +99,9 @@ public class PdfTest {
 		sprint.setReviewNote("PO accepted everything.");
 		sprint.setRetrospectiveNote("Perfect sprint.");
 		sprint.setVelocity(666f);
+		sprint.setProductOwners(Arrays.asList(TestUtil.createUser("Cartman")));
+		sprint.setScrumMasters(Arrays.asList(TestUtil.createUser("Homer")));
+		sprint.setTeamMembers(Arrays.asList(TestUtil.createUser("Alfred"), TestUtil.createUser("Duke")));
 		createPdf(new SprintReportPdfCreator(sprint));
 	}
 
@@ -105,8 +109,7 @@ public class PdfTest {
 	public void wikipage() {
 		Wikipage wikipage = new Wikipage();
 		wikipage.setName("wikipage");
-		wikipage
-				.setText("= Test Wiki Page =\n\nTest wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. ");
+		wikipage.setText("= Test Wiki Page =\n\nTest wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. ");
 		createPdf(new WikipagePdfCreator(wikipage));
 	}
 

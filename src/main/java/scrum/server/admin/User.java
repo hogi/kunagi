@@ -7,6 +7,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.email.Eml;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.mail.Session;
@@ -137,6 +138,14 @@ public class User extends GUser {
 		colors.add("orange");
 		colors.add("green");
 		return colors;
+	}
+
+	public static List<String> getNames(Collection<User> users) {
+		List<String> names = new ArrayList<String>(users.size());
+		for (User user : users) {
+			names.add(user.getName());
+		}
+		return names;
 	}
 
 }

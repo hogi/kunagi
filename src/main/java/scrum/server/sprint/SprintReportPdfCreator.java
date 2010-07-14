@@ -28,6 +28,9 @@ public class SprintReportPdfCreator extends APdfCreator {
 		fields.field("Period").text(
 			sprint.getBegin() + " - " + sprint.getEnd() + " / " + sprint.getLengthInDays() + " days");
 		fields.field("Velocity").text(sprint.getVelocity() + " StoryPoints");
+		fields.field("Product Owner").text(sprint.getProductOwnersAsString());
+		fields.field("Scrum Master").text(sprint.getScrumMastersAsString());
+		fields.field("Product Owner").text(sprint.getTeamMembersAsString());
 
 		pdf.nl();
 		pdf.image(BurndownChart.createBurndownChartAsByteArray(sprint, 1000, 500)).setScaleByWidth(150f);

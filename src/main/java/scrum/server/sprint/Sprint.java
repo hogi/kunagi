@@ -1,5 +1,6 @@
 package scrum.server.sprint;
 
+import ilarkesto.base.Str;
 import ilarkesto.base.time.Date;
 import ilarkesto.core.logging.Log;
 
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import scrum.server.admin.User;
+import scrum.server.project.Project;
 import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
 
@@ -58,9 +60,25 @@ public class Sprint extends GSprint {
 			}
 			requirement.setSprint(null);
 		}
-		setVelocity(velocity);
-		getProject().setVelocity(Math.round(velocity));
 		setCompletedRequirementLabels(sb.toString());
+		setVelocity(velocity);
+		Project project = getProject();
+		project.setVelocity(Math.round(velocity));
+		setProductOwners(project.getProductOwners());
+		setScrumMasters(project.getScrumMasters());
+		setTeamMembers(project.getTeamMembers());
+	}
+
+	public String getProductOwnersAsString() {
+		return Str.concat(User.getNames(getProductOwners()), ", ");
+	}
+
+	public String getScrumMastersAsString() {
+		return Str.concat(User.getNames(getScrumMasters()), ", ");
+	}
+
+	public String getTeamMembersAsString() {
+		return Str.concat(User.getNames(getTeamMembers()), ", ");
 	}
 
 	public List<SprintDaySnapshot> getDaySnapshots() {

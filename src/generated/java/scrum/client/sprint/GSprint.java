@@ -570,6 +570,90 @@ public abstract class GSprint
 
     }
 
+    // --- productOwners ---
+
+    private Set<String> productOwnersIds = new HashSet<String>();
+
+    public final java.util.Set<scrum.client.admin.User> getProductOwners() {
+        if ( productOwnersIds.isEmpty()) return Collections.emptySet();
+        return getDao().getUsers(this.productOwnersIds);
+    }
+
+    public final void setProductOwners(Collection<scrum.client.admin.User> values) {
+        productOwnersIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("productOwnersIds", this.productOwnersIds);
+    }
+
+    public final void addProductOwner(scrum.client.admin.User productOwner) {
+        String id = productOwner.getId();
+        if (productOwnersIds.contains(id)) return;
+        productOwnersIds.add(id);
+        propertyChanged("productOwnersIds", this.productOwnersIds);
+    }
+
+    public final void removeProductOwner(scrum.client.admin.User productOwner) {
+        String id = productOwner.getId();
+        if (!productOwnersIds.contains(id)) return;
+        productOwnersIds.remove(id);
+        propertyChanged("productOwnersIds", this.productOwnersIds);
+    }
+
+    // --- scrumMasters ---
+
+    private Set<String> scrumMastersIds = new HashSet<String>();
+
+    public final java.util.Set<scrum.client.admin.User> getScrumMasters() {
+        if ( scrumMastersIds.isEmpty()) return Collections.emptySet();
+        return getDao().getUsers(this.scrumMastersIds);
+    }
+
+    public final void setScrumMasters(Collection<scrum.client.admin.User> values) {
+        scrumMastersIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("scrumMastersIds", this.scrumMastersIds);
+    }
+
+    public final void addScrumMaster(scrum.client.admin.User scrumMaster) {
+        String id = scrumMaster.getId();
+        if (scrumMastersIds.contains(id)) return;
+        scrumMastersIds.add(id);
+        propertyChanged("scrumMastersIds", this.scrumMastersIds);
+    }
+
+    public final void removeScrumMaster(scrum.client.admin.User scrumMaster) {
+        String id = scrumMaster.getId();
+        if (!scrumMastersIds.contains(id)) return;
+        scrumMastersIds.remove(id);
+        propertyChanged("scrumMastersIds", this.scrumMastersIds);
+    }
+
+    // --- teamMembers ---
+
+    private Set<String> teamMembersIds = new HashSet<String>();
+
+    public final java.util.Set<scrum.client.admin.User> getTeamMembers() {
+        if ( teamMembersIds.isEmpty()) return Collections.emptySet();
+        return getDao().getUsers(this.teamMembersIds);
+    }
+
+    public final void setTeamMembers(Collection<scrum.client.admin.User> values) {
+        teamMembersIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("teamMembersIds", this.teamMembersIds);
+    }
+
+    public final void addTeamMember(scrum.client.admin.User teamMember) {
+        String id = teamMember.getId();
+        if (teamMembersIds.contains(id)) return;
+        teamMembersIds.add(id);
+        propertyChanged("teamMembersIds", this.teamMembersIds);
+    }
+
+    public final void removeTeamMember(scrum.client.admin.User teamMember) {
+        String id = teamMember.getId();
+        if (!teamMembersIds.contains(id)) return;
+        teamMembersIds.remove(id);
+        propertyChanged("teamMembersIds", this.teamMembersIds);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -585,6 +669,9 @@ public abstract class GSprint
         planningNote  = (java.lang.String) props.get("planningNote");
         reviewNote  = (java.lang.String) props.get("reviewNote");
         retrospectiveNote  = (java.lang.String) props.get("retrospectiveNote");
+        productOwnersIds = (Set<String>) props.get("productOwnersIds");
+        scrumMastersIds = (Set<String>) props.get("scrumMastersIds");
+        teamMembersIds = (Set<String>) props.get("teamMembersIds");
     }
 
     @Override
@@ -600,6 +687,9 @@ public abstract class GSprint
         properties.put("planningNote", this.planningNote);
         properties.put("reviewNote", this.reviewNote);
         properties.put("retrospectiveNote", this.retrospectiveNote);
+        properties.put("productOwnersIds", this.productOwnersIds);
+        properties.put("scrumMastersIds", this.scrumMastersIds);
+        properties.put("teamMembersIds", this.teamMembersIds);
     }
 
     @Override
