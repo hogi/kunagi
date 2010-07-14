@@ -2,6 +2,8 @@ package scrum.server.admin;
 
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
+import ilarkesto.io.IO;
+import ilarkesto.ui.web.HtmlRenderer;
 
 import java.io.IOException;
 
@@ -36,7 +38,27 @@ public class ConfirmEmailServlet extends AHttpServlet {
 		user.setEmailVerified(true);
 		webApplication.getTransactionService().commit();
 		log.info("Email verified:", user);
-		resp.sendRedirect(webApplication.getBaseUrl());
+
+		returnConfirmationPage(resp);
+	}
+
+	private void returnConfirmationPage(HttpServletResponse resp) throws IOException {
+		resp.setContentType("text/html");
+		String url = webApplication.getBaseUrl();
+		HtmlRenderer html = new HtmlRenderer(resp.getWriter(), IO.UTF_8);
+		html.startHTML();
+		html.startHEAD("Email confirmed", "en");
+		html.METArefresh(3, url);
+		html.endHEAD();
+		html.startBODY();
+		html.startDIV().setStyle("width: 200px", "border: 1px solid lightgray", "padding: 10px", "margin: 100px auto",
+			"text-align: center", "font-family: sans-serif;");
+		html.text("Email confirmed. ");
+		html.A(url, "Continue...");
+		html.endDIV();
+		html.endBODY();
+		html.endHTML();
+		html.flush();
 	}
 
 	@Override
