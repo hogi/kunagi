@@ -1,9 +1,0 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="kunagi" verbose="2">
-  <test name="all">
-    <packages>
-      <package name="scrum.client.wiki"/>
-      <package name="scrum.server.project"/>
-    </packages>
-  </test>
-</suite>

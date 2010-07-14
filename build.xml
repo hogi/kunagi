@@ -2,26 +2,26 @@
 
 <project name="scrum" default="war" basedir=".">
 
-	<target name="update">
-		<exec executable="svn">
-			<arg value="update" />
-		</exec>
-		<exec executable="svn" dir="../ilarkesto">
-			<arg value="update" />
-		</exec>
-	</target>
+    <target name="update">
+        <exec executable="svn">
+            <arg value="update" />
+        </exec>
+        <exec executable="svn" dir="../ilarkesto">
+            <arg value="update" />
+        </exec>
+    </target>
 
-	<target name="init">
-		<tstamp>
-			<format property="build.tstamp" pattern="yyyy-MM-dd HH:mm" locale="de,DE" />
-		</tstamp>
-	</target>
+    <target name="init">
+        <tstamp>
+            <format property="build.tstamp" pattern="yyyy-MM-dd HH:mm" locale="de,DE" />
+        </tstamp>
+    </target>
 
-	<target name="clean">
-		<delete dir="build" />
-	</target>
-	
-	<target name="compile-java" depends="clean, init">
+    <target name="clean">
+        <delete dir="build" />
+    </target>
+
+    <target name="compile-java" depends="clean, init">
         <mkdir dir="build/webapp/WEB-INF/classes" />
         <copy todir="build/webapp/WEB-INF/classes">
             <fileset dir="src/main/java" />
@@ -29,11 +29,9 @@
             <fileset dir="../ilarkesto/src/main/java" />
         </copy>
         <javac srcdir="build/webapp/WEB-INF/classes" destdir="build/webapp/WEB-INF/classes" encoding="UTF-8" nowarn="true" debug="true" debuglevel="lines,vars,source">
-            <classpath>
-                <fileset dir="../ilarkesto/lib" />
-            </classpath>
+            <classpath> <fileset dir="../ilarkesto/lib" /> </classpath>
         </javac>
-	</target>
+    </target>
 
     <target name="compile-gwt" depends="clean, init">
         <java classname="com.google.gwt.dev.Compiler" failonerror="true" fork="true">
@@ -49,84 +47,107 @@
             <classpath location="../ilarkesto/lib/gwt-dev.jar" />
         </java>
     </target>
-	
-	<target name="compile" depends="compile-java, compile-gwt">
-		<replace file="build/webapp/WEB-INF/classes/scrum/server/build.properties" token="@build-date@" value="${build.tstamp}" />
-	</target>
 
-	<target name="webapp" depends="compile">
-		<copy todir="build/webapp" verbose="true">
-			<fileset dir="src/main/webapp" />
-			<fileset file="README" />
-			<fileset dir="." includes="license.*" />
-		</copy>
-		<copy todir="build/webapp/WEB-INF/lib" verbose="true">
-			<fileset dir="../ilarkesto/lib">
+	<target name="compile-test" depends="compile-java">
+        <mkdir dir="build/test-classes" />
+        <javac srcdir="src/test/java" destdir="build/test-classes" encoding="UTF-8" nowarn="true" debug="true" debuglevel="lines,vars,source">
+            <classpath>
+                <path location="build/webapp/WEB-INF/classes" />
+                <fileset dir="../ilarkesto/lib" />
+            </classpath>
+        </javac>
+	</target>
+	
+    <target name="compile" depends="compile-java, compile-gwt">
+       <replace file="build/webapp/WEB-INF/classes/scrum/server/build.properties" token="@build-date@" value="${build.tstamp}" />
+    </target>
+
+    <target name="test" depends="clean, compile-test">
+        <taskdef name="testng" classpath="../ilarkesto/lib/testng-5.8.jar" classname="org.testng.TestNGAntTask" />
+        <testng outputDir="build/test-output" verbose="2" failureProperty="test.failed">
+            <classfileset dir="build/test-classes" includes="**/*.class" />
+            <classpath>
+                <path location="build/webapp/WEB-INF/classes" />
+                <path location="build/test-classes" />
+                <fileset dir="../ilarkesto/lib" />
+            </classpath>
+        </testng>
+        <fail message="Test failed! Check test reports." if="test.failed" />
+    </target>
+
+    <target name="webapp" depends="compile, test">
+        <copy todir="build/webapp" verbose="true">
+            <fileset dir="src/main/webapp" />
+            <fileset file="README" />
+            <fileset dir="." includes="license.*" />
+        </copy>
+        <copy todir="build/webapp/WEB-INF/lib" verbose="true">
+            <fileset dir="../ilarkesto/lib">
                 <exclude name="**/src/" />
                 <exclude name="**/javadoc/" />
-				<exclude name="**/gwt-dev.jar" />
+                <exclude name="**/gwt-dev.jar" />
                 <exclude name="**/servlet-api-*.jar" />
-				<exclude name="**/google-collect-*.jar" />
-				<exclude name="**/commons-io-*.jar" />
+                <exclude name="**/google-collect-*.jar" />
+                <exclude name="**/commons-io-*.jar" />
                 <exclude name="**/commons-logging-*.jar" />
-				<exclude name="**/junit-*.jar" />
+                <exclude name="**/junit-*.jar" />
                 <exclude name="**/testng-*.jar" />
                 <exclude name="**/httpunit-*.jar" />
                 <exclude name="**/tidy*.jar" />
                 <exclude name="**/oacurl-*.jar" />
                 <exclude name="**/bsh-*.jar" />
-				<exclude name="**/gdata-*.jar" />
-				<exclude name="**/jaudiotagger-*.jar" />
-				<exclude name="**/jcip-annotations.jar" />
-			</fileset>
-		</copy>
-	</target>
+                <exclude name="**/gdata-*.jar" />
+                <exclude name="**/jaudiotagger-*.jar" />
+                <exclude name="**/jcip-annotations.jar" />
+            </fileset>
+        </copy>
+    </target>
 
-	<target name="war" depends="webapp">
-		<war destfile="build/kunagi.war" basedir="build/webapp" />
-	</target>
+    <target name="war" depends="webapp">
+            <war destfile="build/kunagi.war" basedir="build/webapp" />
+    </target>
 
-	<target name="install-scrum-latest" depends="war">
-		<copy tofile="/home/scrum-latest/tomcat/webapps/scrum-latest.war" file="build/kunagi.war" />
-	</target>
-	
-	<target name="install-homepage" depends="war">
-		<mkdir dir="/var/www/servisto.de/projects/scrum" />
-		<copy todir="/var/www/servisto.de/projects/scrum">
-			<fileset dir="src/projectHomepage/html" />
-		</copy>
+    <target name="install-scrum-latest" depends="war">
+            <copy tofile="/home/scrum-latest/tomcat/webapps/scrum-latest.war" file="build/kunagi.war" />
+    </target>
+
+    <target name="install-homepage" depends="war">
+        <mkdir dir="/var/www/servisto.de/projects/scrum" />
+        <copy todir="/var/www/servisto.de/projects/scrum">
+            <fileset dir="src/projectHomepage/html" />
+        </copy>
         <mkdir dir="/var/www/servisto.de/projects/scrum/velocity" />
         <copy todir="/var/www/servisto.de/projects/scrum/velocity">
             <fileset dir="src/projectHomepage/velocity" />
         </copy>
-	</target>
-	
-	<target name="deploy" depends="install-homepage,install-scrum-latest">
-	</target>
+    </target>
 
-	<target name="sourceforge-upload">
+    <target name="deploy" depends="install-homepage,install-scrum-latest">
+    </target>
+
+    <target name="sourceforge-upload">
         <exec executable="scp" failonerror="true">
             <arg line="build/kunagi.war koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/kunagi.war" />
         </exec>
-	</target>
-	
-	<target name="release" depends="sourceforge-upload">
-		<copy file="build/kunagi.war" tofile="/var/www/servisto.de/projects/scrum/kunagi.war" />
-		<copy file="build/kunagi.war" tofile="/home/scrum/tomcat/webapps/scrum.war" />
-		<copy file="build/kunagi.war" tofile="/home/kunagi-demo/tomcat/webapps/kunagi-demo.war" />
-	</target>
+    </target>
 
-	<target name="sourceforge">
-		<exec executable="git" dir="sourceforge-svn" failonerror="true">
-			<arg line="svn rebase" />
-		</exec>
-		<exec executable="git" dir="sourceforge-svn" failonerror="true">
-			<arg line="svn dcommit" />
-		</exec>
-	</target>
+    <target name="release" depends="sourceforge-upload">
+        <copy file="build/kunagi.war" tofile="/var/www/servisto.de/projects/scrum/kunagi.war" />
+        <copy file="build/kunagi.war" tofile="/home/scrum/tomcat/webapps/scrum.war" />
+        <copy file="build/kunagi.war" tofile="/home/kunagi-demo/tomcat/webapps/kunagi-demo.war" />
+    </target>
 
-	<target name="continousIntegrationBuild" depends="deploy" />
+    <target name="sourceforge">
+        <exec executable="git" dir="sourceforge-svn" failonerror="true">
+            <arg line="svn rebase" />
+        </exec>
+        <exec executable="git" dir="sourceforge-svn" failonerror="true">
+            <arg line="svn dcommit" />
+        </exec>
+    </target>
 
-	<target name="continousIntegrationRelease" depends="release" />
+    <target name="continousIntegrationBuild" depends="deploy" />
+
+    <target name="continousIntegrationRelease" depends="release" />
 
 </project>
