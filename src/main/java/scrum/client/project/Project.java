@@ -62,7 +62,8 @@ public class Project extends GProject implements ForumSupport {
 
 	@Override
 	public boolean isEditable() {
-		return isAdmin(Scope.get().getComponent(Auth.class).getUser());
+		User currentUser = Scope.get().getComponent(Auth.class).getUser();
+		return currentUser.isAdmin() || isAdmin(currentUser);
 	}
 
 	public List<Issue> getClaimedBugs(User user) {

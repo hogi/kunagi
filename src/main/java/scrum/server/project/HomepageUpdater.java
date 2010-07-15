@@ -165,6 +165,8 @@ public class HomepageUpdater {
 		List<Requirement> requirements = new ArrayList<Requirement>(sprint.getRequirements());
 		context.put("label", sprint.getLabel());
 		context.put("goal", wiki2html(sprint.getGoal()));
+		context.put("begin", sprint.getBegin());
+		context.put("end", sprint.getEnd());
 		Collections.sort(requirements, project.getRequirementsOrderComparator());
 		for (Requirement requirement : requirements) {
 			fillStory(context.addSubContext("stories"), requirement);
