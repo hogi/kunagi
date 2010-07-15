@@ -4,6 +4,7 @@ import ilarkesto.base.Str;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
+import ilarkesto.io.IO;
 import ilarkesto.velocity.ContextBuilder;
 import ilarkesto.velocity.Velocity;
 
@@ -11,13 +12,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 import scrum.client.wiki.HtmlContext;
 import scrum.client.wiki.WikiModel;
 import scrum.client.wiki.WikiParser;
 import scrum.server.collaboration.Wikipage;
+import scrum.server.common.BurndownChart;
 import scrum.server.issues.Issue;
 import scrum.server.pr.BlogEntry;
+import scrum.server.sprint.Sprint;
 
 public class HomepageUpdater {
 
@@ -28,6 +32,7 @@ public class HomepageUpdater {
 	private File templateDir;
 	private File outputDir;
 	private Velocity velocity;
+	private Properties properties;
 
 	private HomepageUpdater(Project project, String templatePath, String outputPath) {
 		super();
@@ -37,6 +42,18 @@ public class HomepageUpdater {
 		this.outputDir = new File(outputPath);
 		htmlContext = new MyHtmlContext(project);
 		velocity = new Velocity(templateDir);
+
+		loadProperties();
+	}
+
+	public static void updateHomepage(String templatePath, String outputPath, Project project) {
+		HomepageUpdater updater = new HomepageUpdater(project, templatePath, outputPath);
+		synchronized (project) {
+			updater.processDefaultTemplates();
+			updater.processIssueTemplates();
+			updater.processStoryTemplates();
+			updater.createSprintBurndownChart(700, 200);
+		}
 	}
 
 	private void processDefaultTemplates() {
@@ -82,6 +99,12 @@ public class HomepageUpdater {
 		}
 	}
 
+	private void createSprintBurndownChart(int width, int height) {
+		byte[] imageData = BurndownChart.createBurndownChartAsByteArray(project.getCurrentSprint(), width, height);
+		IO.copyDataToFile(imageData,
+			new File(outputDir.getPath() + "/sprint-burndown-" + width + "x" + height + ".png"));
+	}
+
 	private void processEntityTemplate(ContextBuilder context, String reference) {
 		String prefix = reference.substring(0, 3);
 		File[] templateFiles = templateDir.listFiles();
@@ -114,8 +137,8 @@ public class HomepageUpdater {
 	private void fillIssue(ContextBuilder context, Issue issue) {
 		context.put("reference", issue.getReference());
 		context.put("label", issue.getLabel());
-		context.put("description", wiki2html(issue.getDescription(), htmlContext));
-		context.put("statement", wiki2html(issue.getStatement(), htmlContext));
+		context.put("description", wiki2html(issue.getDescription()));
+		context.put("statement", wiki2html(issue.getStatement()));
 	}
 
 	private void fillBlog(ContextBuilder context) {
@@ -130,7 +153,7 @@ public class HomepageUpdater {
 	private void fillBlogEntry(ContextBuilder context, BlogEntry entry) {
 		context.put("reference", entry.getReference());
 		context.put("title", entry.getTitle());
-		context.put("text", wiki2html(entry.getText(), htmlContext));
+		context.put("text", wiki2html(entry.getText()));
 		context.put("plainText", wiki2text(entry.getText()));
 		DateAndTime date = entry.getDateAndTime();
 		context.put("date", date.toString(Date.FORMAT_LONGMONTH_DAY_YEAR));
@@ -138,7 +161,10 @@ public class HomepageUpdater {
 	}
 
 	private void fillSprintBacklog(ContextBuilder context) {
-		List<Requirement> requirements = new ArrayList<Requirement>(project.getCurrentSprint().getRequirements());
+		Sprint sprint = project.getCurrentSprint();
+		List<Requirement> requirements = new ArrayList<Requirement>(sprint.getRequirements());
+		context.put("label", sprint.getLabel());
+		context.put("goal", wiki2html(sprint.getGoal()));
 		Collections.sort(requirements, project.getRequirementsOrderComparator());
 		for (Requirement requirement : requirements) {
 			fillStory(context.addSubContext("stories"), requirement);
@@ -157,29 +183,20 @@ public class HomepageUpdater {
 	private void fillStory(ContextBuilder context, Requirement requirement) {
 		context.put("reference", requirement.getReference());
 		context.put("label", requirement.getLabel());
-		context.put("description", wiki2html(requirement.getDescription(), htmlContext));
+		context.put("description", wiki2html(requirement.getDescription()));
 	}
 
 	private void fillWiki(ContextBuilder context) {
 		for (Wikipage page : project.getWikipages()) {
-			context.put(page.getName(), wiki2html(page.getText(), htmlContext));
+			context.put(page.getName(), wiki2html(page.getText()));
 		}
 	}
 
 	private void fillProject(ContextBuilder context) {
 		context.put("label", project.getLabel());
 		context.put("shortDescription", project.getShortDescription());
-		context.put("description", wiki2html(project.getDescription(), htmlContext));
-		context.put("longDescription", wiki2html(project.getLongDescription(), htmlContext));
-	}
-
-	public static void updateHomepage(String templatePath, String outputPath, Project project) {
-		HomepageUpdater updater = new HomepageUpdater(project, templatePath, outputPath);
-		synchronized (project) {
-			updater.processDefaultTemplates();
-			updater.processIssueTemplates();
-			updater.processStoryTemplates();
-		}
+		context.put("description", wiki2html(project.getDescription()));
+		context.put("longDescription", wiki2html(project.getLongDescription()));
 	}
 
 	public static void updateHomepage(Project project) {
@@ -193,16 +210,26 @@ public class HomepageUpdater {
 		if (velocityDir.exists()) updateHomepage(velocityDir.getPath(), homepageDir.getPath(), project);
 	}
 
-	public static String wiki2html(String wikitext, HtmlContext context) {
+	public String wiki2html(String wikitext) {
 		if (Str.isBlank(wikitext)) return "";
 		WikiParser wikiParser = new WikiParser(wikitext);
 		WikiModel model = wikiParser.parse();
-		return model.toHtml(context);
+		return model.toHtml(htmlContext);
 	}
 
 	public static String wiki2text(String wikitext) {
 		if (Str.isBlank(wikitext)) return "";
 		return wikitext;
+	}
+
+	private void loadProperties() {
+		File file = new File(outputDir.getPath() + "/kunagi.properties");
+		if (!file.exists()) file = new File(templateDir.getPath() + "/kunagi.properties");
+		if (!file.exists()) {
+			properties = new Properties();
+			return;
+		}
+		properties = IO.loadProperties(file, IO.UTF_8);
 	}
 
 	private static class MyHtmlContext implements HtmlContext {

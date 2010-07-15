@@ -2,16 +2,33 @@
 
 #header("development")
 
+
+<div class="section">
+    <h2>Scrum with Kunagi</h2>
+    <p>Since the project was started in September 2008, we are doing Scrum. After a year of work,
+        Kunagi was good enough to give it a try. From the beginning it was perfect for our needs.
+        Now Kunagi is able to export ist contents, so we can share our progress and plans with you.</p>
+</div>
+
+<div class="separator"></div>
+
+
 <div class="section">
     <h2>Sprint Backlog</h2>
+    <h3>Goal for the current Sprint</h3>
+    <p>$sprintBacklog.goal</p>
+    <h3>Stories the Team has committed to</h3>
     <ul>
     #foreach( $story in $sprintBacklog.stories )
         <li><a href="${story.reference}.html">$story.reference</a> $story.label</li>
     #end
     </ul>
+    <h3>Current Burndown</h3>
+    <img src="sprint-burndown-700x200.png" alt="current sprint burndown chart">
 </div>
 
 <div class="separator"></div>
+
 
 <div class="section">
     <h2>Product Backlog</h2>
@@ -24,6 +41,7 @@
 </div>
 
 <div class="separator"></div>
+
 
 <div class="section">
     <h2>Development Team</h2>
@@ -38,6 +56,7 @@
 </div>
 
 <div class="separator"></div>
+
 
 <div class="section">
     <h2>Donations</h2>
@@ -66,6 +85,7 @@
 </div>
 
 <div class="separator"></div>
+
 
 <div class="section">
     <h2>Infos for Software Developers</h2>

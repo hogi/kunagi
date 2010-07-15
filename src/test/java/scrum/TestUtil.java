@@ -5,6 +5,7 @@ import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.base.time.Time;
 import ilarkesto.core.logging.Log;
+import ilarkesto.persistence.DaoService;
 import ilarkesto.persistence.EntityStore;
 import ilarkesto.persistence.FileEntityStore;
 import ilarkesto.persistence.TransactionService;
@@ -28,13 +29,17 @@ import scrum.server.risks.Risk;
 import scrum.server.risks.RiskDao;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintDao;
+import scrum.server.sprint.SprintDaySnapshot;
 import scrum.server.sprint.SprintDaySnapshotDao;
+import scrum.server.sprint.Task;
+import scrum.server.sprint.TaskDao;
 
 public class TestUtil {
 
 	private static boolean initialized;
 	private static EntityStore entityStore;
 	private static TransactionService transactionService;
+	private static DaoService daoService;
 	private static SprintDaySnapshotDao sprintDaySnapshotDao;
 	private static RequirementDao requirementDao;
 	private static ProjectDao projectDao;
@@ -46,6 +51,7 @@ public class TestUtil {
 	private static BlogEntryDao blogEntryDao;
 	private static IssueDao issueDao;
 	private static UserDao userDao;
+	private static TaskDao taskDao;
 
 	private static void initialize() {
 		if (initialized) return;
@@ -58,50 +64,73 @@ public class TestUtil {
 		transactionService = new TransactionService();
 		transactionService.setEntityStore(entityStore);
 
+		daoService = new DaoService();
+
 		userDao = new UserDao();
 		userDao.setTransactionService(transactionService);
+		Sprint.setUserDao(userDao);
+
+		taskDao = new TaskDao();
+		taskDao.setTransactionService(transactionService);
+		Sprint.setTaskDao(taskDao);
+		Project.setTaskDao(taskDao);
 
 		wikipageDao = new WikipageDao();
 		wikipageDao.setTransactionService(transactionService);
+		Project.setWikipageDao(wikipageDao);
 
 		simpleEventDao = new SimpleEventDao();
 		simpleEventDao.setTransactionService(transactionService);
+		Project.setSimpleEventDao(simpleEventDao);
 
 		riskDao = new RiskDao();
 		riskDao.setTransactionService(transactionService);
+		Project.setRiskDao(riskDao);
 
 		impedimentDao = new ImpedimentDao();
 		impedimentDao.setTransactionService(transactionService);
+		Project.setImpedimentDao(impedimentDao);
 
 		requirementDao = new RequirementDao();
 		requirementDao.setTransactionService(transactionService);
+		Sprint.setRequirementDao(requirementDao);
+		Project.setRequirementDao(requirementDao);
 
 		sprintDaySnapshotDao = new SprintDaySnapshotDao();
 		sprintDaySnapshotDao.setTransactionService(transactionService);
+		sprintDaySnapshotDao.setDaoService(daoService);
+		Sprint.setSprintDaySnapshotDao(sprintDaySnapshotDao);
+		Project.setSprintDaySnapshotDao(sprintDaySnapshotDao);
 
 		sprintDao = new SprintDao();
 		sprintDao.setTransactionService(transactionService);
-		Sprint.setSprintDaySnapshotDao(sprintDaySnapshotDao);
-		Sprint.setRequirementDao(requirementDao);
-		Sprint.setUserDao(userDao);
+		SprintDaySnapshot.setSprintDao(sprintDao);
+		Project.setSprintDao(sprintDao);
 
 		blogEntryDao = new BlogEntryDao();
 		blogEntryDao.setTransactionService(transactionService);
+		Project.setBlogEntryDao(blogEntryDao);
 
 		issueDao = new IssueDao();
 		issueDao.setTransactionService(transactionService);
+		Project.setIssueDao(issueDao);
 
 		projectDao = new ProjectDao();
 		projectDao.setTransactionService(transactionService);
-		Project.setWikipageDao(wikipageDao);
-		Project.setSprintDaySnapshotDao(sprintDaySnapshotDao);
-		Project.setRequirementDao(requirementDao);
-		Project.setSprintDao(sprintDao);
-		Project.setImpedimentDao(impedimentDao);
-		Project.setRiskDao(riskDao);
-		Project.setSimpleEventDao(simpleEventDao);
-		Project.setBlogEntryDao(blogEntryDao);
-		Project.setIssueDao(issueDao);
+	}
+
+	public static Task createTask(Requirement requirement, int number, int work) {
+		return createTask(requirement, number, Str.generateRandomSentence(2, 6), work);
+	}
+
+	public static Task createTask(Requirement requirement, int number, String label, int work) {
+		initialize();
+		Task task = taskDao.newEntityInstance();
+		task.setRequirement(requirement);
+		task.setNumber(number);
+		task.setLabel(label);
+		task.setRemainingWork(work);
+		return task;
 	}
 
 	public static User createUser(String name) {

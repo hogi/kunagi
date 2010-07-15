@@ -11,8 +11,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
@@ -84,7 +86,7 @@ public class BurndownChart {
 			Date date = Date.today();
 			date = Date.latest(date, sprint.getBegin());
 			date = Date.earliest(date, sprint.getEnd());
-			sprint.getDaySnapshot(date).update();
+			sprint.getDaySnapshot(date).updateWithCurrentSprint();
 			snapshots = sprint.getDaySnapshots();
 		}
 
@@ -132,7 +134,7 @@ public class BurndownChart {
 			tick *= 2;
 		}
 
-		JFreeChart chart = createSprintBurndownChart(data, "Date", "Work", firstDay, lastDay, 1, 3, max * 1.1, tick);
+		JFreeChart chart = createSprintBurndownChart(data, null, null, firstDay, lastDay, 1, 3, max * 1.1, tick);
 		try {
 			ChartUtilities.writeScaledChartAsPNG(out, chart, width, height, 1, 1);
 			out.flush();
@@ -157,33 +159,33 @@ public class BurndownChart {
 		renderer.setSeriesPaint(2, COLOR_OPTIMUM_LINE);
 		renderer.setSeriesStroke(2, new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
 
-		DateAxis axis = new DateAxis(dateAxisLabel);
-		axis.setLabelFont(new Font(axis.getLabelFont().getName(), Font.PLAIN, 7));
-		axis.setDateFormatOverride(Date.FORMAT_DAY_MONTH);
-		axis.setTickUnit(new DateTickUnit(DateTickUnit.DAY, dateLabelTickUnit));
-		axis.setAxisLineVisible(false);
+		DateAxis domainAxis1 = new DateAxis(dateAxisLabel);
+		domainAxis1.setLabelFont(new Font(domainAxis1.getLabelFont().getName(), Font.PLAIN, 7));
+		domainAxis1.setDateFormatOverride(new SimpleDateFormat("d.", Locale.US));
+		domainAxis1.setTickUnit(new DateTickUnit(DateTickUnit.DAY, dateLabelTickUnit));
+		domainAxis1.setAxisLineVisible(false);
 		Range range = new Range(firstDay.toMillis(), lastDay.toMillis());
-		axis.setRange(range);
+		domainAxis1.setRange(range);
 
-		DateAxis axis2 = new DateAxis();
-		axis2.setTickUnit(new DateTickUnit(DateTickUnit.DAY, dateMarkTickUnit));
-		axis2.setTickMarksVisible(false);
-		axis2.setTickLabelsVisible(false);
-		axis2.setRange(range);
+		DateAxis domainAxis2 = new DateAxis();
+		domainAxis2.setTickUnit(new DateTickUnit(DateTickUnit.DAY, dateMarkTickUnit));
+		domainAxis2.setTickMarksVisible(false);
+		domainAxis2.setTickLabelsVisible(false);
+		domainAxis2.setRange(range);
 
-		chart.getXYPlot().setDomainAxis(0, axis2);
-		chart.getXYPlot().setDomainAxis(1, axis);
+		chart.getXYPlot().setDomainAxis(0, domainAxis2);
+		chart.getXYPlot().setDomainAxis(1, domainAxis1);
 		chart.getXYPlot().setDomainAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
 
-		NumberAxis axis3 = new NumberAxis(valueAxisLabel);
-		axis3.setLabelFont(new Font(axis3.getLabelFont().getName(), Font.PLAIN, 7));
-		axis3.setNumberFormatOverride(NumberFormat.getIntegerInstance());
-		axis3.setTickUnit(new NumberTickUnit(valueLabelTickUnit));
+		NumberAxis rangeAxis = new NumberAxis(valueAxisLabel);
+		rangeAxis.setLabelFont(new Font(rangeAxis.getLabelFont().getName(), Font.PLAIN, 6));
+		rangeAxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
+		rangeAxis.setTickUnit(new NumberTickUnit(valueLabelTickUnit));
 
-		axis3.setLowerBound(0);
-		axis3.setUpperBound(upperBoundary);
+		rangeAxis.setLowerBound(0);
+		rangeAxis.setUpperBound(upperBoundary);
 
-		chart.getXYPlot().setRangeAxis(axis3);
+		chart.getXYPlot().setRangeAxis(rangeAxis);
 
 		chart.getXYPlot().getRenderer().setBaseStroke(new BasicStroke(2f));
 

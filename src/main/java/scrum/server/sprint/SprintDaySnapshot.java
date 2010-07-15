@@ -6,7 +6,7 @@ import scrum.server.project.Project;
 
 public class SprintDaySnapshot extends GSprintDaySnapshot implements BurndownSnapshot {
 
-	public void update() {
+	public void updateWithCurrentSprint() {
 		setRemainingWork(getSprint().getRemainingWork());
 		setBurnedWork(getSprint().getBurnedWork());
 	}

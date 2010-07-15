@@ -298,7 +298,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Task) {
 			// update sprint day snapshot before change
 			Task task = (Task) entity;
-			task.getRequirement().getSprint().getDaySnapshot(Date.today()).update();
+			task.getRequirement().getSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
 		}
 
 		Sprint previousRequirementSprint = null;
@@ -341,7 +341,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			// update sprint day snapshot after change
 			Task task = (Task) entity;
 			Requirement requirement = task.getRequirement();
-			requirement.getSprint().getDaySnapshot(Date.today()).update();
+			requirement.getSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
 
 			if (task.isClosed() && properties.containsKey("remainingWork")) {
 				String event = currentUser.getName() + " closed " + task.getReferenceAndLabel();
