@@ -655,6 +655,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		} else if (reference.startsWith(scrum.client.issues.Issue.REFERENCE_PREFIX)) {
 			conversation.sendToClient(project.getIssueByNumber(number));
 			return;
+		} else if (reference.startsWith(scrum.client.sprint.Sprint.REFERENCE_PREFIX)) {
+			conversation.sendToClient(project.getSprintByNumber(number));
+			return;
 		} else if (reference.startsWith(scrum.client.collaboration.Subject.REFERENCE_PREFIX)) {
 			conversation.sendToClient(project.getSubjectByNumber(number));
 			return;

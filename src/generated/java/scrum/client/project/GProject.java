@@ -621,6 +621,64 @@ public abstract class GProject
         propertyChanged("urgentIssuesOrderIds", this.urgentIssuesOrderIds);
     }
 
+    // --- lastSprintNumber ---
+
+    private int lastSprintNumber ;
+
+    public final int getLastSprintNumber() {
+        return this.lastSprintNumber ;
+    }
+
+    public final Project setLastSprintNumber(int lastSprintNumber) {
+        if (isLastSprintNumber(lastSprintNumber)) return (Project)this;
+        this.lastSprintNumber = lastSprintNumber ;
+        propertyChanged("lastSprintNumber", this.lastSprintNumber);
+        return (Project)this;
+    }
+
+    public final boolean isLastSprintNumber(int lastSprintNumber) {
+        return equals(this.lastSprintNumber, lastSprintNumber);
+    }
+
+    private transient LastSprintNumberModel lastSprintNumberModel;
+
+    public LastSprintNumberModel getLastSprintNumberModel() {
+        if (lastSprintNumberModel == null) lastSprintNumberModel = createLastSprintNumberModel();
+        return lastSprintNumberModel;
+    }
+
+    protected LastSprintNumberModel createLastSprintNumberModel() { return new LastSprintNumberModel(); }
+
+    protected class LastSprintNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getLastSprintNumber();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setLastSprintNumber(value);
+        }
+
+            @Override
+            public void increment() {
+                setLastSprintNumber(getLastSprintNumber() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setLastSprintNumber(getLastSprintNumber() - 1);
+            }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- lastTaskNumber ---
 
     private int lastTaskNumber ;
@@ -1501,6 +1559,7 @@ public abstract class GProject
         velocity  = (java.lang.Integer) props.get("velocity");
         requirementsOrderIds  = (java.util.List<java.lang.String>) props.get("requirementsOrderIds");
         urgentIssuesOrderIds  = (java.util.List<java.lang.String>) props.get("urgentIssuesOrderIds");
+        lastSprintNumber  = (Integer) props.get("lastSprintNumber");
         lastTaskNumber  = (Integer) props.get("lastTaskNumber");
         lastRequirementNumber  = (Integer) props.get("lastRequirementNumber");
         lastQualityNumber  = (Integer) props.get("lastQualityNumber");
@@ -1539,6 +1598,7 @@ public abstract class GProject
         properties.put("velocity", this.velocity);
         properties.put("requirementsOrderIds", this.requirementsOrderIds);
         properties.put("urgentIssuesOrderIds", this.urgentIssuesOrderIds);
+        properties.put("lastSprintNumber", this.lastSprintNumber);
         properties.put("lastTaskNumber", this.lastTaskNumber);
         properties.put("lastRequirementNumber", this.lastRequirementNumber);
         properties.put("lastQualityNumber", this.lastQualityNumber);

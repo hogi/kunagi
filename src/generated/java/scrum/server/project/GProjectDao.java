@@ -74,6 +74,8 @@ public abstract class GProjectDao
         requirementsOrderIdsCache = null;
         projectsByUrgentIssuesOrderIdCache.clear();
         urgentIssuesOrderIdsCache = null;
+        projectsByLastSprintNumberCache.clear();
+        lastSprintNumbersCache = null;
         projectsByLastTaskNumberCache.clear();
         lastTaskNumbersCache = null;
         projectsByLastRequirementNumberCache.clear();
@@ -759,6 +761,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.containsUrgentIssuesOrderId(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - lastSprintNumber
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Project>> projectsByLastSprintNumberCache = new Cache<Integer,Set<Project>>(
+            new Cache.Factory<Integer,Set<Project>>() {
+                public Set<Project> create(Integer lastSprintNumber) {
+                    return getEntities(new IsLastSprintNumber(lastSprintNumber));
+                }
+            });
+
+    public final Set<Project> getProjectsByLastSprintNumber(int lastSprintNumber) {
+        return projectsByLastSprintNumberCache.get(lastSprintNumber);
+    }
+    private Set<Integer> lastSprintNumbersCache;
+
+    public final Set<Integer> getLastSprintNumbers() {
+        if (lastSprintNumbersCache == null) {
+            lastSprintNumbersCache = new HashSet<Integer>();
+            for (Project e : getEntities()) {
+                lastSprintNumbersCache.add(e.getLastSprintNumber());
+            }
+        }
+        return lastSprintNumbersCache;
+    }
+
+    private static class IsLastSprintNumber implements Predicate<Project> {
+
+        private int value;
+
+        public IsLastSprintNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isLastSprintNumber(value);
         }
 
     }

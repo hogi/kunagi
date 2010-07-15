@@ -125,6 +125,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addIntegerProperty("velocity");
 			projectModel.addListProperty("requirementsOrderIds", String.class);
 			projectModel.addListProperty("urgentIssuesOrderIds", String.class);
+			projectModel.addProperty("lastSprintNumber", int.class);
 			projectModel.addProperty("lastTaskNumber", int.class);
 			projectModel.addProperty("lastRequirementNumber", int.class);
 			projectModel.addProperty("lastQualityNumber", int.class);
@@ -293,6 +294,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			sprintModel.addPredicate("reviewEditable");
 			sprintModel.addPredicate("retrospectiveEditable");
 			sprintModel.addPredicate("datesEditable");
+			sprintModel.addProperty("number", int.class);
 			sprintModel.addReference("project", getProjectModel()).setMaster(true);
 			sprintModel.addStringProperty("label").setMandatory(true).setSearchable(true)
 					.setEditablePredicate("editable");

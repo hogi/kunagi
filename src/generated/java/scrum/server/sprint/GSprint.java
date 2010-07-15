@@ -36,6 +36,7 @@ public abstract class GSprint
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("number", this.number);
         properties.put("projectId", this.projectId);
         properties.put("label", this.label);
         properties.put("goal", this.goal);
@@ -73,6 +74,35 @@ public abstract class GSprint
         if (matchesKey(getReviewNote(), key)) return true;
         if (matchesKey(getRetrospectiveNote(), key)) return true;
         return false;
+    }
+
+    // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private int number;
+
+    public final int getNumber() {
+        return number;
+    }
+
+    public final void setNumber(int number) {
+        number = prepareNumber(number);
+        if (isNumber(number)) return;
+        this.number = number;
+        fireModified();
+    }
+
+    protected int prepareNumber(int number) {
+        return number;
+    }
+
+    public final boolean isNumber(int number) {
+        return this.number == number;
+    }
+
+    protected final void updateNumber(Object value) {
+        setNumber((Integer)value);
     }
 
     // -----------------------------------------------------------
@@ -706,6 +736,7 @@ public abstract class GSprint
             String property = (String) entry.getKey();
             if (property.equals("id")) continue;
             Object value = entry.getValue();
+            if (property.equals("number")) updateNumber(value);
             if (property.equals("projectId")) updateProject(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("goal")) updateGoal(value);

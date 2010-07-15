@@ -28,6 +28,7 @@ import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
 import scrum.client.release.Release;
 import scrum.client.risks.Risk;
+import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
 import scrum.client.workspace.VisibleDataChangedEvent;
 
@@ -99,6 +100,11 @@ public class Dao extends GDao {
 			return null;
 		} else if (reference.startsWith(Issue.REFERENCE_PREFIX)) {
 			for (Issue e : getIssues()) {
+				if (e.isNumber(number)) return e;
+			}
+			return null;
+		} else if (reference.startsWith(Sprint.REFERENCE_PREFIX)) {
+			for (Sprint e : getSprints()) {
 				if (e.isNumber(number)) return e;
 			}
 			return null;

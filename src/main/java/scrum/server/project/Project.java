@@ -299,6 +299,10 @@ public class Project extends GProject {
 		return issueDao.getIssueByNumber(number, this);
 	}
 
+	public Sprint getSprintByNumber(int number) {
+		return sprintDao.getSprintByNumber(number, this);
+	}
+
 	public Impediment getImpedimentByNumber(int number) {
 		return impedimentDao.getImpedimentByNumber(number, this);
 	}
@@ -376,6 +380,12 @@ public class Project extends GProject {
 	public synchronized int generateIssueNumber() {
 		int number = getLastIssueNumber() + 1;
 		setLastIssueNumber(number);
+		return number;
+	}
+
+	public synchronized int generateSprintNumber() {
+		int number = getLastSprintNumber() + 1;
+		setLastSprintNumber(number);
 		return number;
 	}
 

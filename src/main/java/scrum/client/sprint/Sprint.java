@@ -10,10 +10,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.collaboration.Wiki;
+import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
@@ -22,7 +24,9 @@ import scrum.client.release.Release;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
 
-public class Sprint extends GSprint implements ForumSupport {
+public class Sprint extends GSprint implements ForumSupport, ReferenceSupport {
+
+	public static final String REFERENCE_PREFIX = "spr";
 
 	private Wiki wiki = Scope.get().getComponent(Wiki.class);
 
@@ -152,8 +156,13 @@ public class Sprint extends GSprint implements ForumSupport {
 	}
 
 	@Override
+	public String toHtml() {
+		return ScrumGwt.toHtml(getReference(), getLabel());
+	}
+
+	@Override
 	public String toString() {
-		return getLabel();
+		return getReference() + " " + getLabel();
 	}
 
 	@Override
@@ -226,7 +235,7 @@ public class Sprint extends GSprint implements ForumSupport {
 	}
 
 	public String getReference() {
-		return "spr";
+		return REFERENCE_PREFIX + getNumber();
 	}
 
 }

@@ -9,11 +9,12 @@ import java.util.List;
 import java.util.Set;
 
 import scrum.server.admin.User;
+import scrum.server.common.Numbered;
 import scrum.server.project.Project;
 import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
 
-public class Sprint extends GSprint {
+public class Sprint extends GSprint implements Numbered {
 
 	private static final Log LOG = Log.get(Sprint.class);
 
@@ -124,9 +125,19 @@ public class Sprint extends GSprint {
 		return taskDao.getTasksBySprint(this);
 	}
 
+	public String getReference() {
+		return scrum.client.sprint.Sprint.REFERENCE_PREFIX + getNumber();
+	}
+
+	@Override
+	public void updateNumber() {
+		if (getNumber() == 0) setNumber(getProject().generateSprintNumber());
+	}
+
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
+		updateNumber();
 
 		if (getProject().isCurrentSprint(this)) {
 			if (!isBeginSet()) setBegin(Date.today());
@@ -142,13 +153,18 @@ public class Sprint extends GSprint {
 
 	}
 
+	@Override
 	public boolean isVisibleFor(User user) {
 		return getProject().isVisibleFor(user);
 	}
 
+	public String getReferenceAndLabel() {
+		return getReference() + " " + getLabel();
+	}
+
 	@Override
 	public String toString() {
-		return getLabel();
+		return getReferenceAndLabel();
 	}
 
 	public void burndownTasksRandomly(Date begin, Date end) {

@@ -54,6 +54,64 @@ public abstract class GSprint
         return ENTITY_TYPE;
     }
 
+    // --- number ---
+
+    private int number ;
+
+    public final int getNumber() {
+        return this.number ;
+    }
+
+    public final Sprint setNumber(int number) {
+        if (isNumber(number)) return (Sprint)this;
+        this.number = number ;
+        propertyChanged("number", this.number);
+        return (Sprint)this;
+    }
+
+    public final boolean isNumber(int number) {
+        return equals(this.number, number);
+    }
+
+    private transient NumberModel numberModel;
+
+    public NumberModel getNumberModel() {
+        if (numberModel == null) numberModel = createNumberModel();
+        return numberModel;
+    }
+
+    protected NumberModel createNumberModel() { return new NumberModel(); }
+
+    protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getNumber();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setNumber(value);
+        }
+
+            @Override
+            public void increment() {
+                setNumber(getNumber() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setNumber(getNumber() - 1);
+            }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- project ---
 
     private String projectId;
@@ -657,6 +715,7 @@ public abstract class GSprint
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
+        number  = (Integer) props.get("number");
         projectId = (String) props.get("projectId");
         label  = (java.lang.String) props.get("label");
         goal  = (java.lang.String) props.get("goal");
@@ -677,6 +736,7 @@ public abstract class GSprint
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("number", this.number);
         properties.put("projectId", this.projectId);
         properties.put("label", this.label);
         properties.put("goal", this.goal);

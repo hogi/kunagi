@@ -1093,6 +1093,14 @@ public abstract class GDao
 
 
 
+    public final List<scrum.client.project.Project> getProjectsByLastSprintNumber(int lastSprintNumber) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isLastSprintNumber(lastSprintNumber)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.project.Project> getProjectsByLastTaskNumber(int lastTaskNumber) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
@@ -2203,6 +2211,14 @@ public abstract class GDao
 
     public final List<scrum.client.sprint.Sprint> getSprints() {
         return new ArrayList<scrum.client.sprint.Sprint>(sprints.values());
+    }
+
+    public final List<scrum.client.sprint.Sprint> getSprintsByNumber(int number) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.isNumber(number)) ret.add(entity);
+        }
+        return ret;
     }
 
     public final List<scrum.client.sprint.Sprint> getSprintsByProject(scrum.client.project.Project project) {

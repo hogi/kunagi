@@ -1,9 +1,20 @@
 package scrum.server.sprint;
 
 import ilarkesto.base.time.Date;
+import ilarkesto.fp.Predicate;
 import scrum.server.project.Project;
 
 public class SprintDao extends GSprintDao {
+
+	public Sprint getSprintByNumber(final int number, final Project project) {
+		return getEntity(new Predicate<Sprint>() {
+
+			@Override
+			public boolean test(Sprint sprint) {
+				return sprint.isNumber(number) && sprint.isProject(project);
+			}
+		});
+	}
 
 	@Override
 	public Sprint newEntityInstance() {
@@ -30,4 +41,5 @@ public class SprintDao extends GSprintDao {
 
 		return sprint;
 	}
+
 }

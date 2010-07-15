@@ -42,6 +42,8 @@ public abstract class GSprintDao
 
     // --- clear caches ---
     public void clearCaches() {
+        sprintsByNumberCache.clear();
+        numbersCache = null;
         sprintsByProjectCache.clear();
         projectsCache = null;
         sprintsByLabelCache.clear();
@@ -84,6 +86,46 @@ public abstract class GSprintDao
         if (event.getEntity() instanceof Sprint) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - number
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Sprint>> sprintsByNumberCache = new Cache<Integer,Set<Sprint>>(
+            new Cache.Factory<Integer,Set<Sprint>>() {
+                public Set<Sprint> create(Integer number) {
+                    return getEntities(new IsNumber(number));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByNumber(int number) {
+        return sprintsByNumberCache.get(number);
+    }
+    private Set<Integer> numbersCache;
+
+    public final Set<Integer> getNumbers() {
+        if (numbersCache == null) {
+            numbersCache = new HashSet<Integer>();
+            for (Sprint e : getEntities()) {
+                numbersCache.add(e.getNumber());
+            }
+        }
+        return numbersCache;
+    }
+
+    private static class IsNumber implements Predicate<Sprint> {
+
+        private int value;
+
+        public IsNumber(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.isNumber(value);
+        }
+
     }
 
     // -----------------------------------------------------------
