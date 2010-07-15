@@ -117,8 +117,14 @@ public class User extends GUser {
 		if (!isColorSet()) setColor(getDefaultColor());
 	}
 
+	@Override
 	public boolean isVisibleFor(User user) {
 		return true;
+	}
+
+	@Override
+	public boolean isEditableBy(User user) {
+		return user == this || user.isAdmin();
 	}
 
 	@Override

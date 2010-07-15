@@ -2,11 +2,14 @@ package scrum.client.admin;
 
 import ilarkesto.core.scope.Scope;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumScopeManager;
 import scrum.client.collaboration.UsersStatus;
+import scrum.client.project.Project;
 
 public class User extends GUser {
 
@@ -23,6 +26,14 @@ public class User extends GUser {
 
 	public ProjectUserConfig getProjectConfig() {
 		return ScrumScopeManager.getProject().getUserConfig(this);
+	}
+
+	public List<Project> getProjects() {
+		List<Project> ret = new ArrayList<Project>();
+		for (Project project : getDao().getProjects()) {
+			if (project.isParticipant(this)) ret.add(project);
+		}
+		return ret;
 	}
 
 	public int compareTo(User u) {

@@ -2,14 +2,17 @@ package scrum.client.admin;
 
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
+
+import java.util.List;
+
 import scrum.client.Dao;
 import scrum.client.ScrumGwt;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
-import scrum.client.common.FieldsWidget;
 import scrum.client.project.DeleteProjectAction;
 import scrum.client.project.OpenProjectAction;
 import scrum.client.project.Project;
@@ -41,11 +44,12 @@ public class ProjectBlock extends ABlockWidget<Project> {
 	@Override
 	protected Widget onExtendedInitialization() {
 		final Project project = getObject();
-		FieldsWidget fields = new FieldsWidget();
-		fields.add("Label", new TextEditorWidget(project.getLabelModel()));
-		fields.add("Description", new RichtextEditorWidget(project.getDescriptionModel()));
 
-		fields.add("Participants", new AMultiSelectionViewEditWidget<User>() {
+		TableBuilder tb = ScrumGwt.createFieldTable();
+		tb.addFieldRow("Label", new TextEditorWidget(project.getLabelModel()));
+		tb.addFieldRow("Description", new RichtextEditorWidget(project.getDescriptionModel()));
+
+		tb.addFieldRow("Participants", new AMultiSelectionViewEditWidget<User>() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -54,7 +58,9 @@ public class ProjectBlock extends ABlockWidget<Project> {
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorItems(Dao.get().getUsers());
+				List<User> users = Dao.get().getUsersByDisabled(false);
+				users.addAll(project.getParticipants());
+				setEditorItems(users);
 				setEditorSelectedItems(project.getParticipants());
 			}
 
@@ -69,7 +75,7 @@ public class ProjectBlock extends ABlockWidget<Project> {
 			}
 		});
 
-		fields.add("Admins", new AMultiSelectionViewEditWidget<User>() {
+		tb.addFieldRow("Admins", new AMultiSelectionViewEditWidget<User>() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -94,7 +100,7 @@ public class ProjectBlock extends ABlockWidget<Project> {
 
 		});
 
-		fields.add("Product Owner", new AMultiSelectionViewEditWidget<User>() {
+		tb.addFieldRow("Product Owner", new AMultiSelectionViewEditWidget<User>() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -118,7 +124,7 @@ public class ProjectBlock extends ABlockWidget<Project> {
 			}
 		});
 
-		fields.add("Scrum Master", new AMultiSelectionViewEditWidget<User>() {
+		tb.addFieldRow("Scrum Master", new AMultiSelectionViewEditWidget<User>() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -142,7 +148,7 @@ public class ProjectBlock extends ABlockWidget<Project> {
 			}
 		});
 
-		fields.add("Development Team", new AMultiSelectionViewEditWidget<User>() {
+		tb.addFieldRow("Development Team", new AMultiSelectionViewEditWidget<User>() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -167,15 +173,16 @@ public class ProjectBlock extends ABlockWidget<Project> {
 		});
 
 		if (project.isAdmin(getCurrentUser())) {
-			fields.add("",
+			tb.addFieldRow("",
 				Gwt.createServletDownloadLink("backupDownload.zip?projectId=" + project.getId(), "Download Backup ZIP"));
 		}
 
-		return fields;
+		return tb.createTable();
 	}
 
 	public static final BlockWidgetFactory<Project> FACTORY = new BlockWidgetFactory<Project>() {
 
+		@Override
 		public ProjectBlock createBlock() {
 			return new ProjectBlock();
 		}

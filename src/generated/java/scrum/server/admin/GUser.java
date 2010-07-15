@@ -22,7 +22,7 @@ import ilarkesto.auth.*;
 
 public abstract class GUser
             extends AUser
-            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, ilarkesto.search.Searchable, java.lang.Comparable<User> {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, ilarkesto.auth.EditProtected<scrum.server.admin.User>, ilarkesto.search.Searchable, java.lang.Comparable<User> {
 
     // --- AEntity ---
 

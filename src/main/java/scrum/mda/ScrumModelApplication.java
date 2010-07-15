@@ -405,6 +405,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel = createEntityModel("User", "admin");
 			userModel.setGwtSupport(true);
 			userModel.setSuperbean(super.getUserModel());
+			userModel.setViewProtected(true);
+			userModel.setEditProtected(true);
 			userModel.addStringProperty("name").setMandatory(true).setSearchable(true);
 			userModel.addProperty("admin", boolean.class);
 			userModel.addProperty("emailVerified", boolean.class);

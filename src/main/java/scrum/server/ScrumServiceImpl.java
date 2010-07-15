@@ -768,6 +768,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 
 		User user = userDao.postUser(email, username, password);
+		user.setLastLoginDateAndTime(DateAndTime.now());
 		user.triggerEmailVerification();
 		webApplication.triggerRegisterNotification(user);
 

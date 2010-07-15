@@ -1,5 +1,6 @@
 package scrum.client.admin;
 
+import ilarkesto.gwt.client.AOutputViewEditWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwt;
 import scrum.client.common.ABlockWidget;
@@ -50,6 +51,13 @@ public class UserBlock extends ABlockWidget<User> {
 		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.addFieldRow("Name", user.getNameModel());
 		tb.addFieldRow("E-Mail", user.getEmailModel());
+		tb.addFieldRow("Projects", new AOutputViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewer(ScrumGwt.createToHtmlItemsWidget(user.getProjects()));
+			}
+		});
 		return tb.createTable();
 	}
 
