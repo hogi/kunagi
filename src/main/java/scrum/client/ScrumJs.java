@@ -23,8 +23,8 @@ public class ScrumJs {
 			entityLabel = entityLabel.replace("\"", "`");
 			labelString = " title='" + entityLabel + "'";
 		}
-		return "<a onclick='window.scrum.showEntityByReference(\"" + reference + "\")'" + labelString + ">" + reference
-				+ "</a>";
+		return "<a class='reference' onclick='window.scrum.showEntityByReference(\"" + reference + "\")'" + labelString
+				+ ">" + reference + "</a>";
 	}
 
 	public static native String regexTextToHtml(String text) /*-{

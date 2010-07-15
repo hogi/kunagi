@@ -5,6 +5,7 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.HtmlLabelSupport;
 import ilarkesto.gwt.client.editor.AOptionEditorModel;
 
 import java.util.ArrayList;
@@ -16,8 +17,9 @@ import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.Emoticon;
+import scrum.client.collaboration.ForumSupport;
 
-public abstract class AScrumGwtEntity extends AGwtEntity implements ToHtmlSupport {
+public abstract class AScrumGwtEntity extends AGwtEntity implements ToHtmlSupport, HtmlLabelSupport {
 
 	public AScrumGwtEntity() {}
 
@@ -103,6 +105,23 @@ public abstract class AScrumGwtEntity extends AGwtEntity implements ToHtmlSuppor
 		super(data);
 	}
 
+	@Override
+	public String getHtmlLabel() {
+		StringBuilder sb = new StringBuilder();
+		if (this instanceof ReferenceSupport) {
+			sb.append("<span class='reference'>").append(((ReferenceSupport) this).getReference()).append("</span> ");
+		}
+		String label;
+		if (this instanceof ForumSupport) {
+			label = ((ForumSupport) this).getLabel();
+		} else {
+			label = toString();
+		}
+		sb.append(Gwt.escapeHtml(label));
+		return sb.toString();
+	}
+
+	@Override
 	public String toHtml() {
 		return Gwt.escapeHtml(toString());
 	}

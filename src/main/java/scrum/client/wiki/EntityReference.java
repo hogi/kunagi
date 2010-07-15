@@ -18,7 +18,7 @@ public class EntityReference extends AWikiElement {
 	@Override
 	String toHtml(HtmlContext context) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<a onclick='window.scrum.showEntityByReference(\"");
+		sb.append("<a class='reference' onclick='window.scrum.showEntityByReference(\"");
 		sb.append(reference);
 		sb.append("\")");
 		String entityLabel = context.getEntityLabelByReference(reference);
