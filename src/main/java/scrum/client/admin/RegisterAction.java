@@ -35,6 +35,11 @@ public class RegisterAction extends GLoginAction {
 			return;
 		}
 
+		if (!Str.isEmail(email)) {
+			registrationData.setFailed("Invalid email.");
+			return;
+		}
+
 		if (Str.isBlank(password)) {
 			registrationData.setFailed("Password required.");
 			return;

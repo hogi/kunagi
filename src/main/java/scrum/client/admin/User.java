@@ -1,5 +1,6 @@
 package scrum.client.admin;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
 
 import java.util.ArrayList;
@@ -43,6 +44,18 @@ public class User extends GUser {
 	@Override
 	public String toString() {
 		return getName();
+	}
+
+	@Override
+	public EmailModel getEmailModel() {
+		return new EmailModel() {
+
+			@Override
+			public void setValue(String value) {
+				if (!Str.isEmail(value)) throw new RuntimeException("Invalid email.");
+				super.setValue(value);
+			}
+		};
 	}
 
 	public static final Comparator<User> NAME_COMPARATOR = new Comparator<User>() {
