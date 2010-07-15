@@ -198,8 +198,13 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 				Ui ui = Scope.get().getComponent(Ui.class);
 				if (entity == null) {
 					ui.unlock();
-					Scope.get().getComponent(Chat.class)
-							.postSystemMessage("Object does not exist: " + reference, false);
+					if (reference.length() > 4 && reference.startsWith("[[")) {
+						String pageName = reference.substring(2, reference.length() - 2);
+						showWiki(pageName);
+					} else {
+						Scope.get().getComponent(Chat.class)
+								.postSystemMessage("Object does not exist: " + reference, false);
+					}
 					return;
 				}
 				ui.unlock();
