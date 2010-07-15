@@ -101,7 +101,10 @@ public class HeaderWidget extends AScrumWidget {
 	}
 
 	private Widget createLogo() {
-		return Gwt.createDiv("HeaderWidget-logo", Img.bundle.logo25().createImage());
+		SimplePanel div = Gwt.createDiv("HeaderWidget-logo", Img.bundle.logo25().createImage());
+		ApplicationInfo applicationInfo = getApp().getApplicationInfo();
+		if (applicationInfo != null) div.setTitle(applicationInfo.getVersionDescription());
+		return div;
 	}
 
 }

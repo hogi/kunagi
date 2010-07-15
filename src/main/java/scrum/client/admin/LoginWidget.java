@@ -60,19 +60,25 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 					+ "</div>"));
 		} else {
 			ApplicationInfo appInfo = getApp().getApplicationInfo();
-			if (!appInfo.isProductionStage()) {
+			if (appInfo.isDefaultAdminPassword()) {
 				StringBuilder sb = new StringBuilder();
 				sb.append("<div class='LoginWidget-errorMessage'>");
-				sb.append("This is a demo system with preconfigured projects.<br>All your data will be deleted by next day.");
-				sb.append("</div>");
-				sb.append("<div style='color: gray;'>");
-				sb.append("<br>Test&nbsp;users:&nbsp;");
-				sb.append("<strong>duke</strong>&nbsp;(PO),&nbsp;");
-				sb.append("<strong>spinne</strong>&nbsp;(SM),&nbsp;");
-				sb.append("<strong>cartman</strong>&nbsp;(T),&nbsp;");
-				sb.append("<strong>homer</strong>&nbsp;(T)<br>");
-				sb.append("Password: <strong>geheim</strong>");
-				sb.append("</div>");
+				sb.append("Admin login: <strong><code>admin</code></strong><br>");
+				sb.append("Password: <strong><code>" + User.INITIAL_PASSWORD + "</code></strong>");
+				sb.append("</div><br>");
+				if (!appInfo.isProductionStage()) {
+					sb.append("<div class='LoginWidget-errorMessage'>");
+					sb.append("This is a demo system with preconfigured projects.<br>All your data will be deleted by next day.");
+					sb.append("</div>");
+					sb.append("<div style='color: gray;'>");
+					sb.append("<br>Test&nbsp;users:&nbsp;");
+					sb.append("<strong>duke</strong>&nbsp;(PO),&nbsp;");
+					sb.append("<strong>spinne</strong>&nbsp;(SM),&nbsp;");
+					sb.append("<strong>cartman</strong>&nbsp;(T),&nbsp;");
+					sb.append("<strong>homer</strong>&nbsp;(T)<br>");
+					sb.append("Password: <strong>geheim</strong>");
+					sb.append("</div>");
+				}
 				content = TableBuilder.row(40, content, new HTML(sb.toString()));
 			}
 		}

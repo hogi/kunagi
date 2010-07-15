@@ -34,7 +34,7 @@ public class UserDao extends GUserDao {
 	}
 
 	public User postUser(String name) {
-		return postUser(name, "geheim");
+		return postUser(name, scrum.client.admin.User.INITIAL_PASSWORD);
 	}
 
 	@Override

@@ -62,7 +62,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	private BurndownChart burndownChart;
 	private ScrumConfig config;
 	private ScrumEntityfilePreparator entityfilePreparator;
-	private ApplicationInfo applicationInfo;
 	private SystemMessage systemMessage;
 
 	// --- composites ---
@@ -96,10 +95,11 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public ApplicationInfo getApplicationInfo() {
-		if (applicationInfo == null) {
-			applicationInfo = new ApplicationInfo("kunagi", getBuild(), getDeploymentStage());
-		}
-		return applicationInfo;
+		User admin = getUserDao().getUserByName("admin");
+		boolean defaultAdminPassword = false;
+		if (admin != null && admin.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD))
+			defaultAdminPassword = true;
+		return new ApplicationInfo("kunagi", getBuild(), getDeploymentStage(), defaultAdminPassword);
 	}
 
 	// --- ---
@@ -129,7 +129,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		getTransactionService().commit();
 
 		// test data
-		if (getProjectDao().getEntities().isEmpty()) createTestData();
+		if (isDevelopmentMode() && getProjectDao().getEntities().isEmpty()) createTestData();
 
 	}
 

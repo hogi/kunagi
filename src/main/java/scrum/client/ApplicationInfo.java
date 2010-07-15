@@ -13,14 +13,20 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 	private String name;
 	private String build;
 	private String deploymentStage;
+	private boolean defaultAdminPassword;
 
-	public ApplicationInfo(String name, String build, String deploymentStage) {
+	public ApplicationInfo(String name, String build, String deploymentStage, boolean defaultAdminPassword) {
 		this.name = name;
 		this.build = build;
 		this.deploymentStage = deploymentStage;
+		this.defaultAdminPassword = defaultAdminPassword;
 	}
 
 	protected ApplicationInfo() {}
+
+	public boolean isDefaultAdminPassword() {
+		return defaultAdminPassword;
+	}
 
 	public String getName() {
 		return name;
