@@ -59,7 +59,7 @@ public class UpcomingTasksWidget extends AScrumWidget {
 		int minTasks = 10 - criticalBugs.size();
 		if (maxTasks < minTasks) maxTasks = minTasks;
 		int taskCount = 0;
-		List<Task> tasks = project.getCurrentSprint().getUnclaimedTasks(true);
+		List<Task> tasks = project.getCurrentSprint().getUnclaimedTasks(false);
 		Collections.sort(tasks, Task.REQUIREMENT_ORDER_THEN_NUMBER_COMPARATOR);
 		if (!tasks.isEmpty()) {
 			sb.append("Next upcoming tasks:");

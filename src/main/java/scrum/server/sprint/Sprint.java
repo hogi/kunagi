@@ -1,6 +1,7 @@
 package scrum.server.sprint;
 
 import ilarkesto.base.Str;
+import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.core.logging.Log;
 
@@ -148,6 +149,39 @@ public class Sprint extends GSprint {
 	@Override
 	public String toString() {
 		return getLabel();
+	}
+
+	public void burndownTasksRandomly(Date begin, Date end) {
+		int days = getBegin().getPeriodTo(getEnd()).toDays();
+		days -= (days / 7) * 2;
+		int defaultWorkPerDay = getRemainingWork() / days;
+
+		getDaySnapshot(begin).updateWithCurrentSprint();
+		begin = begin.nextDay();
+		while (begin.isBefore(end)) {
+			if (!begin.isWeekend()) {
+				int toBurn = Utl.randomInt(0, defaultWorkPerDay + (defaultWorkPerDay * 2));
+				int totalRemaining = getRemainingWork();
+				for (Task task : getTasks()) {
+					if (toBurn == 0) break;
+					int remaining = task.getRemainingWork();
+					int burn = Math.min(toBurn, remaining);
+					remaining -= burn;
+					toBurn -= burn;
+					task.setBurnedWork(task.getBurnedWork() + burn);
+					if (Utl.randomInt(1, 10) == 1) {
+						remaining += Utl.randomInt(-defaultWorkPerDay * 2, defaultWorkPerDay * 3);
+					}
+					if (totalRemaining == 0) {
+						remaining += Utl.randomInt(defaultWorkPerDay * 3, defaultWorkPerDay * 5);
+						totalRemaining = remaining;
+					}
+					task.setRemainingWork(remaining);
+				}
+			}
+			getDaySnapshot(begin).updateWithCurrentSprint();
+			begin = begin.nextDay();
+		}
 	}
 
 }

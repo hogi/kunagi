@@ -45,12 +45,11 @@ public class TaskDao extends GTaskDao {
 
 	// --- test data ---
 
-	public Task postTask(Requirement requirement, String label, int remainingWork, int burnedWork) {
+	public Task postTask(Requirement requirement, String label, int work) {
 		Task task = newEntityInstance();
 		task.setRequirement(requirement);
 		task.setLabel(label);
-		task.setRemainingWork(remainingWork);
-		task.setBurnedWork(burnedWork);
+		task.setRemainingWork(work);
 		saveEntity(task);
 		return task;
 	}

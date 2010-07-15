@@ -61,14 +61,16 @@ public class ProjectDao extends GProjectDao {
 		project.addParticipants(project.getProductOwners());
 		project.addParticipants(project.getScrumMasters());
 
-		project.addTestImpediments();
 		project.addTestSprints();
 		project.addTestRequirements();
+		project.addTestImpediments();
 		project.addTestRisks();
 		project.addTestQualitys();
 		project.addTestIssues();
 		project.addTestEvents();
 		project.addTestSimpleEvents();
+
+		project.getCurrentSprint().burndownTasksRandomly(Date.beforeDays(15), Date.today().addDays(-1));
 
 		po.setCurrentProject(project);
 

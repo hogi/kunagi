@@ -762,33 +762,33 @@ public class Project extends GProject {
 		req.setDescription("As a Product Owner I want the concept to be unsurpassable so I don't have to worry about ROI anymore.");
 		reqOrder.add(req);
 		req.setSprint(getCurrentSprint());
-		taskDao.postTask(req, "Create Concept", 2, 1);
-		taskDao.postTask(req, "Make Sure All Others Are Inferior", 5, 3);
+		taskDao.postTask(req, "Create Concept", 20);
+		taskDao.postTask(req, "Make Sure All Others Are Inferior", 50);
 
 		// Amazing Product Backlog
 		req = requirementDao.postRequirement(this, "Amazing Product Backlog", 2f);
 		req.setDescription("As a Product Owner I want my Backlog to be amazing so that people stand in awe.");
 		reqOrder.add(req);
 		req.setSprint(getCurrentSprint());
-		taskDao.postTask(req, "Creation of Storys", 1, 0);
-		taskDao.postTask(req, "Intelligent Design of Storys", 1, 0);
-		taskDao.postTask(req, "Deletion of Storys", 1, 0);
+		taskDao.postTask(req, "Creation of Storys", 10);
+		taskDao.postTask(req, "Intelligent Design of Storys", 10);
+		taskDao.postTask(req, "Deletion of Storys", 10);
 
 		// Functional Quality Backlog
 		req = requirementDao.postRequirement(this, "Functional Quality Backlog", 1f);
 		req.setDescription("As a Product Owner I want my non-functional Requirements to be functional, so I can use them.");
 		reqOrder.add(req);
 		req.setSprint(getCurrentSprint());
-		taskDao.postTask(req, "Copy And Paste Product Backlog", 1, 0);
-		taskDao.postTask(req, "Marry Storys and Qualitys", 1, 0);
+		taskDao.postTask(req, "Copy And Paste Product Backlog", 10);
+		taskDao.postTask(req, "Marry Storys and Qualitys", 10);
 
 		// Groundbraking Scrum Backlog
 		req = requirementDao.postRequirement(this, "Groundbraking Scrum Backlog", 1f);
 		req.setDescription("As a Team member I want the Scrum Backlog to be groundbreaking, so that everybody can see that I am the most important here.");
 		reqOrder.add(req);
 		req.setSprint(getCurrentSprint());
-		taskDao.postTask(req, "Create Tasks", 1, 0);
-		taskDao.postTask(req, "Create More Tasks", 1, 0);
+		taskDao.postTask(req, "Create Tasks", 10);
+		taskDao.postTask(req, "Create More Tasks", 10);
 
 		// Breathtaking Whiteboard
 		req = requirementDao.postRequirement(this, "Breathtaking Whiteboard", 8f);

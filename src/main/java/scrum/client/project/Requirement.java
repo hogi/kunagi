@@ -268,7 +268,8 @@ public class Requirement extends GRequirement implements ReferenceSupport, Forum
 	public List<Task> getUnclaimedTasks() {
 		List<Task> ret = new ArrayList<Task>();
 		for (Task task : getTasks()) {
-			if (!task.isOwnerSet()) ret.add(task);
+			if (task.isClosed() || task.isOwnerSet()) continue;
+			ret.add(task);
 		}
 		return ret;
 	}
