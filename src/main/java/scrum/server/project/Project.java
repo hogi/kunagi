@@ -643,15 +643,18 @@ public class Project extends GProject {
 		}
 	}
 
+	@Override
 	public boolean isVisibleFor(User user) {
-		return user.isAdmin() || containsParticipant(user);
+		return (user != null && user.isAdmin()) || containsParticipant(user);
 	}
 
 	public boolean isEditableBy(User user) {
 		return containsParticipant(user);
 	}
 
+	@Override
 	public boolean isDeletableBy(User user) {
+		if (user != null && user.isAdmin()) return true;
 		return containsAdmin(user);
 	}
 
