@@ -17,6 +17,8 @@ import scrum.server.ScrumWebApplication;
 
 public class User extends GUser {
 
+	private static final int HOURS_FOR_EMAIL_VERIFICATION = 72;
+
 	private static Log log = Log.get(User.class);
 
 	// --- dependencies ---
@@ -38,6 +40,9 @@ public class User extends GUser {
 		sb.append("\n");
 		sb.append("Please visit the following link, to confirm your email: ").append(urlBase)
 				.append("confirmEmail?user=").append(getId()).append("&email=").append(getEmail()).append("\n");
+		sb.append("\n");
+		sb.append("Please confirm your email within " + HOURS_FOR_EMAIL_VERIFICATION
+				+ " hours, otherwise your account will be deleted.\n");
 		webApplication.sendEmail(null, getEmail(), "Kunagi email verification: " + getEmail(), sb.toString());
 	}
 
@@ -151,7 +156,7 @@ public class User extends GUser {
 	public boolean isEmailVerificationOverdue() {
 		if (!isRegistrationDateAndTimeSet()) return false;
 		if (isEmailVerified()) return false;
-		return getRegistrationDateAndTime().getPeriodToNow().abs().toHours() > 72;
+		return getRegistrationDateAndTime().getPeriodToNow().abs().toHours() > HOURS_FOR_EMAIL_VERIFICATION;
 	}
 
 }
