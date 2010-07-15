@@ -33,7 +33,8 @@ public class AcceptIssueAsBugAction extends GAcceptIssueAsBugAction {
 
 	@Override
 	public boolean isExecutable() {
-		if (!issue.isOpen()) return false;
+		if (issue.isClosed()) return false;
+		if (issue.isBug()) return false;
 		return true;
 	}
 
