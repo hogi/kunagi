@@ -52,17 +52,10 @@ public class ReleaseWidget extends AScrumWidget {
 
 				@Override
 				public boolean isEditable() {
-					return release.getProject().isProductOwner(getCurrentUser());
+					return release.getProject().isProductOwnerOrScrumMaster(getCurrentUser());
 				}
 			});
 
-			tb.addFieldRow("Sprints", new AOutputViewEditWidget() {
-
-				@Override
-				protected void onViewerUpdate() {
-					setViewer(ScrumGwt.createToHtmlItemsWidget(release.getSprints()));
-				}
-			});
 			tb.addFieldRow("Requirements", new AOutputViewEditWidget() {
 
 				@Override
