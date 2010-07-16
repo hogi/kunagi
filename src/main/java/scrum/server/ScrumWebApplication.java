@@ -117,7 +117,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	@Override
 	protected void onStartWebApplication() {
 
-		Log.setDebugEnabled(true); // TODO remove this for production
+		Log.setDebugEnabled(isDevelopmentMode() || getConfig().isLoggingDebug());
 
 		if (getUserDao().getEntities().isEmpty()) {
 			String password = getConfig().getInitialPassword();

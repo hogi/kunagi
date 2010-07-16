@@ -37,4 +37,8 @@ public class ScrumConfig {
 		return p.get("initialPassword", scrum.client.admin.User.INITIAL_PASSWORD);
 	}
 
+	public boolean isLoggingDebug() {
+		return p.getBoolean("logging.debug", false);
+	}
+
 }
