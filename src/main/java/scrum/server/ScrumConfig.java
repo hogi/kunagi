@@ -33,4 +33,8 @@ public class ScrumConfig {
 		return p.getBoolean("stage.integration", false);
 	}
 
+	public String getInitialPassword() {
+		return p.get("initialPassword", scrum.client.admin.User.INITIAL_PASSWORD);
+	}
+
 }

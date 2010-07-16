@@ -120,8 +120,11 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		Log.setDebugEnabled(true); // TODO remove this for production
 
 		if (getUserDao().getEntities().isEmpty()) {
-			log.warn("No users. Creating initial user: admin");
-			getUserDao().postUser("admin").setAdmin(true);
+			String password = getConfig().getInitialPassword();
+			log.warn("No users. Creating initial user <admin> with password <" + password + ">");
+			User admin = getUserDao().postUser("admin");
+			admin.setPassword(password);
+			admin.setAdmin(true);
 			getTransactionService().commit();
 		}
 
