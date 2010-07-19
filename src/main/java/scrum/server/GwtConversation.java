@@ -47,7 +47,7 @@ public class GwtConversation extends AGwtConversation {
 				propertiesMap.remove("smtpPassword");
 			}
 		} else if (entity instanceof User) {
-			if (user == null || user != entity) {
+			if (user == null || (user != entity && !user.isAdmin())) {
 				propertiesMap.remove("password");
 				propertiesMap.remove("email");
 			}
