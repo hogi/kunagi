@@ -23,6 +23,7 @@ public class UserBlock extends ABlockWidget<User> {
 		User user = getObject();
 		iconWrapper = header.insertPrefixIcon();
 		lastLoginLabel = header.appendCenterSuffix("");
+		header.addMenuAction(new ConfirmUserEmailAction(user));
 		header.addMenuAction(new DisableUserAction(user));
 		header.addMenuAction(new EnableUserAction(user));
 		header.addMenuAction(new DeleteUserAction(user));

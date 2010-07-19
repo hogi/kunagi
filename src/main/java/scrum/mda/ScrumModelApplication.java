@@ -422,6 +422,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.addAction("DeleteUser");
 			userModel.addAction("DisableUser");
 			userModel.addAction("EnableUser");
+			userModel.addAction("ConfirmUserEmail");
 		}
 		return userModel;
 	}
