@@ -22,14 +22,14 @@
       <link>http://kunagi.org</link>
     </image>
  
-#foreach( $blogEntry in $blog.entries )    
+#foreach( $entry in $blog.entries )    
     <item>
-      <title>$blogEntry.title</title>
-      <description><![CDATA[$blogEntry.plainText]]></description>
-      <link>http://kunagi.org/blog.html#$blogEntry.reference</link>
+      <title>$entry.title</title>
+      <description><![CDATA[$entry.plainText]]></description>
+      <link>http://kunagi.org/${entry.reference}.html</link>
       <author>Kunagi Team</author>
-      <guid>http://kunagi.org/blog.html#$blogEntry.reference</guid>
-      <pubDate>$blogEntry.rssDate</pubDate>
+      <guid>http://kunagi.org/blog.html#$entry.reference</guid>
+      <pubDate>$entry.rssDate</pubDate>
     </item>
 #end 
  

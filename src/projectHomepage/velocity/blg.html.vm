@@ -1,0 +1,13 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+#header("blg")
+
+#blogRssLink()
+
+<div class="section">
+    <h2>$entry.title</h2>
+    <p class="secondaryText">$entry.date</p>
+    $entry.text
+</div>
+
+#footer()

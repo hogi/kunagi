@@ -52,6 +52,7 @@ public class HomepageUpdater {
 			updater.processDefaultTemplates();
 			updater.processIssueTemplates();
 			updater.processStoryTemplates();
+			updater.processBlogEntryTemplates();
 			updater.createSprintBurndownChart(700, 200);
 		}
 	}
@@ -73,6 +74,8 @@ public class HomepageUpdater {
 			if (!templateName.endsWith(".vm")) continue;
 			if (templateName.equals(Velocity.LIB_TEMPLATE_NAME)) continue;
 			if (templateName.startsWith("iss.")) continue;
+			if (templateName.startsWith("blg.")) continue;
+			if (templateName.startsWith("sto.")) continue;
 			String outputFileName = Str.removeSuffix(templateName, ".vm");
 			velocity.processTemplate(templateName, new File(outputDir.getPath() + "/" + outputFileName), context);
 		}
@@ -96,6 +99,16 @@ public class HomepageUpdater {
 			ContextBuilder context = new ContextBuilder();
 			fillStory(context.putSubContext("story"), requirement);
 			processEntityTemplate(context, requirement.getReference());
+		}
+	}
+
+	private void processBlogEntryTemplates() {
+		List<BlogEntry> entries = new ArrayList<BlogEntry>(project.getBlogEntrys());
+		for (BlogEntry entry : entries) {
+			if (!entry.isPublished()) continue;
+			ContextBuilder context = new ContextBuilder();
+			fillBlogEntry(context.putSubContext("entry"), entry);
+			processEntityTemplate(context, entry.getReference());
 		}
 	}
 

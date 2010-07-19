@@ -87,3 +87,11 @@ pageTracker._trackPageview();
 </body>
 </html>
 #end
+
+
+
+
+#macro( blogRssLink )
+    <a href="blog.rss.xml" style="float: right; line-height: 16px;">RSS Feed</a>
+    <a href="blog.rss.xml" style="float: right;"><img src="img/rss.png" alt="RSS" style="margin-right: 5px;"></a>
+#end
