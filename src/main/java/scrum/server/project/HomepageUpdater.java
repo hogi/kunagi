@@ -226,14 +226,14 @@ public class HomepageUpdater {
 	}
 
 	public String wiki2html(String wikitext) {
-		if (Str.isBlank(wikitext)) return "";
+		if (Str.isBlank(wikitext)) return null;
 		WikiParser wikiParser = new WikiParser(wikitext);
 		WikiModel model = wikiParser.parse();
 		return model.toHtml(htmlContext);
 	}
 
 	public static String wiki2text(String wikitext) {
-		if (Str.isBlank(wikitext)) return "";
+		if (Str.isBlank(wikitext)) return null;
 		return wikitext;
 	}
 
