@@ -3,6 +3,7 @@ package scrum.server;
 import ilarkesto.auth.Auth;
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Reflect;
+import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
@@ -165,6 +166,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onRequestNewPassword(GwtConversation conversation, String login) {
+		login = login.toLowerCase();
 		User user = null;
 		if (login.contains("@")) {
 			user = userDao.getUserByEmail(login);
@@ -457,6 +459,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onLogin(GwtConversation conversation, String username, String password) {
+		username = username.toLowerCase();
 		conversation.clearRemoteEntities();
 		User user = null;
 		if (username.contains("@")) {
@@ -759,6 +762,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onRegister(GwtConversation conversation, String username, String email, String password) {
+		if (Str.containsNonLetterOrDigit(username)) {
+			conversation.getNextData().addError(
+				"Registration failed. Name '" + username
+						+ "' contains an illegal character. Only letters and digits allowed.");
+			return;
+		}
 		if (userDao.getUserByName(username) != null) {
 			conversation.getNextData().addError("Registration failed. Name '" + username + "' is already used.");
 			log.warn("Registration failed. User name already exists:", username);
