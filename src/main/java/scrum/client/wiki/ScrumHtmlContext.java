@@ -15,6 +15,12 @@ public class ScrumHtmlContext implements HtmlContext {
 		this.dao = Scope.get().getComponent(Dao.class);
 	}
 
+	@Override
+	public String getEntityReferenceHrefOrOnclickAParameter(String reference) {
+		return "onclick='window.scrum.showEntityByReference(\"" + reference + "\")'";
+	}
+
+	@Override
 	public String getEntityLabelByReference(String reference) {
 		AScrumGwtEntity entity = dao.getEntityByReference(reference);
 		if (entity == null) {
@@ -25,6 +31,7 @@ public class ScrumHtmlContext implements HtmlContext {
 		return entity.toString();
 	}
 
+	@Override
 	public String getDownloadUrlByReference(String reference) {
 		return GWT.getModuleBaseURL() + "fileDownload?reference=" + reference;
 	}

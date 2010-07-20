@@ -283,6 +283,39 @@ public class Project extends GProject {
 		return taskDao.getTasksByProject(this);
 	}
 
+	public AEntity getEntityByReference(String reference) {
+		if (reference.length() > 4 && reference.startsWith("[[")) {
+			String pageName = reference.substring(2, reference.length() - 2);
+			return getWikipageByName(pageName);
+		}
+
+		int number = Integer.parseInt(reference.substring(scrum.client.project.Requirement.REFERENCE_PREFIX.length()));
+
+		if (reference.startsWith(scrum.client.project.Requirement.REFERENCE_PREFIX)) {
+			return getRequirementByNumber(number);
+		} else if (reference.startsWith(scrum.client.project.Quality.REFERENCE_PREFIX)) {
+			return getQualityByNumber(number);
+		} else if (reference.startsWith(scrum.client.sprint.Task.REFERENCE_PREFIX)) {
+			return getTaskByNumber(number);
+		} else if (reference.startsWith(scrum.client.impediments.Impediment.REFERENCE_PREFIX)) {
+			return getImpedimentByNumber(number);
+		} else if (reference.startsWith(scrum.client.issues.Issue.REFERENCE_PREFIX)) {
+			return getIssueByNumber(number);
+		} else if (reference.startsWith(scrum.client.sprint.Sprint.REFERENCE_PREFIX)) {
+			return getSprintByNumber(number);
+		} else if (reference.startsWith(scrum.client.collaboration.Subject.REFERENCE_PREFIX)) {
+			return getSubjectByNumber(number);
+		} else if (reference.startsWith(scrum.client.files.File.REFERENCE_PREFIX)) {
+			return getFileByNumber(number);
+		} else if (reference.startsWith(scrum.client.calendar.SimpleEvent.REFERENCE_PREFIX)) {
+			return getSimpleEventByNumber(number);
+		} else if (reference.startsWith(scrum.client.release.Release.REFERENCE_PREFIX)) {
+			return getReleaseByNumber(number);
+		} else if (reference.startsWith(scrum.client.pr.BlogEntry.REFERENCE_PREFIX)) { return getBlogEntryByNumber(number); }
+
+		return null;
+	}
+
 	public Requirement getRequirementByNumber(int number) {
 		return requirementDao.getRequirementByNumber(number, this);
 	}

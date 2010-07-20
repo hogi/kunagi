@@ -636,48 +636,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
 
-		if (reference.length() > 4 && reference.startsWith("[[")) {
-			String pageName = reference.substring(2, reference.length() - 2);
-			conversation.sendToClient(project.getWikipageByName(pageName));
-			return;
+		AEntity entity = project.getEntityByReference(reference);
+		if (entity == null) {
+			LOG.info("Requested entity not found:", reference);
+		} else {
+			conversation.sendToClient(entity);
 		}
-
-		int number = Integer.parseInt(reference.substring(scrum.client.project.Requirement.REFERENCE_PREFIX.length()));
-		if (reference.startsWith(scrum.client.project.Requirement.REFERENCE_PREFIX)) {
-			conversation.sendToClient(project.getRequirementByNumber(number));
-			return;
-		} else if (reference.startsWith(scrum.client.project.Quality.REFERENCE_PREFIX)) {
-			conversation.sendToClient(project.getQualityByNumber(number));
-			return;
-		} else if (reference.startsWith(scrum.client.sprint.Task.REFERENCE_PREFIX)) {
-			conversation.sendToClient(project.getTaskByNumber(number));
-			return;
-		} else if (reference.startsWith(scrum.client.impediments.Impediment.REFERENCE_PREFIX)) {
-			conversation.sendToClient(project.getImpedimentByNumber(number));
-			return;
-		} else if (reference.startsWith(scrum.client.issues.Issue.REFERENCE_PREFIX)) {
-			conversation.sendToClient(project.getIssueByNumber(number));
-			return;
-		} else if (reference.startsWith(scrum.client.sprint.Sprint.REFERENCE_PREFIX)) {
-			conversation.sendToClient(project.getSprintByNumber(number));
-			return;
-		} else if (reference.startsWith(scrum.client.collaboration.Subject.REFERENCE_PREFIX)) {
-			conversation.sendToClient(project.getSubjectByNumber(number));
-			return;
-		} else if (reference.startsWith(scrum.client.files.File.REFERENCE_PREFIX)) {
-			conversation.sendToClient(project.getFileByNumber(number));
-			return;
-		} else if (reference.startsWith(scrum.client.calendar.SimpleEvent.REFERENCE_PREFIX)) {
-			conversation.sendToClient(project.getSimpleEventByNumber(number));
-			return;
-		} else if (reference.startsWith(scrum.client.release.Release.REFERENCE_PREFIX)) {
-			conversation.sendToClient(project.getReleaseByNumber(number));
-			return;
-		} else if (reference.startsWith(scrum.client.pr.BlogEntry.REFERENCE_PREFIX)) {
-			conversation.sendToClient(project.getBlogEntryByNumber(number));
-			return;
-		}
-		LOG.info("Requested entity not found:", reference);
 	}
 
 	@Override

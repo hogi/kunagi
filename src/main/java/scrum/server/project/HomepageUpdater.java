@@ -5,6 +5,7 @@ import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
+import ilarkesto.persistence.AEntity;
 import ilarkesto.velocity.ContextBuilder;
 import ilarkesto.velocity.Velocity;
 
@@ -21,6 +22,7 @@ import scrum.server.collaboration.Wikipage;
 import scrum.server.common.BurndownChart;
 import scrum.server.issues.Issue;
 import scrum.server.pr.BlogEntry;
+import scrum.server.release.Release;
 import scrum.server.sprint.Sprint;
 
 public class HomepageUpdater {
@@ -52,6 +54,7 @@ public class HomepageUpdater {
 			updater.processDefaultTemplates();
 			updater.processIssueTemplates();
 			updater.processStoryTemplates();
+			updater.processReleaseTemplates();
 			updater.processBlogEntryTemplates();
 			updater.createSprintBurndownChart(700, 200);
 		}
@@ -66,6 +69,7 @@ public class HomepageUpdater {
 		fillProductBacklog(context.putSubContext("productBacklog"));
 		fillBugs(context);
 		fillIdeas(context);
+		fillReleases(context);
 
 		File[] templateFiles = templateDir.listFiles();
 		if (templateFiles == null) return;
@@ -78,6 +82,18 @@ public class HomepageUpdater {
 			if (templateName.startsWith("sto.")) continue;
 			String outputFileName = Str.removeSuffix(templateName, ".vm");
 			velocity.processTemplate(templateName, new File(outputDir.getPath() + "/" + outputFileName), context);
+		}
+	}
+
+	private void processReleaseTemplates() {
+		List<Release> releases = new ArrayList<Release>(project.getReleases());
+		Collections.sort(releases, Release.DATE_REVERSE_COMPARATOR);
+		for (Release release : releases) {
+			if (!release.isReleased()) continue;
+			ContextBuilder context = new ContextBuilder();
+			fillRelease(context.putSubContext("release"), release);
+			String reference = release.getReference();
+			processEntityTemplate(context, reference);
 		}
 	}
 
@@ -147,11 +163,31 @@ public class HomepageUpdater {
 		}
 	}
 
+	private void fillReleases(ContextBuilder context) {
+		List<Release> releases = new ArrayList<Release>(project.getReleases());
+		Collections.sort(releases, Release.DATE_REVERSE_COMPARATOR);
+		for (Release release : releases) {
+			if (!release.isReleased()) continue;
+			fillRelease(context.addSubContext("releases"), release);
+		}
+	}
+
 	private void fillIssue(ContextBuilder context, Issue issue) {
 		context.put("reference", issue.getReference());
 		context.put("label", issue.getLabel());
 		context.put("description", wiki2html(issue.getDescription()));
 		context.put("statement", wiki2html(issue.getStatement()));
+	}
+
+	private void fillRelease(ContextBuilder context, Release release) {
+		context.put("reference", release.getReference());
+		context.put("label", release.getLabel());
+		context.put("note", wiki2html(release.getNote()));
+		context.put("releaseNotes", wiki2html(release.getReleaseNotes()));
+		context.put("releaseDate", release.getReleaseDate());
+		context.put("released", release.isReleased());
+		context.put("major", release.isMajor());
+		context.put("bugfix", release.isBugfix());
 	}
 
 	private void fillBlog(ContextBuilder context) {
@@ -257,13 +293,19 @@ public class HomepageUpdater {
 		}
 
 		@Override
+		public String getEntityReferenceHrefOrOnclickAParameter(String reference) {
+			return "href=\"" + reference + ".html\"";
+		}
+
+		@Override
 		public String getDownloadUrlByReference(String reference) {
 			return reference;
 		}
 
 		@Override
 		public String getEntityLabelByReference(String reference) {
-			return reference;
+			AEntity entity = project.getEntityByReference(reference);
+			return entity == null ? null : entity.toString();
 		}
 
 	}

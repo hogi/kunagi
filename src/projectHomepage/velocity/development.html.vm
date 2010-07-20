@@ -90,27 +90,29 @@
 
 
 <div class="section">
-    <h2>Infos for Software Developers</h2>
+    <h2>Source Code</h2>
+    <p>You can get source code from 
+        <a target="_blank" href="http://github.com/witek/kunagi/">GitHub</a>, 
+        <a target="_blank" href="https://sourceforge.net/projects/kunagi/">SourceForge</a> or
+        <a target="_blank" href="https://code.google.com/p/kunagi/">Google Code</a>.
+    </p>
+</div>
+
+<div class="separator"></div>
+
+
+<div class="section">
+    <h2>Participation</h2>
     <div class="middle">
-        <a target="_blank" href="https://servisto.de/organizanto/179246cd-e81c-4299-8201-0303a515ebbd">Organizanto Project</a><br>
-        <a target="_blank" href="https://servisto.de/organizanto/5cfe9dd8-a1dd-4a37-8314-c40b242ed33f">Continous Integration</a><br>
-        
-        <a target="_blank" href="https://sourceforge.net/projects/kunagi/">SourceForge</a><br>
-        <a target="_blank" href="https://code.google.com/p/kunagi/">Google Code</a><br>
-        <a target="_blank" href="http://github.com/witek/kunagi/">GitHub</a><br>
-        <a target="_blank" href="https://launchpad.net/kunagi/">launchpad</a><br>
-        <a target="_blank" href="http://freshmeat.net/projects/kunagi/">freshmeat</a><br>
-        <a target="_blank" href="http://www.facebook.com/pages/kunagi/106332836057762">Facebook</a><br>
-        
-        <a target="_blank" href="https://servisto.de/projects/ilarkesto/javadoc/">Ilarkesto Javadocs</a><br>
+        <p>We are working on making our development process more open. We will also document the architecture
+            and design patterns used in Kunagi, so that developers can provide patches or join our team.</p>        
     </div>
     <div class="sidebar">
         <div class="starter">
-            <a target="_blank" href="https://servisto.de/scrum/">Start Release</a>
+            <a target="_blank" href="https://servisto.de/scrum/">Kunagi Kunagi</a>
         </div>
     </div>
     <div class="clear"></div>
 </div>
-
 
 #footer()

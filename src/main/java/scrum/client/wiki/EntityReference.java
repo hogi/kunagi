@@ -1,5 +1,7 @@
 package scrum.client.wiki;
 
+import ilarkesto.core.base.Str;
+
 public class EntityReference extends AWikiElement {
 
 	private String reference;
@@ -18,17 +20,18 @@ public class EntityReference extends AWikiElement {
 	@Override
 	String toHtml(HtmlContext context) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<a class='reference' onclick='window.scrum.showEntityByReference(\"");
-		sb.append(reference);
-		sb.append("\")");
+		sb.append("<a class='reference' ");
+		String hrefOrOnclick = context.getEntityReferenceHrefOrOnclickAParameter(reference);
+		sb.append(hrefOrOnclick);
+
 		String entityLabel = context.getEntityLabelByReference(reference);
-		if (entityLabel != null) {
+		if (!Str.isBlank(entityLabel)) {
 			entityLabel = entityLabel.replace("'", "`");
 			entityLabel = entityLabel.replace("\"", "`");
-			sb.append("' title='");
-			sb.append(entityLabel);
+			sb.append(" title='").append(entityLabel).append("'");
 		}
-		sb.append("'>");
+
+		sb.append(">");
 		sb.append(escapeHtml(label));
 		sb.append("</a>");
 		return sb.toString();

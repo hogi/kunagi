@@ -1,6 +1,9 @@
 package scrum.server.release;
 
+import ilarkesto.base.time.Date;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import scrum.server.admin.User;
@@ -19,6 +22,14 @@ public class Release extends GRelease implements Numbered {
 	}
 
 	// --- ---
+
+	public boolean isMajor() {
+		return !isBugfix();
+	}
+
+	public boolean isBugfix() {
+		return isParentReleaseSet();
+	}
 
 	public List<Issue> getIssues() {
 		List<Issue> ret = new ArrayList<Issue>();
@@ -57,5 +68,24 @@ public class Release extends GRelease implements Numbered {
 		super.ensureIntegrity();
 		updateNumber();
 	}
+
+	public static final Comparator<Release> DATE_COMPARATOR = new Comparator<Release>() {
+
+		public int compare(Release ra, Release rb) {
+			Date a = ra.getReleaseDate();
+			Date b = rb.getReleaseDate();
+			if (a == null && b == null) return 0;
+			if (a == null) return 1;
+			if (b == null) return -1;
+			return a.compareTo(b);
+		}
+	};
+
+	public static final Comparator<Release> DATE_REVERSE_COMPARATOR = new Comparator<Release>() {
+
+		public int compare(Release ra, Release rb) {
+			return -DATE_COMPARATOR.compare(ra, rb);
+		}
+	};
 
 }

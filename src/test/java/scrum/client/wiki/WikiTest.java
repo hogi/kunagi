@@ -24,21 +24,17 @@ public class WikiTest extends Assert {
 
 	@Test
 	public void testLocalImg() {
-		Assert.assertEquals(toHtml("[[Image:fle1]]"),
-			"<a onclick='window.scrum.showEntityByReference(\"fle1\")'><img src=\"fle1\"></a>");
-		Assert
-				.assertEquals(toHtml("[[Image:fle1|thumb]]"),
-					"<a onclick='window.scrum.showEntityByReference(\"fle1\")'><img src=\"fle1\" width=\"100px\" align=\"right\"></a>");
-		Assert
-				.assertEquals(toHtml("[[Image:fle1|thumb|left]]"),
-					"<a onclick='window.scrum.showEntityByReference(\"fle1\")'><img src=\"fle1\" width=\"100px\" align=\"left\"></a>");
+		Assert.assertEquals(toHtml("[[Image:fle1]]"), "<a href='fle1.html'><img src=\"fle1\"></a>");
+		Assert.assertEquals(toHtml("[[Image:fle1|thumb]]"),
+			"<a href='fle1.html'><img src=\"fle1\" width=\"100px\" align=\"right\"></a>");
+		Assert.assertEquals(toHtml("[[Image:fle1|thumb|left]]"),
+			"<a href='fle1.html'><img src=\"fle1\" width=\"100px\" align=\"left\"></a>");
 	}
 
 	@Test
 	public void testExternalImg() {
-		Assert
-				.assertEquals(toHtml("[[Image:http://servisto.de/image.png]]"),
-					"<a href=\"http://servisto.de/image.png\" target=\"_blank\"><img src=\"http://servisto.de/image.png\"></a>");
+		Assert.assertEquals(toHtml("[[Image:http://servisto.de/image.png]]"),
+			"<a href=\"http://servisto.de/image.png\" target=\"_blank\"><img src=\"http://servisto.de/image.png\"></a>");
 
 	}
 
@@ -94,9 +90,7 @@ public class WikiTest extends Assert {
 	@Test
 	public void testCode() {
 		Assert.assertEquals(toHtml("here is <code>code</code>."), "here is <code>code</code>.");
-		Assert
-				.assertEquals(toHtml("here is <code>multiword code</code>."),
-					"here is <code>multiword&nbsp;code</code>.");
+		Assert.assertEquals(toHtml("here is <code>multiword code</code>."), "here is <code>multiword&nbsp;code</code>.");
 		Assert.assertEquals(toHtml("here is <code>multiline\ncode</code>."),
 			"<p>here is <code>multiline<br>code</code>.</p>");
 		Assert.assertEquals(toHtml("simple line\n\n<code>code</code>"), "<p>simple line</p><p><code>code</code></p>");
@@ -134,9 +128,8 @@ public class WikiTest extends Assert {
 	public void testComplete() {
 		String html = toHtml("= header 1 =\nmy first paragraph\nstill first\n\nsecond paragraph\n\n\n\nthird paragraph\n\n== header 2 ==");
 		// System.out.println("\n-----\n" + html + "\n-----\n");
-		Assert
-				.assertEquals(html,
-					"<h1>header 1</h1><p>my first paragraph still first</p><p>second paragraph</p><p>third paragraph</p><h2>header 2</h2>");
+		Assert.assertEquals(html,
+			"<h1>header 1</h1><p>my first paragraph still first</p><p>second paragraph</p><p>third paragraph</p><h2>header 2</h2>");
 	}
 
 	private static String toHtml(String wiki) {
@@ -146,6 +139,11 @@ public class WikiTest extends Assert {
 	}
 
 	static class TestHtmlContext implements HtmlContext {
+
+		@Override
+		public String getEntityReferenceHrefOrOnclickAParameter(String reference) {
+			return "href='" + reference + ".html'";
+		}
 
 		public String getDownloadUrlByReference(String reference) {
 			return reference;

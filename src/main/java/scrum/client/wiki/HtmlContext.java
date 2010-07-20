@@ -6,4 +6,6 @@ public interface HtmlContext {
 
 	String getEntityLabelByReference(String reference);
 
+	String getEntityReferenceHrefOrOnclickAParameter(String reference);
+
 }

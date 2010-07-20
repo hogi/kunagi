@@ -22,9 +22,10 @@ public class Image extends AWikiElement {
 			sb.append(reference);
 			sb.append("\" target=\"_blank\">");
 		} else {
-			sb.append("<a onclick='window.scrum.showEntityByReference(\"");
-			sb.append(reference);
-			sb.append("\")'>");
+			String hrefOrOnclick = context.getEntityReferenceHrefOrOnclickAParameter(reference);
+			sb.append("<a ");
+			sb.append(hrefOrOnclick);
+			sb.append(">");
 		}
 		sb.append("<img src=\"");
 		if (external) {
