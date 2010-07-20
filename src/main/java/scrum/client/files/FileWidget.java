@@ -9,7 +9,7 @@ import scrum.client.common.AScrumWidget;
 import scrum.client.project.Project;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 public class FileWidget extends AScrumWidget {
@@ -28,19 +28,16 @@ public class FileWidget extends AScrumWidget {
 
 		TableBuilder left = ScrumGwt.createFieldTable();
 		left.addFieldRow("Label", file.getLabelModel());
-		left.addFieldRow("Download", Gwt.createServletDownloadLink("fileDownload?projectId=" + project.getId()
-				+ "&fileId=" + file.getId(), file.getFilename()));
+		String relativeUrl = "fileDownload?projectId=" + project.getId() + "&fileId=" + file.getId();
+		HTML downloadLink = Gwt.createServletDownloadLink(relativeUrl, file.getFilename());
+		left.addFieldRow("Download", downloadLink);
 		left.addFieldRow("Notes", file.getNoteModel());
 		left.addFieldRow("Uploaded", file.getUploadTimeModel());
 
 		TableBuilder right = new TableBuilder();
 		if (file.isImage()) {
-			Image image = new Image();
-			image.setUrl(GWT.getModuleBaseURL() + "fileDownload?projectId=" + project.getId() + "&fileId="
-					+ file.getId());
-			image.setWidth("300px");
-			// image.getElement().getStyle().setProperty("maxHeight", "200px");
-			right.addRow(image);
+			String url = GWT.getModuleBaseURL() + relativeUrl;
+			right.addRow(new HTML("<a href='" + url + "' target='_blank'><img src='" + url + "' width='300px'></a>"));
 		}
 		right.addRow(new CommentsWidget(file));
 
