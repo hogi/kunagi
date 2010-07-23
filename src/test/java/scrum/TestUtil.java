@@ -25,6 +25,7 @@ import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
+import scrum.server.release.ReleaseDao;
 import scrum.server.risks.Risk;
 import scrum.server.risks.RiskDao;
 import scrum.server.sprint.Sprint;
@@ -52,6 +53,7 @@ public class TestUtil {
 	private static IssueDao issueDao;
 	private static UserDao userDao;
 	private static TaskDao taskDao;
+	private static ReleaseDao releaseDao;
 
 	private static void initialize() {
 		if (initialized) return;
@@ -69,6 +71,10 @@ public class TestUtil {
 		userDao = new UserDao();
 		userDao.setTransactionService(transactionService);
 		Sprint.setUserDao(userDao);
+
+		releaseDao = new ReleaseDao();
+		releaseDao.setTransactionService(transactionService);
+		Project.setReleaseDao(releaseDao);
 
 		taskDao = new TaskDao();
 		taskDao.setTransactionService(transactionService);
