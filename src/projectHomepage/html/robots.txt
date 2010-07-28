@@ -1,0 +1,3 @@
+Sitemap: http://kunagi.org/sitemap.xml
+User-agent: *
+Disallow: /velocity/
