@@ -6,6 +6,7 @@ import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.img.Img;
+import scrum.client.journal.ActivateChangeHistoryAction;
 
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -25,6 +26,7 @@ public class BlogEntryBlock extends ABlockWidget<BlogEntry> {
 		header.appendCell(new EmoticonsWidget(blogEntry), null, true, true, null);
 		header.addMenuAction(new PublishBlogEntryAction(blogEntry));
 		header.addMenuAction(new UnpublishBlogEntryAction(blogEntry));
+		header.addMenuAction(new ActivateChangeHistoryAction(blogEntry));
 		header.addMenuAction(new DeleteBlogEntryAction(blogEntry));
 	}
 

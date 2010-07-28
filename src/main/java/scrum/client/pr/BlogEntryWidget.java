@@ -5,6 +5,7 @@ import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwt;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
+import scrum.client.journal.ChangeHistoryWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -47,6 +48,7 @@ public class BlogEntryWidget extends AScrumWidget {
 				return true;
 			}
 		});
+		tb.addRow(new ChangeHistoryWidget(blogEntry), 2);
 
 		return TableBuilder.row(20, tb.createTable(), ScrumGwt.createEmoticonsAndComments(blogEntry));
 	}
