@@ -452,6 +452,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			if (properties.containsKey("published") && blogEntry.isPublished()) {
 				postProjectEvent(conversation, currentUser.getName() + " published " + blogEntry.getReferenceAndLabel());
 			}
+
+			if (properties.containsKey("text")) {
+				blogEntry.addAuthor(currentUser);
+			}
 		}
 
 		sendToOtherConversationsByProject(conversation, entity);
