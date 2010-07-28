@@ -4,7 +4,7 @@
 
 <div class="section">
 
-    <h2>Contact / Feedback</h2>
+    <h2>Contact / Feedback / Feature Request / User Story</h2>
     <form method="post" action="https://servisto.de/scrum/submitIssue" accept-charset="UTF-8">
         <input name="projectId" type="hidden" value="ef50396a-0e3a-479b-8808-c31cdfd77fa0">
         <input name="returnUrl" type="hidden" value="http://kunagi.org/message.html#{message}">
