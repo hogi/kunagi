@@ -25,7 +25,7 @@ public class ReleaseBlock extends ABlockWidget<Release> implements TrashSupport 
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Release release = getObject();
 		typeIcon = header.insertPrefixIcon();
-		dateLabel = header.insertPrefixLabel("150px", true);
+		dateLabel = header.insertPrefixLabel("160px", true);
 		parentLabel = header.appendCenterSuffix("");
 		header.appendCell(new EmoticonsWidget(release), null, true, true, null);
 		header.addMenuAction(new CreateBugfixReleaseAction(release));
