@@ -688,11 +688,11 @@ public class Project extends GProject {
 
 	@Override
 	public boolean isVisibleFor(User user) {
-		return (user != null && user.isAdmin()) || containsParticipant(user);
+		return (user != null && user.isAdmin()) || containsParticipant(user) || containsAdmin(user);
 	}
 
 	public boolean isEditableBy(User user) {
-		return containsParticipant(user);
+		return isVisibleFor(user);
 	}
 
 	@Override

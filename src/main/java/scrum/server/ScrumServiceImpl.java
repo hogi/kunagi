@@ -213,6 +213,15 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			((Numbered) entity).updateNumber();
 		}
 
+		if (entity instanceof Project) {
+			Project project = (Project) entity;
+			project.addParticipant(currentUser);
+			project.addAdmin(currentUser);
+			project.addProductOwner(currentUser);
+			project.addScrumMaster(currentUser);
+			project.addTeamMember(currentUser);
+		}
+
 		if (entity instanceof Comment) {
 			Comment comment = (Comment) entity;
 			comment.setDateAndTime(DateAndTime.now());

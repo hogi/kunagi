@@ -53,7 +53,11 @@ public class Project extends GProject implements ForumSupport {
 
 	public Project(User creator) {
 		setLabel(INIT_LABEL);
+		addParticipant(creator);
 		addAdmin(creator);
+		addProductOwner(creator);
+		addScrumMaster(creator);
+		addTeamMember(creator);
 		setLastOpenedDateAndTime(DateAndTime.now());
 	}
 

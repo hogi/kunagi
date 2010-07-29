@@ -14,7 +14,6 @@ public class CreateProjectAction extends GCreateProjectAction {
 	@Override
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Create a new Project.");
-
 		return tb.getTooltip();
 	}
 
