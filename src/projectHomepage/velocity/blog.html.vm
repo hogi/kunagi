@@ -8,8 +8,11 @@
     <a name="$entry.reference"></a>
     <div class="section">
         <h2>$entry.title</h2>
-        <p class="secondaryText">$entry.date</p>
         $entry.text
+        <div class="sectionfooter">
+            $entry.date |
+            <a href="http://kunagi.org/${entry.reference}.html" title="Permalink" rel="bookmark">Permalink</a>
+        </div>
     </div>
     <div class="separator"></div>
 #end
