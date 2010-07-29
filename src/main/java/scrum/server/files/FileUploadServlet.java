@@ -5,6 +5,7 @@ import gwtupload.server.exceptions.UploadActionException;
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
+import ilarkesto.webapp.Servlet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +27,16 @@ public class FileUploadServlet extends UploadAction {
 	public String executeAction(HttpServletRequest req, List<FileItem> sessionFiles) throws UploadActionException {
 		sessionFiles = new ArrayList<FileItem>(sessionFiles);
 		String projectId = null;
+		log.debug("file upload", Servlet.toString(req, "    "));
+		log.debug("fields:", sessionFiles.size());
 		for (FileItem item : new ArrayList<FileItem>(sessionFiles)) {
 			String fieldName = item.getFieldName();
 			if (item.isFormField()) {
-				log.debug(fieldName, "->", item.getString());
+				log.debug("   ", fieldName, "->", item.getString());
 				sessionFiles.remove(item);
 				if (fieldName.equals("projectId")) projectId = item.getString();
 			} else {
-				log.debug(fieldName, "-> [file]");
+				log.debug("   ", fieldName, "-> [file]");
 			}
 		}
 		if (projectId == null) throw new RuntimeException("projectId == null");
