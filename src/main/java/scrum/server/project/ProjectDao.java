@@ -23,6 +23,13 @@ public class ProjectDao extends GProjectDao {
 
 	// --- ---
 
+	@Override
+	public Project newEntityInstance() {
+		Project project = super.newEntityInstance();
+		project.setLastOpenedDateAndTime(DateAndTime.now());
+		return project;
+	}
+
 	public Project postProject(User admin) {
 		Project project = newEntityInstance();
 		project.setLabel("New Project");

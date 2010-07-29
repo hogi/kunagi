@@ -47,11 +47,13 @@ import javax.servlet.http.HttpServletRequest;
 import scrum.client.ApplicationInfo;
 import scrum.client.UsersStatusData;
 import scrum.client.admin.SystemMessage;
+import scrum.server.admin.DeleteDisabledUsersTask;
 import scrum.server.admin.DisableUsersWithUnverifiedEmailsTask;
 import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.common.BurndownChart;
+import scrum.server.project.DeleteOldProjectsTask;
 import scrum.server.project.HomepageUpdaterTask;
 import scrum.server.project.Project;
 
@@ -156,6 +158,10 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		tm.scheduleWithFixedDelay(autowire(new DestroyTimeoutedSessionsTask()), Tm.MINUTE);
 		tm.scheduleWithFixedDelay(autowire(new HomepageUpdaterTask()), Tm.HOUR);
 		tm.scheduleWithFixedDelay(autowire(new DisableUsersWithUnverifiedEmailsTask()), Tm.HOUR);
+		if (getConfig().isDeleteOldProjects())
+			tm.scheduleWithFixedDelay(autowire(new DeleteOldProjectsTask()), Tm.SECOND, Tm.HOUR * 25);
+		if (getConfig().isDeleteDisabledUsers())
+			tm.scheduleWithFixedDelay(autowire(new DeleteDisabledUsersTask()), Tm.SECOND * 30, Tm.HOUR * 26);
 	}
 
 	@Override

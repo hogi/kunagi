@@ -54,6 +54,7 @@ public class Project extends GProject implements ForumSupport {
 	public Project(User creator) {
 		setLabel(INIT_LABEL);
 		addAdmin(creator);
+		setLastOpenedDateAndTime(DateAndTime.now());
 	}
 
 	public Project(Map data) {

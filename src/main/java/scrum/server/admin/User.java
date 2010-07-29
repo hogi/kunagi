@@ -9,11 +9,13 @@ import ilarkesto.email.Eml;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 
 import scrum.server.ScrumWebApplication;
+import scrum.server.project.Project;
 
 public class User extends GUser {
 
@@ -30,6 +32,10 @@ public class User extends GUser {
 	}
 
 	// --- ---
+
+	public Set<Project> getProjects() {
+		return projectDao.getProjectsByParticipant(this);
+	}
 
 	private String password;
 

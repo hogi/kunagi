@@ -29,6 +29,14 @@ public class ScrumConfig {
 		return p.getBoolean("startup.delete", false);
 	}
 
+	public boolean isDeleteOldProjects() {
+		return p.getBoolean("deleteOldProjects", false);
+	}
+
+	public boolean isDeleteDisabledUsers() {
+		return p.getBoolean("deleteDisabledUsers", false);
+	}
+
 	public boolean isStageIntegration() {
 		return p.getBoolean("stage.integration", false);
 	}
