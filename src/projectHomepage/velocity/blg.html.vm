@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
-#header("blg")
+#header("blg", "$entry.title - Kunagi", "Kunagi Blog: $entry.title", "Kunagi, blog")
 
 #blogRssLink()
 

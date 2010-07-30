@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
-#header("iss")
+#header("iss", "$issue.label - Kunagi", "Kunagi issue: $issue.label", "Kunagi, issue, bug")
 
 <div class="section">
     <h2>$issue.label</h2>

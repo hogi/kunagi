@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
-#header("support")
+#header("support", "Support - Kunagi", "Kunagi support. Feedback, feature requests. Documentation and Tutorials.", "Kunagi, support, feedback, feature request, documentation, tutorial")
 
 <div class="section">
 

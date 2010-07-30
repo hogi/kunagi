@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
-#header("screenshots")
+#header("screenshots", "Screenshots - Kunagi", "Kunagi Screenshots and feature descriptions.", "Kunagi, screenshots, features")
 
 <div class="section">
     <table id="screen-table" width="100%">

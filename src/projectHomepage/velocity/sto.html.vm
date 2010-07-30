@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
-#header("iss")
+#header("story", "$story.label - Kunagi", "Kunagi story: $story.label", "Kunagi, story, user story, requirement")
 
 <div class="section">
     <h2>$story.label</h2>

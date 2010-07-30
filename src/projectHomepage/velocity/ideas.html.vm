@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
-#header("ideas")
+#header("ideas", "Ideas - Kunagi", "List of ideas and feature requests for Kunagi", "Kunagi, ideas, features")
 
 <div class="section">
     

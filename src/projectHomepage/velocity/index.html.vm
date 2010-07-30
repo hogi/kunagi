@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
-#header("index")
+#header("index", "Kunagi - Agile project management based on Scrum", "$project.shortDescription", "Scrum, Project Management, agile, tool, demo")
 
 <div class="section">
     <h2>What is Kunagi?</h2>
