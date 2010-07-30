@@ -180,6 +180,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			return;
 		}
 
+		if (user.isAdmin()) {
+			conversation.getNextData().addError("Admins can not request new passwords.");
+			return;
+		}
+
 		if (!user.isEmailSet()) {
 			conversation.getNextData().addError("No email address for user '" + login + "'. Please contact the admin.");
 			return;
