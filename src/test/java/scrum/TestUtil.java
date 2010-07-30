@@ -282,6 +282,9 @@ public class TestUtil {
 		initialize();
 		Project project = projectDao.newEntityInstance();
 		project.setLabel(label);
+		project.setShortDescription(Str.generateRandomSentence(4, 4));
+		project.setDescription(Str.generateRandomParagraph());
+		project.setLongDescription(Str.generateRandomParagraphs(5, null, null, "\n\n"));
 		return project;
 	}
 

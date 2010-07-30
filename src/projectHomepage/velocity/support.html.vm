@@ -42,7 +42,7 @@
     <h2>Known bugs</h2>
     <ul>
     #foreach ($issue in $bugs)
-        <li><a href="${issue.reference}.html">$issue.reference</a> $issue.label</li>
+        <li><a href="${issue.reference}.html" class="reference">$issue.reference</a> $issue.label</li>
     #end
     </ul>
     

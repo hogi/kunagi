@@ -22,7 +22,7 @@
     <h3>Stories the Team has committed to</h3>
     <ul>
     #foreach( $story in $sprintBacklog.stories )
-        <li><a href="${story.reference}.html">$story.reference</a> $story.label</li>
+        <li><a href="${story.reference}.html" class="reference">$story.reference</a> $story.label</li>
     #end
     </ul>
     <h3>Current Burndown</h3>
@@ -36,7 +36,7 @@
     <h2>Product Backlog</h2>
     <ul>
     #foreach( $story in $productBacklog.stories )
-        <li><a href="${story.reference}.html">$story.reference</a> $story.label</li>
+        <li><a href="${story.reference}.html" class="reference">$story.reference</a> $story.label</li>
     #end
     </ul>
     <p>There are more story canditates among collected <a href="ideas.html">ideas</a>.</p>

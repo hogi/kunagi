@@ -19,6 +19,7 @@ input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 
 
 #content {background: white; padding: 25px; min-height: 500px;}
     #content a {color: #B37400;}
+    #content a.reference {font-family: monospace;}
     #content code {color: #7070A0; font-family: monospace;}
     #content .section {padding: 0px 0px;}
         #content .section .sectionfooter {text-align: right; font-size: 10px; margin-top: 10px;}
