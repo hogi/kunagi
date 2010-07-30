@@ -134,7 +134,7 @@ public class WikiTest extends Assert {
 
 	private static String toHtml(String wiki) {
 		WikiParser parser = new WikiParser(wiki);
-		WikiModel model = parser.parse();
+		WikiModel model = parser.parse(true);
 		return model.toHtml(new TestHtmlContext());
 	}
 

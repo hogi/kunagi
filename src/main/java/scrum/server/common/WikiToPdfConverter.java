@@ -194,7 +194,7 @@ public class WikiToPdfConverter extends APdfCreator {
 	public static void buildPdf(APdfContainerElement parent, String code, PdfContext pdfContext) {
 		if (code == null) return;
 		WikiParser parser = new WikiParser(code);
-		WikiModel model = parser.parse();
+		WikiModel model = parser.parse(false);
 		WikiToPdfConverter converter = new WikiToPdfConverter(model, pdfContext);
 		converter.build(parent);
 	}

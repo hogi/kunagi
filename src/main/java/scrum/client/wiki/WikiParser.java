@@ -8,12 +8,6 @@ import scrum.client.ScrumGwtApplication;
  */
 public class WikiParser {
 
-	public static void main(String[] args) {
-		WikiParser wikiParser = new WikiParser("tsk17, (req122)\n");
-		WikiModel model = wikiParser.parse();
-		System.out.println(model);
-	}
-
 	private String input;
 	private WikiModel model;
 	private boolean oneliner;
@@ -392,13 +386,13 @@ public class WikiParser {
 		model.add(appendText(new Paragraph(!oneliner), cutParagraph()));
 	}
 
-	public WikiModel parse() {
+	public WikiModel parse(boolean onelinerWithoutP) {
 		model = new WikiModel();
 
 		input = input.replace("\r", "");
 		input = input.replace("\t", "    ");
 
-		oneliner = input.indexOf('\n') < 0;
+		oneliner = onelinerWithoutP && input.indexOf('\n') < 0;
 
 		while (input != null) {
 			nextPart();

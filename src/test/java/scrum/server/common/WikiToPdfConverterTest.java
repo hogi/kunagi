@@ -81,7 +81,7 @@ public class WikiToPdfConverterTest {
 		sb.append("A paragraph after the paragraph with thumg image on the rihgt. A paragraph after the paragraph with thumg image on the rihgt. A paragraph after the paragraph with thumg image on the rihgt. A paragraph after the paragraph with thumg image on the rihgt. A paragraph after the paragraph with thumg image on the rihgt. A paragraph after the paragraph with thumg image on the rihgt. A paragraph after the paragraph with thumg image on the rihgt. A paragraph after the paragraph with thumg image on the rihgt. A paragraph after the paragraph with thumg image on the rihgt. A paragraph after the paragraph with thumg image on the rihgt. \n\n");
 
 		WikiParser parser = new WikiParser(sb.toString());
-		WikiModel model = parser.parse();
+		WikiModel model = parser.parse(false);
 
 		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream("test-output/wiki.pdf"));
 		PdfBuilder pdfBuilder = new PdfBuilder();

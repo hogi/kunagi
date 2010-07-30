@@ -269,7 +269,7 @@ public class HomepageUpdater {
 	public String wiki2html(String wikitext) {
 		if (Str.isBlank(wikitext)) return null;
 		WikiParser wikiParser = new WikiParser(wikitext);
-		WikiModel model = wikiParser.parse();
+		WikiModel model = wikiParser.parse(false);
 		return model.toHtml(htmlContext);
 	}
 

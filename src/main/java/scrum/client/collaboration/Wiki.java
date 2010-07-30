@@ -43,7 +43,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 		if (wiki == null) return null;
 		if (wiki.trim().length() == 0) return "";
 		WikiParser parser = new WikiParser(wiki);
-		WikiModel model = parser.parse();
+		WikiModel model = parser.parse(true);
 		return model.toHtml(new ScrumHtmlContext());
 	}
 
@@ -116,8 +116,8 @@ public class Wiki extends GWiki implements RichtextFormater {
 				}
 			}), 0);
 
-			toolbar.insert(createToolbarButton(Img.bundle.enumlist().createImage(), "Numbered list",
-				new ClickHandler() {
+			toolbar.insert(
+				createToolbarButton(Img.bundle.enumlist().createImage(), "Numbered list", new ClickHandler() {
 
 					public void onClick(ClickEvent event) {
 						BetterTextArea textArea = editor.getEditor();
@@ -126,8 +126,8 @@ public class Wiki extends GWiki implements RichtextFormater {
 					}
 				}), 0);
 
-			toolbar.insert(createToolbarButton(Img.bundle.itemlist().createImage(), "Bulleted list",
-				new ClickHandler() {
+			toolbar.insert(
+				createToolbarButton(Img.bundle.itemlist().createImage(), "Bulleted list", new ClickHandler() {
 
 					public void onClick(ClickEvent event) {
 						BetterTextArea textArea = editor.getEditor();
@@ -145,8 +145,8 @@ public class Wiki extends GWiki implements RichtextFormater {
 				}
 			}), 0);
 
-			toolbar.insert(createToolbarButton(Img.bundle.formatTextItalic().createImage(), "Italic",
-				new ClickHandler() {
+			toolbar.insert(
+				createToolbarButton(Img.bundle.formatTextItalic().createImage(), "Italic", new ClickHandler() {
 
 					public void onClick(ClickEvent event) {
 						BetterTextArea textArea = editor.getEditor();
