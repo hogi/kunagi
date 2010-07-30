@@ -161,6 +161,13 @@ public class Project extends GProject {
 
 	// --- ---
 
+	public boolean containsParticipantWithVerifiedEmail() {
+		for (User user : getParticipants()) {
+			if (user.isEmailVerified()) return true;
+		}
+		return false;
+	}
+
 	public void updateRequirementsOrder(List<Requirement> requirements) {
 		setRequirementsOrderIds(Persist.getIdsAsList(requirements));
 	}
