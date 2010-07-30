@@ -8,22 +8,19 @@
     <meta name="author" content="Artjom Kochtchi, Witoslaw Koczewski">
     <meta name="keywords" content="$keywords">
 
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta http-equiv="content-language" content="en">
 
-    <meta name="google-site-verification" content="J_A-jkvvOE0Tyruc6MhB5MxFDltbQO84579ZIVYcuyg" />
-    <meta name="y_key" content="7cc8fa0621a57566" />
-
     <meta name="robots" content="index">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-    <link rel="stylesheet" href="screen.css" type="text/css" />
-    <link rel="alternate" type="application/rss+xml" title="Kunagi Blog as RSS 2.0" href="blog.rss.xml" />
-    <script type="text/javascript" language="javascript" src="js/prototype.js"></script>
-    <script type="text/javascript" language="javascript" src="js/kill-ie6.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="screen.css" type="text/css">
+    <link rel="alternate" type="application/rss+xml" title="Kunagi Blog as RSS 2.0" href="blog.rss.xml">
+    <script type="text/javascript" src="js/prototype.js"></script>
+    <script type="text/javascript" src="js/kill-ie6.js"></script>
 
 </head>
 
-<body bgcolor="#808080" background="img/bg.png">
+<body>
 
 <div id="main">
 
