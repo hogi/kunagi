@@ -85,6 +85,26 @@ public class HomepageUpdater {
 		}
 	}
 
+	private void processEntityTemplate(ContextBuilder context, String reference) {
+		fillProject(context.putSubContext("project"));
+		fillProductBacklog(context.putSubContext("productBacklog"));
+		fillSprintBacklog(context.putSubContext("sprintBacklog"));
+		fillWiki(context.putSubContext("wiki"));
+
+		String prefix = reference.substring(0, 3);
+		File[] templateFiles = templateDir.listFiles();
+		if (templateFiles == null) return;
+		for (File templateFile : templateFiles) {
+			String templateName = templateFile.getName();
+			if (!templateName.endsWith(".vm")) continue;
+			if (!templateName.startsWith(prefix + ".")) continue;
+			String outputFileName = Str.removeSuffix(templateName, ".vm");
+			outputFileName = Str.removePrefix(outputFileName, prefix + ".");
+			outputFileName = reference + "." + outputFileName;
+			velocity.processTemplate(templateName, new File(outputDir.getPath() + "/" + outputFileName), context);
+		}
+	}
+
 	private void processReleaseTemplates() {
 		List<Release> releases = new ArrayList<Release>(project.getReleases());
 		Collections.sort(releases, Release.DATE_REVERSE_COMPARATOR);
@@ -132,21 +152,6 @@ public class HomepageUpdater {
 		byte[] imageData = BurndownChart.createBurndownChartAsByteArray(project.getCurrentSprint(), width, height);
 		IO.copyDataToFile(imageData,
 			new File(outputDir.getPath() + "/sprint-burndown-" + width + "x" + height + ".png"));
-	}
-
-	private void processEntityTemplate(ContextBuilder context, String reference) {
-		String prefix = reference.substring(0, 3);
-		File[] templateFiles = templateDir.listFiles();
-		if (templateFiles == null) return;
-		for (File templateFile : templateFiles) {
-			String templateName = templateFile.getName();
-			if (!templateName.endsWith(".vm")) continue;
-			if (!templateName.startsWith(prefix + ".")) continue;
-			String outputFileName = Str.removeSuffix(templateName, ".vm");
-			outputFileName = Str.removePrefix(outputFileName, prefix + ".");
-			outputFileName = reference + "." + outputFileName;
-			velocity.processTemplate(templateName, new File(outputDir.getPath() + "/" + outputFileName), context);
-		}
 	}
 
 	private void fillBugs(ContextBuilder context) {
