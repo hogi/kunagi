@@ -148,6 +148,8 @@
 "c0c391d4-5861-4ebb-8b43-28c05db0b513","08d9cbc3-bd9c-4b71-8bf1-0ac8fdc2ad26","Inject","true"
 "ec7d7a49-aecb-4967-a9e4-864bace8ebcd","342e0a36-ad56-49d4-bb2c-47819fa693f9","ServiceCall","RequestChanges"
 "310f57dd-c471-4a92-bc80-58b2b04bc94d","ec7d7a49-aecb-4967-a9e4-864bace8ebcd","Parameter","parentId"
+"6597a5d7-bde9-40d2-9ff9-7f2b04b2ec54","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","locale"
+"b7e08a77-bf14-433a-bf4a-057f04100e75","6597a5d7-bde9-40d2-9ff9-7f2b04b2ec54","Component","Localizer"
 "c829a32f-5300-49a9-983a-75bc0e214ae4","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","project"
 "08ded0fe-d8f2-429d-8874-60c0fc454ef6","c829a32f-5300-49a9-983a-75bc0e214ae4","ServiceCall","CloseProject"
 "ca632922-0e7e-4b05-b9f9-2a6b2fed1de8","c829a32f-5300-49a9-983a-75bc0e214ae4","ServiceCall","CreateExampleProject"

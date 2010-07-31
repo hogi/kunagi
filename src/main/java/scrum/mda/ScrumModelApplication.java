@@ -452,16 +452,28 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addProperty("number", int.class);
 			issueModel.addStringProperty("type").setOptionRestricted(true);
 			issueModel.addProperty("date", DateAndTime.class).setMandatory(true);
-			issueModel.addReference("creator", getUserModel());
-			issueModel.addStringProperty("label").setMandatory(true).setSearchable(true);
-			issueModel.addStringProperty("description").setRichtext(true).setSearchable(true);
-			issueModel.addStringProperty("statement").setRichtext(true).setSearchable(true);
-			issueModel.addStringProperty("issuerName");
-			issueModel.addStringProperty("issuerEmail");
+			issueModel.addReference("creator", getUserModel()).setTooltip("User, who created this issue.");
+			issueModel.addStringProperty("label").setMandatory(true).setSearchable(true)
+					.setTooltip("Short description of this issue.");
+			issueModel.addStringProperty("description").setRichtext(true).setSearchable(true)
+					.setTooltip("Detailed description of this issue.");
+			issueModel
+					.addStringProperty("statement")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setTooltip(
+						"Official statement from the Scrum Team to the public about this issue. This could be a"
+								+ " workaround description, the reason or some other information about status of the"
+								+ " issue.");
+			issueModel.addStringProperty("issuerName").setTooltip("Name of the person, who created this issue.");
+			issueModel.addStringProperty("issuerEmail").setTooltip(
+				"Email address of the person, who created this issue.");
 			issueModel.addProperty("acceptDate", Date.class);
 			issueModel.addProperty("urgent", boolean.class);
-			issueModel.addProperty("severity", int.class).setOptionRestricted(true);
-			issueModel.addReference("owner", getUserModel());
+			issueModel.addProperty("severity", int.class).setOptionRestricted(true)
+					.setTooltip("Severity level of this issue.");
+			issueModel.addReference("owner", getUserModel()).setTooltip(
+				"Team member, who is currently working on this issue.");
 			issueModel.addProperty("fixDate", Date.class);
 			issueModel.addProperty("closeDate", Date.class);
 			issueModel.addProperty("suspendedUntilDate", Date.class);

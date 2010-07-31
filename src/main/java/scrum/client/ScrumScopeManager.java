@@ -19,6 +19,7 @@ import scrum.client.core.ServiceCaller;
 import scrum.client.files.Uploader;
 import scrum.client.issues.IssueManager;
 import scrum.client.journal.ChangeHistoryManager;
+import scrum.client.locale.Localizer;
 import scrum.client.project.CloseProjectServiceCall;
 import scrum.client.project.Project;
 import scrum.client.search.Search;
@@ -52,6 +53,7 @@ public class ScrumScopeManager {
 		scope.putComponent(dao);
 		scope.putComponent(new ServiceCaller());
 		scope.putComponent(new Pinger());
+		scope.putComponent(new Localizer());
 		scope.putComponent(new Ui());
 		scope.putComponent(new SystemMessageManager());
 		scope.putComponent(new ModeSwitcher());

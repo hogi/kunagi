@@ -51,6 +51,11 @@ public class IssueWidget extends AScrumWidget {
 
 			@Override
 			public void setValue(String value) {}
+
+			@Override
+			public String getTooltip() {
+				return "Person who created this issue.";
+			}
 		}));
 		left.addFieldRow("Statement", issue.getStatementModel());
 		left.addFieldRow("Affected releases", new AMultiSelectionViewEditWidget<Release>() {
@@ -77,6 +82,11 @@ public class IssueWidget extends AScrumWidget {
 			public boolean isEditable() {
 				return true;
 			}
+
+			@Override
+			public String getTooltip() {
+				return "Releases on which this issue is related to. This could be the release, where the issue was discovered.";
+			}
 		});
 		left.addFieldRow("Fix releases", new AMultiSelectionViewEditWidget<Release>() {
 
@@ -101,6 +111,11 @@ public class IssueWidget extends AScrumWidget {
 			@Override
 			public boolean isEditable() {
 				return true;
+			}
+
+			@Override
+			public String getTooltip() {
+				return "Releases to which this issue is or will be fixed.";
 			}
 		});
 		left.addRow(new ChangeHistoryWidget(issue), 2);

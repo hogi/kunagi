@@ -300,6 +300,8 @@ public abstract class GIssue
 
         @Override
         public boolean isMandatory() { return true; }
+        @Override
+        public String getTooltip() { return "Short description of this issue."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -351,6 +353,8 @@ public abstract class GIssue
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "Detailed description of this issue."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -402,6 +406,8 @@ public abstract class GIssue
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "Official statement from the Scrum Team to the public about this issue. This could be a workaround description, the reason or some other information about status of the issue."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -450,6 +456,8 @@ public abstract class GIssue
         public void setValue(java.lang.String value) {
             setIssuerName(value);
         }
+        @Override
+        public String getTooltip() { return "Name of the person, who created this issue."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -498,6 +506,8 @@ public abstract class GIssue
         public void setValue(java.lang.String value) {
             setIssuerEmail(value);
         }
+        @Override
+        public String getTooltip() { return "Email address of the person, who created this issue."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -620,6 +630,8 @@ public abstract class GIssue
         public List<java.lang.Integer> getOptions() {
             return getSeverityOptions();
         }
+        @Override
+        public String getTooltip() { return "Severity level of this issue."; }
 
         @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
