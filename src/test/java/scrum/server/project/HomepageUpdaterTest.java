@@ -1,8 +1,10 @@
 package scrum.server.project;
 
 import ilarkesto.base.Str;
+import ilarkesto.base.Sys;
 import ilarkesto.base.time.Date;
 
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import scrum.TestUtil;
@@ -10,6 +12,11 @@ import scrum.server.issues.Issue;
 import scrum.server.sprint.Sprint;
 
 public class HomepageUpdaterTest {
+
+	@BeforeSuite
+	public void init() {
+		Sys.setHeadless(true);
+	}
 
 	@Test
 	public void updateHomepage() {

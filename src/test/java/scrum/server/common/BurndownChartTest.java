@@ -1,5 +1,6 @@
 package scrum.server.common;
 
+import ilarkesto.base.Sys;
 import ilarkesto.base.time.Date;
 import ilarkesto.io.IO;
 
@@ -11,13 +12,18 @@ import java.util.List;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.DefaultXYDataset;
-import org.testng.annotations.Test;
+import org.testng.annotations.BeforeSuite;
 
 import scrum.server.sprint.SprintDaySnapshot;
 
 public class BurndownChartTest {
 
-//	@Test
+	@BeforeSuite
+	public void init() {
+		Sys.setHeadless(true);
+	}
+
+	// @Test
 	public void sprintBurndown() {
 		List<BurndownSnapshot> shots = new ArrayList<BurndownSnapshot>();
 
