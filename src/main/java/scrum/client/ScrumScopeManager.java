@@ -17,6 +17,7 @@ import scrum.client.communication.ServerErrorManager;
 import scrum.client.core.ModeSwitcher;
 import scrum.client.core.ServiceCaller;
 import scrum.client.files.Uploader;
+import scrum.client.i18n.Localizer;
 import scrum.client.issues.IssueManager;
 import scrum.client.journal.ChangeHistoryManager;
 import scrum.client.locale.Localizer;
@@ -73,6 +74,7 @@ public class ScrumScopeManager {
 
 		scope.putComponent("user", user);
 		scope.putComponent(new UsersWorkspaceWidgets());
+		scope.putComponent(new Localizer());
 
 		userScope.wireComponents();
 	}

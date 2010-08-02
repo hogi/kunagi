@@ -7,6 +7,7 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.ScrumScopeManager;
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
+import scrum.client.i18n.Localizer;
 import scrum.client.project.Project;
 import scrum.client.sprint.Sprint;
 import scrum.client.workspace.Ui;
@@ -22,6 +23,10 @@ public abstract class AScrumWidget extends AWidget {
 	protected static final User getCurrentUser() {
 		assert getAuth().isUserLoggedIn();
 		return getAuth().getUser();
+	}
+
+	public static final Localizer getLocalizer() {
+		return Scope.get().getComponent(Localizer.class);
 	}
 
 	protected static final Auth getAuth() {

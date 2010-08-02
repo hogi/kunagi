@@ -26,6 +26,8 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     protected ilarkesto.core.scope.ComponentReflector uploaderReflector = createUploaderReflector();
 
+    protected ilarkesto.core.scope.ComponentReflector localizerReflector = createLocalizerReflector();
+
     protected ilarkesto.core.scope.ComponentReflector issueManagerReflector = createIssueManagerReflector();
 
     protected ilarkesto.core.scope.ComponentReflector changeHistoryManagerReflector = createChangeHistoryManagerReflector();
@@ -60,6 +62,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.core.ModeSwitcher) modeSwitcherReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.core.ServiceCaller) serviceCallerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.injectComponents(component, scope);
+        if (component instanceof scrum.client.i18n.Localizer) localizerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.issues.IssueManager) issueManagerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.journal.ChangeHistoryManager) changeHistoryManagerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.locale.Localizer) localizerReflector.injectComponents(component, scope);
@@ -85,6 +88,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.core.ModeSwitcher) modeSwitcherReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.core.ServiceCaller) serviceCallerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.callInitializationMethods(component);
+        if (component instanceof scrum.client.i18n.Localizer) localizerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.issues.IssueManager) issueManagerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.journal.ChangeHistoryManager) changeHistoryManagerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.locale.Localizer) localizerReflector.callInitializationMethods(component);
@@ -110,6 +114,7 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.core.ModeSwitcher) modeSwitcherReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.core.ServiceCaller) serviceCallerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.outjectComponents(component, scope);
+        if (component instanceof scrum.client.i18n.Localizer) localizerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.issues.IssueManager) issueManagerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.journal.ChangeHistoryManager) changeHistoryManagerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.locale.Localizer) localizerReflector.outjectComponents(component, scope);
@@ -165,6 +170,10 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     public ilarkesto.core.scope.ComponentReflector createUploaderReflector() {
         return new scrum.client.files.GUploaderReflector();
+    }
+
+    public ilarkesto.core.scope.ComponentReflector createLocalizerReflector() {
+        return new scrum.client.i18n.GLocalizerReflector();
     }
 
     public ilarkesto.core.scope.ComponentReflector createIssueManagerReflector() {

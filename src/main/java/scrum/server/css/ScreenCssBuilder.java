@@ -71,6 +71,10 @@ public class ScreenCssBuilder implements CssBuilder {
 	public static String cCommentsBorder = "#EAFFEA";
 	public static String cCommentDate = "darkgray";
 
+	public static String cDocumentationBackground = "#F8F8FF";
+	public static String cDocumentation = "#000066";
+	public static String cDocumentationBorder = "#EAFAEF";
+
 	public static String cChangesBackground = "#FFFFF8";
 	public static String cChangesBorder = "#FFFFEA";
 	public static String cChangeDate = cCommentDate;
@@ -92,6 +96,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		systemMessage(css);
 		blockList(css);
 		comments(css);
+		documentation(css);
 		actions(css);
 		changeHistory(css);
 		workspace(css);
@@ -341,6 +346,11 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	private void actions(CssRenderer css) {
 		css.style(".ActionsPanel").background(cActionsBackground).border(1, cActionsBorder).padding(7).borderRadius(10);
+	}
+
+	private void documentation(CssRenderer css) {
+		css.style(".DocumentationWidget").color(cDocumentation).background(cDocumentationBackground)
+				.border(1, cDocumentationBorder).padding(7).borderRadius(10);
 	}
 
 	private void comments(CssRenderer css) {
