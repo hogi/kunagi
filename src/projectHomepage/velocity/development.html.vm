@@ -14,6 +14,7 @@
 
 
 <div class="section">
+    <a name="sprintbacklog"></a>
     <h2>Sprint Backlog</h2>
     #if( $sprintBacklog.goal )
         <h3>Goal for the current Sprint</h3>
@@ -33,6 +34,7 @@
 
 
 <div class="section">
+    <a name="productbacklog"></a>
     <h2>Product Backlog</h2>
     <ul>
     #foreach( $story in $productBacklog.stories )
@@ -46,6 +48,7 @@
 
 
 <div class="section">
+    <a name="team"></a>
     <h2>Development Team</h2>
     <p>Kunagi is developed by a distributed team of experienced software developers:</p>
     <ul>
@@ -61,6 +64,7 @@
 
 
 <div class="section">
+    <a name="donations"</a>
     <h2>Donations</h2>
     <p>Kunagi is free software, developed in our spare time. The software will stay free no matter what,
         but donations would allow us to invest more time into the project.</p>
@@ -69,7 +73,16 @@
             <h3>Flattr</h3>
             <script type="text/javascript">var flattr_url = 'http://kunagi.org';</script>
             <script src="http://api.flattr.com/button/load.js" type="text/javascript"></script>
-        </td><td width="170">
+        </td>
+        <td width="190">
+            <h3>Spreadshirt</h3>
+            <p style="width: 150px; height: 80px; overflow: hidden;">
+            <a href="http://kunagi.spreadshirt.de" target="_blank">
+                <img src="http://image.spreadshirt.net/image-server/image/product/19709849/view/1/type/png/width/150/height/150" alt="Kunagi T-Shirt">
+            </a>
+            </p>
+        </td>
+        <td width="180">
             <h3>Paypal</h3>
             <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
                 <input type="hidden" name="cmd" value="_s-xclick">
@@ -77,7 +90,8 @@
                 <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
                 <img alt="" border="0" src="https://www.paypal.com/de_DE/i/scr/pixel.gif" width="1" height="1">
             </form>
-        </td><td width="100">
+        </td>
+        <td width="140">
             <h3>SourceForge</h3>
             <a href="http://sourceforge.net/donate/index.php?group_id=306714" target="_blank">
                 <img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" alt="Support the Kunagi Project" />
@@ -90,6 +104,7 @@
 
 
 <div class="section">
+    <a name="source"></a>
     <h2>Source Code</h2>
     <p>You can get source code from 
         <a target="_blank" href="http://github.com/witek/kunagi/">GitHub</a>, 
@@ -102,6 +117,7 @@
 
 
 <div class="section">
+    <a name="participation"></a>
     <h2>Participation</h2>
     <div class="middle">
         <p>We are working on making our development process more open. We will also document the architecture
