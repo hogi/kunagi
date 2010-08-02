@@ -32,8 +32,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     protected ilarkesto.core.scope.ComponentReflector changeHistoryManagerReflector = createChangeHistoryManagerReflector();
 
-    protected ilarkesto.core.scope.ComponentReflector localizerReflector = createLocalizerReflector();
-
     protected ilarkesto.core.scope.ComponentReflector searchReflector = createSearchReflector();
 
     protected ilarkesto.core.scope.ComponentReflector undoReflector = createUndoReflector();
@@ -65,7 +63,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.i18n.Localizer) localizerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.issues.IssueManager) issueManagerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.journal.ChangeHistoryManager) changeHistoryManagerReflector.injectComponents(component, scope);
-        if (component instanceof scrum.client.locale.Localizer) localizerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.search.Search) searchReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.undo.Undo) undoReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.workspace.DndManager) dndManagerReflector.injectComponents(component, scope);
@@ -91,7 +88,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.i18n.Localizer) localizerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.issues.IssueManager) issueManagerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.journal.ChangeHistoryManager) changeHistoryManagerReflector.callInitializationMethods(component);
-        if (component instanceof scrum.client.locale.Localizer) localizerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.search.Search) searchReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.undo.Undo) undoReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.workspace.DndManager) dndManagerReflector.callInitializationMethods(component);
@@ -117,7 +113,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.i18n.Localizer) localizerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.issues.IssueManager) issueManagerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.journal.ChangeHistoryManager) changeHistoryManagerReflector.outjectComponents(component, scope);
-        if (component instanceof scrum.client.locale.Localizer) localizerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.search.Search) searchReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.undo.Undo) undoReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.workspace.DndManager) dndManagerReflector.outjectComponents(component, scope);
@@ -182,10 +177,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     public ilarkesto.core.scope.ComponentReflector createChangeHistoryManagerReflector() {
         return new scrum.client.journal.GChangeHistoryManagerReflector();
-    }
-
-    public ilarkesto.core.scope.ComponentReflector createLocalizerReflector() {
-        return new scrum.client.locale.GLocalizerReflector();
     }
 
     public ilarkesto.core.scope.ComponentReflector createSearchReflector() {
