@@ -9,6 +9,7 @@ import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
+import scrum.client.common.DocumentationWidget;
 import scrum.client.journal.ActivateChangeHistoryAction;
 import scrum.client.journal.ChangeHistoryWidget;
 import scrum.client.workspace.PagePanel;
@@ -20,8 +21,8 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
+import com.google.gwt.user.client.ui.Widget;
 
 public class WikiWidget extends AScrumWidget {
 
@@ -79,6 +80,9 @@ public class WikiWidget extends AScrumWidget {
 			left.add(new ChangeHistoryWidget(wikipage));
 			page.addSection(left);
 		}
+
+		page.addSection(new DocumentationWidget(getCurrentProject().getWikipages().size() < 5, getLocalizer().views()
+				.wiki()));
 
 		panel.clear();
 		panel.add(page);

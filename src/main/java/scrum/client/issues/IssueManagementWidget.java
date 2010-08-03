@@ -9,6 +9,7 @@ import java.util.List;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.common.BlockListWidget;
+import scrum.client.common.DocumentationWidget;
 import scrum.client.project.Project;
 import scrum.client.workspace.PagePanel;
 
@@ -59,9 +60,14 @@ public class IssueManagementWidget extends AScrumWidget {
 			suspensionStatusButtonWrapper);
 		inboxPage.addSection(openList);
 
-		return Gwt.createFlowPanel(inboxPage, Gwt.createSpacer(1, 10), PagePanel.createSimple(
-			"bugs (Team needs to fix this)", bugList), Gwt.createSpacer(1, 10), PagePanel.createSimple(
-			"ideas (Product owner needs to create stories)", ideaList), Gwt.createSpacer(1, 10), createClosedPage());
+		PagePanel documentationPage = new PagePanel();
+		documentationPage.addSection(new DocumentationWidget(getCurrentProject().getImpediments().size() < 15,
+				getLocalizer().views().impediments()));
+
+		return Gwt.createFlowPanel(inboxPage, Gwt.createSpacer(1, 10),
+			PagePanel.createSimple("bugs (Team needs to fix this)", bugList), Gwt.createSpacer(1, 10),
+			PagePanel.createSimple("ideas (Product owner needs to create stories)", ideaList), Gwt.createSpacer(1, 10),
+			createClosedPage(), Gwt.createSpacer(1, 10), documentationPage);
 	}
 
 	private Widget createClosedPage() {

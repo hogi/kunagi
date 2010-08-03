@@ -4,6 +4,7 @@ import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.common.BlockListWidget;
+import scrum.client.common.DocumentationWidget;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -31,6 +32,8 @@ public class ReleaseManagementWidget extends AScrumWidget {
 		page.addSection(planned);
 		page.addHeader("Published releases");
 		page.addSection(published);
+		page.addSection(new DocumentationWidget(getCurrentProject().getReleases().size() < 5, getLocalizer().views()
+				.releases()));
 		return page;
 	}
 

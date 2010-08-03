@@ -3,6 +3,7 @@ package scrum.client.files;
 import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
+import scrum.client.common.DocumentationWidget;
 import scrum.client.impediments.RequestImpedimentsServiceCall;
 import scrum.client.workspace.PagePanel;
 
@@ -22,6 +23,8 @@ public class FileRepositoryWidget extends AScrumWidget {
 		PagePanel page = new PagePanel();
 		page.addHeader("File Repository", new ButtonWidget(new UploadFileAction()));
 		page.addSection(list);
+		page.addSection(new DocumentationWidget(getCurrentProject().getFiles().size() < 5, getLocalizer().views()
+				.fileRepository()));
 		return page;
 	}
 

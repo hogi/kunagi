@@ -2,6 +2,7 @@ package scrum.client.sprint;
 
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
+import scrum.client.common.DocumentationWidget;
 import scrum.client.project.Requirement;
 import scrum.client.workspace.PagePanel;
 
@@ -24,7 +25,8 @@ public class SprintBacklogWidget extends AScrumWidget {
 		page.addSection(requirementList);
 		page.addHeader("Sprint Properties");
 		page.addSection(new SprintWidget(sprint));
-
+		page.addSection(new DocumentationWidget(getCurrentProject().getCurrentSprint().getRequirements().size() < 3,
+				getLocalizer().views().sprintBacklog()));
 		return page;
 	}
 
