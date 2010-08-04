@@ -284,7 +284,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		sb.append("Name: ").append(user.getName()).append("\n");
 		sb.append("Email: ").append(user.getEmail()).append("\n");
 		sb.append("Date/Time: ").append(DateAndTime.now()).append("\n");
-		sendEmail(null, null, "User registered on " + getBaseUrl(), sb.toString());
+		sendEmail(null, null, user.getName() + " (" + user.getEmail() + ") registered on " + getBaseUrl(),
+			sb.toString());
 	}
 
 	public void sendEmail(String from, String to, String subject, String text) {
