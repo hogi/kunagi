@@ -171,6 +171,8 @@ public abstract class GRisk
 
         @Override
         public boolean isMandatory() { return true; }
+        @Override
+        public String getTooltip() { return "The label should be short (as it appears where the Risk is referenced),yet give a hint strong enough to make the content of it come to mind."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -222,6 +224,8 @@ public abstract class GRisk
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "The description of a Risk should give additional information likewhy or when it might occur, what would be affected and how;reasons, preconditions and damage that might result."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -273,6 +277,8 @@ public abstract class GRisk
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "The mitigation plans that should be put into practice in order tomitigate the probability of a problem arising."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -324,6 +330,8 @@ public abstract class GRisk
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "The mitigation plans that should be put into practice in order tomitigate the impact, should a problem arise."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -382,6 +390,8 @@ public abstract class GRisk
 
         @Override
         public boolean isEditable() { return GRisk.this.isPriorityEditable(); }
+        @Override
+        public String getTooltip() { return "How probable is it (concidering the description and implemented minigation plans)that this Risk turns into a problem?"; }
 
         @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
@@ -440,6 +450,8 @@ public abstract class GRisk
 
         @Override
         public boolean isEditable() { return GRisk.this.isPriorityEditable(); }
+        @Override
+        public String getTooltip() { return "How high is the impact (concidering the decription and the implemented mitigation plans),should a problem arise?"; }
 
         @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {

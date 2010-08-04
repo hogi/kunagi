@@ -29,4 +29,9 @@ public abstract class GEnableUserAction
         return true;
     }
 
+    @Override
+    public String getId() {
+        return ilarkesto.core.base.Str.getSimpleName(getClass()) + ' ' + ilarkesto.core.base.Str.toHtmlId(user);
+    }
+
 }

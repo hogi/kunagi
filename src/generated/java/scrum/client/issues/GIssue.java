@@ -301,7 +301,7 @@ public abstract class GIssue
         @Override
         public boolean isMandatory() { return true; }
         @Override
-        public String getTooltip() { return "Short description of this issue."; }
+        public String getTooltip() { return "The label should be short (as it appears where the Issue is referenced),yet give a hint strong enough to make the content of it come to mind."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -354,7 +354,7 @@ public abstract class GIssue
         @Override
         public boolean isRichtext() { return true; }
         @Override
-        public String getTooltip() { return "Detailed description of this issue."; }
+        public String getTooltip() { return "The description of an issue should give enough information for other people to understandwhat the issue is about. That contains information on how to reproduce an issue andwhat symptoms are, as well as suggestions on how to fix it."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -457,7 +457,7 @@ public abstract class GIssue
             setIssuerName(value);
         }
         @Override
-        public String getTooltip() { return "Name of the person, who created this issue."; }
+        public String getTooltip() { return "The person who filed this issue."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -507,7 +507,7 @@ public abstract class GIssue
             setIssuerEmail(value);
         }
         @Override
-        public String getTooltip() { return "Email address of the person, who created this issue."; }
+        public String getTooltip() { return "E-Mail address of the person, who filed this issue."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -631,7 +631,7 @@ public abstract class GIssue
             return getSeverityOptions();
         }
         @Override
-        public String getTooltip() { return "Severity level of this issue."; }
+        public String getTooltip() { return "The level of this bug's impact. A minor bug might be a cosmetic failure,a normal bug encumbers the user's work,a severe bug might lead to loss of data or property,a critical bug makes product usage impossible."; }
 
         @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {

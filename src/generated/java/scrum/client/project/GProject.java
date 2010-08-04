@@ -88,6 +88,8 @@ public abstract class GProject
 
         @Override
         public boolean isMandatory() { return true; }
+        @Override
+        public String getTooltip() { return "This is the project name that should be chosen for humans to clearly identify the project."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -187,6 +189,8 @@ public abstract class GProject
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "This is a vision that should state the purpose and aim of the project.It should focus be used to focus the participant's work on a common goalthat is simple, measurable, achievable, relevant, and time-bound."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

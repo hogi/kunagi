@@ -225,6 +225,8 @@ public abstract class GRelease
 
         @Override
         public boolean isMandatory() { return true; }
+        @Override
+        public String getTooltip() { return "This is the codename of the release, used to refer to it by project members and users."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -276,6 +278,8 @@ public abstract class GRelease
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "The development notes contain information useful forproject participants and stakeholders while working on the release."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -324,6 +328,8 @@ public abstract class GRelease
         public void setValue(ilarkesto.gwt.client.Date value) {
             setReleaseDate(value);
         }
+        @Override
+        public String getTooltip() { return "The intended or actual release date for planned and finished releases, respectively."; }
 
         @Override
         protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
@@ -394,6 +400,8 @@ public abstract class GRelease
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "The release notes contain a description used to articulate the changesthat this release contains to the public.It should be done in human readable format and an informative manner."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -442,6 +450,8 @@ public abstract class GRelease
         public void setValue(java.lang.String value) {
             setScmTag(value);
         }
+        @Override
+        public String getTooltip() { return "The tag used in content management systems for this release."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

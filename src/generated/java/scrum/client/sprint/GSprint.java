@@ -182,6 +182,8 @@ public abstract class GSprint
 
         @Override
         public boolean isEditable() { return GSprint.this.isEditable(); }
+        @Override
+        public String getTooltip() { return "The label should be short (as it appears where the Sprint is referenced),yet give a hint strong enough to make the content of it come to mind."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -241,6 +243,8 @@ public abstract class GSprint
 
         @Override
         public String getTemplate() { return getGoalTemplate(); }
+        @Override
+        public String getTooltip() { return "The goal is used to summarize the purpose of this Sprint.Naturally, it should be a description on why it is important that the Storiescurrently high in the Product Backlog should be realized next."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -292,6 +296,8 @@ public abstract class GSprint
 
         @Override
         public boolean isEditable() { return GSprint.this.isDatesEditable(); }
+        @Override
+        public String getTooltip() { return "The date the Team starts working on the Sprint."; }
 
         @Override
         protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
@@ -343,6 +349,8 @@ public abstract class GSprint
 
         @Override
         public boolean isEditable() { return GSprint.this.isDatesEditable(); }
+        @Override
+        public String getTooltip() { return "The date by which the Team will finish working on this Sprint.A Sprint Review meeting should be scheduled to present results."; }
 
         @Override
         protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
@@ -501,6 +509,8 @@ public abstract class GSprint
 
         @Override
         public String getTemplate() { return getPlanningNoteTemplate(); }
+        @Override
+        public String getTooltip() { return "Things that come up during Sprint Planning that might affect the Sprint or be of interest for stakeholders(illness, vacation and other influences; discussion results, agreements, etc."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -560,6 +570,8 @@ public abstract class GSprint
 
         @Override
         public String getTemplate() { return getReviewNoteTemplate(); }
+        @Override
+        public String getTooltip() { return "Things that come up during the Sprint Review that might be of interest for stakeholders."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -619,6 +631,8 @@ public abstract class GSprint
 
         @Override
         public String getTemplate() { return getRetrospectiveNoteTemplate(); }
+        @Override
+        public String getTooltip() { return "Things that come up during Sprint Retrospectives that are important in the futureor might be of interest for stakeholders."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

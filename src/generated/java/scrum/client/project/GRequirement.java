@@ -227,6 +227,8 @@ public abstract class GRequirement
 
         @Override
         public boolean isEditable() { return GRequirement.this.isEditable(); }
+        @Override
+        public String getTooltip() { return "The label should be short (as it appears where the Story is referenced),yet give a hint strong enough to make the content of it come to mind."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -281,6 +283,8 @@ public abstract class GRequirement
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "The description of a Story should make what the label cannot:It should provide information on what is and what is not part of it.Ideally, it is given in terms of a user story:'As a [user] I want [function] so that [value].'"; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -335,6 +339,8 @@ public abstract class GRequirement
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "The Test contains requirements that have to be met by the Teamin order for the Story to be considered done."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -383,6 +389,8 @@ public abstract class GRequirement
         public void setValue(java.lang.Float value) {
             setEstimatedWork(value);
         }
+        @Override
+        public String getTooltip() { return "The estimated work gives a relative estimation of effort that needs to be put into the Story to complete it.The bigger the Story the less important the accuracy of the estimation.Big Stories (Epics) close to being worked on should be split to be smaller."; }
 
         @Override
         protected void onChangeValue(java.lang.Float oldValue, java.lang.Float newValue) {

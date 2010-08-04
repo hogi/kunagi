@@ -200,6 +200,8 @@ public abstract class GBlogEntry
 
         @Override
         public boolean isMandatory() { return true; }
+        @Override
+        public String getTooltip() { return "The title that will appear in the blog."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -251,6 +253,8 @@ public abstract class GBlogEntry
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "The text that will appear in the blog."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -299,6 +303,8 @@ public abstract class GBlogEntry
         public void setValue(ilarkesto.gwt.client.DateAndTime value) {
             setDateAndTime(value);
         }
+        @Override
+        public String getTooltip() { return "The time that indicates when the blog entry was released."; }
 
         @Override
         protected void onChangeValue(ilarkesto.gwt.client.DateAndTime oldValue, ilarkesto.gwt.client.DateAndTime newValue) {

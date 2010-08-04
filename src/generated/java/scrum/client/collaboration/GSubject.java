@@ -111,6 +111,8 @@ public abstract class GSubject
 
         @Override
         public boolean isMandatory() { return true; }
+        @Override
+        public String getTooltip() { return "The subject this discussion will be listed under in the project's forum."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -162,6 +164,8 @@ public abstract class GSubject
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "Notes that give background information and summarize discussion results."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
