@@ -25,6 +25,7 @@ import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
 import scrum.server.project.RequirementDao;
+import scrum.server.release.Release;
 import scrum.server.release.ReleaseDao;
 import scrum.server.risks.Risk;
 import scrum.server.risks.RiskDao;
@@ -38,6 +39,7 @@ import scrum.server.sprint.TaskDao;
 public class TestUtil {
 
 	private static boolean initialized;
+
 	private static EntityStore entityStore;
 	private static TransactionService transactionService;
 	private static DaoService daoService;
@@ -70,59 +72,72 @@ public class TestUtil {
 
 		userDao = new UserDao();
 		userDao.setTransactionService(transactionService);
+		User.setUserDao(userDao);
 		Sprint.setUserDao(userDao);
 
 		releaseDao = new ReleaseDao();
 		releaseDao.setTransactionService(transactionService);
+		Release.setReleaseDao(releaseDao);
 		Project.setReleaseDao(releaseDao);
 
 		taskDao = new TaskDao();
 		taskDao.setTransactionService(transactionService);
+		Task.setTaskDao(taskDao);
 		Sprint.setTaskDao(taskDao);
 		Project.setTaskDao(taskDao);
 
 		wikipageDao = new WikipageDao();
 		wikipageDao.setTransactionService(transactionService);
+		Wikipage.setWikipageDao(wikipageDao);
 		Project.setWikipageDao(wikipageDao);
 
 		simpleEventDao = new SimpleEventDao();
 		simpleEventDao.setTransactionService(transactionService);
+		SimpleEvent.setSimpleEventDao(simpleEventDao);
 		Project.setSimpleEventDao(simpleEventDao);
 
 		riskDao = new RiskDao();
 		riskDao.setTransactionService(transactionService);
+		Risk.setRiskDao(riskDao);
 		Project.setRiskDao(riskDao);
 
 		impedimentDao = new ImpedimentDao();
 		impedimentDao.setTransactionService(transactionService);
+		Impediment.setImpedimentDao(impedimentDao);
 		Project.setImpedimentDao(impedimentDao);
 
 		requirementDao = new RequirementDao();
 		requirementDao.setTransactionService(transactionService);
+		Requirement.setRequirementDao(requirementDao);
 		Sprint.setRequirementDao(requirementDao);
 		Project.setRequirementDao(requirementDao);
 
 		sprintDaySnapshotDao = new SprintDaySnapshotDao();
 		sprintDaySnapshotDao.setTransactionService(transactionService);
 		sprintDaySnapshotDao.setDaoService(daoService);
+		SprintDaySnapshot.setSprintDaySnapshotDao(sprintDaySnapshotDao);
 		Sprint.setSprintDaySnapshotDao(sprintDaySnapshotDao);
 		Project.setSprintDaySnapshotDao(sprintDaySnapshotDao);
 
 		sprintDao = new SprintDao();
 		sprintDao.setTransactionService(transactionService);
+		Sprint.setSprintDao(sprintDao);
 		SprintDaySnapshot.setSprintDao(sprintDao);
 		Project.setSprintDao(sprintDao);
 
 		blogEntryDao = new BlogEntryDao();
 		blogEntryDao.setTransactionService(transactionService);
+		BlogEntry.setBlogEntryDao(blogEntryDao);
 		Project.setBlogEntryDao(blogEntryDao);
 
 		issueDao = new IssueDao();
 		issueDao.setTransactionService(transactionService);
+		Issue.setIssueDao(issueDao);
 		Project.setIssueDao(issueDao);
 
 		projectDao = new ProjectDao();
 		projectDao.setTransactionService(transactionService);
+		Project.setProjectDao(projectDao);
 	}
 
 	public static Task createTask(Requirement requirement, int number, int work) {
