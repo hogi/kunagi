@@ -290,7 +290,7 @@ public class TestUtil {
 	}
 
 	public static Project createProject() {
-		return createProject("Some Project");
+		return createProject(Str.generateRandomWord(5, 10, true));
 	}
 
 	public static Project createProject(String label) {
