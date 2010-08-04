@@ -54,6 +54,7 @@ public abstract class GUser
 
     public final User setName(java.lang.String name) {
         if (isName(name)) return (User)this;
+        if (name != null && getDao().getUserByName(name) != null) throw new RuntimeException("\"" + name + "\" already exists.");
         this.name = name ;
         propertyChanged("name", this.name);
         return (User)this;
@@ -143,6 +144,7 @@ public abstract class GUser
 
     public final User setEmail(java.lang.String email) {
         if (isEmail(email)) return (User)this;
+        if (email != null && getDao().getUserByEmail(email) != null) throw new RuntimeException("\"" + email + "\" already exists.");
         this.email = email ;
         propertyChanged("email", this.email);
         return (User)this;

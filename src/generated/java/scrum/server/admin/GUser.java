@@ -80,6 +80,7 @@ public abstract class GUser
     public final void setName(java.lang.String name) {
         name = prepareName(name);
         if (isName(name)) return;
+        if (name != null && getDao().getUserByName(name) != null) throw new RuntimeException("\"" + name + "\" already exists.");
         this.name = name;
         fireModified();
     }
@@ -173,6 +174,7 @@ public abstract class GUser
     public final void setEmail(java.lang.String email) {
         email = prepareEmail(email);
         if (isEmail(email)) return;
+        if (email != null && getDao().getUserByEmail(email) != null) throw new RuntimeException("\"" + email + "\" already exists.");
         this.email = email;
         fireModified();
     }

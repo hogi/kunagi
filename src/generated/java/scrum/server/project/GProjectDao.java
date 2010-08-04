@@ -42,7 +42,6 @@ public abstract class GProjectDao
 
     // --- clear caches ---
     public void clearCaches() {
-        projectsByLabelCache.clear();
         labelsCache = null;
         projectsByShortDescriptionCache.clear();
         shortDescriptionsCache = null;
@@ -129,15 +128,8 @@ public abstract class GProjectDao
     // - label
     // -----------------------------------------------------------
 
-    private final Cache<java.lang.String,Set<Project>> projectsByLabelCache = new Cache<java.lang.String,Set<Project>>(
-            new Cache.Factory<java.lang.String,Set<Project>>() {
-                public Set<Project> create(java.lang.String label) {
-                    return getEntities(new IsLabel(label));
-                }
-            });
-
-    public final Set<Project> getProjectsByLabel(java.lang.String label) {
-        return projectsByLabelCache.get(label);
+    public final Project getProjectByLabel(java.lang.String label) {
+        return getEntity(new IsLabel(label));
     }
     private Set<java.lang.String> labelsCache;
 

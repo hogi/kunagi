@@ -52,7 +52,7 @@ public class Project extends GProject implements ForumSupport {
 	private transient Comparator<Issue> issuesOrderComparator;
 
 	public Project(User creator) {
-		setLabel(INIT_LABEL);
+		setLabel(INIT_LABEL + " " + DateAndTime.now());
 		addParticipant(creator);
 		addAdmin(creator);
 		addProductOwner(creator);

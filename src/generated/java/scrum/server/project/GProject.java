@@ -106,6 +106,7 @@ public abstract class GProject
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
         if (isLabel(label)) return;
+        if (label != null && getDao().getProjectByLabel(label) != null) throw new RuntimeException("\"" + label + "\" already exists.");
         this.label = label;
         fireModified();
     }

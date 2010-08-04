@@ -2,21 +2,10 @@ package scrum.server.admin;
 
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
-import ilarkesto.fp.Predicate;
 
 public class UserDao extends GUserDao {
 
 	private static Log log = Log.get(UserDao.class);
-
-	@Override
-	public User getUserByName(final String name) {
-		return getEntity(new Predicate<User>() {
-
-			public boolean test(User e) {
-				return name.equals(e.getName());
-			}
-		});
-	}
 
 	@Override
 	public User postUser(String name, String password) {

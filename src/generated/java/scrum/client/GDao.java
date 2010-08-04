@@ -1014,12 +1014,11 @@ public abstract class GDao
         return new ArrayList<scrum.client.project.Project>(projects.values());
     }
 
-    public final List<scrum.client.project.Project> getProjectsByLabel(java.lang.String label) {
-        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+    public final scrum.client.project.Project getProjectByLabel(java.lang.String label) {
         for (scrum.client.project.Project entity : projects.values()) {
-            if (entity.isLabel(label)) ret.add(entity);
+            if (entity.isLabel(label)) return entity;
         }
-        return ret;
+        return null;
     }
 
     public final List<scrum.client.project.Project> getProjectsByShortDescription(java.lang.String shortDescription) {
@@ -2720,12 +2719,11 @@ public abstract class GDao
         return new ArrayList<scrum.client.admin.User>(users.values());
     }
 
-    public final List<scrum.client.admin.User> getUsersByName(java.lang.String name) {
-        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+    public final scrum.client.admin.User getUserByName(java.lang.String name) {
         for (scrum.client.admin.User entity : users.values()) {
-            if (entity.isName(name)) ret.add(entity);
+            if (entity.isName(name)) return entity;
         }
-        return ret;
+        return null;
     }
 
     public final List<scrum.client.admin.User> getUsersByAdmin(boolean admin) {
