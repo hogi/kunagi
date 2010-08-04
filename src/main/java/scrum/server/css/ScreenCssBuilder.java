@@ -71,9 +71,9 @@ public class ScreenCssBuilder implements CssBuilder {
 	public static String cCommentsBorder = "#EAFFEA";
 	public static String cCommentDate = "darkgray";
 
-	public static String cDocumentationBackground = "#F8F8FF";
-	public static String cDocumentation = "#000066";
-	public static String cDocumentationBorder = "#EAFAEF";
+	public static String cUserguideBackground = "#F8F8FF";
+	public static String cUserguide = "#000066";
+	public static String cUserguideBorder = "#E0E0FF";
 
 	public static String cChangesBackground = "#FFFFF8";
 	public static String cChangesBorder = "#FFFFEA";
@@ -96,7 +96,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		systemMessage(css);
 		blockList(css);
 		comments(css);
-		documentation(css);
+		userGuide(css);
 		actions(css);
 		changeHistory(css);
 		workspace(css);
@@ -348,9 +348,11 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".ActionsPanel").background(cActionsBackground).border(1, cActionsBorder).padding(7).borderRadius(10);
 	}
 
-	private void documentation(CssRenderer css) {
-		css.style(".DocumentationWidget").color(cDocumentation).background(cDocumentationBackground)
-				.border(1, cDocumentationBorder).padding(7).borderRadius(10);
+	private void userGuide(CssRenderer css) {
+		css.style(".UserGuideWidget").color(cUserguide).background(cUserguideBackground).border(1, cUserguideBorder)
+				.borderRadius(10);
+		css.style(".UserGuideWidget-header").padding(7);
+		css.style(".UserGuideWidget-content").margin(0, 7, 7, 7).paddingTop(7).borderTop(1, cUserguideBorder);
 	}
 
 	private void comments(CssRenderer css) {

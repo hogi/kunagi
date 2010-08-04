@@ -3,7 +3,7 @@ package scrum.client.journal;
 import ilarkesto.gwt.client.Gwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.DocumentationWidget;
+import scrum.client.common.UserGuideWidget;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -22,7 +22,7 @@ public class JournalWidget extends AScrumWidget {
 		page.addSection(list);
 		page.addSection(Gwt.createServletDownloadLink("projectJournal.rss?projectId=" + getCurrentProject().getId(),
 			"RSS Feed"));
-		page.addSection(new DocumentationWidget(getCurrentProject().getProjectEvents().size() < 15, getLocalizer()
+		page.addSection(new UserGuideWidget(getCurrentProject().getProjectEvents().size() < 15, getLocalizer()
 				.views().journal()));
 		return page;
 	}

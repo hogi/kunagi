@@ -12,7 +12,7 @@ import java.util.List;
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.DocumentationWidget;
+import scrum.client.common.UserGuideWidget;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -46,7 +46,7 @@ public class ProductBacklogWidget extends AScrumWidget {
 		page.addSection(tb.createTable());
 		page.addSection(Gwt.createFlowPanel(list));
 		page.addSection(ScrumGwt.createPdfLink("Download as PDF", "productBacklog", getCurrentProject()));
-		page.addSection(new DocumentationWidget(getCurrentProject().getProductBacklogRequirements().size() < 5,
+		page.addSection(new UserGuideWidget(getCurrentProject().getProductBacklogRequirements().size() < 5,
 				getLocalizer().views().productBacklog()));
 
 		return page;

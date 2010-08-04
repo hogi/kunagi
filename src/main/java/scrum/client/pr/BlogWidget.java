@@ -3,7 +3,7 @@ package scrum.client.pr;
 import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.DocumentationWidget;
+import scrum.client.common.UserGuideWidget;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -20,7 +20,7 @@ public class BlogWidget extends AScrumWidget {
 		PagePanel page = new PagePanel();
 		page.addHeader("Blog", new ButtonWidget(new CreateBlogEntryAction()));
 		page.addSection(list);
-		page.addSection(new DocumentationWidget(getCurrentProject().getBlogEntrys().size() < 5, getLocalizer().views()
+		page.addSection(new UserGuideWidget(getCurrentProject().getBlogEntrys().size() < 5, getLocalizer().views()
 				.blog()));
 		return page;
 	}

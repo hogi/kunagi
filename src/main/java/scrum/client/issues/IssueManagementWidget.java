@@ -9,7 +9,7 @@ import java.util.List;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.DocumentationWidget;
+import scrum.client.common.UserGuideWidget;
 import scrum.client.project.Project;
 import scrum.client.workspace.PagePanel;
 
@@ -61,7 +61,7 @@ public class IssueManagementWidget extends AScrumWidget {
 		inboxPage.addSection(openList);
 
 		PagePanel documentationPage = new PagePanel();
-		documentationPage.addSection(new DocumentationWidget(getCurrentProject().getImpediments().size() < 15,
+		documentationPage.addSection(new UserGuideWidget(getCurrentProject().getImpediments().size() < 15,
 				getLocalizer().views().impediments()));
 
 		return Gwt.createFlowPanel(inboxPage, Gwt.createSpacer(1, 10),

@@ -7,7 +7,7 @@ import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
-import scrum.client.common.DocumentationWidget;
+import scrum.client.common.UserGuideWidget;
 import scrum.client.project.Project;
 import scrum.client.workspace.PagePanel;
 
@@ -31,7 +31,7 @@ public class NextSprintWidget extends AScrumWidget {
 		PagePanel page = new PagePanel();
 		page.addHeader("Next Sprint", new ButtonWidget(new SwitchToNextSprintAction()));
 		page.addSection(TableBuilder.row(20, tb.createTable(), new CommentsWidget(sprint)));
-		page.addSection(new DocumentationWidget(getCurrentProject().getSprints().size() < 5, getLocalizer().views()
+		page.addSection(new UserGuideWidget(getCurrentProject().getSprints().size() < 5, getLocalizer().views()
 				.nextSprint()));
 		return page;
 	}

@@ -3,7 +3,7 @@ package scrum.client.admin;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.common.AScrumWidget;
-import scrum.client.common.DocumentationWidget;
+import scrum.client.common.UserGuideWidget;
 import scrum.client.common.FieldsWidget;
 import scrum.client.workspace.PagePanel;
 
@@ -32,7 +32,7 @@ public class ProjectUserConfigWidget extends AScrumWidget {
 		PagePanel page = new PagePanel();
 		page.addHeader("Personal preferences for current project");
 		page.addSection(fields);
-		page.addSection(new DocumentationWidget(true, getLocalizer().views().personalPreferences()));
+		page.addSection(new UserGuideWidget(true, getLocalizer().views().personalPreferences()));
 		return Gwt.createFlowPanel(page, globalUserConfig);
 	}
 

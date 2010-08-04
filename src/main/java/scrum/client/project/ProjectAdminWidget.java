@@ -4,7 +4,7 @@ import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
-import scrum.client.common.DocumentationWidget;
+import scrum.client.common.UserGuideWidget;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -31,7 +31,7 @@ public class ProjectAdminWidget extends AScrumWidget {
 		tbHomepage.addFieldRow("Homepage direcotry", project.getHomepageDirModel());
 		// TODO tbHomepage.addFieldRow("Auto-update homepage", project.getAutoUpdateHomepage());
 		page.addSection(tbHomepage.createTable());
-		page.addSection(new DocumentationWidget(false, getLocalizer().views().projectAdministration()));
+		page.addSection(new UserGuideWidget(false, getLocalizer().views().projectAdministration()));
 		return page;
 	}
 }

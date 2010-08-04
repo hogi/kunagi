@@ -12,7 +12,7 @@ import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListSelectionManager;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.DocumentationWidget;
+import scrum.client.common.UserGuideWidget;
 import scrum.client.common.ElementPredicate;
 import scrum.client.context.UserHighlightSupport;
 import scrum.client.project.Requirement;
@@ -67,7 +67,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 
 		PagePanel page = new PagePanel();
 		page.addSection(grid);
-		page.addSection(new DocumentationWidget(getCurrentProject().getCurrentSprint().getRequirements().size() < 3,
+		page.addSection(new UserGuideWidget(getCurrentProject().getCurrentSprint().getRequirements().size() < 3,
 				getLocalizer().views().whiteboard()));
 		return page;
 	}

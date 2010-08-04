@@ -7,7 +7,7 @@ import ilarkesto.gwt.client.editor.IntegerEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
-import scrum.client.common.DocumentationWidget;
+import scrum.client.common.UserGuideWidget;
 import scrum.client.project.Project;
 import scrum.client.workspace.PagePanel;
 
@@ -49,7 +49,7 @@ public class PunishmentsWidget extends AScrumWidget {
 			page.addSection(settings.createTable());
 		}
 
-		page.addSection(new DocumentationWidget(true, getLocalizer().views().courtRoom()));
+		page.addSection(new UserGuideWidget(true, getLocalizer().views().courtRoom()));
 
 		return page;
 	}

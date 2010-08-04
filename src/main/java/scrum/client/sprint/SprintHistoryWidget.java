@@ -2,7 +2,7 @@ package scrum.client.sprint;
 
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
-import scrum.client.common.DocumentationWidget;
+import scrum.client.common.UserGuideWidget;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -19,7 +19,7 @@ public class SprintHistoryWidget extends AScrumWidget {
 		PagePanel page = new PagePanel();
 		page.addHeader("Sprint history");
 		page.addSection(sprintList);
-		page.addSection(new DocumentationWidget(getCurrentProject().getSprints().size() < 5, getLocalizer().views()
+		page.addSection(new UserGuideWidget(getCurrentProject().getSprints().size() < 5, getLocalizer().views()
 				.sprintHistory()));
 		return page;
 	}
