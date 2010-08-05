@@ -80,7 +80,7 @@ public abstract class GUser
     public final void setName(java.lang.String name) {
         name = prepareName(name);
         if (isName(name)) return;
-        if (name != null && getDao().getUserByName(name) != null) throw new RuntimeException("\"" + name + "\" already exists.");
+        if (name != null && getDao().getUserByName(name) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "name", name);
         this.name = name;
         fireModified();
     }
@@ -174,7 +174,7 @@ public abstract class GUser
     public final void setEmail(java.lang.String email) {
         email = prepareEmail(email);
         if (isEmail(email)) return;
-        if (email != null && getDao().getUserByEmail(email) != null) throw new RuntimeException("\"" + email + "\" already exists.");
+        if (email != null && getDao().getUserByEmail(email) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "email", email);
         this.email = email;
         fireModified();
     }
