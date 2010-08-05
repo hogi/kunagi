@@ -70,7 +70,7 @@ public abstract class GSystemConfig
         url = prepareUrl(url);
         if (isUrl(url)) return;
         this.url = url;
-        fireModified();
+        fireModified("url="+url);
     }
 
     protected java.lang.String prepareUrl(java.lang.String url) {
@@ -105,7 +105,7 @@ public abstract class GSystemConfig
         adminEmail = prepareAdminEmail(adminEmail);
         if (isAdminEmail(adminEmail)) return;
         this.adminEmail = adminEmail;
-        fireModified();
+        fireModified("adminEmail="+adminEmail);
     }
 
     protected java.lang.String prepareAdminEmail(java.lang.String adminEmail) {
@@ -140,7 +140,7 @@ public abstract class GSystemConfig
         googleAnalyticsId = prepareGoogleAnalyticsId(googleAnalyticsId);
         if (isGoogleAnalyticsId(googleAnalyticsId)) return;
         this.googleAnalyticsId = googleAnalyticsId;
-        fireModified();
+        fireModified("googleAnalyticsId="+googleAnalyticsId);
     }
 
     protected java.lang.String prepareGoogleAnalyticsId(java.lang.String googleAnalyticsId) {
@@ -175,7 +175,7 @@ public abstract class GSystemConfig
         smtpServer = prepareSmtpServer(smtpServer);
         if (isSmtpServer(smtpServer)) return;
         this.smtpServer = smtpServer;
-        fireModified();
+        fireModified("smtpServer="+smtpServer);
     }
 
     protected java.lang.String prepareSmtpServer(java.lang.String smtpServer) {
@@ -210,7 +210,7 @@ public abstract class GSystemConfig
         smtpUser = prepareSmtpUser(smtpUser);
         if (isSmtpUser(smtpUser)) return;
         this.smtpUser = smtpUser;
-        fireModified();
+        fireModified("smtpUser="+smtpUser);
     }
 
     protected java.lang.String prepareSmtpUser(java.lang.String smtpUser) {
@@ -245,7 +245,7 @@ public abstract class GSystemConfig
         smtpPassword = prepareSmtpPassword(smtpPassword);
         if (isSmtpPassword(smtpPassword)) return;
         this.smtpPassword = smtpPassword;
-        fireModified();
+        fireModified("smtpPassword="+smtpPassword);
     }
 
     protected java.lang.String prepareSmtpPassword(java.lang.String smtpPassword) {
@@ -280,7 +280,7 @@ public abstract class GSystemConfig
         smtpFrom = prepareSmtpFrom(smtpFrom);
         if (isSmtpFrom(smtpFrom)) return;
         this.smtpFrom = smtpFrom;
-        fireModified();
+        fireModified("smtpFrom="+smtpFrom);
     }
 
     protected java.lang.String prepareSmtpFrom(java.lang.String smtpFrom) {
@@ -315,7 +315,7 @@ public abstract class GSystemConfig
         loginPageMessage = prepareLoginPageMessage(loginPageMessage);
         if (isLoginPageMessage(loginPageMessage)) return;
         this.loginPageMessage = loginPageMessage;
-        fireModified();
+        fireModified("loginPageMessage="+loginPageMessage);
     }
 
     protected java.lang.String prepareLoginPageMessage(java.lang.String loginPageMessage) {
@@ -350,7 +350,7 @@ public abstract class GSystemConfig
         registerPageMessage = prepareRegisterPageMessage(registerPageMessage);
         if (isRegisterPageMessage(registerPageMessage)) return;
         this.registerPageMessage = registerPageMessage;
-        fireModified();
+        fireModified("registerPageMessage="+registerPageMessage);
     }
 
     protected java.lang.String prepareRegisterPageMessage(java.lang.String registerPageMessage) {
@@ -385,7 +385,7 @@ public abstract class GSystemConfig
         aboutPageMessage = prepareAboutPageMessage(aboutPageMessage);
         if (isAboutPageMessage(aboutPageMessage)) return;
         this.aboutPageMessage = aboutPageMessage;
-        fireModified();
+        fireModified("aboutPageMessage="+aboutPageMessage);
     }
 
     protected java.lang.String prepareAboutPageMessage(java.lang.String aboutPageMessage) {

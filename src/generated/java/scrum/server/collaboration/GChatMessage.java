@@ -75,7 +75,7 @@ public abstract class GChatMessage
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
-        fireModified();
+        fireModified("project="+project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -126,7 +126,7 @@ public abstract class GChatMessage
         if (isAuthor(author)) return;
         this.authorId = author == null ? null : author.getId();
         authorCache = author;
-        fireModified();
+        fireModified("author="+author);
     }
 
     protected scrum.server.admin.User prepareAuthor(scrum.server.admin.User author) {
@@ -135,8 +135,7 @@ public abstract class GChatMessage
 
     protected void repairDeadAuthorReference(String entityId) {
         if (this.authorId == null || entityId.equals(this.authorId)) {
-            this.authorId = null;
-            fireModified();
+            setAuthor(null);
         }
     }
 
@@ -167,7 +166,7 @@ public abstract class GChatMessage
         text = prepareText(text);
         if (isText(text)) return;
         this.text = text;
-        fireModified();
+        fireModified("text="+text);
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -202,7 +201,7 @@ public abstract class GChatMessage
         dateAndTime = prepareDateAndTime(dateAndTime);
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
-        fireModified();
+        fireModified("dateAndTime="+dateAndTime);
     }
 
     protected ilarkesto.base.time.DateAndTime prepareDateAndTime(ilarkesto.base.time.DateAndTime dateAndTime) {

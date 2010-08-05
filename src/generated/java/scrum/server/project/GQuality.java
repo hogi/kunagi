@@ -89,7 +89,7 @@ public abstract class GQuality
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
-        fireModified();
+        fireModified("project="+project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -129,7 +129,7 @@ public abstract class GQuality
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        fireModified();
+        fireModified("number="+number);
     }
 
     protected int prepareNumber(int number) {
@@ -158,7 +158,7 @@ public abstract class GQuality
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        fireModified();
+        fireModified("label="+label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -193,7 +193,7 @@ public abstract class GQuality
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
-        fireModified();
+        fireModified("description="+description);
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -228,7 +228,7 @@ public abstract class GQuality
         testDescription = prepareTestDescription(testDescription);
         if (isTestDescription(testDescription)) return;
         this.testDescription = testDescription;
-        fireModified();
+        fireModified("testDescription="+testDescription);
     }
 
     protected java.lang.String prepareTestDescription(java.lang.String testDescription) {

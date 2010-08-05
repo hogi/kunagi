@@ -90,7 +90,7 @@ public abstract class GFile
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
-        fireModified();
+        fireModified("project="+project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -130,7 +130,7 @@ public abstract class GFile
         filename = prepareFilename(filename);
         if (isFilename(filename)) return;
         this.filename = filename;
-        fireModified();
+        fireModified("filename="+filename);
     }
 
     protected java.lang.String prepareFilename(java.lang.String filename) {
@@ -165,7 +165,7 @@ public abstract class GFile
         uploadTime = prepareUploadTime(uploadTime);
         if (isUploadTime(uploadTime)) return;
         this.uploadTime = uploadTime;
-        fireModified();
+        fireModified("uploadTime="+uploadTime);
     }
 
     protected ilarkesto.base.time.DateAndTime prepareUploadTime(ilarkesto.base.time.DateAndTime uploadTime) {
@@ -200,7 +200,7 @@ public abstract class GFile
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        fireModified();
+        fireModified("label="+label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -235,7 +235,7 @@ public abstract class GFile
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        fireModified();
+        fireModified("number="+number);
     }
 
     protected int prepareNumber(int number) {
@@ -264,7 +264,7 @@ public abstract class GFile
         note = prepareNote(note);
         if (isNote(note)) return;
         this.note = note;
-        fireModified();
+        fireModified("note="+note);
     }
 
     protected java.lang.String prepareNote(java.lang.String note) {

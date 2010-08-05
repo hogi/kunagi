@@ -86,7 +86,7 @@ public abstract class GComment
         if (isParent(parent)) return;
         this.parentId = parent == null ? null : parent.getId();
         parentCache = parent;
-        fireModified();
+        fireModified("parent="+parent);
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -137,7 +137,7 @@ public abstract class GComment
         if (isAuthor(author)) return;
         this.authorId = author == null ? null : author.getId();
         authorCache = author;
-        fireModified();
+        fireModified("author="+author);
     }
 
     protected scrum.server.admin.User prepareAuthor(scrum.server.admin.User author) {
@@ -146,8 +146,7 @@ public abstract class GComment
 
     protected void repairDeadAuthorReference(String entityId) {
         if (this.authorId == null || entityId.equals(this.authorId)) {
-            this.authorId = null;
-            fireModified();
+            setAuthor(null);
         }
     }
 
@@ -178,7 +177,7 @@ public abstract class GComment
         text = prepareText(text);
         if (isText(text)) return;
         this.text = text;
-        fireModified();
+        fireModified("text="+text);
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -213,7 +212,7 @@ public abstract class GComment
         dateAndTime = prepareDateAndTime(dateAndTime);
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
-        fireModified();
+        fireModified("dateAndTime="+dateAndTime);
     }
 
     protected ilarkesto.base.time.DateAndTime prepareDateAndTime(ilarkesto.base.time.DateAndTime dateAndTime) {

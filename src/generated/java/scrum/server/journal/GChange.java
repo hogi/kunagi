@@ -78,7 +78,7 @@ public abstract class GChange
         if (isParent(parent)) return;
         this.parentId = parent == null ? null : parent.getId();
         parentCache = parent;
-        fireModified();
+        fireModified("parent="+parent);
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -129,7 +129,7 @@ public abstract class GChange
         if (isUser(user)) return;
         this.userId = user == null ? null : user.getId();
         userCache = user;
-        fireModified();
+        fireModified("user="+user);
     }
 
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
@@ -138,8 +138,7 @@ public abstract class GChange
 
     protected void repairDeadUserReference(String entityId) {
         if (this.userId == null || entityId.equals(this.userId)) {
-            this.userId = null;
-            fireModified();
+            setUser(null);
         }
     }
 
@@ -170,7 +169,7 @@ public abstract class GChange
         dateAndTime = prepareDateAndTime(dateAndTime);
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
-        fireModified();
+        fireModified("dateAndTime="+dateAndTime);
     }
 
     protected ilarkesto.base.time.DateAndTime prepareDateAndTime(ilarkesto.base.time.DateAndTime dateAndTime) {
@@ -205,7 +204,7 @@ public abstract class GChange
         key = prepareKey(key);
         if (isKey(key)) return;
         this.key = key;
-        fireModified();
+        fireModified("key="+key);
     }
 
     protected java.lang.String prepareKey(java.lang.String key) {
@@ -240,7 +239,7 @@ public abstract class GChange
         oldValue = prepareOldValue(oldValue);
         if (isOldValue(oldValue)) return;
         this.oldValue = oldValue;
-        fireModified();
+        fireModified("oldValue="+oldValue);
     }
 
     protected java.lang.String prepareOldValue(java.lang.String oldValue) {
@@ -275,7 +274,7 @@ public abstract class GChange
         newValue = prepareNewValue(newValue);
         if (isNewValue(newValue)) return;
         this.newValue = newValue;
-        fireModified();
+        fireModified("newValue="+newValue);
     }
 
     protected java.lang.String prepareNewValue(java.lang.String newValue) {
@@ -310,7 +309,7 @@ public abstract class GChange
         comment = prepareComment(comment);
         if (isComment(comment)) return;
         this.comment = comment;
-        fireModified();
+        fireModified("comment="+comment);
     }
 
     protected java.lang.String prepareComment(java.lang.String comment) {

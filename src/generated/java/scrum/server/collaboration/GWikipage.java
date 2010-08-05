@@ -86,7 +86,7 @@ public abstract class GWikipage
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
-        fireModified();
+        fireModified("project="+project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -126,7 +126,7 @@ public abstract class GWikipage
         name = prepareName(name);
         if (isName(name)) return;
         this.name = name;
-        fireModified();
+        fireModified("name="+name);
     }
 
     protected java.lang.String prepareName(java.lang.String name) {
@@ -161,7 +161,7 @@ public abstract class GWikipage
         text = prepareText(text);
         if (isText(text)) return;
         this.text = text;
-        fireModified();
+        fireModified("text="+text);
     }
 
     protected java.lang.String prepareText(java.lang.String text) {

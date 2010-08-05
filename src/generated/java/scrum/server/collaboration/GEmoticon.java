@@ -74,7 +74,7 @@ public abstract class GEmoticon
         if (isParent(parent)) return;
         this.parentId = parent == null ? null : parent.getId();
         parentCache = parent;
-        fireModified();
+        fireModified("parent="+parent);
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -125,7 +125,7 @@ public abstract class GEmoticon
         if (isOwner(owner)) return;
         this.ownerId = owner == null ? null : owner.getId();
         ownerCache = owner;
-        fireModified();
+        fireModified("owner="+owner);
     }
 
     protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
@@ -134,8 +134,7 @@ public abstract class GEmoticon
 
     protected void repairDeadOwnerReference(String entityId) {
         if (this.ownerId == null || entityId.equals(this.ownerId)) {
-            this.ownerId = null;
-            fireModified();
+            setOwner(null);
         }
     }
 
@@ -166,7 +165,7 @@ public abstract class GEmoticon
         emotion = prepareEmotion(emotion);
         if (isEmotion(emotion)) return;
         this.emotion = emotion;
-        fireModified();
+        fireModified("emotion="+emotion);
     }
 
     protected java.lang.String prepareEmotion(java.lang.String emotion) {

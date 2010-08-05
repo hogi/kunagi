@@ -95,7 +95,7 @@ public abstract class GRelease
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
-        fireModified();
+        fireModified("project="+project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -146,7 +146,7 @@ public abstract class GRelease
         if (isParentRelease(parentRelease)) return;
         this.parentReleaseId = parentRelease == null ? null : parentRelease.getId();
         parentReleaseCache = parentRelease;
-        fireModified();
+        fireModified("parentRelease="+parentRelease);
     }
 
     protected scrum.server.release.Release prepareParentRelease(scrum.server.release.Release parentRelease) {
@@ -155,8 +155,7 @@ public abstract class GRelease
 
     protected void repairDeadParentReleaseReference(String entityId) {
         if (this.parentReleaseId == null || entityId.equals(this.parentReleaseId)) {
-            this.parentReleaseId = null;
-            fireModified();
+            setParentRelease(null);
         }
     }
 
@@ -189,7 +188,7 @@ public abstract class GRelease
         java.util.Set<String> ids = getIdsAsSet(sprints);
         if (this.sprintsIds.equals(ids)) return;
         this.sprintsIds = ids;
-        fireModified();
+        fireModified("sprints="+Str.format(sprints));
     }
 
     protected Collection<scrum.server.sprint.Sprint> prepareSprints(Collection<scrum.server.sprint.Sprint> sprints) {
@@ -197,7 +196,7 @@ public abstract class GRelease
     }
 
     protected void repairDeadSprintReference(String entityId) {
-        if (this.sprintsIds.remove(entityId)) fireModified();
+        if (this.sprintsIds.remove(entityId)) fireModified("sprints-=" + entityId);
     }
 
     public final boolean containsSprint(scrum.server.sprint.Sprint sprint) {
@@ -216,7 +215,7 @@ public abstract class GRelease
     public final boolean addSprint(scrum.server.sprint.Sprint sprint) {
         if (sprint == null) throw new IllegalArgumentException("sprint == null");
         boolean added = this.sprintsIds.add(sprint.getId());
-        if (added) fireModified();
+        if (added) fireModified("sprints+=" + sprint);
         return added;
     }
 
@@ -226,7 +225,7 @@ public abstract class GRelease
         for (scrum.server.sprint.Sprint sprint : sprints) {
             added = added | this.sprintsIds.add(sprint.getId());
         }
-        if (added) fireModified();
+        if (added) fireModified("sprints+="+Str.format(sprints));
         return added;
     }
 
@@ -234,7 +233,7 @@ public abstract class GRelease
         if (sprint == null) throw new IllegalArgumentException("sprint == null");
         if (this.sprintsIds == null) return false;
         boolean removed = this.sprintsIds.remove(sprint.getId());
-        if (removed) fireModified();
+        if (removed) fireModified("sprints-=" + sprint);
         return removed;
     }
 
@@ -245,13 +244,14 @@ public abstract class GRelease
         for (scrum.server.sprint.Sprint _element: sprints) {
             removed = removed | removeSprint(_element);
         }
+        if (removed) fireModified("sprints-="+Str.format(sprints));
         return removed;
     }
 
     public final boolean clearSprints() {
         if (this.sprintsIds.isEmpty()) return false;
         this.sprintsIds.clear();
-        fireModified();
+        fireModified("sprints cleared");
         return true;
     }
 
@@ -274,7 +274,7 @@ public abstract class GRelease
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        fireModified();
+        fireModified("number="+number);
     }
 
     protected int prepareNumber(int number) {
@@ -303,7 +303,7 @@ public abstract class GRelease
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        fireModified();
+        fireModified("label="+label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -338,7 +338,7 @@ public abstract class GRelease
         note = prepareNote(note);
         if (isNote(note)) return;
         this.note = note;
-        fireModified();
+        fireModified("note="+note);
     }
 
     protected java.lang.String prepareNote(java.lang.String note) {
@@ -373,7 +373,7 @@ public abstract class GRelease
         releaseDate = prepareReleaseDate(releaseDate);
         if (isReleaseDate(releaseDate)) return;
         this.releaseDate = releaseDate;
-        fireModified();
+        fireModified("releaseDate="+releaseDate);
     }
 
     protected ilarkesto.base.time.Date prepareReleaseDate(ilarkesto.base.time.Date releaseDate) {
@@ -408,7 +408,7 @@ public abstract class GRelease
         released = prepareReleased(released);
         if (isReleased(released)) return;
         this.released = released;
-        fireModified();
+        fireModified("released="+released);
     }
 
     protected boolean prepareReleased(boolean released) {
@@ -437,7 +437,7 @@ public abstract class GRelease
         releaseNotes = prepareReleaseNotes(releaseNotes);
         if (isReleaseNotes(releaseNotes)) return;
         this.releaseNotes = releaseNotes;
-        fireModified();
+        fireModified("releaseNotes="+releaseNotes);
     }
 
     protected java.lang.String prepareReleaseNotes(java.lang.String releaseNotes) {
@@ -472,7 +472,7 @@ public abstract class GRelease
         scmTag = prepareScmTag(scmTag);
         if (isScmTag(scmTag)) return;
         this.scmTag = scmTag;
-        fireModified();
+        fireModified("scmTag="+scmTag);
     }
 
     protected java.lang.String prepareScmTag(java.lang.String scmTag) {

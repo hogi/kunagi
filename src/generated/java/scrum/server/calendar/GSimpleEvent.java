@@ -94,7 +94,7 @@ public abstract class GSimpleEvent
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
-        fireModified();
+        fireModified("project="+project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -134,7 +134,7 @@ public abstract class GSimpleEvent
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        fireModified();
+        fireModified("label="+label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -169,7 +169,7 @@ public abstract class GSimpleEvent
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        fireModified();
+        fireModified("number="+number);
     }
 
     protected int prepareNumber(int number) {
@@ -198,7 +198,7 @@ public abstract class GSimpleEvent
         date = prepareDate(date);
         if (isDate(date)) return;
         this.date = date;
-        fireModified();
+        fireModified("date="+date);
     }
 
     protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
@@ -233,7 +233,7 @@ public abstract class GSimpleEvent
         time = prepareTime(time);
         if (isTime(time)) return;
         this.time = time;
-        fireModified();
+        fireModified("time="+time);
     }
 
     protected ilarkesto.base.time.Time prepareTime(ilarkesto.base.time.Time time) {
@@ -268,7 +268,7 @@ public abstract class GSimpleEvent
         location = prepareLocation(location);
         if (isLocation(location)) return;
         this.location = location;
-        fireModified();
+        fireModified("location="+location);
     }
 
     protected java.lang.String prepareLocation(java.lang.String location) {
@@ -303,7 +303,7 @@ public abstract class GSimpleEvent
         duration = prepareDuration(duration);
         if (isDuration(duration)) return;
         this.duration = duration;
-        fireModified();
+        fireModified("duration="+duration);
     }
 
     protected java.lang.Integer prepareDuration(java.lang.Integer duration) {
@@ -337,7 +337,7 @@ public abstract class GSimpleEvent
         agenda = prepareAgenda(agenda);
         if (isAgenda(agenda)) return;
         this.agenda = agenda;
-        fireModified();
+        fireModified("agenda="+agenda);
     }
 
     protected java.lang.String prepareAgenda(java.lang.String agenda) {
@@ -372,7 +372,7 @@ public abstract class GSimpleEvent
         note = prepareNote(note);
         if (isNote(note)) return;
         this.note = note;
-        fireModified();
+        fireModified("note="+note);
     }
 
     protected java.lang.String prepareNote(java.lang.String note) {

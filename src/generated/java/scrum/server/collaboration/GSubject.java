@@ -87,7 +87,7 @@ public abstract class GSubject
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
-        fireModified();
+        fireModified("project="+project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -127,7 +127,7 @@ public abstract class GSubject
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        fireModified();
+        fireModified("label="+label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -162,7 +162,7 @@ public abstract class GSubject
         text = prepareText(text);
         if (isText(text)) return;
         this.text = text;
-        fireModified();
+        fireModified("text="+text);
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -197,7 +197,7 @@ public abstract class GSubject
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        fireModified();
+        fireModified("number="+number);
     }
 
     protected int prepareNumber(int number) {

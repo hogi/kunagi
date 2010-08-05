@@ -75,7 +75,7 @@ public abstract class GProjectUserConfig
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
-        fireModified();
+        fireModified("project="+project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -126,7 +126,7 @@ public abstract class GProjectUserConfig
         if (isUser(user)) return;
         this.userId = user == null ? null : user.getId();
         userCache = user;
-        fireModified();
+        fireModified("user="+user);
     }
 
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
@@ -166,7 +166,7 @@ public abstract class GProjectUserConfig
         color = prepareColor(color);
         if (isColor(color)) return;
         this.color = color;
-        fireModified();
+        fireModified("color="+color);
     }
 
     protected java.lang.String prepareColor(java.lang.String color) {
@@ -201,7 +201,7 @@ public abstract class GProjectUserConfig
         misconducts = prepareMisconducts(misconducts);
         if (isMisconducts(misconducts)) return;
         this.misconducts = misconducts;
-        fireModified();
+        fireModified("misconducts="+misconducts);
     }
 
     protected int prepareMisconducts(int misconducts) {

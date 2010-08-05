@@ -74,7 +74,7 @@ public abstract class GRequirementEstimationVote
         if (isRequirement(requirement)) return;
         this.requirementId = requirement == null ? null : requirement.getId();
         requirementCache = requirement;
-        fireModified();
+        fireModified("requirement="+requirement);
     }
 
     protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
@@ -125,7 +125,7 @@ public abstract class GRequirementEstimationVote
         if (isUser(user)) return;
         this.userId = user == null ? null : user.getId();
         userCache = user;
-        fireModified();
+        fireModified("user="+user);
     }
 
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
@@ -165,7 +165,7 @@ public abstract class GRequirementEstimationVote
         estimatedWork = prepareEstimatedWork(estimatedWork);
         if (isEstimatedWork(estimatedWork)) return;
         this.estimatedWork = estimatedWork;
-        fireModified();
+        fireModified("estimatedWork="+estimatedWork);
     }
 
     protected java.lang.Float prepareEstimatedWork(java.lang.Float estimatedWork) {

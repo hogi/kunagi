@@ -91,7 +91,7 @@ public abstract class GImpediment
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
-        fireModified();
+        fireModified("project="+project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -131,7 +131,7 @@ public abstract class GImpediment
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        fireModified();
+        fireModified("number="+number);
     }
 
     protected int prepareNumber(int number) {
@@ -160,7 +160,7 @@ public abstract class GImpediment
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        fireModified();
+        fireModified("label="+label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -195,7 +195,7 @@ public abstract class GImpediment
         date = prepareDate(date);
         if (isDate(date)) return;
         this.date = date;
-        fireModified();
+        fireModified("date="+date);
     }
 
     protected ilarkesto.base.time.Date prepareDate(ilarkesto.base.time.Date date) {
@@ -230,7 +230,7 @@ public abstract class GImpediment
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
-        fireModified();
+        fireModified("description="+description);
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -265,7 +265,7 @@ public abstract class GImpediment
         solution = prepareSolution(solution);
         if (isSolution(solution)) return;
         this.solution = solution;
-        fireModified();
+        fireModified("solution="+solution);
     }
 
     protected java.lang.String prepareSolution(java.lang.String solution) {
@@ -300,7 +300,7 @@ public abstract class GImpediment
         closed = prepareClosed(closed);
         if (isClosed(closed)) return;
         this.closed = closed;
-        fireModified();
+        fireModified("closed="+closed);
     }
 
     protected boolean prepareClosed(boolean closed) {

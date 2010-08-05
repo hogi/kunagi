@@ -93,7 +93,7 @@ public abstract class GRisk
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
-        fireModified();
+        fireModified("project="+project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -133,7 +133,7 @@ public abstract class GRisk
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        fireModified();
+        fireModified("number="+number);
     }
 
     protected int prepareNumber(int number) {
@@ -162,7 +162,7 @@ public abstract class GRisk
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        fireModified();
+        fireModified("label="+label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -197,7 +197,7 @@ public abstract class GRisk
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
-        fireModified();
+        fireModified("description="+description);
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -232,7 +232,7 @@ public abstract class GRisk
         probabilityMitigation = prepareProbabilityMitigation(probabilityMitigation);
         if (isProbabilityMitigation(probabilityMitigation)) return;
         this.probabilityMitigation = probabilityMitigation;
-        fireModified();
+        fireModified("probabilityMitigation="+probabilityMitigation);
     }
 
     protected java.lang.String prepareProbabilityMitigation(java.lang.String probabilityMitigation) {
@@ -267,7 +267,7 @@ public abstract class GRisk
         impactMitigation = prepareImpactMitigation(impactMitigation);
         if (isImpactMitigation(impactMitigation)) return;
         this.impactMitigation = impactMitigation;
-        fireModified();
+        fireModified("impactMitigation="+impactMitigation);
     }
 
     protected java.lang.String prepareImpactMitigation(java.lang.String impactMitigation) {
@@ -302,7 +302,7 @@ public abstract class GRisk
         probability = prepareProbability(probability);
         if (isProbability(probability)) return;
         this.probability = probability;
-        fireModified();
+        fireModified("probability="+probability);
     }
 
     protected int prepareProbability(int probability) {
@@ -331,7 +331,7 @@ public abstract class GRisk
         impact = prepareImpact(impact);
         if (isImpact(impact)) return;
         this.impact = impact;
-        fireModified();
+        fireModified("impact="+impact);
     }
 
     protected int prepareImpact(int impact) {

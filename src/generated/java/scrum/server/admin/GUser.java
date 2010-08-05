@@ -82,7 +82,7 @@ public abstract class GUser
         if (isName(name)) return;
         if (name != null && getDao().getUserByName(name) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "name", name);
         this.name = name;
-        fireModified();
+        fireModified("name="+name);
     }
 
     protected java.lang.String prepareName(java.lang.String name) {
@@ -117,7 +117,7 @@ public abstract class GUser
         admin = prepareAdmin(admin);
         if (isAdmin(admin)) return;
         this.admin = admin;
-        fireModified();
+        fireModified("admin="+admin);
     }
 
     protected boolean prepareAdmin(boolean admin) {
@@ -146,7 +146,7 @@ public abstract class GUser
         emailVerified = prepareEmailVerified(emailVerified);
         if (isEmailVerified(emailVerified)) return;
         this.emailVerified = emailVerified;
-        fireModified();
+        fireModified("emailVerified="+emailVerified);
     }
 
     protected boolean prepareEmailVerified(boolean emailVerified) {
@@ -176,7 +176,7 @@ public abstract class GUser
         if (isEmail(email)) return;
         if (email != null && getDao().getUserByEmail(email) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "email", email);
         this.email = email;
-        fireModified();
+        fireModified("email="+email);
     }
 
     protected java.lang.String prepareEmail(java.lang.String email) {
@@ -222,7 +222,7 @@ public abstract class GUser
         if (isCurrentProject(currentProject)) return;
         this.currentProjectId = currentProject == null ? null : currentProject.getId();
         currentProjectCache = currentProject;
-        fireModified();
+        fireModified("currentProject="+currentProject);
     }
 
     protected scrum.server.project.Project prepareCurrentProject(scrum.server.project.Project currentProject) {
@@ -231,8 +231,7 @@ public abstract class GUser
 
     protected void repairDeadCurrentProjectReference(String entityId) {
         if (this.currentProjectId == null || entityId.equals(this.currentProjectId)) {
-            this.currentProjectId = null;
-            fireModified();
+            setCurrentProject(null);
         }
     }
 
@@ -263,7 +262,7 @@ public abstract class GUser
         color = prepareColor(color);
         if (isColor(color)) return;
         this.color = color;
-        fireModified();
+        fireModified("color="+color);
     }
 
     protected java.lang.String prepareColor(java.lang.String color) {
@@ -298,7 +297,7 @@ public abstract class GUser
         lastLoginDateAndTime = prepareLastLoginDateAndTime(lastLoginDateAndTime);
         if (isLastLoginDateAndTime(lastLoginDateAndTime)) return;
         this.lastLoginDateAndTime = lastLoginDateAndTime;
-        fireModified();
+        fireModified("lastLoginDateAndTime="+lastLoginDateAndTime);
     }
 
     protected ilarkesto.base.time.DateAndTime prepareLastLoginDateAndTime(ilarkesto.base.time.DateAndTime lastLoginDateAndTime) {
@@ -333,7 +332,7 @@ public abstract class GUser
         registrationDateAndTime = prepareRegistrationDateAndTime(registrationDateAndTime);
         if (isRegistrationDateAndTime(registrationDateAndTime)) return;
         this.registrationDateAndTime = registrationDateAndTime;
-        fireModified();
+        fireModified("registrationDateAndTime="+registrationDateAndTime);
     }
 
     protected ilarkesto.base.time.DateAndTime prepareRegistrationDateAndTime(ilarkesto.base.time.DateAndTime registrationDateAndTime) {
@@ -368,7 +367,7 @@ public abstract class GUser
         disabled = prepareDisabled(disabled);
         if (isDisabled(disabled)) return;
         this.disabled = disabled;
-        fireModified();
+        fireModified("disabled="+disabled);
     }
 
     protected boolean prepareDisabled(boolean disabled) {

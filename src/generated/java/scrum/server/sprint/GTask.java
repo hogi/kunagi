@@ -90,7 +90,7 @@ public abstract class GTask
         if (isRequirement(requirement)) return;
         this.requirementId = requirement == null ? null : requirement.getId();
         requirementCache = requirement;
-        fireModified();
+        fireModified("requirement="+requirement);
     }
 
     protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
@@ -130,7 +130,7 @@ public abstract class GTask
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        fireModified();
+        fireModified("number="+number);
     }
 
     protected int prepareNumber(int number) {
@@ -159,7 +159,7 @@ public abstract class GTask
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        fireModified();
+        fireModified("label="+label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -194,7 +194,7 @@ public abstract class GTask
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
-        fireModified();
+        fireModified("description="+description);
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -229,7 +229,7 @@ public abstract class GTask
         remainingWork = prepareRemainingWork(remainingWork);
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
-        fireModified();
+        fireModified("remainingWork="+remainingWork);
     }
 
     protected int prepareRemainingWork(int remainingWork) {
@@ -258,7 +258,7 @@ public abstract class GTask
         burnedWork = prepareBurnedWork(burnedWork);
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
-        fireModified();
+        fireModified("burnedWork="+burnedWork);
     }
 
     protected int prepareBurnedWork(int burnedWork) {
@@ -298,7 +298,7 @@ public abstract class GTask
         if (isOwner(owner)) return;
         this.ownerId = owner == null ? null : owner.getId();
         ownerCache = owner;
-        fireModified();
+        fireModified("owner="+owner);
     }
 
     protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
@@ -307,8 +307,7 @@ public abstract class GTask
 
     protected void repairDeadOwnerReference(String entityId) {
         if (this.ownerId == null || entityId.equals(this.ownerId)) {
-            this.ownerId = null;
-            fireModified();
+            setOwner(null);
         }
     }
 

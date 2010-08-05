@@ -90,7 +90,7 @@ public abstract class GSprint
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        fireModified();
+        fireModified("number="+number);
     }
 
     protected int prepareNumber(int number) {
@@ -130,7 +130,7 @@ public abstract class GSprint
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
-        fireModified();
+        fireModified("project="+project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -170,7 +170,7 @@ public abstract class GSprint
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        fireModified();
+        fireModified("label="+label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -205,7 +205,7 @@ public abstract class GSprint
         goal = prepareGoal(goal);
         if (isGoal(goal)) return;
         this.goal = goal;
-        fireModified();
+        fireModified("goal="+goal);
     }
 
     protected java.lang.String prepareGoal(java.lang.String goal) {
@@ -240,7 +240,7 @@ public abstract class GSprint
         begin = prepareBegin(begin);
         if (isBegin(begin)) return;
         this.begin = begin;
-        fireModified();
+        fireModified("begin="+begin);
     }
 
     protected ilarkesto.base.time.Date prepareBegin(ilarkesto.base.time.Date begin) {
@@ -275,7 +275,7 @@ public abstract class GSprint
         end = prepareEnd(end);
         if (isEnd(end)) return;
         this.end = end;
-        fireModified();
+        fireModified("end="+end);
     }
 
     protected ilarkesto.base.time.Date prepareEnd(ilarkesto.base.time.Date end) {
@@ -310,7 +310,7 @@ public abstract class GSprint
         velocity = prepareVelocity(velocity);
         if (isVelocity(velocity)) return;
         this.velocity = velocity;
-        fireModified();
+        fireModified("velocity="+velocity);
     }
 
     protected java.lang.Float prepareVelocity(java.lang.Float velocity) {
@@ -344,7 +344,7 @@ public abstract class GSprint
         completedRequirementLabels = prepareCompletedRequirementLabels(completedRequirementLabels);
         if (isCompletedRequirementLabels(completedRequirementLabels)) return;
         this.completedRequirementLabels = completedRequirementLabels;
-        fireModified();
+        fireModified("completedRequirementLabels="+completedRequirementLabels);
     }
 
     protected java.lang.String prepareCompletedRequirementLabels(java.lang.String completedRequirementLabels) {
@@ -379,7 +379,7 @@ public abstract class GSprint
         planningNote = preparePlanningNote(planningNote);
         if (isPlanningNote(planningNote)) return;
         this.planningNote = planningNote;
-        fireModified();
+        fireModified("planningNote="+planningNote);
     }
 
     protected java.lang.String preparePlanningNote(java.lang.String planningNote) {
@@ -414,7 +414,7 @@ public abstract class GSprint
         reviewNote = prepareReviewNote(reviewNote);
         if (isReviewNote(reviewNote)) return;
         this.reviewNote = reviewNote;
-        fireModified();
+        fireModified("reviewNote="+reviewNote);
     }
 
     protected java.lang.String prepareReviewNote(java.lang.String reviewNote) {
@@ -449,7 +449,7 @@ public abstract class GSprint
         retrospectiveNote = prepareRetrospectiveNote(retrospectiveNote);
         if (isRetrospectiveNote(retrospectiveNote)) return;
         this.retrospectiveNote = retrospectiveNote;
-        fireModified();
+        fireModified("retrospectiveNote="+retrospectiveNote);
     }
 
     protected java.lang.String prepareRetrospectiveNote(java.lang.String retrospectiveNote) {
@@ -486,7 +486,7 @@ public abstract class GSprint
         java.util.Set<String> ids = getIdsAsSet(productOwners);
         if (this.productOwnersIds.equals(ids)) return;
         this.productOwnersIds = ids;
-        fireModified();
+        fireModified("productOwners="+Str.format(productOwners));
     }
 
     protected Collection<scrum.server.admin.User> prepareProductOwners(Collection<scrum.server.admin.User> productOwners) {
@@ -494,7 +494,7 @@ public abstract class GSprint
     }
 
     protected void repairDeadProductOwnerReference(String entityId) {
-        if (this.productOwnersIds.remove(entityId)) fireModified();
+        if (this.productOwnersIds.remove(entityId)) fireModified("productOwners-=" + entityId);
     }
 
     public final boolean containsProductOwner(scrum.server.admin.User productOwner) {
@@ -513,7 +513,7 @@ public abstract class GSprint
     public final boolean addProductOwner(scrum.server.admin.User productOwner) {
         if (productOwner == null) throw new IllegalArgumentException("productOwner == null");
         boolean added = this.productOwnersIds.add(productOwner.getId());
-        if (added) fireModified();
+        if (added) fireModified("productOwners+=" + productOwner);
         return added;
     }
 
@@ -523,7 +523,7 @@ public abstract class GSprint
         for (scrum.server.admin.User productOwner : productOwners) {
             added = added | this.productOwnersIds.add(productOwner.getId());
         }
-        if (added) fireModified();
+        if (added) fireModified("productOwners+="+Str.format(productOwners));
         return added;
     }
 
@@ -531,7 +531,7 @@ public abstract class GSprint
         if (productOwner == null) throw new IllegalArgumentException("productOwner == null");
         if (this.productOwnersIds == null) return false;
         boolean removed = this.productOwnersIds.remove(productOwner.getId());
-        if (removed) fireModified();
+        if (removed) fireModified("productOwners-=" + productOwner);
         return removed;
     }
 
@@ -542,13 +542,14 @@ public abstract class GSprint
         for (scrum.server.admin.User _element: productOwners) {
             removed = removed | removeProductOwner(_element);
         }
+        if (removed) fireModified("productOwners-="+Str.format(productOwners));
         return removed;
     }
 
     public final boolean clearProductOwners() {
         if (this.productOwnersIds.isEmpty()) return false;
         this.productOwnersIds.clear();
-        fireModified();
+        fireModified("productOwners cleared");
         return true;
     }
 
@@ -573,7 +574,7 @@ public abstract class GSprint
         java.util.Set<String> ids = getIdsAsSet(scrumMasters);
         if (this.scrumMastersIds.equals(ids)) return;
         this.scrumMastersIds = ids;
-        fireModified();
+        fireModified("scrumMasters="+Str.format(scrumMasters));
     }
 
     protected Collection<scrum.server.admin.User> prepareScrumMasters(Collection<scrum.server.admin.User> scrumMasters) {
@@ -581,7 +582,7 @@ public abstract class GSprint
     }
 
     protected void repairDeadScrumMasterReference(String entityId) {
-        if (this.scrumMastersIds.remove(entityId)) fireModified();
+        if (this.scrumMastersIds.remove(entityId)) fireModified("scrumMasters-=" + entityId);
     }
 
     public final boolean containsScrumMaster(scrum.server.admin.User scrumMaster) {
@@ -600,7 +601,7 @@ public abstract class GSprint
     public final boolean addScrumMaster(scrum.server.admin.User scrumMaster) {
         if (scrumMaster == null) throw new IllegalArgumentException("scrumMaster == null");
         boolean added = this.scrumMastersIds.add(scrumMaster.getId());
-        if (added) fireModified();
+        if (added) fireModified("scrumMasters+=" + scrumMaster);
         return added;
     }
 
@@ -610,7 +611,7 @@ public abstract class GSprint
         for (scrum.server.admin.User scrumMaster : scrumMasters) {
             added = added | this.scrumMastersIds.add(scrumMaster.getId());
         }
-        if (added) fireModified();
+        if (added) fireModified("scrumMasters+="+Str.format(scrumMasters));
         return added;
     }
 
@@ -618,7 +619,7 @@ public abstract class GSprint
         if (scrumMaster == null) throw new IllegalArgumentException("scrumMaster == null");
         if (this.scrumMastersIds == null) return false;
         boolean removed = this.scrumMastersIds.remove(scrumMaster.getId());
-        if (removed) fireModified();
+        if (removed) fireModified("scrumMasters-=" + scrumMaster);
         return removed;
     }
 
@@ -629,13 +630,14 @@ public abstract class GSprint
         for (scrum.server.admin.User _element: scrumMasters) {
             removed = removed | removeScrumMaster(_element);
         }
+        if (removed) fireModified("scrumMasters-="+Str.format(scrumMasters));
         return removed;
     }
 
     public final boolean clearScrumMasters() {
         if (this.scrumMastersIds.isEmpty()) return false;
         this.scrumMastersIds.clear();
-        fireModified();
+        fireModified("scrumMasters cleared");
         return true;
     }
 
@@ -660,7 +662,7 @@ public abstract class GSprint
         java.util.Set<String> ids = getIdsAsSet(teamMembers);
         if (this.teamMembersIds.equals(ids)) return;
         this.teamMembersIds = ids;
-        fireModified();
+        fireModified("teamMembers="+Str.format(teamMembers));
     }
 
     protected Collection<scrum.server.admin.User> prepareTeamMembers(Collection<scrum.server.admin.User> teamMembers) {
@@ -668,7 +670,7 @@ public abstract class GSprint
     }
 
     protected void repairDeadTeamMemberReference(String entityId) {
-        if (this.teamMembersIds.remove(entityId)) fireModified();
+        if (this.teamMembersIds.remove(entityId)) fireModified("teamMembers-=" + entityId);
     }
 
     public final boolean containsTeamMember(scrum.server.admin.User teamMember) {
@@ -687,7 +689,7 @@ public abstract class GSprint
     public final boolean addTeamMember(scrum.server.admin.User teamMember) {
         if (teamMember == null) throw new IllegalArgumentException("teamMember == null");
         boolean added = this.teamMembersIds.add(teamMember.getId());
-        if (added) fireModified();
+        if (added) fireModified("teamMembers+=" + teamMember);
         return added;
     }
 
@@ -697,7 +699,7 @@ public abstract class GSprint
         for (scrum.server.admin.User teamMember : teamMembers) {
             added = added | this.teamMembersIds.add(teamMember.getId());
         }
-        if (added) fireModified();
+        if (added) fireModified("teamMembers+="+Str.format(teamMembers));
         return added;
     }
 
@@ -705,7 +707,7 @@ public abstract class GSprint
         if (teamMember == null) throw new IllegalArgumentException("teamMember == null");
         if (this.teamMembersIds == null) return false;
         boolean removed = this.teamMembersIds.remove(teamMember.getId());
-        if (removed) fireModified();
+        if (removed) fireModified("teamMembers-=" + teamMember);
         return removed;
     }
 
@@ -716,13 +718,14 @@ public abstract class GSprint
         for (scrum.server.admin.User _element: teamMembers) {
             removed = removed | removeTeamMember(_element);
         }
+        if (removed) fireModified("teamMembers-="+Str.format(teamMembers));
         return removed;
     }
 
     public final boolean clearTeamMembers() {
         if (this.teamMembersIds.isEmpty()) return false;
         this.teamMembersIds.clear();
-        fireModified();
+        fireModified("teamMembers cleared");
         return true;
     }
 

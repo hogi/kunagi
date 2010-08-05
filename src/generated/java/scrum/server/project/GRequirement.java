@@ -97,7 +97,7 @@ public abstract class GRequirement
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
-        fireModified();
+        fireModified("project="+project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -148,7 +148,7 @@ public abstract class GRequirement
         if (isSprint(sprint)) return;
         this.sprintId = sprint == null ? null : sprint.getId();
         sprintCache = sprint;
-        fireModified();
+        fireModified("sprint="+sprint);
     }
 
     protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
@@ -157,8 +157,7 @@ public abstract class GRequirement
 
     protected void repairDeadSprintReference(String entityId) {
         if (this.sprintId == null || entityId.equals(this.sprintId)) {
-            this.sprintId = null;
-            fireModified();
+            setSprint(null);
         }
     }
 
@@ -189,7 +188,7 @@ public abstract class GRequirement
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        fireModified();
+        fireModified("number="+number);
     }
 
     protected int prepareNumber(int number) {
@@ -220,7 +219,7 @@ public abstract class GRequirement
         java.util.Set<String> ids = getIdsAsSet(qualitys);
         if (this.qualitysIds.equals(ids)) return;
         this.qualitysIds = ids;
-        fireModified();
+        fireModified("qualitys="+Str.format(qualitys));
     }
 
     protected Collection<scrum.server.project.Quality> prepareQualitys(Collection<scrum.server.project.Quality> qualitys) {
@@ -228,7 +227,7 @@ public abstract class GRequirement
     }
 
     protected void repairDeadQualityReference(String entityId) {
-        if (this.qualitysIds.remove(entityId)) fireModified();
+        if (this.qualitysIds.remove(entityId)) fireModified("qualitys-=" + entityId);
     }
 
     public final boolean containsQuality(scrum.server.project.Quality quality) {
@@ -247,7 +246,7 @@ public abstract class GRequirement
     public final boolean addQuality(scrum.server.project.Quality quality) {
         if (quality == null) throw new IllegalArgumentException("quality == null");
         boolean added = this.qualitysIds.add(quality.getId());
-        if (added) fireModified();
+        if (added) fireModified("qualitys+=" + quality);
         return added;
     }
 
@@ -257,7 +256,7 @@ public abstract class GRequirement
         for (scrum.server.project.Quality quality : qualitys) {
             added = added | this.qualitysIds.add(quality.getId());
         }
-        if (added) fireModified();
+        if (added) fireModified("qualitys+="+Str.format(qualitys));
         return added;
     }
 
@@ -265,7 +264,7 @@ public abstract class GRequirement
         if (quality == null) throw new IllegalArgumentException("quality == null");
         if (this.qualitysIds == null) return false;
         boolean removed = this.qualitysIds.remove(quality.getId());
-        if (removed) fireModified();
+        if (removed) fireModified("qualitys-=" + quality);
         return removed;
     }
 
@@ -276,13 +275,14 @@ public abstract class GRequirement
         for (scrum.server.project.Quality _element: qualitys) {
             removed = removed | removeQuality(_element);
         }
+        if (removed) fireModified("qualitys-="+Str.format(qualitys));
         return removed;
     }
 
     public final boolean clearQualitys() {
         if (this.qualitysIds.isEmpty()) return false;
         this.qualitysIds.clear();
-        fireModified();
+        fireModified("qualitys cleared");
         return true;
     }
 
@@ -305,7 +305,7 @@ public abstract class GRequirement
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        fireModified();
+        fireModified("label="+label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -340,7 +340,7 @@ public abstract class GRequirement
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
-        fireModified();
+        fireModified("description="+description);
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -375,7 +375,7 @@ public abstract class GRequirement
         testDescription = prepareTestDescription(testDescription);
         if (isTestDescription(testDescription)) return;
         this.testDescription = testDescription;
-        fireModified();
+        fireModified("testDescription="+testDescription);
     }
 
     protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
@@ -410,7 +410,7 @@ public abstract class GRequirement
         estimatedWork = prepareEstimatedWork(estimatedWork);
         if (isEstimatedWork(estimatedWork)) return;
         this.estimatedWork = estimatedWork;
-        fireModified();
+        fireModified("estimatedWork="+estimatedWork);
     }
 
     protected java.lang.Float prepareEstimatedWork(java.lang.Float estimatedWork) {
@@ -444,7 +444,7 @@ public abstract class GRequirement
         rejectDate = prepareRejectDate(rejectDate);
         if (isRejectDate(rejectDate)) return;
         this.rejectDate = rejectDate;
-        fireModified();
+        fireModified("rejectDate="+rejectDate);
     }
 
     protected ilarkesto.base.time.Date prepareRejectDate(ilarkesto.base.time.Date rejectDate) {
@@ -479,7 +479,7 @@ public abstract class GRequirement
         closed = prepareClosed(closed);
         if (isClosed(closed)) return;
         this.closed = closed;
-        fireModified();
+        fireModified("closed="+closed);
     }
 
     protected boolean prepareClosed(boolean closed) {
@@ -508,7 +508,7 @@ public abstract class GRequirement
         dirty = prepareDirty(dirty);
         if (isDirty(dirty)) return;
         this.dirty = dirty;
-        fireModified();
+        fireModified("dirty="+dirty);
     }
 
     protected boolean prepareDirty(boolean dirty) {
@@ -537,7 +537,7 @@ public abstract class GRequirement
         workEstimationVotingActive = prepareWorkEstimationVotingActive(workEstimationVotingActive);
         if (isWorkEstimationVotingActive(workEstimationVotingActive)) return;
         this.workEstimationVotingActive = workEstimationVotingActive;
-        fireModified();
+        fireModified("workEstimationVotingActive="+workEstimationVotingActive);
     }
 
     protected boolean prepareWorkEstimationVotingActive(boolean workEstimationVotingActive) {
@@ -566,7 +566,7 @@ public abstract class GRequirement
         workEstimationVotingShowoff = prepareWorkEstimationVotingShowoff(workEstimationVotingShowoff);
         if (isWorkEstimationVotingShowoff(workEstimationVotingShowoff)) return;
         this.workEstimationVotingShowoff = workEstimationVotingShowoff;
-        fireModified();
+        fireModified("workEstimationVotingShowoff="+workEstimationVotingShowoff);
     }
 
     protected boolean prepareWorkEstimationVotingShowoff(boolean workEstimationVotingShowoff) {
