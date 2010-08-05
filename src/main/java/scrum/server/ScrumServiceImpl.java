@@ -1,6 +1,7 @@
 package scrum.server;
 
 import ilarkesto.auth.Auth;
+import ilarkesto.auth.WrongPasswordException;
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Reflect;
 import ilarkesto.base.Str;
@@ -187,7 +188,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			if (!user.isEmailVerified()) user.triggerEmailVerification();
 			user.triggerPasswordReset();
 		} else {
-			user.setPassword("geheim");
+			user.setPassword(scrum.client.admin.User.INITIAL_PASSWORD);
 		}
 	}
 
@@ -224,7 +225,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onChangePassword(GwtConversation conversation, String oldPassword, String newPassword) {
 		User user = conversation.getSession().getUser();
-		if (user.matchesPassword(oldPassword) == false) { throw new RuntimeException("Wrong password"); }
+		if (user.matchesPassword(oldPassword) == false) throw new WrongPasswordException();
 
 		user.setPassword(newPassword);
 
@@ -680,6 +681,34 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	public void onRegister(GwtConversation conversation, String username, String email, String password) {
+		if (Str.containsNonLetterOrDigit(username)) {
+			conversation.getNextData().addError(
+				"Registration failed. Name '" + username
+						+ "' contains an illegal character. Only letters and digits allowed.");
+			return;
+		}
+		if (userDao.getUserByName(username) != null) {
+			conversation.getNextData().addError("Registration failed. Name '" + username + "' is already used.");
+			log.warn("Registration failed. User name already exists:", username);
+			return;
+		}
+		if (userDao.getUserByEmail(email) != null) {
+			conversation.getNextData().addError("Registration failed. Email '" + email + "' is already used.");
+			log.warn("Registration failed. User email already exists:", email);
+			return;
+		}
+
+		User user = userDao.postUser(email, username, password);
+		user.setLastLoginDateAndTime(DateAndTime.now());
+		user.triggerEmailVerification();
+		webApplication.triggerRegisterNotification(user);
+
+		conversation.getSession().setUser(user);
+		conversation.sendUserScopeDataToClient(user);
+	}
+
+	@Override
 	public void onPing(GwtConversation conversation) {
 		// nop
 	}
@@ -743,31 +772,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	public void onRegister(GwtConversation conversation, String username, String email, String password) {
-		if (Str.containsNonLetterOrDigit(username)) {
-			conversation.getNextData().addError(
-				"Registration failed. Name '" + username
-						+ "' contains an illegal character. Only letters and digits allowed.");
-			return;
-		}
-		if (userDao.getUserByName(username) != null) {
-			conversation.getNextData().addError("Registration failed. Name '" + username + "' is already used.");
-			log.warn("Registration failed. User name already exists:", username);
-			return;
-		}
-		if (userDao.getUserByEmail(email) != null) {
-			conversation.getNextData().addError("Registration failed. Email '" + email + "' is already used.");
-			log.warn("Registration failed. User email already exists:", email);
-			return;
-		}
-
-		User user = userDao.postUser(email, username, password);
-		user.setLastLoginDateAndTime(DateAndTime.now());
-		user.triggerEmailVerification();
-		webApplication.triggerRegisterNotification(user);
-
-		conversation.getSession().setUser(user);
-		conversation.sendUserScopeDataToClient(user);
+	protected AWebApplication getWebApplication() {
+		return webApplication;
 	}
 
 }

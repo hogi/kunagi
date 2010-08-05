@@ -1,13 +1,18 @@
 package scrum.server;
 
+import ilarkesto.auth.WrongPasswordException;
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Str;
+import ilarkesto.base.Utl;
 import ilarkesto.persistence.AEntity;
+import ilarkesto.testng.ATest;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -18,45 +23,50 @@ import scrum.client.admin.SystemMessage;
 import scrum.server.admin.User;
 import scrum.server.project.Project;
 
-public class ScrumServiceImplTest extends Assert {
+public class ScrumServiceImplTest extends ATest {
 
 	ScrumWebApplication app;
 	ScrumServiceImpl service;
+	WebSession sessionForAdmin;
 	WebSession session;
-	WebSession adminSession;
+	GwtConversation conversationForAdmin;
 	GwtConversation conversation;
-	GwtConversation adminConversation;
-	User duke;
 	User admin;
+	User duke;
 
 	@BeforeTest
 	public void init() {
 		TestUtil.initialize();
 		app = TestUtil.getApp();
 
-		duke = app.getUserDao().getUserByName("duke");
-		if (duke == null) duke = app.getUserDao().postUser("duke", "geheim");
-
 		admin = app.getUserDao().getUserByName("admin");
 		if (admin == null) {
-			admin = app.getUserDao().postUser("admin", "geheim");
+			admin = app.getUserDao().postUser("admin");
 			admin.setAdmin(true);
 		}
 
+		duke = app.getUserDao().getUserByName("duke");
+		if (duke == null) duke = app.getUserDao().postUser("duke");
+		duke.setEmail("duke@kunagi.org");
+		duke.setEmailVerified(true);
+
 		service = new ScrumServiceImpl();
+		service.setWebApplication(app);
 		app.autowire(service);
 
 		session = (WebSession) app.createWebSession(null);
 		session.setUser(duke);
 
-		adminSession = (WebSession) app.createWebSession(null);
-		adminSession.setUser(admin);
+		sessionForAdmin = (WebSession) app.createWebSession(null);
+		sessionForAdmin.setUser(admin);
 	}
 
 	@BeforeMethod
 	public void initConversation() {
 		conversation = (GwtConversation) session.createGwtConversation();
-		adminConversation = (GwtConversation) adminSession.createGwtConversation();
+		conversation.getNextData().clear();
+		conversationForAdmin = (GwtConversation) sessionForAdmin.createGwtConversation();
+		conversationForAdmin.getNextData().clear();
 	}
 
 	@Test
@@ -74,8 +84,10 @@ public class ScrumServiceImplTest extends Assert {
 	@Test
 	public void createExampleProject() {
 		service.onCreateExampleProject(conversation);
+		assertConversationWithoutErrors(conversation);
+		assertEquals(conversation.getNextData().getEntities().size(), 1);
 		Project project = getEntityByType(Project.class);
-		assertTrue(project.getLabel().startsWith("Example Project"));
+		assertStartsWith(project.getLabel(), "Example Project");
 		assertTrue(project.containsAdmin(duke));
 		assertTrue(project.containsParticipant(duke));
 		assertTrue(project.containsProductOwner(duke));
@@ -104,8 +116,55 @@ public class ScrumServiceImplTest extends Assert {
 		SystemMessage systemMessage = new SystemMessage();
 		systemMessage.setText("Alert!");
 		systemMessage.setActive(true);
-		service.onUpdateSystemMessage(adminConversation, systemMessage);
-		assertConversationWithoutErrors(adminConversation);
+		service.onUpdateSystemMessage(conversationForAdmin, systemMessage);
+		assertConversationWithoutErrors(conversationForAdmin);
+	}
+
+	@Test
+	public void setSelectedEntitysIds() {
+		Set<String> ids = Utl.toSet("1", "2");
+		service.onSetSelectedEntitysIds(conversation, ids);
+		assertConversationWithoutErrors(conversation);
+	}
+
+	@Test
+	public void resetPassword() {
+		service.onResetPassword(conversation, duke.getId());
+		assertConversationWithoutErrors(conversation);
+	}
+
+	@Test
+	public void requestNewPassword() {
+		duke.setPassword(scrum.client.admin.User.INITIAL_PASSWORD);
+		service.onRequestNewPassword(conversation, "duke");
+		assertConversationWithoutErrors(conversation);
+		assertFalse(duke.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD));
+	}
+
+	@Test
+	public void changePassword() {
+		duke.setPassword("geheim");
+		service.onChangePassword(conversation, "geheim", "supergeheim");
+	}
+
+	@Test(expectedExceptions = WrongPasswordException.class)
+	public void changePasswordFail() {
+		duke.setPassword("geheim");
+		service.onChangePassword(conversation, "wrong", "supergeheim");
+		assertConversationWithoutErrors(conversation);
+		assertTrue(duke.matchesPassword("supergeheim"));
+	}
+
+	@Test
+	public void createEntity() {
+		Map<String, Object> properties = new HashMap<String, Object>();
+		properties.put("id", UUID.randomUUID().toString());
+		properties.put("name", "anonymous");
+		service.onCreateEntity(conversation, "user", properties);
+		assertConversationWithoutErrors(conversation);
+		User anonymous = app.getUserDao().getUserByName("anonymous");
+		assertNotNull(anonymous);
+		app.getUserDao().deleteEntity(anonymous);
 	}
 
 	private <E extends AEntity> E getEntityByType(Class<E> type) {
