@@ -167,6 +167,16 @@ public class ScrumServiceImplTest extends ATest {
 		app.getUserDao().deleteEntity(anonymous);
 	}
 
+	@Test
+	public void deleteEntity() {
+		User anonymous = app.getUserDao().postUser("daemon");
+		service.onDeleteEntity(conversationForAdmin, anonymous.getId());
+		assertConversationWithoutErrors(conversationForAdmin);
+		assertNull(app.getUserDao().getUserByName("daemon"));
+	}
+
+	// --- helpers ---
+
 	private <E extends AEntity> E getEntityByType(Class<E> type) {
 		DataTransferObject dto = conversation.getNextData();
 		if (!dto.containsEntities()) return null;
@@ -180,7 +190,7 @@ public class ScrumServiceImplTest extends ATest {
 		return null;
 	}
 
-	private <E extends AEntity> E createEntity(Class<E> type, Map properties) {
+	private static <E extends AEntity> E createEntity(Class<E> type, Map properties) {
 		E entity;
 		try {
 			entity = type.newInstance();
@@ -193,13 +203,13 @@ public class ScrumServiceImplTest extends ATest {
 		return entity;
 	}
 
-	private void assertConversationError(GwtConversation conversation, String error) {
+	private static void assertConversationError(GwtConversation conversation, String error) {
 		List<String> errors = conversation.getNextData().getErrors();
 		assertTrue(errors != null && errors.contains(error),
 			"Conversation error not found: <" + error + "> in " + Str.format(errors));
 	}
 
-	private void assertConversationWithoutErrors(GwtConversation conversation) {
+	private static void assertConversationWithoutErrors(GwtConversation conversation) {
 		List<String> errors = conversation.getNextData().getErrors();
 		assertTrue(errors == null || errors.isEmpty(), "Conversation contains errors: " + Str.format(errors));
 	}
