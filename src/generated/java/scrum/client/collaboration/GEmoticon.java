@@ -125,6 +125,11 @@ public abstract class GEmoticon
     protected class EmotionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Emoticon_emotion";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getEmotion();
         }

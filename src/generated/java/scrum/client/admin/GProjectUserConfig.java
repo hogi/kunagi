@@ -127,6 +127,11 @@ public abstract class GProjectUserConfig
     protected class ColorModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "ProjectUserConfig_color";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getColor();
         }
@@ -173,6 +178,11 @@ public abstract class GProjectUserConfig
     protected MisconductsModel createMisconductsModel() { return new MisconductsModel(); }
 
     protected class MisconductsModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "ProjectUserConfig_misconducts";
+        }
 
         @Override
         public java.lang.Integer getValue() {

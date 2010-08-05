@@ -100,6 +100,11 @@ public abstract class GWikipage
     protected class NameModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Wikipage_name";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getName();
         }
@@ -149,6 +154,11 @@ public abstract class GWikipage
     protected TextModel createTextModel() { return new TextModel(); }
 
     protected class TextModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Wikipage_text";
+        }
 
         @Override
         public java.lang.String getValue() {

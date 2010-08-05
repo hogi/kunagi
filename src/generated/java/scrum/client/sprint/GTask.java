@@ -102,6 +102,11 @@ public abstract class GTask
     protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Task_number";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getNumber();
         }
@@ -160,6 +165,11 @@ public abstract class GTask
     protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Task_label";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLabel();
         }
@@ -216,6 +226,11 @@ public abstract class GTask
     protected class DescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Task_description";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getDescription();
         }
@@ -270,6 +285,11 @@ public abstract class GTask
     protected RemainingWorkModel createRemainingWorkModel() { return new RemainingWorkModel(); }
 
     protected class RemainingWorkModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "Task_remainingWork";
+        }
 
         @Override
         public java.lang.Integer getValue() {
@@ -333,6 +353,11 @@ public abstract class GTask
     protected BurnedWorkModel createBurnedWorkModel() { return new BurnedWorkModel(); }
 
     protected class BurnedWorkModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "Task_burnedWork";
+        }
 
         @Override
         public java.lang.Integer getValue() {

@@ -75,6 +75,11 @@ public abstract class GSystemConfig
     protected class UrlModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "SystemConfig_url";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getUrl();
         }
@@ -121,6 +126,11 @@ public abstract class GSystemConfig
     protected AdminEmailModel createAdminEmailModel() { return new AdminEmailModel(); }
 
     protected class AdminEmailModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_adminEmail";
+        }
 
         @Override
         public java.lang.String getValue() {
@@ -171,6 +181,11 @@ public abstract class GSystemConfig
     protected class GoogleAnalyticsIdModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "SystemConfig_googleAnalyticsId";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getGoogleAnalyticsId();
         }
@@ -217,6 +232,11 @@ public abstract class GSystemConfig
     protected SmtpServerModel createSmtpServerModel() { return new SmtpServerModel(); }
 
     protected class SmtpServerModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_smtpServer";
+        }
 
         @Override
         public java.lang.String getValue() {
@@ -267,6 +287,11 @@ public abstract class GSystemConfig
     protected class SmtpUserModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "SystemConfig_smtpUser";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getSmtpUser();
         }
@@ -313,6 +338,11 @@ public abstract class GSystemConfig
     protected SmtpPasswordModel createSmtpPasswordModel() { return new SmtpPasswordModel(); }
 
     protected class SmtpPasswordModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_smtpPassword";
+        }
 
         @Override
         public java.lang.String getValue() {
@@ -363,6 +393,11 @@ public abstract class GSystemConfig
     protected class SmtpFromModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "SystemConfig_smtpFrom";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getSmtpFrom();
         }
@@ -409,6 +444,11 @@ public abstract class GSystemConfig
     protected LoginPageMessageModel createLoginPageMessageModel() { return new LoginPageMessageModel(); }
 
     protected class LoginPageMessageModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_loginPageMessage";
+        }
 
         @Override
         public java.lang.String getValue() {
@@ -462,6 +502,11 @@ public abstract class GSystemConfig
     protected class RegisterPageMessageModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "SystemConfig_registerPageMessage";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getRegisterPageMessage();
         }
@@ -511,6 +556,11 @@ public abstract class GSystemConfig
     protected AboutPageMessageModel createAboutPageMessageModel() { return new AboutPageMessageModel(); }
 
     protected class AboutPageMessageModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_aboutPageMessage";
+        }
 
         @Override
         public java.lang.String getValue() {

@@ -76,6 +76,11 @@ public abstract class GUser
     protected class NameModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "User_name";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getName();
         }
@@ -166,6 +171,11 @@ public abstract class GUser
     protected class EmailModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "User_email";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getEmail();
         }
@@ -239,6 +249,11 @@ public abstract class GUser
     protected class ColorModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "User_color";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getColor();
         }
@@ -287,6 +302,11 @@ public abstract class GUser
     protected class LastLoginDateAndTimeModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
 
         @Override
+        public String getId() {
+            return "User_lastLoginDateAndTime";
+        }
+
+        @Override
         public ilarkesto.gwt.client.DateAndTime getValue() {
             return getLastLoginDateAndTime();
         }
@@ -333,6 +353,11 @@ public abstract class GUser
     protected RegistrationDateAndTimeModel createRegistrationDateAndTimeModel() { return new RegistrationDateAndTimeModel(); }
 
     protected class RegistrationDateAndTimeModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
+
+        @Override
+        public String getId() {
+            return "User_registrationDateAndTime";
+        }
 
         @Override
         public ilarkesto.gwt.client.DateAndTime getValue() {

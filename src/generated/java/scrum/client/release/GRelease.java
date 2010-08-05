@@ -153,6 +153,11 @@ public abstract class GRelease
     protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Release_number";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getNumber();
         }
@@ -214,6 +219,11 @@ public abstract class GRelease
     protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Release_label";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLabel();
         }
@@ -267,6 +277,11 @@ public abstract class GRelease
     protected class NoteModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Release_note";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getNote();
         }
@@ -318,6 +333,11 @@ public abstract class GRelease
     protected ReleaseDateModel createReleaseDateModel() { return new ReleaseDateModel(); }
 
     protected class ReleaseDateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public String getId() {
+            return "Release_releaseDate";
+        }
 
         @Override
         public ilarkesto.gwt.client.Date getValue() {
@@ -389,6 +409,11 @@ public abstract class GRelease
     protected class ReleaseNotesModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Release_releaseNotes";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getReleaseNotes();
         }
@@ -440,6 +465,11 @@ public abstract class GRelease
     protected ScmTagModel createScmTagModel() { return new ScmTagModel(); }
 
     protected class ScmTagModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Release_scmTag";
+        }
 
         @Override
         public java.lang.String getValue() {

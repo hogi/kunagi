@@ -127,6 +127,11 @@ public abstract class GRequirement
     protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Requirement_number";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getNumber();
         }
@@ -213,6 +218,11 @@ public abstract class GRequirement
     protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Requirement_label";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLabel();
         }
@@ -267,6 +277,11 @@ public abstract class GRequirement
     protected DescriptionModel createDescriptionModel() { return new DescriptionModel(); }
 
     protected class DescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Requirement_description";
+        }
 
         @Override
         public java.lang.String getValue() {
@@ -325,6 +340,11 @@ public abstract class GRequirement
     protected class TestDescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Requirement_testDescription";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getTestDescription();
         }
@@ -381,6 +401,11 @@ public abstract class GRequirement
     protected class EstimatedWorkModel extends ilarkesto.gwt.client.editor.AFloatEditorModel {
 
         @Override
+        public String getId() {
+            return "Requirement_estimatedWork";
+        }
+
+        @Override
         public java.lang.Float getValue() {
             return getEstimatedWork();
         }
@@ -429,6 +454,11 @@ public abstract class GRequirement
     protected RejectDateModel createRejectDateModel() { return new RejectDateModel(); }
 
     protected class RejectDateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public String getId() {
+            return "Requirement_rejectDate";
+        }
 
         @Override
         public ilarkesto.gwt.client.Date getValue() {

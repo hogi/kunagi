@@ -100,6 +100,11 @@ public abstract class GFile
     protected class FilenameModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "File_filename";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getFilename();
         }
@@ -152,6 +157,11 @@ public abstract class GFile
     protected UploadTimeModel createUploadTimeModel() { return new UploadTimeModel(); }
 
     protected class UploadTimeModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
+
+        @Override
+        public String getId() {
+            return "File_uploadTime";
+        }
 
         @Override
         public ilarkesto.gwt.client.DateAndTime getValue() {
@@ -208,6 +218,11 @@ public abstract class GFile
     protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "File_label";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLabel();
         }
@@ -259,6 +274,11 @@ public abstract class GFile
     protected NumberModel createNumberModel() { return new NumberModel(); }
 
     protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "File_number";
+        }
 
         @Override
         public java.lang.Integer getValue() {
@@ -320,6 +340,11 @@ public abstract class GFile
     protected NoteModel createNoteModel() { return new NoteModel(); }
 
     protected class NoteModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "File_note";
+        }
 
         @Override
         public java.lang.String getValue() {

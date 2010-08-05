@@ -102,6 +102,11 @@ public abstract class GRisk
     protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Risk_number";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getNumber();
         }
@@ -160,6 +165,11 @@ public abstract class GRisk
     protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Risk_label";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLabel();
         }
@@ -211,6 +221,11 @@ public abstract class GRisk
     protected DescriptionModel createDescriptionModel() { return new DescriptionModel(); }
 
     protected class DescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Risk_description";
+        }
 
         @Override
         public java.lang.String getValue() {
@@ -266,6 +281,11 @@ public abstract class GRisk
     protected class ProbabilityMitigationModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Risk_probabilityMitigation";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getProbabilityMitigation();
         }
@@ -317,6 +337,11 @@ public abstract class GRisk
     protected ImpactMitigationModel createImpactMitigationModel() { return new ImpactMitigationModel(); }
 
     protected class ImpactMitigationModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Risk_impactMitigation";
+        }
 
         @Override
         public java.lang.String getValue() {
@@ -372,6 +397,11 @@ public abstract class GRisk
     protected ProbabilityModel createProbabilityModel() { return new ProbabilityModel(); }
 
     protected class ProbabilityModel extends ilarkesto.gwt.client.editor.AOptionEditorModel<java.lang.Integer> {
+
+        @Override
+        public String getId() {
+            return "Risk_probability";
+        }
 
         @Override
         public java.lang.Integer getValue() {
@@ -432,6 +462,11 @@ public abstract class GRisk
     protected ImpactModel createImpactModel() { return new ImpactModel(); }
 
     protected class ImpactModel extends ilarkesto.gwt.client.editor.AOptionEditorModel<java.lang.Integer> {
+
+        @Override
+        public String getId() {
+            return "Risk_impact";
+        }
 
         @Override
         public java.lang.Integer getValue() {

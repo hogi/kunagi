@@ -125,6 +125,11 @@ public abstract class GChange
     protected class DateAndTimeModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
 
         @Override
+        public String getId() {
+            return "Change_dateAndTime";
+        }
+
+        @Override
         public ilarkesto.gwt.client.DateAndTime getValue() {
             return getDateAndTime();
         }
@@ -176,6 +181,11 @@ public abstract class GChange
     protected class KeyModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Change_key";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getKey();
         }
@@ -222,6 +232,11 @@ public abstract class GChange
     protected OldValueModel createOldValueModel() { return new OldValueModel(); }
 
     protected class OldValueModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Change_oldValue";
+        }
 
         @Override
         public java.lang.String getValue() {
@@ -272,6 +287,11 @@ public abstract class GChange
     protected class NewValueModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Change_newValue";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getNewValue();
         }
@@ -318,6 +338,11 @@ public abstract class GChange
     protected CommentModel createCommentModel() { return new CommentModel(); }
 
     protected class CommentModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Change_comment";
+        }
 
         @Override
         public java.lang.String getValue() {

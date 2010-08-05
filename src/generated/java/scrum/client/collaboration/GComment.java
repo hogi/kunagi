@@ -125,6 +125,11 @@ public abstract class GComment
     protected class TextModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Comment_text";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getText();
         }
@@ -177,6 +182,11 @@ public abstract class GComment
     protected DateAndTimeModel createDateAndTimeModel() { return new DateAndTimeModel(); }
 
     protected class DateAndTimeModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
+
+        @Override
+        public String getId() {
+            return "Comment_dateAndTime";
+        }
 
         @Override
         public ilarkesto.gwt.client.DateAndTime getValue() {

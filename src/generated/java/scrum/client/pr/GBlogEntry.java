@@ -100,6 +100,11 @@ public abstract class GBlogEntry
     protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "BlogEntry_number";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getNumber();
         }
@@ -189,6 +194,11 @@ public abstract class GBlogEntry
     protected class TitleModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "BlogEntry_title";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getTitle();
         }
@@ -242,6 +252,11 @@ public abstract class GBlogEntry
     protected class TextModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "BlogEntry_text";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getText();
         }
@@ -293,6 +308,11 @@ public abstract class GBlogEntry
     protected DateAndTimeModel createDateAndTimeModel() { return new DateAndTimeModel(); }
 
     protected class DateAndTimeModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
+
+        @Override
+        public String getId() {
+            return "BlogEntry_dateAndTime";
+        }
 
         @Override
         public ilarkesto.gwt.client.DateAndTime getValue() {

@@ -100,6 +100,11 @@ public abstract class GImpediment
     protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Impediment_number";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getNumber();
         }
@@ -158,6 +163,11 @@ public abstract class GImpediment
     protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Impediment_label";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLabel();
         }
@@ -209,6 +219,11 @@ public abstract class GImpediment
     protected DateModel createDateModel() { return new DateModel(); }
 
     protected class DateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public String getId() {
+            return "Impediment_date";
+        }
 
         @Override
         public ilarkesto.gwt.client.Date getValue() {
@@ -264,6 +279,11 @@ public abstract class GImpediment
     protected class DescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Impediment_description";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getDescription();
         }
@@ -315,6 +335,11 @@ public abstract class GImpediment
     protected SolutionModel createSolutionModel() { return new SolutionModel(); }
 
     protected class SolutionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Impediment_solution";
+        }
 
         @Override
         public java.lang.String getValue() {

@@ -100,6 +100,11 @@ public abstract class GIssue
     protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Issue_number";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getNumber();
         }
@@ -160,6 +165,11 @@ public abstract class GIssue
     protected class TypeModel extends ilarkesto.gwt.client.editor.AOptionEditorModel<java.lang.String> {
 
         @Override
+        public String getId() {
+            return "Issue_type";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getType();
         }
@@ -211,6 +221,11 @@ public abstract class GIssue
     protected DateModel createDateModel() { return new DateModel(); }
 
     protected class DateModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
+
+        @Override
+        public String getId() {
+            return "Issue_date";
+        }
 
         @Override
         public ilarkesto.gwt.client.DateAndTime getValue() {
@@ -289,6 +304,11 @@ public abstract class GIssue
     protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Issue_label";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLabel();
         }
@@ -340,6 +360,11 @@ public abstract class GIssue
     protected DescriptionModel createDescriptionModel() { return new DescriptionModel(); }
 
     protected class DescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Issue_description";
+        }
 
         @Override
         public java.lang.String getValue() {
@@ -395,6 +420,11 @@ public abstract class GIssue
     protected class StatementModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Issue_statement";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getStatement();
         }
@@ -448,6 +478,11 @@ public abstract class GIssue
     protected class IssuerNameModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Issue_issuerName";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getIssuerName();
         }
@@ -498,6 +533,11 @@ public abstract class GIssue
     protected class IssuerEmailModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Issue_issuerEmail";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getIssuerEmail();
         }
@@ -546,6 +586,11 @@ public abstract class GIssue
     protected AcceptDateModel createAcceptDateModel() { return new AcceptDateModel(); }
 
     protected class AcceptDateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public String getId() {
+            return "Issue_acceptDate";
+        }
 
         @Override
         public ilarkesto.gwt.client.Date getValue() {
@@ -615,6 +660,11 @@ public abstract class GIssue
     protected SeverityModel createSeverityModel() { return new SeverityModel(); }
 
     protected class SeverityModel extends ilarkesto.gwt.client.editor.AOptionEditorModel<java.lang.Integer> {
+
+        @Override
+        public String getId() {
+            return "Issue_severity";
+        }
 
         @Override
         public java.lang.Integer getValue() {
@@ -697,6 +747,11 @@ public abstract class GIssue
     protected class FixDateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
 
         @Override
+        public String getId() {
+            return "Issue_fixDate";
+        }
+
+        @Override
         public ilarkesto.gwt.client.Date getValue() {
             return getFixDate();
         }
@@ -745,6 +800,11 @@ public abstract class GIssue
     protected class CloseDateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
 
         @Override
+        public String getId() {
+            return "Issue_closeDate";
+        }
+
+        @Override
         public ilarkesto.gwt.client.Date getValue() {
             return getCloseDate();
         }
@@ -791,6 +851,11 @@ public abstract class GIssue
     protected SuspendedUntilDateModel createSuspendedUntilDateModel() { return new SuspendedUntilDateModel(); }
 
     protected class SuspendedUntilDateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public String getId() {
+            return "Issue_suspendedUntilDate";
+        }
 
         @Override
         public ilarkesto.gwt.client.Date getValue() {

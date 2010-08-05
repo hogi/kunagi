@@ -102,6 +102,11 @@ public abstract class GQuality
     protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Quality_number";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getNumber();
         }
@@ -160,6 +165,11 @@ public abstract class GQuality
     protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Quality_label";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLabel();
         }
@@ -216,6 +226,11 @@ public abstract class GQuality
     protected class DescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Quality_description";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getDescription();
         }
@@ -270,6 +285,11 @@ public abstract class GQuality
     protected TestDescriptionModel createTestDescriptionModel() { return new TestDescriptionModel(); }
 
     protected class TestDescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Quality_testDescription";
+        }
 
         @Override
         public java.lang.String getValue() {

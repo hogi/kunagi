@@ -78,6 +78,11 @@ public abstract class GProject
     protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Project_label";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLabel();
         }
@@ -131,6 +136,11 @@ public abstract class GProject
     protected class ShortDescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Project_shortDescription";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getShortDescription();
         }
@@ -177,6 +187,11 @@ public abstract class GProject
     protected DescriptionModel createDescriptionModel() { return new DescriptionModel(); }
 
     protected class DescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_description";
+        }
 
         @Override
         public java.lang.String getValue() {
@@ -232,6 +247,11 @@ public abstract class GProject
     protected class LongDescriptionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Project_longDescription";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLongDescription();
         }
@@ -283,6 +303,11 @@ public abstract class GProject
     protected class BeginModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
 
         @Override
+        public String getId() {
+            return "Project_begin";
+        }
+
+        @Override
         public ilarkesto.gwt.client.Date getValue() {
             return getBegin();
         }
@@ -329,6 +354,11 @@ public abstract class GProject
     protected EndModel createEndModel() { return new EndModel(); }
 
     protected class EndModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_end";
+        }
 
         @Override
         public ilarkesto.gwt.client.Date getValue() {
@@ -569,6 +599,11 @@ public abstract class GProject
     protected class VelocityModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Project_velocity";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getVelocity();
         }
@@ -657,6 +692,11 @@ public abstract class GProject
     protected class LastSprintNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Project_lastSprintNumber";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getLastSprintNumber();
         }
@@ -713,6 +753,11 @@ public abstract class GProject
     protected LastTaskNumberModel createLastTaskNumberModel() { return new LastTaskNumberModel(); }
 
     protected class LastTaskNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_lastTaskNumber";
+        }
 
         @Override
         public java.lang.Integer getValue() {
@@ -773,6 +818,11 @@ public abstract class GProject
     protected class LastRequirementNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Project_lastRequirementNumber";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getLastRequirementNumber();
         }
@@ -829,6 +879,11 @@ public abstract class GProject
     protected LastQualityNumberModel createLastQualityNumberModel() { return new LastQualityNumberModel(); }
 
     protected class LastQualityNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_lastQualityNumber";
+        }
 
         @Override
         public java.lang.Integer getValue() {
@@ -889,6 +944,11 @@ public abstract class GProject
     protected class LastRiskNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Project_lastRiskNumber";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getLastRiskNumber();
         }
@@ -945,6 +1005,11 @@ public abstract class GProject
     protected LastIssueNumberModel createLastIssueNumberModel() { return new LastIssueNumberModel(); }
 
     protected class LastIssueNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_lastIssueNumber";
+        }
 
         @Override
         public java.lang.Integer getValue() {
@@ -1005,6 +1070,11 @@ public abstract class GProject
     protected class LastImpedimentNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Project_lastImpedimentNumber";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getLastImpedimentNumber();
         }
@@ -1061,6 +1131,11 @@ public abstract class GProject
     protected LastFileNumberModel createLastFileNumberModel() { return new LastFileNumberModel(); }
 
     protected class LastFileNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_lastFileNumber";
+        }
 
         @Override
         public java.lang.Integer getValue() {
@@ -1121,6 +1196,11 @@ public abstract class GProject
     protected class LastSubjectNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Project_lastSubjectNumber";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getLastSubjectNumber();
         }
@@ -1177,6 +1257,11 @@ public abstract class GProject
     protected LastEventNumberModel createLastEventNumberModel() { return new LastEventNumberModel(); }
 
     protected class LastEventNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_lastEventNumber";
+        }
 
         @Override
         public java.lang.Integer getValue() {
@@ -1237,6 +1322,11 @@ public abstract class GProject
     protected class LastReleaseNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Project_lastReleaseNumber";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getLastReleaseNumber();
         }
@@ -1293,6 +1383,11 @@ public abstract class GProject
     protected LastBlogEntryNumberModel createLastBlogEntryNumberModel() { return new LastBlogEntryNumberModel(); }
 
     protected class LastBlogEntryNumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_lastBlogEntryNumber";
+        }
 
         @Override
         public java.lang.Integer getValue() {
@@ -1353,6 +1448,11 @@ public abstract class GProject
     protected class PunishmentFactorModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Project_punishmentFactor";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getPunishmentFactor();
         }
@@ -1411,6 +1511,11 @@ public abstract class GProject
     protected class PunishmentUnitModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Project_punishmentUnit";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getPunishmentUnit();
         }
@@ -1457,6 +1562,11 @@ public abstract class GProject
     protected HomepageDirModel createHomepageDirModel() { return new HomepageDirModel(); }
 
     protected class HomepageDirModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_homepageDir";
+        }
 
         @Override
         public java.lang.String getValue() {
@@ -1524,6 +1634,11 @@ public abstract class GProject
     protected LastOpenedDateAndTimeModel createLastOpenedDateAndTimeModel() { return new LastOpenedDateAndTimeModel(); }
 
     protected class LastOpenedDateAndTimeModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_lastOpenedDateAndTime";
+        }
 
         @Override
         public ilarkesto.gwt.client.DateAndTime getValue() {

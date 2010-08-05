@@ -100,6 +100,11 @@ public abstract class GSimpleEvent
     protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "SimpleEvent_label";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLabel();
         }
@@ -149,6 +154,11 @@ public abstract class GSimpleEvent
     protected NumberModel createNumberModel() { return new NumberModel(); }
 
     protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "SimpleEvent_number";
+        }
 
         @Override
         public java.lang.Integer getValue() {
@@ -212,6 +222,11 @@ public abstract class GSimpleEvent
     protected class DateModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
 
         @Override
+        public String getId() {
+            return "SimpleEvent_date";
+        }
+
+        @Override
         public ilarkesto.gwt.client.Date getValue() {
             return getDate();
         }
@@ -258,6 +273,11 @@ public abstract class GSimpleEvent
     protected TimeModel createTimeModel() { return new TimeModel(); }
 
     protected class TimeModel extends ilarkesto.gwt.client.editor.ATimeEditorModel {
+
+        @Override
+        public String getId() {
+            return "SimpleEvent_time";
+        }
 
         @Override
         public ilarkesto.gwt.client.Time getValue() {
@@ -308,6 +328,11 @@ public abstract class GSimpleEvent
     protected class LocationModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "SimpleEvent_location";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLocation();
         }
@@ -354,6 +379,11 @@ public abstract class GSimpleEvent
     protected DurationModel createDurationModel() { return new DurationModel(); }
 
     protected class DurationModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "SimpleEvent_duration";
+        }
 
         @Override
         public java.lang.Integer getValue() {
@@ -414,6 +444,11 @@ public abstract class GSimpleEvent
     protected class AgendaModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "SimpleEvent_agenda";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getAgenda();
         }
@@ -463,6 +498,11 @@ public abstract class GSimpleEvent
     protected NoteModel createNoteModel() { return new NoteModel(); }
 
     protected class NoteModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SimpleEvent_note";
+        }
 
         @Override
         public java.lang.String getValue() {

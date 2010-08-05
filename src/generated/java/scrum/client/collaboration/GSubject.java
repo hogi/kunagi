@@ -100,6 +100,11 @@ public abstract class GSubject
     protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Subject_label";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLabel();
         }
@@ -153,6 +158,11 @@ public abstract class GSubject
     protected class TextModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Subject_text";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getText();
         }
@@ -204,6 +214,11 @@ public abstract class GSubject
     protected NumberModel createNumberModel() { return new NumberModel(); }
 
     protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "Subject_number";
+        }
 
         @Override
         public java.lang.Integer getValue() {

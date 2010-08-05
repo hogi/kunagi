@@ -125,6 +125,11 @@ public abstract class GRequirementEstimationVote
     protected class EstimatedWorkModel extends ilarkesto.gwt.client.editor.AFloatEditorModel {
 
         @Override
+        public String getId() {
+            return "RequirementEstimationVote_estimatedWork";
+        }
+
+        @Override
         public java.lang.Float getValue() {
             return getEstimatedWork();
         }

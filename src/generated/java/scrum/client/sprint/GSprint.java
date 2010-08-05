@@ -85,6 +85,11 @@ public abstract class GSprint
     protected class NumberModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
 
         @Override
+        public String getId() {
+            return "Sprint_number";
+        }
+
+        @Override
         public java.lang.Integer getValue() {
             return getNumber();
         }
@@ -168,6 +173,11 @@ public abstract class GSprint
     protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Sprint_label";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLabel();
         }
@@ -224,6 +234,11 @@ public abstract class GSprint
     protected GoalModel createGoalModel() { return new GoalModel(); }
 
     protected class GoalModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Sprint_goal";
+        }
 
         @Override
         public java.lang.String getValue() {
@@ -285,6 +300,11 @@ public abstract class GSprint
     protected class BeginModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
 
         @Override
+        public String getId() {
+            return "Sprint_begin";
+        }
+
+        @Override
         public ilarkesto.gwt.client.Date getValue() {
             return getBegin();
         }
@@ -336,6 +356,11 @@ public abstract class GSprint
     protected EndModel createEndModel() { return new EndModel(); }
 
     protected class EndModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public String getId() {
+            return "Sprint_end";
+        }
 
         @Override
         public ilarkesto.gwt.client.Date getValue() {
@@ -391,6 +416,11 @@ public abstract class GSprint
     protected class VelocityModel extends ilarkesto.gwt.client.editor.AFloatEditorModel {
 
         @Override
+        public String getId() {
+            return "Sprint_velocity";
+        }
+
+        @Override
         public java.lang.Float getValue() {
             return getVelocity();
         }
@@ -437,6 +467,11 @@ public abstract class GSprint
     protected CompletedRequirementLabelsModel createCompletedRequirementLabelsModel() { return new CompletedRequirementLabelsModel(); }
 
     protected class CompletedRequirementLabelsModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Sprint_completedRequirementLabels";
+        }
 
         @Override
         public java.lang.String getValue() {
@@ -490,6 +525,11 @@ public abstract class GSprint
     protected PlanningNoteModel createPlanningNoteModel() { return new PlanningNoteModel(); }
 
     protected class PlanningNoteModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Sprint_planningNote";
+        }
 
         @Override
         public java.lang.String getValue() {
@@ -553,6 +593,11 @@ public abstract class GSprint
     protected class ReviewNoteModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "Sprint_reviewNote";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getReviewNote();
         }
@@ -612,6 +657,11 @@ public abstract class GSprint
     protected RetrospectiveNoteModel createRetrospectiveNoteModel() { return new RetrospectiveNoteModel(); }
 
     protected class RetrospectiveNoteModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Sprint_retrospectiveNote";
+        }
 
         @Override
         public java.lang.String getValue() {

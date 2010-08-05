@@ -102,6 +102,11 @@ public abstract class GProjectEvent
     protected class LabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
 
         @Override
+        public String getId() {
+            return "ProjectEvent_label";
+        }
+
+        @Override
         public java.lang.String getValue() {
             return getLabel();
         }
@@ -154,6 +159,11 @@ public abstract class GProjectEvent
     protected DateAndTimeModel createDateAndTimeModel() { return new DateAndTimeModel(); }
 
     protected class DateAndTimeModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
+
+        @Override
+        public String getId() {
+            return "ProjectEvent_dateAndTime";
+        }
 
         @Override
         public ilarkesto.gwt.client.DateAndTime getValue() {
