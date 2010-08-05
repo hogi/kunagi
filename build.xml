@@ -145,7 +145,11 @@
         </exec>
     </target>
 
-    <target name="continousIntegrationBuild" depends="deploy" />
+	<target name="clean-runtimedata">
+        <deltree dir="runtimedata"/>
+	</target>
+	
+    <target name="continousIntegrationBuild" depends="clean-runtimedata,deploy" />
 
     <target name="continousIntegrationRelease" depends="release" />
 
