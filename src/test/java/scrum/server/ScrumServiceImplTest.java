@@ -4,9 +4,11 @@ import ilarkesto.auth.WrongPasswordException;
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
+import ilarkesto.base.time.Date;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.testng.ATest;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -214,11 +216,47 @@ public class ScrumServiceImplTest extends ATest {
 
 	@Test
 	public void requestForum() {
+		app.getSubjectDao().newEntityInstance().setProject(project);
+		app.getCommentDao().newEntityInstance().setParent(project);
 		service.onRequestForum(conversation);
 		assertConversationWithoutErrors(conversation);
+		assertContainsEntities(conversation, project.getSubjects());
+		assertContainsEntities(conversation, project.getLatestComments());
+	}
+
+	@Test
+	public void requestImpediments() {
+		app.getImpedimentDao().postImpediment(project, Date.today(), "Test", false);
+		service.onRequestImpediments(conversation);
+		assertConversationWithoutErrors(conversation);
+		assertContainsEntities(conversation, project.getImpediments());
+	}
+
+	@Test
+	public void requestRisks() {
+		app.getRiskDao().postRisk(project, "Test", 1, 1);
+		service.onRequestRisks(conversation);
+		assertConversationWithoutErrors(conversation);
+		assertContainsEntities(conversation, project.getRisks());
 	}
 
 	// --- helpers ---
+
+	private static void assertContainsEntities(GwtConversation conversation, Collection<? extends AEntity> entities) {
+		DataTransferObject dto = conversation.getNextData();
+		for (AEntity entity : entities) {
+			assertContainsEntity(conversation, entity);
+		}
+	}
+
+	private static void assertContainsEntity(GwtConversation conversation, AEntity entity) {
+		DataTransferObject dto = conversation.getNextData();
+		assertTrue(dto.containsEntities());
+		for (Map properties : dto.getEntities()) {
+			if (entity.getId().equals(properties.get("id"))) return;
+		}
+		fail("Conversation does not contain <" + entity + ">.");
+	}
 
 	private static <E extends AEntity> E getEntityByType(GwtConversation conversation, Class<E> type) {
 		DataTransferObject dto = conversation.getNextData();

@@ -549,6 +549,61 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	public void onRequestImpediments(GwtConversation conversation) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		conversation.sendToClient(project.getImpediments());
+	}
+
+	@Override
+	public void onRequestRisks(GwtConversation conversation) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		conversation.sendToClient(project.getRisks());
+	}
+
+	@Override
+	public void onRequestAcceptedIssues(GwtConversation conversation) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		conversation.sendToClient(project.getAcceptedIssues());
+	}
+
+	@Override
+	public void onRequestClosedIssues(GwtConversation conversation) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		conversation.sendToClient(project.getClosedIssues());
+	}
+
+	@Override
+	public void onRequestEntity(GwtConversation conversation, String entityId) {
+		assertProjectSelected(conversation);
+
+		try {
+			AEntity entity = getDaoService().getById(entityId);
+			if (!Auth.isVisible(entity, conversation.getSession().getUser())) throw new PermissionDeniedException();
+			// TODO check if entity is from project
+			conversation.sendToClient(entity);
+		} catch (EntityDoesNotExistException ex) {
+			// nop
+		}
+	}
+
+	@Override
+	public void onRequestEntityByReference(GwtConversation conversation, String reference) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+
+		AEntity entity = project.getEntityByReference(reference);
+		if (entity == null) {
+			LOG.info("Requested entity not found:", reference);
+		} else {
+			conversation.sendToClient(entity);
+		}
+	}
+
+	@Override
 	public void onActivateRequirementEstimationVoting(GwtConversation conversation, String requirementId) {
 		Requirement requirement = requirementDao.getById(requirementId);
 		if (requirement == null || !requirement.isProject(conversation.getProject()))
@@ -594,62 +649,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Requirement requirement = requirementDao.getById(requirementId);
 		if (!requirement.isProject(project)) throw new PermissionDeniedException();
 		conversation.sendToClient(requirement.getEstimationVotes());
-	}
-
-	@Override
-	public void onRequestImpediments(GwtConversation conversation) {
-		assertProjectSelected(conversation);
-		Project project = conversation.getProject();
-		conversation.sendToClient(project.getImpediments());
-	}
-
-	@Override
-	public void onRequestAcceptedIssues(GwtConversation conversation) {
-		assertProjectSelected(conversation);
-		Project project = conversation.getProject();
-		conversation.sendToClient(project.getAcceptedIssues());
-	}
-
-	@Override
-	public void onRequestClosedIssues(GwtConversation conversation) {
-		assertProjectSelected(conversation);
-		Project project = conversation.getProject();
-		conversation.sendToClient(project.getClosedIssues());
-	}
-
-	@Override
-	public void onRequestRisks(GwtConversation conversation) {
-		assertProjectSelected(conversation);
-		Project project = conversation.getProject();
-		conversation.sendToClient(project.getRisks());
-	}
-
-	@Override
-	public void onRequestEntity(GwtConversation conversation, String entityId) {
-		assertProjectSelected(conversation);
-		Project project = conversation.getProject();
-
-		try {
-			AEntity entity = getDaoService().getById(entityId);
-			if (!Auth.isVisible(entity, conversation.getSession().getUser())) throw new PermissionDeniedException();
-			// TODO check if entity is from project
-			conversation.sendToClient(entity);
-		} catch (EntityDoesNotExistException ex) {
-			// nop
-		}
-	}
-
-	@Override
-	public void onRequestEntityByReference(GwtConversation conversation, String reference) {
-		assertProjectSelected(conversation);
-		Project project = conversation.getProject();
-
-		AEntity entity = project.getEntityByReference(reference);
-		if (entity == null) {
-			LOG.info("Requested entity not found:", reference);
-		} else {
-			conversation.sendToClient(entity);
-		}
 	}
 
 	@Override
