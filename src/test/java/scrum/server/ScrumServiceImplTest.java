@@ -1,5 +1,6 @@
 package scrum.server;
 
+import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Str;
 import ilarkesto.persistence.AEntity;
 
@@ -13,6 +14,7 @@ import org.testng.annotations.Test;
 
 import scrum.TestUtil;
 import scrum.client.DataTransferObject;
+import scrum.client.admin.SystemMessage;
 import scrum.server.admin.User;
 import scrum.server.project.Project;
 
@@ -21,8 +23,11 @@ public class ScrumServiceImplTest extends Assert {
 	ScrumWebApplication app;
 	ScrumServiceImpl service;
 	WebSession session;
+	WebSession adminSession;
 	GwtConversation conversation;
+	GwtConversation adminConversation;
 	User duke;
+	User admin;
 
 	@BeforeTest
 	public void init() {
@@ -32,29 +37,38 @@ public class ScrumServiceImplTest extends Assert {
 		duke = app.getUserDao().getUserByName("duke");
 		if (duke == null) duke = app.getUserDao().postUser("duke", "geheim");
 
+		admin = app.getUserDao().getUserByName("admin");
+		if (admin == null) {
+			admin = app.getUserDao().postUser("admin", "geheim");
+			admin.setAdmin(true);
+		}
+
 		service = new ScrumServiceImpl();
 		app.autowire(service);
 
 		session = (WebSession) app.createWebSession(null);
 		session.setUser(duke);
 
+		adminSession = (WebSession) app.createWebSession(null);
+		adminSession.setUser(admin);
 	}
 
 	@BeforeMethod
 	public void initConversation() {
 		conversation = (GwtConversation) session.createGwtConversation();
+		adminConversation = (GwtConversation) adminSession.createGwtConversation();
 	}
 
 	@Test
 	public void loginFail() {
 		service.onLogin(conversation, "duke", "bad password");
-		assertConversationError("Login failed.");
+		assertConversationError(conversation, "Login failed.");
 	}
 
 	@Test
 	public void loginSuccess() {
 		service.onLogin(conversation, "duke", "geheim");
-		assertConversationWithoutErrors();
+		assertConversationWithoutErrors(conversation);
 	}
 
 	@Test
@@ -67,6 +81,31 @@ public class ScrumServiceImplTest extends Assert {
 		assertTrue(project.containsProductOwner(duke));
 		assertTrue(project.containsScrumMaster(duke));
 		assertTrue(project.containsTeamMember(duke));
+		app.getProjectDao().deleteEntity(project);
+	}
+
+	@Test
+	public void search() {
+		service.onSearch(conversation, "something");
+		assertConversationWithoutErrors(conversation);
+	}
+
+	@Test(expectedExceptions = PermissionDeniedException.class)
+	public void updateSystemMessage() {
+		SystemMessage systemMessage = new SystemMessage();
+		systemMessage.setText("Alert!");
+		systemMessage.setActive(true);
+		service.onUpdateSystemMessage(conversation, systemMessage);
+		assertConversationWithoutErrors(conversation);
+	}
+
+	@Test
+	public void updateSystemMessageAdmin() {
+		SystemMessage systemMessage = new SystemMessage();
+		systemMessage.setText("Alert!");
+		systemMessage.setActive(true);
+		service.onUpdateSystemMessage(adminConversation, systemMessage);
+		assertConversationWithoutErrors(adminConversation);
 	}
 
 	private <E extends AEntity> E getEntityByType(Class<E> type) {
@@ -95,14 +134,15 @@ public class ScrumServiceImplTest extends Assert {
 		return entity;
 	}
 
-	private void assertConversationError(String error) {
+	private void assertConversationError(GwtConversation conversation, String error) {
 		List<String> errors = conversation.getNextData().getErrors();
 		assertTrue(errors != null && errors.contains(error),
 			"Conversation error not found: <" + error + "> in " + Str.format(errors));
 	}
 
-	private void assertConversationWithoutErrors() {
+	private void assertConversationWithoutErrors(GwtConversation conversation) {
 		List<String> errors = conversation.getNextData().getErrors();
 		assertTrue(errors == null || errors.isEmpty(), "Conversation contains errors: " + Str.format(errors));
 	}
+
 }
