@@ -146,7 +146,7 @@
     </target>
 
 	<target name="clean-runtimedata">
-        <deltree dir="runtimedata"/>
+		<delete dir="runtimedata" />
 	</target>
 	
     <target name="continousIntegrationBuild" depends="clean-runtimedata,deploy" />
