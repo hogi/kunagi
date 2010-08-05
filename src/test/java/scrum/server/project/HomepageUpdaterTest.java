@@ -23,7 +23,7 @@ public class HomepageUpdaterTest {
 
 	@BeforeClass
 	public void createProject() {
-		project = TestUtil.createProject();
+		project = TestUtil.createProject(TestUtil.getDuke());
 	}
 
 	@Test

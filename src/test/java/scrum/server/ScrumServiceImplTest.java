@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -42,16 +43,8 @@ public class ScrumServiceImplTest extends ATest {
 		TestUtil.initialize();
 		app = TestUtil.getApp();
 
-		admin = app.getUserDao().getUserByName("admin");
-		if (admin == null) {
-			admin = app.getUserDao().postUser("admin");
-			admin.setAdmin(true);
-		}
-
-		duke = app.getUserDao().getUserByName("duke");
-		if (duke == null) duke = app.getUserDao().postUser("duke");
-		duke.setEmail("duke@kunagi.org");
-		duke.setEmailVerified(true);
+		admin = TestUtil.getAdmin();
+		duke = TestUtil.getDuke();
 
 		service = new ScrumServiceImpl();
 		service.setWebApplication(app);
@@ -63,12 +56,10 @@ public class ScrumServiceImplTest extends ATest {
 		sessionForAdmin = (WebSession) app.createWebSession(null);
 		sessionForAdmin.setUser(admin);
 
-		project = TestUtil.createProject();
+		project = TestUtil.createProject(duke);
 		project.addAdmin(admin);
-		project.addParticipant(duke);
-		project.addProductOwner(duke);
-		project.addScrumMaster(duke);
-		project.addTeamMember(duke);
+
+		app.getTransactionService().commit();
 	}
 
 	@BeforeMethod
@@ -79,6 +70,11 @@ public class ScrumServiceImplTest extends ATest {
 
 		conversationForAdmin = (GwtConversation) sessionForAdmin.createGwtConversation();
 		conversationForAdmin.getNextData().clear();
+	}
+
+	@AfterMethod
+	public void commit() {
+		app.getTransactionService().commit();
 	}
 
 	@Test

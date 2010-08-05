@@ -36,6 +36,23 @@ public class TestUtil {
 
 	}
 
+	public static User getDuke() {
+		User duke = app.getUserDao().getUserByName("duke");
+		if (duke == null) duke = app.getUserDao().postUser("duke");
+		duke.setEmail("duke@kunagi.org");
+		duke.setEmailVerified(true);
+		return duke;
+	}
+
+	public static User getAdmin() {
+		User admin = app.getUserDao().getUserByName("admin");
+		if (admin == null) {
+			admin = app.getUserDao().postUser("admin");
+			admin.setAdmin(true);
+		}
+		return admin;
+	}
+
 	public static Task createTask(Requirement requirement, int number, int work) {
 		return createTask(requirement, number, Str.generateRandomSentence(2, 6), work);
 	}
@@ -176,11 +193,15 @@ public class TestUtil {
 	}
 
 	public static Project createProject() {
-		return createProject(Str.generateRandomWord(5, 10, true));
+		return createProject(getDuke());
 	}
 
-	public static Project createProject(String label) {
-		Project project = app.getProjectDao().newEntityInstance();
+	public static Project createProject(User admin) {
+		return createProject(admin, Str.generateRandomWord(5, 10, true));
+	}
+
+	public static Project createProject(User admin, String label) {
+		Project project = app.getProjectDao().postProject(admin);
 		project.setLabel(label);
 		project.setShortDescription(Str.generateRandomSentence(4, 4));
 		project.setDescription(Str.generateRandomParagraph());

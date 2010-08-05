@@ -25,7 +25,7 @@ public class PdfTest {
 
 	@Test
 	public void calendar() {
-		Project project = TestUtil.createProject();
+		Project project = TestUtil.createProject(TestUtil.getDuke());
 
 		TestUtil.createSimpleEvent(project, 0);
 		TestUtil.createSimpleEvent(project, 10);
