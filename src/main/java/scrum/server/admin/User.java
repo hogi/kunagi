@@ -4,15 +4,11 @@ import ilarkesto.base.Crypt;
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.core.logging.Log;
-import ilarkesto.email.Eml;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-
-import javax.mail.Session;
-import javax.mail.internet.MimeMessage;
 
 import scrum.server.ScrumWebApplication;
 import scrum.server.project.Project;
@@ -72,28 +68,19 @@ public class User extends GUser {
 
 	public void triggerPasswordReset() {
 		String urlBase = webApplication.getBaseUrl();
-		SystemConfig config = webApplication.getSystemConfig();
-		String smtpServer = config.getSmtpServer();
-		if (smtpServer == null) {
-			throw new RuntimeException("SMTP server not set in System Configuration");
-		} else {
-			String newPassword = Str.generatePassword(8);
-			StringBuilder sb = new StringBuilder();
-			sb.append("An admin created a new password for your Kunagi account on ").append(urlBase).append("\n");
-			sb.append("\n");
-			sb.append("Email: ").append(getEmail()).append("\n");
-			sb.append("Password: ").append(newPassword).append("\n");
-			sb.append("\n");
-			sb.append("You sould change this password, since somebody else could read this email.");
 
-			Session session = Eml.createSmtpSession(smtpServer, config.getSmtpUser(), config.getSmtpPassword());
-			MimeMessage message = Eml.createTextMessage(session, "Kunagi password", sb.toString(),
-				config.getSmtpFrom(), getEmail());
-			Eml.sendSmtpMessage(session, message);
+		String newPassword = Str.generatePassword(8);
+		setPassword(newPassword);
+		log.info("Password changed for", this);
 
-			setPassword(newPassword);
-			log.info("Password changed for", this);
-		}
+		StringBuilder sb = new StringBuilder();
+		sb.append("An admin created a new password for your Kunagi account on ").append(urlBase).append("\n");
+		sb.append("\n");
+		sb.append("Email: ").append(getEmail()).append("\n");
+		sb.append("Password: ").append(newPassword).append("\n");
+		sb.append("\n");
+		sb.append("You sould change this password, since somebody else could read this email.");
+		webApplication.sendEmail(null, getEmail(), "Kunagi password", sb.toString());
 	}
 
 	@Override
