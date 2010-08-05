@@ -1,9 +1,11 @@
 package scrum;
 
 import ilarkesto.base.Str;
+import ilarkesto.base.Sys;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.base.time.Time;
+import ilarkesto.core.logging.Log;
 import scrum.server.ScrumWebApplication;
 import scrum.server.admin.User;
 import scrum.server.calendar.SimpleEvent;
@@ -25,6 +27,9 @@ public class TestUtil {
 	public static void initialize() {
 		if (initialized) return;
 		initialized = true;
+
+		Log.setDebugEnabled(true);
+		Sys.setHeadless(true);
 
 		app = new ScrumWebApplication();
 		app.start();

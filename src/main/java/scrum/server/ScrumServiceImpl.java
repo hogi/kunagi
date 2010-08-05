@@ -111,6 +111,39 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	// --- ---
 
+	private void onStartConversation(GwtConversation conversation) {
+		conversation.clearRemoteEntities();
+		conversation.getNextData().applicationInfo = webApplication.getApplicationInfo();
+		conversation.sendToClient(webApplication.getSystemConfig());
+	}
+
+	@Override
+	public void onLogin(GwtConversation conversation, String username, String password) {
+		username = username.toLowerCase();
+		conversation.clearRemoteEntities();
+		User user = null;
+		if (username.contains("@")) {
+			user = userDao.getUserByEmail(username);
+		}
+		if (user == null) {
+			user = userDao.getUserByName(username);
+		}
+
+		if (user == null || user.matchesPassword(password) == false) {
+			conversation.getNextData().addError("Login failed.");
+			return;
+		}
+
+		if (user.isDisabled()) {
+			conversation.getNextData().addError("User is disabled.");
+			return;
+		}
+
+		user.setLastLoginDateAndTime(DateAndTime.now());
+		conversation.getSession().setUser(user);
+		conversation.sendUserScopeDataToClient(user);
+	}
+
 	@Override
 	public void onCreateExampleProject(GwtConversation conversation) {
 		User user = conversation.getSession().getUser();
@@ -132,12 +165,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		User user = conversation.getSession().getUser();
 		if (user == null || user.isAdmin() == false) throw new PermissionDeniedException();
 		webApplication.updateSystemMessage(systemMessage);
-	}
-
-	private void onStartConversation(GwtConversation conversation) {
-		conversation.clearRemoteEntities();
-		conversation.getNextData().applicationInfo = webApplication.getApplicationInfo();
-		conversation.sendToClient(webApplication.getSystemConfig());
 	}
 
 	@Override
@@ -473,33 +500,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 
 		sendToOtherConversationsByProject(conversation, entity);
-	}
-
-	@Override
-	public void onLogin(GwtConversation conversation, String username, String password) {
-		username = username.toLowerCase();
-		conversation.clearRemoteEntities();
-		User user = null;
-		if (username.contains("@")) {
-			user = userDao.getUserByEmail(username);
-		}
-		if (user == null) {
-			user = userDao.getUserByName(username);
-		}
-
-		if (user == null || user.matchesPassword(password) == false) {
-			conversation.getNextData().addError("Login failed.");
-			return;
-		}
-
-		if (user.isDisabled()) {
-			conversation.getNextData().addError("User is disabled.");
-			return;
-		}
-
-		user.setLastLoginDateAndTime(DateAndTime.now());
-		conversation.getSession().setUser(user);
-		conversation.sendUserScopeDataToClient(user);
 	}
 
 	@Override

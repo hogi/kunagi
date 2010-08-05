@@ -1,9 +1,7 @@
 package scrum.server.project;
 
 import ilarkesto.base.Str;
-import ilarkesto.base.Sys;
 import ilarkesto.base.time.Date;
-import ilarkesto.core.logging.Log;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -19,9 +17,7 @@ public class HomepageUpdaterTest {
 	Project project;
 
 	@BeforeSuite
-	public void init() {
-		Log.setDebugEnabled(true);
-		Sys.setHeadless(true);
+	public void initglobal() {
 		TestUtil.initialize();
 	}
 
