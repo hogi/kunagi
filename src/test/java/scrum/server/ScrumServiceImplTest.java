@@ -33,6 +33,7 @@ public class ScrumServiceImplTest extends ATest {
 	GwtConversation conversation;
 	User admin;
 	User duke;
+	Project project;
 
 	@BeforeTest
 	public void init() {
@@ -59,12 +60,21 @@ public class ScrumServiceImplTest extends ATest {
 
 		sessionForAdmin = (WebSession) app.createWebSession(null);
 		sessionForAdmin.setUser(admin);
+
+		project = TestUtil.createProject();
+		project.addAdmin(admin);
+		project.addParticipant(duke);
+		project.addProductOwner(duke);
+		project.addScrumMaster(duke);
+		project.addTeamMember(duke);
 	}
 
 	@BeforeMethod
 	public void initConversations() {
 		conversation = (GwtConversation) session.createGwtConversation();
 		conversation.getNextData().clear();
+		conversation.setProject(project);
+
 		conversationForAdmin = (GwtConversation) sessionForAdmin.createGwtConversation();
 		conversationForAdmin.getNextData().clear();
 	}
@@ -87,7 +97,7 @@ public class ScrumServiceImplTest extends ATest {
 		service.onCreateExampleProject(conversation);
 		assertConversationWithoutErrors(conversation);
 		assertEquals(conversation.getNextData().getEntities().size(), 1);
-		Project project = getEntityByType(Project.class);
+		Project project = getEntityByType(conversation, Project.class);
 		assertStartsWith(project.getLabel(), "Example Project");
 		assertTrue(project.containsAdmin(duke));
 		assertTrue(project.containsParticipant(duke));
@@ -176,15 +186,47 @@ public class ScrumServiceImplTest extends ATest {
 		assertNull(app.getUserDao().getUserByName("daemon"));
 	}
 
+	@Test
+	public void changeProperties() {
+		duke.setEmail("support@kunagi.org");
+		Map<String, Object> properties = new HashMap<String, Object>();
+		properties.put("email", "duke@kunagi.org");
+		service.onChangeProperties(conversation, duke.getId(), properties);
+		assertConversationWithoutErrors(conversation);
+		assertEquals(duke.getEmail(), "duke@kunagi.org");
+	}
+
+	@Test
+	public void selectProject() {
+		conversation.setProject(null);
+		service.onSelectProject(conversation, project.getId());
+		assertConversationWithoutErrors(conversation);
+		assertSame(conversation.getProject(), project);
+		assertSame(duke.getCurrentProject(), project);
+	}
+
+	@Test
+	public void closeProject() {
+		service.onCloseProject(conversation);
+		assertConversationWithoutErrors(conversation);
+		assertNull(conversation.getProject());
+	}
+
+	@Test
+	public void requestForum() {
+		service.onRequestForum(conversation);
+		assertConversationWithoutErrors(conversation);
+	}
+
 	// --- helpers ---
 
-	private <E extends AEntity> E getEntityByType(Class<E> type) {
+	private static <E extends AEntity> E getEntityByType(GwtConversation conversation, Class<E> type) {
 		DataTransferObject dto = conversation.getNextData();
 		if (!dto.containsEntities()) return null;
 		for (Map entity : dto.getEntities()) {
 			if (type.getSimpleName().toLowerCase().equals(entity.get("@type"))) {
 				String id = (String) entity.get("id");
-				E e = (E) app.getDaoService().getEntityById(id);
+				E e = (E) TestUtil.getApp().getDaoService().getEntityById(id);
 				return e;
 			}
 		}

@@ -322,17 +322,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 	}
 
-	private void postChangeIfChanged(GwtConversation conversation, AEntity entity, Map properties, User user,
-			String property) {
-		if (properties.containsKey(property)) {
-			boolean reference = property.endsWith("Id");
-			Object oldValue = Reflect.getProperty(entity, property);
-			Object newValue = properties.get(property);
-			Change change = changeDao.postChange(entity, user, property, oldValue, newValue);
-			conversation.sendToClient(change);
-		}
-	}
-
 	@Override
 	public void onChangeProperties(GwtConversation conversation, String entityId, Map properties) {
 		AEntity entity = getDaoService().getEntityById(entityId);
@@ -539,6 +528,15 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	public void onCloseProject(GwtConversation conversation) {
+		Project project = conversation.getProject();
+		if (project != null) webApplication.setUsersSelectedEntities(project, conversation, new HashSet<String>(0));
+		conversation.clearRemoteEntities();
+		conversation.setProject(null);
+		if (project != null) webApplication.updateOnlineTeamMembers(project, conversation);
+	}
+
+	@Override
 	public void onRequestForum(GwtConversation conversation) {
 		Project project = conversation.getProject();
 		Set<AEntity> parents = new HashSet<AEntity>();
@@ -548,15 +546,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			parents.add(comment.getParent());
 		}
 		conversation.sendToClient(parents);
-	}
-
-	@Override
-	public void onCloseProject(GwtConversation conversation) {
-		Project project = conversation.getProject();
-		if (project != null) webApplication.setUsersSelectedEntities(project, conversation, new HashSet<String>(0));
-		conversation.clearRemoteEntities();
-		conversation.setProject(null);
-		if (project != null) webApplication.updateOnlineTeamMembers(project, conversation);
 	}
 
 	@Override
@@ -718,6 +707,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Utl.sleep(millis);
 	}
 
+	// --- helper ---
+
+	@Override
 	public DataTransferObject startConversation(int conversationNumber) {
 		LOG.debug("startConversation");
 		WebSession session = (WebSession) getSession();
@@ -736,7 +728,16 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		return ret;
 	}
 
-	// --- helper ---
+	private void postChangeIfChanged(GwtConversation conversation, AEntity entity, Map properties, User user,
+			String property) {
+		if (properties.containsKey(property)) {
+			boolean reference = property.endsWith("Id");
+			Object oldValue = Reflect.getProperty(entity, property);
+			Object newValue = properties.get(property);
+			Change change = changeDao.postChange(entity, user, property, oldValue, newValue);
+			conversation.sendToClient(change);
+		}
+	}
 
 	private void postProjectEvent(GwtConversation conversation, String label) {
 		assertProjectSelected(conversation);
