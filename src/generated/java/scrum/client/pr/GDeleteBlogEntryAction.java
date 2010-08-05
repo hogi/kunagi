@@ -31,7 +31,7 @@ public abstract class GDeleteBlogEntryAction
 
     @Override
     public String getId() {
-        return ilarkesto.core.base.Str.getSimpleName(getClass()) + ' ' + ilarkesto.core.base.Str.toHtmlId(blogEntry);
+        return ilarkesto.core.base.Str.getSimpleName(getClass()) + '_' + ilarkesto.core.base.Str.toHtmlId(blogEntry);
     }
 
 }

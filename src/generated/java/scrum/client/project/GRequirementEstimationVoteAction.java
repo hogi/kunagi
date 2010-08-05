@@ -33,7 +33,7 @@ public abstract class GRequirementEstimationVoteAction
 
     @Override
     public String getId() {
-        return ilarkesto.core.base.Str.getSimpleName(getClass()) + ' ' + ilarkesto.core.base.Str.toHtmlId(requirement, estimatedWork);
+        return ilarkesto.core.base.Str.getSimpleName(getClass()) + '_' + ilarkesto.core.base.Str.toHtmlId(requirement, estimatedWork);
     }
 
 }

@@ -31,7 +31,7 @@ public abstract class GFixRequirementAction
 
     @Override
     public String getId() {
-        return ilarkesto.core.base.Str.getSimpleName(getClass()) + ' ' + ilarkesto.core.base.Str.toHtmlId(requirement);
+        return ilarkesto.core.base.Str.getSimpleName(getClass()) + '_' + ilarkesto.core.base.Str.toHtmlId(requirement);
     }
 
 }

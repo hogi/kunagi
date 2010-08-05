@@ -31,7 +31,7 @@ public abstract class GDeleteSubjectAction
 
     @Override
     public String getId() {
-        return ilarkesto.core.base.Str.getSimpleName(getClass()) + ' ' + ilarkesto.core.base.Str.toHtmlId(subject);
+        return ilarkesto.core.base.Str.getSimpleName(getClass()) + '_' + ilarkesto.core.base.Str.toHtmlId(subject);
     }
 
 }

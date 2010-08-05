@@ -31,7 +31,7 @@ public abstract class GConfirmUserEmailAction
 
     @Override
     public String getId() {
-        return ilarkesto.core.base.Str.getSimpleName(getClass()) + ' ' + ilarkesto.core.base.Str.toHtmlId(user);
+        return ilarkesto.core.base.Str.getSimpleName(getClass()) + '_' + ilarkesto.core.base.Str.toHtmlId(user);
     }
 
 }
