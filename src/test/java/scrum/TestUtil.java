@@ -28,7 +28,7 @@ public class TestUtil {
 		if (initialized) return;
 		initialized = true;
 
-		Log.setDebugEnabled(true);
+		Log.setDebugEnabled(false);
 		Sys.setHeadless(true);
 
 		app = new ScrumWebApplication();

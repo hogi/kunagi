@@ -64,7 +64,7 @@
 
     <target name="test" depends="clean, compile-test">
         <taskdef name="testng" classpath="../ilarkesto/lib/testng-5.8.jar" classname="org.testng.TestNGAntTask" />
-        <testng outputDir="build/test-output" verbose="2" failureProperty="test.failed">
+        <testng outputDir="build/test-reports" haltonfailure="true">
             <classfileset dir="build/test-classes" includes="**/*.class" />
             <classpath>
                 <path location="build/webapp/WEB-INF/classes" />
@@ -72,7 +72,6 @@
                 <fileset dir="../ilarkesto/lib" />
             </classpath>
         </testng>
-        <fail message="Test failed! Check test reports." if="test.failed" />
     </target>
 
     <target name="webapp" depends="compile, test">

@@ -62,7 +62,7 @@ public class ScrumServiceImplTest extends ATest {
 	}
 
 	@BeforeMethod
-	public void initConversation() {
+	public void initConversations() {
 		conversation = (GwtConversation) session.createGwtConversation();
 		conversation.getNextData().clear();
 		conversationForAdmin = (GwtConversation) sessionForAdmin.createGwtConversation();
@@ -77,6 +77,7 @@ public class ScrumServiceImplTest extends ATest {
 
 	@Test
 	public void loginSuccess() {
+		duke.setPassword("geheim");
 		service.onLogin(conversation, "duke", "geheim");
 		assertConversationWithoutErrors(conversation);
 	}
