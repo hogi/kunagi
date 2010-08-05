@@ -3,7 +3,10 @@ package scrum.server.project;
 import ilarkesto.base.Str;
 import ilarkesto.base.Sys;
 import ilarkesto.base.time.Date;
+import ilarkesto.core.logging.Log;
 
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
@@ -13,15 +16,22 @@ import scrum.server.sprint.Sprint;
 
 public class HomepageUpdaterTest {
 
+	Project project;
+
 	@BeforeSuite
 	public void init() {
+		Log.setDebugEnabled(true);
 		Sys.setHeadless(true);
+		TestUtil.initialize();
+	}
+
+	@BeforeClass
+	public void createProject() {
+		project = TestUtil.createProject();
 	}
 
 	@Test
 	public void updateHomepage() {
-		Project project = TestUtil.createProject();
-
 		Sprint sprint = TestUtil.createSprint(project, Date.inDays(15));
 		project.setCurrentSprint(sprint);
 		sprint.setLabel(Str.generateRandomSentence(2, 4));
@@ -61,6 +71,11 @@ public class HomepageUpdaterTest {
 		sprint.burndownTasksRandomly(sprint.getBegin(), Date.today().addDays(-1));
 
 		HomepageUpdater.updateHomepage("src/projectHomepage/velocity", "test-output/homepage", project);
+	}
+
+	@AfterClass
+	public void cleanup() {
+		if (project != null) TestUtil.getApp().getProjectDao().deleteEntity(project);
 	}
 
 }

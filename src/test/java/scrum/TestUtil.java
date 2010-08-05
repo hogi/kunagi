@@ -4,140 +4,31 @@ import ilarkesto.base.Str;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.base.time.Time;
-import ilarkesto.core.logging.Log;
-import ilarkesto.persistence.DaoService;
-import ilarkesto.persistence.EntityStore;
-import ilarkesto.persistence.FileEntityStore;
-import ilarkesto.persistence.TransactionService;
+import scrum.server.ScrumWebApplication;
 import scrum.server.admin.User;
-import scrum.server.admin.UserDao;
 import scrum.server.calendar.SimpleEvent;
-import scrum.server.calendar.SimpleEventDao;
 import scrum.server.collaboration.Wikipage;
-import scrum.server.collaboration.WikipageDao;
 import scrum.server.impediments.Impediment;
-import scrum.server.impediments.ImpedimentDao;
 import scrum.server.issues.Issue;
-import scrum.server.issues.IssueDao;
 import scrum.server.pr.BlogEntry;
-import scrum.server.pr.BlogEntryDao;
 import scrum.server.project.Project;
-import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
-import scrum.server.project.RequirementDao;
-import scrum.server.release.Release;
-import scrum.server.release.ReleaseDao;
 import scrum.server.risks.Risk;
-import scrum.server.risks.RiskDao;
 import scrum.server.sprint.Sprint;
-import scrum.server.sprint.SprintDao;
-import scrum.server.sprint.SprintDaySnapshot;
-import scrum.server.sprint.SprintDaySnapshotDao;
 import scrum.server.sprint.Task;
-import scrum.server.sprint.TaskDao;
 
 public class TestUtil {
 
 	private static boolean initialized;
+	private static ScrumWebApplication app;
 
-	private static EntityStore entityStore;
-	private static TransactionService transactionService;
-	private static DaoService daoService;
-	private static SprintDaySnapshotDao sprintDaySnapshotDao;
-	private static RequirementDao requirementDao;
-	private static ProjectDao projectDao;
-	private static SprintDao sprintDao;
-	private static ImpedimentDao impedimentDao;
-	private static RiskDao riskDao;
-	private static SimpleEventDao simpleEventDao;
-	private static WikipageDao wikipageDao;
-	private static BlogEntryDao blogEntryDao;
-	private static IssueDao issueDao;
-	private static UserDao userDao;
-	private static TaskDao taskDao;
-	private static ReleaseDao releaseDao;
-
-	private static void initialize() {
+	public static void initialize() {
 		if (initialized) return;
 		initialized = true;
 
-		Log.setDebugEnabled(true);
+		app = new ScrumWebApplication();
+		app.start();
 
-		entityStore = new FileEntityStore();
-
-		transactionService = new TransactionService();
-		transactionService.setEntityStore(entityStore);
-
-		daoService = new DaoService();
-
-		userDao = new UserDao();
-		userDao.setTransactionService(transactionService);
-		User.setUserDao(userDao);
-		Sprint.setUserDao(userDao);
-
-		releaseDao = new ReleaseDao();
-		releaseDao.setTransactionService(transactionService);
-		Release.setReleaseDao(releaseDao);
-		Project.setReleaseDao(releaseDao);
-
-		taskDao = new TaskDao();
-		taskDao.setTransactionService(transactionService);
-		Task.setTaskDao(taskDao);
-		Sprint.setTaskDao(taskDao);
-		Project.setTaskDao(taskDao);
-
-		wikipageDao = new WikipageDao();
-		wikipageDao.setTransactionService(transactionService);
-		Wikipage.setWikipageDao(wikipageDao);
-		Project.setWikipageDao(wikipageDao);
-
-		simpleEventDao = new SimpleEventDao();
-		simpleEventDao.setTransactionService(transactionService);
-		SimpleEvent.setSimpleEventDao(simpleEventDao);
-		Project.setSimpleEventDao(simpleEventDao);
-
-		riskDao = new RiskDao();
-		riskDao.setTransactionService(transactionService);
-		Risk.setRiskDao(riskDao);
-		Project.setRiskDao(riskDao);
-
-		impedimentDao = new ImpedimentDao();
-		impedimentDao.setTransactionService(transactionService);
-		Impediment.setImpedimentDao(impedimentDao);
-		Project.setImpedimentDao(impedimentDao);
-
-		requirementDao = new RequirementDao();
-		requirementDao.setTransactionService(transactionService);
-		Requirement.setRequirementDao(requirementDao);
-		Sprint.setRequirementDao(requirementDao);
-		Project.setRequirementDao(requirementDao);
-
-		sprintDaySnapshotDao = new SprintDaySnapshotDao();
-		sprintDaySnapshotDao.setTransactionService(transactionService);
-		sprintDaySnapshotDao.setDaoService(daoService);
-		SprintDaySnapshot.setSprintDaySnapshotDao(sprintDaySnapshotDao);
-		Sprint.setSprintDaySnapshotDao(sprintDaySnapshotDao);
-		Project.setSprintDaySnapshotDao(sprintDaySnapshotDao);
-
-		sprintDao = new SprintDao();
-		sprintDao.setTransactionService(transactionService);
-		Sprint.setSprintDao(sprintDao);
-		SprintDaySnapshot.setSprintDao(sprintDao);
-		Project.setSprintDao(sprintDao);
-
-		blogEntryDao = new BlogEntryDao();
-		blogEntryDao.setTransactionService(transactionService);
-		BlogEntry.setBlogEntryDao(blogEntryDao);
-		Project.setBlogEntryDao(blogEntryDao);
-
-		issueDao = new IssueDao();
-		issueDao.setTransactionService(transactionService);
-		Issue.setIssueDao(issueDao);
-		Project.setIssueDao(issueDao);
-
-		projectDao = new ProjectDao();
-		projectDao.setTransactionService(transactionService);
-		Project.setProjectDao(projectDao);
 	}
 
 	public static Task createTask(Requirement requirement, int number, int work) {
@@ -145,8 +36,7 @@ public class TestUtil {
 	}
 
 	public static Task createTask(Requirement requirement, int number, String label, int work) {
-		initialize();
-		Task task = taskDao.newEntityInstance();
+		Task task = app.getTaskDao().newEntityInstance();
 		task.setRequirement(requirement);
 		task.setNumber(number);
 		task.setLabel(label);
@@ -155,8 +45,7 @@ public class TestUtil {
 	}
 
 	public static User createUser(String name) {
-		initialize();
-		User user = userDao.newEntityInstance();
+		User user = app.getUserDao().newEntityInstance();
 		user.setName(name);
 		return user;
 	}
@@ -167,8 +56,7 @@ public class TestUtil {
 	}
 
 	public static Issue createIssue(Project project, int number, String label, String description, String statement) {
-		initialize();
-		Issue issue = issueDao.newEntityInstance();
+		Issue issue = app.getIssueDao().newEntityInstance();
 		issue.setProject(project);
 		issue.setNumber(number);
 		issue.setLabel(label);
@@ -186,8 +74,7 @@ public class TestUtil {
 	}
 
 	public static Wikipage createWikipage(Project project, String name, String text) {
-		initialize();
-		Wikipage wikipage = wikipageDao.newEntityInstance();
+		Wikipage wikipage = app.getWikipageDao().newEntityInstance();
 		wikipage.setProject(project);
 		wikipage.setName(name);
 		wikipage.setText(text);
@@ -200,8 +87,7 @@ public class TestUtil {
 	}
 
 	public static SimpleEvent createSimpleEvent(Project project, Date date, String label, String location, String note) {
-		initialize();
-		SimpleEvent event = simpleEventDao.newEntityInstance();
+		SimpleEvent event = app.getSimpleEventDao().newEntityInstance();
 		event.setProject(project);
 		event.setDate(date);
 		event.setLabel(label);
@@ -215,8 +101,7 @@ public class TestUtil {
 	}
 
 	public static Risk createRisk(Project project, int number, String label, String description) {
-		initialize();
-		Risk risk = riskDao.newEntityInstance();
+		Risk risk = app.getRiskDao().newEntityInstance();
 		risk.setProject(project);
 		risk.setNumber(number);
 		risk.setLabel(label);
@@ -232,8 +117,7 @@ public class TestUtil {
 	}
 
 	public static Impediment createImpediment(Project project, Date date, int number, String label, String description) {
-		initialize();
-		Impediment impediment = impedimentDao.newEntityInstance();
+		Impediment impediment = app.getImpedimentDao().newEntityInstance();
 		impediment.setProject(project);
 		impediment.setDate(date);
 		impediment.setNumber(number);
@@ -249,8 +133,7 @@ public class TestUtil {
 
 	public static BlogEntry createBlogEntry(Project project, int number, String title, String text,
 			DateAndTime dateAndTime) {
-		initialize();
-		BlogEntry entry = blogEntryDao.newEntityInstance();
+		BlogEntry entry = app.getBlogEntryDao().newEntityInstance();
 		entry.setProject(project);
 		entry.setNumber(number);
 		entry.setTitle(title);
@@ -265,8 +148,7 @@ public class TestUtil {
 	}
 
 	public static Requirement createRequirement(Project project, int number, String label, String description) {
-		initialize();
-		Requirement requirement = requirementDao.newEntityInstance();
+		Requirement requirement = app.getRequirementDao().newEntityInstance();
 		requirement.setProject(project);
 		requirement.setNumber(number);
 		requirement.setLabel(label);
@@ -279,8 +161,7 @@ public class TestUtil {
 	}
 
 	public static Sprint createSprint(Project project, Date begin, Date end) {
-		initialize();
-		Sprint sprint = sprintDao.newEntityInstance();
+		Sprint sprint = app.getSprintDao().newEntityInstance();
 		sprint.setProject(project);
 		sprint.setBegin(begin);
 		sprint.setEnd(end);
@@ -294,13 +175,16 @@ public class TestUtil {
 	}
 
 	public static Project createProject(String label) {
-		initialize();
-		Project project = projectDao.newEntityInstance();
+		Project project = app.getProjectDao().newEntityInstance();
 		project.setLabel(label);
 		project.setShortDescription(Str.generateRandomSentence(4, 4));
 		project.setDescription(Str.generateRandomParagraph());
 		project.setLongDescription(Str.generateRandomParagraphs(5, null, null, "\n\n"));
 		return project;
+	}
+
+	public static ScrumWebApplication getApp() {
+		return app;
 	}
 
 }
