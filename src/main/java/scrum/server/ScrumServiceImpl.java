@@ -577,6 +577,15 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	public void onRequestReleaseIssues(GwtConversation conversation, String releaseId) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		Release release = releaseDao.getById(releaseId);
+		if (!release.isProject(project)) throw new PermissionDeniedException();
+		conversation.sendToClient(release.getIssues());
+	}
+
+	@Override
 	public void onRequestEntity(GwtConversation conversation, String entityId) {
 		assertProjectSelected(conversation);
 
@@ -601,6 +610,25 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		} else {
 			conversation.sendToClient(entity);
 		}
+	}
+
+	@Override
+	public void onRequestComments(GwtConversation conversation, String parentId) {
+		conversation.sendToClient(commentDao.getCommentsByParentId(parentId));
+	}
+
+	@Override
+	public void onRequestChanges(GwtConversation conversation, String parentId) {
+		conversation.sendToClient(changeDao.getChangesByParentId(parentId));
+	}
+
+	@Override
+	public void onRequestRequirementEstimationVotes(GwtConversation conversation, String requirementId) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		Requirement requirement = requirementDao.getById(requirementId);
+		if (!requirement.isProject(project)) throw new PermissionDeniedException();
+		conversation.sendToClient(requirement.getEstimationVotes());
 	}
 
 	@Override
@@ -634,38 +662,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	public void onRequestReleaseIssues(GwtConversation conversation, String releaseId) {
-		assertProjectSelected(conversation);
-		Project project = conversation.getProject();
-		Release release = releaseDao.getById(releaseId);
-		if (!release.isProject(project)) throw new PermissionDeniedException();
-		conversation.sendToClient(release.getIssues());
-	}
-
-	@Override
-	public void onRequestRequirementEstimationVotes(GwtConversation conversation, String requirementId) {
-		assertProjectSelected(conversation);
-		Project project = conversation.getProject();
-		Requirement requirement = requirementDao.getById(requirementId);
-		if (!requirement.isProject(project)) throw new PermissionDeniedException();
-		conversation.sendToClient(requirement.getEstimationVotes());
-	}
-
-	@Override
 	public void onUpdateProjectHomepage(GwtConversation conversation) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
 		HomepageUpdater.updateHomepage(project);
-	}
-
-	@Override
-	public void onRequestComments(GwtConversation conversation, String parentId) {
-		conversation.sendToClient(commentDao.getCommentsByParentId(parentId));
-	}
-
-	@Override
-	public void onRequestChanges(GwtConversation conversation, String parentId) {
-		conversation.sendToClient(changeDao.getChangesByParentId(parentId));
 	}
 
 	@Override

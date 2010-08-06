@@ -24,7 +24,14 @@ import scrum.TestUtil;
 import scrum.client.DataTransferObject;
 import scrum.client.admin.SystemMessage;
 import scrum.server.admin.User;
+import scrum.server.collaboration.Comment;
+import scrum.server.estimation.RequirementEstimationVote;
+import scrum.server.issues.Issue;
+import scrum.server.journal.Change;
 import scrum.server.project.Project;
+import scrum.server.project.Requirement;
+import scrum.server.release.Release;
+import scrum.server.sprint.Sprint;
 
 public class ScrumServiceImplTest extends ATest {
 
@@ -64,6 +71,7 @@ public class ScrumServiceImplTest extends ATest {
 
 	@BeforeMethod
 	public void initConversations() {
+		session.setUser(duke);
 		conversation = (GwtConversation) session.createGwtConversation();
 		conversation.getNextData().clear();
 		conversation.setProject(project);
@@ -236,6 +244,122 @@ public class ScrumServiceImplTest extends ATest {
 		assertContainsEntities(conversation, project.getRisks());
 	}
 
+	@Test
+	public void requestAcceptedIssues() {
+		Issue spam = app.getIssueDao().postIssue(project, "spam");
+		Issue bug = app.getIssueDao().postIssue(project, "bug");
+		bug.setAcceptDate(Date.today());
+		service.onRequestAcceptedIssues(conversation);
+		assertConversationWithoutErrors(conversation);
+		assertContainsEntities(conversation, project.getAcceptedIssues());
+		assertContainsEntity(conversation, bug);
+		assertNotContainsEntity(conversation, spam);
+	}
+
+	@Test
+	public void requestClosedIssues() {
+		Issue spam = app.getIssueDao().postIssue(project, "spam");
+		Issue bug = app.getIssueDao().postIssue(project, "bug");
+		bug.setAcceptDate(Date.today());
+		bug.setCloseDate(Date.today());
+		service.onRequestClosedIssues(conversation);
+		assertConversationWithoutErrors(conversation);
+		assertContainsEntities(conversation, project.getClosedIssues());
+		assertContainsEntity(conversation, bug);
+		assertNotContainsEntity(conversation, spam);
+	}
+
+	@Test
+	public void requestReleaseIssues() {
+		Release release = app.getReleaseDao().newEntityInstance();
+		release.setProject(project);
+		Issue bug = app.getIssueDao().postIssue(project, "bug");
+		bug.setAcceptDate(Date.today());
+		bug.addAffectedRelease(release);
+		service.onRequestReleaseIssues(conversation, release.getId());
+		assertConversationWithoutErrors(conversation);
+		assertContainsEntity(conversation, bug);
+	}
+
+	@Test
+	public void requestEntity() {
+		Issue problem = app.getIssueDao().postIssue(project, "problem");
+		service.onRequestEntity(conversation, problem.getId());
+		assertConversationWithoutErrors(conversation);
+		assertContainsEntity(conversation, problem);
+	}
+
+	@Test
+	public void requestEntityByReference() {
+		Issue problem = app.getIssueDao().postIssue(project, "problem");
+		service.onRequestEntityByReference(conversation, problem.getReference());
+		assertConversationWithoutErrors(conversation);
+		assertContainsEntity(conversation, problem);
+	}
+
+	@Test
+	public void requestComments() {
+		Comment comment = app.getCommentDao().newEntityInstance();
+		comment.setParent(project);
+		service.onRequestComments(conversation, project.getId());
+		assertConversationWithoutErrors(conversation);
+		assertContainsEntities(conversation, app.getCommentDao().getCommentsByParent(project));
+		assertContainsEntity(conversation, comment);
+	}
+
+	@Test
+	public void requestChanges() {
+		Change change = app.getChangeDao().postChange(project, duke, "dummy", "olddummy", "newdummy");
+		service.onRequestChanges(conversation, project.getId());
+		assertConversationWithoutErrors(conversation);
+		assertContainsEntities(conversation, app.getChangeDao().getChangesByParent(project));
+		assertContainsEntity(conversation, change);
+	}
+
+	@Test
+	public void requestRequirementEstimationVotes() {
+		Requirement requirement = app.getRequirementDao().postRequirement(project, "new feature", 2f);
+		RequirementEstimationVote vote = app.getRequirementEstimationVoteDao().postVote(requirement, duke);
+		service.onRequestRequirementEstimationVotes(conversation, requirement.getId());
+		assertConversationWithoutErrors(conversation);
+		assertContainsEntities(conversation, requirement.getEstimationVotes());
+		assertContainsEntity(conversation, vote);
+	}
+
+	@Test
+	public void activateRequirementEstimationVoting() {
+		Requirement requirement = app.getRequirementDao().postRequirement(project, "new feature", 2f);
+		requirement.setWorkEstimationVotingActive(false);
+		service.onActivateRequirementEstimationVoting(conversation, requirement.getId());
+		assertConversationWithoutErrors(conversation);
+		assertTrue(requirement.isWorkEstimationVotingActive());
+	}
+
+	@Test
+	public void switchToNextSprint() {
+		Sprint currentSprint = project.getCurrentSprint();
+		Sprint nextSprint = project.getNextSprint();
+		service.onSwitchToNextSprint(conversation);
+		assertConversationWithoutErrors(conversation);
+		assertNotSame(project.getCurrentSprint(), currentSprint);
+		assertNotSame(project.getNextSprint(), nextSprint);
+		assertEquals(project.getCurrentSprint(), nextSprint);
+	}
+
+	@Test
+	public void register() {
+		User charlie = app.getUserDao().getUserByName("charlie");
+		if (charlie != null) {
+			app.getUserDao().deleteEntity(charlie);
+			app.getTransactionService().commit();
+		}
+		service.onRegister(conversation, "charlie", "charlie@kunagi.org", "geheim");
+		assertConversationWithoutErrors(conversation);
+		charlie = app.getUserDao().getUserByName("charlie");
+		assertNotNull(charlie);
+		assertSame(conversation.getSession().getUser(), charlie);
+	}
+
 	// --- helpers ---
 
 	private static void assertContainsEntities(GwtConversation conversation, Collection<? extends AEntity> entities) {
@@ -252,6 +376,14 @@ public class ScrumServiceImplTest extends ATest {
 			if (entity.getId().equals(properties.get("id"))) return;
 		}
 		fail("Conversation does not contain <" + entity + ">.");
+	}
+
+	private static void assertNotContainsEntity(GwtConversation conversation, AEntity entity) {
+		DataTransferObject dto = conversation.getNextData();
+		assertTrue(dto.containsEntities());
+		for (Map properties : dto.getEntities()) {
+			if (entity.getId().equals(properties.get("id"))) fail("Conversation does contain <" + entity + ">.");
+		}
 	}
 
 	private static <E extends AEntity> E getEntityByType(GwtConversation conversation, Class<E> type) {

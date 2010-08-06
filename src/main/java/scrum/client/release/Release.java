@@ -24,7 +24,6 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 	public static final String REFERENCE_PREFIX = "rel";
 
 	public Release(Project project) {
-		setLabel("Next Release");
 		setProject(project);
 	}
 

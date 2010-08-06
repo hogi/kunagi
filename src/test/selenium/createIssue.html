@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="" />
-<title>createStory</title>
+<title>createIssue</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">createStory</td></tr>
+<tr><td rowspan="1" colspan="3">createIssue</td></tr>
 </thead><tbody>
 <tr>
 	<td>click</td>
@@ -18,38 +18,33 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Product Backlog</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>ProductBacklogWidget</td>
+	<td>link=Issues</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>button_CreateRequirementAction</td>
+	<td>button_CreateIssueAction</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='editor_Requirement_label']</td>
-	<td>test story</td>
+	<td>editor_Issue_label</td>
+	<td>test issue</td>
 </tr>
 <tr>
 	<td>keyPress</td>
-	<td>//input[@id='editor_Requirement_label']</td>
+	<td>editor_Issue_label</td>
 	<td>13</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='viewer_Requirement_description']/div</td>
+	<td>//div[@id='viewer_Issue_description']/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div[@id='editor_Requirement_description']/textarea</td>
-	<td>story description</td>
+	<td>//div[@id='editor_Issue_description']/textarea</td>
+	<td>test description</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -58,13 +53,13 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='viewer_Requirement_testDescription']/div</td>
+	<td>//div[@id='viewer_Issue_statement']/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div[@id='editor_Requirement_testDescription']/textarea</td>
-	<td>story acceptance tests</td>
+	<td>//div[@id='editor_Issue_statement']/textarea</td>
+	<td>test statement</td>
 </tr>
 <tr>
 	<td>click</td>
