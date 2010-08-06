@@ -61,13 +61,13 @@ public class IssueManagementWidget extends AScrumWidget {
 		inboxPage.addSection(openList);
 
 		PagePanel documentationPage = new PagePanel();
-		documentationPage.addSection(new UserGuideWidget(getCurrentProject().getImpediments().size() < 15,
-				getLocalizer().views().impediments()));
+		documentationPage.addSection(new UserGuideWidget(getCurrentProject().getIssues().size() < 15, getLocalizer()
+				.views().issues()));
 
-		return Gwt.createFlowPanel(inboxPage, Gwt.createSpacer(1, 10),
-			PagePanel.createSimple("bugs (Team needs to fix this)", bugList), Gwt.createSpacer(1, 10),
-			PagePanel.createSimple("ideas (Product owner needs to create stories)", ideaList), Gwt.createSpacer(1, 10),
-			createClosedPage(), Gwt.createSpacer(1, 10), documentationPage);
+		return Gwt.createFlowPanel(inboxPage, Gwt.createSpacer(1, 10), PagePanel.createSimple(
+			"bugs (Team needs to fix this)", bugList), Gwt.createSpacer(1, 10), PagePanel.createSimple(
+			"ideas (Product owner needs to create stories)", ideaList), Gwt.createSpacer(1, 10), createClosedPage(),
+			Gwt.createSpacer(1, 10), documentationPage);
 	}
 
 	private Widget createClosedPage() {
