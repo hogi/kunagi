@@ -162,7 +162,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if (getConfig().isDeleteOldProjects())
 			tm.scheduleWithFixedDelay(autowire(new DeleteOldProjectsTask()), Tm.SECOND, Tm.HOUR * 25);
 		if (getConfig().isDeleteDisabledUsers())
-			tm.scheduleWithFixedDelay(autowire(new DeleteDisabledUsersTask()), Tm.SECOND * 30, Tm.HOUR * 26);
+			tm.scheduleWithFixedDelay(autowire(new DeleteDisabledUsersTask()), Tm.MINUTE * 3, Tm.HOUR * 26);
 	}
 
 	@Override
