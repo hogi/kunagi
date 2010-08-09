@@ -357,7 +357,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".UserGuideWidget").color(cUserguide).background(cUserguideBackground).border(1, cUserguideBorder)
 				.borderRadius(10);
 		css.style(".UserGuideWidget-header").padding(7);
-		css.style(".UserGuideWidget-content").margin(0, 7, 7, 7).paddingTop(7).borderTop(1, cUserguideBorder);
+		css.style(".UserGuideWidget-content").margin(0, 7, 7, 7).paddingTop(7).borderTop(1, cUserguideBorder)
+				.columnWidth(290).columnGap(10);
 	}
 
 	private void comments(CssRenderer css) {
