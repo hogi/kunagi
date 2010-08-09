@@ -158,7 +158,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	protected void scheduleTasks(TaskManager tm) {
 		tm.scheduleWithFixedDelay(autowire(new DestroyTimeoutedSessionsTask()), Tm.MINUTE);
 		tm.scheduleWithFixedDelay(autowire(new HomepageUpdaterTask()), Tm.HOUR);
-		tm.scheduleWithFixedDelay(autowire(new DisableUsersWithUnverifiedEmailsTask()), Tm.HOUR);
+		if (getConfig().isDisableUsersWithUnverifiedEmails())
+			tm.scheduleWithFixedDelay(autowire(new DisableUsersWithUnverifiedEmailsTask()), Tm.HOUR);
 		if (getConfig().isDeleteOldProjects())
 			tm.scheduleWithFixedDelay(autowire(new DeleteOldProjectsTask()), Tm.SECOND, Tm.HOUR * 25);
 		if (getConfig().isDeleteDisabledUsers())

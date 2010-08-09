@@ -33,6 +33,7 @@ public class DisableUsersWithUnverifiedEmailsTask extends ACollectionTask<User> 
 	@Override
 	protected void perform(User user) throws InterruptedException {
 		if (user.isDisabled()) return;
+		if (user.isAdmin()) return;
 		if (user.isEmailVerificationOverdue()) {
 			log.warn("Disabling user:", user);
 			user.setDisabled(true);
