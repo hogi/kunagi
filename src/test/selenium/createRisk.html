@@ -4,51 +4,51 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="" />
-<title>createRelease</title>
+<title>createRisk</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">createRelease</td></tr>
+<tr><td rowspan="1" colspan="3">createRisk</td></tr>
 </thead><tbody>
 <tr>
 	<td>click</td>
-	<td>link=Product</td>
+	<td>link=Project</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Releases</td>
+	<td>link=Risks</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>ReleaseManagementWidget</td>
+	<td>RiskListWidget</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>button_CreateReleaseAction</td>
+	<td>button_CreateRiskAction</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>editor_Release_label</td>
-	<td>test release</td>
+	<td>editor_Risk_label</td>
+	<td>test risk</td>
 </tr>
 <tr>
 	<td>keyPress</td>
-	<td>editor_Release_label</td>
+	<td>editor_Risk_label</td>
 	<td>13</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='viewer_Release_note']/div</td>
+	<td>//div[@id='viewer_Risk_description']/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div[@id='editor_Release_note']/textarea</td>
+	<td>//div[@id='editor_Risk_description']/textarea</td>
 	<td>test description</td>
 </tr>
 <tr>
@@ -58,13 +58,33 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='viewer_Release_releaseNotes']/div</td>
+	<td>//div[@id='viewer_Risk_impact']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>editor_Risk_impact</td>
+	<td>label=extreme</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='viewer_Risk_probability']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>editor_Risk_probability</td>
+	<td>label=possible</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='viewer_Risk_impactMitigation']/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div[@id='editor_Release_releaseNotes']/textarea</td>
-	<td>test release notes</td>
+	<td>//div[@id='editor_Risk_impactMitigation']/textarea</td>
+	<td>test impact mitigation</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -73,18 +93,18 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='viewer_Release_scmTag']/div</td>
+	<td>//div[@id='viewer_Risk_probabilityMitigation']/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>editor_Release_scmTag</td>
-	<td>testTag</td>
+	<td>//div[@id='editor_Risk_probabilityMitigation']/textarea</td>
+	<td>test probability mitigation</td>
 </tr>
 <tr>
-	<td>keyPress</td>
-	<td>editor_Release_scmTag</td>
-	<td>13</td>
+	<td>click</td>
+	<td>button_RichtextEditorWidget_1</td>
+	<td></td>
 </tr>
 
 </tbody></table>

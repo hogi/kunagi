@@ -4,51 +4,61 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="" />
-<title>createRelease</title>
+<title>createImpediment</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">createRelease</td></tr>
+<tr><td rowspan="1" colspan="3">createImpediment</td></tr>
 </thead><tbody>
 <tr>
 	<td>click</td>
-	<td>link=Product</td>
+	<td>link=Project</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Releases</td>
+	<td>link=Impediments</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>ReleaseManagementWidget</td>
+	<td>ImpedimentListWidget</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>button_CreateReleaseAction</td>
+	<td>button_CreateImpedimentAction</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>editor_Release_label</td>
-	<td>test release</td>
+	<td>editor_Impediment_label</td>
+	<td>test impediment</td>
 </tr>
 <tr>
 	<td>keyPress</td>
-	<td>editor_Release_label</td>
+	<td>editor_Impediment_label</td>
 	<td>13</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='viewer_Release_note']/div</td>
+	<td>//div[@id='viewer_Impediment_date']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//table[@id='editor_Impediment_date']/tbody/tr[2]/td/table/tbody/tr[4]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='viewer_Impediment_description']/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div[@id='editor_Release_note']/textarea</td>
+	<td>//div[@id='editor_Impediment_description']/textarea</td>
 	<td>test description</td>
 </tr>
 <tr>
@@ -58,33 +68,18 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='viewer_Release_releaseNotes']/div</td>
+	<td>//div[@id='viewer_Impediment_solution']/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div[@id='editor_Release_releaseNotes']/textarea</td>
-	<td>test release notes</td>
+	<td>//div[@id='editor_Impediment_solution']/textarea</td>
+	<td>test solution</td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>button_RichtextEditorWidget_1</td>
 	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//div[@id='viewer_Release_scmTag']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>editor_Release_scmTag</td>
-	<td>testTag</td>
-</tr>
-<tr>
-	<td>keyPress</td>
-	<td>editor_Release_scmTag</td>
-	<td>13</td>
 </tr>
 
 </tbody></table>
