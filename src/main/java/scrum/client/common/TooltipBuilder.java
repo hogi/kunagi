@@ -43,6 +43,28 @@ public class TooltipBuilder {
 
 		}
 		return sb.toString();
+	}
+
+	public String getTooltipAsHtml() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p>").append(mainTooltip).append("</p>");
+
+		if (remarks.size() > 0) {
+
+			if (remarks.size() == 1) {
+				sb.append("<p><i>Disabled for the following reason:</i></p>");
+			} else {
+				sb.append("<p><i>Disabled for the following reasons:</i></p>");
+			}
+
+			sb.append("<ul>");
+			for (String element : remarks) {
+				sb.append("<li>").append(element).append("</li>");
+			}
+			sb.append("</ul>");
+
+		}
+		return sb.toString();
 
 	}
 
