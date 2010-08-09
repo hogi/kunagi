@@ -1,5 +1,6 @@
 package scrum.client.common;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
@@ -23,6 +24,8 @@ public class UserGuideWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		if (Str.isBlank(text)) return null;
+
 		AAction toggleAction = enabled ? new DeactivateAction() : new ActivateAction();
 
 		panel = new FlowPanel();

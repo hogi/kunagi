@@ -43,7 +43,7 @@ public class TextBundleViews {
     }
 
     public String personalPreferences() {
-        return "@personalPreferences";
+        return null;
     }
 
     public String productBacklog() {
@@ -51,7 +51,7 @@ public class TextBundleViews {
     }
 
     public String projectAdministration() {
-        return "@projectAdministration";
+        return null;
     }
 
     public String qualities() {
@@ -71,7 +71,7 @@ public class TextBundleViews {
     }
 
     public String sprintHistory() {
-        return "@sprintHistory";
+        return null;
     }
 
     public String whiteboard() {
@@ -79,7 +79,7 @@ public class TextBundleViews {
     }
 
     public String wiki() {
-        return "@wiki";
+        return null;
     }
 
 }
