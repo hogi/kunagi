@@ -71,9 +71,13 @@ public class ScreenCssBuilder implements CssBuilder {
 	public static String cCommentsBorder = "#EAFFEA";
 	public static String cCommentDate = "darkgray";
 
-	public static String cUserguideBackground = "#F8F8FF";
-	public static String cUserguide = "#000066";
-	public static String cUserguideBorder = "#E0E0FF";
+	// public static String cUserguideBackground = "#F8F8FF";
+	// public static String cUserguide = "#000066";
+	// public static String cUserguideBorder = "#E0E0FF";
+
+	public static String cUserguideBackground = cPagePanelHeaderBackground;
+	public static String cUserguide = "#330000";
+	public static String cUserguideBorder = "#E0E0E0";
 
 	public static String cChangesBackground = "#FFFFF8";
 	public static String cChangesBorder = "#FFFFEA";
@@ -255,7 +259,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".BugMarker").border(1, cError).background(cErrorBackground).color(cError).displayBlock().margin(3)
 				.padding(3).fontWeightBold().fontSize(fontSizeSmall);
 
-		css.style(".Tooltip").background(cBackground).padding(10).border(1, cPagePanelBorder);
+		css.style(".Tooltip").background(cUserguideBackground).color(cUserguide).padding(10)
+				.border(1, cUserguideBorder).maxWidth(400);
 
 		css.style(".DropdownMenuButtonWidget .gwt-MenuBar-horizontal").paddingLeft(1).border(1, cPagePanelBorder);
 		css.style(".DropdownMenuButtonWidget .gwt-MenuBar-horizontal td").fontSize(fontSizeSmall)
