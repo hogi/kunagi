@@ -378,6 +378,40 @@ public abstract class GRelease
         return equals(this.released, released);
     }
 
+    private transient ReleasedModel releasedModel;
+
+    public ReleasedModel getReleasedModel() {
+        if (releasedModel == null) releasedModel = createReleasedModel();
+        return releasedModel;
+    }
+
+    protected ReleasedModel createReleasedModel() { return new ReleasedModel(); }
+
+    protected class ReleasedModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "Release_released";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isReleased();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setReleased(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- releaseNotes ---
 
     private java.lang.String releaseNotes ;

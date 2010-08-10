@@ -55,6 +55,21 @@ public abstract class GUserDao
         usersByRegistrationDateAndTimeCache.clear();
         registrationDateAndTimesCache = null;
         usersByDisabledCache.clear();
+        usersByHideUserGuideBlogCache.clear();
+        usersByHideUserGuideCalendarCache.clear();
+        usersByHideUserGuideFilesCache.clear();
+        usersByHideUserGuideForumCache.clear();
+        usersByHideUserGuideImpedimentsCache.clear();
+        usersByHideUserGuideIssuesCache.clear();
+        usersByHideUserGuideJournalCache.clear();
+        usersByHideUserGuideNextSprintCache.clear();
+        usersByHideUserGuideProductBacklogCache.clear();
+        usersByHideUserGuideCourtroomCache.clear();
+        usersByHideUserGuideQualityBacklogCache.clear();
+        usersByHideUserGuideReleasesCache.clear();
+        usersByHideUserGuideRisksCache.clear();
+        usersByHideUserGuideSprintBacklogCache.clear();
+        usersByHideUserGuideWhiteboardCache.clear();
     }
 
     @Override
@@ -382,6 +397,441 @@ public abstract class GUserDao
 
         public boolean test(User e) {
             return value == e.isDisabled();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideBlog
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideBlogCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideBlog) {
+                    return getEntities(new IsHideUserGuideBlog(hideUserGuideBlog));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideBlog(boolean hideUserGuideBlog) {
+        return usersByHideUserGuideBlogCache.get(hideUserGuideBlog);
+    }
+
+    private static class IsHideUserGuideBlog implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideBlog(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideBlog();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideCalendar
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideCalendarCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideCalendar) {
+                    return getEntities(new IsHideUserGuideCalendar(hideUserGuideCalendar));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideCalendar(boolean hideUserGuideCalendar) {
+        return usersByHideUserGuideCalendarCache.get(hideUserGuideCalendar);
+    }
+
+    private static class IsHideUserGuideCalendar implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideCalendar(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideCalendar();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideFiles
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideFilesCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideFiles) {
+                    return getEntities(new IsHideUserGuideFiles(hideUserGuideFiles));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideFiles(boolean hideUserGuideFiles) {
+        return usersByHideUserGuideFilesCache.get(hideUserGuideFiles);
+    }
+
+    private static class IsHideUserGuideFiles implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideFiles(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideFiles();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideForum
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideForumCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideForum) {
+                    return getEntities(new IsHideUserGuideForum(hideUserGuideForum));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideForum(boolean hideUserGuideForum) {
+        return usersByHideUserGuideForumCache.get(hideUserGuideForum);
+    }
+
+    private static class IsHideUserGuideForum implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideForum(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideForum();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideImpediments
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideImpedimentsCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideImpediments) {
+                    return getEntities(new IsHideUserGuideImpediments(hideUserGuideImpediments));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideImpediments(boolean hideUserGuideImpediments) {
+        return usersByHideUserGuideImpedimentsCache.get(hideUserGuideImpediments);
+    }
+
+    private static class IsHideUserGuideImpediments implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideImpediments(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideImpediments();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideIssues
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideIssuesCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideIssues) {
+                    return getEntities(new IsHideUserGuideIssues(hideUserGuideIssues));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideIssues(boolean hideUserGuideIssues) {
+        return usersByHideUserGuideIssuesCache.get(hideUserGuideIssues);
+    }
+
+    private static class IsHideUserGuideIssues implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideIssues(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideIssues();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideJournal
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideJournalCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideJournal) {
+                    return getEntities(new IsHideUserGuideJournal(hideUserGuideJournal));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideJournal(boolean hideUserGuideJournal) {
+        return usersByHideUserGuideJournalCache.get(hideUserGuideJournal);
+    }
+
+    private static class IsHideUserGuideJournal implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideJournal(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideJournal();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideNextSprint
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideNextSprintCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideNextSprint) {
+                    return getEntities(new IsHideUserGuideNextSprint(hideUserGuideNextSprint));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
+        return usersByHideUserGuideNextSprintCache.get(hideUserGuideNextSprint);
+    }
+
+    private static class IsHideUserGuideNextSprint implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideNextSprint(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideNextSprint();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideProductBacklog
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideProductBacklogCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideProductBacklog) {
+                    return getEntities(new IsHideUserGuideProductBacklog(hideUserGuideProductBacklog));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
+        return usersByHideUserGuideProductBacklogCache.get(hideUserGuideProductBacklog);
+    }
+
+    private static class IsHideUserGuideProductBacklog implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideProductBacklog(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideProductBacklog();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideCourtroom
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideCourtroomCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideCourtroom) {
+                    return getEntities(new IsHideUserGuideCourtroom(hideUserGuideCourtroom));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
+        return usersByHideUserGuideCourtroomCache.get(hideUserGuideCourtroom);
+    }
+
+    private static class IsHideUserGuideCourtroom implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideCourtroom(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideCourtroom();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideQualityBacklog
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideQualityBacklogCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideQualityBacklog) {
+                    return getEntities(new IsHideUserGuideQualityBacklog(hideUserGuideQualityBacklog));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
+        return usersByHideUserGuideQualityBacklogCache.get(hideUserGuideQualityBacklog);
+    }
+
+    private static class IsHideUserGuideQualityBacklog implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideQualityBacklog(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideQualityBacklog();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideReleases
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideReleasesCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideReleases) {
+                    return getEntities(new IsHideUserGuideReleases(hideUserGuideReleases));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideReleases(boolean hideUserGuideReleases) {
+        return usersByHideUserGuideReleasesCache.get(hideUserGuideReleases);
+    }
+
+    private static class IsHideUserGuideReleases implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideReleases(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideReleases();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideRisks
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideRisksCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideRisks) {
+                    return getEntities(new IsHideUserGuideRisks(hideUserGuideRisks));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideRisks(boolean hideUserGuideRisks) {
+        return usersByHideUserGuideRisksCache.get(hideUserGuideRisks);
+    }
+
+    private static class IsHideUserGuideRisks implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideRisks(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideRisks();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideSprintBacklog
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideSprintBacklogCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideSprintBacklog) {
+                    return getEntities(new IsHideUserGuideSprintBacklog(hideUserGuideSprintBacklog));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
+        return usersByHideUserGuideSprintBacklogCache.get(hideUserGuideSprintBacklog);
+    }
+
+    private static class IsHideUserGuideSprintBacklog implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideSprintBacklog(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideSprintBacklog();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideWhiteboard
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<User>> usersByHideUserGuideWhiteboardCache = new Cache<Boolean,Set<User>>(
+            new Cache.Factory<Boolean,Set<User>>() {
+                public Set<User> create(Boolean hideUserGuideWhiteboard) {
+                    return getEntities(new IsHideUserGuideWhiteboard(hideUserGuideWhiteboard));
+                }
+            });
+
+    public final Set<User> getUsersByHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
+        return usersByHideUserGuideWhiteboardCache.get(hideUserGuideWhiteboard);
+    }
+
+    private static class IsHideUserGuideWhiteboard implements Predicate<User> {
+
+        private boolean value;
+
+        public IsHideUserGuideWhiteboard(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return value == e.isHideUserGuideWhiteboard();
         }
 
     }

@@ -9,7 +9,6 @@ import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
-import scrum.client.common.UserGuideWidget;
 import scrum.client.journal.ActivateChangeHistoryAction;
 import scrum.client.journal.ChangeHistoryWidget;
 import scrum.client.workspace.PagePanel;
@@ -80,9 +79,6 @@ public class WikiWidget extends AScrumWidget {
 			left.add(new ChangeHistoryWidget(wikipage));
 			page.addSection(left);
 		}
-
-		page.addSection(new UserGuideWidget(getCurrentProject().getWikipages().size() < 5, getLocalizer().views()
-				.wiki()));
 
 		panel.clear();
 		panel.add(page);

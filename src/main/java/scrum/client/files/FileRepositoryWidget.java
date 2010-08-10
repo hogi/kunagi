@@ -23,8 +23,8 @@ public class FileRepositoryWidget extends AScrumWidget {
 		PagePanel page = new PagePanel();
 		page.addHeader("File Repository", new ButtonWidget(new UploadFileAction()));
 		page.addSection(list);
-		page.addSection(new UserGuideWidget(getCurrentProject().getFiles().size() < 5, getLocalizer().views()
-				.fileRepository()));
+		page.addSection(new UserGuideWidget(getLocalizer().views().fileRepository(), getCurrentProject().getFiles()
+				.size() < 5, getCurrentUser().getHideUserGuideFilesModel()));
 		return page;
 	}
 

@@ -31,8 +31,8 @@ public class NextSprintWidget extends AScrumWidget {
 		PagePanel page = new PagePanel();
 		page.addHeader("Next Sprint", new ButtonWidget(new SwitchToNextSprintAction()));
 		page.addSection(TableBuilder.row(20, tb.createTable(), new CommentsWidget(sprint)));
-		page.addSection(new UserGuideWidget(getCurrentProject().getSprints().size() < 5, getLocalizer().views()
-				.nextSprint()));
+		page.addSection(new UserGuideWidget(getLocalizer().views().nextSprint(), getCurrentProject().getSprints()
+				.size() < 5, getCurrentUser().getHideUserGuideNextSprintModel()));
 		return page;
 	}
 

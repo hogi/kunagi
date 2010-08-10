@@ -20,8 +20,8 @@ public class BlogWidget extends AScrumWidget {
 		PagePanel page = new PagePanel();
 		page.addHeader("Blog", new ButtonWidget(new CreateBlogEntryAction()));
 		page.addSection(list);
-		page.addSection(new UserGuideWidget(getCurrentProject().getBlogEntrys().size() < 5, getLocalizer().views()
-				.blog()));
+		page.addSection(new UserGuideWidget(getLocalizer().views().blog(),
+				getCurrentProject().getBlogEntrys().size() < 5, getCurrentUser().getHideUserGuideBlogModel()));
 		return page;
 	}
 

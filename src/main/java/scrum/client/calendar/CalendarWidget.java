@@ -29,8 +29,8 @@ public class CalendarWidget extends AScrumWidget {
 		PagePanel left = new PagePanel();
 		left.addHeader("Project Calendar", new ButtonWidget(new CreateSimpleEventAction()));
 		left.addSection(dayList);
-		left.addSection(new UserGuideWidget(getCurrentProject().getSimpleEvents().size() < 5, getLocalizer()
-				.views().calendar()));
+		left.addSection(new UserGuideWidget(getLocalizer().views().calendar(), getCurrentProject().getSimpleEvents()
+				.size() < 5, getCurrentUser().getHideUserGuideCalendarModel()));
 
 		PagePanel right = new PagePanel();
 		right.addHeader("Years");

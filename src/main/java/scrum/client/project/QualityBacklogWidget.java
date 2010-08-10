@@ -19,8 +19,8 @@ public class QualityBacklogWidget extends AScrumWidget {
 		PagePanel page = new PagePanel();
 		page.addHeader("Quality Backlog", new ButtonWidget(new CreateQualityAction()));
 		page.addSection(list);
-		page.addSection(new UserGuideWidget(getCurrentProject().getQualitys().size() < 5, getLocalizer().views()
-				.qualities()));
+		page.addSection(new UserGuideWidget(getLocalizer().views().qualities(), getCurrentProject().getQualitys()
+				.size() < 5, getCurrentUser().getHideUserGuideQualityBacklogModel()));
 		return page;
 	}
 

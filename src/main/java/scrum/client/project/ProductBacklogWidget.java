@@ -46,8 +46,8 @@ public class ProductBacklogWidget extends AScrumWidget {
 		page.addSection(tb.createTable());
 		page.addSection(Gwt.createFlowPanel(list));
 		page.addSection(ScrumGwt.createPdfLink("Download as PDF", "productBacklog", getCurrentProject()));
-		page.addSection(new UserGuideWidget(getCurrentProject().getProductBacklogRequirements().size() < 5,
-				getLocalizer().views().productBacklog()));
+		page.addSection(new UserGuideWidget(getLocalizer().views().productBacklog(), getCurrentProject()
+				.getProductBacklogRequirements().size() < 5, getCurrentUser().getHideUserGuideProductBacklogModel()));
 
 		return page;
 	}

@@ -22,8 +22,8 @@ public class JournalWidget extends AScrumWidget {
 		page.addSection(list);
 		page.addSection(Gwt.createServletDownloadLink("projectJournal.rss?projectId=" + getCurrentProject().getId(),
 			"RSS Feed"));
-		page.addSection(new UserGuideWidget(getCurrentProject().getProjectEvents().size() < 15, getLocalizer()
-				.views().journal()));
+		page.addSection(new UserGuideWidget(getLocalizer().views().journal(), getCurrentProject().getProjectEvents()
+				.size() < 15, getCurrentUser().getHideUserGuideJournalModel()));
 		return page;
 	}
 

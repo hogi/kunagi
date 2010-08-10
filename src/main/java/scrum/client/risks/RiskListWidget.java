@@ -25,8 +25,8 @@ public class RiskListWidget extends AScrumWidget {
 		page.addHeader("Risk List", new ButtonWidget(new CreateRiskAction()));
 		page.addSection(Gwt.createFlowPanel(list, Gwt.createSpacer(1, 10),
 			ScrumGwt.createPdfLink("Downlad as PDF", "riskList", "")));
-		page.addSection(new UserGuideWidget(getCurrentProject().getRisks().size() < 5, getLocalizer().views()
-				.risks()));
+		page.addSection(new UserGuideWidget(getLocalizer().views().risks(), getCurrentProject().getRisks().size() < 5,
+				getCurrentUser().getHideUserGuideRisksModel()));
 		return page;
 	}
 

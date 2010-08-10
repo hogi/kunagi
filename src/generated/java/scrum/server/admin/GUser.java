@@ -45,6 +45,21 @@ public abstract class GUser
         properties.put("lastLoginDateAndTime", this.lastLoginDateAndTime == null ? null : this.lastLoginDateAndTime.toString());
         properties.put("registrationDateAndTime", this.registrationDateAndTime == null ? null : this.registrationDateAndTime.toString());
         properties.put("disabled", this.disabled);
+        properties.put("hideUserGuideBlog", this.hideUserGuideBlog);
+        properties.put("hideUserGuideCalendar", this.hideUserGuideCalendar);
+        properties.put("hideUserGuideFiles", this.hideUserGuideFiles);
+        properties.put("hideUserGuideForum", this.hideUserGuideForum);
+        properties.put("hideUserGuideImpediments", this.hideUserGuideImpediments);
+        properties.put("hideUserGuideIssues", this.hideUserGuideIssues);
+        properties.put("hideUserGuideJournal", this.hideUserGuideJournal);
+        properties.put("hideUserGuideNextSprint", this.hideUserGuideNextSprint);
+        properties.put("hideUserGuideProductBacklog", this.hideUserGuideProductBacklog);
+        properties.put("hideUserGuideCourtroom", this.hideUserGuideCourtroom);
+        properties.put("hideUserGuideQualityBacklog", this.hideUserGuideQualityBacklog);
+        properties.put("hideUserGuideReleases", this.hideUserGuideReleases);
+        properties.put("hideUserGuideRisks", this.hideUserGuideRisks);
+        properties.put("hideUserGuideSprintBacklog", this.hideUserGuideSprintBacklog);
+        properties.put("hideUserGuideWhiteboard", this.hideUserGuideWhiteboard);
     }
 
     public int compareTo(User other) {
@@ -382,6 +397,441 @@ public abstract class GUser
         setDisabled((Boolean)value);
     }
 
+    // -----------------------------------------------------------
+    // - hideUserGuideBlog
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideBlog;
+
+    public final boolean isHideUserGuideBlog() {
+        return hideUserGuideBlog;
+    }
+
+    public final void setHideUserGuideBlog(boolean hideUserGuideBlog) {
+        hideUserGuideBlog = prepareHideUserGuideBlog(hideUserGuideBlog);
+        if (isHideUserGuideBlog(hideUserGuideBlog)) return;
+        this.hideUserGuideBlog = hideUserGuideBlog;
+        fireModified("hideUserGuideBlog="+hideUserGuideBlog);
+    }
+
+    protected boolean prepareHideUserGuideBlog(boolean hideUserGuideBlog) {
+        return hideUserGuideBlog;
+    }
+
+    public final boolean isHideUserGuideBlog(boolean hideUserGuideBlog) {
+        return this.hideUserGuideBlog == hideUserGuideBlog;
+    }
+
+    protected final void updateHideUserGuideBlog(Object value) {
+        setHideUserGuideBlog((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideCalendar
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideCalendar;
+
+    public final boolean isHideUserGuideCalendar() {
+        return hideUserGuideCalendar;
+    }
+
+    public final void setHideUserGuideCalendar(boolean hideUserGuideCalendar) {
+        hideUserGuideCalendar = prepareHideUserGuideCalendar(hideUserGuideCalendar);
+        if (isHideUserGuideCalendar(hideUserGuideCalendar)) return;
+        this.hideUserGuideCalendar = hideUserGuideCalendar;
+        fireModified("hideUserGuideCalendar="+hideUserGuideCalendar);
+    }
+
+    protected boolean prepareHideUserGuideCalendar(boolean hideUserGuideCalendar) {
+        return hideUserGuideCalendar;
+    }
+
+    public final boolean isHideUserGuideCalendar(boolean hideUserGuideCalendar) {
+        return this.hideUserGuideCalendar == hideUserGuideCalendar;
+    }
+
+    protected final void updateHideUserGuideCalendar(Object value) {
+        setHideUserGuideCalendar((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideFiles
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideFiles;
+
+    public final boolean isHideUserGuideFiles() {
+        return hideUserGuideFiles;
+    }
+
+    public final void setHideUserGuideFiles(boolean hideUserGuideFiles) {
+        hideUserGuideFiles = prepareHideUserGuideFiles(hideUserGuideFiles);
+        if (isHideUserGuideFiles(hideUserGuideFiles)) return;
+        this.hideUserGuideFiles = hideUserGuideFiles;
+        fireModified("hideUserGuideFiles="+hideUserGuideFiles);
+    }
+
+    protected boolean prepareHideUserGuideFiles(boolean hideUserGuideFiles) {
+        return hideUserGuideFiles;
+    }
+
+    public final boolean isHideUserGuideFiles(boolean hideUserGuideFiles) {
+        return this.hideUserGuideFiles == hideUserGuideFiles;
+    }
+
+    protected final void updateHideUserGuideFiles(Object value) {
+        setHideUserGuideFiles((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideForum
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideForum;
+
+    public final boolean isHideUserGuideForum() {
+        return hideUserGuideForum;
+    }
+
+    public final void setHideUserGuideForum(boolean hideUserGuideForum) {
+        hideUserGuideForum = prepareHideUserGuideForum(hideUserGuideForum);
+        if (isHideUserGuideForum(hideUserGuideForum)) return;
+        this.hideUserGuideForum = hideUserGuideForum;
+        fireModified("hideUserGuideForum="+hideUserGuideForum);
+    }
+
+    protected boolean prepareHideUserGuideForum(boolean hideUserGuideForum) {
+        return hideUserGuideForum;
+    }
+
+    public final boolean isHideUserGuideForum(boolean hideUserGuideForum) {
+        return this.hideUserGuideForum == hideUserGuideForum;
+    }
+
+    protected final void updateHideUserGuideForum(Object value) {
+        setHideUserGuideForum((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideImpediments
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideImpediments;
+
+    public final boolean isHideUserGuideImpediments() {
+        return hideUserGuideImpediments;
+    }
+
+    public final void setHideUserGuideImpediments(boolean hideUserGuideImpediments) {
+        hideUserGuideImpediments = prepareHideUserGuideImpediments(hideUserGuideImpediments);
+        if (isHideUserGuideImpediments(hideUserGuideImpediments)) return;
+        this.hideUserGuideImpediments = hideUserGuideImpediments;
+        fireModified("hideUserGuideImpediments="+hideUserGuideImpediments);
+    }
+
+    protected boolean prepareHideUserGuideImpediments(boolean hideUserGuideImpediments) {
+        return hideUserGuideImpediments;
+    }
+
+    public final boolean isHideUserGuideImpediments(boolean hideUserGuideImpediments) {
+        return this.hideUserGuideImpediments == hideUserGuideImpediments;
+    }
+
+    protected final void updateHideUserGuideImpediments(Object value) {
+        setHideUserGuideImpediments((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideIssues
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideIssues;
+
+    public final boolean isHideUserGuideIssues() {
+        return hideUserGuideIssues;
+    }
+
+    public final void setHideUserGuideIssues(boolean hideUserGuideIssues) {
+        hideUserGuideIssues = prepareHideUserGuideIssues(hideUserGuideIssues);
+        if (isHideUserGuideIssues(hideUserGuideIssues)) return;
+        this.hideUserGuideIssues = hideUserGuideIssues;
+        fireModified("hideUserGuideIssues="+hideUserGuideIssues);
+    }
+
+    protected boolean prepareHideUserGuideIssues(boolean hideUserGuideIssues) {
+        return hideUserGuideIssues;
+    }
+
+    public final boolean isHideUserGuideIssues(boolean hideUserGuideIssues) {
+        return this.hideUserGuideIssues == hideUserGuideIssues;
+    }
+
+    protected final void updateHideUserGuideIssues(Object value) {
+        setHideUserGuideIssues((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideJournal
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideJournal;
+
+    public final boolean isHideUserGuideJournal() {
+        return hideUserGuideJournal;
+    }
+
+    public final void setHideUserGuideJournal(boolean hideUserGuideJournal) {
+        hideUserGuideJournal = prepareHideUserGuideJournal(hideUserGuideJournal);
+        if (isHideUserGuideJournal(hideUserGuideJournal)) return;
+        this.hideUserGuideJournal = hideUserGuideJournal;
+        fireModified("hideUserGuideJournal="+hideUserGuideJournal);
+    }
+
+    protected boolean prepareHideUserGuideJournal(boolean hideUserGuideJournal) {
+        return hideUserGuideJournal;
+    }
+
+    public final boolean isHideUserGuideJournal(boolean hideUserGuideJournal) {
+        return this.hideUserGuideJournal == hideUserGuideJournal;
+    }
+
+    protected final void updateHideUserGuideJournal(Object value) {
+        setHideUserGuideJournal((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideNextSprint
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideNextSprint;
+
+    public final boolean isHideUserGuideNextSprint() {
+        return hideUserGuideNextSprint;
+    }
+
+    public final void setHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
+        hideUserGuideNextSprint = prepareHideUserGuideNextSprint(hideUserGuideNextSprint);
+        if (isHideUserGuideNextSprint(hideUserGuideNextSprint)) return;
+        this.hideUserGuideNextSprint = hideUserGuideNextSprint;
+        fireModified("hideUserGuideNextSprint="+hideUserGuideNextSprint);
+    }
+
+    protected boolean prepareHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
+        return hideUserGuideNextSprint;
+    }
+
+    public final boolean isHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
+        return this.hideUserGuideNextSprint == hideUserGuideNextSprint;
+    }
+
+    protected final void updateHideUserGuideNextSprint(Object value) {
+        setHideUserGuideNextSprint((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideProductBacklog
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideProductBacklog;
+
+    public final boolean isHideUserGuideProductBacklog() {
+        return hideUserGuideProductBacklog;
+    }
+
+    public final void setHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
+        hideUserGuideProductBacklog = prepareHideUserGuideProductBacklog(hideUserGuideProductBacklog);
+        if (isHideUserGuideProductBacklog(hideUserGuideProductBacklog)) return;
+        this.hideUserGuideProductBacklog = hideUserGuideProductBacklog;
+        fireModified("hideUserGuideProductBacklog="+hideUserGuideProductBacklog);
+    }
+
+    protected boolean prepareHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
+        return hideUserGuideProductBacklog;
+    }
+
+    public final boolean isHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
+        return this.hideUserGuideProductBacklog == hideUserGuideProductBacklog;
+    }
+
+    protected final void updateHideUserGuideProductBacklog(Object value) {
+        setHideUserGuideProductBacklog((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideCourtroom
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideCourtroom;
+
+    public final boolean isHideUserGuideCourtroom() {
+        return hideUserGuideCourtroom;
+    }
+
+    public final void setHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
+        hideUserGuideCourtroom = prepareHideUserGuideCourtroom(hideUserGuideCourtroom);
+        if (isHideUserGuideCourtroom(hideUserGuideCourtroom)) return;
+        this.hideUserGuideCourtroom = hideUserGuideCourtroom;
+        fireModified("hideUserGuideCourtroom="+hideUserGuideCourtroom);
+    }
+
+    protected boolean prepareHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
+        return hideUserGuideCourtroom;
+    }
+
+    public final boolean isHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
+        return this.hideUserGuideCourtroom == hideUserGuideCourtroom;
+    }
+
+    protected final void updateHideUserGuideCourtroom(Object value) {
+        setHideUserGuideCourtroom((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideQualityBacklog
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideQualityBacklog;
+
+    public final boolean isHideUserGuideQualityBacklog() {
+        return hideUserGuideQualityBacklog;
+    }
+
+    public final void setHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
+        hideUserGuideQualityBacklog = prepareHideUserGuideQualityBacklog(hideUserGuideQualityBacklog);
+        if (isHideUserGuideQualityBacklog(hideUserGuideQualityBacklog)) return;
+        this.hideUserGuideQualityBacklog = hideUserGuideQualityBacklog;
+        fireModified("hideUserGuideQualityBacklog="+hideUserGuideQualityBacklog);
+    }
+
+    protected boolean prepareHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
+        return hideUserGuideQualityBacklog;
+    }
+
+    public final boolean isHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
+        return this.hideUserGuideQualityBacklog == hideUserGuideQualityBacklog;
+    }
+
+    protected final void updateHideUserGuideQualityBacklog(Object value) {
+        setHideUserGuideQualityBacklog((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideReleases
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideReleases;
+
+    public final boolean isHideUserGuideReleases() {
+        return hideUserGuideReleases;
+    }
+
+    public final void setHideUserGuideReleases(boolean hideUserGuideReleases) {
+        hideUserGuideReleases = prepareHideUserGuideReleases(hideUserGuideReleases);
+        if (isHideUserGuideReleases(hideUserGuideReleases)) return;
+        this.hideUserGuideReleases = hideUserGuideReleases;
+        fireModified("hideUserGuideReleases="+hideUserGuideReleases);
+    }
+
+    protected boolean prepareHideUserGuideReleases(boolean hideUserGuideReleases) {
+        return hideUserGuideReleases;
+    }
+
+    public final boolean isHideUserGuideReleases(boolean hideUserGuideReleases) {
+        return this.hideUserGuideReleases == hideUserGuideReleases;
+    }
+
+    protected final void updateHideUserGuideReleases(Object value) {
+        setHideUserGuideReleases((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideRisks
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideRisks;
+
+    public final boolean isHideUserGuideRisks() {
+        return hideUserGuideRisks;
+    }
+
+    public final void setHideUserGuideRisks(boolean hideUserGuideRisks) {
+        hideUserGuideRisks = prepareHideUserGuideRisks(hideUserGuideRisks);
+        if (isHideUserGuideRisks(hideUserGuideRisks)) return;
+        this.hideUserGuideRisks = hideUserGuideRisks;
+        fireModified("hideUserGuideRisks="+hideUserGuideRisks);
+    }
+
+    protected boolean prepareHideUserGuideRisks(boolean hideUserGuideRisks) {
+        return hideUserGuideRisks;
+    }
+
+    public final boolean isHideUserGuideRisks(boolean hideUserGuideRisks) {
+        return this.hideUserGuideRisks == hideUserGuideRisks;
+    }
+
+    protected final void updateHideUserGuideRisks(Object value) {
+        setHideUserGuideRisks((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideSprintBacklog
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideSprintBacklog;
+
+    public final boolean isHideUserGuideSprintBacklog() {
+        return hideUserGuideSprintBacklog;
+    }
+
+    public final void setHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
+        hideUserGuideSprintBacklog = prepareHideUserGuideSprintBacklog(hideUserGuideSprintBacklog);
+        if (isHideUserGuideSprintBacklog(hideUserGuideSprintBacklog)) return;
+        this.hideUserGuideSprintBacklog = hideUserGuideSprintBacklog;
+        fireModified("hideUserGuideSprintBacklog="+hideUserGuideSprintBacklog);
+    }
+
+    protected boolean prepareHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
+        return hideUserGuideSprintBacklog;
+    }
+
+    public final boolean isHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
+        return this.hideUserGuideSprintBacklog == hideUserGuideSprintBacklog;
+    }
+
+    protected final void updateHideUserGuideSprintBacklog(Object value) {
+        setHideUserGuideSprintBacklog((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideWhiteboard
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideWhiteboard;
+
+    public final boolean isHideUserGuideWhiteboard() {
+        return hideUserGuideWhiteboard;
+    }
+
+    public final void setHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
+        hideUserGuideWhiteboard = prepareHideUserGuideWhiteboard(hideUserGuideWhiteboard);
+        if (isHideUserGuideWhiteboard(hideUserGuideWhiteboard)) return;
+        this.hideUserGuideWhiteboard = hideUserGuideWhiteboard;
+        fireModified("hideUserGuideWhiteboard="+hideUserGuideWhiteboard);
+    }
+
+    protected boolean prepareHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
+        return hideUserGuideWhiteboard;
+    }
+
+    public final boolean isHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
+        return this.hideUserGuideWhiteboard == hideUserGuideWhiteboard;
+    }
+
+    protected final void updateHideUserGuideWhiteboard(Object value) {
+        setHideUserGuideWhiteboard((Boolean)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -396,6 +846,21 @@ public abstract class GUser
             if (property.equals("lastLoginDateAndTime")) updateLastLoginDateAndTime(value);
             if (property.equals("registrationDateAndTime")) updateRegistrationDateAndTime(value);
             if (property.equals("disabled")) updateDisabled(value);
+            if (property.equals("hideUserGuideBlog")) updateHideUserGuideBlog(value);
+            if (property.equals("hideUserGuideCalendar")) updateHideUserGuideCalendar(value);
+            if (property.equals("hideUserGuideFiles")) updateHideUserGuideFiles(value);
+            if (property.equals("hideUserGuideForum")) updateHideUserGuideForum(value);
+            if (property.equals("hideUserGuideImpediments")) updateHideUserGuideImpediments(value);
+            if (property.equals("hideUserGuideIssues")) updateHideUserGuideIssues(value);
+            if (property.equals("hideUserGuideJournal")) updateHideUserGuideJournal(value);
+            if (property.equals("hideUserGuideNextSprint")) updateHideUserGuideNextSprint(value);
+            if (property.equals("hideUserGuideProductBacklog")) updateHideUserGuideProductBacklog(value);
+            if (property.equals("hideUserGuideCourtroom")) updateHideUserGuideCourtroom(value);
+            if (property.equals("hideUserGuideQualityBacklog")) updateHideUserGuideQualityBacklog(value);
+            if (property.equals("hideUserGuideReleases")) updateHideUserGuideReleases(value);
+            if (property.equals("hideUserGuideRisks")) updateHideUserGuideRisks(value);
+            if (property.equals("hideUserGuideSprintBacklog")) updateHideUserGuideSprintBacklog(value);
+            if (property.equals("hideUserGuideWhiteboard")) updateHideUserGuideWhiteboard(value);
         }
     }
 

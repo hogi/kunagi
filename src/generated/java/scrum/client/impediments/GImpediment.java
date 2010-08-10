@@ -383,6 +383,40 @@ public abstract class GImpediment
         return equals(this.closed, closed);
     }
 
+    private transient ClosedModel closedModel;
+
+    public ClosedModel getClosedModel() {
+        if (closedModel == null) closedModel = createClosedModel();
+        return closedModel;
+    }
+
+    protected ClosedModel createClosedModel() { return new ClosedModel(); }
+
+    protected class ClosedModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "Impediment_closed";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isClosed();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setClosed(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {

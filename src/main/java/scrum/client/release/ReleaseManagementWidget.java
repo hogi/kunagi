@@ -32,8 +32,8 @@ public class ReleaseManagementWidget extends AScrumWidget {
 		page.addSection(planned);
 		page.addHeader("Published releases");
 		page.addSection(published);
-		page.addSection(new UserGuideWidget(getCurrentProject().getReleases().size() < 5, getLocalizer().views()
-				.releases()));
+		page.addSection(new UserGuideWidget(getLocalizer().views().releases(),
+				getCurrentProject().getReleases().size() < 5, getCurrentUser().getHideUserGuideReleasesModel()));
 		return page;
 	}
 

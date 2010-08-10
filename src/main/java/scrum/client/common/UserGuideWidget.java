@@ -4,6 +4,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
+import ilarkesto.gwt.client.editor.ABooleanEditorModel;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -13,20 +14,23 @@ public class UserGuideWidget extends AScrumWidget {
 
 	private boolean enabled;
 	private String text;
+	private ABooleanEditorModel hideSwitch;
 
 	private FlowPanel panel;
 
-	public UserGuideWidget(boolean enabled, String text) {
+	public UserGuideWidget(String text, boolean enabled, ABooleanEditorModel hideSwitch) {
 		super();
-		this.enabled = enabled;
 		this.text = text;
+		this.enabled = enabled;
+		this.hideSwitch = hideSwitch;
 	}
 
 	@Override
 	protected Widget onInitialization() {
 		if (Str.isBlank(text)) return null;
 
-		AAction toggleAction = enabled ? new DeactivateAction() : new ActivateAction();
+		boolean hide = hideSwitch != null && hideSwitch.isTrue();
+		AAction toggleAction = enabled && !hide ? new DeactivateAction() : new ActivateAction();
 
 		panel = new FlowPanel();
 		panel.setStyleName("UserGuideWidget");
@@ -48,6 +52,7 @@ public class UserGuideWidget extends AScrumWidget {
 		@Override
 		protected void onExecute() {
 			enabled = true;
+			if (hideSwitch != null) hideSwitch.setValue(false);
 			reset();
 		}
 
@@ -63,6 +68,7 @@ public class UserGuideWidget extends AScrumWidget {
 		@Override
 		protected void onExecute() {
 			enabled = false;
+			if (hideSwitch != null) hideSwitch.setValue(true);
 			reset();
 		}
 

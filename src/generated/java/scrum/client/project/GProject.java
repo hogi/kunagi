@@ -1605,6 +1605,40 @@ public abstract class GProject
         return equals(this.autoUpdateHomepage, autoUpdateHomepage);
     }
 
+    private transient AutoUpdateHomepageModel autoUpdateHomepageModel;
+
+    public AutoUpdateHomepageModel getAutoUpdateHomepageModel() {
+        if (autoUpdateHomepageModel == null) autoUpdateHomepageModel = createAutoUpdateHomepageModel();
+        return autoUpdateHomepageModel;
+    }
+
+    protected AutoUpdateHomepageModel createAutoUpdateHomepageModel() { return new AutoUpdateHomepageModel(); }
+
+    protected class AutoUpdateHomepageModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_autoUpdateHomepage";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isAutoUpdateHomepage();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setAutoUpdateHomepage(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- lastOpenedDateAndTime ---
 
     private ilarkesto.gwt.client.DateAndTime lastOpenedDateAndTime ;

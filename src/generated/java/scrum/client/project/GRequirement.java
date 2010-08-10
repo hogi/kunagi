@@ -497,6 +497,40 @@ public abstract class GRequirement
         return equals(this.closed, closed);
     }
 
+    private transient ClosedModel closedModel;
+
+    public ClosedModel getClosedModel() {
+        if (closedModel == null) closedModel = createClosedModel();
+        return closedModel;
+    }
+
+    protected ClosedModel createClosedModel() { return new ClosedModel(); }
+
+    protected class ClosedModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "Requirement_closed";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isClosed();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setClosed(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- dirty ---
 
     private boolean dirty ;
@@ -514,6 +548,40 @@ public abstract class GRequirement
 
     public final boolean isDirty(boolean dirty) {
         return equals(this.dirty, dirty);
+    }
+
+    private transient DirtyModel dirtyModel;
+
+    public DirtyModel getDirtyModel() {
+        if (dirtyModel == null) dirtyModel = createDirtyModel();
+        return dirtyModel;
+    }
+
+    protected DirtyModel createDirtyModel() { return new DirtyModel(); }
+
+    protected class DirtyModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "Requirement_dirty";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isDirty();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setDirty(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- workEstimationVotingActive ---
@@ -535,6 +603,40 @@ public abstract class GRequirement
         return equals(this.workEstimationVotingActive, workEstimationVotingActive);
     }
 
+    private transient WorkEstimationVotingActiveModel workEstimationVotingActiveModel;
+
+    public WorkEstimationVotingActiveModel getWorkEstimationVotingActiveModel() {
+        if (workEstimationVotingActiveModel == null) workEstimationVotingActiveModel = createWorkEstimationVotingActiveModel();
+        return workEstimationVotingActiveModel;
+    }
+
+    protected WorkEstimationVotingActiveModel createWorkEstimationVotingActiveModel() { return new WorkEstimationVotingActiveModel(); }
+
+    protected class WorkEstimationVotingActiveModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "Requirement_workEstimationVotingActive";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isWorkEstimationVotingActive();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setWorkEstimationVotingActive(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- workEstimationVotingShowoff ---
 
     private boolean workEstimationVotingShowoff ;
@@ -552,6 +654,40 @@ public abstract class GRequirement
 
     public final boolean isWorkEstimationVotingShowoff(boolean workEstimationVotingShowoff) {
         return equals(this.workEstimationVotingShowoff, workEstimationVotingShowoff);
+    }
+
+    private transient WorkEstimationVotingShowoffModel workEstimationVotingShowoffModel;
+
+    public WorkEstimationVotingShowoffModel getWorkEstimationVotingShowoffModel() {
+        if (workEstimationVotingShowoffModel == null) workEstimationVotingShowoffModel = createWorkEstimationVotingShowoffModel();
+        return workEstimationVotingShowoffModel;
+    }
+
+    protected WorkEstimationVotingShowoffModel createWorkEstimationVotingShowoffModel() { return new WorkEstimationVotingShowoffModel(); }
+
+    protected class WorkEstimationVotingShowoffModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "Requirement_workEstimationVotingShowoff";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isWorkEstimationVotingShowoff();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setWorkEstimationVotingShowoff(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
     }
 
     // --- update properties by map ---

@@ -629,6 +629,40 @@ public abstract class GIssue
         return equals(this.urgent, urgent);
     }
 
+    private transient UrgentModel urgentModel;
+
+    public UrgentModel getUrgentModel() {
+        if (urgentModel == null) urgentModel = createUrgentModel();
+        return urgentModel;
+    }
+
+    protected UrgentModel createUrgentModel() { return new UrgentModel(); }
+
+    protected class UrgentModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "Issue_urgent";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isUrgent();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setUrgent(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- severity ---
 
     private int severity ;

@@ -25,8 +25,8 @@ public class ImpedimentListWidget extends AScrumWidget {
 		page.addHeader("Impediment List", new ButtonWidget(new CreateImpedimentAction()));
 		page.addSection(Gwt.createFlowPanel(list, Gwt.createSpacer(1, 10),
 			ScrumGwt.createPdfLink("Downlad as PDF", "impedimentList", "")));
-		page.addSection(new UserGuideWidget(getCurrentProject().getImpediments().size() < 5, getLocalizer().views()
-				.impediments()));
+		page.addSection(new UserGuideWidget(getLocalizer().views().impediments(), getCurrentProject().getImpediments()
+				.size() < 5, getCurrentUser().getHideUserGuideImpedimentsModel()));
 		return page;
 	}
 

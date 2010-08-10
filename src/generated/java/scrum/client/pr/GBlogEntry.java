@@ -381,6 +381,40 @@ public abstract class GBlogEntry
         return equals(this.published, published);
     }
 
+    private transient PublishedModel publishedModel;
+
+    public PublishedModel getPublishedModel() {
+        if (publishedModel == null) publishedModel = createPublishedModel();
+        return publishedModel;
+    }
+
+    protected PublishedModel createPublishedModel() { return new PublishedModel(); }
+
+    protected class PublishedModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "BlogEntry_published";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isPublished();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setPublished(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {

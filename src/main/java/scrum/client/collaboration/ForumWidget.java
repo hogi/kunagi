@@ -22,8 +22,8 @@ public class ForumWidget extends AScrumWidget {
 		PagePanel page = new PagePanel();
 		page.addHeader("Forum", new ButtonWidget(new CreateSubjectAction()));
 		page.addSection(list);
-		page.addSection(new UserGuideWidget(getCurrentProject().getSubjects().size() < 5, getLocalizer().views()
-				.forum()));
+		page.addSection(new UserGuideWidget(getLocalizer().views().forum(),
+				getCurrentProject().getSubjects().size() < 5, getCurrentUser().getHideUserGuideForumModel()));
 		return page;
 	}
 

@@ -2789,6 +2789,126 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideBlog(boolean hideUserGuideBlog) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideBlog(hideUserGuideBlog)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideCalendar(boolean hideUserGuideCalendar) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideCalendar(hideUserGuideCalendar)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideFiles(boolean hideUserGuideFiles) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideFiles(hideUserGuideFiles)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideForum(boolean hideUserGuideForum) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideForum(hideUserGuideForum)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideImpediments(boolean hideUserGuideImpediments) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideImpediments(hideUserGuideImpediments)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideIssues(boolean hideUserGuideIssues) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideIssues(hideUserGuideIssues)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideJournal(boolean hideUserGuideJournal) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideJournal(hideUserGuideJournal)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideNextSprint(hideUserGuideNextSprint)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideProductBacklog(hideUserGuideProductBacklog)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideCourtroom(hideUserGuideCourtroom)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideQualityBacklog(hideUserGuideQualityBacklog)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideReleases(boolean hideUserGuideReleases) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideReleases(hideUserGuideReleases)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideRisks(boolean hideUserGuideRisks) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideRisks(hideUserGuideRisks)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideSprintBacklog(hideUserGuideSprintBacklog)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.User> getUsersByHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isHideUserGuideWhiteboard(hideUserGuideWhiteboard)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Wikipage ---
 
     private Map<String, scrum.client.collaboration.Wikipage> wikipages = new HashMap<String, scrum.client.collaboration.Wikipage>();

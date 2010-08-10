@@ -49,7 +49,8 @@ public class PunishmentsWidget extends AScrumWidget {
 			page.addSection(settings.createTable());
 		}
 
-		page.addSection(new UserGuideWidget(true, getLocalizer().views().courtRoom()));
+		page.addSection(new UserGuideWidget(getLocalizer().views().courtRoom(), true, getCurrentUser()
+				.getHideUserGuideCourtroomModel()));
 
 		return page;
 	}

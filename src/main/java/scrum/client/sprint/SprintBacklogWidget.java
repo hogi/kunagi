@@ -25,8 +25,8 @@ public class SprintBacklogWidget extends AScrumWidget {
 		page.addSection(requirementList);
 		page.addHeader("Sprint Properties");
 		page.addSection(new SprintWidget(sprint));
-		page.addSection(new UserGuideWidget(getCurrentProject().getCurrentSprint().getRequirements().size() < 3,
-				getLocalizer().views().sprintBacklog()));
+		page.addSection(new UserGuideWidget(getLocalizer().views().sprintBacklog(), getCurrentProject()
+				.getCurrentSprint().getRequirements().size() < 3, getCurrentUser().getHideUserGuideSprintBacklogModel()));
 		return page;
 	}
 
