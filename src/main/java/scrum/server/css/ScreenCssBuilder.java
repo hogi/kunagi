@@ -388,6 +388,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".ChangeWidget-comment .AViewEditWidget-viewer").background(cChangesCommentBackground);
 	}
 
+
 	private void blockList(CssRenderer css) {
 		css.style(".ABlockWidget-extended").border(2, cBlockSelectionBorder).padding(3).backgroundWhite();
 		css.style(".ABlockWidget-body").padding(10).border(1, cBlockHeaderBackground);
