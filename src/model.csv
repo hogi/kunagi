@@ -77,6 +77,7 @@
 "6f2f7159-7ceb-4cf8-a51e-362ba6378bbd","ccf2115c-869f-4063-acd0-07ce6288164d","Parameter","login"
 "c68dd53d-79f0-4cbe-92f0-5f2b2f8cd2b5","a2e30272-5798-4ecd-b8b6-11fb7bb85a72","ServiceCall","ResetPassword"
 "ba485f3d-1774-4438-902e-cfa29b7a1ee2","c68dd53d-79f0-4cbe-92f0-5f2b2f8cd2b5","Parameter","userId"
+"9e4c6c10-2cd2-4f1c-b681-0460e41bffe2","a2e30272-5798-4ecd-b8b6-11fb7bb85a72","ServiceCall","SendTestEmail"
 "7dd754a3-6bfa-4b59-b67c-7f7ae2b73903","a2e30272-5798-4ecd-b8b6-11fb7bb85a72","Entity","SystemConfig"
 "b98217f8-7bad-4510-8025-d9cddcfc487e","7dd754a3-6bfa-4b59-b67c-7f7ae2b73903","TextProperty","url"
 "66e78423-d218-4030-a263-3e5ae1e5e876","7dd754a3-6bfa-4b59-b67c-7f7ae2b73903","TextProperty","adminEmail"
@@ -461,3 +462,4 @@
 "c27736ea-6e38-430a-add7-dc684e100211","d5e513a6-6f19-4fad-a532-00e7d87039e8","Dependency","ui"
 "91c4eac8-f33c-4a91-9bef-7e8772c4a1ec","c27736ea-6e38-430a-add7-dc684e100211","Type","Ui"
 "d7d91296-34d3-4fb5-9daf-c6c421d8b20a","a6206e9c-11c2-4304-a249-ef470d2881ef","Event","VisibleDataChanged"
+

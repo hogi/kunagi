@@ -697,6 +697,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	public void onSendTestEmail(GwtConversation conversation) {
+		webApplication.sendEmail(null, null, "Kunagi email test", "Kunagi email test");
+	}
+
+	@Override
 	public void onPing(GwtConversation conversation) {
 		// nop
 	}
