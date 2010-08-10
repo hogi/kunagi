@@ -80,6 +80,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	public static String cUserguideBorder = "#E0E0E0";
 	public static String cUserguideTableHeaderBackground = cUserguideBorder;
 
+
 	public static String cChangesBackground = "#FFFFF8";
 	public static String cChangesBorder = "#FFFFEA";
 	public static String cChangeDate = cCommentDate;
