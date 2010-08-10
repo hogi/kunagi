@@ -78,6 +78,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	public static String cUserguideBackground = cPagePanelHeaderBackground;
 	public static String cUserguide = "#330000";
 	public static String cUserguideBorder = "#E0E0E0";
+	public static String cUserguideTableHeaderBackground = cUserguideBorder;
 
 	public static String cChangesBackground = "#FFFFF8";
 	public static String cChangesBorder = "#FFFFEA";
@@ -358,8 +359,11 @@ public class ScreenCssBuilder implements CssBuilder {
 				.borderRadius(10);
 		css.style(".UserGuideWidget-header").padding(7);
 		css.style(".UserGuideWidget-content").margin(0, 7, 7, 7).paddingTop(7).borderTop(1, cUserguideBorder)
-				.columnWidth(290).columnGap(25).textAlignJustify();
-		css.style(".UserGuideWidget-content strong").color("");
+				.columnWidth(310).columnGap(25).textAlignJustify();
+		css.style(".UserGuideWidget-content table").width100().marginBottom(10);
+		css.style(".UserGuideWidget-content table td").fontSize(fontSizeSmall);
+		css.style(".UserGuideWidget-content table td.headerCell").background(cUserguideTableHeaderBackground)
+				.fontWeightBold();
 	}
 
 	private void comments(CssRenderer css) {
