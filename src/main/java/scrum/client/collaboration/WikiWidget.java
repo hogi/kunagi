@@ -98,6 +98,7 @@ public class WikiWidget extends AScrumWidget {
 
 	private Widget createPageSelector() {
 		SuggestBox pageNameBox = new SuggestBox(wiki.createPagesSuggestOracle());
+		pageNameBox.getElement().setId("wikiPageNameInput");
 		pageNameBox.setAutoSelectEnabled(false);
 		pageNameBox.setTitle("Enter name of wiki page");
 		pageNameBox.addSelectionHandler(new PageNameHandler());

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>createCalendarEvent</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">createCalendarEvent</td></tr>
+</thead><tbody>
+<tr>
+	<td>click</td>
+	<td>link=Collaboration</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Calendar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>CalendarWidget</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>button_CreateSimpleEventAction</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>editor_SimpleEvent_label</td>
+	<td>test event</td>
+</tr>
+<tr>
+	<td>keyPress</td>
+	<td>editor_SimpleEvent_label</td>
+	<td>13</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='viewer_SimpleEvent_time']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>editor_SimpleEvent_time</td>
+	<td>12:00</td>
+</tr>
+<tr>
+	<td>keyPress</td>
+	<td>editor_SimpleEvent_time</td>
+	<td>13</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='viewer_SimpleEvent_location']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>editor_SimpleEvent_location</td>
+	<td>test location</td>
+</tr>
+<tr>
+	<td>keyPress</td>
+	<td>editor_SimpleEvent_location</td>
+	<td>13</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='viewer_SimpleEvent_agenda']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@id='editor_SimpleEvent_agenda']/textarea</td>
+	<td>test agenda</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>button_RichtextEditorWidget_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='viewer_SimpleEvent_note']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@id='editor_SimpleEvent_note']/textarea</td>
+	<td>test note</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>button_RichtextEditorWidget_1</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
