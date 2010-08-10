@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>createBlogEntry</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">createBlogEntry</td></tr>
+</thead><tbody>
+<tr>
+	<td>click</td>
+	<td>link=Administration</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Blog</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>BlogWidget</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>button_CreateBlogEntryAction</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>editor_BlogEntry_title</td>
+	<td>test blog post</td>
+</tr>
+<tr>
+	<td>keyPress</td>
+	<td>editor_BlogEntry_title</td>
+	<td>13</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='viewer_BlogEntry_text']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@id='editor_BlogEntry_text']/textarea</td>
+	<td>test blog text</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>button_RichtextEditorWidget_1</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
