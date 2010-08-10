@@ -30,12 +30,13 @@ public class UserGuideWidget extends AScrumWidget {
 		if (Str.isBlank(text)) return null;
 
 		boolean hide = hideSwitch != null && hideSwitch.isTrue();
-		AAction toggleAction = enabled && !hide ? new DeactivateAction() : new ActivateAction();
+		boolean open = enabled && !hide;
+		AAction toggleAction = open ? new DeactivateAction() : new ActivateAction();
 
 		panel = new FlowPanel();
 		panel.setStyleName("UserGuideWidget");
 		panel.add(Gwt.createDiv("UserGuideWidget-header", new HyperlinkWidget(toggleAction)));
-		if (enabled) {
+		if (open) {
 			panel.add(Gwt.createDiv("UserGuideWidget-content", new HTML(text)));
 		}
 
