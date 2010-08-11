@@ -24,18 +24,19 @@ public class RegisterAction extends GLoginAction {
 		String username = registrationData.getUsername();
 		String email = registrationData.getEmail();
 		String password = registrationData.getPassword();
+		boolean emailMandatory = getDao().getSystemConfig().isUserEmailMandatory();
 
 		if (Str.isBlank(username)) {
 			registrationData.setFailed("Username required.");
 			return;
 		}
 
-		if (Str.isBlank(email)) {
+		if (emailMandatory && Str.isBlank(email)) {
 			registrationData.setFailed("Email required.");
 			return;
 		}
 
-		if (!Str.isEmail(email)) {
+		if (emailMandatory && !Str.isEmail(email)) {
 			registrationData.setFailed("Invalid email.");
 			return;
 		}

@@ -122,11 +122,11 @@ public class LoginWidget extends AScrumWidget implements LoginDataProvider {
 
 		public void onKeyPress(KeyPressEvent event) {
 			if (event.getCharCode() != KeyCodes.KEY_ENTER) return;
-			if (Gwt.isEmpty(getUsername())) {
+			if (Str.isBlank(getUsername())) {
 				username.setFocus(true);
 				return;
 			}
-			if (Gwt.isEmpty(getPassword())) {
+			if (Str.isBlank(getPassword())) {
 				password.setFocus(true);
 				return;
 			}

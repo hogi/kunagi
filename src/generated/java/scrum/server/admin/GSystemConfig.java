@@ -46,6 +46,7 @@ public abstract class GSystemConfig
         properties.put("loginPageMessage", this.loginPageMessage);
         properties.put("registerPageMessage", this.registerPageMessage);
         properties.put("aboutPageMessage", this.aboutPageMessage);
+        properties.put("userEmailMandatory", this.userEmailMandatory);
     }
 
     public int compareTo(SystemConfig other) {
@@ -406,6 +407,35 @@ public abstract class GSystemConfig
         setAboutPageMessage((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - userEmailMandatory
+    // -----------------------------------------------------------
+
+    private boolean userEmailMandatory;
+
+    public final boolean isUserEmailMandatory() {
+        return userEmailMandatory;
+    }
+
+    public final void setUserEmailMandatory(boolean userEmailMandatory) {
+        userEmailMandatory = prepareUserEmailMandatory(userEmailMandatory);
+        if (isUserEmailMandatory(userEmailMandatory)) return;
+        this.userEmailMandatory = userEmailMandatory;
+        fireModified("userEmailMandatory="+userEmailMandatory);
+    }
+
+    protected boolean prepareUserEmailMandatory(boolean userEmailMandatory) {
+        return userEmailMandatory;
+    }
+
+    public final boolean isUserEmailMandatory(boolean userEmailMandatory) {
+        return this.userEmailMandatory == userEmailMandatory;
+    }
+
+    protected final void updateUserEmailMandatory(Object value) {
+        setUserEmailMandatory((Boolean)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -421,6 +451,7 @@ public abstract class GSystemConfig
             if (property.equals("loginPageMessage")) updateLoginPageMessage(value);
             if (property.equals("registerPageMessage")) updateRegisterPageMessage(value);
             if (property.equals("aboutPageMessage")) updateAboutPageMessage(value);
+            if (property.equals("userEmailMandatory")) updateUserEmailMandatory(value);
         }
     }
 

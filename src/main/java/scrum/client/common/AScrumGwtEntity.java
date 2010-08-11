@@ -1,5 +1,6 @@
 package scrum.client.common;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.core.base.ToHtmlSupport;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
@@ -45,7 +46,7 @@ public abstract class AScrumGwtEntity extends AGwtEntity implements ToHtmlSuppor
 	}
 
 	public void setCurrentUserEmoticon(String emotion) {
-		boolean delete = Gwt.isEmpty(emotion);
+		boolean delete = Str.isBlank(emotion);
 		Emoticon emoticon = getCurrentUserEmoticon();
 		if (emoticon == null) {
 			if (!delete) {

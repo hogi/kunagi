@@ -73,6 +73,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			systemConfigModel.addStringProperty("loginPageMessage").setRichtext(true);
 			systemConfigModel.addStringProperty("registerPageMessage").setRichtext(true);
 			systemConfigModel.addStringProperty("aboutPageMessage").setRichtext(true);
+			systemConfigModel.addProperty("userEmailMandatory", boolean.class);
 			autowire(systemConfigModel);
 		}
 		return systemConfigModel;

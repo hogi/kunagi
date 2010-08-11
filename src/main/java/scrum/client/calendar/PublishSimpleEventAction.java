@@ -1,5 +1,6 @@
 package scrum.client.calendar;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.Time;
@@ -28,7 +29,7 @@ public class PublishSimpleEventAction extends GPublishSimpleEventAction {
 		if (time != null)
 			suffix += ", " + Gwt.DTF_HOUR_MINUTE.format(new DateAndTime(simpleEvent.getDate(), time).toJavaDate());
 		String location = simpleEvent.getLocation();
-		if (!Gwt.isEmpty(location)) suffix += " @ " + location;
+		if (!Str.isBlank(location)) suffix += " @ " + location;
 		getDao().createProjectEvent(
 			new ProjectEvent(getCurrentProject(), simpleEvent.getLabel() + " scheduled to " + suffix));
 	}

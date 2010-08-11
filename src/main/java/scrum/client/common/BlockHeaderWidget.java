@@ -1,5 +1,6 @@
 package scrum.client.common;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
@@ -144,7 +145,7 @@ public class BlockHeaderWidget extends AWidget {
 	}
 
 	public void setCenter(String text) {
-		if (Gwt.isEmpty(text)) text = "<new>";
+		if (Str.isBlank(text)) text = "<new>";
 		centerText.setText(text);
 	}
 

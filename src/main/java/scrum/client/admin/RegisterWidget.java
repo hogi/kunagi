@@ -30,16 +30,19 @@ public class RegisterWidget extends AScrumWidget implements RegisterDataProvider
 		message = new Label();
 
 		username = new TextBox();
+		username.addStyleName("InputMandatory");
 		username.setName("username");
 		username.setWidth("150px");
 		username.addKeyPressHandler(new InputKeyHandler());
 
 		email = new TextBox();
+		if (getDao().getSystemConfig().isUserEmailMandatory()) email.addStyleName("InputMandatory");
 		email.setName("email");
 		email.setWidth("150px");
 		email.addKeyPressHandler(new InputKeyHandler());
 
 		password = new PasswordTextBox();
+		password.addStyleName("InputMandatory");
 		password.setName("password");
 		password.setWidth("150px");
 		password.addKeyPressHandler(new InputKeyHandler());
@@ -102,15 +105,15 @@ public class RegisterWidget extends AScrumWidget implements RegisterDataProvider
 
 		public void onKeyPress(KeyPressEvent event) {
 			if (event.getCharCode() != KeyCodes.KEY_ENTER) return;
-			if (Gwt.isEmpty(getUsername())) {
+			if (Str.isBlank(getUsername())) {
 				username.setFocus(true);
 				return;
 			}
-			if (Gwt.isEmpty(getEmail())) {
+			if (Str.isBlank(getEmail()) && getDao().getSystemConfig().isUserEmailMandatory()) {
 				email.setFocus(true);
 				return;
 			}
-			if (Gwt.isEmpty(getPassword())) {
+			if (Str.isBlank(getPassword())) {
 				password.setFocus(true);
 				return;
 			}

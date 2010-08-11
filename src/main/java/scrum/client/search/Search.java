@@ -1,6 +1,6 @@
 package scrum.client.search;
 
-import ilarkesto.gwt.client.Gwt;
+import ilarkesto.core.base.Str;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,7 +19,7 @@ public class Search extends GSearch implements SearchResultsChangedHandler {
 		this.searchText = text;
 		log.info("Searching:", searchText);
 		results.clear();
-		if (Gwt.isEmpty(searchText)) return;
+		if (Str.isBlank(searchText)) return;
 
 		new SearchServiceCall(searchText).execute(new Runnable() {
 

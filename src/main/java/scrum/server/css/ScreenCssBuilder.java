@@ -172,6 +172,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style("ul.toc");// .displayInline().floatRight();
 
 		css.style(".reference").fontFamilyMonospace().color(cLink);
+
+		css.style("input.InputMandatory").border(1, "black");
 	}
 
 	private void planningPoker(CssRenderer css) {
@@ -296,6 +298,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.ul().margin(0, 0, 10, 0).padding(0, 0, 0, 20);
 		css.ol().margin(0, 0, 10, 0).padding(0, 0, 0, 20);
 		css.img().border("0");
+		css.input().border(1, cPagePanelBorder);
+		css.textarea().border(1, cPagePanelBorder);
 	}
 
 	private void workspace(CssRenderer css) {

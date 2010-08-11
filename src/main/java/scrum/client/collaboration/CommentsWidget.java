@@ -1,8 +1,8 @@
 package scrum.client.collaboration;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AViewEditWidget;
-import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.editor.ATextEditorModel;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
@@ -76,7 +76,7 @@ public class CommentsWidget extends AScrumWidget {
 
 	private void postComment() {
 		String text = editor.getEditorText();
-		if (Gwt.isEmpty(text)) return;
+		if (Str.isBlank(text)) return;
 		text = text.trim();
 		Comment comment = new Comment(parent, getAuth().getUser(), text);
 		getDao().createComment(comment);

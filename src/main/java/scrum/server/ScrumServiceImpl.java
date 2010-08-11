@@ -213,12 +213,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			return;
 		}
 
-		if (!user.isEmailSet()) {
-			conversation.getNextData().addError("No email address for user '" + login + "'. Please contact the admin.");
+		if (!user.isEmailVerified()) {
+			conversation.getNextData().addError(
+				"User '" + login + "' has no verified email. Please contact the admin: "
+						+ webApplication.getSystemConfig().getAdminEmail());
 			return;
 		}
 
-		if (!user.isEmailVerified()) user.triggerEmailVerification();
 		user.triggerNewPasswordRequest();
 	}
 
@@ -670,6 +671,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onRegister(GwtConversation conversation, String username, String email, String password) {
+		if (Str.isBlank(email)) email = null;
+
 		if (Str.containsNonLetterOrDigit(username)) {
 			conversation.getNextData().addError(
 				"Registration failed. Name '" + username
@@ -681,7 +684,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			log.warn("Registration failed. User name already exists:", username);
 			return;
 		}
-		if (userDao.getUserByEmail(email) != null) {
+		if (email != null && userDao.getUserByEmail(email) != null) {
 			conversation.getNextData().addError("Registration failed. Email '" + email + "' is already used.");
 			log.warn("Registration failed. User email already exists:", email);
 			return;

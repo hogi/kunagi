@@ -62,6 +62,7 @@ public abstract class GSystemConfigDao
         registerPageMessagesCache = null;
         systemConfigsByAboutPageMessageCache.clear();
         aboutPageMessagesCache = null;
+        systemConfigsByUserEmailMandatoryCache.clear();
     }
 
     @Override
@@ -476,6 +477,35 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return e.isAboutPageMessage(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - userEmailMandatory
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<SystemConfig>> systemConfigsByUserEmailMandatoryCache = new Cache<Boolean,Set<SystemConfig>>(
+            new Cache.Factory<Boolean,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(Boolean userEmailMandatory) {
+                    return getEntities(new IsUserEmailMandatory(userEmailMandatory));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByUserEmailMandatory(boolean userEmailMandatory) {
+        return systemConfigsByUserEmailMandatoryCache.get(userEmailMandatory);
+    }
+
+    private static class IsUserEmailMandatory implements Predicate<SystemConfig> {
+
+        private boolean value;
+
+        public IsUserEmailMandatory(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return value == e.isUserEmailMandatory();
         }
 
     }

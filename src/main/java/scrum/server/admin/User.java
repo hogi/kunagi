@@ -36,6 +36,11 @@ public class User extends GUser {
 	private String password;
 
 	public void triggerEmailVerification() {
+		if (!isEmailSet()) {
+			log.info("User has no email. Skipping email verification:", this);
+			return;
+		}
+
 		String urlBase = webApplication.getBaseUrl();
 		StringBuilder sb = new StringBuilder();
 		sb.append("You have created a Kunagi account on ").append(urlBase).append("\n");
@@ -49,11 +54,16 @@ public class User extends GUser {
 	}
 
 	public void triggerNewPasswordRequest() {
-		String urlBase = webApplication.getBaseUrl();
+		if (!isEmailSet()) {
+			log.info("User has no email. Skipping new password request:", this);
+			return;
+		}
 
 		String newPassword = Str.generatePassword(8);
+
 		StringBuilder sb = new StringBuilder();
-		sb.append("You requested a new password for your Kunagi account on ").append(urlBase).append("\n");
+		sb.append("You requested a new password for your Kunagi account on ").append(webApplication.getBaseUrl())
+				.append("\n");
 		sb.append("\n");
 		sb.append("Email: ").append(getEmail()).append("\n");
 		sb.append("Password: ").append(newPassword).append("\n");

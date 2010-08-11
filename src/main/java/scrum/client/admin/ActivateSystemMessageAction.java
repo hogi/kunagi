@@ -1,7 +1,7 @@
 package scrum.client.admin;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
-import ilarkesto.gwt.client.Gwt;
 
 public class ActivateSystemMessageAction extends GCreateUserAction {
 
@@ -14,7 +14,7 @@ public class ActivateSystemMessageAction extends GCreateUserAction {
 	public boolean isExecutable() {
 		if (getCurrentUser().isAdmin() == false) return false;
 		if (Scope.get().getComponent(SystemMessageManager.class).getSystemMessage().isActive()) return false;
-		if (Gwt.isEmpty(Scope.get().getComponent(SystemMessageManager.class).getSystemMessage().getText()))
+		if (Str.isBlank(Scope.get().getComponent(SystemMessageManager.class).getSystemMessage().getText()))
 			return false;
 		return true;
 	}

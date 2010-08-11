@@ -583,6 +583,59 @@ public abstract class GSystemConfig
 
     }
 
+    // --- userEmailMandatory ---
+
+    private boolean userEmailMandatory ;
+
+    public final boolean isUserEmailMandatory() {
+        return this.userEmailMandatory ;
+    }
+
+    public final SystemConfig setUserEmailMandatory(boolean userEmailMandatory) {
+        if (isUserEmailMandatory(userEmailMandatory)) return (SystemConfig)this;
+        this.userEmailMandatory = userEmailMandatory ;
+        propertyChanged("userEmailMandatory", this.userEmailMandatory);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isUserEmailMandatory(boolean userEmailMandatory) {
+        return equals(this.userEmailMandatory, userEmailMandatory);
+    }
+
+    private transient UserEmailMandatoryModel userEmailMandatoryModel;
+
+    public UserEmailMandatoryModel getUserEmailMandatoryModel() {
+        if (userEmailMandatoryModel == null) userEmailMandatoryModel = createUserEmailMandatoryModel();
+        return userEmailMandatoryModel;
+    }
+
+    protected UserEmailMandatoryModel createUserEmailMandatoryModel() { return new UserEmailMandatoryModel(); }
+
+    protected class UserEmailMandatoryModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_userEmailMandatory";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isUserEmailMandatory();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setUserEmailMandatory(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -596,6 +649,7 @@ public abstract class GSystemConfig
         loginPageMessage  = (java.lang.String) props.get("loginPageMessage");
         registerPageMessage  = (java.lang.String) props.get("registerPageMessage");
         aboutPageMessage  = (java.lang.String) props.get("aboutPageMessage");
+        userEmailMandatory  = (Boolean) props.get("userEmailMandatory");
     }
 
     @Override
@@ -611,6 +665,7 @@ public abstract class GSystemConfig
         properties.put("loginPageMessage", this.loginPageMessage);
         properties.put("registerPageMessage", this.registerPageMessage);
         properties.put("aboutPageMessage", this.aboutPageMessage);
+        properties.put("userEmailMandatory", this.userEmailMandatory);
     }
 
 }
