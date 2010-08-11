@@ -54,6 +54,11 @@ public class ReleaseWidget extends AScrumWidget {
 				public boolean isEditable() {
 					return release.getProject().isProductOwnerOrScrumMaster(getCurrentUser());
 				}
+
+				@Override
+				public String getTooltip() {
+					return getLocalizer().fields().releaseSprints();
+				}
 			});
 
 			tb.addFieldRow("Requirements", new AOutputViewEditWidget() {
@@ -61,6 +66,11 @@ public class ReleaseWidget extends AScrumWidget {
 				@Override
 				protected void onViewerUpdate() {
 					setViewer(ScrumGwt.createToHtmlItemsWidget(release.getRequirements()));
+				}
+
+				@Override
+				public String getTooltip() {
+					return getLocalizer().fields().releaseRequirements();
 				}
 			});
 		}
@@ -70,6 +80,11 @@ public class ReleaseWidget extends AScrumWidget {
 			protected void onViewerUpdate() {
 				setViewer(ScrumGwt.createToHtmlItemsWidget(release.getAffectedByIssues()));
 			}
+
+			@Override
+			public String getTooltip() {
+				return getLocalizer().fields().releaseAffectedByIssues();
+			}
 		});
 		tb.addFieldRow("Fixed issues", new AOutputViewEditWidget() {
 
@@ -77,12 +92,22 @@ public class ReleaseWidget extends AScrumWidget {
 			protected void onViewerUpdate() {
 				setViewer(ScrumGwt.createToHtmlItemsWidget(release.getFixedIssues()));
 			}
+
+			@Override
+			public String getTooltip() {
+				return getLocalizer().fields().releaseFixedIssues();
+			}
 		});
 		tb.addFieldRow("Planned issues", new AOutputViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
 				setViewer(ScrumGwt.createToHtmlItemsWidget(release.getPlannedIssues()));
+			}
+
+			@Override
+			public String getTooltip() {
+				return getLocalizer().fields().releasePlannedIssues();
 			}
 		});
 		tb.addRow(new ChangeHistoryWidget(release), 2);
