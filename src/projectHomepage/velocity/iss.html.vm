@@ -5,13 +5,10 @@
 <div class="section">
     <h2>$issue.label</h2>
     <p>$issue.description</p>
-</div>
-
-<div class="separator"></div>
-
-<div class="section">
-    <h2>Statement from Kunagi Team</h2>
-    <p>$issue.statement</p>
+    #if( $issue.statement )
+        <h3>Statement from Kunagi Team</h3>
+        <p>$issue.statement</p>
+    #end
 </div>
 
 

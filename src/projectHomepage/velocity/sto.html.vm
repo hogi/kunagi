@@ -4,7 +4,14 @@
 
 <div class="section">
     <h2>$story.label</h2>
+    #if( $story.estimatedWork )
+        <p><i>$story.estimatedWork story points estimated by the team</i></p>
+    #end
     <p>$story.description</p>
+    #if( $story.testDescription )
+        <h3>Acceptance tests</h3>
+        <p>$story.testDescription</p>
+    #end
 </div>
 
 #footer()

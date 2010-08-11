@@ -252,6 +252,9 @@ public class HomepageUpdater {
 		context.put("reference", requirement.getReference());
 		context.put("label", requirement.getLabel());
 		context.put("description", wiki2html(requirement.getDescription()));
+		context.put("testDescription", wiki2html(requirement.getTestDescription()));
+		if (!requirement.isEstimatedWorkSet() && !requirement.isDirty())
+			context.put("estimatedWork", requirement.getEstimatedWorkAsString());
 	}
 
 	private void fillWiki(ContextBuilder context) {

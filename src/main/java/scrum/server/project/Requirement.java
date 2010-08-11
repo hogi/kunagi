@@ -26,6 +26,13 @@ public class Requirement extends GRequirement implements Numbered {
 
 	// --- ---
 
+	public String getEstimatedWorkAsString() {
+		Float work = getEstimatedWork();
+		if (work == null) return null;
+		if (work <= 0.5f) return work.toString();
+		return String.valueOf(work.intValue());
+	}
+
 	public boolean isInCurrentSprint() {
 		if (!isSprintSet()) return false;
 		return isSprint(getProject().getCurrentSprint());
