@@ -80,7 +80,6 @@ public class ScreenCssBuilder implements CssBuilder {
 	public static String cUserguideBorder = "#E0E0E0";
 	public static String cUserguideTableHeaderBackground = cUserguideBorder;
 
-
 	public static String cChangesBackground = "#FFFFF8";
 	public static String cChangesBorder = "#FFFFEA";
 	public static String cChangeDate = cCommentDate;
@@ -115,8 +114,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		planningPoker(css);
 
 		css.style(".EmoticonSelectorWidget-emoticon").border(1, "white").borderRadius(2).padding(2, 1, 0, 1);
-		css.style(".EmoticonSelectorWidget-emoticon-selected").background(cBlockHeaderBackground).border(1,
-			cBlockSelectionBorder).padding(2, 3, 0, 2);
+		css.style(".EmoticonSelectorWidget-emoticon-selected").background(cBlockHeaderBackground)
+				.border(1, cBlockSelectionBorder).padding(2, 3, 0, 2);
 
 		css.style(".TrashWidget").background(cTrashBackground).border(1, cTrashBorder).padding(5);
 
@@ -135,15 +134,16 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style(".highlighted .ABlockWidget-title").border(1, cError);
 
-		css.style(".WaitWidget").background(cWaitBackground).borderTop(1, cPagePanelBorder).borderBottom(1,
-			cPagePanelBorder).margin(200, 0, 200, 0).fontSize(fontSize + 2);
-		css.style(".LoginWidget-errorMessage").background(cErrorBackground).color(cError).border(1, cError).fontSize(
-			fontSize + 2).padding(5);
+		css.style(".WaitWidget").background(cWaitBackground).borderTop(1, cPagePanelBorder)
+				.borderBottom(1, cPagePanelBorder).margin(200, 0, 200, 0).fontSize(fontSize + 2);
+		css.style(".LoginWidget-errorMessage").background(cErrorBackground).color(cError).border(1, cError)
+				.fontSize(fontSize + 2).padding(5);
 
 		css.style(".PunishmentsWidget-tableHeader").padding(10).fontSize(fontSizeTitle).lineHeight(lineHeightTitle);
 
-		css.style(".AViewEditWidget-viewer").background(cFieldBackground).border(1, "dotted",
-			cNavigatorSelectedItemBackground).cursorPointer().minWidth(16).minHeight(16).displayBlock().padding(3);
+		css.style(".AViewEditWidget-viewer").background(cFieldBackground)
+				.border(1, "dotted", cNavigatorSelectedItemBackground).cursorPointer().minWidth(16).minHeight(16)
+				.displayBlock().padding(3);
 		css.style(".ARichtextViewEditWidget-editor").height(100).width(96, "%");
 		css.style(".AEditableTextareaWidget-editorPanel").width100();
 		css.style(".Integer-editor").width(10, "%");
@@ -166,8 +166,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".EstimationBarWidget-bar1").background(cEstimationBar1).lineHeight(1).fontSize(1);
 
 		css.style(".SprintBorderIndicatorWidget").background(cPagePanelHeaderBackground).color(cPagePanelHeader)
-				.border(1, cPagePanelBorder).textAlignCenter().borderRadius(10).fontSize(fontSizeSmall).margin(3, 100,
-					3, 100);
+				.border(1, cPagePanelBorder).textAlignCenter().borderRadius(10).fontSize(fontSizeSmall)
+				.margin(3, 100, 3, 100);
 
 		css.style("ul.toc");// .displayInline().floatRight();
 
@@ -177,8 +177,8 @@ public class ScreenCssBuilder implements CssBuilder {
 	private void planningPoker(CssRenderer css) {
 		css.style(".PlanningPokerWidget-table-border").background("#333").border(2, "#2A2A2A").padding(12)
 				.borderRadius(60).marginBottom(10);
-		css.style(".PlanningPokerWidget-table").border(2, "#2A2A2A").borderRadius(45).background(
-			"#5A5 url(pokertable_bg.jpg)").padding(40);
+		css.style(".PlanningPokerWidget-table").border(2, "#2A2A2A").borderRadius(45)
+				.background("#5A5 url(pokertable_bg.jpg)").padding(40);
 		css.style(".PlanningPokerWidget-table-branding").color(cPlanningPokerTableLines).fontFamily("Times New Roman")
 				.fontWeightBold().fontSize(30).textAlignCenter().marginBottom(30);
 		css.style(".PlanningPokerWidget-table .HyperlinkWidget, .PlanningPokerWidget-table a").color(
@@ -186,8 +186,8 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		int cardWidth = 40;
 		int cardHeight = 60;
-		css.style(".PlanningPokerCardSlotWidget-slot").width(cardWidth - 8).height(cardHeight - 8).border(5, "solid",
-			cPlanningPokerTableLines).borderRadius(5);
+		css.style(".PlanningPokerCardSlotWidget-slot").width(cardWidth - 8).height(cardHeight - 8)
+				.border(5, "solid", cPlanningPokerTableLines).borderRadius(5);
 		css.style(".PlanningPokerCardSlotWidget-text").color(cPlanningPokerTableLines).fontSize(fontSizeSmall)
 				.textAlignCenter();
 
@@ -206,12 +206,12 @@ public class ScreenCssBuilder implements CssBuilder {
 				.border(1, "white");
 		css.style(".DateSelectorWidget-weeknumber").background("white").color(cBlockHeaderCellSecondary).width(20)
 				.border(1, "white");
-		css.style(".DateSelectorWidget-spacer").background("white").textAlignCenter().height(20).border(1, "solid",
-			"white");
-		css.style(".DateSelectorWidget-selected").background(cNavigatorHoverItemBackground).textAlignCenter().border(1,
-			cNavigatorHoverItemBackground);
-		css.style(".DateSelectorWidget-visible").background(cBackground).textAlignCenter().border(1, "solid",
-			cBackground);
+		css.style(".DateSelectorWidget-spacer").background("white").textAlignCenter().height(20)
+				.border(1, "solid", "white");
+		css.style(".DateSelectorWidget-selected").background(cNavigatorHoverItemBackground).textAlignCenter()
+				.border(1, cNavigatorHoverItemBackground);
+		css.style(".DateSelectorWidget-visible").background(cBackground).textAlignCenter()
+				.border(1, "solid", cBackground);
 		css.style(".DateSelectorWidget-today").border(1, cNavigatorSelectedItemBackground);
 		css.style(".DateSelectorWidget-events").color("red").fontSize(fontSizeSmall).lineHeight(lineHeightSmall)
 				.textAlignCenter();
@@ -222,9 +222,8 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void dashboard(CssRenderer css) {
-		css
-				.style(
-					".TeamTasksWidget, .UpcomingTasksWidget, .AcceptedIssuesWidget, .OpenImpedimentsWidget, .HighestRisksWidget, .LatestEventsWidget td")
+		css.style(
+			".TeamTasksWidget, .UpcomingTasksWidget, .AcceptedIssuesWidget, .OpenImpedimentsWidget, .HighestRisksWidget, .LatestEventsWidget td")
 				.lineHeight(lineHeight + 4);
 		css.style(".LatestEventsWidget td").borderTop(1, cBlockHeaderBackground).padding(3);
 		css.style(".LatestEventsWidget table").borderBottom(1, cBlockHeaderBackground);
@@ -265,18 +264,18 @@ public class ScreenCssBuilder implements CssBuilder {
 				.border(1, cUserguideBorder).maxWidth(400);
 
 		css.style(".DropdownMenuButtonWidget .gwt-MenuBar-horizontal").paddingLeft(1).border(1, cPagePanelBorder);
-		css.style(".DropdownMenuButtonWidget .gwt-MenuBar-horizontal td").fontSize(fontSizeSmall).lineHeight(
-			lineHeightSmall).padding(0, 3, 0, 3).whiteSpaceNowrap().cursorPointer();
+		css.style(".DropdownMenuButtonWidget .gwt-MenuBar-horizontal td").fontSize(fontSizeSmall)
+				.lineHeight(lineHeightSmall).padding(0, 3, 0, 3).whiteSpaceNowrap().cursorPointer();
 		css.style(".DropdownMenuButtonWidget .gwt-MenuItem-selected").backgroundNone();
 	}
 
 	private void gwt(CssRenderer css) {
 		css.style(".gwt-Hyperlink a").whiteSpaceNowrap();
-		css.style(".gwt-Button").fontFamily(fontFamily).fontSize(fontSize).fontWeightBold().color(cButtonText).padding(
-			2).margin(0).whiteSpaceNowrap().border(1, cButtonBorder);
+		css.style(".gwt-Button").fontFamily(fontFamily).fontSize(fontSize).fontWeightBold().color(cButtonText)
+				.padding(2).margin(0).whiteSpaceNowrap().border(1, cButtonBorder);
 		css.style(".gwt-Button:hover").color(cButtonTextHover).border(1, cButtonBorderHover);
-		css.style(".gwt-Button[disabled], .gwt-Button[disabled]:hover").color(cButtonTextDisabled).border(1, "solid",
-			cButtonBorderDisabled);
+		css.style(".gwt-Button[disabled], .gwt-Button[disabled]:hover").color(cButtonTextDisabled)
+				.border(1, "solid", cButtonBorderDisabled);
 		css.style(".MenuItem-disabled").color(cButtonTextDisabled);
 	}
 
@@ -388,7 +387,6 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".ChangeWidget-comment .AViewEditWidget-viewer").background(cChangesCommentBackground);
 	}
 
-
 	private void blockList(CssRenderer css) {
 		css.style(".ABlockWidget-extended").border(2, cBlockSelectionBorder).padding(3).backgroundWhite();
 		css.style(".ABlockWidget-body").padding(10).border(1, cBlockHeaderBackground);
@@ -396,14 +394,14 @@ public class ScreenCssBuilder implements CssBuilder {
 		// css.style(".BlockListWidget").border(1, "yellow").minHeight(50, "px");
 		css.style(".BlockHeaderWidget").background(cBlockHeaderBackground);
 		css.style(".BlockHeaderWidget:hover").background(cBlockHeaderHoverBackground);
-		css.style(".BlockHeaderWidget-dragHandle").margin(2).padding(2).fontSize(fontSize - 1).lineHeight(
-			lineHeight - 2).textAlignCenter().cursorMove().background(cBlockHeaderDragHandleBackground).border(1,
-			cNavigatorSeparator).borderRadius(5);
+		css.style(".BlockHeaderWidget-dragHandle").margin(2).padding(2).fontSize(fontSize - 1)
+				.lineHeight(lineHeight - 2).textAlignCenter().cursorMove().background(cBlockHeaderDragHandleBackground)
+				.border(1, cNavigatorSeparator).borderRadius(5);
 		css.style(".BlockHeaderWidget-center").padding(2).cursorPointer();
 		css.style(".BlockHeaderWidget-center-text").fontWeightBold().color(cHeaderBackground)
 				.lineHeight(lineHeight + 4);
-		css.style(".BlockHeaderWidget-centerSuffix").marginLeft(5).color(cBlockHeaderCellSecondary).fontSize(
-			fontSizeSmall);
+		css.style(".BlockHeaderWidget-centerSuffix").marginLeft(5).color(cBlockHeaderCellSecondary)
+				.fontSize(fontSizeSmall);
 		css.style(".BlockHeaderWidget-cell").padding(2);
 		css.style(".BlockHeaderWidget-cell-secondary").color(cBlockHeaderCellSecondary);
 		css.style(".BlockHeaderWidget-prefixLabel"); // .cursorPointer();
