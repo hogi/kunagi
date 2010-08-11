@@ -10,7 +10,7 @@
 <div class="separator"></div>
 
 <div class="section">
-    <h3>Statement from Kunagi Team</h3>
+    <h2>Statement from Kunagi Team</h2>
     <p>$issue.statement</p>
 </div>
 

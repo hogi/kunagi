@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+#header("closedissues", "Closed issues - Kunagi", "List of closed issues in Kunagi", "Kunagi, bugs, issues, features")
+
+<div class="section">
+    
+    <h2>Closed issues</h2>
+    <ul>
+    #foreach ($issue in $closedIssues)
+        <li><a href="${issue.reference}.html" class="reference">$issue.reference</a> $issue.label</li>
+    #end
+    </ul>
+    
+</div>
+
+#footer()

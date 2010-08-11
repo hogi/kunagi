@@ -69,6 +69,7 @@ public class HomepageUpdater {
 		fillProductBacklog(context.putSubContext("productBacklog"));
 		fillBugs(context);
 		fillIdeas(context);
+		fillClosedIssues(context);
 		fillReleases(context);
 
 		File[] templateFiles = templateDir.listFiles();
@@ -120,6 +121,7 @@ public class HomepageUpdater {
 	private void processIssueTemplates() {
 		List<Issue> issues = new ArrayList<Issue>(project.getOpenBugs());
 		issues.addAll(project.getOpenIdeas());
+		issues.addAll(project.getClosedIssues());
 		for (Issue issue : issues) {
 			ContextBuilder context = new ContextBuilder();
 			fillIssue(context.putSubContext("issue"), issue);
@@ -156,6 +158,7 @@ public class HomepageUpdater {
 
 	private void fillBugs(ContextBuilder context) {
 		List<Issue> issues = new ArrayList<Issue>(project.getOpenBugs());
+		Collections.sort(issues, Issue.ACCEPT_DATE_COMPARATOR);
 		for (Issue issue : issues) {
 			fillIssue(context.addSubContext("bugs"), issue);
 		}
@@ -163,8 +166,17 @@ public class HomepageUpdater {
 
 	private void fillIdeas(ContextBuilder context) {
 		List<Issue> issues = new ArrayList<Issue>(project.getOpenIdeas());
+		Collections.sort(issues, Issue.ACCEPT_DATE_COMPARATOR);
 		for (Issue issue : issues) {
 			fillIssue(context.addSubContext("ideas"), issue);
+		}
+	}
+
+	private void fillClosedIssues(ContextBuilder context) {
+		List<Issue> issues = new ArrayList<Issue>(project.getOpenIdeas());
+		Collections.sort(issues, Issue.CLOSE_DATE_COMPARATOR);
+		for (Issue issue : issues) {
+			fillIssue(context.addSubContext("closedIssues"), issue);
 		}
 	}
 

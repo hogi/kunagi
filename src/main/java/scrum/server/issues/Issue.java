@@ -1,6 +1,10 @@
 package scrum.server.issues;
 
+import ilarkesto.base.Utl;
 import ilarkesto.base.time.DateAndTime;
+
+import java.util.Comparator;
+
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 
@@ -77,4 +81,27 @@ public class Issue extends GIssue implements Numbered {
 		return getReferenceAndLabel();
 	}
 
+	public static final Comparator<Issue> CLOSE_DATE_COMPARATOR = new Comparator<Issue>() {
+
+		@Override
+		public int compare(Issue a, Issue b) {
+			return Utl.compare(b.getCloseDate(), a.getCloseDate());
+		}
+	};
+
+	public static final Comparator<Issue> ACCEPT_DATE_COMPARATOR = new Comparator<Issue>() {
+
+		@Override
+		public int compare(Issue a, Issue b) {
+			return Utl.compare(b.getAcceptDate(), a.getAcceptDate());
+		}
+	};
+
+	public static final Comparator<Issue> DATE_COMPARATOR = new Comparator<Issue>() {
+
+		@Override
+		public int compare(Issue a, Issue b) {
+			return Utl.compare(b.getDate(), a.getDate());
+		}
+	};
 }
