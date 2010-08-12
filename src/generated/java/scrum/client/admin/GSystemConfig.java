@@ -256,6 +256,122 @@ public abstract class GSystemConfig
 
     }
 
+    // --- smtpPort ---
+
+    private java.lang.Integer smtpPort ;
+
+    public final java.lang.Integer getSmtpPort() {
+        return this.smtpPort ;
+    }
+
+    public final SystemConfig setSmtpPort(java.lang.Integer smtpPort) {
+        if (isSmtpPort(smtpPort)) return (SystemConfig)this;
+        this.smtpPort = smtpPort ;
+        propertyChanged("smtpPort", this.smtpPort);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isSmtpPort(java.lang.Integer smtpPort) {
+        return equals(this.smtpPort, smtpPort);
+    }
+
+    private transient SmtpPortModel smtpPortModel;
+
+    public SmtpPortModel getSmtpPortModel() {
+        if (smtpPortModel == null) smtpPortModel = createSmtpPortModel();
+        return smtpPortModel;
+    }
+
+    protected SmtpPortModel createSmtpPortModel() { return new SmtpPortModel(); }
+
+    protected class SmtpPortModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_smtpPort";
+        }
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getSmtpPort();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setSmtpPort(value);
+        }
+
+            @Override
+            public void increment() {
+                setSmtpPort(getSmtpPort() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setSmtpPort(getSmtpPort() - 1);
+            }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- smtpTls ---
+
+    private boolean smtpTls ;
+
+    public final boolean isSmtpTls() {
+        return this.smtpTls ;
+    }
+
+    public final SystemConfig setSmtpTls(boolean smtpTls) {
+        if (isSmtpTls(smtpTls)) return (SystemConfig)this;
+        this.smtpTls = smtpTls ;
+        propertyChanged("smtpTls", this.smtpTls);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isSmtpTls(boolean smtpTls) {
+        return equals(this.smtpTls, smtpTls);
+    }
+
+    private transient SmtpTlsModel smtpTlsModel;
+
+    public SmtpTlsModel getSmtpTlsModel() {
+        if (smtpTlsModel == null) smtpTlsModel = createSmtpTlsModel();
+        return smtpTlsModel;
+    }
+
+    protected SmtpTlsModel createSmtpTlsModel() { return new SmtpTlsModel(); }
+
+    protected class SmtpTlsModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_smtpTls";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isSmtpTls();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setSmtpTls(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- smtpUser ---
 
     private java.lang.String smtpUser ;
@@ -636,6 +752,112 @@ public abstract class GSystemConfig
 
     }
 
+    // --- registrationDisabled ---
+
+    private boolean registrationDisabled ;
+
+    public final boolean isRegistrationDisabled() {
+        return this.registrationDisabled ;
+    }
+
+    public final SystemConfig setRegistrationDisabled(boolean registrationDisabled) {
+        if (isRegistrationDisabled(registrationDisabled)) return (SystemConfig)this;
+        this.registrationDisabled = registrationDisabled ;
+        propertyChanged("registrationDisabled", this.registrationDisabled);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isRegistrationDisabled(boolean registrationDisabled) {
+        return equals(this.registrationDisabled, registrationDisabled);
+    }
+
+    private transient RegistrationDisabledModel registrationDisabledModel;
+
+    public RegistrationDisabledModel getRegistrationDisabledModel() {
+        if (registrationDisabledModel == null) registrationDisabledModel = createRegistrationDisabledModel();
+        return registrationDisabledModel;
+    }
+
+    protected RegistrationDisabledModel createRegistrationDisabledModel() { return new RegistrationDisabledModel(); }
+
+    protected class RegistrationDisabledModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_registrationDisabled";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isRegistrationDisabled();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setRegistrationDisabled(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- defaultUserPassword ---
+
+    private java.lang.String defaultUserPassword ;
+
+    public final java.lang.String getDefaultUserPassword() {
+        return this.defaultUserPassword ;
+    }
+
+    public final SystemConfig setDefaultUserPassword(java.lang.String defaultUserPassword) {
+        if (isDefaultUserPassword(defaultUserPassword)) return (SystemConfig)this;
+        this.defaultUserPassword = defaultUserPassword ;
+        propertyChanged("defaultUserPassword", this.defaultUserPassword);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isDefaultUserPassword(java.lang.String defaultUserPassword) {
+        return equals(this.defaultUserPassword, defaultUserPassword);
+    }
+
+    private transient DefaultUserPasswordModel defaultUserPasswordModel;
+
+    public DefaultUserPasswordModel getDefaultUserPasswordModel() {
+        if (defaultUserPasswordModel == null) defaultUserPasswordModel = createDefaultUserPasswordModel();
+        return defaultUserPasswordModel;
+    }
+
+    protected DefaultUserPasswordModel createDefaultUserPasswordModel() { return new DefaultUserPasswordModel(); }
+
+    protected class DefaultUserPasswordModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_defaultUserPassword";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getDefaultUserPassword();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setDefaultUserPassword(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -643,6 +865,8 @@ public abstract class GSystemConfig
         adminEmail  = (java.lang.String) props.get("adminEmail");
         googleAnalyticsId  = (java.lang.String) props.get("googleAnalyticsId");
         smtpServer  = (java.lang.String) props.get("smtpServer");
+        smtpPort  = (java.lang.Integer) props.get("smtpPort");
+        smtpTls  = (Boolean) props.get("smtpTls");
         smtpUser  = (java.lang.String) props.get("smtpUser");
         smtpPassword  = (java.lang.String) props.get("smtpPassword");
         smtpFrom  = (java.lang.String) props.get("smtpFrom");
@@ -650,6 +874,8 @@ public abstract class GSystemConfig
         registerPageMessage  = (java.lang.String) props.get("registerPageMessage");
         aboutPageMessage  = (java.lang.String) props.get("aboutPageMessage");
         userEmailMandatory  = (Boolean) props.get("userEmailMandatory");
+        registrationDisabled  = (Boolean) props.get("registrationDisabled");
+        defaultUserPassword  = (java.lang.String) props.get("defaultUserPassword");
     }
 
     @Override
@@ -659,6 +885,8 @@ public abstract class GSystemConfig
         properties.put("adminEmail", this.adminEmail);
         properties.put("googleAnalyticsId", this.googleAnalyticsId);
         properties.put("smtpServer", this.smtpServer);
+        properties.put("smtpPort", this.smtpPort);
+        properties.put("smtpTls", this.smtpTls);
         properties.put("smtpUser", this.smtpUser);
         properties.put("smtpPassword", this.smtpPassword);
         properties.put("smtpFrom", this.smtpFrom);
@@ -666,6 +894,8 @@ public abstract class GSystemConfig
         properties.put("registerPageMessage", this.registerPageMessage);
         properties.put("aboutPageMessage", this.aboutPageMessage);
         properties.put("userEmailMandatory", this.userEmailMandatory);
+        properties.put("registrationDisabled", this.registrationDisabled);
+        properties.put("defaultUserPassword", this.defaultUserPassword);
     }
 
 }

@@ -20,6 +20,7 @@ public class SystemConfig extends GSystemConfig {
 		super.ensureIntegrity();
 		if (!isUrlSet()) setUrl(StartServlet.getWebappUrl());
 		if (!getUrl().endsWith("/")) setUrl(getUrl() + "/");
+		if (!isDefaultUserPasswordSet()) setDefaultUserPassword(scrum.client.admin.User.INITIAL_PASSWORD);
 	}
 
 }

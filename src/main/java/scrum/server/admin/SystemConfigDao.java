@@ -1,23 +1,32 @@
 package scrum.server.admin;
 
-import ilarkesto.fp.Predicate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SystemConfigDao extends GSystemConfigDao {
 
 	public SystemConfig getSystemConfig() {
-		SystemConfig config = getEntity(new Predicate<SystemConfig>() {
+		List<SystemConfig> all = new ArrayList<SystemConfig>(getEntities());
 
-			public boolean test(SystemConfig e) {
-				return true;
-			}
-		});
-
-		if (config == null) {
-			config = newEntityInstance();
+		if (all.isEmpty()) {
+			SystemConfig config = newEntityInstance();
 			saveEntity(config);
+			return config;
 		}
 
-		return config;
+		while (all.size() > 1) {
+			SystemConfig config = all.get(0);
+			deleteEntity(config);
+			all.remove(config);
+		}
+
+		return all.get(0);
+	}
+
+	@Override
+	public void ensureIntegrity() {
+		super.ensureIntegrity();
+		getSystemConfig();
 	}
 
 }

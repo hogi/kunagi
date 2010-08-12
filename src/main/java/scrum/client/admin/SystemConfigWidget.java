@@ -26,11 +26,16 @@ public class SystemConfigWidget extends AScrumWidget {
 		page.addHeader("Installation");
 		TableBuilder tbKunagi = ScrumGwt.createFieldTable();
 		tbKunagi.addFieldRow("Public URL", config.getUrlModel());
+		tbKunagi.addFieldRow("Disable registration page", config.getRegistrationDisabledModel());
+		tbKunagi.addFieldRow("Users email is mandatory", config.getUserEmailMandatoryModel());
+		tbKunagi.addFieldRow("Default user password", config.getDefaultUserPasswordModel());
 		page.addSection(tbKunagi.createTable());
 
 		page.addHeader("Email", new ButtonWidget(new SendTestEmailAction()));
 		TableBuilder tbEmail = ScrumGwt.createFieldTable();
 		tbEmail.addFieldRow("SMTP Server", config.getSmtpServerModel());
+		tbEmail.addFieldRow("SMTP Port", config.getSmtpPortModel());
+		tbEmail.addFieldRow("SMTP TLS", config.getSmtpTlsModel());
 		tbEmail.addFieldRow("SMTP User", config.getSmtpUserModel());
 		tbEmail.addFieldRow("SMTP Password", config.getSmtpPasswordModel());
 		tbEmail.addFieldRow("Sender email", config.getSmtpFromModel());
@@ -44,5 +49,4 @@ public class SystemConfigWidget extends AScrumWidget {
 
 		return page;
 	}
-
 }

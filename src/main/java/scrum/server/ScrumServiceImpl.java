@@ -183,12 +183,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onResetPassword(GwtConversation conversation, String userId) {
+		if (!conversation.getSession().getUser().isAdmin()) throw new PermissionDeniedException();
 		User user = userDao.getById(userId);
 		if (user.isEmailSet()) {
-			if (!user.isEmailVerified()) user.triggerEmailVerification();
+			user.triggerEmailVerification();
 			user.triggerPasswordReset();
 		} else {
-			user.setPassword(scrum.client.admin.User.INITIAL_PASSWORD);
+			user.setPassword(webApplication.getSystemConfig().getDefaultUserPassword());
 		}
 	}
 

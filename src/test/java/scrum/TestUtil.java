@@ -166,15 +166,17 @@ public class TestUtil {
 
 	public static Requirement createRequirement(Project project, int number) {
 		return createRequirement(project, number, Str.generateRandomSentence(4, 5) + " (#" + number + ")",
-			Str.generateRandomParagraph());
+			Str.generateRandomParagraph(), Str.generateRandomParagraph());
 	}
 
-	public static Requirement createRequirement(Project project, int number, String label, String description) {
+	public static Requirement createRequirement(Project project, int number, String label, String description,
+			String testDescription) {
 		Requirement requirement = app.getRequirementDao().newEntityInstance();
 		requirement.setProject(project);
 		requirement.setNumber(number);
 		requirement.setLabel(label);
 		requirement.setDescription(description);
+		requirement.setTestDescription(testDescription);
 		return requirement;
 	}
 

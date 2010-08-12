@@ -67,6 +67,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			systemConfigModel.addStringProperty("adminEmail");
 			systemConfigModel.addStringProperty("googleAnalyticsId");
 			systemConfigModel.addStringProperty("smtpServer");
+			systemConfigModel.addProperty("smtpPort", Integer.class);
+			systemConfigModel.addProperty("smtpTls", boolean.class);
 			systemConfigModel.addStringProperty("smtpUser");
 			systemConfigModel.addStringProperty("smtpPassword");
 			systemConfigModel.addStringProperty("smtpFrom");
@@ -74,6 +76,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			systemConfigModel.addStringProperty("registerPageMessage").setRichtext(true);
 			systemConfigModel.addStringProperty("aboutPageMessage").setRichtext(true);
 			systemConfigModel.addProperty("userEmailMandatory", boolean.class);
+			systemConfigModel.addProperty("registrationDisabled", boolean.class);
+			systemConfigModel.addStringProperty("defaultUserPassword");
 			autowire(systemConfigModel);
 		}
 		return systemConfigModel;
@@ -623,6 +627,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.addAction("DisableUser");
 			userModel.addAction("EnableUser");
 			userModel.addAction("ConfirmUserEmail");
+			userModel.addAction("ResetUserPassword");
 		}
 		return userModel;
 	}

@@ -146,8 +146,8 @@ public class ScrumServiceImplTest extends ATest {
 
 	@Test
 	public void resetPassword() {
-		service.onResetPassword(conversation, duke.getId());
-		assertConversationWithoutErrors(conversation);
+		service.onResetPassword(conversationForAdmin, duke.getId());
+		assertConversationWithoutErrors(conversationForAdmin);
 	}
 
 	@Test

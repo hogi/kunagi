@@ -18,11 +18,20 @@ public class User extends GUser {
 	public static final String INITIAL_PASSWORD = "geheim";
 
 	public User() {
-		setName(INITIAL_NAME);
+		setName(getNextNewUserName());
 	}
 
 	public User(Map data) {
 		super(data);
+	}
+
+	private String getNextNewUserName() {
+		int index = 1;
+		while (true) {
+			String name = "newuser" + index;
+			if (getDao().getUserByName(name) == null) return name;
+			index++;
+		}
 	}
 
 	public ProjectUserConfig getProjectConfig() {

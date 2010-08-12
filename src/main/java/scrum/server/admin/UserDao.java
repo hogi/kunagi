@@ -2,6 +2,7 @@ package scrum.server.admin;
 
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
+import scrum.server.ScrumWebApplication;
 
 public class UserDao extends GUserDao {
 
@@ -23,15 +24,20 @@ public class UserDao extends GUserDao {
 	}
 
 	public User postUser(String name) {
-		return postUser(name, scrum.client.admin.User.INITIAL_PASSWORD);
+		return postUser(name, getDefaultPassword());
 	}
 
 	@Override
 	public User newEntityInstance() {
 		User user = super.newEntityInstance();
-		user.setPassword("geheim");
+		String password = getDefaultPassword();
+		user.setPassword(password);
 		user.setRegistrationDateAndTime(DateAndTime.now());
 		return user;
+	}
+
+	private String getDefaultPassword() {
+		return ScrumWebApplication.get().getSystemConfig().getDefaultUserPassword();
 	}
 
 	// --- test data ---

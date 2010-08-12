@@ -315,11 +315,13 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public Session createSmtpSession() {
 		SystemConfig config = getSystemConfig();
 		String smtpServer = config.getSmtpServer();
+		Integer smtpPort = config.getSmtpPort();
+		boolean smtpTls = config.isSmtpTls();
 		if (smtpServer == null) {
 			log.error("Missing configuration: smtpServer");
 			return null;
 		}
-		return Eml.createSmtpSession(smtpServer, config.getSmtpUser(), config.getSmtpPassword());
+		return Eml.createSmtpSession(smtpServer, smtpPort, smtpTls, config.getSmtpUser(), config.getSmtpPassword());
 	}
 
 }

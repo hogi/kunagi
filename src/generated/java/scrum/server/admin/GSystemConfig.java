@@ -40,6 +40,8 @@ public abstract class GSystemConfig
         properties.put("adminEmail", this.adminEmail);
         properties.put("googleAnalyticsId", this.googleAnalyticsId);
         properties.put("smtpServer", this.smtpServer);
+        properties.put("smtpPort", this.smtpPort);
+        properties.put("smtpTls", this.smtpTls);
         properties.put("smtpUser", this.smtpUser);
         properties.put("smtpPassword", this.smtpPassword);
         properties.put("smtpFrom", this.smtpFrom);
@@ -47,6 +49,8 @@ public abstract class GSystemConfig
         properties.put("registerPageMessage", this.registerPageMessage);
         properties.put("aboutPageMessage", this.aboutPageMessage);
         properties.put("userEmailMandatory", this.userEmailMandatory);
+        properties.put("registrationDisabled", this.registrationDisabled);
+        properties.put("defaultUserPassword", this.defaultUserPassword);
     }
 
     public int compareTo(SystemConfig other) {
@@ -195,6 +199,69 @@ public abstract class GSystemConfig
 
     protected final void updateSmtpServer(Object value) {
         setSmtpServer((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - smtpPort
+    // -----------------------------------------------------------
+
+    private java.lang.Integer smtpPort;
+
+    public final java.lang.Integer getSmtpPort() {
+        return smtpPort;
+    }
+
+    public final void setSmtpPort(java.lang.Integer smtpPort) {
+        smtpPort = prepareSmtpPort(smtpPort);
+        if (isSmtpPort(smtpPort)) return;
+        this.smtpPort = smtpPort;
+        fireModified("smtpPort="+smtpPort);
+    }
+
+    protected java.lang.Integer prepareSmtpPort(java.lang.Integer smtpPort) {
+        return smtpPort;
+    }
+
+    public final boolean isSmtpPortSet() {
+        return this.smtpPort != null;
+    }
+
+    public final boolean isSmtpPort(java.lang.Integer smtpPort) {
+        if (this.smtpPort == null && smtpPort == null) return true;
+        return this.smtpPort != null && this.smtpPort.equals(smtpPort);
+    }
+
+    protected final void updateSmtpPort(Object value) {
+        setSmtpPort((java.lang.Integer)value);
+    }
+
+    // -----------------------------------------------------------
+    // - smtpTls
+    // -----------------------------------------------------------
+
+    private boolean smtpTls;
+
+    public final boolean isSmtpTls() {
+        return smtpTls;
+    }
+
+    public final void setSmtpTls(boolean smtpTls) {
+        smtpTls = prepareSmtpTls(smtpTls);
+        if (isSmtpTls(smtpTls)) return;
+        this.smtpTls = smtpTls;
+        fireModified("smtpTls="+smtpTls);
+    }
+
+    protected boolean prepareSmtpTls(boolean smtpTls) {
+        return smtpTls;
+    }
+
+    public final boolean isSmtpTls(boolean smtpTls) {
+        return this.smtpTls == smtpTls;
+    }
+
+    protected final void updateSmtpTls(Object value) {
+        setSmtpTls((Boolean)value);
     }
 
     // -----------------------------------------------------------
@@ -436,6 +503,70 @@ public abstract class GSystemConfig
         setUserEmailMandatory((Boolean)value);
     }
 
+    // -----------------------------------------------------------
+    // - registrationDisabled
+    // -----------------------------------------------------------
+
+    private boolean registrationDisabled;
+
+    public final boolean isRegistrationDisabled() {
+        return registrationDisabled;
+    }
+
+    public final void setRegistrationDisabled(boolean registrationDisabled) {
+        registrationDisabled = prepareRegistrationDisabled(registrationDisabled);
+        if (isRegistrationDisabled(registrationDisabled)) return;
+        this.registrationDisabled = registrationDisabled;
+        fireModified("registrationDisabled="+registrationDisabled);
+    }
+
+    protected boolean prepareRegistrationDisabled(boolean registrationDisabled) {
+        return registrationDisabled;
+    }
+
+    public final boolean isRegistrationDisabled(boolean registrationDisabled) {
+        return this.registrationDisabled == registrationDisabled;
+    }
+
+    protected final void updateRegistrationDisabled(Object value) {
+        setRegistrationDisabled((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - defaultUserPassword
+    // -----------------------------------------------------------
+
+    private java.lang.String defaultUserPassword;
+
+    public final java.lang.String getDefaultUserPassword() {
+        return defaultUserPassword;
+    }
+
+    public final void setDefaultUserPassword(java.lang.String defaultUserPassword) {
+        defaultUserPassword = prepareDefaultUserPassword(defaultUserPassword);
+        if (isDefaultUserPassword(defaultUserPassword)) return;
+        this.defaultUserPassword = defaultUserPassword;
+        fireModified("defaultUserPassword="+defaultUserPassword);
+    }
+
+    protected java.lang.String prepareDefaultUserPassword(java.lang.String defaultUserPassword) {
+        defaultUserPassword = Str.removeUnreadableChars(defaultUserPassword);
+        return defaultUserPassword;
+    }
+
+    public final boolean isDefaultUserPasswordSet() {
+        return this.defaultUserPassword != null;
+    }
+
+    public final boolean isDefaultUserPassword(java.lang.String defaultUserPassword) {
+        if (this.defaultUserPassword == null && defaultUserPassword == null) return true;
+        return this.defaultUserPassword != null && this.defaultUserPassword.equals(defaultUserPassword);
+    }
+
+    protected final void updateDefaultUserPassword(Object value) {
+        setDefaultUserPassword((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -445,6 +576,8 @@ public abstract class GSystemConfig
             if (property.equals("adminEmail")) updateAdminEmail(value);
             if (property.equals("googleAnalyticsId")) updateGoogleAnalyticsId(value);
             if (property.equals("smtpServer")) updateSmtpServer(value);
+            if (property.equals("smtpPort")) updateSmtpPort(value);
+            if (property.equals("smtpTls")) updateSmtpTls(value);
             if (property.equals("smtpUser")) updateSmtpUser(value);
             if (property.equals("smtpPassword")) updateSmtpPassword(value);
             if (property.equals("smtpFrom")) updateSmtpFrom(value);
@@ -452,6 +585,8 @@ public abstract class GSystemConfig
             if (property.equals("registerPageMessage")) updateRegisterPageMessage(value);
             if (property.equals("aboutPageMessage")) updateAboutPageMessage(value);
             if (property.equals("userEmailMandatory")) updateUserEmailMandatory(value);
+            if (property.equals("registrationDisabled")) updateRegistrationDisabled(value);
+            if (property.equals("defaultUserPassword")) updateDefaultUserPassword(value);
         }
     }
 

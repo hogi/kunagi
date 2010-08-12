@@ -173,7 +173,7 @@ public class HomepageUpdater {
 	}
 
 	private void fillClosedIssues(ContextBuilder context) {
-		List<Issue> issues = new ArrayList<Issue>(project.getOpenIdeas());
+		List<Issue> issues = new ArrayList<Issue>(project.getClosedIssues());
 		Collections.sort(issues, Issue.CLOSE_DATE_COMPARATOR);
 		for (Issue issue : issues) {
 			fillIssue(context.addSubContext("closedIssues"), issue);
@@ -194,6 +194,9 @@ public class HomepageUpdater {
 		context.put("label", issue.getLabel());
 		context.put("description", wiki2html(issue.getDescription()));
 		context.put("statement", wiki2html(issue.getStatement()));
+		context.put("statusText", issue.getStatusText());
+		if (issue.isOwnerSet()) context.put("owner", issue.getOwner().getName());
+		if (issue.isFixed()) context.put("fixed", "true");
 	}
 
 	private void fillRelease(ContextBuilder context, Release release) {
@@ -253,7 +256,7 @@ public class HomepageUpdater {
 		context.put("label", requirement.getLabel());
 		context.put("description", wiki2html(requirement.getDescription()));
 		context.put("testDescription", wiki2html(requirement.getTestDescription()));
-		if (!requirement.isEstimatedWorkSet() && !requirement.isDirty())
+		if (requirement.isEstimatedWorkSet() && !requirement.isDirty())
 			context.put("estimatedWork", requirement.getEstimatedWorkAsString());
 	}
 

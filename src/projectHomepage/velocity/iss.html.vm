@@ -3,12 +3,20 @@
 #header("iss", "$issue.label - Kunagi", "Kunagi issue: $issue.label", "Kunagi, issue, bug")
 
 <div class="section">
+    
     <h2>$issue.label</h2>
     <p>$issue.description</p>
+
+    #if( $issue.statusText )
+        <h3>Status</h3>
+        <p>$issue.statusText</p>
+    #end
+
     #if( $issue.statement )
         <h3>Statement from Kunagi Team</h3>
         <p>$issue.statement</p>
     #end
+    
 </div>
 
 

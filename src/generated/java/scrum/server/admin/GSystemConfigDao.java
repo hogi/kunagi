@@ -50,6 +50,9 @@ public abstract class GSystemConfigDao
         googleAnalyticsIdsCache = null;
         systemConfigsBySmtpServerCache.clear();
         smtpServersCache = null;
+        systemConfigsBySmtpPortCache.clear();
+        smtpPortsCache = null;
+        systemConfigsBySmtpTlsCache.clear();
         systemConfigsBySmtpUserCache.clear();
         smtpUsersCache = null;
         systemConfigsBySmtpPasswordCache.clear();
@@ -63,6 +66,9 @@ public abstract class GSystemConfigDao
         systemConfigsByAboutPageMessageCache.clear();
         aboutPageMessagesCache = null;
         systemConfigsByUserEmailMandatoryCache.clear();
+        systemConfigsByRegistrationDisabledCache.clear();
+        systemConfigsByDefaultUserPasswordCache.clear();
+        defaultUserPasswordsCache = null;
     }
 
     @Override
@@ -237,6 +243,75 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return e.isSmtpServer(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - smtpPort
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.Integer,Set<SystemConfig>> systemConfigsBySmtpPortCache = new Cache<java.lang.Integer,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.Integer,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.Integer smtpPort) {
+                    return getEntities(new IsSmtpPort(smtpPort));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsBySmtpPort(java.lang.Integer smtpPort) {
+        return systemConfigsBySmtpPortCache.get(smtpPort);
+    }
+    private Set<java.lang.Integer> smtpPortsCache;
+
+    public final Set<java.lang.Integer> getSmtpPorts() {
+        if (smtpPortsCache == null) {
+            smtpPortsCache = new HashSet<java.lang.Integer>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isSmtpPortSet()) smtpPortsCache.add(e.getSmtpPort());
+            }
+        }
+        return smtpPortsCache;
+    }
+
+    private static class IsSmtpPort implements Predicate<SystemConfig> {
+
+        private java.lang.Integer value;
+
+        public IsSmtpPort(java.lang.Integer value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isSmtpPort(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - smtpTls
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<SystemConfig>> systemConfigsBySmtpTlsCache = new Cache<Boolean,Set<SystemConfig>>(
+            new Cache.Factory<Boolean,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(Boolean smtpTls) {
+                    return getEntities(new IsSmtpTls(smtpTls));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsBySmtpTls(boolean smtpTls) {
+        return systemConfigsBySmtpTlsCache.get(smtpTls);
+    }
+
+    private static class IsSmtpTls implements Predicate<SystemConfig> {
+
+        private boolean value;
+
+        public IsSmtpTls(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return value == e.isSmtpTls();
         }
 
     }
@@ -506,6 +581,75 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return value == e.isUserEmailMandatory();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - registrationDisabled
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<SystemConfig>> systemConfigsByRegistrationDisabledCache = new Cache<Boolean,Set<SystemConfig>>(
+            new Cache.Factory<Boolean,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(Boolean registrationDisabled) {
+                    return getEntities(new IsRegistrationDisabled(registrationDisabled));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByRegistrationDisabled(boolean registrationDisabled) {
+        return systemConfigsByRegistrationDisabledCache.get(registrationDisabled);
+    }
+
+    private static class IsRegistrationDisabled implements Predicate<SystemConfig> {
+
+        private boolean value;
+
+        public IsRegistrationDisabled(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return value == e.isRegistrationDisabled();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - defaultUserPassword
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsByDefaultUserPasswordCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String defaultUserPassword) {
+                    return getEntities(new IsDefaultUserPassword(defaultUserPassword));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByDefaultUserPassword(java.lang.String defaultUserPassword) {
+        return systemConfigsByDefaultUserPasswordCache.get(defaultUserPassword);
+    }
+    private Set<java.lang.String> defaultUserPasswordsCache;
+
+    public final Set<java.lang.String> getDefaultUserPasswords() {
+        if (defaultUserPasswordsCache == null) {
+            defaultUserPasswordsCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isDefaultUserPasswordSet()) defaultUserPasswordsCache.add(e.getDefaultUserPassword());
+            }
+        }
+        return defaultUserPasswordsCache;
+    }
+
+    private static class IsDefaultUserPassword implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsDefaultUserPassword(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isDefaultUserPassword(value);
         }
 
     }

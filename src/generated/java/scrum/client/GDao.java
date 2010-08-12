@@ -2491,6 +2491,22 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsBySmtpPort(java.lang.Integer smtpPort) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isSmtpPort(smtpPort)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsBySmtpTls(boolean smtpTls) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isSmtpTls(smtpTls)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.admin.SystemConfig> getSystemConfigsBySmtpUser(java.lang.String smtpUser) {
         List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
         for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
@@ -2543,6 +2559,22 @@ public abstract class GDao
         List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
         for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
             if (entity.isUserEmailMandatory(userEmailMandatory)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsByRegistrationDisabled(boolean registrationDisabled) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isRegistrationDisabled(registrationDisabled)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsByDefaultUserPassword(java.lang.String defaultUserPassword) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isDefaultUserPassword(defaultUserPassword)) ret.add(entity);
         }
         return ret;
     }

@@ -27,6 +27,7 @@ public class RegisterWidget extends AScrumWidget implements RegisterDataProvider
 
 	@Override
 	protected Widget onInitialization() {
+		boolean registrationDisabled = getDao().getSystemConfig().isRegistrationDisabled();
 		message = new Label();
 
 		username = new TextBox();
@@ -47,16 +48,20 @@ public class RegisterWidget extends AScrumWidget implements RegisterDataProvider
 		password.setWidth("150px");
 		password.addKeyPressHandler(new InputKeyHandler());
 
-		TableBuilder fields = ScrumGwt.createFieldTable();
-		fields.setWidth(null);
+		Widget content;
 
-		fields.addRow(message, 2);
-		fields.addFieldRow("Username", username);
-		fields.addFieldRow("Email", email);
-		fields.addFieldRow("Password", password);
-		fields.addFieldRow("", new ButtonWidget(new RegisterAction(this)), 2);
-
-		Widget content = fields.createTable();
+		if (registrationDisabled) {
+			content = new Label("Registration is disabled.");
+		} else {
+			TableBuilder fields = ScrumGwt.createFieldTable();
+			fields.setWidth(null);
+			fields.addRow(message, 2);
+			fields.addFieldRow("Username", username);
+			fields.addFieldRow("Email", email);
+			fields.addFieldRow("Password", password);
+			fields.addFieldRow("", new ButtonWidget(new RegisterAction(this)), 2);
+			content = fields.createTable();
+		}
 
 		SystemConfig config = getDao().getSystemConfig();
 		String message = config.getRegisterPageMessage();
@@ -65,9 +70,11 @@ public class RegisterWidget extends AScrumWidget implements RegisterDataProvider
 					+ "</div>"));
 		}
 
+		content = Gwt.createCenterer(content);
+
 		PagePanel page = new PagePanel();
 		page.addHeader("Register");
-		page.addSection(Gwt.createCenterer(content));
+		page.addSection(content);
 
 		return page;
 	}

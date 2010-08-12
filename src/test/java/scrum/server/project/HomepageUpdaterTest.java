@@ -1,6 +1,7 @@
 package scrum.server.project;
 
 import ilarkesto.base.Str;
+import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 
 import org.testng.annotations.AfterClass;
@@ -36,6 +37,8 @@ public class HomepageUpdaterTest {
 		for (int i = 1; i <= 5; i++) {
 			Requirement story = TestUtil.createRequirement(project, i);
 			story.setSprint(sprint);
+			story.setEstimatedWorkAsString(Utl.randomElement(scrum.client.project.Requirement.WORK_ESTIMATION_VALUES));
+			story.setDirty(false);
 			for (int j = 1; j <= 5; j++) {
 				TestUtil.createTask(story, j, 16);
 			}

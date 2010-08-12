@@ -1,5 +1,7 @@
 package scrum.server.project;
 
+import ilarkesto.core.base.Str;
+
 import java.util.Set;
 
 import scrum.server.admin.User;
@@ -31,6 +33,14 @@ public class Requirement extends GRequirement implements Numbered {
 		if (work == null) return null;
 		if (work <= 0.5f) return work.toString();
 		return String.valueOf(work.intValue());
+	}
+
+	public void setEstimatedWorkAsString(String value) {
+		if (Str.isBlank(value)) {
+			setEstimatedWork(null);
+			return;
+		}
+		setEstimatedWork(Float.parseFloat(value));
 	}
 
 	public boolean isInCurrentSprint() {
