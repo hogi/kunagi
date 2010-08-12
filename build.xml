@@ -115,6 +115,8 @@
         <copy todir="/var/www/servisto.de/projects/scrum">
             <fileset dir="src/projectHomepage/html" />
         </copy>
+    	<mkdir dir="/var/www/servisto.de/projects/scrum/latest" />
+        <copy tofile="/var/www/servisto.de/projects/scrum/latest/kunagi.war" file="build/kunagi.war" />
         <mkdir dir="/var/www/servisto.de/projects/scrum/velocity" />
         <copy todir="/var/www/servisto.de/projects/scrum/velocity">
             <fileset dir="src/projectHomepage/velocity" />
@@ -154,3 +156,4 @@
     <target name="continousIntegrationRelease" depends="release" />
 
 </project>
+
