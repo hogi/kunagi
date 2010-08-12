@@ -34,7 +34,7 @@ public class SystemConfigWidget extends AScrumWidget {
 		tbEmail.addFieldRow("SMTP User", config.getSmtpUserModel());
 		tbEmail.addFieldRow("SMTP Password", config.getSmtpPasswordModel());
 		tbEmail.addFieldRow("Sender email", config.getSmtpFromModel());
-		tbKunagi.addFieldRow("Administrator email", config.getAdminEmailModel());
+		tbEmail.addFieldRow("Administrator email", config.getAdminEmailModel());
 		page.addSection(tbEmail.createTable());
 
 		page.addHeader("Google Integration");
