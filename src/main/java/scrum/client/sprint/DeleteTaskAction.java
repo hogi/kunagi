@@ -15,7 +15,7 @@ public class DeleteTaskAction extends GDeleteTaskAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Delete this Task.");
+		TooltipBuilder tb = new TooltipBuilder("Delete this Task permanently.");
 
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM);

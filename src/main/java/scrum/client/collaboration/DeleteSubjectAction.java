@@ -15,7 +15,7 @@ public class DeleteSubjectAction extends GDeleteSubjectAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Delete this Subject and all comments.");
+		TooltipBuilder tb = new TooltipBuilder("Delete this Subject and all it's comments permanently.");
 		if (!subject.getProject().isScrumMaster(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_SCRUMMASTER);
 
 		return tb.getTooltip();

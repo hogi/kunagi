@@ -18,7 +18,8 @@ public class SuspendIssueAction extends GSuspendIssueAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Hide this issue for " + days + " days.");
+		TooltipBuilder tb = new TooltipBuilder("Hide this issue for " + days
+				+ " days (if you want to postpone a decision).");
 		if (!issue.getProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 		return tb.getTooltip();
 	}

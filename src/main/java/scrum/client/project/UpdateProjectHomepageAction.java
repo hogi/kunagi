@@ -11,7 +11,8 @@ public class UpdateProjectHomepageAction extends GUpdateProjectHomepageAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Update the public homepage for this project.");
+		TooltipBuilder tb = new TooltipBuilder(
+				"Export project data, thereby updating the public homepage for this project.");
 		if (!project.isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 		return super.getTooltip();

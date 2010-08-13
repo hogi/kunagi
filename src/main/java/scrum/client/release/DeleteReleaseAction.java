@@ -15,7 +15,7 @@ public class DeleteReleaseAction extends GDeleteReleaseAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Delete this Release");
+		TooltipBuilder tb = new TooltipBuilder("Delete this Release permanently.");
 
 		if (!getCurrentProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 

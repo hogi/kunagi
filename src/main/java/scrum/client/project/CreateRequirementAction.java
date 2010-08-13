@@ -8,7 +8,7 @@ public class CreateRequirementAction extends GCreateRequirementAction {
 
 	@Override
 	public String getLabel() {
-		return "Create new Story";
+		return "Create Story";
 	}
 
 	@Override

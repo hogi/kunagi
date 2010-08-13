@@ -16,15 +16,15 @@ public class SetRequirementCleanAction extends GSetRequirementCleanAction {
 	@Override
 	public String getTooltip() {
 
-		TooltipBuilder tb = new TooltipBuilder("Mark this Story as clean. This means, the estimated work is accurate.");
+		TooltipBuilder tb = new TooltipBuilder("Confirm that the estimation of the Story is still accurate.");
 
 		if (!requirement.getProject().isTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM);
 		} else {
 			if (requirement.isClosed()) tb.addRemark("Story is already closed.");
-			if (!requirement.isDirty()) tb.addRemark("Story is already clean.");
+			if (!requirement.isDirty()) tb.addRemark("The estimation has already been confirmed.");
 			if (requirement.getEstimatedWork() == null) tb.addRemark("Story is not yet estimated.");
-			if (requirement.isInCurrentSprint()) tb.addRemark("Story is in Sprint.");
+			if (requirement.isInCurrentSprint()) tb.addRemark("Story is in current Sprint and cannot be changed.");
 		}
 
 		return tb.getTooltip();

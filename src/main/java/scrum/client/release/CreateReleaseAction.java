@@ -8,12 +8,12 @@ public class CreateReleaseAction extends GCreateReleaseAction {
 
 	@Override
 	public String getLabel() {
-		return "Create new Release";
+		return "Create Release";
 	}
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Create new major Release");
+		TooltipBuilder tb = new TooltipBuilder("Create new major Release.");
 
 		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);

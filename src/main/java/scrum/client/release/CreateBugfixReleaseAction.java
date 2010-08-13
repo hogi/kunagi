@@ -12,12 +12,12 @@ public class CreateBugfixReleaseAction extends GCreateBugfixReleaseAction {
 
 	@Override
 	public String getLabel() {
-		return "Create new Bugfix Release";
+		return "Create Bugfix Release";
 	}
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Create a new Bugfix Release for this Release");
+		TooltipBuilder tb = new TooltipBuilder("Create a new Bugfix Release for this Release.");
 
 		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);

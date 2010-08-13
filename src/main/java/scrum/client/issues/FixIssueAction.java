@@ -16,7 +16,7 @@ public class FixIssueAction extends GFixIssueAction {
 	@Override
 	public String getTooltip() {
 
-		TooltipBuilder tb = new TooltipBuilder("Mark Issue as fixed.");
+		TooltipBuilder tb = new TooltipBuilder("Mark this Issue as fixed.");
 
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM);

@@ -7,7 +7,7 @@ public class CreateIssueAction extends GCreateIssueAction {
 
 	@Override
 	public String getLabel() {
-		return "Create new Issue";
+		return "Create Issue";
 	}
 
 	@Override

@@ -10,19 +10,19 @@ public class SetRequirementDirtyAction extends GSetRequirementDirtyAction {
 
 	@Override
 	public String getLabel() {
-		return "Request Re-Estimation";
+		return "Request re-estimation";
 	}
 
 	@Override
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder(
-				"Mark this Story as dirty. This means, the estimated work needs to be reestimated.");
+				"Request a re-estimation of this story, if you changed the Story or think that the current estimation is outdated.");
 		if (!requirement.getProject().isProductOwnerOrTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM_NOR_PRODUCT_OWNER);
 		} else {
 			if (requirement.isClosed()) tb.addRemark("Story is already closed.");
-			if (requirement.isDirty()) tb.addRemark("Story is already dirty.");
-			if (requirement.isInCurrentSprint()) tb.addRemark("Story is in Sprint.");
+			if (requirement.isDirty()) tb.addRemark("Re-estmation has already been requested for this Story.");
+			if (requirement.isInCurrentSprint()) tb.addRemark("Story is in current Sprint.");
 		}
 
 		return tb.getTooltip();

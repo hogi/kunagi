@@ -16,7 +16,7 @@ public class DeleteProjectAction extends GDeleteProjectAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Delete this project and destroy all its data.");
+		TooltipBuilder tb = new TooltipBuilder("Delete this project and destroy all its data permanently.");
 
 		if (!getCurrentUser().isAdmin()) tb.addRemark(TooltipBuilder.NOT_SYS_ADMIN);
 

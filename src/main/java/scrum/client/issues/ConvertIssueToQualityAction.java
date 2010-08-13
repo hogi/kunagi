@@ -18,7 +18,7 @@ public class ConvertIssueToQualityAction extends GConvertIssueToQualityAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Convert this issue to a real Quality on the Quality Backlog.");
+		TooltipBuilder tb = new TooltipBuilder("Convert this issue to a Quality in the Quality Backlog.");
 		if (!issue.getProject().isProductOwner(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 		}

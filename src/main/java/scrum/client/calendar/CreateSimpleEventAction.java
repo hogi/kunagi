@@ -8,12 +8,12 @@ public class CreateSimpleEventAction extends GCreateSimpleEventAction {
 
 	@Override
 	public String getLabel() {
-		return "Create new Event";
+		return "Create Event";
 	}
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Create new Event.");
+		TooltipBuilder tb = new TooltipBuilder("Create new Event on the date selected.");
 		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 

@@ -16,7 +16,7 @@ public class StartRequirementEstimationVotingAction extends GStartRequirementEst
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Activate the Planning Poker table for this Story.");
+		TooltipBuilder tb = new TooltipBuilder("Open the Planning Poker table for this Story.");
 
 		if (!requirement.getProject().isTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_TEAM);
 

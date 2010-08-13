@@ -8,7 +8,7 @@ public class CreateProjectAction extends GCreateProjectAction {
 
 	@Override
 	public String getLabel() {
-		return "Create new Project";
+		return "Create Project";
 	}
 
 	@Override

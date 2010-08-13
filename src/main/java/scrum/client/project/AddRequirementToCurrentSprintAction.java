@@ -11,13 +11,13 @@ public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurren
 
 	@Override
 	public String getLabel() {
-		return "Pull to current Sprint";
+		return "Pull to Sprint";
 	}
 
 	@Override
 	public String getTooltip() {
 
-		TooltipBuilder tb = new TooltipBuilder("Add this Story the the current Sprint.");
+		TooltipBuilder tb = new TooltipBuilder("Add this Story to the current Sprint Backlog.");
 
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM);

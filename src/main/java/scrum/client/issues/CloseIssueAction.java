@@ -1,5 +1,7 @@
 package scrum.client.issues;
 
+import scrum.client.common.TooltipBuilder;
+
 public class CloseIssueAction extends GCloseIssueAction {
 
 	public CloseIssueAction(scrum.client.issues.Issue issue) {
@@ -9,6 +11,16 @@ public class CloseIssueAction extends GCloseIssueAction {
 	@Override
 	public String getLabel() {
 		return "Close";
+	}
+
+	@Override
+	public String getTooltip() {
+		TooltipBuilder tb = new TooltipBuilder(
+				"Close this Issue, marking it as resolved or rejected. You can give a reason in the Statement and Change Log.");
+
+		if (!isPermitted()) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
+
+		return tb.getTooltip();
 	}
 
 	@Override

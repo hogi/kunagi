@@ -15,7 +15,7 @@ public class DeleteRequirementAction extends GDeleteRequirementAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Delete this Story.");
+		TooltipBuilder tb = new TooltipBuilder("Delete this Story permanently.");
 
 		if (!requirement.getProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 

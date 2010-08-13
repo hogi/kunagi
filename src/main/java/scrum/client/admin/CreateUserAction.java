@@ -1,13 +1,21 @@
 package scrum.client.admin;
 
 import ilarkesto.core.scope.Scope;
+import scrum.client.common.TooltipBuilder;
 import scrum.client.workspace.UsersWorkspaceWidgets;
 
 public class CreateUserAction extends GCreateUserAction {
 
 	@Override
 	public String getLabel() {
-		return "Create new User";
+		return "Create User";
+	}
+
+	@Override
+	public String getTooltip() {
+		TooltipBuilder tb = new TooltipBuilder("Create a new user.");
+
+		return tb.getTooltip();
 	}
 
 	@Override

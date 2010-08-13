@@ -8,7 +8,7 @@ public class CreateQualityAction extends GCreateQualityAction {
 
 	@Override
 	public String getLabel() {
-		return "Create new Quality";
+		return "Create Quality";
 	}
 
 	@Override

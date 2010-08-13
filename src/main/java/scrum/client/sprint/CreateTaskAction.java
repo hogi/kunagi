@@ -15,7 +15,7 @@ public class CreateTaskAction extends GCreateTaskAction {
 
 	@Override
 	public String getLabel() {
-		return "Create new Task";
+		return "Create Task";
 	}
 
 	@Override

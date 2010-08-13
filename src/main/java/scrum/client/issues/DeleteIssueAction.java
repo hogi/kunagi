@@ -15,7 +15,7 @@ public class DeleteIssueAction extends GDeleteIssueAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Delete this issue.");
+		TooltipBuilder tb = new TooltipBuilder("Delete this Issue permanently.");
 		if (!issue.getProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 		if (!issue.isOpen()) tb.addRemark("Only issues from the inbox can be deleted.");

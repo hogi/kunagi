@@ -10,12 +10,13 @@ public class ReopenTaskAction extends GReopenTaskAction {
 
 	@Override
 	public String getLabel() {
-		return "Re-Open";
+		return "Reopen";
 	}
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Reactivate this Task.");
+		TooltipBuilder tb = new TooltipBuilder(
+				"Reopen this Task, stating that is is not yet done or needs to be performed again.");
 
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM);

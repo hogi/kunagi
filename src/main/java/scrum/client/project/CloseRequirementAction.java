@@ -15,7 +15,7 @@ public class CloseRequirementAction extends GCloseRequirementAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Accept this Story as completed.");
+		TooltipBuilder tb = new TooltipBuilder("Accept this Story as done.");
 
 		if (!getCurrentProject().isProductOwner(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);

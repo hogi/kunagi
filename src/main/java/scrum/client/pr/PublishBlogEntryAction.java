@@ -1,6 +1,7 @@
 package scrum.client.pr;
 
 import ilarkesto.core.base.Str;
+import scrum.client.common.TooltipBuilder;
 
 public class PublishBlogEntryAction extends GPublishBlogEntryAction {
 
@@ -10,7 +11,18 @@ public class PublishBlogEntryAction extends GPublishBlogEntryAction {
 
 	@Override
 	public String getLabel() {
-		return "Publish this Blog entry";
+		return "Publish";
+	}
+
+	@Override
+	public String getTooltip() {
+		// TODO Auto-generated method stub
+		TooltipBuilder tb = new TooltipBuilder(
+				"Publish this Blog entry. Published entries are taken into account when exporting project data.");
+
+		if (!isPermitted()) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER_NOR_SCRUMMASTER);
+
+		return tb.getTooltip();
 	}
 
 	@Override

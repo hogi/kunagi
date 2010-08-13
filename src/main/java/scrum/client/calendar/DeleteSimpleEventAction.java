@@ -15,7 +15,7 @@ public class DeleteSimpleEventAction extends GDeleteSimpleEventAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Delete this Impediment.");
+		TooltipBuilder tb = new TooltipBuilder("Delete this Impediment permanently.");
 		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 		return tb.getTooltip();

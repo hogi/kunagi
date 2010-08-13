@@ -15,7 +15,7 @@ public class DeleteBlogEntryAction extends GDeleteBlogEntryAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Delete this Blog entry");
+		TooltipBuilder tb = new TooltipBuilder("Delete this Blog entry permanently.");
 
 		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);

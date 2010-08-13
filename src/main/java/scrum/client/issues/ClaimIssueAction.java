@@ -17,7 +17,7 @@ public class ClaimIssueAction extends GClaimIssueAction {
 	@Override
 	public String getTooltip() {
 
-		TooltipBuilder tb = new TooltipBuilder("Claim ownership for this Issue.");
+		TooltipBuilder tb = new TooltipBuilder("Claim ownership for this Issue, stating that you are working on it.");
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM);
 		} else {

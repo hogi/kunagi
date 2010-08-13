@@ -8,7 +8,7 @@ public class CreateImpedimentAction extends GCreateImpedimentAction {
 
 	@Override
 	public String getLabel() {
-		return "Create new Impediment";
+		return "Create Impediment";
 	}
 
 	@Override

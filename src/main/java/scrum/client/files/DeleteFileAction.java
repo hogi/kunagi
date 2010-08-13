@@ -16,7 +16,7 @@ public class DeleteFileAction extends GDeleteFileAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Delete this File.");
+		TooltipBuilder tb = new TooltipBuilder("Delete this File permanently.");
 		if (!file.getProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 

@@ -16,7 +16,7 @@ public class CloseTaskAction extends GCloseTaskAction {
 	@Override
 	public String getTooltip() {
 
-		TooltipBuilder tb = new TooltipBuilder("Mark Task as done.");
+		TooltipBuilder tb = new TooltipBuilder("Mark this Task as done.");
 
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM);

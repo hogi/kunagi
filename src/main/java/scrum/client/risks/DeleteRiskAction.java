@@ -15,7 +15,7 @@ public class DeleteRiskAction extends GDeleteRiskAction {
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Delete this Risk");
+		TooltipBuilder tb = new TooltipBuilder("Delete this Risk permanently.");
 
 		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);

@@ -19,6 +19,7 @@ import ilarkesto.mda.swingeditor.Starter;
 import ilarkesto.mda.swingeditor.Workspace;
 
 import java.io.File;
+import java.util.List;
 
 public class ScrumModeller extends Starter {
 
@@ -33,6 +34,7 @@ public class ScrumModeller extends Starter {
 
 		ModellingSession modellingSession = scope.getComponent(ModellingSession.class);
 		modellingSession.addProcessor(new LegacyGeneration());
+		// modellingSession.addProcessor(new TextGeneration());
 		modellingSession.load(new CsvFileModelSource(new File("src/model.csv")));
 		appendLegacy(modellingSession.getModel());
 
@@ -84,6 +86,20 @@ public class ScrumModeller extends Starter {
 
 		public void processModel(Model model) {
 			scrumModelApplication.generateClasses().shutdown();
+		}
+
+	}
+
+	static class TextGeneration implements ModelProcessor {
+
+		public void processModel(Model model) {
+			List<Node> nodes = model.getRoot().getChildrenByTypeRecursive(NodeTypes.EN);
+			for (Node n : nodes) {
+				System.out.println("");
+				System.out.println("<h2>" + Str.uppercaseFirstLetter(n.getParent().getValue()) + "</h2>");
+				System.out.println(n.getValue());
+			}
+
 		}
 
 	}

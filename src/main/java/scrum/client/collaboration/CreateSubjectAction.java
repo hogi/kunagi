@@ -8,12 +8,13 @@ public class CreateSubjectAction extends GCreateSubjectAction {
 
 	@Override
 	public String getLabel() {
-		return "Create new Subject";
+		return "Create Subject";
 	}
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Create new thread.");
+		TooltipBuilder tb = new TooltipBuilder(
+				"Create new Subject. You can set the title and start discussing after creation.");
 		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 

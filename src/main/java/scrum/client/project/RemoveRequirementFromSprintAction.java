@@ -16,12 +16,12 @@ public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSpr
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Remove this Story from Sprint.");
+		TooltipBuilder tb = new TooltipBuilder("Remove this Story from the current Sprint.");
 
 		if (!requirement.getProject().isProductOwner(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 		} else {
-			if (!requirement.isSprintSet()) tb.addRemark("Story is not in Sprint.");
+			if (!requirement.isSprintSet()) tb.addRemark("Story is not in in the current Sprint.");
 		}
 
 		return tb.getTooltip();

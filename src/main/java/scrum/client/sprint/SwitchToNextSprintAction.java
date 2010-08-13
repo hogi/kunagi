@@ -11,12 +11,12 @@ public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 
 	@Override
 	public String getLabel() {
-		return "Switch to this Sprint";
+		return "Switch to next Sprint";
 	}
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Switch to this Sprint");
+		TooltipBuilder tb = new TooltipBuilder("Finish the current Sprint and replace it by the next one.");
 		if (!getCurrentProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 		return tb.getTooltip();
 	}
