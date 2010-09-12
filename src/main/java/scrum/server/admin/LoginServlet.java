@@ -176,6 +176,9 @@ public class LoginServlet extends AHttpServlet {
 
 		html.endDIV();
 		html.comment(applicationInfo.toString());
+
+		html.SCRIPTjavascript(null, "document.getElementById('username').focus();");
+
 		String analyticsId = config.getGoogleAnalyticsId();
 		if (analyticsId != null) html.googleAnalytics(analyticsId);
 		html.endBODY();
