@@ -318,9 +318,12 @@ public class LoginServlet extends AHttpServlet {
 
 		html.BR();
 		html.A("login.html?showPasswordRequest=true", "Forgot your password?");
-		html.nbsp();
-		html.nbsp();
-		html.A("login.html?showCreateAccount=true", "Create new account");
+
+		if (!webApplication.getSystemConfig().isRegistrationDisabled()) {
+			html.nbsp();
+			html.nbsp();
+			html.A("login.html?showCreateAccount=true", "Create new account");
+		}
 	}
 
 	@Override
