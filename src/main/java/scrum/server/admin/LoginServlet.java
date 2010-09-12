@@ -304,7 +304,7 @@ public class LoginServlet extends AHttpServlet {
 
 		html.startTR();
 		html.startTD();
-		html.LABEL("username", "Username/E-Mail");
+		html.LABEL("username", "Username / E-Mail");
 		html.endTD();
 		html.startTD();
 		html.LABEL("password", "Password");

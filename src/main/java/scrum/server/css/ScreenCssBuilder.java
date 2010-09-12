@@ -188,9 +188,9 @@ public class ScreenCssBuilder implements CssBuilder {
 				.marginRight(5);
 		css.style(".loginPage h2").colorWhite();
 		css.style(".loginPage input").marginBottom(5);
-		css.style("#username").width(200).marginRight(10);
-		css.style("#email").width(200).marginRight(10);
-		css.style("#password").width(200).marginRight(10);
+		css.style("#username").width(150).marginRight(10);
+		css.style("#email").width(150).marginRight(10);
+		css.style("#password").width(150).marginRight(10);
 		css.style(".loginPage .kunagiLink").textAlignRight().margin(50);
 	}
 
