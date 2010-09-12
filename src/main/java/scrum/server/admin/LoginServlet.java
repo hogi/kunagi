@@ -143,7 +143,7 @@ public class LoginServlet extends AHttpServlet {
 	}
 
 	private String getStartPage() {
-		return webApplication.isDevelopmentMode() ? "index.html?gwt.codesvr=127.0.0.1:9997" : "/";
+		return webApplication.isDevelopmentMode() ? "index.html?gwt.codesvr=127.0.0.1:9997" : "";
 	}
 
 	private void createLoginPage(HttpServletResponse resp, String username, String message, boolean passwordRequest,
