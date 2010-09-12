@@ -1,5 +1,6 @@
 package scrum.server.css;
 
+import ilarkesto.base.Colors;
 import ilarkesto.ui.web.CssRenderer;
 
 import java.io.PrintWriter;
@@ -98,6 +99,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		html(css);
 		gwt(css);
 		ilarkesto(css);
+		loginPage(css);
 		systemMessage(css);
 		blockList(css);
 		comments(css);
@@ -174,6 +176,21 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".reference").fontFamilyMonospace().color(cLink);
 
 		css.style("input.InputMandatory").border(1, "black");
+	}
+
+	private void loginPage(CssRenderer css) {
+		css.style(".loginPage").background(cHeaderBackground);
+		css.style(".loginPage a").color("orange");
+		css.style(".loginPage .panel").width(400).margin("100px auto").padding(20);
+		css.style(".loginPage .panel img").marginBottom(0);
+		css.style(".loginPage .message").color("white").marginBottom(10).fontSize(fontSizeTitle).fontStyleItalic();
+		css.style(".loginPage .panel label").color(Colors.lighten(Colors.lighten(Colors.lighten(cHeaderBackground))))
+				.marginRight(5);
+		css.style(".loginPage h2").colorWhite();
+		css.style(".loginPage input").marginBottom(5);
+		css.style("#username").width(200).marginRight(10);
+		css.style("#email").width(200).marginRight(10);
+		css.style("#password").width(200).marginRight(10);
 	}
 
 	private void planningPoker(CssRenderer css) {

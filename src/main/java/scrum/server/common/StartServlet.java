@@ -18,11 +18,18 @@ import scrum.server.WebSession;
 public class StartServlet extends AHttpServlet {
 
 	private static String webappUrl = "http://localhost:8080/kunagi/";
+	private static ScrumWebApplication webApplication;
+
 	private ScrumConfig config;
 	private ApplicationInfo applicationInfo;
 
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
+		if (session.getUser() == null) {
+			resp.sendRedirect("login.html");
+			return;
+		}
+
 		String charset = IO.UTF_8;
 		resp.setContentType("text/html");
 
@@ -52,10 +59,10 @@ public class StartServlet extends AHttpServlet {
 		webappUrl = Servlet.getWebappUrl(servletConfig, false);
 		System.out.println("Initializing Kunagi (" + webappUrl + ")");
 
-		ScrumWebApplication app = ScrumWebApplication.get(servletConfig);
+		webApplication = ScrumWebApplication.get(servletConfig);
 
-		config = app.getConfig();
-		applicationInfo = app.getApplicationInfo();
+		config = webApplication.getConfig();
+		applicationInfo = webApplication.getApplicationInfo();
 	}
 
 	public static String getWebappUrl() {
