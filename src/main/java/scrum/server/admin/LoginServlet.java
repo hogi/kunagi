@@ -29,6 +29,7 @@ public class LoginServlet extends AHttpServlet {
 	private ApplicationInfo applicationInfo;
 	private ScrumConfig config;
 	private UserDao userDao;
+	private SystemConfig systemConfig;
 
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
@@ -86,7 +87,7 @@ public class LoginServlet extends AHttpServlet {
 
 		if (!user.isEmailVerified()) {
 			createLoginPage(resp, login, "User '" + login + "' has no verified email. Please contact the admin: "
-					+ webApplication.getSystemConfig().getAdminEmail(), true, false);
+					+ systemConfig.getAdminEmail(), true, false);
 			return;
 		}
 
@@ -105,7 +106,7 @@ public class LoginServlet extends AHttpServlet {
 			createLoginPage(resp, username, "Creating account failed. Username required.", false, true);
 			return;
 		}
-		if (webApplication.getSystemConfig().isUserEmailMandatory() && email == null) {
+		if (systemConfig.isUserEmailMandatory() && email == null) {
 			createLoginPage(resp, username, "Creating account failed. E-Mail required.", false, true);
 			return;
 		}
@@ -167,6 +168,10 @@ public class LoginServlet extends AHttpServlet {
 		if (!createAccount && !passwordRequest) createLoginForm(html, username);
 		if (passwordRequest) createPasswordRequestForm(html, username);
 		if (createAccount) createCreateAccountForm(html, username);
+		html.endDIV();
+
+		html.startDIV("kunagiLink");
+		html.A("http://kunagi.org", "kunagi.org");
 		html.endDIV();
 
 		html.endDIV();
@@ -252,6 +257,12 @@ public class LoginServlet extends AHttpServlet {
 
 		html.BR();
 		html.A("login.html", "Login");
+
+		if (systemConfig.isRegisterPageMessageSet()) {
+			html.BR();
+			html.BR();
+			html.html(systemConfig.getRegisterPageMessage());
+		}
 	}
 
 	private void createMessage(HtmlRenderer html, String message) {
@@ -319,10 +330,16 @@ public class LoginServlet extends AHttpServlet {
 		html.BR();
 		html.A("login.html?showPasswordRequest=true", "Forgot your password?");
 
-		if (!webApplication.getSystemConfig().isRegistrationDisabled()) {
+		if (!systemConfig.isRegistrationDisabled()) {
 			html.nbsp();
 			html.nbsp();
 			html.A("login.html?showCreateAccount=true", "Create new account");
+		}
+
+		if (systemConfig.isLoginPageMessageSet()) {
+			html.BR();
+			html.BR();
+			html.html(systemConfig.getLoginPageMessage());
 		}
 	}
 
@@ -333,6 +350,7 @@ public class LoginServlet extends AHttpServlet {
 		userDao = webApplication.getUserDao();
 		applicationInfo = webApplication.getApplicationInfo();
 		config = webApplication.getConfig();
+		systemConfig = webApplication.getSystemConfig();
 	}
 
 }

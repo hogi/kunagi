@@ -191,6 +191,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style("#username").width(200).marginRight(10);
 		css.style("#email").width(200).marginRight(10);
 		css.style("#password").width(200).marginRight(10);
+		css.style(".loginPage .kunagiLink").textAlignRight().margin(50);
 	}
 
 	private void planningPoker(CssRenderer css) {
