@@ -114,11 +114,17 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, UserL
 			History.newItem(startToken, true);
 			return;
 		}
-		gotoUsersStart();
+		String historyToken = History.getToken();
+		if (historyToken.contains("project=")) {
+			evalHistoryToken(historyToken);
+		} else {
+			gotoUsersStart();
+		}
 	}
 
 	public void gotoProjectSelector() {
-		gotoToken("projectSelector");
+		History.newItem("projectSelector", false);
+		modeSwitcher.activateUserMode();
 	}
 
 	public void gotoProject(String projectId) {
