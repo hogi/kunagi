@@ -4,9 +4,15 @@ import scrum.client.common.TooltipBuilder;
 
 public class ChangeProjectAction extends GChangeProjectAction {
 
+	private Project project;
+
+	public ChangeProjectAction(Project project) {
+		this.project = project;
+	}
+
 	@Override
 	public String getLabel() {
-		return "Change Project";
+		return project.getLabel();
 	}
 
 	@Override
@@ -17,7 +23,7 @@ public class ChangeProjectAction extends GChangeProjectAction {
 
 	@Override
 	protected void onExecute() {
-		getNavigator().gotoProjectSelector();
+		getNavigator().gotoProject(project.getId());
 	}
 
 }
