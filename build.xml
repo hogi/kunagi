@@ -103,11 +103,22 @@
     </target>
 
     <target name="war" depends="webapp">
-            <war destfile="build/kunagi.war" basedir="build/webapp" />
+        <war destfile="build/kunagi.war" basedir="build/webapp" />
+    </target>
+
+    <target name="package" depends="war">
+        <mkdir dir="build/package" />
+        <copy file="build/kunagi.war" tofile="package/kunagi.war" />
+        <copy todir="build/webapp" verbose="true">
+            <fileset dir="src/main/webapp" />
+            <fileset file="README" />
+            <fileset dir="." includes="license.*" />
+        </copy>
+        <zip destfile="build/kunagi.zip" basedir="build/package" />
     </target>
 
     <target name="install-scrum-latest" depends="war">
-            <copy tofile="/home/scrum-latest/tomcat/webapps/scrum-latest.war" file="build/kunagi.war" />
+        <copy tofile="/home/scrum-latest/tomcat/webapps/scrum-latest.war" file="build/kunagi.war" />
     </target>
 
     <target name="install-homepage" depends="war">
@@ -128,12 +139,19 @@
 
     <target name="sourceforge-upload">
         <exec executable="scp" failonerror="true">
-            <arg line="build/kunagi.war koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/kunagi.war" />
+            <arg line="build/kunagi.zip koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/${release.label}/kunagi-${release.label}.zip" />
+        </exec>
+        <exec executable="scp" failonerror="true">
+            <arg line="build/kunagi.war koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/${release.label}/kunagi.war" />
         </exec>
     </target>
 
     <target name="release" depends="sourceforge-upload">
-        <copy file="build/kunagi.war" tofile="/var/www/servisto.de/projects/scrum/kunagi.war" />
+        <copy file="build/kunagi.war" tofile="/var/www/kunagi.org/kunagi.war" />
+        <mkdir dir="/var/www/kunagi.org/releases/${release.label}" />
+        <copy file="build/kunagi.war" tofile="/var/www/kunagi.org/releases/${release.label}/kunagi.war" />
+        <copy file="build/kunagi.zip" tofile="/var/www/kunagi.org/releases/${release.label}/kunagi-${release.label}.zip" />
+
         <copy file="build/kunagi.war" tofile="/home/scrum/tomcat/webapps/scrum.war" />
         <copy file="build/kunagi.war" tofile="/home/kunagi-demo/tomcat/webapps/kunagi-demo.war" />
     </target>
@@ -151,7 +169,7 @@
 		<delete dir="runtimedata" />
 	</target>
 	
-    <target name="continousIntegrationBuild" depends="clean-runtimedata,deploy" />
+    <target name="continousIntegrationBuild" depends="clean-runtimedata,deploy,package" />
 
     <target name="continousIntegrationRelease" depends="release" />
 
