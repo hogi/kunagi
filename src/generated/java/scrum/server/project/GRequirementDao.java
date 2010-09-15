@@ -64,6 +64,8 @@ public abstract class GRequirementDao
         requirementsByDirtyCache.clear();
         requirementsByWorkEstimationVotingActiveCache.clear();
         requirementsByWorkEstimationVotingShowoffCache.clear();
+        requirementsByTasksOrderIdCache.clear();
+        tasksOrderIdsCache = null;
     }
 
     @Override
@@ -554,6 +556,46 @@ public abstract class GRequirementDao
 
         public boolean test(Requirement e) {
             return value == e.isWorkEstimationVotingShowoff();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - tasksOrderIds
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Requirement>> requirementsByTasksOrderIdCache = new Cache<java.lang.String,Set<Requirement>>(
+            new Cache.Factory<java.lang.String,Set<Requirement>>() {
+                public Set<Requirement> create(java.lang.String tasksOrderId) {
+                    return getEntities(new ContainsTasksOrderId(tasksOrderId));
+                }
+            });
+
+    public final Set<Requirement> getRequirementsByTasksOrderId(java.lang.String tasksOrderId) {
+        return requirementsByTasksOrderIdCache.get(tasksOrderId);
+    }
+    private Set<java.lang.String> tasksOrderIdsCache;
+
+    public final Set<java.lang.String> getTasksOrderIds() {
+        if (tasksOrderIdsCache == null) {
+            tasksOrderIdsCache = new HashSet<java.lang.String>();
+            for (Requirement e : getEntities()) {
+                tasksOrderIdsCache.addAll(e.getTasksOrderIds());
+            }
+        }
+        return tasksOrderIdsCache;
+    }
+
+    private static class ContainsTasksOrderId implements Predicate<Requirement> {
+
+        private java.lang.String value;
+
+        public ContainsTasksOrderId(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Requirement e) {
+            return e.containsTasksOrderId(value);
         }
 
     }

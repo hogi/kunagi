@@ -49,6 +49,7 @@ public abstract class GRequirement
         properties.put("dirty", this.dirty);
         properties.put("workEstimationVotingActive", this.workEstimationVotingActive);
         properties.put("workEstimationVotingShowoff", this.workEstimationVotingShowoff);
+        properties.put("tasksOrderIds", this.tasksOrderIds);
     }
 
     public int compareTo(Requirement other) {
@@ -581,6 +582,97 @@ public abstract class GRequirement
         setWorkEstimationVotingShowoff((Boolean)value);
     }
 
+    // -----------------------------------------------------------
+    // - tasksOrderIds
+    // -----------------------------------------------------------
+
+    private java.util.List<java.lang.String> tasksOrderIds = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getTasksOrderIds() {
+        return new java.util.ArrayList<java.lang.String>(tasksOrderIds);
+    }
+
+    public final void setTasksOrderIds(Collection<java.lang.String> tasksOrderIds) {
+        tasksOrderIds = prepareTasksOrderIds(tasksOrderIds);
+        if (tasksOrderIds == null) tasksOrderIds = Collections.emptyList();
+        if (this.tasksOrderIds.equals(tasksOrderIds)) return;
+        this.tasksOrderIds = new java.util.ArrayList<java.lang.String>(tasksOrderIds);
+        fireModified("tasksOrderIds="+Str.format(tasksOrderIds));
+    }
+
+    protected Collection<java.lang.String> prepareTasksOrderIds(Collection<java.lang.String> tasksOrderIds) {
+        return tasksOrderIds;
+    }
+
+    public final boolean containsTasksOrderId(java.lang.String tasksOrderId) {
+        if (tasksOrderId == null) return false;
+        return this.tasksOrderIds.contains(tasksOrderId);
+    }
+
+    public final int getTasksOrderIdsCount() {
+        return this.tasksOrderIds.size();
+    }
+
+    public final boolean isTasksOrderIdsEmpty() {
+        return this.tasksOrderIds.isEmpty();
+    }
+
+    public final boolean addTasksOrderId(java.lang.String tasksOrderId) {
+        if (tasksOrderId == null) throw new IllegalArgumentException("tasksOrderId == null");
+        boolean added = this.tasksOrderIds.add(tasksOrderId);
+        if (added) fireModified("tasksOrderIds+=" + tasksOrderId);
+        return added;
+    }
+
+    public final boolean addTasksOrderIds(Collection<java.lang.String> tasksOrderIds) {
+        if (tasksOrderIds == null) throw new IllegalArgumentException("tasksOrderIds == null");
+        boolean added = false;
+        for (java.lang.String tasksOrderId : tasksOrderIds) {
+            added = added | this.tasksOrderIds.add(tasksOrderId);
+        }
+        if (added) fireModified("tasksOrderIds+="+Str.format(tasksOrderIds));
+        return added;
+    }
+
+    public final boolean removeTasksOrderId(java.lang.String tasksOrderId) {
+        if (tasksOrderId == null) throw new IllegalArgumentException("tasksOrderId == null");
+        if (this.tasksOrderIds == null) return false;
+        boolean removed = this.tasksOrderIds.remove(tasksOrderId);
+        if (removed) fireModified("tasksOrderIds-=" + tasksOrderId);
+        return removed;
+    }
+
+    public final boolean removeTasksOrderIds(Collection<java.lang.String> tasksOrderIds) {
+        if (tasksOrderIds == null) return false;
+        if (tasksOrderIds.isEmpty()) return false;
+        boolean removed = false;
+        for (java.lang.String _element: tasksOrderIds) {
+            removed = removed | removeTasksOrderId(_element);
+        }
+        if (removed) fireModified("tasksOrderIds-="+Str.format(tasksOrderIds));
+        return removed;
+    }
+
+    public final boolean clearTasksOrderIds() {
+        if (this.tasksOrderIds.isEmpty()) return false;
+        this.tasksOrderIds.clear();
+        fireModified("tasksOrderIds cleared");
+        return true;
+    }
+
+    public final String getTasksOrderIdsAsCommaSeparatedString() {
+        if (this.tasksOrderIds.isEmpty()) return null;
+        return Str.concat(this.tasksOrderIds,", ");
+    }
+
+    public final void setTasksOrderIdsAsCommaSeparatedString(String tasksOrderIds) {
+        this.tasksOrderIds = new java.util.ArrayList(Str.parseCommaSeparatedString(tasksOrderIds));
+    }
+
+    protected final void updateTasksOrderIds(Object value) {
+        setTasksOrderIds((java.util.List<java.lang.String>) value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -599,6 +691,7 @@ public abstract class GRequirement
             if (property.equals("dirty")) updateDirty(value);
             if (property.equals("workEstimationVotingActive")) updateWorkEstimationVotingActive(value);
             if (property.equals("workEstimationVotingShowoff")) updateWorkEstimationVotingShowoff(value);
+            if (property.equals("tasksOrderIds")) updateTasksOrderIds(value);
         }
     }
 
@@ -608,6 +701,7 @@ public abstract class GRequirement
         repairDeadSprintReference(entityId);
         if (this.qualitysIds == null) this.qualitysIds = new java.util.HashSet<String>();
         repairDeadQualityReference(entityId);
+        if (this.tasksOrderIds == null) this.tasksOrderIds = new java.util.ArrayList<java.lang.String>();
     }
 
     // --- ensure integrity ---
@@ -640,6 +734,7 @@ public abstract class GRequirement
                 repairDeadQualityReference(entityId);
             }
         }
+        if (this.tasksOrderIds == null) this.tasksOrderIds = new java.util.ArrayList<java.lang.String>();
     }
 
 

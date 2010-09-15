@@ -1804,6 +1804,7 @@ public abstract class GDao
         return ret;
     }
 
+
     // --- RequirementEstimationVote ---
 
     private Map<String, scrum.client.estimation.RequirementEstimationVote> requirementEstimationVotes = new HashMap<String, scrum.client.estimation.RequirementEstimationVote>();

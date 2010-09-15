@@ -11,12 +11,15 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 	public static final String DEPLOYMENT_STAGE_PRODUCTION = "PRODUCTION";
 
 	private String name;
+	private String release;
 	private String build;
 	private String deploymentStage;
 	private boolean defaultAdminPassword;
 
-	public ApplicationInfo(String name, String build, String deploymentStage, boolean defaultAdminPassword) {
+	public ApplicationInfo(String name, String release, String build, String deploymentStage,
+			boolean defaultAdminPassword) {
 		this.name = name;
+		this.release = release;
 		this.build = build;
 		this.deploymentStage = deploymentStage;
 		this.defaultAdminPassword = defaultAdminPassword;
@@ -30,6 +33,10 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getRelease() {
+		return release;
 	}
 
 	public String getBuild() {
@@ -49,7 +56,7 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 	}
 
 	public String getVersionDescription() {
-		return name + " | Build " + build + " | " + deploymentStage;
+		return name + " | Release " + " | Build " + build + " | " + deploymentStage;
 	}
 
 	@Override

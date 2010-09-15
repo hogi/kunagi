@@ -100,9 +100,9 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		grid.resize((requirements.size() * 2) + 1, 3);
 
 		for (Requirement requirement : requirements) {
-			openTasks.put(requirement, new TaskListWidget(this, new UnclaimTaskDropAction(requirement)));
-			ownedTasks.put(requirement, new TaskListWidget(this, new ClaimTaskDropAction(requirement)));
-			closedTasks.put(requirement, new TaskListWidget(this, new CloseTaskDropAction(requirement)));
+			openTasks.put(requirement, new TaskListWidget(requirement, this, new UnclaimTaskDropAction(requirement)));
+			ownedTasks.put(requirement, new TaskListWidget(requirement, this, new ClaimTaskDropAction(requirement)));
+			closedTasks.put(requirement, new TaskListWidget(requirement, this, new CloseTaskDropAction(requirement)));
 		}
 
 		setWidget(0, 0, openLabel, "33%", "WhiteboardWidget-header");

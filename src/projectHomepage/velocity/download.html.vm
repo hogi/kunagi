@@ -12,9 +12,10 @@
         </p>
     </div>
     <div class="sidebar">
-<div class="starter">
-    <a href="http://sourceforge.net/projects/kunagi/files/kunagi.war/download">Download</a>
-</div>
+        <div class="starter">
+            <a href="http://sourceforge.net/projects/kunagi/files/kunagi.war/download">Download</a>
+        </div>
+        <div class="smallText" style="text-align: center;">Current release is $project.currentRelease</div>
     </div>
     <div class="clear"></div>
 </div>

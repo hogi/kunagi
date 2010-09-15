@@ -1,28 +1,30 @@
 package scrum.client.tasks;
 
-import ilarkesto.gwt.client.AWidget;
-
 import java.util.List;
 
+import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.ElementPredicate;
 import scrum.client.dnd.BlockListDropAction;
+import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class TaskListWidget extends AWidget {
+public class TaskListWidget extends AScrumWidget {
 
 	private BlockListWidget<Task> list;
 	private BlockListDropAction<Task> dropAction;
 
 	private TaskBlockContainer container;
+	private Requirement requirement;
 
-	public TaskListWidget(TaskBlockContainer container) {
-		this(container, null);
+	public TaskListWidget(Requirement requirement, TaskBlockContainer container) {
+		this(requirement, container, null);
 	}
 
-	public TaskListWidget(TaskBlockContainer container, BlockListDropAction<Task> dropAction) {
+	public TaskListWidget(Requirement requirement, TaskBlockContainer container, BlockListDropAction<Task> dropAction) {
+		this.requirement = requirement;
 		this.container = container;
 		this.dropAction = dropAction;
 	}
@@ -31,8 +33,12 @@ public class TaskListWidget extends AWidget {
 	protected Widget onInitialization() {
 		list = new BlockListWidget<Task>(new TaskBlock.TaskBlockFactory(container), this.dropAction);
 		list.setSelectionManager(container.getSelectionManager());
-		list.setAutoSorter(Task.NUMBER_COMPARATOR);
 		list.setMinHeight(100);
+		list.setAutoSorter(requirement.getTasksOrderComparator());
+		if (requirement.getProject().isTeamMember(getCurrentUser())) {
+			list.setDndSorting(true);
+			list.setMoveObserver(new MoveObserver());
+		}
 		return list;
 	}
 
@@ -52,5 +58,15 @@ public class TaskListWidget extends AWidget {
 
 	public void clearTaskHighlighting() {
 		list.clearTaskHighlighting();
+	}
+
+	class MoveObserver implements Runnable {
+
+		public void run() {
+			List<Task> tasks = list.getObjects();
+			requirement.updateTasksOrder(tasks);
+			update();
+		}
+
 	}
 }

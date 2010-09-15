@@ -185,7 +185,7 @@ public abstract class GTask
         @Override
         public boolean isEditable() { return GTask.this.isEditable(); }
         @Override
-        public String getTooltip() { return "The label should be short (as it appears where the Task is referenced),yet give a hint strong enough to make the content of it come to mind."; }
+        public String getTooltip() { return "The label should be short (as it appears where the Task is referenced), yet give a hint strong enough to make the content of it come to mind."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -246,7 +246,7 @@ public abstract class GTask
         @Override
         public boolean isRichtext() { return true; }
         @Override
-        public String getTooltip() { return "The description of a Task may be used to give information that is important,but cannot be inferred from the Label.As Tasks are small units of work, the Label might be sufficient"; }
+        public String getTooltip() { return "The description of a Task may be used to give information that is important, but cannot be inferred from the Label. As Tasks are small units of work, the Label might be sufficient"; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -314,7 +314,7 @@ public abstract class GTask
         @Override
         public boolean isEditable() { return GTask.this.isEditable(); }
         @Override
-        public String getTooltip() { return "The remaining time needed to get this Task done. If the remaining time is high,it might be an indication (but is not necessarily the case) thatsplitting the Task is a good idea."; }
+        public String getTooltip() { return "The remaining time needed to get this Task done. If the remaining time is high, it might be an indication (but is not necessarily the case) that splitting the Task is a good idea."; }
 
         @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {

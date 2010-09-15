@@ -185,7 +185,7 @@ public abstract class GQuality
         @Override
         public boolean isEditable() { return GQuality.this.isEditable(); }
         @Override
-        public String getTooltip() { return "The label should be short (as it appears where the Quality is referenced),yet give a hint strong enough to make the content of it come to mind."; }
+        public String getTooltip() { return "The label should be short (as it appears where the Quality is referenced), yet give a hint strong enough to make the content of it come to mind."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

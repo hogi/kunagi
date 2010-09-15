@@ -101,7 +101,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		boolean defaultAdminPassword = false;
 		if (admin != null && admin.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD))
 			defaultAdminPassword = true;
-		return new ApplicationInfo("kunagi", getBuild(), getDeploymentStage(), defaultAdminPassword);
+		return new ApplicationInfo("kunagi", getReleaseLabel(), getBuild(), getDeploymentStage(), defaultAdminPassword);
 	}
 
 	// --- ---

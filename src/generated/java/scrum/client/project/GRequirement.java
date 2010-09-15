@@ -238,7 +238,7 @@ public abstract class GRequirement
         @Override
         public boolean isEditable() { return GRequirement.this.isEditable(); }
         @Override
-        public String getTooltip() { return "The label should be short (as it appears where the Story is referenced),yet give a hint strong enough to make the content of it come to mind."; }
+        public String getTooltip() { return "The label should be short (as it appears where the Story is referenced), yet give a hint strong enough to make the content of it come to mind."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -690,6 +690,21 @@ public abstract class GRequirement
 
     }
 
+    // --- tasksOrderIds ---
+
+    private java.util.List<java.lang.String> tasksOrderIds = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getTasksOrderIds() {
+        return new java.util.ArrayList<java.lang.String>(tasksOrderIds);
+    }
+
+    public final void setTasksOrderIds(java.util.List<java.lang.String> tasksOrderIds) {
+        if (tasksOrderIds == null) throw new IllegalArgumentException("null is not allowed");
+        if (this.tasksOrderIds.equals(tasksOrderIds)) return;
+        this.tasksOrderIds = new java.util.ArrayList<java.lang.String>(tasksOrderIds);
+        propertyChanged("tasksOrderIds", this.tasksOrderIds);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -707,6 +722,7 @@ public abstract class GRequirement
         dirty  = (Boolean) props.get("dirty");
         workEstimationVotingActive  = (Boolean) props.get("workEstimationVotingActive");
         workEstimationVotingShowoff  = (Boolean) props.get("workEstimationVotingShowoff");
+        tasksOrderIds  = (java.util.List<java.lang.String>) props.get("tasksOrderIds");
     }
 
     @Override
@@ -725,6 +741,7 @@ public abstract class GRequirement
         properties.put("dirty", this.dirty);
         properties.put("workEstimationVotingActive", this.workEstimationVotingActive);
         properties.put("workEstimationVotingShowoff", this.workEstimationVotingShowoff);
+        properties.put("tasksOrderIds", this.tasksOrderIds);
     }
 
     @Override

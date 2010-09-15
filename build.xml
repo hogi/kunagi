@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="scrum" default="war" basedir=".">
+<project name="scrum" default="package" basedir=".">
 
     <target name="update">
         <exec executable="svn">
@@ -21,8 +21,9 @@
         <delete dir="build" />
     </target>
 
-    <target name="compile-java" depends="clean, init">
-        <mkdir dir="build/webapp/WEB-INF/classes" />
+    <target name="compile" depends="clean, init">
+
+    	<mkdir dir="build/webapp/WEB-INF/classes" />
         <copy todir="build/webapp/WEB-INF/classes">
             <fileset dir="src/main/java" />
             <fileset dir="src/generated/java" />
@@ -31,9 +32,15 @@
         <javac srcdir="build/webapp/WEB-INF/classes" destdir="build/webapp/WEB-INF/classes" encoding="UTF-8" nowarn="true" debug="true" debuglevel="lines,vars,source">
             <classpath> <fileset dir="../ilarkesto/lib" /> </classpath>
         </javac>
-    </target>
 
-    <target name="compile-gwt" depends="clean, init">
+        <mkdir dir="build/test-classes" />
+        <javac srcdir="src/test/java" destdir="build/test-classes" encoding="UTF-8" nowarn="true" debug="true" debuglevel="lines,vars,source">
+            <classpath>
+                <path location="build/webapp/WEB-INF/classes" />
+                <fileset dir="../ilarkesto/lib" />
+            </classpath>
+        </javac>
+
         <java classname="com.google.gwt.dev.Compiler" failonerror="true" fork="true">
             <arg value="-war" />
             <arg value="build/webapp" />
@@ -46,23 +53,13 @@
             <classpath location="../ilarkesto/lib/gwt-user.jar" />
             <classpath location="../ilarkesto/lib/gwt-dev.jar" />
         </java>
+
+        <replace file="build/webapp/WEB-INF/classes/scrum/server/build.properties" token="@build-date@" value="${build.tstamp}" />
+
     </target>
 
-	<target name="compile-test" depends="compile-java">
-        <mkdir dir="build/test-classes" />
-        <javac srcdir="src/test/java" destdir="build/test-classes" encoding="UTF-8" nowarn="true" debug="true" debuglevel="lines,vars,source">
-            <classpath>
-                <path location="build/webapp/WEB-INF/classes" />
-                <fileset dir="../ilarkesto/lib" />
-            </classpath>
-        </javac>
-	</target>
-	
-    <target name="compile" depends="compile-java, compile-gwt">
-       <replace file="build/webapp/WEB-INF/classes/scrum/server/build.properties" token="@build-date@" value="${build.tstamp}" />
-    </target>
-
-    <target name="test" depends="clean, compile-test">
+    <target name="test" depends="clean, compile">
+        <delete dir="runtimedata" />
         <taskdef name="testng" classpath="../ilarkesto/lib/testng-5.8.jar" classname="org.testng.TestNGAntTask" />
         <testng outputDir="build/test-reports" haltonfailure="true">
             <classfileset dir="build/test-classes" includes="**/*.class" />
@@ -74,7 +71,7 @@
         </testng>
     </target>
 
-    <target name="webapp" depends="compile, test">
+    <target name="webapp" depends="clean, compile, test">
         <copy todir="build/webapp" verbose="true">
             <fileset dir="src/main/webapp" />
             <fileset file="README" />
@@ -102,11 +99,9 @@
         </copy>
     </target>
 
-    <target name="war" depends="webapp">
+    <target name="package">
+        <replace file="build/webapp/WEB-INF/classes/scrum/server/build.properties" token="@release-label@" value="${release.label}" />
         <war destfile="build/kunagi.war" basedir="build/webapp" />
-    </target>
-
-    <target name="package" depends="war">
         <mkdir dir="build/package" />
         <copy file="build/kunagi.war" tofile="package/kunagi.war" />
         <copy todir="build/webapp" verbose="true">
@@ -117,45 +112,6 @@
         <zip destfile="build/kunagi.zip" basedir="build/package" />
     </target>
 
-    <target name="install-scrum-latest" depends="war">
-        <copy tofile="/home/scrum-latest/tomcat/webapps/scrum-latest.war" file="build/kunagi.war" />
-    </target>
-
-    <target name="install-homepage" depends="war">
-        <mkdir dir="/var/www/servisto.de/projects/scrum" />
-        <copy todir="/var/www/servisto.de/projects/scrum">
-            <fileset dir="src/projectHomepage/html" />
-        </copy>
-    	<mkdir dir="/var/www/servisto.de/projects/scrum/latest" />
-        <copy tofile="/var/www/servisto.de/projects/scrum/latest/kunagi.war" file="build/kunagi.war" />
-        <mkdir dir="/var/www/servisto.de/projects/scrum/velocity" />
-        <copy todir="/var/www/servisto.de/projects/scrum/velocity">
-            <fileset dir="src/projectHomepage/velocity" />
-        </copy>
-    </target>
-
-    <target name="deploy" depends="install-homepage,install-scrum-latest">
-    </target>
-
-    <target name="sourceforge-upload">
-        <exec executable="scp" failonerror="true">
-            <arg line="build/kunagi.zip koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/${release.label}/kunagi-${release.label}.zip" />
-        </exec>
-        <exec executable="scp" failonerror="true">
-            <arg line="build/kunagi.war koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/${release.label}/kunagi.war" />
-        </exec>
-    </target>
-
-    <target name="release" depends="sourceforge-upload">
-        <copy file="build/kunagi.war" tofile="/var/www/kunagi.org/kunagi.war" />
-        <mkdir dir="/var/www/kunagi.org/releases/${release.label}" />
-        <copy file="build/kunagi.war" tofile="/var/www/kunagi.org/releases/${release.label}/kunagi.war" />
-        <copy file="build/kunagi.zip" tofile="/var/www/kunagi.org/releases/${release.label}/kunagi-${release.label}.zip" />
-
-        <copy file="build/kunagi.war" tofile="/home/scrum/tomcat/webapps/scrum.war" />
-        <copy file="build/kunagi.war" tofile="/home/kunagi-demo/tomcat/webapps/kunagi-demo.war" />
-    </target>
-
     <target name="sourceforge">
         <exec executable="git" dir="sourceforge-svn" failonerror="true">
             <arg line="svn rebase" />
@@ -164,14 +120,35 @@
             <arg line="svn dcommit" />
         </exec>
     </target>
-
-	<target name="clean-runtimedata">
-		<delete dir="runtimedata" />
-	</target>
 	
-    <target name="continousIntegrationBuild" depends="clean-runtimedata,deploy,package" />
+    <target name="continousIntegrationBuild" depends="webapp">
+        <copy todir="/var/www/kunagi.org">
+            <fileset dir="src/projectHomepage/html" />
+        </copy>
+        <mkdir dir="/var/www/kunagi.org/velocity" />
+        <copy todir="/var/www/kunagi.org/velocity">
+            <fileset dir="src/projectHomepage/velocity" />
+        </copy>
 
-    <target name="continousIntegrationRelease" depends="release" />
+        <war destfile="build/kunagi.war" basedir="build/webapp" />
+        <copy tofile="/home/scrum-latest/tomcat/webapps/scrum-latest.war" file="build/kunagi.war" />
+    </target>
+
+    <target name="continousIntegrationRelease" depends="package">
+        <exec executable="scp" failonerror="true">
+            <arg line="build/kunagi.zip koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/${release.label}/kunagi-${release.label}.zip" />
+        </exec>
+        <exec executable="scp" failonerror="true">
+            <arg line="build/kunagi.war koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/${release.label}/kunagi.war" />
+        </exec>
+
+                <mkdir dir="/var/www/kunagi.org/releases/${release.label}" />
+        <copy file="build/kunagi.war" tofile="/var/www/kunagi.org/releases/${release.label}/kunagi.war" />
+        <copy file="build/kunagi.zip" tofile="/var/www/kunagi.org/releases/${release.label}/kunagi-${release.label}.zip" />
+
+        <copy file="build/kunagi.war" tofile="/home/scrum/tomcat/webapps/scrum.war" />
+        <copy file="build/kunagi.war" tofile="/home/kunagi-demo/tomcat/webapps/kunagi-demo.war" />
+    </target>
 
 </project>
 

@@ -2,6 +2,9 @@ package scrum.client.sprint;
 
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
+
+import java.util.List;
+
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
@@ -88,7 +91,11 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 
 		requirementWidget = new RequirementWidget(requirement, false, false, true, false, false, false, false);
 		taskList = new BlockListWidget<Task>(TaskInRequirementBlock.FACTORY);
-		taskList.setAutoSorter(Task.NUMBER_COMPARATOR);
+		taskList.setAutoSorter(requirement.getTasksOrderComparator());
+		if (requirement.getProject().isTeamMember(getCurrentUser())) {
+			taskList.setDndSorting(true);
+			taskList.setMoveObserver(new MoveObserver());
+		}
 		changeHistoryWidget = new ChangeHistoryWidget(requirement);
 
 		FlowPanel left = new FlowPanel();
@@ -118,6 +125,16 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 
 	public void selectTask(Task task) {
 		taskList.showObject(task);
+	}
+
+	class MoveObserver implements Runnable {
+
+		public void run() {
+			List<Task> tasks = taskList.getObjects();
+			getObject().updateTasksOrder(tasks);
+			update();
+		}
+
 	}
 
 	public static final BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {

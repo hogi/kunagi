@@ -7,6 +7,8 @@ import ilarkesto.gwt.client.HyperlinkWidget;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +32,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Forum
 			"40", "100" };
 
 	private transient EstimationBar estimationBar;
+	private transient Comparator<Task> tasksOrderComparator;
 
 	public Requirement(Project project) {
 		setProject(project);
@@ -289,6 +292,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Forum
 	public Task createNewTask() {
 		Task task = new Task(this);
 		getDao().createTask(task);
+		updateTasksOrder();
 		return task;
 	}
 
@@ -313,8 +317,42 @@ public class Requirement extends GRequirement implements ReferenceSupport, Forum
 		return getReferenceAndLabel();
 	}
 
+	@Override
 	public Widget createForumItemWidget() {
 		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
+	}
+
+	private void updateTasksOrder() {
+		List<Task> tasks = getTasks();
+		Collections.sort(tasks, getTasksOrderComparator());
+		updateTasksOrder(tasks);
+	}
+
+	public void updateTasksOrder(List<Task> tasks) {
+		setTasksOrderIds(Gwt.getIdsAsList(tasks));
+	}
+
+	public Comparator<Task> getTasksOrderComparator() {
+		if (tasksOrderComparator == null) tasksOrderComparator = new Comparator<Task>() {
+
+			@Override
+			public int compare(Task a, Task b) {
+				List<String> order = getTasksOrderIds();
+				int additional = order.size();
+				int ia = order.indexOf(a.getId());
+				if (ia < 0) {
+					ia = additional;
+					additional++;
+				}
+				int ib = order.indexOf(b.getId());
+				if (ib < 0) {
+					ib = additional;
+					additional++;
+				}
+				return ia - ib;
+			}
+		};
+		return tasksOrderComparator;
 	}
 
 }

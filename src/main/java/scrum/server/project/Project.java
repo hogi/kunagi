@@ -447,6 +447,10 @@ public class Project extends GProject {
 		return number;
 	}
 
+	public Release getCurrentRelease() {
+		return releaseDao.getCurrentRelease();
+	}
+
 	public ProjectSprintSnapshot getCurrentSprintSnapshot() {
 		ProjectSprintSnapshot snapshot = projectSprintSnapshotDao.getProjectSprintSnapshotBySprint(getCurrentSprint());
 		if (snapshot == null) snapshot = createSprintSnapshot();

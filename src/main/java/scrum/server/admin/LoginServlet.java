@@ -18,7 +18,6 @@ import scrum.server.ScrumConfig;
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
-import scrum.server.css.ScreenCssBuilder;
 
 public class LoginServlet extends AHttpServlet {
 
@@ -55,14 +54,14 @@ public class LoginServlet extends AHttpServlet {
 			return;
 		}
 
-		createLoginPage(resp, null, null, req.getParameter("showPasswordRequest") != null,
+		renderLoginPage(resp, null, null, null, req.getParameter("showPasswordRequest") != null,
 			req.getParameter("showCreateAccount") != null);
 	}
 
 	private void passwordRequest(String login, HttpServletResponse resp, WebSession session)
 			throws UnsupportedEncodingException, IOException {
 		if (login == null || Str.isBlank(login)) {
-			createLoginPage(resp, login, "E-Mail required.", true, false);
+			renderLoginPage(resp, login, null, "E-Mail required.", true, false);
 			return;
 		}
 
@@ -76,23 +75,23 @@ public class LoginServlet extends AHttpServlet {
 		}
 
 		if (user == null) {
-			createLoginPage(resp, login, "User '" + login + "' does not exist.", true, false);
+			renderLoginPage(resp, login, login, "User '" + login + "' does not exist.", true, false);
 			return;
 		}
 
 		if (user.isAdmin()) {
-			createLoginPage(resp, login, "Admins can not request new passwords.", true, false);
+			renderLoginPage(resp, login, login, "Admins can not request new passwords.", true, false);
 			return;
 		}
 
 		if (!user.isEmailVerified()) {
-			createLoginPage(resp, login, "User '" + login + "' has no verified email. Please contact the admin: "
-					+ systemConfig.getAdminEmail(), true, false);
+			renderLoginPage(resp, login, login, "User '" + login
+					+ "' has no verified email. Please contact the admin: " + systemConfig.getAdminEmail(), true, false);
 			return;
 		}
 
 		user.triggerNewPasswordRequest();
-		createLoginPage(resp, login, "New password has been sent to " + login, false, false);
+		renderLoginPage(resp, login, login, "New password has been sent to " + login, false, false);
 	}
 
 	private void createAccount(String username, String email, String password, HttpServletResponse resp,
@@ -103,32 +102,39 @@ public class LoginServlet extends AHttpServlet {
 		if (Str.isBlank(password)) password = null;
 
 		if (username == null) {
-			createLoginPage(resp, username, "Creating account failed. Username required.", false, true);
+			renderLoginPage(resp, username, email, "Creating account failed. Username required.", false, true);
 			return;
 		}
 		if (systemConfig.isUserEmailMandatory() && email == null) {
-			createLoginPage(resp, username, "Creating account failed. E-Mail required.", false, true);
+			renderLoginPage(resp, username, email, "Creating account failed. E-Mail required.", false, true);
 			return;
 		}
 		if (password == null) {
-			createLoginPage(resp, username, "Creating account failed. Password required.", false, true);
+			renderLoginPage(resp, username, email, "Creating account failed. Password required.", false, true);
 			return;
 		}
 
 		if (Str.containsNonLetterOrDigit(username)) {
-			createLoginPage(resp, username, "Creating account failed. Name '" + username
+			renderLoginPage(resp, username, email, "Creating account failed. Name '" + username
 					+ "' contains an illegal character. Only letters and digits allowed.", false, true);
 			return;
 		}
+
+		if (email != null && !Str.isEmail(email)) {
+			renderLoginPage(resp, username, email, "Creating account failed. Illegal email address.", false, true);
+			return;
+		}
+
 		if (userDao.getUserByName(username) != null) {
-			createLoginPage(resp, username, "Creating account failed. Name '" + username + "' is already used.", false,
-				true);
+			renderLoginPage(resp, username, email, "Creating account failed. Name '" + username + "' is already used.",
+				false, true);
 			log.warn("Registration failed. User name already exists:", username);
 			return;
 		}
+
 		if (email != null && userDao.getUserByEmail(email) != null) {
-			createLoginPage(resp, username, "Creating account failed. Email '" + email + "' is already used.", false,
-				true);
+			renderLoginPage(resp, username, email, "Creating account failed. Email '" + email + "' is already used.",
+				false, true);
 			log.warn("Registration failed. User email already exists:", email);
 			return;
 		}
@@ -146,8 +152,44 @@ public class LoginServlet extends AHttpServlet {
 		return webApplication.isDevelopmentMode() ? "index.html?gwt.codesvr=127.0.0.1:9997" : "";
 	}
 
-	private void createLoginPage(HttpServletResponse resp, String username, String message, boolean passwordRequest,
-			boolean createAccount) throws UnsupportedEncodingException, IOException {
+	private void login(String username, String password, HttpServletResponse resp, WebSession session)
+			throws UnsupportedEncodingException, IOException {
+		username = username.toLowerCase();
+		User user = null;
+		if (username.contains("@")) {
+			user = userDao.getUserByEmail(username);
+		}
+		if (user == null) {
+			user = userDao.getUserByName(username);
+		}
+
+		if (user == null || user.matchesPassword(password) == false) {
+			renderLoginPage(resp, username, null, "Login failed.", false, false);
+			return;
+		}
+
+		if (user.isDisabled()) {
+			renderLoginPage(resp, username, null, "User is disabled.", false, false);
+			return;
+		}
+
+		user.setLastLoginDateAndTime(DateAndTime.now());
+		session.setUser(user);
+		resp.sendRedirect(getStartPage());
+	}
+
+	@Override
+	protected void onInit(ServletConfig servletConfig) {
+		super.onInit(servletConfig);
+		webApplication = ScrumWebApplication.get();
+		userDao = webApplication.getUserDao();
+		applicationInfo = webApplication.getApplicationInfo();
+		config = webApplication.getConfig();
+		systemConfig = webApplication.getSystemConfig();
+	}
+
+	private void renderLoginPage(HttpServletResponse resp, String username, String email, String message,
+			boolean passwordRequest, boolean createAccount) throws UnsupportedEncodingException, IOException {
 		String charset = IO.UTF_8;
 		resp.setContentType("text/html");
 
@@ -160,18 +202,20 @@ public class LoginServlet extends AHttpServlet {
 		html.LINKcss("scrum.ScrumGwtApplication/screen.css");
 		html.endHEAD();
 
-		html.startBODY().setStyle("background: " + ScreenCssBuilder.cHeaderBackground);
+		html.startBODY();
 		html.startDIV("loginPage");
 		html.startDIV("panel");
 		html.IMG("kunagi.png", "Kunagi", null, 172, 85);
-		if (message != null) createMessage(html, message);
-		if (!createAccount && !passwordRequest) createLoginForm(html, username);
-		if (passwordRequest) createPasswordRequestForm(html, username);
-		if (createAccount) createCreateAccountForm(html, username);
-		html.endDIV();
-
+		html.DIV("separator", null);
+		if (message != null) renderMessage(html, message);
+		if (!createAccount && !passwordRequest) renderLoginForm(html, username);
+		if (passwordRequest) renderPasswordRequestForm(html, username);
+		if (createAccount) renderCreateAccountForm(html, username, email);
+		html.DIV("separator", null);
 		html.startDIV("kunagiLink");
+		html.text("Kunagi " + webApplication.getReleaseLabel() + " | ");
 		html.A("http://kunagi.org", "kunagi.org");
+		html.endDIV();
 		html.endDIV();
 
 		html.endDIV();
@@ -186,124 +230,10 @@ public class LoginServlet extends AHttpServlet {
 		html.flush();
 	}
 
-	private void createPasswordRequestForm(HtmlRenderer html, String username) {
-		html.H2("Request new password");
-		html.startFORM(null, "passwordRequestForm", false);
-		html.startTABLE();
-
-		html.startTR();
-		html.startTD();
-		html.LABEL("email", "E-Mail");
-		html.endTD();
-		html.TD(" ");
-		html.endTR();
-
-		html.startTR();
-		html.startTD();
-		html.INPUTtext("email", "email", username, 80);
-		html.endTD();
-		html.startTD();
-		html.INPUTsubmit("passwordRequest", "Request password", null, 's');
-		html.endTD();
-		html.endTR();
-
-		html.endTABLE();
-		html.endFORM();
-
-		html.BR();
-		html.A("login.html", "Login");
-	}
-
-	private void createCreateAccountForm(HtmlRenderer html, String username) {
-		html.H2("Create account");
-		html.startDIV("createAccount");
-		html.startFORM(null, "loginForm", false);
-		html.startTABLE();
-
-		html.startTR();
-		html.startTD();
-		html.LABEL("username", "Username");
-		html.endTD();
-		html.startTD();
-		html.INPUTtext("username", "username", username, 80);
-		html.endTD();
-		html.endTR();
-
-		html.startTR();
-		html.startTD();
-		html.LABEL("email", "E-Mail");
-		html.endTD();
-		html.startTD();
-		html.INPUTtext("email", "email", "", 80);
-		html.endTD();
-		html.endTR();
-
-		html.startTR();
-		html.startTD();
-		html.LABEL("password", "Password");
-		html.endTD();
-		html.startTD();
-		html.INPUTpassword("password", "password", 80, "");
-		html.endTD();
-		html.endTR();
-
-		html.startTR();
-		html.TD("");
-		html.startTD();
-		html.INPUTsubmit("createAccount", "Create account", null, 's');
-		html.endTD();
-		html.endTR();
-
-		html.endTABLE();
-		html.endFORM();
-		html.endDIV();
-
-		html.BR();
-		html.A("login.html", "Login");
-
-		if (systemConfig.isRegisterPageMessageSet()) {
-			html.BR();
-			html.BR();
-			html.html(systemConfig.getRegisterPageMessage());
-		}
-	}
-
-	private void createMessage(HtmlRenderer html, String message) {
-		html.startDIV("message");
-		html.text(message);
-		html.endDIV();
-	}
-
-	private void login(String username, String password, HttpServletResponse resp, WebSession session)
-			throws UnsupportedEncodingException, IOException {
-		username = username.toLowerCase();
-		User user = null;
-		if (username.contains("@")) {
-			user = userDao.getUserByEmail(username);
-		}
-		if (user == null) {
-			user = userDao.getUserByName(username);
-		}
-
-		if (user == null || user.matchesPassword(password) == false) {
-			createLoginPage(resp, username, "Login failed.", false, false);
-			return;
-		}
-
-		if (user.isDisabled()) {
-			createLoginPage(resp, username, "User is disabled.", false, false);
-			return;
-		}
-
-		user.setLastLoginDateAndTime(DateAndTime.now());
-		session.setUser(user);
-		resp.sendRedirect(getStartPage());
-	}
-
-	private void createLoginForm(HtmlRenderer html, String username) {
+	private void renderLoginForm(HtmlRenderer html, String username) {
 		html.H2("Login");
 		html.startFORM(null, "loginForm", false);
-		html.startTABLE();
+		html.startTABLE().setAlignCenter();
 
 		html.startTR();
 		html.startTD();
@@ -340,20 +270,102 @@ public class LoginServlet extends AHttpServlet {
 		}
 
 		if (systemConfig.isLoginPageMessageSet()) {
-			html.BR();
-			html.BR();
+			html.DIV("separator", null);
+			html.startDIV("configMessage");
 			html.html(systemConfig.getLoginPageMessage());
+			html.endDIV();
 		}
 	}
 
-	@Override
-	protected void onInit(ServletConfig servletConfig) {
-		super.onInit(servletConfig);
-		webApplication = ScrumWebApplication.get();
-		userDao = webApplication.getUserDao();
-		applicationInfo = webApplication.getApplicationInfo();
-		config = webApplication.getConfig();
-		systemConfig = webApplication.getSystemConfig();
+	private void renderPasswordRequestForm(HtmlRenderer html, String username) {
+		html.H2("Request new password");
+		html.startFORM(null, "passwordRequestForm", false);
+		html.startTABLE().setAlignCenter();
+
+		html.startTR();
+		html.startTD();
+		html.LABEL("email", "E-Mail");
+		html.endTD();
+		html.TD(" ");
+		html.endTR();
+
+		html.startTR();
+		html.startTD();
+		html.INPUTtext("email", "email", username, 80);
+		html.endTD();
+		html.startTD();
+		html.INPUTsubmit("passwordRequest", "Request password", null, 's');
+		html.endTD();
+		html.endTR();
+
+		html.endTABLE();
+		html.endFORM();
+
+		html.BR();
+		html.A("login.html", "Back to Login");
+	}
+
+	private void renderCreateAccountForm(HtmlRenderer html, String username, String email) {
+		html.H2("Create account");
+		html.startDIV("createAccount");
+		html.startFORM(null, "loginForm", false);
+		html.startTABLE().setAlignCenter();
+
+		html.startTR();
+		html.startTD();
+		html.LABEL("username", "Username");
+		html.endTD();
+		html.startTD();
+		html.INPUTtext("username", "username", username, 80);
+		html.endTD();
+		html.endTR();
+
+		html.startTR();
+		html.startTD();
+		if (!webApplication.getSystemConfig().isUserEmailMandatory()) html.startDIV("optionalLabel");
+		html.LABEL("email", "E-Mail");
+		if (!webApplication.getSystemConfig().isUserEmailMandatory()) html.endDIV();
+		html.endTD();
+		html.startTD();
+		html.INPUTtext("email", "email", email, 80);
+		html.endTD();
+		html.endTR();
+
+		html.startTR();
+		html.startTD();
+		html.LABEL("password", "Password");
+		html.endTD();
+		html.startTD();
+		html.INPUTpassword("password", "password", 80, "");
+		html.endTD();
+		html.endTR();
+
+		html.startTR();
+		html.TD("");
+		html.startTD();
+		html.INPUTsubmit("createAccount", "Create account", null, 's');
+		html.endTD();
+		html.endTR();
+
+		html.endTABLE();
+		html.endFORM();
+		html.endDIV();
+
+		html.BR();
+		html.A("login.html", "Back to Login");
+
+		if (systemConfig.isRegisterPageMessageSet()) {
+			html.DIV("separator", null);
+			html.startDIV("configMessage");
+			html.html(systemConfig.getRegisterPageMessage());
+			html.endDIV();
+		}
+	}
+
+	private void renderMessage(HtmlRenderer html, String message) {
+		html.startDIV("message");
+		html.text(message);
+		html.endDIV();
 	}
 
 }

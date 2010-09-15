@@ -271,6 +271,8 @@ public class HomepageUpdater {
 		context.put("shortDescription", project.getShortDescription());
 		context.put("description", wiki2html(project.getDescription()));
 		context.put("longDescription", wiki2html(project.getLongDescription()));
+		Release currentRelease = project.getCurrentRelease();
+		context.put("currentRelease", currentRelease == null ? "?" : currentRelease.getLabel());
 	}
 
 	public static void updateHomepage(Project project) {

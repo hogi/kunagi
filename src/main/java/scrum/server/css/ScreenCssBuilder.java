@@ -179,19 +179,24 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void loginPage(CssRenderer css) {
-		css.style(".loginPage").background(cHeaderBackground);
-		css.style(".loginPage a").color("orange");
-		css.style(".loginPage .panel").width(400).margin("100px auto").padding(20);
-		css.style(".loginPage .panel img").marginBottom(0);
-		css.style(".loginPage .message").color("white").marginBottom(10).fontSize(fontSizeTitle).fontStyleItalic();
-		css.style(".loginPage .panel label").color(Colors.lighten(Colors.lighten(Colors.lighten(cHeaderBackground))))
-				.marginRight(5);
-		css.style(".loginPage h2").colorWhite();
+		css.style(".loginPage");
+		css.style(".loginPage a").color("moccasin");
+		css.style(".loginPage .panel").background(cHeaderBackground).width(380).margin("100px auto").padding(20)
+				.borderRadius(15);
+		css.style(".loginPage .panel img").marginBottom(-20);
+		css.style(".loginPage .message").color("gold").fontWeightBold().marginBottom(10).fontSize(fontSizeTitle);
+		String labelColor = Colors.lighten(Colors.lighten(Colors.lighten(cHeaderBackground)));
+		css.style(".loginPage .panel label").color(labelColor).marginRight(5);
+		css.style(".loginPage .panel .optionalLabel label").color(Colors.lighten(cHeaderBackground));
+		css.style(".loginPage h2").colorWhite().marginBottom(10);
 		css.style(".loginPage input").marginBottom(5);
 		css.style("#username").width(150).marginRight(10);
 		css.style("#email").width(150).marginRight(10);
 		css.style("#password").width(150).marginRight(10);
-		css.style(".loginPage .kunagiLink").textAlignRight().margin(50);
+		css.style(".loginPage .separator").borderTop(1, Colors.lighten(cHeaderBackground)).margin(20, 0, 20, 0);
+		css.style(".loginPage .configMessage").colorWhite();
+		css.style(".loginPage .kunagiLink").textAlignRight().fontSize(fontSizeSmall).color(labelColor);
+		css.style(".loginPage .kunagiLink a").color(Colors.lighten(labelColor));
 	}
 
 	private void planningPoker(CssRenderer css) {

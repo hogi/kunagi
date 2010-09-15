@@ -180,7 +180,7 @@ public abstract class GImpediment
         @Override
         public boolean isMandatory() { return true; }
         @Override
-        public String getTooltip() { return "The label should be short (as it appears where the Impediment is referenced),yet give a hint strong enough to make the content of it come to mind."; }
+        public String getTooltip() { return "The label should be short (as it appears where the Impediment is referenced), yet give a hint strong enough to make the content of it come to mind."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -296,7 +296,7 @@ public abstract class GImpediment
         @Override
         public boolean isRichtext() { return true; }
         @Override
-        public String getTooltip() { return "The detailed description of the Impediment that explains problems,states who is affected and how, gives background information and solution hints."; }
+        public String getTooltip() { return "The detailed description of the Impediment that explains problems, states who is affected and how, gives background information and solution hints."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -354,7 +354,7 @@ public abstract class GImpediment
         @Override
         public boolean isRichtext() { return true; }
         @Override
-        public String getTooltip() { return "As soon as a solution is found, it can be documented here, so that people affected byor holding stake in the Impediment can read it up."; }
+        public String getTooltip() { return "As soon as a solution is found, it can be documented here, so that people affected by or holding stake in the Impediment can read it up."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

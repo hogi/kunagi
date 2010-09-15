@@ -542,6 +542,7 @@ public class Project extends GProject implements ForumSupport {
 	public Comparator<Requirement> getRequirementsOrderComparator() {
 		if (requirementsOrderComparator == null) requirementsOrderComparator = new Comparator<Requirement>() {
 
+			@Override
 			public int compare(Requirement a, Requirement b) {
 				if (a.isInCurrentSprint() && !b.isInCurrentSprint()) return -1;
 				if (b.isInCurrentSprint() && !a.isInCurrentSprint()) return 1;
