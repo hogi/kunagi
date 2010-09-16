@@ -655,6 +655,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel = createEntityModel("Issue", "issues");
 			issueModel.setGwtSupport(true);
 			issueModel.addReference("project", getProjectModel()).setMaster(true);
+			issueModel.addReference("story", getRequirementModel());
 			issueModel.addProperty("number", int.class);
 			issueModel.addStringProperty("type").setOptionRestricted(true);
 			issueModel.addProperty("date", DateAndTime.class).setMandatory(true);

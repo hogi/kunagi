@@ -42,7 +42,8 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 	protected void onExecute() {
 		Requirement requirement = new Requirement(issue);
 		getDao().createRequirement(requirement);
-		issue.appendStatement("Created Story in Product Backlog");
+		issue.setStory(requirement);
+		issue.appendStatement("Created Story in Product Backlog.");
 		issue.close();
 		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showProductBacklog(requirement);
 		addUndo(new Undo(requirement));

@@ -822,6 +822,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.issues.Issue> getIssuesByStory(scrum.client.project.Requirement story) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isStory(story)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.issues.Issue> getIssuesByNumber(int number) {
         List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
         for (scrum.client.issues.Issue entity : issues.values()) {

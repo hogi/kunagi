@@ -31,6 +31,7 @@ public class Change extends GChange {
 
 		if (parent instanceof Issue) {
 			if (key.equals("closeDate")) return Str.isBlank(newValue) ? "reopened issue" : "closed issue";
+			if (key.equals("storyId")) return "created story " + getDao().getRequirement(newValue).getReference();
 		} else if (parent instanceof Impediment) {
 			if (key.equals("closed")) return Str.isTrue(newValue) ? "closed impediment" : "reopened impediment";
 		} else if (parent instanceof Requirement) {

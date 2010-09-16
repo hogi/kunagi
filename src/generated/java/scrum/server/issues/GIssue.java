@@ -37,6 +37,7 @@ public abstract class GIssue
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
+        properties.put("storyId", this.storyId);
         properties.put("number", this.number);
         properties.put("type", this.type);
         properties.put("date", this.date == null ? null : this.date.toString());
@@ -127,6 +128,57 @@ public abstract class GIssue
 
     protected final void updateProject(Object value) {
         setProject(value == null ? null : (scrum.server.project.Project)projectDao.getById((String)value));
+    }
+
+    // -----------------------------------------------------------
+    // - story
+    // -----------------------------------------------------------
+
+    private String storyId;
+    private transient scrum.server.project.Requirement storyCache;
+
+    private void updateStoryCache() {
+        storyCache = this.storyId == null ? null : (scrum.server.project.Requirement)requirementDao.getById(this.storyId);
+    }
+
+    public final String getStoryId() {
+        return this.storyId;
+    }
+
+    public final scrum.server.project.Requirement getStory() {
+        if (storyCache == null) updateStoryCache();
+        return storyCache;
+    }
+
+    public final void setStory(scrum.server.project.Requirement story) {
+        story = prepareStory(story);
+        if (isStory(story)) return;
+        this.storyId = story == null ? null : story.getId();
+        storyCache = story;
+        fireModified("story="+story);
+    }
+
+    protected scrum.server.project.Requirement prepareStory(scrum.server.project.Requirement story) {
+        return story;
+    }
+
+    protected void repairDeadStoryReference(String entityId) {
+        if (this.storyId == null || entityId.equals(this.storyId)) {
+            setStory(null);
+        }
+    }
+
+    public final boolean isStorySet() {
+        return this.storyId != null;
+    }
+
+    public final boolean isStory(scrum.server.project.Requirement story) {
+        if (this.storyId == null && story == null) return true;
+        return story != null && story.getId().equals(this.storyId);
+    }
+
+    protected final void updateStory(Object value) {
+        setStory(value == null ? null : (scrum.server.project.Requirement)requirementDao.getById((String)value));
     }
 
     // -----------------------------------------------------------
@@ -885,6 +937,7 @@ public abstract class GIssue
             if (property.equals("id")) continue;
             Object value = entry.getValue();
             if (property.equals("projectId")) updateProject(value);
+            if (property.equals("storyId")) updateStory(value);
             if (property.equals("number")) updateNumber(value);
             if (property.equals("type")) updateType(value);
             if (property.equals("date")) updateDate(value);
@@ -909,6 +962,7 @@ public abstract class GIssue
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
+        repairDeadStoryReference(entityId);
         repairDeadCreatorReference(entityId);
         repairDeadOwnerReference(entityId);
         if (this.affectedReleasesIds == null) this.affectedReleasesIds = new java.util.HashSet<String>();
@@ -930,6 +984,12 @@ public abstract class GIssue
         } catch (EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
+        }
+        try {
+            getStory();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead story reference");
+            repairDeadStoryReference(this.storyId);
         }
         try {
             getCreator();
@@ -974,6 +1034,12 @@ public abstract class GIssue
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GIssue.projectDao = projectDao;
+    }
+
+    static scrum.server.project.RequirementDao requirementDao;
+
+    public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
+        GIssue.requirementDao = requirementDao;
     }
 
     static scrum.server.release.ReleaseDao releaseDao;

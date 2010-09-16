@@ -69,6 +69,31 @@ public abstract class GIssue
         return equals(this.projectId, project);
     }
 
+    // --- story ---
+
+    private String storyId;
+
+    public final scrum.client.project.Requirement getStory() {
+        if (storyId == null) return null;
+        return getDao().getRequirement(this.storyId);
+    }
+
+    public final boolean isStorySet() {
+        return storyId != null;
+    }
+
+    public final Issue setStory(scrum.client.project.Requirement story) {
+        String id = story == null ? null : story.getId();
+        if (equals(this.storyId, id)) return (Issue) this;
+        this.storyId = id;
+        propertyChanged("storyId", this.storyId);
+        return (Issue)this;
+    }
+
+    public final boolean isStory(scrum.client.project.Requirement story) {
+        return equals(this.storyId, story);
+    }
+
     // --- number ---
 
     private int number ;
@@ -969,6 +994,7 @@ public abstract class GIssue
 
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
+        storyId = (String) props.get("storyId");
         number  = (Integer) props.get("number");
         type  = (java.lang.String) props.get("type");
         String dateAsString = (String) props.get("date");
@@ -998,6 +1024,7 @@ public abstract class GIssue
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
+        properties.put("storyId", this.storyId);
         properties.put("number", this.number);
         properties.put("type", this.type);
         properties.put("date", this.date == null ? null : this.date.toString());

@@ -44,6 +44,8 @@ public abstract class GIssueDao
     public void clearCaches() {
         issuesByProjectCache.clear();
         projectsCache = null;
+        issuesByStoryCache.clear();
+        storysCache = null;
         issuesByNumberCache.clear();
         numbersCache = null;
         issuesByTypeCache.clear();
@@ -133,6 +135,46 @@ public abstract class GIssueDao
 
         public boolean test(Issue e) {
             return e.isProject(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - story
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.project.Requirement,Set<Issue>> issuesByStoryCache = new Cache<scrum.server.project.Requirement,Set<Issue>>(
+            new Cache.Factory<scrum.server.project.Requirement,Set<Issue>>() {
+                public Set<Issue> create(scrum.server.project.Requirement story) {
+                    return getEntities(new IsStory(story));
+                }
+            });
+
+    public final Set<Issue> getIssuesByStory(scrum.server.project.Requirement story) {
+        return issuesByStoryCache.get(story);
+    }
+    private Set<scrum.server.project.Requirement> storysCache;
+
+    public final Set<scrum.server.project.Requirement> getStorys() {
+        if (storysCache == null) {
+            storysCache = new HashSet<scrum.server.project.Requirement>();
+            for (Issue e : getEntities()) {
+                if (e.isStorySet()) storysCache.add(e.getStory());
+            }
+        }
+        return storysCache;
+    }
+
+    private static class IsStory implements Predicate<Issue> {
+
+        private scrum.server.project.Requirement value;
+
+        public IsStory(scrum.server.project.Requirement value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isStory(value);
         }
 
     }
@@ -865,6 +907,12 @@ public abstract class GIssueDao
 
     public void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         this.projectDao = projectDao;
+    }
+
+    scrum.server.project.RequirementDao requirementDao;
+
+    public void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
+        this.requirementDao = requirementDao;
     }
 
     scrum.server.release.ReleaseDao releaseDao;
