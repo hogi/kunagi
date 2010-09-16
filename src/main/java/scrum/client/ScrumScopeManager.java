@@ -27,7 +27,6 @@ import scrum.client.undo.Undo;
 import scrum.client.workspace.DndManager;
 import scrum.client.workspace.Navigator;
 import scrum.client.workspace.ProjectWorkspaceWidgets;
-import scrum.client.workspace.PublicWorkspaceWidgets;
 import scrum.client.workspace.Ui;
 import scrum.client.workspace.UsersWorkspaceWidgets;
 
@@ -57,7 +56,6 @@ public class ScrumScopeManager {
 		scope.putComponent(new SystemMessageManager());
 		scope.putComponent(new ModeSwitcher());
 		scope.putComponent(new Auth());
-		scope.putComponent(new PublicWorkspaceWidgets());
 		scope.putComponent(new Navigator());
 		scope.putComponent(new ServerErrorManager());
 

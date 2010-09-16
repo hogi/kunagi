@@ -12,19 +12,6 @@ public class ResetUserPasswordAction extends GResetUserPasswordAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		return "Reset users password to the default: " + getDao().getSystemConfig().getDefaultUserPassword();
-	}
-
-	@Override
-	public boolean isPermitted() {
-		if (!getCurrentUser().isAdmin()) return false;
-		return true;
-	}
-
-	@Override
-	protected void onExecute() {
-		new ResetPasswordServiceCall(user.getId());
-	}
+	protected void onExecute() {}
 
 }

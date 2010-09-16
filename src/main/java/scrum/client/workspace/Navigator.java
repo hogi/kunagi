@@ -1,6 +1,5 @@
 package scrum.client.workspace;
 
-import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 
@@ -43,11 +42,6 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, UserL
 
 	private void onHistoryToken(final Map<String, String> tokens) {
 
-		if (tokens.containsKey("login")) {
-			modeSwitcher.activatePublicMode();
-			return;
-		}
-
 		if (tokens.containsKey("projectSelector")) {
 			modeSwitcher.activateUserMode();
 			return;
@@ -82,15 +76,9 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, UserL
 		}
 	}
 
+	@Override
 	public void onApplicationStarted(ApplicationStartedEvent event) {
-		User user = auth.getUser();
 		String historyToken = History.getToken();
-		if (user == null) {
-			startToken = Str.isBlank(historyToken) ? null : historyToken;
-			modeSwitcher.activatePublicMode();
-			return;
-		}
-
 		if (historyToken.contains("project=")) {
 			evalHistoryToken(historyToken);
 		} else {
