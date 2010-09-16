@@ -38,6 +38,7 @@ public abstract class GRequirement
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("sprintId", this.sprintId);
+        properties.put("issueId", this.issueId);
         properties.put("number", this.number);
         properties.put("qualitysIds", this.qualitysIds);
         properties.put("label", this.label);
@@ -173,6 +174,57 @@ public abstract class GRequirement
 
     protected final void updateSprint(Object value) {
         setSprint(value == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById((String)value));
+    }
+
+    // -----------------------------------------------------------
+    // - issue
+    // -----------------------------------------------------------
+
+    private String issueId;
+    private transient scrum.server.issues.Issue issueCache;
+
+    private void updateIssueCache() {
+        issueCache = this.issueId == null ? null : (scrum.server.issues.Issue)issueDao.getById(this.issueId);
+    }
+
+    public final String getIssueId() {
+        return this.issueId;
+    }
+
+    public final scrum.server.issues.Issue getIssue() {
+        if (issueCache == null) updateIssueCache();
+        return issueCache;
+    }
+
+    public final void setIssue(scrum.server.issues.Issue issue) {
+        issue = prepareIssue(issue);
+        if (isIssue(issue)) return;
+        this.issueId = issue == null ? null : issue.getId();
+        issueCache = issue;
+        fireModified("issue="+issue);
+    }
+
+    protected scrum.server.issues.Issue prepareIssue(scrum.server.issues.Issue issue) {
+        return issue;
+    }
+
+    protected void repairDeadIssueReference(String entityId) {
+        if (this.issueId == null || entityId.equals(this.issueId)) {
+            setIssue(null);
+        }
+    }
+
+    public final boolean isIssueSet() {
+        return this.issueId != null;
+    }
+
+    public final boolean isIssue(scrum.server.issues.Issue issue) {
+        if (this.issueId == null && issue == null) return true;
+        return issue != null && issue.getId().equals(this.issueId);
+    }
+
+    protected final void updateIssue(Object value) {
+        setIssue(value == null ? null : (scrum.server.issues.Issue)issueDao.getById((String)value));
     }
 
     // -----------------------------------------------------------
@@ -680,6 +732,7 @@ public abstract class GRequirement
             Object value = entry.getValue();
             if (property.equals("projectId")) updateProject(value);
             if (property.equals("sprintId")) updateSprint(value);
+            if (property.equals("issueId")) updateIssue(value);
             if (property.equals("number")) updateNumber(value);
             if (property.equals("qualitysIds")) updateQualitys(value);
             if (property.equals("label")) updateLabel(value);
@@ -699,6 +752,7 @@ public abstract class GRequirement
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadSprintReference(entityId);
+        repairDeadIssueReference(entityId);
         if (this.qualitysIds == null) this.qualitysIds = new java.util.HashSet<String>();
         repairDeadQualityReference(entityId);
         if (this.tasksOrderIds == null) this.tasksOrderIds = new java.util.ArrayList<java.lang.String>();
@@ -723,6 +777,12 @@ public abstract class GRequirement
         } catch (EntityDoesNotExistException ex) {
             LOG.info("Repairing dead sprint reference");
             repairDeadSprintReference(this.sprintId);
+        }
+        try {
+            getIssue();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead issue reference");
+            repairDeadIssueReference(this.issueId);
         }
         if (this.qualitysIds == null) this.qualitysIds = new java.util.HashSet<String>();
         Set<String> qualitys = new HashSet<String>(this.qualitysIds);
@@ -752,6 +812,12 @@ public abstract class GRequirement
 
     public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
         GRequirement.sprintDao = sprintDao;
+    }
+
+    static scrum.server.issues.IssueDao issueDao;
+
+    public static final void setIssueDao(scrum.server.issues.IssueDao issueDao) {
+        GRequirement.issueDao = issueDao;
     }
 
     static scrum.server.project.QualityDao qualityDao;

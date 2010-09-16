@@ -96,6 +96,31 @@ public abstract class GRequirement
         return equals(this.sprintId, sprint);
     }
 
+    // --- issue ---
+
+    private String issueId;
+
+    public final scrum.client.issues.Issue getIssue() {
+        if (issueId == null) return null;
+        return getDao().getIssue(this.issueId);
+    }
+
+    public final boolean isIssueSet() {
+        return issueId != null;
+    }
+
+    public final Requirement setIssue(scrum.client.issues.Issue issue) {
+        String id = issue == null ? null : issue.getId();
+        if (equals(this.issueId, id)) return (Requirement) this;
+        this.issueId = id;
+        propertyChanged("issueId", this.issueId);
+        return (Requirement)this;
+    }
+
+    public final boolean isIssue(scrum.client.issues.Issue issue) {
+        return equals(this.issueId, issue);
+    }
+
     // --- number ---
 
     private int number ;
@@ -710,6 +735,7 @@ public abstract class GRequirement
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
         sprintId = (String) props.get("sprintId");
+        issueId = (String) props.get("issueId");
         number  = (Integer) props.get("number");
         qualitysIds = (Set<String>) props.get("qualitysIds");
         label  = (java.lang.String) props.get("label");
@@ -730,6 +756,7 @@ public abstract class GRequirement
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("sprintId", this.sprintId);
+        properties.put("issueId", this.issueId);
         properties.put("number", this.number);
         properties.put("qualitysIds", this.qualitysIds);
         properties.put("label", this.label);

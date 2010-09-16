@@ -38,6 +38,7 @@ public class Change extends GChange {
 			if (key.equals("closed")) return Str.isTrue(newValue) ? "closed story" : "reopened story";
 			if (key.equals("sprintId"))
 				return newValue == null ? "kicked story from sprint" : "pulled story to sprint";
+			if (key.equals("issueId")) return "linked story to issue " + getDao().getIssue(newValue).getReference();
 		}
 
 		if (Str.isBlank(oldValue)) return "created " + getFieldLabel();

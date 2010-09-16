@@ -42,6 +42,7 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 	protected void onExecute() {
 		Requirement requirement = new Requirement(issue);
 		getDao().createRequirement(requirement);
+		requirement.setIssue(issue);
 		issue.setStory(requirement);
 		issue.appendStatement("Created Story in Product Backlog.");
 		issue.close();

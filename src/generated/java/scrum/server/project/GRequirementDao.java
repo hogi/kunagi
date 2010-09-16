@@ -46,6 +46,8 @@ public abstract class GRequirementDao
         projectsCache = null;
         requirementsBySprintCache.clear();
         sprintsCache = null;
+        requirementsByIssueCache.clear();
+        issuesCache = null;
         requirementsByNumberCache.clear();
         numbersCache = null;
         requirementsByQualityCache.clear();
@@ -160,6 +162,46 @@ public abstract class GRequirementDao
 
         public boolean test(Requirement e) {
             return e.isSprint(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - issue
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.issues.Issue,Set<Requirement>> requirementsByIssueCache = new Cache<scrum.server.issues.Issue,Set<Requirement>>(
+            new Cache.Factory<scrum.server.issues.Issue,Set<Requirement>>() {
+                public Set<Requirement> create(scrum.server.issues.Issue issue) {
+                    return getEntities(new IsIssue(issue));
+                }
+            });
+
+    public final Set<Requirement> getRequirementsByIssue(scrum.server.issues.Issue issue) {
+        return requirementsByIssueCache.get(issue);
+    }
+    private Set<scrum.server.issues.Issue> issuesCache;
+
+    public final Set<scrum.server.issues.Issue> getIssues() {
+        if (issuesCache == null) {
+            issuesCache = new HashSet<scrum.server.issues.Issue>();
+            for (Requirement e : getEntities()) {
+                if (e.isIssueSet()) issuesCache.add(e.getIssue());
+            }
+        }
+        return issuesCache;
+    }
+
+    private static class IsIssue implements Predicate<Requirement> {
+
+        private scrum.server.issues.Issue value;
+
+        public IsIssue(scrum.server.issues.Issue value) {
+            this.value = value;
+        }
+
+        public boolean test(Requirement e) {
+            return e.isIssue(value);
         }
 
     }
@@ -625,6 +667,12 @@ public abstract class GRequirementDao
 
     public void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
         this.sprintDao = sprintDao;
+    }
+
+    scrum.server.issues.IssueDao issueDao;
+
+    public void setIssueDao(scrum.server.issues.IssueDao issueDao) {
+        this.issueDao = issueDao;
     }
 
     scrum.server.project.QualityDao qualityDao;

@@ -345,6 +345,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			postChangeIfChanged(conversation, entity, properties, currentUser, "testDescription");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "sprintId");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "closed");
+			postChangeIfChanged(conversation, entity, properties, currentUser, "issueId");
 		}
 		if (entity instanceof Wikipage) {
 			postChangeIfChanged(conversation, entity, properties, currentUser, "text");

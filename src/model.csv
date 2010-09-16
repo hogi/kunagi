@@ -393,6 +393,7 @@
 "b7de92db-a596-448a-b93d-4eca0df91868","547376fe-089d-4817-983f-34a234650906","BooleanProperty","dirty"
 "4144df20-b877-4e07-b232-0cdfeee9c8af","547376fe-089d-4817-983f-34a234650906","BooleanProperty","workEstimationVotingActive"
 "231be0cf-d1d7-4a58-a449-2d5c5d495316","547376fe-089d-4817-983f-34a234650906","BooleanProperty","workEstimationVotingShowoff"
+"8890cc15-836c-44be-a0c5-c16077191ba9","547376fe-089d-4817-983f-34a234650906","ReferenceProperty","issue"
 "bb769c83-6873-444a-a738-fa4a3ef3ad45","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","release"
 "125131ce-6faf-4259-acaa-d9c8738ece96","bb769c83-6873-444a-a738-fa4a3ef3ad45","Entity","Release"
 "a4ab64d1-1ba5-47c6-919b-3ab41fac9b0c","125131ce-6faf-4259-acaa-d9c8738ece96","ReferenceProperty","project"
