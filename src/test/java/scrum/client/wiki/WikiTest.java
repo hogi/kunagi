@@ -76,8 +76,17 @@ public class WikiTest extends Assert {
 	public void testItemList() {
 		Assert.assertEquals(toHtml("* item"), "<ul><li>item</li></ul>");
 		Assert.assertEquals(toHtml("# item"), "<ol><li>item</li></ol>");
-		Assert.assertEquals(toHtml("* item\nxyz"), "<ul><li>item xyz</li></ul>");
+		Assert.assertEquals(toHtml("* item\nxyz"), "<ul><li>item<br>xyz</li></ul>");
 		Assert.assertEquals(toHtml("* item 1\n* item 2"), "<ul><li>item 1</li><li>item 2</li></ul>");
+	}
+
+	@Test
+	public void testNestedItemList() {
+		Assert.assertEquals(toHtml("* item\n # subitem"), "<ul><li>item<ol><li>subitem</li></ol></li></ul>");
+		Assert.assertEquals(toHtml("* item\n # subitem\n # subitem"),
+			"<ul><li>item<ol><li>subitem</li><li>subitem</li></ol></li></ul>");
+		Assert.assertEquals(toHtml("* item\n # subitem\n  * subsubitem"),
+			"<ul><li>item<ol><li>subitem<ul><li>subsubitem</li></ul></li></ol></li></ul>");
 	}
 
 	@Test
@@ -99,8 +108,8 @@ public class WikiTest extends Assert {
 	@Test
 	public void testParagraph() {
 		Assert.assertEquals(toHtml("a b"), "a b");
-		Assert.assertEquals(toHtml("a\nb"), "<p>a b</p>");
-		Assert.assertEquals(toHtml("a\r\nb"), "<p>a b</p>");
+		Assert.assertEquals(toHtml("a\nb"), "<p>a<br>b</p>");
+		Assert.assertEquals(toHtml("a\r\nb"), "<p>a<br>b</p>");
 		Assert.assertEquals(toHtml("a\n\nb"), "<p>a</p><p>b</p>");
 		Assert.assertEquals(toHtml("a\n\n\n"), "<p>a</p>");
 	}
@@ -128,8 +137,9 @@ public class WikiTest extends Assert {
 	public void testComplete() {
 		String html = toHtml("= header 1 =\nmy first paragraph\nstill first\n\nsecond paragraph\n\n\n\nthird paragraph\n\n== header 2 ==");
 		// System.out.println("\n-----\n" + html + "\n-----\n");
-		Assert.assertEquals(html,
-			"<h1>header 1</h1><p>my first paragraph still first</p><p>second paragraph</p><p>third paragraph</p><h2>header 2</h2>");
+		Assert.assertEquals(
+			html,
+			"<h1>header 1</h1><p>my first paragraph<br>still first</p><p>second paragraph</p><p>third paragraph</p><h2>header 2</h2>");
 	}
 
 	private static String toHtml(String wiki) {

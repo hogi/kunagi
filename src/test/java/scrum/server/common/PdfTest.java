@@ -109,7 +109,7 @@ public class PdfTest {
 	public void wikipage() {
 		Wikipage wikipage = new Wikipage();
 		wikipage.setName("wikipage");
-		wikipage.setText("= Test Wiki Page =\n\nTest wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. ");
+		wikipage.setText("= Test Wiki Page =\n\nTest wiki page.\nTest wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. Test wiki page. ");
 		createPdf(new WikipagePdfCreator(wikipage));
 	}
 

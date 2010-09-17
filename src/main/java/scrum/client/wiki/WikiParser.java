@@ -69,7 +69,15 @@ public class WikiParser {
 			}
 		}
 
-		text = text.replace('\n', ' ');
+		begin = text.indexOf('\n');
+		if (begin > 0) {
+			String prefix = text.substring(0, begin);
+			String suffix = text.substring(begin + 1);
+			appendText(p, prefix);
+			p.add(new LineBreak());
+			appendText(p, suffix);
+			return p;
+		}
 
 		// internal links
 		begin = text.indexOf("[[");
@@ -287,23 +295,27 @@ public class WikiParser {
 			return;
 		}
 
-		// unordered list
+		// list
 		if (input.startsWith("* ") || input.startsWith("# ")) {
 			boolean ordered = input.startsWith("#");
 			ItemList list = new ItemList(ordered);
 			Paragraph item = null;
 			String line = getNextLine();
+			String leadingSpaces = Str.getLeadingSpaces(line);
+			String lineTrimmed = leadingSpaces.length() == 0 ? line : line.substring(leadingSpaces.length());
 			while (!line.startsWith("\n") && line.length() > 0) {
-				if (line.startsWith(ordered ? "# " : "* ")) {
+				if (lineTrimmed.startsWith("# ") || lineTrimmed.startsWith("* ")) {
 					item = new Paragraph(false);
-					appendText(item, line.substring(2));
-					list.add(item);
+					appendText(item, lineTrimmed.substring(2));
+					list.add(item, leadingSpaces, lineTrimmed.startsWith("#"));
 				} else {
-					item.add(Text.SPACE);
+					item.add(LineBreak.INSTANCE);
 					appendText(item, line);
 				}
 				burn(line.length() + 1);
 				line = getNextLine();
+				leadingSpaces = Str.getLeadingSpaces(line);
+				lineTrimmed = leadingSpaces.length() == 0 ? line : line.substring(leadingSpaces.length());
 			}
 			model.add(list);
 			return;

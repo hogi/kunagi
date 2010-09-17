@@ -17,6 +17,7 @@ import scrum.client.wiki.Header;
 import scrum.client.wiki.Highlight;
 import scrum.client.wiki.Image;
 import scrum.client.wiki.ItemList;
+import scrum.client.wiki.LineBreak;
 import scrum.client.wiki.Link;
 import scrum.client.wiki.Paragraph;
 import scrum.client.wiki.Pre;
@@ -96,11 +97,11 @@ public class WikiToPdfConverter extends APdfCreator {
 		boolean ordered = list.isOrdered();
 		ATable table = parent.table(1, ordered ? 30 : 45);
 		int counter = 0;
-		for (Paragraph item : list.getItems()) {
+		for (ItemList.Item item : list.getItems()) {
 			ARow row = table.row();
 			counter++;
 			row.cell(ordered ? counter + "." : "-", defaultFont);
-			processParagraph(item, row.cell());
+			processParagraph(item.getParagraph(), row.cell());
 		}
 	}
 
@@ -146,6 +147,10 @@ public class WikiToPdfConverter extends APdfCreator {
 		}
 		if (element instanceof Image) {
 			processImage((Image) element, parent);
+			return;
+		}
+		if (element instanceof LineBreak) {
+			parent.nl();
 			return;
 		}
 		throw new RuntimeException("Unsupported Wiki-Paragraph-Element: " + element.getClass().getName());

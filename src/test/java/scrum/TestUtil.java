@@ -37,6 +37,7 @@ public class TestUtil {
 	}
 
 	public static User getDuke() {
+		initialize();
 		User duke = app.getUserDao().getUserByName("duke");
 		if (duke == null) duke = app.getUserDao().postUser("duke");
 		duke.setEmail("duke@kunagi.org");
@@ -45,6 +46,7 @@ public class TestUtil {
 	}
 
 	public static User getAdmin() {
+		initialize();
 		User admin = app.getUserDao().getUserByName("admin");
 		if (admin == null) {
 			admin = app.getUserDao().postUser("admin");
