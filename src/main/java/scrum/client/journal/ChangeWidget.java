@@ -8,6 +8,7 @@ import scrum.client.collaboration.Wiki;
 import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -61,10 +62,9 @@ public class ChangeWidget extends AScrumWidget {
 		};
 
 		FlowPanel panel = new FlowPanel();
-		panel.add(new Label(change.getLabel()));
+		panel.add(new HTML(Wiki.toHtml(change.getLabel())));
 		panel.add(valueWidget);
 		panel.add(Gwt.createDiv("ChangeWidget-comment", new RichtextEditorWidget(change.getCommentModel())));
 		return panel;
 	}
-
 }

@@ -54,6 +54,7 @@ public class Change extends GChange {
 
 		if (parent instanceof Issue) {
 			if (key.equals("closeDate")) return null;
+			if (key.equals("storyId")) return null;
 		} else if (parent instanceof Impediment) {
 			if (key.equals("closed")) return null;
 		} else if (parent instanceof Risk) {
@@ -66,6 +67,7 @@ public class Change extends GChange {
 		} else if (parent instanceof Requirement) {
 			if (key.equals("closed")) return null;
 			if (key.equals("sprintId")) return null;
+			if (key.equals("issueId")) return null;
 		}
 
 		if (Str.isBlank(oldValue)) return getNewValue();
