@@ -37,6 +37,7 @@ public abstract class GProject
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("label", this.label);
+        properties.put("vision", this.vision);
         properties.put("shortDescription", this.shortDescription);
         properties.put("description", this.description);
         properties.put("longDescription", this.longDescription);
@@ -87,6 +88,7 @@ public abstract class GProject
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getVision(), key)) return true;
         if (matchesKey(getShortDescription(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
         if (matchesKey(getLongDescription(), key)) return true;
@@ -127,6 +129,41 @@ public abstract class GProject
 
     protected final void updateLabel(Object value) {
         setLabel((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - vision
+    // -----------------------------------------------------------
+
+    private java.lang.String vision;
+
+    public final java.lang.String getVision() {
+        return vision;
+    }
+
+    public final void setVision(java.lang.String vision) {
+        vision = prepareVision(vision);
+        if (isVision(vision)) return;
+        this.vision = vision;
+        fireModified("vision="+vision);
+    }
+
+    protected java.lang.String prepareVision(java.lang.String vision) {
+        vision = Str.removeUnreadableChars(vision);
+        return vision;
+    }
+
+    public final boolean isVisionSet() {
+        return this.vision != null;
+    }
+
+    public final boolean isVision(java.lang.String vision) {
+        if (this.vision == null && vision == null) return true;
+        return this.vision != null && this.vision.equals(vision);
+    }
+
+    protected final void updateVision(Object value) {
+        setVision((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -1579,6 +1616,7 @@ public abstract class GProject
             if (property.equals("id")) continue;
             Object value = entry.getValue();
             if (property.equals("label")) updateLabel(value);
+            if (property.equals("vision")) updateVision(value);
             if (property.equals("shortDescription")) updateShortDescription(value);
             if (property.equals("description")) updateDescription(value);
             if (property.equals("longDescription")) updateLongDescription(value);

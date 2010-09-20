@@ -27,9 +27,9 @@ public class ReleaseWidget extends AScrumWidget {
 		TableBuilder tb = ScrumGwt.createFieldTable();
 
 		tb.addFieldRow("Label", release.getLabelModel());
-		tb.addFieldRow("Release date", release.getReleaseDateModel());
-		tb.addFieldRow("Description", release.getNoteModel());
-		tb.addFieldRow("Release notes", release.getReleaseNotesModel());
+		tb.addFieldRow("Release Date", release.getReleaseDateModel());
+		tb.addFieldRow("Development Notes", release.getNoteModel());
+		tb.addFieldRow("Release Notes", release.getReleaseNotesModel());
 		tb.addFieldRow("SCM Tag", release.getScmTagModel());
 		if (release.isMajor()) {
 			tb.addFieldRow("Sprints", new AMultiSelectionViewEditWidget<Sprint>() {
@@ -74,7 +74,7 @@ public class ReleaseWidget extends AScrumWidget {
 				}
 			});
 		}
-		tb.addFieldRow("Affected by issues", new AOutputViewEditWidget() {
+		tb.addFieldRow("Affected by Issues", new AOutputViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -86,7 +86,7 @@ public class ReleaseWidget extends AScrumWidget {
 				return getLocalizer().fields().releaseAffectedByIssues();
 			}
 		});
-		tb.addFieldRow("Fixed issues", new AOutputViewEditWidget() {
+		tb.addFieldRow("Fixed Issues", new AOutputViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -98,7 +98,7 @@ public class ReleaseWidget extends AScrumWidget {
 				return getLocalizer().fields().releaseFixedIssues();
 			}
 		});
-		tb.addFieldRow("Planned issues", new AOutputViewEditWidget() {
+		tb.addFieldRow("Planned Issues", new AOutputViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {

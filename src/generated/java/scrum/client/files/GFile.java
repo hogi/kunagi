@@ -235,7 +235,7 @@ public abstract class GFile
         @Override
         public boolean isMandatory() { return true; }
         @Override
-        public String getTooltip() { return "The label is used to provide a human readable name for the uploaded file.It may (and probably should) differ from the filename"; }
+        public String getTooltip() { return "The label is used to provide a human readable name for the uploaded file. It may (and probably should) differ from the filename."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

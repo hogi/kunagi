@@ -246,7 +246,7 @@ public abstract class GQuality
         @Override
         public boolean isRichtext() { return true; }
         @Override
-        public String getTooltip() { return "The desctiption of a Quality should give detailled information onwhat the Quality is about and how it affects Storys that reference it."; }
+        public String getTooltip() { return "The desctiption of a Quality should give detailled information on what the Quality is about and how it affects Storys that reference it."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -307,7 +307,7 @@ public abstract class GQuality
         @Override
         public boolean isRichtext() { return true; }
         @Override
-        public String getTooltip() { return "The Test contains requirements that have to be met by the Teamin order for a Story that references this Quality to be considered done."; }
+        public String getTooltip() { return "The Test contains requirements that have to be met by the Team in order for a Story that references this Quality to be considered done."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

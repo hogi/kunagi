@@ -1029,6 +1029,14 @@ public abstract class GDao
         return null;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByVision(java.lang.String vision) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isVision(vision)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.project.Project> getProjectsByShortDescription(java.lang.String shortDescription) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {

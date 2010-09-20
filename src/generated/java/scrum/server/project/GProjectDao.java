@@ -43,6 +43,8 @@ public abstract class GProjectDao
     // --- clear caches ---
     public void clearCaches() {
         labelsCache = null;
+        projectsByVisionCache.clear();
+        visionsCache = null;
         projectsByShortDescriptionCache.clear();
         shortDescriptionsCache = null;
         projectsByDescriptionCache.clear();
@@ -153,6 +155,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isLabel(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - vision
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByVisionCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String vision) {
+                    return getEntities(new IsVision(vision));
+                }
+            });
+
+    public final Set<Project> getProjectsByVision(java.lang.String vision) {
+        return projectsByVisionCache.get(vision);
+    }
+    private Set<java.lang.String> visionsCache;
+
+    public final Set<java.lang.String> getVisions() {
+        if (visionsCache == null) {
+            visionsCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isVisionSet()) visionsCache.add(e.getVision());
+            }
+        }
+        return visionsCache;
+    }
+
+    private static class IsVision implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsVision(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isVision(value);
         }
 
     }

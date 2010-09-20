@@ -117,27 +117,33 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addPredicate("editable");
 			projectModel.addStringProperty("label").setMandatory(true).setSearchable(true).setUnique(true).setTooltip(
 				"This is the project name that should be chosen for humans to clearly identify the project.");
-			projectModel.addStringProperty("shortDescription").setSearchable(true);
-			projectModel.addStringProperty("description").setRichtext(true).setSearchable(true).setTooltip(
-				"This is a vision that should state the purpose and aim of the project."
-						+ "It should focus be used to focus the participant's work on a common goal"
+			projectModel.addStringProperty("vision").setRichtext(true).setSearchable(true).setTooltip(
+				"This is a vision that should state the purpose and aim of the project. "
+						+ "It should focus be used to focus the participant's work on a common goal "
 						+ "that is simple, measurable, achievable, relevant, and time-bound.");
-			projectModel.addStringProperty("longDescription").setRichtext(true).setSearchable(true);
+			projectModel.addStringProperty("shortDescription").setSearchable(true).setTooltip(
+				"This is a project description in a sentence. It can, for example, be used in "
+						+ "the homepage metatag or inserted descriptions, where space is limited to one line.");
+			projectModel.addStringProperty("description").setRichtext(true).setSearchable(true).setTooltip(
+				"This is a product description in a paragraph. It is can be used to give a short introduction "
+						+ "about the product, summing up all essential features.");
+			projectModel.addStringProperty("longDescription").setRichtext(true).setSearchable(true).setTooltip(
+				"This is a full lenth description that takes as much space as it needs.");
 			projectModel.addProperty("begin", Date.class);
 			projectModel.addProperty("end", Date.class);
 			projectModel.addSetReference("participants", getUserModel()).setTooltip(
-				"The project's participants are all stakeholders."
-						+ "Speaking in Scrum terms, they are both pigs and chickens"
+				"The project's participants are all stakeholders. "
+						+ "Speaking in Scrum terms, they are both pigs and chickens "
 						+ "that are allowed to log into the project and browse all information available.");
 			projectModel.addSetReference("admins", getUserModel()).setTooltip(
-				"The admins can change the project properties and are of no direct relevance to the Scrum idea."
+				"The admins can change the project properties and are of no direct relevance to the Scrum idea. "
 						+ "An admin is the person to turn to when administrating Kunagi program data.");
 			projectModel.addSetReference("productOwners", getUserModel()).setTooltip(
-				"The Product Owner is the person in charge of defining and priotizing the product requirements"
-						+ "by managing the Product Backlog. He represents the customer to the Team."
+				"The Product Owner is the person in charge of defining and priotizing the product requirements "
+						+ "by managing the Product Backlog. He represents the customer to the Team. "
 						+ "Ideally, the Product Owner should not be a Team Member.");
 			projectModel.addSetReference("scrumMasters", getUserModel()).setTooltip(
-				"The Scrum Master ensures cooperation between all Scrum roles,"
+				"The Scrum Master ensures cooperation between all Scrum roles, "
 						+ "shields the Team agains adverse influences and removies impediments.");
 			projectModel.addSetReference("teamMembers", getUserModel()).setTooltip(
 				"The Team ideally consists of around 7 members and is self-organized and cross-functional.");
@@ -183,8 +189,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setSearchable(true);
 			fileModel.addProperty("uploadTime", DateAndTime.class).setEditablePredicate("false").setMandatory(true);
 			fileModel.addStringProperty("label").setMandatory(true).setSearchable(true).setTooltip(
-				"The label is used to provide a human readable name for the uploaded file."
-						+ "It may (and probably should) differ from the filename");
+				"The label is used to provide a human readable name for the uploaded file. "
+						+ "It may (and probably should) differ from the filename.");
 			fileModel.addProperty("number", int.class).setMandatory(true);
 			fileModel.addStringProperty("note").setRichtext(true).setSearchable(true).setTooltip(
 				"Use this to give additional information on this uploaded file useful for other project members.");
@@ -203,21 +209,21 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			releaseModel.addReference("project", getProjectModel()).setMaster(true);
 			releaseModel.addReference("parentRelease", getReleaseModel());
 			releaseModel.addSetReference("sprints", getSprintModel()).setTooltip(
-				"Releases in Scrum usually only make sense after the completion of Sprints."
-						+ "Therefore, one (public) release contains the results of a number of Sprints."
+				"Releases in Scrum usually only make sense after the completion of Sprints. "
+						+ "Therefore, one (public) release contains the results of a number of Sprints. "
 						+ "This is the list of Sprints that were undertaken to build this release.");
 			releaseModel.addProperty("number", int.class).setMandatory(true);
 			releaseModel.addStringProperty("label").setMandatory(true).setSearchable(true).setTooltip(
 				"This is the codename of the release, used to refer to it by project members and users.");
 			releaseModel.addStringProperty("note").setRichtext(true).setSearchable(true).setTooltip(
-				"The development notes contain information useful for"
+				"The development notes contain information useful for "
 						+ "project participants and stakeholders while working on the release.");
 			releaseModel.addProperty("releaseDate", Date.class).setTooltip(
 				"The intended or actual release date for planned and finished releases, respectively.");
 			releaseModel.addProperty("released", boolean.class);
 			releaseModel.addStringProperty("releaseNotes").setRichtext(true).setSearchable(true).setTooltip(
-				"The release notes contain a description used to articulate the changes"
-						+ "that this release contains to the public."
+				"The release notes contain a description used to articulate the changes "
+						+ "that this release contains to the public. "
 						+ "It should be done in human readable format and an informative manner.");
 			releaseModel.addStringProperty("scmTag").setSearchable(true).setTooltip(
 				"The tag used in content management systems for this release.");
@@ -254,24 +260,24 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addReference("issue", getIssueModel());
 			requirementModel.addProperty("number", int.class);
 			requirementModel.addSetReference("qualitys", getQualityModel()).setTooltip(
-				"Qualities are non-functional or cross-story requirements."
-						+ "Qualities linked to Stories indicate that not only the Story's requirements,"
+				"Qualities are non-functional or cross-story requirements. "
+						+ "Qualities linked to Stories indicate that not only the Story's requirements, "
 						+ "but also the Quality's requirements need to be met in order to complete a Story.");
 			requirementModel.addStringProperty("label").setMandatory(true).setEditablePredicate("editable")
 					.setSearchable(true).setTooltip(createLabelTooltipText("Story"));
 			requirementModel.addStringProperty("description").setRichtext(true).setEditablePredicate("editable")
 					.setSearchable(true).setTooltip(
-						"The description of a Story should make what the label cannot:"
-								+ "It should provide information on what is and what is not part of it."
-								+ "Ideally, it is given in terms of a user story:"
+						"The description of a Story should make what the label cannot: "
+								+ "It should provide information on what is and what is not part of it. "
+								+ "Ideally, it is given in terms of a user story: "
 								+ "'As a [user] I want [function] so that [value].'");
 			requirementModel.addStringProperty("testDescription").setRichtext(true).setEditablePredicate("editable")
 					.setSearchable(true).setTooltip(
-						"The Test contains requirements that have to be met by the Team"
+						"The Test contains requirements that have to be met by the Team "
 								+ "in order for the Story to be considered done.");
 			requirementModel.addProperty("estimatedWork", Float.class).setTooltip(
-				"The estimated work gives a relative estimation of effort that needs to be put into the Story to complete it."
-						+ "The bigger the Story the less important the accuracy of the estimation."
+				"The estimated work gives a relative estimation of effort that needs to be put into the Story to complete it. "
+						+ "The bigger the Story the less important the accuracy of the estimation. "
 						+ "Big Stories (Epics) close to being worked on should be split to be smaller.");
 			requirementModel.addProperty("rejectDate", Date.class);
 			requirementModel.addProperty("closed", boolean.class);
@@ -324,11 +330,11 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				"editable").setTooltip(createLabelTooltipText("Quality"));
 			qualityModel.addStringProperty("description").setRichtext(true).setSearchable(true).setEditablePredicate(
 				"editable").setTooltip(
-				"The desctiption of a Quality should give detailled information on"
+				"The desctiption of a Quality should give detailled information on "
 						+ "what the Quality is about and how it affects Storys that reference it.");
 			qualityModel.addStringProperty("testDescription").setRichtext(true).setSearchable(true)
 					.setEditablePredicate("editable").setTooltip(
-						"The Test contains requirements that have to be met by the Team"
+						"The Test contains requirements that have to be met by the Team "
 								+ "in order for a Story that references this Quality to be considered done.");
 			getApplicationModel().addCreateAction(qualityModel);
 			qualityModel.addAction("DeleteQuality");
@@ -409,7 +415,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setSearchable(true).setTooltip(
 						"The description of a Task may be used to give information that is important, "
 								+ "but cannot be inferred from the Label. "
-								+ "As Tasks are small units of work, the Label might be sufficient");
+								+ "As Tasks are small units of work, the Label might be sufficient.");
 			taskModel.addProperty("remainingWork", int.class).setEditablePredicate("editable").setTooltip(
 				"The remaining time needed to get this Task done. If the remaining time is high, "
 						+ "it might be an indication (but is not necessarily the case) that "
@@ -570,7 +576,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				"Official statement from the Scrum Team to the public about this issue. This could be a "
 						+ " workaround description, the reason or some other information about status of the "
 						+ " issue.");
-			issueModel.addStringProperty("issuerName").setTooltip("Name of the person, who created this issue.")
+			issueModel.addStringProperty("issuerName").setTooltip("Name of the person that created this issue.")
 					.setTooltip("The person who filed this issue.");
 			issueModel.addStringProperty("issuerEmail").setTooltip(
 				"E-Mail address of the person, who filed this issue.");

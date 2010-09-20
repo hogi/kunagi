@@ -32,8 +32,8 @@ public class Subject extends GSubject implements ForumSupport {
 
 	public Widget createForumItemWidget() {
 		TableBuilder tb = ScrumGwt.createFieldTable();
-		tb.addFieldRow("Label", getLabelModel());
-		tb.addFieldRow("Text", getTextModel());
+		tb.addFieldRow("Title", getLabelModel());
+		tb.addFieldRow("Notes", getTextModel());
 		return tb.createTable();
 	}
 

@@ -105,6 +105,64 @@ public abstract class GProject
 
     }
 
+    // --- vision ---
+
+    private java.lang.String vision ;
+
+    public final java.lang.String getVision() {
+        return this.vision ;
+    }
+
+    public final Project setVision(java.lang.String vision) {
+        if (isVision(vision)) return (Project)this;
+        this.vision = vision ;
+        propertyChanged("vision", this.vision);
+        return (Project)this;
+    }
+
+    public final boolean isVision(java.lang.String vision) {
+        return equals(this.vision, vision);
+    }
+
+    private transient VisionModel visionModel;
+
+    public VisionModel getVisionModel() {
+        if (visionModel == null) visionModel = createVisionModel();
+        return visionModel;
+    }
+
+    protected VisionModel createVisionModel() { return new VisionModel(); }
+
+    protected class VisionModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_vision";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getVision();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setVision(value);
+        }
+
+        @Override
+        public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "This is a vision that should state the purpose and aim of the project. It should focus be used to focus the participant's work on a common goal that is simple, measurable, achievable, relevant, and time-bound."; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- shortDescription ---
 
     private java.lang.String shortDescription ;
@@ -149,6 +207,8 @@ public abstract class GProject
         public void setValue(java.lang.String value) {
             setShortDescription(value);
         }
+        @Override
+        public String getTooltip() { return "This is a project description in a sentence. It can, for example, be used in the homepage metatag or inserted descriptions, where space is limited to one line."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -206,7 +266,7 @@ public abstract class GProject
         @Override
         public boolean isRichtext() { return true; }
         @Override
-        public String getTooltip() { return "This is a vision that should state the purpose and aim of the project.It should focus be used to focus the participant's work on a common goalthat is simple, measurable, achievable, relevant, and time-bound."; }
+        public String getTooltip() { return "This is a product description in a paragraph. It is can be used to give a short introduction about the product, summing up all essential features."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -263,6 +323,8 @@ public abstract class GProject
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "This is a full lenth description that takes as much space as it needs."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -1696,6 +1758,7 @@ public abstract class GProject
 
     public void updateProperties(Map props) {
         label  = (java.lang.String) props.get("label");
+        vision  = (java.lang.String) props.get("vision");
         shortDescription  = (java.lang.String) props.get("shortDescription");
         description  = (java.lang.String) props.get("description");
         longDescription  = (java.lang.String) props.get("longDescription");
@@ -1737,6 +1800,7 @@ public abstract class GProject
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("label", this.label);
+        properties.put("vision", this.vision);
         properties.put("shortDescription", this.shortDescription);
         properties.put("description", this.description);
         properties.put("longDescription", this.longDescription);
@@ -1775,6 +1839,7 @@ public abstract class GProject
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
+        if (matchesKey(getVision(), key)) return true;
         if (matchesKey(getShortDescription(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
         if (matchesKey(getLongDescription(), key)) return true;

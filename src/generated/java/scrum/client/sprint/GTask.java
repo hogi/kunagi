@@ -246,7 +246,7 @@ public abstract class GTask
         @Override
         public boolean isRichtext() { return true; }
         @Override
-        public String getTooltip() { return "The description of a Task may be used to give information that is important, but cannot be inferred from the Label. As Tasks are small units of work, the Label might be sufficient"; }
+        public String getTooltip() { return "The description of a Task may be used to give information that is important, but cannot be inferred from the Label. As Tasks are small units of work, the Label might be sufficient."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

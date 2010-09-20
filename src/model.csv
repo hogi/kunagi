@@ -373,6 +373,7 @@
 "d6994b1f-3c99-426d-8cd8-4e5f3632d76b","84cfdd0d-3949-4730-a7f6-a7ebdd3e8c0c","IntegerProperty","punishmentFactor"
 "14bb6fc2-1fce-4457-87eb-fe3128f1ea56","84cfdd0d-3949-4730-a7f6-a7ebdd3e8c0c","BooleanProperty","autoUpdateHomepage"
 "130d6724-ce00-4352-a8be-8c4cbb3dc914","84cfdd0d-3949-4730-a7f6-a7ebdd3e8c0c","DateAndTimeProperty","lastOpenedDateAndTime"
+"9d596b3e-1671-4cb5-a516-8a532d597000","84cfdd0d-3949-4730-a7f6-a7ebdd3e8c0c","TextProperty","vision"
 "8606e237-4fa7-41d1-83d5-a70ecc54357f","c829a32f-5300-49a9-983a-75bc0e214ae4","Entity","Quality"
 "65df8af2-b7c4-4c07-98ee-431126da744c","8606e237-4fa7-41d1-83d5-a70ecc54357f","ReferenceProperty","project"
 "9673e31b-5d36-4457-b06d-6799bff0dfd0","8606e237-4fa7-41d1-83d5-a70ecc54357f","TextProperty","label"

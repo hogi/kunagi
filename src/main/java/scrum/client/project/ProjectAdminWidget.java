@@ -17,17 +17,17 @@ public class ProjectAdminWidget extends AScrumWidget {
 
 		PagePanel page = new PagePanel();
 
-		page.addHeader("Public Descriptions");
+		page.addHeader("Product Descriptions");
 		TableBuilder tbDescr = ScrumGwt.createFieldTable();
-		tbDescr.addFieldRow("Label", project.getLabelModel());
-		tbDescr.addFieldRow("Short description", project.getShortDescriptionModel());
-		tbDescr.addFieldRow("Main description", project.getDescriptionModel());
-		tbDescr.addFieldRow("Long description", project.getLongDescriptionModel());
+		tbDescr.addFieldRow("Name", project.getLabelModel());
+		tbDescr.addFieldRow("Tagline", project.getShortDescriptionModel());
+		tbDescr.addFieldRow("Short Description", project.getDescriptionModel());
+		tbDescr.addFieldRow("Long Description", project.getLongDescriptionModel());
 		page.addSection(tbDescr.createTable());
 
-		page.addHeader("Project homepage", new ButtonWidget(new UpdateProjectHomepageAction(project)));
+		page.addHeader("Project Homepage", new ButtonWidget(new UpdateProjectHomepageAction(project)));
 		TableBuilder tbHomepage = ScrumGwt.createFieldTable();
-		tbHomepage.addFieldRow("Homepage direcotry", project.getHomepageDirModel());
+		tbHomepage.addFieldRow("Homepage Direcotry", project.getHomepageDirModel());
 		// TODO tbHomepage.addFieldRow("Auto-update homepage", project.getAutoUpdateHomepage());
 		page.addSection(tbHomepage.createTable());
 		return page;

@@ -294,7 +294,7 @@ public abstract class GRelease
         @Override
         public boolean isRichtext() { return true; }
         @Override
-        public String getTooltip() { return "The development notes contain information useful forproject participants and stakeholders while working on the release."; }
+        public String getTooltip() { return "The development notes contain information useful for project participants and stakeholders while working on the release."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -460,7 +460,7 @@ public abstract class GRelease
         @Override
         public boolean isRichtext() { return true; }
         @Override
-        public String getTooltip() { return "The release notes contain a description used to articulate the changesthat this release contains to the public.It should be done in human readable format and an informative manner."; }
+        public String getTooltip() { return "The release notes contain a description used to articulate the changes that this release contains to the public. It should be done in human readable format and an informative manner."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

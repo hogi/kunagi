@@ -46,8 +46,8 @@ public class ProjectBlock extends ABlockWidget<Project> {
 		final Project project = getObject();
 
 		TableBuilder tb = ScrumGwt.createFieldTable();
-		tb.addFieldRow("Label", new TextEditorWidget(project.getLabelModel()));
-		tb.addFieldRow("Description", new RichtextEditorWidget(project.getDescriptionModel()));
+		tb.addFieldRow("Name", new TextEditorWidget(project.getLabelModel()));
+		tb.addFieldRow("Vision", new RichtextEditorWidget(project.getVisionModel()));
 
 		tb.addFieldRow("Participants", new AMultiSelectionViewEditWidget<User>() {
 
@@ -173,8 +173,8 @@ public class ProjectBlock extends ABlockWidget<Project> {
 		});
 
 		if (project.isAdmin(getCurrentUser())) {
-			tb.addFieldRow("",
-				Gwt.createServletDownloadLink("backupDownload.zip?projectId=" + project.getId(), "Download Backup ZIP"));
+			tb.addFieldRow("", Gwt.createServletDownloadLink("backupDownload.zip?projectId=" + project.getId(),
+				"Download Backup ZIP"));
 		}
 
 		return tb.createTable();

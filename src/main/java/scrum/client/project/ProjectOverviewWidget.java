@@ -38,8 +38,8 @@ public class ProjectOverviewWidget extends AScrumWidget {
 	private Widget createProjectOverview(Project project) {
 
 		TableBuilder tb = ScrumGwt.createFieldTable();
-		tb.addFieldRow("Label", project.getLabelModel());
-		tb.addFieldRow("Description", project.getDescriptionModel());
+		tb.addFieldRow("Name", project.getLabelModel());
+		tb.addFieldRow("Vision", project.getVisionModel());
 
 		return TableBuilder.row(20, tb.createTable(), new CommentsWidget(project));
 	}
