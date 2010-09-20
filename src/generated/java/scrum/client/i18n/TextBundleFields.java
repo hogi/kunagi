@@ -7,23 +7,23 @@ public class TextBundleFields {
     protected static ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(TextBundleFields.class);
 
     public String releaseAffectedByIssues() {
-        return null;
+        return "Known Issues for this release.";
     }
 
     public String releaseFixedIssues() {
-        return null;
+        return "Issues that have been fixed in this Release.";
     }
 
     public String releasePlannedIssues() {
-        return null;
+        return "Issues that were planned to be adressed during the production\nof this Release, but still remain.";
     }
 
     public String releaseRequirements() {
-        return null;
+        return "Stories that have been implemented in this Release.";
     }
 
     public String releaseSprints() {
-        return "Sprints which this release contains.";
+        return "Sprints that are part of this Release.";
     }
 
 }
