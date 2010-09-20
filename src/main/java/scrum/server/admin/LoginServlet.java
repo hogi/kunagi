@@ -269,6 +269,14 @@ public class LoginServlet extends AHttpServlet {
 			html.A("login.html?showCreateAccount=true", "Create new account");
 		}
 
+		if (webApplication.isAdminPasswordDefault()) {
+			html.DIV("separator", null);
+			html.startDIV("configMessage");
+			html.html("<h2>Warning!</h2>The administrator user <strong>admin</strong> has the default password <strong>"
+					+ scrum.client.admin.User.INITIAL_PASSWORD + "</strong>. Please change it.");
+			html.endDIV();
+		}
+
 		if (systemConfig.isLoginPageMessageSet()) {
 			html.DIV("separator", null);
 			html.startDIV("configMessage");

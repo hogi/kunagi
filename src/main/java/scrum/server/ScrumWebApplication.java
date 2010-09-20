@@ -188,6 +188,12 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return userDao;
 	}
 
+	public boolean isAdminPasswordDefault() {
+		User admin = userDao.getUserByName("admin");
+		if (admin == null) return false;
+		return admin.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD);
+	}
+
 	public Set<GwtConversation> getConversationsByProject(Project project, GwtConversation exception) {
 		Set<GwtConversation> ret = new HashSet<GwtConversation>();
 		for (Object element : getGwtConversations()) {
