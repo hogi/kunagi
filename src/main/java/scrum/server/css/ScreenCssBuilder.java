@@ -181,6 +181,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	private void loginPage(CssRenderer css) {
 		css.style(".loginPage");
 		css.style(".loginPage a").color("moccasin");
+		css.style(".loginPage code").color("#FFA");
 		css.style(".loginPage .panel").background(cHeaderBackground).width(380).margin("100px auto").padding(20)
 				.borderRadius(15);
 		css.style(".loginPage .panel img").marginBottom(-20);
