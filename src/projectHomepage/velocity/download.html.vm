@@ -15,7 +15,9 @@
         <div class="starter">
             <a href="http://sourceforge.net/projects/kunagi/files/kunagi.war/download">Download</a>
         </div>
-        <div class="smallText" style="text-align: center;">Current release is $project.currentRelease</div>
+        #if( $project.currentRelease )
+            <div class="smallText" style="text-align: center;">Current release is $project.currentRelease</div>
+        #end
     </div>
     <div class="clear"></div>
 </div>
