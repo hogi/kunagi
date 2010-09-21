@@ -5,7 +5,10 @@
 <div class="section">
     
     <h2>$issue.label</h2>
-    <p>$issue.description</p>
+    
+    #if( $issue.description )
+        <p>$issue.description</p>
+    #end
 
     #if( $issue.statement )
         <h3>Statement from Kunagi Team</h3>
