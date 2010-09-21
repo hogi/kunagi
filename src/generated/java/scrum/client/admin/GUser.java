@@ -1293,6 +1293,60 @@ public abstract class GUser
 
     }
 
+    // --- loginToken ---
+
+    private java.lang.String loginToken ;
+
+    public final java.lang.String getLoginToken() {
+        return this.loginToken ;
+    }
+
+    public final User setLoginToken(java.lang.String loginToken) {
+        if (isLoginToken(loginToken)) return (User)this;
+        if (loginToken != null && getDao().getUserByLoginToken(loginToken) != null) throw new RuntimeException("\"" + loginToken + "\" already exists.");
+        this.loginToken = loginToken ;
+        propertyChanged("loginToken", this.loginToken);
+        return (User)this;
+    }
+
+    public final boolean isLoginToken(java.lang.String loginToken) {
+        return equals(this.loginToken, loginToken);
+    }
+
+    private transient LoginTokenModel loginTokenModel;
+
+    public LoginTokenModel getLoginTokenModel() {
+        if (loginTokenModel == null) loginTokenModel = createLoginTokenModel();
+        return loginTokenModel;
+    }
+
+    protected LoginTokenModel createLoginTokenModel() { return new LoginTokenModel(); }
+
+    protected class LoginTokenModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "User_loginToken";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getLoginToken();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLoginToken(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -1322,6 +1376,7 @@ public abstract class GUser
         hideUserGuideRisks  = (Boolean) props.get("hideUserGuideRisks");
         hideUserGuideSprintBacklog  = (Boolean) props.get("hideUserGuideSprintBacklog");
         hideUserGuideWhiteboard  = (Boolean) props.get("hideUserGuideWhiteboard");
+        loginToken  = (java.lang.String) props.get("loginToken");
     }
 
     @Override
@@ -1351,6 +1406,7 @@ public abstract class GUser
         properties.put("hideUserGuideRisks", this.hideUserGuideRisks);
         properties.put("hideUserGuideSprintBacklog", this.hideUserGuideSprintBacklog);
         properties.put("hideUserGuideWhiteboard", this.hideUserGuideWhiteboard);
+        properties.put("loginToken", this.loginToken);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package scrum.server.common;
 
+import ilarkesto.base.Str;
 import ilarkesto.io.IO;
 import ilarkesto.ui.web.HtmlRenderer;
 import ilarkesto.webapp.Servlet;
@@ -26,7 +27,10 @@ public class StartServlet extends AHttpServlet {
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
 		if (session.getUser() == null) {
-			resp.sendRedirect("login.html");
+			String url = "login.html";
+			String token = Str.cutFrom(req.getRequestURI(), "#");
+			if (!Str.isBlank(token)) url += "?historyToken=" + Str.encodeUrlParameter(token);
+			resp.sendRedirect(url);
 			return;
 		}
 

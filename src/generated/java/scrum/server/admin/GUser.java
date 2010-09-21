@@ -60,6 +60,7 @@ public abstract class GUser
         properties.put("hideUserGuideRisks", this.hideUserGuideRisks);
         properties.put("hideUserGuideSprintBacklog", this.hideUserGuideSprintBacklog);
         properties.put("hideUserGuideWhiteboard", this.hideUserGuideWhiteboard);
+        properties.put("loginToken", this.loginToken);
     }
 
     public int compareTo(User other) {
@@ -832,6 +833,42 @@ public abstract class GUser
         setHideUserGuideWhiteboard((Boolean)value);
     }
 
+    // -----------------------------------------------------------
+    // - loginToken
+    // -----------------------------------------------------------
+
+    private java.lang.String loginToken;
+
+    public final java.lang.String getLoginToken() {
+        return loginToken;
+    }
+
+    public final void setLoginToken(java.lang.String loginToken) {
+        loginToken = prepareLoginToken(loginToken);
+        if (isLoginToken(loginToken)) return;
+        if (loginToken != null && getDao().getUserByLoginToken(loginToken) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "loginToken", loginToken);
+        this.loginToken = loginToken;
+        fireModified("loginToken="+loginToken);
+    }
+
+    protected java.lang.String prepareLoginToken(java.lang.String loginToken) {
+        loginToken = Str.removeUnreadableChars(loginToken);
+        return loginToken;
+    }
+
+    public final boolean isLoginTokenSet() {
+        return this.loginToken != null;
+    }
+
+    public final boolean isLoginToken(java.lang.String loginToken) {
+        if (this.loginToken == null && loginToken == null) return true;
+        return this.loginToken != null && this.loginToken.equals(loginToken);
+    }
+
+    protected final void updateLoginToken(Object value) {
+        setLoginToken((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -861,6 +898,7 @@ public abstract class GUser
             if (property.equals("hideUserGuideRisks")) updateHideUserGuideRisks(value);
             if (property.equals("hideUserGuideSprintBacklog")) updateHideUserGuideSprintBacklog(value);
             if (property.equals("hideUserGuideWhiteboard")) updateHideUserGuideWhiteboard(value);
+            if (property.equals("loginToken")) updateLoginToken(value);
         }
     }
 

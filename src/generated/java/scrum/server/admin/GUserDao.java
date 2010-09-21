@@ -70,6 +70,7 @@ public abstract class GUserDao
         usersByHideUserGuideRisksCache.clear();
         usersByHideUserGuideSprintBacklogCache.clear();
         usersByHideUserGuideWhiteboardCache.clear();
+        loginTokensCache = null;
     }
 
     @Override
@@ -832,6 +833,39 @@ public abstract class GUserDao
 
         public boolean test(User e) {
             return value == e.isHideUserGuideWhiteboard();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - loginToken
+    // -----------------------------------------------------------
+
+    public final User getUserByLoginToken(java.lang.String loginToken) {
+        return getEntity(new IsLoginToken(loginToken));
+    }
+    private Set<java.lang.String> loginTokensCache;
+
+    public final Set<java.lang.String> getLoginTokens() {
+        if (loginTokensCache == null) {
+            loginTokensCache = new HashSet<java.lang.String>();
+            for (User e : getEntities()) {
+                if (e.isLoginTokenSet()) loginTokensCache.add(e.getLoginToken());
+            }
+        }
+        return loginTokensCache;
+    }
+
+    private static class IsLoginToken implements Predicate<User> {
+
+        private java.lang.String value;
+
+        public IsLoginToken(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return e.isLoginToken(value);
         }
 
     }

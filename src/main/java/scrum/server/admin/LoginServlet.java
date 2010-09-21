@@ -5,6 +5,7 @@ import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
 import ilarkesto.ui.web.HtmlRenderer;
+import ilarkesto.webapp.Servlet;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import scrum.client.ApplicationInfo;
+import scrum.client.ScrumGwtApplication;
 import scrum.server.ScrumConfig;
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
@@ -21,8 +23,10 @@ import scrum.server.common.AHttpServlet;
 
 public class LoginServlet extends AHttpServlet {
 
-	private static Log log = Log.get(LoginServlet.class);
+	private static final int LOGIN_TOKEN_COOKIE_MAXAGE = 259200; // 3days
 	private static final long serialVersionUID = 1;
+
+	private static Log log = Log.get(LoginServlet.class);
 
 	private static ScrumWebApplication webApplication;
 	private ApplicationInfo applicationInfo;
@@ -32,36 +36,52 @@ public class LoginServlet extends AHttpServlet {
 
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
+		String historyToken = req.getParameter("historyToken");
+
 		if (session.getUser() != null) {
-			resp.sendRedirect(getStartPage());
+			resp.sendRedirect(getStartPage(historyToken));
 			return;
 		}
 
+		String loginToken = Servlet.getCookieValue(req, ScrumGwtApplication.LOGIN_TOKEN_COOKIE);
+		if (!Str.isBlank(loginToken)) {
+			User user = userDao.getUserByLoginToken(loginToken);
+			if (user != null) {
+				user.setLastLoginDateAndTime(DateAndTime.now());
+				session.setUser(user);
+				Servlet.setCookie(resp, ScrumGwtApplication.LOGIN_TOKEN_COOKIE, user.getLoginToken(),
+					LOGIN_TOKEN_COOKIE_MAXAGE);
+				resp.sendRedirect(getStartPage(historyToken));
+				return;
+			}
+		}
+
 		if (req.getParameter("createAccount") != null) {
-			createAccount(req.getParameter("username"), req.getParameter("email"), req.getParameter("password"), resp,
-				session);
+			createAccount(req.getParameter("username"), req.getParameter("email"), req.getParameter("password"),
+				historyToken, resp, session);
 			return;
 		}
 
 		if (req.getParameter("passwordRequest") != null) {
-			passwordRequest(req.getParameter("email"), resp, session);
+			passwordRequest(req.getParameter("email"), historyToken, resp, session);
 			return;
 		}
 
 		String username = req.getParameter("username");
 		if (username != null) {
-			login(username, req.getParameter("password"), resp, session);
+			login(username, req.getParameter("password"), req.getParameter("keepmeloggedin") != null, historyToken,
+				resp, session);
 			return;
 		}
 
-		renderLoginPage(resp, null, null, null, req.getParameter("showPasswordRequest") != null,
+		renderLoginPage(resp, null, null, historyToken, null, req.getParameter("showPasswordRequest") != null,
 			req.getParameter("showCreateAccount") != null);
 	}
 
-	private void passwordRequest(String login, HttpServletResponse resp, WebSession session)
+	private void passwordRequest(String login, String historyToken, HttpServletResponse resp, WebSession session)
 			throws UnsupportedEncodingException, IOException {
 		if (login == null || Str.isBlank(login)) {
-			renderLoginPage(resp, login, null, "E-Mail required.", true, false);
+			renderLoginPage(resp, login, null, historyToken, "E-Mail required.", true, false);
 			return;
 		}
 
@@ -75,66 +95,70 @@ public class LoginServlet extends AHttpServlet {
 		}
 
 		if (user == null) {
-			renderLoginPage(resp, login, login, "User '" + login + "' does not exist.", true, false);
+			renderLoginPage(resp, login, login, historyToken, "User '" + login + "' does not exist.", true, false);
 			return;
 		}
 
 		if (user.isAdmin()) {
-			renderLoginPage(resp, login, login, "Admins can not request new passwords.", true, false);
+			renderLoginPage(resp, login, login, historyToken, "Admins can not request new passwords.", true, false);
 			return;
 		}
 
 		if (!user.isEmailVerified()) {
-			renderLoginPage(resp, login, login, "User '" + login
+			renderLoginPage(resp, login, login, historyToken, "User '" + login
 					+ "' has no verified email. Please contact the admin: " + systemConfig.getAdminEmail(), true, false);
 			return;
 		}
 
 		user.triggerNewPasswordRequest();
-		renderLoginPage(resp, login, login, "New password has been sent to " + login, false, false);
+		renderLoginPage(resp, login, login, historyToken, "New password has been sent to " + login, false, false);
 	}
 
-	private void createAccount(String username, String email, String password, HttpServletResponse resp,
-			WebSession session) throws UnsupportedEncodingException, IOException {
+	private void createAccount(String username, String email, String password, String historyToken,
+			HttpServletResponse resp, WebSession session) throws UnsupportedEncodingException, IOException {
 
 		if (Str.isBlank(username)) username = null;
 		if (Str.isBlank(email)) email = null;
 		if (Str.isBlank(password)) password = null;
 
 		if (username == null) {
-			renderLoginPage(resp, username, email, "Creating account failed. Username required.", false, true);
+			renderLoginPage(resp, username, email, historyToken, "Creating account failed. Username required.", false,
+				true);
 			return;
 		}
 		if (systemConfig.isUserEmailMandatory() && email == null) {
-			renderLoginPage(resp, username, email, "Creating account failed. E-Mail required.", false, true);
+			renderLoginPage(resp, username, email, historyToken, "Creating account failed. E-Mail required.", false,
+				true);
 			return;
 		}
 		if (password == null) {
-			renderLoginPage(resp, username, email, "Creating account failed. Password required.", false, true);
+			renderLoginPage(resp, username, email, historyToken, "Creating account failed. Password required.", false,
+				true);
 			return;
 		}
 
 		if (Str.containsNonLetterOrDigit(username)) {
-			renderLoginPage(resp, username, email, "Creating account failed. Name '" + username
+			renderLoginPage(resp, username, email, historyToken, "Creating account failed. Name '" + username
 					+ "' contains an illegal character. Only letters and digits allowed.", false, true);
 			return;
 		}
 
 		if (email != null && !Str.isEmail(email)) {
-			renderLoginPage(resp, username, email, "Creating account failed. Illegal email address.", false, true);
+			renderLoginPage(resp, username, email, historyToken, "Creating account failed. Illegal email address.",
+				false, true);
 			return;
 		}
 
 		if (userDao.getUserByName(username) != null) {
-			renderLoginPage(resp, username, email, "Creating account failed. Name '" + username + "' is already used.",
-				false, true);
+			renderLoginPage(resp, username, email, historyToken, "Creating account failed. Name '" + username
+					+ "' is already used.", false, true);
 			log.warn("Registration failed. User name already exists:", username);
 			return;
 		}
 
 		if (email != null && userDao.getUserByEmail(email) != null) {
-			renderLoginPage(resp, username, email, "Creating account failed. Email '" + email + "' is already used.",
-				false, true);
+			renderLoginPage(resp, username, email, historyToken, "Creating account failed. Email '" + email
+					+ "' is already used.", false, true);
 			log.warn("Registration failed. User email already exists:", email);
 			return;
 		}
@@ -145,15 +169,17 @@ public class LoginServlet extends AHttpServlet {
 		webApplication.triggerRegisterNotification(user);
 
 		session.setUser(user);
-		resp.sendRedirect(getStartPage());
+		resp.sendRedirect(getStartPage(historyToken));
 	}
 
-	private String getStartPage() {
-		return webApplication.isDevelopmentMode() ? "index.html?gwt.codesvr=127.0.0.1:9997" : "";
+	private String getStartPage(String historyToken) {
+		String url = webApplication.isDevelopmentMode() ? "index.html?gwt.codesvr=127.0.0.1:9997" : "";
+		if (historyToken != null) url += "#" + historyToken;
+		return url;
 	}
 
-	private void login(String username, String password, HttpServletResponse resp, WebSession session)
-			throws UnsupportedEncodingException, IOException {
+	private void login(String username, String password, boolean keepmeloggedin, String historyToken,
+			HttpServletResponse resp, WebSession session) throws UnsupportedEncodingException, IOException {
 		username = username.toLowerCase();
 		User user = null;
 		if (username.contains("@")) {
@@ -164,18 +190,23 @@ public class LoginServlet extends AHttpServlet {
 		}
 
 		if (user == null || user.matchesPassword(password) == false) {
-			renderLoginPage(resp, username, null, "Login failed.", false, false);
+			renderLoginPage(resp, username, null, historyToken, "Login failed.", false, false);
 			return;
 		}
 
 		if (user.isDisabled()) {
-			renderLoginPage(resp, username, null, "User is disabled.", false, false);
+			renderLoginPage(resp, username, null, historyToken, "User is disabled.", false, false);
 			return;
 		}
 
 		user.setLastLoginDateAndTime(DateAndTime.now());
 		session.setUser(user);
-		resp.sendRedirect(getStartPage());
+
+		if (keepmeloggedin)
+			Servlet.setCookie(resp, ScrumGwtApplication.LOGIN_TOKEN_COOKIE, user.getLoginToken(),
+				LOGIN_TOKEN_COOKIE_MAXAGE);
+
+		resp.sendRedirect(getStartPage(historyToken));
 	}
 
 	@Override
@@ -188,8 +219,9 @@ public class LoginServlet extends AHttpServlet {
 		systemConfig = webApplication.getSystemConfig();
 	}
 
-	private void renderLoginPage(HttpServletResponse resp, String username, String email, String message,
-			boolean passwordRequest, boolean createAccount) throws UnsupportedEncodingException, IOException {
+	private void renderLoginPage(HttpServletResponse resp, String username, String email, String historyToken,
+			String message, boolean passwordRequest, boolean createAccount) throws UnsupportedEncodingException,
+			IOException {
 		String charset = IO.UTF_8;
 		resp.setContentType("text/html");
 
@@ -208,9 +240,9 @@ public class LoginServlet extends AHttpServlet {
 		html.IMG("kunagi.png", "Kunagi", null, 172, 85);
 		html.DIV("separator", null);
 		if (message != null) renderMessage(html, message);
-		if (!createAccount && !passwordRequest) renderLoginForm(html, username);
-		if (passwordRequest) renderPasswordRequestForm(html, username);
-		if (createAccount) renderCreateAccountForm(html, username, email);
+		if (!createAccount && !passwordRequest) renderLoginForm(html, username, historyToken);
+		if (passwordRequest) renderPasswordRequestForm(html, username, historyToken);
+		if (createAccount) renderCreateAccountForm(html, username, email, historyToken);
 		html.DIV("separator", null);
 		html.startDIV("kunagiLink");
 		html.text("Kunagi " + webApplication.getReleaseLabel() + " | ");
@@ -230,9 +262,10 @@ public class LoginServlet extends AHttpServlet {
 		html.flush();
 	}
 
-	private void renderLoginForm(HtmlRenderer html, String username) {
+	private void renderLoginForm(HtmlRenderer html, String username, String historyToken) {
 		html.H2("Login");
 		html.startFORM(null, "loginForm", false);
+		html.INPUThidden("historyToken", historyToken);
 		html.startTABLE().setAlignCenter();
 
 		html.startTR();
@@ -242,7 +275,6 @@ public class LoginServlet extends AHttpServlet {
 		html.startTD();
 		html.LABEL("password", "Password");
 		html.endTD();
-		html.TD(" ");
 		html.endTR();
 
 		html.startTR();
@@ -252,7 +284,14 @@ public class LoginServlet extends AHttpServlet {
 		html.startTD();
 		html.INPUTpassword("password", "password", 80, "");
 		html.endTD();
+		html.endTR();
+
+		html.startTR();
 		html.startTD();
+		html.INPUTcheckbox("keepmeloggedin", "keepmeloggedin", false);
+		html.LABEL("keepmeloggedin", "Keep me logged in");
+		html.endTD();
+		html.startTD().setAlignRight();
 		html.INPUTsubmit("login", "Login", null, 's');
 		html.endTD();
 		html.endTR();
@@ -285,9 +324,10 @@ public class LoginServlet extends AHttpServlet {
 		}
 	}
 
-	private void renderPasswordRequestForm(HtmlRenderer html, String username) {
+	private void renderPasswordRequestForm(HtmlRenderer html, String username, String historyToken) {
 		html.H2("Request new password");
 		html.startFORM(null, "passwordRequestForm", false);
+		html.INPUThidden("historyToken", historyToken);
 		html.startTABLE().setAlignCenter();
 
 		html.startTR();
@@ -313,10 +353,11 @@ public class LoginServlet extends AHttpServlet {
 		html.A("login.html", "Back to Login");
 	}
 
-	private void renderCreateAccountForm(HtmlRenderer html, String username, String email) {
+	private void renderCreateAccountForm(HtmlRenderer html, String username, String email, String historyToken) {
 		html.H2("Create account");
 		html.startDIV("createAccount");
 		html.startFORM(null, "loginForm", false);
+		html.INPUThidden("historyToken", historyToken);
 		html.startTABLE().setAlignCenter();
 
 		html.startTR();

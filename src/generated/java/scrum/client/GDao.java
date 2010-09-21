@@ -2722,6 +2722,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.sprint.Task> getTasksByImpediment(scrum.client.impediments.Impediment impediment) {
+        List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
+        for (scrum.client.sprint.Task entity : tasks.values()) {
+            if (entity.isImpediment(impediment)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- User ---
 
     private Map<String, scrum.client.admin.User> users = new HashMap<String, scrum.client.admin.User>();
@@ -2972,6 +2980,13 @@ public abstract class GDao
             if (entity.isHideUserGuideWhiteboard(hideUserGuideWhiteboard)) ret.add(entity);
         }
         return ret;
+    }
+
+    public final scrum.client.admin.User getUserByLoginToken(java.lang.String loginToken) {
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isLoginToken(loginToken)) return entity;
+        }
+        return null;
     }
 
     // --- Wikipage ---

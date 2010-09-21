@@ -35,6 +35,7 @@ import ilarkesto.webapp.AWebSession;
 import ilarkesto.webapp.DestroyTimeoutedSessionsTask;
 import ilarkesto.webapp.Servlet;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -61,6 +62,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	private static final Log log = Log.get(ScrumWebApplication.class);
 
+	private boolean testMode;
 	private BurndownChart burndownChart;
 	private ScrumConfig config;
 	private ScrumEntityfilePreparator entityfilePreparator;
@@ -164,6 +166,16 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			tm.scheduleWithFixedDelay(autowire(new DeleteOldProjectsTask()), Tm.SECOND, Tm.HOUR * 25);
 		if (getConfig().isDeleteDisabledUsers())
 			tm.scheduleWithFixedDelay(autowire(new DeleteDisabledUsersTask()), Tm.MINUTE * 3, Tm.HOUR * 26);
+	}
+
+	@Override
+	protected String getDevelopmentModeApplicationDataDir() {
+		if (testMode) return new File("test-output/runtimedata").getAbsolutePath();
+		return super.getDevelopmentModeApplicationDataDir();
+	}
+
+	public void setTestMode(boolean testMode) {
+		this.testMode = testMode;
 	}
 
 	@Override

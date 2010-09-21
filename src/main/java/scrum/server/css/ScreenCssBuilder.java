@@ -187,6 +187,10 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".loginPage .panel img").marginBottom(-20);
 		css.style(".loginPage .message").color("gold").fontWeightBold().marginBottom(10).fontSize(fontSizeTitle);
 		String labelColor = Colors.lighten(Colors.lighten(Colors.lighten(cHeaderBackground)));
+		css.style(".loginPage .inputButton").background(Colors.darken(cHeaderBackground)).marginRight(10)
+				.borderRadius(5).color(labelColor).fontWeightBold().padding(1, 10).cursorPointer();
+		css.style(".loginPage input:hover.inputButton").color(Colors.lighten(labelColor));
+		css.style(".loginPage .inputCheckbox").marginLeft(0);
 		css.style(".loginPage .panel label").color(labelColor).marginRight(5);
 		css.style(".loginPage .panel .optionalLabel label").color(Colors.lighten(cHeaderBackground));
 		css.style(".loginPage h2").colorWhite().marginBottom(10);

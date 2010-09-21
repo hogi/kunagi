@@ -32,6 +32,11 @@ public class Task extends GTask implements ReferenceSupport, ForumSupport {
 		super(data);
 	}
 
+	public boolean isBlocked() {
+		if (!isImpedimentSet()) return false;
+		return getImpediment().isOpen();
+	}
+
 	public void claim() {
 		User user = Scope.get().getComponent(Auth.class).getUser();
 		boolean ownerchange = !isOwner(user);

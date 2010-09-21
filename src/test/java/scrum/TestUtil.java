@@ -32,6 +32,7 @@ public class TestUtil {
 		Sys.setHeadless(true);
 
 		app = new ScrumWebApplication();
+		app.setTestMode(true);
 		app.start();
 
 	}

@@ -43,6 +43,7 @@ public abstract class GTask
         properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);
         properties.put("ownerId", this.ownerId);
+        properties.put("impedimentId", this.impedimentId);
     }
 
     public int compareTo(Task other) {
@@ -324,6 +325,57 @@ public abstract class GTask
         setOwner(value == null ? null : (scrum.server.admin.User)userDao.getById((String)value));
     }
 
+    // -----------------------------------------------------------
+    // - impediment
+    // -----------------------------------------------------------
+
+    private String impedimentId;
+    private transient scrum.server.impediments.Impediment impedimentCache;
+
+    private void updateImpedimentCache() {
+        impedimentCache = this.impedimentId == null ? null : (scrum.server.impediments.Impediment)impedimentDao.getById(this.impedimentId);
+    }
+
+    public final String getImpedimentId() {
+        return this.impedimentId;
+    }
+
+    public final scrum.server.impediments.Impediment getImpediment() {
+        if (impedimentCache == null) updateImpedimentCache();
+        return impedimentCache;
+    }
+
+    public final void setImpediment(scrum.server.impediments.Impediment impediment) {
+        impediment = prepareImpediment(impediment);
+        if (isImpediment(impediment)) return;
+        this.impedimentId = impediment == null ? null : impediment.getId();
+        impedimentCache = impediment;
+        fireModified("impediment="+impediment);
+    }
+
+    protected scrum.server.impediments.Impediment prepareImpediment(scrum.server.impediments.Impediment impediment) {
+        return impediment;
+    }
+
+    protected void repairDeadImpedimentReference(String entityId) {
+        if (this.impedimentId == null || entityId.equals(this.impedimentId)) {
+            setImpediment(null);
+        }
+    }
+
+    public final boolean isImpedimentSet() {
+        return this.impedimentId != null;
+    }
+
+    public final boolean isImpediment(scrum.server.impediments.Impediment impediment) {
+        if (this.impedimentId == null && impediment == null) return true;
+        return impediment != null && impediment.getId().equals(this.impedimentId);
+    }
+
+    protected final void updateImpediment(Object value) {
+        setImpediment(value == null ? null : (scrum.server.impediments.Impediment)impedimentDao.getById((String)value));
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -336,6 +388,7 @@ public abstract class GTask
             if (property.equals("remainingWork")) updateRemainingWork(value);
             if (property.equals("burnedWork")) updateBurnedWork(value);
             if (property.equals("ownerId")) updateOwner(value);
+            if (property.equals("impedimentId")) updateImpediment(value);
         }
     }
 
@@ -343,6 +396,7 @@ public abstract class GTask
         super.repairDeadReferences(entityId);
         repairDeadRequirementReference(entityId);
         repairDeadOwnerReference(entityId);
+        repairDeadImpedimentReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -365,6 +419,12 @@ public abstract class GTask
             LOG.info("Repairing dead owner reference");
             repairDeadOwnerReference(this.ownerId);
         }
+        try {
+            getImpediment();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead impediment reference");
+            repairDeadImpedimentReference(this.impedimentId);
+        }
     }
 
 
@@ -376,6 +436,12 @@ public abstract class GTask
 
     public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
         GTask.requirementDao = requirementDao;
+    }
+
+    static scrum.server.impediments.ImpedimentDao impedimentDao;
+
+    public static final void setImpedimentDao(scrum.server.impediments.ImpedimentDao impedimentDao) {
+        GTask.impedimentDao = impedimentDao;
     }
 
     static TaskDao taskDao;

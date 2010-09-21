@@ -27,6 +27,10 @@ public class Impediment extends GImpediment implements ReferenceSupport, ForumSu
 		super(data);
 	}
 
+	public String getReferenceAndLabel() {
+		return getReference() + " " + getLabel();
+	}
+
 	public boolean isOpen() {
 		return !isClosed();
 	}

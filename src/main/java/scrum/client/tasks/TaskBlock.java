@@ -54,6 +54,9 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 		if (task.isClosed()) {
 			statusImage = Img.bundle.tskClosed().createImage();
 			statusImage.setTitle("Closed.");
+		} else if (task.isBlocked()) {
+			statusImage = Img.bundle.tskBlocked().createImage();
+			statusImage.setTitle("Blocked by " + task.getImpediment().getReferenceAndLabel() + ".");
 		} else if (task.isOwnerSet()) {
 			statusImage = Img.bundle.tskClaimed().createImage();
 			statusImage.setTitle("Claimed by " + task.getOwner().getName() + ".");

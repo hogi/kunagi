@@ -4,6 +4,7 @@ import ilarkesto.pdf.APdfContainerElement;
 import ilarkesto.pdf.FieldList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import scrum.server.common.APdfCreator;
@@ -25,6 +26,7 @@ public class ProductBacklogPdfCreator extends APdfCreator {
 		pdf.nl();
 		pdf.paragraph().text("Stories", headerFonts[1]);
 		List<Requirement> requirements = new ArrayList<Requirement>(project.getRequirements());
+		Collections.sort(requirements, project.getRequirementsOrderComparator());
 		for (Requirement req : requirements) {
 			if (req.isClosed()) continue;
 			pdf.nl();

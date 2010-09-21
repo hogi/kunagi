@@ -417,6 +417,31 @@ public abstract class GTask
         return equals(this.ownerId, owner);
     }
 
+    // --- impediment ---
+
+    private String impedimentId;
+
+    public final scrum.client.impediments.Impediment getImpediment() {
+        if (impedimentId == null) return null;
+        return getDao().getImpediment(this.impedimentId);
+    }
+
+    public final boolean isImpedimentSet() {
+        return impedimentId != null;
+    }
+
+    public final Task setImpediment(scrum.client.impediments.Impediment impediment) {
+        String id = impediment == null ? null : impediment.getId();
+        if (equals(this.impedimentId, id)) return (Task) this;
+        this.impedimentId = id;
+        propertyChanged("impedimentId", this.impedimentId);
+        return (Task)this;
+    }
+
+    public final boolean isImpediment(scrum.client.impediments.Impediment impediment) {
+        return equals(this.impedimentId, impediment);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -427,6 +452,7 @@ public abstract class GTask
         remainingWork  = (Integer) props.get("remainingWork");
         burnedWork  = (Integer) props.get("burnedWork");
         ownerId = (String) props.get("ownerId");
+        impedimentId = (String) props.get("impedimentId");
     }
 
     @Override
@@ -439,6 +465,7 @@ public abstract class GTask
         properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);
         properties.put("ownerId", this.ownerId);
+        properties.put("impedimentId", this.impedimentId);
     }
 
     @Override

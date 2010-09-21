@@ -26,10 +26,13 @@ import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkspaceWidget;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class ScrumGwtApplication extends GScrumGwtApplication {
+
+	public static final String LOGIN_TOKEN_COOKIE = "kunagiLoginToken";
 
 	public static final String[] REFERENCE_PREFIXES = new String[] { Requirement.REFERENCE_PREFIX,
 			Task.REFERENCE_PREFIX, Quality.REFERENCE_PREFIX, Issue.REFERENCE_PREFIX, Impediment.REFERENCE_PREFIX,
@@ -69,6 +72,8 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	public void logout() {
 		log.info("Logging out");
+
+		Cookies.removeCookie(LOGIN_TOKEN_COOKIE);
 
 		Scope.get().getComponent(Ui.class).lock("Logging out...");
 		Scope.get().getComponent(Auth.class).logout();

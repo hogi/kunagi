@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import scrum.server.ScrumWebApplication;
 import scrum.server.project.Project;
@@ -111,13 +112,18 @@ public class User extends GUser {
 
 	@Override
 	public String getAutoLoginString() {
-		return null;
+		return getLoginToken();
+	}
+
+	public void createLoginToken() {
+		setLoginToken(UUID.randomUUID().toString());
 	}
 
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
 		if (!isColorSet()) setColor(getDefaultColor());
+		if (!isLoginTokenSet()) createLoginToken();
 	}
 
 	@Override

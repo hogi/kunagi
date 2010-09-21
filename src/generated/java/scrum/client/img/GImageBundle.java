@@ -88,6 +88,9 @@ public interface GImageBundle
     @Resource(value="trash32.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype trash32();
 
+    @Resource(value="tskBlocked.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype tskBlocked();
+
     @Resource(value="tskClaimed.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype tskClaimed();
 

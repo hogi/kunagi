@@ -48,6 +48,17 @@ public class WikiToPdfConverterTest {
 		sb.append("# item 2\n");
 		sb.append("# item 3\n\n");
 
+		sb.append("== Section 2.3 ==\n");
+		sb.append("# item 1\n");
+		sb.append("# item 2\n");
+		sb.append(" * subitem 1\n");
+		sb.append(" * subitem 2\n");
+		sb.append("  # subsubitem 1\n");
+		sb.append("  # subsubitem 2\n");
+		sb.append("  # subsubitem 3\n");
+		sb.append(" * subitem 3\n");
+		sb.append("# item 3\n\n");
+
 		sb.append("= Section 3 =\n\n");
 		sb.append("{|\n");
 		sb.append("! Header 1\n");

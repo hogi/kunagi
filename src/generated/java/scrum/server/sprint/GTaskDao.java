@@ -56,6 +56,8 @@ public abstract class GTaskDao
         burnedWorksCache = null;
         tasksByOwnerCache.clear();
         ownersCache = null;
+        tasksByImpedimentCache.clear();
+        impedimentsCache = null;
     }
 
     @Override
@@ -354,6 +356,46 @@ public abstract class GTaskDao
 
     }
 
+    // -----------------------------------------------------------
+    // - impediment
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.impediments.Impediment,Set<Task>> tasksByImpedimentCache = new Cache<scrum.server.impediments.Impediment,Set<Task>>(
+            new Cache.Factory<scrum.server.impediments.Impediment,Set<Task>>() {
+                public Set<Task> create(scrum.server.impediments.Impediment impediment) {
+                    return getEntities(new IsImpediment(impediment));
+                }
+            });
+
+    public final Set<Task> getTasksByImpediment(scrum.server.impediments.Impediment impediment) {
+        return tasksByImpedimentCache.get(impediment);
+    }
+    private Set<scrum.server.impediments.Impediment> impedimentsCache;
+
+    public final Set<scrum.server.impediments.Impediment> getImpediments() {
+        if (impedimentsCache == null) {
+            impedimentsCache = new HashSet<scrum.server.impediments.Impediment>();
+            for (Task e : getEntities()) {
+                if (e.isImpedimentSet()) impedimentsCache.add(e.getImpediment());
+            }
+        }
+        return impedimentsCache;
+    }
+
+    private static class IsImpediment implements Predicate<Task> {
+
+        private scrum.server.impediments.Impediment value;
+
+        public IsImpediment(scrum.server.impediments.Impediment value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isImpediment(value);
+        }
+
+    }
+
     // --- valueObject classes ---
     @Override
     protected Set<Class> getValueObjectClasses() {
@@ -373,6 +415,12 @@ public abstract class GTaskDao
 
     public void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
         this.requirementDao = requirementDao;
+    }
+
+    scrum.server.impediments.ImpedimentDao impedimentDao;
+
+    public void setImpedimentDao(scrum.server.impediments.ImpedimentDao impedimentDao) {
+        this.impedimentDao = impedimentDao;
     }
 
 }

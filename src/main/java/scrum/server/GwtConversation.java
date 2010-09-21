@@ -50,6 +50,7 @@ public class GwtConversation extends AGwtConversation {
 			if (user == null || (user != entity && !user.isAdmin())) {
 				propertiesMap.remove("password");
 				propertiesMap.remove("email");
+				propertiesMap.remove("loginToken");
 			}
 		}
 

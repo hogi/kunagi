@@ -1,16 +1,22 @@
 package scrum.client.tasks;
 
+import ilarkesto.gwt.client.ADropdownViewEditWidget;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
-import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import scrum.client.ScrumGwt;
+import scrum.client.common.AScrumWidget;
+import scrum.client.impediments.Impediment;
 import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class TaskWidget extends AWidget {
+public class TaskWidget extends AScrumWidget {
 
 	private Task task;
 	private boolean wideMode;
@@ -77,6 +83,42 @@ public class TaskWidget extends AWidget {
 			protected void onUpdate() {
 				setText(task.getOwner() == null ? null : task.getOwner().getName());
 			}
+		}, 3);
+
+		tb.addFieldRow("Impediment", new ADropdownViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerItem(task.getImpediment());
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				Map<String, String> options = new HashMap<String, String>();
+				for (Impediment impediment : task.getProject().getOpenImpediments()) {
+					options.put(impediment.getId(), impediment.getReferenceAndLabel());
+				}
+				setOptions(options);
+				Impediment impediment = task.getImpediment();
+				setSelectedOption(impediment == null ? null : impediment.getId());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				String id = getSelectedOption();
+				task.setImpediment(id == null ? null : getDao().getImpediment(id));
+			}
+
+			@Override
+			public boolean isEditable() {
+				return task.isEditable();
+			}
+
+			@Override
+			public String getTooltip() {
+				return "Impediment, which is blocking this task.";
+			}
+
 		}, 3);
 
 		return wideMode ? TableBuilder.row(20, tb.createTable(), ScrumGwt.createEmoticonsAndComments(task)) : Gwt

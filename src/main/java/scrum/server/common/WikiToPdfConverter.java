@@ -101,7 +101,12 @@ public class WikiToPdfConverter extends APdfCreator {
 			ARow row = table.row();
 			counter++;
 			row.cell(ordered ? counter + "." : "-", defaultFont);
-			processParagraph(item.getParagraph(), row.cell());
+			ACell cell = row.cell();
+			processParagraph(item.getParagraph(), cell);
+			if (item.containsList()) {
+				cell.paragraph().nl(new FontStyle(defaultFont).setSize(0.7f));
+				processItemList(item.getList(), cell);
+			}
 		}
 	}
 
