@@ -39,7 +39,7 @@ public class UploadWidget extends AScrumWidget {
 		statusLabel = new Label();
 		uploader = new SingleUploader(FileInputType.BROWSER_INPUT, new UploadStatus(), button, formPanel);
 		uploader.setAutoSubmit(true);
-		Uploader.setStatusInterval(1000);
+		Uploader.setStatusInterval(5000);
 	}
 
 	@Override

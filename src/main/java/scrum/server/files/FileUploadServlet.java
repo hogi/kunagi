@@ -31,6 +31,7 @@ public class FileUploadServlet extends UploadAction {
 			ServletException {
 		log.debug("-----------------------> doPost()", "\n" + Servlet.toString(request, "        "));
 		super.doPost(request, response);
+		log.debug("-----------------------> end-doPost()");
 	}
 
 	@Override
