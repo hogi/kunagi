@@ -17,6 +17,7 @@ import scrum.client.project.Project;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -39,7 +40,7 @@ public class UploadWidget extends AScrumWidget {
 		statusLabel = new Label();
 		uploader = new SingleUploader(FileInputType.BROWSER_INPUT, new UploadStatus(), button, formPanel);
 		uploader.setAutoSubmit(true);
-		Uploader.setStatusInterval(5000);
+		Uploader.setStatusInterval(1000);
 	}
 
 	@Override
@@ -118,6 +119,7 @@ public class UploadWidget extends AScrumWidget {
 		@Override
 		public void setError(String error) {
 			log.error("Upload failed: " + error);
+			Window.alert("Upload failed: " + error);
 			statusLabel.setText(error);
 		}
 
