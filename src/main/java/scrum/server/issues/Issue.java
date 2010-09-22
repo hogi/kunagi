@@ -17,7 +17,7 @@ public class Issue extends GIssue implements Numbered {
 		if (isClosed()) return "Issue is closed" + releasesText + ".";
 		if (isIdea()) return "Idea is accepted and the Product Owner needs to create a Story of it.";
 		if (isBug()) {
-			if (isFixed()) return "Bug is fixed" + releasesText + ". But not tested yet.";
+			if (isFixed()) return "Bug is fixed" + releasesText + ". Needs to be tested.";
 			if (isOwnerSet()) return getOwner().getName() + " is working on the Bug" + releasesText + ".";
 			return "Bug is accepted as '" + getSeverityLabel() + "' and the Team needs to fix it" + releasesText + ".";
 		}
@@ -79,6 +79,7 @@ public class Issue extends GIssue implements Numbered {
 		return !isClosed() && isAcceptDateSet();
 	}
 
+	@Override
 	public void updateNumber() {
 		if (getNumber() == 0) setNumber(getProject().generateIssueNumber());
 	}
@@ -95,6 +96,7 @@ public class Issue extends GIssue implements Numbered {
 		return isCloseDateSet();
 	}
 
+	@Override
 	public boolean isVisibleFor(User user) {
 		return getProject().isVisibleFor(user);
 	}
