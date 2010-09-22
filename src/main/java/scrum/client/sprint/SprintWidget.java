@@ -1,7 +1,6 @@
 package scrum.client.sprint;
 
 import ilarkesto.gwt.client.AFieldValueWidget;
-import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextOutputWidget;
@@ -24,7 +23,7 @@ public class SprintWidget extends AScrumWidget {
 		boolean completed = sprint.isCompleted();
 
 		TableBuilder tb = ScrumGwt.createFieldTable();
-		tb.setColumnWidths("100px", "80px", "100px", "80px", "100px");
+		tb.setColumnWidths("80px", "100px", "80px", "100px", "80px");
 
 		int cols = 6;
 		tb.addFieldRow("Label", sprint.getLabelModel(), cols - 1);
@@ -41,11 +40,9 @@ public class SprintWidget extends AScrumWidget {
 			tb.addFieldRow("Velocity", new TextOutputWidget(sprint.getVelocityModel()), cols - 1);
 		}
 
-		tb.addFieldLabel("Dates");
-		tb.addField("Begin", sprint.getBeginModel(), 1);
-
-		tb.addField("End", sprint.getEndModel(), 1);
-		tb.addRow(Gwt.createSpacer(1, 1));
+		tb.addField("Begin", sprint.getBeginModel());
+		tb.addField("End", sprint.getEndModel());
+		tb.addFieldRow("Length", sprint.getLengthInDaysModel());
 
 		if (completed == false) {
 			// not completed

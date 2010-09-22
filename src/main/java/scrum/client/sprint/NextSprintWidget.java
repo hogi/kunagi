@@ -2,7 +2,6 @@ package scrum.client.sprint;
 
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.TableBuilder;
-import ilarkesto.gwt.client.editor.DateEditorWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
@@ -22,11 +21,13 @@ public class NextSprintWidget extends AScrumWidget {
 		sprint = getSprint();
 
 		TableBuilder tb = ScrumGwt.createFieldTable();
-		tb.addFieldRow("Label", sprint.getLabelModel());
-		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()));
-		tb.addFieldRow("Begin", new DateEditorWidget(sprint.getBeginModel()));
-		tb.addFieldRow("End", new DateEditorWidget(sprint.getEndModel()));
-		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()));
+		tb.setColumnWidths("15%", "15%", "15%", "15%", "15%", "15%");
+		tb.addFieldRow("Label", sprint.getLabelModel(), 5);
+		tb.addFieldRow("Goal", sprint.getGoalModel(), 5);
+		tb.addField("Begin", sprint.getBeginModel());
+		tb.addField("End", sprint.getEndModel());
+		tb.addFieldRow("Length", sprint.getLengthInDaysModel());
+		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()), 5);
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Next Sprint", new ButtonWidget(new SwitchToNextSprintAction()));

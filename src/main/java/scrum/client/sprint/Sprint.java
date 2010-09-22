@@ -1,6 +1,7 @@
 package scrum.client.sprint;
 
 import ilarkesto.core.scope.Scope;
+import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.TimePeriod;
 
@@ -38,6 +39,21 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport {
 
 	public Sprint(Map data) {
 		super(data);
+	}
+
+	public Integer getLengthInDays() {
+		Date begin = getBegin();
+		Date end = getEnd();
+		if (begin == null || end == null) return null;
+		return begin.getPeriodTo(end).toDays();
+	}
+
+	public void setLengthInDays(Integer lenght) {
+		if (lenght == null || lenght <= 0) return;
+		Date begin = getBegin();
+		if (begin == null) return;
+		Date end = begin.addDays(lenght);
+		setEnd(end);
 	}
 
 	public List<Task> getTasksBlockedBy(Impediment impediment) {
@@ -232,19 +248,79 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport {
 
 	public static final Comparator<Sprint> END_DATE_COMPARATOR = new Comparator<Sprint>() {
 
+		@Override
 		public int compare(Sprint a, Sprint b) {
 			return b.getEnd().compareTo(a.getEnd());
 		}
 
 	};
 
+	@Override
 	public Widget createForumItemWidget() {
 		String label = isCurrent() ? "Sprint Backlog" : "Sprint";
 		return new HyperlinkWidget(new ShowEntityAction(this, label));
 	}
 
+	@Override
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
+	}
+
+	private transient LengthInDaysModel lengthInDaysModel;
+
+	public LengthInDaysModel getLengthInDaysModel() {
+		if (lengthInDaysModel == null) lengthInDaysModel = new LengthInDaysModel();
+		return lengthInDaysModel;
+	}
+
+	protected class LengthInDaysModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+		@Override
+		public String getId() {
+			return "Sprint_lengthInDays";
+		}
+
+		@Override
+		public java.lang.Integer getValue() {
+			return getLengthInDays();
+		}
+
+		@Override
+		public void setValue(java.lang.Integer value) {
+			setLengthInDays(value);
+		}
+
+		@Override
+		public void increment() {
+			setLengthInDays(getLengthInDays() + 1);
+		}
+
+		@Override
+		public void decrement() {
+			setLengthInDays(getLengthInDays() - 1);
+		}
+
+		@Override
+		public boolean isEditable() {
+			return Sprint.this.isEditable();
+		}
+
+		@Override
+		public boolean isMandatory() {
+			return true;
+		}
+
+		@Override
+		public String getTooltip() {
+			return "The lenght of the sprint in days.";
+		}
+
+		@Override
+		protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+			super.onChangeValue(oldValue, newValue);
+			addUndo(this, oldValue);
+		}
+
 	}
 
 }
