@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
 
@@ -85,6 +86,18 @@ public class FileUploadServlet extends UploadAction {
 		int idx = name.lastIndexOf('/');
 		if (idx >= 0) return name.substring(idx + 1);
 		return name;
+	}
+
+	@Override
+	public void checkRequest(HttpServletRequest request) {
+		log.debug("checkRequest() ->", request);
+		super.checkRequest(request);
+	}
+
+	@Override
+	protected String parsePostRequest(HttpServletRequest request, HttpServletResponse response) {
+		log.debug("parsePostRequest() ->", request);
+		return super.parsePostRequest(request, response);
 	}
 
 }
