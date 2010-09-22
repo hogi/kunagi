@@ -7,13 +7,10 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
 import ilarkesto.webapp.Servlet;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
 
@@ -25,20 +22,6 @@ import scrum.server.project.Project;
 public class FileUploadServlet extends UploadAction {
 
 	private static final Log log = Log.get(FileUploadServlet.class);
-
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException,
-			ServletException {
-		log.debug("-----------------------> doPost()", "\n" + Servlet.toString(request, "        "));
-		super.doPost(request, response);
-		log.debug("-----------------------> end-doPost()");
-	}
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		log.debug("-----------------------> doGet()", "\n" + Servlet.toString(request, "        "));
-		super.doGet(request, response);
-	}
 
 	@Override
 	public String executeAction(HttpServletRequest req, List<FileItem> sessionFiles) throws UploadActionException {
