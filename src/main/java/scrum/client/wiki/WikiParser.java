@@ -276,6 +276,19 @@ public class WikiParser {
 			}
 		}
 
+		// code
+		if (input.startsWith("<code>")) {
+			int endIdx = input.indexOf("</code>");
+			if (endIdx > 0) {
+				String code = input.substring(6, endIdx);
+				Paragraph p = new Paragraph(true);
+				p.add(new Code(code));
+				model.add(p);
+				burn(endIdx + 8);
+				return;
+			}
+		}
+
 		// pre
 		if (input.startsWith(" ")) {
 			StringBuilder sb = new StringBuilder();

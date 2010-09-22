@@ -105,6 +105,8 @@ public class WikiTest extends Assert {
 		Assert.assertEquals(toHtml("simple line\n\n<code>code</code>"), "<p>simple line</p><p><code>code</code></p>");
 		Assert.assertEquals(toHtml("<code>\n# enum\n# enum\n</code>"),
 			"<p><div class=\"codeBlock\"><code>#&nbsp;enum<br>#&nbsp;enum<br></code></div></p>");
+		Assert.assertEquals(toHtml("<code>a\n\nb</code>"),
+			"<p><div class=\"codeBlock\"><code>a<br><br>b</code></div></p>");
 	}
 
 	@Test
