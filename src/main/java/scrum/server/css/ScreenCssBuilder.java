@@ -95,6 +95,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	public static String cBurndownProjectionLine = cBurndownLine;
 	public static String cBurndownOptimalLine = cPagePanelBorder;
 
+	@Override
 	public void buildCss(CssRenderer css) {
 		html(css);
 		gwt(css);
@@ -136,8 +137,8 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style(".highlighted .ABlockWidget-title").border(1, cError);
 
-		css.style(".WaitWidget").background(cWaitBackground).borderTop(1, cPagePanelBorder)
-				.borderBottom(1, cPagePanelBorder).margin(200, 0, 200, 0).fontSize(fontSize + 2);
+		css.style(".WaitWidget").background(cWaitBackground).margin(200, 0, 200, 0).borderTop(1, cPagePanelBorder)
+				.borderBottom(1, cPagePanelBorder).fontSize(fontSize + 2);
 		css.style(".LoginWidget-errorMessage").background(cErrorBackground).color(cError).border(1, cError)
 				.fontSize(fontSize + 2).padding(5);
 
@@ -146,7 +147,10 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".AViewEditWidget-viewer").background(cFieldBackground)
 				.border(1, "dotted", cNavigatorSelectedItemBackground).cursorPointer().minWidth(16).minHeight(16)
 				.displayBlock().padding(3);
-		css.style(".ARichtextViewEditWidget-viewer").overflowAuto();
+		css.style(".ARichtextViewEditWidget-viewer .codeBlock").border(1, cPagePanelBorder).padding(5)
+				.margin(0, 10, 10, 10).background(Colors.lighten(cFieldBackground)).maxWidth(400).maxHeight(400)
+				.overflowAuto();
+		css.style(".codeBlock code, .codeBlock pre").margin(0, 0, 0, 0).padding(0, 0, 0, 0);
 		css.style(".ARichtextViewEditWidget-editor").height(100).width(96, "%");
 		css.style(".AEditableTextareaWidget-editorPanel").width100();
 		css.style(".Integer-editor").width(10, "%");

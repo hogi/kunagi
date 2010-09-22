@@ -11,10 +11,25 @@ public class Code extends AWikiElement {
 
 	@Override
 	String toHtml(HtmlContext context) {
-		String html = escapeHtml(text);
+		String s = text;
+		if (s.length() > 0 && s.startsWith("\n")) s = s.substring(1);
+		String html = escapeHtml(s);
 		html = html.replace("\n", "<br>");
 		html = html.replace(" ", "&nbsp;");
-		return "<code>" + html + "</code>";
+
+		boolean codeBlock = isBlock();
+
+		StringBuilder sb = new StringBuilder();
+		if (codeBlock) sb.append("<div class=\"codeBlock\">");
+		sb.append("<code>");
+		sb.append(html);
+		sb.append("</code>");
+		if (codeBlock) sb.append("</div>");
+		return sb.toString();
+	}
+
+	public boolean isBlock() {
+		return text.contains("\n");
 	}
 
 	public String getText() {

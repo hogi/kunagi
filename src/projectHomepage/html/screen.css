@@ -37,6 +37,8 @@ input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 
         ol {margin-left: 30px; margin-top: 10px; margin-bottom: 10px;}
         .secondaryText {color: #666;}
         .smallText {font-size: 10px;}
+        .codeBlock" {border: 1px solid #DDD; padding: 5px; margin: 0 10 10 10; background: #EEE; max-width: 600; max-height: 600; overflow: auto;}
+            .codeBlock code, .codeBlock pre {margin: 0; padding: 0;}
     #content .separator {height: 15px; margin-bottom: 25px; border-bottom: 1px solid #CCC;}
 #footer {background: #192666; color: #CCC; padding: 0px 10px; font-size: 8px; text-align: right;}
 .error {background: darkred; border: 1px solid darkred; text-align: center; color: #FFA; font-size: 16px; font-weight: bold; padding: 10px; margin-bottom: 20px;}

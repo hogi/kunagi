@@ -30,8 +30,6 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport {
 
 	public static final String REFERENCE_PREFIX = "spr";
 
-	private Wiki wiki = Scope.get().getComponent(Wiki.class);
-
 	public Sprint(Project project, String label) {
 		setProject(project);
 		setLabel(label);
@@ -224,22 +222,22 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport {
 
 	@Override
 	public String getGoalTemplate() {
-		return wiki.getTemplate("sprint.goal");
+		return Scope.get().getComponent(Wiki.class).getTemplate("sprint.goal");
 	}
 
 	@Override
 	public String getPlanningNoteTemplate() {
-		return wiki.getTemplate("sprint.planning");
+		return Scope.get().getComponent(Wiki.class).getTemplate("sprint.planning");
 	}
 
 	@Override
 	public String getRetrospectiveNoteTemplate() {
-		return wiki.getTemplate("sprint.retrospective");
+		return Scope.get().getComponent(Wiki.class).getTemplate("sprint.retrospective");
 	}
 
 	@Override
 	public String getReviewNoteTemplate() {
-		return wiki.getTemplate("sprint.review");
+		return Scope.get().getComponent(Wiki.class).getTemplate("sprint.review");
 	}
 
 	public boolean isCurrent() {
