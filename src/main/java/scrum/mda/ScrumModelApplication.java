@@ -514,6 +514,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			taskModel.addAction("UnclaimTask");
 			taskModel.addAction("CloseTask");
 			taskModel.addAction("ReopenTask");
+			taskModel.addAction("CreateTaskImpediment");
 		}
 		return taskModel;
 	}

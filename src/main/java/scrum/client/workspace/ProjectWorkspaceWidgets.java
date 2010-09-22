@@ -434,6 +434,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 
 	private void select(AWidget widget) {
 		getSidebar().getNavigator().select(widget);
+		Scope.get().getComponent(Ui.class).unlock();
 	}
 
 	public WikiWidget getWiki() {

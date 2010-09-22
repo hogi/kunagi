@@ -6,13 +6,7 @@ public interface ScrumServiceAsync {
 
     void changePassword(int conversationNumber, String newPassword, String oldPassword, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
-    void login(int conversationNumber, String username, String password, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
-
     void logout(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
-
-    void register(int conversationNumber, String username, String password, String email, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
-
-    void requestNewPassword(int conversationNumber, String login, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
     void resetPassword(int conversationNumber, String userId, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 

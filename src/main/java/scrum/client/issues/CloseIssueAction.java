@@ -18,7 +18,12 @@ public class CloseIssueAction extends GCloseIssueAction {
 		TooltipBuilder tb = new TooltipBuilder(
 				"Close this Issue, marking it as resolved or rejected. You can give a reason in the Statement and Change Log.");
 
-		if (!isPermitted()) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
+		if (issue.isIdea() || issue.isBug()) {
+			if (!getCurrentProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
+		} else {
+			if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
+				tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
+		}
 
 		return tb.getTooltip();
 	}
@@ -31,7 +36,8 @@ public class CloseIssueAction extends GCloseIssueAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (!getCurrentProject().isProductOwner(getCurrentUser())) return false;
+		if ((issue.isIdea() || issue.isBug()) && !getCurrentProject().isProductOwner(getCurrentUser())) return false;
+		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

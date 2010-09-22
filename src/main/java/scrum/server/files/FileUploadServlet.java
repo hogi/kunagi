@@ -48,8 +48,6 @@ public class FileUploadServlet extends UploadAction {
 		Project project = (Project) ScrumWebApplication.get().getDaoService().getById(projectId);
 		if (!project.isVisibleFor(session.getUser())) throw new PermissionDeniedException();
 
-		if (project == null) throw new PermissionDeniedException();
-
 		FileItem item = sessionFiles.get(0);
 		try {
 			String filename = getFilename(item.getName());

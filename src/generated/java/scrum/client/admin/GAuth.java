@@ -12,8 +12,6 @@ public abstract class GAuth {
 
     protected scrum.client.communication.Pinger pinger;
 
-    protected scrum.client.workspace.PublicWorkspaceWidgets publicWorkspaceWidgets;
-
     protected scrum.client.workspace.Ui ui;
 
     @Override

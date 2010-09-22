@@ -10,6 +10,7 @@ import scrum.client.img.Img;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.ClaimTaskAction;
 import scrum.client.sprint.CloseTaskAction;
+import scrum.client.sprint.CreateTaskImpedimentAction;
 import scrum.client.sprint.DeleteTaskAction;
 import scrum.client.sprint.ReopenTaskAction;
 import scrum.client.sprint.Task;
@@ -43,6 +44,7 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 		header.addMenuAction(new CloseTaskAction(task));
 		header.addMenuAction(new ReopenTaskAction(task));
 		header.addMenuAction(new UnclaimTaskAction(task));
+		header.addMenuAction(new CreateTaskImpedimentAction(task));
 		header.addMenuAction(new DeleteTaskAction(task));
 	}
 

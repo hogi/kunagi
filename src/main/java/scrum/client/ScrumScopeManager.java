@@ -3,6 +3,7 @@ package scrum.client;
 import ilarkesto.core.scope.CascadingScope;
 import ilarkesto.core.scope.NonConcurrentScopeManager;
 import ilarkesto.core.scope.Scope;
+import ilarkesto.core.scope.ScopeManager;
 import ilarkesto.gwt.client.AGwtApplication;
 import ilarkesto.gwt.client.ObjectMappedFlowPanel;
 import scrum.client.admin.Auth;
@@ -14,7 +15,6 @@ import scrum.client.collaboration.UsersStatus;
 import scrum.client.collaboration.Wiki;
 import scrum.client.communication.Pinger;
 import scrum.client.communication.ServerErrorManager;
-import scrum.client.core.ModeSwitcher;
 import scrum.client.core.ServiceCaller;
 import scrum.client.files.Uploader;
 import scrum.client.i18n.Localizer;
@@ -54,7 +54,6 @@ public class ScrumScopeManager {
 		scope.putComponent(new Pinger());
 		scope.putComponent(new Ui());
 		scope.putComponent(new SystemMessageManager());
-		scope.putComponent(new ModeSwitcher());
 		scope.putComponent(new Auth());
 		scope.putComponent(new Navigator());
 		scope.putComponent(new ServerErrorManager());
@@ -76,6 +75,7 @@ public class ScrumScopeManager {
 	}
 
 	public static void createProjectScope(Project project) {
+		assert scopeManager == ScopeManager.getInstance();
 		projectScope = userScope.createScope("project");
 		Scope scope = scopeManager.setScope(projectScope);
 

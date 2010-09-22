@@ -86,19 +86,6 @@ public class ScrumServiceImplTest extends ATest {
 	}
 
 	@Test
-	public void loginFail() {
-		service.onLogin(conversation, "duke", "bad password");
-		assertConversationError(conversation, "Login failed.");
-	}
-
-	@Test
-	public void loginSuccess() {
-		duke.setPassword("geheim");
-		service.onLogin(conversation, "duke", "geheim");
-		assertConversationWithoutErrors(conversation);
-	}
-
-	@Test
 	public void createExampleProject() {
 		service.onCreateExampleProject(conversation);
 		assertConversationWithoutErrors(conversation);
@@ -148,14 +135,6 @@ public class ScrumServiceImplTest extends ATest {
 	public void resetPassword() {
 		service.onResetPassword(conversationForAdmin, duke.getId());
 		assertConversationWithoutErrors(conversationForAdmin);
-	}
-
-	@Test
-	public void requestNewPassword() {
-		duke.setPassword(scrum.client.admin.User.INITIAL_PASSWORD);
-		service.onRequestNewPassword(conversation, "duke");
-		assertConversationWithoutErrors(conversation);
-		assertFalse(duke.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD));
 	}
 
 	@Test
@@ -344,20 +323,6 @@ public class ScrumServiceImplTest extends ATest {
 		assertNotSame(project.getCurrentSprint(), currentSprint);
 		assertNotSame(project.getNextSprint(), nextSprint);
 		assertEquals(project.getCurrentSprint(), nextSprint);
-	}
-
-	@Test
-	public void register() {
-		User charlie = app.getUserDao().getUserByName("charlie");
-		if (charlie != null) {
-			app.getUserDao().deleteEntity(charlie);
-			app.getTransactionService().commit();
-		}
-		service.onRegister(conversation, "charlie", "charlie@kunagi.org", "geheim");
-		assertConversationWithoutErrors(conversation);
-		charlie = app.getUserDao().getUserByName("charlie");
-		assertNotNull(charlie);
-		assertSame(conversation.getSession().getUser(), charlie);
 	}
 
 	// --- helpers ---

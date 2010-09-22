@@ -47,6 +47,7 @@ public class SprintBacklogWidget extends AScrumWidget {
 	}
 
 	public void selectTask(Task task) {
+		update();
 		RequirementInSprintBlock rBlock = (RequirementInSprintBlock) requirementList.getBlock(task.getRequirement());
 		requirementList.extendBlock(rBlock, true);
 		rBlock.selectTask(task);

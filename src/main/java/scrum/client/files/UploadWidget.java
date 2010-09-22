@@ -1,10 +1,11 @@
 package scrum.client.files;
 
+import gwtupload.client.IFileInput.FileInputType;
 import gwtupload.client.IUploadStatus;
+import gwtupload.client.IUploadStatus.Status;
 import gwtupload.client.IUploader;
 import gwtupload.client.SingleUploader;
 import gwtupload.client.Uploader;
-import gwtupload.client.IUploadStatus.Status;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
 
@@ -36,7 +37,7 @@ public class UploadWidget extends AScrumWidget {
 
 	public UploadWidget() {
 		statusLabel = new Label();
-		uploader = new SingleUploader(new UploadStatus(), button, formPanel);
+		uploader = new SingleUploader(FileInputType.BROWSER_INPUT, new UploadStatus(), button, formPanel);
 		uploader.setAutoSubmit(true);
 		Uploader.setStatusInterval(1000);
 	}
@@ -158,7 +159,7 @@ public class UploadWidget extends AScrumWidget {
 			super.add(formElements);
 			Project project = Scope.get().getComponent(Project.class);
 			Hidden projectIdField = new Hidden("projectId", project.getId());
-			projectIdField.setName("projectId");
+			projectIdField.setID("uploadProjectId");
 			add(projectIdField);
 		}
 

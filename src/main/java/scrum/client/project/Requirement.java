@@ -19,6 +19,7 @@ import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.estimation.RequirementEstimationVote;
+import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
@@ -273,6 +274,14 @@ public class Requirement extends GRequirement implements ReferenceSupport, Forum
 		for (Task task : getTasks()) {
 			if (task.isClosed() || task.isOwnerSet()) continue;
 			ret.add(task);
+		}
+		return ret;
+	}
+
+	public List<Task> getTasksBlockedBy(Impediment impediment) {
+		List<Task> ret = new ArrayList<Task>();
+		for (Task task : getTasks()) {
+			if (task.isImpediment(impediment)) ret.add(task);
 		}
 		return ret;
 	}

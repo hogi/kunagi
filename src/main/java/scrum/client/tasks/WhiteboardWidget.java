@@ -40,6 +40,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 	private ElementPredicate<Task> predicate;
 
 	private List<Requirement> knownRequirements = Collections.emptyList();
+	private UserGuideWidget userGuide;
 
 	@Override
 	protected Widget onInitialization() {
@@ -67,8 +68,9 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 
 		PagePanel page = new PagePanel();
 		page.addSection(grid);
-		page.addSection(new UserGuideWidget(getLocalizer().views().whiteboard(), getCurrentProject().getCurrentSprint()
-				.getRequirements().size() < 3, getCurrentUser().getHideUserGuideWhiteboardModel()));
+		userGuide = new UserGuideWidget(getLocalizer().views().whiteboard(), getCurrentProject().getCurrentSprint()
+				.getRequirements().size() < 3, getCurrentUser().getHideUserGuideWhiteboardModel());
+		page.addSection(userGuide);
 		return page;
 	}
 
@@ -129,6 +131,8 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 
 			row++;
 		}
+
+		userGuide.update();
 	}
 
 	private Widget createRequirementWidget(Requirement requirement) {

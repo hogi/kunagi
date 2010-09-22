@@ -1,5 +1,6 @@
 package scrum.client.impediments;
 
+import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.DateEditorWidget;
 import scrum.client.ScrumGwt;
@@ -28,8 +29,15 @@ public class ImpedimentWidget extends AScrumWidget {
 		tb.addFieldRow("Date", new DateEditorWidget(impediment.getDateModel()));
 		tb.addFieldRow("Description", impediment.getDescriptionModel());
 		tb.addFieldRow("Solution", impediment.getSolutionModel());
+		tb.addFieldRow("Blocked Tasks", new AFieldValueWidget() {
+
+			@Override
+			protected void onUpdate() {
+				setContent(ScrumGwt.createToHtmlItemsWidget(impediment.getProject().getCurrentSprint()
+						.getTasksBlockedBy(impediment)));
+			}
+		});
 		tb.addRow(new ChangeHistoryWidget(impediment), 2);
 		return tb.createTable();
 	}
-
 }

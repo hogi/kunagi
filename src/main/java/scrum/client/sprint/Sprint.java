@@ -17,6 +17,7 @@ import scrum.client.collaboration.ForumSupport;
 import scrum.client.collaboration.Wiki;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
+import scrum.client.impediments.Impediment;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 import scrum.client.release.Release;
@@ -37,6 +38,14 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport {
 
 	public Sprint(Map data) {
 		super(data);
+	}
+
+	public List<Task> getTasksBlockedBy(Impediment impediment) {
+		List<Task> ret = new ArrayList<Task>();
+		for (Requirement requirement : getRequirements()) {
+			ret.addAll(requirement.getTasksBlockedBy(impediment));
+		}
+		return ret;
 	}
 
 	public List<Release> getReleases() {

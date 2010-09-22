@@ -9,13 +9,13 @@ public class Auth extends GAuth implements ServerDataReceivedHandler {
 
 	private User user;
 
+	@Override
 	public void onServerDataReceived(ServerDataReceivedEvent event) {
 		DataTransferObject data = event.getData();
 		if (data.isUserSet()) {
 			user = dao.getUser(data.getUserId());
 			log.info("User logged in:", user);
 			ScrumScopeManager.createUserScope(user);
-			new UserLoggedInEvent().fireInCurrentScope();
 		}
 	}
 

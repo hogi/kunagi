@@ -4,7 +4,6 @@ import ilarkesto.auth.Auth;
 import ilarkesto.auth.WrongPasswordException;
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Reflect;
-import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
@@ -113,35 +112,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	// --- ---
 
 	private void onStartConversation(GwtConversation conversation) {
+		User user = conversation.getSession().getUser();
+		if (user == null) throw new PermissionDeniedException("Login required.");
 		conversation.clearRemoteEntities();
 		conversation.getNextData().applicationInfo = webApplication.getApplicationInfo();
 		conversation.sendToClient(webApplication.getSystemConfig());
-	}
-
-	@Override
-	public void onLogin(GwtConversation conversation, String username, String password) {
-		username = username.toLowerCase();
-		conversation.clearRemoteEntities();
-		User user = null;
-		if (username.contains("@")) {
-			user = userDao.getUserByEmail(username);
-		}
-		if (user == null) {
-			user = userDao.getUserByName(username);
-		}
-
-		if (user == null || user.matchesPassword(password) == false) {
-			conversation.getNextData().addError("Login failed.");
-			return;
-		}
-
-		if (user.isDisabled()) {
-			conversation.getNextData().addError("User is disabled.");
-			return;
-		}
-
-		user.setLastLoginDateAndTime(DateAndTime.now());
-		conversation.getSession().setUser(user);
+		conversation.getNextData().setUserId(user.getId());
 		conversation.sendUserScopeDataToClient(user);
 	}
 
@@ -191,37 +167,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		} else {
 			user.setPassword(webApplication.getSystemConfig().getDefaultUserPassword());
 		}
-	}
-
-	@Override
-	public void onRequestNewPassword(GwtConversation conversation, String login) {
-		login = login.toLowerCase();
-		User user = null;
-		if (login.contains("@")) {
-			user = userDao.getUserByEmail(login);
-		}
-		if (user == null) {
-			user = userDao.getUserByName(login);
-		}
-
-		if (user == null) {
-			conversation.getNextData().addError("User '" + login + "' does not exist.");
-			return;
-		}
-
-		if (user.isAdmin()) {
-			conversation.getNextData().addError("Admins can not request new passwords.");
-			return;
-		}
-
-		if (!user.isEmailVerified()) {
-			conversation.getNextData().addError(
-				"User '" + login + "' has no verified email. Please contact the admin: "
-						+ webApplication.getSystemConfig().getAdminEmail());
-			return;
-		}
-
-		user.triggerNewPasswordRequest();
 	}
 
 	@Override
@@ -410,23 +355,25 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 
 			if (properties.containsKey("rejectDate") && requirement.isRejectDateSet()) {
-				postProjectEvent(conversation, currentUser.getName() + " rejected "
-						+ requirement.getReferenceAndLabel());
+				postProjectEvent(conversation,
+					currentUser.getName() + " rejected " + requirement.getReferenceAndLabel());
 			}
 
 			if (properties.containsKey("accepted") && requirement.isRejectDateSet()) {
-				postProjectEvent(conversation, currentUser.getName() + " accepted "
-						+ requirement.getReferenceAndLabel());
+				postProjectEvent(conversation,
+					currentUser.getName() + " accepted " + requirement.getReferenceAndLabel());
 			}
 
 			if (sprint != previousRequirementSprint) {
 				if (properties.containsKey("sprintId")) {
 					if (inCurrentSprint) {
-						postProjectEvent(conversation, currentUser.getName() + " pulled "
-								+ requirement.getReferenceAndLabel() + " to current sprint");
+						postProjectEvent(conversation,
+							currentUser.getName() + " pulled " + requirement.getReferenceAndLabel()
+									+ " to current sprint");
 					} else {
-						postProjectEvent(conversation, currentUser.getName() + " kicked "
-								+ requirement.getReferenceAndLabel() + " from current sprint");
+						postProjectEvent(conversation,
+							currentUser.getName() + " kicked " + requirement.getReferenceAndLabel()
+									+ " from current sprint");
 					}
 				}
 			}
@@ -473,8 +420,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 				if (issue.isFixed()) {
 					postProjectEvent(conversation, currentUser.getName() + " fixed " + issue.getReferenceAndLabel());
 				} else {
-					postProjectEvent(conversation, currentUser.getName() + " rejected fix for "
-							+ issue.getReferenceAndLabel());
+					postProjectEvent(conversation,
+						currentUser.getName() + " rejected fix for " + issue.getReferenceAndLabel());
 				}
 			}
 		}
@@ -671,43 +618,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	public void onRegister(GwtConversation conversation, String username, String email, String password) {
-		if (Str.isBlank(email)) email = null;
-
-		if (Str.containsNonLetterOrDigit(username)) {
-			conversation.getNextData().addError(
-				"Registration failed. Name '" + username
-						+ "' contains an illegal character. Only letters and digits allowed.");
-			return;
-		}
-		if (userDao.getUserByName(username) != null) {
-			conversation.getNextData().addError("Registration failed. Name '" + username + "' is already used.");
-			log.warn("Registration failed. User name already exists:", username);
-			return;
-		}
-		if (email != null && userDao.getUserByEmail(email) != null) {
-			conversation.getNextData().addError("Registration failed. Email '" + email + "' is already used.");
-			log.warn("Registration failed. User email already exists:", email);
-			return;
-		}
-
-		User user = userDao.postUser(email, username, password);
-		user.setLastLoginDateAndTime(DateAndTime.now());
-		user.triggerEmailVerification();
-		webApplication.triggerRegisterNotification(user);
-
-		conversation.getSession().setUser(user);
-		conversation.sendUserScopeDataToClient(user);
-	}
-
-	@Override
 	public void onSendTestEmail(GwtConversation conversation) {
 		webApplication.sendEmail(null, null, "Kunagi email test", "Kunagi email test");
 	}
 
 	@Override
 	public void onPing(GwtConversation conversation) {
-	// nop
+		// nop
 	}
 
 	@Override

@@ -6,13 +6,7 @@ public interface ScrumService extends com.google.gwt.user.client.rpc.RemoteServi
 
     scrum.client.DataTransferObject changePassword(int conversationNumber, String newPassword, String oldPassword);
 
-    scrum.client.DataTransferObject login(int conversationNumber, String username, String password);
-
     scrum.client.DataTransferObject logout(int conversationNumber);
-
-    scrum.client.DataTransferObject register(int conversationNumber, String username, String password, String email);
-
-    scrum.client.DataTransferObject requestNewPassword(int conversationNumber, String login);
 
     scrum.client.DataTransferObject resetPassword(int conversationNumber, String userId);
 

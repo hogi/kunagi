@@ -8,13 +8,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onChangePassword(GwtConversation conversation, String newPassword, String oldPassword);
 
-    public abstract void onLogin(GwtConversation conversation, String username, String password);
-
     public abstract void onLogout(GwtConversation conversation);
-
-    public abstract void onRegister(GwtConversation conversation, String username, String password, String email);
-
-    public abstract void onRequestNewPassword(GwtConversation conversation, String login);
 
     public abstract void onResetPassword(GwtConversation conversation, String userId);
 
@@ -90,26 +84,6 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
         }
     }
 
-    public scrum.client.DataTransferObject login(int conversationNumber, String username, String password) {
-        log.debug("Handling service call: Login");
-        WebSession session = (WebSession) getSession();
-        synchronized (session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:Login");
-            context.bindCurrentThread();
-            try {
-                onLogin(conversation, username, password);
-            } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "Login", ex);
-                throw new RuntimeException(ex);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
     public scrum.client.DataTransferObject logout(int conversationNumber) {
         log.debug("Handling service call: Logout");
         WebSession session = (WebSession) getSession();
@@ -122,46 +96,6 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onLogout(conversation);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "Logout", ex);
-                throw new RuntimeException(ex);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-    public scrum.client.DataTransferObject register(int conversationNumber, String username, String password, String email) {
-        log.debug("Handling service call: Register");
-        WebSession session = (WebSession) getSession();
-        synchronized (session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:Register");
-            context.bindCurrentThread();
-            try {
-                onRegister(conversation, username, password, email);
-            } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "Register", ex);
-                throw new RuntimeException(ex);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-    public scrum.client.DataTransferObject requestNewPassword(int conversationNumber, String login) {
-        log.debug("Handling service call: RequestNewPassword");
-        WebSession session = (WebSession) getSession();
-        synchronized (session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:RequestNewPassword");
-            context.bindCurrentThread();
-            try {
-                onRequestNewPassword(conversation, login);
-            } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestNewPassword", ex);
                 throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

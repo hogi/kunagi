@@ -20,8 +20,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     protected ilarkesto.core.scope.ComponentReflector serverErrorManagerReflector = createServerErrorManagerReflector();
 
-    protected ilarkesto.core.scope.ComponentReflector modeSwitcherReflector = createModeSwitcherReflector();
-
     protected ilarkesto.core.scope.ComponentReflector serviceCallerReflector = createServiceCallerReflector();
 
     protected ilarkesto.core.scope.ComponentReflector uploaderReflector = createUploaderReflector();
@@ -42,8 +40,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     protected ilarkesto.core.scope.ComponentReflector projectWorkspaceWidgetsReflector = createProjectWorkspaceWidgetsReflector();
 
-    protected ilarkesto.core.scope.ComponentReflector publicWorkspaceWidgetsReflector = createPublicWorkspaceWidgetsReflector();
-
     protected ilarkesto.core.scope.ComponentReflector uiReflector = createUiReflector();
 
     protected ilarkesto.core.scope.ComponentReflector usersWorkspaceWidgetsReflector = createUsersWorkspaceWidgetsReflector();
@@ -57,7 +53,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.collaboration.Wiki) wikiReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.communication.Pinger) pingerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.communication.ServerErrorManager) serverErrorManagerReflector.injectComponents(component, scope);
-        if (component instanceof scrum.client.core.ModeSwitcher) modeSwitcherReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.core.ServiceCaller) serviceCallerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.i18n.Localizer) localizerReflector.injectComponents(component, scope);
@@ -68,7 +63,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.workspace.DndManager) dndManagerReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.workspace.Navigator) navigatorReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.workspace.ProjectWorkspaceWidgets) projectWorkspaceWidgetsReflector.injectComponents(component, scope);
-        if (component instanceof scrum.client.workspace.PublicWorkspaceWidgets) publicWorkspaceWidgetsReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.workspace.Ui) uiReflector.injectComponents(component, scope);
         if (component instanceof scrum.client.workspace.UsersWorkspaceWidgets) usersWorkspaceWidgetsReflector.injectComponents(component, scope);
     }
@@ -82,7 +76,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.collaboration.Wiki) wikiReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.communication.Pinger) pingerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.communication.ServerErrorManager) serverErrorManagerReflector.callInitializationMethods(component);
-        if (component instanceof scrum.client.core.ModeSwitcher) modeSwitcherReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.core.ServiceCaller) serviceCallerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.i18n.Localizer) localizerReflector.callInitializationMethods(component);
@@ -93,7 +86,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.workspace.DndManager) dndManagerReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.workspace.Navigator) navigatorReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.workspace.ProjectWorkspaceWidgets) projectWorkspaceWidgetsReflector.callInitializationMethods(component);
-        if (component instanceof scrum.client.workspace.PublicWorkspaceWidgets) publicWorkspaceWidgetsReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.workspace.Ui) uiReflector.callInitializationMethods(component);
         if (component instanceof scrum.client.workspace.UsersWorkspaceWidgets) usersWorkspaceWidgetsReflector.callInitializationMethods(component);
     }
@@ -107,7 +99,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.collaboration.Wiki) wikiReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.communication.Pinger) pingerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.communication.ServerErrorManager) serverErrorManagerReflector.outjectComponents(component, scope);
-        if (component instanceof scrum.client.core.ModeSwitcher) modeSwitcherReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.core.ServiceCaller) serviceCallerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.files.Uploader) uploaderReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.i18n.Localizer) localizerReflector.outjectComponents(component, scope);
@@ -118,7 +109,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
         if (component instanceof scrum.client.workspace.DndManager) dndManagerReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.workspace.Navigator) navigatorReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.workspace.ProjectWorkspaceWidgets) projectWorkspaceWidgetsReflector.outjectComponents(component, scope);
-        if (component instanceof scrum.client.workspace.PublicWorkspaceWidgets) publicWorkspaceWidgetsReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.workspace.Ui) uiReflector.outjectComponents(component, scope);
         if (component instanceof scrum.client.workspace.UsersWorkspaceWidgets) usersWorkspaceWidgetsReflector.outjectComponents(component, scope);
     }
@@ -153,10 +143,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     public ilarkesto.core.scope.ComponentReflector createServerErrorManagerReflector() {
         return new scrum.client.communication.GServerErrorManagerReflector();
-    }
-
-    public ilarkesto.core.scope.ComponentReflector createModeSwitcherReflector() {
-        return new scrum.client.core.GModeSwitcherReflector();
     }
 
     public ilarkesto.core.scope.ComponentReflector createServiceCallerReflector() {
@@ -197,10 +183,6 @@ public class GScrumComponentsReflector implements ilarkesto.core.scope.Component
 
     public ilarkesto.core.scope.ComponentReflector createProjectWorkspaceWidgetsReflector() {
         return new scrum.client.workspace.GProjectWorkspaceWidgetsReflector();
-    }
-
-    public ilarkesto.core.scope.ComponentReflector createPublicWorkspaceWidgetsReflector() {
-        return new scrum.client.workspace.GPublicWorkspaceWidgetsReflector();
     }
 
     public ilarkesto.core.scope.ComponentReflector createUiReflector() {

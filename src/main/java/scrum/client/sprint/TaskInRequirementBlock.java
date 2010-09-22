@@ -31,6 +31,7 @@ public class TaskInRequirementBlock extends ABlockWidget<Task> implements TrashS
 		header.addMenuAction(new CloseTaskAction(task));
 		header.addMenuAction(new ReopenTaskAction(task));
 		header.addMenuAction(new UnclaimTaskAction(task));
+		header.addMenuAction(new CreateTaskImpedimentAction(task));
 		header.addMenuAction(new DeleteTaskAction(task));
 	}
 
@@ -44,6 +45,9 @@ public class TaskInRequirementBlock extends ABlockWidget<Task> implements TrashS
 			statusImage.setTitle("Closed.");
 			ownerLabel.setText("");
 			task.getBurnedWork();
+		} else if (task.isBlocked()) {
+			statusImage = Img.bundle.tskBlocked().createImage();
+			statusImage.setTitle("Blocked by " + task.getImpediment().getReferenceAndLabel() + ".");
 		} else if (task.isOwnerSet()) {
 			statusImage = Img.bundle.tskClaimed().createImage();
 			statusImage.setTitle("Claimed by " + task.getOwner().getName() + ".");

@@ -146,6 +146,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".AViewEditWidget-viewer").background(cFieldBackground)
 				.border(1, "dotted", cNavigatorSelectedItemBackground).cursorPointer().minWidth(16).minHeight(16)
 				.displayBlock().padding(3);
+		css.style(".ARichtextViewEditWidget-viewer").overflowAuto();
 		css.style(".ARichtextViewEditWidget-editor").height(100).width(96, "%");
 		css.style(".AEditableTextareaWidget-editorPanel").width100();
 		css.style(".Integer-editor").width(10, "%");
