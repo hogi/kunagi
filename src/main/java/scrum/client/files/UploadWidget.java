@@ -37,8 +37,7 @@ public class UploadWidget extends AScrumWidget {
 
 	public UploadWidget() {
 		statusLabel = new Label();
-		// uploader = new SingleUploader(FileInputType.BROWSER_INPUT, new UploadStatus(), button, formPanel);
-		uploader = new SingleUploader(FileInputType.BROWSER_INPUT);
+		uploader = new SingleUploader(FileInputType.BROWSER_INPUT, new UploadStatus(), button, formPanel);
 		uploader.setAutoSubmit(true);
 		Uploader.setStatusInterval(1000);
 	}
@@ -76,6 +75,7 @@ public class UploadWidget extends AScrumWidget {
 
 	private class FinishHandler implements IUploader.OnFinishUploaderHandler {
 
+		@Override
 		public void onFinish(IUploader ul) {
 			if (ul.getStatus() != Status.SUCCESS) {
 				new PingServiceCall().execute();
@@ -90,40 +90,49 @@ public class UploadWidget extends AScrumWidget {
 		private Status status;
 		private String filename;
 
+		@Override
 		public HandlerRegistration addCancelHandler(UploadCancelHandler handler) {
 			return null;
 		}
 
+		@Override
 		public Status getStatus() {
 			return status;
 		}
 
+		@Override
 		public Widget getWidget() {
 			return statusLabel;
 		}
 
+		@Override
 		public IUploadStatus newInstance() {
 			return null;
 		}
 
+		@Override
 		public void setCancelConfiguration(Set<CancelBehavior> config) {
 			Log.DEBUG("----------------------> setCancelConfiguration()");
 		}
 
+		@Override
 		public void setError(String error) {
 			log.error("Upload failed: " + error);
 			statusLabel.setText(error);
 		}
 
+		@Override
 		public void setFileName(String name) {
 			this.filename = name;
 		}
 
+		@Override
 		public void setI18Constants(UploadStatusConstants strs) {
 			Log.DEBUG("----------------------> setI18()");
 
 		}
 
+		@Override
 		public void setStatus(Status status) {
 			Log.DEBUG("Upload status changed:", status);
 			if (this.status == null) {
@@ -136,10 +145,13 @@ public class UploadWidget extends AScrumWidget {
 			this.status = status;
 		}
 
+		@Override
 		public void setStatusChangedHandler(UploadStatusChangedHandler handler) {}
 
+		@Override
 		public void setVisible(boolean b) {}
 
+		@Override
 		public void setProgress(int done, int total) {
 			Log.DEBUG("Progress: " + done + "/" + total);
 			if (total == 0) {

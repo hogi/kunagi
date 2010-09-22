@@ -7,9 +7,11 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
 import ilarkesto.webapp.Servlet;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,19 +27,28 @@ public class FileUploadServlet extends UploadAction {
 	private static final Log log = Log.get(FileUploadServlet.class);
 
 	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException,
+			ServletException {
+		log.debug("-----------------------> doPost()", "\n" + Servlet.toString(request, "        "));
+		super.doPost(request, response);
+	}
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		log.debug("-----------------------> doGet()", "\n" + Servlet.toString(request, "        "));
+		super.doGet(request, response);
+	}
+
+	@Override
 	public String executeAction(HttpServletRequest req, List<FileItem> sessionFiles) throws UploadActionException {
+		log.debug("File received", "\n" + Servlet.toString(req, "    "));
 		sessionFiles = new ArrayList<FileItem>(sessionFiles);
 		String projectId = null;
-		log.debug("file upload", Servlet.toString(req, "    "));
-		log.debug("fields:", sessionFiles.size());
 		for (FileItem item : new ArrayList<FileItem>(sessionFiles)) {
 			String fieldName = item.getFieldName();
 			if (item.isFormField()) {
-				log.debug("   ", fieldName, "->", item.getString());
 				sessionFiles.remove(item);
 				if (fieldName.equals("projectId")) projectId = item.getString();
-			} else {
-				log.debug("   ", fieldName, "-> [file]");
 			}
 		}
 		if (projectId == null) throw new RuntimeException("projectId == null");
@@ -86,18 +97,6 @@ public class FileUploadServlet extends UploadAction {
 		int idx = name.lastIndexOf('/');
 		if (idx >= 0) return name.substring(idx + 1);
 		return name;
-	}
-
-	@Override
-	public void checkRequest(HttpServletRequest request) {
-		log.debug("checkRequest() ->", request);
-		super.checkRequest(request);
-	}
-
-	@Override
-	protected String parsePostRequest(HttpServletRequest request, HttpServletResponse response) {
-		log.debug("parsePostRequest() ->", request);
-		return super.parsePostRequest(request, response);
 	}
 
 }
