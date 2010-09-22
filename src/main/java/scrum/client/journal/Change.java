@@ -59,11 +59,11 @@ public class Change extends GChange {
 			if (key.equals("closed")) return null;
 		} else if (parent instanceof Risk) {
 			if (key.equals("impact"))
-				return createSinglelineDiff(RiskComputer.getImpactLabel(oldValue), RiskComputer
-						.getImpactLabel(newValue));
+				return createSinglelineDiff(RiskComputer.getImpactLabel(oldValue),
+					RiskComputer.getImpactLabel(newValue));
 			if (key.equals("probability"))
-				return createSinglelineDiff(RiskComputer.getProbabilityLabel(oldValue), RiskComputer
-						.getProbabilityLabel(newValue));
+				return createSinglelineDiff(RiskComputer.getProbabilityLabel(oldValue),
+					RiskComputer.getProbabilityLabel(newValue));
 		} else if (parent instanceof Requirement) {
 			if (key.equals("closed")) return null;
 			if (key.equals("sprintId")) return null;
@@ -71,7 +71,7 @@ public class Change extends GChange {
 		}
 
 		if (Str.isBlank(oldValue)) return getNewValue();
-		if (Str.isBlank(newValue)) return null;
+		if (Str.isBlank(newValue)) return getOldValue();
 		return createMultilineDiff(oldValue, newValue);
 	}
 
@@ -87,6 +87,7 @@ public class Change extends GChange {
 
 	public static transient final Comparator<Change> DATE_AND_TIME_COMPARATOR = new Comparator<Change>() {
 
+		@Override
 		public int compare(Change a, Change b) {
 			return b.getDateAndTime().compareTo(a.getDateAndTime());
 		}

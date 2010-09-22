@@ -23,6 +23,7 @@ import scrum.client.files.File;
 import scrum.client.files.FileUploadedEvent;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
+import scrum.client.journal.ChangeHistoryManager;
 import scrum.client.pr.BlogEntry;
 import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
@@ -209,9 +210,13 @@ public class Dao extends GDao {
 		}
 
 		private void flush() {
+			if (!entityProperties.isEmpty())
+				Scope.get().getComponent(ChangeHistoryManager.class).deactivateChangeHistory();
+
 			for (Map.Entry<String, Map> entry : entityProperties.entrySet()) {
 				new ChangePropertiesServiceCall(entry.getKey(), entry.getValue()).execute();
 			}
+
 			entityProperties = new HashMap<String, Map>(3);
 		}
 

@@ -438,6 +438,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 		}
 
+		conversation.clearRemoteEntitiesByType(Change.class);
 		sendToOtherConversationsByProject(conversation, entity);
 	}
 
