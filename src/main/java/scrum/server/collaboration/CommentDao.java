@@ -44,4 +44,13 @@ public class CommentDao extends GCommentDao {
 		return commentsByParentIdCache.get(parentId);
 	}
 
+	public Comment postComment(AEntity entity, String text, String name, String email) {
+		Comment comment = newEntityInstance();
+		comment.setParent(entity);
+		comment.setText(text);
+		comment.setAuthorName(name);
+		comment.setAuthorEmail(email);
+		return comment;
+	}
+
 }

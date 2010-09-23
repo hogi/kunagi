@@ -4,6 +4,8 @@ import ilarkesto.core.base.Str;
 
 import java.util.Set;
 
+import scrum.client.common.LabelSupport;
+import scrum.client.common.ReferenceSupport;
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.estimation.RequirementEstimationVote;
@@ -11,7 +13,7 @@ import scrum.server.estimation.RequirementEstimationVoteDao;
 import scrum.server.sprint.Task;
 import scrum.server.sprint.TaskDao;
 
-public class Requirement extends GRequirement implements Numbered {
+public class Requirement extends GRequirement implements Numbered, ReferenceSupport, LabelSupport {
 
 	// --- dependencies ---
 
@@ -81,10 +83,12 @@ public class Requirement extends GRequirement implements Numbered {
 		return getReference() + " " + getLabel();
 	}
 
+	@Override
 	public String getReference() {
 		return scrum.client.project.Requirement.REFERENCE_PREFIX + getNumber();
 	}
 
+	@Override
 	public void updateNumber() {
 		if (getNumber() == 0) setNumber(getProject().generateRequirementNumber());
 	}
@@ -106,6 +110,7 @@ public class Requirement extends GRequirement implements Numbered {
 		return taskDao.getTasksByRequirement(this);
 	}
 
+	@Override
 	public boolean isVisibleFor(User user) {
 		return getProject().isVisibleFor(user);
 	}

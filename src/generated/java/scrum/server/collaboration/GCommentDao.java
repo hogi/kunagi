@@ -49,6 +49,8 @@ public abstract class GCommentDao
         commentsByPublishedCache.clear();
         commentsByAuthorNameCache.clear();
         authorNamesCache = null;
+        commentsByAuthorEmailCache.clear();
+        authorEmailsCache = null;
         commentsByAuthorNameVisibleCache.clear();
         commentsByTextCache.clear();
         textsCache = null;
@@ -217,6 +219,46 @@ public abstract class GCommentDao
 
         public boolean test(Comment e) {
             return e.isAuthorName(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - authorEmail
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Comment>> commentsByAuthorEmailCache = new Cache<java.lang.String,Set<Comment>>(
+            new Cache.Factory<java.lang.String,Set<Comment>>() {
+                public Set<Comment> create(java.lang.String authorEmail) {
+                    return getEntities(new IsAuthorEmail(authorEmail));
+                }
+            });
+
+    public final Set<Comment> getCommentsByAuthorEmail(java.lang.String authorEmail) {
+        return commentsByAuthorEmailCache.get(authorEmail);
+    }
+    private Set<java.lang.String> authorEmailsCache;
+
+    public final Set<java.lang.String> getAuthorEmails() {
+        if (authorEmailsCache == null) {
+            authorEmailsCache = new HashSet<java.lang.String>();
+            for (Comment e : getEntities()) {
+                if (e.isAuthorEmailSet()) authorEmailsCache.add(e.getAuthorEmail());
+            }
+        }
+        return authorEmailsCache;
+    }
+
+    private static class IsAuthorEmail implements Predicate<Comment> {
+
+        private java.lang.String value;
+
+        public IsAuthorEmail(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Comment e) {
+            return e.isAuthorEmail(value);
         }
 
     }

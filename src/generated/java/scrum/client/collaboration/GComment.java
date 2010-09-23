@@ -202,6 +202,59 @@ public abstract class GComment
 
     }
 
+    // --- authorEmail ---
+
+    private java.lang.String authorEmail ;
+
+    public final java.lang.String getAuthorEmail() {
+        return this.authorEmail ;
+    }
+
+    public final Comment setAuthorEmail(java.lang.String authorEmail) {
+        if (isAuthorEmail(authorEmail)) return (Comment)this;
+        this.authorEmail = authorEmail ;
+        propertyChanged("authorEmail", this.authorEmail);
+        return (Comment)this;
+    }
+
+    public final boolean isAuthorEmail(java.lang.String authorEmail) {
+        return equals(this.authorEmail, authorEmail);
+    }
+
+    private transient AuthorEmailModel authorEmailModel;
+
+    public AuthorEmailModel getAuthorEmailModel() {
+        if (authorEmailModel == null) authorEmailModel = createAuthorEmailModel();
+        return authorEmailModel;
+    }
+
+    protected AuthorEmailModel createAuthorEmailModel() { return new AuthorEmailModel(); }
+
+    protected class AuthorEmailModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Comment_authorEmail";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getAuthorEmail();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setAuthorEmail(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- authorNameVisible ---
 
     private boolean authorNameVisible ;
@@ -377,6 +430,7 @@ public abstract class GComment
         authorId = (String) props.get("authorId");
         published  = (Boolean) props.get("published");
         authorName  = (java.lang.String) props.get("authorName");
+        authorEmail  = (java.lang.String) props.get("authorEmail");
         authorNameVisible  = (Boolean) props.get("authorNameVisible");
         text  = (java.lang.String) props.get("text");
         String dateAndTimeAsString = (String) props.get("dateAndTime");
@@ -390,6 +444,7 @@ public abstract class GComment
         properties.put("authorId", this.authorId);
         properties.put("published", this.published);
         properties.put("authorName", this.authorName);
+        properties.put("authorEmail", this.authorEmail);
         properties.put("authorNameVisible", this.authorNameVisible);
         properties.put("text", this.text);
         properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());

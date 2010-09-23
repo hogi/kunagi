@@ -162,6 +162,7 @@
 "0bb7b8bb-bec7-40db-81d3-871e0a0a420f","34cfdbb9-e8cb-4a99-a414-9789333f35d5","BooleanProperty","published"
 "9ecd25a0-06f2-4c1d-94fe-ffaeb9cfa2d2","34cfdbb9-e8cb-4a99-a414-9789333f35d5","TextProperty","authorName"
 "d27ef0e0-54e3-4258-9e7e-fdf5f05eccc1","34cfdbb9-e8cb-4a99-a414-9789333f35d5","BooleanProperty","authorNameVisible"
+"2639eccf-bfc6-4e14-830d-9ea3e9e64c45","34cfdbb9-e8cb-4a99-a414-9789333f35d5","TextProperty","authorEmail"
 "ea4642da-ef1b-4f7f-a6e6-ff5869a92b5a","9fbffd41-4998-4d23-b9dd-734cc9334d8b","Entity","Emoticon"
 "e806066c-a783-4280-88be-762e105806ea","ea4642da-ef1b-4f7f-a6e6-ff5869a92b5a","TextProperty","emotion"
 "b09d7566-3da0-4c68-97af-79dd650550db","ea4642da-ef1b-4f7f-a6e6-ff5869a92b5a","ReferenceProperty","owner"

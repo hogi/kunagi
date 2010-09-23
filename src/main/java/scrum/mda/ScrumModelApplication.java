@@ -822,6 +822,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			commentModel.addReference("author", getUserModel());
 			commentModel.addProperty("published", boolean.class);
 			commentModel.addStringProperty("authorName");
+			commentModel.addStringProperty("authorEmail");
 			commentModel.addProperty("authorNameVisible", boolean.class);
 			commentModel.addStringProperty("text").setRichtext(true).setMandatory(true).setSearchable(true)
 					.setEditablePredicate("editable");

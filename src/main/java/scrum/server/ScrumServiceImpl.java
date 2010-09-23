@@ -206,6 +206,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			Comment comment = (Comment) entity;
 			comment.setDateAndTime(DateAndTime.now());
 			postProjectEvent(conversation, comment.getAuthor().getName() + " commented on " + comment.getParent());
+			if (conversation.getProject().isHomepageDirSet()) {
+				new HomepageUpdater(conversation.getProject()).processEntityTemplate(comment.getParent());
+			}
 		}
 
 		if (entity instanceof ChatMessage) {
@@ -246,6 +249,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			Change change = changeDao.postChange(entity, user, "@created", null, null);
 			conversation.sendToClient(change);
 		}
+
 	}
 
 	@Override
@@ -443,6 +447,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 						currentUser.getName() + " published " + blogEntry.getReferenceAndLabel());
 				}
 				blogEntry.getProject().updateHomepage();
+			}
+		}
+
+		if (entity instanceof Comment) {
+			Comment comment = (Comment) entity;
+			if (conversation.getProject().isHomepageDirSet()) {
+				new HomepageUpdater(conversation.getProject()).processEntityTemplate(comment.getParent());
 			}
 		}
 

@@ -2,11 +2,19 @@ package scrum.server.pr;
 
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.DateAndTime;
+import scrum.client.common.LabelSupport;
+import scrum.client.common.ReferenceSupport;
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 
-public class BlogEntry extends GBlogEntry implements Numbered, Comparable<BlogEntry> {
+public class BlogEntry extends GBlogEntry implements Numbered, ReferenceSupport, LabelSupport, Comparable<BlogEntry> {
 
+	@Override
+	public String getLabel() {
+		return getTitle();
+	}
+
+	@Override
 	public boolean isVisibleFor(User user) {
 		return getProject().isVisibleFor(user);
 	}
@@ -15,10 +23,12 @@ public class BlogEntry extends GBlogEntry implements Numbered, Comparable<BlogEn
 		return getReference() + " " + getTitle();
 	}
 
+	@Override
 	public String getReference() {
 		return scrum.client.pr.BlogEntry.REFERENCE_PREFIX + getNumber();
 	}
 
+	@Override
 	public void updateNumber() {
 		if (getNumber() == 0) setNumber(getProject().generateBlogEntryNumber());
 	}

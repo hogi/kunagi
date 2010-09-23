@@ -6,11 +6,13 @@ import ilarkesto.base.time.DateAndTime;
 import java.util.Comparator;
 import java.util.Set;
 
+import scrum.client.common.LabelSupport;
+import scrum.client.common.ReferenceSupport;
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.release.Release;
 
-public class Issue extends GIssue implements Numbered {
+public class Issue extends GIssue implements Numbered, ReferenceSupport, LabelSupport {
 
 	public String getStatusText() {
 		String releasesText = isFixReleasesEmpty() ? "" : " for " + getFixReleasesAsString();
@@ -84,6 +86,7 @@ public class Issue extends GIssue implements Numbered {
 		if (getNumber() == 0) setNumber(getProject().generateIssueNumber());
 	}
 
+	@Override
 	public String getReference() {
 		return scrum.client.issues.Issue.REFERENCE_PREFIX + getNumber();
 	}

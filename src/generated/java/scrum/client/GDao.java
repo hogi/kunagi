@@ -438,6 +438,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.collaboration.Comment> getCommentsByAuthorEmail(java.lang.String authorEmail) {
+        List<scrum.client.collaboration.Comment> ret = new ArrayList<scrum.client.collaboration.Comment>();
+        for (scrum.client.collaboration.Comment entity : comments.values()) {
+            if (entity.isAuthorEmail(authorEmail)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.collaboration.Comment> getCommentsByAuthorNameVisible(boolean authorNameVisible) {
         List<scrum.client.collaboration.Comment> ret = new ArrayList<scrum.client.collaboration.Comment>();
         for (scrum.client.collaboration.Comment entity : comments.values()) {

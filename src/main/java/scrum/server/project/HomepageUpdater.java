@@ -130,31 +130,53 @@ public class HomepageUpdater {
 		}
 	}
 
+	public void processEntityTemplate(AEntity entity) {
+		if (entity instanceof Issue) {
+			processIssueTemplate((Issue) entity);
+			return;
+		}
+		if (entity instanceof Requirement) {
+			processStoryTemplate((Requirement) entity);
+			return;
+		}
+		if (entity instanceof BlogEntry) {
+			processBlogEntryTemplate((BlogEntry) entity);
+			return;
+		}
+	}
+
 	public void processIssueTemplate(Issue issue) {
 		ContextBuilder context = new ContextBuilder();
 		fillIssue(context.putSubContext("issue"), issue);
-		String reference = issue.getReference();
-		processEntityTemplate(context, reference);
+		processEntityTemplate(context, issue.getReference());
 	}
 
 	private void processStoryTemplates() {
 		List<Requirement> requirements = new ArrayList<Requirement>(project.getRequirements());
 		for (Requirement requirement : requirements) {
 			if (requirement.isClosed()) continue;
-			ContextBuilder context = new ContextBuilder();
-			fillStory(context.putSubContext("story"), requirement);
-			processEntityTemplate(context, requirement.getReference());
+			processStoryTemplate(requirement);
 		}
+	}
+
+	private void processStoryTemplate(Requirement requirement) {
+		ContextBuilder context = new ContextBuilder();
+		fillStory(context.putSubContext("story"), requirement);
+		processEntityTemplate(context, requirement.getReference());
 	}
 
 	private void processBlogEntryTemplates() {
 		List<BlogEntry> entries = new ArrayList<BlogEntry>(project.getBlogEntrys());
 		for (BlogEntry entry : entries) {
 			if (!entry.isPublished()) continue;
-			ContextBuilder context = new ContextBuilder();
-			fillBlogEntry(context.putSubContext("entry"), entry);
-			processEntityTemplate(context, entry.getReference());
+			processBlogEntryTemplate(entry);
 		}
+	}
+
+	private void processBlogEntryTemplate(BlogEntry entry) {
+		ContextBuilder context = new ContextBuilder();
+		fillBlogEntry(context.putSubContext("entry"), entry);
+		processEntityTemplate(context, entry.getReference());
 	}
 
 	private void createSprintBurndownChart(int width, int height) {

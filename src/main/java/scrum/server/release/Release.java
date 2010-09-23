@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import scrum.client.common.ReferenceSupport;
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.issues.Issue;
 import scrum.server.issues.IssueDao;
 
-public class Release extends GRelease implements Numbered {
+public class Release extends GRelease implements Numbered, ReferenceSupport {
 
 	// --- dependencies ---
 
@@ -38,10 +39,12 @@ public class Release extends GRelease implements Numbered {
 		return ret;
 	}
 
+	@Override
 	public void updateNumber() {
 		if (getNumber() == 0) setNumber(getProject().generateReleaseNumber());
 	}
 
+	@Override
 	public String getReference() {
 		return scrum.client.release.Release.REFERENCE_PREFIX + getNumber();
 	}
@@ -50,6 +53,7 @@ public class Release extends GRelease implements Numbered {
 		return getReference() + " " + getLabel();
 	}
 
+	@Override
 	public boolean isVisibleFor(User user) {
 		return getProject().isVisibleFor(user);
 	}
@@ -71,6 +75,7 @@ public class Release extends GRelease implements Numbered {
 
 	public static final Comparator<Release> DATE_COMPARATOR = new Comparator<Release>() {
 
+		@Override
 		public int compare(Release ra, Release rb) {
 			Date a = ra.getReleaseDate();
 			Date b = rb.getReleaseDate();
@@ -83,6 +88,7 @@ public class Release extends GRelease implements Numbered {
 
 	public static final Comparator<Release> DATE_REVERSE_COMPARATOR = new Comparator<Release>() {
 
+		@Override
 		public int compare(Release ra, Release rb) {
 			return -DATE_COMPARATOR.compare(ra, rb);
 		}

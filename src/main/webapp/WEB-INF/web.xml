@@ -142,6 +142,17 @@
         <url-pattern>/submitIssue</url-pattern>
     </servlet-mapping>
 
+    <!-- comment -->
+    <servlet>
+        <servlet-name>comment</servlet-name>
+        <servlet-class>scrum.server.collaboration.CommentServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>      
+    <servlet-mapping>
+        <servlet-name>comment</servlet-name>
+        <url-pattern>/postComment</url-pattern>
+    </servlet-mapping>
+
     <!-- email confirmation -->
     <servlet>
         <servlet-name>confirmEmail</servlet-name>

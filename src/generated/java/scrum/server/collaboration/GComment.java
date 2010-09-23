@@ -40,6 +40,7 @@ public abstract class GComment
         properties.put("authorId", this.authorId);
         properties.put("published", this.published);
         properties.put("authorName", this.authorName);
+        properties.put("authorEmail", this.authorEmail);
         properties.put("authorNameVisible", this.authorNameVisible);
         properties.put("text", this.text);
         properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
@@ -231,6 +232,41 @@ public abstract class GComment
     }
 
     // -----------------------------------------------------------
+    // - authorEmail
+    // -----------------------------------------------------------
+
+    private java.lang.String authorEmail;
+
+    public final java.lang.String getAuthorEmail() {
+        return authorEmail;
+    }
+
+    public final void setAuthorEmail(java.lang.String authorEmail) {
+        authorEmail = prepareAuthorEmail(authorEmail);
+        if (isAuthorEmail(authorEmail)) return;
+        this.authorEmail = authorEmail;
+        fireModified("authorEmail="+authorEmail);
+    }
+
+    protected java.lang.String prepareAuthorEmail(java.lang.String authorEmail) {
+        authorEmail = Str.removeUnreadableChars(authorEmail);
+        return authorEmail;
+    }
+
+    public final boolean isAuthorEmailSet() {
+        return this.authorEmail != null;
+    }
+
+    public final boolean isAuthorEmail(java.lang.String authorEmail) {
+        if (this.authorEmail == null && authorEmail == null) return true;
+        return this.authorEmail != null && this.authorEmail.equals(authorEmail);
+    }
+
+    protected final void updateAuthorEmail(Object value) {
+        setAuthorEmail((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
     // - authorNameVisible
     // -----------------------------------------------------------
 
@@ -338,6 +374,7 @@ public abstract class GComment
             if (property.equals("authorId")) updateAuthor(value);
             if (property.equals("published")) updatePublished(value);
             if (property.equals("authorName")) updateAuthorName(value);
+            if (property.equals("authorEmail")) updateAuthorEmail(value);
             if (property.equals("authorNameVisible")) updateAuthorNameVisible(value);
             if (property.equals("text")) updateText(value);
             if (property.equals("dateAndTime")) updateDateAndTime(value);
