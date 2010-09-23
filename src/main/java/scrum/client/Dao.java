@@ -210,8 +210,10 @@ public class Dao extends GDao {
 		}
 
 		private void flush() {
-			if (!entityProperties.isEmpty())
-				Scope.get().getComponent(ChangeHistoryManager.class).deactivateChangeHistory();
+			if (!entityProperties.isEmpty()) {
+				ChangeHistoryManager changeHistoryManager = Scope.get().getComponent(ChangeHistoryManager.class);
+				if (changeHistoryManager != null) changeHistoryManager.deactivateChangeHistory();
+			}
 
 			for (Map.Entry<String, Map> entry : entityProperties.entrySet()) {
 				new ChangePropertiesServiceCall(entry.getKey(), entry.getValue()).execute();

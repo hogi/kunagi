@@ -36,6 +36,7 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 		header.addMenuAction(new ClaimIssueAction(issue));
 		header.addMenuAction(new FixIssueAction(issue));
 		header.addMenuAction(new RejectFixIssueAction(issue));
+		header.addMenuAction(new PublishIssueAction(issue));
 		header.addMenuAction(new ConvertIssueToRequirementAction(issue));
 		header.addMenuAction(new ReopenIssueAction(issue));
 		header.addMenuAction(new SuspendIssueAction(issue, 7));
@@ -72,12 +73,14 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 		return new IssueWidget(getObject());
 	}
 
+	@Override
 	public AScrumAction getTrashAction() {
 		return new DeleteIssueAction(getObject());
 	}
 
 	public static final BlockWidgetFactory<Issue> FACTORY = new BlockWidgetFactory<Issue>() {
 
+		@Override
 		public IssueBlock createBlock() {
 			return new IssueBlock();
 		}

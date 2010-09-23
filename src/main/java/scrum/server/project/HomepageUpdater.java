@@ -36,7 +36,7 @@ public class HomepageUpdater {
 	private Velocity velocity;
 	private Properties properties;
 
-	private HomepageUpdater(Project project, String templatePath, String outputPath) {
+	public HomepageUpdater(Project project, String templatePath, String outputPath) {
 		super();
 		assert project != null;
 		this.project = project;
@@ -48,16 +48,17 @@ public class HomepageUpdater {
 		loadProperties();
 	}
 
-	public static void updateHomepage(String templatePath, String outputPath, Project project) {
-		HomepageUpdater updater = new HomepageUpdater(project, templatePath, outputPath);
-		synchronized (project) {
-			updater.processDefaultTemplates();
-			updater.processIssueTemplates();
-			updater.processStoryTemplates();
-			updater.processReleaseTemplates();
-			updater.processBlogEntryTemplates();
-			updater.createSprintBurndownChart(700, 200);
-		}
+	public HomepageUpdater(Project project) {
+		this(project, project.getHomepageVelocityDir(), project.getHomepageDir());
+	}
+
+	public void processAll() {
+		processDefaultTemplates();
+		processIssueTemplates();
+		processStoryTemplates();
+		processReleaseTemplates();
+		processBlogEntryTemplates();
+		createSprintBurndownChart(700, 200);
 	}
 
 	private void processDefaultTemplates() {
@@ -118,16 +119,18 @@ public class HomepageUpdater {
 		}
 	}
 
-	private void processIssueTemplates() {
-		List<Issue> issues = new ArrayList<Issue>(project.getOpenBugs());
-		issues.addAll(project.getOpenIdeas());
-		issues.addAll(project.getClosedIssues());
+	public void processIssueTemplates() {
+		List<Issue> issues = new ArrayList<Issue>(project.getPublishedIssues());
 		for (Issue issue : issues) {
-			ContextBuilder context = new ContextBuilder();
-			fillIssue(context.putSubContext("issue"), issue);
-			String reference = issue.getReference();
-			processEntityTemplate(context, reference);
+			processIssueTemplate(issue);
 		}
+	}
+
+	public void processIssueTemplate(Issue issue) {
+		ContextBuilder context = new ContextBuilder();
+		fillIssue(context.putSubContext("issue"), issue);
+		String reference = issue.getReference();
+		processEntityTemplate(context, reference);
 	}
 
 	private void processStoryTemplates() {
@@ -274,17 +277,6 @@ public class HomepageUpdater {
 		context.put("longDescription", wiki2html(project.getLongDescription()));
 		Release currentRelease = project.getCurrentRelease();
 		context.put("currentRelease", currentRelease == null ? "?" : currentRelease.getLabel());
-	}
-
-	public static void updateHomepage(Project project) {
-		File homepageDir = project.getHomepageDirFile();
-		if (homepageDir == null || !homepageDir.exists()) {
-			log.warn("Updating project homepage failed. Homepage directory does not exist:", homepageDir);
-			return;
-		}
-
-		File velocityDir = new File(homepageDir.getPath() + "/velocity");
-		if (velocityDir.exists()) updateHomepage(velocityDir.getPath(), homepageDir.getPath(), project);
 	}
 
 	public String wiki2html(String wikitext) {

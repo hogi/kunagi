@@ -64,6 +64,9 @@ public interface GImageBundle
     @Resource(value="majorRelease.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype majorRelease();
 
+    @Resource(value="publicComment.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype publicComment();
+
     @Resource(value="reqClosed.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype reqClosed();
 

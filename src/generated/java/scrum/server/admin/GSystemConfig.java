@@ -45,6 +45,7 @@ public abstract class GSystemConfig
         properties.put("smtpUser", this.smtpUser);
         properties.put("smtpPassword", this.smtpPassword);
         properties.put("smtpFrom", this.smtpFrom);
+        properties.put("loginPageLogoUrl", this.loginPageLogoUrl);
         properties.put("loginPageMessage", this.loginPageMessage);
         properties.put("registerPageMessage", this.registerPageMessage);
         properties.put("aboutPageMessage", this.aboutPageMessage);
@@ -370,6 +371,41 @@ public abstract class GSystemConfig
     }
 
     // -----------------------------------------------------------
+    // - loginPageLogoUrl
+    // -----------------------------------------------------------
+
+    private java.lang.String loginPageLogoUrl;
+
+    public final java.lang.String getLoginPageLogoUrl() {
+        return loginPageLogoUrl;
+    }
+
+    public final void setLoginPageLogoUrl(java.lang.String loginPageLogoUrl) {
+        loginPageLogoUrl = prepareLoginPageLogoUrl(loginPageLogoUrl);
+        if (isLoginPageLogoUrl(loginPageLogoUrl)) return;
+        this.loginPageLogoUrl = loginPageLogoUrl;
+        fireModified("loginPageLogoUrl="+loginPageLogoUrl);
+    }
+
+    protected java.lang.String prepareLoginPageLogoUrl(java.lang.String loginPageLogoUrl) {
+        loginPageLogoUrl = Str.removeUnreadableChars(loginPageLogoUrl);
+        return loginPageLogoUrl;
+    }
+
+    public final boolean isLoginPageLogoUrlSet() {
+        return this.loginPageLogoUrl != null;
+    }
+
+    public final boolean isLoginPageLogoUrl(java.lang.String loginPageLogoUrl) {
+        if (this.loginPageLogoUrl == null && loginPageLogoUrl == null) return true;
+        return this.loginPageLogoUrl != null && this.loginPageLogoUrl.equals(loginPageLogoUrl);
+    }
+
+    protected final void updateLoginPageLogoUrl(Object value) {
+        setLoginPageLogoUrl((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
     // - loginPageMessage
     // -----------------------------------------------------------
 
@@ -581,6 +617,7 @@ public abstract class GSystemConfig
             if (property.equals("smtpUser")) updateSmtpUser(value);
             if (property.equals("smtpPassword")) updateSmtpPassword(value);
             if (property.equals("smtpFrom")) updateSmtpFrom(value);
+            if (property.equals("loginPageLogoUrl")) updateLoginPageLogoUrl(value);
             if (property.equals("loginPageMessage")) updateLoginPageMessage(value);
             if (property.equals("registerPageMessage")) updateRegisterPageMessage(value);
             if (property.equals("aboutPageMessage")) updateAboutPageMessage(value);

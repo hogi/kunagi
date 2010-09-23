@@ -172,9 +172,19 @@ public class Project extends GProject {
 		setRequirementsOrderIds(Persist.getIdsAsList(requirements));
 	}
 
+	public synchronized void updateHomepage() {
+		if (!isHomepageDirSet()) return;
+		new HomepageUpdater(this).processAll();
+	}
+
 	public java.io.File getHomepageDirFile() {
 		if (!isHomepageDirSet()) return null;
 		return new java.io.File(getHomepageDir());
+	}
+
+	public String getHomepageVelocityDir() {
+		if (!isHomepageDirSet()) return null;
+		return getHomepageDir() + "/velocity";
 	}
 
 	public void buildProductBacklogReport(APdfBuilder pdf) {}
@@ -552,6 +562,10 @@ public class Project extends GProject {
 		return issueDao.getOpenIssues(this);
 	}
 
+	public Set<Issue> getPublishedIssues() {
+		return issueDao.getPublishedIssues(this);
+	}
+
 	public Set<Issue> getOpenBugs() {
 		return issueDao.getOpenBugs(this);
 	}
@@ -920,6 +934,7 @@ public class Project extends GProject {
 	public Comparator<Requirement> getRequirementsOrderComparator() {
 		if (requirementsOrderComparator == null) requirementsOrderComparator = new Comparator<Requirement>() {
 
+			@Override
 			public int compare(Requirement a, Requirement b) {
 				if (a.isInCurrentSprint() && !b.isInCurrentSprint()) return -1;
 				if (b.isInCurrentSprint() && !a.isInCurrentSprint()) return 1;

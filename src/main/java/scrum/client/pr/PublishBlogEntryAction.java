@@ -16,7 +16,6 @@ public class PublishBlogEntryAction extends GPublishBlogEntryAction {
 
 	@Override
 	public String getTooltip() {
-		// TODO Auto-generated method stub
 		TooltipBuilder tb = new TooltipBuilder(
 				"Publish this Blog entry. Published entries are taken into account when exporting project data.");
 
@@ -42,6 +41,7 @@ public class PublishBlogEntryAction extends GPublishBlogEntryAction {
 	@Override
 	protected void onExecute() {
 		blogEntry.setPublished(true);
+		addUndo(new Undo());
 	}
 
 	private class Undo extends ALocalUndo {

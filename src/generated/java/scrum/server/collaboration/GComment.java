@@ -38,6 +38,9 @@ public abstract class GComment
         super.storeProperties(properties);
         properties.put("parentId", this.parentId);
         properties.put("authorId", this.authorId);
+        properties.put("published", this.published);
+        properties.put("authorName", this.authorName);
+        properties.put("authorNameVisible", this.authorNameVisible);
         properties.put("text", this.text);
         properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
     }
@@ -164,6 +167,99 @@ public abstract class GComment
     }
 
     // -----------------------------------------------------------
+    // - published
+    // -----------------------------------------------------------
+
+    private boolean published;
+
+    public final boolean isPublished() {
+        return published;
+    }
+
+    public final void setPublished(boolean published) {
+        published = preparePublished(published);
+        if (isPublished(published)) return;
+        this.published = published;
+        fireModified("published="+published);
+    }
+
+    protected boolean preparePublished(boolean published) {
+        return published;
+    }
+
+    public final boolean isPublished(boolean published) {
+        return this.published == published;
+    }
+
+    protected final void updatePublished(Object value) {
+        setPublished((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - authorName
+    // -----------------------------------------------------------
+
+    private java.lang.String authorName;
+
+    public final java.lang.String getAuthorName() {
+        return authorName;
+    }
+
+    public final void setAuthorName(java.lang.String authorName) {
+        authorName = prepareAuthorName(authorName);
+        if (isAuthorName(authorName)) return;
+        this.authorName = authorName;
+        fireModified("authorName="+authorName);
+    }
+
+    protected java.lang.String prepareAuthorName(java.lang.String authorName) {
+        authorName = Str.removeUnreadableChars(authorName);
+        return authorName;
+    }
+
+    public final boolean isAuthorNameSet() {
+        return this.authorName != null;
+    }
+
+    public final boolean isAuthorName(java.lang.String authorName) {
+        if (this.authorName == null && authorName == null) return true;
+        return this.authorName != null && this.authorName.equals(authorName);
+    }
+
+    protected final void updateAuthorName(Object value) {
+        setAuthorName((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - authorNameVisible
+    // -----------------------------------------------------------
+
+    private boolean authorNameVisible;
+
+    public final boolean isAuthorNameVisible() {
+        return authorNameVisible;
+    }
+
+    public final void setAuthorNameVisible(boolean authorNameVisible) {
+        authorNameVisible = prepareAuthorNameVisible(authorNameVisible);
+        if (isAuthorNameVisible(authorNameVisible)) return;
+        this.authorNameVisible = authorNameVisible;
+        fireModified("authorNameVisible="+authorNameVisible);
+    }
+
+    protected boolean prepareAuthorNameVisible(boolean authorNameVisible) {
+        return authorNameVisible;
+    }
+
+    public final boolean isAuthorNameVisible(boolean authorNameVisible) {
+        return this.authorNameVisible == authorNameVisible;
+    }
+
+    protected final void updateAuthorNameVisible(Object value) {
+        setAuthorNameVisible((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
     // - text
     // -----------------------------------------------------------
 
@@ -240,6 +336,9 @@ public abstract class GComment
             Object value = entry.getValue();
             if (property.equals("parentId")) updateParent(value);
             if (property.equals("authorId")) updateAuthor(value);
+            if (property.equals("published")) updatePublished(value);
+            if (property.equals("authorName")) updateAuthorName(value);
+            if (property.equals("authorNameVisible")) updateAuthorNameVisible(value);
             if (property.equals("text")) updateText(value);
             if (property.equals("dateAndTime")) updateDateAndTime(value);
         }

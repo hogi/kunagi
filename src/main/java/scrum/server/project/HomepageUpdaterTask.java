@@ -23,7 +23,7 @@ public class HomepageUpdaterTask extends ACollectionTask<Project> {
 
 	@Override
 	protected void perform(Project project) throws InterruptedException {
-		HomepageUpdater.updateHomepage(project);
+		project.updateHomepage();
 	}
 
 }

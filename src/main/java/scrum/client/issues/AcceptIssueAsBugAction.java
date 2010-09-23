@@ -12,13 +12,13 @@ public class AcceptIssueAsBugAction extends GAcceptIssueAsBugAction {
 
 	@Override
 	public String getLabel() {
-		return "Accept as Bug";
+		return "Accept as bug";
 	}
 
 	@Override
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder(
-				"Accept this issue as a Bug. Bugs can be classified by severeness and need to be reviewed and (if necessary) fixed by the Team.");
+				"Accept this issue as a bug. Bugs can be classified by severeness and need to be reviewed and (if necessary) fixed by the Team.");
 		if (!issue.getProject().isProductOwnerOrScrumMaster(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER_NOR_SCRUMMASTER);
 		}

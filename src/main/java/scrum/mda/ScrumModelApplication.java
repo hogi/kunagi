@@ -63,21 +63,35 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			systemConfigModel.setGwtSupport(true);
 			systemConfigModel.setViewProtected(true);
 			systemConfigModel.setEditProtected(true);
-			systemConfigModel.addStringProperty("url");
-			systemConfigModel.addStringProperty("adminEmail");
-			systemConfigModel.addStringProperty("googleAnalyticsId");
-			systemConfigModel.addStringProperty("smtpServer");
-			systemConfigModel.addProperty("smtpPort", Integer.class);
-			systemConfigModel.addProperty("smtpTls", boolean.class);
-			systemConfigModel.addStringProperty("smtpUser");
-			systemConfigModel.addStringProperty("smtpPassword");
-			systemConfigModel.addStringProperty("smtpFrom");
-			systemConfigModel.addStringProperty("loginPageMessage").setRichtext(true);
-			systemConfigModel.addStringProperty("registerPageMessage").setRichtext(true);
+			systemConfigModel.addStringProperty("url").setTooltip(
+				"URL, on which this Kunagi instance is installed. It will be used in emails.");
+			systemConfigModel.addStringProperty("adminEmail").setTooltip(
+				"Email of the administrator of this Kunagi instance.");
+			systemConfigModel.addStringProperty("googleAnalyticsId").setTooltip(
+				"Google Web Property ID, so you can log to Google Analytics.");
+			systemConfigModel.addStringProperty("smtpServer").setTooltip("Hostname of your SMTP email server.");
+			systemConfigModel.addProperty("smtpPort", Integer.class).setTooltip("Port of your SMTP email server.");
+			systemConfigModel.addProperty("smtpTls", boolean.class).setTooltip(
+				"Activate this, if your SMTP email server requires TLS. Gmail requires this.");
+			systemConfigModel.addStringProperty("smtpUser").setTooltip(
+				"Username, if your SMTP email server requires authentication.");
+			systemConfigModel.addStringProperty("smtpPassword").setTooltip(
+				"Password, if your SMTP email server requires authentication.");
+			systemConfigModel.addStringProperty("smtpFrom").setTooltip(
+				"Email address, which is used as sender, when Kunagi sends Emails.");
+			systemConfigModel.addStringProperty("loginPageLogoUrl").setTooltip(
+				"If you wand your custom logo on the login page, type the URL to the image here.");
+			systemConfigModel.addStringProperty("loginPageMessage").setRichtext(true)
+					.setTooltip("Message in HTML, which is displayed on the login page.");
+			systemConfigModel.addStringProperty("registerPageMessage").setRichtext(true)
+					.setTooltip("Message in HTML, which is displayed on the registration page for new users.");
 			systemConfigModel.addStringProperty("aboutPageMessage").setRichtext(true);
-			systemConfigModel.addProperty("userEmailMandatory", boolean.class);
-			systemConfigModel.addProperty("registrationDisabled", boolean.class);
-			systemConfigModel.addStringProperty("defaultUserPassword");
+			systemConfigModel.addProperty("userEmailMandatory", boolean.class).setTooltip(
+				"Activate this, if you want the email field on the registration page for new users to be mandatory.");
+			systemConfigModel.addProperty("registrationDisabled", boolean.class).setTooltip(
+				"Acitviate this, if you want to disable the registration page for new users.");
+			systemConfigModel.addStringProperty("defaultUserPassword").setTooltip(
+				"Default password, which is assigned to new users, which are created by the admin.");
 			autowire(systemConfigModel);
 		}
 		return systemConfigModel;
@@ -717,6 +731,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addProperty("suspendedUntilDate", Date.class);
 			issueModel.addSetReference("affectedReleases", getReleaseModel());
 			issueModel.addSetReference("fixReleases", getReleaseModel());
+			issueModel.addProperty("published", boolean.class).setTooltip("Issue is visible on the public homepage.");
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("ClaimIssue");
 			issueModel.addAction("FixIssue");
@@ -730,6 +745,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addAction("ConvertIssueToQuality");
 			issueModel.addAction("SuspendIssue");
 			issueModel.addAction("UnsuspendIssue");
+			issueModel.addAction("PublishIssue");
 		}
 		return issueModel;
 	}
@@ -804,8 +820,14 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			commentModel.setGwtSupport(true);
 			commentModel.addReference("parent", getEntityModel()).setMaster(true);
 			commentModel.addReference("author", getUserModel());
-			commentModel.addStringProperty("text").setRichtext(true).setMandatory(true).setSearchable(true);
+			commentModel.addProperty("published", boolean.class);
+			commentModel.addStringProperty("authorName");
+			commentModel.addProperty("authorNameVisible", boolean.class);
+			commentModel.addStringProperty("text").setRichtext(true).setMandatory(true).setSearchable(true)
+					.setEditablePredicate("editable");
 			commentModel.addProperty("dateAndTime", DateAndTime.class);
+			commentModel.addPredicate("editable");
+			commentModel.addAction("PublishComment");
 		}
 		return commentModel;
 	}

@@ -16,11 +16,12 @@ public class SystemConfigWidget extends AScrumWidget {
 
 		PagePanel page = new PagePanel();
 
-		page.addHeader("Messages");
+		page.addHeader("Login Page");
 		TableBuilder tbMessages = ScrumGwt.createFieldTable();
-		tbMessages.addFieldRow("Login Page", config.getLoginPageMessageModel());
-		tbMessages.addFieldRow("Register Page", config.getRegisterPageMessageModel());
-		tbMessages.addFieldRow("About Page", config.getAboutPageMessageModel());
+		tbMessages.addFieldRow("Custom Logo", config.getLoginPageLogoUrlModel());
+		tbMessages.addFieldRow("Login Message", config.getLoginPageMessageModel());
+		tbMessages.addFieldRow("Register Message", config.getRegisterPageMessageModel());
+		// tbMessages.addFieldRow("About Page", config.getAboutPageMessageModel());
 		page.addSection(tbMessages.createTable());
 
 		page.addHeader("Installation");

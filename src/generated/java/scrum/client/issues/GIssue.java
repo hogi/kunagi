@@ -990,6 +990,61 @@ public abstract class GIssue
         propertyChanged("fixReleasesIds", this.fixReleasesIds);
     }
 
+    // --- published ---
+
+    private boolean published ;
+
+    public final boolean isPublished() {
+        return this.published ;
+    }
+
+    public final Issue setPublished(boolean published) {
+        if (isPublished(published)) return (Issue)this;
+        this.published = published ;
+        propertyChanged("published", this.published);
+        return (Issue)this;
+    }
+
+    public final boolean isPublished(boolean published) {
+        return equals(this.published, published);
+    }
+
+    private transient PublishedModel publishedModel;
+
+    public PublishedModel getPublishedModel() {
+        if (publishedModel == null) publishedModel = createPublishedModel();
+        return publishedModel;
+    }
+
+    protected PublishedModel createPublishedModel() { return new PublishedModel(); }
+
+    protected class PublishedModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "Issue_published";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isPublished();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setPublished(value);
+        }
+        @Override
+        public String getTooltip() { return "Issue is visible on the public homepage."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -1018,6 +1073,7 @@ public abstract class GIssue
         suspendedUntilDate  =  suspendedUntilDateAsString == null ? null : new ilarkesto.gwt.client.Date(suspendedUntilDateAsString);
         affectedReleasesIds = (Set<String>) props.get("affectedReleasesIds");
         fixReleasesIds = (Set<String>) props.get("fixReleasesIds");
+        published  = (Boolean) props.get("published");
     }
 
     @Override
@@ -1043,6 +1099,7 @@ public abstract class GIssue
         properties.put("suspendedUntilDate", this.suspendedUntilDate == null ? null : this.suspendedUntilDate.toString());
         properties.put("affectedReleasesIds", this.affectedReleasesIds);
         properties.put("fixReleasesIds", this.fixReleasesIds);
+        properties.put("published", this.published);
     }
 
     @Override

@@ -88,6 +88,8 @@ public abstract class GSystemConfig
         public void setValue(java.lang.String value) {
             setUrl(value);
         }
+        @Override
+        public String getTooltip() { return "URL, on which this Kunagi instance is installed. It will be used in emails."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -141,6 +143,8 @@ public abstract class GSystemConfig
         public void setValue(java.lang.String value) {
             setAdminEmail(value);
         }
+        @Override
+        public String getTooltip() { return "Email of the administrator of this Kunagi instance."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -194,6 +198,8 @@ public abstract class GSystemConfig
         public void setValue(java.lang.String value) {
             setGoogleAnalyticsId(value);
         }
+        @Override
+        public String getTooltip() { return "Google Web Property ID, so you can log to Google Analytics."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -247,6 +253,8 @@ public abstract class GSystemConfig
         public void setValue(java.lang.String value) {
             setSmtpServer(value);
         }
+        @Override
+        public String getTooltip() { return "Hostname of your SMTP email server."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -310,6 +318,8 @@ public abstract class GSystemConfig
             public void decrement() {
                 setSmtpPort(getSmtpPort() - 1);
             }
+        @Override
+        public String getTooltip() { return "Port of your SMTP email server."; }
 
         @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
@@ -363,6 +373,8 @@ public abstract class GSystemConfig
         public void setValue(java.lang.Boolean value) {
             setSmtpTls(value);
         }
+        @Override
+        public String getTooltip() { return "Activate this, if your SMTP email server requires TLS. Gmail requires this."; }
 
         @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
@@ -416,6 +428,8 @@ public abstract class GSystemConfig
         public void setValue(java.lang.String value) {
             setSmtpUser(value);
         }
+        @Override
+        public String getTooltip() { return "Username, if your SMTP email server requires authentication."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -469,6 +483,8 @@ public abstract class GSystemConfig
         public void setValue(java.lang.String value) {
             setSmtpPassword(value);
         }
+        @Override
+        public String getTooltip() { return "Password, if your SMTP email server requires authentication."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -522,6 +538,63 @@ public abstract class GSystemConfig
         public void setValue(java.lang.String value) {
             setSmtpFrom(value);
         }
+        @Override
+        public String getTooltip() { return "Email address, which is used as sender, when Kunagi sends Emails."; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- loginPageLogoUrl ---
+
+    private java.lang.String loginPageLogoUrl ;
+
+    public final java.lang.String getLoginPageLogoUrl() {
+        return this.loginPageLogoUrl ;
+    }
+
+    public final SystemConfig setLoginPageLogoUrl(java.lang.String loginPageLogoUrl) {
+        if (isLoginPageLogoUrl(loginPageLogoUrl)) return (SystemConfig)this;
+        this.loginPageLogoUrl = loginPageLogoUrl ;
+        propertyChanged("loginPageLogoUrl", this.loginPageLogoUrl);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isLoginPageLogoUrl(java.lang.String loginPageLogoUrl) {
+        return equals(this.loginPageLogoUrl, loginPageLogoUrl);
+    }
+
+    private transient LoginPageLogoUrlModel loginPageLogoUrlModel;
+
+    public LoginPageLogoUrlModel getLoginPageLogoUrlModel() {
+        if (loginPageLogoUrlModel == null) loginPageLogoUrlModel = createLoginPageLogoUrlModel();
+        return loginPageLogoUrlModel;
+    }
+
+    protected LoginPageLogoUrlModel createLoginPageLogoUrlModel() { return new LoginPageLogoUrlModel(); }
+
+    protected class LoginPageLogoUrlModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_loginPageLogoUrl";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getLoginPageLogoUrl();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLoginPageLogoUrl(value);
+        }
+        @Override
+        public String getTooltip() { return "If you wand your custom logo on the login page, type the URL to the image here."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -578,6 +651,8 @@ public abstract class GSystemConfig
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "Message in HTML, which is displayed on the login page."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -634,6 +709,8 @@ public abstract class GSystemConfig
 
         @Override
         public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "Message in HTML, which is displayed on the registration page for new users."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -743,6 +820,8 @@ public abstract class GSystemConfig
         public void setValue(java.lang.Boolean value) {
             setUserEmailMandatory(value);
         }
+        @Override
+        public String getTooltip() { return "Activate this, if you want the email field on the registration page for new users to be mandatory."; }
 
         @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
@@ -796,6 +875,8 @@ public abstract class GSystemConfig
         public void setValue(java.lang.Boolean value) {
             setRegistrationDisabled(value);
         }
+        @Override
+        public String getTooltip() { return "Acitviate this, if you want to disable the registration page for new users."; }
 
         @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
@@ -849,6 +930,8 @@ public abstract class GSystemConfig
         public void setValue(java.lang.String value) {
             setDefaultUserPassword(value);
         }
+        @Override
+        public String getTooltip() { return "Default password, which is assigned to new users, which are created by the admin."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -870,6 +953,7 @@ public abstract class GSystemConfig
         smtpUser  = (java.lang.String) props.get("smtpUser");
         smtpPassword  = (java.lang.String) props.get("smtpPassword");
         smtpFrom  = (java.lang.String) props.get("smtpFrom");
+        loginPageLogoUrl  = (java.lang.String) props.get("loginPageLogoUrl");
         loginPageMessage  = (java.lang.String) props.get("loginPageMessage");
         registerPageMessage  = (java.lang.String) props.get("registerPageMessage");
         aboutPageMessage  = (java.lang.String) props.get("aboutPageMessage");
@@ -890,6 +974,7 @@ public abstract class GSystemConfig
         properties.put("smtpUser", this.smtpUser);
         properties.put("smtpPassword", this.smtpPassword);
         properties.put("smtpFrom", this.smtpFrom);
+        properties.put("loginPageLogoUrl", this.loginPageLogoUrl);
         properties.put("loginPageMessage", this.loginPageMessage);
         properties.put("registerPageMessage", this.registerPageMessage);
         properties.put("aboutPageMessage", this.aboutPageMessage);

@@ -59,6 +59,8 @@ public abstract class GSystemConfigDao
         smtpPasswordsCache = null;
         systemConfigsBySmtpFromCache.clear();
         smtpFromsCache = null;
+        systemConfigsByLoginPageLogoUrlCache.clear();
+        loginPageLogoUrlsCache = null;
         systemConfigsByLoginPageMessageCache.clear();
         loginPageMessagesCache = null;
         systemConfigsByRegisterPageMessageCache.clear();
@@ -432,6 +434,46 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return e.isSmtpFrom(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - loginPageLogoUrl
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsByLoginPageLogoUrlCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String loginPageLogoUrl) {
+                    return getEntities(new IsLoginPageLogoUrl(loginPageLogoUrl));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByLoginPageLogoUrl(java.lang.String loginPageLogoUrl) {
+        return systemConfigsByLoginPageLogoUrlCache.get(loginPageLogoUrl);
+    }
+    private Set<java.lang.String> loginPageLogoUrlsCache;
+
+    public final Set<java.lang.String> getLoginPageLogoUrls() {
+        if (loginPageLogoUrlsCache == null) {
+            loginPageLogoUrlsCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isLoginPageLogoUrlSet()) loginPageLogoUrlsCache.add(e.getLoginPageLogoUrl());
+            }
+        }
+        return loginPageLogoUrlsCache;
+    }
+
+    private static class IsLoginPageLogoUrl implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsLoginPageLogoUrl(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isLoginPageLogoUrl(value);
         }
 
     }

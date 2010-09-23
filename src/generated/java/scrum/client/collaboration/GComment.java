@@ -29,6 +29,8 @@ public abstract class GComment
         return scrum.client.Dao.get();
     }
 
+    public abstract boolean isEditable();
+
     public GComment() {
     }
 
@@ -94,6 +96,165 @@ public abstract class GComment
         return equals(this.authorId, author);
     }
 
+    // --- published ---
+
+    private boolean published ;
+
+    public final boolean isPublished() {
+        return this.published ;
+    }
+
+    public final Comment setPublished(boolean published) {
+        if (isPublished(published)) return (Comment)this;
+        this.published = published ;
+        propertyChanged("published", this.published);
+        return (Comment)this;
+    }
+
+    public final boolean isPublished(boolean published) {
+        return equals(this.published, published);
+    }
+
+    private transient PublishedModel publishedModel;
+
+    public PublishedModel getPublishedModel() {
+        if (publishedModel == null) publishedModel = createPublishedModel();
+        return publishedModel;
+    }
+
+    protected PublishedModel createPublishedModel() { return new PublishedModel(); }
+
+    protected class PublishedModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "Comment_published";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isPublished();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setPublished(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- authorName ---
+
+    private java.lang.String authorName ;
+
+    public final java.lang.String getAuthorName() {
+        return this.authorName ;
+    }
+
+    public final Comment setAuthorName(java.lang.String authorName) {
+        if (isAuthorName(authorName)) return (Comment)this;
+        this.authorName = authorName ;
+        propertyChanged("authorName", this.authorName);
+        return (Comment)this;
+    }
+
+    public final boolean isAuthorName(java.lang.String authorName) {
+        return equals(this.authorName, authorName);
+    }
+
+    private transient AuthorNameModel authorNameModel;
+
+    public AuthorNameModel getAuthorNameModel() {
+        if (authorNameModel == null) authorNameModel = createAuthorNameModel();
+        return authorNameModel;
+    }
+
+    protected AuthorNameModel createAuthorNameModel() { return new AuthorNameModel(); }
+
+    protected class AuthorNameModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Comment_authorName";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getAuthorName();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setAuthorName(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- authorNameVisible ---
+
+    private boolean authorNameVisible ;
+
+    public final boolean isAuthorNameVisible() {
+        return this.authorNameVisible ;
+    }
+
+    public final Comment setAuthorNameVisible(boolean authorNameVisible) {
+        if (isAuthorNameVisible(authorNameVisible)) return (Comment)this;
+        this.authorNameVisible = authorNameVisible ;
+        propertyChanged("authorNameVisible", this.authorNameVisible);
+        return (Comment)this;
+    }
+
+    public final boolean isAuthorNameVisible(boolean authorNameVisible) {
+        return equals(this.authorNameVisible, authorNameVisible);
+    }
+
+    private transient AuthorNameVisibleModel authorNameVisibleModel;
+
+    public AuthorNameVisibleModel getAuthorNameVisibleModel() {
+        if (authorNameVisibleModel == null) authorNameVisibleModel = createAuthorNameVisibleModel();
+        return authorNameVisibleModel;
+    }
+
+    protected AuthorNameVisibleModel createAuthorNameVisibleModel() { return new AuthorNameVisibleModel(); }
+
+    protected class AuthorNameVisibleModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "Comment_authorNameVisible";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isAuthorNameVisible();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setAuthorNameVisible(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- text ---
 
     private java.lang.String text ;
@@ -141,6 +302,9 @@ public abstract class GComment
 
         @Override
         public boolean isMandatory() { return true; }
+
+        @Override
+        public boolean isEditable() { return GComment.this.isEditable(); }
 
         @Override
         public boolean isRichtext() { return true; }
@@ -211,6 +375,9 @@ public abstract class GComment
     public void updateProperties(Map props) {
         parentId = (String) props.get("parentId");
         authorId = (String) props.get("authorId");
+        published  = (Boolean) props.get("published");
+        authorName  = (java.lang.String) props.get("authorName");
+        authorNameVisible  = (Boolean) props.get("authorNameVisible");
         text  = (java.lang.String) props.get("text");
         String dateAndTimeAsString = (String) props.get("dateAndTime");
         dateAndTime  =  dateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(dateAndTimeAsString);
@@ -221,6 +388,9 @@ public abstract class GComment
         super.storeProperties(properties);
         properties.put("parentId", this.parentId);
         properties.put("authorId", this.authorId);
+        properties.put("published", this.published);
+        properties.put("authorName", this.authorName);
+        properties.put("authorNameVisible", this.authorNameVisible);
         properties.put("text", this.text);
         properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
     }

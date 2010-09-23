@@ -46,6 +46,10 @@ public abstract class GCommentDao
         parentsCache = null;
         commentsByAuthorCache.clear();
         authorsCache = null;
+        commentsByPublishedCache.clear();
+        commentsByAuthorNameCache.clear();
+        authorNamesCache = null;
+        commentsByAuthorNameVisibleCache.clear();
         commentsByTextCache.clear();
         textsCache = null;
         commentsByDateAndTimeCache.clear();
@@ -144,6 +148,104 @@ public abstract class GCommentDao
 
         public boolean test(Comment e) {
             return e.isAuthor(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - published
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<Comment>> commentsByPublishedCache = new Cache<Boolean,Set<Comment>>(
+            new Cache.Factory<Boolean,Set<Comment>>() {
+                public Set<Comment> create(Boolean published) {
+                    return getEntities(new IsPublished(published));
+                }
+            });
+
+    public final Set<Comment> getCommentsByPublished(boolean published) {
+        return commentsByPublishedCache.get(published);
+    }
+
+    private static class IsPublished implements Predicate<Comment> {
+
+        private boolean value;
+
+        public IsPublished(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(Comment e) {
+            return value == e.isPublished();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - authorName
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Comment>> commentsByAuthorNameCache = new Cache<java.lang.String,Set<Comment>>(
+            new Cache.Factory<java.lang.String,Set<Comment>>() {
+                public Set<Comment> create(java.lang.String authorName) {
+                    return getEntities(new IsAuthorName(authorName));
+                }
+            });
+
+    public final Set<Comment> getCommentsByAuthorName(java.lang.String authorName) {
+        return commentsByAuthorNameCache.get(authorName);
+    }
+    private Set<java.lang.String> authorNamesCache;
+
+    public final Set<java.lang.String> getAuthorNames() {
+        if (authorNamesCache == null) {
+            authorNamesCache = new HashSet<java.lang.String>();
+            for (Comment e : getEntities()) {
+                if (e.isAuthorNameSet()) authorNamesCache.add(e.getAuthorName());
+            }
+        }
+        return authorNamesCache;
+    }
+
+    private static class IsAuthorName implements Predicate<Comment> {
+
+        private java.lang.String value;
+
+        public IsAuthorName(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Comment e) {
+            return e.isAuthorName(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - authorNameVisible
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<Comment>> commentsByAuthorNameVisibleCache = new Cache<Boolean,Set<Comment>>(
+            new Cache.Factory<Boolean,Set<Comment>>() {
+                public Set<Comment> create(Boolean authorNameVisible) {
+                    return getEntities(new IsAuthorNameVisible(authorNameVisible));
+                }
+            });
+
+    public final Set<Comment> getCommentsByAuthorNameVisible(boolean authorNameVisible) {
+        return commentsByAuthorNameVisibleCache.get(authorNameVisible);
+    }
+
+    private static class IsAuthorNameVisible implements Predicate<Comment> {
+
+        private boolean value;
+
+        public IsAuthorNameVisible(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(Comment e) {
+            return value == e.isAuthorNameVisible();
         }
 
     }

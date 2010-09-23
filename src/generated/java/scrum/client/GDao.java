@@ -422,6 +422,30 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.collaboration.Comment> getCommentsByPublished(boolean published) {
+        List<scrum.client.collaboration.Comment> ret = new ArrayList<scrum.client.collaboration.Comment>();
+        for (scrum.client.collaboration.Comment entity : comments.values()) {
+            if (entity.isPublished(published)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.collaboration.Comment> getCommentsByAuthorName(java.lang.String authorName) {
+        List<scrum.client.collaboration.Comment> ret = new ArrayList<scrum.client.collaboration.Comment>();
+        for (scrum.client.collaboration.Comment entity : comments.values()) {
+            if (entity.isAuthorName(authorName)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.collaboration.Comment> getCommentsByAuthorNameVisible(boolean authorNameVisible) {
+        List<scrum.client.collaboration.Comment> ret = new ArrayList<scrum.client.collaboration.Comment>();
+        for (scrum.client.collaboration.Comment entity : comments.values()) {
+            if (entity.isAuthorNameVisible(authorNameVisible)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.collaboration.Comment> getCommentsByText(java.lang.String text) {
         List<scrum.client.collaboration.Comment> ret = new ArrayList<scrum.client.collaboration.Comment>();
         for (scrum.client.collaboration.Comment entity : comments.values()) {
@@ -959,6 +983,14 @@ public abstract class GDao
     }
 
 
+
+    public final List<scrum.client.issues.Issue> getIssuesByPublished(boolean published) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isPublished(published)) ret.add(entity);
+        }
+        return ret;
+    }
 
     // --- Project ---
 
@@ -2552,6 +2584,14 @@ public abstract class GDao
         List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
         for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
             if (entity.isSmtpFrom(smtpFrom)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsByLoginPageLogoUrl(java.lang.String loginPageLogoUrl) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isLoginPageLogoUrl(loginPageLogoUrl)) ret.add(entity);
         }
         return ret;
     }

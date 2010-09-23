@@ -424,17 +424,25 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 						currentUser.getName() + " rejected fix for " + issue.getReferenceAndLabel());
 				}
 			}
+
+			if (properties.containsKey("published")) {
+				new HomepageUpdater(issue.getProject()).processIssueTemplate(issue);
+			}
 		}
 
 		if (entity instanceof BlogEntry) {
 			BlogEntry blogEntry = (BlogEntry) entity;
 
-			if (properties.containsKey("published") && blogEntry.isPublished()) {
-				postProjectEvent(conversation, currentUser.getName() + " published " + blogEntry.getReferenceAndLabel());
-			}
-
 			if (properties.containsKey("text")) {
 				blogEntry.addAuthor(currentUser);
+			}
+
+			if (properties.containsKey("published")) {
+				if (blogEntry.isPublished()) {
+					postProjectEvent(conversation,
+						currentUser.getName() + " published " + blogEntry.getReferenceAndLabel());
+				}
+				blogEntry.getProject().updateHomepage();
 			}
 		}
 
@@ -615,7 +623,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	public void onUpdateProjectHomepage(GwtConversation conversation) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
-		HomepageUpdater.updateHomepage(project);
+		project.updateHomepage();
 	}
 
 	@Override

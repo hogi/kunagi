@@ -16,6 +16,7 @@ import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
 import scrum.server.journal.ProjectEventDao;
+import scrum.server.project.HomepageUpdater;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 
@@ -36,22 +37,24 @@ public class IssueServlet extends AHttpServlet {
 
 		String projectId = req.getParameter("projectId");
 		String text = req.getParameter("text");
-		String name = req.getParameter("name");
+		String name = Str.cutRight(req.getParameter("name"), 33);
 		if (Str.isBlank(name)) name = null;
-		String email = req.getParameter("email");
+		String email = Str.cutRight(req.getParameter("email"), 33);
 		if (Str.isBlank(email)) email = null;
+		boolean publish = Str.isTrue(req.getParameter("publish"));
 
 		log.info("Message from the internets");
 		log.info("    projectId: " + projectId);
 		log.info("    name: " + name);
 		log.info("    email: " + email);
+		log.info("    publish: " + publish);
 		log.info("    text: " + text);
 		log.info("  Request-Data:");
 		log.info(Servlet.toString(req, "        "));
 
 		String message;
 		try {
-			message = submitIssue(projectId, text, name, email);
+			message = submitIssue(projectId, text, name, email, publish);
 		} catch (Throwable ex) {
 			log.error("Submitting issue failed.", "\n" + Servlet.toString(req, "  "), ex);
 			message = "<h2>Failure</h2><p>Submitting your feedback failed: <strong>" + Str.getRootCauseMessage(ex)
@@ -65,15 +68,20 @@ public class IssueServlet extends AHttpServlet {
 		resp.sendRedirect(returnUrl);
 	}
 
-	private String submitIssue(String projectId, String text, String name, String email) {
+	private String submitIssue(String projectId, String text, String name, String email, boolean publish) {
 		if (projectId == null) throw new RuntimeException("projectId == null");
 		Project project = projectDao.getById(projectId);
-		Issue issue = issueDao.postIssue(project, "Message from the Internets", text, name, email);
+		Issue issue = issueDao.postIssue(project, "Message from the Internets", text, name, email, publish);
+		if (publish) {
+			new HomepageUpdater(project).processIssueTemplate(issue);
+		}
 		projectEventDao.postEvent(project, issue.getIssuer() + " submitted " + issue.getReferenceAndLabel());
 		transactionService.commit();
-		return "<h2>Feedback submitted</h2>" + "<p>Thank you for your feedback!</p>"
-				+ "<p>In case you submitted a bug or feature request, it is now known as <code>" + issue.getReference()
-				+ "</code> and will be reviewed by our Product Owner shortly.</p>";
+
+		String issueLink = publish ? "<code>" + issue.getReference() + "</code>" : "<a href=\"" + issue.getReference()
+				+ ".html\">" + issue.getReference() + "</a>";
+		return "<h2>Feedback submitted</h2><p>Thank you for your feedback!</p><p>Your issue is now known as "
+				+ issueLink + " and will be reviewed by our Product Owner shortly.</p>";
 	}
 
 	@Override

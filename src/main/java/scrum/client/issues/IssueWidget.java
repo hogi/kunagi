@@ -1,6 +1,7 @@
 package scrum.client.issues;
 
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
+import ilarkesto.gwt.client.AOutputViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
@@ -118,6 +119,15 @@ public class IssueWidget extends AScrumWidget {
 				return "Releases to which this issue is or will be fixed.";
 			}
 		});
+		if (issue.isOpen() && issue.getProject().getHomepageDir() != null) {
+			left.addFieldRow("Published", new AOutputViewEditWidget() {
+
+				@Override
+				protected void onViewerUpdate() {
+					setViewer(new Label(issue.isPublished() ? "Yes" : "No"));
+				}
+			});
+		}
 		left.addRow(new ChangeHistoryWidget(issue), 2);
 
 		TableBuilder right = ScrumGwt.createFieldTable();

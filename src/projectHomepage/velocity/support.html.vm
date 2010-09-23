@@ -11,19 +11,22 @@
         <table cellspacing="0" cellpadding="0" border="0" width="100%">
             <tr>
                 <td colspan="3">
-                    <span class="label">Your issue:</span><br>
-                    <textarea name="text" rows="10" cols="50" style="width: 687px;"></textarea><br>
+                    <label for="text">Your issue:</label><br>
+                    <textarea name="text" id="text" rows="10" cols="50" style="width: 687px;"></textarea><br>
+                    <br>
+                    <input type="checkbox" name="publish" id="publish" value="true">
+                    <label for="publish">Make this issue visible on this homepage (without your Name and E-Mail).</label><br>
                     <br>    
                 </td>
             </tr>
             <tr>
                 <td>
-                    <span class="label">Name:</span>
-                    <input type="text" name="name" class="textinput">
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" id="name" class="textinput">
                 </td>
                 <td>
-                    <span class="label">E-Mail:</span>
-                    <input type="text" name="email" class="textinput">
+                    <label for="email">E-Mail:</label>
+                    <input type="text" name="email" id="email" class="textinput">
                 </td>
                 <td align="right">
                     <input type="submit" name="submit" class="submit" value="Submit issue">

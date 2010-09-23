@@ -111,7 +111,7 @@ public class Issue extends GIssue implements Numbered {
 		updateNumber();
 		if (!isTypeSet()) setType(scrum.client.issues.Issue.INIT_TYPE);
 		if (!isDateSet()) setDate(DateAndTime.now());
-
+		if (isAcceptDateSet() || isCloseDateSet()) setPublished(true);
 	}
 
 	@Override

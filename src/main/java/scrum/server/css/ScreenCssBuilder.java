@@ -116,7 +116,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		calendar(css);
 		planningPoker(css);
 
-		css.style(".EmoticonSelectorWidget-emoticon").border(1, "white").borderRadius(2).padding(2, 1, 0, 1);
+		css.style(".EmoticonSelectorWidget-emoticon").border(1, "white").borderRadius(2).padding(2, 1, 0, 1)
+				.cursorPointer();
 		css.style(".EmoticonSelectorWidget-emoticon-selected").background(cBlockHeaderBackground)
 				.border(1, cBlockSelectionBorder).padding(2, 3, 0, 2);
 
@@ -144,12 +145,11 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style(".PunishmentsWidget-tableHeader").padding(10).fontSize(fontSizeTitle).lineHeight(lineHeightTitle);
 
-		css.style(".AViewEditWidget-viewer").background(cFieldBackground)
-				.border(1, "dotted", cNavigatorSelectedItemBackground).cursorPointer().minWidth(16).minHeight(16)
-				.displayBlock().padding(3);
-		css.style(".ARichtextViewEditWidget-viewer .codeBlock").border(1, cPagePanelBorder).padding(5)
-				.margin(0, 10, 10, 10).background(Colors.lighten(cFieldBackground)).maxWidth(400).maxHeight(400)
-				.overflowAuto();
+		css.style(".AViewEditWidget-viewer").minWidth(16).minHeight(16).displayBlock().padding(3);
+		css.style(".AViewEditWidget-viewer-editable").background(cFieldBackground)
+				.border(1, "dotted", cNavigatorSelectedItemBackground).cursorPointer();
+		css.style(".ARichtextViewEditWidget-viewer .codeBlock").padding(5).margin(0, 10, 10, 10).border(1, "#EEE")
+				.background(Colors.lighten(cFieldBackground)).maxWidth(400).maxHeight(400).overflowAuto();
 		css.style(".codeBlock code, .codeBlock pre").margin(0, 0, 0, 0).padding(0, 0, 0, 0);
 		css.style(".ARichtextViewEditWidget-editor").height(100).width(96, "%");
 		css.style(".AEditableTextareaWidget-editorPanel").width100();
@@ -406,17 +406,21 @@ public class ScreenCssBuilder implements CssBuilder {
 	private void comments(CssRenderer css) {
 		css.style(".CommentsWidget").background(cCommentsBackground).border(1, cCommentsBorder).padding(7)
 				.borderRadius(10);
-		css.style(".CommentWidget").margin(15, 0, 10, 0).borderTop(1, cBlockHeaderBackground);
-		css.style(".CommentWidget-header").margin(4, 0, 2, 0);
+		css.style(".CommentWidget").margin(15, 0, 10, 0).borderTop(1, cPagePanelBorder);
+		css.style(".CommentWidget-header").margin(4, 0, 2, 0).width100();
 		css.style(".CommentWidget-header-author").floatLeft().marginRight(5);
 		css.style(".CommentWidget-header-date").color(cCommentDate);
 		css.style(".CommentWidget-editor");
+		css.style(".CommentsWidget .AViewEditWidget-viewer").padding(0);
+		css.style(".CommentsWidget .AViewEditWidget-viewer-editable").padding(3);
+		css.style(".Comment-Widget-header-pub").floatRight();
+		css.style(".Comment-Widget-header-pub .gwt-Button").fontSize(fontSizeSmall);
 	}
 
 	private void changeHistory(CssRenderer css) {
 		css.style(".ChangeHistoryWidget").background(cChangesBackground).border(1, cChangesBorder).padding(7)
 				.borderRadius(10);
-		css.style(".ChangeWidget").margin(15, 0, 10, 0).borderTop(1, cBlockHeaderBackground);
+		css.style(".ChangeWidget").margin(15, 0, 10, 0);
 		css.style(".ChangeWidget-header").margin(4, 0, 2, 0);
 		css.style(".ChangeWidget-header-author").floatLeft().marginRight(5);
 		css.style(".ChangeWidget-header-date").floatLeft().marginRight(5).color(cChangeDate);

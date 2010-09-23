@@ -81,6 +81,7 @@ public abstract class GIssueDao
         affectedReleasesCache = null;
         issuesByFixReleaseCache.clear();
         fixReleasesCache = null;
+        issuesByPublishedCache.clear();
     }
 
     @Override
@@ -884,6 +885,35 @@ public abstract class GIssueDao
 
         public boolean test(Issue e) {
             return e.containsFixRelease(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - published
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<Issue>> issuesByPublishedCache = new Cache<Boolean,Set<Issue>>(
+            new Cache.Factory<Boolean,Set<Issue>>() {
+                public Set<Issue> create(Boolean published) {
+                    return getEntities(new IsPublished(published));
+                }
+            });
+
+    public final Set<Issue> getIssuesByPublished(boolean published) {
+        return issuesByPublishedCache.get(published);
+    }
+
+    private static class IsPublished implements Predicate<Issue> {
+
+        private boolean value;
+
+        public IsPublished(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return value == e.isPublished();
         }
 
     }

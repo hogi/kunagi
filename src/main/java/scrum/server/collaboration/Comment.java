@@ -12,9 +12,12 @@ public class Comment extends GComment {
 		if (Utl.isEmpty(getText()) && getDateAndTime().getPeriodToNow().toHours() > 1) {
 			getDao().deleteEntity(this);
 		}
-
+		if (isAuthorSet()) {
+			setAuthorName(getAuthor().getName());
+		}
 	}
 
+	@Override
 	public boolean isVisibleFor(User user) {
 		return Auth.isVisible(getParent(), user);
 	}
@@ -27,4 +30,5 @@ public class Comment extends GComment {
 	public String toString() {
 		return "[" + getAuthor() + "@" + getDateAndTime() + "] " + getText();
 	}
+
 }

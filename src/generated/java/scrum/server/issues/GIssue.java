@@ -56,6 +56,7 @@ public abstract class GIssue
         properties.put("suspendedUntilDate", this.suspendedUntilDate == null ? null : this.suspendedUntilDate.toString());
         properties.put("affectedReleasesIds", this.affectedReleasesIds);
         properties.put("fixReleasesIds", this.fixReleasesIds);
+        properties.put("published", this.published);
     }
 
     public int compareTo(Issue other) {
@@ -931,6 +932,35 @@ public abstract class GIssue
         setFixReleases((java.util.Set) releaseDao.getByIdsAsSet(ids));
     }
 
+    // -----------------------------------------------------------
+    // - published
+    // -----------------------------------------------------------
+
+    private boolean published;
+
+    public final boolean isPublished() {
+        return published;
+    }
+
+    public final void setPublished(boolean published) {
+        published = preparePublished(published);
+        if (isPublished(published)) return;
+        this.published = published;
+        fireModified("published="+published);
+    }
+
+    protected boolean preparePublished(boolean published) {
+        return published;
+    }
+
+    public final boolean isPublished(boolean published) {
+        return this.published == published;
+    }
+
+    protected final void updatePublished(Object value) {
+        setPublished((Boolean)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -956,6 +986,7 @@ public abstract class GIssue
             if (property.equals("suspendedUntilDate")) updateSuspendedUntilDate(value);
             if (property.equals("affectedReleasesIds")) updateAffectedReleases(value);
             if (property.equals("fixReleasesIds")) updateFixReleases(value);
+            if (property.equals("published")) updatePublished(value);
         }
     }
 

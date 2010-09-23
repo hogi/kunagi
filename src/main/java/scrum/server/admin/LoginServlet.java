@@ -230,14 +230,16 @@ public class LoginServlet extends AHttpServlet {
 
 		html.startHEAD(applicationInfo.getName() + " Login", "EN");
 		html.META("X-UA-Compatible", "chrome=1");
-		// TODO html.LINKfavicon();
+		html.LINKfavicon();
 		html.LINKcss("scrum.ScrumGwtApplication/screen.css");
 		html.endHEAD();
 
 		html.startBODY();
 		html.startDIV("loginPage");
 		html.startDIV("panel");
-		html.IMG("kunagi.png", "Kunagi", null, 172, 85);
+		String logoUrl = webApplication.getSystemConfig().getLoginPageLogoUrl();
+		if (Str.isBlank(logoUrl)) logoUrl = "kunagi.png";
+		html.IMG(logoUrl, "Kunagi", null, null, null);
 		html.DIV("separator", null);
 		if (message != null) renderMessage(html, message);
 		if (!createAccount && !passwordRequest) renderLoginForm(html, username, historyToken);

@@ -69,7 +69,7 @@ public class HomepageUpdaterTest {
 
 		sprint.burndownTasksRandomly(sprint.getBegin(), Date.today().addDays(-1));
 
-		HomepageUpdater.updateHomepage("src/projectHomepage/velocity", "test-output/homepage", project);
+		new HomepageUpdater(project, "src/projectHomepage/velocity", "test-output/homepage").processAll();
 	}
 
 	@AfterClass
