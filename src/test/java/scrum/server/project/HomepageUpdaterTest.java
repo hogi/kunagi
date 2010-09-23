@@ -58,13 +58,16 @@ public class HomepageUpdaterTest {
 			Issue issue = TestUtil.createIssue(project, i);
 			issue.setAcceptDate(Date.today());
 			issue.setUrgent(true);
+			TestUtil.createComments(issue, 5);
 		}
 		for (int i = 6; i <= 10; i++) {
 			Issue issue = TestUtil.createIssue(project, i);
 			issue.setAcceptDate(Date.today());
+			TestUtil.createComments(issue, 5);
 		}
 		for (int i = 11; i <= 15; i++) {
 			Issue issue = TestUtil.createIssue(project, i);
+			TestUtil.createComments(issue, 5);
 		}
 
 		sprint.burndownTasksRandomly(sprint.getBegin(), Date.today().addDays(-1));

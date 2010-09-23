@@ -4,7 +4,7 @@ import ilarkesto.auth.Auth;
 import ilarkesto.base.Utl;
 import scrum.server.admin.User;
 
-public class Comment extends GComment {
+public class Comment extends GComment implements Comparable<Comment> {
 
 	@Override
 	public void ensureIntegrity() {
@@ -27,8 +27,13 @@ public class Comment extends GComment {
 	}
 
 	@Override
+	public int compareTo(Comment other) {
+		return Utl.compare(getDateAndTime(), other.getDateAndTime());
+	}
+
+	@Override
 	public String toString() {
-		return "[" + getAuthor() + "@" + getDateAndTime() + "] " + getText();
+		return "[" + getAuthorName() + "@" + getDateAndTime() + "] " + getText();
 	}
 
 }

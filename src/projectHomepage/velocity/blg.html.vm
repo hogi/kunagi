@@ -13,4 +13,6 @@
     </div>
 </div>
 
+#commentsSection($entry)
+
 #footer()

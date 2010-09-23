@@ -2,13 +2,16 @@ package scrum;
 
 import ilarkesto.base.Str;
 import ilarkesto.base.Sys;
+import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.base.time.Time;
 import ilarkesto.core.logging.Log;
+import ilarkesto.persistence.AEntity;
 import scrum.server.ScrumWebApplication;
 import scrum.server.admin.User;
 import scrum.server.calendar.SimpleEvent;
+import scrum.server.collaboration.Comment;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.impediments.Impediment;
 import scrum.server.issues.Issue;
@@ -56,6 +59,28 @@ public class TestUtil {
 		return admin;
 	}
 
+	public static void createComments(AEntity parent, int count) {
+		for (int i = 0; i < count; i++) {
+			createComment(parent);
+		}
+	}
+
+	public static Comment createComment(AEntity parent) {
+		return createComment(parent, DateAndTime.now().addHours(Utl.randomInt(-100000, -1)),
+			Str.generateRandomSentence(1, 2), Str.generateRandomParagraph(), true);
+	}
+
+	public static Comment createComment(AEntity parent, DateAndTime dateAndTime, String author, String text,
+			boolean published) {
+		Comment comment = app.getCommentDao().newEntityInstance();
+		comment.setParent(parent);
+		comment.setDateAndTime(dateAndTime);
+		comment.setAuthorName(author);
+		comment.setText(text);
+		comment.setPublished(published);
+		return comment;
+	}
+
 	public static Task createTask(Requirement requirement, int number, int work) {
 		return createTask(requirement, number, Str.generateRandomSentence(2, 6), work);
 	}
@@ -77,16 +102,18 @@ public class TestUtil {
 
 	public static Issue createIssue(Project project, int number) {
 		return createIssue(project, number, Str.generateRandomSentence(4, 8), Str.generateRandomParagraph(),
-			Str.generateRandomParagraph());
+			Str.generateRandomParagraph(), true);
 	}
 
-	public static Issue createIssue(Project project, int number, String label, String description, String statement) {
+	public static Issue createIssue(Project project, int number, String label, String description, String statement,
+			boolean published) {
 		Issue issue = app.getIssueDao().newEntityInstance();
 		issue.setProject(project);
 		issue.setNumber(number);
 		issue.setLabel(label);
 		issue.setDescription(description);
 		issue.setStatement(statement);
+		issue.setPublished(published);
 		return issue;
 	}
 

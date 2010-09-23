@@ -19,8 +19,9 @@
         <h3>Status</h3>
         <p>$issue.statusText</p>
     #end
-    
+        
 </div>
 
+#commentsSection($issue)
 
 #footer()

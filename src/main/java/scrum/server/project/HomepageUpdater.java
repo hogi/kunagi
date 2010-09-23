@@ -1,6 +1,7 @@
 package scrum.server.project;
 
 import ilarkesto.base.Str;
+import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
@@ -11,6 +12,7 @@ import ilarkesto.velocity.Velocity;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
@@ -18,6 +20,8 @@ import java.util.Properties;
 import scrum.client.wiki.HtmlContext;
 import scrum.client.wiki.WikiModel;
 import scrum.client.wiki.WikiParser;
+import scrum.server.collaboration.Comment;
+import scrum.server.collaboration.CommentDao;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.common.BurndownChart;
 import scrum.server.issues.Issue;
@@ -193,6 +197,7 @@ public class HomepageUpdater {
 	}
 
 	private void fillIssue(ContextBuilder context, Issue issue) {
+		context.put("id", issue.getId());
 		context.put("reference", issue.getReference());
 		context.put("label", issue.getLabel());
 		context.put("description", wiki2html(issue.getDescription()));
@@ -200,9 +205,28 @@ public class HomepageUpdater {
 		context.put("statusText", issue.getStatusText());
 		if (issue.isOwnerSet()) context.put("owner", issue.getOwner().getName());
 		if (issue.isFixed()) context.put("fixed", "true");
+		fillComments(context, issue);
+	}
+
+	private void fillComments(ContextBuilder context, AEntity entity) {
+		CommentDao commentDao = (CommentDao) entity.getDaoService().getDaoByClass(Comment.class);
+		Collection<Comment> comments = commentDao.getPublishedCommentsByParent(entity);
+		comments = Utl.sort(comments);
+		for (Comment comment : comments) {
+			fillComment(context.addSubContext("comments"), comment);
+		}
+	}
+
+	private void fillComment(ContextBuilder context, Comment comment) {
+		context.put("id", comment.getId());
+		context.put("text", wiki2html(comment.getText()));
+		context.put("author", comment.getAuthorName());
+		context.put("date", comment.getDateAndTime()
+				.toString(DateAndTime.FORMAT_WEEKDAY_LONGMONTH_DAY_YEAR_HOUR_MINUTE));
 	}
 
 	private void fillRelease(ContextBuilder context, Release release) {
+		context.put("id", release.getId());
 		context.put("reference", release.getReference());
 		context.put("label", release.getLabel());
 		context.put("note", wiki2html(release.getNote()));
@@ -211,6 +235,7 @@ public class HomepageUpdater {
 		context.put("released", release.isReleased());
 		context.put("major", release.isMajor());
 		context.put("bugfix", release.isBugfix());
+		fillComments(context, release);
 	}
 
 	private void fillBlog(ContextBuilder context) {
@@ -223,6 +248,7 @@ public class HomepageUpdater {
 	}
 
 	private void fillBlogEntry(ContextBuilder context, BlogEntry entry) {
+		context.put("id", entry.getId());
 		context.put("reference", entry.getReference());
 		context.put("title", entry.getTitle());
 		context.put("text", wiki2html(entry.getText()));
@@ -230,6 +256,7 @@ public class HomepageUpdater {
 		DateAndTime date = entry.getDateAndTime();
 		context.put("date", date.toString(Date.FORMAT_LONGMONTH_DAY_YEAR));
 		context.put("rssDate", date.toString(DateAndTime.FORMAT_RFC822));
+		fillComments(context, entry);
 	}
 
 	private void fillSprintBacklog(ContextBuilder context) {
@@ -255,12 +282,14 @@ public class HomepageUpdater {
 	}
 
 	private void fillStory(ContextBuilder context, Requirement requirement) {
+		context.put("id", requirement.getId());
 		context.put("reference", requirement.getReference());
 		context.put("label", requirement.getLabel());
 		context.put("description", wiki2html(requirement.getDescription()));
 		context.put("testDescription", wiki2html(requirement.getTestDescription()));
 		if (requirement.isEstimatedWorkSet() && !requirement.isDirty())
 			context.put("estimatedWork", requirement.getEstimatedWorkAsString());
+		fillComments(context, requirement);
 	}
 
 	private void fillWiki(ContextBuilder context) {
@@ -270,6 +299,7 @@ public class HomepageUpdater {
 	}
 
 	private void fillProject(ContextBuilder context) {
+		context.put("id", project.getId());
 		context.put("label", project.getLabel());
 		context.put("vision", project.getVision());
 		context.put("shortDescription", project.getShortDescription());

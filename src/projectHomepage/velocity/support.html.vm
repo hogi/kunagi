@@ -5,36 +5,8 @@
 <div class="section">
 
     <h2>Contact / Feedback / Feature Request / User Story</h2>
-    <form method="post" action="https://servisto.de/scrum/submitIssue" accept-charset="UTF-8">
-        <input name="projectId" type="hidden" value="ef50396a-0e3a-479b-8808-c31cdfd77fa0">
-        <input name="returnUrl" type="hidden" value="http://kunagi.org/message.html#{message}">
-        <table cellspacing="0" cellpadding="0" border="0" width="100%">
-            <tr>
-                <td colspan="3">
-                    <label for="text">Your issue:</label><br>
-                    <textarea name="text" id="text" rows="10" cols="50" style="width: 687px;"></textarea><br>
-                    <br>
-                    <input type="checkbox" name="publish" id="publish" value="true">
-                    <label for="publish">Make this issue visible on this homepage (without your Name and E-Mail).</label><br>
-                    <br>    
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="name">Name:</label>
-                    <input type="text" name="name" id="name" class="textinput">
-                </td>
-                <td>
-                    <label for="email">E-Mail:</label>
-                    <input type="text" name="email" id="email" class="textinput">
-                </td>
-                <td align="right">
-                    <input type="submit" name="submit" class="submit" value="Submit issue">
-                </td>
-            </tr>
-        </table>
-    </form>
-
+    #commentForm("submitIssue", $null, "Your issue", "Make this issue visible on this homepage (without your Name and E-Mail).", "Submit issue")
+    
 </div>
 
 <div class="separator"></div>                    
