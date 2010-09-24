@@ -113,11 +113,11 @@
             </tr>
             <tr>
                 <td>
-                    <label for="name">Name:</label>
+                    <label for="name" class="optional">Name:</label>
                     <input type="text" name="name" id="name" class="textinput">
                 </td>
                 <td>
-                    <label for="email">E-Mail:</label>
+                    <label for="email" class="optional">E-Mail:</label>
                     <input type="text" name="email" id="email" class="textinput">
                 </td>
                 <td align="right">
