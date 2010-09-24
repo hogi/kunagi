@@ -24,6 +24,7 @@ public class Pinger extends GPinger implements ServerDataReceivedHandler, BlockE
 	private int maxDelay = MAX_DELAY;
 	private long lastDataReceiveTime = System.currentTimeMillis();
 
+	@Override
 	public void onApplicationStarted(ApplicationStartedEvent event) {
 		timer = new Timer() {
 
@@ -43,6 +44,7 @@ public class Pinger extends GPinger implements ServerDataReceivedHandler, BlockE
 		timer = null;
 	}
 
+	@Override
 	public void onServerDataReceived(ServerDataReceivedEvent event) {
 		DataTransferObject data = event.getData();
 		if (data.containsEntities() || data.usersStatus != null) {
@@ -51,10 +53,12 @@ public class Pinger extends GPinger implements ServerDataReceivedHandler, BlockE
 		}
 	}
 
+	@Override
 	public void onBlockCollapsed(BlockCollapsedEvent event) {
 		deactivatePowerPolling();
 	}
 
+	@Override
 	public void onBlockExpanded(BlockExpandedEvent event) {
 		Object object = event.getObject();
 		if (object instanceof Requirement) {

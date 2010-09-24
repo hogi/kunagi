@@ -3,7 +3,6 @@ package scrum.client.admin;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
-import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 
 import java.util.List;
@@ -47,7 +46,6 @@ public class ProjectBlock extends ABlockWidget<Project> {
 
 		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.addFieldRow("Name", new TextEditorWidget(project.getLabelModel()));
-		tb.addFieldRow("Vision", new RichtextEditorWidget(project.getVisionModel()));
 
 		tb.addFieldRow("Participants", new AMultiSelectionViewEditWidget<User>() {
 
@@ -100,6 +98,17 @@ public class ProjectBlock extends ABlockWidget<Project> {
 
 		});
 
+		addRolesFieldRows(project, tb);
+
+		if (project.isAdmin(getCurrentUser())) {
+			tb.addFieldRow("",
+				Gwt.createServletDownloadLink("backupDownload.zip?projectId=" + project.getId(), "Download Backup ZIP"));
+		}
+
+		return tb.createTable();
+	}
+
+	public static void addRolesFieldRows(final Project project, TableBuilder tb) {
 		tb.addFieldRow("Product Owner", new AMultiSelectionViewEditWidget<User>() {
 
 			@Override
@@ -171,13 +180,6 @@ public class ProjectBlock extends ABlockWidget<Project> {
 				return project.isEditable();
 			}
 		});
-
-		if (project.isAdmin(getCurrentUser())) {
-			tb.addFieldRow("", Gwt.createServletDownloadLink("backupDownload.zip?projectId=" + project.getId(),
-				"Download Backup ZIP"));
-		}
-
-		return tb.createTable();
 	}
 
 	public static final BlockWidgetFactory<Project> FACTORY = new BlockWidgetFactory<Project>() {

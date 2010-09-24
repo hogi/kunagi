@@ -144,6 +144,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 						"This is a vision that should state the purpose and aim of the project. "
 								+ "It should focus be used to focus the participant's work on a common goal "
 								+ "that is simple, measurable, achievable, relevant, and time-bound.");
+			projectModel.addStringProperty("productLabel").setSearchable(true)
+					.setTooltip("This is the name of the product, which is created within this project.");
 			projectModel
 					.addStringProperty("shortDescription")
 					.setSearchable(true)
@@ -197,7 +199,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addProperty("punishmentFactor", int.class);
 			projectModel.addStringProperty("punishmentUnit");
 			projectModel.addStringProperty("homepageDir");
-			projectModel.addProperty("autoUpdateHomepage", boolean.class);
+			projectModel.addProperty("autoUpdateHomepage", boolean.class).setTooltip(
+				"Automatically update the homepage.");
 			projectModel.addProperty("lastOpenedDateAndTime", DateAndTime.class);
 			getApplicationModel().addCreateAction(projectModel);
 			projectModel.addAction("DeleteProject");
@@ -676,6 +679,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectUserConfigModel.addReference("user", getUserModel()).setMaster(true);
 			projectUserConfigModel.addStringProperty("color");
 			projectUserConfigModel.addProperty("misconducts", int.class).setEditablePredicate("misconductsEditable");
+			projectUserConfigModel.addStringProperty("richtextAutosaveText");
+			projectUserConfigModel.addStringProperty("richtextAutosaveField");
 		}
 		return projectUserConfigModel;
 	}

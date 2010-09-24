@@ -102,6 +102,14 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport {
 		return sum;
 	}
 
+	public List<Requirement> getDecitableRequirements() {
+		List<Requirement> ret = new ArrayList<Requirement>();
+		for (Requirement requirement : getRequirements()) {
+			if (requirement.isDecidable()) ret.add(requirement);
+		}
+		return ret;
+	}
+
 	public List<Requirement> getRequirements() {
 		return getDao().getRequirementsBySprint(this);
 	}

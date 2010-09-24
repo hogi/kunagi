@@ -163,6 +163,61 @@ public abstract class GProject
 
     }
 
+    // --- productLabel ---
+
+    private java.lang.String productLabel ;
+
+    public final java.lang.String getProductLabel() {
+        return this.productLabel ;
+    }
+
+    public final Project setProductLabel(java.lang.String productLabel) {
+        if (isProductLabel(productLabel)) return (Project)this;
+        this.productLabel = productLabel ;
+        propertyChanged("productLabel", this.productLabel);
+        return (Project)this;
+    }
+
+    public final boolean isProductLabel(java.lang.String productLabel) {
+        return equals(this.productLabel, productLabel);
+    }
+
+    private transient ProductLabelModel productLabelModel;
+
+    public ProductLabelModel getProductLabelModel() {
+        if (productLabelModel == null) productLabelModel = createProductLabelModel();
+        return productLabelModel;
+    }
+
+    protected ProductLabelModel createProductLabelModel() { return new ProductLabelModel(); }
+
+    protected class ProductLabelModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_productLabel";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getProductLabel();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setProductLabel(value);
+        }
+        @Override
+        public String getTooltip() { return "This is the name of the product, which is created within this project."; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- shortDescription ---
 
     private java.lang.String shortDescription ;
@@ -1692,6 +1747,8 @@ public abstract class GProject
         public void setValue(java.lang.Boolean value) {
             setAutoUpdateHomepage(value);
         }
+        @Override
+        public String getTooltip() { return "Automatically update the homepage."; }
 
         @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
@@ -1759,6 +1816,7 @@ public abstract class GProject
     public void updateProperties(Map props) {
         label  = (java.lang.String) props.get("label");
         vision  = (java.lang.String) props.get("vision");
+        productLabel  = (java.lang.String) props.get("productLabel");
         shortDescription  = (java.lang.String) props.get("shortDescription");
         description  = (java.lang.String) props.get("description");
         longDescription  = (java.lang.String) props.get("longDescription");
@@ -1801,6 +1859,7 @@ public abstract class GProject
         super.storeProperties(properties);
         properties.put("label", this.label);
         properties.put("vision", this.vision);
+        properties.put("productLabel", this.productLabel);
         properties.put("shortDescription", this.shortDescription);
         properties.put("description", this.description);
         properties.put("longDescription", this.longDescription);
@@ -1840,6 +1899,7 @@ public abstract class GProject
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getVision(), key)) return true;
+        if (matchesKey(getProductLabel(), key)) return true;
         if (matchesKey(getShortDescription(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
         if (matchesKey(getLongDescription(), key)) return true;

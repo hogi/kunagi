@@ -38,6 +38,7 @@ public abstract class GProject
         super.storeProperties(properties);
         properties.put("label", this.label);
         properties.put("vision", this.vision);
+        properties.put("productLabel", this.productLabel);
         properties.put("shortDescription", this.shortDescription);
         properties.put("description", this.description);
         properties.put("longDescription", this.longDescription);
@@ -89,6 +90,7 @@ public abstract class GProject
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getVision(), key)) return true;
+        if (matchesKey(getProductLabel(), key)) return true;
         if (matchesKey(getShortDescription(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
         if (matchesKey(getLongDescription(), key)) return true;
@@ -164,6 +166,41 @@ public abstract class GProject
 
     protected final void updateVision(Object value) {
         setVision((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - productLabel
+    // -----------------------------------------------------------
+
+    private java.lang.String productLabel;
+
+    public final java.lang.String getProductLabel() {
+        return productLabel;
+    }
+
+    public final void setProductLabel(java.lang.String productLabel) {
+        productLabel = prepareProductLabel(productLabel);
+        if (isProductLabel(productLabel)) return;
+        this.productLabel = productLabel;
+        fireModified("productLabel="+productLabel);
+    }
+
+    protected java.lang.String prepareProductLabel(java.lang.String productLabel) {
+        productLabel = Str.removeUnreadableChars(productLabel);
+        return productLabel;
+    }
+
+    public final boolean isProductLabelSet() {
+        return this.productLabel != null;
+    }
+
+    public final boolean isProductLabel(java.lang.String productLabel) {
+        if (this.productLabel == null && productLabel == null) return true;
+        return this.productLabel != null && this.productLabel.equals(productLabel);
+    }
+
+    protected final void updateProductLabel(Object value) {
+        setProductLabel((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -1617,6 +1654,7 @@ public abstract class GProject
             Object value = entry.getValue();
             if (property.equals("label")) updateLabel(value);
             if (property.equals("vision")) updateVision(value);
+            if (property.equals("productLabel")) updateProductLabel(value);
             if (property.equals("shortDescription")) updateShortDescription(value);
             if (property.equals("description")) updateDescription(value);
             if (property.equals("longDescription")) updateLongDescription(value);

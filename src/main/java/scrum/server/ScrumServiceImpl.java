@@ -40,7 +40,6 @@ import scrum.server.journal.ProjectEvent;
 import scrum.server.journal.ProjectEventDao;
 import scrum.server.pr.BlogEntry;
 import scrum.server.pr.BlogEntryDao;
-import scrum.server.project.HomepageUpdater;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
@@ -206,9 +205,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			Comment comment = (Comment) entity;
 			comment.setDateAndTime(DateAndTime.now());
 			postProjectEvent(conversation, comment.getAuthor().getName() + " commented on " + comment.getParent());
-			if (conversation.getProject().isHomepageDirSet()) {
-				new HomepageUpdater(conversation.getProject()).processEntityTemplate(comment.getParent());
-			}
+			conversation.getProject().updateHomepage(comment.getParent(), true);
 		}
 
 		if (entity instanceof ChatMessage) {
@@ -430,7 +427,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 
 			if (properties.containsKey("published")) {
-				new HomepageUpdater(issue.getProject()).processIssueTemplate(issue);
+				issue.getProject().updateHomepage(issue, false);
 			}
 		}
 
@@ -452,9 +449,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		if (entity instanceof Comment) {
 			Comment comment = (Comment) entity;
-			if (conversation.getProject().isHomepageDirSet()) {
-				new HomepageUpdater(conversation.getProject()).processEntityTemplate(comment.getParent());
-			}
+			conversation.getProject().updateHomepage(comment.getParent(), false);
 		}
 
 		conversation.clearRemoteEntitiesByType(Change.class);

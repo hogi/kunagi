@@ -4,7 +4,6 @@ import ilarkesto.base.Money;
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
-import ilarkesto.pdf.APdfBuilder;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.Persist;
 import ilarkesto.rss.Rss20Builder;
@@ -174,7 +173,13 @@ public class Project extends GProject {
 
 	public synchronized void updateHomepage() {
 		if (!isHomepageDirSet()) return;
-		new HomepageUpdater(this).processAll();
+		getHomepageUpdater().processAll();
+	}
+
+	public synchronized void updateHomepage(AEntity entity, boolean forceUpdate) {
+		if (!isHomepageDirSet()) return;
+		if (!forceUpdate && !isAutoUpdateHomepage()) return;
+		getHomepageUpdater().processEntityTemplate(entity);
 	}
 
 	public java.io.File getHomepageDirFile() {
@@ -187,7 +192,9 @@ public class Project extends GProject {
 		return getHomepageDir() + "/velocity";
 	}
 
-	public void buildProductBacklogReport(APdfBuilder pdf) {}
+	public HomepageUpdater getHomepageUpdater() {
+		return new HomepageUpdater(this);
+	}
 
 	public void scanFiles() {
 		java.io.File dir = new java.io.File(getFileRepositoryPath());
@@ -709,6 +716,7 @@ public class Project extends GProject {
 		if (getPunishmentFactor() == 0) {
 			setPunishmentFactor(1);
 		}
+		if (!isHomepageDirSet()) setAutoUpdateHomepage(false);
 	}
 
 	@Override

@@ -16,7 +16,6 @@ import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
 import scrum.server.journal.ProjectEventDao;
-import scrum.server.project.HomepageUpdater;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 
@@ -73,7 +72,7 @@ public class IssueServlet extends AHttpServlet {
 		Project project = projectDao.getById(projectId);
 		Issue issue = issueDao.postIssue(project, "Message from the Internets", text, name, email, publish);
 		if (publish) {
-			new HomepageUpdater(project).processIssueTemplate(issue);
+			project.updateHomepage(issue, true);
 		}
 		projectEventDao.postEvent(project, issue.getIssuer() + " submitted " + issue.getReferenceAndLabel());
 		transactionService.commit();

@@ -40,6 +40,8 @@ public abstract class GProjectUserConfig
         properties.put("userId", this.userId);
         properties.put("color", this.color);
         properties.put("misconducts", this.misconducts);
+        properties.put("richtextAutosaveText", this.richtextAutosaveText);
+        properties.put("richtextAutosaveField", this.richtextAutosaveField);
     }
 
     public int compareTo(ProjectUserConfig other) {
@@ -216,6 +218,76 @@ public abstract class GProjectUserConfig
         setMisconducts((Integer)value);
     }
 
+    // -----------------------------------------------------------
+    // - richtextAutosaveText
+    // -----------------------------------------------------------
+
+    private java.lang.String richtextAutosaveText;
+
+    public final java.lang.String getRichtextAutosaveText() {
+        return richtextAutosaveText;
+    }
+
+    public final void setRichtextAutosaveText(java.lang.String richtextAutosaveText) {
+        richtextAutosaveText = prepareRichtextAutosaveText(richtextAutosaveText);
+        if (isRichtextAutosaveText(richtextAutosaveText)) return;
+        this.richtextAutosaveText = richtextAutosaveText;
+        fireModified("richtextAutosaveText="+richtextAutosaveText);
+    }
+
+    protected java.lang.String prepareRichtextAutosaveText(java.lang.String richtextAutosaveText) {
+        richtextAutosaveText = Str.removeUnreadableChars(richtextAutosaveText);
+        return richtextAutosaveText;
+    }
+
+    public final boolean isRichtextAutosaveTextSet() {
+        return this.richtextAutosaveText != null;
+    }
+
+    public final boolean isRichtextAutosaveText(java.lang.String richtextAutosaveText) {
+        if (this.richtextAutosaveText == null && richtextAutosaveText == null) return true;
+        return this.richtextAutosaveText != null && this.richtextAutosaveText.equals(richtextAutosaveText);
+    }
+
+    protected final void updateRichtextAutosaveText(Object value) {
+        setRichtextAutosaveText((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - richtextAutosaveField
+    // -----------------------------------------------------------
+
+    private java.lang.String richtextAutosaveField;
+
+    public final java.lang.String getRichtextAutosaveField() {
+        return richtextAutosaveField;
+    }
+
+    public final void setRichtextAutosaveField(java.lang.String richtextAutosaveField) {
+        richtextAutosaveField = prepareRichtextAutosaveField(richtextAutosaveField);
+        if (isRichtextAutosaveField(richtextAutosaveField)) return;
+        this.richtextAutosaveField = richtextAutosaveField;
+        fireModified("richtextAutosaveField="+richtextAutosaveField);
+    }
+
+    protected java.lang.String prepareRichtextAutosaveField(java.lang.String richtextAutosaveField) {
+        richtextAutosaveField = Str.removeUnreadableChars(richtextAutosaveField);
+        return richtextAutosaveField;
+    }
+
+    public final boolean isRichtextAutosaveFieldSet() {
+        return this.richtextAutosaveField != null;
+    }
+
+    public final boolean isRichtextAutosaveField(java.lang.String richtextAutosaveField) {
+        if (this.richtextAutosaveField == null && richtextAutosaveField == null) return true;
+        return this.richtextAutosaveField != null && this.richtextAutosaveField.equals(richtextAutosaveField);
+    }
+
+    protected final void updateRichtextAutosaveField(Object value) {
+        setRichtextAutosaveField((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -225,6 +297,8 @@ public abstract class GProjectUserConfig
             if (property.equals("userId")) updateUser(value);
             if (property.equals("color")) updateColor(value);
             if (property.equals("misconducts")) updateMisconducts(value);
+            if (property.equals("richtextAutosaveText")) updateRichtextAutosaveText(value);
+            if (property.equals("richtextAutosaveField")) updateRichtextAutosaveField(value);
         }
     }
 

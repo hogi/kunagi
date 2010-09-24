@@ -20,7 +20,6 @@ import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
 import scrum.server.journal.ProjectEventDao;
-import scrum.server.project.HomepageUpdater;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 
@@ -78,7 +77,7 @@ public class CommentServlet extends AHttpServlet {
 		Project project = projectDao.getById(projectId);
 		AEntity entity = daoService.getById(entityId);
 		Comment comment = commentDao.postComment(entity, text, name, email);
-		new HomepageUpdater(project).processEntityTemplate(entity);
+		project.updateHomepage(entity, true);
 		String reference = ((ReferenceSupport) entity).getReference();
 		String label = ((LabelSupport) entity).getLabel();
 		projectEventDao.postEvent(project, comment.getAuthorName() + " posted comment on " + reference + " " + label);

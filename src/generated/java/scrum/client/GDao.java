@@ -1077,6 +1077,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByProductLabel(java.lang.String productLabel) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isProductLabel(productLabel)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.project.Project> getProjectsByShortDescription(java.lang.String shortDescription) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
@@ -1460,6 +1468,22 @@ public abstract class GDao
         List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
         for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
             if (entity.isMisconducts(misconducts)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByRichtextAutosaveText(java.lang.String richtextAutosaveText) {
+        List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
+        for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
+            if (entity.isRichtextAutosaveText(richtextAutosaveText)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByRichtextAutosaveField(java.lang.String richtextAutosaveField) {
+        List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
+        for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
+            if (entity.isRichtextAutosaveField(richtextAutosaveField)) ret.add(entity);
         }
         return ret;
     }

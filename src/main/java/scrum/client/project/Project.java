@@ -371,6 +371,14 @@ public class Project extends GProject implements ForumSupport {
 		return ret;
 	}
 
+	public List<Issue> getFixedBugs() {
+		List<Issue> ret = new ArrayList<Issue>();
+		for (Issue issue : getIssues()) {
+			if (issue.isBug() && issue.isFixed()) ret.add(issue);
+		}
+		return ret;
+	}
+
 	public List<Issue> getClosedIssues() {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getIssues()) {
@@ -520,6 +528,7 @@ public class Project extends GProject implements ForumSupport {
 	public Comparator<Issue> getIssuesOrderComparator() {
 		if (issuesOrderComparator == null) issuesOrderComparator = new Comparator<Issue>() {
 
+			@Override
 			public int compare(Issue a, Issue b) {
 				List<String> order = getUrgentIssuesOrderIds();
 				int additional = order.size();
@@ -576,6 +585,7 @@ public class Project extends GProject implements ForumSupport {
 
 	public static final Comparator<Project> LABEL_COMPARATOR = new Comparator<Project>() {
 
+		@Override
 		public int compare(Project a, Project b) {
 			return a.getLabel().compareTo(b.getLabel());
 		}
@@ -583,6 +593,7 @@ public class Project extends GProject implements ForumSupport {
 
 	public static final Comparator<Project> LAST_OPENED_COMPARATOR = new Comparator<Project>() {
 
+		@Override
 		public int compare(Project a, Project b) {
 			return Utl.compare(a.getLastOpenedDateAndTime(), b.getLastOpenedDateAndTime()) * -1;
 		}
@@ -599,10 +610,12 @@ public class Project extends GProject implements ForumSupport {
 		return users;
 	}
 
+	@Override
 	public Widget createForumItemWidget() {
 		return new HyperlinkWidget(new ShowEntityAction(this, "Project Dashboard"));
 	}
 
+	@Override
 	public String getReference() {
 		return "prj";
 	}

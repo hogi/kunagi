@@ -215,6 +215,112 @@ public abstract class GProjectUserConfig
 
     }
 
+    // --- richtextAutosaveText ---
+
+    private java.lang.String richtextAutosaveText ;
+
+    public final java.lang.String getRichtextAutosaveText() {
+        return this.richtextAutosaveText ;
+    }
+
+    public final ProjectUserConfig setRichtextAutosaveText(java.lang.String richtextAutosaveText) {
+        if (isRichtextAutosaveText(richtextAutosaveText)) return (ProjectUserConfig)this;
+        this.richtextAutosaveText = richtextAutosaveText ;
+        propertyChanged("richtextAutosaveText", this.richtextAutosaveText);
+        return (ProjectUserConfig)this;
+    }
+
+    public final boolean isRichtextAutosaveText(java.lang.String richtextAutosaveText) {
+        return equals(this.richtextAutosaveText, richtextAutosaveText);
+    }
+
+    private transient RichtextAutosaveTextModel richtextAutosaveTextModel;
+
+    public RichtextAutosaveTextModel getRichtextAutosaveTextModel() {
+        if (richtextAutosaveTextModel == null) richtextAutosaveTextModel = createRichtextAutosaveTextModel();
+        return richtextAutosaveTextModel;
+    }
+
+    protected RichtextAutosaveTextModel createRichtextAutosaveTextModel() { return new RichtextAutosaveTextModel(); }
+
+    protected class RichtextAutosaveTextModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "ProjectUserConfig_richtextAutosaveText";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getRichtextAutosaveText();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setRichtextAutosaveText(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- richtextAutosaveField ---
+
+    private java.lang.String richtextAutosaveField ;
+
+    public final java.lang.String getRichtextAutosaveField() {
+        return this.richtextAutosaveField ;
+    }
+
+    public final ProjectUserConfig setRichtextAutosaveField(java.lang.String richtextAutosaveField) {
+        if (isRichtextAutosaveField(richtextAutosaveField)) return (ProjectUserConfig)this;
+        this.richtextAutosaveField = richtextAutosaveField ;
+        propertyChanged("richtextAutosaveField", this.richtextAutosaveField);
+        return (ProjectUserConfig)this;
+    }
+
+    public final boolean isRichtextAutosaveField(java.lang.String richtextAutosaveField) {
+        return equals(this.richtextAutosaveField, richtextAutosaveField);
+    }
+
+    private transient RichtextAutosaveFieldModel richtextAutosaveFieldModel;
+
+    public RichtextAutosaveFieldModel getRichtextAutosaveFieldModel() {
+        if (richtextAutosaveFieldModel == null) richtextAutosaveFieldModel = createRichtextAutosaveFieldModel();
+        return richtextAutosaveFieldModel;
+    }
+
+    protected RichtextAutosaveFieldModel createRichtextAutosaveFieldModel() { return new RichtextAutosaveFieldModel(); }
+
+    protected class RichtextAutosaveFieldModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "ProjectUserConfig_richtextAutosaveField";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getRichtextAutosaveField();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setRichtextAutosaveField(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -222,6 +328,8 @@ public abstract class GProjectUserConfig
         userId = (String) props.get("userId");
         color  = (java.lang.String) props.get("color");
         misconducts  = (Integer) props.get("misconducts");
+        richtextAutosaveText  = (java.lang.String) props.get("richtextAutosaveText");
+        richtextAutosaveField  = (java.lang.String) props.get("richtextAutosaveField");
     }
 
     @Override
@@ -231,6 +339,8 @@ public abstract class GProjectUserConfig
         properties.put("userId", this.userId);
         properties.put("color", this.color);
         properties.put("misconducts", this.misconducts);
+        properties.put("richtextAutosaveText", this.richtextAutosaveText);
+        properties.put("richtextAutosaveField", this.richtextAutosaveField);
     }
 
 }

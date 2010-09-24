@@ -98,12 +98,14 @@ public class CommentsWidget extends AScrumWidget {
 		this.editor.switchToEditMode();
 		this.editor.setModeSwitchHandler(new AViewEditWidget.ModeSwitchHandler() {
 
-			public void onViewerActivated() {
+			@Override
+			public void onViewerActivated(AViewEditWidget widget) {
 				editor = null;
 				update();
 			}
 
-			public void onEditorActivated() {}
+			@Override
+			public void onEditorActivated(AViewEditWidget widget) {}
 		});
 	}
 

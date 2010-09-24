@@ -15,6 +15,7 @@ import scrum.client.collaboration.UsersStatus;
 import scrum.client.collaboration.Wiki;
 import scrum.client.communication.Pinger;
 import scrum.client.communication.ServerErrorManager;
+import scrum.client.core.RichtextAutosaver;
 import scrum.client.core.ServiceCaller;
 import scrum.client.files.Uploader;
 import scrum.client.i18n.Localizer;
@@ -57,6 +58,7 @@ public class ScrumScopeManager {
 		scope.putComponent(new Auth());
 		scope.putComponent(new Navigator());
 		scope.putComponent(new ServerErrorManager());
+		scope.putComponent(new RichtextAutosaver());
 
 		appScope.wireComponents();
 	}
@@ -67,7 +69,7 @@ public class ScrumScopeManager {
 		userScope = appScope.createScope("user");
 		Scope scope = scopeManager.setScope(userScope);
 
-		scope.putComponent("user", user);
+		scope.putComponent(user);
 		scope.putComponent(new UsersWorkspaceWidgets());
 		scope.putComponent(new Localizer());
 
@@ -79,7 +81,8 @@ public class ScrumScopeManager {
 		projectScope = userScope.createScope("project");
 		Scope scope = scopeManager.setScope(projectScope);
 
-		scope.putComponent("project", project);
+		scope.putComponent(project);
+		scope.putComponent(project.getUserConfig(userScope.getComponent(User.class)));
 		scope.putComponent(new ProjectWorkspaceWidgets());
 		scope.putComponent(new Chat());
 		scope.putComponent(new ChangeHistoryManager());

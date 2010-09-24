@@ -50,6 +50,10 @@ public abstract class GProjectUserConfigDao
         colorsCache = null;
         projectUserConfigsByMisconductsCache.clear();
         misconductssCache = null;
+        projectUserConfigsByRichtextAutosaveTextCache.clear();
+        richtextAutosaveTextsCache = null;
+        projectUserConfigsByRichtextAutosaveFieldCache.clear();
+        richtextAutosaveFieldsCache = null;
     }
 
     @Override
@@ -224,6 +228,86 @@ public abstract class GProjectUserConfigDao
 
         public boolean test(ProjectUserConfig e) {
             return e.isMisconducts(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - richtextAutosaveText
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<ProjectUserConfig>> projectUserConfigsByRichtextAutosaveTextCache = new Cache<java.lang.String,Set<ProjectUserConfig>>(
+            new Cache.Factory<java.lang.String,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(java.lang.String richtextAutosaveText) {
+                    return getEntities(new IsRichtextAutosaveText(richtextAutosaveText));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsByRichtextAutosaveText(java.lang.String richtextAutosaveText) {
+        return projectUserConfigsByRichtextAutosaveTextCache.get(richtextAutosaveText);
+    }
+    private Set<java.lang.String> richtextAutosaveTextsCache;
+
+    public final Set<java.lang.String> getRichtextAutosaveTexts() {
+        if (richtextAutosaveTextsCache == null) {
+            richtextAutosaveTextsCache = new HashSet<java.lang.String>();
+            for (ProjectUserConfig e : getEntities()) {
+                if (e.isRichtextAutosaveTextSet()) richtextAutosaveTextsCache.add(e.getRichtextAutosaveText());
+            }
+        }
+        return richtextAutosaveTextsCache;
+    }
+
+    private static class IsRichtextAutosaveText implements Predicate<ProjectUserConfig> {
+
+        private java.lang.String value;
+
+        public IsRichtextAutosaveText(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return e.isRichtextAutosaveText(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - richtextAutosaveField
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<ProjectUserConfig>> projectUserConfigsByRichtextAutosaveFieldCache = new Cache<java.lang.String,Set<ProjectUserConfig>>(
+            new Cache.Factory<java.lang.String,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(java.lang.String richtextAutosaveField) {
+                    return getEntities(new IsRichtextAutosaveField(richtextAutosaveField));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsByRichtextAutosaveField(java.lang.String richtextAutosaveField) {
+        return projectUserConfigsByRichtextAutosaveFieldCache.get(richtextAutosaveField);
+    }
+    private Set<java.lang.String> richtextAutosaveFieldsCache;
+
+    public final Set<java.lang.String> getRichtextAutosaveFields() {
+        if (richtextAutosaveFieldsCache == null) {
+            richtextAutosaveFieldsCache = new HashSet<java.lang.String>();
+            for (ProjectUserConfig e : getEntities()) {
+                if (e.isRichtextAutosaveFieldSet()) richtextAutosaveFieldsCache.add(e.getRichtextAutosaveField());
+            }
+        }
+        return richtextAutosaveFieldsCache;
+    }
+
+    private static class IsRichtextAutosaveField implements Predicate<ProjectUserConfig> {
+
+        private java.lang.String value;
+
+        public IsRichtextAutosaveField(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return e.isRichtextAutosaveField(value);
         }
 
     }

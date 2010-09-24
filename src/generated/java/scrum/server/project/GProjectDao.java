@@ -45,6 +45,8 @@ public abstract class GProjectDao
         labelsCache = null;
         projectsByVisionCache.clear();
         visionsCache = null;
+        projectsByProductLabelCache.clear();
+        productLabelsCache = null;
         projectsByShortDescriptionCache.clear();
         shortDescriptionsCache = null;
         projectsByDescriptionCache.clear();
@@ -195,6 +197,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isVision(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - productLabel
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByProductLabelCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String productLabel) {
+                    return getEntities(new IsProductLabel(productLabel));
+                }
+            });
+
+    public final Set<Project> getProjectsByProductLabel(java.lang.String productLabel) {
+        return projectsByProductLabelCache.get(productLabel);
+    }
+    private Set<java.lang.String> productLabelsCache;
+
+    public final Set<java.lang.String> getProductLabels() {
+        if (productLabelsCache == null) {
+            productLabelsCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isProductLabelSet()) productLabelsCache.add(e.getProductLabel());
+            }
+        }
+        return productLabelsCache;
+    }
+
+    private static class IsProductLabel implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsProductLabel(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isProductLabel(value);
         }
 
     }
