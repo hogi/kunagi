@@ -242,7 +242,7 @@ public class HomepageUpdater {
 	private void fillComment(ContextBuilder context, Comment comment) {
 		context.put("id", comment.getId());
 		context.put("text", wiki2html(comment.getText()));
-		context.put("author", comment.getAuthorName());
+		context.put("author", comment.getAuthorLabel());
 		context.put("date", comment.getDateAndTime()
 				.toString(DateAndTime.FORMAT_WEEKDAY_LONGMONTH_DAY_YEAR_HOUR_MINUTE));
 	}

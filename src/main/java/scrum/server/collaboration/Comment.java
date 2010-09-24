@@ -6,6 +6,12 @@ import scrum.server.admin.User;
 
 public class Comment extends GComment implements Comparable<Comment> {
 
+	public String getAuthorLabel() {
+		if (isAuthorSet()) return getAuthor().getName();
+		if (isAuthorNameSet()) return getAuthorName();
+		return "anonymous";
+	}
+
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
