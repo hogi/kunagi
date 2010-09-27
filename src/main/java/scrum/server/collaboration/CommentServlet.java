@@ -80,7 +80,7 @@ public class CommentServlet extends AHttpServlet {
 		project.updateHomepage(entity, true);
 		String reference = ((ReferenceSupport) entity).getReference();
 		String label = ((LabelSupport) entity).getLabel();
-		projectEventDao.postEvent(project, comment.getAuthorName() + " posted comment on " + reference + " " + label);
+		projectEventDao.postEvent(project, comment.getAuthorName() + " commented on " + reference + " " + label);
 		transactionService.commit();
 
 		return "<h2>Comment posted</h2><p>Thank you for your comment!</p><p>Back to <a href=\"" + reference
