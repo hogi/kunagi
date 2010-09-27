@@ -76,7 +76,7 @@ public class CommentServlet extends AHttpServlet {
 		if (projectId == null) throw new RuntimeException("projectId == null");
 		Project project = projectDao.getById(projectId);
 		AEntity entity = daoService.getById(entityId);
-		Comment comment = commentDao.postComment(entity, text, name, email);
+		Comment comment = commentDao.postComment(entity, text, name, email, true);
 		project.updateHomepage(entity, true);
 		String reference = ((ReferenceSupport) entity).getReference();
 		String label = ((LabelSupport) entity).getLabel();

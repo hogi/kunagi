@@ -46,7 +46,7 @@ public class CommentDao extends GCommentDao {
 		return commentsByParentIdCache.get(parentId);
 	}
 
-	public Comment postComment(AEntity entity, String text, String name, String email) {
+	public Comment postComment(AEntity entity, String text, String name, String email, boolean publish) {
 		assert entity != null;
 		if (Str.isBlank(name)) name = "anonymous";
 		Comment comment = newEntityInstance();
@@ -55,6 +55,7 @@ public class CommentDao extends GCommentDao {
 		comment.setAuthorName(name);
 		comment.setAuthorEmail(email);
 		comment.setDateAndTime(DateAndTime.now());
+		comment.setPublished(publish);
 		saveEntity(comment);
 		return comment;
 	}
