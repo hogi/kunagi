@@ -465,7 +465,7 @@ public class Project extends GProject {
 	}
 
 	public Release getCurrentRelease() {
-		return releaseDao.getCurrentRelease();
+		return releaseDao.getCurrentRelease(this);
 	}
 
 	public ProjectSprintSnapshot getCurrentSprintSnapshot() {
