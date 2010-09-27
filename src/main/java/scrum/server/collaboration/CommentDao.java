@@ -2,6 +2,7 @@ package scrum.server.collaboration;
 
 import ilarkesto.base.AFactoryCache;
 import ilarkesto.base.Cache;
+import ilarkesto.core.base.Str;
 import ilarkesto.fp.Predicate;
 import ilarkesto.persistence.AEntity;
 
@@ -45,6 +46,8 @@ public class CommentDao extends GCommentDao {
 	}
 
 	public Comment postComment(AEntity entity, String text, String name, String email) {
+		assert entity != null;
+		if (Str.isBlank(name)) name = "anonymous";
 		Comment comment = newEntityInstance();
 		comment.setParent(entity);
 		comment.setText(text);

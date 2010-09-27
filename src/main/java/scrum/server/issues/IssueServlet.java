@@ -61,7 +61,7 @@ public class IssueServlet extends AHttpServlet {
 		}
 
 		String returnUrl = req.getParameter("returnUrl");
-		if (returnUrl == null) returnUrl = "http://kunagi.org#{message}";
+		if (returnUrl == null) returnUrl = "http://kunagi.org/message.html#{message}";
 		returnUrl = returnUrl.replace("{message}", Str.encodeUrlParameter(message));
 
 		resp.sendRedirect(returnUrl);
