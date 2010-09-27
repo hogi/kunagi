@@ -2,6 +2,7 @@ package scrum.server.collaboration;
 
 import ilarkesto.auth.Auth;
 import ilarkesto.base.Utl;
+import ilarkesto.base.time.DateAndTime;
 import scrum.server.admin.User;
 
 public class Comment extends GComment implements Comparable<Comment> {
@@ -15,12 +16,9 @@ public class Comment extends GComment implements Comparable<Comment> {
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
-		if (Utl.isEmpty(getText()) && getDateAndTime().getPeriodToNow().toHours() > 1) {
-			getDao().deleteEntity(this);
-		}
-		if (isAuthorSet()) {
-			setAuthorName(getAuthor().getName());
-		}
+		if (Utl.isEmpty(getText()) && getDateAndTime().getPeriodToNow().toHours() > 1) getDao().deleteEntity(this);
+		if (isAuthorSet()) setAuthorName(getAuthor().getName());
+		if (!isDateAndTimeSet()) setDateAndTime(DateAndTime.now());
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package scrum.server.collaboration;
 
 import ilarkesto.base.AFactoryCache;
 import ilarkesto.base.Cache;
+import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.base.Str;
 import ilarkesto.fp.Predicate;
 import ilarkesto.persistence.AEntity;
@@ -53,6 +54,7 @@ public class CommentDao extends GCommentDao {
 		comment.setText(text);
 		comment.setAuthorName(name);
 		comment.setAuthorEmail(email);
+		comment.setDateAndTime(DateAndTime.now());
 		saveEntity(comment);
 		return comment;
 	}
