@@ -428,7 +428,7 @@ public class LoginServlet extends AHttpServlet {
 		renderOpenIdLink(OpenId.AOL, "AOL", historyToken, html);
 		renderOpenIdLink(OpenId.WORDPRESS, "WordPress", historyToken, html);
 		renderOpenIdLink(OpenId.FLICKR, "Flickr", historyToken, html);
-		renderOpenIdLink(OpenId.BLOGSPOT, "Blogger", historyToken, html);
+		// renderOpenIdLink(OpenId.BLOGSPOT, "Blogger", historyToken, html);
 		renderOpenIdLink(OpenId.MYVIDOOP, "Vidoop", historyToken, html);
 		html.DIVclear();
 		html.BR();
