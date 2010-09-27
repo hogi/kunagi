@@ -3061,6 +3061,13 @@ public abstract class GDao
         return null;
     }
 
+    public final scrum.client.admin.User getUserByOpenId(java.lang.String openId) {
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isOpenId(openId)) return entity;
+        }
+        return null;
+    }
+
     // --- Wikipage ---
 
     private Map<String, scrum.client.collaboration.Wikipage> wikipages = new HashMap<String, scrum.client.collaboration.Wikipage>();

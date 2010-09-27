@@ -61,6 +61,7 @@ public abstract class GUser
         properties.put("hideUserGuideSprintBacklog", this.hideUserGuideSprintBacklog);
         properties.put("hideUserGuideWhiteboard", this.hideUserGuideWhiteboard);
         properties.put("loginToken", this.loginToken);
+        properties.put("openId", this.openId);
     }
 
     public int compareTo(User other) {
@@ -869,6 +870,42 @@ public abstract class GUser
         setLoginToken((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - openId
+    // -----------------------------------------------------------
+
+    private java.lang.String openId;
+
+    public final java.lang.String getOpenId() {
+        return openId;
+    }
+
+    public final void setOpenId(java.lang.String openId) {
+        openId = prepareOpenId(openId);
+        if (isOpenId(openId)) return;
+        if (openId != null && getDao().getUserByOpenId(openId) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "openId", openId);
+        this.openId = openId;
+        fireModified("openId="+openId);
+    }
+
+    protected java.lang.String prepareOpenId(java.lang.String openId) {
+        openId = Str.removeUnreadableChars(openId);
+        return openId;
+    }
+
+    public final boolean isOpenIdSet() {
+        return this.openId != null;
+    }
+
+    public final boolean isOpenId(java.lang.String openId) {
+        if (this.openId == null && openId == null) return true;
+        return this.openId != null && this.openId.equals(openId);
+    }
+
+    protected final void updateOpenId(Object value) {
+        setOpenId((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -899,6 +936,7 @@ public abstract class GUser
             if (property.equals("hideUserGuideSprintBacklog")) updateHideUserGuideSprintBacklog(value);
             if (property.equals("hideUserGuideWhiteboard")) updateHideUserGuideWhiteboard(value);
             if (property.equals("loginToken")) updateLoginToken(value);
+            if (property.equals("openId")) updateOpenId(value);
         }
     }
 

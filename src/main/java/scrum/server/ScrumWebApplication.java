@@ -127,7 +127,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if (getUserDao().getEntities().isEmpty()) {
 			String password = getConfig().getInitialPassword();
 			log.warn("No users. Creating initial user <admin> with password <" + password + ">");
-			User admin = getUserDao().postUser("admin");
+			User admin = getUserDao().postUserWithDefaultPassword("admin");
 			admin.setPassword(password);
 			admin.setAdmin(true);
 			getTransactionService().commit();
@@ -145,10 +145,10 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	private void createTestData() {
 		log.warn("Creating test data");
 
-		getUserDao().postUser("homer");
-		getUserDao().postUser("cartman");
-		getUserDao().postUser("duke");
-		getUserDao().postUser("spinne");
+		getUserDao().postUserWithDefaultPassword("homer");
+		getUserDao().postUserWithDefaultPassword("cartman");
+		getUserDao().postUserWithDefaultPassword("duke");
+		getUserDao().postUserWithDefaultPassword("spinne");
 
 		getProjectDao().postExampleProject(getUserDao().getUserByName("admin"), getUserDao().getUserByName("cartman"),
 			getUserDao().getUserByName("admin"));
@@ -230,6 +230,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		Set<User> users = getConversationUsersByProject(project);
 		Set<String> userIds = new HashSet<String>(FP.foreach(users, new Function<User, String>() {
 
+			@Override
 			public String eval(User user) {
 				return user.getId();
 			}
@@ -303,8 +304,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		sb.append("Name: ").append(user.getName()).append("\n");
 		sb.append("Email: ").append(user.getEmail()).append("\n");
 		sb.append("Date/Time: ").append(DateAndTime.now()).append("\n");
-		sendEmail(null, null, user.getName() + " (" + user.getEmail() + ") registered on " + getBaseUrl(),
-			sb.toString());
+		sendEmail(null, null, user.getLabel() + " registered on " + getBaseUrl(), sb.toString());
 	}
 
 	public void sendEmail(String from, String to, String subject, String text) {

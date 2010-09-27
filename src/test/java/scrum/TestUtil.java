@@ -43,7 +43,7 @@ public class TestUtil {
 	public static User getDuke() {
 		initialize();
 		User duke = app.getUserDao().getUserByName("duke");
-		if (duke == null) duke = app.getUserDao().postUser("duke");
+		if (duke == null) duke = app.getUserDao().postUserWithDefaultPassword("duke");
 		duke.setEmail("duke@kunagi.org");
 		duke.setEmailVerified(true);
 		return duke;
@@ -53,7 +53,7 @@ public class TestUtil {
 		initialize();
 		User admin = app.getUserDao().getUserByName("admin");
 		if (admin == null) {
-			admin = app.getUserDao().postUser("admin");
+			admin = app.getUserDao().postUserWithDefaultPassword("admin");
 			admin.setAdmin(true);
 		}
 		return admin;

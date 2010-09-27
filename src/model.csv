@@ -126,6 +126,7 @@
 "2a85e25a-de36-4183-9921-15f183b9b20c","2022a887-21ae-4fb1-ac20-5daf2700f34e","TextProperty","loginToken"
 "9e5c5a86-907a-4ea3-a7bc-ce220d532cfb","2022a887-21ae-4fb1-ac20-5daf2700f34e","TextProperty","name"
 "ca9742c0-f9e9-4407-ac46-ec35ba5c2546","2022a887-21ae-4fb1-ac20-5daf2700f34e","DateAndTimeProperty","registrationDateAndTime"
+"e87ba882-97f1-48a8-9093-254530877c1e","2022a887-21ae-4fb1-ac20-5daf2700f34e","TextProperty","openId"
 "11d4b7c6-fd7c-4152-8bfe-e6d12cf1c759","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","calendar"
 "259688b7-9a5e-459c-a1c5-d18b68ee795e","11d4b7c6-fd7c-4152-8bfe-e6d12cf1c759","Component","Calendar"
 "e7807ef2-dac0-48cd-9e85-8cd188ed6478","259688b7-9a5e-459c-a1c5-d18b68ee795e","Dependency","project"

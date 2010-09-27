@@ -30,6 +30,11 @@ public class User extends GUser {
 
 	// --- ---
 
+	public String getLabel() {
+		if (isEmailSet()) return getName() + " (" + getEmail() + ")";
+		return getName();
+	}
+
 	public Set<Project> getProjects() {
 		return projectDao.getProjectsByParticipant(this);
 	}

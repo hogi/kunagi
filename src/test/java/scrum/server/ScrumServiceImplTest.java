@@ -165,7 +165,7 @@ public class ScrumServiceImplTest extends ATest {
 
 	@Test
 	public void deleteEntity() {
-		User anonymous = app.getUserDao().postUser("daemon");
+		User anonymous = app.getUserDao().postUserWithDefaultPassword("daemon");
 		service.onDeleteEntity(conversationForAdmin, anonymous.getId());
 		assertConversationWithoutErrors(conversationForAdmin);
 		assertNull(app.getUserDao().getUserByName("daemon"));

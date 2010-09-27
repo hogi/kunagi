@@ -1347,6 +1347,60 @@ public abstract class GUser
 
     }
 
+    // --- openId ---
+
+    private java.lang.String openId ;
+
+    public final java.lang.String getOpenId() {
+        return this.openId ;
+    }
+
+    public final User setOpenId(java.lang.String openId) {
+        if (isOpenId(openId)) return (User)this;
+        if (openId != null && getDao().getUserByOpenId(openId) != null) throw new RuntimeException("\"" + openId + "\" already exists.");
+        this.openId = openId ;
+        propertyChanged("openId", this.openId);
+        return (User)this;
+    }
+
+    public final boolean isOpenId(java.lang.String openId) {
+        return equals(this.openId, openId);
+    }
+
+    private transient OpenIdModel openIdModel;
+
+    public OpenIdModel getOpenIdModel() {
+        if (openIdModel == null) openIdModel = createOpenIdModel();
+        return openIdModel;
+    }
+
+    protected OpenIdModel createOpenIdModel() { return new OpenIdModel(); }
+
+    protected class OpenIdModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "User_openId";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getOpenId();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setOpenId(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -1377,6 +1431,7 @@ public abstract class GUser
         hideUserGuideSprintBacklog  = (Boolean) props.get("hideUserGuideSprintBacklog");
         hideUserGuideWhiteboard  = (Boolean) props.get("hideUserGuideWhiteboard");
         loginToken  = (java.lang.String) props.get("loginToken");
+        openId  = (java.lang.String) props.get("openId");
     }
 
     @Override
@@ -1407,6 +1462,7 @@ public abstract class GUser
         properties.put("hideUserGuideSprintBacklog", this.hideUserGuideSprintBacklog);
         properties.put("hideUserGuideWhiteboard", this.hideUserGuideWhiteboard);
         properties.put("loginToken", this.loginToken);
+        properties.put("openId", this.openId);
     }
 
     @Override

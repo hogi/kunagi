@@ -1,5 +1,6 @@
 package scrum.server.admin;
 
+import ilarkesto.auth.OpenId;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
 import scrum.server.ScrumWebApplication;
@@ -23,8 +24,20 @@ public class UserDao extends GUserDao {
 		return user;
 	}
 
-	public User postUser(String name) {
+	public User postUserWithDefaultPassword(String name) {
 		return postUser(name, getDefaultPassword());
+	}
+
+	public User postUserWithOpenId(String openId) {
+		String name = OpenId.cutUsername(openId);
+		if (getUserByName(name) != null) name = openId;
+
+		User user = newEntityInstance();
+		user.setName(name);
+		user.setOpenId(openId);
+		saveEntity(user);
+		log.info("User created:", user);
+		return user;
 	}
 
 	@Override
@@ -44,7 +57,7 @@ public class UserDao extends GUserDao {
 
 	public User getTestUser(String name) {
 		User user = getUserByName(name);
-		if (user == null) user = postUser(name);
+		if (user == null) user = postUserWithDefaultPassword(name);
 		return user;
 	}
 

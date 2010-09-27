@@ -53,6 +53,7 @@ public class UserBlock extends ABlockWidget<User> {
 		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.addFieldRow("Name", user.getNameModel());
 		tb.addFieldRow("E-Mail", user.getEmailModel());
+		tb.addFieldRow("OpenID", user.getOpenIdModel());
 		tb.addFieldRow("Projects", new AOutputViewEditWidget() {
 
 			@Override
@@ -65,6 +66,7 @@ public class UserBlock extends ABlockWidget<User> {
 
 	public static final BlockWidgetFactory<User> FACTORY = new BlockWidgetFactory<User>() {
 
+		@Override
 		public UserBlock createBlock() {
 			return new UserBlock();
 		}

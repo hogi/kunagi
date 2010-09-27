@@ -71,6 +71,7 @@ public abstract class GUserDao
         usersByHideUserGuideSprintBacklogCache.clear();
         usersByHideUserGuideWhiteboardCache.clear();
         loginTokensCache = null;
+        openIdsCache = null;
     }
 
     @Override
@@ -866,6 +867,39 @@ public abstract class GUserDao
 
         public boolean test(User e) {
             return e.isLoginToken(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - openId
+    // -----------------------------------------------------------
+
+    public final User getUserByOpenId(java.lang.String openId) {
+        return getEntity(new IsOpenId(openId));
+    }
+    private Set<java.lang.String> openIdsCache;
+
+    public final Set<java.lang.String> getOpenIds() {
+        if (openIdsCache == null) {
+            openIdsCache = new HashSet<java.lang.String>();
+            for (User e : getEntities()) {
+                if (e.isOpenIdSet()) openIdsCache.add(e.getOpenId());
+            }
+        }
+        return openIdsCache;
+    }
+
+    private static class IsOpenId implements Predicate<User> {
+
+        private java.lang.String value;
+
+        public IsOpenId(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return e.isOpenId(value);
         }
 
     }

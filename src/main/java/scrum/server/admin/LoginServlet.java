@@ -1,6 +1,8 @@
 package scrum.server.admin;
 
+import ilarkesto.auth.OpenId;
 import ilarkesto.base.Str;
+import ilarkesto.base.Utl;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
@@ -13,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import scrum.client.ApplicationInfo;
 import scrum.client.ScrumGwtApplication;
@@ -56,6 +59,11 @@ public class LoginServlet extends AHttpServlet {
 			}
 		}
 
+		if (OpenId.isOpenIdCallback(req)) {
+			loginOpenId(resp, session, req);
+			return;
+		}
+
 		if (req.getParameter("createAccount") != null) {
 			createAccount(req.getParameter("username"), req.getParameter("email"), req.getParameter("password"),
 				historyToken, resp, session);
@@ -64,6 +72,12 @@ public class LoginServlet extends AHttpServlet {
 
 		if (req.getParameter("passwordRequest") != null) {
 			passwordRequest(req.getParameter("email"), historyToken, resp, session);
+			return;
+		}
+
+		String openId = req.getParameter("openid");
+		if (openId != null) {
+			redirectOpenId(openId, req.getParameter("keepmeloggedin") != null, historyToken, resp, session, req);
 			return;
 		}
 
@@ -178,6 +192,89 @@ public class LoginServlet extends AHttpServlet {
 		return url;
 	}
 
+	private void loginOpenId(HttpServletResponse resp, WebSession session, HttpServletRequest request)
+			throws UnsupportedEncodingException, IOException {
+		HttpSession httpSession = request.getSession();
+		String historyToken = (String) httpSession.getAttribute("openidHistoryToken");
+		boolean keepmeloggedin = httpSession.getAttribute("openidKeepmeloggedin") != null;
+
+		String openId;
+		try {
+			openId = OpenId.getIdentifierFromCallbackWithoutSuffix(request);
+		} catch (RuntimeException ex) {
+			log.error("OpenID authentication failed.", ex);
+			renderLoginPage(resp, null, null, historyToken,
+				"OpenID authentication failed: " + Str.format(Utl.getRootCause(ex)), false, false);
+			return;
+		}
+		if (openId == null) {
+			renderLoginPage(resp, null, null, historyToken, "OpenID authentication failed.", false, false);
+			return;
+		}
+
+		log.info("User authenticated by OpenID:", openId);
+
+		User user = userDao.getUserByOpenId(openId);
+
+		if (user == null) {
+			if (webApplication.getSystemConfig().isRegistrationDisabled()) {
+				renderLoginPage(resp, null, null, historyToken, "There is no user with the OpenID " + openId
+						+ " and creating new users is disabled.", false, false);
+				return;
+			}
+
+			if (userDao.getUserByOpenId(openId) != null) {
+				renderLoginPage(resp, null, null, historyToken, "Creating account failed. OpenID '" + openId
+						+ "' is already used.", false, true);
+				log.warn("Registration failed. OpenID already exists:", openId);
+				return;
+			}
+
+			user = userDao.postUserWithOpenId(openId);
+			webApplication.triggerRegisterNotification(user);
+		}
+
+		if (user.isDisabled()) {
+			renderLoginPage(resp, null, null, historyToken, "User is disabled.", false, false);
+			return;
+		}
+
+		user.setLastLoginDateAndTime(DateAndTime.now());
+		session.setUser(user);
+
+		if (keepmeloggedin)
+			Servlet.setCookie(resp, ScrumGwtApplication.LOGIN_TOKEN_COOKIE, user.getLoginToken(),
+				LOGIN_TOKEN_COOKIE_MAXAGE);
+
+		resp.sendRedirect(getStartPage(historyToken));
+	}
+
+	private void redirectOpenId(String openId, boolean keepmeloggedin, String historyToken, HttpServletResponse resp,
+			WebSession session, HttpServletRequest request) throws UnsupportedEncodingException, IOException {
+		HttpSession httpSession = request.getSession();
+		if (Str.isBlank(openId)) openId = null;
+
+		if (openId == null) {
+			renderLoginPage(resp, null, null, historyToken, "Login failed. OpenID required.", false, true);
+			return;
+		}
+
+		String url;
+		try {
+			url = OpenId.createAuthenticationRequestUrl(openId, request.getRequestURL().toString(), httpSession);
+		} catch (RuntimeException ex) {
+			log.error("OpenID authentication failed.", ex);
+			renderLoginPage(resp, null, null, historyToken,
+				"OpenID authentication failed: " + Str.format(Utl.getRootCause(ex)), false, false);
+			return;
+		}
+
+		httpSession.setAttribute("openidHistoryToken", historyToken);
+		httpSession.setAttribute("openidKeepmeloggedin", keepmeloggedin ? "true" : null);
+
+		resp.sendRedirect(url);
+	}
+
 	private void login(String username, String password, boolean keepmeloggedin, String historyToken,
 			HttpServletResponse resp, WebSession session) throws UnsupportedEncodingException, IOException {
 		username = username.toLowerCase();
@@ -209,16 +306,6 @@ public class LoginServlet extends AHttpServlet {
 		resp.sendRedirect(getStartPage(historyToken));
 	}
 
-	@Override
-	protected void onInit(ServletConfig servletConfig) {
-		super.onInit(servletConfig);
-		webApplication = ScrumWebApplication.get();
-		userDao = webApplication.getUserDao();
-		applicationInfo = webApplication.getApplicationInfo();
-		config = webApplication.getConfig();
-		systemConfig = webApplication.getSystemConfig();
-	}
-
 	private void renderLoginPage(HttpServletResponse resp, String username, String email, String historyToken,
 			String message, boolean passwordRequest, boolean createAccount) throws UnsupportedEncodingException,
 			IOException {
@@ -242,9 +329,9 @@ public class LoginServlet extends AHttpServlet {
 		html.IMG(logoUrl, "Kunagi", null, null, null);
 		html.DIV("separator", null);
 		if (message != null) renderMessage(html, message);
-		if (!createAccount && !passwordRequest) renderLoginForm(html, username, historyToken);
-		if (passwordRequest) renderPasswordRequestForm(html, username, historyToken);
-		if (createAccount) renderCreateAccountForm(html, username, email, historyToken);
+		if (!createAccount && !passwordRequest) renderLogin(html, username, historyToken);
+		if (passwordRequest) renderPasswordRequest(html, username, historyToken);
+		if (createAccount) renderCreateAccount(html, username, email, historyToken);
 		html.DIV("separator", null);
 		html.startDIV("kunagiLink");
 		html.text("Kunagi " + webApplication.getReleaseLabel() + " | ");
@@ -264,8 +351,38 @@ public class LoginServlet extends AHttpServlet {
 		html.flush();
 	}
 
-	private void renderLoginForm(HtmlRenderer html, String username, String historyToken) {
-		html.H2("Login");
+	private void renderLogin(HtmlRenderer html, String username, String historyToken) {
+		html.H2("Login with OpenID");
+		renderOpenIdLoginForm(html, historyToken);
+
+		html.DIV("separator", null);
+		html.H2("Login with Password");
+		renderRetroLoginForm(html, username, historyToken);
+		html.BR();
+		html.A("login.html?showPasswordRequest=true", "Forgot your password?");
+		if (!systemConfig.isRegistrationDisabled()) {
+			html.nbsp();
+			html.nbsp();
+			html.A("login.html?showCreateAccount=true", "Create new account");
+		}
+
+		if (webApplication.isAdminPasswordDefault()) {
+			html.DIV("separator", null);
+			html.startDIV("configMessage");
+			html.html("<h2>Warning!</h2>The administrator user <code>admin</code> has the default password <code>"
+					+ scrum.client.admin.User.INITIAL_PASSWORD + "</code>. Please change it.");
+			html.endDIV();
+		}
+
+		if (systemConfig.isLoginPageMessageSet()) {
+			html.DIV("separator", null);
+			html.startDIV("configMessage");
+			html.html(systemConfig.getLoginPageMessage());
+			html.endDIV();
+		}
+	}
+
+	public void renderRetroLoginForm(HtmlRenderer html, String username, String historyToken) {
 		html.startFORM(null, "loginForm", false);
 		html.INPUThidden("historyToken", historyToken);
 		html.startTABLE().setAlignCenter();
@@ -300,33 +417,66 @@ public class LoginServlet extends AHttpServlet {
 
 		html.endTABLE();
 		html.endFORM();
-
-		html.BR();
-		html.A("login.html?showPasswordRequest=true", "Forgot your password?");
-
-		if (!systemConfig.isRegistrationDisabled()) {
-			html.nbsp();
-			html.nbsp();
-			html.A("login.html?showCreateAccount=true", "Create new account");
-		}
-
-		if (webApplication.isAdminPasswordDefault()) {
-			html.DIV("separator", null);
-			html.startDIV("configMessage");
-			html.html("<h2>Warning!</h2>The administrator user <code>admin</code> has the default password <code>"
-					+ scrum.client.admin.User.INITIAL_PASSWORD + "</code>. Please change it.");
-			html.endDIV();
-		}
-
-		if (systemConfig.isLoginPageMessageSet()) {
-			html.DIV("separator", null);
-			html.startDIV("configMessage");
-			html.html(systemConfig.getLoginPageMessage());
-			html.endDIV();
-		}
 	}
 
-	private void renderPasswordRequestForm(HtmlRenderer html, String username, String historyToken) {
+	public void renderOpenIdLoginForm(HtmlRenderer html, String historyToken) {
+		renderOpenIdLink(OpenId.MYOPENID, "MyOpenID", historyToken, html);
+		renderOpenIdLink(OpenId.GOOGLE, "Google", historyToken, html);
+		renderOpenIdLink(OpenId.YAHOO, "Yahoo!", historyToken, html);
+		renderOpenIdLink(OpenId.LAUNCHPAD, "Launchpad", historyToken, html);
+		renderOpenIdLink(OpenId.VERISIGN, "Verisign", historyToken, html);
+		renderOpenIdLink(OpenId.AOL, "AOL", historyToken, html);
+		renderOpenIdLink(OpenId.WORDPRESS, "WordPress", historyToken, html);
+		renderOpenIdLink(OpenId.FLICKR, "Flickr", historyToken, html);
+		renderOpenIdLink(OpenId.BLOGSPOT, "Blogger", historyToken, html);
+		renderOpenIdLink(OpenId.MYVIDOOP, "Vidoop", historyToken, html);
+		html.DIVclear();
+		html.BR();
+
+		html.startFORM(null, "openIdForm", false);
+		html.INPUThidden("historyToken", historyToken);
+		html.startTABLE().setAlignCenter();
+
+		html.startTR();
+		html.startTD();
+		html.LABEL("openid", "Custom OpenID");
+		html.endTD();
+		html.TD("");
+		html.endTR();
+
+		html.startTR();
+		html.startTD(null, 2);
+		html.INPUTtext("openid", "openid", null, 80);
+		html.endTD();
+		html.endTR();
+
+		html.startTR();
+		html.startTD();
+		html.INPUTcheckbox("keepmeloggedinOpenId", "keepmeloggedin", false);
+		html.LABEL("keepmeloggedinOpenId", "Keep me logged in");
+		html.endTD();
+		html.startTD().setAlignRight();
+		html.INPUTsubmit("login", "Login", null, 's');
+		html.endTD();
+		html.endTR();
+
+		html.endTABLE();
+		html.endFORM();
+	}
+
+	private void renderOpenIdLink(String openId, String label, String historyToken, HtmlRenderer html) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("login.html?openid=").append(Str.encodeUrlParameter(openId));
+		sb.append("&login=Login");
+		if (historyToken != null) sb.append("&historyToken=").append(Str.encodeUrlParameter(historyToken));
+		html.startA("openid", sb.toString());
+		html.startDIV("button");
+		html.text(label);
+		html.endDIV();
+		html.endA();
+	}
+
+	private void renderPasswordRequest(HtmlRenderer html, String username, String historyToken) {
 		html.H2("Request new password");
 		html.startFORM(null, "passwordRequestForm", false);
 		html.INPUThidden("historyToken", historyToken);
@@ -355,7 +505,7 @@ public class LoginServlet extends AHttpServlet {
 		html.A("login.html", "Back to Login");
 	}
 
-	private void renderCreateAccountForm(HtmlRenderer html, String username, String email, String historyToken) {
+	private void renderCreateAccount(HtmlRenderer html, String username, String email, String historyToken) {
 		html.H2("Create account");
 		html.startDIV("createAccount");
 		html.startFORM(null, "loginForm", false);
@@ -417,6 +567,17 @@ public class LoginServlet extends AHttpServlet {
 		html.startDIV("message");
 		html.text(message);
 		html.endDIV();
+		html.DIV("separator", null);
+	}
+
+	@Override
+	protected void onInit(ServletConfig servletConfig) {
+		super.onInit(servletConfig);
+		webApplication = ScrumWebApplication.get();
+		userDao = webApplication.getUserDao();
+		applicationInfo = webApplication.getApplicationInfo();
+		config = webApplication.getConfig();
+		systemConfig = webApplication.getSystemConfig();
 	}
 
 }

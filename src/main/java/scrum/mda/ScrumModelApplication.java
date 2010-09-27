@@ -658,6 +658,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.addProperty("hideUserGuideSprintBacklog", boolean.class);
 			userModel.addProperty("hideUserGuideWhiteboard", boolean.class);
 			userModel.addStringProperty("loginToken").setUnique(true);
+			userModel.addStringProperty("openId").setUnique(true);
 			getApplicationModel().addCreateAction(userModel);
 			userModel.addAction("DeleteUser");
 			userModel.addAction("DisableUser");
