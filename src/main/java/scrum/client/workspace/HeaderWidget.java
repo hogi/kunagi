@@ -4,9 +4,13 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.DropdownMenuButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
-import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget.SwitchAction;
+import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.undo.UndoButtonWidget;
+
+import java.util.Collections;
+import java.util.List;
+
 import scrum.client.ApplicationInfo;
 import scrum.client.ScrumScopeManager;
 import scrum.client.admin.LogoutAction;
@@ -83,7 +87,9 @@ public class HeaderWidget extends AScrumWidget {
 
 			});
 			switchProjectButton.addSeparator();
-			for (Project p : getDao().getProjects()) {
+			List<Project> projects = getDao().getProjects();
+			Collections.sort(projects, Project.LAST_OPENED_COMPARATOR);
+			for (Project p : projects) {
 				switchProjectButton.addAction("QuickLinks", new ChangeProjectAction(p));
 			}
 		}
