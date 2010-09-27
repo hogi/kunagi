@@ -50,6 +50,7 @@ public class CommentDao extends GCommentDao {
 		comment.setText(text);
 		comment.setAuthorName(name);
 		comment.setAuthorEmail(email);
+		saveEntity(comment);
 		return comment;
 	}
 
