@@ -16,10 +16,11 @@
 <div class="section">
     <a name="sprintbacklog"></a>
     <h2>Sprint Backlog</h2>
-    The current sprint started on <strong>${sprintBacklog.begin}</strong> and will end on <strong>${sprintBacklog.end}</strong>.
-    #if ($sprintBacklog.release)
-        Release <strong>#{sprintBacklog.release}</strong> is being implemented.
-    #end
+    <p>The current sprint started on <strong>${sprintBacklog.begin}</strong> and will end on <strong>${sprintBacklog.end}</strong>.
+        #if ($sprintBacklog.release)
+            Release <strong>#{sprintBacklog.release}</strong> is being implemented.
+        #end
+    </p>
     #if( $sprintBacklog.goal )
         <h3>Goal for the current Sprint</h3>
         <p>$sprintBacklog.goal</p>
