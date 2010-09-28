@@ -42,6 +42,8 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onRequestImpediments(GwtConversation conversation);
 
+    public abstract void onConvertIssueToStory(GwtConversation conversation, String issueId);
+
     public abstract void onRequestAcceptedIssues(GwtConversation conversation);
 
     public abstract void onRequestClosedIssues(GwtConversation conversation);
@@ -415,6 +417,26 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestImpediments(conversation);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "RequestImpediments", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject convertIssueToStory(int conversationNumber, String issueId) {
+        log.debug("Handling service call: ConvertIssueToStory");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:ConvertIssueToStory");
+            context.bindCurrentThread();
+            try {
+                onConvertIssueToStory(conversation, issueId);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "ConvertIssueToStory", ex);
                 throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

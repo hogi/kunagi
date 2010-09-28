@@ -1,6 +1,7 @@
 package scrum.server.project;
 
 import ilarkesto.fp.Predicate;
+import scrum.server.issues.Issue;
 
 public class RequirementDao extends GRequirementDao {
 
@@ -28,6 +29,18 @@ public class RequirementDao extends GRequirementDao {
 		requirement.setLabel(label);
 		requirement.setEstimatedWork(estimation);
 		saveEntity(requirement);
+		requirement.updateNumber();
+		return requirement;
+	}
+
+	public Requirement postRequirement(Issue issue) {
+		Requirement requirement = newEntityInstance();
+		requirement.setProject(issue.getProject());
+		requirement.setLabel(issue.getLabel());
+		requirement.setIssue(issue);
+		issue.setStory(requirement);
+		saveEntity(requirement);
+		requirement.updateNumber();
 		return requirement;
 	}
 }

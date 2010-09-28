@@ -1,9 +1,7 @@
 package scrum.client.issues;
 
-import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
 import scrum.client.project.Requirement;
-import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementAction {
 
@@ -40,14 +38,7 @@ public class ConvertIssueToRequirementAction extends GConvertIssueToRequirementA
 
 	@Override
 	protected void onExecute() {
-		Requirement requirement = new Requirement(issue);
-		getDao().createRequirement(requirement);
-		requirement.setIssue(issue);
-		issue.setStory(requirement);
-		issue.appendStatement("Created Story in Product Backlog.");
-		issue.close();
-		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showProductBacklog(requirement);
-		addUndo(new Undo(requirement));
+		new ConvertIssueToStoryServiceCall(issue.getId()).execute();
 	}
 
 	class Undo extends ALocalUndo {

@@ -31,14 +31,15 @@ public class Change extends GChange {
 
 		if (parent instanceof Issue) {
 			if (key.equals("closeDate")) return Str.isBlank(newValue) ? "reopened issue" : "closed issue";
-			if (key.equals("storyId")) return "created story " + getDao().getRequirement(newValue).getReference();
+			if (key.equals("storyId"))
+				return "converted issue to story " + getDao().getRequirement(newValue).getReference();
 		} else if (parent instanceof Impediment) {
 			if (key.equals("closed")) return Str.isTrue(newValue) ? "closed impediment" : "reopened impediment";
 		} else if (parent instanceof Requirement) {
 			if (key.equals("closed")) return Str.isTrue(newValue) ? "closed story" : "reopened story";
 			if (key.equals("sprintId"))
 				return newValue == null ? "kicked story from sprint" : "pulled story to sprint";
-			if (key.equals("issueId")) return "linked story to issue " + getDao().getIssue(newValue).getReference();
+			if (key.equals("issueId")) return "created story from issue " + getDao().getIssue(newValue).getReference();
 		}
 
 		if (Str.isBlank(oldValue)) return "created " + getFieldLabel();
@@ -59,11 +60,11 @@ public class Change extends GChange {
 			if (key.equals("closed")) return null;
 		} else if (parent instanceof Risk) {
 			if (key.equals("impact"))
-				return createSinglelineDiff(RiskComputer.getImpactLabel(oldValue),
-					RiskComputer.getImpactLabel(newValue));
+				return createSinglelineDiff(RiskComputer.getImpactLabel(oldValue), RiskComputer
+						.getImpactLabel(newValue));
 			if (key.equals("probability"))
-				return createSinglelineDiff(RiskComputer.getProbabilityLabel(oldValue),
-					RiskComputer.getProbabilityLabel(newValue));
+				return createSinglelineDiff(RiskComputer.getProbabilityLabel(oldValue), RiskComputer
+						.getProbabilityLabel(newValue));
 		} else if (parent instanceof Requirement) {
 			if (key.equals("closed")) return null;
 			if (key.equals("sprintId")) return null;

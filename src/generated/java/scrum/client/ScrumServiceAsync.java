@@ -42,6 +42,8 @@ public interface ScrumServiceAsync {
 
     void requestImpediments(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
+    void convertIssueToStory(int conversationNumber, String issueId, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
+
     void requestAcceptedIssues(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
     void requestClosedIssues(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
