@@ -18,6 +18,18 @@ public class ReleaseDao extends GReleaseDao {
 		});
 	}
 
+	public Release getNextRelease(Project project) {
+		Release next = null;
+		Set<Release> releases = getReleasesByProject(project);
+		for (Release release : releases) {
+			if (release.isReleased()) continue;
+			if (next == null || release.getReleaseDate().isBefore(next.getReleaseDate())) {
+				next = release;
+			}
+		}
+		return next;
+	}
+
 	public Release getCurrentRelease(Project project) {
 		Release latest = null;
 		Set<Release> releases = getReleasesByProject(project);

@@ -1252,14 +1252,6 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.project.Project> getProjectsByPunishmentFactor(int punishmentFactor) {
-        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
-        for (scrum.client.project.Project entity : projects.values()) {
-            if (entity.isPunishmentFactor(punishmentFactor)) ret.add(entity);
-        }
-        return ret;
-    }
-
     public final List<scrum.client.project.Project> getProjectsByPunishmentUnit(java.lang.String punishmentUnit) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
@@ -1268,10 +1260,26 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByPunishmentFactor(int punishmentFactor) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isPunishmentFactor(punishmentFactor)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.project.Project> getProjectsByHomepageDir(java.lang.String homepageDir) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
             if (entity.isHomepageDir(homepageDir)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Project> getProjectsByHomepageUrl(java.lang.String homepageUrl) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isHomepageUrl(homepageUrl)) ret.add(entity);
         }
         return ret;
     }
@@ -2664,6 +2672,14 @@ public abstract class GDao
         List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
         for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
             if (entity.isRegistrationDisabled(registrationDisabled)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsByProjectCreationDisabled(boolean projectCreationDisabled) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isProjectCreationDisabled(projectCreationDisabled)) ret.add(entity);
         }
         return ret;
     }

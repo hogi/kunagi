@@ -739,6 +739,8 @@ public abstract class GProject
             public void decrement() {
                 setVelocity(getVelocity() - 1);
             }
+        @Override
+        public String getTooltip() { return "Estimated velocity for the current sprint."; }
 
         @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
@@ -1534,6 +1536,59 @@ public abstract class GProject
 
     }
 
+    // --- punishmentUnit ---
+
+    private java.lang.String punishmentUnit ;
+
+    public final java.lang.String getPunishmentUnit() {
+        return this.punishmentUnit ;
+    }
+
+    public final Project setPunishmentUnit(java.lang.String punishmentUnit) {
+        if (isPunishmentUnit(punishmentUnit)) return (Project)this;
+        this.punishmentUnit = punishmentUnit ;
+        propertyChanged("punishmentUnit", this.punishmentUnit);
+        return (Project)this;
+    }
+
+    public final boolean isPunishmentUnit(java.lang.String punishmentUnit) {
+        return equals(this.punishmentUnit, punishmentUnit);
+    }
+
+    private transient PunishmentUnitModel punishmentUnitModel;
+
+    public PunishmentUnitModel getPunishmentUnitModel() {
+        if (punishmentUnitModel == null) punishmentUnitModel = createPunishmentUnitModel();
+        return punishmentUnitModel;
+    }
+
+    protected PunishmentUnitModel createPunishmentUnitModel() { return new PunishmentUnitModel(); }
+
+    protected class PunishmentUnitModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_punishmentUnit";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getPunishmentUnit();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setPunishmentUnit(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- punishmentFactor ---
 
     private int punishmentFactor ;
@@ -1597,59 +1652,6 @@ public abstract class GProject
 
     }
 
-    // --- punishmentUnit ---
-
-    private java.lang.String punishmentUnit ;
-
-    public final java.lang.String getPunishmentUnit() {
-        return this.punishmentUnit ;
-    }
-
-    public final Project setPunishmentUnit(java.lang.String punishmentUnit) {
-        if (isPunishmentUnit(punishmentUnit)) return (Project)this;
-        this.punishmentUnit = punishmentUnit ;
-        propertyChanged("punishmentUnit", this.punishmentUnit);
-        return (Project)this;
-    }
-
-    public final boolean isPunishmentUnit(java.lang.String punishmentUnit) {
-        return equals(this.punishmentUnit, punishmentUnit);
-    }
-
-    private transient PunishmentUnitModel punishmentUnitModel;
-
-    public PunishmentUnitModel getPunishmentUnitModel() {
-        if (punishmentUnitModel == null) punishmentUnitModel = createPunishmentUnitModel();
-        return punishmentUnitModel;
-    }
-
-    protected PunishmentUnitModel createPunishmentUnitModel() { return new PunishmentUnitModel(); }
-
-    protected class PunishmentUnitModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
-
-        @Override
-        public String getId() {
-            return "Project_punishmentUnit";
-        }
-
-        @Override
-        public java.lang.String getValue() {
-            return getPunishmentUnit();
-        }
-
-        @Override
-        public void setValue(java.lang.String value) {
-            setPunishmentUnit(value);
-        }
-
-        @Override
-        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
-            super.onChangeValue(oldValue, newValue);
-            addUndo(this, oldValue);
-        }
-
-    }
-
     // --- homepageDir ---
 
     private java.lang.String homepageDir ;
@@ -1694,6 +1696,63 @@ public abstract class GProject
         public void setValue(java.lang.String value) {
             setHomepageDir(value);
         }
+        @Override
+        public String getTooltip() { return "Directory, which contains homepage files and velocity templates."; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- homepageUrl ---
+
+    private java.lang.String homepageUrl ;
+
+    public final java.lang.String getHomepageUrl() {
+        return this.homepageUrl ;
+    }
+
+    public final Project setHomepageUrl(java.lang.String homepageUrl) {
+        if (isHomepageUrl(homepageUrl)) return (Project)this;
+        this.homepageUrl = homepageUrl ;
+        propertyChanged("homepageUrl", this.homepageUrl);
+        return (Project)this;
+    }
+
+    public final boolean isHomepageUrl(java.lang.String homepageUrl) {
+        return equals(this.homepageUrl, homepageUrl);
+    }
+
+    private transient HomepageUrlModel homepageUrlModel;
+
+    public HomepageUrlModel getHomepageUrlModel() {
+        if (homepageUrlModel == null) homepageUrlModel = createHomepageUrlModel();
+        return homepageUrlModel;
+    }
+
+    protected HomepageUrlModel createHomepageUrlModel() { return new HomepageUrlModel(); }
+
+    protected class HomepageUrlModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_homepageUrl";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getHomepageUrl();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setHomepageUrl(value);
+        }
+        @Override
+        public String getTooltip() { return "URL on which the project homepage is accessible."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -1846,9 +1905,10 @@ public abstract class GProject
         lastEventNumber  = (Integer) props.get("lastEventNumber");
         lastReleaseNumber  = (Integer) props.get("lastReleaseNumber");
         lastBlogEntryNumber  = (Integer) props.get("lastBlogEntryNumber");
-        punishmentFactor  = (Integer) props.get("punishmentFactor");
         punishmentUnit  = (java.lang.String) props.get("punishmentUnit");
+        punishmentFactor  = (Integer) props.get("punishmentFactor");
         homepageDir  = (java.lang.String) props.get("homepageDir");
+        homepageUrl  = (java.lang.String) props.get("homepageUrl");
         autoUpdateHomepage  = (Boolean) props.get("autoUpdateHomepage");
         String lastOpenedDateAndTimeAsString = (String) props.get("lastOpenedDateAndTime");
         lastOpenedDateAndTime  =  lastOpenedDateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(lastOpenedDateAndTimeAsString);
@@ -1887,9 +1947,10 @@ public abstract class GProject
         properties.put("lastEventNumber", this.lastEventNumber);
         properties.put("lastReleaseNumber", this.lastReleaseNumber);
         properties.put("lastBlogEntryNumber", this.lastBlogEntryNumber);
-        properties.put("punishmentFactor", this.punishmentFactor);
         properties.put("punishmentUnit", this.punishmentUnit);
+        properties.put("punishmentFactor", this.punishmentFactor);
         properties.put("homepageDir", this.homepageDir);
+        properties.put("homepageUrl", this.homepageUrl);
         properties.put("autoUpdateHomepage", this.autoUpdateHomepage);
         properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
     }

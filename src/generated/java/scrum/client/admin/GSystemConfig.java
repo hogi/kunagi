@@ -886,6 +886,61 @@ public abstract class GSystemConfig
 
     }
 
+    // --- projectCreationDisabled ---
+
+    private boolean projectCreationDisabled ;
+
+    public final boolean isProjectCreationDisabled() {
+        return this.projectCreationDisabled ;
+    }
+
+    public final SystemConfig setProjectCreationDisabled(boolean projectCreationDisabled) {
+        if (isProjectCreationDisabled(projectCreationDisabled)) return (SystemConfig)this;
+        this.projectCreationDisabled = projectCreationDisabled ;
+        propertyChanged("projectCreationDisabled", this.projectCreationDisabled);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isProjectCreationDisabled(boolean projectCreationDisabled) {
+        return equals(this.projectCreationDisabled, projectCreationDisabled);
+    }
+
+    private transient ProjectCreationDisabledModel projectCreationDisabledModel;
+
+    public ProjectCreationDisabledModel getProjectCreationDisabledModel() {
+        if (projectCreationDisabledModel == null) projectCreationDisabledModel = createProjectCreationDisabledModel();
+        return projectCreationDisabledModel;
+    }
+
+    protected ProjectCreationDisabledModel createProjectCreationDisabledModel() { return new ProjectCreationDisabledModel(); }
+
+    protected class ProjectCreationDisabledModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_projectCreationDisabled";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isProjectCreationDisabled();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setProjectCreationDisabled(value);
+        }
+        @Override
+        public String getTooltip() { return "Activate this, to prevent users from creating projects."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- defaultUserPassword ---
 
     private java.lang.String defaultUserPassword ;
@@ -959,6 +1014,7 @@ public abstract class GSystemConfig
         aboutPageMessage  = (java.lang.String) props.get("aboutPageMessage");
         userEmailMandatory  = (Boolean) props.get("userEmailMandatory");
         registrationDisabled  = (Boolean) props.get("registrationDisabled");
+        projectCreationDisabled  = (Boolean) props.get("projectCreationDisabled");
         defaultUserPassword  = (java.lang.String) props.get("defaultUserPassword");
     }
 
@@ -980,6 +1036,7 @@ public abstract class GSystemConfig
         properties.put("aboutPageMessage", this.aboutPageMessage);
         properties.put("userEmailMandatory", this.userEmailMandatory);
         properties.put("registrationDisabled", this.registrationDisabled);
+        properties.put("projectCreationDisabled", this.projectCreationDisabled);
         properties.put("defaultUserPassword", this.defaultUserPassword);
     }
 

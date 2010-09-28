@@ -14,6 +14,8 @@ public class CreateProjectAction extends GCreateProjectAction {
 	@Override
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Create a new Project.");
+		if (!getCurrentUser().isAdmin() && getDao().getSystemConfig().isProjectCreationDisabled())
+			tb.addRemark("Creating new projects is disabled.");
 		return tb.getTooltip();
 	}
 
@@ -24,6 +26,7 @@ public class CreateProjectAction extends GCreateProjectAction {
 
 	@Override
 	public boolean isPermitted() {
+		if (!getCurrentUser().isAdmin() && getDao().getSystemConfig().isProjectCreationDisabled()) return false;
 		return true;
 	}
 

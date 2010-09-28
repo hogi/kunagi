@@ -66,9 +66,10 @@ public abstract class GProject
         properties.put("lastEventNumber", this.lastEventNumber);
         properties.put("lastReleaseNumber", this.lastReleaseNumber);
         properties.put("lastBlogEntryNumber", this.lastBlogEntryNumber);
-        properties.put("punishmentFactor", this.punishmentFactor);
         properties.put("punishmentUnit", this.punishmentUnit);
+        properties.put("punishmentFactor", this.punishmentFactor);
         properties.put("homepageDir", this.homepageDir);
+        properties.put("homepageUrl", this.homepageUrl);
         properties.put("autoUpdateHomepage", this.autoUpdateHomepage);
         properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
     }
@@ -1485,35 +1486,6 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
-    // - punishmentFactor
-    // -----------------------------------------------------------
-
-    private int punishmentFactor;
-
-    public final int getPunishmentFactor() {
-        return punishmentFactor;
-    }
-
-    public final void setPunishmentFactor(int punishmentFactor) {
-        punishmentFactor = preparePunishmentFactor(punishmentFactor);
-        if (isPunishmentFactor(punishmentFactor)) return;
-        this.punishmentFactor = punishmentFactor;
-        fireModified("punishmentFactor="+punishmentFactor);
-    }
-
-    protected int preparePunishmentFactor(int punishmentFactor) {
-        return punishmentFactor;
-    }
-
-    public final boolean isPunishmentFactor(int punishmentFactor) {
-        return this.punishmentFactor == punishmentFactor;
-    }
-
-    protected final void updatePunishmentFactor(Object value) {
-        setPunishmentFactor((Integer)value);
-    }
-
-    // -----------------------------------------------------------
     // - punishmentUnit
     // -----------------------------------------------------------
 
@@ -1549,6 +1521,35 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
+    // - punishmentFactor
+    // -----------------------------------------------------------
+
+    private int punishmentFactor;
+
+    public final int getPunishmentFactor() {
+        return punishmentFactor;
+    }
+
+    public final void setPunishmentFactor(int punishmentFactor) {
+        punishmentFactor = preparePunishmentFactor(punishmentFactor);
+        if (isPunishmentFactor(punishmentFactor)) return;
+        this.punishmentFactor = punishmentFactor;
+        fireModified("punishmentFactor="+punishmentFactor);
+    }
+
+    protected int preparePunishmentFactor(int punishmentFactor) {
+        return punishmentFactor;
+    }
+
+    public final boolean isPunishmentFactor(int punishmentFactor) {
+        return this.punishmentFactor == punishmentFactor;
+    }
+
+    protected final void updatePunishmentFactor(Object value) {
+        setPunishmentFactor((Integer)value);
+    }
+
+    // -----------------------------------------------------------
     // - homepageDir
     // -----------------------------------------------------------
 
@@ -1581,6 +1582,41 @@ public abstract class GProject
 
     protected final void updateHomepageDir(Object value) {
         setHomepageDir((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - homepageUrl
+    // -----------------------------------------------------------
+
+    private java.lang.String homepageUrl;
+
+    public final java.lang.String getHomepageUrl() {
+        return homepageUrl;
+    }
+
+    public final void setHomepageUrl(java.lang.String homepageUrl) {
+        homepageUrl = prepareHomepageUrl(homepageUrl);
+        if (isHomepageUrl(homepageUrl)) return;
+        this.homepageUrl = homepageUrl;
+        fireModified("homepageUrl="+homepageUrl);
+    }
+
+    protected java.lang.String prepareHomepageUrl(java.lang.String homepageUrl) {
+        homepageUrl = Str.removeUnreadableChars(homepageUrl);
+        return homepageUrl;
+    }
+
+    public final boolean isHomepageUrlSet() {
+        return this.homepageUrl != null;
+    }
+
+    public final boolean isHomepageUrl(java.lang.String homepageUrl) {
+        if (this.homepageUrl == null && homepageUrl == null) return true;
+        return this.homepageUrl != null && this.homepageUrl.equals(homepageUrl);
+    }
+
+    protected final void updateHomepageUrl(Object value) {
+        setHomepageUrl((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -1682,9 +1718,10 @@ public abstract class GProject
             if (property.equals("lastEventNumber")) updateLastEventNumber(value);
             if (property.equals("lastReleaseNumber")) updateLastReleaseNumber(value);
             if (property.equals("lastBlogEntryNumber")) updateLastBlogEntryNumber(value);
-            if (property.equals("punishmentFactor")) updatePunishmentFactor(value);
             if (property.equals("punishmentUnit")) updatePunishmentUnit(value);
+            if (property.equals("punishmentFactor")) updatePunishmentFactor(value);
             if (property.equals("homepageDir")) updateHomepageDir(value);
+            if (property.equals("homepageUrl")) updateHomepageUrl(value);
             if (property.equals("autoUpdateHomepage")) updateAutoUpdateHomepage(value);
             if (property.equals("lastOpenedDateAndTime")) updateLastOpenedDateAndTime(value);
         }

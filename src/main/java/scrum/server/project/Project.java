@@ -468,6 +468,10 @@ public class Project extends GProject {
 		return releaseDao.getCurrentRelease(this);
 	}
 
+	public Release getNextRelease() {
+		return releaseDao.getNextRelease(this);
+	}
+
 	public ProjectSprintSnapshot getCurrentSprintSnapshot() {
 		ProjectSprintSnapshot snapshot = projectSprintSnapshotDao.getProjectSprintSnapshotBySprint(getCurrentSprint());
 		if (snapshot == null) snapshot = createSprintSnapshot();
@@ -571,6 +575,18 @@ public class Project extends GProject {
 
 	public Set<Issue> getPublishedIssues() {
 		return issueDao.getPublishedIssues(this);
+	}
+
+	public Set<Issue> getBugsInCurrentRelease() {
+		Release release = getCurrentRelease();
+		Release nextRelease = getNextRelease();
+		if (release == null) return getOpenBugs();
+		Set<Issue> ret = new HashSet<Issue>();
+		ret.addAll(getOpenBugs());
+		for (Issue issue : getClosedIssues()) {
+			if (issue.containsFixRelease(nextRelease) && !issue.containsFixRelease(release)) ret.add(issue);
+		}
+		return ret;
 	}
 
 	public Set<Issue> getOpenBugs() {

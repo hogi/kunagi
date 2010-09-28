@@ -1,6 +1,7 @@
 package scrum.client.admin;
 
 import ilarkesto.core.base.Str;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.scope.Scope;
 
 import java.util.ArrayList;
@@ -67,8 +68,17 @@ public class User extends GUser {
 		};
 	}
 
+	public static final Comparator<User> LAST_LOGIN_COMPARATOR = new Comparator<User>() {
+
+		@Override
+		public int compare(User a, User b) {
+			return Utl.compare(b.getLastLoginDateAndTime(), a.getLastLoginDateAndTime());
+		}
+	};
+
 	public static final Comparator<User> NAME_COMPARATOR = new Comparator<User>() {
 
+		@Override
 		public int compare(User a, User b) {
 			return a.getName().compareTo(b.getName());
 		}
@@ -76,6 +86,7 @@ public class User extends GUser {
 
 	public transient static final Comparator<User> ONLINE_OFFLINE_COMPARATOR = new Comparator<User>() {
 
+		@Override
 		public int compare(User a, User b) {
 			UsersStatus usersStatus = Scope.get().getComponent(UsersStatus.class);
 			boolean aOnline = usersStatus.isOnline(a);

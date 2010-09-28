@@ -77,7 +77,7 @@ public class SprintWidget extends AScrumWidget {
 				protected void onUpdate() {
 					setHours(getSprint().getRemainingWork());
 				}
-			});
+			}, 2);
 			tb.nextRow();
 		} else {
 			// completed

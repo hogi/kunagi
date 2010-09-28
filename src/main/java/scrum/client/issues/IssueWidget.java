@@ -1,5 +1,6 @@
 package scrum.client.issues;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.AOutputViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
@@ -19,6 +20,7 @@ import scrum.client.common.AScrumWidget;
 import scrum.client.journal.ChangeHistoryWidget;
 import scrum.client.release.Release;
 
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -119,12 +121,23 @@ public class IssueWidget extends AScrumWidget {
 				return "Releases to which this issue is or will be fixed.";
 			}
 		});
-		if (issue.isOpen() && issue.getProject().getHomepageDir() != null) {
+		if (issue.getProject().getHomepageDir() != null) {
 			left.addFieldRow("Published", new AOutputViewEditWidget() {
 
 				@Override
 				protected void onViewerUpdate() {
-					setViewer(new Label(issue.isPublished() ? "Yes" : "No"));
+					if (issue.isPublished()) {
+						String url = issue.getProject().getHomepageUrl();
+						if (Str.isBlank(url)) {
+							setViewer(new Label("Yes"));
+						} else {
+							if (!url.endsWith("/")) url += "/";
+							url += issue.getReference() + ".html";
+							setViewer(new HTML("<a href=\"" + url + "\" target=\"_blank\">" + url + "</a>"));
+						}
+					} else {
+						setViewer(new Label("No"));
+					}
 				}
 			});
 		}

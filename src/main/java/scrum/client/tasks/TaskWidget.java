@@ -39,7 +39,7 @@ public class TaskWidget extends AScrumWidget {
 
 			@Override
 			protected void onIntegerViewerUpdate() {
-				setViewerValue(task.getBurnedWork(), "hours");
+				setViewerValue(task.getBurnedWork());
 			}
 
 			@Override

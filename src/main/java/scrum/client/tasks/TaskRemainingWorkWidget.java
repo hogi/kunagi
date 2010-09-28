@@ -56,7 +56,7 @@ public class TaskRemainingWorkWidget extends AWidget {
 
 		@Override
 		protected void onIntegerViewerUpdate() {
-			setViewerValue(task.getRemainingWork(), "hours");
+			setViewerValue(task.getRemainingWork());
 		}
 
 		@Override

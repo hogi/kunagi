@@ -186,7 +186,7 @@ public class HomepageUpdater {
 	}
 
 	private void fillBugs(ContextBuilder context) {
-		List<Issue> issues = new ArrayList<Issue>(project.getOpenBugs());
+		List<Issue> issues = new ArrayList<Issue>(project.getBugsInCurrentRelease());
 		Collections.sort(issues, Issue.ACCEPT_DATE_COMPARATOR);
 		for (Issue issue : issues) {
 			fillIssue(context.addSubContext("bugs"), issue);
@@ -283,11 +283,13 @@ public class HomepageUpdater {
 
 	private void fillSprintBacklog(ContextBuilder context) {
 		Sprint sprint = project.getCurrentSprint();
-		List<Requirement> requirements = new ArrayList<Requirement>(sprint.getRequirements());
 		context.put("label", sprint.getLabel());
 		context.put("goal", wiki2html(sprint.getGoal()));
-		context.put("begin", sprint.getBegin());
-		context.put("end", sprint.getEnd());
+		context.put("begin", sprint.getBegin().toString(Date.FORMAT_LONGMONTH_DAY_YEAR));
+		context.put("end", sprint.getEnd().toString(Date.FORMAT_LONGMONTH_DAY_YEAR));
+		Release release = sprint.getRelease();
+		if (release != null) context.put("release", release.getLabel());
+		List<Requirement> requirements = new ArrayList<Requirement>(sprint.getRequirements());
 		Collections.sort(requirements, project.getRequirementsOrderComparator());
 		for (Requirement requirement : requirements) {
 			fillStory(context.addSubContext("stories"), requirement);

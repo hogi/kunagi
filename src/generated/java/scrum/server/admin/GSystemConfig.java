@@ -51,6 +51,7 @@ public abstract class GSystemConfig
         properties.put("aboutPageMessage", this.aboutPageMessage);
         properties.put("userEmailMandatory", this.userEmailMandatory);
         properties.put("registrationDisabled", this.registrationDisabled);
+        properties.put("projectCreationDisabled", this.projectCreationDisabled);
         properties.put("defaultUserPassword", this.defaultUserPassword);
     }
 
@@ -569,6 +570,35 @@ public abstract class GSystemConfig
     }
 
     // -----------------------------------------------------------
+    // - projectCreationDisabled
+    // -----------------------------------------------------------
+
+    private boolean projectCreationDisabled;
+
+    public final boolean isProjectCreationDisabled() {
+        return projectCreationDisabled;
+    }
+
+    public final void setProjectCreationDisabled(boolean projectCreationDisabled) {
+        projectCreationDisabled = prepareProjectCreationDisabled(projectCreationDisabled);
+        if (isProjectCreationDisabled(projectCreationDisabled)) return;
+        this.projectCreationDisabled = projectCreationDisabled;
+        fireModified("projectCreationDisabled="+projectCreationDisabled);
+    }
+
+    protected boolean prepareProjectCreationDisabled(boolean projectCreationDisabled) {
+        return projectCreationDisabled;
+    }
+
+    public final boolean isProjectCreationDisabled(boolean projectCreationDisabled) {
+        return this.projectCreationDisabled == projectCreationDisabled;
+    }
+
+    protected final void updateProjectCreationDisabled(Object value) {
+        setProjectCreationDisabled((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
     // - defaultUserPassword
     // -----------------------------------------------------------
 
@@ -623,6 +653,7 @@ public abstract class GSystemConfig
             if (property.equals("aboutPageMessage")) updateAboutPageMessage(value);
             if (property.equals("userEmailMandatory")) updateUserEmailMandatory(value);
             if (property.equals("registrationDisabled")) updateRegistrationDisabled(value);
+            if (property.equals("projectCreationDisabled")) updateProjectCreationDisabled(value);
             if (property.equals("defaultUserPassword")) updateDefaultUserPassword(value);
         }
     }

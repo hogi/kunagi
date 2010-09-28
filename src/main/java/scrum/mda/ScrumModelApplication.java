@@ -90,6 +90,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				"Activate this, if you want the email field on the registration page for new users to be mandatory.");
 			systemConfigModel.addProperty("registrationDisabled", boolean.class).setTooltip(
 				"Acitviate this, if you want to disable the registration page for new users.");
+			systemConfigModel.addProperty("projectCreationDisabled", boolean.class).setTooltip(
+				"Activate this, to prevent users from creating projects.");
 			systemConfigModel.addStringProperty("defaultUserPassword").setTooltip(
 				"Default password, which is assigned to new users, which are created by the admin.");
 			autowire(systemConfigModel);
@@ -181,7 +183,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				"The Team ideally consists of around 7 members and is self-organized and cross-functional.");
 			projectModel.addReference("currentSprint", getSprintModel());
 			projectModel.addReference("nextSprint", getSprintModel());
-			projectModel.addIntegerProperty("velocity");
+			projectModel.addIntegerProperty("velocity").setTooltip("Estimated velocity for the current sprint.");
 			projectModel.addListProperty("requirementsOrderIds", String.class);
 			projectModel.addListProperty("urgentIssuesOrderIds", String.class);
 			projectModel.addProperty("lastSprintNumber", int.class);
@@ -196,9 +198,12 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addProperty("lastEventNumber", int.class);
 			projectModel.addProperty("lastReleaseNumber", int.class);
 			projectModel.addProperty("lastBlogEntryNumber", int.class);
-			projectModel.addProperty("punishmentFactor", int.class);
 			projectModel.addStringProperty("punishmentUnit");
-			projectModel.addStringProperty("homepageDir");
+			projectModel.addProperty("punishmentFactor", int.class);
+			projectModel.addStringProperty("homepageDir").setTooltip(
+				"Directory, which contains homepage files and velocity templates.");
+			projectModel.addStringProperty("homepageUrl")
+					.setTooltip("URL on which the project homepage is accessible.");
 			projectModel.addProperty("autoUpdateHomepage", boolean.class).setTooltip(
 				"Automatically update the homepage.");
 			projectModel.addProperty("lastOpenedDateAndTime", DateAndTime.class);

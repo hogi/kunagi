@@ -101,12 +101,14 @@ public abstract class GProjectDao
         lastReleaseNumbersCache = null;
         projectsByLastBlogEntryNumberCache.clear();
         lastBlogEntryNumbersCache = null;
-        projectsByPunishmentFactorCache.clear();
-        punishmentFactorsCache = null;
         projectsByPunishmentUnitCache.clear();
         punishmentUnitsCache = null;
+        projectsByPunishmentFactorCache.clear();
+        punishmentFactorsCache = null;
         projectsByHomepageDirCache.clear();
         homepageDirsCache = null;
+        projectsByHomepageUrlCache.clear();
+        homepageUrlsCache = null;
         projectsByAutoUpdateHomepageCache.clear();
         projectsByLastOpenedDateAndTimeCache.clear();
         lastOpenedDateAndTimesCache = null;
@@ -1322,46 +1324,6 @@ public abstract class GProjectDao
     }
 
     // -----------------------------------------------------------
-    // - punishmentFactor
-    // -----------------------------------------------------------
-
-    private final Cache<Integer,Set<Project>> projectsByPunishmentFactorCache = new Cache<Integer,Set<Project>>(
-            new Cache.Factory<Integer,Set<Project>>() {
-                public Set<Project> create(Integer punishmentFactor) {
-                    return getEntities(new IsPunishmentFactor(punishmentFactor));
-                }
-            });
-
-    public final Set<Project> getProjectsByPunishmentFactor(int punishmentFactor) {
-        return projectsByPunishmentFactorCache.get(punishmentFactor);
-    }
-    private Set<Integer> punishmentFactorsCache;
-
-    public final Set<Integer> getPunishmentFactors() {
-        if (punishmentFactorsCache == null) {
-            punishmentFactorsCache = new HashSet<Integer>();
-            for (Project e : getEntities()) {
-                punishmentFactorsCache.add(e.getPunishmentFactor());
-            }
-        }
-        return punishmentFactorsCache;
-    }
-
-    private static class IsPunishmentFactor implements Predicate<Project> {
-
-        private int value;
-
-        public IsPunishmentFactor(int value) {
-            this.value = value;
-        }
-
-        public boolean test(Project e) {
-            return e.isPunishmentFactor(value);
-        }
-
-    }
-
-    // -----------------------------------------------------------
     // - punishmentUnit
     // -----------------------------------------------------------
 
@@ -1402,6 +1364,46 @@ public abstract class GProjectDao
     }
 
     // -----------------------------------------------------------
+    // - punishmentFactor
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Project>> projectsByPunishmentFactorCache = new Cache<Integer,Set<Project>>(
+            new Cache.Factory<Integer,Set<Project>>() {
+                public Set<Project> create(Integer punishmentFactor) {
+                    return getEntities(new IsPunishmentFactor(punishmentFactor));
+                }
+            });
+
+    public final Set<Project> getProjectsByPunishmentFactor(int punishmentFactor) {
+        return projectsByPunishmentFactorCache.get(punishmentFactor);
+    }
+    private Set<Integer> punishmentFactorsCache;
+
+    public final Set<Integer> getPunishmentFactors() {
+        if (punishmentFactorsCache == null) {
+            punishmentFactorsCache = new HashSet<Integer>();
+            for (Project e : getEntities()) {
+                punishmentFactorsCache.add(e.getPunishmentFactor());
+            }
+        }
+        return punishmentFactorsCache;
+    }
+
+    private static class IsPunishmentFactor implements Predicate<Project> {
+
+        private int value;
+
+        public IsPunishmentFactor(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isPunishmentFactor(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
     // - homepageDir
     // -----------------------------------------------------------
 
@@ -1437,6 +1439,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isHomepageDir(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - homepageUrl
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByHomepageUrlCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String homepageUrl) {
+                    return getEntities(new IsHomepageUrl(homepageUrl));
+                }
+            });
+
+    public final Set<Project> getProjectsByHomepageUrl(java.lang.String homepageUrl) {
+        return projectsByHomepageUrlCache.get(homepageUrl);
+    }
+    private Set<java.lang.String> homepageUrlsCache;
+
+    public final Set<java.lang.String> getHomepageUrls() {
+        if (homepageUrlsCache == null) {
+            homepageUrlsCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isHomepageUrlSet()) homepageUrlsCache.add(e.getHomepageUrl());
+            }
+        }
+        return homepageUrlsCache;
+    }
+
+    private static class IsHomepageUrl implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsHomepageUrl(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isHomepageUrl(value);
         }
 
     }

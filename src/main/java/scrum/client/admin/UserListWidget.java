@@ -14,7 +14,7 @@ public class UserListWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		list = new BlockListWidget<User>(UserBlock.FACTORY);
-		list.setAutoSorter(User.NAME_COMPARATOR);
+		list.setAutoSorter(User.LAST_LOGIN_COMPARATOR);
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Users", new ButtonWidget(new CreateUserAction()));

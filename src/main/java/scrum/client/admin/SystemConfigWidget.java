@@ -28,6 +28,7 @@ public class SystemConfigWidget extends AScrumWidget {
 		TableBuilder tbKunagi = ScrumGwt.createFieldTable();
 		tbKunagi.addFieldRow("Public URL", config.getUrlModel());
 		tbKunagi.addFieldRow("Disable registration page", config.getRegistrationDisabledModel());
+		tbKunagi.addFieldRow("Disable project creation", config.getProjectCreationDisabledModel());
 		tbKunagi.addFieldRow("Users email is mandatory", config.getUserEmailMandatoryModel());
 		tbKunagi.addFieldRow("Default user password", config.getDefaultUserPasswordModel());
 		page.addSection(tbKunagi.createTable());

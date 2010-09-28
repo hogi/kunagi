@@ -69,6 +69,7 @@ public abstract class GSystemConfigDao
         aboutPageMessagesCache = null;
         systemConfigsByUserEmailMandatoryCache.clear();
         systemConfigsByRegistrationDisabledCache.clear();
+        systemConfigsByProjectCreationDisabledCache.clear();
         systemConfigsByDefaultUserPasswordCache.clear();
         defaultUserPasswordsCache = null;
     }
@@ -652,6 +653,35 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return value == e.isRegistrationDisabled();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - projectCreationDisabled
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<SystemConfig>> systemConfigsByProjectCreationDisabledCache = new Cache<Boolean,Set<SystemConfig>>(
+            new Cache.Factory<Boolean,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(Boolean projectCreationDisabled) {
+                    return getEntities(new IsProjectCreationDisabled(projectCreationDisabled));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByProjectCreationDisabled(boolean projectCreationDisabled) {
+        return systemConfigsByProjectCreationDisabledCache.get(projectCreationDisabled);
+    }
+
+    private static class IsProjectCreationDisabled implements Predicate<SystemConfig> {
+
+        private boolean value;
+
+        public IsProjectCreationDisabled(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return value == e.isProjectCreationDisabled();
         }
 
     }

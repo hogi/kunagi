@@ -37,6 +37,7 @@ public class ProjectAdminWidget extends AScrumWidget {
 		page.addHeader("Project Homepage", new ButtonWidget(new UpdateProjectHomepageAction(project)));
 		TableBuilder tbHomepage = ScrumGwt.createFieldTable();
 		tbHomepage.addFieldRow("Homepage Direcotry", project.getHomepageDirModel());
+		tbHomepage.addFieldRow("Homepage URL", project.getHomepageUrlModel());
 		tbHomepage.addFieldRow("Update automatically", project.getAutoUpdateHomepageModel());
 		page.addSection(tbHomepage.createTable());
 		return page;
