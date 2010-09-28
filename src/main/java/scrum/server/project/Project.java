@@ -251,7 +251,9 @@ public class Project extends GProject {
 			Rss20Builder.Item item = rss.addItem();
 			item.setTitle(event.getLabel());
 			item.setDescription(event.getLabel());
-			item.setLink(baseUrl + "#project=" + getId());
+			String link = baseUrl + "#project=" + getId();
+			if (event.isSubjectSet()) link += "|entity=" + event.getSubjectId();
+			item.setLink(link);
 			item.setGuid(event.getId());
 			item.setPubDate(event.getDateAndTime());
 		}

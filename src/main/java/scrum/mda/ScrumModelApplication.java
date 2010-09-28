@@ -869,6 +869,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectEventModel.addReference("project", getProjectModel()).setMaster(true);
 			projectEventModel.addStringProperty("label").setMandatory(true).setSearchable(true)
 					.setEditablePredicate("editable").setSearchable(true);
+			projectEventModel.addReference("subject", getEntityModel());
 			projectEventModel.addProperty("dateAndTime", DateAndTime.class).setMandatory(true)
 					.setEditablePredicate("editable");
 		}

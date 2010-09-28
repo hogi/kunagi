@@ -38,6 +38,7 @@ public abstract class GProjectEvent
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("label", this.label);
+        properties.put("subjectId", this.subjectId);
         properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
     }
 
@@ -147,6 +148,57 @@ public abstract class GProjectEvent
     }
 
     // -----------------------------------------------------------
+    // - subject
+    // -----------------------------------------------------------
+
+    private String subjectId;
+    private transient ilarkesto.persistence.AEntity subjectCache;
+
+    private void updateSubjectCache() {
+        subjectCache = this.subjectId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.subjectId);
+    }
+
+    public final String getSubjectId() {
+        return this.subjectId;
+    }
+
+    public final ilarkesto.persistence.AEntity getSubject() {
+        if (subjectCache == null) updateSubjectCache();
+        return subjectCache;
+    }
+
+    public final void setSubject(ilarkesto.persistence.AEntity subject) {
+        subject = prepareSubject(subject);
+        if (isSubject(subject)) return;
+        this.subjectId = subject == null ? null : subject.getId();
+        subjectCache = subject;
+        fireModified("subject="+subject);
+    }
+
+    protected ilarkesto.persistence.AEntity prepareSubject(ilarkesto.persistence.AEntity subject) {
+        return subject;
+    }
+
+    protected void repairDeadSubjectReference(String entityId) {
+        if (this.subjectId == null || entityId.equals(this.subjectId)) {
+            setSubject(null);
+        }
+    }
+
+    public final boolean isSubjectSet() {
+        return this.subjectId != null;
+    }
+
+    public final boolean isSubject(ilarkesto.persistence.AEntity subject) {
+        if (this.subjectId == null && subject == null) return true;
+        return subject != null && subject.getId().equals(this.subjectId);
+    }
+
+    protected final void updateSubject(Object value) {
+        setSubject(value == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById((String)value));
+    }
+
+    // -----------------------------------------------------------
     // - dateAndTime
     // -----------------------------------------------------------
 
@@ -188,6 +240,7 @@ public abstract class GProjectEvent
             Object value = entry.getValue();
             if (property.equals("projectId")) updateProject(value);
             if (property.equals("label")) updateLabel(value);
+            if (property.equals("subjectId")) updateSubject(value);
             if (property.equals("dateAndTime")) updateDateAndTime(value);
         }
     }
@@ -195,6 +248,7 @@ public abstract class GProjectEvent
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
+        repairDeadSubjectReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -210,6 +264,12 @@ public abstract class GProjectEvent
         } catch (EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
+        }
+        try {
+            getSubject();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead subject reference");
+            repairDeadSubjectReference(this.subjectId);
         }
     }
 

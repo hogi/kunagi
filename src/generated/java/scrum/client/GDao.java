@@ -1378,6 +1378,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.journal.ProjectEvent> getProjectEventsBySubject(ilarkesto.gwt.client.AGwtEntity subject) {
+        List<scrum.client.journal.ProjectEvent> ret = new ArrayList<scrum.client.journal.ProjectEvent>();
+        for (scrum.client.journal.ProjectEvent entity : projectEvents.values()) {
+            if (entity.isSubject(subject)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.journal.ProjectEvent> getProjectEventsByDateAndTime(ilarkesto.gwt.client.DateAndTime dateAndTime) {
         List<scrum.client.journal.ProjectEvent> ret = new ArrayList<scrum.client.journal.ProjectEvent>();
         for (scrum.client.journal.ProjectEvent entity : projectEvents.values()) {

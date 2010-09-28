@@ -204,7 +204,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Comment) {
 			Comment comment = (Comment) entity;
 			comment.setDateAndTime(DateAndTime.now());
-			postProjectEvent(conversation, comment.getAuthor().getName() + " commented on " + comment.getParent());
+			postProjectEvent(conversation, comment.getAuthor().getName() + " commented on " + comment.getParent(),
+				comment.getParent());
 			conversation.getProject().updateHomepage(comment.getParent(), true);
 		}
 
@@ -331,12 +332,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 				if (requirement.isTasksClosed()) {
 					event += ", all tasks closed in " + requirement.getReferenceAndLabel();
 				}
-				postProjectEvent(conversation, event);
+				postProjectEvent(conversation, event, task);
 			} else if (task.isOwnerSet() && properties.containsKey("ownerId")) {
-				postProjectEvent(conversation, currentUser.getName() + " claimed " + task.getReferenceAndLabel());
+				postProjectEvent(conversation, currentUser.getName() + " claimed " + task.getReferenceAndLabel(), task);
 			}
 			if (!task.isOwnerSet() && properties.containsKey("ownerId")) {
-				postProjectEvent(conversation, currentUser.getName() + " unclaimed " + task.getReferenceAndLabel());
+				postProjectEvent(conversation, currentUser.getName() + " unclaimed " + task.getReferenceAndLabel(),
+					task);
 			}
 			if (!task.isClosed() && requirement.isRejectDateSet()) {
 				requirement.setRejectDate(null);
@@ -357,12 +359,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 			if (properties.containsKey("rejectDate") && requirement.isRejectDateSet()) {
 				postProjectEvent(conversation,
-					currentUser.getName() + " rejected " + requirement.getReferenceAndLabel());
+					currentUser.getName() + " rejected " + requirement.getReferenceAndLabel(), requirement);
 			}
 
 			if (properties.containsKey("accepted") && requirement.isRejectDateSet()) {
 				postProjectEvent(conversation,
-					currentUser.getName() + " accepted " + requirement.getReferenceAndLabel());
+					currentUser.getName() + " accepted " + requirement.getReferenceAndLabel(), requirement);
 			}
 
 			if (sprint != previousRequirementSprint) {
@@ -370,11 +372,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 					if (inCurrentSprint) {
 						postProjectEvent(conversation,
 							currentUser.getName() + " pulled " + requirement.getReferenceAndLabel()
-									+ " to current sprint");
+									+ " to current sprint", requirement);
 					} else {
 						postProjectEvent(conversation,
 							currentUser.getName() + " kicked " + requirement.getReferenceAndLabel()
-									+ " from current sprint");
+									+ " from current sprint", requirement);
 					}
 				}
 			}
@@ -397,7 +399,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Impediment) {
 			Impediment impediment = (Impediment) entity;
 			if (impediment.isClosed() && properties.containsKey("closed")) {
-				postProjectEvent(conversation, currentUser.getName() + " closed " + impediment.getReferenceAndLabel());
+				postProjectEvent(conversation, currentUser.getName() + " closed " + impediment.getReferenceAndLabel(),
+					impediment);
 			}
 		}
 
@@ -407,22 +410,26 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			if (properties.containsKey("closeDate")) {
 				if (issue.isClosed()) {
 					issue.setCloseDate(Date.today());
-					postProjectEvent(conversation, currentUser.getName() + " closed " + issue.getReferenceAndLabel());
+					postProjectEvent(conversation, currentUser.getName() + " closed " + issue.getReferenceAndLabel(),
+						issue);
 				} else {
-					postProjectEvent(conversation, currentUser.getName() + " reopened " + issue.getReferenceAndLabel());
+					postProjectEvent(conversation, currentUser.getName() + " reopened " + issue.getReferenceAndLabel(),
+						issue);
 				}
 			}
 
 			if (properties.containsKey("ownerId") && issue.isOwnerSet()) {
-				postProjectEvent(conversation, currentUser.getName() + " claimed " + issue.getReferenceAndLabel());
+				postProjectEvent(conversation, currentUser.getName() + " claimed " + issue.getReferenceAndLabel(),
+					issue);
 			}
 
 			if (properties.containsKey("fixDate")) {
 				if (issue.isFixed()) {
-					postProjectEvent(conversation, currentUser.getName() + " fixed " + issue.getReferenceAndLabel());
+					postProjectEvent(conversation, currentUser.getName() + " fixed " + issue.getReferenceAndLabel(),
+						issue);
 				} else {
 					postProjectEvent(conversation,
-						currentUser.getName() + " rejected fix for " + issue.getReferenceAndLabel());
+						currentUser.getName() + " rejected fix for " + issue.getReferenceAndLabel(), issue);
 				}
 			}
 
@@ -441,7 +448,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			if (properties.containsKey("published")) {
 				if (blogEntry.isPublished()) {
 					postProjectEvent(conversation,
-						currentUser.getName() + " published " + blogEntry.getReferenceAndLabel());
+						currentUser.getName() + " published " + blogEntry.getReferenceAndLabel(), blogEntry);
 				}
 				blogEntry.getProject().updateHomepage();
 			}
@@ -679,9 +686,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 	}
 
-	private void postProjectEvent(GwtConversation conversation, String label) {
+	private void postProjectEvent(GwtConversation conversation, String label, AEntity subject) {
 		assertProjectSelected(conversation);
-		ProjectEvent event = projectEventDao.postEvent(conversation.getProject(), label);
+		ProjectEvent event = projectEventDao.postEvent(conversation.getProject(), label, subject);
 		sendToClients(conversation, event);
 		sendToClients(conversation, event.createChatMessage());
 	}

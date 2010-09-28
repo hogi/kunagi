@@ -323,6 +323,7 @@
 "e240278c-e0f7-41e3-8221-7e9865fe18f9","479bf7fe-bf43-44f3-8ec2-031f99a213b6","ReferenceProperty","project"
 "96e0880f-818a-4a89-8d8c-098da9e7210a","479bf7fe-bf43-44f3-8ec2-031f99a213b6","TextProperty","label"
 "c35fd77d-26cd-4acd-ac00-bd57d8c11bfa","479bf7fe-bf43-44f3-8ec2-031f99a213b6","DateAndTimeProperty","dateAndTime"
+"2ae15a5d-8567-480d-8ee5-57e2edd91696","479bf7fe-bf43-44f3-8ec2-031f99a213b6","ReferenceProperty","subject"
 "ad40f446-aea0-4611-896e-b037219a73f1","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","pr"
 "7bc90f22-7610-496a-9abb-f75effe3fb8d","ad40f446-aea0-4611-896e-b037219a73f1","Entity","BlogEntry"
 "4867fc86-c3d9-4dbe-8e8e-feb85c4cb259","7bc90f22-7610-496a-9abb-f75effe3fb8d","ReferenceProperty","project"

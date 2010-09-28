@@ -46,6 +46,8 @@ public abstract class GProjectEventDao
         projectsCache = null;
         projectEventsByLabelCache.clear();
         labelsCache = null;
+        projectEventsBySubjectCache.clear();
+        subjectsCache = null;
         projectEventsByDateAndTimeCache.clear();
         dateAndTimesCache = null;
     }
@@ -142,6 +144,46 @@ public abstract class GProjectEventDao
 
         public boolean test(ProjectEvent e) {
             return e.isLabel(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - subject
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.persistence.AEntity,Set<ProjectEvent>> projectEventsBySubjectCache = new Cache<ilarkesto.persistence.AEntity,Set<ProjectEvent>>(
+            new Cache.Factory<ilarkesto.persistence.AEntity,Set<ProjectEvent>>() {
+                public Set<ProjectEvent> create(ilarkesto.persistence.AEntity subject) {
+                    return getEntities(new IsSubject(subject));
+                }
+            });
+
+    public final Set<ProjectEvent> getProjectEventsBySubject(ilarkesto.persistence.AEntity subject) {
+        return projectEventsBySubjectCache.get(subject);
+    }
+    private Set<ilarkesto.persistence.AEntity> subjectsCache;
+
+    public final Set<ilarkesto.persistence.AEntity> getSubjects() {
+        if (subjectsCache == null) {
+            subjectsCache = new HashSet<ilarkesto.persistence.AEntity>();
+            for (ProjectEvent e : getEntities()) {
+                if (e.isSubjectSet()) subjectsCache.add(e.getSubject());
+            }
+        }
+        return subjectsCache;
+    }
+
+    private static class IsSubject implements Predicate<ProjectEvent> {
+
+        private ilarkesto.persistence.AEntity value;
+
+        public IsSubject(ilarkesto.persistence.AEntity value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectEvent e) {
+            return e.isSubject(value);
         }
 
     }

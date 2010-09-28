@@ -130,6 +130,31 @@ public abstract class GProjectEvent
 
     }
 
+    // --- subject ---
+
+    private String subjectId;
+
+    public final ilarkesto.gwt.client.AGwtEntity getSubject() {
+        if (subjectId == null) return null;
+        return getDao().getEntity(this.subjectId);
+    }
+
+    public final boolean isSubjectSet() {
+        return subjectId != null;
+    }
+
+    public final ProjectEvent setSubject(ilarkesto.gwt.client.AGwtEntity subject) {
+        String id = subject == null ? null : subject.getId();
+        if (equals(this.subjectId, id)) return (ProjectEvent) this;
+        this.subjectId = id;
+        propertyChanged("subjectId", this.subjectId);
+        return (ProjectEvent)this;
+    }
+
+    public final boolean isSubject(ilarkesto.gwt.client.AGwtEntity subject) {
+        return equals(this.subjectId, subject);
+    }
+
     // --- dateAndTime ---
 
     private ilarkesto.gwt.client.DateAndTime dateAndTime ;
@@ -194,6 +219,7 @@ public abstract class GProjectEvent
     public void updateProperties(Map props) {
         projectId = (String) props.get("projectId");
         label  = (java.lang.String) props.get("label");
+        subjectId = (String) props.get("subjectId");
         String dateAndTimeAsString = (String) props.get("dateAndTime");
         dateAndTime  =  dateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(dateAndTimeAsString);
     }
@@ -203,6 +229,7 @@ public abstract class GProjectEvent
         super.storeProperties(properties);
         properties.put("projectId", this.projectId);
         properties.put("label", this.label);
+        properties.put("subjectId", this.subjectId);
         properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
     }
 
