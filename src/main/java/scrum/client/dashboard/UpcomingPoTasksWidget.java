@@ -41,7 +41,7 @@ public class UpcomingPoTasksWidget extends AScrumWidget {
 			sb.append("</ul>");
 		}
 
-		List<Requirement> decidableRequirements = project.getCurrentSprint().getDecitableRequirements();
+		List<Requirement> decidableRequirements = project.getCurrentSprint().getDecidableUndecidedRequirements();
 		Collections.sort(decidableRequirements, project.getRequirementsOrderComparator());
 		if (!decidableRequirements.isEmpty()) {
 			sb.append("Completed Stories to review:");

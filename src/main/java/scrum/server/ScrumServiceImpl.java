@@ -22,6 +22,7 @@ import java.util.Set;
 
 import scrum.client.DataTransferObject;
 import scrum.client.admin.SystemMessage;
+import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.collaboration.ChatMessage;
@@ -364,23 +365,25 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 
 			if (properties.containsKey("rejectDate") && requirement.isRejectDateSet()) {
-				postProjectEvent(conversation, currentUser.getName() + " rejected "
-						+ requirement.getReferenceAndLabel(), requirement);
+				postProjectEvent(conversation,
+					currentUser.getName() + " rejected " + requirement.getReferenceAndLabel(), requirement);
 			}
 
 			if (properties.containsKey("accepted") && requirement.isRejectDateSet()) {
-				postProjectEvent(conversation, currentUser.getName() + " accepted "
-						+ requirement.getReferenceAndLabel(), requirement);
+				postProjectEvent(conversation,
+					currentUser.getName() + " accepted " + requirement.getReferenceAndLabel(), requirement);
 			}
 
 			if (sprint != previousRequirementSprint) {
 				if (properties.containsKey("sprintId")) {
 					if (inCurrentSprint) {
-						postProjectEvent(conversation, currentUser.getName() + " pulled "
-								+ requirement.getReferenceAndLabel() + " to current sprint", requirement);
+						postProjectEvent(conversation,
+							currentUser.getName() + " pulled " + requirement.getReferenceAndLabel()
+									+ " to current sprint", requirement);
 					} else {
-						postProjectEvent(conversation, currentUser.getName() + " kicked "
-								+ requirement.getReferenceAndLabel() + " from current sprint", requirement);
+						postProjectEvent(conversation,
+							currentUser.getName() + " kicked " + requirement.getReferenceAndLabel()
+									+ " from current sprint", requirement);
 					}
 				}
 			}
@@ -432,14 +435,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 					postProjectEvent(conversation, currentUser.getName() + " fixed " + issue.getReferenceAndLabel(),
 						issue);
 				} else {
-					postProjectEvent(conversation, currentUser.getName() + " rejected fix for "
-							+ issue.getReferenceAndLabel(), issue);
+					postProjectEvent(conversation,
+						currentUser.getName() + " rejected fix for " + issue.getReferenceAndLabel(), issue);
 				}
 			}
 
-			if (properties.containsKey("published")) {
-				issue.getProject().updateHomepage(issue, false);
-			}
+			issue.getProject().updateHomepage(issue, false);
 		}
 
 		if (entity instanceof BlogEntry) {
@@ -451,8 +452,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 			if (properties.containsKey("published")) {
 				if (blogEntry.isPublished()) {
-					postProjectEvent(conversation, currentUser.getName() + " published "
-							+ blogEntry.getReferenceAndLabel(), blogEntry);
+					postProjectEvent(conversation,
+						currentUser.getName() + " published " + blogEntry.getReferenceAndLabel(), blogEntry);
 				}
 				blogEntry.getProject().updateHomepage();
 			}
@@ -461,6 +462,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Comment) {
 			Comment comment = (Comment) entity;
 			conversation.getProject().updateHomepage(comment.getParent(), false);
+		}
+
+		if (entity instanceof SystemConfig) {
+			SystemConfig config = (SystemConfig) entity;
+			if (properties.containsKey("url")) {
+				webApplication.getConfig().setUrl(config.getUrl());
+			}
 		}
 
 		conversation.clearRemoteEntitiesByType(Change.class);
@@ -650,7 +658,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onPing(GwtConversation conversation) {
-	// nop
+		// nop
 	}
 
 	@Override
@@ -738,8 +746,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		sendToClients(conversation, story);
 		sendToClients(conversation, issue);
 		User currentUser = conversation.getSession().getUser();
-		postProjectEvent(conversation, currentUser.getName() + " created " + story.getNumber() + " from "
-				+ issue.getReferenceAndLabel(), issue);
+		postProjectEvent(conversation,
+			currentUser.getName() + " created " + story.getNumber() + " from " + issue.getReferenceAndLabel(), issue);
 		changeDao.postChange(issue, currentUser, "storyId", null, story.getId());
 		changeDao.postChange(story, currentUser, "issueId", null, issue.getId());
 	}

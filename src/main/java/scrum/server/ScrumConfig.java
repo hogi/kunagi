@@ -17,6 +17,14 @@ public class ScrumConfig {
 
 	// --- ---
 
+	public String getUrl() {
+		return p.get("url");
+	}
+
+	public void setUrl(String url) {
+		p.set("url", url);
+	}
+
 	public String getGoogleAnalyticsId() {
 		return p.get("google.analytics.id");
 	}

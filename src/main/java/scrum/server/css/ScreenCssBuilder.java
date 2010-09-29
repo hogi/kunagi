@@ -423,7 +423,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	private void changeHistory(CssRenderer css) {
 		css.style(".ChangeHistoryWidget").background(cChangesBackground).border(1, cChangesBorder).padding(7)
 				.borderRadius(10);
-		css.style(".ChangeWidget").margin(15, 0, 10, 0);
+		css.style(".ChangeWidget").margin(15, 0, 10, 0).borderTop(1, cPagePanelBorder);
 		css.style(".ChangeWidget-header").margin(4, 0, 2, 0);
 		css.style(".ChangeWidget-header-author").floatLeft().marginRight(5);
 		css.style(".ChangeWidget-header-date").floatLeft().marginRight(5).color(cChangeDate);

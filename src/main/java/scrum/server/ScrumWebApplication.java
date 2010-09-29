@@ -124,6 +124,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 		deleteOldBackupFiles(getApplicationDataDir() + "/backup");
 
+		String url = getConfig().getUrl();
+		if (!Str.isBlank(url)) getSystemConfig().setUrl(url);
+
 		if (getUserDao().getEntities().isEmpty()) {
 			String password = getConfig().getInitialPassword();
 			log.warn("No users. Creating initial user <admin> with password <" + password + ">");
@@ -140,6 +143,18 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if ((isDevelopmentMode() || getConfig().isStageIntegration()) && getProjectDao().getEntities().isEmpty())
 			createTestData();
 
+	}
+
+	public String createUrl(String relativePath) {
+		if (relativePath == null) relativePath = "";
+		String prefix = getConfig().getUrl();
+		if (Str.isBlank(prefix)) return relativePath;
+		if (prefix.endsWith("/")) {
+			if (relativePath.startsWith("/")) return prefix.substring(0, prefix.length() - 1) + relativePath;
+			return prefix + relativePath;
+		}
+		if (relativePath.startsWith("/")) return prefix + relativePath;
+		return prefix + "/" + relativePath;
 	}
 
 	private void createTestData() {

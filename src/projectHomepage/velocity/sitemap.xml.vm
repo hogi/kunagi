@@ -40,4 +40,21 @@
       <changefreq>weekly</changefreq>
       <priority>0.0</priority>
    </url>
+
+#foreach ($issue in $issues)
+   <url>
+      <loc>http://kunagi.org/${issue.reference}.html</loc>
+      <changefreq>daily</changefreq>
+      <priority>0.4</priority>
+   </url>
+#end
+
+#foreach ($story in $stories)
+   <url>
+      <loc>http://kunagi.org/${story.reference}.html</loc>
+      <changefreq>daily</changefreq>
+      <priority>0.4</priority>
+   </url>
+#end
+
 </urlset>

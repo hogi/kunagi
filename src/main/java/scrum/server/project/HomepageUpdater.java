@@ -76,6 +76,8 @@ public class HomepageUpdater {
 		fillIdeas(context);
 		fillClosedIssues(context);
 		fillReleases(context);
+		fillIssues(context);
+		fillStories(context);
 
 		File[] templateFiles = templateDir.listFiles();
 		if (templateFiles == null) return;
@@ -183,6 +185,15 @@ public class HomepageUpdater {
 		byte[] imageData = BurndownChart.createBurndownChartAsByteArray(project.getCurrentSprint(), width, height);
 		IO.copyDataToFile(imageData,
 			new File(outputDir.getPath() + "/sprint-burndown-" + width + "x" + height + ".png"));
+	}
+
+	private void fillIssues(ContextBuilder context) {
+		List<Issue> issues = new ArrayList<Issue>(project.getBugsInCurrentRelease());
+		Collections.sort(issues, Issue.ACCEPT_DATE_COMPARATOR);
+		for (Issue issue : project.getIssues()) {
+			if (!issue.isPublished()) continue;
+			fillIssue(context.addSubContext("issues"), issue);
+		}
 	}
 
 	private void fillBugs(ContextBuilder context) {
@@ -301,6 +312,13 @@ public class HomepageUpdater {
 		Collections.sort(requirements, project.getRequirementsOrderComparator());
 		for (Requirement requirement : requirements) {
 			if (requirement.isClosed() || requirement.isInCurrentSprint()) continue;
+			fillStory(context.addSubContext("stories"), requirement);
+		}
+	}
+
+	private void fillStories(ContextBuilder context) {
+		for (Requirement requirement : project.getRequirements()) {
+			if (requirement.isClosed()) continue;
 			fillStory(context.addSubContext("stories"), requirement);
 		}
 	}

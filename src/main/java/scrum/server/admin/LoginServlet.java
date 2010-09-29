@@ -189,6 +189,7 @@ public class LoginServlet extends AHttpServlet {
 	private String getStartPage(String historyToken) {
 		String url = webApplication.isDevelopmentMode() ? "index.html?gwt.codesvr=127.0.0.1:9997" : "";
 		if (historyToken != null) url += "#" + historyToken;
+		url = webApplication.createUrl(url);
 		return url;
 	}
 
@@ -261,7 +262,7 @@ public class LoginServlet extends AHttpServlet {
 
 		String url;
 		try {
-			url = OpenId.createAuthenticationRequestUrl(openId, request.getRequestURL().toString(), httpSession);
+			url = OpenId.createAuthenticationRequestUrl(openId, webApplication.createUrl("login.html"), httpSession);
 		} catch (RuntimeException ex) {
 			log.error("OpenID authentication failed.", ex);
 			renderLoginPage(resp, null, null, historyToken,

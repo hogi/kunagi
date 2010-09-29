@@ -25,8 +25,8 @@ public class NextSprintWidget extends AScrumWidget {
 		tb.addFieldRow("Label", sprint.getLabelModel(), 5);
 		tb.addFieldRow("Goal", sprint.getGoalModel(), 5);
 		tb.addField("Begin", sprint.getBeginModel());
-		tb.addField("End", sprint.getEndModel());
 		tb.addFieldRow("Length", sprint.getLengthInDaysModel());
+		tb.addFieldRow("End", sprint.getEndModel());
 		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()), 5);
 
 		PagePanel page = new PagePanel();

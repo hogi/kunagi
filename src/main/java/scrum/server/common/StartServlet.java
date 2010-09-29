@@ -30,7 +30,7 @@ public class StartServlet extends AHttpServlet {
 			String url = "login.html";
 			String token = Str.cutFrom(req.getRequestURI(), "#");
 			if (!Str.isBlank(token)) url += "?historyToken=" + Str.encodeUrlParameter(token);
-			resp.sendRedirect(url);
+			resp.sendRedirect(webApplication.createUrl(url));
 			return;
 		}
 

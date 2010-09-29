@@ -16,6 +16,7 @@ public class Comment extends GComment {
 	public Comment(AGwtEntity parent, User author, String text) {
 		setParent(parent);
 		setAuthor(author);
+		setAuthorName(author.getName());
 		setText(text);
 		setDateAndTime(DateAndTime.now());
 	}

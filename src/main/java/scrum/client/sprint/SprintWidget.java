@@ -41,8 +41,8 @@ public class SprintWidget extends AScrumWidget {
 		}
 
 		tb.addField("Begin", sprint.getBeginModel());
-		tb.addField("End", sprint.getEndModel());
-		tb.addFieldRow("Length", sprint.getLengthInDaysModel());
+		tb.addField("Length", sprint.getLengthInDaysModel());
+		tb.addFieldRow("End", sprint.getEndModel());
 
 		if (completed == false) {
 			// not completed

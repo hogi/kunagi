@@ -1,6 +1,7 @@
 package scrum.client.core;
 
 import ilarkesto.core.base.Str;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AViewEditWidget;
 import ilarkesto.gwt.client.AViewEditWidget.ModeSwitchHandler;
@@ -11,6 +12,8 @@ import com.google.gwt.user.client.Timer;
 
 public class RichtextAutosaver extends GRichtextAutosaver implements ApplicationStartedHandler {
 
+	public static final int SAVE_INTERVAL_IN_SECONDS = 10;
+
 	@Override
 	public void onApplicationStarted(ApplicationStartedEvent event) {
 		new Timer() {
@@ -19,7 +22,7 @@ public class RichtextAutosaver extends GRichtextAutosaver implements Application
 			public void run() {
 				autosave();
 			}
-		}.scheduleRepeating(10000);
+		}.scheduleRepeating(SAVE_INTERVAL_IN_SECONDS * 1000);
 		AViewEditWidget.setGlobalModeSwitchHandler(new ModeSwitchHandler() {
 
 			@Override
@@ -65,7 +68,8 @@ public class RichtextAutosaver extends GRichtextAutosaver implements Application
 		if (!editor.isEditMode()) return;
 		String text = editor.getEditorText();
 		if (Str.isBlank(text)) return;
-		if (text == null || text.length() < 50) return;
+		if (text == null || text.length() < 3) return;
+		if (Utl.equals(text, editor.getModel().getValue())) return;
 		config.setRichtextAutosaveText(text);
 		config.setRichtextAutosaveField(editor.getId());
 	}

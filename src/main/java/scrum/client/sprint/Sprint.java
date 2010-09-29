@@ -102,10 +102,10 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport {
 		return sum;
 	}
 
-	public List<Requirement> getDecitableRequirements() {
+	public List<Requirement> getDecidableUndecidedRequirements() {
 		List<Requirement> ret = new ArrayList<Requirement>();
 		for (Requirement requirement : getRequirements()) {
-			if (requirement.isDecidable()) ret.add(requirement);
+			if (requirement.isDecidable() && !requirement.isClosed()) ret.add(requirement);
 		}
 		return ret;
 	}

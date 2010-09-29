@@ -1,5 +1,6 @@
 package scrum.client.tasks;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.gwt.client.ADropdownViewEditWidget;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AIntegerViewEditWidget;
@@ -95,18 +96,19 @@ public class TaskWidget extends AScrumWidget {
 			@Override
 			protected void onEditorUpdate() {
 				Map<String, String> options = new HashMap<String, String>();
+				options.put("", "");
 				for (Impediment impediment : task.getProject().getOpenImpediments()) {
 					options.put(impediment.getId(), impediment.getReferenceAndLabel());
 				}
 				setOptions(options);
 				Impediment impediment = task.getImpediment();
-				setSelectedOption(impediment == null ? null : impediment.getId());
+				setSelectedOption(impediment == null ? "" : impediment.getId());
 			}
 
 			@Override
 			protected void onEditorSubmit() {
 				String id = getSelectedOption();
-				task.setImpediment(id == null ? null : getDao().getImpediment(id));
+				task.setImpediment(Str.isBlank(id) ? null : getDao().getImpediment(id));
 			}
 
 			@Override

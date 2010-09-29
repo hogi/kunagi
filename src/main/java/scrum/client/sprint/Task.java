@@ -60,6 +60,7 @@ public class Task extends GTask implements ReferenceSupport, ForumSupport {
 		return sb.toString();
 	}
 
+	@Override
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
 	}
@@ -92,13 +93,16 @@ public class Task extends GTask implements ReferenceSupport, ForumSupport {
 
 	public String getWorkText() {
 		String work;
+		int burned = getBurnedWork();
 		if (isClosed()) {
-			work = String.valueOf(getBurnedWork());
+			work = String.valueOf(burned);
 		} else {
+			int remaining = getRemainingWork();
 			if (isClaimed()) {
-				work = getBurnedWork() + " of " + getRemainingWork();
+				int total = remaining + burned;
+				work = burned + " of " + total;
 			} else {
-				work = String.valueOf(getRemainingWork());
+				work = String.valueOf(remaining);
 			}
 		}
 		return work + " hrs";
@@ -167,12 +171,14 @@ public class Task extends GTask implements ReferenceSupport, ForumSupport {
 		return true;
 	}
 
+	@Override
 	public Widget createForumItemWidget() {
 		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
 
 	public static final Comparator<Task> NUMBER_COMPARATOR = new Comparator<Task>() {
 
+		@Override
 		public int compare(Task a, Task b) {
 			return a.getNumber() - b.getNumber();
 		}
@@ -180,6 +186,7 @@ public class Task extends GTask implements ReferenceSupport, ForumSupport {
 
 	public static final Comparator<Task> REQUIREMENT_ORDER_THEN_NUMBER_COMPARATOR = new Comparator<Task>() {
 
+		@Override
 		public int compare(Task a, Task b) {
 			Requirement ar = a.getRequirement();
 			Requirement br = b.getRequirement();
