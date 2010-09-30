@@ -18,7 +18,7 @@
     <h2>Sprint Backlog</h2>
     <p>The current sprint started on <strong>${sprintBacklog.begin}</strong> and will end on <strong>${sprintBacklog.end}</strong>.
         #if ($sprintBacklog.release)
-            Release <strong>#{sprintBacklog.release}</strong> is being implemented.
+            Release <strong>${sprintBacklog.release}</strong> is being implemented.
         #end
     </p>
     #if( $sprintBacklog.goal )
@@ -135,5 +135,14 @@
     </div>
     <div class="clear"></div>
 </div>
+
+#if ($wiki.DevDoc)
+    <div class="separator"></div>
+    <div class="section">
+        <a name="devdoc"></a>
+        $wiki.DevDoc
+    </div>
+#end
+
 
 #footer()

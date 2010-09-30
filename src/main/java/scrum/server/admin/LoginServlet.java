@@ -425,8 +425,8 @@ public class LoginServlet extends AHttpServlet {
 		renderOpenIdLink(OpenId.GOOGLE, "Google", historyToken, html);
 		renderOpenIdLink(OpenId.YAHOO, "Yahoo!", historyToken, html);
 		renderOpenIdLink(OpenId.LAUNCHPAD, "Launchpad", historyToken, html);
-		renderOpenIdLink(OpenId.VERISIGN, "Verisign", historyToken, html);
 		renderOpenIdLink(OpenId.AOL, "AOL", historyToken, html);
+		renderOpenIdLink(OpenId.VERISIGN, "Verisign", historyToken, html);
 		renderOpenIdLink(OpenId.WORDPRESS, "WordPress", historyToken, html);
 		renderOpenIdLink(OpenId.FLICKR, "Flickr", historyToken, html);
 		// renderOpenIdLink(OpenId.BLOGSPOT, "Blogger", historyToken, html);

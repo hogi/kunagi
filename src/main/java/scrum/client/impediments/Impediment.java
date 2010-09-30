@@ -27,6 +27,10 @@ public class Impediment extends GImpediment implements ReferenceSupport, ForumSu
 		super(data);
 	}
 
+	public boolean isBlockingTasksFromCurrentSprint() {
+		return !getProject().getCurrentSprint().getTasksBlockedBy(this).isEmpty();
+	}
+
 	public String getReferenceAndLabel() {
 		return getReference() + " " + getLabel();
 	}
@@ -35,6 +39,7 @@ public class Impediment extends GImpediment implements ReferenceSupport, ForumSu
 		return !isClosed();
 	}
 
+	@Override
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
 	}
@@ -49,12 +54,14 @@ public class Impediment extends GImpediment implements ReferenceSupport, ForumSu
 		return getReference() + " " + getLabel();
 	}
 
+	@Override
 	public Widget createForumItemWidget() {
 		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
 
 	public static final Comparator<Impediment> DATE_COMPARATOR = new Comparator<Impediment>() {
 
+		@Override
 		public int compare(Impediment a, Impediment b) {
 			return a.getDate().compareTo(b.getDate());
 		}
@@ -62,6 +69,7 @@ public class Impediment extends GImpediment implements ReferenceSupport, ForumSu
 
 	public static final Comparator<Impediment> REVERSE_DATE_COMPARATOR = new Comparator<Impediment>() {
 
+		@Override
 		public int compare(Impediment a, Impediment b) {
 			return DATE_COMPARATOR.compare(b, a);
 		}

@@ -43,7 +43,13 @@ input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 
             .codeBlock code, .codeBlock pre {margin: 0; padding: 0;}
         label.optional {color: gray;}
     #content .separator {height: 15px; margin-bottom: 25px; border-bottom: 1px solid #CCC;}
+
 #footer {background: #192666; color: #CCC; padding: 0px 10px; font-size: 8px; text-align: right;}
+
+#cse {}
+    #cse input.gsc-input, #cse input.gsc-search-button, #cse div.gsc-clear-button {display: none;}
+    #cse form.gsc-search-box {margin: -20px 0 0 0;}
+
 .error {background: darkred; border: 1px solid darkred; text-align: center; color: #FFA; font-size: 16px; font-weight: bold; padding: 10px; margin-bottom: 20px;}
 input.textinput {width: 170px; padding: 5px 7px 5px 7px;}
 input.submit {color: #B37400; font-size: 16px; font-weight: bold; font-family: "verdana","sans-serif"; background: orange url("img/button_bg.png") 0 0 repeat-x; border: 1px solid orange; width: 150px; padding: 5px; text-align: center; -moz-border-radius: 5px; cursor: pointer;}

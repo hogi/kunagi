@@ -29,7 +29,10 @@ public class OpenImpedimentsWidget extends AScrumWidget {
 		if (!impediments.isEmpty()) {
 			for (Impediment impediment : impediments) {
 				sb.append("<li>");
+				boolean blocking = impediment.isBlockingTasksFromCurrentSprint();
+				if (blocking) sb.append("<span style='color: red;'>");
 				sb.append(impediment.toHtml());
+				if (blocking) sb.append("</span>");
 				sb.append("</li>");
 			}
 		}

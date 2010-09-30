@@ -52,8 +52,7 @@
 
 #macro( search )
     <div id="searchbox">
-        <form action="http://www.google.de/custom" method="GET">
-            <input type="hidden" name="sitesearch" value="kunagi.org">
+        <form action="search.html" method="GET">
             <input type="text" id="searchinput" name="q" size="22" value="Search..." onFocus="this.value=''" onBlur="this.value='Search...'">
         </form>
     </div>

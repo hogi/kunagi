@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+#header("search", "Search Results - Kunagi", "Kunagi Hompage Search Results", "")
+
+<div class="section">
+    
+    <h2>Search Results</h2>
+    <div id="cse" style="width: 100%;">Loading...</div>
+        <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+        <script type="text/javascript">
+        
+google.load('search', '1', {language : 'en'});
+google.setOnLoadCallback(function() {
+  var customSearchControl = new google.search.CustomSearchControl('016496106436192721220:-b5kkiy6cma');
+  customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+  customSearchControl.draw('cse');
+  autosearch();
+}, true);
+
+function autosearch() {
+  searchbox = $$('input.gsc-input')[0];
+  searchbutton = $$('input.gsc-search-button')[0];
+  
+  query = window.location.search;
+  if (query != null && query.startsWith("?q=")) query = query.substring(3);
+  
+  searchbox.value = query;
+  searchbutton.click();
+    
+  $('searchinput').value = query;
+}
+
+        </script>
+
+
+      
+    
+</div>
+
+#footer()
