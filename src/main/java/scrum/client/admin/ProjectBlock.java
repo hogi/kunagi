@@ -47,6 +47,8 @@ public class ProjectBlock extends ABlockWidget<Project> {
 		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.addFieldRow("Name", new TextEditorWidget(project.getLabelModel()));
 
+		tb.addFieldRow("Vision", new TextEditorWidget(project.getVisionModel()));
+
 		tb.addFieldRow("Participants", new AMultiSelectionViewEditWidget<User>() {
 
 			@Override
@@ -101,8 +103,8 @@ public class ProjectBlock extends ABlockWidget<Project> {
 		addRolesFieldRows(project, tb);
 
 		if (project.isAdmin(getCurrentUser())) {
-			tb.addFieldRow("",
-				Gwt.createServletDownloadLink("backupDownload.zip?projectId=" + project.getId(), "Download Backup ZIP"));
+			tb.addFieldRow("", Gwt.createServletDownloadLink("backupDownload.zip?projectId=" + project.getId(),
+				"Download Backup ZIP"));
 		}
 
 		return tb.createTable();
