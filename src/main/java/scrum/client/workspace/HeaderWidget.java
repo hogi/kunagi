@@ -90,6 +90,7 @@ public class HeaderWidget extends AScrumWidget {
 			List<Project> projects = getDao().getProjects();
 			Collections.sort(projects, Project.LAST_OPENED_COMPARATOR);
 			for (Project p : projects) {
+				if (p == getCurrentProject()) continue;
 				switchProjectButton.addAction("QuickLinks", new ChangeProjectAction(p));
 			}
 		}
