@@ -37,6 +37,7 @@ public class RequirementDao extends GRequirementDao {
 		Requirement requirement = newEntityInstance();
 		requirement.setProject(issue.getProject());
 		requirement.setLabel(issue.getLabel());
+		requirement.setDescription(issue.getDescription());
 		requirement.setIssue(issue);
 		issue.setStory(requirement);
 		saveEntity(requirement);
