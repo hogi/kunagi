@@ -27,6 +27,7 @@ public class BlockHeaderWidget extends AWidget {
 	private DropdownMenuButtonWidget menu;
 	private int prefixCellCount = 0;
 	private int suffixCellCount = 0;
+	private Label dragHandle;
 
 	@Override
 	protected Widget onInitialization() {
@@ -137,7 +138,11 @@ public class BlockHeaderWidget extends AWidget {
 	}
 
 	public void setDragHandle(String text) {
-		setDragHandle(new Label(text));
+		if (dragHandle == null) {
+			dragHandle = new Label();
+			setDragHandle(dragHandle);
+		}
+		dragHandle.setText(text);
 	}
 
 	public void setDragHandle(Widget widget) {

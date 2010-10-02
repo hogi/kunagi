@@ -429,6 +429,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".ChangeWidget-header-date").floatLeft().marginRight(5).color(cChangeDate);
 		css.style(".ChangeWidget-comment").marginTop(4);
 		css.style(".ChangeWidget-comment .AViewEditWidget-viewer").background(cChangesCommentBackground);
+		css.style(".ChangeWidget-diff span.added").color("green");
+		css.style(".ChangeWidget-diff span.removed").color("darkred").textDecorationLineThrough();
 	}
 
 	private void blockList(CssRenderer css) {

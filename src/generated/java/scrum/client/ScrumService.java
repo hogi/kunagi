@@ -16,7 +16,7 @@ public interface ScrumService extends com.google.gwt.user.client.rpc.RemoteServi
 
     scrum.client.DataTransferObject requestComments(int conversationNumber, String parentId);
 
-    scrum.client.DataTransferObject requestForum(int conversationNumber);
+    scrum.client.DataTransferObject requestForum(int conversationNumber, boolean all);
 
     scrum.client.DataTransferObject setSelectedEntitysIds(int conversationNumber, java.util.Set ids);
 

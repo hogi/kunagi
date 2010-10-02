@@ -51,6 +51,7 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 	@Override
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Issue issue = getObject();
+
 		if (issue.isBug()) {
 			Image statusImage = null;
 			if (severityPrefix != null) severityPrefix.setText(issue.getSeverityLabel());

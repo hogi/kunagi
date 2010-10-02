@@ -14,7 +14,7 @@ public class ForumWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		new RequestForumServiceCall().execute();
+		new RequestForumServiceCall(false).execute();
 
 		list = new BlockListWidget<ForumSupport>(ForumItemBlock.FACTORY);
 		list.setAutoSorter(ForumSupport.COMPARATOR);

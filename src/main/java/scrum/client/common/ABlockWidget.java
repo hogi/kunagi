@@ -203,6 +203,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 
 	private class SelectionClickHandler implements ClickHandler {
 
+		@Override
 		public void onClick(ClickEvent event) {
 			NativeEvent nativeEvent = event.getNativeEvent();
 			boolean modifierDown = nativeEvent.getCtrlKey() || nativeEvent.getShiftKey() || nativeEvent.getAltKey();

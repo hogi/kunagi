@@ -201,7 +201,7 @@ public class ScrumServiceImplTest extends ATest {
 	public void requestForum() {
 		app.getSubjectDao().newEntityInstance().setProject(project);
 		app.getCommentDao().newEntityInstance().setParent(project);
-		service.onRequestForum(conversation);
+		service.onRequestForum(conversation, true);
 		assertConversationWithoutErrors(conversation);
 		assertContainsEntities(conversation, project.getSubjects());
 		assertContainsEntities(conversation, project.getLatestComments());

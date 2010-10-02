@@ -175,6 +175,8 @@
 "8aee2245-887b-4cc7-98ac-c595c033ee5a","9fbffd41-4998-4d23-b9dd-734cc9334d8b","ServiceCall","RequestComments"
 "6d750186-980e-4c15-933a-62926afee88d","8aee2245-887b-4cc7-98ac-c595c033ee5a","Parameter","parentId"
 "8c207310-e5cc-4216-a555-565c07d606ff","9fbffd41-4998-4d23-b9dd-734cc9334d8b","ServiceCall","RequestForum"
+"101eada7-6f18-4d69-9f44-f2fa514391a9","8c207310-e5cc-4216-a555-565c07d606ff","Parameter","all"
+"d1497492-48b9-49b2-a958-3819b19b22e6","101eada7-6f18-4d69-9f44-f2fa514391a9","Type","boolean"
 "d2a9f33b-9eab-49e5-86bc-3d1a0c5197e1","9fbffd41-4998-4d23-b9dd-734cc9334d8b","ServiceCall","SetSelectedEntitysIds"
 "ab3b099f-140d-48a7-915b-70a43c22eac7","d2a9f33b-9eab-49e5-86bc-3d1a0c5197e1","Parameter","ids"
 "f5da59a8-242a-4982-809e-712affe17d18","ab3b099f-140d-48a7-915b-70a43c22eac7","Type","java.util.Set"

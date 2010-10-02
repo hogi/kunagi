@@ -1,6 +1,8 @@
 package scrum.client.journal;
 
 import ilarkesto.core.base.Str;
+import ilarkesto.core.diff.Diff;
+import ilarkesto.core.diff.HtmlDiffMarker;
 import ilarkesto.gwt.client.AGwtEntity;
 
 import java.util.Comparator;
@@ -60,20 +62,17 @@ public class Change extends GChange {
 			if (key.equals("closed")) return null;
 		} else if (parent instanceof Risk) {
 			if (key.equals("impact"))
-				return createSinglelineDiff(RiskComputer.getImpactLabel(oldValue), RiskComputer
-						.getImpactLabel(newValue));
+				return createDiff(RiskComputer.getImpactLabel(oldValue), RiskComputer.getImpactLabel(newValue));
 			if (key.equals("probability"))
-				return createSinglelineDiff(RiskComputer.getProbabilityLabel(oldValue), RiskComputer
-						.getProbabilityLabel(newValue));
+				return createDiff(RiskComputer.getProbabilityLabel(oldValue),
+					RiskComputer.getProbabilityLabel(newValue));
 		} else if (parent instanceof Requirement) {
 			if (key.equals("closed")) return null;
 			if (key.equals("sprintId")) return null;
 			if (key.equals("issueId")) return null;
 		}
 
-		if (Str.isBlank(oldValue)) return getNewValue();
-		if (Str.isBlank(newValue)) return getOldValue();
-		return createMultilineDiff(oldValue, newValue);
+		return createDiff(oldValue, newValue);
 	}
 
 	private String getFieldLabel() {
@@ -94,12 +93,11 @@ public class Change extends GChange {
 		}
 	};
 
-	private static String createSinglelineDiff(Object oldValue, Object newValue) {
-		return oldValue + "<code> -> </code>" + newValue;
-	}
-
-	private static String createMultilineDiff(String oldValue, String newValue) {
-		return oldValue + "\n\n          < old | new >\n\n" + newValue;
+	private static String createDiff(String oldValue, String newValue) {
+		Diff diff = new Diff(oldValue, newValue, new HtmlDiffMarker());
+		diff.diff();
+		String s = diff.toString();
+		return s;
 	}
 
 }

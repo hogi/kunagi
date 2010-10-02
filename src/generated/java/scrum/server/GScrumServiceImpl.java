@@ -18,7 +18,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onRequestComments(GwtConversation conversation, String parentId);
 
-    public abstract void onRequestForum(GwtConversation conversation);
+    public abstract void onRequestForum(GwtConversation conversation, boolean all);
 
     public abstract void onSetSelectedEntitysIds(GwtConversation conversation, java.util.Set ids);
 
@@ -186,7 +186,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
         }
     }
 
-    public scrum.client.DataTransferObject requestForum(int conversationNumber) {
+    public scrum.client.DataTransferObject requestForum(int conversationNumber, boolean all) {
         log.debug("Handling service call: RequestForum");
         WebSession session = (WebSession) getSession();
         synchronized (session) {
@@ -195,7 +195,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
             context.setName("gwt-srv:RequestForum");
             context.bindCurrentThread();
             try {
-                onRequestForum(conversation);
+                onRequestForum(conversation, all);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "RequestForum", ex);
                 throw new RuntimeException(ex);

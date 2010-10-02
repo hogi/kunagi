@@ -16,7 +16,7 @@ public interface ScrumServiceAsync {
 
     void requestComments(int conversationNumber, String parentId, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
-    void requestForum(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
+    void requestForum(int conversationNumber, boolean all, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
     void setSelectedEntitysIds(int conversationNumber, java.util.Set ids, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 

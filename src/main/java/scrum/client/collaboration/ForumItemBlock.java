@@ -42,6 +42,7 @@ public class ForumItemBlock extends ABlockWidget<ForumSupport> implements TrashS
 		return new ForumItemWidget(getObject());
 	}
 
+	@Override
 	public AScrumAction getTrashAction() {
 		ForumSupport entity = getObject();
 		if (entity instanceof Subject) return new DeleteSubjectAction((Subject) entity);
@@ -50,6 +51,7 @@ public class ForumItemBlock extends ABlockWidget<ForumSupport> implements TrashS
 
 	public static final BlockWidgetFactory<ForumSupport> FACTORY = new BlockWidgetFactory<ForumSupport>() {
 
+		@Override
 		public ForumItemBlock createBlock() {
 			return new ForumItemBlock();
 		}

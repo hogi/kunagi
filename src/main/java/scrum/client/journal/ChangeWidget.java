@@ -53,17 +53,18 @@ public class ChangeWidget extends AScrumWidget {
 	}
 
 	private Widget createBody() {
-		ATextWidget valueWidget = new ATextWidget() {
+		ATextWidget diffWidget = new ATextWidget() {
 
 			@Override
 			protected void onUpdate() {
-				setHtml(Wiki.toHtml(change.getDiff()));
+				setHtml(change.getDiff());
 			}
 		};
+		diffWidget.addStyleName("ChangeWidget-diff");
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(new HTML(Wiki.toHtml(change.getLabel())));
-		panel.add(valueWidget);
+		panel.add(diffWidget);
 		panel.add(Gwt.createDiv("ChangeWidget-comment", new RichtextEditorWidget(change.getCommentModel())));
 		return panel;
 	}

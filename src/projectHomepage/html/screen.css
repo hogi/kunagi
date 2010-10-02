@@ -49,6 +49,9 @@ input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 
 #cse {}
     #cse input.gsc-input, #cse input.gsc-search-button, #cse div.gsc-clear-button {display: none;}
     #cse form.gsc-search-box {margin: -20px 0 0 0;}
+    #cse div.gsc-control-cse div.gsc-wrapper {font:14px/19px "verdana","sans-serif";}
+    #cse div.gsc-control-cse div.gsc-wrapper .gs-result .gs-title * {color: #B37400;}
+    #cse div.gsc-control-cse div.gsc-wrapper .gs-visibleUrl {display: none;}
 
 .error {background: darkred; border: 1px solid darkred; text-align: center; color: #FFA; font-size: 16px; font-weight: bold; padding: 10px; margin-bottom: 20px;}
 input.textinput {width: 170px; padding: 5px 7px 5px 7px;}
