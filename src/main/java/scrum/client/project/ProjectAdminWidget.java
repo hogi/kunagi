@@ -40,6 +40,13 @@ public class ProjectAdminWidget extends AScrumWidget {
 		tbHomepage.addFieldRow("Homepage URL", project.getHomepageUrlModel());
 		tbHomepage.addFieldRow("Update automatically", project.getAutoUpdateHomepageModel());
 		page.addSection(tbHomepage.createTable());
+
+		page.addHeader("Project Support");
+		TableBuilder tbSupport = ScrumGwt.createFieldTable();
+		tbSupport.addFieldRow("Support Email", project.getSupportEmailModel());
+		tbSupport.addFieldRow("Issue reply template", project.getIssueReplyTemplateModel());
+		page.addSection(tbSupport.createTable());
+
 		return page;
 	}
 }

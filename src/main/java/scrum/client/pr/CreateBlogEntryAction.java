@@ -16,7 +16,7 @@ public class CreateBlogEntryAction extends GCreateBlogEntryAction {
 		TooltipBuilder tb = new TooltipBuilder(
 				"Create a new Blog entry. You can set date, title and text after creation.");
 
-		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 
 		return tb.getTooltip();
@@ -29,7 +29,7 @@ public class CreateBlogEntryAction extends GCreateBlogEntryAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

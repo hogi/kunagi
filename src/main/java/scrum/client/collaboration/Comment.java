@@ -36,7 +36,7 @@ public class Comment extends GComment {
 		} else {
 			// public comment
 			Project project = Scope.get().getComponent(Project.class);
-			if (!project.isProductOwnerOrScrumMasterOrTeamMember(currentUser)) return false;
+			if (!project.isScrumTeamMember(currentUser)) return false;
 		}
 		return true;
 	}

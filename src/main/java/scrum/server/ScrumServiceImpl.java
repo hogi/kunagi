@@ -129,6 +129,18 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	public void onSendIssueReplyEmail(GwtConversation conversation, String issueId, String from, String to,
+			String subject, String text) {
+		assertProjectSelected(conversation);
+		Issue issue = issueDao.getById(issueId);
+		webApplication.sendEmail(from, to, subject, text);
+		User user = conversation.getSession().getUser();
+		postProjectEvent(conversation, user.getName() + " emailed a response to " + issue.getReferenceAndLabel(), issue);
+		Change change = changeDao.postChange(issue, user, "@reply", null, text);
+		conversation.sendToClient(change);
+	}
+
+	@Override
 	public void onCreateExampleProject(GwtConversation conversation) {
 		User user = conversation.getSession().getUser();
 		Project project = projectDao.postExampleProject(user, user, user);
@@ -707,9 +719,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 	}
 
-	private void postProjectEvent(GwtConversation conversation, String label, AEntity subject) {
+	private void postProjectEvent(GwtConversation conversation, String message, AEntity subject) {
 		assertProjectSelected(conversation);
-		ProjectEvent event = projectEventDao.postEvent(conversation.getProject(), label, subject);
+		ProjectEvent event = projectEventDao.postEvent(conversation.getProject(), message, subject);
 		sendToClients(conversation, event);
 		sendToClients(conversation, event.createChatMessage());
 	}

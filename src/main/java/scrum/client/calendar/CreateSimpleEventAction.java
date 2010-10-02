@@ -14,7 +14,7 @@ public class CreateSimpleEventAction extends GCreateSimpleEventAction {
 	@Override
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Create new Event on the date selected.");
-		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 
 		return tb.getTooltip();
@@ -27,7 +27,7 @@ public class CreateSimpleEventAction extends GCreateSimpleEventAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

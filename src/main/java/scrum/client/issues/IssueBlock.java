@@ -44,6 +44,7 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 		header.addMenuAction(new SuspendIssueAction(issue, 180));
 		header.addMenuAction(new UnsuspendIssueAction(issue));
 		header.addMenuAction(new CloseIssueAction(issue));
+		header.addMenuAction(new ReplyToIssueAuthorAction(issue));
 		header.addMenuAction(new ActivateChangeHistoryAction(issue));
 		header.addMenuAction(new DeleteIssueAction(issue));
 	}

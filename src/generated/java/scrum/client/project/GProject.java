@@ -1817,6 +1817,119 @@ public abstract class GProject
 
     }
 
+    // --- supportEmail ---
+
+    private java.lang.String supportEmail ;
+
+    public final java.lang.String getSupportEmail() {
+        return this.supportEmail ;
+    }
+
+    public final Project setSupportEmail(java.lang.String supportEmail) {
+        if (isSupportEmail(supportEmail)) return (Project)this;
+        this.supportEmail = supportEmail ;
+        propertyChanged("supportEmail", this.supportEmail);
+        return (Project)this;
+    }
+
+    public final boolean isSupportEmail(java.lang.String supportEmail) {
+        return equals(this.supportEmail, supportEmail);
+    }
+
+    private transient SupportEmailModel supportEmailModel;
+
+    public SupportEmailModel getSupportEmailModel() {
+        if (supportEmailModel == null) supportEmailModel = createSupportEmailModel();
+        return supportEmailModel;
+    }
+
+    protected SupportEmailModel createSupportEmailModel() { return new SupportEmailModel(); }
+
+    protected class SupportEmailModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_supportEmail";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getSupportEmail();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setSupportEmail(value);
+        }
+        @Override
+        public String getTooltip() { return "Email address of the support for this project."; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- issueReplyTemplate ---
+
+    private java.lang.String issueReplyTemplate ;
+
+    public final java.lang.String getIssueReplyTemplate() {
+        return this.issueReplyTemplate ;
+    }
+
+    public final Project setIssueReplyTemplate(java.lang.String issueReplyTemplate) {
+        if (isIssueReplyTemplate(issueReplyTemplate)) return (Project)this;
+        this.issueReplyTemplate = issueReplyTemplate ;
+        propertyChanged("issueReplyTemplate", this.issueReplyTemplate);
+        return (Project)this;
+    }
+
+    public final boolean isIssueReplyTemplate(java.lang.String issueReplyTemplate) {
+        return equals(this.issueReplyTemplate, issueReplyTemplate);
+    }
+
+    private transient IssueReplyTemplateModel issueReplyTemplateModel;
+
+    public IssueReplyTemplateModel getIssueReplyTemplateModel() {
+        if (issueReplyTemplateModel == null) issueReplyTemplateModel = createIssueReplyTemplateModel();
+        return issueReplyTemplateModel;
+    }
+
+    protected IssueReplyTemplateModel createIssueReplyTemplateModel() { return new IssueReplyTemplateModel(); }
+
+    protected class IssueReplyTemplateModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_issueReplyTemplate";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getIssueReplyTemplate();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setIssueReplyTemplate(value);
+        }
+
+        @Override
+        public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "Text template, which to use when replying to issue authors by email.<br><br>The following variables can be used: ${issue.reference} ${issuer.name} ${issuer.email} ${homepage.url} ${user.name} ${user.email}"; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- lastOpenedDateAndTime ---
 
     private ilarkesto.gwt.client.DateAndTime lastOpenedDateAndTime ;
@@ -1910,6 +2023,8 @@ public abstract class GProject
         homepageDir  = (java.lang.String) props.get("homepageDir");
         homepageUrl  = (java.lang.String) props.get("homepageUrl");
         autoUpdateHomepage  = (Boolean) props.get("autoUpdateHomepage");
+        supportEmail  = (java.lang.String) props.get("supportEmail");
+        issueReplyTemplate  = (java.lang.String) props.get("issueReplyTemplate");
         String lastOpenedDateAndTimeAsString = (String) props.get("lastOpenedDateAndTime");
         lastOpenedDateAndTime  =  lastOpenedDateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(lastOpenedDateAndTimeAsString);
     }
@@ -1952,6 +2067,8 @@ public abstract class GProject
         properties.put("homepageDir", this.homepageDir);
         properties.put("homepageUrl", this.homepageUrl);
         properties.put("autoUpdateHomepage", this.autoUpdateHomepage);
+        properties.put("supportEmail", this.supportEmail);
+        properties.put("issueReplyTemplate", this.issueReplyTemplate);
         properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
     }
 

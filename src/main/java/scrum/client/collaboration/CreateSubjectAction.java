@@ -15,7 +15,7 @@ public class CreateSubjectAction extends GCreateSubjectAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder(
 				"Create new Subject. You can set the title and start discussing after creation.");
-		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 
 		return tb.getTooltip();
@@ -28,7 +28,7 @@ public class CreateSubjectAction extends GCreateSubjectAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

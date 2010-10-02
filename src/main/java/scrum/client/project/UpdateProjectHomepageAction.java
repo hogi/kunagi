@@ -13,7 +13,7 @@ public class UpdateProjectHomepageAction extends GUpdateProjectHomepageAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder(
 				"Export project data, thereby updating the public homepage for this project.");
-		if (!project.isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
+		if (!project.isScrumTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 		return super.getTooltip();
 	}
@@ -26,7 +26,7 @@ public class UpdateProjectHomepageAction extends GUpdateProjectHomepageAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (!project.isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
+		if (!project.isScrumTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

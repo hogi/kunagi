@@ -21,7 +21,13 @@ public class Change extends GChange {
 	}
 
 	public String getLabel() {
-		if ("@created".equals(getKey())) return "created entity";
+		String key = getKey();
+		AGwtEntity parent = getParent();
+		if ("@created".equals(key)) return "created entity";
+		if (parent instanceof Issue) {
+			if (key.equals("@reply")) return "emailed a reply";
+		}
+
 		return getFieldChangeLabel();
 	}
 
@@ -58,6 +64,7 @@ public class Change extends GChange {
 		if (parent instanceof Issue) {
 			if (key.equals("closeDate")) return null;
 			if (key.equals("storyId")) return null;
+			if (key.equals("@reply")) return Str.toHtml(newValue);
 		} else if (parent instanceof Impediment) {
 			if (key.equals("closed")) return null;
 		} else if (parent instanceof Risk) {

@@ -71,6 +71,8 @@ public abstract class GProject
         properties.put("homepageDir", this.homepageDir);
         properties.put("homepageUrl", this.homepageUrl);
         properties.put("autoUpdateHomepage", this.autoUpdateHomepage);
+        properties.put("supportEmail", this.supportEmail);
+        properties.put("issueReplyTemplate", this.issueReplyTemplate);
         properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
     }
 
@@ -1649,6 +1651,76 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
+    // - supportEmail
+    // -----------------------------------------------------------
+
+    private java.lang.String supportEmail;
+
+    public final java.lang.String getSupportEmail() {
+        return supportEmail;
+    }
+
+    public final void setSupportEmail(java.lang.String supportEmail) {
+        supportEmail = prepareSupportEmail(supportEmail);
+        if (isSupportEmail(supportEmail)) return;
+        this.supportEmail = supportEmail;
+        fireModified("supportEmail="+supportEmail);
+    }
+
+    protected java.lang.String prepareSupportEmail(java.lang.String supportEmail) {
+        supportEmail = Str.removeUnreadableChars(supportEmail);
+        return supportEmail;
+    }
+
+    public final boolean isSupportEmailSet() {
+        return this.supportEmail != null;
+    }
+
+    public final boolean isSupportEmail(java.lang.String supportEmail) {
+        if (this.supportEmail == null && supportEmail == null) return true;
+        return this.supportEmail != null && this.supportEmail.equals(supportEmail);
+    }
+
+    protected final void updateSupportEmail(Object value) {
+        setSupportEmail((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - issueReplyTemplate
+    // -----------------------------------------------------------
+
+    private java.lang.String issueReplyTemplate;
+
+    public final java.lang.String getIssueReplyTemplate() {
+        return issueReplyTemplate;
+    }
+
+    public final void setIssueReplyTemplate(java.lang.String issueReplyTemplate) {
+        issueReplyTemplate = prepareIssueReplyTemplate(issueReplyTemplate);
+        if (isIssueReplyTemplate(issueReplyTemplate)) return;
+        this.issueReplyTemplate = issueReplyTemplate;
+        fireModified("issueReplyTemplate="+issueReplyTemplate);
+    }
+
+    protected java.lang.String prepareIssueReplyTemplate(java.lang.String issueReplyTemplate) {
+        issueReplyTemplate = Str.removeUnreadableChars(issueReplyTemplate);
+        return issueReplyTemplate;
+    }
+
+    public final boolean isIssueReplyTemplateSet() {
+        return this.issueReplyTemplate != null;
+    }
+
+    public final boolean isIssueReplyTemplate(java.lang.String issueReplyTemplate) {
+        if (this.issueReplyTemplate == null && issueReplyTemplate == null) return true;
+        return this.issueReplyTemplate != null && this.issueReplyTemplate.equals(issueReplyTemplate);
+    }
+
+    protected final void updateIssueReplyTemplate(Object value) {
+        setIssueReplyTemplate((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
     // - lastOpenedDateAndTime
     // -----------------------------------------------------------
 
@@ -1723,6 +1795,8 @@ public abstract class GProject
             if (property.equals("homepageDir")) updateHomepageDir(value);
             if (property.equals("homepageUrl")) updateHomepageUrl(value);
             if (property.equals("autoUpdateHomepage")) updateAutoUpdateHomepage(value);
+            if (property.equals("supportEmail")) updateSupportEmail(value);
+            if (property.equals("issueReplyTemplate")) updateIssueReplyTemplate(value);
             if (property.equals("lastOpenedDateAndTime")) updateLastOpenedDateAndTime(value);
         }
     }

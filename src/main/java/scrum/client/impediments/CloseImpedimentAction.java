@@ -16,7 +16,7 @@ public class CloseImpedimentAction extends GCloseImpedimentAction {
 	@Override
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Close this Impediment, marking it as solved or obsolete.");
-		if (!impediment.getProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) {
+		if (!impediment.getProject().isScrumTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 		} else {
 			if (impediment.isClosed()) tb.addRemark("Impediment is already closed.");
@@ -33,7 +33,7 @@ public class CloseImpedimentAction extends GCloseImpedimentAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (!impediment.getProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
+		if (!impediment.getProject().isScrumTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

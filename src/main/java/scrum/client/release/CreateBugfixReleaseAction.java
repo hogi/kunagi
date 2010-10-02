@@ -19,7 +19,7 @@ public class CreateBugfixReleaseAction extends GCreateBugfixReleaseAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Create a new Bugfix Release for this Release.");
 
-		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 
 		return tb.getTooltip();
@@ -33,7 +33,7 @@ public class CreateBugfixReleaseAction extends GCreateBugfixReleaseAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

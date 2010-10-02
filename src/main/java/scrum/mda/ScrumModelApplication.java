@@ -206,6 +206,14 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setTooltip("URL on which the project homepage is accessible.");
 			projectModel.addProperty("autoUpdateHomepage", boolean.class).setTooltip(
 				"Automatically update the homepage.");
+			projectModel.addStringProperty("supportEmail").setTooltip("Email address of the support for this project.");
+			projectModel
+					.addStringProperty("issueReplyTemplate")
+					.setRichtext(true)
+					.setTooltip(
+						"Text template, which to use when replying to issue authors by email.<br><br>"
+								+ "The following variables can be used: "
+								+ "${issue.reference} ${issuer.name} ${issuer.email} ${homepage.url} ${user.name} ${user.email}");
 			projectModel.addProperty("lastOpenedDateAndTime", DateAndTime.class);
 			getApplicationModel().addCreateAction(projectModel);
 			projectModel.addAction("DeleteProject");
@@ -757,6 +765,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addAction("SuspendIssue");
 			issueModel.addAction("UnsuspendIssue");
 			issueModel.addAction("PublishIssue");
+			issueModel.addAction("ReplyToIssueAuthor");
 		}
 		return issueModel;
 	}

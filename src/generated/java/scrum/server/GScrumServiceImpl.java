@@ -50,6 +50,8 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onRequestReleaseIssues(GwtConversation conversation, String releaseId);
 
+    public abstract void onSendIssueReplyEmail(GwtConversation conversation, String issueId, String from, String to, String subject, String text);
+
     public abstract void onRequestChanges(GwtConversation conversation, String parentId);
 
     public abstract void onCloseProject(GwtConversation conversation);
@@ -497,6 +499,26 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestReleaseIssues(conversation, releaseId);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "RequestReleaseIssues", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject sendIssueReplyEmail(int conversationNumber, String issueId, String from, String to, String subject, String text) {
+        log.debug("Handling service call: SendIssueReplyEmail");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:SendIssueReplyEmail");
+            context.bindCurrentThread();
+            try {
+                onSendIssueReplyEmail(conversation, issueId, from, to, subject, text);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "SendIssueReplyEmail", ex);
                 throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

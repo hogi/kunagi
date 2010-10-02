@@ -50,6 +50,8 @@ public interface ScrumServiceAsync {
 
     void requestReleaseIssues(int conversationNumber, String releaseId, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
+    void sendIssueReplyEmail(int conversationNumber, String issueId, String from, String to, String subject, String text, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
+
     void requestChanges(int conversationNumber, String parentId, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
     void closeProject(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);

@@ -38,6 +38,7 @@ public class Change extends GChange implements Comparable<Change> {
 	}
 
 	public boolean isMergableWith(Change other) {
+		if (getKey().startsWith("@")) return false;
 		if (!isParent(other.getParent())) return false;
 		if (!isUser(other.getUser())) return false;
 		if (!isKey(other.getKey())) return false;

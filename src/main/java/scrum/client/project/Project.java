@@ -186,7 +186,7 @@ public class Project extends GProject implements ForumSupport {
 
 	// TODO: guten namen für die methode finden.. hieß vorher isPig(), allerdings ist der PO eig. kein Pig,
 	// oder?
-	public boolean isProductOwnerOrScrumMasterOrTeamMember(User user) {
+	public boolean isScrumTeamMember(User user) {
 		return isProductOwner(user) || isScrumMaster(user) || isTeamMember(user);
 	}
 

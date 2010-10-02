@@ -110,6 +110,10 @@ public abstract class GProjectDao
         projectsByHomepageUrlCache.clear();
         homepageUrlsCache = null;
         projectsByAutoUpdateHomepageCache.clear();
+        projectsBySupportEmailCache.clear();
+        supportEmailsCache = null;
+        projectsByIssueReplyTemplateCache.clear();
+        issueReplyTemplatesCache = null;
         projectsByLastOpenedDateAndTimeCache.clear();
         lastOpenedDateAndTimesCache = null;
     }
@@ -1508,6 +1512,86 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return value == e.isAutoUpdateHomepage();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - supportEmail
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsBySupportEmailCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String supportEmail) {
+                    return getEntities(new IsSupportEmail(supportEmail));
+                }
+            });
+
+    public final Set<Project> getProjectsBySupportEmail(java.lang.String supportEmail) {
+        return projectsBySupportEmailCache.get(supportEmail);
+    }
+    private Set<java.lang.String> supportEmailsCache;
+
+    public final Set<java.lang.String> getSupportEmails() {
+        if (supportEmailsCache == null) {
+            supportEmailsCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isSupportEmailSet()) supportEmailsCache.add(e.getSupportEmail());
+            }
+        }
+        return supportEmailsCache;
+    }
+
+    private static class IsSupportEmail implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsSupportEmail(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isSupportEmail(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - issueReplyTemplate
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByIssueReplyTemplateCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String issueReplyTemplate) {
+                    return getEntities(new IsIssueReplyTemplate(issueReplyTemplate));
+                }
+            });
+
+    public final Set<Project> getProjectsByIssueReplyTemplate(java.lang.String issueReplyTemplate) {
+        return projectsByIssueReplyTemplateCache.get(issueReplyTemplate);
+    }
+    private Set<java.lang.String> issueReplyTemplatesCache;
+
+    public final Set<java.lang.String> getIssueReplyTemplates() {
+        if (issueReplyTemplatesCache == null) {
+            issueReplyTemplatesCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isIssueReplyTemplateSet()) issueReplyTemplatesCache.add(e.getIssueReplyTemplate());
+            }
+        }
+        return issueReplyTemplatesCache;
+    }
+
+    private static class IsIssueReplyTemplate implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsIssueReplyTemplate(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isIssueReplyTemplate(value);
         }
 
     }

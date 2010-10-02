@@ -830,6 +830,8 @@ public class Project extends GProject {
 		iss.setAcceptDate(Date.today());
 		iss.setUrgent(true);
 		iss.setSeverity(scrum.client.issues.Issue.MINOR);
+		iss.setIssuerName("Witek");
+		iss.setIssuerEmail("wi@koczewski.de");
 
 		// terrific pb suggestion
 		iss = issueDao.postIssue(this, "Product Backlog should be terrific, not amazing");

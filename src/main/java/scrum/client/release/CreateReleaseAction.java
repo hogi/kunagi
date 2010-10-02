@@ -15,7 +15,7 @@ public class CreateReleaseAction extends GCreateReleaseAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Create new major Release.");
 
-		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 
 		return tb.getTooltip();
@@ -28,7 +28,7 @@ public class CreateReleaseAction extends GCreateReleaseAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

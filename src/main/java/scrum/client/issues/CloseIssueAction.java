@@ -21,7 +21,7 @@ public class CloseIssueAction extends GCloseIssueAction {
 		if (issue.isIdea() || issue.isBug()) {
 			if (!getCurrentProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 		} else {
-			if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
+			if (!getCurrentProject().isScrumTeamMember(getCurrentUser()))
 				tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 		}
 
@@ -37,7 +37,7 @@ public class CloseIssueAction extends GCloseIssueAction {
 	@Override
 	public boolean isPermitted() {
 		if ((issue.isIdea() || issue.isBug()) && !getCurrentProject().isProductOwner(getCurrentUser())) return false;
-		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 

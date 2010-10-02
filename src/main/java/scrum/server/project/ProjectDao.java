@@ -56,6 +56,10 @@ public class ProjectDao extends GProjectDao {
 		project.setLabel("Example Project # " + DateAndTime.now());
 		project.setBegin(Date.today().addMonths(-2));
 		project.setEnd(Date.today().addMonths(5));
+		project.setSupportEmail("support@kunagi.org");
+		project.setIssueReplyTemplate("Hello ${issuer.name},\n" + "\n"
+				+ "Thank you for your feedback. You can check the status of your issue here: "
+				+ "${homepage.url}/${issue.reference}.html" + "\n" + "\nKind regards,\n" + "${user.name}");
 
 		project.addAdmin(owner);
 		project.addProductOwner(po);

@@ -17,7 +17,7 @@ public class DeleteFileAction extends GDeleteFileAction {
 	@Override
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Delete this File permanently.");
-		if (!file.getProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser()))
+		if (!file.getProject().isScrumTeamMember(getCurrentUser()))
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 
 		return tb.getTooltip();
@@ -30,7 +30,7 @@ public class DeleteFileAction extends GDeleteFileAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (!getCurrentProject().isProductOwnerOrScrumMasterOrTeamMember(getCurrentUser())) return false;
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 
