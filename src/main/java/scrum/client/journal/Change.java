@@ -1,8 +1,8 @@
 package scrum.client.journal;
 
 import ilarkesto.core.base.Str;
-import ilarkesto.core.diff.CharDiff;
 import ilarkesto.core.diff.HtmlDiffMarker;
+import ilarkesto.core.diff.WordDiff;
 import ilarkesto.gwt.client.AGwtEntity;
 
 import java.util.Comparator;
@@ -94,7 +94,7 @@ public class Change extends GChange {
 	};
 
 	private static String createDiff(String oldValue, String newValue) {
-		CharDiff diff = new CharDiff(oldValue, newValue, new HtmlDiffMarker());
+		WordDiff diff = new WordDiff(oldValue, newValue, new HtmlDiffMarker());
 		diff.diff();
 		String s = diff.toString();
 		return s;
