@@ -77,8 +77,8 @@ public class IssueServlet extends AHttpServlet {
 		projectEventDao.postEvent(project, issue.getIssuer() + " submitted " + issue.getReferenceAndLabel(), issue);
 		transactionService.commit();
 
-		String issueLink = publish ? "<code>" + issue.getReference() + "</code>" : "<a href=\"" + issue.getReference()
-				+ ".html\">" + issue.getReference() + "</a>";
+		String issueLink = publish ? "<a href=\"" + issue.getReference() + ".html\">" + issue.getReference() + "</a>"
+				: "<code>" + issue.getReference() + "</code>";
 		return "<h2>Feedback submitted</h2><p>Thank you for your feedback!</p><p>Your issue is now known as "
 				+ issueLink + " and will be reviewed by our Product Owner shortly.</p>";
 	}
