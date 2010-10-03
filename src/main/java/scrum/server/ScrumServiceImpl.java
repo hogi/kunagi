@@ -443,18 +443,18 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			if (properties.containsKey("ownerId") && issue.isOwnerSet()) {
 				postProjectEvent(conversation, currentUser.getName() + " claimed " + issue.getReferenceAndLabel(),
 					issue);
+
+				Release nextRelease = issue.getProject().getNextRelease();
+				if (issue.isFixReleasesEmpty() && nextRelease != null) {
+					issue.setFixReleases(Collections.singleton(nextRelease));
+					sendToClients(conversation, issue);
+				}
 			}
 
 			if (properties.containsKey("fixDate")) {
 				if (issue.isFixed()) {
 					postProjectEvent(conversation, currentUser.getName() + " fixed " + issue.getReferenceAndLabel(),
 						issue);
-
-					Release nextRelease = issue.getProject().getNextRelease();
-					if (issue.isFixReleasesEmpty() && nextRelease != null) {
-						issue.setFixReleases(Collections.singleton(nextRelease));
-						sendToClients(conversation, issue);
-					}
 				} else {
 					postProjectEvent(conversation, currentUser.getName() + " rejected fix for "
 							+ issue.getReferenceAndLabel(), issue);
