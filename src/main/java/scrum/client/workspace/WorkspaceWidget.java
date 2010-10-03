@@ -41,6 +41,7 @@ public class WorkspaceWidget extends AScrumWidget {
 
 		ScrollPanel workareaScroller = new ScrollPanel(Gwt.createDiv("Workspace-body-center-content", workarea));
 		workareaScroller.setHeight("100%");
+		workarea.setScrollPanel(workareaScroller);
 
 		FlowPanel body = new FlowPanel();
 		body.setStyleName("Workspace-body");
@@ -67,6 +68,7 @@ public class WorkspaceWidget extends AScrumWidget {
 		locker.lock(lockInfo);
 		Gwt.runLater(5000, new Runnable() {
 
+			@Override
 			public void run() {
 				Window.Location.reload();
 			}
@@ -98,6 +100,7 @@ public class WorkspaceWidget extends AScrumWidget {
 		Button close = new Button("close");
 		close.addClickListener(new ClickListener() {
 
+			@Override
 			public void onClick(Widget sender) {
 				db.hide();
 			}

@@ -344,7 +344,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".Workspace-body").height100();
 		css.style(".Workspace-body-west").floatLeft().width(200).height100();
 		css.style(".Workspace-body-center").height100();
-		css.style(".Workspace-body-center-content").padding(10);
+		css.style(".Workspace-body-center-content").padding(10).paddingBottom(1000);
 		css.style(".Workspace-body-west .PagePanel").padding(0);
 		css.style(".Workspace-body-west .PagePanel-header").color(cHeaderText);
 		css.style(".Workspace-body-west .PagePanel-content").border("0");
