@@ -31,6 +31,7 @@ public class ReleaseBlock extends ABlockWidget<Release> implements TrashSupport 
 		header.addMenuAction(new CreateBugfixReleaseAction(release));
 		header.addMenuAction(new ReleaseReleaseAction(release));
 		header.addMenuAction(new UnreleaseReleaseAction(release));
+		header.addMenuAction(new CreateBlogEntryAction(release));
 		header.addMenuAction(new ActivateChangeHistoryAction(release));
 		header.addMenuAction(new DeleteReleaseAction(release));
 	}

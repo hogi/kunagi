@@ -295,6 +295,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setTooltip("The tag used in content management systems for this release.");
 			getApplicationModel().addCreateAction(releaseModel);
 			releaseModel.addAction("DeleteRelease");
+			releaseModel.addAction("CreateBlogEntry");
 			releaseModel.addAction("ReleaseRelease");
 			releaseModel.addAction("UnreleaseRelease");
 			releaseModel.addAction("CreateBugfixRelease");

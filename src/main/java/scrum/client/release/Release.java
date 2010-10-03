@@ -75,6 +75,50 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
 
+	public String getIzemizedReleaseNotes() {
+		String notes = "";
+
+		// add Stories from all Sprints that are part of this Release
+		if (someSprintHasStories()) {
+			notes += "'''New Features'''\n\n";
+			for (Sprint sprint : getSprints()) {
+				for (Requirement story : sprint.getRequirements()) {
+					notes += "* " + (story.isClosed() ? "" : "(UNFINISHED) ") + story.getReferenceAndLabel() + "\n";
+				}
+			}
+			notes += "\n\n";
+		}
+
+		// add Bugs that have been fixed for this Release
+		if (!getFixedIssues().isEmpty() || !getPlannedIssues().isEmpty()) {
+			notes += "'''Fixed Bugs'''\n\n";
+			for (Issue issue : getFixedIssues()) {
+				notes += "* " + issue.getReferenceAndLabel() + "\n";
+			}
+			for (Issue issue : getPlannedIssues()) {
+				notes += "* (UNFINISHED) " + issue.getReferenceAndLabel() + "\n";
+			}
+			notes += "\n\n";
+		}
+
+		// add all Bugs that have not been fixed for this Release
+		if (!getAffectedByIssues().isEmpty()) {
+			notes += "'''Known Issues'''\n\n";
+			for (Issue issue : getAffectedByIssues()) {
+				notes += "* " + issue.getReferenceAndLabel() + "\n";
+			}
+		}
+
+		return notes;
+	}
+
+	private boolean someSprintHasStories() {
+		for (Sprint sprint : getSprints()) {
+			if (!sprint.getRequirements().isEmpty()) return true;
+		}
+		return false;
+	}
+
 	@Override
 	public String toHtml() {
 		return ScrumGwt.toHtml(getReference(), getLabel());

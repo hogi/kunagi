@@ -436,6 +436,14 @@ public class Project extends GProject implements ForumSupport {
 		return blogEntry;
 	}
 
+	public BlogEntry createNewBlogEntry(Release release) {
+		BlogEntry blogEntry = new BlogEntry(this);
+		blogEntry.setTitle("Release " + release.getLabel());
+		blogEntry.setText(release.getIzemizedReleaseNotes());
+		getDao().createBlogEntry(blogEntry);
+		return blogEntry;
+	}
+
 	public Release createNewRelease(Release parentRelease) {
 		Release release = new Release(this);
 		Date date = Date.today();

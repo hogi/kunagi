@@ -167,6 +167,10 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 		return REFERENCE_PREFIX + getNumber();
 	}
 
+	public String getReferenceAndLabel() {
+		return getReference() + " " + getLabel();
+	}
+
 	@Override
 	public List<String> getTypeOptions() {
 		return Types.ALL;
