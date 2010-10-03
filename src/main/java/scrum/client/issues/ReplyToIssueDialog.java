@@ -81,16 +81,9 @@ public class ReplyToIssueDialog {
 
 		@Override
 		protected void onExecute() {
-			getUi().lock("Sending email");
 			new SendIssueReplyEmailServiceCall(issue.getId(), from.getText(), to.getText(), subject.getText(),
-					text.getText()).execute(new Runnable() {
-
-				@Override
-				public void run() {
-					dialogBox.hide();
-					getUi().unlock();
-				}
-			});
+					text.getText()).execute();
+			dialogBox.hide();
 		}
 	}
 
